@@ -1,0 +1,773 @@
+@charset "utf-8";
+
+.Wrapper {
+	width: 360px;
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+#DispMsg {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 40px 10px;
+	background: rgba(0, 0, 0, 0.8);
+	display: none;
+	color: #fff;
+	box-sizing: border-box;
+	z-index: 999;
+}
+
+.IllustThumbList {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/********** ILLUST LIST **********/
+.IllustThumb {
+	display: block;
+	float: left;
+	width: 118px;
+	height: 118px;
+	margin: 0 3px 3px 0;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.IllustThumb:nth-child(3n) {margin-right: 0;}
+
+
+.IllustThumb .IllustThumbImg {
+	display: block;
+	width: 100%;
+}
+
+/********** USER LIST **********/
+.UserThumb {
+	display: flex;
+	width: 100%;
+	flex-flow: row nowrap;
+	box-sizing: border-box;
+	overflow: hidden;
+	padding: 10px;
+	border-bottom: solid 1px #ccc;
+}
+
+.UserThumb .UserThumbImg {
+	display: block;
+	flex: 0 0 30px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	border: solid 1px #ccc;
+	border-radius: 30px;
+	margin: 0 5px 0 0;
+	box-sizing: border-box;
+}
+.UserThumb .UserThumbImg img {
+	display: block;
+	width: 100%;
+}
+
+.UserThumb .UserThumbName {
+	display: block;
+	flex: 1 1;
+	height: 30px;
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 30px;
+}
+
+.UserThumb .UserThumbName .UserThumbNameAdditional {
+	font-weight: normal;
+}
+
+/********** TAG LIST **********/
+.TagItem {
+	display: block;
+	width: 100%;
+	height: 51px;
+	box-sizing: border-box;
+	overflow: hidden;
+	padding: 10px;
+	border-bottom: solid 1px #ccc;
+	color: #c5c;
+	line-height: 30px;
+}
+
+/********** UPLOAD **********/
+
+.UploadFile {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px 10px 50px 10px;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.UploadFile .InputFile {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0;
+	overflow: hidden;
+	border: solid 1px #eee;
+	position: relative;
+	background: #eee;
+	color: #ccc;
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
+	box-sizing:border-box;
+	cursor: pointer;
+}
+
+.UploadFile .InputFile input[type="file"] {
+	position:absolute;
+	top:0;
+	right:0;
+	z-index:99;
+	width:100%;
+	height:100%;
+	font-size:315px;
+	opacity:0;
+	filter:alpha(opacity=0);
+	-ms-filter:"alpha(opacity=0)";
+	cursor: pointer;
+}
+
+.UploadFile .InputFile .OrgMessage {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 253px;
+	line-height: 253px;
+	padding: 0;
+	font-size: 36px;
+	text-align: center;
+}
+
+.UploadFile .InputFile .OrgMessage .typcn {
+	font-size: 48px;
+}
+
+.UploadFile .InputFile .imgView {
+	display: block;
+	float: left;
+	width: 100%;
+	display: none;
+}
+
+.UploadFile .Description {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 10px 0;
+	position: relative;
+}
+
+.UploadFile .Description .EditDescription {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 130px;
+	box-sizing: border-box;
+	padding-bottom: 17px;
+}
+
+.UploadFile .Description .DescriptionCharNum {
+	display: block;
+	text-align: right;
+	font-size: 12px;
+	height: 15px;
+	line-height: 15px;
+	position: absolute;
+	bottom: 1px;
+	right: 10px;
+}
+
+.UploadFile .UoloadCmdOption {
+	display: flex;
+	flex-flow: column;
+	width: 100%;
+	margin: 0 0 10px 0;
+	align-items: flex-end;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem {
+	flex: 0 0;
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionLabel {
+	display: block;
+	margin: 0 5px 0 0;
+	font-size: 12px;
+	line-height: 20px;
+}
+
+.UploadFile .UoloadCmd {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.UploadFile .UoloadCmd .UoloadCmdBtn {
+	display: inline-block;
+}
+
+/********** Illust List **********/
+
+.IllustItemList {
+	display: block;
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.IllustItem {
+	display: block;
+	width: 100%;
+	margin: 0 0 40px 0;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.IllustItem .IllustItemThumb {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	border-top: solid 1px #eee;
+	border-bottom: solid 1px #eee;
+	min-height: 60px;
+}
+
+.IllustItem .IllustItemThumb .IllustItemThumbImg {
+	display: block;
+	width: 100%;
+}
+
+.IllustItem .IllustItemUser {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+	padding: 5px 10px;
+}
+
+.IllustItem .IllustItemUser .IllustItemUserThumb {
+	display: block;
+	flex: 0 0 30px;
+	height: 30px;
+	overflow: hidden;
+	border: solid 2px #ccc;
+	border-radius: 60px;
+}
+
+.IllustItem .IllustItemUser .IllustItemUserThumb .IllustItemUserThumbImg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 60px;
+}
+
+.IllustItem .IllustItemUser .IllustItemUserName {
+	display: block;
+	flex: 1 1 204px;
+	padding: 0;
+	margin: 0 0 0 10px;
+	text-align: left;
+	font-weight: bold;
+	font-size: 14px;
+	height: 34px;
+	line-height: 34px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.IllustItem .IllustItemUser .UserInfoCmdFollow {
+	display: block;
+	flex: 0 0 90px;
+	cursor: pointer;
+	font-size: 12px;
+	padding: 0;
+	height: 24px;
+	line-height: 24px;
+	margin: 4px 0;
+}
+
+.IllustItem .IllustItemInfo {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	padding: 2px 10px;
+	word-break: break-all;
+}
+
+.IllustItem .IllustItemInfo .IllustItemInfoDesc {
+	display: inline;
+	font-size: 14px;
+}
+
+.IllustItem .IllustItemCommand {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	position: relative;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCommandComment,
+.IllustItem .IllustItemCommand .IllustItemCommandHeart {
+	display: inline-block;
+	font-size: 36px;
+	margin: 0 0 0 15px;
+	cursor: pointer;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCommandCommentNum,
+.IllustItem .IllustItemCommand .IllustItemCommandHeartNum {
+	display: inline-block;
+	font-size: 16px;
+	margin: 0 15px 0 0;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCommandSub {
+	position: absolute;
+	right: 0;
+	bottom: 4px;
+	font-size: 22px;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandInfo,
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete {
+	display: inline-block;
+	font-size: 26px;
+	color: #aaa;
+}
+
+/********** COMMENT **********/
+.IllustItemList .ItemComment {
+	display: block;
+	width: 100%;
+	float: left;
+	box-sizing: border-box;
+	margin: 5px auto 0 auto;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	font-size: 14px;
+	padding: 10px;
+	border-bottom: solid 1px #ccc;
+}
+
+.IllustItemList .ItemComment.Home .ItemCommentItem {
+	padding: 1px 10px;
+	border: none;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentName {
+	display: block;
+	flex: 0 0;
+	font-weight: bold;
+	font-size: 13px;
+	margin: 0 5px 0 0;
+	white-space: nowrap;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDesc {
+	display: block;
+	flex: 1 1;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDesc .CommentName {
+	display: inline;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDescTxt {
+	display: block;
+	flex: 1 1;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDesc .CommentCmd {
+	cursor: pointer;
+}
+
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDescBtn {
+	display: block;
+	flex: 0 0;
+	box-sizing: border-box;
+	text-align: right;
+	margin: 2px 0 2px 10px;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDescBtn .BtnBase {
+	font-size: 20px;
+	padding: 0px 10px;
+}
+
+.IllustItemList .ItemComment .CommentTo {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	display: none;
+	padding: 10px 10px 0 10px;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb {
+	display: block;
+	flex: 0 0 30px;
+	height: 30px;
+	border: solid 1px #ccc;
+	border-radius: 30px;
+	overflow: hidden;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart {
+	border: none;
+	line-height: 27px;
+	border-radius: 0;
+	overflow: visible;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb img {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+}
+
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart .typcn {
+	display: block;
+	width: 30px;
+	height: 30px;
+	font-size: 32px;
+	color: #ee9999;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail {
+	display: block;
+	flex: 1 1;
+	margin: 0 0 0 5px;
+	box-sizing: border-box;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDate {
+	display: block;
+	float: right;
+	font-size: 9px;
+	font-weight: normal;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDesc {
+	display: block;
+	flex: 1 1;
+	margin: 0;
+	word-break: break-all;
+	min-height: 16px;
+	line-height: 16px;
+}
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDesc .CommentName {
+	display: inline;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDesc .CommentCmd {
+	cursor: pointer;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail.Heart .CommentName {
+	line-height: 30px;
+}
+
+
+
+/*********** IllustView UserInfo **********/
+
+.UserInfo {
+	display: block;
+	float: left;
+	width: 100%;
+	margin: 0 0 3px 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	background: #eee;
+}
+
+.UserInfo .UserInfoBg {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 80px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.UserInfo .UserInfoUser {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+	background: rgba(255, 2555, 255, 0.70);
+}
+
+.UserInfo .UserInfoUser .UserInfoUserThumb {
+	display: block;
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
+	border: solid 2px #ccc;
+	border-radius: 80px;
+	margin: -42px auto 0 auto;
+}
+
+.UserInfo .UserInfoUser .UserInfoUserThumb .UserInfoUserThumbImg {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: 80px;
+}
+
+.UserInfo .UserInfoUser .UserInfoUserName {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 5px 0 0 0;
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.UserInfo .UserInfoUser .UserInfoProgile {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 5px 20px;
+	margin: 0;
+	text-align: center;
+	font-size: 13px;
+}
+
+.UserInfo .UserInfoCmd {
+	display: block;
+	position: relative;
+	float: left;
+	width: 100%;
+	text-align: center;
+	padding: 5px 0;
+	background: rgba(255, 2555, 255, 0.70);
+}
+
+.UserInfo .UserInfoCmd .UserInfoCmdFollow {
+	display: inline-block;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.UserInfo .UserInfoCmd .IllustItemCommandSub {
+	display: block;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	font-size: 22px;
+}
+
+.UserInfo .UserInfoCmd .UserInfoCmdBlock {
+	display: inline-block;
+	height: 22px;
+	line-height: 22px;
+	vertical-align: bottom;
+	font-size: 24px;
+}
+
+.UserInfo .UserInfoState {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 32px;
+	overflow: hidden;
+	text-align: center;
+	padding: 3px 0;
+	background: rgba(255, 2555, 255, 0.9);
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem {
+	display: inline-block;
+	min-width: 50px;
+	margin: 0 15px;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem .UserInfoStateItemTitle {
+	display: block;
+	width: 100%;
+	font-size: 9px;
+	height: 14px;
+	line-height: 14px;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem .UserInfoStateItemNum {
+	display: block;
+	width: 100%;
+	height: 18px;
+	line-height: 18px;
+	font-size: 14px;
+}
+
+/**********IllustView InfoForm **********/
+.InfoForm {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 30px 0 0 0;
+	font-size: 11px;
+	text-align: right;
+}
+
+/********** MyEditSettingV.jsp **********/
+.SettingList {
+	display: block;
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.SettingList .SettingListItem {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0 0 40px 0;
+	padding: 0 10px;
+}
+
+.SettingList .SettingListItem .SettingListTitle {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 10px 0;
+	font-size: 18px;
+}
+
+.SettingList .SettingListItem .SettingBody {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.SettingList .SettingListItem .SettingBody .SettingBodyTxt {
+	box-sizing: border-box;
+	width: 100%;
+	overflow: hidden;
+}
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: left;
+	margin: 10px 0 0 0;
+}
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .RegistMessage {
+	display: block;
+	flex: 1 1;
+	font-size: 14px;
+}
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .SettingBodyCmdRegist {
+	display: block;
+	flex: 0 0;
+	align-self: flex-start;
+	margin-left: 10px;
+}
+
+.SettingList .SettingListItem .SettingBody .FileSelectFrame {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 120px;
+	position: relative;
+	overflow:hidden;
+	line-height: 115px;
+	text-align: center;
+	cursor: pointer;
+	background: #eee;
+	color: #ccc;
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
+	box-sizing:border-box;
+	cursor: pointer;
+}
+.SettingList .SettingListItem .SettingBody .FileSelectFrame .typcn {
+	font-size: 60px;
+}
+
+.SettingList .SettingListItem .SettingBody .FileSelectFrame .SelectFile {
+	position:absolute;
+	top:0;
+	right:0;
+	z-index:99;
+	width:100%;
+	height:100%;
+	font-size:315px;
+	opacity:0;
+	filter:alpha(opacity=0);
+	-ms-filter:"alpha(opacity=0)";
+	cursor: pointer;
+}
+
+
+/********** SEARCH ALL **********/
+.SearchKeyword {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 6px 10px;
+	box-sizing:border-box;
+	background: #ccc;
+}
+
+.SearchKeyword .SearchKeywordInput {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 2px 2px 2px 20px;
+	box-sizing:border-box;
+	background: #fff url('/img/search.png') 1% 50% no-repeat;
+	font-size: 16px;
+	font-family: sans-serif;
+	border-radius:5px;
+}

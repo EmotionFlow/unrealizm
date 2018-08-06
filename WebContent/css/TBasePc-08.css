@@ -1,0 +1,48 @@
+@charset "utf-8";
+body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
+.Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 36px; border-bottom: solid 1px #ccc; text-align: center; padding: 8px 0; background: #fff; z-index: 9;}
+.Header .HeaderLink {display: block;}
+.Header .HeaderLink .HeaderImg {display: block; height: 36px; margin: 0 auto;}
+#HeaderSearchWrapper {display: none;}
+.HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 0; box-sizing: border-box; overflow: hidden;}
+.Header .HeaderSearch {display: flex; flex-flow: row nowrap; justify-content: center; padding: 3px 10px;}
+.Header .HeaderSearch .HeaderSearchBox {display: block; flex: 1 1; height: 30px; padding: 0 5px; box-sizing: border-box; border: solid 1px #c5c;}
+.Header .HeaderSearch .HeaderSearchBox:placeholder-shown {color: #c0c0b5; font-style: italic;}
+.Header .HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 30px; height: 30px; box-sizing: border-box; margin: 0; background-color: #c5c; color: #fff; border: solid 1px #c5c; cursor: pointer; border-left: none;}
+.Header .HeaderSearch .HeaderSearchBtn:hover {background-color: #fff; color: #c5c;}
+.FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ccc; background-color: #fff; z-index: 99; }
+.FooterMenuWrapper .FooterMenu {display: block; max-width: 600px; height: 50px; margin: 0 auto;}
+.FooterMenuWrapper .FooterMenu .FooterMenuItem {display: block; float: left; width: 20%; height: 50px; text-align: center; font-size: 0;}
+.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-02.png') no-repeat; background-size: 1400%; position: relative;}
+.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; width: 15px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
+.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
+.FooterMenuWrapper .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #c5c;}
+#MenuHome .FooterMenuItemIcon {background-position: 0 0;}
+#MenuSearch .FooterMenuItemIcon {background-position: -308px 0;}
+#MenuUpload .FooterMenuItemIcon {background-position: -336px 0;}
+#MenuAct .FooterMenuItemIcon {background-position: -140px 0;}
+#MenuMe .FooterMenuItemIcon {background-position: -364px 0;}
+#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: 0 -28px;}
+#MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -308px -28px;}
+#MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -336px -28px;}
+#MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -140px -28px;}
+#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}
+
+.LinkApp {text-align: center; margin: 10px 0;}
+
+.Footer {background: url('/img/pc_top_bg.jpg') 50% 50% no-repeat fixed; background-size: cover; display:block; width: 100%; text-align: center; padding: 20px 10px; center; background-color: #c5c; font-size: 10px; box-sizing: border-box; color: #fff;}
+.Footer .FooterHref {text-decoration: underline; color: #fff;}
+.Footer .FooterCopy {text-align: center;}
+.Footer .FooterLink {display: flex; flex-flow: row nowrap; margin: 0 0 30px 0; justify-content: space-around; border-top: solid 1px #fff; padding: 15px 0 0 0;}
+.Footer .FooterLink .FooterLinkItem {flex: 0 0; text-align: left; white-space: nowrap; margin: 0 20px; padding: 0;}
+
+.TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto;}
+.TabMenu .TabMenuItem {display: block; flex: 1 1; height: 26px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #c5c; margin: 0 0 3px 0; font-size: 14px;}
+.TabMenu .TabMenuItem.Selected {border-color: #c5c;}
+
+/********** AnalogicoInfo *********/
+.AnalogicoInfo {color: #fff; background: url('/img/pc_top_bg.jpg') 50% 50% no-repeat fixed; background-size: cover; height: auto; padding: 15px 0;}
+.AnalogicoInfo .AnalogicoInfoTitle {display: block; margin: 0 0 15px 0; padding: 0; font-size: 14px; text-align: center; text-shadow: 0 0 8px #000; font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;}
+.AnalogicoInfo .AnalogicoInfoRegist {display: block; text-align: center; font-size: 14px;}
+.Footer .AnalogicoInfo {background: none; padding: 0 0 15px 0;}
+
