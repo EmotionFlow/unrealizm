@@ -1,4 +1,4 @@
-package com.emotionflow.poipic.util;
+package com.emotionflow.poipiku.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -24,13 +24,13 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(strKeyword)%>');
 		});
 		</script>
 
 		<style>
-		#HeaderLink {display: none;}
+		#HeaderTitleWrapper {display: none;}
 		#HeaderSearchWrapper {display: block;}
 		</style>
 

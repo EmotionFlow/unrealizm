@@ -7,11 +7,6 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-
-if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/");
-	return;
-}
 %>
 <!DOCTYPE html>
 <html>
@@ -22,15 +17,9 @@ if(!cCheckLogin.m_bLogin) {
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
-
-		<style>
-		#HeaderLink {display: none;}
-		#HeaderSearchWrapper {display: block;}
-		</style>
-
 		<script>
 			var g_nNextId = -1;
 			function addContents(nStartId) {
@@ -72,15 +61,16 @@ if(!cCheckLogin.m_bLogin) {
 	</head>
 
 	<body>
+		<div class="TabMenu">
+			<a class="TabMenuItem" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+			<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+			<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+			<a class="TabMenuItem Selected" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+		</div>
+
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem" href="/NewArrivalPcV.jsp">recent</a>
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp">popular</a>
-				<a class="TabMenuItem Selected" href="/PopularTagListPcV.jsp">tag</a>
-			</div>
-
 			<div id="IllustThumbList" class="IllustItemList">
 			</div>
 		</div>

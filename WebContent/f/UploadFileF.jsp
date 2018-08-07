@@ -137,7 +137,7 @@ class UploadFileC {
 					} else {
 						bufMsg.append(strTweetMsg);
 					}
-					bufMsg.append(String.format(" https://analogico.pipa.jp/%d/%d.html", cParam.m_nUserId, m_nContentId));
+					bufMsg.append(String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, m_nContentId));
 
 					if (!cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strFileName))) {
 						System.out.println("tweet失敗");

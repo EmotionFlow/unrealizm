@@ -17,7 +17,7 @@ if(!cCheckLogin.m_bLogin) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title>analogico</title>
+		<title>ポイピク</title>
 		<script>
 			var g_nNextId = -1;
 			function addContents(nStartId) {
@@ -137,14 +137,16 @@ if(!cCheckLogin.m_bLogin) {
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
-			<div style="display: block; float: left; width: 100%; padding: 5px; box-sizing: border-box; font-size: 10px; color: red;">
-				平素よりアナロジコをご愛顧いただきまして誠にありがとうございます。
-				アナロジコの一層の活性化を目的に、8月中にアナログイラストを中心に置きつつ多様なイラストを気軽に投稿できる場に拡張する予定です。
-				引き続きご愛顧のほどよろしくお願いいたします。
+			<div class="TabMenu">
+				<a class="TabMenuItem Selected" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 			</div>
+
 			<div id="InfoMsg" style="display:none; float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
-				analogicoへようこそ<br />
-				analogicoはアナログイラストを愛する人のためのSNSです。<br />
+				ポイピクへようこそ<br />
+				ポイピクはアナログイラストを愛する人のためのSNSです。<br />
 				<br />
 				<br />
 				<a class="BtnBase" href="javascript:void(0)" onclick="MoveTab()">

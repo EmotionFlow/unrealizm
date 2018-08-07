@@ -34,9 +34,9 @@ boolean bRtn = cResults.GetResults(cParam);
 
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
-		body {color: #fff; background: url('/img/pc_top_bg.jpg') 50% 50% no-repeat fixed; background-size: cover; height: auto;}
-		.AnalogicoDesc {width: 90%; margin: 80px auto 0 auto; padding: 0; text-align: center; font-size: 16px; text-shadow: 0 0 8px #000; color: #fff; font-weight: normal;}
-		.AnalogicoDesc.Title {font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;}
+		.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
+		.AnalogicoDesc {width: 90%; margin: 40px auto 0 auto; padding: 0; text-align: center; font-size: 14px; line-height: 28px; color: #fff; font-weight: normal;}
+		.AnalogicoDesc.Title {}
 		.AnalogicoStart {text-align: center; margin: 60px 0 0 0;}
 		.simply-scroll-container {position: relative;}
 		.simply-scroll-clip {position: relative; overflow: hidden;}
@@ -48,7 +48,6 @@ boolean bRtn = cResults.GetResults(cParam);
 		.simply-scroll-list li a {display: block; float: left; width: 120px; height: 120px; margin: 0 3px 0 0;}
 		<%}%>
 		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
-		.Footer {background: none;}
 		.AnalogicoInfo {display: none;}
 		</style>
 
@@ -68,29 +67,28 @@ boolean bRtn = cResults.GetResults(cParam);
 	</head>
 
 	<body>
+		<div class="TabMenu">
+			<a class="TabMenuItem Selected" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+			<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+			<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+			<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+		</div>
+
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div style="width: 100%;">
+		<div class="Wrapper">
 			<h1 class="AnalogicoDesc Title">
-				analogico (アナロジコ)へようこそ<br />
+				描くのに飽きたらポイポイ<br />
+				下描き放置もポイポイ<br />
+				完成したらもちろんポイポイ<br />
+				日々の鍛錬をポイポイ<br />
+				闇に葬る前にとりあえずポイポイ<br />
+				なんでもポイピクにポイポイ<br />
+				ポイポイしたら誰かがきっと励ましてくれる<br />
 				<br />
-				analogicoはアナログイラストを<br />愛する人のSNSです。<br />
-				<br />
-				<a class="AnalogicoDesc" href="/PopularIllustListPcV.jsp" style="text-decoration: underline;">
-					<span class="fa fa-search"></span>analogicoをのぞいてみる
-				</a>
+				ポイピクはイラストをポイポイして<br />
+				励まし合うイラストSNSです。
 			</h1>
-			<div style="margin: 50px 0 0 0;">
-				<ul id="loopSlide">
-					<%for(CContent cContent : cResults.m_vContentList) {%>
-					<li>
-						<a class="IllustThumb" href="/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html">
-							<img class="IllustThumbImg" src="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg">
-						</a>
-					</li>
-					<%}%>
-				</ul>
-			</div>
 			<div class="AnalogicoStart">
 				<a class="BtnBase" href="/LoginFormTwitterPc.jsp">
 					<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン

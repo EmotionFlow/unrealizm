@@ -6,6 +6,6 @@
 <%@page import="javax.sql.*"%>
 <%@page import="javax.naming.*"%>
 <%@page import="java.security.MessageDigest"%>
-<%@page import="com.emotionflow.poipic.*"%>
-<%@page import="com.emotionflow.poipic.util.*"%>
+<%@page import="com.emotionflow.poipiku.*"%>
+<%@page import="com.emotionflow.poipiku.util.*"%>
 <%@include file="/inner/Common.jsp"%>

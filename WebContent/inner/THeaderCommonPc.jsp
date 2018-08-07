@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="com.emotionflow.poipic.*"%>
+<%@page import="com.emotionflow.poipiku.*"%>
 <meta charset="utf-8">
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Cache-Control" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-07.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-10.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-08.css" type="text/css" rel="stylesheet" />

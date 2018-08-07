@@ -51,7 +51,7 @@ boolean bRtn = cResults.GetResults(cParam);
 				<img style="margin: 20% 0 15% 0;" src="/img/pc_top_title.jpg" />
 			</div>
 			<div style="width: 95%; margin: 0 auto 30px auto; text-align: center; font-size: 12px; text-shadow: 0 0 8px #000;">
-				「analogico (アナロジコ)」はアナログイラストを愛する人のためのSNSアプリです。 お気に入りの作品やちょっとした落書きなど、なんでもカメラで撮って気軽に投稿してみましょう。きっとあなたのイラストの世界観を楽しみにしている人が待っています！
+				「ポイピク」はアナログイラストを愛する人のためのSNSアプリです。 お気に入りの作品やちょっとした落書きなど、なんでもカメラで撮って気軽に投稿してみましょう。きっとあなたのイラストの世界観を楽しみにしている人が待っています！
 			</div>
 			<div style="text-align: center;">
 				<a href="https://itunes.apple.com/jp/app/analogico/id1074955216?mt=8" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>

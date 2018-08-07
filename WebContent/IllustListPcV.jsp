@@ -1,5 +1,5 @@
-<%@page import="com.emotionflow.poipic.util.Log"%>
-<%@page import="com.emotionflow.poipic.util.CPageBar"%>
+<%@page import="com.emotionflow.poipiku.util.Log"%>
+<%@page import="com.emotionflow.poipiku.util.CPageBar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
@@ -50,7 +50,7 @@ if(!cResults.GetResults(cParam)) {
 			<%if(cResults.m_bOwner) {%>
 			$('#MenuMe').addClass('Selected');
 			<%} else {%>
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 			<%}%>
 		});
 		</script>
@@ -143,7 +143,7 @@ if(!cResults.GetResults(cParam)) {
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 					<%}%>
 					<%
-					String strTwitterUrl="https://twitter.com/share?url=" + URLEncoder.encode("https://analogico.pipa.jp/"+cResults.m_cUser.m_nUserId+"/", "UTF-8");
+					String strTwitterUrl="https://twitter.com/share?url=" + URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8");
 					%>
 					<span class="IllustItemCommandSub">
 						<a class="social-icon Twitter" href="<%=strTwitterUrl%>">&#229;</a>

@@ -454,7 +454,7 @@ if(cResults.m_bUpdate) {
 							</select>
 						</div>
 						<div class="SettingBodyCmd">
-							<%if(cResults.m_cUser.m_strAutoTweetDesc.length()<=0){cResults.m_cUser.m_strAutoTweetDesc=_TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://analogico.pipa.jp/%d/", cResults.m_cUser.m_nUserId);}%>
+							<%if(cResults.m_cUser.m_strAutoTweetDesc.length()<=0){cResults.m_cUser.m_strAutoTweetDesc=_TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://poipiku.com/%d/", cResults.m_cUser.m_nUserId);}%>
 							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
 						</div>
 						<div class="SettingBodyCmd">

@@ -32,26 +32,29 @@ if(strRequestUri != null) {
 	</head>
 
 	<style>
-		.AnalogicoDesc {display: block; width: 90%; margin: 0 auto; padding: 10px 0; text-align: center; text-shadow: 0 0 8px #000; color: #fff; font-weight: normal;}
-		.AnalogicoDesc.Title {margin: 50px auto; font-family: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif;}
-		.AnalogicoLink {display: block; margin: 10px 0; text-align: center; text-shadow: 0 0 8px #000; color: #fff; font-weight: normal;}
+		.AnalogicoDesc {display: block; width: 90%; margin: 0 auto; padding: 10px 0; text-align: center; color: #fff; font-weight: normal;}
+		.AnalogicoDesc.Title {}
+		.AnalogicoLink {display: block; margin: 10px 0; text-align: center; color: #fff; font-weight: normal;}
 		.AnalogicoLogin {margin: 10px 0;}
 		.AnalogicoCode {margin: 10px 0;}
 		.AnalogicoTerm {margin: 50px 0 0 0;}
 	</style>
 
-	<body style="color: #fff; background: url('/img/pc_top_bg.jpg') 50% 50% no-repeat fixed; background-size: cover;">
+	<body style="color: #fff; background: #5bd;">
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
 			<div id="InfoMsg" style="float: left; width: 100%; padding: 60px 0 0 0; text-align: center;">
 				<div class="AnalogicoDesc Title">
-					analogico (アナロジコ)へようこそ<br />
+					描くのに飽きたらポイポイ<br />
+					下描き放置もポイポイ<br />
+					完成したらもちろんポイポイ<br />
+					日々の鍛錬をポイポイ<br />
+					闇に葬る前にとりあえずポイポイ<br />
+					なんでもポイピクにポイポイ<br />
+					ポイポイしたら誰かがきっと励ましてくれる<br />
 					<br />
-					analogicoはアナログイラストを<br />愛する人のためのSNSです。<br />
-					<br />
-					<a class="AnalogicoDesc" href="/PopularIllustListV.jsp" style="text-decoration: underline;">
-						<span class="fa fa-search"></span>analogicoをのぞいてみる
-					</a>
+					ポイピクはイラストをポイポイして<br />
+					励まし合うイラストSNSです。
 				</div>
 				<div class="AnalogicoLogin">
 					<a class="BtnBase" href="/LoginFormTwitter.jsp">

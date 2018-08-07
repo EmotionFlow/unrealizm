@@ -1,4 +1,4 @@
-package com.emotionflow.poipic;
+package com.emotionflow.poipiku;
 
 import java.net.URLDecoder;
 import java.sql.*;
@@ -8,6 +8,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
+import com.emotionflow.poipiku.Common;
 
 public class CheckLogin {
 	public boolean m_bLogin = false;

@@ -1,5 +1,5 @@
-<%@page import="com.emotionflow.poipic.util.Util"%>
-<%@page import="com.emotionflow.poipic.util.Log"%>
+<%@page import="com.emotionflow.poipiku.util.Util"%>
+<%@page import="com.emotionflow.poipiku.util.Log"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="org.apache.commons.lang3.RandomStringUtils"%>
 <%@page import="java.net.URLEncoder"%>
@@ -179,7 +179,7 @@ try {
 			cState.setString(6, screen_name);
 			cState.setInt(7, -1);
 			cState.setInt(8, -1);
-			cState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://analogico.pipa.jp/%d/", nUserId));
+			cState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://poipiku.com/%d/", nUserId));
 			cState.executeUpdate();
 			cState.close();cState=null;
 

@@ -25,7 +25,7 @@ boolean bRtn = cResults.GetResults(cParam);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
 	</head>

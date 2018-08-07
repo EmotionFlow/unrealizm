@@ -42,13 +42,13 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustViewPc.Title.Desc"), strDesc, cResults.m_cUser.m_strNickName))%>" />
-		<meta name="twitter:image" content="https://analogico.pipa.jp/<%=cResults.m_cContent.m_strFileName%>" />
+		<meta name="twitter:image" content="https://poipiku.com/<%=cResults.m_cContent.m_strFileName%>" />
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%></title>
 
 		<script type="text/javascript">
 			$(function(){
-				$('#MenuSearch').addClass('Selected');
+				$('#MenuHome').addClass('Selected');
 			});
 		</script>
 
@@ -248,7 +248,7 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 						<span id="IllustItemCommandHeart_<%=cResults.m_cContent.m_nContentId%>" class="IllustItemCommandHeart typcn <%if(cResults.m_bBookmark){%>typcn-heart-full-outline Selected<%}else{%>typcn-heart-outline<%}%>" onclick="UpdateBookmark(<%=cResults.m_cContent.m_nContentId%>)"></span>
 						<a id="IllustItemCommandHeartNum_<%=cResults.m_cContent.m_nContentId%>" class="IllustItemCommandHeartNum" href="/IllustHeartPcV.jsp?ID=<%=cResults.m_cContent.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=cResults.m_cContent.m_nBookmarkNum%></a>
 						<div class="IllustItemCommandSub">
-							<%String strUrl = URLEncoder.encode(String.format("https://analogico.pipa.jp/%d/%d.html", cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId), "UTF-8");%>
+							<%String strUrl = URLEncoder.encode(String.format("https://poipiku.com/%d/%d.html", cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId), "UTF-8");%>
 							<a class="social-icon Twitter" href="https://twitter.com/share?url=<%=strUrl%>">&#229;</a>
 							<%if(cResults.m_bOwner || cCheckLogin.m_nUserId==1) {%>
 							<a class="IllustItemCommandDelete typcn typcn-trash" href="javascript:void(0)" onclick="DeleteContent(<%=cResults.m_cContent.m_nContentId%>)"></a>

@@ -213,7 +213,7 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 						<span id="IllustItemCommandHeart_<%=cResults.m_cContent.m_nContentId%>" class="IllustItemCommandHeart typcn <%if(cResults.m_bBookmark){%>typcn-heart-full-outline Selected<%}else{%>typcn-heart-outline<%}%>" onclick="UpdateBookmark(<%=cResults.m_cContent.m_nContentId%>)"></span>
 						<a id="IllustItemCommandHeartNum_<%=cResults.m_cContent.m_nContentId%>" class="IllustItemCommandHeartNum" href="/IllustHeartV.jsp?ID=<%=cResults.m_cContent.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=cResults.m_cContent.m_nBookmarkNum%></a>
 						<div class="IllustItemCommandSub">
-							<%String strUrl = URLEncoder.encode(String.format("https://analogico.pipa.jp/%d/%d.html", cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId), "UTF-8");%>
+							<%String strUrl = URLEncoder.encode(String.format("https://poipiku.com/%d/%d.html", cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId), "UTF-8");%>
 							<a class="social-icon Twitter" href="https://twitter.com/share?url=<%=strUrl%>">&#229;</a>
 							<%if(cResults.m_bOwner || cCheckLogin.m_nUserId==1) {%>
 							<a class="IllustItemCommandDelete typcn typcn-trash" href="javascript:void(0)" onclick="DeleteContent(<%=cResults.m_cContent.m_nContentId%>)"></a>

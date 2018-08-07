@@ -1,4 +1,4 @@
-<%@page import="com.emotionflow.poipic.util.CPageBar"%>
+<%@page import="com.emotionflow.poipiku.util.CPageBar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
@@ -26,13 +26,13 @@ boolean bRtn = cResults.GetResults(cParam);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(cParam.m_strKeyword)%>');
 		});
 		</script>
 
 		<style>
-		#HeaderLink {display: none;}
+		#HeaderTitleWrapper {display: none;}
 		#HeaderSearchWrapper {display: block;}
 		</style>
 	</head>

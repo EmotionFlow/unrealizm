@@ -19,10 +19,10 @@ String strReportDesc = Common.TrimAll(Common.EscapeInjection(Common.ToString(req
 try {
 	String SMTP_HOST	= "localhost";
 	String FROM_NAME	= "ANALOGICO_REPORT";
-	String FROM_ADDR	= "analogico@pipa.jp";
+	String FROM_ADDR	= "poipiku@pipa.jp";
 	String TO_ADDR	= "info@pipa.jp";
 	String EMAIL_TITLE = "ANALOGICO_REPORT";
-	String EMAIL_TXT = "Post UserId : https://analogico.pipa.jp/IllustListPcV.jsp?ID=%d \nTarg Content : https://analogico.pipa.jp/IllustViewV.jsp?TD=%d \nReportDesc:%s \n\n";
+	String EMAIL_TXT = "Post UserId : https://poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://poipic.com/IllustViewV.jsp?TD=%d \nReportDesc:%s \n\n";
 
 	System.out.println(String.format(EMAIL_TXT, cCheckLogin.m_nUserId, nContentId, strReportDesc));
 

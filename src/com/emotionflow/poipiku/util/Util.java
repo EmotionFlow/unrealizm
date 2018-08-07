@@ -1,4 +1,4 @@
-package com.emotionflow.poipic.util;
+package com.emotionflow.poipiku.util;
 
 import java.security.MessageDigest;
 

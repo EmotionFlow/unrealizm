@@ -204,7 +204,7 @@ function CreateIllustItemBase(cItem, nUserId, nMode) {
 	$objItemCommand.append($objItemCommandHeartNum);
 
 	var $objItemCommandSub = $("<div/>").addClass("IllustItemCommandSub");
-	var url="https://twitter.com/share?url=" + encodeURIComponent("https://analogico.pipa.jp/"+cItem.user_id+"/"+cItem.content_id+".html");
+	var url="https://twitter.com/share?url=" + encodeURIComponent("https://poipiku.com/"+cItem.user_id+"/"+cItem.content_id+".html");
 	var $objItemCommandSocial = $("<a/>").addClass("social-icon").addClass("Twitter").attr("href", url).html("&#229;");
 	var $objItemCommandDelete = $("<a/>").addClass("IllustItemCommandDelete").addClass("typcn").addClass("typcn-trash").attr("data-id", cItem.content_id).attr("href", "javascript:void(0)").click(function(){
 		DeleteContent($(this).data("id"));

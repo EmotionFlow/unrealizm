@@ -1,4 +1,4 @@
-package com.emotionflow.poipic;
+package com.emotionflow.poipiku;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,13 +10,16 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.emotionflow.poipiku.Common;
+import com.emotionflow.poipiku.ResourceBundleControl;
+
 public class Common {
 	public static final int PAGE_BAR_NUM = 2;
 
 	public static int TWITTER_PROVIDER_ID = 1;
 	public static String TWITTER_CONSUMER_KEY = "uy0WEt4dRoARC27AaLa5u1pSB";
 	public static String TWITTER_CONSUMER_SECRET = "1ulxbzCZW4DLb5ZSYu04CrhkHKECzuzIhriGAg8Op6lDzNRS9h";
-	public static String TWITTER_CALLBAK_DOMAIN = "https://analogico.pipa.jp";
+	public static String TWITTER_CALLBAK_DOMAIN = "https://poipiku.com";
 	//static String TWITTER_CALLBAK_DOMAIN = "http://atest.pipa.jp";
 
 	public static String GetPageTitle2(ResourceBundleControl _TEX, String pageName){
@@ -26,7 +29,7 @@ public class Common {
 	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
 
 	// for Database
-	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipic";
+	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";
 
 	public static String ToString(String strSrc) {
 		if(strSrc == null) {
@@ -149,7 +152,7 @@ public class Common {
 
 	public static String GetUrl(String strFileName) {
 		if(strFileName==null) return "";
-		//return "http://analogico.pipa.jp" + strFileName;
+		//return "http://poipiku.com" + strFileName;
 		return strFileName;
 	}
 

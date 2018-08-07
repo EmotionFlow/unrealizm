@@ -37,7 +37,7 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
 

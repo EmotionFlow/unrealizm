@@ -1,4 +1,4 @@
-<%@page import="com.emotionflow.poipic.util.CPageBar"%>
+<%@page import="com.emotionflow.poipiku.util.CPageBar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
@@ -25,7 +25,7 @@ boolean bRtn = cResults.GetResults(cParam);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>analogico</title>
+		<title>ポイピク</title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -114,16 +114,11 @@ boolean bRtn = cResults.GetResults(cParam);
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
-			<div style="display: block; float: left; width: 100%; padding: 5px; box-sizing: border-box; font-size: 10px; color: red;">
-				平素よりアナロジコをご愛顧いただきまして誠にありがとうございます。
-				アナロジコの一層の活性化を目的に、8月中にアナログイラストを中心に置きつつ多様なイラストを気軽に投稿できる場に拡張する予定です。
-				引き続きご愛顧のほどよろしくお願いいたします。
-			</div>
 			<div id="IllustItemList" class="IllustItemList">
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center;">
-					analogicoへようこそ<br />
-					analogicoはアナログイラストを愛する人のためのSNSです。<br />
+					ポイピクへようこそ<br />
+					ポイピクはアナログイラストを愛する人のためのSNSです。<br />
 					<br />
 					<br />
 					<a class="BtnBase" href="/NewArrivalPcV.jsp">
@@ -151,7 +146,7 @@ boolean bRtn = cResults.GetResults(cParam);
 						<a id="IllustItemCommandHeart_<%=cContent.m_nContentId%>" class="IllustItemCommandHeart typcn <%=strHeartClass%>" href="javascript:void(0)" onclick="UpdateBookmark(<%=cContent.m_nContentId%>)"></a>
 						<a class="IllustItemCommandHeartNum" id="IllustItemCommandHeartNum_<%=cContent.m_nContentId%>" href="/IllustHeartPcV.jsp?ID=<%=cContent.m_nUserId%>&amp;TD=<%=cContent.m_nContentId%>">&nbsp;<%=cContent.m_nBookmarkNum%></a>
 						<div class="IllustItemCommandSub">
-							<%String strUrl = URLEncoder.encode("https://analogico.pipa.jp/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"); %>
+							<%String strUrl = URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"); %>
 							<a class="social-icon Twitter" href="https://twitter.com/share?url=<%=strUrl%>">&#229;</a>
 							<%if(cContent.m_nUserId==cCheckLogin.m_nUserId) {%>
 							<a class="IllustItemCommandDelete typcn typcn-trash" href="javascript:void(0)" onclick="DeleteContent(<%=cContent.m_nContentId%>)"></a>

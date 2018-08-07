@@ -5,8 +5,8 @@
 <%@ page import="java.util.regex.*" %>
 <%@ page import="java.nio.channels.FileChannel"%>
 <%@ page import="java.sql.Timestamp"%>
-<%@page import="com.emotionflow.poipic.*"%>
-<%@page import="com.emotionflow.poipic.util.*"%>
+<%@page import="com.emotionflow.poipiku.*"%>
+<%@page import="com.emotionflow.poipiku.util.*"%>
 <%!
 class CUser {
 	public int m_nUserId = 0;

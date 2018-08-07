@@ -17,7 +17,7 @@ cCheckLogin.GetResults2(request, response);
 		<div class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
-					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「analogico」利用規約</div>
+					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」利用規約</div>
 					<div class="SettingBody">
 						したの きやくが わからない かたは、かならず ほごしゃの かたと いっしょに かくにんして ください。<br />
 						You have to confirm the following Terms and Conditions with your guardian, if necessary.
@@ -27,7 +27,7 @@ cCheckLogin.GetResults2(request, response);
 				<div class="SettingListItem">
 					<div class="SettingListTitle">第1条(規約の適用)</div>
 					<div class="SettingBody">
-pipa.jpは、「analogico」(以下、本サービスという)において利用規約(以下、本規約)を定め、これにより本サービスを提供します。<br />
+pipa.jpは、「ポイピク」(以下、本サービスという)において利用規約(以下、本規約)を定め、これにより本サービスを提供します。<br />
 2.本規約は、pipa.jpと利用者との間の一切の関係に適用します。<br />
 3.利用者は、本サービスを利用することにより、本規約内容について承諾したものとみなします。<br />
 					</div>
@@ -291,7 +291,7 @@ pipa.jpは、本サービスの利用および本規約に起因する損害に�
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
-						(最終更新日 2016/1/14)
+						(最終更新日 2018/8/8)
 					</div>
 				</div>
 			</div>

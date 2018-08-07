@@ -1,4 +1,4 @@
-<%@page import="com.emotionflow.poipic.util.CPageBar"%>
+<%@page import="com.emotionflow.poipiku.util.CPageBar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
@@ -8,11 +8,6 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-
-if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/");
-	return;
-}
 
 NewArrivalCParam cParam = new NewArrivalCParam();
 cParam.GetParam(request);
@@ -31,26 +26,22 @@ boolean bRtn = cResults.GetResults(cParam);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
-
-		<style>
-		#HeaderLink {display: none;}
-		#HeaderSearchWrapper {display: block;}
-		</style>
 	</head>
 
 	<body>
+		<div class="TabMenu">
+			<a class="TabMenuItem" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+			<a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+			<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+			<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+		</div>
+
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp">recent</a>
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp">popular</a>
-				<a class="TabMenuItem" href="/PopularTagListPcV.jsp">tag</a>
-			</div>
-
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(CContent cContent : cResults.m_vContentList) {%>
 					<a class="IllustThumb" href="/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html">

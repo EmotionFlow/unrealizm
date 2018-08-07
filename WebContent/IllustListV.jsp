@@ -159,7 +159,7 @@ if(!cResults.GetResults(cParam)) {
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 					<%}%>
 					<%
-					String strTwitterUrl="https://twitter.com/share?url=" + URLEncoder.encode("https://analogico.pipa.jp/"+cResults.m_cUser.m_nUserId+"/", "UTF-8");
+					String strTwitterUrl="https://twitter.com/share?url=" + URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8");
 					%>
 					<span class="IllustItemCommandSub">
 						<a class="social-icon Twitter" href="<%=strTwitterUrl%>">&#229;</a>

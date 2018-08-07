@@ -1,4 +1,4 @@
-package com.emotionflow.poipic.util;
+package com.emotionflow.poipiku.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +14,7 @@ import java.sql.Statement;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.emotionflow.poipic.Common;
+import com.emotionflow.poipiku.Common;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.basic.DefaultOAuthConsumer;

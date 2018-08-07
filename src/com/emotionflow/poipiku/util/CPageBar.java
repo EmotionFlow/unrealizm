@@ -1,4 +1,4 @@
-package com.emotionflow.poipic.util;
+package com.emotionflow.poipiku.util;
 
 public class CPageBar {
 	static final int PAGE_BAR_NUM = 2;

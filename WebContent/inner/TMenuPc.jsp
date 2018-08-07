@@ -2,15 +2,18 @@
 <%
 {
 	String URL_HOME		= (cCheckLogin.m_bLogin)?"/MyHomePcV.jsp":"/";
-	String URL_SEARCH	= (cCheckLogin.m_bLogin)?"/NewArrivalPcV.jsp":"/";
+	String URL_SEARCH	= (cCheckLogin.m_bLogin)?"/NewArrivalPcV.jsp":"/NewArrivalPcV.jsp";
 	String URL_UPLOAD	= (cCheckLogin.m_bLogin)?"/UploadFilePcV.jsp":"/";
 	String URL_ACT		= (cCheckLogin.m_bLogin)?"/ActivityListPcV.jsp":"/";
 	String URL_ME		= (cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/";
 %>
 <header class="Header">
-	<a id="HeaderLink" class="HeaderLink" href="<%=URL_HOME%>">
-		<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
-	</a>
+	<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
+		<a id="HeaderLink" class="HeaderLink" href="<%=URL_HOME%>">
+			<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
+		</a>
+		<a class="HeaderTitleSearch fa fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+	</div>
 	<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" action="/SearchIllustByKeywordPcV.jsp" >
 		<div class="HeaderSearch">
 			<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="" />
@@ -25,25 +28,21 @@
 	<nav class="FooterMenu">
 		<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
 			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName">home</span>
-		</a>
-		<a id="MenuSearch" class="FooterMenuItem" href="<%=URL_SEARCH%>">
-			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName">search</span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>
 		<a id="MenuUpload" class="FooterMenuItem" href="<%=URL_UPLOAD%>">
 			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName">upload</span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 		</a>
 		<a id="MenuAct" class="FooterMenuItem" href="<%=URL_ACT%>">
 			<span class="FooterMenuItemIcon">
 				<div id="InfoNumAct" class="InfoNum">0</div>
 			</span>
-			<span class="FooterMenuItemName">act</span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 		</a>
 		<a id="MenuMe" class="FooterMenuItem" href="<%=URL_ME%>">
 			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName">me</span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>
 	</nav>
 </div>
@@ -73,11 +72,12 @@
 <%}%>
 
 <%if(!cCheckLogin.m_bLogin) {%>
-<div class="AnalogicoInfo">
+<div id="AnalogicoInfo" class="AnalogicoInfo">
 	<div class="Wrapper">
 		<h1 class="AnalogicoInfoTitle">
-			analogico (アナロジコ)へようこそ<br />
-			analogicoはアナログイラストを愛する人のSNSです。<br />
+			描くのに飽きたらポイポイ<br />
+			ポイポイしたら誰かがきっと励ましてくれる<br />
+			「イラストSNS ポイピク」
 		</h1>
 		<div class="AnalogicoInfoRegist">
 			<a class="BtnBase" href="/LoginFormTwitterPc.jsp">
