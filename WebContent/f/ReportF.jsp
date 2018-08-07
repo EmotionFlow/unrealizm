@@ -22,7 +22,7 @@ try {
 	String FROM_ADDR	= "poipiku@pipa.jp";
 	String TO_ADDR	= "info@pipa.jp";
 	String EMAIL_TITLE = "ANALOGICO_REPORT";
-	String EMAIL_TXT = "Post UserId : https://poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://poipic.com/IllustViewV.jsp?TD=%d \nReportDesc:%s \n\n";
+	String EMAIL_TXT = "Post UserId : https://poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://poipiku.com/IllustViewV.jsp?TD=%d \nReportDesc:%s \n\n";
 
 	System.out.println(String.format(EMAIL_TXT, cCheckLogin.m_nUserId, nContentId, strReportDesc));
 
