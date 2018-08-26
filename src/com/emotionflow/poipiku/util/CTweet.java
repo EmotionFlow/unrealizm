@@ -23,6 +23,8 @@ public class CTweet {
 	public boolean m_bIsTweetEnable = false;
 	public String m_strUserAccessToken = "";
 	public String m_strSecretToken = "";
+	public static final int MAX_LENGTH = 140;
+	public static final String ELLIPSE = "...";
 
 	public boolean GetResults(int nUserId) {
 		boolean bResult = true;

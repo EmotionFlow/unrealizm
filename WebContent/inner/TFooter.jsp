@@ -46,9 +46,6 @@
 
 	<div class="FooterCopy">
 		Copyright(C) 2018 -
-		<a class="FooterHref" href="http://emotionflow.com/" target="_blank">EmotionFlow project</a>
-		<br />
-		produced by
 		<a class="FooterHref" href="http://www.pipa.jp/" target="_blank">Pipa.jp Ltd.</a>
 	</div>
 </div>

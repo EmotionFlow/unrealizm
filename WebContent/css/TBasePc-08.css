@@ -39,7 +39,7 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 .Footer .FooterLink .FooterLinkItem {flex: 0 0; text-align: left; white-space: nowrap; margin: 0 20px; padding: 0;}
 
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto; background: #fff;}
-.TabMenu .TabMenuItem {display: block; flex: 1 1; height: 24px; line-height: 29px; border-bottom: solid 2px #fff; text-align: center; color: #5bd; margin: 0 0 3px 0; font-size: 13px; overflow: hidden;}
+.TabMenu .TabMenuItem {display: block; flex: 1 1; height: 24px; line-height: 29px; border-bottom: solid 2px #fff; text-align: center; color: #5bd; margin: 0 0 5px 0; font-size: 13px; overflow: hidden;}
 .TabMenu .TabMenuItem.Selected {border-color: #5bd;}
 
 /********** AnalogicoInfo *********/

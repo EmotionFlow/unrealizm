@@ -10,5 +10,5 @@
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/font/font-awesome.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/js/common-08.js"></script>
+<script type="text/javascript" src="/js/common-09.js"></script>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>

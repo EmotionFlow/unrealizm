@@ -25,7 +25,7 @@ boolean bRtn = cResults.GetResults(cParam);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>ポイピク</title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyHomePc.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -111,6 +111,14 @@ boolean bRtn = cResults.GetResults(cParam);
 
 	<body>
 		<div id="DispMsg"></div>
+
+		<div class="TabMenu">
+			<a class="TabMenuItem Selected" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+			<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+			<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+			<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+		</div>
+
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
@@ -137,7 +145,7 @@ boolean bRtn = cResults.GetResults(cParam);
 						</a>
 					</div>
 					<span class="IllustItemThumb">
-						<img class="IllustItemThumbImg" src="<%=cContent.m_strFileName%>" />
+						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cContent.m_strFileName)%>_640.jpg" />
 					</span>
 					<div class="IllustItemCommand">
 						<a class="IllustItemCommandComment typcn typcn-message" href="/IllustCommentPcV.jsp?TD=<%=cContent.m_nContentId%>"></a>

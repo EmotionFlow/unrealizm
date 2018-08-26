@@ -17,7 +17,7 @@ if(!cCheckLogin.m_bLogin) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title>ポイピク</title>
+		<title>home</title>
 		<script>
 			var g_nNextId = -1;
 			function addContents(nStartId) {
@@ -137,13 +137,6 @@ if(!cCheckLogin.m_bLogin) {
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem Selected" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
-				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
-				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-			</div>
-
 			<div id="InfoMsg" style="display:none; float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
 				ポイピクへようこそ<br />
 				ポイピクはアナログイラストを愛する人のためのSNSです。<br />

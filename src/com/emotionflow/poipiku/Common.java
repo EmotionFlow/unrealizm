@@ -17,10 +17,9 @@ public class Common {
 	public static final int PAGE_BAR_NUM = 2;
 
 	public static int TWITTER_PROVIDER_ID = 1;
-	public static String TWITTER_CONSUMER_KEY = "uy0WEt4dRoARC27AaLa5u1pSB";
-	public static String TWITTER_CONSUMER_SECRET = "1ulxbzCZW4DLb5ZSYu04CrhkHKECzuzIhriGAg8Op6lDzNRS9h";
+	public static String TWITTER_CONSUMER_KEY = "kzEqWQyT9X8GozWdCT2E6TNr3";
+	public static String TWITTER_CONSUMER_SECRET = "6QfxAs3iP3LtBX5EYZq64r8xlQjo8dx8e8pJKcpgnGSb5x5GzW";
 	public static String TWITTER_CALLBAK_DOMAIN = "https://poipiku.com";
-	//static String TWITTER_CALLBAK_DOMAIN = "http://atest.pipa.jp";
 
 	public static String GetPageTitle2(ResourceBundleControl _TEX, String pageName){
 		return pageName + " - " + _TEX.T("TopV.TitleBar");
@@ -152,8 +151,7 @@ public class Common {
 
 	public static String GetUrl(String strFileName) {
 		if(strFileName==null) return "";
-		//return "http://poipiku.com" + strFileName;
-		return strFileName;
+		return "//img.poipiku.com" + strFileName;
 	}
 
 	public static String getProfUrl(int nUserId){

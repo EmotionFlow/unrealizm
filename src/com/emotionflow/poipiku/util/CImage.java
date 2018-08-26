@@ -118,10 +118,11 @@ public class CImage {
 
 			//BufferedImage cImage = getOrientatedImage(strSrcFileName);
 			BufferedImage cImage = ImageIO.read(new File(strSrcFileName));
-			if(cImage.getWidth()<=1280) {
-				Files.copy(Paths.get(strSrcFileName), Paths.get(strDstFileName));
+			Files.copy(Paths.get(strSrcFileName), Paths.get(strDstFileName));
+			if(cImage.getWidth()<=640) {
+				Files.copy(Paths.get(strSrcFileName), Paths.get(strDstFileName+"_640.jpg"));
 			} else {
-				saveImageJpg(cImage, strDstFileName, 1280);
+				saveImageJpg(cImage, strDstFileName+"_640.jpg", 640);
 			}
 			if(cImage.getWidth()<=360) {
 				Files.copy(Paths.get(strSrcFileName), Paths.get(strDstFileName+"_360.jpg"));
@@ -129,14 +130,14 @@ public class CImage {
 				saveImageN(cImage, strDstFileName+"_360.jpg", 360);
 			}
 
-			for(int nCnt=0; nCnt<10; nCnt++) {
-				Thread.sleep(100);
-				File fileOut = new File(strDstFileName);
-				if(fileOut.exists()) {
-					System.out.println(nCnt + " - created : "+strDstFileName);
-					break;
-				}
-			}
+			//for(int nCnt=0; nCnt<10; nCnt++) {
+			//	Thread.sleep(100);
+			//	File fileOut = new File(strDstFileName);
+			//	if(fileOut.exists()) {
+			//		System.out.println(nCnt + " - created : "+strDstFileName);
+			//		break;
+			//	}
+			//}
 		} catch(Exception e){
 			e.printStackTrace();
 			return false;

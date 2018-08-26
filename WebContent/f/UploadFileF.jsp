@@ -84,7 +84,7 @@ class UploadFileC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			// insert file_name
+			// get content id
 			strSql ="INSERT INTO contents_0000(user_id) VALUES(?) RETURNING content_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
@@ -101,17 +101,24 @@ class UploadFileC {
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, description=?, open_id=0 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=0, comment_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
+			cState.setInt(2, m_nContentId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+
+			// add new comment
+			strSql ="INSERT INTO comments_0000(content_id, description, user_id, to_user_id) VALUES(?, ?, ?, 0)";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nContentId);
 			cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
-			cState.setInt(3, m_nContentId);
+			cState.setInt(3, cParam.m_nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
 			// Add my tags
-			// Pattern ptn = Pattern.compile("#(.*?)[\\s\\r\\n]+", Pattern.MULTILINE);
-			Pattern ptn = Pattern.compile("#([\\w|\\p{InHiragana}|\\p{InKatakana}|\\p{InHalfwidthAndFullwidthForms}|\\p{InCJKUnifiedIdeographs}]+)", Pattern.MULTILINE);
+			Pattern ptn = Pattern.compile("#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", Pattern.MULTILINE);
 			Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
 			strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
 			cState = cConn.prepareStatement(strSql);
@@ -129,15 +136,16 @@ class UploadFileC {
 			if(cParam.m_bTweet) {
 				CTweet cTweet = new CTweet();
 				if (cTweet.GetResults(cParam.m_nUserId)) {
-					String strTweetMsg = cParam.m_strDescription;
+					String strFooter = String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, m_nContentId);
+					int nMessageLength = CTweet.MAX_LENGTH-strFooter.length();
 					StringBuffer bufMsg = new StringBuffer();
-					if (100 < strTweetMsg.length()) {
-						bufMsg.append(strTweetMsg.substring(0, 100));
-						bufMsg.append("...");
+					if (nMessageLength < cParam.m_strDescription.length()) {
+						bufMsg.append(cParam.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
+						bufMsg.append(CTweet.ELLIPSE);
 					} else {
-						bufMsg.append(strTweetMsg);
+						bufMsg.append(cParam.m_strDescription);
 					}
-					bufMsg.append(String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, m_nContentId));
+					bufMsg.append(strFooter);
 
 					if (!cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strFileName))) {
 						System.out.println("tweet失敗");

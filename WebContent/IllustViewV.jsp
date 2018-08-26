@@ -204,7 +204,7 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 					</div>
 
 					<div class="IllustItemThumb">
-						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
+						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />
 					</div>
 
 					<div class="IllustItemCommand">
@@ -224,21 +224,6 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 					</div>
 
 					<div class="ItemComment Home">
-						<%if(!cResults.m_cContent.m_strDescription.isEmpty()) {%>
-						<div class="ItemCommentItem">
-							<span class="CommentName">
-								<%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%>
-							</span>
-							<span class="CommentDesc">
-								<span>
-									<%=Common.AutoLinkPc(Common.ToStringHtml(cResults.m_cContent.m_strDescription))%>
-								</span>
-								<span class="CommentCmd">
-									<a class="fa fa-reply" href="javascript:void(0)" onclick="ResComment(<%=cResults.m_cContent.m_nContentId%>, <%=cResults.m_cContent.m_cUser.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%>')"></a>
-								</span>
-							</span>
-						</div>
-						<%}%>
 						<%for(CComment cComment : cResults.m_cContent.m_vComment) {%>
 						<div class="ItemCommentItem">
 							<a class="CommentName" href="/IllustListV.jsp?ID=<%=cComment.m_nUserId%>">
@@ -250,9 +235,9 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 									&gt; <%=Common.ToStringHtml(cComment.m_strToNickName)%>
 								</a>
 								<%}%>
-								<a href="/IllustCommentV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>">
-									<%=Common.ToStringHtml(cComment.m_strDescription)%>
-								</a>
+								<span>
+									<%=Common.AutoLinkPc(Common.ToStringHtml(cComment.m_strDescription))%>
+								</span>
 								<span class="CommentCmd">
 									<a class="fa fa-reply" href="javascript:void(0)" onclick="ResComment(<%=cResults.m_cContent.m_nContentId%>, <%=cComment.m_nUserId%>, '<%=Common.ToStringHtml(cComment.m_strNickName)%>')"></a>
 								</span>

@@ -25,7 +25,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		<script src="/js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
 		<script src="/js/exif.js" type="text/javascript"></script>
 		<script src="/js/megapix-image.js" type="text/javascript"></script>
-		<title>アップロード</title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){

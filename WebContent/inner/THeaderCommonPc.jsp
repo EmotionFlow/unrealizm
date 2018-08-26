@@ -12,7 +12,7 @@
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/font/font-awesome.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/js/common-08.js"></script>
+<script type="text/javascript" src="/js/common-09.js"></script>
 <%if(Common.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
@@ -20,8 +20,6 @@
 .Wrapper {width: 600px;}
 .IllustThumb {width: 198px; height: 198px;}
 .IllustItem {margin: 40px auto;}
-.AnalogicoInfo .AnalogicoInfoTitle {font-size: 16px;}
-.AnalogicoInfo .AnalogicoInfoRegist {font-size: 16px;}
 </style>
 <%}%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>

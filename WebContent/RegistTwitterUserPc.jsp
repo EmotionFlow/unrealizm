@@ -209,6 +209,9 @@ try {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
 		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp" />
+		<style>
+		.AnalogicoInfo {display: none;}
+		</style>
 	</head>
 
 	<body>

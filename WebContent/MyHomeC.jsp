@@ -103,16 +103,6 @@ class MyHomeC {
 						cContent.m_vComment.add(0, cComment);
 					}
 					cResSet.close();cResSet=null;
-
-					// first comment
-					CComment cComment = new CComment();
-					cComment.m_nCommentId		= 0;
-					cComment.m_nUserId			= cContent.m_nUserId;
-					cComment.m_strNickName		= cContent.m_cUser.m_strNickName;
-					cComment.m_nToUserId			= 0;
-					cComment.m_strToNickName		= "";
-					cComment.m_strDescription	= cContent.m_strDescription;
-					cContent.m_vComment.add(0, cComment);
 				}
 				cState.close();cState=null;
 			}

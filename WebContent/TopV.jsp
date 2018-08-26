@@ -36,7 +36,6 @@ boolean bRtn = cResults.GetResults(cParam);
 		<style>
 		.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
 		.AnalogicoDesc {width: 90%; margin: 40px auto 0 auto; padding: 0; text-align: center; font-size: 14px; line-height: 28px; color: #fff; font-weight: normal;}
-		.AnalogicoDesc.Title {}
 		.AnalogicoStart {text-align: center; margin: 60px 0 0 0;}
 		.simply-scroll-container {position: relative;}
 		.simply-scroll-clip {position: relative; overflow: hidden;}
@@ -46,6 +45,7 @@ boolean bRtn = cResults.GetResults(cParam);
 		.simply-scroll-list li a {display: block; float: left; width: 90px; height: 90px; margin: 0 3px 0 0;}
 		<%} else {%>
 		.simply-scroll-list li a {display: block; float: left; width: 120px; height: 120px; margin: 0 3px 0 0;}
+		.AnalogicoDesc.Title {font-size: 16px;}
 		<%}%>
 		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 		.AnalogicoInfo {display: none;}
