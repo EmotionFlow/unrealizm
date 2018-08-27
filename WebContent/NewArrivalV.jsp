@@ -17,11 +17,7 @@
 					"success": function(data) {
 						g_nNextId = data.end_id;
 						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							var cItem = data.result[nCnt];
-							var $objItem = $("<a/>").addClass("IllustThumb").attr("href", "/IllustViewV.jsp?ID="+cItem.user_id+"&TD="+cItem.content_id);
-							var $objItemImg = $("<img/>").addClass("IllustThumbImg").attr("src", cItem.file_name+"_360.jpg");
-							$objItem.append($objItemImg);
-							$("#IllustThumbList").append($objItem);
+							$("#IllustThumbList").append(CreateIllustThumb(data.result[nCnt]));
 						}
 						$(".Waiting").remove();
 					},

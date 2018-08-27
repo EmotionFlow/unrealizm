@@ -39,10 +39,21 @@
 	margin: 3px 3px 0 0;
 	box-sizing: border-box;
 	overflow: hidden;
+	position: relative;
 }
 
 .IllustThumb:nth-child(3n) {margin-right: 0;}
 
+.IllustThumb .Category {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #5bd;
+	padding: 2px 7px;
+	font-size: 11px;
+	color: #fff;
+}
 
 .IllustThumb .IllustThumbImg {
 	display: block;

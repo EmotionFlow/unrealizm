@@ -157,6 +157,8 @@ button.Disabled, button.Disabled:hover {
 	cursor: default;
 }
 
+.BtnBase.Rev {border-color: #fff;}
+
 
 .onoffswitch {
 	position: relative; width: 46px;

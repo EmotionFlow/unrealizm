@@ -154,6 +154,22 @@ $(function(){
 	});
 });
 
+function CreateIllustThumb(cItem) {
+	return CreateIllustThumbBase(cItem, 0);
+}
+
+function CreateIllustThumbPc(cItem) {
+	return CreateIllustThumbBase(cItem, 1);
+}
+
+function CreateIllustThumbBase(cItem, nMode) {
+	var ILLUST_VIEW = (nMode==0)?"/IllustViewV.jsp":"/IllustViewPcV.jsp";
+	var $objItem = $("<a/>").addClass("IllustThumb").attr("href", ILLUST_VIEW+"?ID="+cItem.user_id+"&TD="+cItem.content_id);
+	var $objItemImg = $("<img/>").addClass("IllustThumbImg").attr("src", cItem.file_name+"_360.jpg");
+	$objItem.append($objItemImg);
+	return $objItem;
+}
+
 function CreateIllustItem(cItem, nUserId) {
 	return CreateIllustItemBase(cItem, nUserId, 0);
 }
@@ -170,9 +186,7 @@ function CreateIllustItemBase(cItem, nUserId, nMode) {
 	var REPORT_FORM = (nMode==0)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 	var ILLUST_DETAIL = (nMode==0)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 
-
 	var $objItem = $("<div/>").addClass("IllustItem").attr('id', 'IllustItem_'+cItem.content_id);
-
 	var $objItemUser = $("<div/>").addClass("IllustItemUser");
 	var $objItemUserThumb = $("<a/>").addClass("IllustItemUserThumb").attr("href", ILLUST_LIST+"?ID="+cItem.user_id);
 	var $objItemUserThumbImg = $("<img/>").addClass("IllustItemUserThumbImg").attr("src", cItem.user_file_name+"_120.jpg");

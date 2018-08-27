@@ -86,7 +86,7 @@ boolean bRtn = cResults.GetResults(cParam);
 				励まし合うイラストSNSです。
 			</h1>
 			<div class="AnalogicoStart">
-				<a class="BtnBase" href="/LoginFormTwitterPc.jsp">
+				<a class="BtnBase Rev" href="/LoginFormTwitterPc.jsp">
 					<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
 				</a>
 				<p><a class="AnalogicoDesc" href="/RulePcS.jsp" style="font-size: 14px; text-decoration: underline;">利用規約</a></p>

@@ -80,7 +80,7 @@
 			「イラストSNS ポイピク」
 		</h1>
 		<div class="AnalogicoInfoRegist">
-			<a class="BtnBase" href="/LoginFormTwitterPc.jsp">
+			<a class="BtnBase Rev" href="/LoginFormTwitterPc.jsp">
 				<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
 			</a>
 		</div>
