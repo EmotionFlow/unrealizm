@@ -1,7 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
 <%@page import="oauth.signpost.OAuthConsumer"%>
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.basic.DefaultOAuthProvider"%>
@@ -246,7 +243,7 @@ if(cResults.m_bUpdate) {
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result>0) {
-							deleteCookie('ANALOGICO_LK');
+							deleteCookie('POIPIKU_LK');
 							sendObjectMessage("restart");
 						}
 					},
@@ -266,7 +263,7 @@ if(cResults.m_bUpdate) {
 						"dataType": "json",
 						"success": function(data) {
 							if(data.result>0) {
-								deleteCookie('ANALOGICO_LK');
+								deleteCookie('POIPIKU_LK');
 								sendObjectMessage("restart");
 							}
 						},

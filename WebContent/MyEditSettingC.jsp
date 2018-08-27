@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="javax.sql.*"%>
-<%@ page import="javax.naming.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%!
 class MyEditSettingCParam {
 	public int m_nUserId = -1;

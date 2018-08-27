@@ -22,13 +22,31 @@ if(!cResults.GetResults(cParam)) {
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript">
-			$(function(){
-				$('#MenuHome').addClass('Selected');
-			});
+		$(function(){
+			$('#MenuHome').addClass('Selected');
+		});
 		</script>
+
+		<%if(Common.isSmartPhone(request)) {%>
+		<script type="text/javascript">
+		$(function(){
+			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsgSp")%>');
+		});
+		</script>
+		<style>
+		.IllustItemImage {max-width: 360px;}
+		</style>
+		<%} else {%>
+		<script type="text/javascript">
+		$(function(){
+			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsg")%>');
+		});
+		</script>
+		<%}%>
 	</head>
 
 	<body style="height: 100%;background: #ffffff; padding: 0;">
+		<div id="DispMsg"></div>
 		<table style="width: 100%; height: 100%; text-align: center;">
 		<tr>
 		<td>

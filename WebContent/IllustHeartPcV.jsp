@@ -1,11 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="javax.sql.*"%>
-<%@ page import="javax.naming.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
-<%@ page import="java.net.URLEncoder"%>
 <%@ include file="/IllustHeartC.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
@@ -39,7 +32,7 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div class="IllustItemList">
@@ -58,6 +51,6 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

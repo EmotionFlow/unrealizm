@@ -1,7 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
 <%@page import="oauth.signpost.OAuthConsumer"%>
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.basic.DefaultOAuthProvider"%>
@@ -310,7 +307,7 @@ if(cResults.m_bUpdate) {
 
 	<body>
 		<div id="DispMsg"></div>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div class="SettingList">
@@ -515,6 +512,6 @@ if(cResults.m_bUpdate) {
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

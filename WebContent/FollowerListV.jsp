@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 String strDebug = "";
 

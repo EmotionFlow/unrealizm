@@ -1,11 +1,8 @@
+<%@page import="com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="javax.sql.*"%><%@ page import="javax.naming.*"%>
 <%@ page import="javax.mail.*"%>
 <%@ page import="javax.mail.internet.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 //login check
 CheckLogin cCheckLogin = new CheckLogin();
@@ -18,10 +15,10 @@ String strReportDesc = Common.TrimAll(Common.EscapeInjection(Common.ToString(req
 
 try {
 	String SMTP_HOST	= "localhost";
-	String FROM_NAME	= "ANALOGICO_REPORT";
+	String FROM_NAME	= "POIPIKU_REPORT";
 	String FROM_ADDR	= "poipiku@pipa.jp";
 	String TO_ADDR	= "info@pipa.jp";
-	String EMAIL_TITLE = "ANALOGICO_REPORT";
+	String EMAIL_TITLE = "POIPIKU_REPORT";
 	String EMAIL_TXT = "Post UserId : https://poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://poipiku.com/IllustViewV.jsp?TD=%d \nReportDesc:%s \n\n";
 
 	System.out.println(String.format(EMAIL_TXT, cCheckLogin.m_nUserId, nContentId, strReportDesc));

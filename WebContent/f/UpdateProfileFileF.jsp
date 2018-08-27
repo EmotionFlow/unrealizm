@@ -5,7 +5,7 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.io.*"%>
 <%@page import="org.apache.commons.codec.binary.Base64"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 class UpdateProfileFileCParam {
 	public int m_nUserId = -1;

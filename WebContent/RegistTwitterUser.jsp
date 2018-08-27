@@ -1,16 +1,13 @@
-<%@page import="com.emotionflow.poipiku.util.Util"%>
-<%@page import="com.emotionflow.poipiku.util.Log"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="org.apache.commons.lang3.RandomStringUtils"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="java.security.MessageDigest"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%@page import="javax.naming.*"%>
 <%@page import="javax.sql.*"%>
 <%@page import="oauth.signpost.http.*"%>
 <%@page import="oauth.signpost.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin();
@@ -102,7 +99,7 @@ try {
 			Log.d("VRegistTwitterUser.jsp:ERROR:"+nUserId);
 		}
 
-		Cookie cLK = new Cookie("ANALOGICO_LK", strHashPass);
+		Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
 		cLK.setMaxAge(Integer.MAX_VALUE);
 		cLK.setPath("/");
 		response.addCookie(cLK);
@@ -184,7 +181,7 @@ try {
 			cState.close();cState=null;
 
 
-			Cookie cLK = new Cookie("ANALOGICO_LK", strHashPass);
+			Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);

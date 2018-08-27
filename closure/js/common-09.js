@@ -282,7 +282,7 @@ function CreateCommentItemBase(content_id, user_id, nickname, to_user_id, to_nic
 	var $objCommentName = $("<a/>").addClass("CommentName").attr("href", ILLUST_LIST+"?ID="+user_id).html(nickname);
 	var $objItemCommentDesc = $("<span/>").addClass("CommentDesc");
 	if(to_user_id>0) {
-		var $objItemCommentToUser = $("<a/>").addClass("CommentName").attr("href", ILLUST_LIST+"?ID="+to_user_id).html("&gt; "+to_nickname);
+		var $objItemCommentToUser = $("<a/>").addClass("CommentName").attr("href", ILLUST_LIST+"?ID="+to_user_id).html("> "+to_nickname);
 		$objItemCommentDesc.append($objItemCommentToUser);
 	}
 	//var $objItemCommentDescCont = $("<a/>").attr("href", ILLUST_COMMENT+"?TD="+content_id).html(description+' ').autoLink(nMode);

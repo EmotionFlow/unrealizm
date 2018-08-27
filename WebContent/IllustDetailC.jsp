@@ -4,7 +4,7 @@
 <%@page import="java.util.*"%>
 <%@page import="javax.naming.*"%>
 <%@page import="javax.sql.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%!
 class IllustDetailCParam {
 	public int m_nContentId = -1;

@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 int nContentId	= Common.ToInt(request.getParameter("TD"));
@@ -49,7 +45,7 @@ boolean bMobile = Common.isSmartPhone(request);
 
 	<body>
 		<div id="DispMsg"></div>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div class="SettingList">
@@ -59,7 +55,7 @@ boolean bMobile = Common.isSmartPhone(request);
 						<div class="SettingBodyTxt" style="margin-top: 30px;">
 							問題点を具体的に記載してください。
 						</div>
-						<textarea id="ReportDesc" class="SettingBodyTxt" type="text"></textarea>
+						<textarea id="ReportDesc" class="SettingBodyTxt"></textarea>
 						<div class="SettingBodyCmd" style="margin-top: 30px;">
 							<div id="ProfileTextMessage" class="RegistMessage" ></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="Login()">送信する</a>
@@ -69,6 +65,6 @@ boolean bMobile = Common.isSmartPhone(request);
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

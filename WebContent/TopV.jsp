@@ -1,14 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
 <%@ include file="/TopC.jsp"%>
 <%
-if(Common.isSmartPhone(request)) {
+//if(Common.isSmartPhone(request)) {
 		//response.sendRedirect("/sTopV.jsp");
 		//return;
-}
+//}
 
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
@@ -74,7 +70,7 @@ boolean bRtn = cResults.GetResults(cParam);
 			<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 		</div>
 
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<h1 class="AnalogicoDesc Title">
@@ -98,6 +94,6 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

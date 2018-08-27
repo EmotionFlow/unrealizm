@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="com.emotionflow.poipiku.*"%>
+<%@page import="jp.pipa.poipiku.*"%>
 <meta charset="utf-8">
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Cache-Control" content="no-cache"/>

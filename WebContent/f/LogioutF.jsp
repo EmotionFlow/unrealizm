@@ -1,12 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="javax.sql.*"%><%@ page import="javax.naming.*"%>
-<%@ page import="java.net.URLEncoder"%>
-<%@ page import="java.net.URLDecoder"%>
-<%@ page import="java.security.MessageDigest"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 
@@ -20,7 +13,7 @@ if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 	return;
 }
 
-Cookie cLK = new Cookie("ANALOGICO_LK", "");
+Cookie cLK = new Cookie("POIPIKU_LK", "");
 cLK.setMaxAge(0);
 cLK.setPath("/");
 response.addCookie(cLK);

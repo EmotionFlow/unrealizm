@@ -1,11 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%><%@ page import="javax.sql.*"%><%@ page import="javax.naming.*"%>
-<%@ page import="java.net.*"%>
-<%@ page import="javax.mail.*"%>
-<%@ page import="javax.mail.internet.*"%>
-<%@ page import="java.security.MessageDigest"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%!
 class RegistUserCParam {
 	public String m_strNickName = "no_name";
@@ -103,7 +97,7 @@ if(!cCheckLogin.m_bLogin) {
 	bRtn = cResults.GetResults(cParam);
 
 	if(bRtn) {
-		Cookie cLK = new Cookie("ANALOGICO_LK", cResults.m_strHashPass);
+		Cookie cLK = new Cookie("POIPIKU_LK", cResults.m_strHashPass);
 
 		cLK.setMaxAge(Integer.MAX_VALUE);
 		cLK.setPath("/");

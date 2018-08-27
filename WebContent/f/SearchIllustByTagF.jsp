@@ -8,7 +8,7 @@ import="java.sql.*"
 import="javax.sql.*"
 import="javax.naming.*"
 %>
-<%@ include file="/inner/CheckLogin.jsp"
+<%@ include file="/inner/Common.jsp"
 %><%!
 class SearchIllustByTagCParam {
 	public int m_nStartId = -1;

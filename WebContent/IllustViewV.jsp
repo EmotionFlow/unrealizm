@@ -1,11 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="javax.sql.*"%>
-<%@ page import="javax.naming.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
-<%@ page import="java.net.URLEncoder"%>
 <%@ include file="/IllustViewC.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
@@ -203,9 +196,9 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 						}%>
 					</div>
 
-					<div class="IllustItemThumb">
+					<a class="IllustItemThumb" href="/IllustDetailV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>" target="_blank">
 						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />
-					</div>
+					</a>
 
 					<div class="IllustItemCommand">
 						<a class="IllustItemCommandComment typcn typcn-message" href="/IllustCommentV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>"></a>

@@ -1,10 +1,4 @@
-<%@page import="com.emotionflow.poipiku.util.Log"%>
-<%@page import="com.emotionflow.poipiku.util.CPageBar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
 <%@ include file="/IllustListC.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
@@ -111,7 +105,7 @@ if(!cResults.GetResults(cParam)) {
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>')">
 			<div class="UserInfo" style="background-size: 360px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>')">
@@ -176,6 +170,6 @@ if(!cResults.GetResults(cParam)) {
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

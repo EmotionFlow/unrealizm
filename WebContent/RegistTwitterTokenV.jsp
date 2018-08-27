@@ -1,4 +1,3 @@
-<%@page import="com.emotionflow.poipiku.util.Log"%>
 <%@page
 language="java"
 contentType="text/html; charset=UTF-8"%>
@@ -11,7 +10,7 @@ contentType="text/html; charset=UTF-8"%>
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.http.HttpParameters"%>
 <%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin();
@@ -112,7 +111,6 @@ try
 }
 
 response.sendRedirect("/MyEditSettingV.jsp#TwitterSetting");
-if(true) return;
 %>
 <!DOCTYPE html>
 <html>

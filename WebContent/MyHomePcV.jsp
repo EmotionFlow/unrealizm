@@ -1,9 +1,5 @@
-<%@page import="com.emotionflow.poipiku.util.CPageBar"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
 <%@ include file="/MyHomeC.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
@@ -119,7 +115,7 @@ boolean bRtn = cResults.GetResults(cParam);
 			<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 		</div>
 
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div id="IllustItemList" class="IllustItemList">
@@ -144,9 +140,11 @@ boolean bRtn = cResults.GetResults(cParam);
 							<%=Common.ToStringHtml(cContent.m_cUser.m_strNickName)%>
 						</a>
 					</div>
-					<span class="IllustItemThumb">
+
+					<a class="IllustItemThumb" href="/IllustDetailPcV.jsp?TD=<%=cContent.m_nContentId%>" target="_blank">
 						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cContent.m_strFileName)%>_640.jpg" />
-					</span>
+					</a>
+
 					<div class="IllustItemCommand">
 						<a class="IllustItemCommandComment typcn typcn-message" href="/IllustCommentPcV.jsp?TD=<%=cContent.m_nContentId%>"></a>
 						<a id="IllustItemCommandCommentNum_<%=cContent.m_nContentId%>" class="IllustItemCommandCommentNum" href="/IllustCommentPcV.jsp?TD=<%=cContent.m_nContentId%>">&nbsp;<%=cContent.m_nCommentNum%></a>
@@ -166,10 +164,14 @@ boolean bRtn = cResults.GetResults(cParam);
 						<%boolean bReply = false;%>
 						<%for(CComment cComment : cContent.m_vComment) {%>
 						<div class="ItemCommentItem">
-							<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nUserId%>"><%=Common.ToStringHtml(cComment.m_strNickName)%></a>
+							<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nUserId%>">
+								<%=Common.ToStringHtml(cComment.m_strNickName)%>
+							</a>
 							<span class="CommentDesc">
 								<%if(cComment.m_nToUserId>0) {%>
-								<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nToUserId%>"><%=Common.ToStringHtml(cComment.m_strToNickName)%></a>
+								<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nToUserId%>">
+									&gt; <%=Common.ToStringHtml(cComment.m_strToNickName)%>
+								</a>
 								<%}%>
 								<a href="/IllustCommentPcV.jsp?TD=<%=cComment.m_nContentId%>">
 									<%=Common.AutoLinkPc(Common.ToStringHtml(cComment.m_strDescription))%>
@@ -212,6 +214,6 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

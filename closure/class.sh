@@ -1,1 +1,1 @@
-rsync -av --delete ../build/classes/com/emotionflow/poipiku/ ../WebContent/WEB-INF/classes/com/emotionflow/poipiku/
+rsync -av --delete ../build/classes/jp/ ../WebContent/WEB-INF/classes/jp/

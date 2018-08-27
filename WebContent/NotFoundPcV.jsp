@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 
@@ -20,7 +16,7 @@ cCheckLogin.GetResults2(request, response);
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 70px 10px;">
@@ -29,6 +25,6 @@ cCheckLogin.GetResults2(request, response);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

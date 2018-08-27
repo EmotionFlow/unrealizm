@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%><%@ page import="javax.sql.*"%><%@ page import="javax.naming.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 class UpdateTagCParam {
 	public int GetParam(HttpServletRequest cRequest) {

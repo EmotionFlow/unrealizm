@@ -1,9 +1,5 @@
-<%@page import="com.emotionflow.poipiku.util.CPageBar"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
 <%@ include file="/NewArrivalC.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
@@ -39,7 +35,7 @@ boolean bRtn = cResults.GetResults(cParam);
 			<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 		</div>
 
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div id="IllustThumbList" class="IllustThumbList">
@@ -55,6 +51,6 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

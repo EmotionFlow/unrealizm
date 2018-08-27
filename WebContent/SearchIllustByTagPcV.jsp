@@ -1,10 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.text.*"%>
-<%@ page import="java.net.URLEncoder"%>
-<%@ page import="java.net.URLDecoder"%>
 <%@ include file="/SearchIllustByTagC.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
@@ -31,7 +25,7 @@ boolean bRtn = cResults.GetResults(cParam);
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 		<div class="Wrapper">
 			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cParam.m_strKeyword)%></div>
 
@@ -48,6 +42,6 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

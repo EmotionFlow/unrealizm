@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
@@ -12,7 +12,7 @@ cCheckLogin.GetResults2(request, response);
 	</head>
 	<body>
 		<div id="DispMsg"></div>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div class="SettingList">
@@ -75,6 +75,6 @@ pipa.jpがサービスを提供するために必要な範囲でのみユーザ�
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>

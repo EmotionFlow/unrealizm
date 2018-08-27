@@ -3,7 +3,7 @@
 <%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.OAuthConsumer"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 //login check

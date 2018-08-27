@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="javax.sql.*"%>
-<%@ page import="javax.naming.*"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%!
 class IllustViewCParam {
 	//public int m_nUserId = -1;
@@ -61,17 +57,10 @@ class IllustViewC {
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
-				m_cContent.m_nUserId				= cResSet.getInt("user_id");
-				m_cContent.m_nContentId			= cResSet.getInt("content_id");
-				m_cContent.m_timeUploadDate		= cResSet.getTimestamp("upload_date");
-				m_cContent.m_strDescription		= Common.ToString(cResSet.getString("description"));
-				m_cContent.m_strFileName			= Common.ToString(cResSet.getString("file_name"));
-				m_cContent.m_cUser.m_nUserId		= cResSet.getInt("user_id");
+				m_cContent = new CContent(cResSet);
 				m_cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
 				m_cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
 				m_cContent.m_bBookmark			= (cResSet.getInt("bookmark")>0);
-				m_cContent.m_nCommentNum			= cResSet.getInt("comment_num");
-				m_cContent.m_nBookmarkNum		= cResSet.getInt("bookmark_num");
 				if(m_cContent.m_cUser.m_strFileName.isEmpty()) m_cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 			}
 			cResSet.close();cResSet=null;
@@ -110,13 +99,9 @@ class IllustViewC {
 			cState.setInt(1, m_cContent.m_nContentId);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CComment cComment = new CComment();
-				cComment.m_nCommentId		= cResSet.getInt("comment_id");
-				cComment.m_nUserId			= cResSet.getInt("user_id");
+				CComment cComment = new CComment(cResSet);
 				cComment.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
 				cComment.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-				cComment.m_strDescription	= Common.ToString(cResSet.getString("description"));
-				cComment.m_nToUserId		= cResSet.getInt("to_user_id");
 				cComment.m_strToNickName	= Common.ToString(cResSet.getString("to_nickname"));
 				if(cComment.m_strFileName.length()<=0) cComment.m_strFileName="/img/default_user.jpg";
 				m_bReply = (m_bOwner && cComment.m_nUserId!=cParam.m_nAccessUserId);

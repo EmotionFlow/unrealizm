@@ -3,7 +3,7 @@
 <%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.OAuthConsumer"%>
-<%@ include file="/inner/CheckLogin.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 //login check
@@ -41,7 +41,7 @@ if(!authUrl.isEmpty()) {
 		<title><%=_TEX.T("THeader.Title")%> - Twitter Link</title>
 	</head>
 	<body>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper" style="text-align: center;">
 			<p>
@@ -50,6 +50,6 @@ if(!authUrl.isEmpty()) {
 			</p>
 		</div>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>
