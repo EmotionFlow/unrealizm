@@ -33,7 +33,7 @@ class UploadFileCParam {
 					if(strName.equals("UID")) {
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("DES")) {
-						m_strDescription = Common.SubStrNum(Common.ToString(item.getString("UTF-8")), 200);
+						m_strDescription = Common.SubStrNum(Common.TrimAll(item.getString("UTF-8")), 200);
 					} else if(strName.equals("TWI")) {
 						m_bTweet = (Common.ToInt(item.getString())==1);
 					}
@@ -104,30 +104,32 @@ class UploadFileC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			// add new comment
-			strSql ="INSERT INTO comments_0000(content_id, description, user_id, to_user_id) VALUES(?, ?, ?, 0)";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
-			cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
-			cState.setInt(3, cParam.m_nUserId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			if (!cParam.m_strDescription.isEmpty()) {
+				// add new comment
+				strSql ="INSERT INTO comments_0000(content_id, description, user_id, to_user_id) VALUES(?, ?, ?, 0)";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nContentId);
+				cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
+				cState.setInt(3, cParam.m_nUserId);
+				cState.executeUpdate();
+				cState.close();cState=null;
 
-			// Add my tags
-			Pattern ptn = Pattern.compile("#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", Pattern.MULTILINE);
-			Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
-			strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
-			cState = cConn.prepareStatement(strSql);
-			for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-				try {
-					cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-					cState.setInt(2, m_nContentId);
-					cState.executeUpdate();
-				} catch(Exception e) {
-					e.printStackTrace();
+				// Add my tags
+				Pattern ptn = Pattern.compile("#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", Pattern.MULTILINE);
+				Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
+				cState = cConn.prepareStatement(strSql);
+				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
+					try {
+						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
+						cState.setInt(2, m_nContentId);
+						cState.executeUpdate();
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
+				cState.close();cState=null;
 			}
-			cState.close();cState=null;
 
 			if(cParam.m_bTweet) {
 				CTweet cTweet = new CTweet();

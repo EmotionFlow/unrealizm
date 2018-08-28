@@ -61,8 +61,7 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 							$('#InfoMsg').show();
 						}
 						for(var nCnt=0; nCnt<data.result.length; nCnt++) {
-							var cItem = data.result[nCnt];
-							var $objItem = CreateIllustItemPc(cItem, <%=cCheckLogin.m_nUserId%>);
+							var $objItem = CreateIllustItemPc(data.result[nCnt], <%=cCheckLogin.m_nUserId%>);
 							var $objUserInfoCmdFollow = $("#UserInfoCmdFollow").clone(true).attr('id', '');
 							$objItem.find('.IllustItemUser').append($objUserInfoCmdFollow);
 							$("#IllustItemList").append($objItem);
@@ -230,6 +229,8 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 						<%	}
 						}%>
 					</div>
+
+					<span class="Category C<%=cResults.m_cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))%></span>
 
 					<a class="IllustItemThumb" href="/IllustDetailPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>" target="_blank">
 						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />

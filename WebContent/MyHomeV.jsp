@@ -30,9 +30,7 @@ if(!cCheckLogin.m_bLogin) {
 							$('#InfoMsg').show();
 						}
 						for(var nCnt=0; nCnt<data.result.length; nCnt++) {
-							var cItem = data.result[nCnt];
-							var $objItem = CreateIllustItem(cItem, <%=cCheckLogin.m_nUserId%>);
-							$("#IllustItemList").append($objItem);
+							$("#IllustItemList").append(CreateIllustItem(data.result[nCnt], <%=cCheckLogin.m_nUserId%>));
 						}
 						$(".Waiting").remove();
 					},

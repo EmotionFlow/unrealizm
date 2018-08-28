@@ -202,6 +202,8 @@ function CreateIllustItemBase(cItem, nUserId, nMode) {
 	$objItemUser.append($objItemUserThumb);
 	$objItemUser.append($objItemUserName);
 
+	var $objCategory = $("<span/>").addClass("Category C"+cItem.category_id).html(cItem.category);
+
 	var $objItemThumb = $("<a/>").addClass("IllustItemThumb").attr("href", ILLUST_DETAIL+"?TD="+cItem.content_id);
 	if(nMode==1) {
 		$objItemThumb.attr("target", "_blank");
@@ -279,6 +281,7 @@ function CreateIllustItemBase(cItem, nUserId, nMode) {
 	$objItemComment.append($objItemCommentItem);
 
 	$objItem.append($objItemUser);
+	$objItem.append($objCategory);
 	$objItem.append($objItemThumb);
 	//$objItem.append($objItemInfo);
 	$objItem.append($objItemCommand);

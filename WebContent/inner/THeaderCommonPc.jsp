@@ -19,7 +19,7 @@
 <style>
 .Wrapper {width: 600px;}
 .IllustThumb {width: 198px; height: 198px;}
-.IllustThumb .Category {padding: 3px 10px; font-size: 13px; top: 5px; left: 5px;}
+.IllustThumb .Category {padding: 3px 10px; font-size: 13px; top: 0; left: 0;}
 .IllustItem {margin: 40px auto;}
 </style>
 <%}%>

@@ -138,6 +138,8 @@ for (int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 "bookmark" : <%=(cContent.m_bBookmark)?1:0%>,
 "comment_num" : <%=cContent.m_nCommentNum%>,
 "bookmark_num" : <%=cContent.m_nBookmarkNum%>,
+"category_id" : <%=cContent.m_nCategoryId%>,
+"category" : "<%=CEnc.E(_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)))%>",
 "comment":[
 <%
 for (int nCmtCnt=0; nCmtCnt<cContent.m_vComment.size(); nCmtCnt++) {

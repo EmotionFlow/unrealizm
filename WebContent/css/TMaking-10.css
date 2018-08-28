@@ -47,26 +47,18 @@
 .IllustThumb .Category {
 	display: block;
 	position: absolute;
-	width: 100%;
-	padding: 1px 0;
+	max-width: 100%;
+	padding: 1px 5px;
 	top: 0;
 	left: 0;
 	background: #5bd;
 	font-size: 11px;
 	color: #fff;
 	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	box-sizing: border-box;
 }
-
-.IllustThumb .Category.C0 {background-color: #bfda80; color: #555;}
-.IllustThumb .Category.C1 {background-color: #ea691a;}
-.IllustThumb .Category.C2 {background-color: #eba210;}
-.IllustThumb .Category.C3 {background-color: #ecec01; color: #555;}
-.IllustThumb .Category.C4 {background-color: #d20000;}
-.IllustThumb .Category.C5 {background-color: #34cca4;}
-.IllustThumb .Category.C6 {background-color: #25aebc;}
-.IllustThumb .Category.C7 {background-color: #017ff0;}
-.IllustThumb .Category.C8 {background-color: #333333;}
-.IllustThumb .Category.C9 {background-color: #003399;}
 
 .IllustThumb .IllustThumbImg {
 	display: block;
@@ -267,13 +259,39 @@
 	overflow: hidden;
 }
 
+.IllustItem .Category {
+	display: block;
+	float: left;
+	max-width: 100%;
+	padding: 3px 10px;
+	top: 0;
+	left: 0;
+	background: #5bd;
+	font-size: 13px;
+	color: #fff;
+	text-align: left;
+	box-sizing: border-box;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.IllustThumb .Category.C0, .IllustItem .Category.C0 {background-color: #bfda80; color: #555;}
+.IllustThumb .Category.C1, .IllustItem .Category.C1 {background-color: #ea691a;}
+.IllustThumb .Category.C2, .IllustItem .Category.C2 {background-color: #eba210;}
+.IllustThumb .Category.C3, .IllustItem .Category.C3 {background-color: #ecec01; color: #555;}
+.IllustThumb .Category.C4, .IllustItem .Category.C4 {background-color: #d20000;}
+.IllustThumb .Category.C5, .IllustItem .Category.C5 {background-color: #34cca4;}
+.IllustThumb .Category.C6, .IllustItem .Category.C6 {background-color: #25aebc;}
+.IllustThumb .Category.C7, .IllustItem .Category.C7 {background-color: #017ff0;}
+.IllustThumb .Category.C8, .IllustItem .Category.C8 {background-color: #333333;}
+.IllustThumb .Category.C9, .IllustItem .Category.C9 {background-color: #003399;}
+
 .IllustItem .IllustItemThumb {
 	display: block;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	overflow: hidden;
-	border-top: solid 1px #eee;
 	border-bottom: solid 1px #eee;
 	min-height: 60px;
 }

@@ -11,7 +11,7 @@ class SendCommentCParam {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nContentId		= Common.ToInt(cRequest.getParameter("IID"));
-			m_strDescription	= Common.TrimAll(Common.ToString(cRequest.getParameter("DES")));
+			m_strDescription	= Common.TrimAll(cRequest.getParameter("DES"));
 			m_nUserId			= Common.ToInt(cRequest.getParameter("UID"));
 			m_nToUserId			= Math.max(Common.ToInt(cRequest.getParameter("TOD")), 0);
 		} catch(Exception e) {
@@ -24,6 +24,8 @@ class SendCommentCParam {
 
 class SendCommentC {
 	public boolean GetResults(SendCommentCParam cParam, ResourceBundleControl _TEX) {
+		if (cParam.m_strDescription.isEmpty()) return false;
+
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;

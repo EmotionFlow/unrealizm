@@ -141,6 +141,8 @@ boolean bRtn = cResults.GetResults(cParam);
 						</a>
 					</div>
 
+					<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
+
 					<a class="IllustItemThumb" href="/IllustDetailPcV.jsp?TD=<%=cContent.m_nContentId%>" target="_blank">
 						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cContent.m_strFileName)%>_640.jpg" />
 					</a>
