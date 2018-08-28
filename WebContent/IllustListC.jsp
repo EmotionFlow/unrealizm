@@ -91,10 +91,7 @@ class IllustListC {
 				cState.setInt(3, SELECT_MAX_GALLERY);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
-					CContent cContent = new CContent();
-					cContent.m_nUserId		= cResSet.getInt("user_id");
-					cContent.m_nContentId		= cResSet.getInt("content_id");
-					cContent.m_strFileName	= Common.ToString(cResSet.getString("file_name"));
+					CContent cContent = new CContent(cResSet);
 					m_vContentList.addElement(cContent);
 				}
 				cResSet.close();cResSet=null;

@@ -160,6 +160,7 @@ if(!cResults.GetResults(cParam)) {
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(CContent cContent : cResults.m_vContentList) {%>
 					<a class="IllustThumb" href="/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html">
+						<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
 						<img class="IllustThumbImg" src="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg">
 					</a>
 				<%}%>

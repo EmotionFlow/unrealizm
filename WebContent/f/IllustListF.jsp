@@ -63,11 +63,7 @@ class IllustListC {
 			}
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CContent cContent = new CContent();
-				cContent.m_nUserId		= cResSet.getInt("user_id");
-				cContent.m_nContentId		= cResSet.getInt("content_id");
-				cContent.m_strFileName	= Common.ToString(cResSet.getString("file_name"));
-
+				CContent cContent = new CContent(cResSet);
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.addElement(cContent);
 			}
@@ -105,7 +101,9 @@ for (int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 {
 "content_id" : <%=cContent.m_nContentId%>,
 "user_id" : <%=cContent.m_nUserId%>,
-"file_name" : "<%=CEnc.E(Common.GetUrl(cContent.m_strFileName))%>"
+"file_name" : "<%=CEnc.E(Common.GetUrl(cContent.m_strFileName))%>",
+"category_id" : <%=cContent.m_nCategoryId%>,
+"category" : "<%=CEnc.E(_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)))%>"
 }<%=(nCnt<cResults.m_vContentList.size()-1)?",":""%>
 <%
 }

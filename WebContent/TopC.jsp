@@ -3,12 +3,9 @@
 <%!
 class TopCParam {
 	public void GetParam(HttpServletRequest cRequest) {
-		try
-		{
+		try {
 			cRequest.setCharacterEncoding("UTF-8");
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			;
 		}
 	}
@@ -40,11 +37,7 @@ class TopC {
 				cState.setInt(1, SELECT_MAX_GALLERY);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
-					CContent cContent = new CContent();
-					cContent.m_nUserId		= cResSet.getInt("user_id");
-					cContent.m_nContentId		= cResSet.getInt("content_id");
-					cContent.m_strFileName	= Common.ToString(cResSet.getString("file_name"));
-
+					CContent cContent = new CContent(cResSet);
 					m_nEndId = cContent.m_nContentId;
 					m_vContentList.addElement(cContent);
 				}

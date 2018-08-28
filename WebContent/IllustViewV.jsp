@@ -229,7 +229,7 @@ SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
 								</a>
 								<%}%>
 								<span>
-									<%=Common.AutoLinkPc(Common.ToStringHtml(cComment.m_strDescription))%>
+									<%=Common.AutoLink(Common.ToStringHtml(cComment.m_strDescription))%>
 								</span>
 								<span class="CommentCmd">
 									<a class="fa fa-reply" href="javascript:void(0)" onclick="ResComment(<%=cResults.m_cContent.m_nContentId%>, <%=cComment.m_nUserId%>, '<%=Common.ToStringHtml(cComment.m_strNickName)%>')"></a>

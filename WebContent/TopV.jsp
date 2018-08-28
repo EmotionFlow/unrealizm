@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/TopC.jsp"%>
 <%
-//if(Common.isSmartPhone(request)) {
-		//response.sendRedirect("/sTopV.jsp");
-		//return;
-//}
-
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
@@ -14,12 +9,11 @@ if(cCheckLogin.m_bLogin) {
 	return;
 }
 
-TopCParam cParam = new TopCParam();
-cParam.GetParam(request);
-
-TopC cResults = new TopC();
-cResults.SELECT_MAX_GALLERY = 20;
-boolean bRtn = cResults.GetResults(cParam);
+//TopCParam cParam = new TopCParam();
+//cParam.GetParam(request);
+//TopC cResults = new TopC();
+//cResults.SELECT_MAX_GALLERY = 20;
+//boolean bRtn = cResults.GetResults(cParam);
 %>
 <!DOCTYPE html>
 <html style="height: 100%;">

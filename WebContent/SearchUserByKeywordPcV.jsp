@@ -38,7 +38,6 @@ boolean bRtn = cResults.GetResults(cParam);
 
 		<div class="Wrapper">
 			<div class="TabMenu">
-				<a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>">illustration</a>
 				<a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>">tag</a>
 				<a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>">user</a>
 			</div>

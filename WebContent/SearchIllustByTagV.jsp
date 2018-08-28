@@ -14,19 +14,18 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 			function addContents(nStartId) {
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
+				console.log("start");
 				$.ajaxSingle({
 					"type": "post",
 					"data": { "SID" : nStartId, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
 					"url": "/f/SearchIllustByTagF.jsp",
 					"dataType": "json",
 					"success": function(data) {
+						console.log("done");
+						console.log(data);
 						g_nNextId = data.end_id;
 						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							var cItem = data.result[nCnt];
-							var $objItem = $("<a/>").addClass("IllustThumb").attr("href", "/IllustViewV.jsp?ID="+cItem.user_id+"&TD="+cItem.content_id);
-							var $objItemImg = $("<img/>").addClass("IllustThumbImg").attr("src", cItem.file_name+"_360.jpg");
-							$objItem.append($objItemImg);
-							$("#IllustThumbList").append($objItem);
+							$("#IllustThumbList").append(CreateIllustThumb(data.result[nCnt]));
 						}
 						$(".Waiting").remove();
 					},

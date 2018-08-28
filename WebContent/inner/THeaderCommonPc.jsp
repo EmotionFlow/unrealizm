@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="jp.pipa.poipiku.*"%>
+<%@page import="com.emotionflow.poipiku.*"%>
 <meta charset="utf-8">
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Cache-Control" content="no-cache"/>
@@ -19,7 +19,7 @@
 <style>
 .Wrapper {width: 600px;}
 .IllustThumb {width: 198px; height: 198px;}
-.IllustThumb .Category {padding: 3px 12px; font-size: 13px;}
+.IllustThumb .Category {padding: 3px 10px; font-size: 13px; top: 5px; left: 5px;}
 .IllustItem {margin: 40px auto;}
 </style>
 <%}%>

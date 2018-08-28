@@ -47,13 +47,26 @@
 .IllustThumb .Category {
 	display: block;
 	position: absolute;
+	width: 100%;
+	padding: 1px 0;
 	top: 0;
 	left: 0;
 	background: #5bd;
-	padding: 2px 7px;
 	font-size: 11px;
 	color: #fff;
+	text-align: center;
 }
+
+.IllustThumb .Category.C0 {background-color: #bfda80; color: #555;}
+.IllustThumb .Category.C1 {background-color: #ea691a;}
+.IllustThumb .Category.C2 {background-color: #eba210;}
+.IllustThumb .Category.C3 {background-color: #ecec01; color: #555;}
+.IllustThumb .Category.C4 {background-color: #d20000;}
+.IllustThumb .Category.C5 {background-color: #34cca4;}
+.IllustThumb .Category.C6 {background-color: #25aebc;}
+.IllustThumb .Category.C7 {background-color: #017ff0;}
+.IllustThumb .Category.C8 {background-color: #333333;}
+.IllustThumb .Category.C9 {background-color: #003399;}
 
 .IllustThumb .IllustThumbImg {
 	display: block;

@@ -65,6 +65,11 @@ function SearchIllustByKeyword() {
 	location.href="/SearchIllustByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
+function SearchTagByKeyword() {
+	var keyword = $('#HeaderSearchBox').val();
+	location.href="/SearchTagByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
+}
+
 function SearchUserByKeyword() {
 	var keyword = $('#HeaderSearchBox').val();
 	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
@@ -165,7 +170,9 @@ function CreateIllustThumbPc(cItem) {
 function CreateIllustThumbBase(cItem, nMode) {
 	var ILLUST_VIEW = (nMode==0)?"/IllustViewV.jsp":"/IllustViewPcV.jsp";
 	var $objItem = $("<a/>").addClass("IllustThumb").attr("href", ILLUST_VIEW+"?ID="+cItem.user_id+"&TD="+cItem.content_id);
+	var $objCategory = $("<span/>").addClass("Category C"+cItem.category_id).html(cItem.category);
 	var $objItemImg = $("<img/>").addClass("IllustThumbImg").attr("src", cItem.file_name+"_360.jpg");
+	$objItem.append($objCategory);
 	$objItem.append($objItemImg);
 	return $objItem;
 }
