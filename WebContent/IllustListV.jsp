@@ -14,7 +14,7 @@ if(cParam.m_nUserId==-1) {
 IllustListC cResults = new IllustListC();
 if(!cResults.GetResults(cParam)) {
 	if(!cCheckLogin.m_bLogin) {
-		response.sendRedirect("/StartAnalogicoV.jsp");
+		response.sendRedirect("/StartPoipikuV.jsp");
 	} else {
 		response.sendRedirect("/NotFoundV.jsp");
 	}

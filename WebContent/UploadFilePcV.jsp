@@ -35,31 +35,37 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 			});
 			function UploadFile() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+				var nCategory = $('input:radio[name="CAT"]:checked').val();
 				var strDescription = $.trim($("#EditDescription").val());
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-				$("#file_thumb").upload('/f/UploadFileF.jsp', {
-					"UID":<%=cCheckLogin.m_nUserId%>,
-					"DES":strDescription,
-					"TWI":nTweet,},
-						function(res) {
-							var nResId = parseInt($.trim(res), 10);
-							if(nResId > 0) {
-								// complete
-								DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-								setTimeout(function(){
-									location.href="/MyHomePcV.jsp";
-								}, 1000);
-							} else if(nResId == -1) {
-								// file size error
-								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-							} else if(nResId == -2) {
-								// file type error
-								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
-							} else {
-								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + nResId);
-							}
-						},
-						'html');
+				$("#file_thumb").upload(
+					'/f/UploadFileF.jsp',
+					{
+						"UID":<%=cCheckLogin.m_nUserId%>,
+						"DES":strDescription,
+						"TWI":nTweet,
+						"CAT":nCategory
+					},
+					function(res) {
+						var nResId = parseInt($.trim(res), 10);
+						if(nResId > 0) {
+							// complete
+							DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+							setTimeout(function(){
+								location.href="/MyHomePcV.jsp";
+							}, 1000);
+						} else if(nResId == -1) {
+							// file size error
+							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
+						} else if(nResId == -2) {
+							// file type error
+							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
+						} else {
+							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + nResId);
+						}
+					},
+					'html'
+				);
 			}
 
 			function DispDescCharNum() {
@@ -100,6 +106,18 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					</div>
 					<img id="imgView" class="imgView" src="" />
 					<input id="file_thumb" type="file" name="file_thumb" />
+				</div>
+				<div class="CategorDesc">
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="0" checked><span class="CategoryLabel"><%=_TEX.T("Category.C0")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="1"><span class="CategoryLabel"><%=_TEX.T("Category.C1")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="2"><span class="CategoryLabel"><%=_TEX.T("Category.C2")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="3"><span class="CategoryLabel"><%=_TEX.T("Category.C3")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="4"><span class="CategoryLabel"><%=_TEX.T("Category.C4")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="5"><span class="CategoryLabel"><%=_TEX.T("Category.C5")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="6"><span class="CategoryLabel"><%=_TEX.T("Category.C6")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="7"><span class="CategoryLabel"><%=_TEX.T("Category.C7")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="8"><span class="CategoryLabel"><%=_TEX.T("Category.C8")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="9"><span class="CategoryLabel"><%=_TEX.T("Category.C9")%></span></label>
 				</div>
 				<div class="Description">
 					<textarea id="EditDescription" class="EditDescription" maxlength="200" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>

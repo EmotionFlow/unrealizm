@@ -19,8 +19,11 @@
 <style>
 .Wrapper {width: 600px;}
 .IllustThumb {width: 198px; height: 198px;}
-.IllustThumb .Category {padding: 3px 10px; font-size: 13px; top: 0; left: 0;}
+.IllustItem .IllustItemUser {padding: 5px 0px;}
+.IllustThumb .Category {top: 7px; left: 7px; font-size: 13px; width: 70px; height: 24px; line-height: 24px;}
+.IllustItem .Category {margin: 0px 0 3px 0px;}
 .IllustItem {margin: 40px auto;}
+.UploadFile .CategorDesc .CategoryLabel {width: 96px; margin: 5px 10px;}
 </style>
 <%}%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>

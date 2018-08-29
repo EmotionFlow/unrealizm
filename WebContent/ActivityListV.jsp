@@ -8,7 +8,7 @@ CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
 if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/StartAnalogicoV.jsp");
+	response.sendRedirect("/StartPoipikuV.jsp");
 	return;
 }
 

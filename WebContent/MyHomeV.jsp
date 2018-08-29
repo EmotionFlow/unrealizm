@@ -5,7 +5,7 @@ CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
 if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/StartAnalogicoV.jsp");
+	response.sendRedirect("/StartPoipikuV.jsp");
 	return;
 }
 %>
@@ -133,7 +133,9 @@ if(!cCheckLogin.m_bLogin) {
 		<div class="Wrapper">
 			<div id="InfoMsg" style="display:none; float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
 				ポイピクへようこそ<br />
-				ポイピクはアナログイラストを愛する人のためのSNSです。<br />
+				<br />
+				描くのに飽きたらポイポイ<br />
+				ポイポイしたら誰かがきっと励ましてくれる<br />
 				<br />
 				<br />
 				<a class="BtnBase" href="javascript:void(0)" onclick="MoveTab()">

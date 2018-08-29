@@ -99,7 +99,7 @@ public class Common {
 		} catch (Exception e) {
 			nRet = nMin;
 		}
-		nRet = Math.min(Math.max(nRet, 0), nMax);
+		nRet = Math.min(Math.max(nRet, nMin), nMax);
 
 		return nRet;
 	}

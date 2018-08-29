@@ -122,7 +122,9 @@ boolean bRtn = cResults.GetResults(cParam);
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center;">
 					ポイピクへようこそ<br />
-					ポイピクはアナログイラストを愛する人のためのSNSです。<br />
+					<br />
+					描くのに飽きたらポイポイ<br />
+					ポイポイしたら誰かがきっと励ましてくれる<br />
 					<br />
 					<br />
 					<a class="BtnBase" href="/NewArrivalPcV.jsp">

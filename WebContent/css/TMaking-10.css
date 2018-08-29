@@ -47,10 +47,8 @@
 .IllustThumb .Category {
 	display: block;
 	position: absolute;
-	max-width: 100%;
-	padding: 1px 5px;
-	top: 0;
-	left: 0;
+	top: 5px;
+	left: 5px;
 	background: #5bd;
 	font-size: 11px;
 	color: #fff;
@@ -58,6 +56,11 @@
 	overflow: hidden;
 	white-space: nowrap;
 	box-sizing: border-box;
+
+	border-radius: 100px;
+	width: 60px;
+	height: 22px;
+	line-height: 22px;
 }
 
 .IllustThumb .IllustThumbImg {
@@ -181,12 +184,52 @@
 	display: none;
 }
 
+.UploadFile .CategorDesc {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 10px 0 0 0;
+	font-size: 0;
+	text-align: center;
+}
+
+.UploadFile .CategorDesc .CategoryRadio {
+	display: none;
+}
+
+.UploadFile .CategorDesc .CategoryLabel {
+	display: block;
+	float: left;
+	background: #fff;
+	border: solid 1px #5bd;
+	font-size: 12px;
+	text-align: center;
+	box-sizing: border-box;
+	overflow: hidden;
+	white-space: nowrap;
+	color: #5bd;
+	border-radius: 100px;
+	width: 63px;
+	height: 22px;
+	line-height: 22px;
+	margin: 5px 2px;
+	cursor: pointer;
+}
+
+.UploadFile .CategorDesc input:checked + .CategoryLabel,
+.UploadFile .CategorDesc .CategoryLabel:hover {
+	background: #5bd;
+	color: #fff;
+}
+
+
 .UploadFile .Description {
 	display: block;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	margin: 10px 0;
+	margin: 10px 0 0 0;
 	position: relative;
 }
 
@@ -262,17 +305,19 @@
 .IllustItem .Category {
 	display: block;
 	float: left;
-	max-width: 100%;
-	padding: 3px 10px;
-	top: 0;
-	left: 0;
 	background: #5bd;
 	font-size: 13px;
 	color: #fff;
-	text-align: left;
+	text-align: center;
 	box-sizing: border-box;
 	overflow: hidden;
 	white-space: nowrap;
+
+	border-radius: 100px;
+	width: 80px;
+	height: 24px;
+	line-height: 24px;
+	margin: 0 0 3px 4px;
 }
 
 .IllustThumb .Category.C0, .IllustItem .Category.C0 {background-color: #bfda80; color: #555;}
@@ -292,6 +337,7 @@
 	width: 100%;
 	box-sizing: border-box;
 	overflow: hidden;
+	border-top: solid 1px #eee;
 	border-bottom: solid 1px #eee;
 	min-height: 60px;
 }

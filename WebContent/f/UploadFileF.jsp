@@ -11,6 +11,7 @@ class UploadFileCParam {
 	public String m_strFileName = "";
 	public String m_strDescription = "";
 	public boolean m_bTweet = false;
+	public int m_nCategoryId = 0;
 
 	public int GetParam(HttpServletRequest cRequest) {
 		try {
@@ -36,6 +37,8 @@ class UploadFileCParam {
 						m_strDescription = Common.SubStrNum(Common.TrimAll(item.getString("UTF-8")), 200);
 					} else if(strName.equals("TWI")) {
 						m_bTweet = (Common.ToInt(item.getString())==1);
+					} else if(strName.equals("CAT")) {
+						m_nCategoryId = Common.ToIntN(item.getString(), 0, 9);
 					}
 				} else {
 					String strFileName = Long.toString((new java.util.Date()).getTime());
@@ -97,10 +100,11 @@ class UploadFileC {
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=0, comment_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, open_id=0, comment_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
-			cState.setInt(2, m_nContentId);
+			cState.setInt(2, cParam.m_nCategoryId);
+			cState.setInt(3, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
