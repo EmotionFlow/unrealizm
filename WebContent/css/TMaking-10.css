@@ -255,9 +255,10 @@
 
 .UploadFile .UoloadCmdOption {
 	display: flex;
+	float: left;
 	flex-flow: column;
 	width: 100%;
-	margin: 0 0 10px 0;
+	margin: 3px 0 10px 0;
 	align-items: flex-end;
 }
 

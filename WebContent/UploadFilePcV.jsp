@@ -38,6 +38,8 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				var nCategory = $('input:radio[name="CAT"]:checked').val();
 				var strDescription = $.trim($("#EditDescription").val());
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+				console.log(nCategory, strDescription, nTweet);
+				return;
 				$("#file_thumb").upload(
 					'/f/UploadFileF.jsp',
 					{
@@ -108,7 +110,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					<input id="file_thumb" type="file" name="file_thumb" />
 				</div>
 				<div class="CategorDesc">
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="0" checked><span class="CategoryLabel"><%=_TEX.T("Category.C0")%></span></label>
+					<label><input class="CategoryRadio" type="radio" name="CAT" value="0"><span class="CategoryLabel"><%=_TEX.T("Category.C0")%></span></label>
 					<label><input class="CategoryRadio" type="radio" name="CAT" value="1"><span class="CategoryLabel"><%=_TEX.T("Category.C1")%></span></label>
 					<label><input class="CategoryRadio" type="radio" name="CAT" value="2"><span class="CategoryLabel"><%=_TEX.T("Category.C2")%></span></label>
 					<label><input class="CategoryRadio" type="radio" name="CAT" value="3"><span class="CategoryLabel"><%=_TEX.T("Category.C3")%></span></label>
