@@ -100,24 +100,16 @@ class UploadFileC {
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, open_id=0, comment_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=0, comment_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setInt(2, cParam.m_nCategoryId);
-			cState.setInt(3, m_nContentId);
+			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, 200));
+			cState.setInt(4, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
 			if (!cParam.m_strDescription.isEmpty()) {
-				// add new comment
-				strSql ="INSERT INTO comments_0000(content_id, description, user_id, to_user_id) VALUES(?, ?, ?, 0)";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nContentId);
-				cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
-				cState.setInt(3, cParam.m_nUserId);
-				cState.executeUpdate();
-				cState.close();cState=null;
-
 				// Add my tags
 				Pattern ptn = Pattern.compile("#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", Pattern.MULTILINE);
 				Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");

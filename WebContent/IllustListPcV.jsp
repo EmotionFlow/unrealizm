@@ -140,7 +140,7 @@ if(!cResults.GetResults(cParam)) {
 					String strTwitterUrl="https://twitter.com/share?url=" + URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8");
 					%>
 					<span class="IllustItemCommandSub">
-						<a class="social-icon Twitter" href="<%=strTwitterUrl%>">&#229;</a>
+						<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>"></a>
 					</span>
 				</span>
 				<%if(cResults.m_bOwner) {%>

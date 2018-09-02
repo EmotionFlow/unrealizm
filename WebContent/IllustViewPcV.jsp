@@ -74,90 +74,11 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 				});
 			}
 
-			function UpdateBookmark(nContentId) {
-				<%if(cCheckLogin.m_bLogin) {%>
-				var bBookmark = $("#IllustItemCommandHeart_"+nContentId).hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "CID": nContentId, "CHK": (bBookmark)?0:1 },
-					"url": "/f/UpdateBookmarkF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(bBookmark) {
-							$("#IllustItemCommandHeart_"+nContentId).addClass('typcn-heart-outline').removeClass('typcn-heart-full-outline').removeClass('Selected');
-						} else {
-							$("#IllustItemCommandHeart_"+nContentId).removeClass('typcn-heart-outline').addClass('typcn-heart-full-outline').addClass('Selected');
-						}
-						$('#IllustItemCommandHeartNum_'+nContentId).html(data.bookmark_num);
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
-				});
-				<%} else {%>
-				location.href="/";
-				<%}%>
-			}
-
 			function DeleteContent(nContentId) {
 				<%if(cCheckLogin.m_bLogin) {%>
 				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID":<%=cCheckLogin.m_nUserId%>, "CID":nContentId },
-					"url": "/f/DeleteContentF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						sendObjectMessage("deleted");
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
-				});
+				DeleteContentBase(<%=cCheckLogin.m_nUserId%>, nContentId);
 				return false;
-				<%} else {%>
-				location.href="/";
-				<%}%>
-			}
-
-			function ResComment(nId, nToUserId, strToUserName) {
-				<%if(cCheckLogin.m_bLogin) {%>
-				$("#CommentTo_"+nId).show();
-				$("#CommentToTxt_"+nId).html(strToUserName);
-				$("#CommentToId_"+nId).val(nToUserId);
-				<%} else {%>
-				location.href="/";
-				<%}%>
-			}
-
-			function DeleteRes(nId) {
-				<%if(cCheckLogin.m_bLogin) {%>
-				$("#CommentTo_"+nId).hide();
-				$("#CommentToTxt_"+nId).html("");
-				$("#CommentToId_"+nId).val(0);
-				<%} else {%>
-				location.href="/";
-				<%}%>
-			}
-
-			function SendComment(nId) {
-				<%if(cCheckLogin.m_bLogin) {%>
-				var strDescription = $("#CommentDescTxt_"+nId).val();
-				var nToUserId = $("#CommentToId_"+nId).val();
-				var strToUserNickName = $("#CommentToTxt_"+nId).html();
-				if(strDescription.length <= 0) return;
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": nId, "DES": strDescription, "TOD":nToUserId },
-					"url": "/f/SendCommentF.jsp",
-					"success": function(data) {
-						var $objItemCommentItem = CreateCommentItemPc(nId, <%=cCheckLogin.m_nUserId%>, '<%=cCheckLogin.m_strNickName%>', nToUserId, strToUserNickName, strDescription);
-						$('#IllustItem_'+nId + ' .ItemComment .ItemCommentItem:last').before($objItemCommentItem);
-						DeleteRes(nId);
-						$("#CommentDescTxt_"+nId).val('');
-						//location.reload(true);
-					}
-				});
 				<%} else {%>
 				location.href="/";
 				<%}%>
@@ -230,62 +151,28 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 						}%>
 					</div>
 
-					<span class="Category C<%=cResults.m_cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))%></span>
-
-					<a class="IllustItemThumb" href="/IllustDetailPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>" target="_blank">
-						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />
-					</a>
-
 					<div class="IllustItemCommand">
-						<a class="IllustItemCommandComment typcn typcn-message" href="/IllustCommentPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>"></a>
-						<a class="IllustItemCommandCommentNum" href="/IllustCommentPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>"><%=cResults.m_cContent.m_nCommentNum%></a>
-						<span id="IllustItemCommandHeart_<%=cResults.m_cContent.m_nContentId%>" class="IllustItemCommandHeart typcn <%if(cResults.m_bBookmark){%>typcn-heart-full-outline Selected<%}else{%>typcn-heart-outline<%}%>" onclick="UpdateBookmark(<%=cResults.m_cContent.m_nContentId%>)"></span>
-						<a id="IllustItemCommandHeartNum_<%=cResults.m_cContent.m_nContentId%>" class="IllustItemCommandHeartNum" href="/IllustHeartPcV.jsp?ID=<%=cResults.m_cContent.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=cResults.m_cContent.m_nBookmarkNum%></a>
+						<span class="Category C<%=cResults.m_cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))%></span>
 						<div class="IllustItemCommandSub">
 							<%String strUrl = URLEncoder.encode(String.format("https://poipiku.com/%d/%d.html", cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId), "UTF-8");%>
-							<a class="social-icon Twitter" href="https://twitter.com/share?url=<%=strUrl%>">&#229;</a>
+							<a class="IllustItemCommandTweet fab fa-twitter-square" href="https://twitter.com/share?url=<%=strUrl%>"></a>
 							<%if(cResults.m_bOwner || cCheckLogin.m_nUserId==1) {%>
-							<a class="IllustItemCommandDelete typcn typcn-trash" href="javascript:void(0)" onclick="DeleteContent(<%=cResults.m_cContent.m_nContentId%>)"></a>
+							<a class="IllustItemCommandDelete far fa-trash-alt" href="javascript:void(0)" onclick="DeleteContent(<%=cResults.m_cContent.m_nContentId%>)"></a>
 							<%} else {%>
-							<a class="IllustItemCommandInfo typcn typcn-info-large" href="/ReportFormPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>"></a>
+							<a class="IllustItemCommandInfo fas fa-info-circle" href="/ReportFormPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>"></a>
 							<%}%>
 						</div>
 					</div>
 
-					<div class="ItemComment Home">
-						<%for(CComment cComment : cResults.m_cContent.m_vComment) {%>
-						<div class="ItemCommentItem">
-							<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nUserId%>">
-								<%=Common.ToStringHtml(cComment.m_strNickName)%>
-							</a>
-							<span class="CommentDesc">
-								<%if(cComment.m_nToUserId>0) {%>
-								<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nToUserId%>">
-									&gt; <%=Common.ToStringHtml(cComment.m_strToNickName)%>
-								</a>
-								<%}%>
-								<span>
-									<%=Common.AutoLinkPc(Common.ToStringHtml(cComment.m_strDescription))%>
-								</span>
-								<span class="CommentCmd">
-									<a class="fa fa-reply" href="javascript:void(0)" onclick="ResComment(<%=cResults.m_cContent.m_nContentId%>, <%=cComment.m_nUserId%>, '<%=Common.ToStringHtml(cComment.m_strNickName)%>')"></a>
-								</span>
-							</span>
-						</div>
-						<%}%>
-						<div id="CommentTo_<%=cResults.m_cContent.m_nContentId%>" class="CommentTo">
-							<span>&gt; </span>
-							<span id="CommentToTxt_<%=cResults.m_cContent.m_nContentId%>"></span>
-							<input id="CommentToId_<%=cResults.m_cContent.m_nContentId%>" type="hidden" value="0" />
-							<span class="typcn typcn-times" onclick="DeleteRes(<%=cResults.m_cContent.m_nContentId%>)"></span>
-						</div>
-						<div class="ItemCommentItem">
-							<input id="CommentDescTxt_<%=cResults.m_cContent.m_nContentId%>" class="CommentDescTxt" type="text" maxlength="200" />
-							<div class="CommentDescBtn">
-								<a class="BtnBase typcn typcn-message" onclick="SendComment(<%=cResults.m_cContent.m_nContentId%>)"></a>
-							</div>
-						</div>
+					<%if(!cResults.m_cContent.m_strDescription.isEmpty()) {%>
+					<div class="IllustItemDesc">
+						<%=Common.AutoLinkPc(Common.ToStringHtml(cResults.m_cContent.m_strDescription))%>
 					</div>
+					<%}%>
+
+					<a class="IllustItemThumb" href="/IllustDetailPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>" target="_blank">
+						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />
+					</a>
 				</div>
 			</div>
 

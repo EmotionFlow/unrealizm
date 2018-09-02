@@ -1,6 +1,6 @@
 @charset "utf-8";
 body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
-.Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 30px; border-bottom: solid 1px #ccc; text-align: center; padding: 10px 0; background: #fff; z-index: 9;}
+.Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 30px; border-bottom: solid 1px #ccc; text-align: center; padding: 10px 0; background: #fff; z-index: 9999;}
 .Header .HeaderTitleWrapper {display: block; max-width: 600px; margin: 0 auto; position: relative;}
 .Header .HeaderLink {display: block; width: 100%;}
 .Header .HeaderTitleSearch {display: block; color: #5bd; width: 30px; height: 30px; line-height: 28px; text-align: center; position: absolute; top: 0; right: 10px;}
@@ -12,13 +12,14 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 .Header .HeaderSearch .HeaderSearchBox:placeholder-shown {color: #c0c0b5; font-style: italic;}
 .Header .HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 30px; height: 30px; box-sizing: border-box; margin: 0; background-color: #5bd; color: #fff; border: solid 1px #5bd; cursor: pointer; border-left: none;line-height: 28px;}
 .Header .HeaderSearch .HeaderSearchBtn:hover {background-color: #fff; color: #5bd;}
-.FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ccc; background-color: #fff; z-index: 99; }
+.FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ccc; background-color: #fff; z-index: 9999; }
 .FooterMenuWrapper .FooterMenu {display: block; max-width: 600px; height: 50px; margin: 0 auto;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem {display: block; float: left; width: 25%; height: 50px; text-align: center; font-size: 0;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-02.png') no-repeat; background-size: 1400%; position: relative;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; width: 15px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
+#DispMsg {top: 51px;}
 #MenuHome .FooterMenuItemIcon {background-position: 0 0;}
 #MenuSearch .FooterMenuItemIcon {background-position: -308px 0;}
 #MenuUpload .FooterMenuItemIcon {background-position: -336px 0;}

@@ -41,14 +41,14 @@ button,
 textarea,
 select {
 	font-family: Verdana, 'Rounded Mplus 1c', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 input[type="text"],
 input[type="password"],
 textarea,
 select {
-	font-size: 16px;
+	font-size: 14px;
 	webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-ms-box-sizing: border-box;
@@ -60,6 +60,11 @@ select {
 	border: 1px solid #cccccc;
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 	color: #6d6965;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
 	-webkit-appearance: none;
 }
 

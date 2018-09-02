@@ -12,13 +12,13 @@
 		<a id="HeaderLink" class="HeaderLink" href="<%=URL_HOME%>">
 			<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
 		</a>
-		<a class="HeaderTitleSearch fa fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+		<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
 	</div>
 	<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" action="/SearchTagByKeywordPcV.jsp" >
 		<div class="HeaderSearch">
 			<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="" />
 			<div class="HeaderSearchBtn" onclick="SearchTagByKeyword()">
-				<span class="fa fa-search"></span>
+				<span class="fas fa-search"></span>
 			</div>
 		</div>
 	</form>

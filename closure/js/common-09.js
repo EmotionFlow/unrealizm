@@ -188,12 +188,12 @@ function CreateIllustItemPc(cItem, nUserId) {
 function CreateIllustItemBase(cItem, nUserId, nMode) {
 	// nMode : 0-app, 1-pc & smart phone
 	var ILLUST_LIST = (nMode==0)?"/IllustListV.jsp":"/IllustListPcV.jsp";
-	var ILLUST_COMMENT = (nMode==0)?"/IllustCommentV.jsp":"/IllustCommentPcV.jsp";
 	var ILLUST_HEART = (nMode==0)?"/IllustHeartV.jsp":"/IllustHeartPcV.jsp";
 	var REPORT_FORM = (nMode==0)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 	var ILLUST_DETAIL = (nMode==0)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 
 	var $objItem = $("<div/>").addClass("IllustItem").attr('id', 'IllustItem_'+cItem.content_id);
+
 	var $objItemUser = $("<div/>").addClass("IllustItemUser");
 	var $objItemUserThumb = $("<a/>").addClass("IllustItemUserThumb").attr("href", ILLUST_LIST+"?ID="+cItem.user_id);
 	var $objItemUserThumbImg = $("<img/>").addClass("IllustItemUserThumbImg").attr("src", cItem.user_file_name+"_120.jpg");
@@ -202,40 +202,16 @@ function CreateIllustItemBase(cItem, nUserId, nMode) {
 	$objItemUser.append($objItemUserThumb);
 	$objItemUser.append($objItemUserName);
 
-	var $objCategory = $("<span/>").addClass("Category C"+cItem.category_id).html(cItem.category);
-
-	var $objItemThumb = $("<a/>").addClass("IllustItemThumb").attr("href", ILLUST_DETAIL+"?TD="+cItem.content_id);
-	if(nMode==1) {
-		$objItemThumb.attr("target", "_blank");
-	}
-	var $objItemThumbImg = $("<img/>").addClass("IllustItemThumbImg").attr("src", cItem.file_name+"_640.jpg");
-	$objItemThumb.append($objItemThumbImg);
-
-	//var $objItemInfo = $("<div/>").addClass("IllustItemInfo");
-	//var $objItemInfoDesc = $("<div/>").addClass("IllustItemInfoDesc").html(cItem.description).autoLink();
-	//$objItemInfo.append($objItemInfoDesc);
-
 	var $objItemCommand = $("<div/>").addClass("IllustItemCommand");
-	var $objItemCommandComment = $("<a/>").addClass("IllustItemCommandComment").addClass("typcn").addClass("typcn-message").attr("href", ILLUST_COMMENT+"?TD="+cItem.content_id);
-	var $objItemCommandCommentNum = $("<a/>").attr("id", "IllustItemCommandCommentNum_"+cItem.content_id).addClass("IllustItemCommandCommentNum").html("&nbsp;"+cItem.comment_num).attr("href", ILLUST_COMMENT+"?TD="+cItem.content_id);
-	var $objItemCommandHeart = $("<a/>").attr("id", "IllustItemCommandHeart_"+cItem.content_id).addClass("IllustItemCommandHeart").addClass("typcn").addClass("typcn-heart-outline").attr("data-id", cItem.content_id).attr("href", "javascript:void(0)")
-	.click(function(){
-		UpdateBookmark($(this).data("id"));
-	});
-	if(cItem.bookmark==1) $objItemCommandHeart.removeClass('typcn-heart-outline').addClass('typcn-heart-full-outline').addClass('Selected');
-	var $objItemCommandHeartNum = $("<a/>").addClass("IllustItemCommandHeartNum").attr("id", "IllustItemCommandHeartNum_"+cItem.content_id).html("&nbsp;"+cItem.bookmark_num).attr("href", ILLUST_HEART+"?ID="+cItem.user_id+"&TD="+cItem.content_id);
-	$objItemCommand.append($objItemCommandComment);
-	$objItemCommand.append($objItemCommandCommentNum);
-	$objItemCommand.append($objItemCommandHeart);
-	$objItemCommand.append($objItemCommandHeartNum);
-
+	var $objCategory = $("<span/>").addClass("Category C"+cItem.category_id).html(cItem.category);
+	$objItemCommand.append($objCategory);
 	var $objItemCommandSub = $("<div/>").addClass("IllustItemCommandSub");
 	var url="https://twitter.com/share?url=" + encodeURIComponent("https://poipiku.com/"+cItem.user_id+"/"+cItem.content_id+".html");
-	var $objItemCommandSocial = $("<a/>").addClass("social-icon").addClass("Twitter").attr("href", url).html("&#229;");
-	var $objItemCommandDelete = $("<a/>").addClass("IllustItemCommandDelete").addClass("typcn").addClass("typcn-trash").attr("data-id", cItem.content_id).attr("href", "javascript:void(0)").click(function(){
+	var $objItemCommandSocial = $("<a/>").addClass("IllustItemCommandTweet fab fa-twitter-square").attr("href", url);
+	var $objItemCommandDelete = $("<a/>").addClass("IllustItemCommandDelete far fa-trash-alt").attr("data-id", cItem.content_id).attr("href", "javascript:void(0)").click(function(){
 		DeleteContent($(this).data("id"));
 	});
-	var $IllustItemCommandInfo = $("<a/>").addClass("IllustItemCommandInfo").addClass("typcn").addClass("typcn-info-large").attr("href", REPORT_FORM+"?TD="+cItem.content_id);
+	var $IllustItemCommandInfo = $("<a/>").addClass("IllustItemCommandInfo fas fa-info-circle").attr("href", REPORT_FORM+"?TD="+cItem.content_id);
 	$objItemCommandSub.append($objItemCommandSocial);
 	if(cItem.user_id==nUserId) {
 		$objItemCommandSub.append($objItemCommandDelete);
@@ -244,83 +220,49 @@ function CreateIllustItemBase(cItem, nUserId, nMode) {
 	}
 	$objItemCommand.append($objItemCommandSub);
 
-	var $objItemComment = $("<div/>").addClass("ItemComment").addClass("Home");
-	var bReply = false;
-	for(var nCmtCnt=0; nCmtCnt<cItem.comment.length; nCmtCnt++) {
-		var cCmtItem = cItem.comment[nCmtCnt];
-		var $objItemCommentItem = CreateCommentItemBase(cItem.content_id, cCmtItem.user_id, cCmtItem.nickname, cCmtItem.to_user_id, cCmtItem.to_nickname, cCmtItem.description, nMode);
-		$objItemComment.append($objItemCommentItem);
-		bReply = (cItem.user_id==nUserId && cCmtItem.user_id!=nUserId);
+	var $objIllustItemDesc = $("<div/>").addClass("IllustItemDesc").html(cItem.description).autoLink();
+
+	var $objItemThumb = $("<a/>").addClass("IllustItemThumb").attr("href", ILLUST_DETAIL+"?TD="+cItem.content_id);
+	if(nMode==1) {
+		$objItemThumb.attr("target", "_blank");
 	}
-	// Send Comment
-	var $objItemCommentItem = $("<div/>").addClass("ItemCommentItem");
-	var $objCommentTo = $("<div/>").addClass("CommentTo").attr('id', 'CommentTo_'+cItem.content_id);
-	var $objCommentToRes = $("<span/>").html('> ');
-	var $objCommentToTxt = $("<span/>").addClass("CommentToTxt").attr('id', 'CommentToTxt_'+cItem.content_id);
-	var $objCommentToId = $("<input/>").attr('id', 'CommentToId_'+cItem.content_id).attr('type', 'hidden').val(0);
-	var $objDeleteRes = $("<span/>").addClass("typcn typcn-times").attr("data-id", cItem.content_id)
-	.click(function(){
-		DeleteRes($(this).data("id"));
-	});
-	$objCommentTo.append($objCommentToRes).append($objCommentToTxt).append($objCommentToId).append($objDeleteRes);
-	if(bReply) {
-		var cCmtItem = cItem.comment[cItem.comment.length-1];
-		$objCommentTo.show();
-		$objCommentToTxt.html(cCmtItem.nickname);
-		$objCommentToId.val(cCmtItem.user_id);
-	}
-	var $objCommentDescTxt = $("<input/>").addClass("CommentDescTxt").attr('id', 'CommentDescTxt_'+cItem.content_id).attr('type', 'text').attr('maxlength', '200').attr("data-id", cItem.content_id);
-	var $objCommentDescBtn = $("<div/>").addClass("CommentDescBtn");
-	var $objSendComment = $("<a/>").addClass("BtnBase typcn typcn-message").attr("data-id", cItem.content_id)
-	.click(function(){
-		SendComment($(this).data("id"));
-	});
-	$objCommentDescBtn.html(' ').append($objSendComment);
-	$objItemCommentItem.append($objCommentDescTxt).append($objCommentDescBtn);
-	$objItemComment.append($objCommentTo)
-	$objItemComment.append($objItemCommentItem);
+	var $objItemThumbImg = $("<img/>").addClass("IllustItemThumbImg").attr("src", cItem.file_name+"_640.jpg");
+	$objItemThumb.append($objItemThumbImg);
 
 	$objItem.append($objItemUser);
-	$objItem.append($objCategory);
-	$objItem.append($objItemThumb);
-	//$objItem.append($objItemInfo);
 	$objItem.append($objItemCommand);
-	$objItem.append($objItemComment);
+	$objItem.append($objIllustItemDesc);
+	$objItem.append($objItemThumb);
 
 	return $objItem;
 }
 
-function CreateCommentItem(content_id, user_id, nickname, to_user_id, to_nickname, description) {
-	return CreateCommentItemBase(content_id, user_id, nickname, to_user_id, to_nickname, description, 0);
-}
-function CreateCommentItemPc(content_id, user_id, nickname, to_user_id, to_nickname, description) {
-	return CreateCommentItemBase(content_id, user_id, nickname, to_user_id, to_nickname, description, 1);
-}
-
-function CreateCommentItemBase(content_id, user_id, nickname, to_user_id, to_nickname, description, nMode) {
-	// nMode : 0-app, 1-pc & smart phone
-	var ILLUST_LIST = (nMode==0)?"/IllustListV.jsp":"/IllustListPcV.jsp";
-	var ILLUST_COMMENT = (nMode==0)?"/IllustCommentV.jsp":"/IllustCommentPcV.jsp";
-
-	var $objItemCommentItem = $("<div/>").addClass("ItemCommentItem");
-	var $objCommentName = $("<a/>").addClass("CommentName").attr("href", ILLUST_LIST+"?ID="+user_id).html(nickname);
-	var $objItemCommentDesc = $("<span/>").addClass("CommentDesc");
-	if(to_user_id>0) {
-		var $objItemCommentToUser = $("<a/>").addClass("CommentName").attr("href", ILLUST_LIST+"?ID="+to_user_id).html("> "+to_nickname);
-		$objItemCommentDesc.append($objItemCommentToUser);
-	}
-	//var $objItemCommentDescCont = $("<a/>").attr("href", ILLUST_COMMENT+"?TD="+content_id).html(description+' ').autoLink(nMode);
-	var $objItemCommentDescCont = $("<span/>").html(description+' ').autoLink(nMode);
-	var $objCommentCmd = $("<span/>").addClass("CommentCmd");
-	var $objResComment = $("<a/>").addClass("fa fa-reply").attr("data-id", content_id).attr("data-uid", user_id).attr("data-nickname", nickname)
-	.click(function(){
-		ResComment($(this).data("id"), $(this).data("uid"), $(this).data("nickname"));
+function SendComment(nContentId, strDescription, nUserId) {
+	if(strDescription.length <= 0) return;
+	$.ajax({
+		"type": "post",
+		"data": {"IID": nContentId, "DES": strDescription, "UID": nUserId},
+		"url": "/f/SendCommentF.jsp",
+		"success": function(data) {
+			var $objResEmoji = $("<span/>").addClass("ResEmoji").html(strDescription);
+			$("#ResEmojiAdd_"+nContentId).before($objResEmoji);
+		}
 	});
-	$objCommentCmd.append($objResComment);
-	$objItemCommentDesc.append($objItemCommentDescCont);
-	$objItemCommentDesc.append($objCommentCmd);
-	$objItemCommentItem.append($objCommentName);
-	$objItemCommentItem.append($objItemCommentDesc);
-	return $objItemCommentItem;
+	return false;
+}
+
+function DeleteContentBase(nUserId, nContentId) {
+	$.ajaxSingle({
+		"type": "post",
+		"data": { "UID":nUserId, "CID":nContentId },
+		"url": "/f/DeleteContentF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			$('#IllustItem_'+nContentId).remove();
+		},
+		"error": function(req, stat, ex){
+			DispMsg('Delete Error');
+		}
+	});
 }
 

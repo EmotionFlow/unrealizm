@@ -28,7 +28,7 @@ public class CContent {
 	public CContent(ResultSet resultSet) throws SQLException {
 		m_nContentId		= resultSet.getInt("content_id");
 		m_nCategoryId		= resultSet.getInt("category_id");
-		//m_strDescription	= Common.ToString(resultSet.getString("description"));
+		m_strDescription	= Common.ToString(resultSet.getString("description"));
 		m_timeUploadDate	= resultSet.getTimestamp("upload_date");
 		m_nUserId			= resultSet.getInt("user_id");
 		//m_nOpenId			= resultSet.getInt("open_id");

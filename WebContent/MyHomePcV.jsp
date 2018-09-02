@@ -30,77 +30,10 @@ boolean bRtn = cResults.GetResults(cParam);
 		</script>
 
 		<script>
-			function UpdateBookmark(nContentId) {
-				var bBookmark = $("#IllustItemCommandHeart_"+nContentId).hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "CID": nContentId, "CHK": (bBookmark)?0:1 },
-					"url": "/f/UpdateBookmarkF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(bBookmark) {
-							$("#IllustItemCommandHeart_"+nContentId).addClass('typcn-heart-outline').removeClass('typcn-heart-full-outline').removeClass('Selected');
-						} else {
-							$("#IllustItemCommandHeart_"+nContentId).removeClass('typcn-heart-outline').addClass('typcn-heart-full-outline').addClass('Selected');
-						}
-						$('#IllustItemCommandHeartNum_'+nContentId).html("&nbsp;"+data.bookmark_num);
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
-				});
-			}
-
 			function DeleteContent(nContentId) {
 				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID":<%=cCheckLogin.m_nUserId%>, "CID":nContentId },
-					"url": "/f/DeleteContentF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						$('#IllustItem_'+nContentId).remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
-				});
+				DeleteContentBase(<%=cCheckLogin.m_nUserId%>, nContentId);
 				return false;
-			}
-
-			function ResComment(nId, nToUserId, strToUserName) {
-				$("#CommentTo_"+nId).show();
-				$("#CommentToTxt_"+nId).html(strToUserName);
-				$("#CommentToId_"+nId).val(nToUserId);
-			}
-
-			function DeleteRes(nId) {
-				$("#CommentTo_"+nId).hide();
-				$("#CommentToTxt_"+nId).html("");
-				$("#CommentToId_"+nId).val(0);
-			}
-
-			function SendComment(nId) {
-				var strDescription = $("#CommentDescTxt_"+nId).val();
-				var nToUserId = $("#CommentToId_"+nId).val();
-				var strToUserNickName = $("#CommentToTxt_"+nId).html();
-				if(strDescription.length <= 0) return;
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": nId, "DES": strDescription, "TOD":nToUserId },
-					"url": "/f/SendCommentF.jsp",
-					"success": function(data) {
-						var $objItemCommentItem = CreateCommentItemPc(nId, <%=cCheckLogin.m_nUserId%>, '<%=cCheckLogin.m_strNickName%>', nToUserId, strToUserNickName, strDescription);
-						$('#IllustItem_'+nId + ' .ItemComment .ItemCommentItem:last').before($objItemCommentItem);
-						DeleteRes(nId);
-						$("#CommentDescTxt_"+nId).val('');
-						//location.reload(true);
-					}
-				});
-			}
-
-			function MoveTab() {
-				sendObjectMessage("moveTabNewArrival")
 			}
 		</script>
 	</head>
@@ -132,6 +65,7 @@ boolean bRtn = cResults.GetResults(cParam);
 					</a>
 				</div>
 				<%}%>
+
 				<%for(CContent cContent : cResults.m_vContentList) {%>
 				<div class="IllustItem" id="IllustItem_<%=cContent.m_nContentId%>">
 					<div class="IllustItemUser">
@@ -143,71 +77,47 @@ boolean bRtn = cResults.GetResults(cParam);
 						</a>
 					</div>
 
-					<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
+					<div class="IllustItemCommand">
+						<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
+						<div class="IllustItemCommandSub">
+							<%String strUrl = URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"); %>
+							<a class="IllustItemCommandTweet fab fa-twitter-square" href="https://twitter.com/share?url=<%=strUrl%>"></a>
+							<%if(cContent.m_nUserId==cCheckLogin.m_nUserId) {%>
+							<a class="IllustItemCommandDelete far fa-trash-alt" href="javascript:void(0)" onclick="DeleteContent(<%=cContent.m_nContentId%>)"></a>
+							<%} else {%>
+							<a class="IllustItemCommandInfo fas fa-info-circle" href="/ReportFormPcV.jsp?TD=<%=cContent.m_nContentId%>"></a>
+							<%}%>
+						</div>
+					</div>
+
+					<%if(!cContent.m_strDescription.isEmpty()) {%>
+					<div class="IllustItemDesc">
+						<%=Common.AutoLinkPc(Common.ToStringHtml(cContent.m_strDescription))%>
+					</div>
+					<%}%>
 
 					<a class="IllustItemThumb" href="/IllustDetailPcV.jsp?TD=<%=cContent.m_nContentId%>" target="_blank">
 						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cContent.m_strFileName)%>_640.jpg" />
 					</a>
 
-					<div class="IllustItemCommand">
-						<a class="IllustItemCommandComment typcn typcn-message" href="/IllustCommentPcV.jsp?TD=<%=cContent.m_nContentId%>"></a>
-						<a id="IllustItemCommandCommentNum_<%=cContent.m_nContentId%>" class="IllustItemCommandCommentNum" href="/IllustCommentPcV.jsp?TD=<%=cContent.m_nContentId%>">&nbsp;<%=cContent.m_nCommentNum%></a>
-						<%String strHeartClass = (cContent.m_bBookmark)?"typcn-heart-full-outline Selected":"typcn-heart-outline"; %>
-						<a id="IllustItemCommandHeart_<%=cContent.m_nContentId%>" class="IllustItemCommandHeart typcn <%=strHeartClass%>" href="javascript:void(0)" onclick="UpdateBookmark(<%=cContent.m_nContentId%>)"></a>
-						<a class="IllustItemCommandHeartNum" id="IllustItemCommandHeartNum_<%=cContent.m_nContentId%>" href="/IllustHeartPcV.jsp?ID=<%=cContent.m_nUserId%>&amp;TD=<%=cContent.m_nContentId%>">&nbsp;<%=cContent.m_nBookmarkNum%></a>
-						<div class="IllustItemCommandSub">
-							<%String strUrl = URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"); %>
-							<a class="social-icon Twitter" href="https://twitter.com/share?url=<%=strUrl%>">&#229;</a>
-							<%if(cContent.m_nUserId==cCheckLogin.m_nUserId) {%>
-							<a class="IllustItemCommandDelete typcn typcn-trash" href="javascript:void(0)" onclick="DeleteContent(<%=cContent.m_nContentId%>)"></a>
+					<div class="IllustItemResList">
+						<div class="IllustItemResListTitle">
+							<%if(cContent.m_vComment.size()<=0) {%>
+							<%=_TEX.T("Common.IllustItemRes.Title.Init")%>
+							<%} else {%>
+							<%=String.format(_TEX.T("Common.IllustItemRes.Title"), cContent.m_vComment.size())%>
 							<%}%>
-							<a class="IllustItemCommandInfo typcn typcn-info-large" href="/ReportFormPcV.jsp?TD=<%=cContent.m_nContentId%>"></a>
 						</div>
+						<%for(CComment comment : cContent.m_vComment) {%>
+						<span class="ResEmoji"><%=Common.ToStringHtml(comment.m_strDescription)%></span>
+						<%}%>
+						<span id="ResEmojiAdd_<%=cContent.m_nContentId%>" class="ResEmojiAdd"><span class="fas fa-plus-square"></span></span>
 					</div>
-					<div class="ItemComment Home">
-						<%boolean bReply = false;%>
-						<%for(CComment cComment : cContent.m_vComment) {%>
-						<div class="ItemCommentItem">
-							<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nUserId%>">
-								<%=Common.ToStringHtml(cComment.m_strNickName)%>
-							</a>
-							<span class="CommentDesc">
-								<%if(cComment.m_nToUserId>0) {%>
-								<a class="CommentName" href="/IllustListPcV.jsp?ID=<%=cComment.m_nToUserId%>">
-									&gt; <%=Common.ToStringHtml(cComment.m_strToNickName)%>
-								</a>
-								<%}%>
-								<a href="/IllustCommentPcV.jsp?TD=<%=cComment.m_nContentId%>">
-									<%=Common.AutoLinkPc(Common.ToStringHtml(cComment.m_strDescription))%>
-								</a>
-								<span class="CommentCmd">
-									<a class="fa fa-reply" onclick="ResComment(<%=cContent.m_nContentId%>, <%=cComment.m_nUserId%>, '<%=Common.ToStringHtml(cComment.m_strNickName)%>')"></a>
-								</span>
-							</span>
-						</div>
-						<%
-							bReply = (cContent.m_nUserId==cCheckLogin.m_nUserId && cComment.m_nUserId!=cCheckLogin.m_nUserId);
-						}
-						%>
-						<div class="CommentTo" id="CommentTo_<%=cContent.m_nContentId%>">
-							<span>&gt; </span>
-							<span class="CommentToTxt" id="CommentToTxt_<%=cContent.m_nContentId%>"></span>
-							<input id="CommentToId_<%=cContent.m_nContentId%>" type="hidden" value="0" />
-							<span class="typcn typcn-times" onclick="DeleteRes(<%=cContent.m_nContentId%>)"></span>
-						</div>
-						<div class="ItemCommentItem">
-							<%
-							String strComment = "";
-							if(bReply) {
-								CComment cComment = cContent.m_vComment.get(cContent.m_vComment.size()-1);
-								strComment = "> " + Common.ToStringHtml(cComment.m_strNickName);
-							}
-							%>
-							<input class="CommentDescTxt" id="CommentDescTxt_<%=cContent.m_nContentId%>" type="text" maxlength="200" value="<%=Common.ToStringHtml(strComment)%>" />
-							<div class="CommentDescBtn">
-								<a class="BtnBase typcn typcn-message" data-id="<%=cContent.m_nContentId%>" onclick="SendComment(<%=cContent.m_nContentId%>)"></a>
-							</div>
-						</div>
+
+					<div class="IllustItemResBtnList">
+						<%for(String strEmoji : Common.CATEGORY_EMOJI[cContent.m_nCategoryId]) {%>
+						<a class="ResEmojiBtn" onclick="SendComment(<%=cContent.m_nContentId%>, '<%=strEmoji%>', <%=cCheckLogin.m_nUserId%>)"><%=strEmoji%></a>
+						<%}%>
 					</div>
 				</div>
 				<%}%>

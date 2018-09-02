@@ -35,11 +35,9 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 			});
 			function UploadFile() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
-				var nCategory = $('input:radio[name="CAT"]:checked').val();
+				var nCategory = $('#EditCategory').val();
 				var strDescription = $.trim($("#EditDescription").val());
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-				console.log(nCategory, strDescription, nTweet);
-				return;
 				$("#file_thumb").upload(
 					'/f/UploadFileF.jsp',
 					{
@@ -77,7 +75,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 
 			$(function() {
 				$('#file_thumb').on("change",function(){
-					DispMsgStatic('画像ファイル読込中...');
+					DispMsgStatic('loading...');
 					var file = $(this).prop("files")[0];
 					if (this.files.length && file.type.match('image.*')) {
 						EXIF.getData(file, function(){
@@ -104,22 +102,24 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 			<div class="UploadFile">
 				<div class="InputFile">
 					<div class="OrgMessage">
-						<span class="typcn typcn-plus-outline"></span>画像を選択
+						<span class="typcn typcn-plus-outline"></span><%=_TEX.T("UploadFilePc.SelectImg")%>
 					</div>
 					<img id="imgView" class="imgView" src="" />
 					<input id="file_thumb" type="file" name="file_thumb" />
 				</div>
 				<div class="CategorDesc">
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="0"><span class="CategoryLabel"><%=_TEX.T("Category.C0")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="1"><span class="CategoryLabel"><%=_TEX.T("Category.C1")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="2"><span class="CategoryLabel"><%=_TEX.T("Category.C2")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="3"><span class="CategoryLabel"><%=_TEX.T("Category.C3")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="4"><span class="CategoryLabel"><%=_TEX.T("Category.C4")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="5"><span class="CategoryLabel"><%=_TEX.T("Category.C5")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="6"><span class="CategoryLabel"><%=_TEX.T("Category.C6")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="7"><span class="CategoryLabel"><%=_TEX.T("Category.C7")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="8"><span class="CategoryLabel"><%=_TEX.T("Category.C8")%></span></label>
-					<label><input class="CategoryRadio" type="radio" name="CAT" value="9"><span class="CategoryLabel"><%=_TEX.T("Category.C9")%></span></label>
+					<select id="EditCategory">
+						<option value="0"><%=_TEX.T("Category.C0")%></option>
+						<option value="1"><%=_TEX.T("Category.C1")%></option>
+						<option value="2"><%=_TEX.T("Category.C2")%></option>
+						<option value="3"><%=_TEX.T("Category.C3")%></option>
+						<option value="4"><%=_TEX.T("Category.C4")%></option>
+						<option value="5"><%=_TEX.T("Category.C5")%></option>
+						<option value="6"><%=_TEX.T("Category.C6")%></option>
+						<option value="7"><%=_TEX.T("Category.C7")%></option>
+						<option value="8"><%=_TEX.T("Category.C8")%></option>
+						<option value="9"><%=_TEX.T("Category.C9")%></option>
+					</select>
 				</div>
 				<div class="Description">
 					<textarea id="EditDescription" class="EditDescription" maxlength="200" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
@@ -127,7 +127,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				</div>
 				<div class="UoloadCmdOption">
 					<div class="OptionItem">
-						<div class="OptionLabel">Twitterに投稿</div>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" />
 							<label class="onoffswitch-label" for="OptionTweet">
@@ -138,7 +138,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					</div>
 				</div>
 				<div class="UoloadCmd">
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile()">アップロード</a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile()"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				</div>
 			</div>
 		</div>

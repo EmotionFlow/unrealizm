@@ -93,6 +93,7 @@ class IllustViewC {
 				return false;
 			}
 
+			/*
 			// Comment
 			strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname, T2.nickname as to_nickname FROM (comments_0000 INNER JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id) LEFT JOIN users_0000 as T2 ON comments_0000.to_user_id=T2.user_id  WHERE content_id=? ORDER BY comment_id ASC";
 			cState = cConn.prepareStatement(strSql);
@@ -109,6 +110,7 @@ class IllustViewC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			*/
 
 			// bookmark
 			strSql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=? LIMIT 1";

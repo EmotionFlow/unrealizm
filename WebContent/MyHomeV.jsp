@@ -40,73 +40,10 @@ if(!cCheckLogin.m_bLogin) {
 				});
 			}
 
-			function UpdateBookmark(nContentId) {
-				var bBookmark = $("#IllustItemCommandHeart_"+nContentId).hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "CID": nContentId, "CHK": (bBookmark)?0:1 },
-					"url": "/f/UpdateBookmarkF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(bBookmark) {
-							$("#IllustItemCommandHeart_"+nContentId).addClass('typcn-heart-outline').removeClass('typcn-heart-full-outline').removeClass('Selected');
-						} else {
-							$("#IllustItemCommandHeart_"+nContentId).removeClass('typcn-heart-outline').addClass('typcn-heart-full-outline').addClass('Selected');
-						}
-						$('#IllustItemCommandHeartNum_'+nContentId).html("&nbsp;"+data.bookmark_num);
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
-				});
-			}
-
 			function DeleteContent(nContentId) {
 				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID":<%=cCheckLogin.m_nUserId%>, "CID":nContentId },
-					"url": "/f/DeleteContentF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						$('#IllustItem_'+nContentId).remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
-				});
+				DeleteContentBase(<%=cCheckLogin.m_nUserId%>, nContentId);
 				return false;
-			}
-
-			function ResComment(nId, nToUserId, strToUserName) {
-				$("#CommentTo_"+nId).show();
-				$("#CommentToTxt_"+nId).html(strToUserName);
-				$("#CommentToId_"+nId).val(nToUserId);
-			}
-
-			function DeleteRes(nId) {
-				$("#CommentTo_"+nId).hide();
-				$("#CommentToTxt_"+nId).html("");
-				$("#CommentToId_"+nId).val(0);
-			}
-
-			function SendComment(nId) {
-				var strDescription = $("#CommentDescTxt_"+nId).val();
-				var nToUserId = $("#CommentToId_"+nId).val();
-				var strToUserNickName = $("#CommentToTxt_"+nId).html();
-				if(strDescription.length <= 0) return;
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": nId, "DES": strDescription, "TOD":nToUserId },
-					"url": "/f/SendCommentF.jsp",
-					"success": function(data) {
-						var $objItemCommentItem = CreateCommentItem(nId, <%=cCheckLogin.m_nUserId%>, '<%=cCheckLogin.m_strNickName%>', nToUserId, strToUserNickName, strDescription);
-						$('#IllustItem_'+nId + ' .ItemComment .ItemCommentItem:last').before($objItemCommentItem);
-						DeleteRes(nId);
-						$("#CommentDescTxt_"+nId).val('');
-						//location.reload(true);
-					}
-				});
 			}
 
 			function MoveTab() {
