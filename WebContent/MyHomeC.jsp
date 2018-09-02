@@ -71,7 +71,7 @@ class MyHomeC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 
-				// Eeach Comment
+				// Eeach Emoji
 				strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
 				cState = cConn.prepareStatement(strSql);
 				for(CContent cContent : m_vContentList) {

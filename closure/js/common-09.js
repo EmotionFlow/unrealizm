@@ -237,15 +237,17 @@ function CreateIllustItemBase(cItem, nUserId, nMode) {
 	return $objItem;
 }
 
-function SendComment(nContentId, strDescription, nUserId) {
-	if(strDescription.length <= 0) return;
+function SendEmoji(nContentId, nCategory, nPos , nUserId) {
 	$.ajax({
 		"type": "post",
-		"data": {"IID": nContentId, "DES": strDescription, "UID": nUserId},
-		"url": "/f/SendCommentF.jsp",
+		"data": {"IID": nContentId, "CAT": nCategory, "POS": nPos, "UID": nUserId},
+		"url": "/f/SendEmojiF.jsp",
+		"dataType": "json",
 		"success": function(data) {
-			var $objResEmoji = $("<span/>").addClass("ResEmoji").html(strDescription);
-			$("#ResEmojiAdd_"+nContentId).before($objResEmoji);
+			if(data.result_num>0) {
+				var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
+				$("#ResEmojiAdd_"+nContentId).before($objResEmoji);
+			}
 		}
 	});
 	return false;

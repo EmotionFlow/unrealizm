@@ -134,47 +134,7 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 
 		<div class="Wrapper">
 
-			<div class="IllustItemList">
-				<div class="IllustItem" id="IllustItem_<%=cResults.m_cContent.m_nContentId%>">
-					<div class="IllustItemUser">
-						<a class="IllustItemUserThumb" href="/IllustListPcV.jsp?ID=<%=cResults.m_cContent.m_nUserId%>">
-							<img class="IllustItemUserThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg" />
-						</a>
-						<a class="IllustItemUserName" href="/IllustListPcV.jsp?ID=<%=cResults.m_cContent.m_nUserId%>"><%=cResults.m_cContent.m_cUser.m_strNickName%></a>
-
-						<%if(!cResults.m_bOwner){
-							if(cResults.m_bFollow){%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow Selected" onclick="UpdateFollow()">フォロー中</span>
-						<%	} else {%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" onclick="UpdateFollow()">フォローする</span>
-						<%	}
-						}%>
-					</div>
-
-					<div class="IllustItemCommand">
-						<span class="Category C<%=cResults.m_cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))%></span>
-						<div class="IllustItemCommandSub">
-							<%String strUrl = URLEncoder.encode(String.format("https://poipiku.com/%d/%d.html", cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId), "UTF-8");%>
-							<a class="IllustItemCommandTweet fab fa-twitter-square" href="https://twitter.com/share?url=<%=strUrl%>"></a>
-							<%if(cResults.m_bOwner || cCheckLogin.m_nUserId==1) {%>
-							<a class="IllustItemCommandDelete far fa-trash-alt" href="javascript:void(0)" onclick="DeleteContent(<%=cResults.m_cContent.m_nContentId%>)"></a>
-							<%} else {%>
-							<a class="IllustItemCommandInfo fas fa-info-circle" href="/ReportFormPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>"></a>
-							<%}%>
-						</div>
-					</div>
-
-					<%if(!cResults.m_cContent.m_strDescription.isEmpty()) {%>
-					<div class="IllustItemDesc">
-						<%=Common.AutoLinkPc(Common.ToStringHtml(cResults.m_cContent.m_strDescription))%>
-					</div>
-					<%}%>
-
-					<a class="IllustItemThumb" href="/IllustDetailPcV.jsp?TD=<%=cResults.m_cContent.m_nContentId%>" target="_blank">
-						<img class="IllustItemThumbImg" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />
-					</a>
-				</div>
-			</div>
+			<%=cResults.m_cContent.toHtml(cCheckLogin.m_nUserId, false, _TEX)%>
 
 			<div id="IllustItemList" class="IllustItemList">
 			</div>

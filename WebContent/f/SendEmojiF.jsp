@@ -1,30 +1,32 @@
+<%@page import="com.emotionflow.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
 class SendCommentCParam {
 	public int m_nContentId = -1;
+	public int m_nCategory = 0;
+	public int m_nPos = 0;
 	public int m_nUserId = -1;
-	public int m_nToUserId = -1;
-	public String m_strDescription = "";
 
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nContentId		= Common.ToInt(cRequest.getParameter("IID"));
-			m_strDescription	= Common.TrimAll(cRequest.getParameter("DES"));
-			m_nUserId			= Common.ToInt(cRequest.getParameter("UID"));
-			m_nToUserId			= Math.max(Common.ToInt(cRequest.getParameter("TOD")), 0);
+			m_nContentId	= Common.ToInt(cRequest.getParameter("IID"));
+			m_nCategory		= Common.ToInt(cRequest.getParameter("CAT"));
+			m_nPos			= Common.ToInt(cRequest.getParameter("POS"));
+			m_nUserId		= Common.ToInt(cRequest.getParameter("UID"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
-			m_strDescription = "";
 		}
 	}
 }
 
 class SendCommentC {
+	public String m_strEmoji = "";
 	public boolean GetResults(SendCommentCParam cParam, ResourceBundleControl _TEX) {
-		if (cParam.m_strDescription.isEmpty()) return false;
+		if(cParam.m_nCategory<0 || cParam.m_nCategory>=Common.CATEGORY_EMOJI.length) return false;
+		if(cParam.m_nPos<0 || cParam.m_nPos>=Common.CATEGORY_EMOJI[cParam.m_nCategory].length) return false;
 
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
@@ -54,13 +56,28 @@ class SendCommentC {
 				return false;
 			}
 
-			// add new comment
-			strSql = "INSERT INTO comments_0000(content_id, description, user_id, to_user_id) VALUES(?, ?, ?, ?)";
+			// max 5 emoji
+			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);
-			cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
+			cState.setInt(2, cParam.m_nUserId);
+			cResSet = cState.executeQuery();
+			int nEmojiNum = 0;
+			if(cResSet.next()) {
+				nEmojiNum = cResSet.getInt(1);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			if(nEmojiNum>=5) {
+				return false;
+			}
+
+			// add new comment
+			strSql = "INSERT INTO comments_0000(content_id, description, user_id) VALUES(?, ?, ?)";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cState.setString(2, Common.CATEGORY_EMOJI[cParam.m_nCategory][cParam.m_nPos]);
 			cState.setInt(3, cParam.m_nUserId);
-			cState.setInt(4, cParam.m_nToUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
@@ -73,6 +90,8 @@ class SendCommentC {
 			cState.close();cState=null;
 
 			bRtn = true; // 以下実行されなくてもOKを返す
+			m_strEmoji = Common.CATEGORY_EMOJI[cParam.m_nCategory][cParam.m_nPos];
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -91,8 +110,11 @@ cCheckLogin.GetResults2(request, response);
 SendCommentCParam cParam = new SendCommentCParam();
 cParam.GetParam(request);
 boolean bRtn = false;
+SendCommentC cResults = new SendCommentC();
 if( cCheckLogin.m_bLogin && cParam.m_nUserId == cCheckLogin.m_nUserId ) {
-	SendCommentC cResults = new SendCommentC();
 	bRtn = cResults.GetResults(cParam, _TEX);
 }
-%><%=bRtn%>
+%>{
+"result_num" : <%=(bRtn)?1:0%>,
+"result" : "<%=cResults.m_strEmoji%>"
+}

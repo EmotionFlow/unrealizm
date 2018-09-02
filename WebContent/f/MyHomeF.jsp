@@ -11,28 +11,24 @@ import="javax.naming.*"
 <%@ include file="/inner/Common.jsp"
 %><%!
 class MyHomeCParam {
-	public int m_nStartId = -1;
-	public int m_nSelectMax = -1;
+	public int m_nMode = 0;
+	public int m_nPage = 0;
 	public int m_nAccessUserId = -1;
 
 	public void GetParam(HttpServletRequest cRequest) {
-		try
-		{
+		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nStartId		= Common.ToInt(cRequest.getParameter("SID"));
-			m_nSelectMax	= Common.ToIntN(cRequest.getParameter("PNM"), 10, 20);
-		}
-		catch(Exception e)
-		{
-			m_nStartId = -1;
-			m_nSelectMax = -1;
+			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
+			m_nPage = Common.ToInt(cRequest.getParameter("PG"));
+		} catch(Exception e) {
+			m_nPage = 0;
 		}
 	}
 }
 
 class MyHomeC {
+	public int SELECT_MAX = 10;
 	public Vector<CContent> m_vContentList = new Vector<CContent>();
-	int m_nEndId = -1;
 
 	public boolean GetResults(MyHomeCParam cParam) {
 		boolean bResult = false;
@@ -47,23 +43,13 @@ class MyHomeC {
 			cConn = dsPostgres.getConnection();
 
 			// NEW ARRIVAL
-			if(cParam.m_nStartId>0) {
-				m_nEndId = cParam.m_nStartId;
-				strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name, bookmarks_0000.content_id as bookmark FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id AND bookmarks_0000.user_id=? WHERE (contents_0000.user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) OR contents_0000.user_id=?) AND contents_0000.content_id<? ORDER BY content_id DESC LIMIT ?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nAccessUserId);
-				cState.setInt(2, cParam.m_nAccessUserId);
-				cState.setInt(3, cParam.m_nAccessUserId);
-				cState.setInt(4, cParam.m_nStartId);
-				cState.setInt(5, cParam.m_nSelectMax);
-			} else {
-				strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name, bookmarks_0000.content_id as bookmark FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id AND bookmarks_0000.user_id=? WHERE (contents_0000.user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) OR contents_0000.user_id=?) ORDER BY content_id DESC LIMIT ?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nAccessUserId);
-				cState.setInt(2, cParam.m_nAccessUserId);
-				cState.setInt(3, cParam.m_nAccessUserId);
-				cState.setInt(4, cParam.m_nSelectMax);
-			}
+			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name, bookmarks_0000.content_id as bookmark FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id AND bookmarks_0000.user_id=? WHERE (contents_0000.user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) OR contents_0000.user_id=?) ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nAccessUserId);
+			cState.setInt(2, cParam.m_nAccessUserId);
+			cState.setInt(3, cParam.m_nAccessUserId);
+			cState.setInt(4, SELECT_MAX*cParam.m_nPage);
+			cState.setInt(5, SELECT_MAX);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
@@ -71,8 +57,6 @@ class MyHomeC {
 				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
 				cContent.m_bBookmark			= (cResSet.getInt("bookmark")>0);
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-
-				m_nEndId = cContent.m_nContentId;
 				m_vContentList.addElement(cContent);
 			}
 			cResSet.close();cResSet=null;
@@ -114,43 +98,7 @@ cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
 
 MyHomeC cResults = new MyHomeC();
 boolean bRtn = cResults.GetResults(cParam);
-%>{
-"start_id":<%=cParam.m_nStartId%>,
-"end_id":<%=cResults.m_nEndId%>,
-"result_num":<%=cResults.m_vContentList.size()%>,
-"result":[
-<%
-for (int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CContent cContent = cResults.m_vContentList.get(nCnt);
 %>
-{
-"content_id" : <%=cContent.m_nContentId%>,
-"user_id" : <%=cContent.m_nUserId%>,
-"file_name" : "<%=CEnc.E(Common.GetUrl(cContent.m_strFileName))%>",
-"description" : "<%=CEnc.E(cContent.m_strDescription)%>",
-"nickname" : "<%=CEnc.E(cContent.m_cUser.m_strNickName)%>",
-"user_file_name" : "<%=CEnc.E(Common.GetUrl(cContent.m_cUser.m_strFileName))%>",
-"bookmark" : <%=(cContent.m_bBookmark)?1:0%>,
-"comment_num" : <%=cContent.m_nCommentNum%>,
-"bookmark_num" : <%=cContent.m_nBookmarkNum%>,
-"category_id" : <%=cContent.m_nCategoryId%>,
-"category" : "<%=CEnc.E(_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)))%>",
-"comment":[
-<%
-for (int nCmtCnt=0; nCmtCnt<cContent.m_vComment.size(); nCmtCnt++) {
-	CComment cComment = cContent.m_vComment.get(nCmtCnt);
-%>
-{
-"comment_id" : <%=cComment.m_nCommentId%>,
-"user_id" : <%=cComment.m_nUserId%>,
-"nickname" : "<%=CEnc.E(cComment.m_strNickName)%>",
-"to_user_id" : <%=cComment.m_nToUserId%>,
-"to_nickname" : "<%=CEnc.E(cComment.m_strToNickName)%>",
-"description" : "<%=CEnc.E(cComment.m_strDescription)%>"
-}<%=(nCmtCnt<cContent.m_vComment.size()-1)?",":""%>
+<%for (CContent cContent : cResults.m_vContentList) {%>
+<%=CCnv.toHtml(cContent, cCheckLogin.m_nUserId, cParam.m_nMode, _TEX)%>
 <%}%>
-]
-}<%=(nCnt<cResults.m_vContentList.size()-1)?",":""%>
-<%}%>
-]
-}

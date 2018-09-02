@@ -15,24 +15,23 @@ if(!cCheckLogin.m_bLogin) {
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>home</title>
 		<script>
-			var g_nNextId = -1;
-			function addContents(nStartId) {
+			var g_nPage = 0;
+			function addContents() {
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "SID" : nStartId },
+					"data": {"MD" : <%=CCnv.MODE_SP%>, "PG" : g_nPage},
 					"url": "/f/MyHomeF.jsp",
-					"dataType": "json",
 					"success": function(data) {
-						g_nNextId = data.end_id;
-						if(g_nNextId == -1) {
-							$('#InfoMsg').show();
+						if(data) {
+							g_nPage++;
+							$('#InfoMsg').hide();
+							$("#IllustItemList").append(data);
+							$(".Waiting").remove();
+						} else {
+							$(window).unbind("scroll.addContents");
 						}
-						for(var nCnt=0; nCnt<data.result.length; nCnt++) {
-							$("#IllustItemList").append(CreateIllustItem(data.result[nCnt], <%=cCheckLogin.m_nUserId%>));
-						}
-						$(".Waiting").remove();
 					},
 					"error": function(req, stat, ex){
 						DispMsg('Connection error');
@@ -51,14 +50,14 @@ if(!cCheckLogin.m_bLogin) {
 			}
 
 			$(function(){
-				addContents(g_nNextId);
+				addContents();
 			});
 
 			$(document).ready(function() {
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 100) {
-						addContents(g_nNextId);
+						addContents();
 					}
 				});
 			});
