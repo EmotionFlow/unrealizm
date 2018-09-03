@@ -10,7 +10,9 @@ import="javax.naming.*"
 %>
 <%@ include file="/inner/Common.jsp"
 %><%!
-class MyHomeCParam {
+class IllustViewCParam {
+	public int m_nUserId = -1;
+	public int m_nContentId = -1;
 	public int m_nPage = 0;
 	public int m_nMode = 0;
 	public int m_nAccessUserId = -1;
@@ -18,19 +20,21 @@ class MyHomeCParam {
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Common.ToInt(cRequest.getParameter("PG"));
-			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
+			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
+			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
+			m_nPage 		= Common.ToInt(cRequest.getParameter("PG"));
+			m_nMode 		= Common.ToInt(cRequest.getParameter("MD"));
 		} catch(Exception e) {
-			m_nPage = 0;
+			m_nContentId = -1;
 		}
 	}
 }
 
-class MyHomeC {
+class IllustViewC {
 	public int SELECT_MAX = 10;
 	public Vector<CContent> m_vContentList = new Vector<CContent>();
 
-	public boolean GetResults(MyHomeCParam cParam) {
+	public boolean GetResults(IllustViewCParam cParam) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -42,11 +46,25 @@ class MyHomeC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+
+			// follow
+			int m_nFollow = CUser.FOLLOW_HIDE;
+			if(cParam.m_nUserId != cParam.m_nAccessUserId) {
+				strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nAccessUserId);
+				cState.setInt(2, cParam.m_nUserId);
+				cResSet = cState.executeQuery();
+				m_nFollow = (cResSet.next())?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
+
 			// NEW ARRIVAL
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) OR contents_0000.user_id=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND contents_0000.content_id<? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nAccessUserId);
-			cState.setInt(2, cParam.m_nAccessUserId);
+			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(2, cParam.m_nContentId);
 			cState.setInt(3, SELECT_MAX*cParam.m_nPage);
 			cState.setInt(4, SELECT_MAX);
 			cResSet = cState.executeQuery();
@@ -55,7 +73,7 @@ class MyHomeC {
 				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
 				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
+				cContent.m_cUser.m_nFollowing = m_nFollow;
 				m_vContentList.addElement(cContent);
 			}
 			cResSet.close();cResSet=null;
@@ -91,11 +109,11 @@ class MyHomeC {
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-MyHomeCParam cParam = new MyHomeCParam();
+IllustViewCParam cParam = new IllustViewCParam();
 cParam.GetParam(request);
 cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
 
-MyHomeC cResults = new MyHomeC();
+IllustViewC cResults = new IllustViewC();
 boolean bRtn = cResults.GetResults(cParam);
 %>
 <%for (CContent cContent : cResults.m_vContentList) {%>

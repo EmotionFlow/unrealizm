@@ -16,22 +16,26 @@ if(!cCheckLogin.m_bLogin) {
 		<title>home</title>
 		<script>
 			var g_nPage = 0;
+			var g_bAdding = false;
 			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
-				$.ajaxSingle({
+				$.ajax({
 					"type": "post",
-					"data": {"MD" : <%=CCnv.MODE_SP%>, "PG" : g_nPage},
+					"data": {"PG" : g_nPage, "MD" : <%=CCnv.MODE_SP%>},
 					"url": "/f/MyHomeF.jsp",
 					"success": function(data) {
 						if(data) {
 							g_nPage++;
 							$('#InfoMsg').hide();
 							$("#IllustItemList").append(data);
-							$(".Waiting").remove();
+							g_bAdding = false;
 						} else {
 							$(window).unbind("scroll.addContents");
 						}
+						$(".Waiting").remove();
 					},
 					"error": function(req, stat, ex){
 						DispMsg('Connection error');
@@ -56,7 +60,7 @@ if(!cCheckLogin.m_bLogin) {
 			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 100) {
+					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 200) {
 						addContents();
 					}
 				});
@@ -78,8 +82,7 @@ if(!cCheckLogin.m_bLogin) {
 					フォローする人を探す
 				</a>
 			</div>
-			<div id="IllustItemList" class="IllustItemList">
-			</div>
+			<div id="IllustItemList" class="IllustItemList"></div>
 		</div>
 	</body>
 </html>

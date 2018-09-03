@@ -34,7 +34,7 @@
 			$(document).ready(function() {
 				$(window).bind("scroll", function() {
 					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 100) {
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
 						addContents(g_nNextId);
 					}
 				});

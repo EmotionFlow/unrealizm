@@ -37,7 +37,7 @@ if(cResults.m_bUpdate) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>設定</title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("TopV.ContentsTitle.Setting")%></title>
 
 		<script type="text/javascript">
 		$(function(){

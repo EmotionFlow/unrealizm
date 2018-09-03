@@ -72,7 +72,7 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX)%>
 			</div>
 		</div>
 

@@ -62,10 +62,10 @@ if(!cResults.GetResults(cParam)) {
 					"success": function(data) {
 						if(data.result==1) {
 							$('#UserInfoCmdFollow').addClass('Selected');
-							$('#UserInfoCmdFollow').html("フォロー中");
+							$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Following")%>");
 						} else if(data.result==2) {
 							$('#UserInfoCmdFollow').removeClass('Selected');
-							$('#UserInfoCmdFollow').html("フォローする");
+							$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
 						} else {
 							DispMsg('フォローできませんでした');
 						}
@@ -87,12 +87,12 @@ if(!cResults.GetResults(cParam)) {
 						if(data.result==1) {
 							$('#UserInfoCmdBlock').addClass('Selected');
 							$('#UserInfoCmdFollow').removeClass('Selected');
-							$('#UserInfoCmdFollow').html("フォローする");
+							$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
 							$('#UserInfoCmdFollow').hide();
 						} else if(data.result==2) {
 							$('#UserInfoCmdBlock').removeClass('Selected');
 							$('#UserInfoCmdFollow').removeClass('Selected');
-							$('#UserInfoCmdFollow').html("フォローする");
+							$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
 							$('#UserInfoCmdFollow').show();
 						} else {
 							DispMsg('ブロックできませんでした');
@@ -114,7 +114,7 @@ if(!cResults.GetResults(cParam)) {
 				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
 				$(window).bind("scroll", function() {
 					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 100) {
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
 						addContents(g_nNextId);
 					}
 				});
@@ -138,16 +138,16 @@ if(!cResults.GetResults(cParam)) {
 				</div>
 				<span class="UserInfoCmd">
 					<%if(cResults.m_bOwner) {%>
-					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><span class="typcn typcn-cog-outline"></span>設定</a>
+					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><span class="typcn typcn-cog-outline"></span>_TEX.T("TopV.ContentsTitle.Setting")</a>
 					<%} else if(cResults.m_bBlocking){%>
-					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" style="display: none;" onclick="UpdateFollow()">フォローする</span>
+					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" style="display: none;" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
 					<%} else if(cResults.m_bBlocked){%>
 					<%} else if(cResults.m_bFollow){%>
-					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow Selected" onclick="UpdateFollow()">フォロー中</span>
+					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow Selected" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Following")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock " onclick="UpdateBlock()"></span>
 					<%} else {%>
-					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" onclick="UpdateFollow()">フォローする</span>
+					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 					<%}%>
 					<%

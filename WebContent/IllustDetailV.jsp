@@ -11,7 +11,7 @@ cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
 
 IllustDetailC cResults = new IllustDetailC();
 if(!cResults.GetResults(cParam)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 %>

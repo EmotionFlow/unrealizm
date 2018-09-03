@@ -14,10 +14,6 @@ if(!cResults.GetResults(cParam)) {
 	return;
 }
 
-DateFormat cContentDateFromat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, request.getLocale());
-cContentDateFromat.setTimeZone(Common.GetTimeZone(request));
-SimpleDateFormat cImgArg = new SimpleDateFormat("yyyyMMddHHmmss");
-
 String strTitle = "";
 String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
 if(strs.length>0 && strs[0].length()>0) {
@@ -30,13 +26,12 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustViewPc.Title.Desc"), strDesc, cResults.m_cUser.m_strNickName))%>" />
+		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustViewPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%>" />
-		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustViewPc.Title.Desc"), strDesc, cResults.m_cUser.m_strNickName))%>" />
+		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustViewPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:image" content="https://poipiku.com/<%=cResults.m_cContent.m_strFileName%>" />
-
 		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%></title>
 
 		<script type="text/javascript">
@@ -46,25 +41,25 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 		</script>
 
 		<script type="text/javascript">
-			var g_nNextId = <%=cResults.m_cContent.m_nContentId%>;
-			function addContents(nStartId) {
+			var g_nPage = 0;
+			var g_bAdding = false;
+			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
-				$.ajaxSingle({
+				$.ajax({
 					"type": "post",
-					"data": { "SID" : nStartId, "ID" :  <%=cResults.m_cContent.m_nUserId%>},
-					"url": "/f/IllustListTimeLineF.jsp",
-					"dataType": "json",
+					"data": {"ID" :  <%=cResults.m_cContent.m_nUserId%>, "TD" : <%=cResults.m_cContent.m_nContentId%>, "PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
+					"url": "/f/IllustViewF.jsp",
 					"success": function(data) {
-						g_nNextId = data.end_id;
-						if(g_nNextId == -1) {
-							$('#InfoMsg').show();
-						}
-						for(var nCnt=0; nCnt<data.result.length; nCnt++) {
-							var $objItem = CreateIllustItemPc(data.result[nCnt], <%=cCheckLogin.m_nUserId%>);
-							var $objUserInfoCmdFollow = $("#UserInfoCmdFollow").clone(true).attr('id', '');
-							$objItem.find('.IllustItemUser').append($objUserInfoCmdFollow);
-							$("#IllustItemList").append($objItem);
+						if(data) {
+							g_nPage++;
+							$("#IllustItemList").append(data);
+							$(".Waiting").remove();
+							g_bAdding = false;
+						} else {
+							$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -88,16 +83,16 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bFollow)?0:1 },
+					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cContent.m_nUserId%>, "CHK": (bFollow)?0:1 },
 					"url": "/f/UpdateFollowF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result==1) {
 							$('.UserInfoCmdFollow').addClass('Selected');
-							$('.UserInfoCmdFollow').html("フォロー中");
+							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Following")%>");
 						} else if(data.result==2) {
 							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("フォローする");
+							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
 						} else {
 							DispMsg('フォローできませんでした');
 						}
@@ -109,20 +104,14 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 			}
 
 			$(function(){
-				<%
-				if(cResults.m_bReply) {
-					CComment cComment = cResults.m_cContent.m_vComment.get(cResults.m_cContent.m_vComment.size()-1);
-				%>
-				ResComment(<%=cResults.m_cContent.m_nContentId%>, <%=cComment.m_nUserId%>, '<%=Common.ToStringHtml(cComment.m_strNickName)%>');
-				<%}%>
-				addContents(g_nNextId);
+				addContents();
 			});
 
 			$(document).ready(function() {
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 100) {
-						addContents(g_nNextId);
+					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 200) {
+						addContents();
 					}
 				});
 			});
@@ -133,11 +122,10 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-
-			<%=cResults.m_cContent.toHtml(cCheckLogin.m_nUserId, false, _TEX)%>
-
-			<div id="IllustItemList" class="IllustItemList">
+			<div class="IllustItemList">
+				<%=CCnv.toHtml(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 			</div>
+			<div id="IllustItemList" class="IllustItemList"></div>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

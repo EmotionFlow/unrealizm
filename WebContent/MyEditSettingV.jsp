@@ -35,7 +35,7 @@ if(cResults.m_bUpdate) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp" %>
-		<title>設定</title>
+		<title>setting</title>
 		<script type="text/javascript">
 			$.ajaxSetup({
 				cache: false,

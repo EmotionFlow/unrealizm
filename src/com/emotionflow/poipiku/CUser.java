@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import com.emotionflow.poipiku.CContent;
 
 public class CUser {
+	public static final int FOLLOW_NONE = 0;
+	public static final int FOLLOW_FOLLOWING = 1;
+	public static final int FOLLOW_HIDE = -1;
+
 	public int m_nUserId = 0;
 	public String m_strNickName = "";
 	public String m_strProfile = "";
@@ -23,4 +27,5 @@ public class CUser {
 	public int m_nAutoTweetTime=-99;
 	public String m_strAutoTweetDesc="";
 	public int m_nAutoTweetWeekDay = -1;
+	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 }

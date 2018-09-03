@@ -22,7 +22,6 @@ public class CContent {
 	public int m_nCommentNum = 0;
 	public CUser m_cUser = new CUser();
 	public Vector<CComment> m_vComment = new Vector<CComment>();
-	public boolean m_bBookmark = false;
 
 	public CContent() {}
 	public CContent(ResultSet resultSet) throws SQLException {
