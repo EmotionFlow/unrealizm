@@ -17,7 +17,7 @@ boolean bRtn = cResults.GetResults(cParam);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<meta name="description" content="<%=_TEX.T("SearchUserByKeyword.Title.Desc")%>" />
+		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchUserByKeyword.Title")%></title>
 
 		<script type="text/javascript">

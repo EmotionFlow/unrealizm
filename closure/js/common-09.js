@@ -177,66 +177,6 @@ function CreateIllustThumbBase(cItem, nMode) {
 	return $objItem;
 }
 
-function CreateIllustItem(cItem, nUserId) {
-	return CreateIllustItemBase(cItem, nUserId, 0);
-}
-
-function CreateIllustItemPc(cItem, nUserId) {
-	return CreateIllustItemBase(cItem, nUserId, 1);
-}
-
-function CreateIllustItemBase(cItem, nUserId, nMode) {
-	// nMode : 0-app, 1-pc & smart phone
-	var ILLUST_LIST = (nMode==0)?"/IllustListV.jsp":"/IllustListPcV.jsp";
-	var ILLUST_HEART = (nMode==0)?"/IllustHeartV.jsp":"/IllustHeartPcV.jsp";
-	var REPORT_FORM = (nMode==0)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
-	var ILLUST_DETAIL = (nMode==0)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
-
-	var $objItem = $("<div/>").addClass("IllustItem").attr('id', 'IllustItem_'+cItem.content_id);
-
-	var $objItemUser = $("<div/>").addClass("IllustItemUser");
-	var $objItemUserThumb = $("<a/>").addClass("IllustItemUserThumb").attr("href", ILLUST_LIST+"?ID="+cItem.user_id);
-	var $objItemUserThumbImg = $("<img/>").addClass("IllustItemUserThumbImg").attr("src", cItem.user_file_name+"_120.jpg");
-	var $objItemUserName = $("<a/>").addClass("IllustItemUserName").attr("href", ILLUST_LIST+"?ID="+cItem.user_id).html(cItem.nickname);
-	$objItemUserThumb.append($objItemUserThumbImg);
-	$objItemUser.append($objItemUserThumb);
-	$objItemUser.append($objItemUserName);
-
-	var $objItemCommand = $("<div/>").addClass("IllustItemCommand");
-	var $objCategory = $("<span/>").addClass("Category C"+cItem.category_id).html(cItem.category);
-	$objItemCommand.append($objCategory);
-	var $objItemCommandSub = $("<div/>").addClass("IllustItemCommandSub");
-	var url="https://twitter.com/share?url=" + encodeURIComponent("https://poipiku.com/"+cItem.user_id+"/"+cItem.content_id+".html");
-	var $objItemCommandSocial = $("<a/>").addClass("IllustItemCommandTweet fab fa-twitter-square").attr("href", url);
-	var $objItemCommandDelete = $("<a/>").addClass("IllustItemCommandDelete far fa-trash-alt").attr("data-id", cItem.content_id).attr("href", "javascript:void(0)").click(function(){
-		DeleteContent($(this).data("id"));
-	});
-	var $IllustItemCommandInfo = $("<a/>").addClass("IllustItemCommandInfo fas fa-info-circle").attr("href", REPORT_FORM+"?TD="+cItem.content_id);
-	$objItemCommandSub.append($objItemCommandSocial);
-	if(cItem.user_id==nUserId) {
-		$objItemCommandSub.append($objItemCommandDelete);
-	} else {
-		$objItemCommandSub.append($IllustItemCommandInfo);
-	}
-	$objItemCommand.append($objItemCommandSub);
-
-	var $objIllustItemDesc = $("<div/>").addClass("IllustItemDesc").html(cItem.description).autoLink();
-
-	var $objItemThumb = $("<a/>").addClass("IllustItemThumb").attr("href", ILLUST_DETAIL+"?TD="+cItem.content_id);
-	if(nMode==1) {
-		$objItemThumb.attr("target", "_blank");
-	}
-	var $objItemThumbImg = $("<img/>").addClass("IllustItemThumbImg").attr("src", cItem.file_name+"_640.jpg");
-	$objItemThumb.append($objItemThumbImg);
-
-	$objItem.append($objItemUser);
-	$objItem.append($objItemCommand);
-	$objItem.append($objIllustItemDesc);
-	$objItem.append($objItemThumb);
-
-	return $objItem;
-}
-
 function SendEmoji(nContentId, nCategory, nPos , nUserId) {
 	$.ajax({
 		"type": "post",

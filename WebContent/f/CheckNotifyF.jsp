@@ -34,77 +34,75 @@ class CheckNotifyC {
 			cConn = dsPostgres.getConnection();
 
 			// Check Comment
-			strSql = "SELECT COUNT(*) as content_num FROM comments_0000 WHERE ((content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=?) OR to_user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nUserId);
 			cState.setInt(3, cParam.m_nUserId);
-			cState.setInt(4, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nCheckComment = cResSet.getInt("content_num");
+				m_nCheckComment = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 			// Check Follower
-			strSql = "SELECT  COUNT(*) as content_num FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT  COUNT(*) FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nCheckFollow = cResSet.getInt("content_num");
+				m_nCheckFollow = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 			// Check Heart
-			strSql = "SELECT COUNT(*) as content_num FROM bookmarks_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT COUNT(*) FROM bookmarks_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nCheckHeart = cResSet.getInt("content_num");
+				m_nCheckHeart = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 			// Notify Comment
-			strSql = "SELECT COUNT(*) as content_num FROM comments_0000 WHERE ((content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=?) OR to_user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nUserId);
 			cState.setInt(3, cParam.m_nUserId);
-			cState.setInt(4, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nNotifyComment = cResSet.getInt("content_num");
+				m_nNotifyComment = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 			// Notify Follower
-			strSql = "SELECT  COUNT(*) as content_num FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT  COUNT(*) FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nNotifyFollow = cResSet.getInt("content_num");
+				m_nNotifyFollow = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 			// Notify Heart
-			strSql = "SELECT COUNT(*) as content_num FROM bookmarks_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT COUNT(*) FROM bookmarks_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nNotifyHeart = cResSet.getInt("content_num");
+				m_nNotifyHeart = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

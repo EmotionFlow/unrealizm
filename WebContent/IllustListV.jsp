@@ -138,7 +138,7 @@ if(!cResults.GetResults(cParam)) {
 				</div>
 				<span class="UserInfoCmd">
 					<%if(cResults.m_bOwner) {%>
-					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><span class="typcn typcn-cog-outline"></span>_TEX.T("TopV.ContentsTitle.Setting")</a>
+					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><span class="typcn typcn-cog-outline"></span><%=_TEX.T("MyEditSetting.Title.Setting")%></a>
 					<%} else if(cResults.m_bBlocking){%>
 					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" style="display: none;" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>

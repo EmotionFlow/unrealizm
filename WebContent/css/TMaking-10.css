@@ -643,13 +643,21 @@
 	border-radius: 30px;
 }
 
-.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart .typcn
-	{
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart .typcn {
 	display: block;
 	width: 30px;
 	height: 30px;
 	font-size: 32px;
 	color: #ee9999;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart .Emoji {
+	display: block;
+	width: 30px;
+	height: 30px;
+	font-size: 24px;
+	line-height: 30px;
+	text-align: center;
 }
 
 .IllustItemList .ItemComment .ItemCommentItem .CommentDetail {
@@ -781,7 +789,7 @@
 .UserInfo .UserInfoCmd .IllustItemCommandSub {
 	display: block;
 	position: absolute;
-	right: 0;
+	right: 5px;
 	bottom: 0;
 	font-size: 22px;
 }

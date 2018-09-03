@@ -37,7 +37,7 @@ if(!cResults.GetResults(cParam)) {
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"ID" :  <%=cResults.m_cContent.m_nUserId%>, "TD" : <%=cResults.m_cContent.m_nContentId%>, "PG" : g_nPage, "MD" : <%=CCnv.MODE_SP%>},
+					"data": {"ID" : <%=cResults.m_cContent.m_nUserId%>, "TD" : <%=cResults.m_cContent.m_nContentId%>, "PG" : g_nPage, "MD" : <%=CCnv.MODE_SP%>},
 					"url": "/f/IllustViewF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -92,7 +92,7 @@ if(!cResults.GetResults(cParam)) {
 			});
 
 			$(document).ready(function() {
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 200) {
 						addContents();

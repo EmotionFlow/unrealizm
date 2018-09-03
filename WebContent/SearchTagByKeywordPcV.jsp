@@ -15,7 +15,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<meta name="description" content="<%=_TEX.T("SearchTagByKeyword.Title.Desc")%>" />
+		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchTagByKeyword.Title")%></title>
 
 		<script type="text/javascript">

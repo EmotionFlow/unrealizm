@@ -72,7 +72,7 @@ public class CCnv {
 
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
 		for(int nCnt=0; nCnt<Common.CATEGORY_EMOJI[cContent.m_nCategoryId].length; nCnt++) {
-			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, %d, %d, %d)\">%s</a>", cContent.m_nContentId, cContent.m_nCategoryId, nCnt, nLoginUserId, Common.CATEGORY_EMOJI[cContent.m_nCategoryId][nCnt]));
+			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, %d, %d, %d)\">%s</a>", cContent.m_nContentId, cContent.m_nCategoryId, nCnt, nLoginUserId, Common.ToStringHtml(Common.CATEGORY_EMOJI[cContent.m_nCategoryId][nCnt])));
 		}
 		strRtn.append("</div>");
 		strRtn.append("</div>");

@@ -46,7 +46,6 @@ class IllustViewC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
 			if(cParam.m_nUserId != cParam.m_nAccessUserId) {
@@ -78,7 +77,6 @@ class IllustViewC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-
 
 			// Eeach Comment
 			strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";

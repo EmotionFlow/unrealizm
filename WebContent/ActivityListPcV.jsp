@@ -25,7 +25,7 @@ cResults.GetResults(cParam);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>アクティビティ</title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -56,10 +56,6 @@ cResults.GetResults(cParam);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem <%if(cParam.m_nMode<=0){%>Selected<%}%>" href="/ActivityListPcV.jsp?MOD=0">received</a>
-				<a class="TabMenuItem <%if(cParam.m_nMode>0){%>Selected<%}%>" href="/ActivityListPcV.jsp?MOD=1">sent</a>
-			</div>
 
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
@@ -72,29 +68,21 @@ cResults.GetResults(cParam);
 				<%}%>
 			</div>
 			<%}%>
-			<div class="IllustItemList">
+			<div class="IllustItemList" style="min-height: 600px;">
 				<div class="ItemComment">
 					<%for(CComment cComment : cResults.m_vComment) {%>
-					<%if(cComment.m_nCommentType==0) {%>
+					<%if(cComment.m_nCommentType==CComment.TYPE_COMMENT) {%>
 					<a class="ItemCommentItem" href="/IllustViewPcV.jsp?TD=<%=cComment.m_nContentId%>">
-						<span class="CommentThumb">
-							<img src="<%=Common.GetUrl(cComment.m_strFileName)%>_120.jpg" />
+						<span class="CommentThumb Heart">
+							<span class="Emoji"><%=Common.ToStringHtml(cComment.m_strDescription)%></span>
 						</span>
-						<span class="CommentDetail">
+						<span class="CommentDetail Heart">
 							<span class="CommentName">
 								<%=Common.ToStringHtml(cComment.m_strNickName)%>
 							</span>
-							<span class="CommentDesc">
-								<%if(cComment.m_nToUserId>0) {%>
-								<span class="CommentName">
-									&gt; <%=Common.ToStringHtml(cComment.m_strToNickName)%>
-								</span>
-								<%}%>
-								<%=Common.ToStringHtml(cComment.m_strDescription)%>
-							</span>
 						</span>
 					</a>
-					<%} else if(cComment.m_nCommentType==1) {%>
+					<%} else if(cComment.m_nCommentType==CComment.TYPE_FOLLOW) {%>
 					<a class="UserThumb" href="/IllustListPcV.jsp?ID=<%=cComment.m_nUserId%>">
 						<span class="UserThumbImg">
 							<img src="<%=Common.GetUrl(cComment.m_strFileName)%>_120.jpg" />
@@ -106,7 +94,7 @@ cResults.GetResults(cParam);
 							</span>
 						</span>
 					</a>
-					<%} else if(cComment.m_nCommentType==2) {%>
+					<%} else if(cComment.m_nCommentType==CComment.TYPE_HEART) {%>
 					<a class="ItemCommentItem" href="/IllustViewPcV.jsp?TD=<%=cComment.m_nContentId%>">
 						<span class="CommentThumb Heart">
 							<span class="typcn typcn-heart-full-outline"></span>

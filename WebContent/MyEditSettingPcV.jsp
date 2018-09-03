@@ -5,8 +5,6 @@
 <%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
 <%@ include file="/MyEditSettingC.jsp"%>
 <%
-System.out.println("MyEditSetting");
-
 String strDebug = "";
 
 //login check
@@ -37,7 +35,7 @@ if(cResults.m_bUpdate) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("TopV.ContentsTitle.Setting")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
 		$(function(){

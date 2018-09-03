@@ -124,7 +124,7 @@ if(!cResults.GetResults(cParam)) {
 					<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
 					<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
 					<%} else if(cResults.m_bOwner) {%>
-					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><span class="typcn typcn-cog-outline"></span><%=_TEX.T("TopV.ContentsTitle.Setting")%></a>
+					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><span class="typcn typcn-cog-outline"></span><%=_TEX.T("MyEditSetting.Title.Setting")%></a>
 					<%} else if(cResults.m_bBlocking){%>
 					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" style="display: none;" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>

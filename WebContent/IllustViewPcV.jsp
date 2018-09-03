@@ -26,11 +26,11 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustViewPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
+		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%>" />
-		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustViewPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
+		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:image" content="https://poipiku.com/<%=cResults.m_cContent.m_strFileName%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%></title>
 
@@ -50,7 +50,7 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"ID" :  <%=cResults.m_cContent.m_nUserId%>, "TD" : <%=cResults.m_cContent.m_nContentId%>, "PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
+					"data": {"ID" : <%=cResults.m_cContent.m_nUserId%>, "TD" : <%=cResults.m_cContent.m_nContentId%>, "PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
 					"url": "/f/IllustViewF.jsp",
 					"success": function(data) {
 						if(data) {

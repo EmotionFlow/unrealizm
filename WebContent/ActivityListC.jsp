@@ -34,29 +34,21 @@ class ActivityListC {
 
 			// Comment
 			if(cParam.m_nMode<=0) {
-				strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname, T2.nickname as to_nickname FROM (comments_0000 INNER JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id) LEFT JOIN users_0000 as T2 ON comments_0000.to_user_id=T2.user_id  WHERE ((content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=?) OR to_user_id=?) ORDER BY comment_id DESC LIMIT 100";
+				strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname FROM comments_0000 LEFT JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? ORDER BY comment_id DESC LIMIT 100";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);
 				cState.setInt(2, cParam.m_nUserId);
-				cState.setInt(3, cParam.m_nUserId);
 			} else {
-				strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname, T2.nickname as to_nickname FROM (comments_0000 INNER JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id) LEFT JOIN users_0000 as T2 ON comments_0000.to_user_id=T2.user_id  WHERE comments_0000.user_id=? ORDER BY comment_id DESC LIMIT 100";
+				strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname FROM comments_0000 LEFT JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id WHERE comments_0000.user_id=? ORDER BY comment_id DESC LIMIT 100";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);
 			}
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CComment cComment = new CComment();
-				cComment.m_nCommentId		= cResSet.getInt("comment_id");
-				cComment.m_nContentId		= cResSet.getInt("content_id");
-				cComment.m_nUserId			= cResSet.getInt("user_id");
+				CComment cComment = new CComment(cResSet);
 				cComment.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
 				cComment.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-				cComment.m_strDescription	= Common.ToString(cResSet.getString("description"));
-				cComment.m_nToUserId		= cResSet.getInt("to_user_id");
-				cComment.m_strToNickName	= Common.ToString(cResSet.getString("to_nickname"));
-				cComment.m_timeUploadDate	= cResSet.getTimestamp("upload_date");
-				cComment.m_nCommentType		= 0;
+				cComment.m_nCommentType		= CComment.TYPE_COMMENT;
 				if(cComment.m_strFileName.length()<=0) cComment.m_strFileName="/img/default_user.jpg";
 				m_vComment.add(cComment);
 			}
@@ -75,7 +67,7 @@ class ActivityListC {
 					cContent.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
 					cContent.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
 					cContent.m_timeUploadDate	= cResSet.getTimestamp("upload_date");
-					cContent.m_nCommentType	= 1;
+					cContent.m_nCommentType		= CComment.TYPE_FOLLOW;
 					if(cContent.m_strFileName.isEmpty()) cContent.m_strFileName="/img/default_user.jpg";
 					m_vComment.addElement(cContent);
 				}
@@ -90,7 +82,7 @@ class ActivityListC {
 					cContent.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
 					cContent.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
 					cContent.m_timeUploadDate	= cResSet.getTimestamp("upload_date");
-					cContent.m_nCommentType	= 1;
+					cContent.m_nCommentType		= CComment.TYPE_FOLLOW;
 					if(cContent.m_strFileName.isEmpty()) cContent.m_strFileName="/img/default_user.jpg";
 					m_vComment.addElement(cContent);
 				}
@@ -114,7 +106,7 @@ class ActivityListC {
 				cContent.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
 				cContent.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
 				cContent.m_timeUploadDate	= cResSet.getTimestamp("upload_date");
-				cContent.m_nCommentType		= 2;
+				cContent.m_nCommentType		= CComment.TYPE_HEART;
 				if(cContent.m_strFileName.isEmpty()) cContent.m_strFileName="/img/default_user.jpg";
 				m_vComment.add(cContent);
 			}
