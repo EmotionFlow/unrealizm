@@ -20,7 +20,7 @@ boolean bRtn = cResults.GetResults(cParam);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyHomePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -51,6 +51,8 @@ boolean bRtn = cResults.GetResults(cParam);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div id="IllustItemList" class="IllustItemList">
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center;">
@@ -70,6 +72,8 @@ boolean bRtn = cResults.GetResults(cParam);
 					<%= CCnv.toHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 				<%}%>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX)%>

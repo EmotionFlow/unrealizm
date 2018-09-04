@@ -24,7 +24,7 @@ cResults.GetResults(cParam);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">
@@ -56,6 +56,7 @@ cResults.GetResults(cParam);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
@@ -109,6 +110,8 @@ cResults.GetResults(cParam);
 					<%}%>
 				</div>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

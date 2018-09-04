@@ -14,7 +14,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchTagByKeyword.Title")%></title>
 
@@ -71,16 +71,19 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 	</head>
 
 	<body>
+		<div class="TabMenu">
+			<a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>">tag</a>
+			<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>">user</a>
+		</div>
+
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>">tag</a>
-				<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>">user</a>
-			</div>
+			<%@ include file="/inner/TAdTop.jspf"%>
 
-			<div id="IllustThumbList" class="IllustItemList">
-			</div>
+			<div id="IllustThumbList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

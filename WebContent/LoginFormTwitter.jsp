@@ -37,7 +37,7 @@ if(!authUrl.isEmpty()) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
 	</head>
 

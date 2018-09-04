@@ -17,7 +17,8 @@
 <meta name="viewport" content="width=360" />
 <%} else {%>
 <style>
-.Wrapper {width: 600px;}
+.Wrapper {width: 600px; position: relative;}
+.SideBarTop {width: 336px; position: fix; top: 0; right: -346px; z-index: 2;}
 .IllustThumb {width: 198px; height: 198px;}
 .IllustItem .IllustItemUser {padding: 5px 0px;}
 .IllustThumb .Category {top: 7px; left: 7px; font-size: 13px; min-width: 60px; height: 24px; line-height: 24px; max-width: none;}
@@ -27,4 +28,4 @@
 .IllustItem .IllustItemResBtnList .ResEmojiBtn {margin: 4px 1px;}
 </style>
 <%}%>
-<%@ include file="/inner/TGoogleAnalytics.jsp"%>
+<%@ include file="/inner/TGoogleAnalytics.jspf"%>

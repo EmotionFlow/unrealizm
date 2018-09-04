@@ -15,7 +15,7 @@ if(!cCheckLogin.m_bLogin) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>フォロー</title>
 		<script>
 			var g_nNextId = -1;
@@ -66,8 +66,11 @@ if(!cCheckLogin.m_bLogin) {
 
 	<body>
 		<div class="Wrapper">
-			<div id="IllustThumbList" class="IllustItemList">
-			</div>
+			<%@ include file="/inner/TAdTop.jspf"%>
+
+			<div id="IllustThumbList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

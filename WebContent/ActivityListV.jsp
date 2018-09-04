@@ -24,12 +24,14 @@ cResults.GetResults(cParam);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>アクティビティ</title>
 	</head>
 
 	<body>
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
 				<%if(cParam.m_nMode<=0){%>
@@ -82,6 +84,8 @@ cResults.GetResults(cParam);
 					<%}%>
 				</div>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

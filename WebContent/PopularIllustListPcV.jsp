@@ -16,7 +16,7 @@ boolean bRtn = cResults.GetResults(cParam);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("PopularIllustList.Title")%></title>
 
@@ -38,6 +38,8 @@ boolean bRtn = cResults.GetResults(cParam);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(CContent cContent : cResults.m_vContentList) {%>
 					<a class="IllustThumb" href="/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html">
@@ -46,6 +48,8 @@ boolean bRtn = cResults.GetResults(cParam);
 					</a>
 				<%}%>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/PopularIllustListPcV.jsp", "", cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

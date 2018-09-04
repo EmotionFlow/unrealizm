@@ -23,7 +23,7 @@ if(strRequestUri != null) {
 <!DOCTYPE html>
 <html style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>Start</title>
 	</head>
 
@@ -39,6 +39,7 @@ if(strRequestUri != null) {
 	<body style="color: #fff; background: #5bd;">
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
+
 			<div id="InfoMsg" style="float: left; width: 100%; padding: 60px 0 0 0; text-align: center;">
 				<div class="AnalogicoDesc Title">
 					描くのに飽きたらポイポイ<br />

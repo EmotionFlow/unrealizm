@@ -11,7 +11,7 @@ cCheckLogin.GetResults2(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>問題の報告</title>
 	</head>
 	<script>

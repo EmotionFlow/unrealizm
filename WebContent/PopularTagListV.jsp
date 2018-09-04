@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>tag</title>
 		<script>
 			var g_nNextId = -1;
@@ -46,8 +46,11 @@
 
 	<body>
 		<div class="Wrapper">
-			<div id="IllustThumbList" class="IllustItemList">
-			</div>
+			<%@ include file="/inner/TAdTop.jspf"%>
+
+			<div id="IllustThumbList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

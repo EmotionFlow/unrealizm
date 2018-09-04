@@ -7,7 +7,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=Common.ToStringHtml(strKeyword)%></title>
 		<script>
 			var g_nNextId = -1;
@@ -53,8 +53,12 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 	<body>
 		<div class="Wrapper">
 			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(strKeyword)%></div>
-			<div id="IllustThumbList" class="IllustThumbList">
-			</div>
+
+			<%@ include file="/inner/TAdTop.jspf"%>
+
+			<div id="IllustThumbList" class="IllustThumbList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

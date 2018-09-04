@@ -13,7 +13,7 @@ boolean bMobile = Common.isSmartPhone(request);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title>問題の報告</title>
 	</head>
 	<script>

@@ -24,7 +24,7 @@ if(!cResults.GetResults(cParam)) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nNextId = -1;
@@ -171,8 +171,9 @@ if(!cResults.GetResults(cParam)) {
 				<%}%>
 			</div>
 
-			<div id="IllustThumbList" class="IllustThumbList">
-			</div>
+			<div id="IllustThumbList" class="IllustThumbList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

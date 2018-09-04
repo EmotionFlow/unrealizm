@@ -1,0 +1,15 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.emotionflow.poipiku.Common"%>
+<%if(Common.isSmartPhone(request)) {%>
+<div class="SideBarBottom">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- poipiku_320x50_bottom -->
+<ins class="adsbygoogle"
+	style="display:inline-block;width:320px;height:50px"
+	data-ad-client="ca-pub-9388519601000159"
+	data-ad-slot="6006409224"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+<%}%>

@@ -7,7 +7,7 @@ cCheckLogin.GetResults2(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("PopularTagList.Title")%></title>
 
@@ -67,8 +67,11 @@ cCheckLogin.GetResults2(request, response);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<div id="IllustThumbList" class="IllustItemList">
-			</div>
+			<%@ include file="/inner/TAdTop.jspf"%>
+
+			<div id="IllustThumbList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

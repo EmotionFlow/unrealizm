@@ -25,7 +25,7 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -122,10 +122,14 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div class="IllustItemList">
 				<%=CCnv.toHtml(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 			</div>
 			<div id="IllustItemList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

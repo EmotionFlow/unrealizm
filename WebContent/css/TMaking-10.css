@@ -8,6 +8,22 @@
 	overflow: hidden;
 }
 
+.SideBarTop {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin: 3px 0 0 0;
+}
+
+.SideBarBottom {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin: 3px 0 0 0;
+}
+
 #DispMsg {
 	display: block;
 	position: fixed;

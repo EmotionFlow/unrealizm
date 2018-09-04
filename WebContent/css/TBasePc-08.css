@@ -4,7 +4,7 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 .Header .HeaderTitleWrapper {display: block; max-width: 600px; margin: 0 auto; position: relative;}
 .Header .HeaderLink {display: block; width: 100%;}
 .Header .HeaderTitleSearch {display: block; color: #5bd; width: 30px; height: 30px; line-height: 28px; text-align: center; position: absolute; top: 0; right: 10px;}
-.Header .HeaderLink .HeaderImg {display: block; height: 24px; margin: 0 auto; padding: 3px 0;}
+.Header .HeaderLink .HeaderImg {display: block; height: 28px; margin: 0 auto; padding: 0px 0 2px 0;}
 #HeaderSearchWrapper {display: none;}
 .HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 0; box-sizing: border-box; overflow: hidden;}
 .Header .HeaderSearch {display: flex; flex-flow: row nowrap; justify-content: center; padding: 0 10px;}
@@ -22,12 +22,12 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 #DispMsg {top: 51px;}
 #MenuHome .FooterMenuItemIcon {background-position: 0 0;}
 #MenuSearch .FooterMenuItemIcon {background-position: -308px 0;}
-#MenuUpload .FooterMenuItemIcon {background-position: -336px 0;}
+#MenuUpload .FooterMenuItemIcon {background-position: -28px 0;}
 #MenuAct .FooterMenuItemIcon {background-position: -140px 0;}
 #MenuMe .FooterMenuItemIcon {background-position: -364px 0;}
 #MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: 0 -28px;}
 #MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -308px -28px;}
-#MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -336px -28px;}
+#MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -28px -28px;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -140px -28px;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}
 

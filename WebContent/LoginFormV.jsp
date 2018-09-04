@@ -23,7 +23,7 @@ if(strRequestUri != null) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>
 	</head>
 	<script>

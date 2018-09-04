@@ -11,18 +11,18 @@ cCheckLogin.GetResults2(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>ユーザ名の設定</title>
 		<script>
 			$.ajaxSetup({
-			    cache: false,
+				cache: false,
 			});
 			function CheckInput() {
 				var bRtn = true;
 				var strMessage = "&nbsp;";
 				try {
 					var strUserName = $.trim($("#RegistUserName").val());
-	
+
 					if(strUserName.length<5) {
 						strMessage = "<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>";
 						bRtn = false;
@@ -32,7 +32,7 @@ cCheckLogin.GetResults2(request, response);
 				}
 				return bRtn;
 			}
-			
+
 			function UpdateNickName() {
 				var strUserName = $.trim($("#RegistUserName").val());
 				if(strUserName.length<5) {
@@ -60,12 +60,16 @@ cCheckLogin.GetResults2(request, response);
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 130px 10px;">
 				<p>ユーザ名を設定してください</p>
 				<div id="RegistMessage" style="font-size: 12px; margin: 40px 0 10px 0; text-align: left; color: red;">&nbsp;</div>
 				<input id="RegistUserName" style="box-sizing: border-box; width: 100%; margin: 0 0 60px 0;" type="text" placeholder="ユーザ名" maxlength="16" onkeyup="CheckInput()" />
 				<a class="BtnBase" href="javascript:void(0)" onclick="UpdateNickName()">設定</a>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

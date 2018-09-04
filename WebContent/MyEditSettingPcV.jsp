@@ -34,7 +34,7 @@ if(cResults.m_bUpdate) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
@@ -308,6 +308,8 @@ if(cResults.m_bUpdate) {
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
@@ -508,6 +510,8 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div><!--Wrapper-->
 
 		<%@ include file="/inner/TFooter.jspf"%>

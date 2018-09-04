@@ -17,7 +17,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<script src="/js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
 		<script src="/js/exif.js" type="text/javascript"></script>
 		<script src="/js/megapix-image.js" type="text/javascript"></script>

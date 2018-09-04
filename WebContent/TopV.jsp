@@ -18,7 +18,7 @@ if(cCheckLogin.m_bLogin) {
 <!DOCTYPE html>
 <html style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%></title>
 

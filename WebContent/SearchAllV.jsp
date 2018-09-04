@@ -7,7 +7,7 @@ String strKeyword = Common.TrimAll(Common.ToString(request.getParameter("KWD")))
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=Common.ToStringHtml(strKeyword)%></title>
 		<script>
 			var g_nNextId = -1;
@@ -110,11 +110,14 @@ String strKeyword = Common.TrimAll(Common.ToString(request.getParameter("KWD")))
 
 	<body>
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<form id="SearchKeyword" class="SearchKeyword" action="/SearchAllV.jsp" method="get">
 				<input class="SearchKeywordInput" type="text" name="KWD" value="<%=Common.ToStringHtml(strKeyword)%>" />
 			</form>
-			<div id="IllustThumbList" class="IllustThumbList">
-			</div>
+			<div id="IllustThumbList" class="IllustThumbList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

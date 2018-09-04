@@ -34,7 +34,7 @@ if(cResults.m_bUpdate) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp" %>
+		<%@ include file="/inner/THeaderCommon.jspf" %>
 		<title>setting</title>
 		<script type="text/javascript">
 			$.ajaxSetup({
@@ -298,7 +298,10 @@ if(cResults.m_bUpdate) {
 
 	<body>
 		<div id="DispMsg"></div>
+
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
@@ -510,6 +513,8 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div><!--Wrapper-->
 	</body>
 </html>

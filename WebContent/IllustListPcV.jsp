@@ -25,7 +25,7 @@ if(!cResults.GetResults(cParam)) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:card" content="gallery" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -165,6 +165,8 @@ if(!cResults.GetResults(cParam)) {
 					</a>
 				<%}%>
 			</div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", "&ID="+cParam.m_nUserId, cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

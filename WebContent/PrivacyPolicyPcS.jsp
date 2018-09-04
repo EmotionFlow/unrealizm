@@ -7,7 +7,7 @@ cCheckLogin.GetResults2(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%> - プライバシーポリシー</title>
 	</head>
 	<body>

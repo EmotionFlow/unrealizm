@@ -1,0 +1,27 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.emotionflow.poipiku.Common"%>
+<div class="SideBarTop">
+	<%if(Common.isSmartPhone(request)) {%>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- poipiku_320x50_top -->
+	<ins class="adsbygoogle"
+		style="display:inline-block;width:320px;height:50px"
+		data-ad-client="ca-pub-9388519601000159"
+		data-ad-slot="3667186340"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+	<%} else {%>
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- poipiku_336x280_right_top -->
+	<ins class="adsbygoogle"
+		style="display:inline-block;width:336px;height:280px"
+		data-ad-client="ca-pub-9388519601000159"
+		data-ad-slot="9560734751"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+	<%}%>
+</div>
+
+

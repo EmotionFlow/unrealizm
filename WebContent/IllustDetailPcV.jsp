@@ -18,7 +18,7 @@ if(!cResults.GetResults(cParam)) {
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript">

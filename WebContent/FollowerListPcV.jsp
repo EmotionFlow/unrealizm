@@ -15,7 +15,7 @@ if(!cCheckLogin.m_bLogin) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title>フォロワー</title>
 
 		<script type="text/javascript">
@@ -76,8 +76,11 @@ if(!cCheckLogin.m_bLogin) {
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<div id="IllustThumbList" class="IllustItemList">
-			</div>
+			<%@ include file="/inner/TAdTop.jspf"%>
+
+			<div id="IllustThumbList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

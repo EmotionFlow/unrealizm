@@ -12,7 +12,7 @@ if(!cCheckLogin.m_bLogin) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>home</title>
 		<script>
 			var g_nPage = 0;
@@ -71,6 +71,8 @@ if(!cCheckLogin.m_bLogin) {
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div id="InfoMsg" style="display:none; float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
 				ポイピクへようこそ<br />
 				<br />
@@ -83,6 +85,8 @@ if(!cCheckLogin.m_bLogin) {
 				</a>
 			</div>
 			<div id="IllustItemList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

@@ -17,7 +17,7 @@ if(!cResults.GetResults(cParam)) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<%
 		String strTitle = cResults.m_cContent.m_cUser.m_strNickName;
 		String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
@@ -104,11 +104,14 @@ if(!cResults.GetResults(cParam)) {
 
 	<body>
 		<div class="Wrapper">
+			<%@ include file="/inner/TAdTop.jspf"%>
+
 			<div class="IllustItemList">
 				<%=CCnv.toHtml(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX)%>
 			</div>
-			<div id="IllustItemList" class="IllustItemList">
-			</div>
+			<div id="IllustItemList" class="IllustItemList"></div>
+
+			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

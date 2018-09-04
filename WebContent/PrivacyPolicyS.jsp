@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>プライバシーポリシー</title>
 	</head>
 	<body>
