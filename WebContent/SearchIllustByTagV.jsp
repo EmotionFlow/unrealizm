@@ -10,20 +10,25 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=Common.ToStringHtml(strKeyword)%></title>
 		<script>
-			var g_nNextId = -1;
-			function addContents(nStartId) {
+			var g_nPage = 0;
+			var g_bAdding = false;
+			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
-				console.log("start");
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "SID" : nStartId, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
 					"url": "/f/SearchIllustByTagF.jsp",
-					"dataType": "json",
 					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							$("#IllustThumbList").append(CreateIllustThumb(data.result[nCnt]));
+						if(data) {
+							g_nPage++;
+							$('#InfoMsg').hide();
+							$("#IllustThumbList").append(data);
+							g_bAdding = false;
+						} else {
+							$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -34,14 +39,14 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 			}
 
 			$(function(){
-				addContents(g_nNextId);
+				addContents();
 			});
 
 			$(document).ready(function() {
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
+						addContents();
 					}
 				});
 			});
@@ -52,11 +57,8 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 		<div class="Wrapper">
 			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(strKeyword)%></div>
 
-			<%@ include file="/inner/TAdTop.jspf"%>
-
 			<div id="IllustThumbList" class="IllustThumbList"></div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

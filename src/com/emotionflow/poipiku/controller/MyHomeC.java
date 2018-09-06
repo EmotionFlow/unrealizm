@@ -12,13 +12,10 @@ import com.emotionflow.poipiku.*;
 public class MyHomeC {
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
-		try
-		{
+		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			;
 		}
 	}

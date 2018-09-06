@@ -15,7 +15,7 @@
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"PG" : g_nPage, "MD" : <%=CCnv.MODE_SP%>},
+					"data": {"PG" : g_nPages},
 					"url": "/f/NewArrivalF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -39,7 +39,7 @@
 			});
 
 			$(document).ready(function() {
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
 						addContents();

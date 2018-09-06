@@ -1,21 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/SearchIllustByTagC.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-SearchIllustByTagCParam cParam = new SearchIllustByTagCParam();
-cParam.GetParam(request);
-
 SearchIllustByTagC cResults = new SearchIllustByTagC();
-boolean bRtn = cResults.GetResults(cParam);
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cParam.m_strKeyword, cResults.m_nContentsNum))%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByTag.Title"), cParam.m_strKeyword))%></title>
+		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum))%>" />
+		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword))%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -27,7 +25,7 @@ boolean bRtn = cResults.GetResults(cParam);
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 		<div class="Wrapper">
-			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cParam.m_strKeyword)%></div>
+			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></div>
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
@@ -40,7 +38,7 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/SearchIllustByTagPcV.jsp", String.format("&KWD=%s", URLEncoder.encode(cParam.m_strKeyword, "UTF-8")) , cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/SearchIllustByTagPcV.jsp", String.format("&KWD=%s", URLEncoder.encode(cResults.m_strKeyword, "UTF-8")) , cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

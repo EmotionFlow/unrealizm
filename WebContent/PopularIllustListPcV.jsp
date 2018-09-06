@@ -1,17 +1,12 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/PopularIllustListC.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-PopularIllustListCParam cParam = new PopularIllustListCParam();
-cParam.GetParam(request);
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-
 PopularIllustListC cResults = new PopularIllustListC();
-cResults.SELECT_MAX_GALLERY = 60;
-boolean bRtn = cResults.GetResults(cParam);
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -50,7 +45,7 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/PopularIllustListPcV.jsp", "", cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/PopularIllustListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

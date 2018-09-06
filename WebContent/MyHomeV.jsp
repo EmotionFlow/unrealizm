@@ -24,7 +24,7 @@ if(!cCheckLogin.m_bLogin) {
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "MD" : <%=CCnv.MODE_SP%>},
+					"data": {"PG" : g_nPage},
 					"url": "/f/MyHomeF.jsp",
 					"success": function(data) {
 						if(data) {
