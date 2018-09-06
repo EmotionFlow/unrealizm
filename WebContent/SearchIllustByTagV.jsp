@@ -21,8 +21,6 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 					"url": "/f/SearchIllustByTagF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						console.log("done");
-						console.log(data);
 						g_nNextId = data.end_id;
 						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
 							$("#IllustThumbList").append(CreateIllustThumb(data.result[nCnt]));

@@ -12,6 +12,7 @@
 <%@page import="javax.sql.*"%>
 <%@page import="com.emotionflow.poipiku.*"%>
 <%@page import="com.emotionflow.poipiku.util.*"%>
+<%@page import="com.emotionflow.poipiku.controller.*"%>
 <%
 ResourceBundleControl _TEX = new ResourceBundleControl(request);
 int g_nSafeFilter = 0;

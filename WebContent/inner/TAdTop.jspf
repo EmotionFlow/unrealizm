@@ -13,15 +13,13 @@
 	</script>
 	<%} else {%>
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<!-- poipiku_336x280_right_top -->
+	<!-- poipiku_468x60_top -->
 	<ins class="adsbygoogle"
-		style="display:inline-block;width:336px;height:280px"
+		style="display:inline-block;width:468px;height:60px"
 		data-ad-client="ca-pub-9388519601000159"
-		data-ad-slot="9560734751"></ins>
+		data-ad-slot="5366392776"></ins>
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
 	<%}%>
 </div>
-
-

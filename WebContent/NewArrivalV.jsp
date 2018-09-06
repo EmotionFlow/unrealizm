@@ -1,23 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/inner/Common.jsp"%>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>recent</title>
 		<script>
-			var g_nNextId = -1;
-			function addContents(nStartId) {
+			var g_nPage = 0;
+			var g_bAdding = false;
+			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "SID" : nStartId },
+					"data": {"PG" : g_nPage, "MD" : <%=CCnv.MODE_SP%>},
 					"url": "/f/NewArrivalF.jsp",
-					"dataType": "json",
 					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							$("#IllustThumbList").append(CreateIllustThumb(data.result[nCnt]));
+						if(data) {
+							g_nPage++;
+							$('#InfoMsg').hide();
+							$("#IllustThumbList").append(data);
+							g_bAdding = false;
+						} else {
+							$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -28,14 +35,14 @@
 			}
 
 			$(function(){
-				addContents(g_nNextId);
+				addContents();
 			});
 
 			$(document).ready(function() {
 				$(window).bind("scroll", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
+						addContents();
 					}
 				});
 			});
@@ -44,11 +51,9 @@
 
 	<body>
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div id="IllustThumbList" class="IllustThumbList"></div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

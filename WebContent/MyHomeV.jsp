@@ -71,7 +71,6 @@ if(!cCheckLogin.m_bLogin) {
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div id="InfoMsg" style="display:none; float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
 				ポイピクへようこそ<br />
@@ -86,7 +85,6 @@ if(!cCheckLogin.m_bLogin) {
 			</div>
 			<div id="IllustItemList" class="IllustItemList"></div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

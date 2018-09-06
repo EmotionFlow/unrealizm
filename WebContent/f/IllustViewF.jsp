@@ -114,6 +114,10 @@ cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
 IllustViewC cResults = new IllustViewC();
 boolean bRtn = cResults.GetResults(cParam);
 %>
-<%for (CContent cContent : cResults.m_vContentList) {%>
-<%=CCnv.toHtml(cContent, cCheckLogin.m_nUserId, cParam.m_nMode, _TEX)%>
+<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+	CContent cContent = cResults.m_vContentList.get(nCnt);%>
+	<%= CCnv.toHtml(cContent, cCheckLogin.m_nUserId, cParam.m_nMode, _TEX)%>
+	<%if((nCnt+1)%3==0) {%>
+	<%@ include file="/inner/TAdMid.jspf"%>
+	<%}%>
 <%}%>

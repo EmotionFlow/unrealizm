@@ -29,18 +29,15 @@ boolean bRtn = cResults.GetResults(cParam);
 		<div class="Wrapper">
 			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cParam.m_strKeyword)%></div>
 
-			<%@ include file="/inner/TAdTop.jspf"%>
-
 			<div id="IllustThumbList" class="IllustThumbList">
-				<%for(CContent cContent : cResults.m_vContentList) {%>
-					<a class="IllustThumb" href="/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html">
-						<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
-						<img class="IllustThumbImg" src="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg">
-					</a>
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.MODE_PC, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
 				<%}%>
 			</div>
-
-			<%@ include file="/inner/TAdBottom.jspf"%>
 
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/SearchIllustByTagPcV.jsp", String.format("&KWD=%s", URLEncoder.encode(cParam.m_strKeyword, "UTF-8")) , cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

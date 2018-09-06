@@ -15,7 +15,7 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 .FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ccc; background-color: #fff; z-index: 9999; }
 .FooterMenuWrapper .FooterMenu {display: block; max-width: 600px; height: 50px; margin: 0 auto;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem {display: block; float: left; width: 25%; height: 50px; text-align: center; font-size: 0;}
-.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-02.png') no-repeat; background-size: 1400%; position: relative;}
+.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-02.png') no-repeat; background-size: 1500%; position: relative;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; width: 15px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
 .FooterMenuWrapper .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
@@ -23,12 +23,12 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 #MenuHome .FooterMenuItemIcon {background-position: 0 0;}
 #MenuSearch .FooterMenuItemIcon {background-position: -308px 0;}
 #MenuUpload .FooterMenuItemIcon {background-position: -28px 0;}
-#MenuAct .FooterMenuItemIcon {background-position: -140px 0;}
+#MenuAct .FooterMenuItemIcon {background-position: -392px 0;}
 #MenuMe .FooterMenuItemIcon {background-position: -364px 0;}
 #MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: 0 -28px;}
 #MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -308px -28px;}
 #MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -28px -28px;}
-#MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -140px -28px;}
+#MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}
 
 .LinkApp {text-align: center; margin: 10px 0;}
@@ -36,7 +36,7 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 .Footer {background: #5bd; display:block; width: 100%; text-align: center; padding: 20px 10px; center; background-color: #5bd; font-size: 10px; box-sizing: border-box; color: #fff;}
 .Footer .FooterHref {text-decoration: underline; color: #fff;}
 .Footer .FooterCopy {text-align: center;}
-.Footer .FooterLink {display: flex; flex-flow: row nowrap; margin: 0 0 30px 0; justify-content: space-around; border-top: solid 1px #fff; padding: 15px 0 0 0;}
+.Footer .FooterLink {display: flex; flex-flow: row nowrap; margin: 0 0 30px 0; justify-content: space-evenly; border-top: solid 1px #fff; padding: 15px 0 0 0;}
 .Footer .FooterLink .FooterLinkItem {flex: 0 0; text-align: left; white-space: nowrap; margin: 0 20px; padding: 0;}
 
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto; background: #fff;}

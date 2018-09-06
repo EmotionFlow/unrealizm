@@ -5,6 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-07.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-10.css" type="text/css" rel="stylesheet" />
@@ -17,8 +18,10 @@
 <meta name="viewport" content="width=360" />
 <%} else {%>
 <style>
-.Wrapper {width: 600px; position: relative;}
-.SideBarTop {width: 336px; position: fix; top: 0; right: -346px; z-index: 2;}
+.Wrapper {width: 600px; height: 60px; position: relative;}
+.SideBarTop {height: 60px;}
+.SideBarMid {height: 60px;}
+.SideBarBottom {height: 60px;}
 .IllustThumb {width: 198px; height: 198px;}
 .IllustItem .IllustItemUser {padding: 5px 0px;}
 .IllustThumb .Category {top: 7px; left: 7px; font-size: 13px; min-width: 60px; height: 24px; line-height: 24px; max-width: none;}

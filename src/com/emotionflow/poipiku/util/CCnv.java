@@ -79,4 +79,17 @@ public class CCnv {
 
 		return strRtn.toString();
 	}
+
+	public static String toThumbHtml(CContent cContent, int nMode,  ResourceBundleControl _TEX) {
+		String ILLUST_VIEW = (nMode==MODE_SP)?"/IllustViewV.jsp":"/IllustViewPcV.jsp";
+
+		StringBuilder strRtn = new StringBuilder();
+
+		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_VIEW, cContent.m_nUserId, cContent.m_nContentId));
+		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+		strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
+		strRtn.append("</a>");
+
+		return strRtn.toString();
+	}
 }

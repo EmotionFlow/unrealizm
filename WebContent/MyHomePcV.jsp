@@ -1,6 +1,5 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/MyHomeC.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
@@ -10,12 +9,9 @@ if(!cCheckLogin.m_bLogin) {
 	return;
 }
 
-MyHomeCParam cParam = new MyHomeCParam();
-cParam.GetParam(request);
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-
 MyHomeC cResults = new MyHomeC();
-boolean bRtn = cResults.GetResults(cParam);
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -51,7 +47,6 @@ boolean bRtn = cResults.GetResults(cParam);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div id="IllustItemList" class="IllustItemList">
 				<%if(cResults.m_vContentList.size()<=0) {%>
@@ -68,15 +63,17 @@ boolean bRtn = cResults.GetResults(cParam);
 				</div>
 				<%}%>
 
-				<%for(CContent cContent : cResults.m_vContentList) {%>
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.toHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%if((nCnt+1)%2==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
 				<%}%>
 			</div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
-
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX)%>
+				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX)%>
 			</div>
 		</div>
 

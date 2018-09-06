@@ -104,14 +104,12 @@ if(!cResults.GetResults(cParam)) {
 
 	<body>
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div class="IllustItemList">
 				<%=CCnv.toHtml(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX)%>
 			</div>
 			<div id="IllustItemList" class="IllustItemList"></div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

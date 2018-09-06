@@ -122,14 +122,12 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div class="IllustItemList">
 				<%=CCnv.toHtml(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 			</div>
 			<div id="IllustItemList" class="IllustItemList"></div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

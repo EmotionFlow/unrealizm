@@ -5,23 +5,37 @@
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
-	overflow: hidden;
+	min-height: 600px;
 }
 
 .SideBarTop {
 	display: block;
 	float: left;
 	width: 100%;
+	height: 50px;
 	text-align: center;
 	margin: 3px 0 0 0;
+	overflow: hidden;
+}
+
+.SideBarMid {
+	display: block;
+	float: left;
+	margin: 3px 0 0 0;
+	overflow: hidden;
+	width: 100%;
+	height: 50px;
+	text-align: center;
 }
 
 .SideBarBottom {
 	display: block;
 	float: left;
 	width: 100%;
+	height: 50px;
 	text-align: center;
 	margin: 3px 0 0 0;
+	overflow: hidden;
 }
 
 #DispMsg {
@@ -276,6 +290,7 @@
 /********** Illust List **********/
 .IllustItemList {
 	display: block;
+	float: left;
 	width: 100%;
 	max-width: 600px;
 	margin: 0 auto;
@@ -284,11 +299,16 @@
 
 .IllustItem {
 	display: block;
+	float: left;
 	width: 100%;
-	margin: 0 0 50px 0;
+	margin: 25px 0;
 	box-sizing: border-box;
 	overflow: hidden;
 }
+
+.IllustItem:first-child {margin-top: 5px;}
+.IllustItem:last-child {margin-bottom: 0;}
+
 
 .IllustItem .IllustItemUser {
 	display: flex;

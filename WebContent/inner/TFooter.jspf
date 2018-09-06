@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<div style="clear: both;"></div>
+<%@ include file="/inner/TAdFooter.jspf"%>
+
 <div class="Footer">
 	<div class="AnalogicoInfo" style="background: none;">
 		<%if(!cCheckLogin.m_bLogin) {%>

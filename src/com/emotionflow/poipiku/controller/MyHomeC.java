@@ -1,10 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
-<%!
-class MyHomeCParam {
-	public int m_nAccessUserId = -1;
+package com.emotionflow.poipiku.controller;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.*;
+
+import com.emotionflow.poipiku.*;
+
+public class MyHomeC {
 	public int m_nPage = 0;
-	public void GetParam(HttpServletRequest cRequest) {
+	public void getParam(HttpServletRequest cRequest) {
 		try
 		{
 			cRequest.setCharacterEncoding("UTF-8");
@@ -15,34 +22,31 @@ class MyHomeCParam {
 			;
 		}
 	}
-}
 
-class MyHomeC {
+
 	public int SELECT_MAX = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 
-	public boolean GetResults(MyHomeCParam cParam) {
+	public boolean getResults(CheckLogin cCheckLogin) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
-		DatabaseMetaData meta = null;
 		String strSql = "";
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-			meta = cConn.getMetaData();
 
 			// NEW ARRIVAL
 			strSql = "SELECT count(*) FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id AND bookmarks_0000.user_id=? WHERE (contents_0000.user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) OR contents_0000.user_id=?)";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nAccessUserId);
-			cState.setInt(2, cParam.m_nAccessUserId);
-			cState.setInt(3, cParam.m_nAccessUserId);
+			cState.setInt(1, cCheckLogin.m_nUserId);
+			cState.setInt(2, cCheckLogin.m_nUserId);
+			cState.setInt(3, cCheckLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
 				m_nContentsNum = cResSet.getInt(1);
@@ -52,9 +56,9 @@ class MyHomeC {
 
 			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) OR contents_0000.user_id=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nAccessUserId);
-			cState.setInt(2, cParam.m_nAccessUserId);
-			cState.setInt(3, SELECT_MAX*cParam.m_nPage);
+			cState.setInt(1, cCheckLogin.m_nUserId);
+			cState.setInt(2, cCheckLogin.m_nUserId);
+			cState.setInt(3, SELECT_MAX*m_nPage);
 			cState.setInt(4, SELECT_MAX);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
@@ -93,5 +97,5 @@ class MyHomeC {
 		}
 		return bResult;
 	}
+
 }
-%>
