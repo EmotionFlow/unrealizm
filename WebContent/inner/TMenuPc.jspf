@@ -14,10 +14,10 @@
 		</a>
 		<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
 	</div>
-	<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" action="/SearchTagByKeywordPcV.jsp" >
+	<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" action="/SearchIllustByKeywordPcV.jsp" >
 		<div class="HeaderSearch">
 			<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="" />
-			<div class="HeaderSearchBtn" onclick="SearchTagByKeyword()">
+			<div class="HeaderSearchBtn" onclick="SearchIllustByKeyword()">
 				<span class="fas fa-search"></span>
 			</div>
 		</div>

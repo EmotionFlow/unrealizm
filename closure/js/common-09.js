@@ -159,24 +159,6 @@ $(function(){
 	});
 });
 
-function CreateIllustThumb(cItem) {
-	return CreateIllustThumbBase(cItem, 0);
-}
-
-function CreateIllustThumbPc(cItem) {
-	return CreateIllustThumbBase(cItem, 1);
-}
-
-function CreateIllustThumbBase(cItem, nMode) {
-	var ILLUST_VIEW = (nMode==0)?"/IllustViewV.jsp":"/IllustViewPcV.jsp";
-	var $objItem = $("<a/>").addClass("IllustThumb").attr("href", ILLUST_VIEW+"?ID="+cItem.user_id+"&TD="+cItem.content_id);
-	var $objCategory = $("<span/>").addClass("Category C"+cItem.category_id).html(cItem.category);
-	var $objItemImg = $("<img/>").addClass("IllustThumbImg").attr("src", cItem.file_name+"_360.jpg");
-	$objItem.append($objCategory);
-	$objItem.append($objItemImg);
-	return $objItem;
-}
-
 function SendEmoji(nContentId, nCategory, nPos , nUserId) {
 	$.ajax({
 		"type": "post",

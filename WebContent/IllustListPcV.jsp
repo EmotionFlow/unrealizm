@@ -1,23 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/IllustListC.jsp"%>
+<%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-
-IllustListCParam cParam = new IllustListCParam();
-cParam.GetParam(request);
-if(!cCheckLogin.m_bLogin && cParam.m_nUserId==-1) {
+if(!cCheckLogin.m_bLogin) {
 	response.sendRedirect("/");
 	return;
 }
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-if(cParam.m_nUserId==-1) {
-	cParam.m_nUserId = cCheckLogin.m_nUserId;
-}
-//Log.d(""+cParam.m_nUserId, ""+cParam.m_nPage, ""+cParam.m_nAccessUserId);
+
 IllustListC cResults = new IllustListC();
-cResults.SELECT_MAX_GALLERY = 30;
-if(!cResults.GetResults(cParam)) {
+cResults.getParam(request);
+if(cResults.m_nUserId==-1) {
+	cResults.m_nUserId = cCheckLogin.m_nUserId;
+}
+if(!cResults.getResults(cCheckLogin, false)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
@@ -107,15 +103,17 @@ if(!cResults.GetResults(cParam)) {
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>')">
-			<div class="UserInfo" style="background-size: 360px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>')">
+		<div class="Wrapper" <%if(!cResults.m_cUser.m_strBgFileName.isEmpty()){%>style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>')"<%}%>>
+			<div class="UserInfo" <%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>style="background-size: 600px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>')"<%}%>>
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
 					<span class="UserInfoUserThumb">
+						<%if(!cResults.m_cUser.m_strFileName.isEmpty()) {%>
 						<img class="UserInfoUserThumbImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>" />
+						<%}%>
 					</span>
 					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
-					<%if(!cResults.m_cUser.m_strProfile.equals("")) {%>
+					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
 					<span class="UserInfoProgile"><%=Common.ToStringHtml(cResults.m_cUser.m_strProfile)%></span>
 					<%}%>
 				</div>
@@ -146,11 +144,11 @@ if(!cResults.GetResults(cParam)) {
 				<%if(cResults.m_bOwner) {%>
 				<span class="UserInfoState">
 					<a class="UserInfoStateItem" href="/FollowListPcV.jsp">
-						<span class="UserInfoStateItemTitle">フォロー</span>
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
 					<a class="UserInfoStateItem" href="/FollowerListPcV.jsp">
-						<span class="UserInfoStateItemTitle">フォロワー</span>
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
 					</a>
 				</span>
@@ -168,7 +166,7 @@ if(!cResults.GetResults(cParam)) {
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", "&ID="+cParam.m_nUserId, cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", "&ID="+cResults.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

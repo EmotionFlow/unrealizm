@@ -72,8 +72,9 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 
 	<body>
 		<div class="TabMenu">
-			<a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>">tag</a>
-			<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>">user</a>
+			<a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
+			<a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
+			<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>

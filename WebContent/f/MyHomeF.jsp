@@ -3,6 +3,7 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
+if(!cCheckLogin.m_bLogin) return;
 
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);

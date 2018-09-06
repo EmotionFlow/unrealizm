@@ -1,17 +1,12 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/SearchIllustByKeywordC.jsp"%>
+<%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-SearchIllustByKeywordCParam cParam = new SearchIllustByKeywordCParam();
-cParam.GetParam(request);
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
-cResults.SELECT_MAX_GALLERY = 60;
-boolean bRtn = cResults.GetResults(cParam);
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +18,7 @@ boolean bRtn = cResults.GetResults(cParam);
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
-			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(cParam.m_strKeyword)%>');
+			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(cResults.m_strKeyword)%>');
 		});
 		</script>
 
@@ -35,9 +30,9 @@ boolean bRtn = cResults.GetResults(cParam);
 
 	<body>
 		<div class="TabMenu">
-			<a class="TabMenuItem Selected" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>">illustration</a>
-			<a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>">tag</a>
-			<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>">user</a>
+			<a class="TabMenuItem Selected" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
+			<a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
+			<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>
@@ -55,7 +50,7 @@ boolean bRtn = cResults.GetResults(cParam);
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/SearchIllustByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cParam.m_strKeyword, "UTF-8"), cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/SearchIllustByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

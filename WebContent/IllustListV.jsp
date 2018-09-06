@@ -1,23 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/IllustListC.jsp"%>
+<%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-
-IllustListCParam cParam = new IllustListCParam();
-cParam.GetParam(request);
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-if(cParam.m_nUserId==-1) {
-	cParam.m_nUserId = cCheckLogin.m_nUserId;
+if(!cCheckLogin.m_bLogin) {
+	response.sendRedirect("/StartPoipikuV.jsp");
+	return;
 }
 
 IllustListC cResults = new IllustListC();
-if(!cResults.GetResults(cParam)) {
-	if(!cCheckLogin.m_bLogin) {
-		response.sendRedirect("/StartPoipikuV.jsp");
-	} else {
-		response.sendRedirect("/NotFoundV.jsp");
-	}
+cResults.getParam(request);
+if(cResults.m_nUserId==-1) {
+	cResults.m_nUserId = cCheckLogin.m_nUserId;
+}
+if(!cResults.getResults(cCheckLogin, false)) {
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 %>
@@ -28,21 +25,27 @@ if(!cResults.GetResults(cParam)) {
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nNextId = -1;
-			function addContents(nStartId) {
+
+
+			var g_nPage = 1; // start 1
+			var g_bAdding = false;
+			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": {
-						"ID" : <%=cResults.m_cUser.m_nUserId%>,
-						"SID" : nStartId
-						},
+					"data": {"PG" : g_nPage},
 					"url": "/f/IllustListF.jsp",
-					"dataType": "json",
 					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							$("#IllustThumbList").append(CreateIllustThumb(data.result[nCnt]));
+						if(data) {
+							g_nPage++;
+							$('#InfoMsg').hide();
+							$("#IllustThumbList").append(data);
+							g_bAdding = false;
+						} else {
+							$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -106,7 +109,7 @@ if(!cResults.GetResults(cParam)) {
 
 			$(function(){
 				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
-				addContents(g_nNextId);
+				addContents();
 				<%}%>
 			});
 
@@ -115,7 +118,7 @@ if(!cResults.GetResults(cParam)) {
 				$(window).bind("scroll", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
+						addContents();
 					}
 				});
 				<%}%>
@@ -124,15 +127,17 @@ if(!cResults.GetResults(cParam)) {
 	</head>
 
 	<body>
-		<div class="Wrapper" style="background-size: 360px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>')">
-			<div class="UserInfo" style="background-size: 360px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>')">
+		<div class="Wrapper" <%if(!cResults.m_cUser.m_strBgFileName.isEmpty()){%>style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>')"<%}%>>
+			<div class="UserInfo" <%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>style="background-size: 360px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>')"<%}%>>
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
 					<span class="UserInfoUserThumb">
+						<%if(!cResults.m_cUser.m_strFileName.isEmpty()) {%>
 						<img class="UserInfoUserThumbImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>" />
+						<%}%>
 					</span>
 					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
-					<%if(!cResults.m_cUser.m_strProfile.equals("")) {%>
+					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
 					<span class="UserInfoProgile"><%=Common.ToStringHtml(cResults.m_cUser.m_strProfile)%></span>
 					<%}%>
 				</div>
@@ -160,20 +165,27 @@ if(!cResults.GetResults(cParam)) {
 				<%if(cResults.m_bOwner) {%>
 				<span class="UserInfoState">
 					<a class="UserInfoStateItem" href="/FollowListV.jsp">
-						<span class="UserInfoStateItemTitle">フォロー</span>
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
 					<a class="UserInfoStateItem" href="/FollowerListV.jsp">
-						<span class="UserInfoStateItemTitle">フォロワー</span>
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
 					</a>
 				</span>
 				<%}%>
 			</div>
 
-			<div id="IllustThumbList" class="IllustThumbList"></div>
+			<div id="IllustThumbList" class="IllustThumbList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.MODE_SP, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>
