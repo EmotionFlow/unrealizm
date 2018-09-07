@@ -3,7 +3,7 @@ package com.emotionflow.poipiku;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import com.emotionflow.poipiku.CComment;
 import com.emotionflow.poipiku.CUser;
@@ -21,7 +21,7 @@ public class CContent {
 	public int m_nBookmarkNum = 0;
 	public int m_nCommentNum = 0;
 	public CUser m_cUser = new CUser();
-	public Vector<CComment> m_vComment = new Vector<CComment>();
+	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 
 	public CContent() {}
 	public CContent(ResultSet resultSet) throws SQLException {

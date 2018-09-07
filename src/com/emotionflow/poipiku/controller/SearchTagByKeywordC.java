@@ -9,7 +9,7 @@ import javax.sql.*;
 
 import com.emotionflow.poipiku.*;
 
-public class SearchUserByKeywordC {
+public class SearchTagByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
 	public void getParam(HttpServletRequest cRequest) {
@@ -25,10 +25,10 @@ public class SearchUserByKeywordC {
 
 
 	public int SELECT_MAX_GALLERY = 30;
-	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
+	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
+	public boolean getResults(CheckLogin cCheckLoginm) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -41,7 +41,7 @@ public class SearchUserByKeywordC {
 			cConn = dsPostgres.getConnection();
 
 			// NEW ARRIVAL
-			strSql = "SELECT count(*) FROM users_0000 WHERE nickname &@~ ?";
+			strSql = "SELECT count(*) FROM (SELECT tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt) as T1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, m_strKeyword);
 			cResSet = cState.executeQuery();
@@ -51,19 +51,14 @@ public class SearchUserByKeywordC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "SELECT * FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?";
+			strSql = "select tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt order by count(*) desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, m_strKeyword);
-			cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);
+			cState.setInt(2, m_nPage*SELECT_MAX_GALLERY);
 			cState.setInt(3, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CUser cContent = new CUser();
-				cContent.m_nUserId		= cResSet.getInt("user_id");
-				cContent.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_strFileName	= Common.ToString(cResSet.getString("file_name"));
-				if(cContent.m_strFileName.length()<=0) cContent.m_strFileName="/img/default_user.jpg";
-				m_vContentList.add(cContent);
+				m_vContentList.add(new CTag(cResSet));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -79,4 +74,5 @@ public class SearchUserByKeywordC {
 		}
 		return bResult;
 	}
+
 }

@@ -4,12 +4,9 @@
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/");
-	return;
-}
-request.setCharacterEncoding("UTF-8");
-String strKeyword = Common.ToString(request.getParameter("KWD"));
+SearchTagByKeywordC cResults = new SearchTagByKeywordC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +18,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
-			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(strKeyword)%>');
+			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(cResults.m_strKeyword)%>');
 		});
 		</script>
 
@@ -29,62 +26,32 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 		#HeaderTitleWrapper {display: none;}
 		#HeaderSearchWrapper {display: block;}
 		</style>
-
-		<script>
-			var g_nNextId = -1;
-			function addContents(nStartId) {
-				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "SID" : nStartId, "KWD" : decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
-					"url": "/f/SearchTagByKeywordF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							var cItem = data.result[nCnt];
-							var $objItem = $("<a/>").addClass("TagItem").attr("href", "/SearchIllustByTagPcV.jsp?KWD="+cItem.keyword).text('#'+cItem.keyword);
-							$("#IllustThumbList").append($objItem);
-						}
-						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			$(function(){
-				addContents(g_nNextId);
-			});
-
-			$(document).ready(function() {
-				$(window).bind("scroll", function() {
-					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
-					}
-				});
-			});
-		</script>
 	</head>
 
 	<body>
 		<div class="TabMenu">
-			<a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
-			<a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
-			<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
+			<a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
+			<a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
+			<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
-			<div id="IllustThumbList" class="IllustItemList"></div>
+			<div id="IllustThumbList" class="IllustItemList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CTag cTag = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
+			<div class="PageBar">
+				<%=CPageBar.CreatePageBar("/SearchTagByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+			</div>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

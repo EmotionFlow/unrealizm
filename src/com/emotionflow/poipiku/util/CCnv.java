@@ -100,8 +100,18 @@ public class CCnv {
 
 		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s?ID=%d\">", ILLUST_LIST, cUser.m_nUserId));
 		strRtn.append(String.format("<span class=\"UserThumbImg\"><img src=\"%s\"></span>", Common.GetUrl(cUser.m_strFileName)));
-		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", cUser.m_strNickName));
+		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", Common.ToStringHtml(cUser.m_strNickName)));
 		strRtn.append("</a>");
+
+		return strRtn.toString();
+	}
+
+	public static String toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX) throws UnsupportedEncodingException {
+		String SEARCH_ILLUST_TAG = (nMode==MODE_SP)?"/SearchIllustByTagV.jsp":"/SearchIllustByTagPcV.jsp";
+
+		StringBuilder strRtn = new StringBuilder();
+
+		strRtn.append(String.format("<a class=\"TagItem\" href=\"%s?KWD=%s\">#%s</a>", SEARCH_ILLUST_TAG, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)));
 
 		return strRtn.toString();
 	}
