@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/TopC.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
@@ -8,12 +8,6 @@ if(cCheckLogin.m_bLogin) {
 	response.sendRedirect("/MyHomePcV.jsp");
 	return;
 }
-
-//TopCParam cParam = new TopCParam();
-//cParam.GetParam(request);
-//TopC cResults = new TopC();
-//cResults.SELECT_MAX_GALLERY = 20;
-//boolean bRtn = cResults.GetResults(cParam);
 %>
 <!DOCTYPE html>
 <html style="height: 100%;">
@@ -25,35 +19,15 @@ if(cCheckLogin.m_bLogin) {
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
 		.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
-		.AnalogicoDesc {width: 90%; margin: 40px auto 0 auto; padding: 0; text-align: center; font-size: 14px; line-height: 28px; color: #fff; font-weight: normal;}
+		.AnalogicoDesc {width: 100%; padding: 40px 0 0 0; box-sizing: border-box; text-align: center; font-size: 14px; line-height: 28px; color: #fff; font-weight: normal;}
 		.AnalogicoStart {text-align: center; margin: 60px 0 0 0;}
-		.simply-scroll-container {position: relative;}
-		.simply-scroll-clip {position: relative; overflow: hidden;}
-		.simply-scroll-list {display: block; float: left; width: 100%; list-style: none; overflow: hidden;margin: 0;padding: 0;}
-		.simply-scroll-list li {display: block; float: left;}
-		<%if(Common.isSmartPhone(request)) {%>
-		.simply-scroll-list li a {display: block; float: left; width: 90px; height: 90px; margin: 0 3px 0 0;}
-		<%} else {%>
-		.simply-scroll-list li a {display: block; float: left; width: 120px; height: 120px; margin: 0 3px 0 0;}
-		.AnalogicoDesc.Title {font-size: 16px;}
-		<%}%>
 		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 		.AnalogicoInfo {display: none;}
+		<%if(Common.isSmartPhone(request)) {%>
+		<%} else {%>
+		.AnalogicoDesc.Title {font-size: 16px;}
+		<%}%>
 		</style>
-
-		<script>
-			$(function() {
-				$('#loopSlide').simplyScroll({
-					autoMode : 'loop',
-					speed : 1,
-					frameRate : 24,
-					horizontal : true,
-					pauseOnHover : true,
-					pauseOnTouch : true
-				});
-				$('#MenuHome').addClass('Selected');
-			});
-		</script>
 	</head>
 
 	<body>

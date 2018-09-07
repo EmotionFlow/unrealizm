@@ -1,30 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/IllustViewC.jsp"%>
-<%
+<%@include file="/inner/Common.jsp"%><%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-IllustViewCParam cParam = new IllustViewCParam();
-cParam.GetParam(request);
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-
 IllustViewC cResults = new IllustViewC();
-if(!cResults.GetResults(cParam)) {
+cResults.getParam(request);
+if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
+
+String strTitle = cResults.m_cContent.m_cUser.m_strNickName;
+String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
+if(strs.length>0 && strs[0].length()>0) {
+	strTitle = strs[0];
+}
+strTitle = Common.SubStrNum(strTitle, 10);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<%
-		String strTitle = cResults.m_cContent.m_cUser.m_strNickName;
-		String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
-		if(strs.length>0 && strs[0].length()>0) {
-			strTitle = strs[0];
-		}
-		strTitle = Common.SubStrNum(strTitle, 10);
 		%>
 		<title><%=strTitle%></title>
 		<script type="text/javascript">

@@ -1,31 +1,29 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.net.*"%>
-<%@page import="java.sql.*"%>
-<%@page import="java.util.*"%>
-<%@page import="javax.naming.*"%>
-<%@page import="javax.sql.*"%>
-<%@include file="/inner/Common.jsp"%>
-<%!
-class IllustDetailCParam {
-	public int m_nContentId = -1;
-	public int m_nAccessUserId = -1;
-	public String m_strAccessIp = "";
+package com.emotionflow.poipiku.controller;
 
-	public void GetParam(HttpServletRequest cRequest) {
+import java.sql.*;
+
+import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.*;
+
+import com.emotionflow.poipiku.*;
+
+public class IllustDetailC {
+	public int m_nUserId = -1;
+	public int m_nContentId = -1;
+	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nContentId		= Common.ToInt(cRequest.getParameter("TD"));
-			m_strAccessIp	= cRequest.getRemoteAddr();
+			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
+			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 		}
 	}
-}
 
-class IllustDetailC {
+
 	public CContent m_cContent = new CContent();
-
-	public boolean GetResults(IllustDetailCParam cParam) {
+	public boolean getResults(CheckLogin cCheckLogin) {
 		String strSql = "";
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
@@ -40,18 +38,17 @@ class IllustDetailC {
 
 
 			// content main
-			strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
+			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
+			cState.setInt(1, m_nUserId);
+			cState.setInt(2, m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_cContent.m_strFileName = cResSet.getString("file_name");
+				bRtn = true;
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-
-			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
-
 		} catch(Exception e) {
 			System.out.println(strSql);
 			e.printStackTrace();
@@ -63,4 +60,3 @@ class IllustDetailC {
 		return bRtn;
 	}
 }
-%>

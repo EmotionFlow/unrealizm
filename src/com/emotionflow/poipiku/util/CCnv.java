@@ -52,7 +52,7 @@ public class CCnv {
 			strRtn.append("</div>");
 		}
 
-		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nContentId));
+		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
 		strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
 		strRtn.append("</a>");
 

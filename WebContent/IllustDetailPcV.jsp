@@ -1,16 +1,12 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.net.URLEncoder"%>
-<%@ include file="/IllustDetailC.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-IllustDetailCParam cParam = new IllustDetailCParam();
-cParam.GetParam(request);
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-
 IllustDetailC cResults = new IllustDetailC();
-if(!cResults.GetResults(cParam)) {
+cResults.getParam(request);
+if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
