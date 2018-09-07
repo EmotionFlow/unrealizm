@@ -24,9 +24,6 @@ if(!cResults.getResults(cCheckLogin, false)) {
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
-			var g_nNextId = -1;
-
-
 			var g_nPage = 1; // start 1
 			var g_bAdding = false;
 			function addContents() {

@@ -9,7 +9,6 @@ import javax.sql.*;
 
 import com.emotionflow.poipiku.*;
 
-
 public class SearchIllustByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";

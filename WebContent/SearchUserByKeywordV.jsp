@@ -11,27 +11,26 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 		<title><%=Common.ToStringHtml(strKeyword)%></title>
 		<script>
 			var g_nNextId = -1;
-			function addContents(nStartId) {
+
+			var g_nPage = 0;
+			var g_bAdding = false;
+			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "SID" : nStartId, "KWD" : decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
 					"url": "/f/SearchUserByKeywordF.jsp",
-					"dataType": "json",
 					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							var cItem = data.result[nCnt];
-							console.log(cItem.nickname);
-							var $objItem = $("<a/>").addClass("UserThumb").attr("href", "/IllustListV.jsp?ID="+cItem.user_id);
-							var $objItemImgFrame = $("<span/>").addClass("UserThumbImg");
-							var $objItemImg = $("<img/>").attr("src", cItem.file_name+"_120.jpg");
-							var $objItemName = $("<span/>").addClass("UserThumbName").html(cItem.nickname);
-							$objItemImgFrame.append($objItemImg);
-							$objItem.append($objItemImgFrame);
-							$objItem.append($objItemName);
-							$("#IllustThumbList").append($objItem);
+						if(data) {
+							g_nPage++;
+							$('#InfoMsg').hide();
+							$("#IllustThumbList").append(data);
+							g_bAdding = false;
+						} else {
+							$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -42,14 +41,14 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 			}
 
 			$(function(){
-				addContents(g_nNextId);
+				addContents();
 			});
 
 			$(document).ready(function() {
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
+						addContents();
 					}
 				});
 			});
@@ -58,11 +57,9 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 
 	<body>
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div id="IllustThumbList" class="IllustItemList"></div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

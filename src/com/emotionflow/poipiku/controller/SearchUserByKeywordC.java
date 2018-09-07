@@ -1,11 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
-<%!
-class SearchUserByKeywordCParam {
-	public int m_nAccessUserId = -1;
+package com.emotionflow.poipiku.controller;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.*;
+
+import com.emotionflow.poipiku.*;
+
+public class SearchUserByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
-	public void GetParam(HttpServletRequest cRequest) {
+	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
@@ -15,33 +22,30 @@ class SearchUserByKeywordCParam {
 			;
 		}
 	}
-}
 
-class SearchUserByKeywordC {
+
 	public int SELECT_MAX_GALLERY = 30;
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 
-	public boolean GetResults(SearchUserByKeywordCParam cParam) {
+	public boolean getResults(CheckLogin cCheckLogin) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
-		DatabaseMetaData meta = null;
 		String strSql = "";
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-			meta = cConn.getMetaData();
 
 			// NEW ARRIVAL
 			if(SELECT_MAX_GALLERY>0) {
-				strSql = "SELECT count(*) FROM users_0000 WHERE nickname ILIKE ?";
+				strSql = "SELECT count(*) FROM users_0000 WHERE nickname &@~ ?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, Common.EscapeSqlLike(cParam.m_strKeyword, meta.getSearchStringEscape()));
+				cState.setString(1, m_strKeyword);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
@@ -49,10 +53,10 @@ class SearchUserByKeywordC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 
-				strSql = "SELECT * FROM users_0000 WHERE nickname ILIKE ? ORDER BY user_id DESC OFFSET ? LIMIT ?";
+				strSql = "SELECT * FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, Common.EscapeSqlLike(cParam.m_strKeyword, meta.getSearchStringEscape()));
-				cState.setInt(2, cParam.m_nPage * SELECT_MAX_GALLERY);
+				cState.setString(1, m_strKeyword);
+				cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);
 				cState.setInt(3, SELECT_MAX_GALLERY);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
@@ -81,4 +85,3 @@ class SearchUserByKeywordC {
 		return bResult;
 	}
 }
-%>

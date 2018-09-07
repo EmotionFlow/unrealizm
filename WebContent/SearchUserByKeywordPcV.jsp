@@ -1,17 +1,12 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/SearchUserByKeywordC.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-SearchUserByKeywordCParam cParam = new SearchUserByKeywordCParam();
-cParam.GetParam(request);
-cParam.m_nAccessUserId = cCheckLogin.m_nUserId;
-
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
-cResults.SELECT_MAX_GALLERY = 60;
-boolean bRtn = cResults.GetResults(cParam);
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -23,7 +18,7 @@ boolean bRtn = cResults.GetResults(cParam);
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
-			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(cParam.m_strKeyword)%>');
+			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(cResults.m_strKeyword)%>');
 		});
 		</script>
 
@@ -35,29 +30,27 @@ boolean bRtn = cResults.GetResults(cParam);
 
 	<body>
 		<div class="TabMenu">
-			<a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
-			<a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
-			<a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cParam.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
+			<a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
+			<a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
+			<a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div id="IllustThumbList" class="IllustItemList">
-				<%for(CUser cContent : cResults.m_vContentList) {%>
-				<a class="UserThumb" href="/IllustListPcV.jsp?ID=<%=cContent.m_nUserId%>">
-					<span class="UserThumbImg"><img src="<%=Common.GetUrl(cContent.m_strFileName)%>"></span>
-					<span class="UserThumbName"><%=cContent.m_strNickName%></span>
-				</a>
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
 				<%}%>
 			</div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
-
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/SearchUserByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cParam.m_strKeyword, "UTF-8"), cParam.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/SearchUserByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

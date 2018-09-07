@@ -92,4 +92,17 @@ public class CCnv {
 
 		return strRtn.toString();
 	}
+
+	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
+		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
+
+		StringBuilder strRtn = new StringBuilder();
+
+		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s?ID=%d\">", ILLUST_LIST, cUser.m_nUserId));
+		strRtn.append(String.format("<span class=\"UserThumbImg\"><img src=\"%s\"></span>", Common.GetUrl(cUser.m_strFileName)));
+		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", cUser.m_strNickName));
+		strRtn.append("</a>");
+
+		return strRtn.toString();
+	}
 }
