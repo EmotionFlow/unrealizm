@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-String strDebug = "";
-
-//login check
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
@@ -11,64 +8,21 @@ if(!cCheckLogin.m_bLogin) {
 	response.sendRedirect("/");
 	return;
 }
+
+FollowListC cResults = new FollowListC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<title>フォロー</title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("IllustListV.Follow")%></title>
 
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 		});
-		</script>
-
-		<script>
-			var ILLUST_LIST = "IllustListPcV.jsp";
-			var g_nNextId = -1;
-			function addContents(nStartId) {
-				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "SID" : nStartId },
-					"url": "/f/FollowListF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							var cItem = data.result[nCnt];
-							console.log(cItem.nickname);
-							var $objItem = $("<a/>").addClass("UserThumb").attr("href", ILLUST_LIST+"?ID="+cItem.user_id);
-							var $objItemImgFrame = $("<span/>").addClass("UserThumbImg");
-							var $objItemImg = $("<img/>").attr("src", cItem.file_name+"_120.jpg");
-							var $objItemName = $("<span/>").addClass("UserThumbName").html(cItem.nickname);
-							$objItemImgFrame.append($objItemImg);
-							$objItem.append($objItemImgFrame);
-							$objItem.append($objItemName);
-							$("#IllustThumbList").append($objItem);
-						}
-						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			$(function(){
-				addContents(g_nNextId);
-			});
-
-			$(document).ready(function() {
-				$(window).bind("scroll", function() {
-					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
-					}
-				});
-			});
 		</script>
 	</head>
 
@@ -76,11 +30,20 @@ if(!cCheckLogin.m_bLogin) {
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
-			<div id="IllustThumbList" class="IllustItemList"></div>
+			<div id="IllustThumbList" class="IllustItemList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
+			<div class="PageBar">
+				<%=CPageBar.CreatePageBar("/FollowListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+			</div>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>
