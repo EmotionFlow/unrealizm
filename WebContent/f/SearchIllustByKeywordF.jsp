@@ -6,7 +6,7 @@ cCheckLogin.GetResults2(request, response);
 
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(cCheckLogin, true);
 %>
 <div id="IllustThumbList" class="IllustThumbList">
 	<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

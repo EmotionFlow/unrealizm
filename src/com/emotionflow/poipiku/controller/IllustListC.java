@@ -26,6 +26,7 @@ public class IllustListC {
 		}
 	}
 
+
 	public CUser m_cUser = new CUser();
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int SELECT_MAX_GALLERY = 30;
@@ -35,6 +36,9 @@ public class IllustListC {
 	public boolean m_bBlocked = false;
 	public int m_nContentsNum = 0;
 
+	public boolean getResults(CheckLogin cCheckLogin) {
+		return getResults(cCheckLogin, false);
+	}
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
 		String strSql = "";
 		boolean bRtn = false;
@@ -98,17 +102,6 @@ public class IllustListC {
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
-					/*
-					strSql = "SELECT COUNT(user_id) as content_num FROM bookmarks_0000 WHERE user_id=?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, cParam.m_nUserId);
-					cResSet = cState.executeQuery();
-					if(cResSet.next()) {
-						m_cUser.m_nHertNum = cResSet.getInt("content_num");
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-					*/
 				} else {
 					// follow
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";

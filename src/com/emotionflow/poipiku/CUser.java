@@ -20,12 +20,13 @@ public class CUser {
 	public String m_strPassword = "";
 	public String m_strHeaderFileName = "";
 	public String m_strBgFileName = "";
+	public String m_strMuteKeyword = "";
 	public int m_nFollowNum = 0;
 	public int m_nFollowerNum = 0;
-	public int m_nHertNum = 0;
 	public boolean m_bTweet = false;
 	public int m_nAutoTweetTime=-99;
 	public String m_strAutoTweetDesc="";
 	public int m_nAutoTweetWeekDay = -1;
+
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 }

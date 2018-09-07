@@ -48,6 +48,7 @@ class MyEditSettingC {
 				m_cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
 				m_cUser.m_nMailComment		= cResSet.getInt("mail_comment");
 				m_cUser.m_strEmail			= Common.ToStringHtml(cResSet.getString("email"));
+				m_cUser.m_strMuteKeyword	= Common.ToString(cResSet.getString("mute_keyword")).trim();
 				if(m_cUser.m_strProfile.equals(""))  m_cUser.m_strProfile = "(no profile)";
 				if(m_cUser.m_strFileName.equals("")) m_cUser.m_strFileName="/img/default_user.jpg";
 				if(m_cUser.m_strHeaderFileName.equals("")) m_cUser.m_strHeaderFileName="/img/default_transparency.gif";
@@ -55,6 +56,22 @@ class MyEditSettingC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+
+			StringBuilder strMuteKeyword = new StringBuilder();
+			if(!m_cUser.m_strMuteKeyword.isEmpty()) {
+				String strKeywords[] = m_cUser.m_strMuteKeyword.split(" ");
+				for(String word : strKeywords) {
+					word = word.trim();
+					if(!word.isEmpty()) {
+						word = word.substring(1);
+						if(!word.isEmpty()) {
+							strMuteKeyword.append(word);
+							strMuteKeyword.append(" ");
+						}
+					}
+				}
+			}
+			m_cUser.m_strMuteKeyword = strMuteKeyword.toString();
 
 			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
 			cState = cConn.prepareStatement(strSql);

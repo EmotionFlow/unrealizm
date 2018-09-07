@@ -165,7 +165,31 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateProfileTxtF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('自己紹介を更新しました。');
+						DispMsg('保存しました。');
+						sendObjectMessage("reloadParent");
+					},
+					"error": function(req, stat, ex){
+						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+					}
+				});
+				return false;
+			}
+
+
+			function DispMuteCharNum() {
+				var nCharNum = 100 - $("#MuteKeywordText").val().length;
+				$("#MuteKeywordTextNum").html(nCharNum);
+			}
+
+			function UpdateMuteKeyword() {
+				var strMuteKeywordTxt = $.trim($("#MuteKeywordText").val());
+				$.ajaxSingle({
+					"type": "post",
+					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "DES": strMuteKeywordTxt },
+					"url": "/f/UpdateMuteKeywordF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						DispMsg('保存しました。');
 						sendObjectMessage("reloadParent");
 					},
 					"error": function(req, stat, ex){
@@ -182,6 +206,7 @@ if(cResults.m_bUpdate) {
 					"url": "/f/DeregistTwitterF.jsp",
 					"dataType": "json",
 					"success": function(data) {
+						sendObjectMessage("reloadParent");
 						location.reload(true);
 					},
 					"error": function(req, stat, ex){
@@ -206,6 +231,8 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateAutoTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
+						DispMsg('保存しました。');
+						sendObjectMessage("reloadParent");
 						location.reload(true);
 					},
 					"error": function(req, stat, ex){
@@ -380,10 +407,21 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
 					<div class="SettingBody">
-						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
+						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
 						<div class="SettingBodyCmd">
 							<div id="ProfileTextMessage" class="RegistMessage" >1000</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="SettingListItem">
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.MuteKeyowrd")%></div>
+					<div class="SettingBody">
+						<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>
+						<div class="SettingBodyCmd">
+							<div id="MuteKeywordTextNum" class="RegistMessage" >100</div>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateMuteKeyword()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
 					</div>
 				</div>
@@ -448,7 +486,7 @@ if(cResults.m_bUpdate) {
 						</div>
 						<div class="SettingBodyCmd">
 							<%if(cResults.m_cUser.m_strAutoTweetDesc.length()<=0){cResults.m_cUser.m_strAutoTweetDesc=_TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://poipiku.com/%d/", cResults.m_cUser.m_nUserId);}%>
-							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
+							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()" maxlength="100"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
 						</div>
 						<div class="SettingBodyCmd">
 							<div id="AutoTweetTxtNum" class="RegistMessage" >100</div>

@@ -13,7 +13,7 @@ cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
-if(!cResults.getResults(cCheckLogin, false)) {
+if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
