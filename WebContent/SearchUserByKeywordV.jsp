@@ -10,8 +10,6 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title><%=Common.ToStringHtml(strKeyword)%></title>
 		<script>
-			var g_nNextId = -1;
-
 			var g_nPage = 0;
 			var g_bAdding = false;
 			function addContents() {
