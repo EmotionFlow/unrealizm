@@ -300,8 +300,6 @@ if(cResults.m_bUpdate) {
 		<div id="DispMsg"></div>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
-
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
@@ -415,11 +413,6 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 					<div class="SettingBody">
 						<%=_TEX.T("EditSettingV.Twitter.Auto.Info")%>
-						<div style="margin: 15px 0 0 0; font-size: 11px;">
-							<span style="font-size: 9px; color: red; font-weight: bold;">new!!</span>
-							定期ツイートの際に1つ前の古い定期ツイートを自動削除するようになりました。ツイッターの画像一覧からも削除するので、常に最新情報だけが表示されるようになります。
-							(7/15以降の定期ツイートから対象)
-						</div>
 						<div class="SettingBodyCmd">
 							<div class="onoffswitch OnOff">
 								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AutoTweet" value="1" <%if(cResults.m_cUser.m_nAutoTweetTime>=0){%>checked="checked"<%}%> />
@@ -464,16 +457,6 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 				<%}%>
-
-
-				<div class="SettingListItem">
-					<div class="SettingListTitle">機種変更</div>
-					<div class="SettingBody">
-						よりセキュアにご利用いただくため、Twitterの認証方式を使用するうように変更しました。
-						Twitterとの連携が完了していない場合は先にTwitter連携を完了してください。
-						機種変後、アプリケーションの最初の画面で「Twitterで新規登録/ログイン」をタップ選ぶことにより、ログインすることができます。
-					</div>
-				</div>
 
 
 				<%if(cResults.m_cUser.m_bTweet){%>

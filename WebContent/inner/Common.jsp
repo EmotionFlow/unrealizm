@@ -16,4 +16,5 @@
 <%
 ResourceBundleControl _TEX = new ResourceBundleControl(request);
 int g_nSafeFilter = 0;
+String g_strSearchWord = "";
 %>

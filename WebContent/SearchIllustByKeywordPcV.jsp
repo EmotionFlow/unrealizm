@@ -7,6 +7,7 @@ cCheckLogin.GetResults2(request, response);
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
+g_strSearchWord = cResults.m_strKeyword;
 %>
 <!DOCTYPE html>
 <html>
@@ -18,7 +19,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
-			$('#HeaderSearchBox').val('<%=Common.ToStringHtml(cResults.m_strKeyword)%>');
 		});
 		</script>
 

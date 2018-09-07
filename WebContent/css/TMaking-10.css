@@ -5,7 +5,7 @@
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
-	min-height: 600px;
+	min-height: 400px;
 }
 
 .SideBarTop {
@@ -828,6 +828,10 @@
 	right: 5px;
 	bottom: 0;
 	font-size: 22px;
+}
+
+.UserInfo .UserInfoCmd .IllustItemCommandSub .IllustItemCommandTweet {
+	color: #bbb;
 }
 
 .UserInfo .UserInfoCmd .UserInfoCmdBlock {

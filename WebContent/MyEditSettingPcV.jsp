@@ -308,8 +308,6 @@ if(cResults.m_bUpdate) {
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
-
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
@@ -423,11 +421,6 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 					<div class="SettingBody">
 						<%=_TEX.T("EditSettingV.Twitter.Auto.Info")%>
-						<div style="margin: 15px 0 0 0; font-size: 11px;">
-							<span style="font-size: 9px; color: red; font-weight: bold;">new!!</span>
-							定期ツイートの際に1つ前の古い定期ツイートを自動削除するようになりました。ツイッターの画像一覧からも削除するので、常に最新情報だけが表示されるようになります。
-							(7/14以降の定期ツイートから対象)
-						</div>
 						<div class="SettingBodyCmd">
 							<div class="onoffswitch OnOff">
 								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AutoTweet" value="1" <%if(cResults.m_cUser.m_nAutoTweetTime>=0){%>checked="checked"<%}%> />
