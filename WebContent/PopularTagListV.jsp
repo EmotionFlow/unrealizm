@@ -3,23 +3,27 @@
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
-		<title>tag</title>
+		<title>popular</title>
 		<script>
-			var g_nNextId = -1;
-			function addContents(nStartId) {
+			var g_nPage = 0;
+			var g_bAdding = false;
+			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "SID" : nStartId },
+					"data": {"PG" : g_nPage},
 					"url": "/f/PopularTagListF.jsp",
-					"dataType": "json",
 					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							var cItem = data.result[nCnt];
-							var $objItem = $("<a/>").addClass("TagItem").attr("href", "/SearchIllustByTagV.jsp?KWD="+cItem.keyword).text('#'+cItem.keyword);
-							$("#IllustThumbList").append($objItem);
+						if(data) {
+							g_nPage++;
+							$('#InfoMsg').hide();
+							$("#IllustThumbList").append(data);
+							g_bAdding = false;
+						} else {
+							$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -30,14 +34,14 @@
 			}
 
 			$(function(){
-				addContents(g_nNextId);
+				addContents();
 			});
 
 			$(document).ready(function() {
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
+						addContents();
 					}
 				});
 			});
@@ -46,11 +50,9 @@
 
 	<body>
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<div id="IllustThumbList" class="IllustItemList"></div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

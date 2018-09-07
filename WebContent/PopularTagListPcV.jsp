@@ -3,6 +3,10 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
+
+PopularTagListC cResults = new PopularTagListC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -15,44 +19,6 @@ cCheckLogin.GetResults2(request, response);
 		$(function(){
 			$('#MenuHome').addClass('Selected');
 		});
-		</script>
-		<script>
-			var g_nNextId = -1;
-			function addContents(nStartId) {
-				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "SID" : nStartId },
-					"url": "/f/PopularTagListF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						g_nNextId = data.end_id;
-						for(var nCnt=0; nCnt<data.result_num; nCnt++) {
-							var cItem = data.result[nCnt];
-							var $objItem = $("<a/>").addClass("TagItem").attr("href", "/SearchIllustByTagPcV.jsp?KWD="+cItem.keyword).text('#'+cItem.keyword);
-							$("#IllustThumbList").append($objItem);
-						}
-						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			$(function(){
-				addContents(g_nNextId);
-			});
-
-			$(document).ready(function() {
-				$(window).bind("scroll", function() {
-					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
-						addContents(g_nNextId);
-					}
-				});
-			});
 		</script>
 	</head>
 
@@ -67,11 +33,15 @@ cCheckLogin.GetResults2(request, response);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
-
-			<div id="IllustThumbList" class="IllustItemList"></div>
-
-			<%@ include file="/inner/TAdBottom.jspf"%>
+			<div id="IllustThumbList" class="IllustThumbList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CTag cTag = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

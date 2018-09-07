@@ -9,22 +9,21 @@ import javax.sql.*;
 
 import com.emotionflow.poipiku.*;
 
-
-public class PopularIllustListC {
-	public int m_nAccessUserId = -1;
+public class PopularTagListC {
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
-		} catch(Exception e) {
+		}
+		catch(Exception e) {
 			;
 		}
 	}
 
-	public int SELECT_MAX_GALLERY = 30;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	int m_nEndId = -1;
+
+	public int SELECT_MAX_GALLERY = 100;
+	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
@@ -39,29 +38,16 @@ public class PopularIllustListC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			// POPULAR
-			strSql = "SELECT count(*) FROM contents_0000 WHERE bookmark_num>10 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cState.setInt(2, cCheckLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nContentsNum = cResSet.getInt(1);
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			// NEW ARRIVAL
+			m_nContentsNum = SELECT_MAX_GALLERY;
 
-			strSql = "SELECT * FROM contents_0000 WHERE bookmark_num>10 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "select tag_txt FROM tags_0000 group by tag_txt order by count(*) desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cState.setInt(2, cCheckLogin.m_nUserId);
-			cState.setInt(3, m_nPage * SELECT_MAX_GALLERY);
-			cState.setInt(4, SELECT_MAX_GALLERY);
+			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
+			cState.setInt(2, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
-				m_nEndId = cContent.m_nContentId;
-				m_vContentList.add(cContent);
+				m_vContentList.add(new CTag(cResSet));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
