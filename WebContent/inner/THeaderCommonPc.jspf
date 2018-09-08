@@ -18,6 +18,16 @@
 <meta name="viewport" content="width=360" />
 <%} else {%>
 <style>
+/*
+.Header {width: 50%;}
+.Header .HeaderTitleWrapper {float: left;  margin: 0 0 0 20px;}
+.Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 5px;}
+.Header .HeaderSearch {}
+.Header .HeaderSearch .HeaderSearchBox {width: 200px;}
+.Header .HeaderTitleSearch {display: none;}
+.FooterMenuWrapper{width: 50%; border-top: none; border-bottom: solid 1px #ccc; top: 0; right: 0; left: auto; bottom: auto;}
+.FooterMenuWrapper .FooterMenu {float: right; width: 320px;}
+*/
 .Wrapper {width: 600px; height: 60px; position: relative;}
 .SideBarTop {height: 60px;}
 .SideBarMid {height: 60px;}

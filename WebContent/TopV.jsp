@@ -20,7 +20,7 @@ if(cCheckLogin.m_bLogin) {
 		<style>
 		.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
 		.AnalogicoDesc {width: 100%; padding: 40px 0 0 0; box-sizing: border-box; text-align: center; font-size: 14px; line-height: 28px; color: #fff; font-weight: normal;}
-		.AnalogicoStart {text-align: center; margin: 60px 0 0 0;}
+		.AnalogicoStart {text-align: center; margin: 60px 0 0 0; padding: 0 0 30px 0;}
 		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 		.AnalogicoInfo {display: none;}
 		<%if(Common.isSmartPhone(request)) {%>

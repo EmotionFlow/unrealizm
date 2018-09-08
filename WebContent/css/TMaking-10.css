@@ -158,6 +158,7 @@
 /********** UPLOAD **********/
 .UploadFile {
 	display: block;
+	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	padding: 10px 10px 50px 10px;
@@ -279,6 +280,7 @@
 
 .UploadFile .UoloadCmd {
 	display: block;
+	float: left;
 	width: 100%;
 	text-align: center;
 }
@@ -831,7 +833,7 @@
 }
 
 .UserInfo .UserInfoCmd .IllustItemCommandSub .IllustItemCommandTweet {
-	color: #bbb;
+	color: #aaa;
 }
 
 .UserInfo .UserInfoCmd .UserInfoCmdBlock {

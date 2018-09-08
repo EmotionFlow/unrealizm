@@ -63,7 +63,7 @@ class UploadFileCParam {
 
 
 class UploadFileC {
-	public int GetResults(UploadFileCParam cParam) {
+	public int GetResults(UploadFileCParam cParam, ResourceBundleControl _TEX) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -130,9 +130,11 @@ class UploadFileC {
 			if(cParam.m_bTweet) {
 				CTweet cTweet = new CTweet();
 				if (cTweet.GetResults(cParam.m_nUserId)) {
+					String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cParam.m_nCategoryId)));
 					String strFooter = String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, m_nContentId);
-					int nMessageLength = CTweet.MAX_LENGTH-strFooter.length();
+					int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
 					StringBuffer bufMsg = new StringBuffer();
+					bufMsg.append(strHeader);
 					if (nMessageLength < cParam.m_strDescription.length()) {
 						bufMsg.append(cParam.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
 						bufMsg.append(CTweet.ELLIPSE);
@@ -173,7 +175,7 @@ System.out.println("UploadFileF.jsp:FILE:"+cParam.m_strFileName);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadFileC cResults = new UploadFileC();
-	nRtn = cResults.GetResults(cParam);
+	nRtn = cResults.GetResults(cParam, _TEX);
 	System.out.println("UploadFileF.jsp:DONE");
 }
 %><%=nRtn%>
