@@ -84,8 +84,6 @@ cResults.GetResults(cParam);
 					<%}%>
 				</div>
 			</div>
-
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

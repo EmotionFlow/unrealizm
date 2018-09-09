@@ -23,7 +23,7 @@ cCheckLogin.GetResults2(request, response);
 				try {
 					var strUserName = $.trim($("#RegistUserName").val());
 
-					if(strUserName.length<5) {
+					if(strUserName.length<4) {
 						strMessage = "<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>";
 						bRtn = false;
 					}
@@ -35,7 +35,7 @@ cCheckLogin.GetResults2(request, response);
 
 			function UpdateNickName() {
 				var strUserName = $.trim($("#RegistUserName").val());
-				if(strUserName.length<5) {
+				if(strUserName.length<4) {
 					$("#RegistMessage").html("<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>");
 					return;
 				}

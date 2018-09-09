@@ -14,7 +14,7 @@ if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 	return;
 }
 
-if(strNickName.length()<5) {
+if(strNickName.length()<4) {
 	return;
 }
 

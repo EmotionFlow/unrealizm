@@ -53,7 +53,7 @@ if(cResults.m_bUpdate) {
 				try {
 					var strUserName = $.trim($("#RegistUserName").val());
 
-					if(strUserName.length<5) {
+					if(strUserName.length<4) {
 						strMessage = "<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>";
 						bRtn = false;
 					}
@@ -65,7 +65,7 @@ if(cResults.m_bUpdate) {
 
 			function UpdateNickName() {
 				var strUserName = $.trim($("#RegistUserName").val());
-				if(strUserName.length<5) {
+				if(strUserName.length<4) {
 					DispMsg("<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>");
 					return;
 				}
@@ -536,8 +536,6 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 			</div>
-
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div><!--Wrapper-->
 
 		<%@ include file="/inner/TFooter.jspf"%>

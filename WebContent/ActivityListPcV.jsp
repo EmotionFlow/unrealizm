@@ -110,8 +110,6 @@ cResults.GetResults(cParam);
 					<%}%>
 				</div>
 			</div>
-
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

@@ -48,6 +48,11 @@
 		</ul>
 	</div>
 
+	<div class="FooterInfo" style="font-size: 10px; margin: 10px 0;">
+		各種機能・コンセプトは特許出願中です。
+		当サイトの各種技術・コンセプト・デザイン・商標等は特許法、著作権法、不正競争防止法等を始めとした各種法律により保護されています。
+	</div>
+
 	<div class="FooterCopy">
 		Copyright(C) 2018 -
 		<a class="FooterHref" href="http://www.pipa.jp/" target="_blank">Pipa.jp Ltd.</a>
