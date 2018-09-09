@@ -20,7 +20,7 @@ public class IllustViewListC {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
 			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
-			m_nPage 		= Common.ToInt(cRequest.getParameter("PG"));
+			m_nPage 		= Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 			m_nMode 		= Common.ToInt(cRequest.getParameter("MD"));
 		} catch(Exception e) {
 			m_nContentId = -1;

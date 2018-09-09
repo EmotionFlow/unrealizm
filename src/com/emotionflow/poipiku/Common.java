@@ -300,36 +300,11 @@ public class Common {
 		String ILLUST_LIST = (nMode==CCnv.MODE_SP)?"/SearchIllustByTagV.jsp":"/SearchIllustByTagPcV.jsp";
 		return strSrc
 				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
-				.replaceAll("(#)([\\w|\\p{InHiragana}|\\p{InKatakana}|\\p{InHalfwidthAndFullwidthForms}|\\p{InCJKUnifiedIdeographs}]+)", String.format(" <a class=\"AutoLink\" href=\"%s?KWD=$2\">$0</a>", ILLUST_LIST));
+				.replaceAll("(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format(" <a class=\"AutoLink\" href=\"%s?KWD=$2\">$0</a>", ILLUST_LIST));
 	}
-
-	public static String AutoLinkPc(String strSrc) {
-		return strSrc
-				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class=\"AutoLink\" href=\"$0\" target=\"_blank\">$0</a>")
-				.replaceAll("(#)([\\w|\\p{InHiragana}|\\p{InKatakana}|\\p{InHalfwidthAndFullwidthForms}|\\p{InCJKUnifiedIdeographs}]+)"," <a class=\"AutoLink\" href=\"/SearchIllustByTagPcV.jsp?KWD=$2\">$0</a>");
-	}
-
-	/*
-	static String AutoLinkTwitter(String strSrc) {
-		return strSrc
-			.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a href=\"$0\" target=\"_blank\">$0</a>")
-			.replaceAll("\\B(@)([0-9|a-z|A-Z|_]+)","<a href=\"http://twitter.com/$2\" target=\"_blank\">$0</a>")
-			.replaceAll("(#)([\\w|\\p{InHiragana}|\\p{InKatakana}|\\p{InHalfwidthAndFullwidthForms}|\\p{InCJKUnifiedIdeographs}]+)","<a href=\"https://twitter.com/hashtag/$2\" target=\"_blank\">$0</a>")
-			.replaceAll("[\\r\\n]+[\\s]+", "\n")
-			.replaceAll("\\n", "<br />");
-	}
-	*/
 
 	public static String EscapeSqlLike(String strSrc, String strEscape) {
 		return "%" + EscapeSqlLikeExact(strSrc, strEscape) + "%";
-		/*
-		String strRtn = strSrc;
-		if(strEscape==null) strEscape="";
-		strRtn = replaceAll(strRtn, strEscape, strEscape+strEscape);
-		strRtn = replaceAll(strRtn, "_", strEscape+"_");
-		strRtn = replaceAll(strRtn, "%", strEscape+"%");
-		return "%"+strRtn+"%";
-		*/
 	}
 
 	public static String EscapeSqlLikeExact(String strSrc, String strEscape) {
