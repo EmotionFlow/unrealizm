@@ -56,7 +56,6 @@ cResults.GetResults(cParam);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
 
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
@@ -71,7 +70,8 @@ cResults.GetResults(cParam);
 			<%}%>
 			<div class="IllustItemList" style="min-height: 600px;">
 				<div class="ItemComment">
-					<%for(CComment cComment : cResults.m_vComment) {%>
+					<%for(int nCnt=0; nCnt<cResults.m_vComment.size(); nCnt++) {
+						CComment cComment = cResults.m_vComment.get(nCnt);%>
 					<%if(cComment.m_nCommentType==CComment.TYPE_COMMENT) {%>
 					<a class="ItemCommentItem" href="/IllustViewPcV.jsp?TD=<%=cComment.m_nContentId%>">
 						<span class="CommentThumb Heart">
@@ -106,6 +106,9 @@ cResults.GetResults(cParam);
 							</span>
 						</span>
 					</a>
+					<%}%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
 					<%}%>
 					<%}%>
 				</div>
