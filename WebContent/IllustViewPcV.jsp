@@ -18,6 +18,7 @@ if(strs.length>0 && strs[0].length()>0) {
 }
 strTitle = Common.SubStrNum(strTitle, 10);
 String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").replaceAll("\r", " ");
+ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -112,7 +113,14 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 					}
 				});
 			});
+
 		</script>
+
+		<link href="lib/css/emoji.css" rel="stylesheet" />
+		<script src="/js/emoji-picker/config.js"></script>
+		<script src="/js/emoji-picker/util.js"></script>
+		<script src="/js/emoji-picker/jquery.emojiarea.js"></script>
+		<script src="/js/emoji-picker/emoji-picker.js"></script>
 	</head>
 
 	<body>
@@ -121,9 +129,9 @@ String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").repl
 		<div class="Wrapper">
 
 			<div class="IllustItemList">
-				<%=CCnv.toHtml(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 			</div>
-			<div id="IllustItemList" class="IllustItemList"></div>
+			<div id="IllustItemList" class="IllustItemList" style="margin-top: 80px;"></div>
 
 		</div>
 

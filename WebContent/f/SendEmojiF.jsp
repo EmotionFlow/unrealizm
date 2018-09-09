@@ -4,16 +4,14 @@
 <%!
 class SendCommentCParam {
 	public int m_nContentId = -1;
-	public int m_nCategory = 0;
-	public int m_nPos = 0;
+	public String m_strEmoji = "";
 	public int m_nUserId = -1;
 
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nContentId	= Common.ToInt(cRequest.getParameter("IID"));
-			m_nCategory		= Common.ToInt(cRequest.getParameter("CAT"));
-			m_nPos			= Common.ToInt(cRequest.getParameter("POS"));
+			m_strEmoji		= Common.ToString(cRequest.getParameter("EMJ")).trim();
 			m_nUserId		= Common.ToInt(cRequest.getParameter("UID"));
 		} catch(Exception e) {
 			m_nContentId = -1;
@@ -25,8 +23,10 @@ class SendCommentCParam {
 class SendCommentC {
 	public String m_strEmoji = "";
 	public boolean GetResults(SendCommentCParam cParam, ResourceBundleControl _TEX) {
-		if(cParam.m_nCategory<0 || cParam.m_nCategory>=Common.CATEGORY_EMOJI.length) return false;
-		if(cParam.m_nPos<0 || cParam.m_nPos>=Common.CATEGORY_EMOJI[cParam.m_nCategory].length) return false;
+		if(!Arrays.asList(Common.EMOJI_KEYBORD).contains(cParam.m_strEmoji)) {
+			System.out.println("Invalid Emoji : "+ cParam.m_strEmoji);
+			return false;
+		}
 
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
@@ -76,7 +76,7 @@ class SendCommentC {
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id) VALUES(?, ?, ?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);
-			cState.setString(2, Common.CATEGORY_EMOJI[cParam.m_nCategory][cParam.m_nPos]);
+			cState.setString(2, cParam.m_strEmoji);
 			cState.setInt(3, cParam.m_nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
@@ -90,7 +90,7 @@ class SendCommentC {
 			cState.close();cState=null;
 
 			bRtn = true; // 以下実行されなくてもOKを返す
-			m_strEmoji = Common.CATEGORY_EMOJI[cParam.m_nCategory][cParam.m_nPos];
+			m_strEmoji = cParam.m_strEmoji;
 
 		} catch(Exception e) {
 			e.printStackTrace();

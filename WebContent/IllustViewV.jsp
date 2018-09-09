@@ -16,6 +16,7 @@ if(strs.length>0 && strs[0].length()>0) {
 	strTitle = strs[0];
 }
 strTitle = Common.SubStrNum(strTitle, 10);
+ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -103,9 +104,9 @@ strTitle = Common.SubStrNum(strTitle, 10);
 		<div class="Wrapper">
 
 			<div class="IllustItemList">
-				<%=CCnv.toHtml(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX)%>
+				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
 			</div>
-			<div id="IllustItemList" class="IllustItemList"></div>
+			<div id="IllustItemList" class="IllustItemList" style="margin-top: 50px;"></div>
 
 		</div>
 	</body>

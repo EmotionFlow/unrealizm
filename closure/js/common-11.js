@@ -159,10 +159,10 @@ $(function(){
 	});
 });
 
-function SendEmoji(nContentId, nCategory, nPos , nUserId) {
+function SendEmoji(nContentId, strEmoji , nUserId) {
 	$.ajax({
 		"type": "post",
-		"data": {"IID": nContentId, "CAT": nCategory, "POS": nPos, "UID": nUserId},
+		"data": {"IID": nContentId, "EMJ": strEmoji, "UID": nUserId},
 		"url": "/f/SendEmojiF.jsp",
 		"dataType": "json",
 		"success": function(data) {
@@ -188,5 +188,13 @@ function DeleteContentBase(nUserId, nContentId) {
 			DispMsg('Delete Error');
 		}
 	});
+}
+
+function switchEmojiKeyboard(obj, nSelected) {
+	$ResEmojiBtnList = $(obj).parent().parent().children('.ResEmojiBtnList');
+	$ResEmojiBtnList.hide();
+	$ResEmojiBtnList.eq(nSelected).show();
+	$(obj).parent().children('.ResBtnSetItem').removeClass('Selected');
+	$(obj).addClass('Selected');
 }
 

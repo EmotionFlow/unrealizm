@@ -41,7 +41,7 @@ public class PopularTagListC {
 			// NEW ARRIVAL
 			m_nContentsNum = SELECT_MAX_GALLERY;
 
-			strSql = "select tag_txt FROM tags_0000 group by tag_txt order by count(*) desc offset ? limit ?";
+			strSql = "select tag_txt FROM vw_rank_tag_daily order by rank desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
 			cState.setInt(2, SELECT_MAX_GALLERY);

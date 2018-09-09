@@ -2,6 +2,7 @@ package com.emotionflow.poipiku.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import com.emotionflow.poipiku.*;
 
@@ -9,7 +10,7 @@ public class CCnv {
 	public static final int MODE_PC = 0;
 	public static final int MODE_SP = 1;
 
-	public static String toHtml(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX) throws UnsupportedEncodingException{
+	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException{
 		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
 		String REPORT_FORM = (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 		String ILLUST_DETAIL = (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
@@ -31,7 +32,7 @@ public class CCnv {
 					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
 							(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
 		}
-		strRtn.append("</div>");
+		strRtn.append("</div>");	// IllustItemUser
 
 		strRtn.append("<div class=\"IllustItemCommand\">");
 		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
@@ -43,13 +44,13 @@ public class CCnv {
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?TD=%d\"></a>", REPORT_FORM, cContent.m_nContentId));
 		}
-		strRtn.append("</div>");
-		strRtn.append("</div>");
+		strRtn.append("</div>");	// IllustItemCommandSub
+		strRtn.append("</div>");	// IllustItemCommand
 
 		if(!cContent.m_strDescription.isEmpty()) {
 			strRtn.append("<div class=\"IllustItemDesc\">");
 			strRtn.append(Common.AutoLink(Common.ToStringHtml(cContent.m_strDescription), nMode));
-			strRtn.append("</div>");
+			strRtn.append("</div>");	// IllustItemDesc
 		}
 
 		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
@@ -63,19 +64,33 @@ public class CCnv {
 		} else {
 			strRtn.append(String.format(_TEX.T("Common.IllustItemRes.Title"), cContent.m_vComment.size()));
 		}
-		strRtn.append("</div>");
+		strRtn.append("</div>");	// IllustItemResListTitle
 		for(CComment comment : cContent.m_vComment) {
 			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", comment.m_strDescription));
 		}
 		strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
-		strRtn.append("</div>");
+		strRtn.append("</div>");	// IllustItemResList
 
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
-		for(int nCnt=0; nCnt<Common.CATEGORY_EMOJI[cContent.m_nCategoryId].length; nCnt++) {
-			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, %d, %d, %d)\">%s</a>", cContent.m_nContentId, cContent.m_nCategoryId, nCnt, nLoginUserId, Common.ToStringHtml(Common.CATEGORY_EMOJI[cContent.m_nCategoryId][nCnt])));
+		strRtn.append("<div class=\"ResBtnSetList\">");
+		strRtn.append("<a class=\"BtnBase ResBtnSetItem Selected\" onclick=\"switchEmojiKeyboard(this, 0)\">人気</a>");
+		strRtn.append("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, 1)\">すべて</a>");
+		strRtn.append("</div>");	// ResBtnSetList
+		strRtn.append("<div class=\"ResEmojiBtnList\">");
+		for(String emoji : vResult) {
+			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
 		}
-		strRtn.append("</div>");
-		strRtn.append("</div>");
+		strRtn.append("</div>");	// ResEmojiBtnList
+		strRtn.append("<div class=\"ResEmojiBtnList\" style=\"display: none;\">");
+		for(String emoji : Common.EMOJI_KEYBORD) {
+			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
+		}
+		//for(int nCnt=0; nCnt<Common.CATEGORY_EMOJI[cContent.m_nCategoryId].length; nCnt++) {
+		//	strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, %d, %d, %d)\">%s</a>", cContent.m_nContentId, cContent.m_nCategoryId, nCnt, nLoginUserId, Common.ToStringHtml(Common.CATEGORY_EMOJI[cContent.m_nCategoryId][nCnt])));
+		//}
+		strRtn.append("</div>");	// ResEmojiBtnList
+		strRtn.append("</div>");	// IllustItemResBtnList
+		strRtn.append("</div>");	// IllustItem
 
 		return strRtn.toString();
 	}
