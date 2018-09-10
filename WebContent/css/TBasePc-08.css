@@ -49,3 +49,5 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 .AnalogicoInfo .AnalogicoInfoRegist {display: block; text-align: center; font-size: 14px; float: left; width: 100%;}
 .Footer .AnalogicoInfo {background: none; padding: 0 0 15px 0;}
 
+/********** Ad **********/
+.FooterAd {text-align: center;}
