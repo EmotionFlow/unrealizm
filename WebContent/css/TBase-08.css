@@ -18,6 +18,7 @@ body {
 	color: #6d6965;
 	background: #fff;
 	-webkit-text-size-adjust:none;
+	user-select:none;
 }
 
 h1 {

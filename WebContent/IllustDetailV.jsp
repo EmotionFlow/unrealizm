@@ -16,6 +16,14 @@ if(!cResults.getResults(cCheckLogin)) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%></title>
+
+		<script>
+		$(function(){
+			$('body, .Wrapper').each(function(index, element){
+				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+			});
+		});
+		</script>
 	</head>
 
 	<body style="height: 100%;background: #ffffff; padding: 0;">
@@ -26,6 +34,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		<a class="IllustItemLink" style="display: block;" href="javascript:(window.open('','_self').opener=window).close();">
 			<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 		</a>
+		<div class="IllustItemTProhibit"><%=_TEX.T("IllustView.ProhibitMsg.Long")%></div>
 		<%} else {%>
 		Not Found.
 		<%}%>

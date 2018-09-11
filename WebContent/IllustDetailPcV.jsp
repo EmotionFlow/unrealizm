@@ -26,6 +26,9 @@ if(!cResults.getResults(cCheckLogin)) {
 		<%if(Common.isSmartPhone(request)) {%>
 		<script type="text/javascript">
 		$(function(){
+			$('body, .Wrapper').each(function(index, element){
+				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+			});
 			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsgSp")%>');
 		});
 		</script>
@@ -35,6 +38,9 @@ if(!cResults.getResults(cCheckLogin)) {
 		<%} else {%>
 		<script type="text/javascript">
 		$(function(){
+			$('body, .Wrapper').each(function(index, element){
+				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+			});
 			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsg")%>');
 		});
 		</script>
@@ -42,7 +48,7 @@ if(!cResults.getResults(cCheckLogin)) {
 	</head>
 
 	<body style="height: 100%;background: #ffffff; padding: 0;">
-		<div id="DispMsg"></div>
+		<div id="DispMsg" style="top: 0;"></div>
 		<table style="width: 100%; height: 100%; text-align: center;">
 		<tr>
 		<td>
@@ -50,6 +56,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		<a class="IllustItemLink" style="display: block;" href="javascript:(window.open('','_self').opener=window).close();">
 			<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 		</a>
+		<div class="IllustItemTProhibit"><%=_TEX.T("IllustView.ProhibitMsg.Long")%></div>
 		<%} else {%>
 		Not Found.
 		<%}%>

@@ -32,6 +32,12 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 				DeleteContentBase(<%=cCheckLogin.m_nUserId%>, nContentId);
 				return false;
 			}
+
+			$(function(){
+				$('body, .Wrapper').each(function(index, element){
+					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+				});
+			});
 		</script>
 	</head>
 
