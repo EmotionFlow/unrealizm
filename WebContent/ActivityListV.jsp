@@ -25,7 +25,7 @@ cResults.GetResults(cParam);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
-		<title>アクティビティ</title>
+		<title><%=_TEX.T("ActivityList.Title")%></title>
 	</head>
 
 	<body>
@@ -33,13 +33,7 @@ cResults.GetResults(cParam);
 
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
-				<%if(cParam.m_nMode<=0){%>
-				コメントやフォローがあると<br />
-				ここに表示されます！
-				<%}else{%>
-				最近行ったコメントやフォローが<br />
-				ここに表示されます！
-				<%}%>
+				<%=(cParam.m_nMode<=0)?_TEX.T("ActivityList.Message.Default.Recive"):_TEX.T("ActivityList.Message.Default.Send")%>
 			</div>
 			<%}%>
 			<div class="IllustItemList">
@@ -53,7 +47,8 @@ cResults.GetResults(cParam);
 						</span>
 						<span class="CommentDetail Heart">
 							<span class="CommentName">
-								<%=Common.ToStringHtml(cComment.m_strNickName)%>
+								<%//=Common.ToStringHtml(cComment.m_strNickName)%>
+								<%=_TEX.T("ActivityList.Message.Comment")%>
 							</span>
 						</span>
 					</a>
@@ -65,7 +60,8 @@ cResults.GetResults(cParam);
 						<span class="UserThumbName">
 							<%=Common.ToStringHtml(cComment.m_strNickName)%>
 							<span class="UserThumbNameAdditional">
-								<%if(cParam.m_nMode<=0){%>にフォローされました<%}else{%>をフォローしました<%}%>
+								<%=String.format((cParam.m_nMode<=0)?_TEX.T("ActivityList.Message.Followed"):_TEX.T("ActivityList.Message.Following"),
+										Common.ToStringHtml(cComment.m_strNickName))%>
 							</span>
 						</span>
 					</a>

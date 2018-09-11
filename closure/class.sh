@@ -1,1 +1,1 @@
-rsync -av --delete ../build/classes/com/ ../WebContent/WEB-INF/classes/com/
+rsync -av --delete ../build/classes/jp/ ../WebContent/WEB-INF/classes/jp/

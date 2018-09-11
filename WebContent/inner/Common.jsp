@@ -10,9 +10,9 @@
 <%@page import="java.util.regex.*" %>
 <%@page import="javax.naming.*"%>
 <%@page import="javax.sql.*"%>
-<%@page import="com.emotionflow.poipiku.*"%>
-<%@page import="com.emotionflow.poipiku.util.*"%>
-<%@page import="com.emotionflow.poipiku.controller.*"%>
+<%@page import="jp.pipa.poipiku.*"%>
+<%@page import="jp.pipa.poipiku.util.*"%>
+<%@page import="jp.pipa.poipiku.controller.*"%>
 <%
 ResourceBundleControl _TEX = new ResourceBundleControl(request);
 int g_nSafeFilter = 0;

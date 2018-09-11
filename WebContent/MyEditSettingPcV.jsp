@@ -272,7 +272,7 @@ if(cResults.m_bUpdate) {
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result>0) {
-							deleteCookie('ANALOGICO_LK');
+							deleteCookie('POIPIKU_LK');
 							location.href="/";
 						}
 					},
@@ -292,7 +292,7 @@ if(cResults.m_bUpdate) {
 						"dataType": "json",
 						"success": function(data) {
 							if(data.result>0) {
-								deleteCookie('ANALOGICO_LK');
+								deleteCookie('POIPIKU_LK');
 								location.href="/";
 							}
 						},

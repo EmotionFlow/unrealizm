@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="com.emotionflow.poipiku.Common"%>
+<%@page import="jp.pipa.poipiku.Common"%>
 <div class="FooterAd">
 	<%if(Common.isSmartPhone(request)) {%>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
