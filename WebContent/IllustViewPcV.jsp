@@ -115,12 +115,6 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 			});
 
 		</script>
-
-		<link href="lib/css/emoji.css" rel="stylesheet" />
-		<script src="/js/emoji-picker/config.js"></script>
-		<script src="/js/emoji-picker/util.js"></script>
-		<script src="/js/emoji-picker/jquery.emojiarea.js"></script>
-		<script src="/js/emoji-picker/emoji-picker.js"></script>
 	</head>
 
 	<body>

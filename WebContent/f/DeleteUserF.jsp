@@ -27,12 +27,13 @@ try {
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 	cConn = dsPostgres.getConnection();
 
+	// 絵文字は残す
 	// delete comment
-	strSql ="DELETE FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
-	cState = cConn.prepareStatement(strSql);
-	cState.setInt(1, m_nUserId);
-	cState.executeUpdate();
-	cState.close();cState=null;
+	//strSql ="DELETE FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
+	//cState = cConn.prepareStatement(strSql);
+	//cState.setInt(1, m_nUserId);
+	//cState.executeUpdate();
+	//cState.close();cState=null;
 
 	// delete tags
 	strSql = "DELETE FROM tags_0000 WHERE tags_0000.content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";

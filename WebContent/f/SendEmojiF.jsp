@@ -2,31 +2,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
-class SendCommentCParam {
+class SendEmojiC {
+	public int EMOJI_MAX = 5;
+
 	public int m_nContentId = -1;
 	public String m_strEmoji = "";
 	public int m_nUserId = -1;
+	public String m_strIpAddress = "";
 
-	public void GetParam(HttpServletRequest cRequest) {
+	public void getParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nContentId	= Common.ToInt(cRequest.getParameter("IID"));
-			m_strEmoji		= Common.ToString(cRequest.getParameter("EMJ")).trim();
-			m_nUserId		= Common.ToInt(cRequest.getParameter("UID"));
+			request.setCharacterEncoding("UTF-8");
+			m_nContentId	= Common.ToInt(request.getParameter("IID"));
+			m_strEmoji		= Common.ToString(request.getParameter("EMJ")).trim();
+			m_nUserId		= Common.ToInt(request.getParameter("UID"));
+			m_strIpAddress	= request.getRemoteAddr();
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
 		}
 	}
-}
 
-class SendCommentC {
-	public String m_strEmoji = "";
-	public boolean GetResults(SendCommentCParam cParam, ResourceBundleControl _TEX) {
-		if(!Arrays.asList(Common.EMOJI_KEYBORD).contains(cParam.m_strEmoji)) {
-			System.out.println("Invalid Emoji : "+ cParam.m_strEmoji);
+	public boolean getResults(CheckLogin checkLogin) {
+		if(!Arrays.asList(Common.EMOJI_KEYBORD).contains(m_strEmoji)) {
+			System.out.println("Invalid Emoji : "+ m_strEmoji);
 			return false;
 		}
+		if(checkLogin.m_bLogin && (m_nUserId != checkLogin.m_nUserId)) return false;	// ログインしてるのにIDが異なる
 
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
@@ -41,15 +43,11 @@ class SendCommentC {
 
 			// 投稿存在確認(不正アクセス対策)
 			boolean bExist = false;
-			int nMakingUserId = 0;
 			strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
+			cState.setInt(1, m_nContentId);
 			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				bExist = true;
-				nMakingUserId = cResSet.getInt("user_id");
-			}
+			bExist = cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(!bExist) {
@@ -57,40 +55,48 @@ class SendCommentC {
 			}
 
 			// max 5 emoji
-			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cState.setInt(2, cParam.m_nUserId);
-			cResSet = cState.executeQuery();
 			int nEmojiNum = 0;
+			if(checkLogin.m_bLogin) {
+				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nContentId);
+				cState.setInt(2, m_nUserId);
+				cResSet = cState.executeQuery();
+			} else {
+				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND ip_address=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nContentId);
+				cState.setString(2, m_strIpAddress);
+				cResSet = cState.executeQuery();
+			}
 			if(cResSet.next()) {
 				nEmojiNum = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(nEmojiNum>=5) {
+			if(nEmojiNum>=EMOJI_MAX) {
 				return false;
 			}
 
 			// add new comment
-			strSql = "INSERT INTO comments_0000(content_id, description, user_id) VALUES(?, ?, ?)";
+			strSql = "INSERT INTO comments_0000(content_id, description, user_id, ip_address) VALUES(?, ?, ?, ?)";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cState.setString(2, cParam.m_strEmoji);
-			cState.setInt(3, cParam.m_nUserId);
+			cState.setInt(1, m_nContentId);
+			cState.setString(2, m_strEmoji);
+			cState.setInt(3, m_nUserId);
+			cState.setString(4, m_strIpAddress);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
 			// update making comment num
 			strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cState.setInt(2, cParam.m_nContentId);
+			cState.setInt(1, m_nContentId);
+			cState.setInt(2, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
 			bRtn = true; // 以下実行されなくてもOKを返す
-			m_strEmoji = cParam.m_strEmoji;
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -107,13 +113,9 @@ class SendCommentC {
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-SendCommentCParam cParam = new SendCommentCParam();
-cParam.GetParam(request);
-boolean bRtn = false;
-SendCommentC cResults = new SendCommentC();
-if( cCheckLogin.m_bLogin && cParam.m_nUserId == cCheckLogin.m_nUserId ) {
-	bRtn = cResults.GetResults(cParam, _TEX);
-}
+SendEmojiC cResults = new SendEmojiC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>{
 "result_num" : <%=(bRtn)?1:0%>,
 "result" : "<%=cResults.m_strEmoji%>"

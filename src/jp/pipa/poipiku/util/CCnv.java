@@ -4,13 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import jp.pipa.poipiku.CComment;
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CTag;
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.ResourceBundleControl;
-
 import jp.pipa.poipiku.*;
 
 public class CCnv {
