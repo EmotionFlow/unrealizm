@@ -3,10 +3,6 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/");
-	return;
-}
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
