@@ -38,7 +38,7 @@ class UploadFileCParam {
 					} else if(strName.equals("TWI")) {
 						m_bTweet = (Common.ToInt(item.getString())==1);
 					} else if(strName.equals("CAT")) {
-						m_nCategoryId = Common.ToIntN(item.getString(), 0, 9);
+						m_nCategoryId = Common.ToIntN(item.getString(), 0, 10);
 					}
 				} else {
 					String strFileName = Long.toString((new java.util.Date()).getTime());

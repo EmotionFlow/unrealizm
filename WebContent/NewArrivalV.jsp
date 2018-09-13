@@ -15,7 +15,7 @@
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"PG" : g_nPages},
+					"data": {"PG" : g_nPage},
 					"url": "/f/NewArrivalF.jsp",
 					"success": function(data) {
 						if(data) {

@@ -441,12 +441,17 @@
 	color: #555;
 }
 
+.IllustThumb .Category.C10, .IllustItem .Category.C10 {
+	background-color: #eebb00;
+	color: #555;
+}
+
 .IllustThumb .Category.C1, .IllustItem .Category.C1 {
-	background-color: #eba210;
+	background-color: #eb7f10;
 }
 
 .IllustThumb .Category.C2, .IllustItem .Category.C2 {
-	background-color: #ea691a;
+	background-color: #ea541a;
 }
 
 .IllustThumb .Category.C3, .IllustItem .Category.C3 {

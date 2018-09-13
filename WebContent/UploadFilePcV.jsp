@@ -110,6 +110,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				<div class="CategorDesc">
 					<select id="EditCategory">
 						<option value="0"><%=_TEX.T("Category.C0")%></option>
+						<option value="10"><%=_TEX.T("Category.C10")%></option>
 						<option value="1"><%=_TEX.T("Category.C1")%></option>
 						<option value="2"><%=_TEX.T("Category.C2")%></option>
 						<option value="3"><%=_TEX.T("Category.C3")%></option>
