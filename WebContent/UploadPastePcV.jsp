@@ -9,20 +9,6 @@ if(!cCheckLogin.m_bLogin) {
 	return;
 }
 
-Cookie cCookies[] = request.getCookies();
-if(cCookies != null) {
-	for(int i = 0; i < cCookies.length; i++) {
-		if(cCookies[i].getName().equals("MOD")) {
-			int nDispMode = Common.ToInt(cCookies[i].getValue());
-			if(nDispMode == 1) {
-				response.sendRedirect("/UploadPastePcV.jsp");
-				return;
-			}
-		}
-	}
-}
-
-
 if(cCheckLogin.m_strNickName.equals("no_name")) {
 	getServletContext().getRequestDispatcher("/SetUserNameV.jsp").forward(request,response);
 	return;
@@ -32,9 +18,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
-		<script src="/js/exif.js" type="text/javascript"></script>
-		<script src="/js/megapix-image.js" type="text/javascript"></script>
+		<script src="/js/paste.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -52,35 +36,37 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				var nCategory = $('#EditCategory').val();
 				var strDescription = $.trim($("#EditDescription").val());
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+				var strEncodeImg = $('#imgView').attr('src').replace('data:image/png;base64,', '');
 				setTweetSetting($('#OptionTweet').prop('checked'));
-				$("#file_thumb").upload(
-					'/f/UploadFileF.jsp',
-					{
+
+				$.ajaxSingle({
+					"type": "post",
+					"data": {
 						"UID":<%=cCheckLogin.m_nUserId%>,
 						"DES":strDescription,
 						"TWI":nTweet,
-						"CAT":nCategory
-					},
-					function(res) {
-						var nResId = parseInt($.trim(res), 10);
-						if(nResId > 0) {
+						"CAT":nCategory,
+						"DATA" : strEncodeImg},
+					"url": "/f/UploadPasteF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						if(data.result > 0) {
 							// complete
 							DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
 							setTimeout(function(){
 								location.href="/MyHomePcV.jsp";
 							}, 1000);
-						} else if(nResId == -1) {
+						} else if(data.result == -1) {
 							// file size error
 							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-						} else if(nResId == -2) {
+						} else if(data.result == -2) {
 							// file type error
 							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
 						} else {
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + nResId);
+							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
 						}
-					},
-					'html'
-				);
+					}
+				});
 			}
 
 			function DispDescCharNum() {
@@ -109,43 +95,45 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 
 			$(function() {
 				$('#OptionTweet').prop('checked', getTweetSetting());
-				$('#file_thumb').on("change",function(){
-					DispMsgStatic('loading...');
-					var file = $(this).prop("files")[0];
-					if (this.files.length && file.type.match('image.*')) {
-						EXIF.getData(file, function(){
-							var orientation = file.exifdata.Orientation;
-							var mpImg = new MegaPixImage(file);
-							mpImg.render($("#imgView")[0], { orientation: orientation });
-							$('.OrgMessage').hide();
-							$('#imgView').css("display", "block");
-							HideMsgStatic();
-						});
-					} else {
-						HideMsgStatic();
+
+				$('#InputFile').pastableNonInputable();
+				$('#InputFile').on('pasteImage', function(ev, data){
+					$('.OrgMessage').hide();
+					$('#imgView').attr('src', data.dataURL).show();
+				}).on('pasteImageError', function(ev, data){
+					if(data.url){
+						alert('error data : ' + data.url)
 					}
+				}).on('pasteText', function(ev, data){
+					;
 				});
+				//$('#InputFile').focus();
 			});
 		</script>
+
+		<style>
+			#InputFile {border: solid 3px #eee;}
+			#InputFile:hover {border-color: #ccc;}
+			#InputFile.pastable-focus {border-color: #5bd;}
+		</style>
 	</head>
 
 	<body>
 		<div id="DispMsg"></div>
 		<div class="TabMenu">
-			<a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a>
-			<a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a>
+			<a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a>
+			<a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
 			<div class="UploadFile">
-				<div class="InputFile">
+				<div id="InputFile" class="InputFile">
 					<div class="OrgMessage">
-						<span class="typcn typcn-plus-outline"></span><%=_TEX.T("UploadFilePc.SelectImg")%>
+						<%=_TEX.T("UploadFilePc.PasteImg")%>
 					</div>
 					<img id="imgView" class="imgView" src="" />
-					<input id="file_thumb" type="file" name="file_thumb" />
 				</div>
 				<div class="CategorDesc">
 					<select id="EditCategory">

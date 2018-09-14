@@ -316,6 +316,7 @@ public class CImage {
 
 	public static void DeleteFiles(String strFileName) {
 		DeleteFile(strFileName);
+		DeleteFile(strFileName+"_640.jpg");
 		DeleteFile(strFileName+"_360.jpg");
 		DeleteFile(strFileName+"_120.jpg");
 	}
