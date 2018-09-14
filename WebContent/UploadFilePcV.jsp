@@ -38,6 +38,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				var nCategory = $('#EditCategory').val();
 				var strDescription = $.trim($("#EditDescription").val());
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+				setTweetSetting($('#OptionTweet').prop('checked'));
 				$("#file_thumb").upload(
 					'/f/UploadFileF.jsp',
 					{
@@ -73,7 +74,18 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				$("#DescriptionCharNum").html(nCharNum);
 			}
 
+			function setTweetSetting(val) {
+				setLocalStrage('upload_tweet', val);
+			}
+
+			function getTweetSetting() {
+				var upload_tweet = getLocalStrage('upload_tweet');
+				if(upload_tweet) return true;
+				return false;
+			}
+
 			$(function() {
+				$('#OptionTweet').prop('checked', getTweetSetting());
 				$('#file_thumb').on("change",function(){
 					DispMsgStatic('loading...');
 					var file = $(this).prop("files")[0];

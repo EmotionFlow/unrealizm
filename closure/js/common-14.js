@@ -60,6 +60,20 @@ function ChLang(l){
 	});
 }
 
+function setLocalStrage(key, val) {
+	var obj = {'val': val};
+	var obj = JSON.stringify(obj);
+	localStorage.setItem(key, obj);
+}
+
+function getLocalStrage(key) {
+	var obj = localStorage.getItem(key);
+	if(!obj) return null;
+	var obj = JSON.parse(obj);
+	if(!obj) return null;
+	return obj.val;
+}
+
 function SearchIllustByKeyword() {
 	var keyword = $('#HeaderSearchBox').val();
 	location.href="/SearchIllustByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
