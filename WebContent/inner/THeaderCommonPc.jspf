@@ -8,12 +8,12 @@
 <link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-08.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-17.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-20.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-09.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/js/common-11.js"></script>
+<script type="text/javascript" src="/js/common-12.js"></script>
 <%if(Common.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>

@@ -198,3 +198,28 @@ function switchEmojiKeyboard(obj, nSelected) {
 	$(obj).addClass('Selected');
 }
 
+function EditDesc(content_id) {
+	$("#IllustItemDesc_"+content_id).hide();
+	$("#IllustItemDescEdit_"+content_id).show();
+}
+
+function UpdateDesc(nUserId, content_id, mode) {
+	var strDesc = $.trim($("#IllustItemDescEdit_"+content_id+" .IllustItemDescEditTxt").val());
+	$.ajaxSingle({
+		"type": "post",
+		"data": { "UID": nUserId, "IID": content_id, "DES": strDesc, "MOD": mode },
+		"url": "/f/UpdateDescF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			$("#IllustItemDesc_"+content_id).html(data.html);
+			$("#IllustItemDescEdit_"+content_id+" .IllustItemDescEditTxt").val(data.text);
+			$("#IllustItemDesc_"+content_id).show();
+			$("#IllustItemDescEdit_"+content_id).hide();
+		},
+		"error": function(req, stat, ex){
+			DispMsg('Connection error');
+		}
+	});
+}
+
+

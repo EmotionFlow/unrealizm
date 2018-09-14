@@ -28,7 +28,7 @@ public class SearchIllustByKeywordC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 30;
+	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 

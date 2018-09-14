@@ -38,8 +38,9 @@ public class CCnv {
 		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
 		String strUrl = URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8");
-		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter-square\" href=\"https://twitter.com/share?url=%s\"></a>", strUrl));
+		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"https://twitter.com/share?url=%s\"></a>", strUrl));
 		if(cContent.m_nUserId==nLoginUserId) {
+			strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"javascript:void(0)\" onclick=\"EditDesc(%d)\"></a>", cContent.m_nContentId));
 			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d)\"></a>", cContent.m_nContentId));
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?TD=%d\"></a>", REPORT_FORM, cContent.m_nContentId));
@@ -47,16 +48,27 @@ public class CCnv {
 		strRtn.append("</div>");	// IllustItemCommandSub
 		strRtn.append("</div>");	// IllustItemCommand
 
-		if(!cContent.m_strDescription.isEmpty()) {
-			strRtn.append("<div class=\"IllustItemDesc\">");
-			strRtn.append(Common.AutoLink(Common.ToStringHtml(cContent.m_strDescription), nMode));
-			strRtn.append("</div>");	// IllustItemDesc
-		}
-
 		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
 		strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
 		strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
 		strRtn.append("</a>");
+
+		strRtn.append(
+			String.format("<div id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</div>",
+				cContent.m_nContentId,
+				(cContent.m_strDescription.isEmpty())?"style=\"display: none;\"":"",
+				Common.AutoLink(Common.ToStringHtml(cContent.m_strDescription), nMode)
+			)
+		);
+
+		if(cContent.m_nUserId==nLoginUserId) {
+			strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
+			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\">%s</textarea>", Common.ToStringHtmlTextarea(cContent.m_strDescription)));
+			strRtn.append("<div class=\"IllustItemDescEditCmdList\">");
+			strRtn.append(String.format("<a class=\"BtnBase IllustItemDescEditCmd\" onclick=\"UpdateDesc(%d, %d, %d)\">OK</a>", cContent.m_nUserId, cContent.m_nContentId, nMode));
+			strRtn.append("</div>");	// IllustItemDescEditCmdList
+			strRtn.append("</div>");	// IllustItemDescEdit
+		}
 
 		strRtn.append("<div class=\"IllustItemResList\">");
 		strRtn.append("<div class=\"IllustItemResListTitle\">");
@@ -74,8 +86,8 @@ public class CCnv {
 
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
 		strRtn.append("<div class=\"ResBtnSetList\">");
-		strRtn.append("<a class=\"BtnBase ResBtnSetItem Selected\" onclick=\"switchEmojiKeyboard(this, 0)\">人気</a>");
-		strRtn.append("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, 1)\">すべて</a>");
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem Selected\" onclick=\"switchEmojiKeyboard(this, 0)\">%s</a>", _TEX.T("IllustV.Emoji.Popular")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, 1)\">%s</a>", _TEX.T("IllustV.Emoji.All")));
 		strRtn.append("</div>");	// ResBtnSetList
 		strRtn.append("<div class=\"ResEmojiBtnList\">");
 		for(String emoji : vResult) {

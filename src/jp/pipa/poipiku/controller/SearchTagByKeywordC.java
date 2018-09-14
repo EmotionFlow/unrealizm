@@ -28,7 +28,7 @@ public class SearchTagByKeywordC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 30;
+	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 

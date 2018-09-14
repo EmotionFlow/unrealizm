@@ -58,7 +58,7 @@ if(strRequestUri != null) {
 						<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
 					</a>
 				</div>
-				<div class="AnalogicoCode">
+				<div class="AnalogicoCode" style="display: none;">
 					<a class="AnalogicoLink" style="font-size: 12px; text-decoration: underline;" href="/LoginFormV.jsp">(旧バージョン用)機種変コードの入力</a>
 				</div>
 				<div class="AnalogicoTerm">

@@ -80,7 +80,7 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX)%>
+				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

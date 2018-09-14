@@ -26,7 +26,7 @@ public class FollowerListC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 30;
+	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
 

@@ -72,36 +72,9 @@
 	position: relative;
 }
 
-.IllustThumb:nth-child(3),
-.IllustThumb:nth-child(6),
-.IllustThumb:nth-child(9),
-.IllustThumb:nth-child(13),
-.IllustThumb:nth-child(16),
-.IllustThumb:nth-child(19),
-.IllustThumb:nth-child(23),
-.IllustThumb:nth-child(26),
-.IllustThumb:nth-child(29),
-.IllustThumb:nth-child(33),
-.IllustThumb:nth-child(36),
-.IllustThumb:nth-child(39),
-.IllustThumb:nth-child(43),
-.IllustThumb:nth-child(46),
-.IllustThumb:nth-child(49),
-.IllustThumb:nth-child(53),
-.IllustThumb:nth-child(56),
-.IllustThumb:nth-child(59),
-.IllustThumb:nth-child(63),
-.IllustThumb:nth-child(66),
-.IllustThumb:nth-child(69),
-.IllustThumb:nth-child(73),
-.IllustThumb:nth-child(76),
-.IllustThumb:nth-child(79),
-.IllustThumb:nth-child(83),
-.IllustThumb:nth-child(86),
-.IllustThumb:nth-child(89),
-.IllustThumb:nth-child(93),
-.IllustThumb:nth-child(96),
-.IllustThumb:nth-child(99) {
+.IllustThumb:nth-child(10n+3),
+.IllustThumb:nth-child(10n+6),
+.IllustThumb:nth-child(10n+9) {
 	margin-right: 0;
 }
 
@@ -411,11 +384,12 @@
 
 .IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandTweet,
 	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandInfo,
-	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete
+	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete,
+	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandEdit
 	{
 	display: inline-block;
 	color: #aaa;
-	margin: 0 15px 0 0;
+	margin: 0 10px 0 15px;
 }
 
 .IllustItem .Category {
@@ -490,7 +464,41 @@
 	box-sizing: border-box;
 	padding: 0 5px;
 	text-align: left;
-	margin: 0 0 5px 0;
+	margin: 0 0 10px 0;
+}
+
+.IllustItem .IllustItemDesc .IllustItemDescCmd {
+	display: inline-block;
+}
+
+.IllustItem .IllustItemDescEdit {
+	display: none;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 5px;
+	text-align: left;
+	margin: 0 0 10px 0;
+}
+
+.IllustItem .IllustItemDescEdit .IllustItemDescEditTxt {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 100px;
+	box-sizing: border-box;
+}
+
+.IllustItem .IllustItemDescEdit .IllustItemDescEditCmdList {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin: 5px 0 0 0;
+}
+
+.IllustItem .IllustItemDescEdit .IllustItemDescEditCmdList .IllustItemDescEditCmd {
+	min-width: 80px;
 }
 
 .IllustItem .IllustItemThumb {
@@ -630,6 +638,7 @@
 	width: 100%;
 	max-height: 360px;
 	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 }
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn {

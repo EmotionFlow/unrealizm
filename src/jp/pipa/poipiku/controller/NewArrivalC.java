@@ -7,10 +7,6 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
-
 import jp.pipa.poipiku.*;
 
 public class NewArrivalC {
@@ -26,7 +22,7 @@ public class NewArrivalC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 30;
+	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;

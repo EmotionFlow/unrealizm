@@ -30,7 +30,7 @@ public class SearchIllustByTagC {
 
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	int m_nEndId = -1;
-	public int SELECT_MAX_GALLERY = 30;
+	public int SELECT_MAX_GALLERY = 36;
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {

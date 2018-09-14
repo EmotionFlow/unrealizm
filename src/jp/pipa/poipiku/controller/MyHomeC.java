@@ -7,12 +7,6 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
-import jp.pipa.poipiku.CComment;
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
-
 import jp.pipa.poipiku.*;
 
 public class MyHomeC {
@@ -27,7 +21,7 @@ public class MyHomeC {
 	}
 
 
-	public int SELECT_MAX = 30;
+	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 
@@ -91,8 +85,8 @@ public class MyHomeC {
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
-			cState.setInt(idx++, SELECT_MAX*m_nPage);
-			cState.setInt(idx++, SELECT_MAX);
+			cState.setInt(idx++, SELECT_MAX_GALLERY = 30*m_nPage);
+			cState.setInt(idx++, SELECT_MAX_GALLERY = 30);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);

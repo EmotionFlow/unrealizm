@@ -138,7 +138,8 @@ public class Common {
 		if(strSrc == null) {
 			return "";
 		}
-
+		strSrc = strSrc.replace("\r\n", "\n");
+		strSrc = strSrc.replace("\r", "\n");
 		strSrc = strSrc.replace("&", "&amp;");
 		strSrc = strSrc.replace("<", "&lt;");
 		strSrc = strSrc.replaceAll(">", "&gt;");
