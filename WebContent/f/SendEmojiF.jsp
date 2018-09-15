@@ -25,7 +25,7 @@ class SendEmojiC {
 
 	public boolean getResults(CheckLogin checkLogin) {
 		if(!Arrays.asList(Common.EMOJI_KEYBORD).contains(m_strEmoji)) {
-			System.out.println("Invalid Emoji : "+ m_strEmoji);
+			Log.d("Invalid Emoji : "+ m_strEmoji);
 			return false;
 		}
 		if(checkLogin.m_bLogin && (m_nUserId != checkLogin.m_nUserId)) return false;	// ログインしてるのにIDが異なる

@@ -100,7 +100,7 @@ cCheckLogin.GetResults2(request, response);
 DeleteMakingCParam cParam = new DeleteMakingCParam();
 cParam.GetParam(request);
 
-System.out.println(cCheckLogin.m_nUserId);
+Log.d(cCheckLogin.m_nUserId);
 
 if(cCheckLogin.m_nUserId != 1) {
 	return;

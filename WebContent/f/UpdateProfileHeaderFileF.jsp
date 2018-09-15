@@ -69,6 +69,7 @@ class UpdateProfileFileC {
 			String strFileName = String.format("/user_img01/%09d/header.jpg", cParam.m_nUserId);
 			CImage.saveProfileHeaderImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
+			Log.d(strFileName);
 
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);

@@ -98,7 +98,7 @@ class UploadFileC {
 			String strFileName = String.format("/user_img01/%09d/%09d.jpg", cParam.m_nUserId, m_nContentId);
 			CImage.saveIllustImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
-			Log.d("UploadFileF.jsp : "+strFileName);
+			Log.d(strFileName);
 
 			// update making file_name
 			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=0, comment_num=1 WHERE content_id=?";
@@ -145,7 +145,7 @@ class UploadFileC {
 					bufMsg.append(strFooter);
 
 					if (!cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strFileName))) {
-						System.out.println("tweet失敗");
+						Log.d("tweet失敗");
 					}
 				}
 			}

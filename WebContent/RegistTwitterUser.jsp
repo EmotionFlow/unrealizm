@@ -51,8 +51,6 @@ try {
 	screen_name = hp.get("screen_name").first();
 	if(screen_name==null || screen_name.isEmpty()) throw(new Exception("screen_name error"));
 
-	Log.d(accessToken, tokenSecret, screen_name, ""+user_id);
-
 	Class.forName("org.postgresql.Driver");
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 	cConn = dsPostgres.getConnection();
@@ -70,7 +68,7 @@ try {
 	cState.close();cState=null;
 
 	if (nUserId>0){	// Login
-		Log.d("VRegistTwitterUser.jsp:Login:"+nUserId);
+		Log.d("Login : " + nUserId);
 		String strPassword = "";
 		strSql = "SELECT * FROM users_0000 WHERE user_id=?";
 		cState = cConn.prepareStatement(strSql);
@@ -96,7 +94,7 @@ try {
 				cState.close();cState=null;
 			}
 		} else {
-			Log.d("VRegistTwitterUser.jsp:ERROR:"+nUserId);
+			Log.d("Login error : no user : " + nUserId);
 		}
 
 		Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
@@ -106,7 +104,7 @@ try {
 
 		bResult = true;
 	} else {		// Regist
-		Log.d("VRegistTwitterUser.jsp:Regist:");
+		Log.d("Regist start");
 		String strPassword = RandomStringUtils.randomAlphanumeric(16);
 		strHashPass = Util.getHashPass(strPassword);
 		String strEmail = RandomStringUtils.randomAlphanumeric(16);
@@ -188,7 +186,7 @@ try {
 
 			bResult = true;
 
-			Log.d(strPassword, strHashPass, strEmail, ""+user_id);
+			Log.d("Regist : " + nUserId);
 		}
 	}
 } catch(Exception e) {

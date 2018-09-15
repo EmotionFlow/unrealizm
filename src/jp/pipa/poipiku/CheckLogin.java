@@ -139,7 +139,7 @@ public class CheckLogin {
 			strResult = e.toString();
 			e.printStackTrace();
 		}
-		//System.out.println(m_nUserId + ":" + m_strNickName + ":" + m_strHashPass);
+		//Log.d(m_nUserId + ":" + m_strNickName + ":" + m_strHashPass);
 		return strResult;
 	}
 

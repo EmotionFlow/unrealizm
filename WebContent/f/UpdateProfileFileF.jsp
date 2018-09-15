@@ -69,7 +69,7 @@ class UpdateProfileFileC {
 			String strFileName = String.format("/user_img01/%09d/profile.jpg", cParam.m_nUserId);
 			CImage.saveProfileImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
-			Log.d("UploadFileF.jsp : "+strFileName);
+			Log.d(strFileName);
 
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);

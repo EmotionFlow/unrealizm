@@ -62,7 +62,7 @@ public class CTweet {
 			try {if (cState != null) cState.close();} catch (Exception e) {}
 			try {if (cConn != null) cConn.close();} catch (Exception e) {}
 		}
-		//System.out.println(strResult);
+		//Log.d(strResult);
 		return bResult;
 	}
 
@@ -118,7 +118,7 @@ public class CTweet {
 								"UTF-8"));
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					System.out.println(line);
+					Log.d(line);
 				}
 				br.close();
 				*/
@@ -131,7 +131,7 @@ public class CTweet {
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				Node error = (Node) xpath.evaluate("//error", is,
 						XPathConstants.NODE);
-				System.out.println(error.getTextContent());
+				Log.d(error.getTextContent());
 				*/
 				bResult = false;
 			}
@@ -205,7 +205,7 @@ public class CTweet {
 								"UTF-8"));
 				String line = null;
 				while ((line = br.readLine()) != null) {
-					System.out.println(line);
+					Log.d(line);
 				}
 				br.close();
 				*/
@@ -215,7 +215,7 @@ public class CTweet {
 				//InputSource is = new InputSource(conn.getErrorStream());
 				//XPath xpath = XPathFactory.newInstance().newXPath();
 				//Node error = (Node) xpath.evaluate("//error", is, XPathConstants.NODE);
-				//System.out.println(error.getTextContent());
+				//Log.d(error.getTextContent());
 				bResult = false;
 			}
 			conn.disconnect();

@@ -48,9 +48,9 @@ class UploadPasteC {
 
 		try {
 			byte[] imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
-			if(imageBinary == null) {throw(new Exception());}
+			if(imageBinary == null) {throw(new Exception("imageBinary == null"));}
 			BufferedImage cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
-			if(cImage == null) {throw(new Exception());}
+			if(cImage == null) {throw(new Exception("cImage == null"));}
 			ImageIO.write(cImage, "png", new File(getServletContext().getRealPath(cParam.m_strFileName)));
 
 			// check file type
@@ -78,7 +78,7 @@ class UploadPasteC {
 			String strFileName = String.format("/user_img01/%09d/%09d.jpg", cParam.m_nUserId, m_nContentId);
 			CImage.saveIllustImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
-			Log.d("UploadFileF.jsp : "+strFileName);
+			Log.d(strFileName);
 
 			// update making file_name
 			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=0, comment_num=1 WHERE content_id=?";
@@ -125,7 +125,7 @@ class UploadPasteC {
 					bufMsg.append(strFooter);
 
 					if (!cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strFileName))) {
-						System.out.println("tweet失敗");
+						Log.d("tweet失敗");
 					}
 				}
 			}

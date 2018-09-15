@@ -134,7 +134,7 @@ public class CImage {
 			//	Thread.sleep(100);
 			//	File fileOut = new File(strDstFileName);
 			//	if(fileOut.exists()) {
-			//		System.out.println(nCnt + " - created : "+strDstFileName);
+			//		Log.d(nCnt + " - created : "+strDstFileName);
 			//		break;
 			//	}
 			//}

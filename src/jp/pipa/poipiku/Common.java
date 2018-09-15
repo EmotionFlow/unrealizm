@@ -10,9 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.ResourceBundleControl;
-import jp.pipa.poipiku.util.CCnv;
+import jp.pipa.poipiku.util.*;
 
 public class Common {
 	public static final int PAGE_BAR_NUM = 2;
@@ -361,7 +359,7 @@ public class Common {
 	public static final String USER_AGENT = "PipaTegaki";
 	public static boolean isAndroidWeb(HttpServletRequest request) {
 		String strUuserAgent = Common.ToString(request.getHeader("user-agent"));
-		System.out.println(strUuserAgent);
+		Log.d(strUuserAgent);
 
 		if(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf(USER_AGENT)<0) return true;
 		return false;
@@ -369,7 +367,7 @@ public class Common {
 
 	public static boolean isIPhoneWeb(HttpServletRequest request) {
 		String strUuserAgent = Common.ToString(request.getHeader("user-agent"));
-		System.out.println(strUuserAgent);
+		Log.d(strUuserAgent);
 
 		if((strUuserAgent.indexOf("iPhone")>=0 || strUuserAgent.indexOf("iPad")>=0 || strUuserAgent.indexOf("iPod")>=0) && strUuserAgent.indexOf(USER_AGENT)<0) return true;
 		return false;

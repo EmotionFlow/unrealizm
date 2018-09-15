@@ -53,8 +53,6 @@ try
 	user_id = hp.get("user_id").first();
 	screen_name = hp.get("screen_name").first();
 
-	Log.d(accessToken, tokenSecret, screen_name, ""+user_id);
-
 	Class.forName("org.postgresql.Driver");
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 	cConn = dsPostgres.getConnection();
@@ -73,6 +71,7 @@ try
 	cResSet.close();
 
 	if (bIsExist){
+		Log.d("TwitterToken Update : " + cCheckLogin.m_nUserId);
 		// update
 		strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=?";
 		cPreState = cConn.prepareStatement(strSql);
@@ -84,6 +83,7 @@ try
 		cPreState.setInt(6, Common.TWITTER_PROVIDER_ID);
 		cPreState.executeUpdate();
 	} else {
+		Log.d("TwitterToken Insert : " + cCheckLogin.m_nUserId);
 		// insert
 		strSql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_weekday, auto_tweet_time, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?, ?, ?) ";
 		cPreState = cConn.prepareStatement(strSql);

@@ -15,7 +15,7 @@ if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 	return;
 }
 
-System.out.println(String.format("DeleteUserV Start:%d", cCheckLogin.m_nUserId));
+Log.d(String.format("DeleteUserV Start:%d", cCheckLogin.m_nUserId));
 
 DataSource dsPostgres = null;
 Connection cConn = null;
@@ -122,6 +122,6 @@ try {
 }
 
 if(m_nRtn>0) {
-	System.out.println(String.format("DeleteUserV Complete:%d", m_nUserId));
+	Log.d(String.format("DeleteUserV Complete:%d", m_nUserId));
 }
 %>{"result":<%=m_nRtn%>}
