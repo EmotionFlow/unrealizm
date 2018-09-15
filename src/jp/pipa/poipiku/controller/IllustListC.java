@@ -7,12 +7,8 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
-
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.util.*;
 
 public class IllustListC {
 	public int m_nUserId = -1;
@@ -173,7 +169,7 @@ public class IllustListC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}

@@ -29,7 +29,7 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
-		<meta name="twitter:image" content="https://poipiku.com/<%=cResults.m_cContent.m_strFileName%>" />
+		<meta name="twitter:image" content="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%></title>
 
 		<script type="text/javascript">

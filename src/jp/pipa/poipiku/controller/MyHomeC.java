@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.util.*;
 
 public class MyHomeC {
 	public int m_nPage = 0;
@@ -114,7 +115,7 @@ public class MyHomeC {
 			cState.close();cState=null;
 			bResult = true;
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}

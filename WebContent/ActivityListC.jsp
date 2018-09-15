@@ -127,7 +127,7 @@ class ActivityListC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}

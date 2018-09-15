@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import jp.pipa.poipiku.Common;
-
 import jp.pipa.poipiku.*;
 
 public class Util {
@@ -63,7 +61,7 @@ public class Util {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}

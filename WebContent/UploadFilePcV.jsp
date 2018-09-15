@@ -35,6 +35,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		<script src="/js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
 		<script src="/js/exif.js" type="text/javascript"></script>
 		<script src="/js/megapix-image.js" type="text/javascript"></script>
+		<script src="/js/upload-01.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -44,9 +45,6 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		</script>
 
 		<script>
-			$.ajaxSetup({
-				cache : false,
-			});
 			function UploadFile() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 				var nCategory = $('#EditCategory').val();
@@ -83,48 +81,8 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				);
 			}
 
-			function DispDescCharNum() {
-				var nCharNum = 200 - $("#EditDescription").val().length;
-				$("#DescriptionCharNum").html(nCharNum);
-			}
-
-			function OnChangeTab(nIndex) {
-				setCookie("MOD", nIndex);
-				if(nIndex==0) {
-					window.location.href="/UploadFilePcV.jsp?TS=<%=System.currentTimeMillis()%>";
-				}else{
-					window.location.href="/UploadPastePcV.jsp?TS=<%=System.currentTimeMillis()%>";
-				}
-			}
-
-			function setTweetSetting(val) {
-				setLocalStrage('upload_tweet', val);
-			}
-
-			function getTweetSetting() {
-				var upload_tweet = getLocalStrage('upload_tweet');
-				if(upload_tweet) return true;
-				return false;
-			}
-
 			$(function() {
-				$('#OptionTweet').prop('checked', getTweetSetting());
-				$('#file_thumb').on("change",function(){
-					DispMsgStatic('loading...');
-					var file = $(this).prop("files")[0];
-					if (this.files.length && file.type.match('image.*')) {
-						EXIF.getData(file, function(){
-							var orientation = file.exifdata.Orientation;
-							var mpImg = new MegaPixImage(file);
-							mpImg.render($("#imgView")[0], { orientation: orientation });
-							$('.OrgMessage').hide();
-							$('#imgView').css("display", "block");
-							HideMsgStatic();
-						});
-					} else {
-						HideMsgStatic();
-					}
-				});
+				initUploadFile();
 			});
 		</script>
 	</head>

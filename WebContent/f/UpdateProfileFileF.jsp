@@ -69,6 +69,7 @@ class UpdateProfileFileC {
 			String strFileName = String.format("/user_img01/%09d/profile.jpg", cParam.m_nUserId);
 			CImage.saveProfileImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
+			Log.d("UploadFileF.jsp : "+strFileName);
 
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -83,7 +84,7 @@ class UpdateProfileFileC {
 			cState.close();cState=null;
 
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 			return -99;
 		} finally {
@@ -95,7 +96,6 @@ class UpdateProfileFileC {
 	}
 }
 %><%
-System.out.println("UpdateProfileFileF.jsp");
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.*;
 
 public class CheckLogin {
 	public boolean m_bLogin = false;
@@ -101,7 +101,7 @@ public class CheckLogin {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.out.println(strSql);
+			Log.d(strSql);
 			m_bLogin = false;
 		} finally {
 			try{if(cResSet!=null)cResSet.close();cResSet=null;}catch(Exception e){;}

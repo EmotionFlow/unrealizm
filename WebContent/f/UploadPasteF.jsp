@@ -78,6 +78,7 @@ class UploadPasteC {
 			String strFileName = String.format("/user_img01/%09d/%09d.jpg", cParam.m_nUserId, m_nContentId);
 			CImage.saveIllustImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
 			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
+			Log.d("UploadFileF.jsp : "+strFileName);
 
 			// update making file_name
 			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=0, comment_num=1 WHERE content_id=?";
@@ -130,7 +131,7 @@ class UploadPasteC {
 			}
 
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 			return m_nContentId;
 		} finally {
@@ -145,7 +146,6 @@ class UploadPasteC {
 %><%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-System.out.println("UploadFileF.jsp:UID:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
 UploadPasteCParam cParam = new UploadPasteCParam();
@@ -155,6 +155,5 @@ nRtn = cParam.GetParam(request);
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadPasteC cResults = new UploadPasteC();
 	nRtn = cResults.GetResults(cParam, _TEX);
-	System.out.println("UploadFileF.jsp:DONE");
 }
 %>{"result":<%=nRtn%>}

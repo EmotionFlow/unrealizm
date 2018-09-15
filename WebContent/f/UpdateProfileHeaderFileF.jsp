@@ -83,7 +83,7 @@ class UpdateProfileFileC {
 			cState.close();cState=null;
 
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 			return -99;
 		} finally {

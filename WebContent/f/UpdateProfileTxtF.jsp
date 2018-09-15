@@ -33,7 +33,7 @@ try {
 	cState.close(); cState=null;
 	nRtn = 1;
 } catch(Exception e) {
-	System.out.println(strSql);
+	Log.d(strSql);
 	e.printStackTrace();
 } finally {
 	try{if(cState != null) cState.close();cState=null;} catch(Exception e) {;}

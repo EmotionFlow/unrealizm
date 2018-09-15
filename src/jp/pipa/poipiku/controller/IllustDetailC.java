@@ -6,11 +6,8 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
-
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.util.*;
 
 public class IllustDetailC {
 	public int m_nUserId = -1;
@@ -54,7 +51,7 @@ public class IllustDetailC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 		} catch(Exception e) {
-			System.out.println(strSql);
+			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}

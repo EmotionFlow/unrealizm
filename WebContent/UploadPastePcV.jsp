@@ -18,7 +18,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/paste.js" type="text/javascript"></script>
+		<script src="/js/upload-01.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -28,10 +28,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		</script>
 
 		<script>
-			$.ajaxSetup({
-				cache : false,
-			});
-			function UploadFile() {
+			function UploadPaste() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 				var nCategory = $('#EditCategory').val();
 				var strDescription = $.trim($("#EditDescription").val());
@@ -69,45 +66,8 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				});
 			}
 
-			function DispDescCharNum() {
-				var nCharNum = 200 - $("#EditDescription").val().length;
-				$("#DescriptionCharNum").html(nCharNum);
-			}
-
-			function OnChangeTab(nIndex) {
-				setCookie("MOD", nIndex);
-				if(nIndex==0) {
-					window.location.href="/UploadFilePcV.jsp?TS=<%=System.currentTimeMillis()%>";
-				}else{
-					window.location.href="/UploadPastePcV.jsp?TS=<%=System.currentTimeMillis()%>";
-				}
-			}
-
-			function setTweetSetting(val) {
-				setLocalStrage('upload_tweet', val);
-			}
-
-			function getTweetSetting() {
-				var upload_tweet = getLocalStrage('upload_tweet');
-				if(upload_tweet) return true;
-				return false;
-			}
-
-			$(function() {
-				$('#OptionTweet').prop('checked', getTweetSetting());
-
-				$('#InputFile').pastableNonInputable();
-				$('#InputFile').on('pasteImage', function(ev, data){
-					$('.OrgMessage').hide();
-					$('#imgView').attr('src', data.dataURL).show();
-				}).on('pasteImageError', function(ev, data){
-					if(data.url){
-						alert('error data : ' + data.url)
-					}
-				}).on('pasteText', function(ev, data){
-					;
-				});
-				//$('#InputFile').focus();
+		$(function() {
+				initUploadPaste();
 			});
 		</script>
 
@@ -167,7 +127,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					</div>
 				</div>
 				<div class="UoloadCmd">
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile()"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste()"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				</div>
 			</div>
 		</div>
