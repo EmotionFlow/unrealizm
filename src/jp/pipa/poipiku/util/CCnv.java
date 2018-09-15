@@ -7,8 +7,22 @@ import java.util.ArrayList;
 import jp.pipa.poipiku.*;
 
 public class CCnv {
+	public static final int TYPE_USER_ILLUST = 0;
+	public static final int TYPE_NEWARRIVAL_ILLUST = 1;
+	public static final int TYPE_POPULAR_ILLUST = 2;
+	public static final int TYPE_KEYWORD_ILLUST = 3;
+	public static final int TYPE_TAG_ILLUST = 4;
+
 	public static final int MODE_PC = 0;
 	public static final int MODE_SP = 1;
+
+	private static final String ILLUST_VIEW[][] ={
+			{"/IllustViewPcV.jsp", "/IllustViewV.jsp"},
+			{"/NewArrivalViewPcV.jsp", "/NewArrivalViewV.jsp"},
+			{"/PopularIllustListViewPcV.jsp", "/PopularIllustListViewV.jsp"},
+			{"/SearchIllustByKeywordViewPcV.jsp", "/SearchIllustByKeywordViewV.jsp"},
+			{"/SearchIllustByTagViewPcV.jsp", "/SearchIllustByTagViewV.jsp"},
+	};
 
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException{
 		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
@@ -108,12 +122,14 @@ public class CCnv {
 		return strRtn.toString();
 	}
 
-	public static String toThumbHtml(CContent cContent, int nMode,  ResourceBundleControl _TEX) {
-		String ILLUST_VIEW = (nMode==MODE_SP)?"/IllustViewV.jsp":"/IllustViewPcV.jsp";
+	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
+		return toThumbHtml(cContent, nType, nMode, "", _TEX);
+	}
 
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
 		StringBuilder strRtn = new StringBuilder();
 
-		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_VIEW, cContent.m_nUserId, cContent.m_nContentId));
+		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
 		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
 		strRtn.append("</a>");

@@ -29,7 +29,11 @@ public class SearchTagByKeywordC {
 	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLoginm) {
+	public boolean getResults(CheckLogin cCheckLogin) {
+		return getResults(cCheckLogin, false);
+	}
+
+	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -42,15 +46,17 @@ public class SearchTagByKeywordC {
 			cConn = dsPostgres.getConnection();
 
 			// NEW ARRIVAL
-			strSql = "SELECT count(*) FROM (SELECT tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt) as T1";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, m_strKeyword);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nContentsNum = cResSet.getInt(1);
+			if(!bContentOnly) {
+				strSql = "SELECT count(*) FROM (SELECT tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt) as T1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setString(1, m_strKeyword);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nContentsNum = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			strSql = "select tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt order by count(*) desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);

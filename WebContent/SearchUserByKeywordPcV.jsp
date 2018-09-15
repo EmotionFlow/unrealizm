@@ -22,6 +22,13 @@ g_strSearchWord = cResults.m_strKeyword;
 		});
 		</script>
 
+		<script>
+			$(function(){
+				$('#HeaderSearchWrapper').attr("action","/SearchUserByKeywordPcV.jsp");
+				$('#HeaderSearchBtn').on('click', SearchUserByKeyword);
+			});
+		</script>
+
 		<style>
 		#HeaderTitleWrapper {display: none;}
 		#HeaderSearchWrapper {display: block;}

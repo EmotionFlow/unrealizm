@@ -154,7 +154,7 @@ if(!cResults.getResults(cCheckLogin)) {
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAdMid.jspf"%>
 					<%}%>

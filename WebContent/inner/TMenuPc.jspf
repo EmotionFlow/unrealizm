@@ -15,14 +15,18 @@
 		</a>
 		<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
 	</div>
-	<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" action="/SearchIllustByKeywordPcV.jsp" >
+	<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
 		<div class="HeaderSearch">
 			<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="" value="<%=Common.ToStringHtml(g_strSearchWord)%>" />
-			<div class="HeaderSearchBtn" onclick="SearchIllustByKeyword()">
+			<div id="HeaderSearchBtn" class="HeaderSearchBtn">
 				<span class="fas fa-search"></span>
 			</div>
 		</div>
 	</form>
+	<script>
+		$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
+		$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+	</script>
 </header>
 
 <div class="FooterMenuWrapper">

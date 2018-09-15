@@ -8,18 +8,26 @@ SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 g_strSearchWord = cResults.m_strKeyword;
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<meta name="description" content="<%=_TEX.T("SearchIllustByKeyword.Title.Desc")%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchIllustByKeyword.Title")%></title>
+		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByKeyword.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum))%>" />
+		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByKeyword.Title"), cResults.m_strKeyword))%></title>
 
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
 		});
+		</script>
+
+		<script>
+			$(function(){
+				$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
+				$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+			});
 		</script>
 
 		<style>
@@ -42,7 +50,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_KEYWORD_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAdMid.jspf"%>
 					<%}%>
@@ -50,7 +58,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/SearchIllustByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/SearchIllustByKeywordPcV.jsp", "&KWD="+strEncodedKeyword, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

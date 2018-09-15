@@ -30,6 +30,10 @@ public class SearchUserByKeywordC {
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
+		return getResults(cCheckLogin, false);
+	}
+
+	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -42,15 +46,17 @@ public class SearchUserByKeywordC {
 			cConn = dsPostgres.getConnection();
 
 			// NEW ARRIVAL
-			strSql = "SELECT count(*) FROM users_0000 WHERE nickname &@~ ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, m_strKeyword);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nContentsNum = cResSet.getInt(1);
+			if(!bContentOnly) {
+				strSql = "SELECT count(*) FROM users_0000 WHERE nickname &@~ ?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setString(1, m_strKeyword);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nContentsNum = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			strSql = "SELECT * FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);

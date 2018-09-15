@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/inner/Common.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
+int nContentId	= Common.ToInt(request.getParameter("TD"));
 String strKeyword = Common.ToString(request.getParameter("KWD"));
 %>
 <!DOCTYPE html>
@@ -16,16 +17,16 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 				if(g_bAdding) return;
 				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
+				$("#IllustItemList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
-					"url": "/f/SearchIllustByTagF.jsp",
+					"data": {"TD" : <%=nContentId%>, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>"), "PG" : g_nPage},
+					"url": "/f/SearchIllustByTagViewF.jsp",
 					"success": function(data) {
 						if(data) {
 							g_nPage++;
 							$('#InfoMsg').hide();
-							$("#IllustThumbList").append(data);
+							$("#IllustItemList").append(data);
 							g_bAdding = false;
 						} else {
 							$(window).unbind("scroll.addContents");
@@ -45,7 +46,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
+					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 200) {
 						addContents();
 					}
 				});
@@ -54,10 +55,10 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 	</head>
 
 	<body>
+		<div id="DispMsg"></div>
 		<div class="Wrapper">
-			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(strKeyword)%></div>
 
-			<div id="IllustThumbList" class="IllustThumbList"></div>
+			<div id="IllustItemList" class="IllustItemList"></div>
 
 		</div>
 	</body>

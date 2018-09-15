@@ -21,7 +21,7 @@ if(!cCheckLogin.m_bLogin) {
 				if(g_bAdding) return;
 				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
+				$("#IllustItemList").append($objMessage);
 				$.ajax({
 					"type": "post",
 					"data": {"PG" : g_nPage},

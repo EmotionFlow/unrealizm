@@ -4,10 +4,10 @@
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-SearchIllustByTagC cResults = new SearchIllustByTagC();
+SearchIllustByTagViewC cResults = new SearchIllustByTagViewC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -21,25 +21,34 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			$('#MenuHome').addClass('Selected');
 		});
 		</script>
+
+		<script>
+			$(function(){
+				$('body, .Wrapper').each(function(index, element){
+					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+				});
+			});
+		</script>
 	</head>
 
 	<body>
+		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jspf"%>
-		<div class="Wrapper">
-			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></div>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+		<div class="Wrapper">
+
+			<div id="IllustItemList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_TAG_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
-					<%if((nCnt+1)%9==0) {%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%if((nCnt+1)%2==0) {%>
 					<%@ include file="/inner/TAdMid.jspf"%>
 					<%}%>
 				<%}%>
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/SearchIllustByTagPcV.jsp", String.format("&KWD=%s", strEncodedKeyword) , cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/SearchIllustByTagViewPcV.jsp", "&TD="+cResults.m_nContentId+"&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

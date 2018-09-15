@@ -28,6 +28,10 @@ public class FollowerListC {
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
+		return getResults(cCheckLogin, false);
+	}
+
+	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -40,15 +44,17 @@ public class FollowerListC {
 			cConn = dsPostgres.getConnection();
 
 			// NEW ARRIVAL
-			strSql = "SELECT count(*) FROM follows_0000 WHERE follow_user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nContentsNum = cResSet.getInt(1);
+			if(!bContentOnly) {
+				strSql = "SELECT count(*) FROM follows_0000 WHERE follow_user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cCheckLogin.m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nContentsNum = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			strSql = "SELECT follows_0000.*, nickname, file_name FROM follows_0000 INNER JOIN users_0000 ON follows_0000.user_id=users_0000.user_id WHERE follows_0000.follow_user_id=? ORDER BY follow_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
