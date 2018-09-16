@@ -43,9 +43,9 @@ if(!cCheckLogin.m_bLogin) {
 				});
 			}
 
-			function DeleteContent(nContentId) {
+			function DeleteContent(nUserId, nContentId) {
 				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				DeleteContentBase(<%=cCheckLogin.m_nUserId%>, nContentId);
+				DeleteContentBase(nUserId, nContentId);
 				return false;
 			}
 

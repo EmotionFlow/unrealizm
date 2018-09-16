@@ -196,7 +196,9 @@ function DeleteContentBase(nUserId, nContentId) {
 		"url": "/f/DeleteContentF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			$('#IllustItem_'+nContentId).remove();
+			$('#IllustItem_'+nContentId).slideUp(300, function(){
+				$('#IllustItem_'+nContentId).remove();
+			});
 		},
 		"error": function(req, stat, ex){
 			DispMsg('Delete Error');

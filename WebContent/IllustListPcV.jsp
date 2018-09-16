@@ -42,20 +42,20 @@ if(!cResults.getResults(cCheckLogin)) {
 		</script>
 
 		<script>
-		function UpdateFollow() {
+		function UpdateFollow(nUserId, nFollowUserId) {
 			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 			$.ajaxSingle({
 				"type": "post",
-				"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bFollow)?0:1 },
+				"data": { "UID": nUserId, "IID": nFollowUserId },
 				"url": "/f/UpdateFollowF.jsp",
 				"dataType": "json",
 				"success": function(data) {
 					if(data.result==1) {
-						$('#UserInfoCmdFollow').addClass('Selected');
-						$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Following")%>");
+						$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
+						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
 					} else if(data.result==2) {
-						$('#UserInfoCmdFollow').removeClass('Selected');
-						$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+						$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
+						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
 					} else {
 						DispMsg('フォローできませんでした');
 					}
@@ -120,14 +120,14 @@ if(!cResults.getResults(cCheckLogin)) {
 					<%} else if(cResults.m_bOwner) {%>
 					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><span class="typcn typcn-cog-outline"></span><%=_TEX.T("MyEditSetting.Title.Setting")%></a>
 					<%} else if(cResults.m_bBlocking){%>
-					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" style="display: none;" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Follow")%></span>
+					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
 					<%} else if(cResults.m_bBlocked){%>
 					<%} else if(cResults.m_bFollow){%>
-					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow Selected" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Following")%></span>
+					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock " onclick="UpdateBlock()"></span>
 					<%} else {%>
-					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" onclick="UpdateFollow()"><%=_TEX.T("IllustV.Follow")%></span>
+					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 					<%}%>
 					<%

@@ -27,9 +27,9 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 		</script>
 
 		<script>
-			function DeleteContent(nContentId) {
+			function DeleteContent(nUserId, nContentId) {
 				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				DeleteContentBase(<%=cCheckLogin.m_nUserId%>, nContentId);
+				DeleteContentBase(nUserId, nContentId);
 				return false;
 			}
 

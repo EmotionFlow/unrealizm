@@ -4,18 +4,15 @@
 class UpdateFollowCParam {
 	public int m_nFollowedUserId = -1;
 	public int m_nUserId = -1;
-	public boolean m_bFollow = false;
 
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nFollowedUserId	= Common.ToInt(cRequest.getParameter("IID"));
 			m_nUserId			= Common.ToInt(cRequest.getParameter("UID"));
-			m_bFollow			= (Common.ToInt(cRequest.getParameter("CHK"))==1);
 		} catch(Exception e) {
 			m_nFollowedUserId = -1;
 			m_nUserId = -1;
-			m_bFollow = false;
 		}
 	}
 }
@@ -33,15 +30,15 @@ class UpdateFollowC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+
+			boolean bCanFollow = true;
 			// blocking
 			strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nFollowedUserId);
 			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				cParam.m_bFollow = false;
-			}
+			bCanFollow = !cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
@@ -51,14 +48,24 @@ class UpdateFollowC {
 			cState.setInt(1, cParam.m_nFollowedUserId);
 			cState.setInt(2, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				cParam.m_bFollow = false;
-			}
+			bCanFollow = !cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 
-			if(cParam.m_bFollow) {
+			boolean bFollowing = false;
+			// now following check
+			strSql ="SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(2, cParam.m_nFollowedUserId);
+			cResSet = cState.executeQuery();
+			bFollowing = cResSet.next();
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+
+			if(bCanFollow && !bFollowing) {
 				strSql ="INSERT INTO follows_0000(user_id, follow_user_id) VALUES(?, ?)";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);

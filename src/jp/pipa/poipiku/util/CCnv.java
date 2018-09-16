@@ -42,9 +42,12 @@ public class CCnv {
 
 
 		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
-			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow %s\" onclick=\"UpdateFollow()\">%s</span>",
+			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollow(%d, %d)\">%s</span>",
+					cContent.m_nUserId,
 					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
-							(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
+					nLoginUserId,
+					cContent.m_nUserId,
+					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
 		}
 		strRtn.append("</div>");	// IllustItemUser
 
@@ -55,7 +58,7 @@ public class CCnv {
 		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"https://twitter.com/share?url=%s\"></a>", strUrl));
 		if(cContent.m_nUserId==nLoginUserId) {
 			strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"javascript:void(0)\" onclick=\"EditDesc(%d)\"></a>", cContent.m_nContentId));
-			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d)\"></a>", cContent.m_nContentId));
+			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d)\"></a>", nLoginUserId, cContent.m_nContentId));
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?TD=%d\"></a>", REPORT_FORM, cContent.m_nContentId));
 		}

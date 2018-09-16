@@ -17,9 +17,9 @@ try {
 	String SMTP_HOST	= "localhost";
 	String FROM_NAME	= "POIPIKU_REPORT";
 	String FROM_ADDR	= "poipiku@pipa.jp";
-	String TO_ADDR	= "info@pipa.jp";
-	String EMAIL_TITLE = "POIPIKU_REPORT";
-	String EMAIL_TXT = "Post UserId : https://poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://poipiku.com/IllustViewV.jsp?TD=%d \nReportDesc:%s \n\n";
+	String TO_ADDR		= "info@emotionflow.com";
+	String EMAIL_TITLE	= "POIPIKU_REPORT";
+	String EMAIL_TXT	= "Post UserId : https://poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://poipiku.com/IllustViewV.jsp?TD=%d \nReportDesc:%s \n\n";
 
 	Log.d(String.format(EMAIL_TXT, cCheckLogin.m_nUserId, nContentId, strReportDesc));
 
@@ -37,6 +37,8 @@ try {
 	objMime.setHeader("Content-Transfer-Encoding", "7bit");
 	objMime.setSentDate(new java.util.Date());
 	Transport.send(objMime);
+
+	Log.d(String.format(EMAIL_TXT, cCheckLogin.m_nUserId, nContentId, strReportDesc));
 }catch(Exception e) {
 	e.printStackTrace();
 }

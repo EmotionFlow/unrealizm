@@ -67,30 +67,20 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 				});
 			}
 
-			function DeleteContent(nContentId) {
-				<%if(cCheckLogin.m_bLogin) {%>
-				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				DeleteContentBase(<%=cCheckLogin.m_nUserId%>, nContentId);
-				return false;
-				<%} else {%>
-				location.href="/";
-				<%}%>
-			}
-
-			function UpdateFollow() {
+			function UpdateFollow(nUserId, nFollowUserId) {
 				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cContent.m_nUserId%>, "CHK": (bFollow)?0:1 },
+					"data": { "UID": nUserId, "IID": nFollowUserId },
 					"url": "/f/UpdateFollowF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result==1) {
-							$('.UserInfoCmdFollow').addClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Following")%>");
+							$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
+							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
 						} else if(data.result==2) {
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+							$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
+							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
 						} else {
 							DispMsg('フォローできませんでした');
 						}
@@ -99,6 +89,12 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 						DispMsg('Connection error');
 					}
 				});
+			}
+
+			function DeleteContent(nUserId, nContentId) {
+				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
+				DeleteContentBase(nUserId, nContentId);
+				return false;
 			}
 
 			$(function(){
