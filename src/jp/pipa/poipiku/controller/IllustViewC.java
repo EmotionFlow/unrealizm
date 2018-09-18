@@ -67,7 +67,18 @@ public class IllustViewC {
 			}
 			m_cContent.m_cUser.m_nFollowing = m_nFollow;
 
-			// Eeach Emoji
+			// Each append image
+			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_cContent.m_nContentId);
+			cResSet = cState.executeQuery();
+			while (cResSet.next()) {
+				m_cContent.m_vContentAppend.add(new CContentAppend(cResSet));
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			// Each Emoji
 			strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_cContent.m_nContentId);

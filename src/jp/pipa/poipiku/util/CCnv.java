@@ -31,6 +31,7 @@ public class CCnv {
 
 		StringBuilder strRtn = new StringBuilder();
 
+		// ユーザ名とフォローボタン
 		strRtn.append(String.format("<div class=\"IllustItem\" id=\"IllustItem_%d\">", cContent.m_nContentId));
 		strRtn.append("<div class=\"IllustItemUser\">");
 		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s?ID=%d\">", ILLUST_LIST, cContent.m_nUserId));
@@ -39,8 +40,6 @@ public class CCnv {
 		strRtn.append(String.format("<a class=\"IllustItemUserName\" href=\"%s?ID=%d\">", ILLUST_LIST, cContent.m_nUserId));
 		strRtn.append(Common.ToStringHtml(cContent.m_cUser.m_strNickName));
 		strRtn.append("</a>");
-
-
 		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
 			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollow(%d, %d)\">%s</span>",
 					cContent.m_nUserId,
@@ -51,6 +50,33 @@ public class CCnv {
 		}
 		strRtn.append("</div>");	// IllustItemUser
 
+		// 画像
+		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
+		strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
+		strRtn.append("</a>");
+
+		// 2枚目以降
+		if(cContent.m_nFileNum>1) {
+			strRtn.append("<div class=\"IllustItemThubExpand\">");
+			for(CContentAppend cContentAppend : cContent.m_vContentAppend) {
+				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId, cContentAppend.m_nAppendId));
+				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
+				strRtn.append("</a>");
+			}
+			strRtn.append("</div>");	// IllustItemThubExpand
+		}
+
+		// 転載禁止表示と2枚目以降ボタン
+		strRtn.append("<div class=\"IllustItemExpand\">");
+		strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
+		if(cContent.m_nFileNum>1) {
+			strRtn.append(String.format("<a class=\"IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s <i class=\"fas fa-chevron-down\"></i></a>",
+					cContent.m_nContentId,
+					String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
+		}
+		strRtn.append("</div>");	// IllustItemExpand
+
+		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
 		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
@@ -65,11 +91,7 @@ public class CCnv {
 		strRtn.append("</div>");	// IllustItemCommandSub
 		strRtn.append("</div>");	// IllustItemCommand
 
-		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-		strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
-		strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
-		strRtn.append("</a>");
-
+		// キャプション
 		strRtn.append(
 			String.format("<div id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</div>",
 				cContent.m_nContentId,
@@ -78,6 +100,7 @@ public class CCnv {
 			)
 		);
 
+		// キャプション編集用
 		if(cContent.m_nUserId==nLoginUserId) {
 			strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
 			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\">%s</textarea>", Common.ToStringHtmlTextarea(cContent.m_strDescription)));
@@ -87,6 +110,7 @@ public class CCnv {
 			strRtn.append("</div>");	// IllustItemDescEdit
 		}
 
+		// 絵文字
 		strRtn.append("<div class=\"IllustItemResList\">");
 		strRtn.append("<div class=\"IllustItemResListTitle\">");
 		if(cContent.m_vComment.size()<=0) {
@@ -132,8 +156,9 @@ public class CCnv {
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
 		StringBuilder strRtn = new StringBuilder();
 
+		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
-		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+		strRtn.append(String.format("<span class=\"Category C%d\">%s %s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
 		strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
 		strRtn.append("</a>");
 

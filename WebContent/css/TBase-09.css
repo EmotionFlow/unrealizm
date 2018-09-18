@@ -143,6 +143,7 @@ button {
 	color: #5bd;
 	cursor: pointer;
 	white-space: nowrap;
+	text-align: center;
 }
 
 .BtnBase.Selected,
@@ -163,7 +164,8 @@ button.Disabled, button.Disabled:hover {
 	cursor: default;
 }
 
-.BtnBase.Rev {border-color: #fff;}
+.BtnBase.Rev {border-color: #fff; background-color: #5bd; color: #fff;}
+.BtnBase.Rev:hover, .BtnBase.Rev.Selected {border-color: #5bd; background-color: #fff; color: #5bd;}
 
 
 .onoffswitch {

@@ -17,11 +17,12 @@ public class CContent {
 	public int m_nUserId = 0;
 	public int m_nOpenId = 0;
 	public String m_strFileName = "";
-	public int m_nAccessNum = 0;
+	public int m_nFileNum = 0;
 	public int m_nBookmarkNum = 0;
 	public int m_nCommentNum = 0;
 	public CUser m_cUser = new CUser();
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
+	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
 
 	public CContent() {}
 	public CContent(ResultSet resultSet) throws SQLException {
@@ -32,7 +33,7 @@ public class CContent {
 		m_nUserId			= resultSet.getInt("user_id");
 		//m_nOpenId			= resultSet.getInt("open_id");
 		m_strFileName		= Common.ToString(resultSet.getString("file_name"));
-		//m_nAccessNum		= resultSet.getInt("access_num");
+		m_nFileNum			= resultSet.getInt("file_num");
 		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
 		m_nCommentNum		= resultSet.getInt("comment_num");
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");

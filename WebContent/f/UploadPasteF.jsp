@@ -12,7 +12,6 @@ class UploadPasteCParam {
 	public boolean m_bTweet = false;
 	public int m_nCategoryId = 0;
 	String m_strEncodeImg = "";
-	public String m_strFileName = "";
 
 	public int GetParam(HttpServletRequest cRequest) {
 		try {
@@ -21,12 +20,6 @@ class UploadPasteCParam {
 			m_bTweet = (Common.ToInt(request.getParameter("TWI"))==1);
 			m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 10);
 			m_strEncodeImg = Common.ToString(request.getParameter("DATA"));
-
-			String strRelativePath = Common.GetUploadPath();
-			String strRealPath = getServletContext().getRealPath(strRelativePath);
-			String strFileName = Long.toString((new java.util.Date()).getTime());
-			strFileName += Integer.toString((int)(Math.random()*9999));
-			m_strFileName = strRelativePath + "/" + strFileName;
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
@@ -39,6 +32,7 @@ class UploadPasteCParam {
 
 class UploadPasteC {
 	public int GetResults(UploadPasteCParam cParam, ResourceBundleControl _TEX) {
+		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -48,15 +42,16 @@ class UploadPasteC {
 
 		try {
 			byte[] imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
-			if(imageBinary == null) {throw(new Exception("imageBinary == null"));}
+			if(imageBinary == null) return nRtn;
+			if(imageBinary.length>1024*1024*30) return nRtn;
 			BufferedImage cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
-			if(cImage == null) {throw(new Exception("cImage == null"));}
-			ImageIO.write(cImage, "png", new File(getServletContext().getRealPath(cParam.m_strFileName)));
+			if(cImage == null) return nRtn;
 
-			// check file type
-			if(!CImage.checkImage(getServletContext().getRealPath(cParam.m_strFileName))) {
-				CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
-				return -2;
+			// check ext
+			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(new ByteArrayInputStream(imageBinary)));
+			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
+				Log.d("main item type error");
+				return nRtn;
 			}
 
 			// regist to DB
@@ -75,13 +70,14 @@ class UploadPasteC {
 			cState.close();cState=null;
 
 			// save file
-			String strFileName = String.format("/user_img01/%09d/%09d.jpg", cParam.m_nUserId, m_nContentId);
-			CImage.saveIllustImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
-			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
+			String strFileName = String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), m_nContentId);
+			String strRealFileName = getServletContext().getRealPath(strFileName);
+			ImageIO.write(cImage, "png", new File(strRealFileName));
+			ImageUtil.createThumbIllust(strRealFileName);
 			Log.d(strFileName);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=0, comment_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=0, file_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setInt(2, cParam.m_nCategoryId);
@@ -129,18 +125,16 @@ class UploadPasteC {
 					}
 				}
 			}
-
+			nRtn = m_nContentId;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
-			return m_nContentId;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
 		}
-		return m_nContentId;
+		return nRtn;
 	}
 }
 %><%

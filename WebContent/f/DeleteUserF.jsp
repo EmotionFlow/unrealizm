@@ -78,7 +78,14 @@ try {
 	cState.executeUpdate();
 	cState.close();cState=null;
 
-	// delete making
+	// delete append data
+	strSql ="DELETE FROM contents_appends_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, m_nUserId);
+	cState.executeUpdate();
+	cState.close();cState=null;
+
+	// delete content data
 	strSql = "DELETE FROM contents_0000 WHERE user_id=?";
 	cState = cConn.prepareStatement(strSql);
 	cState.setInt(1, m_nUserId);
@@ -105,9 +112,8 @@ try {
 	cState.setInt(1, m_nUserId);
 	cState.executeUpdate();
 	cState.close();cState=null;
-
 	// delete files
-	File fileDel = new File(getServletContext().getRealPath(String.format("/user_img01/%09d/", m_nUserId)));
+	File fileDel = new File(getServletContext().getRealPath(Common.getUploadUserPath(m_nUserId)));
 	Common.rmDir(fileDel);
 
 	m_nRtn = 1;

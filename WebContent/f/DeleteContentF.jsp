@@ -83,15 +83,36 @@ class DeleteMakingC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			// delete making
-			strSql ="DELETE FROM contents_0000 WHERE content_id=?";
+			// delete append files
+			strSql ="SELECT * FROM contents_appends_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			while(cResSet.next()) {
+				CContentAppend cContentAppend = new CContentAppend(cResSet);
+				try{
+					ImageUtil.deleteFiles(getServletContext().getRealPath(cContentAppend.m_strFileName));
+				} catch (Exception e) {
+					Log.d("connot delete content_append file : " + cContentAppend.m_strFileName);
+				}
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			// delete append data
+			strSql ="DELETE FROM contents_appends_0000 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
+			// delete content data
+			strSql ="DELETE FROM contents_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cState.executeUpdate();
+			cState.close();cState=null;
 			// delete files
-			CImage.DeleteFiles(getServletContext().getRealPath(String.format("/user_img01/%09d/%09d.jpg", cParam.m_nUserId, cParam.m_nContentId)));
+			ImageUtil.deleteFiles(getServletContext().getRealPath(String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId)));
 
 			bRtn = true;
 		} catch(Exception e) {

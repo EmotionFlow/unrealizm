@@ -13,6 +13,8 @@ int m_nUserId = Common.ToInt(request.getParameter("UID"));
 int m_nContentId = Common.ToInt(request.getParameter("IID"));
 String m_strDesc = Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("DES"))), 200);
 int m_nMode = Common.ToInt(request.getParameter("MOD"));
+m_strDesc = m_strDesc.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
+if(m_strDesc.startsWith("#")) m_strDesc=" "+m_strDesc;
 
 if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 	DataSource dsPostgres = null;

@@ -78,7 +78,7 @@ class DeleteMakingC {
 			cState.close();cState=null;
 
 			// delete files
-			CImage.DeleteFiles(getServletContext().getRealPath(String.format("/user_img01/%09d/%09d.jpg", cParam.m_nUserId, cParam.m_nContentId)));
+			ImageUtil.deleteFiles(getServletContext().getRealPath(String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId)));
 
 			bRtn = true;
 		} catch(Exception e) {

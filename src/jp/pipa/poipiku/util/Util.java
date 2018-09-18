@@ -1,5 +1,6 @@
 package jp.pipa.poipiku.util;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

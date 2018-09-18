@@ -9,38 +9,13 @@
 <%
 class UpdateProfileFileCParam {
 	public int m_nUserId = -1;
-	public String m_strFileName = "";
+	public String m_strEncodeImg = "";
 
 	public int GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId = Common.ToInt(request.getParameter("UID"));
-			String strEncodeImg = Common.TrimAll(Common.CrLfInjection(Common.EscapeInjection(request.getParameter("DATA"))));
-
-			if(strEncodeImg.length() < 1) {
-				return -2;
-			};
-			byte[] imageBinary = Base64.decodeBase64(strEncodeImg.getBytes());
-			if(imageBinary.length>1024*1024*2.2){
-				return -1;
-			}
-			BufferedImage cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
-			if(cImage == null) {
-				return -2;
-			}
-			if(cImage.getWidth()<=0) {
-				m_nUserId = -1;
-			}
-
-			String strRelativePath = Common.GetUploadPath();
-			String strRealPath = getServletContext().getRealPath(strRelativePath);
-			String strFileName = Long.toString((new java.util.Date()).getTime());
-			strFileName += Integer.toString((int)(Math.random()*9999));
-			m_strFileName = strRelativePath + "/" + strFileName;
-			FileOutputStream fileOutStm = new FileOutputStream(String.format("%s/%s", strRealPath, strFileName));
-			fileOutStm.write(imageBinary);
-			fileOutStm.flush();
-			fileOutStm.close();
+			m_strEncodeImg = Common.TrimAll(Common.CrLfInjection(Common.EscapeInjection(request.getParameter("DATA"))));
 		} catch(Exception e) {
 			m_nUserId = -1;
 			return -99;
@@ -49,9 +24,9 @@ class UpdateProfileFileCParam {
 	}
 }
 
-
 class UpdateProfileFileC {
 	public int GetResults(UpdateProfileFileCParam cParam) {
+		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -59,16 +34,24 @@ class UpdateProfileFileC {
 		String strSql = "";
 
 		try {
-			// check file type
-			if(!CImage.checkImage(getServletContext().getRealPath(cParam.m_strFileName))) {
-				CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
-				return -2;
+			byte[] imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
+			if(imageBinary == null) return nRtn;
+			if(imageBinary.length>1024*1024*5) return nRtn;
+			BufferedImage cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
+			if(cImage == null) return nRtn;
+
+			// check ext
+			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(new ByteArrayInputStream(imageBinary)));
+			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
+				Log.d("main item type error");
+				return nRtn;
 			}
 
 			// save file
-			String strFileName = String.format("/user_img01/%09d/profile.jpg", cParam.m_nUserId);
-			CImage.saveProfileImages(getServletContext().getRealPath(cParam.m_strFileName), getServletContext().getRealPath(strFileName));
-			CImage.DeleteFile(getServletContext().getRealPath(cParam.m_strFileName));
+			String strFileName = String.format("%s/profile.jpg", Common.getUploadUserPath(cParam.m_nUserId));
+			String strRealFileName = getServletContext().getRealPath(strFileName);
+			ImageIO.write(cImage, "png", new File(strRealFileName));
+			ImageUtil.createThumbProfile(strRealFileName);
 			Log.d(strFileName);
 
 			// regist to DB
@@ -83,16 +66,16 @@ class UpdateProfileFileC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
+			nRtn = 0;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
-			return -99;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return 0;
+		return nRtn;
 	}
 }
 %><%

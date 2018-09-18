@@ -21,20 +21,11 @@ if(cCookies != null) {
 		}
 	}
 }
-
-
-if(cCheckLogin.m_strNickName.equals("no_name")) {
-	getServletContext().getRequestDispatcher("/SetUserNameV.jsp").forward(request,response);
-	return;
-}
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
-		<script src="/js/exif.js" type="text/javascript"></script>
-		<script src="/js/megapix-image.js" type="text/javascript"></script>
 		<script src="/js/upload-01.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -44,47 +35,165 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		});
 		</script>
 
+		<link href="/js/fine-uploader/fine-uploader-gallery-0.2.css" type="text/css" rel="stylesheet" />
+		<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
+		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<script>
+			var multiFileUploader = null;
 			function UploadFile() {
-				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+				if(!multiFileUploader) return;
+				if(multiFileUploader.getSubmittedNum()<=0) return;
 				var nCategory = $('#EditCategory').val();
 				var strDescription = $.trim($("#EditDescription").val());
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 				setTweetSetting($('#OptionTweet').prop('checked'));
-				$("#file_thumb").upload(
-					'/f/UploadFileF.jsp',
-					{
+				strDescription = strDescription.substr(0 , 200);
+				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+				console.log("start upload");
+
+				$.ajaxSingle({
+					"type": "post",
+					"data": {
 						"UID":<%=cCheckLogin.m_nUserId%>,
+						"CAT":nCategory,
 						"DES":strDescription,
-						"TWI":nTweet,
-						"CAT":nCategory
 					},
-					function(res) {
-						var nResId = parseInt($.trim(res), 10);
-						if(nResId > 0) {
-							// complete
-							DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-							setTimeout(function(){
-								location.href="/MyHomePcV.jsp";
-							}, 1000);
-						} else if(nResId == -1) {
-							// file size error
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-						} else if(nResId == -2) {
-							// file type error
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
-						} else {
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + nResId);
+					"url": "/f/UploadFileReferenceF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						console.log("UploadFileReferenceF");
+						if(data && data.content_id) {
+							if(data.content_id>0) {
+								multiFileUploader.first_file = true;
+								multiFileUploader.user_id = <%=cCheckLogin.m_nUserId%>;
+								multiFileUploader.illust_id = data.content_id;
+								multiFileUploader.tweet = nTweet;
+								multiFileUploader.uploadStoredFiles();
+							} else {
+								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
+							}
 						}
-					},
-					'html'
-				);
+					}
+				});
 			}
 
-			$(function() {
-				initUploadFile();
+			$(function(){
+				multiFileUploader = new qq.FineUploader({
+					element: document.getElementById("file-drop-area"),
+					autoUpload: false,
+					button: document.getElementById('TimeLineAddImage'),
+					maxConnections: 1,
+					validation: {
+						allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+						itemLimit: 100,
+						sizeLimit: 5000000,
+						stopOnFirstInvalidFile: false
+					},
+					retry: {
+						enableAuto: false
+					},
+					callbacks: {
+						onUpload: function(id, name) {
+							if(this.first_file) {
+								this.first_file = false;
+								this.setEndpoint('/f/UploadFileFirstF.jsp', id);
+								console.log("UploadFileFirstF");
+							} else {
+								this.setEndpoint('/f/UploadFileAppendF.jsp', id);
+								console.log("UploadFileAppendF");
+							}
+							this.setParams({
+								UID: this.user_id,
+								IID: this.illust_id
+							}, id);
+						},
+						onAllComplete: function(succeeded, failed) {
+							console.log("onAllComplete", succeeded, failed, this.tweet);
+							if(this.tweet==1) {
+								$.ajax({
+									"type": "post",
+									"data": {
+										UID: this.user_id,
+										IID: this.illust_id,
+									},
+									"url": "/f/UploadFileTweetF.jsp",
+									"dataType": "json",
+									"success": function(data) {
+										console.log("UploadFileTweetF");
+										// complete
+										DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+										setTimeout(function(){
+											location.href="/MyHomePcV.jsp";
+										}, 1000);
+									}
+								});
+							} else {
+								// complete
+								DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+								setTimeout(function(){
+									location.href="/MyHomePcV.jsp";
+								}, 1000);
+							}
+						},
+						onValidate: function(data) {
+							var total = this.getSubmittedSize();
+							var submit_num = this.getSubmittedNum();
+							this.showTotalSize(total, submit_num);
+							total += data.size;
+							if (total>this.total_size) return false;
+							this.showTotalSize(total, submit_num+1);
+						},
+						onStatusChange: function(id, oldStatus, newStatus) {
+							this.showTotalSize(this.getSubmittedSize(), this.getSubmittedNum());
+						}
+					}
+				});
+				multiFileUploader.getSubmittedNum = function() {
+					var uploads = this.getUploads({
+						status: qq.status.SUBMITTED
+					});
+					return uploads.length;
+				};
+				multiFileUploader.getSubmittedSize = function() {
+					var uploads = this.getUploads({
+						status: qq.status.SUBMITTED
+					});
+					var total = 0;
+					$.each(uploads,function(){
+						total+=this.size;
+					});
+					return total;
+				};
+				multiFileUploader.showTotalSize = function(total, submit_num) {
+					var strTotal = "";
+					if(total>0) {
+						strTotal=" (Remaning: "+ (200-submit_num) + " files. " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
+						$('#TimeLineAddImage').removeClass('Light');
+						$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
+					}
+					$('#TotalSize').html(strTotal);
+				};
+				multiFileUploader.total_size = 30*1024*1024;
 			});
 		</script>
+
+		<style>
+.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: auto; background: none; max-height: none;}
+.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
+.qq-gallery .qq-total-progress-bar-container {display: none;}
+.qq-gallery .qq-upload-list li {margin: 10px 0 6px 16px; height: 158px; padding: 7px; box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.22); max-width: 158px;}
+.qq-gallery .qq-file-info {display: none;}
+.qq-upload-retry-selector qq-upload-retry {display: none;}
+.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
+.qq-gallery .qq-upload-retry {display: none;}
+.qq-gallery .qq-thumbnail-wrapper {height: 158px;width: 158px;}
+.qq-gallery .qq-upload-cancel {right: -8px; top: -10px; font-size: 0; background: none;color: #777;}
+.qq-gallery .qq-upload-cancel:hover {background: none;}
+.qq-gallery .qq-upload-cancel:after {content: "\f057"; font-size: 20px;font-family: "Font Awesome 5 Free";font-weight: 900;}
+.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 15px 0;}
+.UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
+.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;}
+		</style>
 	</head>
 
 	<body>
@@ -98,12 +207,13 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 
 		<div class="Wrapper">
 			<div class="UploadFile">
-				<div class="InputFile">
-					<div class="OrgMessage">
-						<span class="typcn typcn-plus-outline"></span><%=_TEX.T("UploadFilePc.SelectImg")%>
-					</div>
-					<img id="imgView" class="imgView" src="" />
-					<input id="file_thumb" type="file" name="file_thumb" />
+				<div class="TimeLineIllustCmd">
+					<span id="file-drop-area"></span>
+					<span id="TotalSize" class="TotalSize"></span>
+					<a id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" href="javascript:void(0)">
+						<i class="far fa-images"></i>
+						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
+					</a>
 				</div>
 				<div class="CategorDesc">
 					<select id="EditCategory">

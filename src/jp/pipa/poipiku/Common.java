@@ -236,14 +236,6 @@ public class Common {
 		return "//img.poipiku.com" + strFileName;
 	}
 
-	public static String getProfUrl(int nUserId){
-		return getProfPath(nUserId);
-	}
-
-	public static String getProfPath(int nUserId){
-		return String.format("/user_img01/%09d/prof.jpg", nUserId);
-	}
-
 	public static String GetUploadPath() {
 		String path = "/user_img01";
 		/*
@@ -257,6 +249,10 @@ public class Common {
 		}
 		*/
 		return path;
+	}
+	public static String getUploadUserPath(int nUserId) {
+		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
+		return String.format("/user_img01/%09d", nUserId);
 	}
 
 	public static String SubStrNum(String strSrc, int nNum) {
