@@ -29,8 +29,6 @@ class UploadFileTweetC {
 		ResultSet cResSet = null;
 		String strSql = "";
 
-		int m_nContentId = -99;
-
 		try {
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -54,7 +52,7 @@ class UploadFileTweetC {
 			CTweet cTweet = new CTweet();
 			if (cTweet.GetResults(cParam.m_nUserId)) {
 				String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
-				String strFooter = String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, m_nContentId);
+				String strFooter = String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, cContent.m_nContentId);
 				int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
 				StringBuffer bufMsg = new StringBuffer();
 				bufMsg.append(strHeader);
@@ -70,7 +68,7 @@ class UploadFileTweetC {
 					Log.d("tweet失敗");
 				}
 			}
-			m_nContentId = cContent.m_nContentId;
+			nRtn = cContent.m_nContentId;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -79,7 +77,7 @@ class UploadFileTweetC {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return m_nContentId;
+		return nRtn;
 	}
 }
 %><%
