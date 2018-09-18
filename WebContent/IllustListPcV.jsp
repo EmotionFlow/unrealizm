@@ -94,13 +94,21 @@ if(!cResults.getResults(cCheckLogin)) {
 			});
 		}
 		</script>
+		<style>
+		<%if(!cResults.m_cUser.m_strBgFileName.isEmpty()){%>
+		.Wrapper {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');}
+		<%}%>
+		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
+		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+		<%}%>
+		</style>
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper" <%if(!cResults.m_cUser.m_strBgFileName.isEmpty()){%>style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>')"<%}%>>
-			<div class="UserInfo" <%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>style="background-size: 600px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>')"<%}%>>
+		<div class="Wrapper">
+			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
 					<span class="UserInfoUserThumb">

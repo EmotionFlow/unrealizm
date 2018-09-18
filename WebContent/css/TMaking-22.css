@@ -405,7 +405,7 @@
 .IllustItem .IllustItemExpand .IllustItemExpandBtn {
 	display: inline-block;
 	margin: 10px 0 5px 0;
-	font-size: 12px;
+	font-size: 13px;
 	color: #5bd;
 }
 
@@ -867,6 +867,8 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	background: #eee;
+	background-size: 100% auto;
+	background-repeat: no-repeat;
 }
 
 .UserInfo .UserInfoBg {

@@ -370,7 +370,7 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle">ヘッダー画像</div>
 					<div class="SettingBody">
 						<div class="FileSelectFrame" style="border: solid 1px #eee;">
-							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 360px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>?<%=Math.random()%>');"></div>
+							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 100% auto; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>?<%=Math.random()%>');"></div>
 							<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
 							<%if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 							<span class="typcn typcn-plus-outline"></span>
@@ -387,11 +387,11 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<div class="SettingListItem">
+				<div class="SettingListItem" style="display: none;">
 					<div class="SettingListTitle">背景画像</div>
 					<div class="SettingBody">
 						<div class="FileSelectFrame" style="border: solid 1px #eee;">
-							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 360px auto; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>?<%=Math.random()%>');"></div>
+							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: cover; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>?<%=Math.random()%>');"></div>
 							<input class="SelectFile" type="file" name="file_bg" id="file_bg" onchange="UpdateProfileBgFile(this)" />
 							<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
 							<span class="typcn typcn-plus-outline"></span>
