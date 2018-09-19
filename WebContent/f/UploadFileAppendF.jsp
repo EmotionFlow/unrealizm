@@ -100,6 +100,10 @@ class UploadFileAppendC {
 			cState.close();cState=null;
 
 			// save file
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			if(!cDir.exists()) {
+				cDir.mkdirs();
+			}
 			String strFileName = String.format("%s/%09d_%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));

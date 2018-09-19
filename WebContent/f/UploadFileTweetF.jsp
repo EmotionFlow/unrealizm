@@ -52,7 +52,10 @@ class UploadFileTweetC {
 			CTweet cTweet = new CTweet();
 			if (cTweet.GetResults(cParam.m_nUserId)) {
 				String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
-				String strFooter = String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, cContent.m_nContentId);
+				String strFooter = String.format(" %s https://poipiku.com/%d/%d.html",
+						String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum),
+						cParam.m_nUserId,
+						cContent.m_nContentId);
 				int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
 				StringBuffer bufMsg = new StringBuffer();
 				bufMsg.append(strHeader);

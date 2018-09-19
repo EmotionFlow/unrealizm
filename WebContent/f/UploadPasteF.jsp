@@ -70,6 +70,10 @@ class UploadPasteC {
 			cState.close();cState=null;
 
 			// save file
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			if(!cDir.exists()) {
+				cDir.mkdirs();
+			}
 			String strFileName = String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), m_nContentId);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			ImageIO.write(cImage, "png", new File(strRealFileName));

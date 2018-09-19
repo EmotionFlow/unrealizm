@@ -88,6 +88,10 @@ class UploadFileFirstC {
 			if(!bExist) return nRtn;
 
 			// save file
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			if(!cDir.exists()) {
+				cDir.mkdirs();
+			}
 			String strFileName = String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));

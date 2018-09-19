@@ -181,18 +181,20 @@ if(cCookies != null) {
 .qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: auto; background: none; max-height: none;}
 .qq-gallery .qq-upload-list {padding: 0; max-height: none;}
 .qq-gallery .qq-total-progress-bar-container {display: none;}
-.qq-gallery .qq-upload-list li {margin: 10px 0 6px 16px; height: 158px; padding: 7px; box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.22); max-width: 158px;}
+.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 6px;}
 .qq-gallery .qq-file-info {display: none;}
 .qq-upload-retry-selector qq-upload-retry {display: none;}
 .qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
 .qq-gallery .qq-upload-retry {display: none;}
-.qq-gallery .qq-thumbnail-wrapper {height: 158px;width: 158px;}
-.qq-gallery .qq-upload-cancel {right: -8px; top: -10px; font-size: 0; background: none;color: #777;}
-.qq-gallery .qq-upload-cancel:hover {background: none;}
-.qq-gallery .qq-upload-cancel:after {content: "\f057"; font-size: 20px;font-family: "Font Awesome 5 Free";font-weight: 900;}
+.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
+.qq-gallery .qq-upload-cancel {right: -8px; top: -8px; width: 26px; height: 26px; line-height: 20px; font-size: 12px; padding: 0; border: solid 3px #fff; border-radius: 30px;}
 .UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 15px 0;}
 .UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
 .UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;}
+<%if(!Common.isSmartPhone(request)) {%>
+.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
+.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
+<%}%>
 		</style>
 	</head>
 

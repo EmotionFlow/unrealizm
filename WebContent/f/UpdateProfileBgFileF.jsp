@@ -48,6 +48,10 @@ class UpdateProfileFileC {
 			}
 
 			// save file
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			if(!cDir.exists()) {
+				cDir.mkdirs();
+			}
 			String strFileName = String.format("%s/bg.jpg", Common.getUploadUserPath(cParam.m_nUserId));
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			ImageIO.write(cImage, "png", new File(strRealFileName));
