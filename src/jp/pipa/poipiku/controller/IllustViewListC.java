@@ -29,7 +29,7 @@ public class IllustViewListC {
 	}
 
 
-	public int SELECT_MAX = 10;
+	public int SELECT_MAX_GALLERY = 10;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public boolean getResults(CheckLogin cCheckLogin) {
 		boolean bResult = false;
@@ -61,8 +61,8 @@ public class IllustViewListC {
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, m_nContentId);
-			cState.setInt(3, SELECT_MAX*m_nPage);
-			cState.setInt(4, SELECT_MAX);
+			cState.setInt(3, SELECT_MAX_GALLERY*m_nPage);
+			cState.setInt(4, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);

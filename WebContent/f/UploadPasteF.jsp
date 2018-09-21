@@ -18,7 +18,7 @@ class UploadPasteCParam {
 			m_nUserId = Common.ToInt(request.getParameter("UID"));
 			m_strDescription = Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
 			m_bTweet = (Common.ToInt(request.getParameter("TWI"))==1);
-			m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 10);
+			m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 12);
 			m_strEncodeImg = Common.ToString(request.getParameter("DATA"));
 		} catch(Exception e) {
 			e.printStackTrace();

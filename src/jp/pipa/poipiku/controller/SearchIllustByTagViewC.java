@@ -28,7 +28,7 @@ public class SearchIllustByTagViewC {
 	}
 
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	public int SELECT_MAX_GALLERY = 36;
+	public int SELECT_MAX_GALLERY = 10;
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {

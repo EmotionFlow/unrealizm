@@ -13,7 +13,7 @@ class UploadReferenceCParam {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
-			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 10);
+			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 12);
 			m_strDescription	= Common.TrimAll(Common.ToString(request.getParameter("DES")));
 			m_strDescription = m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;

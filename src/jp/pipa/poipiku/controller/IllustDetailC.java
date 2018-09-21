@@ -12,11 +12,13 @@ import jp.pipa.poipiku.util.*;
 public class IllustDetailC {
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
+	public int m_nAppendId = -1;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
 			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
+			m_nAppendId		= Common.ToInt(cRequest.getParameter("AD"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 		}
@@ -50,6 +52,21 @@ public class IllustDetailC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+
+			if(m_nAppendId>0 && bRtn) {
+				bRtn = false;
+				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nContentId);
+				cState.setInt(2, m_nAppendId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					m_cContent.m_strFileName = cResSet.getString("file_name");
+					bRtn = true;
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

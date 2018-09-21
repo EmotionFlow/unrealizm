@@ -15,6 +15,7 @@ if(!cResults.getResults(cCheckLogin)) {
 <html lang="ja" style="height: 100%;">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script>
@@ -31,9 +32,9 @@ if(!cResults.getResults(cCheckLogin)) {
 		<tr>
 		<td>
 		<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
-		<a class="IllustItemLink" style="display: block;" href="javascript:(window.open('','_self').opener=window).close();">
+		<span class="IllustItemLink" style="display: block;">
 			<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
-		</a>
+		</span>
 		<div class="IllustItemTProhibit"><%=_TEX.T("IllustView.ProhibitMsg.Long")%></div>
 		<%} else {%>
 		Not Found.

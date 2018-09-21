@@ -222,12 +222,13 @@ if(cCookies != null) {
 						<option value="0"><%=_TEX.T("Category.C0")%></option>
 						<option value="10"><%=_TEX.T("Category.C10")%></option>
 						<option value="1"><%=_TEX.T("Category.C1")%></option>
-						<option value="2"><%=_TEX.T("Category.C2")%></option>
+						<option value="12"><%=_TEX.T("Category.C12")%></option>
 						<option value="3"><%=_TEX.T("Category.C3")%></option>
 						<option value="4"><%=_TEX.T("Category.C4")%></option>
 						<option value="5"><%=_TEX.T("Category.C5")%></option>
 						<option value="6"><%=_TEX.T("Category.C6")%></option>
 						<option value="7"><%=_TEX.T("Category.C7")%></option>
+						<option value="11"><%=_TEX.T("Category.C11")%></option>
 						<option value="8"><%=_TEX.T("Category.C8")%></option>
 						<option value="9"><%=_TEX.T("Category.C9")%></option>
 					</select>
