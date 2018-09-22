@@ -107,11 +107,12 @@ class UploadFileC {
 			Log.d(strFileName);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, description=?, open_id=0 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, description=?, category_id=? WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
-			cState.setInt(3, m_nContentId);
+			cState.setInt(3, cParam.m_nCategoryId);
+			cState.setInt(4, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
