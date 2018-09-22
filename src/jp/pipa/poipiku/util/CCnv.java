@@ -158,6 +158,12 @@ public class CCnv {
 
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
+//		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\" style=\"background-image: url('%s_360.jpg')\">",
+//				ILLUST_VIEW[nType][nMode],
+//				cContent.m_nUserId,
+//				cContent.m_nContentId,
+//				strKeyword,
+//				Common.GetUrl(cContent.m_strFileName)));
 		strRtn.append(String.format("<span class=\"Category C%d\">%s %s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
 		strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
 		strRtn.append("</a>");

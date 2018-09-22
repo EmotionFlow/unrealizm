@@ -6,6 +6,9 @@ import java.awt.Image;
 import java.awt.color.ColorSpace;
 import java.awt.image.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import javax.imageio.*;
@@ -19,8 +22,25 @@ import org.w3c.dom.*;
 public class ImageUtil {
 	public static void createThumbIllust(String strSrcFileName, boolean bLoop) throws IOException {
 		deleteFilesClean(strSrcFileName);
-		ImageUtil.createThumb(strSrcFileName, strSrcFileName+"_640.jpg", 640, 0, bLoop);
-		ImageUtil.createThumbNormalize(strSrcFileName, strSrcFileName+"_360.jpg", 360, bLoop);
+
+		BufferedImage cImage = ImageUtil.read(strSrcFileName);
+		int nWidth = cImage.getWidth();
+		int nHeight = cImage.getHeight();
+
+		if(nWidth<=640) {
+			Path pathSrc = Paths.get(strSrcFileName);
+			Path pathDst = Paths.get(strSrcFileName+"_640.jpg");
+			Files.copy(pathSrc, pathDst);
+		} else {
+			ImageUtil.createThumb(strSrcFileName, strSrcFileName+"_640.jpg", 640, 0, bLoop);
+		}
+		if(nWidth<=360 && nHeight<=360) {
+			Path pathSrc = Paths.get(strSrcFileName);
+			Path pathDst = Paths.get(strSrcFileName+"_360.jpg");
+			Files.copy(pathSrc, pathDst);
+		} else {
+			ImageUtil.createThumbNormalize(strSrcFileName, strSrcFileName+"_360.jpg", 360, bLoop);
+		}
 	}
 	public static void createThumbIllust(String strSrcFileName) throws IOException {
 		createThumbIllust(strSrcFileName, true);

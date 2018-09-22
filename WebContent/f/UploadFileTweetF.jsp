@@ -68,6 +68,7 @@ class UploadFileTweetC {
 					bufMsg.append(cContent.m_strDescription);
 				}
 				bufMsg.append(strFooter);
+				Log.d(cContent.m_strFileName, bufMsg.toString());
 
 				if (!cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(cContent.m_strFileName))) {
 					Log.d("tweet失敗");

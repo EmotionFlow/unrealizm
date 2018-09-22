@@ -31,7 +31,7 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}
 
-.LinkApp {text-align: center; margin: 10px 0;}
+.LinkApp {display:block; float: left; width: 100%; text-align: center; margin: 15px 0 0 0; font-size: 0;}
 
 .Footer {background: #5bd; display:block; width: 100%; text-align: center; padding: 20px 10px; center; background-color: #5bd; font-size: 10px; box-sizing: border-box; color: #fff;}
 .Footer .FooterHref {text-decoration: underline; color: #fff;}

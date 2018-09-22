@@ -84,7 +84,7 @@ cResults.GetResults(cParam);
 							<img src="<%=Common.GetUrl(cComment.m_strFileName)%>_120.jpg" />
 						</span>
 						<span class="UserThumbName">
-							<%=Common.ToStringHtml(cComment.m_strNickName)%>
+							<%//=Common.ToStringHtml(cComment.m_strNickName)%>
 							<span class="UserThumbNameAdditional">
 								<%=String.format((cParam.m_nMode<=0)?_TEX.T("ActivityList.Message.Followed"):_TEX.T("ActivityList.Message.Following"),
 										Common.ToStringHtml(cComment.m_strNickName))%>

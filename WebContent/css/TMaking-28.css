@@ -83,6 +83,9 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .IllustThumb:nth-child(10n+3),
@@ -113,7 +116,8 @@
 
 .IllustThumb .IllustThumbImg {
 	display: block;
-	width: 100%;
+	max-width: 100%;
+	max-height: 100%;
 }
 
 /********** USER LIST **********/
@@ -402,7 +406,7 @@
 	{
 	display: inline-block;
 	color: #aaa;
-	margin: 0 10px 0 15px;
+	margin: 0 15px 0 10px;
 }
 
 .IllustItem .IllustItemExpand {
@@ -612,7 +616,7 @@
 	line-height: 30px;
 	text-align: center;
 	margin: 0;
-	font-family: 'Apple Color Emoji';
+	font-family: 'Apple Color Emoji',ResEmojiBtn,sans-serif;
 	font-size: 20px;
 }
 
@@ -696,7 +700,6 @@
 	display: inline-block;
 	overflow: hidden;
 	text-align: center;
-	font-family: ResEmojiBtn, sans-serif;
 	font-size: 20px;
 	background: #fff;
 	width: 35px;
@@ -705,6 +708,7 @@
 	margin: 0 5px 5px 5px;
 	border-radius: 100px;
 	user-select: none;
+	font-family: 'Apple Color Emoji',ResEmojiBtn,sans-serif;
 	/*
 	box-shadow: 2px 4px 6px #bbb;
 	*/

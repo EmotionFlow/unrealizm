@@ -36,4 +36,13 @@ public class Log {
 		}
 		System.out.print("\n");
 	}
+
+	public static void d(String arg1, int arg2) {
+		System.out.print("Log : ");
+		DateFormat cDateFromat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss, ");
+		System.out.print(cDateFromat.format(new Date()));
+		System.out.print(calledFrom());
+		System.out.print(String.format("%s:%d", arg1, arg2));
+		System.out.print("\n");
+	}
 }

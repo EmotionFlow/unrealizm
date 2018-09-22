@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
+CheckLogin cCheckLogin = new CheckLogin();
+cCheckLogin.GetResults2(request, response);
+if(!cCheckLogin.m_bLogin) return;
+
 String[] CATEGORY_ID = {
 		"0",
 		"10",
@@ -32,6 +36,7 @@ String[] CATEGORY_NAME = {
 %>
 {
 "result": <%=CATEGORY_ID.length%>,
+"user_id": <%=cCheckLogin.m_nUserId%>,
 "category_id" : [
 <%for(int nCnt=0; nCnt<CATEGORY_ID.length; nCnt++) {%>
 "<%=CEnc.E(CATEGORY_ID[nCnt])%>"<%if(nCnt<CATEGORY_ID.length-1){%>,<%}%>
