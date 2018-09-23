@@ -31,13 +31,14 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}
 
-.LinkApp {display:block; float: left; width: 100%; text-align: center; margin: 15px 0 0 0; font-size: 0;}
+.LinkApp {display:block; float: left; width: 100%; text-align: center; margin: 15px 0 0 0; font-size: 0; display: none;}
 
-.Footer {background: #5bd; display:block; width: 100%; text-align: center; padding: 20px 10px; center; background-color: #5bd; font-size: 10px; box-sizing: border-box; color: #fff;}
+.Footer {background: #5bd; display:block; width: 100%; text-align: center; padding: 15px 10px 30px 10px; center; background-color: #5bd; font-size: 10px; box-sizing: border-box; color: #fff;}
 .Footer .FooterHref {text-decoration: underline; color: #fff;}
 .Footer .FooterCopy {text-align: center;}
 .Footer .FooterLink {display: flex; flex-flow: row nowrap; margin: 0 0 30px 0; justify-content: space-around; border-top: solid 1px #fff; padding: 15px 0 0 0; width: 100%;}
 .Footer .FooterLink .FooterLinkItem {flex: 0 0; text-align: left; white-space: nowrap; margin: 0 20px; padding: 0;}
+.Footer .LinkApp {margin: 0 0 15px 0;}
 
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto; background: #fff;}
 .TabMenu .TabMenuItem {display: block; flex: 1 1; height: 24px; line-height: 29px; border-bottom: solid 2px #fff; text-align: center; color: #5bd; margin: 0 0 5px 0; font-size: 13px; overflow: hidden;}

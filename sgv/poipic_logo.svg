@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="6.56"
-     inkscape:cx="116.05266"
-     inkscape:cy="653.09244"
+     inkscape:zoom="4.3374278"
+     inkscape:cx="255.55208"
+     inkscape:cy="168.89795"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -55,6 +55,14 @@
      inkscape:label="レイヤー 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.68107444;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect8802-9-8-4"
+       width="19.524134"
+       height="19.524134"
+       x="37.036808"
+       y="222.92424"
+       ry="0" />
     <path
        style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:#55bbdd;stroke-width:1.10000002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="path4868"
@@ -4554,5 +4562,147 @@
            inkscape:connector-curvature="0" />
       </g>
     </g>
+    <g
+       id="g5969"
+       inkscape:export-filename="/Users/kawai/git/poipiku_Android/app/src/main/res/drawable/notify_small_icon.png"
+       inkscape:export-xdpi="65.215164"
+       inkscape:export-ydpi="65.215164">
+      <rect
+         ry="0"
+         y="227.127"
+         x="59.062862"
+         height="12.463355"
+         width="12.463355"
+         id="rect8802-9-8-5"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:none;stroke-width:0.43476826;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         inkscape:export-ydpi="562.3736"
+         inkscape:export-xdpi="562.3736"
+         inkscape:export-filename="/Users/kawai/git/poipiku_Android/app/src/main/res/drawable/notify_small_icon.png"
+         transform="translate(-90.379752,83.528776)"
+         id="g8426-7-0-5">
+        <path
+           inkscape:connector-curvature="0"
+           id="path4553-7-7-3-1-6-3-4-2-5-5-5-1-7-3-7-6-9"
+           d="m 150.80921,149.11221 5.33836,0 1.22503,-1.23062"
+           style="fill:none;stroke:#ffffff;stroke-width:1.05886245;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           sodipodi:nodetypes="ccc" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:1.05833328;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 153.8494,147.77348 0,6.85046"
+           id="path4555-6-5-1-4-5-3-9-1-5-9-6-5"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="cc" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:1.05886245;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 151.28211,151.56557 -0.0118,2.00542 -0.34254,0.6825"
+           id="path4557-5-2-5-7-3-5-4-3-1-5-5-8"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccc" />
+        <path
+           style="fill:none;stroke:#ffffff;stroke-width:1.05900002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 156.41669,151.56557 0.0118,2.00542 0.34255,0.6825"
+           id="path4557-5-2-9-0-3-6-7-1-06-2-0-5-3"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccc" />
+        <g
+           id="g8420-1-5-8"
+           transform="translate(-15.987233,16.658476)">
+          <circle
+             style="opacity:1;fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:0.79374999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="path4602-6-4-8-2-5-4-7-8-4-3-4-8-9-2-2-3"
+             cy="129.42058"
+             cx="174.58275"
+             r="2.0839558" />
+          <circle
+             r="0.39687499"
+             cy="128.95993"
+             cx="173.84474"
+             id="path5470-0-2-1-0-6-5-0"
+             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <circle
+             r="0.39687499"
+             cy="128.97562"
+             cx="175.32074"
+             id="path5470-2-6-1-4-6-3-5-3"
+             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path5487-9-8-8-2-0-0-1"
+             d="m 173.889,130.16478 1.38749,0"
+             style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.52916682;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        </g>
+      </g>
+    </g>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.18641193;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect8802-9-8-5-1"
+       width="19.524136"
+       height="19.524147"
+       x="56.560944"
+       y="222.92424"
+       ry="0" />
+    <g
+       transform="matrix(0.12347272,0,0,0.12347272,13.328655,233.50284)"
+       id="g5630-6-1-2-0-6-6-1-7-7-4-4"
+       style="stroke:#917c6f">
+      <g
+         transform="translate(15.474933,-173.52466)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="g5632-1-7-1-16-3-6-1-0-2-8-7"
+         style="stroke:#917c6f">
+        <g
+           id="g5634-8-1-6-5-7-6-3-7-2-3-2"
+           style="stroke:#917c6f">
+          <circle
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             id="path5636-4-1-8-7-8-7-8-0-5-9-4"
+             style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g12434-7-5-8"
+       transform="matrix(0.93333718,0,0,0.93333718,-52.305751,147.31401)">
+      <path
+         sodipodi:nodetypes="ssssssss"
+         inkscape:connector-curvature="0"
+         id="path4602-6-4-8-2-5-4-7-8-4-3-4-5-1-5-2-2-9"
+         d="m 129.6138,112.32083 c 0,1.29744 -1.05178,2.34922 -2.34922,2.34922 -0.32436,0 -0.63337,-0.0657 -0.91442,-0.18461 -0.28106,-0.11888 -1.44622,0.29375 -1.65879,0.0812 -0.21256,-0.21256 0.52748,-1.05032 0.4086,-1.33138 -0.11887,-0.28105 -0.18461,-0.59006 -0.18461,-0.91442 0,-1.29744 1.05178,-2.34922 2.34922,-2.34922 1.29744,0 2.34922,1.05178 2.34922,2.34922 z"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#55bbdd;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <circle
+         r="0.39687499"
+         cy="111.93624"
+         cx="126.45276"
+         id="path5470-0-78-4-3-5-8"
+         style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <circle
+         r="0.39687499"
+         cy="111.95192"
+         cx="128.12875"
+         id="path5470-2-6-60-9-4-3-6"
+         style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 126.57083,113.24088 1.38749,0"
+         id="path5487-9-9-2-1-4-7"
+         inkscape:connector-curvature="0" />
+    </g>
+    <rect
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.18641193;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect8802-9-8-5-1-3"
+       width="19.524136"
+       height="19.524147"
+       x="56.560951"
+       y="242.44839"
+       ry="0" />
   </g>
 </svg>

@@ -4,8 +4,8 @@
 <%@ include file="/inner/TAdFooter.jspf"%>
 
 <div class="Footer">
+	<%if(!cCheckLogin.m_bLogin) {%>
 	<div class="AnalogicoInfo" style="background: none;">
-		<%if(!cCheckLogin.m_bLogin) {%>
 		<h1 class="AnalogicoInfoTitle">
 			描くのに飽きたらポイポイ<br />
 			下描き放置もポイポイ<br />
@@ -23,7 +23,12 @@
 				<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
 			</a>
 		</div>
-		<%}%>
+	</div>
+	<%}%>
+
+	<div class="LinkApp">
+		<a href="https://itunes.apple.com/us/app/ポイピク/id1436433822?l=ja&ls=1&mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
+		<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
 	</div>
 
 	<div class="FooterLink">

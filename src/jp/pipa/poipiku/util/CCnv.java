@@ -135,7 +135,7 @@ public class CCnv {
 			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
 		}
 		strRtn.append("</div>");	// ResEmojiBtnList
-		strRtn.append("<div class=\"ResEmojiBtnList\" style=\"display: none;\">");
+		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\">");
 		for(String emoji : Common.EMOJI_KEYBORD) {
 			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
 		}

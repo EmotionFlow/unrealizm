@@ -112,6 +112,7 @@
 	height: 22px;
 	line-height: 22px;
 	padding: 0 5px;
+	z-index: 2;
 }
 
 .IllustThumb .IllustThumbImg {
@@ -616,7 +617,7 @@
 	line-height: 30px;
 	text-align: center;
 	margin: 0;
-	font-family: 'Apple Color Emoji',ResEmojiBtn,sans-serif;
+	font-family: EmojiFontFamily,'Apple Color Emoji',sans-serif;
 	font-size: 20px;
 }
 
@@ -691,7 +692,11 @@
 	display: block;
 	float: left;
 	width: 100%;
-	max-height: 360px;
+	max-height: 200px;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.All {
+	max-height: 400px;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
 }
@@ -708,7 +713,7 @@
 	margin: 0 5px 5px 5px;
 	border-radius: 100px;
 	user-select: none;
-	font-family: 'Apple Color Emoji',ResEmojiBtn,sans-serif;
+	font-family: EmojiFontFamily,'Apple Color Emoji',sans-serif;
 	/*
 	box-shadow: 2px 4px 6px #bbb;
 	*/
