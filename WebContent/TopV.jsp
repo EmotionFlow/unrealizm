@@ -106,7 +106,7 @@ if(cCheckLogin.m_bLogin) {
 					<div class="DescImg">
 						<img src="/img/PoipikuInfo/03.png" style="width: 340px; left: 0;" />
 					</div>
-					ブクマなし。ハートなし。スターなし。国際標準に準拠した感情豊かな1031種類の絵文字リアクションで共感を伝え合おう
+					ブクマなし。ハートなし。スターなし。感情豊かな899種類の絵文字リアクションで共感を伝え合おう
 				</div>
 			</div>
 
@@ -204,7 +204,7 @@ if(cCheckLogin.m_bLogin) {
 					<div class="DescTitle">
 						表示が速い！
 					</div>
-					月間2億PVを支える手ブロのテクノロジを投入。超低延滞なだけじゃなく、できるだけサーバ側で処理して端末に負荷をかけないから、古いスマホやPCでも高速表示
+					月間2億PVを支える手ブロのテクノロジを投入。超低延滞に加えて可能な限りサーバ側で処理して端末に負荷をかけないから、古いスマホやPCでも高速表示
 				</div>
 			</div>
 			<div class="PoipikuInfo">

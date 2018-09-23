@@ -120,7 +120,8 @@ public class CCnv {
 		}
 		strRtn.append("</div>");	// IllustItemResListTitle
 		for(CComment comment : cContent.m_vComment) {
-			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", comment.m_strDescription));
+			//strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", comment.m_strDescription));
+			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
 		}
 		strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
 		strRtn.append("</div>");	// IllustItemResList
@@ -132,12 +133,14 @@ public class CCnv {
 		strRtn.append("</div>");	// ResBtnSetList
 		strRtn.append("<div class=\"ResEmojiBtnList\">");
 		for(String emoji : vResult) {
-			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
+			//strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
+			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 		}
 		strRtn.append("</div>");	// ResEmojiBtnList
 		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\">");
 		for(String emoji : Common.EMOJI_KEYBORD) {
-			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
+			//strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
+			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 		}
 		//for(int nCnt=0; nCnt<Common.CATEGORY_EMOJI[cContent.m_nCategoryId].length; nCnt++) {
 		//	strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, %d, %d, %d)\">%s</a>", cContent.m_nContentId, cContent.m_nCategoryId, nCnt, nLoginUserId, Common.ToStringHtml(Common.CATEGORY_EMOJI[cContent.m_nCategoryId][nCnt])));
