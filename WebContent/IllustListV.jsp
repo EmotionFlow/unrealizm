@@ -114,7 +114,7 @@ if(!cResults.getResults(cCheckLogin)) {
 				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
 				$(window).bind("scroll", function() {
 					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();
 					}
 				});

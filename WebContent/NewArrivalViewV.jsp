@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-request.setCharacterEncoding("UTF-8");
-int nContentId	= Common.ToInt(request.getParameter("TD"));
+CheckLogin cCheckLogin = new CheckLogin();
+cCheckLogin.GetResults2(request, response);
+
+NewArrivalViewC cResults = new NewArrivalViewC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
+ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +15,7 @@ int nContentId	= Common.ToInt(request.getParameter("TD"));
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>recent</title>
 		<script>
-			var g_nPage = 0;
+			var g_nPage = 1;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -19,7 +24,7 @@ int nContentId	= Common.ToInt(request.getParameter("TD"));
 				$("#IllustItemList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"TD" : <%=nContentId%>, "PG" : g_nPage},
+					"data": {"TD" : <%=cResults.m_nContentId%>, "PG" : g_nPage},
 					"url": "/f/NewArrivalViewF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -69,13 +74,9 @@ int nContentId	= Common.ToInt(request.getParameter("TD"));
 			}
 
 			$(function(){
-				addContents();
-			});
-
-			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 200) {
+					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();
 					}
 				});
@@ -87,7 +88,15 @@ int nContentId	= Common.ToInt(request.getParameter("TD"));
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
 
-			<div id="IllustItemList" class="IllustItemList"></div>
+			<div id="IllustItemList" class="IllustItemList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
+					<%if((nCnt+1)%5==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
 		</div>
 	</body>

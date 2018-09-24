@@ -86,8 +86,8 @@ public class MyHomeC {
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
-			cState.setInt(idx++, SELECT_MAX_GALLERY = 30*m_nPage);
-			cState.setInt(idx++, SELECT_MAX_GALLERY = 30);
+			cState.setInt(idx++, SELECT_MAX_GALLERY*m_nPage);
+			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);

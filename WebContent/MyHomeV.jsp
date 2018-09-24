@@ -8,6 +8,11 @@ if(!cCheckLogin.m_bLogin) {
 	response.sendRedirect("/StartPoipikuV.jsp");
 	return;
 }
+
+MyHomeC cResults = new MyHomeC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
+ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +20,7 @@ if(!cCheckLogin.m_bLogin) {
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>home</title>
 		<script>
-			var g_nPage = 0;
+			var g_nPage = 1;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -29,7 +34,6 @@ if(!cCheckLogin.m_bLogin) {
 					"success": function(data) {
 						if(data) {
 							g_nPage++;
-							$('#InfoMsg').hide();
 							$("#IllustItemList").append(data);
 							g_bAdding = false;
 						} else {
@@ -57,13 +61,9 @@ if(!cCheckLogin.m_bLogin) {
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 				});
-				addContents();
-			});
-
-			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 200) {
+					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();
 					}
 				});
@@ -74,8 +74,8 @@ if(!cCheckLogin.m_bLogin) {
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
-
-			<div id="InfoMsg" style="display:none; float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
+			<%if(cResults.m_vContentList.size()<=0) {%>
+			<div id="InfoMsg" style="float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
 				ポイピクへようこそ<br />
 				<br />
 				描くのに飽きたらポイポイ<br />
@@ -86,7 +86,16 @@ if(!cCheckLogin.m_bLogin) {
 					フォローする人を探す
 				</a>
 			</div>
-			<div id="IllustItemList" class="IllustItemList"></div>
+			<%}%>
+			<div id="IllustItemList" class="IllustItemList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
+					<%if((nCnt+1)%5==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
 		</div>
 	</body>

@@ -45,7 +45,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 200) {
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();
 					}
 				});

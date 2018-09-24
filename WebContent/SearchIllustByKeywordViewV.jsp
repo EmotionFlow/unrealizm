@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-request.setCharacterEncoding("UTF-8");
-int nContentId	= Common.ToInt(request.getParameter("TD"));
-String strKeyword = Common.ToString(request.getParameter("KWD"));
+CheckLogin cCheckLogin = new CheckLogin();
+cCheckLogin.GetResults2(request, response);
+
+SearchIllustByKeywordViewC cResults = new SearchIllustByKeywordViewC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
+ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
-		<title><%=Common.ToStringHtml(strKeyword)%></title>
+		<title><%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
 		<script>
-			var g_nPage = 0;
+			var g_nPage = 1;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -20,7 +24,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 				$("#IllustItemList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"TD" : <%=nContentId%>, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>"), "PG" : g_nPage},
+					"data": {"TD" : <%=cResults.m_nContentId%>, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"), "PG" : g_nPage},
 					"url": "/f/SearchIllustByKeywordViewF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -70,13 +74,9 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 			}
 
 			$(function(){
-				addContents();
-			});
-
-			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 200) {
+					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();
 					}
 				});
@@ -88,7 +88,15 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
 
-			<div id="IllustItemList" class="IllustItemList"></div>
+			<div id="IllustItemList" class="IllustItemList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
+					<%if((nCnt+1)%5==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
 		</div>
 	</body>
