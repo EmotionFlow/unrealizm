@@ -118,5 +118,5 @@ cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>{
 "result_num" : <%=(bRtn)?1:0%>,
-"result" : "<%=cResults.m_strEmoji%>"
+"result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>"
 }
