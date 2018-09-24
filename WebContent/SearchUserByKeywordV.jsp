@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
-request.setCharacterEncoding("UTF-8");
-String strKeyword = Common.ToString(request.getParameter("KWD"));
+CheckLogin cCheckLogin = new CheckLogin();
+cCheckLogin.GetResults2(request, response);
+
+SearchUserByKeywordC cResults = new SearchUserByKeywordC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
-		<title><%=Common.ToStringHtml(strKeyword)%></title>
+		<title><%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
 		<script>
-			var g_nPage = 0;
+			var g_nPage = 1;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -19,7 +23,7 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 				$("#IllustThumbList").append($objMessage);
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>")},
 					"url": "/f/SearchUserByKeywordF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -39,10 +43,6 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 			}
 
 			$(function(){
-				addContents();
-			});
-
-			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
@@ -56,7 +56,15 @@ String strKeyword = Common.ToString(request.getParameter("KWD"));
 	<body>
 		<div class="Wrapper">
 
-			<div id="IllustThumbList" class="IllustItemList"></div>
+			<div id="IllustThumbList" class="IllustItemList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
 		</div>
 	</body>

@@ -106,12 +106,6 @@ if(!cResults.getResults(cCheckLogin)) {
 
 			$(function(){
 				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
-				addContents();
-				<%}%>
-			});
-
-			$(document).ready(function() {
-				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
 				$(window).bind("scroll", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {

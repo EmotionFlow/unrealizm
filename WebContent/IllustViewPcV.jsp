@@ -102,9 +102,6 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 				});
 				addContents();
-			});
-
-			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 400) {

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-//login check
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
@@ -9,6 +8,10 @@ if(!cCheckLogin.m_bLogin) {
 	response.sendRedirect("/StartPoipikuV.jsp");
 	return;
 }
+
+FollowerListC cResults = new FollowerListC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -16,7 +19,7 @@ if(!cCheckLogin.m_bLogin) {
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>follower</title>
 		<script>
-			var g_nPage = 0;
+			var g_nPage = 1;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -45,10 +48,6 @@ if(!cCheckLogin.m_bLogin) {
 			}
 
 			$(function(){
-				addContents();
-			});
-
-			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
@@ -62,7 +61,15 @@ if(!cCheckLogin.m_bLogin) {
 	<body>
 		<div class="Wrapper">
 
-			<div id="IllustThumbList" class="IllustItemList"></div>
+			<div id="IllustThumbList" class="IllustItemList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
 		</div>
 	</body>

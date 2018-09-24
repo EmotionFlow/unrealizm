@@ -1,11 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/inner/Common.jsp"%>
+<%
+CheckLogin cCheckLogin = new CheckLogin();
+cCheckLogin.GetResults2(request, response);
+
+PopularIllustListC cResults = new PopularIllustListC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
+%>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>popular</title>
 		<script>
-			var g_nPage = 0;
+			var g_nPage = 1;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -34,10 +43,6 @@
 			}
 
 			$(function(){
-				addContents();
-			});
-
-			$(document).ready(function() {
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
@@ -51,7 +56,15 @@
 	<body>
 		<div class="Wrapper">
 
-			<div id="IllustThumbList" class="IllustThumbList"></div>
+			<div id="IllustThumbList" class="IllustThumbList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_POPULAR_ILLUST, CCnv.MODE_SP, _TEX)%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMid.jspf"%>
+					<%}%>
+				<%}%>
+			</div>
 
 		</div>
 	</body>

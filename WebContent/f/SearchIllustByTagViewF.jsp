@@ -6,7 +6,6 @@ cCheckLogin.GetResults2(request, response);
 
 SearchIllustByTagViewC cResults = new SearchIllustByTagViewC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 5;
 boolean bRtn = cResults.getResults(cCheckLogin, true);
 ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
