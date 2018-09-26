@@ -95,9 +95,6 @@ if(!cResults.getResults(cCheckLogin)) {
 		}
 		</script>
 		<style>
-		<%if(!cResults.m_cUser.m_strBgFileName.isEmpty()){%>
-		.Wrapper {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');}
-		<%}%>
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>

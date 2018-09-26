@@ -19,7 +19,7 @@ if(cCheckLogin.m_bLogin) {
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
 		.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
-		.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 14px; line-height: 28px; color: #fff; font-weight: normal;}
+		.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 18px; line-height: 28px; color: #fff; font-weight: normal;}
 		.AnalogicoLogin {margin: 0 0 10px 0;}
 		.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
 		.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 30px 0;}
@@ -39,7 +39,6 @@ if(cCheckLogin.m_bLogin) {
 
 		<%if(Common.isSmartPhone(request)) {%>
 		<%} else {%>
-		.AnalogicoDesc.Title {font-size: 16px;}
 		<%}%>
 		</style>
 	</head>
@@ -56,16 +55,13 @@ if(cCheckLogin.m_bLogin) {
 
 		<div class="Wrapper">
 			<h1 class="AnalogicoDesc Title">
-				描くのに飽きたらポイポイ<br />
-				下描き放置もポイポイ<br />
-				完成したらもちろんポイポイ<br />
-				日々の鍛錬をポイポイ<br />
-				闇に葬る前にとりあえずポイポイ<br />
-				なんでもポイピクにポイポイ<br />
-				ポイポイしたら誰かがきっと励ましてくれる<br />
+				放置絵ポイポイ<br />
+				練習ポイポイ<br />
+				らくがきポイポイ<br />
+				進捗ポイポイ<br />
 				<br />
-				ポイピクはイラストをポイポイして<br />
-				励まし合うイラストSNSです。
+				イラストポイポイSNS<br />
+				ポイピク
 			</h1>
 			<div class="AnalogicoStart">
 				<a class="BtnBase Rev AnalogicoLogin" href="/LoginFormTwitterPc.jsp">
@@ -73,6 +69,11 @@ if(cCheckLogin.m_bLogin) {
 				</a>
 				<a class="AnalogicoTerm" href="/RulePcS.jsp">利用規約</a>
 				<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp">プライバシーポリシー</a>
+
+				<div class="LinkApp" style="float: none;">
+					<a href="https://itunes.apple.com/us/app/ポイピク/id1436433822?l=ja&ls=1&mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
+					<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
+				</div>
 			</div>
 		</div>
 
@@ -88,7 +89,7 @@ if(cCheckLogin.m_bLogin) {
 			<div class="PoipikuInfo">
 				<div class="poipikuDesc">
 					<div class="DescTitle">
-						途中絵、練習絵、放置絵、過去絵、作業進捗等々なんでもポイポイ！
+						放置絵、練習絵、ボツ絵、作業進捗、らくがき等々なんでもポイポイ！
 					</div>
 					<div class="DescImg" style="position: relative; height: 340px;">
 						<img src="/img/PoipikuInfo/01.png" style="position: absolute; width: 300px; left: 0;" />
@@ -204,7 +205,7 @@ if(cCheckLogin.m_bLogin) {
 					<div class="DescTitle">
 						表示が速い！
 					</div>
-					月間2億PVを支える手ブロのテクノロジを投入。超低延滞に加えて可能な限りサーバ側で処理して端末に負荷をかけないから、古いスマホやPCでも高速表示
+					月間2億PVを支える手書きブログのテクノロジを投入。独自の高速プラットフォームで可能な限りサーバ側で処理して端末に負荷をかけないから、古いスマホやPCでも高速表示
 				</div>
 			</div>
 			<div class="PoipikuInfo">

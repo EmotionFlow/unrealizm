@@ -29,13 +29,10 @@ cCheckLogin.GetResults2(request, response);
 	<body>
 		<div class="Wrapper">
 			<h1 class="AnalogicoDesc Title">
-					描くのに飽きたらポイポイ<br />
-					下描き放置もポイポイ<br />
-					完成したらもちろんポイポイ<br />
-					日々の鍛錬をポイポイ<br />
-					闇に葬る前にとりあえずポイポイ<br />
-					なんでもポイピクにポイポイ<br />
-					ポイポイしたら誰かがきっと励ましてくれる<br />
+				放置絵ポイポイ<br />
+				練習ポイポイ<br />
+				らくがきポイポイ<br />
+				進捗ポイポイ<br />
 			</h1>
 			<div class="AnalogicoStart">
 				<div style="margin: 0 0 5px 0; font-size: 16px;">イラストポイポイSNS</div>

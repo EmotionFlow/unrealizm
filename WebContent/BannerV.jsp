@@ -15,9 +15,10 @@ cCheckLogin.GetResults2(request, response);
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
 		body {padding: 0;}
-		.Wrapper {width: 300px; color: #fff; background: #5bd; height: auto; margin: 0; padding: 23px 0;}
-		.AnalogicoDesc {width: 100%; padding: 0 0 0 0; box-sizing: border-box; text-align: center; font-size: 14px; line-height: 30px; color: #fff; font-weight: normal;}
-		.AnalogicoStart {text-align: center; margin: 20px 0 0 0; padding: 0 0 0 0;}
+		.Wrapper {width: 300px; height: 250px; color: #fff; background: #5bd;; margin: 0; padding: 14px 0;}
+		.AnalogicoDesc {width: 100%; padding: 0 0 0 0; box-sizing: border-box; text-align: center; font-size: 14px; line-height: 25px; color: #fff; font-weight: normal;}
+		.AnalogicoDesc.Foot {margin: 15px 0 0 0; font-weight: bold;}
+		.AnalogicoStart {text-align: center; margin: 10px 0 0 0; padding: 0 0 0 0;font-size: 18px;}
 		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 		.AnalogicoInfo {display: none;}
 		.Logo {height: 30px;}
@@ -28,17 +29,21 @@ cCheckLogin.GetResults2(request, response);
 
 	<body>
 		<div class="Wrapper">
-			<h1 class="AnalogicoDesc Title">
-				描くのに飽きたらポイポイ<br />
-				日々の鍛錬をポイポイ<br />
-				闇に葬る前にとりあえずポイポイ<br />
-				ポイポイしたら誰かがきっと励ましてくれる
-			</h1>
 			<div class="AnalogicoStart">
-				<div style="margin: 0 0 5px 0;">イラストポイポイSNS</div>
-				<a class="BtnBase Rev" href="https://poipiku.com/">
+				<div style="margin: 0 0 5px 0;">
+				放置絵ポイポイ<br />
+				練習ポイポイ<br />
+				らくがきポイポイ<br />
+				進捗ポイポイ<br />
+				<br />
+				<a class="BtnBase" href="https://poipiku.com/">
 					<img class="Logo" src="/img/pc_top_title.jpg" alt="ポイピク">
 				</a>
+			</div>
+			<div class="AnalogicoDesc Foot" style="margin-top: 10px;">
+				<div style="font-size: 18px;">
+					正式オープン！
+				</div>
 			</div>
 		</div>
 	</body>
