@@ -60,8 +60,10 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center;">
 					ポイピクへようこそ<br />
 					<br />
-					描くのに飽きたらポイポイ<br />
-					ポイポイしたら誰かがきっと励ましてくれる<br />
+					放置絵ポイポイ<br />
+					練習ポイポイ<br />
+					らくがきポイポイ<br />
+					進捗ポイポイ<br />
 					<br />
 					<br />
 					<a class="BtnBase" href="/NewArrivalPcV.jsp">

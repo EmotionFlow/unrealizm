@@ -80,9 +80,11 @@
 <div id="AnalogicoInfo" class="AnalogicoInfo">
 	<div class="Wrapper">
 		<h1 class="AnalogicoInfoTitle">
-			描くのに飽きたらポイポイ<br />
-			ポイポイしたら誰かがきっと励ましてくれる<br />
-			「イラストSNS ポイピク」
+			放置絵ポイポイ<br />
+			練習ポイポイ<br />
+			らくがきポイポイ<br />
+			進捗ポイポイ<br />
+			イラストポイポイSNS「ポイピク」
 		</h1>
 		<div class="AnalogicoInfoRegist">
 			<a class="BtnBase Rev" href="/LoginFormTwitterPc.jsp">

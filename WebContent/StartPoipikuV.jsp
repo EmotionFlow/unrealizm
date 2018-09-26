@@ -42,16 +42,12 @@ if(strRequestUri != null) {
 
 			<div id="InfoMsg" style="float: left; width: 100%; padding: 60px 0 0 0; text-align: center;">
 				<div class="AnalogicoDesc Title">
-					描くのに飽きたらポイポイ<br />
-					下描き放置もポイポイ<br />
-					完成したらもちろんポイポイ<br />
-					日々の鍛錬をポイポイ<br />
-					闇に葬る前にとりあえずポイポイ<br />
-					なんでもポイピクにポイポイ<br />
-					ポイポイしたら誰かがきっと励ましてくれる<br />
+					放置絵ポイポイ<br />
+					練習ポイポイ<br />
+					らくがきポイポイ<br />
+					進捗ポイポイ<br />
 					<br />
-					ポイピクはイラストをポイポイして<br />
-					励まし合うイラストSNSです。
+					イラストポイポイSNS「ポイピク」
 				</div>
 				<div class="AnalogicoLogin">
 					<a class="BtnBase" href="/LoginFormTwitter.jsp">

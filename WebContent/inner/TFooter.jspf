@@ -7,16 +7,12 @@
 	<%if(!cCheckLogin.m_bLogin) {%>
 	<div class="AnalogicoInfo" style="background: none;">
 		<h1 class="AnalogicoInfoTitle">
-			描くのに飽きたらポイポイ<br />
-			下描き放置もポイポイ<br />
-			完成したらもちろんポイポイ<br />
-			日々の鍛錬をポイポイ<br />
-			闇に葬る前にとりあえずポイポイ<br />
-			なんでもポイピクにポイポイ<br />
-			ポイポイしたら誰かがきっと励ましてくれる<br />
+			放置絵ポイポイ<br />
+			練習ポイポイ<br />
+			らくがきポイポイ<br />
+			進捗ポイポイ<br />
 			<br />
-			ポイピクはイラストをポイポイして<br />
-			励まし合うイラストSNSです。
+			イラストポイポイSNS「ポイピク」
 		</h1>
 		<div class="AnalogicoInfoRegist">
 			<a class="BtnBase Rev" href="/LoginFormTwitterPc.jsp">

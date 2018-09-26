@@ -19,7 +19,7 @@ if(cCheckLogin.m_bLogin) {
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
 		.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
-		.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 18px; line-height: 28px; color: #fff; font-weight: normal;}
+		.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 16px; line-height: 28px; color: #fff; font-weight: normal;}
 		.AnalogicoLogin {margin: 0 0 10px 0;}
 		.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
 		.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 30px 0;}
@@ -60,8 +60,7 @@ if(cCheckLogin.m_bLogin) {
 				らくがきポイポイ<br />
 				進捗ポイポイ<br />
 				<br />
-				イラストポイポイSNS<br />
-				ポイピク
+				イラストポイポイSNS「ポイピク」
 			</h1>
 			<div class="AnalogicoStart">
 				<a class="BtnBase Rev AnalogicoLogin" href="/LoginFormTwitterPc.jsp">
