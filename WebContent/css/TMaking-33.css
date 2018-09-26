@@ -724,8 +724,10 @@
 }
 
 .IllustItem .IllustItemResList .ResEmoji .Twemoji,
-.IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn .Twemoji {
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn .Twemoji,
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb .Twemoji {
 	width: 20px;
+	height: auto;
 }
 
 /*

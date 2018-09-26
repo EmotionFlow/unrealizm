@@ -43,7 +43,7 @@ cResults.GetResults(cParam);
 					<%if(cComment.m_nCommentType==CComment.TYPE_COMMENT) {%>
 					<a class="ItemCommentItem" href="/IllustViewV.jsp?TD=<%=cComment.m_nContentId%>">
 						<span class="CommentThumb Heart">
-							<span class="Emoji"><%=Common.ToStringHtml(cComment.m_strDescription)%></span>
+							<span class="Emoji"><%=CEmoji.parse(cComment.m_strDescription)%></span>
 						</span>
 						<span class="CommentDetail Heart">
 							<span class="CommentName">
