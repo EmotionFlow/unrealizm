@@ -22,7 +22,7 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustItemList").append($objMessage);
-				$.ajaxSingle({
+				$.ajax({
 					"type": "post",
 					"data": {"TD" : <%=cResults.m_nContentId%>, "PG" : g_nPage},
 					"url": "/f/PopularIllustListViewF.jsp",
@@ -32,6 +32,7 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 							$('#InfoMsg').hide();
 							$("#IllustItemList").append(data);
 							g_bAdding = false;
+							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'?page='+g_nPage});
 						} else {
 							$(window).unbind("scroll.addContents");
 						}

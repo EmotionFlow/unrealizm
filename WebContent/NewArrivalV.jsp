@@ -21,7 +21,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
 				$("#IllustThumbList").append($objMessage);
-				$.ajaxSingle({
+				$.ajax({
 					"type": "post",
 					"data": {"PG" : g_nPage},
 					"url": "/f/NewArrivalF.jsp",
@@ -31,6 +31,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 							$('#InfoMsg').hide();
 							$("#IllustThumbList").append(data);
 							g_bAdding = false;
+							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'?page='+g_nPage});
 						} else {
 							$(window).unbind("scroll.addContents");
 						}

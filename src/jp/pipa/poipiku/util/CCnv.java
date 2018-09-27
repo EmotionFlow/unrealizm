@@ -28,6 +28,7 @@ public class CCnv {
 		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
 		String REPORT_FORM = (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 		String ILLUST_DETAIL = (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
+		String LINK_TARG = (nMode==MODE_SP)?"":"target=\"_blank\"";
 
 		StringBuilder strRtn = new StringBuilder();
 
@@ -80,8 +81,13 @@ public class CCnv {
 		strRtn.append("<div class=\"IllustItemCommand\">");
 		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
-		String strUrl = URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8");
-		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"https://twitter.com/share?url=%s\"></a>", strUrl));
+		String strDesc = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"]" + cContent.m_strDescription.replaceAll("\n", " ").replaceAll("\r", " ");
+		if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
+		String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
+				URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"),
+				URLEncoder.encode(String.format(_TEX.T("Twitter.Illust.Desc"), strDesc, cContent.m_cUser.m_strNickName), "UTF-8"),
+				URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" %s></a>", strTwitterUrl, LINK_TARG));
 		if(cContent.m_nUserId==nLoginUserId) {
 			strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"javascript:void(0)\" onclick=\"EditDesc(%d)\"></a>", cContent.m_nContentId));
 			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d)\"></a>", nLoginUserId, cContent.m_nContentId));

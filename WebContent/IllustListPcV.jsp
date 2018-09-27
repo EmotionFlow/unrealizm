@@ -18,11 +18,11 @@ if(!cResults.getResults(cCheckLogin)) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<meta name="description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName))%>" />
+		<meta name="description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNum)%>" />
 		<meta name="twitter:card" content="gallery" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName))%>" />
-		<meta name="twitter:description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName))%>" />
+		<meta name="twitter:description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNum)%>" />
 		<%
 		for(int nCnt=0; nCnt<cResults.m_vContentList.size() && nCnt<4; nCnt++) {
 			CContent cContent = cResults.m_vContentList.get(nCnt);
@@ -104,7 +104,7 @@ if(!cResults.getResults(cCheckLogin)) {
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper">
+		<div class="Wrapper" style="width: 100%;">
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
@@ -119,11 +119,18 @@ if(!cResults.getResults(cCheckLogin)) {
 					<%}%>
 				</div>
 				<span class="UserInfoCmd">
+					<%
+					String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
+							URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"),
+							URLEncoder.encode(String.format("%s%s", cResults.m_cUser.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
+							URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+					%>
 					<%if(!cCheckLogin.m_bLogin) {%>
 					<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
 					<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
 					<%} else if(cResults.m_bOwner) {%>
-					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><span class="typcn typcn-cog-outline"></span><%=_TEX.T("MyEditSetting.Title.Setting")%></a>
+					<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
+					<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.ShareBtn")%></a>
 					<%} else if(cResults.m_bBlocking){%>
 					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
@@ -135,12 +142,11 @@ if(!cResults.getResults(cCheckLogin)) {
 					<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 					<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 					<%}%>
-					<%
-					String strTwitterUrl="https://twitter.com/share?url=" + URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8");
-					%>
+					<%if(!cResults.m_bOwner) {%>
 					<span class="IllustItemCommandSub">
-						<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>"></a>
+						<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
 					</span>
+					<%}%>
 				</span>
 				<%if(cResults.m_bOwner) {%>
 				<span class="UserInfoState">
@@ -155,7 +161,9 @@ if(!cResults.getResults(cCheckLogin)) {
 				</span>
 				<%}%>
 			</div>
+		</div>
 
+		<div class="Wrapper">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>

@@ -17,18 +17,19 @@ if(strs.length>0 && strs[0].length()>0) {
 	strTitle = strs[0];
 }
 strTitle = Common.SubStrNum(strTitle, 10);
-String strDesc = cResults.m_cContent.m_strDescription.replaceAll("\n", " ").replaceAll("\r", " ");
+String strDesc = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"]" +  cResults.m_cContent.m_strDescription.replaceAll("\n", " ").replaceAll("\r", " ");
+if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
 ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
+		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustView.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%>" />
-		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
+		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustView.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:image" content="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%></title>
 
@@ -56,6 +57,10 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 							$("#IllustItemList").append(data);
 							$(".Waiting").remove();
 							g_bAdding = false;
+							if(g_nPage>0) {
+								console.log(location.pathname+'?page='+g_nPage);
+								gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'?page='+g_nPage});
+							}
 						} else {
 							$(window).unbind("scroll.addContents");
 						}

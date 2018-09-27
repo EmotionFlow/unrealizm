@@ -44,6 +44,9 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 							$("#IllustItemList").append(data);
 							$(".Waiting").remove();
 							g_bAdding = false;
+							if(g_nPage>0) {
+								gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'?page='+g_nPage});
+							}
 						} else {
 							$(window).unbind("scroll.addContents");
 						}

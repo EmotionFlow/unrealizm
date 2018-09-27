@@ -24,7 +24,7 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 		<script>
 			function UpdateFollow(nUserId, nFollowUserId) {
 				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
-				$.ajaxSingle({
+				$.ajax({
 					"type": "post",
 					"data": { "UID": nUserId, "IID": nFollowUserId },
 					"url": "/f/UpdateFollowF.jsp",
