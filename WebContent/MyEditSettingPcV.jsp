@@ -204,6 +204,23 @@ if(cResults.m_bUpdate) {
 				return false;
 			}
 
+			function UpdateFollowerLink() {
+				var bDisp = $('#DispFollower').prop('checked');
+				$.ajaxSingle({
+					"type": "post",
+					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "NB1": (bDisp)?1:0 },
+					"url": "/f/UpdateFollowerLinkF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						DispMsg('保存しました。');
+					},
+					"error": function(req, stat, ex){
+						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+					}
+				});
+				return false;
+			}
+
 			function DeregistTwitter() {
 				$.ajaxSingle({
 					"type": "post",
@@ -426,6 +443,27 @@ if(cResults.m_bUpdate) {
 						<div class="SettingBodyCmd">
 							<div id="MuteKeywordTextNum" class="RegistMessage" >100</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateMuteKeyword()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="SettingListItem">
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.DispSetting")%></div>
+					<div class="SettingBody">
+						<%=_TEX.T("EditSettingV.DispSetting.Follower")%>
+						<div class="SettingBodyCmd">
+							<div class="onoffswitch OnOff">
+								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="DispFollower" value="1" <%if(cResults.m_cUser.m_bDispFollower){%>checked="checked"<%}%> />
+								<label class="onoffswitch-label" for="DispFollower">
+									<span class="onoffswitch-inner"></span>
+									<span class="onoffswitch-switch"></span>
+								</label>
+							</div>
+							<script>
+							$('#DispFollower').change(function(){
+								UpdateFollowerLink();
+							});
+							</script>
 						</div>
 					</div>
 				</div>

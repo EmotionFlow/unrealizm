@@ -257,6 +257,11 @@ public class Common {
 		return "//img.poipiku.com" + strFileName;
 	}
 
+	public static String GetPoipikuUrl(String strFileName) {
+		if(strFileName==null) return "";
+		return "https://poipiku.com" + strFileName;
+	}
+
 	public static String GetUploadPath() {
 		String path = "/user_img01";
 		/*

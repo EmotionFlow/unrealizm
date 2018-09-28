@@ -75,8 +75,15 @@ public class IllustListC {
 					m_cUser.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
 					m_cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("header_file_name"));
 					m_cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
+					m_cUser.m_nMailComment		= cResSet.getInt("mail_comment");
 					//if(m_cUser.m_strProfile.equals(""))  m_cUser.m_strProfile = "";
 					if(m_cUser.m_strFileName.equals("")) m_cUser.m_strFileName="/img/default_user.jpg";
+					m_cUser.m_bDispFollower		= ((m_cUser.m_nMailComment>>>0 & 0x01) == 0x01);
+					//m_cUser.m_bMailHeart		= ((m_cUser.m_nMailComment>>>1 & 0x01) == 0x01);
+					//m_cUser.m_bMailBookmark	= ((m_cUser.m_nMailComment>>>2 & 0x01) == 0x01);
+					//m_cUser.m_bMailFollow		= ((m_cUser.m_nMailComment>>>3 & 0x01) == 0x01);
+					//m_cUser.m_bMailMessage	= ((m_cUser.m_nMailComment>>>4 & 0x01) == 0x01);
+					//m_cUser.m_bMailTag		= ((m_cUser.m_nMailComment>>>5 & 0x01) == 0x01);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;

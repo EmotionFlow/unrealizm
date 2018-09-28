@@ -154,10 +154,12 @@ if(!cResults.getResults(cCheckLogin)) {
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
+					<%if(cResults.m_cUser.m_bDispFollower) {%>
 					<a class="UserInfoStateItem" href="/FollowerListPcV.jsp">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
 					</a>
+					<%}%>
 				</span>
 				<%}%>
 			</div>
