@@ -525,7 +525,14 @@ if(cResults.m_bUpdate) {
 							</select>
 						</div>
 						<div class="SettingBodyCmd">
-							<%if(cResults.m_cUser.m_strAutoTweetDesc.length()<=0){cResults.m_cUser.m_strAutoTweetDesc=_TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://poipiku.com/%d/", cResults.m_cUser.m_nUserId);}%>
+							<%if(cResults.m_cUser.m_strAutoTweetDesc.isEmpty()) {
+								cResults.m_cUser.m_strAutoTweetDesc = String.format("%s%s%s https://poipiku.com/%d/ #%s",
+										_TEX.T("EditSettingV.Twitter.Auto.AutoTxt"),
+										cResults.m_cUser.m_strNickName,
+										_TEX.T("Twitter.UserAddition"),
+										cResults.m_cUser.m_nUserId,
+										_TEX.T("THeader.Title"));
+							}%>
 							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()" maxlength="100"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
 						</div>
 						<div class="SettingBodyCmd">
