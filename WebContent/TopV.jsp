@@ -37,8 +37,11 @@ if(cCheckLogin.m_bLogin) {
 		.PoipikuInfo:nth-child(2n-1) {background-color: #fff; color: #5bd;}
 		.PoipikuInfo:nth-child(2n) {background-color: #5bd; color: #fff;}
 
+		.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
+
 		<%if(Common.isSmartPhone(request)) {%>
 		<%} else {%>
+		.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
 		<%}%>
 		</style>
 	</head>
@@ -55,6 +58,9 @@ if(cCheckLogin.m_bLogin) {
 
 		<div class="Wrapper">
 			<h1 class="AnalogicoDesc Title">
+				<span class="TopBanner">
+					<img style="width: 100%;" src="/img/2018_09_28_top_banner.png" />
+				</span>
 				放置絵ポイポイ<br />
 				練習ポイポイ<br />
 				らくがきポイポイ<br />

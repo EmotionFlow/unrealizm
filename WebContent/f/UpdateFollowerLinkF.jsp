@@ -21,7 +21,7 @@ class UpdateFollowerLink {
 			//m_nDisp += Common.ToInt(request.getParameter("NB4"))>0?8:0;
 			//m_nDisp += Common.ToInt(request.getParameter("NB5"))>0?16:0;
 			//m_nDisp += Common.ToInt(request.getParameter("NB6"))>0?32:0;
-			Log.d("m_nDisp:"+m_nDisp);
+			//Log.d("m_nDisp:"+m_nDisp);
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
