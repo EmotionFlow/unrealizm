@@ -136,9 +136,10 @@ class UploadFileC {
 			CTweet cTweet = new CTweet();
 			if (cParam.m_bTweet && cTweet.GetResults(cParam.m_nUserId)) {
 				String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cParam.m_nCategoryId)));
-				String strFooter = String.format(" https://poipiku.com/%d/%d.html",
+				String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
 						cParam.m_nUserId,
-						m_nContentId);
+						m_nContentId,
+						_TEX.T("THeader.Title"));
 				int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
 				StringBuffer bufMsg = new StringBuffer();
 				bufMsg.append(strHeader);
