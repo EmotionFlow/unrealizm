@@ -13,6 +13,7 @@ class UploadFileCParam {
 	public int m_nOpenId = 0;
 	public boolean m_bTweet = false;
 	FileItem item_file = null;
+	public int m_nOptImage = 1;
 
 	public int GetParam(HttpServletRequest cRequest) {
 		try {
@@ -44,6 +45,8 @@ class UploadFileCParam {
 						m_bTweet = (Common.ToInt(item.getString())==1);
 					} else if(strName.equals("REC")) {
 						m_nOpenId = Common.ToIntN(item.getString(), 0, 2);
+					} else if(strName.equals("IMG")){
+						m_nOptImage = Common.ToIntN(item.getString(), 0, 1);
 					}
 					item.delete();
 				} else {
@@ -156,8 +159,12 @@ class UploadFileC {
 				bufMsg.append(strFooter);
 				Log.d(strFileName, bufMsg.toString());
 
-				if (!cTweet.Tweet(bufMsg.toString(), strRealFileName)) {
-					Log.d("tweet失敗");
+				if(cParam.m_nOptImage==0) {	// text only
+					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
+					if(!bRsultTweet) Log.d("tweet失敗");
+				} else { // with image
+					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), strRealFileName);
+					if(!bRsultTweet) Log.d("tweet失敗");
 				}
 			}
 		} catch(Exception e) {

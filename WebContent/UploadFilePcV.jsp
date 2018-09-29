@@ -26,7 +26,7 @@ if(cCookies != null) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-01.js" type="text/javascript"></script>
+		<script src="/js/upload-02.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -39,144 +39,24 @@ if(cCookies != null) {
 		<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
 		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<script>
-			var multiFileUploader = null;
-			function UploadFile() {
-				if(!multiFileUploader) return;
-				if(multiFileUploader.getSubmittedNum()<=0) return;
-				var nCategory = $('#EditCategory').val();
-				var strDescription = $.trim($("#EditDescription").val());
-				var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-				setTweetSetting($('#OptionTweet').prop('checked'));
-				strDescription = strDescription.substr(0 , 200);
+			function startMsg() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
-				console.log("start upload");
+			}
 
-				$.ajaxSingle({
-					"type": "post",
-					"data": {
-						"UID":<%=cCheckLogin.m_nUserId%>,
-						"CAT":nCategory,
-						"DES":strDescription,
-					},
-					"url": "/f/UploadFileReferenceF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						console.log("UploadFileReferenceF");
-						if(data && data.content_id) {
-							if(data.content_id>0) {
-								multiFileUploader.first_file = true;
-								multiFileUploader.user_id = <%=cCheckLogin.m_nUserId%>;
-								multiFileUploader.illust_id = data.content_id;
-								multiFileUploader.recent = nRecent;
-								multiFileUploader.tweet = nTweet;
-								multiFileUploader.uploadStoredFiles();
-							} else {
-								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
-							}
-						}
-					}
-				});
+			function errorMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
+			}
+
+			function completeMsg() {
+				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+			}
+
+			function completeAddFile() {
+				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
 
 			$(function(){
-				multiFileUploader = new qq.FineUploader({
-					element: document.getElementById("file-drop-area"),
-					autoUpload: false,
-					button: document.getElementById('TimeLineAddImage'),
-					maxConnections: 1,
-					validation: {
-						allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-						itemLimit: 100,
-						sizeLimit: 5000000,
-						stopOnFirstInvalidFile: false
-					},
-					retry: {
-						enableAuto: false
-					},
-					callbacks: {
-						onUpload: function(id, name) {
-							if(this.first_file) {
-								this.first_file = false;
-								this.setEndpoint('/f/UploadFileFirstF.jsp', id);
-								console.log("UploadFileFirstF");
-							} else {
-								this.setEndpoint('/f/UploadFileAppendF.jsp', id);
-								console.log("UploadFileAppendF");
-							}
-							this.setParams({
-								UID: this.user_id,
-								IID: this.illust_id,
-								REC: this.recent
-							}, id);
-						},
-						onAllComplete: function(succeeded, failed) {
-							console.log("onAllComplete", succeeded, failed, this.tweet);
-							if(this.tweet==1) {
-								$.ajax({
-									"type": "post",
-									"data": {
-										UID: this.user_id,
-										IID: this.illust_id,
-									},
-									"url": "/f/UploadFileTweetF.jsp",
-									"dataType": "json",
-									"success": function(data) {
-										console.log("UploadFileTweetF");
-										// complete
-										DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-										setTimeout(function(){
-											location.href="/MyHomePcV.jsp";
-										}, 1000);
-									}
-								});
-							} else {
-								// complete
-								DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-								setTimeout(function(){
-									location.href="/MyHomePcV.jsp";
-								}, 1000);
-							}
-						},
-						onValidate: function(data) {
-							var total = this.getSubmittedSize();
-							var submit_num = this.getSubmittedNum();
-							this.showTotalSize(total, submit_num);
-							total += data.size;
-							if (total>this.total_size) return false;
-							this.showTotalSize(total, submit_num+1);
-						},
-						onStatusChange: function(id, oldStatus, newStatus) {
-							this.showTotalSize(this.getSubmittedSize(), this.getSubmittedNum());
-						}
-					}
-				});
-				multiFileUploader.getSubmittedNum = function() {
-					var uploads = this.getUploads({
-						status: qq.status.SUBMITTED
-					});
-					return uploads.length;
-				};
-				multiFileUploader.getSubmittedSize = function() {
-					var uploads = this.getUploads({
-						status: qq.status.SUBMITTED
-					});
-					var total = 0;
-					$.each(uploads,function(){
-						total+=this.size;
-					});
-					return total;
-				};
-				multiFileUploader.showTotalSize = function(total, submit_num) {
-					var strTotal = "";
-					if(total>0) {
-						strTotal=" (Remaning: "+ (200-submit_num) + " files. " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
-						$('#TimeLineAddImage').removeClass('Light');
-						$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
-					}
-					$('#TotalSize').html(strTotal);
-				};
-				multiFileUploader.total_size = 30*1024*1024;
+				initUploadFile();
 			});
 		</script>
 
@@ -254,8 +134,18 @@ if(cCookies != null) {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
 							<label class="onoffswitch-label" for="OptionTweet">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
+						<div id="ImageSwitch" class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" />
+							<label class="onoffswitch-label" for="OptionImage">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>
@@ -263,7 +153,7 @@ if(cCookies != null) {
 					</div>
 				</div>
 				<div class="UoloadCmd">
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile()"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				</div>
 			</div>
 		</div>

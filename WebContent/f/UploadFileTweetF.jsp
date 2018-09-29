@@ -5,11 +5,13 @@ class UploadFileTweetCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
+	public int m_nOptImage = 1;
 
 	public int GetParam(HttpServletRequest cRequest) {
 		try {
 			m_nUserId		= Common.ToInt(request.getParameter("UID"));
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
+			m_nOptImage		= Common.ToIntN(request.getParameter("IMG"), 0, 1);
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
@@ -71,8 +73,12 @@ class UploadFileTweetC {
 				bufMsg.append(strFooter);
 				Log.d(cContent.m_strFileName, bufMsg.toString());
 
-				if (!cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(cContent.m_strFileName))) {
-					Log.d("tweet失敗");
+				if(cParam.m_nOptImage==0) {	// text only
+					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
+					if(!bRsultTweet) Log.d("tweet失敗");
+				} else { // with image
+					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(cContent.m_strFileName));
+					if(!bRsultTweet) Log.d("tweet失敗");
 				}
 			}
 			nRtn = cContent.m_nContentId;

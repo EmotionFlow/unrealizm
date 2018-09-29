@@ -1,3 +1,37 @@
+$(function(){
+	jQuery.extend({
+		ajaxSingle: (function(options){
+			var ajaxSending = false;
+			return function(options){
+				try{
+					if(!ajaxSending){
+						ajaxSending = true;
+						options.complete = (function(){
+							var complete = typeof(options.complete)=="function" ? options.complete : function(a,b){} ;
+							return function(a,b){
+								ajaxSending = false;
+							};
+						})();
+						$.ajax(options);
+					} else {
+						;
+					}
+				}catch(e){
+					ajaxSending = false;
+				}
+			};
+		})()
+	});
+
+	$(window).on('scroll', function() {
+		if ($(this).scrollTop() >= 75) {
+			$('.MainMenu').addClass('Fixed');
+		} else {
+			$('.MainMenu').removeClass('Fixed');
+		}
+	});
+});
+
 function setCookie(key, val, tmp) {
 	tmp = key + "=" + encodeURIComponent(val) + "; ";
 	tmp += "path=/; ";
@@ -138,40 +172,6 @@ function HideMsgStatic() {
 		$("#DispMsg").hide();
 	}, 1000);
 }
-
-$(function(){
-	jQuery.extend({
-		ajaxSingle: (function(options){
-			var ajaxSending = false;
-			return function(options){
-				try{
-					if(!ajaxSending){
-						ajaxSending = true;
-						options.complete = (function(){
-							var complete = typeof(options.complete)=="function" ? options.complete : function(a,b){} ;
-							return function(a,b){
-								ajaxSending = false;
-							};
-						})();
-						$.ajax(options);
-					} else {
-						;
-					}
-				}catch(e){
-					ajaxSending = false;
-				}
-			};
-		})()
-	});
-
-	$(window).on('scroll', function() {
-		if ($(this).scrollTop() >= 75) {
-			$('.MainMenu').addClass('Fixed');
-		} else {
-			$('.MainMenu').removeClass('Fixed');
-		}
-	});
-});
 
 function SendEmoji(nContentId, strEmoji , nUserId) {
 	$.ajax({

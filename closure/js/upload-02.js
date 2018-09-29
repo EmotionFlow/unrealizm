@@ -1,3 +1,5 @@
+var multiFileUploader = null;
+
 $.ajaxSetup({
 	cache : false,
 });
@@ -461,29 +463,178 @@ function getTweetSetting() {
 	return false;
 }
 
+function setTweetImageSetting(val) {
+	setLocalStrage('upload_tweet_image', val);
+}
+
+function getTweetImageSetting() {
+	var upload_tweet = getLocalStrage('upload_tweet_image');
+	if(upload_tweet) return true;
+	return false;
+}
+
+function updateTweetButton() {
+	var bTweet = $('#OptionTweet').prop('checked');
+	if(!bTweet) {
+		$('#ImageSwitch').addClass('disabled');
+		$('#OptionImage:checkbox').prop('disabled',true);
+	} else {
+		$('#ImageSwitch').removeClass('disabled');
+		$('#OptionImage:checkbox').prop('disabled',false);
+	}
+}
+
 function initUploadFile() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
-	$('#file_thumb').on("change",function(){
-		DispMsgStatic('loading...');
-		var file = $(this).prop("files")[0];
-		if (this.files.length && file.type.match('image.*')) {
-			EXIF.getData(file, function(){
-				var orientation = file.exifdata.Orientation;
-				var mpImg = new MegaPixImage(file);
-				mpImg.render($("#imgView")[0], { orientation: orientation });
-				$('.OrgMessage').hide();
-				$('#imgView').css("display", "block");
-				HideMsgStatic();
-			});
-		} else {
-			HideMsgStatic();
+	$('#OptionImage').prop('checked', getTweetImageSetting());
+	updateTweetButton()
+	multiFileUploader = new qq.FineUploader({
+		element: document.getElementById("file-drop-area"),
+		autoUpload: false,
+		button: document.getElementById('TimeLineAddImage'),
+		maxConnections: 1,
+		validation: {
+			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+			itemLimit: 100,
+			sizeLimit: 5000000,
+			stopOnFirstInvalidFile: false
+		},
+		retry: {
+			enableAuto: false
+		},
+		callbacks: {
+			onUpload: function(id, name) {
+				if(this.first_file) {
+					this.first_file = false;
+					this.setEndpoint('/f/UploadFileFirstF.jsp', id);
+					console.log("UploadFileFirstF");
+				} else {
+					this.setEndpoint('/f/UploadFileAppendF.jsp', id);
+					console.log("UploadFileAppendF");
+				}
+				this.setParams({
+					UID: this.user_id,
+					IID: this.illust_id,
+					REC: this.recent
+				}, id);
+			},
+			onAllComplete: function(succeeded, failed) {
+				console.log("onAllComplete", succeeded, failed, this.tweet);
+				if(this.tweet==1) {
+					$.ajax({
+						"type": "post",
+						"data": {
+							UID: this.user_id,
+							IID: this.illust_id,
+							IMG: this.tweet_image
+						},
+						"url": "/f/UploadFileTweetF.jsp",
+						"dataType": "json",
+						"success": function(data) {
+							console.log("UploadFileTweetF");
+							// complete
+							completeMsg();
+							setTimeout(function(){
+								location.href="/MyHomePcV.jsp";
+							}, 1000);
+						}
+					});
+				} else {
+					// complete
+					completeMsg();
+					setTimeout(function(){
+						location.href="/MyHomePcV.jsp";
+					}, 1000);
+				}
+			},
+			onValidate: function(data) {
+				var total = this.getSubmittedSize();
+				var submit_num = this.getSubmittedNum();
+				this.showTotalSize(total, submit_num);
+				total += data.size;
+				if (total>this.total_size) return false;
+				this.showTotalSize(total, submit_num+1);
+			},
+			onStatusChange: function(id, oldStatus, newStatus) {
+				this.showTotalSize(this.getSubmittedSize(), this.getSubmittedNum());
+			}
 		}
 	});
-
+	multiFileUploader.getSubmittedNum = function() {
+		var uploads = this.getUploads({
+			status: qq.status.SUBMITTED
+		});
+		return uploads.length;
+	};
+	multiFileUploader.getSubmittedSize = function() {
+		var uploads = this.getUploads({
+			status: qq.status.SUBMITTED
+		});
+		var total = 0;
+		$.each(uploads,function(){
+			total+=this.size;
+		});
+		return total;
+	};
+	multiFileUploader.showTotalSize = function(total, submit_num) {
+		var strTotal = "";
+		if(total>0) {
+			strTotal=" (Remaning: "+ (200-submit_num) + " files. " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
+			$('#TimeLineAddImage').removeClass('Light');
+			completeAddFile();
+		}
+		$('#TotalSize').html(strTotal);
+	};
+	multiFileUploader.total_size = 30*1024*1024;
 }
+
+function UploadFile(user_id) {
+	if(!multiFileUploader) return;
+	if(multiFileUploader.getSubmittedNum()<=0) return;
+	var nCategory = $('#EditCategory').val();
+	var strDescription = $.trim($("#EditDescription").val());
+	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
+	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	setTweetSetting($('#OptionTweet').prop('checked'));
+	setTweetImageSetting($('#OptionImage').prop('checked'));
+	strDescription = strDescription.substr(0 , 200);
+	startMsg();
+	console.log("start upload");
+
+	$.ajaxSingle({
+		"type": "post",
+		"data": {
+			"UID":user_id,
+			"CAT":nCategory,
+			"DES":strDescription,
+		},
+		"url": "/f/UploadFileReferenceF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			console.log("UploadFileReferenceF");
+			if(data && data.content_id) {
+				if(data.content_id>0) {
+					multiFileUploader.first_file = true;
+					multiFileUploader.user_id = user_id;
+					multiFileUploader.illust_id = data.content_id;
+					multiFileUploader.recent = nRecent;
+					multiFileUploader.tweet = nTweet;
+					multiFileUploader.tweet_image = nTweetImage;
+					multiFileUploader.uploadStoredFiles();
+				} else {
+					errorMsg();
+				}
+			}
+		}
+	});
+}
+
 
 function initUploadPaste() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
+	$('#OptionImage').prop('checked', getTweetImageSetting());
+	updateTweetButton()
 	$('#InputFile').pastableNonInputable();
 	$('#InputFile').on('pasteImage', function(ev, data){
 		$('.OrgMessage').hide();
@@ -497,3 +648,41 @@ function initUploadPaste() {
 	});
 	//$('#InputFile').focus();
 }
+
+function UploadPaste(user_id) {
+	startMsg();
+	var nCategory = $('#EditCategory').val();
+	var strDescription = $.trim($("#EditDescription").val());
+	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
+	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var strEncodeImg = $('#imgView').attr('src').replace('data:image/png;base64,', '');
+	setTweetSetting($('#OptionTweet').prop('checked'));
+	setTweetImageSetting($('#OptionImage').prop('checked'));
+
+	$.ajaxSingle({
+		"type": "post",
+		"data": {
+			"UID":user_id,
+			"DES":strDescription,
+			"REC":nRecent,
+			"TWI":nTweet,
+			"IMG":nTweetImage,
+			"CAT":nCategory,
+			"DATA" : strEncodeImg},
+		"url": "/f/UploadPasteF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			if(data.result > 0) {
+				// complete
+				completeMsg();
+				setTimeout(function(){
+					location.href="/MyHomePcV.jsp";
+				}, 1000);
+			} else {
+				errorMsg(data.result);
+			}
+		}
+	});
+}
+

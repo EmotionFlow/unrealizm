@@ -73,42 +73,21 @@ public class CTweet {
 
 		boolean bResult = true;
 		try {
-			// これはユーザによらない
-			OAuthConsumer cConsumer = new DefaultOAuthConsumer(
-					Common.TWITTER_CONSUMER_KEY, Common.TWITTER_CONSUMER_SECRET);
-
-			// これはユーザごとに異なる
-			cConsumer.setTokenWithSecret(
-					m_strUserAccessToken,
-					m_strSecretToken);
+			OAuthConsumer cConsumer = new DefaultOAuthConsumer(Common.TWITTER_CONSUMER_KEY, Common.TWITTER_CONSUMER_SECRET);
+			// ユーザ毎Token
+			cConsumer.setTokenWithSecret(m_strUserAccessToken, m_strSecretToken);
 
 			//つぶやく内容
 			StringBuilder message = new StringBuilder(strTweet);
-
-			//返信の場合は先頭に"@宛先 "を付けることが必須
-			//message.insert(0, "@yabuki ");
-			//重複回避のために現在時刻を入れる（オプショナル）
-			//message.append(" at ").append(new Date());
-
-			//送信データ（「status=つぶやき&...」という形式にする）
 			StringBuilder body = new StringBuilder("status=");
-
-			body.append(URLEncoder.encode(message.toString(), "UTF-8")
-					.replace("+", "%20"));
-
-			//返信の場合は返信先のTweet IDを指定する（オプショナル）
-			//body.append("&in_reply_to_status_id=").append("27905604456");
+			body.append(URLEncoder.encode(message.toString(), "UTF-8").replace("+", "%20"));
 
 			// HTTPリクエストを作って署名する
 			URL url = new URL(
 					"https://api.twitter.com/1.1/statuses/update.json?" + body);
-			HttpURLConnection connection = (HttpURLConnection) url
-					.openConnection();
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			cConsumer.sign(connection);
-
-			// レスポンスコード
-			//System.out.printf("%s %s\n", connection.getResponseCode(), connection.getResponseMessage());
 
 			// 成功ならレスポンスボディをそのまま表示する
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {

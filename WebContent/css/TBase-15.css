@@ -361,6 +361,12 @@ form, button {
 	right: 0px;
 }
 
+.onoffswitch.disabled .onoffswitch-inner:before,
+.onoffswitch.disabled .onoffswitch-inner:after {
+	background-color: #eee;
+}
+
+
 .PageBar {
 	display: block;
 	float: left;

@@ -18,7 +18,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-01.js" type="text/javascript"></script>
+		<script src="/js/upload-02.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -28,47 +28,27 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		</script>
 
 		<script>
-			function UploadPaste() {
+			function startMsg() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
-				var nCategory = $('#EditCategory').val();
-				var strDescription = $.trim($("#EditDescription").val());
-				var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-				var strEncodeImg = $('#imgView').attr('src').replace('data:image/png;base64,', '');
-				setTweetSetting($('#OptionTweet').prop('checked'));
-
-				$.ajaxSingle({
-					"type": "post",
-					"data": {
-						"UID":<%=cCheckLogin.m_nUserId%>,
-						"DES":strDescription,
-						"REC":nRecent,
-						"TWI":nTweet,
-						"CAT":nCategory,
-						"DATA" : strEncodeImg},
-					"url": "/f/UploadPasteF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result > 0) {
-							// complete
-							DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-							setTimeout(function(){
-								location.href="/MyHomePcV.jsp";
-							}, 1000);
-						} else if(data.result == -1) {
-							// file size error
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-						} else if(data.result == -2) {
-							// file type error
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
-						} else {
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
-						}
-					}
-				});
 			}
 
-		$(function() {
+			function completeMsg() {
+				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+			}
+
+			function errorMsg(result) {
+				if(data.result == -1) {
+					// file size error
+					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
+				} else if(data.result == -2) {
+					// file type error
+					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
+				} else {
+					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
+				}
+			}
+
+			$(function() {
 				initUploadPaste();
 			});
 		</script>
@@ -131,8 +111,18 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
 							<label class="onoffswitch-label" for="OptionTweet">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
+						<div id="ImageSwitch" class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" />
+							<label class="onoffswitch-label" for="OptionImage">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>
@@ -140,7 +130,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					</div>
 				</div>
 				<div class="UoloadCmd">
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste()"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				</div>
 			</div>
 		</div>

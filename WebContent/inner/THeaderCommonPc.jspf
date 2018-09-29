@@ -7,13 +7,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
-<link href="/css/TBase-14.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBase-15.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-35.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-12.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/js/common-16.js"></script>
+<script type="text/javascript" src="/js/common-17.js"></script>
 <%if(Common.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>

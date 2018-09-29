@@ -13,6 +13,7 @@ class UploadPasteCParam {
 	public boolean m_bTweet = false;
 	public int m_nCategoryId = 0;
 	String m_strEncodeImg = "";
+	public int m_nOptImage = 1;
 
 	public int GetParam(HttpServletRequest cRequest) {
 		try {
@@ -20,6 +21,7 @@ class UploadPasteCParam {
 			m_strDescription = Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
 			m_nOpenId = Common.ToIntN(request.getParameter("REC"), 0, 2);
 			m_bTweet = (Common.ToInt(request.getParameter("TWI"))==1);
+			m_nOptImage = Common.ToIntN(request.getParameter("IMG"), 0, 1);
 			m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 12);
 			m_strEncodeImg = Common.ToString(request.getParameter("DATA"));
 		} catch(Exception e) {
@@ -115,7 +117,10 @@ class UploadPasteC {
 				CTweet cTweet = new CTweet();
 				if (cTweet.GetResults(cParam.m_nUserId)) {
 					String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cParam.m_nCategoryId)));
-					String strFooter = String.format(" https://poipiku.com/%d/%d.html", cParam.m_nUserId, m_nContentId);
+					String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
+							cParam.m_nUserId,
+							m_nContentId,
+							_TEX.T("THeader.Title"));
 					int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
 					StringBuffer bufMsg = new StringBuffer();
 					bufMsg.append(strHeader);
@@ -127,8 +132,12 @@ class UploadPasteC {
 					}
 					bufMsg.append(strFooter);
 
-					if (!cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strFileName))) {
-						Log.d("tweet失敗");
+					if(cParam.m_nOptImage==0) {	// text only
+						boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
+						if(!bRsultTweet) Log.d("tweet失敗");
+					} else { // with image
+						boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strFileName));
+						if(!bRsultTweet) Log.d("tweet失敗");
 					}
 				}
 			}
