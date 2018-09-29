@@ -32,6 +32,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 				var nCategory = $('#EditCategory').val();
 				var strDescription = $.trim($("#EditDescription").val());
+				var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 				var strEncodeImg = $('#imgView').attr('src').replace('data:image/png;base64,', '');
 				setTweetSetting($('#OptionTweet').prop('checked'));
@@ -41,6 +42,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					"data": {
 						"UID":<%=cCheckLogin.m_nUserId%>,
 						"DES":strDescription,
+						"REC":nRecent,
 						"TWI":nTweet,
 						"CAT":nCategory,
 						"DATA" : strEncodeImg},
@@ -116,6 +118,16 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
 				</div>
 				<div class="UoloadCmdOption">
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
+							<label class="onoffswitch-label" for="OptionRecent">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">

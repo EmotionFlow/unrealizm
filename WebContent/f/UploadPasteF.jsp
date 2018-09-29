@@ -9,6 +9,7 @@ class UploadPasteCParam {
 
 	public int m_nUserId = -1;
 	public String m_strDescription = "";
+	public int m_nOpenId = 0;
 	public boolean m_bTweet = false;
 	public int m_nCategoryId = 0;
 	String m_strEncodeImg = "";
@@ -17,6 +18,7 @@ class UploadPasteCParam {
 		try {
 			m_nUserId = Common.ToInt(request.getParameter("UID"));
 			m_strDescription = Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
+			m_nOpenId = Common.ToIntN(request.getParameter("REC"), 0, 2);
 			m_bTweet = (Common.ToInt(request.getParameter("TWI"))==1);
 			m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 12);
 			m_strEncodeImg = Common.ToString(request.getParameter("DATA"));
@@ -81,12 +83,13 @@ class UploadPasteC {
 			Log.d(strFileName);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=0, file_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=?, file_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setInt(2, cParam.m_nCategoryId);
 			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, 200));
-			cState.setInt(4, m_nContentId);
+			cState.setInt(4, cParam.m_nOpenId);
+			cState.setInt(5, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 

@@ -10,6 +10,7 @@ class UploadFileCParam {
 	public int m_nUserId = -1;
 	public int m_nCategoryId = 0;
 	public String m_strDescription = "";
+	public int m_nOpenId = 0;
 	public boolean m_bTweet = false;
 	FileItem item_file = null;
 
@@ -41,6 +42,8 @@ class UploadFileCParam {
 						if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 					} else if(strName.equals("TWI")) {
 						m_bTweet = (Common.ToInt(item.getString())==1);
+					} else if(strName.equals("REC")) {
+						m_nOpenId = Common.ToIntN(item.getString(), 0, 2);
 					}
 					item.delete();
 				} else {
@@ -107,12 +110,13 @@ class UploadFileC {
 			Log.d(strFileName);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, description=?, category_id=?, open_id=0 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, description=?, category_id=?, open_id=? WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
 			cState.setInt(3, cParam.m_nCategoryId);
-			cState.setInt(4, m_nContentId);
+			cState.setInt(4, cParam.m_nOpenId);
+			cState.setInt(5, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 

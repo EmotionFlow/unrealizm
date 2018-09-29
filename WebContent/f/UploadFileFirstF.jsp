@@ -10,6 +10,7 @@ class UploadFileFirstCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
+	public int m_nOpenId = 0;
 	FileItem item_file = null;
 
 	public int GetParam(HttpServletRequest cRequest) {
@@ -33,6 +34,8 @@ class UploadFileFirstCParam {
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("IID")) {
 						m_nContentId = Common.ToInt(item.getString());
+					} else if(strName.equals("REC")) {
+						m_nOpenId = Common.ToIntN(item.getString(), 0, 2);
 					}
 					item.delete();
 				} else {
@@ -99,10 +102,11 @@ class UploadFileFirstC {
 			Log.d(strFileName);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=0, file_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
-			cState.setInt(2, cParam.m_nContentId);
+			cState.setInt(2, cParam.m_nOpenId);
+			cState.setInt(3, cParam.m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 

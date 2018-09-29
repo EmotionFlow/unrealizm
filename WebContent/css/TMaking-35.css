@@ -279,28 +279,35 @@
 .UploadFile .UoloadCmdOption {
 	display: flex;
 	float: left;
-	flex-flow: column;
+	flex-flow: row wrap;
 	width: 100%;
 	margin: 3px 0 10px 0;
 	align-items: flex-end;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem {
-	flex: 0 0;
+	flex: 0 0 85px;
 	display: flex;
-	flex-flow: row nowrap;
+	flex-flow: column;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {
 	display: block;
-	margin: 0 5px 0 0;
-	font-size: 12px;
-	line-height: 20px;
+	margin: 0;
+	font-size: 9px;
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .onoffswitch {
+	margin: 0 auto;
 }
 
 .UploadFile .UoloadCmd {
 	display: block;
-	float: left;
 	width: 100%;
 	text-align: center;
 }

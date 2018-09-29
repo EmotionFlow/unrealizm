@@ -45,6 +45,7 @@ if(cCookies != null) {
 				if(multiFileUploader.getSubmittedNum()<=0) return;
 				var nCategory = $('#EditCategory').val();
 				var strDescription = $.trim($("#EditDescription").val());
+				var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 				var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 				setTweetSetting($('#OptionTweet').prop('checked'));
 				strDescription = strDescription.substr(0 , 200);
@@ -67,6 +68,7 @@ if(cCookies != null) {
 								multiFileUploader.first_file = true;
 								multiFileUploader.user_id = <%=cCheckLogin.m_nUserId%>;
 								multiFileUploader.illust_id = data.content_id;
+								multiFileUploader.recent = nRecent;
 								multiFileUploader.tweet = nTweet;
 								multiFileUploader.uploadStoredFiles();
 							} else {
@@ -104,7 +106,8 @@ if(cCookies != null) {
 							}
 							this.setParams({
 								UID: this.user_id,
-								IID: this.illust_id
+								IID: this.illust_id,
+								REC: this.recent
 							}, id);
 						},
 						onAllComplete: function(succeeded, failed) {
@@ -238,6 +241,16 @@ if(cCookies != null) {
 					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
 				</div>
 				<div class="UoloadCmdOption">
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
+							<label class="onoffswitch-label" for="OptionRecent">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
