@@ -574,10 +574,11 @@ if(cResults.m_bUpdate) {
 				</div>
 
 				<div class="SettingListItem" style="margin-bottom: 15px; border-bottom: none;">
-					<div class="SettingListTitle">利用規約およびプライバシーポリシー</div>
-					<div class="SettingBody" style="text-align: center;">
-						<p><a href="/RulePcS.jsp" style="font-size: 14px; text-decoration: underline;">利用規約</a></p>
-						<p><a href="/PrivacyPolicyPcS.jsp" style="font-size: 14px; text-decoration: underline;">プライバシーポリシー</a></p>
+					<div class="SettingListTitle"><%=_TEX.T("Footer.Term")%>/<%=_TEX.T("Footer.GuideLine")%>/<%=_TEX.T("Footer.PrivacyPolicy")%></div>
+					<div class="SettingBody">
+						<a href="/RulePcS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.Term")%></a><br />
+						<a href="/GuideLinePcV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.GuideLine")%></a><br />
+						<a href="/PrivacyPolicyPcS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
 					</div>
 				</div>
 			</div>

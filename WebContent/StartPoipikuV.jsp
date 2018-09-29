@@ -58,8 +58,9 @@ if(strRequestUri != null) {
 					<a class="AnalogicoLink" style="font-size: 12px; text-decoration: underline;" href="/LoginFormV.jsp">機種変コードの入力</a>
 				</div>
 				<div class="AnalogicoTerm">
-					<a class="AnalogicoLink" href="/RuleS.jsp" style="font-size: 14px; text-decoration: underline;">利用規約</a>
-					<a class="AnalogicoLink" href="/PrivacyPolicyS.jsp" style="font-size: 14px; text-decoration: underline;">プライバシーポリシー</a>
+					<a class="AnalogicoLink" href="/RuleS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.Term")%></a>
+					<a class="AnalogicoLink" href="/GuideLineV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.GuideLine")%></a>
+					<a class="AnalogicoLink" href="/PrivacyPolicyS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 					<p class="AnalogicoLink" style="font-size: 11px; text-align: center;">
 						利用規約は[<%=_TEX.T("THeader.Menu.Me")%>]→[<%=_TEX.T("MyEditSetting.Title.Setting")%>]からいつでも確認することができます。
 					</p>

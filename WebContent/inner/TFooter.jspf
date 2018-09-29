@@ -29,8 +29,9 @@
 
 	<div class="FooterLink">
 		<ul class="FooterLinkItem">
-			<li><a class="FooterHref" href="/RulePcS.jsp" target="_blank">利用規約</a></li>
-			<li><a class="FooterHref" href="/PrivacyPolicyPcS.jsp" target="_blank">プライバシーポリシー</a></li>
+			<li><a class="FooterHref" href="/RulePcS.jsp" target="_blank"><%=_TEX.T("Footer.Term")%></a></li>
+			<li><a class="FooterHref" href="/GuideLinePcV.jsp" target="_blank"><%=_TEX.T("Footer.GuideLine")%></a></li>
+			<li><a class="FooterHref" href="/PrivacyPolicyPcS.jsp" target="_blank"><%=_TEX.T("Footer.PrivacyPolicy")%></a></li>
 			<li><a class="FooterHref" href="http://www.pipa.jp/" target="_blank">運営会社</a></li>
 		</ul>
 		<ul class="FooterLinkItem">
