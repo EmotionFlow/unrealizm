@@ -695,6 +695,7 @@
 	max-height: 200px;
 }
 
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.Food,
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList.All {
 	max-height: 400px;
 	overflow-y: scroll;

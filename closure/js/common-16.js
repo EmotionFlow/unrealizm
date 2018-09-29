@@ -206,10 +206,29 @@ function DeleteContentBase(nUserId, nContentId) {
 	});
 }
 
-function switchEmojiKeyboard(obj, nSelected) {
-	$ResEmojiBtnList = $(obj).parent().parent().children('.ResEmojiBtnList');
+function switchEmojiKeyboard(obj, nContentId, nSelected) {
+	var $ResEmojiBtnList = $(obj).parent().parent().children('.ResEmojiBtnList');
 	$ResEmojiBtnList.hide();
-	$ResEmojiBtnList.eq(nSelected).show();
+	var $ResEmojiBtnListTarg = $ResEmojiBtnList.eq(nSelected);
+	if($ResEmojiBtnListTarg.html()=='' && !$ResEmojiBtnListTarg.loading) {
+		$ResEmojiBtnListTarg.loading = true;
+		var $objMessage = $("<div/>").addClass("Waiting");
+		$ResEmojiBtnListTarg.append($objMessage);
+		$.ajax({
+			"type": "post",
+			"data": { "IID": nContentId, "CAT": nSelected},
+			"url": "/f/GetEmojiListF.jsp",
+			"dataType": "html",
+			"success": function(data) {
+				$ResEmojiBtnListTarg.html(data);
+			},
+			"error": function(req, stat, ex){
+				$(".Waiting").remove();
+				DispMsg('emoji loading Error');
+			}
+		});
+	}
+	$ResEmojiBtnListTarg.show();
 	$(obj).parent().children('.ResBtnSetItem').removeClass('Selected');
 	$(obj).addClass('Selected');
 }

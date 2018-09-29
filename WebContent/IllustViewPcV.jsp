@@ -58,8 +58,8 @@ ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
 							$(".Waiting").remove();
 							g_bAdding = false;
 							if(g_nPage>0) {
-								console.log(location.pathname+'?page='+g_nPage);
-								gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'?page='+g_nPage});
+								console.log(location.pathname+'/'+g_nPage+'.html');
+								gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
 							}
 						} else {
 							$(window).unbind("scroll.addContents");

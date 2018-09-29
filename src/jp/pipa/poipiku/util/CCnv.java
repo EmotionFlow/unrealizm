@@ -125,33 +125,35 @@ public class CCnv {
 			strRtn.append(String.format(_TEX.T("Common.IllustItemRes.Title"), cContent.m_vComment.size()));
 		}
 		strRtn.append("</div>");	// IllustItemResListTitle
+		// もらった絵文字
 		for(CComment comment : cContent.m_vComment) {
-			//strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", comment.m_strDescription));
 			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
 		}
 		strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
 		strRtn.append("</div>");	// IllustItemResList
-
+		// 絵文字ボタン
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
 		strRtn.append("<div class=\"ResBtnSetList\">");
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem Selected\" onclick=\"switchEmojiKeyboard(this, 0)\">%s</a>", _TEX.T("IllustV.Emoji.Popular")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, 1)\">%s</a>", _TEX.T("IllustV.Emoji.All")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem Selected\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
 		strRtn.append("</div>");	// ResBtnSetList
-		strRtn.append("<div class=\"ResEmojiBtnList\">");
+		// 人気の絵文字
+		strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
 		for(String emoji : vResult) {
-			//strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
 			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 		}
 		strRtn.append("</div>");	// ResEmojiBtnList
-		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\">");
+		// 食べ物の絵文字
+		strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
+		// 全ての絵文字
+		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
+		/*
 		for(String emoji : Common.EMOJI_KEYBORD) {
-			//strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, Common.ToStringHtml(emoji)));
 			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 		}
-		//for(int nCnt=0; nCnt<Common.CATEGORY_EMOJI[cContent.m_nCategoryId].length; nCnt++) {
-		//	strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, %d, %d, %d)\">%s</a>", cContent.m_nContentId, cContent.m_nCategoryId, nCnt, nLoginUserId, Common.ToStringHtml(Common.CATEGORY_EMOJI[cContent.m_nCategoryId][nCnt])));
-		//}
 		strRtn.append("</div>");	// ResEmojiBtnList
+		*/
 		strRtn.append("</div>");	// IllustItemResBtnList
 		strRtn.append("</div>");	// IllustItem
 

@@ -24,7 +24,7 @@ class SendEmojiC {
 	}
 
 	public boolean getResults(CheckLogin checkLogin) {
-		if(!Arrays.asList(Common.EMOJI_KEYBORD).contains(m_strEmoji)) {
+		if(!Arrays.asList(Common.EMOJI_LIST[Common.EMOJI_CAT_ALL]).contains(m_strEmoji)) {
 			Log.d("Invalid Emoji : "+ m_strEmoji);
 			return false;
 		}
