@@ -311,9 +311,9 @@ public class Common {
 		String ILLUST_LIST = (nMode==CCnv.MODE_SP)?"/SearchIllustByTagV.jsp":"/SearchIllustByTagPcV.jsp";
 		return strSrc
 				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
-				.replaceAll("(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format(" <a class=\"AutoLink\" href=\"%s?KWD=$2\">$0</a>", ILLUST_LIST));
+				.replaceAll("(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format(" <a class=\"AutoLink\" href=\"%s?KWD=$2\">$0</a>", ILLUST_LIST))
+				.replaceAll("@([0-9a-zA-Z_]{3,15})","<a class='AutoLink' href='https://twitter.com/$1' target='_blank'>$0</a>");
 	}
-
 	public static String EscapeSqlLike(String strSrc, String strEscape) {
 		return "%" + EscapeSqlLikeExact(strSrc, strEscape) + "%";
 	}

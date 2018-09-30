@@ -115,7 +115,7 @@ if(!cResults.getResults(cCheckLogin)) {
 					</span>
 					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
 					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-					<span class="UserInfoProgile"><%=Common.ToStringHtml(cResults.m_cUser.m_strProfile)%></span>
+					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></span>
 					<%}%>
 				</div>
 				<span class="UserInfoCmd">
