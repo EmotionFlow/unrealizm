@@ -122,7 +122,7 @@ public class CCnv {
 		if(cContent.m_vComment.size()<=0) {
 			strRtn.append(_TEX.T("Common.IllustItemRes.Title.Init"));
 		} else {
-			strRtn.append(String.format(_TEX.T("Common.IllustItemRes.Title"), cContent.m_vComment.size()));
+			strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
 		}
 		strRtn.append("</div>");	// IllustItemResListTitle
 		// もらった絵文字
