@@ -496,7 +496,7 @@ function initUploadFile() {
 		validation: {
 			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
 			itemLimit: 100,
-			sizeLimit: 5000000,
+			sizeLimit: 10000000,
 			stopOnFirstInvalidFile: false
 		},
 		retry: {
