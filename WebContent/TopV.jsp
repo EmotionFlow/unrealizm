@@ -108,12 +108,12 @@ if(cCheckLogin.m_bLogin) {
 			<div class="PoipikuInfo">
 				<div class="poipikuDesc">
 					<div class="DescTitle">
-						評価をやめておやつをあげよう！
+						評価から開放されよう！
 					</div>
 					<div class="DescImg">
 						<img src="/img/PoipikuInfo/03_1.png" style="width: 340px; left: 0;" />
 					</div>
-					ブクマなし。ハートなし。スターなし。絵文字を使っておやつをあげてみませんか？感情豊かな899種類の共感を伝えてみよう
+					ブクマなし。ハートなし。スターなし。感情豊かな899種類の絵文字リアクションで共感を伝え合おう
 				</div>
 			</div>
 
