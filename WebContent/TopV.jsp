@@ -58,9 +58,9 @@ if(cCheckLogin.m_bLogin) {
 
 		<div class="Wrapper">
 			<h1 class="AnalogicoDesc Title">
-				<span class="TopBanner">
-					<img style="width: 100%;" src="/img/2018_09_28_top_banner.png" />
-				</span>
+				<div class="TopBanner">
+					<img style="width: 100%;" src="/img/2018_09_30_top_banner.png" />
+				</div>
 				放置絵ポイポイ<br />
 				練習ポイポイ<br />
 				らくがきポイポイ<br />
