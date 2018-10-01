@@ -211,8 +211,8 @@ a:hover {
 	color: #0075c2;
 }
 
-.Selected {
-	color: #ee9999;
+a.Selected {
+	color: #5bd;
 }
 
 hr {

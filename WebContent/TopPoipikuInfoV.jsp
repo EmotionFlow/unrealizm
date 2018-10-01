@@ -72,7 +72,7 @@ cCheckLogin.GetResults2(request, response);
 						評価から開放されよう！
 					</div>
 					<div class="DescImg">
-						<img src="/img/PoipikuInfo/03_1.png" style="width: 340px; left: 0;" />
+						<img src="/img/PoipikuInfo/03_2.png" style="width: 340px; left: 0;" />
 					</div>
 					ブクマなし。ハートなし。スターなし。感情豊かな899種類の絵文字リアクションで共感を伝え合おう
 				</div>

@@ -32,7 +32,8 @@
 			<li><a class="FooterHref" href="/RulePcS.jsp" target="_blank"><%=_TEX.T("Footer.Term")%></a></li>
 			<li><a class="FooterHref" href="/GuideLinePcV.jsp" target="_blank"><%=_TEX.T("Footer.GuideLine")%></a></li>
 			<li><a class="FooterHref" href="/PrivacyPolicyPcS.jsp" target="_blank"><%=_TEX.T("Footer.PrivacyPolicy")%></a></li>
-			<li><a class="FooterHref" href="http://www.pipa.jp/" target="_blank">運営会社</a></li>
+			<li><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.Information")%></a></li>
+			<li><a class="FooterHref" href="http://www.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Company")%></a></li>
 		</ul>
 		<ul class="FooterLinkItem">
 			<li><a class="FooterHref" href="http://tegaki.pipa.jp/" target="_blank">手書きブログ</a></li>
@@ -46,7 +47,7 @@
 	</div>
 
 	<div class="FooterInfo" style="font-size: 10px; margin: 10px 0;">
-		各種機能・コンセプトは特許出願中です。
+		異工程混在表示方式および各種機能は特許出願中です。
 		当サイトの各種技術・コンセプト・デザイン・商標等は特許法、著作権法、不正競争防止法等を始めとした各種法律により保護されています。
 	</div>
 

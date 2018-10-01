@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.util;
 
-import java.io.File;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,7 +39,7 @@ public class Util {
 	}
 
 
-	public static ArrayList<String> getRankEmojiDaily(int nLimitNum) {
+	public static ArrayList<String> getDefaultEmoji(int nUserId, int nLimitNum) {
 		ArrayList<String> vResult = new ArrayList<String>();
 
 		DataSource dsPostgres = null;
@@ -52,15 +51,29 @@ public class Util {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, nLimitNum);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				vResult.add(Common.ToString(cResSet.getString(1)).trim());
+			if(nUserId>0) {
+				strSql = "SELECT description, count(description) FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, nUserId);
+				cState.setInt(2, nLimitNum);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					vResult.add(Common.ToString(cResSet.getString(1)).trim());
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			if(vResult.size()<nLimitNum){
+				strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, nLimitNum-vResult.size());
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					vResult.add(Common.ToString(cResSet.getString(1)).trim());
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

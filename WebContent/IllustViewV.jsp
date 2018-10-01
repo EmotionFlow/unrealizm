@@ -17,7 +17,7 @@ if(strs.length>0 && strs[0].length()>0) {
 	strTitle = strs[0];
 }
 strTitle = Common.SubStrNum(strTitle, 10);
-ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>

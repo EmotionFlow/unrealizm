@@ -84,7 +84,7 @@ cCheckLogin.GetResults2(request, response);
 						おやつをあげよう！
 					</div>
 					<div class="DescImg">
-						<img src="/img/PoipikuInfo/03_1.png" style="width: 340px; left: 0;" />
+						<img src="/img/PoipikuInfo/03_2.png" style="width: 340px; left: 0;" />
 					</div>
 					差し入れに絵文字を使っておやつをあげてみよう
 					（合わせて絵文字一覧をオンデマンド読み込みすることで高速軽量化する機能を導入しました）

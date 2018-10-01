@@ -7,7 +7,7 @@ cCheckLogin.GetResults2(request, response);
 SearchIllustByTagViewC cResults = new SearchIllustByTagViewC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
-ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>

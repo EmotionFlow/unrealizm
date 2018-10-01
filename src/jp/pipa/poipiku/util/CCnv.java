@@ -134,16 +134,31 @@ public class CCnv {
 		// 絵文字ボタン
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
 		strRtn.append("<div class=\"ResBtnSetList\">");
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem Selected\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>", (nLoginUserId<1)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
 		strRtn.append("</div>");	// ResBtnSetList
-		// 人気の絵文字
-		strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
-		for(String emoji : vResult) {
-			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+
+		if(nLoginUserId>0) {
+			// よく使う絵文字
+			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
+			for(String emoji : vResult) {
+				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+			}
+			strRtn.append("</div>");	// ResEmojiBtnList
+			// 人気の絵文字
+			strRtn.append("<div class=\"ResEmojiBtnList Popular\" style=\"display: none;\"></div>");
+		} else {
+			// よく使う絵文字
+			strRtn.append("<div class=\"ResEmojiBtnList Recent\" style=\"display: none;\"></div>");
+			// 人気の絵文字
+			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
+			for(String emoji : vResult) {
+				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+			}
+			strRtn.append("</div>");	// ResEmojiBtnList
 		}
-		strRtn.append("</div>");	// ResEmojiBtnList
 		// 食べ物の絵文字
 		strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
 		// 全ての絵文字

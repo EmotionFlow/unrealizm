@@ -12,7 +12,7 @@ if(!cCheckLogin.m_bLogin) {
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
-ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>

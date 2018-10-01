@@ -8,7 +8,7 @@ if(!cCheckLogin.m_bLogin) return;
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin, true);
-ArrayList<String> vResult = Util.getRankEmojiDaily(Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
