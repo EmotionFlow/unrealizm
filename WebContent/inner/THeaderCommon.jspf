@@ -4,7 +4,7 @@
 <meta http-equiv="Cache-Control" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=360" />
+<meta name="viewport" content="width=360, user-scalable=no" />
 <link href="/css/TBase-16.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-36.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
@@ -12,3 +12,6 @@
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/common-17.js"></script>
 <%@ include file="/inner/TGoogleAnalytics.jspf"%>
+<style>
+body {-webkit-user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-touch-callout: none;}
+</style>
