@@ -210,9 +210,10 @@ function switchEmojiKeyboard(obj, nContentId, nSelected) {
 	var $ResEmojiBtnList = $(obj).parent().parent().children('.ResEmojiBtnList');
 	$ResEmojiBtnList.hide();
 	var $ResEmojiBtnListTarg = $ResEmojiBtnList.eq(nSelected);
-	if($ResEmojiBtnListTarg.html()=='' && !$ResEmojiBtnListTarg.loading) {
+	if(!$ResEmojiBtnListTarg.loading) {
 		$ResEmojiBtnListTarg.loading = true;
 		var $objMessage = $("<div/>").addClass("Waiting");
+		$ResEmojiBtnListTarg.empty();
 		$ResEmojiBtnListTarg.append($objMessage);
 		$.ajax({
 			"type": "post",
@@ -221,10 +222,12 @@ function switchEmojiKeyboard(obj, nContentId, nSelected) {
 			"dataType": "html",
 			"success": function(data) {
 				$ResEmojiBtnListTarg.html(data);
+				$ResEmojiBtnListTarg.loading = false;
 			},
 			"error": function(req, stat, ex){
 				$(".Waiting").remove();
 				DispMsg('emoji loading Error');
+				$ResEmojiBtnListTarg.loading = false;
 			}
 		});
 	}

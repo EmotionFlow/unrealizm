@@ -288,8 +288,9 @@ if(cResults.m_bUpdate) {
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result>0) {
-							deleteCookie('POIPIKU_LK');
+							setCookie('POIPIKU_LK','-1');
 							sendObjectMessage("restart");
+							location.reload(true);
 						}
 					},
 					"error": function(req, stat, ex){
@@ -308,8 +309,9 @@ if(cResults.m_bUpdate) {
 						"dataType": "json",
 						"success": function(data) {
 							if(data.result>0) {
-								deleteCookie('POIPIKU_LK');
+								setCookie('POIPIKU_LK','-1');
 								sendObjectMessage("restart");
+								location.reload(true);
 							}
 						},
 						"error": function(req, stat, ex){

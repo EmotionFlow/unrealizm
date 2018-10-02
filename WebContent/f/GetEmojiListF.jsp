@@ -42,21 +42,10 @@ if(cResults.m_nCategoryId==Common.EMOJI_CAT_POPULAR || (cResults.m_nCategoryId==
 		// Follow
 		ArrayList<String> vEmoji = new ArrayList<String>();
 		if(cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT) {
-			strSql = "SELECT description, count(description) FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cState.setInt(2, Common.EMOJI_KEYBORD_MAX);
+			vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 		} else {
-			strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, Common.EMOJI_KEYBORD_MAX);
+			vEmoji = Util.getDefaultEmoji(-1, Common.EMOJI_KEYBORD_MAX);
 		}
-		cResSet = cState.executeQuery();
-		while (cResSet.next()) {
-			vEmoji.add(cResSet.getString("description"));
-		}
-		cResSet.close();cResSet=null;
-		cState.close();cState=null;
 		EMOJI_LIST = vEmoji.toArray(new String[vEmoji.size()]);
 	} catch(Exception e) {
 		Log.d(strSql);

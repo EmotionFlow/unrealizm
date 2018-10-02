@@ -76,7 +76,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
 			<%if(cResults.m_vContentList.size()<=0) {%>
-			<div id="InfoMsg" style="float: left; width: 100%; padding: 160px 0 0 0; text-align: center;">
+			<div id="InfoMsg" style="float: left; width: 100%; padding: 140px 0 0 0; text-align: center;">
 				ポイピクへようこそ<br />
 				<br />
 				放置絵ポイポイ<br />
@@ -85,9 +85,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				進捗ポイポイ<br />
 				<br />
 				<br />
-				<a class="BtnBase" href="javascript:void(0)" onclick="MoveTab()">
-					フォローする人を探す
-				</a>
+				フォローするとここに最新情報が表示されます<br />
 			</div>
 			<%}%>
 			<div id="IllustItemList" class="IllustItemList">
