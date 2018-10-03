@@ -22,14 +22,6 @@ $(function(){
 			};
 		})()
 	});
-
-	$(window).on('scroll', function() {
-		if ($(this).scrollTop() >= 75) {
-			$('.MainMenu').addClass('Fixed');
-		} else {
-			$('.MainMenu').removeClass('Fixed');
-		}
-	});
 });
 
 function setCookie(key, val, tmp) {
