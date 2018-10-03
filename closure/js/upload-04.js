@@ -495,7 +495,7 @@ function initUploadFile() {
 		maxConnections: 1,
 		validation: {
 			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-			itemLimit: 100,
+			itemLimit: 200,
 			sizeLimit: 10000000,
 			stopOnFirstInvalidFile: false
 		},
@@ -585,7 +585,7 @@ function initUploadFile() {
 		}
 		$('#TotalSize').html(strTotal);
 	};
-	multiFileUploader.total_size = 30*1024*1024;
+	multiFileUploader.total_size = 50*1024*1024;
 }
 
 function UploadFile(user_id) {
