@@ -4,6 +4,11 @@
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
+if(SP_REVIEW && !cCheckLogin.m_bLogin) {
+	response.sendRedirect("/StartPoipikuV.jsp");
+	return;
+}
+
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);

@@ -19,15 +19,17 @@ public class Common {
 	public static String TWITTER_CONSUMER_KEY = "kzEqWQyT9X8GozWdCT2E6TNr3";
 	public static String TWITTER_CONSUMER_SECRET = "6QfxAs3iP3LtBX5EYZq64r8xlQjo8dx8e8pJKcpgnGSb5x5GzW";
 	public static String TWITTER_CALLBAK_DOMAIN = "https://poipiku.com";
+	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
+	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
+
+	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
+	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン
+	*/
 
 	public static String GetPageTitle2(ResourceBundleControl _TEX, String pageName){
 		return pageName + " - " + _TEX.T("TopV.TitleBar");
 	}
 
-	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
-
-	// for Database
-	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";
 
 	public static int EMOJI_KEYBORD_MAX = 64;
 	public static final String[] EMOJI_KEYBORD = {
