@@ -107,7 +107,7 @@ body {
 	padding: 0;
 	-webkit-text-size-adjust: 100%;
 	color: #6d6965;
-	background: #fff;
+	background: #fafafa;
 	-webkit-text-size-adjust: none;
 	user-select: none;
 }
@@ -170,11 +170,6 @@ a {
 }
 
 a:hover {
-	color: #5bd;
-}
-
-.AutoLink {
-	text-decoration: none;
 	color: #5bd;
 }
 

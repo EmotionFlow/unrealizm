@@ -30,7 +30,7 @@ public class IllustListC {
 
 	public CUser m_cUser = new CUser();
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	public int SELECT_MAX_GALLERY = 36;
+	public int SELECT_MAX_GALLERY = 45;
 	public boolean m_bOwner = false;
 	public boolean m_bFollow = false;
 	public boolean m_bBlocking = false;

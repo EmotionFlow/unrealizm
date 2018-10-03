@@ -44,14 +44,22 @@ if(cCheckLogin.m_bLogin) {
 		.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
 		<%}%>
 		</style>
+
+		<script type="text/javascript">
+		$(function(){
+			$('#MenuHome').addClass('Selected');
+		});
+		</script>
 	</head>
 
 	<body>
-		<div class="TabMenu">
-			<a class="TabMenuItem Selected" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
-			<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
-			<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
-			<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+		<div class="TabMenuWrapper">
+			<div class="TabMenu">
+				<a class="TabMenuItem Selected" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+			</div>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>

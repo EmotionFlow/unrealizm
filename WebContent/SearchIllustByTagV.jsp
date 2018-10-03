@@ -56,7 +56,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div class="Wrapper">
-			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></div>
+			<div class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></div>
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

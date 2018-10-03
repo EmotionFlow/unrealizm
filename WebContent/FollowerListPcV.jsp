@@ -29,14 +29,14 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper">
+		<div class="Wrapper ItemList">
 
 			<div id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%@ include file="/inner/TAdMidWide.jspf"%>
 					<%}%>
 				<%}%>
 			</div>

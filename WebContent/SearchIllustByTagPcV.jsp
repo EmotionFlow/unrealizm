@@ -25,15 +25,16 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
-		<div class="Wrapper">
-			<div class="AutoLink" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></div>
+
+		<div class="Wrapper ThumbList">
+			<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></div>
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_TAG_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
-					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%if((nCnt+1)%15==0) {%>
+					<%@ include file="/inner/TAdMidWide.jspf"%>
 					<%}%>
 				<%}%>
 			</div>

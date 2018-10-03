@@ -1,24 +1,26 @@
 @charset "utf-8";
-body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
-.Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 30px; border-bottom: solid 1px #ccc; text-align: center; padding: 10px 0; background: #fff; z-index: 9999;}
-.Header .HeaderTitleWrapper {display: block; max-width: 600px; margin: 0 auto; position: relative;}
-.Header .HeaderLink {display: block; width: 100%;}
-.Header .HeaderTitleSearch {display: block; color: #5bd; width: 30px; height: 30px; line-height: 28px; text-align: center; position: absolute; top: 0; right: 10px;}
+body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box;}
+.Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 50px; border-bottom: solid 1px #ddd; text-align: center; padding: 0; background: #fff; z-index: 9999; overflow: hidden;}
+.HeaderWrapper {display:block; width: 100%;}
+.Header .HeaderTitleWrapper {display: block; max-width: 600px; margin: 0 auto; position: relative; padding: 10px 0;}
+.Header .HeaderLink {display: inline-block;}
+.Header .HeaderTitleSearch {display: block; color: #5bd; width: 30px; height: 30px; line-height: 28px; text-align: center; position: absolute; top: 0; right: 10px; padding: 10px 0;}
 .Header .HeaderLink .HeaderImg {display: block; height: 28px; margin: 0 auto; padding: 0px 0 2px 0;}
 #HeaderSearchWrapper {display: none;}
-.HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 0; box-sizing: border-box; overflow: hidden;}
+.HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 10px 0; box-sizing: border-box; overflow: hidden;}
 .Header .HeaderSearch {display: flex; flex-flow: row nowrap; justify-content: center; padding: 3px 10px 1px 10px;}
 .Header .HeaderSearch .HeaderSearchBox {display: block; flex: 1 1; height: 26px; padding: 0 5px; box-sizing: border-box; border: solid 1px #5bd;}
-.Header .HeaderSearch .HeaderSearchBox:placeholder-shown {color: #c0c0b5; font-style: italic;}
+.Header .HeaderSearch .HeaderSearchBox:placeholder-shown, .Header .HeaderSearch .HeaderSearchBox::placeholder {color: #bbb; font-style: italic;font-size: 12px;}
 .Header .HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 26px; height: 26px; box-sizing: border-box; margin: 0; background-color: #5bd; color: #fff; border: solid 1px #5bd; cursor: pointer; border-left: none;line-height: 25px;}
 .Header .HeaderSearch .HeaderSearchBtn:hover {background-color: #fff; color: #5bd;}
-.FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ccc; background-color: #fff; z-index: 9999; }
-.FooterMenuWrapper .FooterMenu {display: block; max-width: 600px; height: 50px; margin: 0 auto;}
-.FooterMenuWrapper .FooterMenu .FooterMenuItem {display: block; float: left; width: 25%; height: 50px; text-align: center; font-size: 0;}
-.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-02.png') no-repeat; background-size: 1500%; position: relative;}
-.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; width: 15px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
-.FooterMenuWrapper .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
-.FooterMenuWrapper .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
+.FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ddd; background-color: #fff; z-index: 9999; }
+.FooterMenu {display: block; max-width: 600px; height: 50px; margin: 0 auto; overflow: hidden;}
+.FooterMenu .FooterMenuItem {display: block; float: left; width: 25%; height: 50px; text-align: center; font-size: 0;}
+.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-02.png') no-repeat; background-size: 1500%; position: relative;}
+.FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; width: 15px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
+.FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
+.FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
+.FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
 #DispMsg {top: 51px;}
 #MenuHome .FooterMenuItemIcon {background-position: 0 0;}
 #MenuSearch .FooterMenuItemIcon {background-position: -308px 0;}
@@ -40,6 +42,7 @@ body {margin:0; padding: 51px 0; height: 100%; box-sizing: border-box;}
 .Footer .FooterLink .FooterLinkItem {flex: 0 0; text-align: left; white-space: nowrap; margin: 0 20px; padding: 0;}
 .Footer .LinkApp {margin: 0 0 15px 0;}
 
+.TabMenuWrapper {width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;}
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto; background: #fff;}
 .TabMenu .TabMenuItem {display: block; flex: 1 1; height: 24px; line-height: 29px; border-bottom: solid 2px #fff; text-align: center; color: #5bd; margin: 0 0 5px 0; font-size: 13px; overflow: hidden;}
 .TabMenu .TabMenuItem.Selected {border-color: #5bd;}

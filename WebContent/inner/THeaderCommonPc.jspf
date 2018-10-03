@@ -7,9 +7,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
-<link href="/css/TBase-16.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-36.css" type="text/css" rel="stylesheet" />
-<link href="/css/TBasePc-12.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBase-17.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-37.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBasePc-15.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
@@ -17,28 +17,6 @@
 <%if(Common.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<style>
-/*
-.Header {width: 50%;}
-.Header .HeaderTitleWrapper {float: left;  margin: 0 0 0 20px;}
-.Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 5px;}
-.Header .HeaderSearch {}
-.Header .HeaderSearch .HeaderSearchBox {width: 200px;}
-.Header .HeaderTitleSearch {display: none;}
-.FooterMenuWrapper{width: 50%; border-top: none; border-bottom: solid 1px #ccc; top: 0; right: 0; left: auto; bottom: auto;}
-.FooterMenuWrapper .FooterMenu {float: right; width: 320px;}
-*/
-.Wrapper {width: 600px; height: 60px; position: relative;}
-.SideBarTop {height: 60px;}
-.SideBarMid {height: 60px;}
-.SideBarBottom {height: 60px;}
-.IllustThumb {width: 198px; height: 198px;}
-.IllustItem .IllustItemUser {padding: 5px 0px;}
-.IllustThumb .Category {top: 7px; left: 7px; font-size: 13px; min-width: 60px; height: 24px; line-height: 24px; max-width: none;}
-.IllustItem .Category {margin: 0px 0 3px 0px;}
-.IllustItem {margin: 40px auto;}
-.IllustItem .IllustItemResBtnList {padding: 3px 4px;}
-.IllustItem .IllustItemResBtnList .ResEmojiBtn {margin: 4px 1px;}
-</style>
+<link href="/css/TPcAppend-01.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%@ include file="/inner/TGoogleAnalytics.jspf"%>

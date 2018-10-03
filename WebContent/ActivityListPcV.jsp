@@ -55,7 +55,7 @@ cResults.GetResults(cParam);
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper">
+		<div class="Wrapper ItemList">
 
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
@@ -104,7 +104,7 @@ cResults.GetResults(cParam);
 					</a>
 					<%}%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%@ include file="/inner/TAdMidWide.jspf"%>
 					<%}%>
 					<%}%>
 				</div>

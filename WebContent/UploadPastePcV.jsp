@@ -62,9 +62,12 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="TabMenu">
-			<a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a>
-			<a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a>
+
+		<div class="TabMenuWrapper">
+			<div class="TabMenu">
+				<a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a>
+				<a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a>
+			</div>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>

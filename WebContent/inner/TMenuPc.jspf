@@ -9,26 +9,53 @@
 	String URL_ME		= (cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/";
 %>
 <header class="Header">
-	<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
-		<a id="HeaderLink" class="HeaderLink" href="<%=URL_HOME%>">
-			<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
-		</a>
-		<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
-	</div>
-	<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
-		<div class="HeaderSearch">
-			<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="" value="<%=Common.ToStringHtml(g_strSearchWord)%>" />
-			<div id="HeaderSearchBtn" class="HeaderSearchBtn">
-				<span class="fas fa-search"></span>
-			</div>
+	<div class="HeaderWrapper">
+		<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
+			<a id="HeaderLink" class="HeaderLink" href="<%=URL_HOME%>">
+				<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
+			</a>
+			<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
 		</div>
-	</form>
-	<script>
-		$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
-		$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
-	</script>
+		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
+			<div class="HeaderSearch">
+				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Common.ToStringHtml(g_strSearchWord)%>" />
+				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
+					<span class="fas fa-search"></span>
+				</div>
+			</div>
+		</form>
+
+		<script>
+			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
+			$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+		</script>
+
+		<%if(!Common.isSmartPhone(request)) {%>
+		<nav class="FooterMenu">
+			<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
+			</a>
+			<a id="MenuUpload" class="FooterMenuItem" href="<%=URL_UPLOAD%>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+			</a>
+			<a id="MenuAct" class="FooterMenuItem" href="<%=URL_ACT%>">
+				<span class="FooterMenuItemIcon">
+					<div id="InfoNumAct" class="InfoNum">0</div>
+				</span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
+			</a>
+			<a id="MenuMe" class="FooterMenuItem" href="<%=URL_ME%>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
+			</a>
+		</nav>
+		<%}%>
+	</div>
 </header>
 
+<%if(Common.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
 		<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
@@ -51,9 +78,8 @@
 		</a>
 	</nav>
 </div>
-<%
-}
-%>
+<%}%>
+<%}%>
 <%if(cCheckLogin.m_bLogin) {%>
 <script>
 	function UpdateNotify() {

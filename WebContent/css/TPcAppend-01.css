@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+.Wrapper {width: 600px; height: 60px; position: relative;}
+.SideBarTop {height: 60px;}
+.SideBarMid {height: 60px;}
+.SideBarMid.Wide {height: 90px; margin: 15px 0 0 0;}
+.Wrapper.ItemList .SideBarMid.Wide {margin: 0;}
+.SideBarBottom {height: 60px;}
+.IllustThumb {width: 198px; height: 198px;}
+.IllustThumb .Category {font-size: 13px; min-width: 60px; height: 24px; line-height: 24px; max-width: none;}
+.IllustItem {margin: 30px auto; padding: 0; box-shadow: 0 0 1px #ddd; border-radius: 6px;}
+.IllustItem .IllustItemUser {padding: 10px;}
+.IllustItem .Category {margin: 0px 0 3px 0px;}
+.IllustItem .IllustItemCommand {padding: 0 10px;}
+.IllustItem .IllustItemDesc {padding: 0 10px;}
+.IllustItem .IllustItemResList {padding: 0 10px 6px 10px}
+.IllustItem .IllustItemResBtnList {padding: 3px 7px;}
+.IllustItem .IllustItemResBtnList .ResEmojiBtn {margin: 4px 1px;}
+.SearchResultTitle {margin: 15px 0 0 0; font-size: 18px; height: 30px; line-height: 30px;}
+
+.IllustThumb .IllustThumbImg {border: solid 1px #eee;box-sizing: border-box;}
+.IllustThumb {border-radius: 4px; box-shadow: 0 0 1px #ddd; padding: 10px; margin: 15px 15px 0 0; width: 185px; height: 185px;}
+.IllustThumb:nth-child(10n+3), .IllustThumb:nth-child(10n+6), .IllustThumb:nth-child(10n+9) {margin-right: 15px;}
+.IllustThumb:nth-child(16n+5), .IllustThumb:nth-child(16n+10), .IllustThumb:nth-child(16n+15) {margin-right: 0;}
+.Wrapper.ThumbList {width: 985px;}
+.Wrapper.ItemList {width: 728px;}
+.Header {width: 100%; min-width: 700px; padding: 0;}
+.HeaderWrapper {min-width: 700px; max-width: 985px; margin: 0 auto;}
+.Header .HeaderTitleWrapper {float: left;  margin: 0 0 0 10px;}
+.Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 5px;}
+.Header .HeaderSearch {}
+.Header .HeaderSearch .HeaderSearchBox {width: 200px;}
+.Header .HeaderTitleSearch {display: none;}
+.FooterMenu {float: right; width: 320px;}
+

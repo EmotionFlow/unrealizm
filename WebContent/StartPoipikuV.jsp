@@ -30,10 +30,10 @@ if(strRequestUri != null) {
 	<style>
 		.AnalogicoDesc {display: block; width: 90%; margin: 0 auto; padding: 10px 0; text-align: center; color: #fff; font-weight: normal;}
 		.AnalogicoDesc.Title {}
-		.AnalogicoLink {display: block; margin: 10px 0; text-align: center; color: #fff; font-weight: normal;}
+		.AnalogicoLink {display: block; margin: 10px 0; text-align: center; color: #fff; font-weight: normal;font-size: 12px;text-decoration: underline;}
 		.AnalogicoLogin {margin: 10px 0;}
 		.AnalogicoCode {margin: 10px 0;}
-		.AnalogicoTerm {margin: 50px 0 0 0;}
+		.AnalogicoTerm {margin: 30px 0 0 0;}
 	</style>
 
 	<body style="color: #fff; background: #5bd;">
@@ -55,13 +55,13 @@ if(strRequestUri != null) {
 					</a>
 				</div>
 				<div class="AnalogicoCode">
-					<a class="AnalogicoLink" style="font-size: 12px; text-decoration: underline;" href="/LoginFormV.jsp">機種変コードの入力</a>
+					<a class="AnalogicoLink" href="/LoginFormV.jsp">機種変コードの入力</a>
 				</div>
 				<div class="AnalogicoTerm">
-					<a class="AnalogicoLink" href="/RuleS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.Term")%></a>
-					<a class="AnalogicoLink" href="/GuideLineV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.GuideLine")%></a>
-					<a class="AnalogicoLink" href="/PrivacyPolicyS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
-					<p class="AnalogicoLink" style="font-size: 11px; text-align: center;">
+					<a class="AnalogicoLink" href="/RuleS.jsp"><%=_TEX.T("Footer.Term")%></a>
+					<a class="AnalogicoLink" href="/GuideLineV.jsp"><%=_TEX.T("Footer.GuideLine")%></a>
+					<a class="AnalogicoLink" href="/PrivacyPolicyS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
+					<p class="AnalogicoLink" style="font-size: 11px;">
 						利用規約は[<%=_TEX.T("THeader.Menu.Me")%>]→[<%=_TEX.T("MyEditSetting.Title.Setting")%>]からいつでも確認することができます。
 					</p>
 				</div>
