@@ -20,7 +20,7 @@
 
 .IllustThumb .IllustThumbImg {border: solid 1px #eee;box-sizing: border-box;}
 .IllustThumb {border-radius: 4px; box-shadow: 0 0 1px #ddd; padding: 10px; margin: 15px 15px 0 0; width: 185px; height: 185px;}
-.IllustThumb:nth-child(10n+3), .IllustThumb:nth-child(10n+6), .IllustThumb:nth-child(10n+9) {margin-right: 15px;}
+.IllustThumb:nth-child(16n+3), .IllustThumb:nth-child(16n+6), .IllustThumb:nth-child(16n+9), .IllustThumb:nth-child(16n+12), .IllustThumb:nth-child(16n+15) {margin-right: 15px;}
 .IllustThumb:nth-child(16n+5), .IllustThumb:nth-child(16n+10), .IllustThumb:nth-child(16n+15) {margin-right: 0;}
 .Wrapper.ThumbList {width: 985px;}
 .Wrapper.ItemList {width: 728px;}

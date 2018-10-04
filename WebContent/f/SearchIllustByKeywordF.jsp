@@ -13,7 +13,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 	<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 		CContent cContent = cResults.m_vContentList.get(nCnt);%>
 		<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_KEYWORD_ILLUST, CCnv.MODE_SP, strEncodedKeyword, _TEX)%>
-		<%if((nCnt+1)%9==0) {%>
+		<%if((nCnt+1)%15==0) {%>
 		<%@ include file="/inner/TAdMid.jspf"%>
 		<%}%>
 	<%}%>
