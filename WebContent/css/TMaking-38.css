@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+.AutoLink {color: #5bd;}
+
 .Waiting {
 	display: block;
 	float: left;
@@ -36,6 +38,10 @@
 	box-sizing: border-box;
 	user-select:none;
 }
+
+.UpdateInfo {float: left; width: 100%; text-align: center; background-color: #5bd; padding: 5px 0; font-size: 0;}
+
+.UpdateInfo .UpdateInfoMsg {color: #fff;font-size: 12px; font-weight: bold;}
 
 .SideBarTop {
 	display: block;

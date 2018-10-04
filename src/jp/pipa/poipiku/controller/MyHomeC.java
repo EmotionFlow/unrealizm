@@ -12,10 +12,12 @@ import jp.pipa.poipiku.util.*;
 
 public class MyHomeC {
 	public int m_nPage = 0;
+	public int n_nVersion = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			n_nVersion = Common.ToInt(cRequest.getParameter("VER"));
 		} catch(Exception e) {
 			;
 		}
