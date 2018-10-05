@@ -23,7 +23,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		});
 		</script>
 
-		<%if(Common.isSmartPhone(request)) {%>
+		<%if(Util.isSmartPhone(request)) {%>
 		<script type="text/javascript">
 		$(function(){
 			$('body, .Wrapper').each(function(index, element){

@@ -74,7 +74,7 @@ if(cCookies != null) {
 .UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 15px 0;}
 .UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
 .UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;}
-<%if(!Common.isSmartPhone(request)) {%>
+<%if(!Util.isSmartPhone(request)) {%>
 .qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
 .qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
 <%}%>

@@ -1,7 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="jp.pipa.poipiku.Common"%>
+<%@page import="jp.pipa.poipiku.*"%>
+<%@page import="jp.pipa.poipiku.util.*"%>
 <div class="FooterAd">
-	<%if(Common.isSmartPhone(request)) {%>
+	<%if(Util.isSmartPhone(request)) {%>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- poipiku_sp_footer -->
 <ins class="adsbygoogle"

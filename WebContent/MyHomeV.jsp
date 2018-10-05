@@ -75,10 +75,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
-			<%if(cResults.n_nVersion!=103 && cResults.n_nVersion!=205) {%>
+			<%if(Util.needUpdate(cResults.n_nVersion)) {%>
 			<div class="UpdateInfo">
-				<div class="UpdateInfoMsg"><%=_TEX.T("UpdateInfo.Msg")%></div>
 				<!--
+				<div class="UpdateInfoMsg"><%=_TEX.T("UpdateInfo.Msg")%></div>
 				<a href="https://itunes.apple.com/us/app/ポイピク/id1436433822?l=ja&ls=1&mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
 				<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
 				-->

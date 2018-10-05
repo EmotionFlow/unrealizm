@@ -8,7 +8,7 @@ int nContentId	= Common.ToInt(request.getParameter("TD"));
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-boolean bMobile = Common.isSmartPhone(request);
+boolean bMobile = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>

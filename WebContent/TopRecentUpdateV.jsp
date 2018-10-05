@@ -38,7 +38,7 @@ cCheckLogin.GetResults2(request, response);
 
 		.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
 
-		<%if(Common.isSmartPhone(request)) {%>
+		<%if(Util.isSmartPhone(request)) {%>
 		<%} else {%>
 		.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
 		<%}%>

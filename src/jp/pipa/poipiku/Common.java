@@ -22,6 +22,10 @@ public class Common {
 	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
 	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
 
+	public static final int NO_NEED_UPDATE[] = {
+			103, 104, 105,	// iPhone系
+			205, 206, 207	// Android系
+	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
 	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン
 	*/
@@ -350,37 +354,5 @@ public class Common {
 
 			f.delete();
 		}
-	}
-
-
-	public static final String USER_AGENT = "PipaTegaki";
-	public static boolean isAndroidWeb(HttpServletRequest request) {
-		String strUuserAgent = Common.ToString(request.getHeader("user-agent"));
-		Log.d(strUuserAgent);
-
-		if(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf(USER_AGENT)<0) return true;
-		return false;
-	}
-
-	public static boolean isIPhoneWeb(HttpServletRequest request) {
-		String strUuserAgent = Common.ToString(request.getHeader("user-agent"));
-		Log.d(strUuserAgent);
-
-		if((strUuserAgent.indexOf("iPhone")>=0 || strUuserAgent.indexOf("iPad")>=0 || strUuserAgent.indexOf("iPod")>=0) && strUuserAgent.indexOf(USER_AGENT)<0) return true;
-		return false;
-	}
-
-	public static boolean isSmartPhone(HttpServletRequest request) {
-		String strUuserAgent = ToString(request.getHeader("user-agent"));
-		String strReferer = ToString(request.getHeader("Referer"));
-
-		if(strReferer.indexOf("galleria.emotionflow.com")<0) {
-			if(	(strUuserAgent.indexOf("iPhone")>=0 && strUuserAgent.indexOf("iPad")<0) ||
-				strUuserAgent.indexOf("iPod")>=0 ||
-				(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf("Mobile")>=0)) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

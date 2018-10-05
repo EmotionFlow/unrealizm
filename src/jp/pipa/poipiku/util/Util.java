@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
@@ -96,5 +97,35 @@ public class Util {
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 		return vResult;
+	}
+
+
+	public static String toString(String strSrc) {
+		if(strSrc == null) {
+			return "";
+		}
+		return strSrc;
+	}
+
+
+	public static boolean isSmartPhone(HttpServletRequest request) {
+		String strUuserAgent = toString(request.getHeader("user-agent"));
+		String strReferer = toString(request.getHeader("Referer"));
+
+		if(strReferer.indexOf("galleria.emotionflow.com")<0) {
+			if(	(strUuserAgent.indexOf("iPhone")>=0 && strUuserAgent.indexOf("iPad")<0) ||
+				strUuserAgent.indexOf("iPod")>=0 ||
+				(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf("Mobile")>=0)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean needUpdate(int nVersion) {
+		for(int ver : Common.NO_NEED_UPDATE) {
+			if(nVersion==ver) return false;
+		}
+		return true;
 	}
 }
