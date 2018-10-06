@@ -3,7 +3,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%!
 class SendEmojiC {
-	public int EMOJI_MAX = 5;
+	public int EMOJI_MAX = 10;
 
 	public int m_nContentId = -1;
 	public String m_strEmoji = "";

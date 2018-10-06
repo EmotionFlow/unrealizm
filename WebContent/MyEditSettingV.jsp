@@ -239,13 +239,19 @@ if(cResults.m_bUpdate) {
 				var nAutoTweetWeekDay = parseInt($('#AutoTweetWeekDay').val(), 10);
 				var nAutoTweetTime = parseInt($('#AutoTweetTime').val(), 10);
 				var strAutoTweetTxt = $.trim($("#AutoTweetTxt").val());
+				var nAutoTweetThumbNum = ($('#AutoTweetThumb').prop('checked'))?9:0;
 				if(!bAutoTweet) {
 					nAutoTweetWeekDay = -1;
 					nAutoTweetTime = -1;
 				}
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "ID": <%=cCheckLogin.m_nUserId%>, "AW": nAutoTweetWeekDay, "AT": nAutoTweetTime, "AD": strAutoTweetTxt },
+					"data": {
+						"ID": <%=cCheckLogin.m_nUserId%>,
+						"AW": nAutoTweetWeekDay,
+						"AT": nAutoTweetTime,
+						"AD": strAutoTweetTxt,
+						"ATN": nAutoTweetThumbNum },
 					"url": "/f/UpdateAutoTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -461,9 +467,13 @@ if(cResults.m_bUpdate) {
 							</div>
 							<script>
 							$('#DispFollower').change(function(){
-								UpdateFollowerLink();
+								//UpdateFollowerLink();
 							});
 							</script>
+						</div>
+						<div class="SettingBodyCmd">
+							<div class="RegistMessage" ></div>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateFollowerLink()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
 					</div>
 				</div>
@@ -508,6 +518,7 @@ if(cResults.m_bUpdate) {
 								$('#AutoTweetWeekDay').prop('disabled', !bAutoTweet);
 								$('#AutoTweetTime').prop('disabled', !bAutoTweet);
 								$('#AutoTweetTxt').prop('disabled', !bAutoTweet);
+								$('#AutoTweetThumb').prop('disabled', !bAutoTweet);
 							});
 							</script>
 						</div>
@@ -539,6 +550,19 @@ if(cResults.m_bUpdate) {
 						</div>
 						<div class="SettingBodyCmd">
 							<div id="AutoTweetTxtNum" class="RegistMessage" >100</div>
+						</div>
+						<div class="SettingBodyCmd">
+							<%=_TEX.T("EditSettingV.Twitter.Auto.ThumbNum")%>&nbsp;
+							<div class="onoffswitch OnOff">
+								<input type="checkbox" name="AutoTweetThumb" class="onoffswitch-checkbox" id="AutoTweetThumb" value="1" <%if(cResults.m_cUser.m_nAutoTweetThumbNum>0){%>checked="checked"<%}%> />
+								<label class="onoffswitch-label" for="AutoTweetThumb">
+									<span class="onoffswitch-inner"></span>
+									<span class="onoffswitch-switch"></span>
+								</label>
+							</div>
+						</div>
+						<div class="SettingBodyCmd">
+							<div class="RegistMessage" ></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateAutoTweet()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
 					</div>
