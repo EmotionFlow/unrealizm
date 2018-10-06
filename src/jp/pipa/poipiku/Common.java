@@ -23,7 +23,7 @@ public class Common {
 	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
 
 	public static final int NO_NEED_UPDATE[] = {
-			103, 104, 105,	// iPhone系
+			103, 104, 105, 106, 107,	// iPhone系
 			205, 206, 207	// Android系
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動

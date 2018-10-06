@@ -12,18 +12,20 @@ class UploadPasteCParam {
 	public int m_nOpenId = 0;
 	public boolean m_bTweet = false;
 	public int m_nCategoryId = 0;
+	public int m_nSafeFilter = 0;
 	String m_strEncodeImg = "";
 	public int m_nOptImage = 1;
 
 	public int GetParam(HttpServletRequest cRequest) {
 		try {
-			m_nUserId = Common.ToInt(request.getParameter("UID"));
-			m_strDescription = Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
-			m_nOpenId = Common.ToIntN(request.getParameter("REC"), 0, 2);
-			m_bTweet = (Common.ToInt(request.getParameter("TWI"))==1);
-			m_nOptImage = Common.ToIntN(request.getParameter("IMG"), 0, 1);
-			m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 12);
-			m_strEncodeImg = Common.ToString(request.getParameter("DATA"));
+			m_nUserId			= Common.ToInt(request.getParameter("UID"));
+			m_strDescription	= Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
+			m_nOpenId			= Common.ToIntN(request.getParameter("REC"), 0, 2);
+			m_bTweet			= (Common.ToInt(request.getParameter("TWI"))==1);
+			m_nOptImage			= Common.ToIntN(request.getParameter("IMG"), 0, 1);
+			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 12);
+			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), 0, 3);
+			m_strEncodeImg		= Common.ToString(request.getParameter("DATA"));
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
@@ -63,9 +65,12 @@ class UploadPasteC {
 			cConn = dsPostgres.getConnection();
 
 			// get content id
-			strSql ="INSERT INTO contents_0000(user_id) VALUES(?) RETURNING content_id";
+			strSql ="INSERT INTO contents_0000(user_id, category_id, safe_filter, description) VALUES(?, ?, ?, ?) RETURNING content_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(2, cParam.m_nCategoryId);
+			cState.setInt(3, cParam.m_nSafeFilter);
+			cState.setString(4, Common.SubStrNum(cParam.m_strDescription, 200));
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nContentId = cResSet.getInt("content_id");
@@ -85,13 +90,11 @@ class UploadPasteC {
 			Log.d(strFileName);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, category_id=?, description=?, open_id=?, file_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
-			cState.setInt(2, cParam.m_nCategoryId);
-			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, 200));
-			cState.setInt(4, cParam.m_nOpenId);
-			cState.setInt(5, m_nContentId);
+			cState.setInt(2, cParam.m_nOpenId);
+			cState.setInt(3, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 

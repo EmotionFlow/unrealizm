@@ -52,13 +52,28 @@ public class CCnv {
 		strRtn.append("</div>");	// IllustItemUser
 
 		// 画像
-		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-		strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
-		strRtn.append("</a>");
+		if(cContent.m_nSafeFilter<2) {
+			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
+			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
+			strRtn.append("</a>");
+		} else {
+			strRtn.append("<span class=\"IllustItemThumb\">");
+			strRtn.append("<img class=\"IllustItemThumbImg\" src=\"/img/warning.png\" />");
+			strRtn.append("</span>");
+		}
+
+		// R18の時は1枚目にWarningを出すのでずらす
+		if(cContent.m_nSafeFilter>1) cContent.m_nFileNum++;
 
 		// 2枚目以降
 		if(cContent.m_nFileNum>1) {
 			strRtn.append("<div class=\"IllustItemThubExpand\">");
+			// R18の時は1枚めをここで表示
+			if(cContent.m_nSafeFilter>=2) {
+				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
+				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
+				strRtn.append("</a>");
+			}
 			for(CContentAppend cContentAppend : cContent.m_vContentAppend) {
 				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId, cContentAppend.m_nAppendId));
 				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
@@ -66,6 +81,7 @@ public class CCnv {
 			}
 			strRtn.append("</div>");	// IllustItemThubExpand
 		}
+
 
 		// 転載禁止表示と2枚目以降ボタン
 		strRtn.append("<div class=\"IllustItemExpand\">");
@@ -184,14 +200,12 @@ public class CCnv {
 
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
-//		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\" style=\"background-image: url('%s_360.jpg')\">",
-//				ILLUST_VIEW[nType][nMode],
-//				cContent.m_nUserId,
-//				cContent.m_nContentId,
-//				strKeyword,
-//				Common.GetUrl(cContent.m_strFileName)));
 		strRtn.append(String.format("<span class=\"Category C%d\">%s %s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
-		strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
+		if(cContent.m_nSafeFilter<2) {
+			strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
+		} else {
+			strRtn.append("<img class=\"IllustThumbImg\" src=\"/img/warning.png_360.jpg\">");
+		}
 		strRtn.append("</a>");
 
 		return strRtn.toString();

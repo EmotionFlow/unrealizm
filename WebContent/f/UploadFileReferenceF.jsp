@@ -7,6 +7,7 @@
 class UploadReferenceCParam {
 	public int m_nUserId = -1;
 	public int m_nCategoryId = 0;
+	public int m_nSafeFilter = 0;
 	public String m_strDescription = "";
 
 	public int GetParam(HttpServletRequest cRequest) {
@@ -14,6 +15,7 @@ class UploadReferenceCParam {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
 			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 12);
+			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), 0, 3);
 			m_strDescription	= Common.TrimAll(Common.ToString(request.getParameter("DES")));
 			m_strDescription = m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
@@ -43,11 +45,12 @@ class UploadReferenceC {
 			cConn = dsPostgres.getConnection();
 
 			// get content id
-			strSql ="INSERT INTO contents_0000(user_id, category_id, description) VALUES(?, ?, ?) RETURNING content_id";
+			strSql ="INSERT INTO contents_0000(user_id, category_id, safe_filter, description) VALUES(?, ?, ?, ?) RETURNING content_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nCategoryId);
-			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, 200));
+			cState.setInt(3, cParam.m_nSafeFilter);
+			cState.setString(4, Common.SubStrNum(cParam.m_strDescription, 200));
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nContentId = cResSet.getInt("content_id");
