@@ -18,31 +18,33 @@ if(cCheckLogin.m_bLogin) {
 
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
-		.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
-		.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 16px; line-height: 28px; color: #fff; font-weight: normal;}
-		.AnalogicoLogin {margin: 0 0 10px 0;}
-		.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
-		.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 30px 0;}
-		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
-		.AnalogicoInfo {display: none;}
-		.FooterAd {display: none;}
+			body {padding: 83px 0 51px 0 !important;}
 
-		.PoipikuInfoTitle {display: block;width: 340px; margin: 0 auto; padding: 0; font-size: 18px; font-weight: bold; text-align: center;}
-		.PoipikuInfo {padding: 40px 0;}
-		.poipikuDesc {display: block;width: 340px; height: auto; margin: 0 auto; font-size: 15px; line-height: 25px;}
-		.poipikuDesc.TextOnly {height: auto;}
-		.poipikuDesc .DescImg {display: block; width: 340px; background-color: #fff; margin: 10px 0; text-align: center; font-size: 0; border: solid 1px #5bd; overflow: hidden;}
-		.poipikuDesc .DescImg img {background-color: #fff; max-width: 340px; max-height: 340px;}
-		.poipikuDesc .DescTitle {font-size: 18px; font-weight: bold;}
-		.PoipikuInfo:nth-child(2n-1) {background-color: #fff; color: #5bd;}
-		.PoipikuInfo:nth-child(2n) {background-color: #5bd; color: #fff;}
+			.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
+			.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 16px; line-height: 28px; color: #fff; font-weight: normal;}
+			.AnalogicoLogin {margin: 0 0 10px 0;}
+			.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
+			.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 30px 0;}
+			.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
+			.AnalogicoInfo {display: none;}
+			.FooterAd {display: none;}
 
-		.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
+			.PoipikuInfoTitle {display: block;width: 340px; margin: 0 auto; padding: 0; font-size: 18px; font-weight: bold; text-align: center;}
+			.PoipikuInfo {padding: 40px 0;}
+			.poipikuDesc {display: block;width: 340px; height: auto; margin: 0 auto; font-size: 15px; line-height: 25px;}
+			.poipikuDesc.TextOnly {height: auto;}
+			.poipikuDesc .DescImg {display: block; width: 340px; background-color: #fff; margin: 10px 0; text-align: center; font-size: 0; border: solid 1px #5bd; overflow: hidden;}
+			.poipikuDesc .DescImg img {background-color: #fff; max-width: 340px; max-height: 340px;}
+			.poipikuDesc .DescTitle {font-size: 18px; font-weight: bold;}
+			.PoipikuInfo:nth-child(2n-1) {background-color: #fff; color: #5bd;}
+			.PoipikuInfo:nth-child(2n) {background-color: #5bd; color: #fff;}
 
-		<%if(Util.isSmartPhone(request)) {%>
-		<%} else {%>
-		.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
-		<%}%>
+			.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
+
+			<%if(Util.isSmartPhone(request)) {%>
+			<%} else {%>
+			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
+			<%}%>
 		</style>
 
 		<script type="text/javascript">

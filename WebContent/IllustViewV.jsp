@@ -23,8 +23,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
-		<%
-		%>
 		<title><%=strTitle%></title>
 		<script type="text/javascript">
 			var g_nPage = 0;
@@ -36,7 +34,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				$("#IllustItemList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"ID" : <%=cResults.m_cContent.m_nUserId%>, "TD" : <%=cResults.m_cContent.m_nContentId%>, "PG" : g_nPage, "MD" : <%=CCnv.MODE_SP%>},
+					"data": {
+						"ID" : <%=cResults.m_cContent.m_nUserId%>,
+						"TD" : <%=cResults.m_cContent.m_nContentId%>,
+						"PG" : g_nPage,
+						"MD" : <%=CCnv.MODE_SP%>,
+						"ADF" : <%=cResults.m_cContent.m_nSafeFilter%>},
 					"url": "/f/IllustViewF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -105,12 +108,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 	<body>
 		<div class="Wrapper">
-
-			<div class="IllustItemList">
+			<div id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
 			</div>
-			<div id="IllustItemList" class="IllustItemList" style="margin-top: 50px;"></div>
-
 		</div>
 	</body>
 </html>

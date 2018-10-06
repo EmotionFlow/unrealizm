@@ -594,6 +594,7 @@ function UploadFile(user_id) {
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
+	var nSafeFilter = ($('#OptionR18').prop('checked'))?2:0;	// 0:general, 1:R15, 2:R18, 3:R18G
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -607,6 +608,7 @@ function UploadFile(user_id) {
 		"data": {
 			"UID":user_id,
 			"CAT":nCategory,
+			"SAF":nSafeFilter,
 			"DES":strDescription,
 		},
 		"url": "/f/UploadFileReferenceF.jsp",
@@ -654,6 +656,7 @@ function UploadPaste(user_id) {
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
+	var nSafeFilter = ($('#OptionR18').prop('checked'))?2:0;	// 0:general, 1:R15, 2:R18, 3:R18G
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var strEncodeImg = $('#imgView').attr('src').replace('data:image/png;base64,', '');
@@ -666,6 +669,7 @@ function UploadPaste(user_id) {
 			"UID":user_id,
 			"DES":strDescription,
 			"REC":nRecent,
+			"SAF":nSafeFilter,
 			"TWI":nTweet,
 			"IMG":nTweetImage,
 			"CAT":nCategory,

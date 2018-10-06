@@ -19,15 +19,12 @@ if(!cResults.getResults(cCheckLogin)) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNum)%>" />
-		<meta name="twitter:card" content="gallery" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName))%>" />
 		<meta name="twitter:description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNum)%>" />
-		<%
-		for(int nCnt=0; nCnt<cResults.m_vContentList.size() && nCnt<4; nCnt++) {
-			CContent cContent = cResults.m_vContentList.get(nCnt);
-		%>
-		<meta name="twitter:image<%=nCnt%>" content="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg">
+		<%if(!cResults.m_cUser.m_strFileName.isEmpty()) {%>
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(cResults.m_cUser.m_strFileName)%>" />
 		<%}%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName))%></title>
 

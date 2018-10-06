@@ -30,8 +30,12 @@ g_strSearchWord = cResults.m_strKeyword;
 		</script>
 
 		<style>
-		#HeaderTitleWrapper {display: none;}
-		#HeaderSearchWrapper {display: block;}
+			body {padding: 83px 0 51px 0 !important;}
+
+			<%if(Util.isSmartPhone(request)) {%>
+			#HeaderTitleWrapper {display: none;}
+			#HeaderSearchWrapper {display: block;}
+			<%}%>
 		</style>
 	</head>
 

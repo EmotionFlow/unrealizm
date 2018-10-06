@@ -26,7 +26,7 @@ if(cCookies != null) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-04.js" type="text/javascript"></script>
+		<script src="/js/upload-05.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -61,23 +61,25 @@ if(cCookies != null) {
 		</script>
 
 		<style>
-.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: auto; background: none; max-height: none;}
-.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
-.qq-gallery .qq-total-progress-bar-container {display: none;}
-.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 6px;}
-.qq-gallery .qq-file-info {display: none;}
-.qq-upload-retry-selector qq-upload-retry {display: none;}
-.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
-.qq-gallery .qq-upload-retry {display: none;}
-.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
-.qq-gallery .qq-upload-cancel {right: -8px; top: -8px; width: 26px; height: 26px; line-height: 20px; font-size: 12px; padding: 0; border: solid 3px #fff; border-radius: 30px;}
-.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 15px 0;}
-.UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
-.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;}
-<%if(!Util.isSmartPhone(request)) {%>
-.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
-.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
-<%}%>
+			body {padding: 83px 0 51px 0 !important;}
+
+			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: auto; background: none; max-height: none;}
+			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
+			.qq-gallery .qq-total-progress-bar-container {display: none;}
+			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 6px;}
+			.qq-gallery .qq-file-info {display: none;}
+			.qq-upload-retry-selector qq-upload-retry {display: none;}
+			.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
+			.qq-gallery .qq-upload-retry {display: none;}
+			.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
+			.qq-gallery .qq-upload-cancel {right: -8px; top: -8px; width: 26px; height: 26px; line-height: 20px; font-size: 12px; padding: 0; border: solid 3px #fff; border-radius: 30px;}
+			.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 15px 0;}
+			.UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
+			.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;}
+			<%if(!Util.isSmartPhone(request)) {%>
+			.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
+			.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
+			<%}%>
 		</style>
 	</head>
 
@@ -129,6 +131,16 @@ if(cCookies != null) {
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
 							<label class="onoffswitch-label" for="OptionRecent">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.R18")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionR18" id="OptionR18" value="0" />
+							<label class="onoffswitch-label" for="OptionR18">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>

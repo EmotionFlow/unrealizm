@@ -77,7 +77,11 @@ class UploadFileTweetC {
 					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
 					if(!bRsultTweet) Log.d("tweet失敗");
 				} else { // with image
-					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(cContent.m_strFileName));
+					String strTweetFile = cContent.m_strFileName;
+					if(cContent.m_nSafeFilter>=2) {
+						strTweetFile = "/img/warning.png";
+					}
+					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strTweetFile));
 					if(!bRsultTweet) Log.d("tweet失敗");
 				}
 			}

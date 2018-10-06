@@ -15,6 +15,7 @@ public class IllustViewListC {
 	public int m_nContentId = -1;
 	public int m_nPage = 0;
 	public int m_nMode = 0;
+	public boolean m_bAdFilter = false;
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
@@ -23,6 +24,7 @@ public class IllustViewListC {
 			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
 			m_nPage 		= Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 			m_nMode 		= Common.ToInt(cRequest.getParameter("MD"));
+			m_bAdFilter		= (Common.ToInt(cRequest.getParameter("ADF"))>=2);
 		} catch(Exception e) {
 			m_nContentId = -1;
 		}

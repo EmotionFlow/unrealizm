@@ -18,7 +18,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-04.js" type="text/javascript"></script>
+		<script src="/js/upload-05.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -54,6 +54,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		</script>
 
 		<style>
+			body {padding: 83px 0 51px 0 !important;}
 			#InputFile {border: solid 3px #eee;}
 			#InputFile:hover {border-color: #ccc;}
 			#InputFile.pastable-focus {border-color: #5bd;}
@@ -106,6 +107,16 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
 							<label class="onoffswitch-label" for="OptionRecent">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.R18")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionR18" id="OptionR18" value="0" />
+							<label class="onoffswitch-label" for="OptionR18">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>
