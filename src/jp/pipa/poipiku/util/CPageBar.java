@@ -13,9 +13,9 @@ public class CPageBar {
 		int nPageLast = Math.max((int) Math.ceil((double) nContentsNum / (double) SELECT_MAX) - 1, 0);
 		int nPageNext = Math.min(nPageNum + 1, nPageLast);
 
-		String strPagePre = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\">&lt;</a></span>",
+		String strPagePre = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\"><i class=\"fas fa-chevron-left\"></i></a></span>",
 				strPageName, nPagePre, strOption);
-		String strPageNext = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\">&gt;</a></span>",
+		String strPageNext = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\"><i class=\"fas fa-chevron-right\"></i></a></span>",
 				strPageName, nPageNext, strOption);
 
 		final int nPageNumLeftTmp1 = Math.min(nPageNum, nPageBarNum);
@@ -49,9 +49,9 @@ public class CPageBar {
 		int nPageLast = Math.max((int) Math.ceil((double) nContentsNum / (double) SELECT_MAX) - 1, 0);
 		int nPageNext = Math.min(nPageNum + 1, nPageLast);
 
-		String strPagePre = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s_%d.html\">&lt;</a></span>",
+		String strPagePre = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s_%d.html\"><i class=\"fas fa-chevron-left\"></a></span>",
 				strPageName, nPagePre);
-		String strPageNext = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s_%d.html\">&gt;</a></span>",
+		String strPageNext = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s_%d.html\"><i class=\"fas fa-chevron-right\"></a></span>",
 				strPageName, nPageNext);
 
 		final int nPageNumLeftTmp1 = Math.min(nPageNum, nPageBarNum);

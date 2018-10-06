@@ -90,21 +90,21 @@ class UploadReferenceC {
 %><%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-Log.d("UploadFileReferenceF:"+cCheckLogin.m_nUserId);
+Log.d("UploadReferenceC - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
 UploadReferenceCParam cParam = new UploadReferenceCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
-Log.d("UploadReferenceCParam:"+nRtn);
-Log.d("UploadReferenceCParam.m_nUserId:"+cParam.m_nUserId);
-Log.d("UploadReferenceCParam.m_nCategoryId:"+cParam.m_nCategoryId);
-Log.d("UploadReferenceCParam.m_strDescription:"+cParam.m_strDescription);
+//Log.d("UploadReferenceCParam:"+nRtn);
+//Log.d("UploadReferenceCParam.m_nUserId:"+cParam.m_nUserId);
+//Log.d("UploadReferenceCParam.m_nCategoryId:"+cParam.m_nCategoryId);
+//Log.d("UploadReferenceCParam.m_strDescription:"+cParam.m_strDescription);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadReferenceC cResults = new UploadReferenceC();
 	nRtn = cResults.GetResults(cParam, _TEX);
-	Log.d("UploadReferenceC:"+nRtn);
+	Log.d("UploadReferenceC - OK:"+nRtn);
 }
 %>
 {
