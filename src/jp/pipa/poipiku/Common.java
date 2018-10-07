@@ -23,8 +23,8 @@ public class Common {
 	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
 
 	public static final int NO_NEED_UPDATE[] = {
-			103, 104, 105, 106, 107,	// iPhone系
-			205, 206, 207	// Android系
+			106, 107, 108, 109,	// 1系 iPhone
+			205, 206, 207, 208, 209	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
 	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン

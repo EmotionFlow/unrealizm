@@ -1143,6 +1143,7 @@
 	display: flex;
 	flex-flow: row nowrap;
 	width: 100%;
+	float: left;
 	box-sizing: border-box;
 	text-align: left;
 	margin: 10px 0 0 0;
