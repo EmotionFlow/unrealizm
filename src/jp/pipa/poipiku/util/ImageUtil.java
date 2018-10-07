@@ -493,7 +493,7 @@ public class ImageUtil {
 				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getWidth(), bufferedImageSrc.getHeight(), bufferedImageSrc.getType());
 				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
-				bufferedImageSrc = destinationImage;
+				if(destinationImage!=null) bufferedImageSrc = destinationImage;
 				break;
 			}
 			case 3: { // PI rotation
@@ -502,7 +502,7 @@ public class ImageUtil {
 				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getWidth(), bufferedImageSrc.getHeight(), bufferedImageSrc.getType());
 				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
-				bufferedImageSrc = destinationImage;
+				if(destinationImage!=null) bufferedImageSrc = destinationImage;
 				break;
 			}
 			case 4: { // Flip Y
@@ -511,7 +511,7 @@ public class ImageUtil {
 				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getWidth(), bufferedImageSrc.getHeight(), bufferedImageSrc.getType());
 				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
-				bufferedImageSrc = destinationImage;
+				if(destinationImage!=null) bufferedImageSrc = destinationImage;
 				break;
 			}
 			case 5: { // - PI/2 and Flip X
@@ -520,7 +520,7 @@ public class ImageUtil {
 				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
 				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
-				bufferedImageSrc = destinationImage;
+				if(destinationImage!=null) bufferedImageSrc = destinationImage;
 				break;
 			}
 			case 6: { // -PI/2 and -width
@@ -529,7 +529,7 @@ public class ImageUtil {
 				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
 				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
-				bufferedImageSrc = destinationImage;
+				if(destinationImage!=null) bufferedImageSrc = destinationImage;
 				break;
 			}
 			case 7: { // PI/2 and Flip
@@ -540,7 +540,7 @@ public class ImageUtil {
 				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
 				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
-				bufferedImageSrc = destinationImage;
+				if(destinationImage!=null) bufferedImageSrc = destinationImage;
 				break;
 			}
 			case 8: { // PI/2
@@ -549,7 +549,7 @@ public class ImageUtil {
 				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
 				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
 				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
-				bufferedImageSrc = destinationImage;
+				if(destinationImage!=null) bufferedImageSrc = destinationImage;
 				break;
 			}
 			case 1:

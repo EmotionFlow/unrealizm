@@ -75,6 +75,9 @@ class UploadFileFirstC {
 			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
 			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
+				String strFileName = String.format("/error_file/%d_%d.error", cParam.m_nUserId, cParam.m_nContentId);
+				String strRealFileName = getServletContext().getRealPath(strFileName);
+				cParam.item_file.write(new File(strRealFileName));
 				return nRtn;
 			}
 
