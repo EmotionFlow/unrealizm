@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.color.ColorSpace;
+import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -18,6 +19,13 @@ import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
 import org.w3c.dom.*;
+
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.MetadataException;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.drew.metadata.jpeg.JpegDirectory;
 
 public class ImageUtil {
 	public static void createThumbIllust(String strSrcFileName, boolean bLoop) throws IOException {
@@ -54,7 +62,6 @@ public class ImageUtil {
 	public static boolean createThumbNormalize(String strSrcFileName, String strDstFileName, int newWidth, boolean bLoop) throws IOException {
 		boolean bRtn = false;
 		String ext = getExt(strSrcFileName);
-
 		switch (ext) {
 		case "gif":
 			createThumbGifNormalize(strSrcFileName, strDstFileName, newWidth, bLoop);
@@ -451,18 +458,120 @@ public class ImageUtil {
 	}
 
 	public static BufferedImage read(String strSrcFileName) throws IOException {
+		File fileSrc = new File(strSrcFileName);
 		BufferedImage bufferedImageSrc = null;
 		try {
-			bufferedImageSrc = ImageIO.read(new File(strSrcFileName));
+			bufferedImageSrc = ImageIO.read(fileSrc);
 		} catch(Exception e) {
-			bufferedImageSrc = ImageUtil.readImageCMYK(new File(strSrcFileName));
+			bufferedImageSrc = ImageUtil.readImageCMYK(fileSrc);
+		}
+
+		String ext = getExt(strSrcFileName);
+		if(!ext.equals("jpeg")) return bufferedImageSrc;
+
+		try {
+			// Exif処理
+			Metadata metadata = ImageMetadataReader.readMetadata(fileSrc);
+			if(metadata==null) return bufferedImageSrc;
+			ExifIFD0Directory exifIFD0Directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+			if(exifIFD0Directory==null) return bufferedImageSrc;
+			int orientation = exifIFD0Directory.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+			JpegDirectory jpegDirectory = (JpegDirectory) metadata.getFirstDirectoryOfType(JpegDirectory.class);
+			if(jpegDirectory==null) return bufferedImageSrc;
+			int width = jpegDirectory.getImageWidth();
+			int height = jpegDirectory.getImageHeight();
+			Log.d("orientation:"+orientation);
+			Log.d("width:"+width);
+			Log.d("height:"+height);
+			//int width = bufferedImageSrc.getWidth();
+			//int height = bufferedImageSrc.getHeight();
+			AffineTransform affineTransform = new AffineTransform();
+			switch (orientation) {
+			case 2: { // Flip X
+				affineTransform.scale(-1.0, 1.0);
+				affineTransform.translate(-width, 0);
+				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getWidth(), bufferedImageSrc.getHeight(), bufferedImageSrc.getType());
+				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
+				bufferedImageSrc = destinationImage;
+				break;
+			}
+			case 3: { // PI rotation
+				affineTransform.translate(width, height);
+				affineTransform.rotate(Math.PI);
+				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getWidth(), bufferedImageSrc.getHeight(), bufferedImageSrc.getType());
+				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
+				bufferedImageSrc = destinationImage;
+				break;
+			}
+			case 4: { // Flip Y
+				affineTransform.scale(1.0, -1.0);
+				affineTransform.translate(0, -height);
+				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getWidth(), bufferedImageSrc.getHeight(), bufferedImageSrc.getType());
+				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
+				bufferedImageSrc = destinationImage;
+				break;
+			}
+			case 5: { // - PI/2 and Flip X
+				affineTransform.rotate(-Math.PI/2);
+				affineTransform.scale(-1.0, 1.0);
+				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
+				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
+				bufferedImageSrc = destinationImage;
+				break;
+			}
+			case 6: { // -PI/2 and -width
+				affineTransform.translate(height, 0);
+				affineTransform.rotate(Math.PI/2);
+				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
+				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
+				bufferedImageSrc = destinationImage;
+				break;
+			}
+			case 7: { // PI/2 and Flip
+				affineTransform.scale(-1.0, 1.0);
+				affineTransform.translate(-height, 0);
+				affineTransform.translate(0, width);
+				affineTransform.rotate(3 * Math.PI/2);
+				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
+				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
+				bufferedImageSrc = destinationImage;
+				break;
+			}
+			case 8: { // PI/2
+				affineTransform.translate(0, width);
+				affineTransform.rotate(3 * Math.PI/2);
+				AffineTransformOp affineTransformOp = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_BILINEAR);
+				BufferedImage destinationImage = new BufferedImage(bufferedImageSrc.getHeight(), bufferedImageSrc.getWidth(), bufferedImageSrc.getType());
+				destinationImage = affineTransformOp.filter(bufferedImageSrc, destinationImage);
+				bufferedImageSrc = destinationImage;
+				break;
+			}
+			case 1:
+			default:
+				break;
+			}
+		} catch (MetadataException e) {
+			Log.d(e.getMessage());
+			//e.printStackTrace();
+		} catch (ImageProcessingException e) {
+			Log.d(e.getMessage());
+			//e.printStackTrace();
+		} catch (IOException e) {
+			Log.d(e.getMessage());
+			//e.printStackTrace();
 		}
 		return bufferedImageSrc;
 	}
 
 	public static BufferedImage readPng(String strSrcFileName) throws IOException {
 		BufferedImage cImage = ImageUtil.read(strSrcFileName);
-		// Conver ARGB to RGB
+		// Convert ARGB to RGB
 		BufferedImage cImageRGB = new BufferedImage(cImage.getWidth(), cImage.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = cImageRGB.createGraphics();
 		g.setColor(Color.white);

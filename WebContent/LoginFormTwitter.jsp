@@ -25,7 +25,7 @@ try{
 	session.setAttribute("provider", provider);
 	String callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp";
 	authUrl = provider.retrieveRequestToken(consumer, callbackUri);
-	Log.d("LoginFormTwitterV.jsp authUrl:"+authUrl);
+	//Log.d("LoginFormTwitterV.jsp authUrl:"+authUrl);
 }catch(Exception e){
 	e.printStackTrace();
 }

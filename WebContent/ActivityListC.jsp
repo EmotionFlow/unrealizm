@@ -15,7 +15,6 @@ class ActivityListCParam {
 	}
 }
 
-
 class ActivityListC {
 	public Vector<CComment> m_vComment = new Vector<CComment>();
 

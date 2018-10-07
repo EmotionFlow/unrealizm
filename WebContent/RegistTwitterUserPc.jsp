@@ -55,8 +55,9 @@ try {
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 	cConn = dsPostgres.getConnection();
 
-	// select
-	strSql = "SELECT fldUserId FROM tbloauth WHERE fldaccesstoken=? AND fldsecrettoken=? ORDER BY fldUserId LIMIT 1";
+	// check upser
+	// 厳密な認証
+	strSql = "SELECT fldUserId FROM tbloauth WHERE fldaccesstoken=? AND fldsecrettoken=? ORDER BY fldUserId DESC LIMIT 1";
 	cState = cConn.prepareStatement(strSql);
 	cState.setString(1, accessToken);
 	cState.setString(2, tokenSecret);
@@ -66,6 +67,19 @@ try {
 	}
 	cResSet.close();cResSet=null;
 	cState.close();cState=null;
+
+	/*
+	// 再登録も可能な認証
+	strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? ORDER BY fldUserId DESC LIMIT 1";
+	cState = cConn.prepareStatement(strSql);
+	cState.setString(1, user_id);
+	cResSet = cState.executeQuery();
+	if(cResSet.next()) {
+		nUserId = cResSet.getInt("fldUserId");
+	}
+	cResSet.close();cResSet=null;
+	cState.close();cState=null;
+	*/
 
 	if (nUserId>0){	// Login
 		Log.d("Login : " + nUserId);
@@ -83,6 +97,16 @@ try {
 		cState.close();cState=null;
 
 		if(nUserId>0) {
+			/*
+			// twitter_user_idのみでの認証を可能としたので、ログイン都度トークンを更新
+			strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=? WHERE fldUserId=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, accessToken);
+			cState.setString(2, tokenSecret);
+			cState.setInt(3, nUserId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+			*/
 			if(strHashPass.equals("")) {
 				strHashPass = Util.getHashPass(strPassword);
 				// LKをDB登録

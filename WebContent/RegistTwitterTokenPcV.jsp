@@ -110,7 +110,7 @@ try
 	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
 
-response.sendRedirect("/MyEditSettingV.jsp#TwitterSetting");
+response.sendRedirect("/MyEditSettingPcV.jsp#TwitterSetting");
 %>
 <!DOCTYPE html>
 <html>

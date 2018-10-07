@@ -14,7 +14,6 @@ public class IllustViewC {
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
-
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nContentId		= Common.ToInt(cRequest.getParameter("TD"));
 		} catch(Exception e) {
