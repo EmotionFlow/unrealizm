@@ -31,7 +31,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustView.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
 		<%if(cResults.m_cContent.m_nSafeFilter<2) {%>
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(cResults.m_cContent.m_strFileName)%>" />
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />
 		<%} else {%>
 		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl("/img/warning.png")%>" />
 		<%}%>

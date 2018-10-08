@@ -33,6 +33,19 @@ class CheckNotifyC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+			// フォロー通知を表示するか
+			boolean bDispFollower = false;
+			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nUserId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				int nMailComment	= cResSet.getInt("mail_comment");
+				bDispFollower		= ((nMailComment>>>0 & 0x01) == 0x01);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
 			// Check Comment
 			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
@@ -47,16 +60,18 @@ class CheckNotifyC {
 			cState.close();cState=null;
 
 			// Check Follower
-			strSql = "SELECT  COUNT(*) FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setInt(2, cParam.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nCheckFollow = cResSet.getInt(1);
+			if(bDispFollower) {
+				strSql = "SELECT  COUNT(*) FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nUserId);
+				cState.setInt(2, cParam.m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nCheckFollow = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			// Check Heart
 			/*
@@ -86,16 +101,18 @@ class CheckNotifyC {
 			cState.close();cState=null;
 
 			// Notify Follower
-			strSql = "SELECT  COUNT(*) FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setInt(2, cParam.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nNotifyFollow = cResSet.getInt(1);
+			if(bDispFollower) {
+				strSql = "SELECT  COUNT(*) FROM follows_0000 WHERE follows_0000.follow_user_id=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nUserId);
+				cState.setInt(2, cParam.m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nNotifyFollow = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			// Notify Heart
 			/*
