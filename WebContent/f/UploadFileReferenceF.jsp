@@ -71,7 +71,7 @@ class UploadReferenceC {
 						cState.setInt(2, m_nContentId);
 						cState.executeUpdate();
 					} catch(Exception e) {
-						e.printStackTrace();
+						Log.d(e.getMessage());
 					}
 				}
 				cState.close();cState=null;
@@ -90,7 +90,7 @@ class UploadReferenceC {
 %><%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-Log.d("UploadReferenceC - UserId:"+cCheckLogin.m_nUserId);
+Log.d("UploadReferenceF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
 UploadReferenceCParam cParam = new UploadReferenceCParam();
@@ -104,7 +104,7 @@ nRtn = cParam.GetParam(request);
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadReferenceC cResults = new UploadReferenceC();
 	nRtn = cResults.GetResults(cParam, _TEX);
-	Log.d("UploadReferenceC - OK:"+nRtn);
+	Log.d("UploadReferenceF - OK:"+nRtn);
 }
 %>
 {

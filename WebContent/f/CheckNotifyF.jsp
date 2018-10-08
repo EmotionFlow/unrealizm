@@ -59,6 +59,7 @@ class CheckNotifyC {
 			cState.close();cState=null;
 
 			// Check Heart
+			/*
 			strSql = "SELECT COUNT(*) FROM bookmarks_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
@@ -69,6 +70,7 @@ class CheckNotifyC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			*/
 
 			// Notify Comment
 			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
@@ -96,6 +98,7 @@ class CheckNotifyC {
 			cState.close();cState=null;
 
 			// Notify Heart
+			/*
 			strSql = "SELECT COUNT(*) FROM bookmarks_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
@@ -106,6 +109,7 @@ class CheckNotifyC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			*/
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Update Last Check Time

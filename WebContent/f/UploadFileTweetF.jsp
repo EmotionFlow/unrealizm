@@ -100,6 +100,7 @@ class UploadFileTweetC {
 %><%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
+Log.d("UploadFileTweetF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
 UploadFileTweetCParam cParam = new UploadFileTweetCParam();
@@ -109,5 +110,6 @@ nRtn = cParam.GetParam(request);
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadFileTweetC cResults = new UploadFileTweetC();
 	nRtn = cResults.GetResults(cParam, _TEX);
+	Log.d("UploadFileTweetF - OK:"+nRtn);
 }
 %><%=nRtn%>

@@ -14,6 +14,7 @@ class UploadFileFirstCParam {
 	FileItem item_file = null;
 
 	public int GetParam(HttpServletRequest cRequest) {
+		int nRtn = -1;
 		try {
 			String strRelativePath = Common.GetUploadPath();
 			String strRealPath = getServletContext().getRealPath(strRelativePath);
@@ -40,17 +41,19 @@ class UploadFileFirstCParam {
 					item.delete();
 				} else {
 					item_file = item;
+					nRtn = 0;
 				}
 			}
 		} catch(FileUploadException e) {
 			e.printStackTrace();
-			return -1;
+			m_nUserId = -1;
+			nRtn = -2;
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
-			return -99;
+			nRtn = -99;
 		}
-		return 0;
+		return nRtn;
 	}
 }
 
@@ -91,7 +94,10 @@ class UploadFileFirstC {
 			bExist = cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(!bExist) return nRtn;
+			if(!bExist) {
+				Log.d("content not exist error : cParam.m_nUserId="+ cParam.m_nUserId + ", cParam.m_nContentId="+cParam.m_nContentId);
+				return nRtn;
+			}
 
 			// save file
 			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
@@ -129,6 +135,7 @@ class UploadFileFirstC {
 %><%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
+Log.d("UploadFileFirstF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
 UploadFileFirstCParam cParam = new UploadFileFirstCParam();
@@ -138,6 +145,7 @@ nRtn = cParam.GetParam(request);
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadFileFirstC cResults = new UploadFileFirstC();
 	nRtn = cResults.GetResults(cParam, _TEX);
+	Log.d("UploadFileFirstF - OK:"+nRtn);
 }
 %>
 {

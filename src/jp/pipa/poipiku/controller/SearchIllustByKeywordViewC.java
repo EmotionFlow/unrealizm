@@ -19,7 +19,7 @@ public class SearchIllustByKeywordViewC {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
-			m_strKeyword = Common.ToString(cRequest.getParameter("KWD")).trim();
+			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
 		}
 		catch(Exception e) {
 			;
@@ -36,8 +36,6 @@ public class SearchIllustByKeywordViewC {
 	}
 
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
-		if(m_strKeyword.isEmpty()) return false;
-
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -46,6 +44,7 @@ public class SearchIllustByKeywordViewC {
 		String strSql = "";
 		int idx = 1;
 
+		if(m_strKeyword.isEmpty()) return bResult;
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();

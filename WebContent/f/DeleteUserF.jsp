@@ -48,11 +48,11 @@ try {
 	cState.setInt(1, m_nUserId);
 	cState.executeUpdate();
 	cState.close();cState=null;
-	//strSql = "DELETE FROM bookmarks_0000 WHERE user_id=?";
-	//cState = cConn.prepareStatement(strSql);
-	//cState.setInt(1, m_nUserId);
-	//cState.executeUpdate();
-	//cState.close();cState=null;
+	strSql = "DELETE FROM bookmarks_0000 WHERE user_id=?";
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, m_nUserId);
+	cState.executeUpdate();
+	cState.close();cState=null;
 
 	// delete follow
 	strSql = "DELETE FROM follows_0000 WHERE user_id=?";

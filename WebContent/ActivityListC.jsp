@@ -90,6 +90,7 @@ class ActivityListC {
 			cState.close();cState=null;
 
 			// Heart
+			/*
 			if(cParam.m_nMode<=0) {
 				strSql = "SELECT bookmarks_0000.*, users_0000.file_name, users_0000.nickname FROM bookmarks_0000 LEFT JOIN users_0000 ON bookmarks_0000.user_id=users_0000.user_id WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) ORDER BY bookmark_id DESC LIMIT 200";
 			} else {
@@ -111,6 +112,7 @@ class ActivityListC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			*/
 
 
 			// Sort Time Line

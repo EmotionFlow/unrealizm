@@ -480,9 +480,7 @@ public class ImageUtil {
 			if(jpegDirectory==null) return bufferedImageSrc;
 			int width = jpegDirectory.getImageWidth();
 			int height = jpegDirectory.getImageHeight();
-			Log.d("orientation:"+orientation);
-			Log.d("width:"+width);
-			Log.d("height:"+height);
+			Log.d(String.format("read jpeg : orientation=%d, width=%d, height=%d", orientation, width, height));
 			//int width = bufferedImageSrc.getWidth();
 			//int height = bufferedImageSrc.getHeight();
 			AffineTransform affineTransform = new AffineTransform();
