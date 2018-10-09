@@ -90,9 +90,11 @@ class UploadFileC {
 			}
 
 			// insert file_name
-			strSql ="INSERT INTO contents_0000(user_id) VALUES(?) RETURNING content_id";
+			strSql ="INSERT INTO contents_0000(user_id, category_id, description) VALUES(?, ?, ?) RETURNING content_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(2, cParam.m_nCategoryId);
+			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, 200));
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nContentId = cResSet.getInt("content_id");
@@ -112,14 +114,32 @@ class UploadFileC {
 			ImageUtil.createThumbIllust(strRealFileName);
 			Log.d(strFileName);
 
+			// ファイルサイズ系情報
+			int nWidth = 0;
+			int nHeight = 0;
+			long nFileSize = 0;
+			try {
+				int size[] = ImageUtil.getImageSize(strRealFileName);
+				nWidth = size[0];
+				nHeight = size[1];
+				nFileSize = (new File(strRealFileName)).length();
+			} catch(IOException e) {
+				nWidth = 0;
+				nHeight = 0;
+				nFileSize = 0;
+				Log.d("error getImageSize");
+			}
+			Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d", nWidth, nHeight, nFileSize));
+
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, description=?, category_id=?, open_id=? WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=? WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
-			cState.setString(2, Common.SubStrNum(cParam.m_strDescription, 200));
-			cState.setInt(3, cParam.m_nCategoryId);
-			cState.setInt(4, cParam.m_nOpenId);
-			cState.setInt(5, m_nContentId);
+			cState.setInt(2, cParam.m_nOpenId);
+			cState.setInt(3, nWidth);
+			cState.setInt(4, nHeight);
+			cState.setLong(5, nFileSize);
+			cState.setInt(6, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 

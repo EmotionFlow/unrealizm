@@ -110,11 +110,31 @@ class UploadFileAppendC {
 			ImageUtil.createThumbIllust(strRealFileName);
 			Log.d(strFileName);
 
+			// ファイルサイズ系情報
+			int nWidth = 0;
+			int nHeight = 0;
+			long nFileSize = 0;
+			try {
+				int size[] = ImageUtil.getImageSize(strRealFileName);
+				nWidth = size[0];
+				nHeight = size[1];
+				nFileSize = (new File(strRealFileName)).length();
+			} catch(IOException e) {
+				nWidth = 0;
+				nHeight = 0;
+				nFileSize = 0;
+				Log.d("error getImageSize");
+			}
+			Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d", nWidth, nHeight, nFileSize));
+
 			// update file name
-			strSql ="UPDATE contents_appends_0000 SET file_name=? WHERE append_id=?";
+			strSql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=? WHERE append_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
-			cState.setInt(2, nAppendId);
+			cState.setInt(2, nWidth);
+			cState.setInt(3, nHeight);
+			cState.setLong(4, nFileSize);
+			cState.setInt(5, nAppendId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
