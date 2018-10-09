@@ -38,7 +38,7 @@ public class NewArrivalC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND file_complex>0 AND file_complex<=40000 ORDER BY content_id DESC LIMIT 200");
+			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND file_complex>0 AND file_complex<=50000 ORDER BY content_id DESC LIMIT 200");
 			cState = cConn.prepareStatement(strSql);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
