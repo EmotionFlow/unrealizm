@@ -567,6 +567,14 @@ public class ImageUtil {
 		return bufferedImageSrc;
 	}
 
+	public static long getConplex(String strSrcFileName) throws IOException {
+		String strDstFileName = strSrcFileName + "_complex.jpg";
+		ImageIO.write(resizeImageNormalize(ImageUtil.read(strSrcFileName), 1000), "jpg", new File(strDstFileName));
+		long nFileSize = (new File(strDstFileName)).length();
+		deleteFile(strDstFileName);
+		return nFileSize;
+	}
+
 	public static BufferedImage readPng(String strSrcFileName) throws IOException {
 		BufferedImage cImage = ImageUtil.read(strSrcFileName);
 		// Convert ARGB to RGB

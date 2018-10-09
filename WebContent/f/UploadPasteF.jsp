@@ -93,28 +93,32 @@ class UploadPasteC {
 			int nWidth = 0;
 			int nHeight = 0;
 			long nFileSize = 0;
+			long nComplexSize = 0;
 			try {
 				int size[] = ImageUtil.getImageSize(strRealFileName);
 				nWidth = size[0];
 				nHeight = size[1];
 				nFileSize = (new File(strRealFileName)).length();
+				nComplexSize = ImageUtil.getConplex(strRealFileName);
 			} catch(IOException e) {
 				nWidth = 0;
 				nHeight = 0;
 				nFileSize = 0;
+				nComplexSize=0;
 				Log.d("error getImageSize");
 			}
-			Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d", nWidth, nHeight, nFileSize));
+			Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setInt(2, cParam.m_nOpenId);
 			cState.setInt(3, nWidth);
 			cState.setInt(4, nHeight);
 			cState.setLong(5, nFileSize);
-			cState.setInt(6, m_nContentId);
+			cState.setLong(6, nComplexSize);
+			cState.setInt(7, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
