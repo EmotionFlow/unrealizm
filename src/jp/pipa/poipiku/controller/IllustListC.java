@@ -149,7 +149,7 @@ public class IllustListC {
 				}
 			}
 
-			if(m_bBlocking || m_bBlocked) return false;
+			if(m_bBlocking || m_bBlocked) return true;
 
 			// gallery
 			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";

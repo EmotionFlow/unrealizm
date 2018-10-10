@@ -40,7 +40,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 		</script>
 		<style>
-			body {padding: 83px 0 51px 0 !important;}
+			body {padding-top: 83px !important;}
 		</style>
 	</head>
 

@@ -87,7 +87,7 @@ public class CCnv {
 		strRtn.append("<div class=\"IllustItemExpand\">");
 		strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
 		if(cContent.m_nFileNum>1) {
-			strRtn.append(String.format("<a class=\"IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s <i class=\"fas fa-chevron-down\"></i></a>",
+			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s</a>",
 					cContent.m_nContentId,
 					String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		}

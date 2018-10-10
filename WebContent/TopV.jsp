@@ -18,7 +18,7 @@ if(cCheckLogin.m_bLogin) {
 
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
-			body {padding: 83px 0 51px 0 !important;}
+			body {padding-top: 83px !important;}
 
 			.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
 			.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 16px; line-height: 28px; color: #fff; font-weight: normal;}
@@ -29,15 +29,16 @@ if(cCheckLogin.m_bLogin) {
 			.AnalogicoInfo {display: none;}
 			.FooterAd {display: none;}
 
-			.PoipikuInfoTitle {display: block;width: 340px; margin: 0 auto; padding: 0; font-size: 18px; font-weight: bold; text-align: center;}
-			.PoipikuInfo {padding: 40px 0;}
-			.poipikuDesc {display: block;width: 340px; height: auto; margin: 0 auto; font-size: 15px; line-height: 25px;}
+			.PoipikuInfo {display: flex; flex-flow: row wrap; width: 100%; margin: 0 auto; justify-content: space-around; background-color: #fafafa; color: #5bd;padding: 15px 0;}
+			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
+			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 15px 0;}
+			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
+			.PoipikuInfo .PoipikuDesc .DescTitle {font-size: 18px; margin: 0 0 15px 0; font-weight: bold;}
+			.PoipikuInfo .PoipikuDesc .DescTitle .DescSubTitle {font-size: 16px; font-weight: normal;}
+
+
 			.poipikuDesc.TextOnly {height: auto;}
-			.poipikuDesc .DescImg {display: block; width: 340px; background-color: #fff; margin: 10px 0; text-align: center; font-size: 0; border: solid 1px #5bd; overflow: hidden;}
-			.poipikuDesc .DescImg img {background-color: #fff; max-width: 340px; max-height: 340px;}
 			.poipikuDesc .DescTitle {font-size: 18px; font-weight: bold;}
-			.PoipikuInfo:nth-child(2n-1) {background-color: #fff; color: #5bd;}
-			.PoipikuInfo:nth-child(2n) {background-color: #5bd; color: #fff;}
 
 			.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
 
@@ -95,159 +96,78 @@ if(cCheckLogin.m_bLogin) {
 
 
 
-		<div class="Wrapper">
-			<div class="PoipikuInfo" style="padding: 30px 0;">
-				<div class="PoipikuInfoTitle">
-				イラストポイポイSNS「ポイピク」ってこんなに楽しくて便利！
+		<div class="Wrapper ThumbList">
+			<div class="PoipikuInfo">
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS01.png" />
 				</div>
-			</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS02.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS03.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS03-2.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS04.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS05.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS06.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS07.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS08.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS09.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS10.png" />
+				</div>
 
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						放置絵、練習絵、ボツ絵、作業進捗、らくがき等々なんでもポイポイ！
-					</div>
-					<div class="DescImg" style="position: relative; height: 340px;">
-						<img src="/img/PoipikuInfo/01.png" style="position: absolute; width: 300px; left: 0;" />
-						<img src="/img/PoipikuInfo/02.png" style="position: absolute; width: 150px; right: 0; bottom: 0; padding: 15px 0 0 15px;" />
-					</div>
-					専用カテゴリが選べるから他人の目を気にせず超お気軽投稿
-				</div>
-			</div>
-
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						評価から開放されよう！
-					</div>
-					<div class="DescImg">
-						<img src="/img/PoipikuInfo/03_2.png" style="width: 340px; left: 0;" />
-					</div>
-					ブクマなし。ハートなし。スターなし。感情豊かな899種類の絵文字リアクションで共感を伝え合おう
-				</div>
-			</div>
-
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						まとめもワンクッションも漫画も200枚一気にポイポイ！
-					</div>
-					<div class="DescImg">
-						<img src="/img/PoipikuInfo/04_1.png" />
-					</div>
-					最大200枚まとめ投稿 ＆ 2枚目以降はクリック後表示 ＆ 漫画が読みやすい縦表示
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						コメント無し！フォローもフォロワーも他人には見られない！
-					</div>
-					<div class="DescImg" style="height: 240px;">
-						<img src="/img/PoipikuInfo/05.png" />
-					</div>
-					ブクマもハートも無しでさらにコメントも無し。リアクションも匿名でフォローしていることは相手にしか伝わりません
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						新着よけでもっとパーソナル！
-					</div>
-					<div class="DescImg">
-						<img src="/img/PoipikuInfo/10.png" />
-					</div>
-					もっともっと他の人の目を気にしたくない！と言う時は新着よけを使ってみよう
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
+				<div class="PoipikuDesc">
 					<div class="DescTitle">
 						転載対策もOK！
+						<div class="DescSubTitle">
+							転載禁止表示と右クリック禁止対策済み
+						</div>
 					</div>
-					<div class="DescImg" style="height: 290px;">
-						<img src="/img/PoipikuInfo/06.png" />
-					</div>
-					転載禁止表示と右クリック禁止対策済み
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						見たくないものをシャットアウト！
-					</div>
-					<div class="DescImg" style="height: 246px;">
-						<img src="/img/PoipikuInfo/07.png" />
-					</div>
-					ミュートキーワードを指定するとリアルタイムで見たくないものを非表示に
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						見たくない＆見せたくない人もブロック！
-					</div>
-					<div class="DescImg" style="height: 304px;">
-						<img src="/img/PoipikuInfo/08.png" />
-					</div>
-					ユーザブロックすれば見えなくなるだけじゃなく、相手からも見えなくなります
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc">
-					<div class="DescTitle">
-						Twitterでもキレイに見せたい！
-					</div>
-					<div class="DescImg" style="height: 251px;">
-						<img src="/img/PoipikuInfo/09_1.png" />
-					</div>
-					PCからのアップロードは元データをそのまま無劣化保存して原寸表示。Twitterにも同時ツイート。
-					同時ツイートは画像の有り/無しを選べるから、ツイッターのメディア欄を埋めたくない！と言う時にも便利
-				</div>
-			</div>
-
-			<div class="PoipikuInfo">
-				<div class="PoipikuInfoTitle">
-				他にも。。。
-				</div>
-			</div>
-
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc TextOnly">
 					<div class="DescTitle">
 						動くイラストもOK！
+						<div class="DescSubTitle">
+							アニメーションGIFにもフル規格で対応。フレームレートが途中で変わるような特殊なGIFも大丈夫
+						</div>
 					</div>
-					アニメーションGIFにもフル規格で対応。フレームレートが途中で変わるような特殊なGIFも大丈夫
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc TextOnly">
 					<div class="DescTitle">
 						ポイピクの活動をTwitterで定期お知らせ！
+						<div class="DescSubTitle">
+							週1回もしくは毎日の時間指定で定期ツイートできる ＆ 古い定期ツイートを自動削除するからTwitterの画像一覧が定期ツイートで埋まらない
+						</div>
 					</div>
-					週1回もしくは毎日の時間指定で定期ツイートできる ＆ 古い定期ツイートを自動削除するからTwitterの画像一覧が定期ツイートで埋まらない
-				</div>
-			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc TextOnly">
 					<div class="DescTitle">
 						表示が速い！
+						<div class="DescSubTitle">
+							月間2億PVを支える手書きブログのテクノロジを投入。独自の高速プラットフォームで可能な限りサーバ側で処理して端末に負荷をかけないから、古いスマホやPCでも高速表示
+						</div>
 					</div>
-					月間2億PVを支える手書きブログのテクノロジを投入。独自の高速プラットフォームで可能な限りサーバ側で処理して端末に負荷をかけないから、古いスマホやPCでも高速表示
 				</div>
 			</div>
-			<div class="PoipikuInfo">
-				<div class="poipikuDesc TextOnly">
-					<div class="DescTitle" style="text-align: center;">
-						さあ、はじめよう！
-					</div>
-					<div style="text-align: center; margin: 30px 0 0 0;">
-						イラストポイポイSNSポイピク<br />
-						<a class="BtnBase Rev" href="/LoginFormTwitterPc.jsp">
-							<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
-						</a>
-					</div>
-				</div>
+		</div>
+		<div class="Wrapper">
+			<div class="AnalogicoDesc Title">
+					さあ、はじめよう！
+			</div>
+			<div class="AnalogicoStart" style="margin-top: 0; padding-top: 30px;">
+				<a class="BtnBase Rev AnalogicoLogin" href="/LoginFormTwitterPc.jsp">
+					<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
+				</a>
 			</div>
 		</div>
 

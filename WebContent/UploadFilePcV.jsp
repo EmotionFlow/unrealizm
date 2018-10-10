@@ -61,7 +61,7 @@ if(cCookies != null) {
 		</script>
 
 		<style>
-			body {padding: 83px 0 51px 0 !important;}
+			body {padding-top: 83px !important;}
 
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: auto; background: none; max-height: none;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}

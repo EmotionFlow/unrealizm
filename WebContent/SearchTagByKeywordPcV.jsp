@@ -30,7 +30,7 @@ g_strSearchWord = cResults.m_strKeyword;
 		</script>
 
 		<style>
-			body {padding: 83px 0 51px 0 !important;}
+			body {padding-top: 83px !important;}
 
 			<%if(Util.isSmartPhone(request)) {%>
 			#HeaderTitleWrapper {display: none;}

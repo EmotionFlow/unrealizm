@@ -31,7 +31,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 		</script>
 
 		<style>
-			body {padding: 83px 0 51px 0 !important;}
+			body {padding-top: 83px !important;}
 
 			<%if(Util.isSmartPhone(request)) {%>
 			#HeaderTitleWrapper {display: none;}

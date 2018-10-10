@@ -26,30 +26,30 @@ if(!cResults.getResults(cCheckLogin)) {
 		<%if(Util.isSmartPhone(request)) {%>
 		<script type="text/javascript">
 		$(function(){
-			$('body, .Wrapper').each(function(index, element){
+			$('body, .IllustDetail').each(function(index, element){
 				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 			});
 			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsgSp")%>');
 		});
 		</script>
-		<style>
-		.IllustItemImage {max-width: 360px;}
-		</style>
 		<%} else {%>
 		<script type="text/javascript">
 		$(function(){
-			$('body, .Wrapper').each(function(index, element){
+			$('body, .IllustDetail').each(function(index, element){
 				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 			});
 			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsg")%>');
 		});
 		</script>
 		<%}%>
+		<style>
+		body {height: 100%;background: #ffffff; padding: 0 !important;}
+		</style>
 	</head>
 
-	<body style="height: 100%;background: #ffffff; padding: 0;">
+	<body>
 		<div id="DispMsg" style="top: 0;"></div>
-		<table style="width: 100%; height: 100%; text-align: center;">
+		<table class="IllustDetail">
 		<tr>
 		<td>
 		<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>

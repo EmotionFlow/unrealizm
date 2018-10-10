@@ -54,7 +54,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 		</script>
 
 		<style>
-			body {padding: 83px 0 51px 0 !important;}
+			body {padding-top: 83px !important;}
 			#InputFile {border: solid 3px #eee;}
 			#InputFile:hover {border-color: #ccc;}
 			#InputFile.pastable-focus {border-color: #5bd;}

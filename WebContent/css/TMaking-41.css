@@ -20,7 +20,11 @@
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
-	user-select:none;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
 }
 
 .Wrapper.ThumbList {
@@ -28,7 +32,11 @@
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
-	user-select:none;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
 }
 
 .Wrapper.ItemList {
@@ -36,7 +44,22 @@
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
-	user-select:none;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+.IllustDetail {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
 }
 
 .UpdateInfo {float: left; width: 100%; text-align: center; background-color: #5bd; padding: 5px 0; font-size: 0;}
@@ -464,8 +487,7 @@
 .IllustItem .IllustItemExpand .IllustItemExpandBtn {
 	display: inline-block;
 	margin: 10px 0 5px 0;
-	font-size: 13px;
-	color: #5bd;
+	font-size: 12px;
 }
 
 .IllustItem .Category {

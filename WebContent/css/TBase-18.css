@@ -110,6 +110,10 @@ body {
 	background: #fafafa;
 	-webkit-text-size-adjust: none;
 	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
 }
 
 html {
@@ -268,9 +272,11 @@ form, button {
 .onoffswitch {
 	position: relative;
 	width: 46px;
+	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
+	-webkit-touch-callout: none;
 }
 
 .onoffswitch .onoffswitch-checkbox {

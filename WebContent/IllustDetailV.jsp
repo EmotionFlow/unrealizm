@@ -20,15 +20,18 @@ if(!cResults.getResults(cCheckLogin)) {
 
 		<script>
 		$(function(){
-			$('body, .Wrapper').each(function(index, element){
+			$('body, .IllustDetail').each(function(index, element){
 				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 			});
 		});
 		</script>
+		<style>
+		body {height: 100%;background: #ffffff; padding: 0 !important;}
+		</style>
 	</head>
 
-	<body style="height: 100%;background: #ffffff; padding: 0;">
-		<table style="width: 100%; height: 100%; text-align: center;">
+	<body>
+		<table class="IllustDetail">
 		<tr>
 		<td>
 		<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>

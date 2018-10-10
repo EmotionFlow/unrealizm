@@ -21,7 +21,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		});
 		</script>
 		<style>
-			body {padding: 83px 0 51px 0 !important;}
+			body {padding-top: 83px !important;}
 		</style>
 	</head>
 

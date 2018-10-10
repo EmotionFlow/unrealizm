@@ -5,13 +5,13 @@
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=360, user-scalable=no" />
-<link href="/css/TBase-17.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-39.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBase-18.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-41.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/common-19.js"></script>
 <%@ include file="/inner/TGoogleAnalytics.jspf"%>
 <style>
-body {-webkit-user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-touch-callout: none;}
+body {user-select:none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-touch-callout: none;}
 </style>
