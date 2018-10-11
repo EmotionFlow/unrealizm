@@ -33,8 +33,8 @@ if(cCheckLogin.m_bLogin) {
 			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
 			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 15px 0;}
 			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
-			.PoipikuInfo .PoipikuDesc .DescTitle {font-size: 18px; margin: 0 0 15px 0; font-weight: bold;}
-			.PoipikuInfo .PoipikuDesc .DescTitle .DescSubTitle {font-size: 16px; font-weight: normal;}
+			.PoipikuInfo .PoipikuDesc .DescTitle {font-size: 17px; margin: 0 0 15px 0; font-weight: bold;}
+			.PoipikuInfo .PoipikuDesc .DescTitle .DescSubTitle {font-size: 15px; font-weight: normal;}
 
 
 			.poipikuDesc.TextOnly {height: auto;}
@@ -136,25 +136,28 @@ if(cCheckLogin.m_bLogin) {
 					<div class="DescTitle">
 						転載対策もOK！
 						<div class="DescSubTitle">
-							転載禁止表示と右クリック禁止対策済み
+							転載禁止表示と右クリック禁止対策
 						</div>
 					</div>
 					<div class="DescTitle">
 						動くイラストもOK！
 						<div class="DescSubTitle">
-							アニメーションGIFにもフル規格で対応。フレームレートが途中で変わるような特殊なGIFも大丈夫
+							アニメーションGIFにもフル対応
 						</div>
 					</div>
 					<div class="DescTitle">
-						ポイピクの活動をTwitterで定期お知らせ！
+						ポイピクの活動を定期ツイート！
 						<div class="DescSubTitle">
-							週1回もしくは毎日の時間指定で定期ツイートできる ＆ 古い定期ツイートを自動削除するからTwitterの画像一覧が定期ツイートで埋まらない
+							週1回もしくは毎日の指定時間に定期ツイート ＆ 古い定期ツイート自動削除でTwitterの画像一覧が埋まらない
 						</div>
 					</div>
 					<div class="DescTitle">
-						表示が速い！
+						イラストSNS11年の運営実績
 						<div class="DescSubTitle">
-							月間2億PVを支える手書きブログのテクノロジを投入。独自の高速プラットフォームで可能な限りサーバ側で処理して端末に負荷をかけないから、古いスマホやPCでも高速表示
+							2007年から手書きブログを開始し、イラストSNS運営実績は11年。
+							皆様の大切なイラストと共にサービスを売却するようなことはありません。
+							安心してご利用ください。
+							健全な運営のために必要な広告掲載にご理解いただけますと幸いです
 						</div>
 					</div>
 				</div>
