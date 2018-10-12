@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
-class UpdateFollowerLink {
+class UpdateDispFollowerLink {
 	// params
 	public int m_nUserId = -1;
 	public int m_nDisp = 0;
@@ -59,7 +59,7 @@ class UpdateFollowerLink {
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-UpdateFollowerLink cResults = new UpdateFollowerLink();
+UpdateDispFollowerLink cResults = new UpdateDispFollowerLink();
 cResults.getParam(request);
 
 boolean bRtn = false;

@@ -28,7 +28,8 @@ public class CUser {
 	public String m_strAutoTweetDesc="";
 	public int m_nAutoTweetWeekDay = -1;
 	public int m_nAutoTweetThumbNum = 9;
-	public boolean m_bDispFollower = true;
+	public boolean m_bDispFollower = false;
+	public boolean m_bDispR18 = false;
 
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 }

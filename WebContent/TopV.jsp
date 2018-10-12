@@ -99,37 +99,37 @@ if(cCheckLogin.m_bLogin) {
 		<div class="Wrapper ThumbList">
 			<div class="PoipikuInfo">
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS01.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS01.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS02.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS02.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS03.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS03.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS03-2.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS03-2.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS04.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS04.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS05.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS05.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS06.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS06.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS07.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS07.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS08.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS08.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS09.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS09.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo/SS10.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12/SS10.png" />
 				</div>
 
 				<div class="PoipikuDesc">

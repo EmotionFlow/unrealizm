@@ -112,7 +112,7 @@ public class Common {
 		}
 	};
 
-	private static String[] FORBITTED_EMOJI = {"👎"};
+	//private static String[] FORBITTED_EMOJI = {"👎"};
 
 	public static String ToString(String strSrc) {
 		if(strSrc == null) {

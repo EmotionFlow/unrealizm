@@ -81,5 +81,5 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 {
 "result": <%=nRtn%>,
 "html" : "<%=CEnc.E(Common.AutoLink(Common.ToStringHtml(m_strDesc), m_nMode))%>",
-"text" : "<%=CEnc.E(Common.ToStringHtmlTextarea(m_strDesc))%>"
+"text" : "<%=CEnc.E(m_strDesc)%>"
 }
