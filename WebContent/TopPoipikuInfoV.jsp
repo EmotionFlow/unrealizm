@@ -16,6 +16,7 @@ cCheckLogin.GetResults2(request, response);
 			body {padding: 0 !important;}
 
 			.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
+			.Wrapper.ThumbList {width: 630px; margin: 0;}
 			.AnalogicoDesc {display: block;width: 100%; padding: 30px 0 0 0; box-sizing: border-box; text-align: center; font-size: 16px; line-height: 28px; color: #fff; font-weight: normal;}
 			.AnalogicoLogin {margin: 0 0 10px 0;}
 			.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
@@ -24,9 +25,9 @@ cCheckLogin.GetResults2(request, response);
 			.AnalogicoInfo {display: none;}
 			.FooterAd {display: none;}
 
-			.PoipikuInfo {display: flex; flex-flow: row wrap; width: 100%; margin: 0 auto; justify-content: space-around; background-color: #fafafa; color: #5bd;padding: 15px 0;}
+			.PoipikuInfo {display: flex; flex-flow: row wrap; width: 100%; margin: 0 auto; justify-content: space-around; background-color: #fafafa; color: #5bd;padding: 5px; box-sizing: border-box;}
 			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
-			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 15px 0;}
+			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 10px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 5px 0;}
 			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
 			.PoipikuInfo .PoipikuDesc .DescTitle {font-size: 17px; margin: 0 0 15px 0; font-weight: bold;}
 			.PoipikuInfo .PoipikuDesc .DescTitle .DescSubTitle {font-size: 15px; font-weight: normal;}
