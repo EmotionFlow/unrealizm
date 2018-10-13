@@ -59,7 +59,6 @@ if(strRequestUri != null) {
 				</div>
 				<div class="AnalogicoTerm">
 					<a class="AnalogicoLink" href="/RuleS.jsp"><%=_TEX.T("Footer.Term")%></a>
-					<a class="AnalogicoLink" href="/GuideLineV.jsp"><%=_TEX.T("Footer.GuideLine")%></a>
 					<a class="AnalogicoLink" href="/PrivacyPolicyS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 					<p class="AnalogicoLink" style="font-size: 11px;">
 						利用規約は[<%=_TEX.T("THeader.Menu.Me")%>]→[<%=_TEX.T("MyEditSetting.Title.Setting")%>]からいつでも確認することができます。
