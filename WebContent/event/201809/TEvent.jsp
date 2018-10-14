@@ -54,8 +54,8 @@
 		try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 	}
 %>
-<a href="/enent201809/EventInfo.jsp" style="display: inline-block; width: 600px; margin: 0 0 20px 0; position: relative; color: #fff;">
-	<img src="/enent201809/banner_top.png" style="width: 100%;" />
+<a href="/event/201809/EventInfo.jsp" style="display: inline-block; width: 600px; margin: 0 0 20px 0; position: relative; color: #fff;">
+	<img src="/event/201809/banner_top.png" style="width: 100%;" />
 	<span style="display: block; font-size: 26px; width: 100%; font-weight: bold; position: absolute; bottom: 110px; z-index: 2;">
 		ただ今<span style="font-size: 80px;"><%=nPostNum/10%></span>本
 	</span>

@@ -1,16 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
+<%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-if(SP_REVIEW && !cCheckLogin.m_bLogin) {
-	response.sendRedirect("/StartPoipikuV.jsp");
-	return;
-}
-
-
-NewArrivalC cResults = new NewArrivalC();
+SearchIllustByCategoryC cResults = new SearchIllustByCategoryC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
@@ -18,7 +12,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
-		<title>recent</title>
+		<title><%=_TEX.T(String.format("Category.C%d", cResults.m_nCategoryId))%></title>
 		<script>
 			var g_nPage = 1;
 			var g_bAdding = false;
@@ -29,8 +23,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage},
-					"url": "/f/NewArrivalF.jsp",
+					"data": {"PG" : g_nPage, "CD" :  <%=cResults.m_nCategoryId%>},
+					"url": "/f/SearchIllustByCategoryF.jsp",
 					"success": function(data) {
 						if(data) {
 							g_nPage++;
@@ -62,14 +56,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div class="Wrapper">
-			<a style="display: block; width: 100%; float: left;" href="/SearchIllustByCategoryPcV.jsp?CD=13">
-				<img style="display: block; width: 100%;" src="/event/201810/2018_10_13_halloween.png" />
-			</a>
-
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_NEWARRIVAL_ILLUST, CCnv.MODE_SP, _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_CATEGORY_ILLUST, CCnv.MODE_SP, cResults.m_nCategoryId, _TEX)%>
 					<%if((nCnt+1)%15==0) {%>
 					<%@ include file="/inner/TAdMid.jspf"%>
 					<%}%>

@@ -20,6 +20,7 @@ body {padding: 51px 0 0 0 !important;}
 .IllustItem .IllustItemResBtnList {padding: 3px 7px;}
 .IllustItem .IllustItemResBtnList .ResEmojiBtn {margin: 4px 1px;}
 .SearchResultTitle {margin: 15px 0 0 0; font-size: 18px; height: 30px; line-height: 30px;}
+.IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap;}
 
 .IllustThumb .IllustThumbImg {box-sizing: border-box;}
 .IllustThumb {border-radius: 4px; box-shadow: 0 0 1px #ddd; padding: 0px; margin: 5px 5px 0 0; width: 193px; height: 193px;}

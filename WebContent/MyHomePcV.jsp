@@ -59,8 +59,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
+			<a style="display: block; width: 100%; float: left;" href="/SearchIllustByCategoryPcV.jsp?CD=13">
+				<img style="display: block; width: 100%;" src="/event/201810/2018_10_13_halloween.png" />
+			</a>
 
 			<div id="IllustItemList" class="IllustItemList">
+
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center;">
 					ポイピクへようこそ<br />

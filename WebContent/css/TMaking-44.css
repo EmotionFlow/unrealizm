@@ -563,6 +563,18 @@
 	background-color: #003399;
 }
 
+.IllustThumb .Category.C13, .IllustItem .Category.C13 {
+	background-color: #ff9900;
+	color: #000;
+}
+
+.IllustThumb .Category.C13 {
+	font-size: 10px;
+	height: auto;
+	line-height: 11px;
+	white-space: normal;
+}
+
 .IllustItem .IllustItemDesc {
 	display: block;
 	float: left;

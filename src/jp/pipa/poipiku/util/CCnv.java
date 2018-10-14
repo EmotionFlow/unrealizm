@@ -12,6 +12,7 @@ public class CCnv {
 	public static final int TYPE_POPULAR_ILLUST = 2;
 	public static final int TYPE_KEYWORD_ILLUST = 3;
 	public static final int TYPE_TAG_ILLUST = 4;
+	public static final int TYPE_CATEGORY_ILLUST = 5;
 
 	public static final int MODE_PC = 0;
 	public static final int MODE_SP = 1;
@@ -22,6 +23,7 @@ public class CCnv {
 			{"/PopularIllustListViewPcV.jsp", "/PopularIllustListViewV.jsp"},
 			{"/SearchIllustByKeywordViewPcV.jsp", "/SearchIllustByKeywordViewV.jsp"},
 			{"/SearchIllustByTagViewPcV.jsp", "/SearchIllustByTagViewV.jsp"},
+			{"/SearchIllustByCategoryViewPcV.jsp", "/SearchIllustByCategoryViewV.jsp"},
 	};
 
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException{
@@ -193,6 +195,10 @@ public class CCnv {
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
 		return toThumbHtml(cContent, nType, nMode, "", _TEX);
+	}
+
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, int nId, ResourceBundleControl _TEX) {
+		return toThumbHtml(cContent, nType, nMode, ""+nId, _TEX);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {

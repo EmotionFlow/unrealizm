@@ -79,11 +79,24 @@ public class ImageUtil {
 	}
 
 	public static void createThumbJpgNormalize(String strSrcFileName, String strDstFileName, int newWidth) throws IOException {
-		ImageIO.write(resizeImageNormalize(ImageUtil.read(strSrcFileName), newWidth), "jpg", new File(strDstFileName));
+		BufferedImage image = resizeImageNormalize(ImageUtil.read(strSrcFileName), newWidth);
+		long lnJpegSize = saveJpeg(image, strDstFileName);
+		long lnPngSize = savePng(image, strDstFileName);
+		Log.d(String.format("createThumbJpgNormalize:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		if(lnJpegSize < lnPngSize*.7) {
+			saveJpeg(image, strDstFileName);
+		}
 	}
 
 	public static void createThumbPngNormalize(String strSrcFileName, String strDstFileName, int newWidth) throws IOException {
-		ImageIO.write(resizeImageNormalize(ImageUtil.readPng(strSrcFileName), newWidth), "jpg", new File(strDstFileName));
+		BufferedImage image = resizeImageNormalize(ImageUtil.readPng(strSrcFileName), newWidth);
+		long lnJpegSize = saveJpeg(image, strDstFileName);
+		long lnPngSize = savePng(image, strDstFileName);
+		Log.d(String.format("createThumbPngNormalize:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		if(lnJpegSize < lnPngSize*.7) {
+			saveJpeg(image, strDstFileName);
+		}
+
 	}
 
 	public static void createThumbGifNormalize(String strSrcFileName, String strDstFileName, int newWidth, boolean bLoop) throws IOException {
@@ -156,12 +169,45 @@ public class ImageUtil {
 
 	public static void createThumbJpg(String strSrcFileName, String strDstFileName, int newWidth, int newHeight)
 			throws IOException {
-		ImageIO.write(resizeImage(ImageUtil.read(strSrcFileName), newWidth, newHeight), "jpg", new File(strDstFileName));
+		BufferedImage image = resizeImage(ImageUtil.read(strSrcFileName), newWidth, newHeight);
+		long lnJpegSize = saveJpeg(image, strDstFileName);
+		long lnPngSize = savePng(image, strDstFileName);
+		Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		if(lnJpegSize < lnPngSize*.7) {
+			saveJpeg(image, strDstFileName);
+		}
 	}
 
 	public static void createThumbPng(String strSrcFileName, String strDstFileName, int newWidth, int newHeight)
 			throws IOException {
-		ImageIO.write(resizeImage(ImageUtil.readPng(strSrcFileName), newWidth, newHeight), "jpg", new File(strDstFileName));
+		BufferedImage image = resizeImage(ImageUtil.readPng(strSrcFileName), newWidth, newHeight);
+		long lnJpegSize = saveJpeg(image, strDstFileName);
+		long lnPngSize = savePng(image, strDstFileName);
+		Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		if(lnJpegSize < lnPngSize*.7) {
+			saveJpeg(image, strDstFileName);
+		}
+	}
+
+	private static long saveJpeg(BufferedImage image, String strDstFileName) throws FileNotFoundException, IOException {
+		deleteFile(strDstFileName);
+		File file = new File(strDstFileName);
+		FileImageOutputStream output = new FileImageOutputStream(file);
+		ImageWriter writeImage = ImageIO.getImageWritersByFormatName("jpeg").next();
+		ImageWriteParam writeParam = writeImage.getDefaultWriteParam();
+		writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+		writeParam.setCompressionQuality(0.9f);
+		writeImage.setOutput(output);
+		writeImage.write(null, new IIOImage(image, null, null), writeParam);
+		writeImage.dispose();
+		return file.length();
+	}
+
+	private static long savePng(BufferedImage image, String strDstFileName) throws IOException {
+		deleteFile(strDstFileName);
+		File file = new File(strDstFileName);
+		ImageIO.write(image, "png", file);
+		return file.length();
 	}
 
 	public static void createThumbGif(String strSrcFileName, String strDstFileName, int newWidth, int newHeight, boolean bLoop) throws IOException {
@@ -480,7 +526,7 @@ public class ImageUtil {
 			if(jpegDirectory==null) return bufferedImageSrc;
 			int width = jpegDirectory.getImageWidth();
 			int height = jpegDirectory.getImageHeight();
-			Log.d(String.format("read jpeg : orientation=%d, width=%d, height=%d", orientation, width, height));
+			//Log.d(String.format("read jpeg : orientation=%d, width=%d, height=%d", orientation, width, height));
 			//int width = bufferedImageSrc.getWidth();
 			//int height = bufferedImageSrc.getHeight();
 			AffineTransform affineTransform = new AffineTransform();

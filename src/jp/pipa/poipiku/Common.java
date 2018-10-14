@@ -34,6 +34,22 @@ public class Common {
 		return pageName + " - " + _TEX.T("TopV.TitleBar");
 	}
 
+	// 表示するカテゴリ一覧
+	public static int[] CATEGORY_ID = {
+			13,
+			0,
+			10,
+			1,
+			12,
+			3,
+			4,
+			5,
+			6,
+			7,
+			11,
+			8,
+			9,
+	};
 
 	public static int EMOJI_KEYBORD_MAX = 64;
 	public static final String[] EMOJI_KEYBORD = {
