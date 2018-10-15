@@ -82,7 +82,7 @@ public class ImageUtil {
 		BufferedImage image = resizeImageNormalize(ImageUtil.read(strSrcFileName), newWidth);
 		long lnJpegSize = saveJpeg(image, strDstFileName);
 		long lnPngSize = savePng(image, strDstFileName);
-		Log.d(String.format("createThumbJpgNormalize:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		//Log.d(String.format("createThumbJpgNormalize:jpq=%d, png=%d", lnJpegSize, lnPngSize));
 		if(lnJpegSize < lnPngSize*.7) {
 			saveJpeg(image, strDstFileName);
 		}
@@ -92,7 +92,7 @@ public class ImageUtil {
 		BufferedImage image = resizeImageNormalize(ImageUtil.readPng(strSrcFileName), newWidth);
 		long lnJpegSize = saveJpeg(image, strDstFileName);
 		long lnPngSize = savePng(image, strDstFileName);
-		Log.d(String.format("createThumbPngNormalize:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		//Log.d(String.format("createThumbPngNormalize:jpq=%d, png=%d", lnJpegSize, lnPngSize));
 		if(lnJpegSize < lnPngSize*.7) {
 			saveJpeg(image, strDstFileName);
 		}
@@ -172,7 +172,7 @@ public class ImageUtil {
 		BufferedImage image = resizeImage(ImageUtil.read(strSrcFileName), newWidth, newHeight);
 		long lnJpegSize = saveJpeg(image, strDstFileName);
 		long lnPngSize = savePng(image, strDstFileName);
-		Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		//Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
 		if(lnJpegSize < lnPngSize*.7) {
 			saveJpeg(image, strDstFileName);
 		}
@@ -183,7 +183,7 @@ public class ImageUtil {
 		BufferedImage image = resizeImage(ImageUtil.readPng(strSrcFileName), newWidth, newHeight);
 		long lnJpegSize = saveJpeg(image, strDstFileName);
 		long lnPngSize = savePng(image, strDstFileName);
-		Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
+		//Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
 		if(lnJpegSize < lnPngSize*.7) {
 			saveJpeg(image, strDstFileName);
 		}
@@ -601,13 +601,13 @@ public class ImageUtil {
 				break;
 			}
 		} catch (MetadataException e) {
-			Log.d(e.getMessage());
+			//Log.d(e.getMessage());
 			//e.printStackTrace();
 		} catch (ImageProcessingException e) {
-			Log.d(e.getMessage());
+			//Log.d(e.getMessage());
 			//e.printStackTrace();
 		} catch (IOException e) {
-			Log.d(e.getMessage());
+			//Log.d(e.getMessage());
 			//e.printStackTrace();
 		}
 		return bufferedImageSrc;
