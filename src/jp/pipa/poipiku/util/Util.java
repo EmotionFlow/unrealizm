@@ -1,5 +1,6 @@
 package jp.pipa.poipiku.util;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -128,4 +129,23 @@ public class Util {
 		}
 		return true;
 	}
+
+	public static String changeExtension(String inputData, String extention) {
+		String returnVal = null;
+
+		if (inputData == null || extention == null || inputData.isEmpty() || extention.isEmpty()) return "";
+
+		File in = new File(inputData);
+		String fileName = in.getName();
+
+		if (fileName.lastIndexOf(".") < 0) {
+			returnVal = inputData + "." + extention;
+		} else {
+			int postionOfFullPath = inputData.lastIndexOf("."); // フルパスの
+			String pathWithoutExt = inputData.substring(0, postionOfFullPath);
+			returnVal = pathWithoutExt + "." + extention;
+		}
+		return returnVal;
+	}
+
 }

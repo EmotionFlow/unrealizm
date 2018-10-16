@@ -56,7 +56,17 @@ if(!cResults.getResults(cCheckLogin)) {
 		<a class="IllustItemLink" style="display: block;" href="javascript:(window.open('','_self').opener=window).close();">
 			<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 		</a>
-		<div class="IllustItemTProhibit"><%=_TEX.T("IllustView.ProhibitMsg.Long")%></div>
+		<div class="IllustItemTProhibit">
+			<%if(cResults.m_cContent.m_cUser.m_nUserId==cCheckLogin.m_nUserId) {
+				String file_name = Util.changeExtension(
+						(new File(cResults.m_cContent.m_strFileName)).getName(),
+						ImageUtil.getExt(getServletContext().getRealPath(cResults.m_cContent.m_strFileName)));
+			%>
+			<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+			<%} else {%>
+			<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
+			<%}%>
+		</div>
 		<%} else {%>
 		Not Found.
 		<%}%>

@@ -45,6 +45,7 @@ if(cCheckLogin.m_bLogin) {
 			<%if(Util.isSmartPhone(request)) {%>
 			<%} else {%>
 			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
+			.PoipikuInfo .PoipikuDesc.Full {flex: 0 0 960px;}
 			<%}%>
 		</style>
 
@@ -136,7 +137,7 @@ if(cCheckLogin.m_bLogin) {
 					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS10.png" />
 				</div>
 
-				<div class="PoipikuDesc" style="flex: 0 0 960px;">
+				<div class="PoipikuDesc Full">
 					<div class="DescTitle">
 						転載対策もOK！
 						<div class="DescSubTitle">
@@ -159,9 +160,7 @@ if(cCheckLogin.m_bLogin) {
 						イラストSNS11年の運営実績
 						<div class="DescSubTitle">
 							2007年から手書きブログを開始し、イラストSNS運営実績は11年。
-							皆様の大切なイラストと共にサービスを売却するようなことはありません。
 							安心してご利用ください。
-							健全な運営のために必要な広告掲載にご理解いただけますと幸いです
 						</div>
 					</div>
 				</div>

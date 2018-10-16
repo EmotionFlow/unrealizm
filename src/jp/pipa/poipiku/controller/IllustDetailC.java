@@ -47,7 +47,7 @@ public class IllustDetailC {
 			cState.setInt(2, m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
-				m_cContent.m_strFileName = cResSet.getString("file_name");
+				m_cContent = new CContent(cResSet);
 				bRtn = true;
 			}
 			cResSet.close();cResSet=null;
