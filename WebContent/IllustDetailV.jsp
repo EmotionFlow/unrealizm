@@ -44,7 +44,7 @@ if(!cResults.getResults(cCheckLogin)) {
 						(new File(cResults.m_cContent.m_strFileName)).getName(),
 						ImageUtil.getExt(getServletContext().getRealPath(cResults.m_cContent.m_strFileName)));
 			%>
-			<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+			<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 			<%} else {%>
 			<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
 			<%}%>

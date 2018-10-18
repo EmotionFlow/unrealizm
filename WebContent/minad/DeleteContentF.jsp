@@ -9,8 +9,8 @@ class DeleteMakingCParam {
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId			= Common.ToInt(cRequest.getParameter("ID"));
-			m_nContentId		= Common.ToInt(cRequest.getParameter("TD"));
+			m_nUserId			= Common.ToInt(cRequest.getParameter("UID"));
+			m_nContentId		= Common.ToInt(cRequest.getParameter("CID"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
@@ -35,16 +35,29 @@ class DeleteMakingC {
 
 			// イラスト存在確認(不正アクセス対策)
 			boolean bExist = false;
-			strSql = "SELECT * FROM contents_0000 WHERE content_id=? AND user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cState.setInt(2, cParam.m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				bExist = true;
+			if(cParam.m_nUserId==1) {
+				strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					cParam.m_nUserId = cResSet.getInt("user_id");
+					bExist = true;
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			} else {
+				strSql = "SELECT * FROM contents_0000 WHERE content_id=? AND user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cState.setInt(2, cParam.m_nUserId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					bExist = true;
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 			if(!bExist) {
 				return false;
 			}
@@ -70,13 +83,34 @@ class DeleteMakingC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			// delete making
-			strSql ="DELETE FROM contents_0000 WHERE content_id=?";
+			// delete append files
+			strSql ="SELECT * FROM contents_appends_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			while(cResSet.next()) {
+				CContentAppend cContentAppend = new CContentAppend(cResSet);
+				try{
+					ImageUtil.deleteFiles(getServletContext().getRealPath(cContentAppend.m_strFileName));
+				} catch (Exception e) {
+					Log.d("connot delete content_append file : " + cContentAppend.m_strFileName);
+				}
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			// delete append data
+			strSql ="DELETE FROM contents_appends_0000 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
+			// delete content data
+			strSql ="DELETE FROM contents_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cState.executeUpdate();
+			cState.close();cState=null;
 			// delete files
 			ImageUtil.deleteFiles(getServletContext().getRealPath(String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId)));
 
@@ -100,7 +134,7 @@ cCheckLogin.GetResults2(request, response);
 DeleteMakingCParam cParam = new DeleteMakingCParam();
 cParam.GetParam(request);
 
-Log.d(cCheckLogin.m_nUserId);
+Log.d(""+cCheckLogin.m_nUserId);
 
 if(cCheckLogin.m_nUserId != 1) {
 	return;

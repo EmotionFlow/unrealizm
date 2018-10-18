@@ -52,7 +52,7 @@ public class DownloadImageZip extends HttpServlet {
 		if(!cResults.getResults(cCheckLogin)) return;
 
 		response.setContentType("application/zip");
-		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%d.zip\"", cResults.m_nContentId));
+		response.setHeader("Content-Disposition", String.format("attachment;filename=\"%d.zip\"", cResults.m_nContentId));
 		response.setHeader("Content-Transfer-Encoding", "binary");
 
 		OutputStream outStream = response.getOutputStream();

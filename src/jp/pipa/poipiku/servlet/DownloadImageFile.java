@@ -55,17 +55,30 @@ public class DownloadImageFile extends HttpServlet {
 		File file = new File(file_name_full);
 		if(!file.exists()) return;
 		String ext = ImageUtil.getExt(file_name_full);
-
-		response.setContentType("application/octet-stream");
-		response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", Util.changeExtension(file.getName(), ext)));
-		response.setHeader("Content-Transfer-Encoding", "binary");
+		switch (ext) {
+		case "gif":
+			response.setContentType("image/gif");
+			break;
+		case "jpeg":
+			response.setContentType("image/jpeg");
+			break;
+		case "png":
+			response.setContentType("image/png");
+			break;
+		default:
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-Transfer-Encoding", "binary");
+			break;
+		}
+		response.setHeader("Content-Disposition", String.format("attachment;filename=\"%s\"", Util.changeExtension(file.getName(), ext)));
+		//response.setStatus(HttpServletResponse.SC_OK);
 
 		try {
 			OutputStream outStream = response.getOutputStream();
 			InputStream inStream = new FileInputStream(file);
 			IOUtils.copy(inStream, response.getOutputStream());
-			inStream.close();
 			outStream.flush();
+			inStream.close();
 			outStream.close();
 		} catch (Exception e) {
 			;

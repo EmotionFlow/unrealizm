@@ -112,7 +112,10 @@
 	</tr>
 	<tr>
 		<td>
+<span style="color: red;">(※R-18/G分離のため一時的に投稿せきません)</span>
+<!--
 「R-18G」相当かつ成人向けであることを明記したワンクッションが必須のもの
+-->
 		</td>
 		<td>
 <ul>
@@ -128,7 +131,10 @@
 	</tr>
 	<tr>
 		<td>
+<span style="color: red;">(※R-18/G分離のため一時的に投稿せきません)</span>
+<!--
 「R-18」相当かつ成人向けであることを明記したワンクッションが必須のもの
+-->
 		</td>
 		<td>
 <ul>
@@ -224,6 +230,7 @@
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
+						(2018/10/17 R18分離に向けた変更)<br />
 						(2018/9/30 制定)
 					</div>
 				</div>
