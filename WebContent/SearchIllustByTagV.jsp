@@ -6,6 +6,7 @@ cCheckLogin.GetResults2(request, response);
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>

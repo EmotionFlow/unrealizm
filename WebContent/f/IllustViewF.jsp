@@ -6,6 +6,9 @@ cCheckLogin.GetResults2(request, response);
 
 IllustViewListC cResults = new IllustViewListC();
 cResults.getParam(request);
+if(cResults.m_nMode==CCnv.MODE_SP) {
+	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+}
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>

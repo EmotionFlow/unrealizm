@@ -6,6 +6,7 @@ cCheckLogin.GetResults2(request, response);
 
 SearchIllustByCategoryViewC cResults = new SearchIllustByCategoryViewC();
 cResults.getParam(request);
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin, true);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>

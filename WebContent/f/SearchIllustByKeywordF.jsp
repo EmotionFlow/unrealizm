@@ -6,6 +6,7 @@ cCheckLogin.GetResults2(request, response);
 
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin, true);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 %>

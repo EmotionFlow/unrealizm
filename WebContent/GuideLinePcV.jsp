@@ -93,7 +93,7 @@ cCheckLogin.GetResults2(request, response);
 				<div class="SettingListItem">
 					<div class="SettingListTitle">5.倫理基準</div>
 					<div class="SettingBody">
-1枚目に警告等の画像を設定し、2枚目以降を作品とすることで直接閲覧できない状態とする(以下、ワンクッション)基準は以下の通りとします。<br />
+1枚目に警告の画像を設定し、2枚目以降を作品とすることで直接閲覧できない状態とする(以下、ワンクッション)基準は以下の通りとします。<br />
 <br />
 
 <table>
@@ -118,12 +118,13 @@ cCheckLogin.GetResults2(request, response);
 	</tr>
 	<tr>
 		<td>
-<span style="color: red;">(※R-18/G分離のため一時的に投稿せきません)</span>
+<span style="color: red;">(※R-18G相当は準備中のため現在投稿できません)</span>
 <!--
 「R-18G」相当かつ成人向けであることを明記したワンクッションが必須のもの
 -->
 		</td>
 		<td>
+
 <ul>
 <li>暴力的な表現</li>
 <li>血液や臓器等が露出したもの</li>
@@ -137,10 +138,8 @@ cCheckLogin.GetResults2(request, response);
 	</tr>
 	<tr>
 		<td>
-<span style="color: red;">(※R-18/G分離のため一時的に投稿せきません)</span>
-<!--
-「R-18」相当かつ成人向けであることを明記したワンクッションが必須のもの
--->
+ワンクッションかつR-18の設定が必須のもの
+(※スマートフォンアプリからは投稿できません)
 		</td>
 		<td>
 <ul>
@@ -154,7 +153,7 @@ cCheckLogin.GetResults2(request, response);
 	</tr>
 	<tr>
 		<td>
-内容を明記したワンクッションを推奨するもの
+ワンクッションの設定を推奨するもの
 		</td>
 		<td>
 <ul>
@@ -236,6 +235,7 @@ cCheckLogin.GetResults2(request, response);
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
+						(2018/10/19 R18分離に合わせて変更)<br />
 						(2018/10/17 R18分離に向けた変更)<br />
 						(2018/9/30 制定)
 					</div>

@@ -59,12 +59,13 @@ public class IllustViewListC {
 			}
 
 			// NEW ARRIVAL
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND contents_0000.content_id<? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND contents_0000.content_id<? AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, m_nContentId);
-			cState.setInt(3, SELECT_MAX_GALLERY*m_nPage);
-			cState.setInt(4, SELECT_MAX_GALLERY);
+			cState.setInt(3, cCheckLogin.m_nSafeFilter);
+			cState.setInt(4, SELECT_MAX_GALLERY*m_nPage);
+			cState.setInt(5, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);

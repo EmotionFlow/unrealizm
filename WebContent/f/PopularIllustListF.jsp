@@ -6,6 +6,7 @@ cCheckLogin.GetResults2(request, response);
 
 PopularIllustListC cResults = new PopularIllustListC();
 cResults.getParam(request);
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

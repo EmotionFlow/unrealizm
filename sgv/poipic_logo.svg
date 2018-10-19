@@ -28,14 +28,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.1370715"
-     inkscape:cx="363.50245"
-     inkscape:cy="-243.54532"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="862.29954"
+     inkscape:cy="1.4488309"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1350"
-     inkscape:window-height="810"
+     inkscape:window-width="1523"
+     inkscape:window-height="941"
      inkscape:window-x="90"
      inkscape:window-y="23"
      inkscape:window-maximized="0" />
@@ -84,14 +84,15 @@
        d="m 101.89156,91.82183 a 6.8844409,6.8844409 0 0 1 6.88444,-6.88444 l 0,6.884441 z" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:GauFontAtomic;-inkscape-font-specification:'GauFontAtomic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:GauFontAtomic;-inkscape-font-specification:'GauFontAtomic, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="28.325306"
        y="88.794304"
        id="text4487"><tspan
          sodipodi:role="line"
          id="tspan4522"
          x="28.325306"
-         y="88.794304">KeIh</tspan></text>
+         y="88.794304"
+         style="font-size:10.58333302px;line-height:1.25">KeIh</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 23.906994,75.458705 c 52.302453,0 52.585936,0 52.585936,0"
@@ -3378,15 +3379,15 @@
            style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <text
            xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:23.33361816px;line-height:125%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#c0c0b5;fill-opacity:1;stroke:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#c0c0b5;fill-opacity:1;stroke:none"
            x="-296.66708"
            y="893.78766"
-           id="text4745-4"
-           sodipodi:linespacing="125%"><tspan
+           id="text4745-4"><tspan
              sodipodi:role="line"
              id="tspan4747-8"
              x="-296.66708"
-             y="893.78766">♥</tspan></text>
+             y="893.78766"
+             style="font-size:23.33361816px;line-height:1.25">♥</tspan></text>
       </g>
       <g
          inkscape:export-ydpi="180"
@@ -3817,15 +3818,15 @@
            style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <text
            xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:23.33361816px;line-height:125%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#55bbdd;fill-opacity:1;stroke:none"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#55bbdd;fill-opacity:1;stroke:none"
            x="-296.66708"
            y="893.78766"
-           id="text4745-0-7"
-           sodipodi:linespacing="125%"><tspan
+           id="text4745-0-7"><tspan
              sodipodi:role="line"
              id="tspan4747-6-7"
              x="-296.66708"
-             y="893.78766">♥</tspan></text>
+             y="893.78766"
+             style="font-size:23.33361816px;line-height:1.25">♥</tspan></text>
       </g>
       <g
          inkscape:export-ydpi="90"
@@ -5006,16 +5007,16 @@
         </g>
       </g>
       <text
-         sodipodi:linespacing="125%"
          id="text5921"
          y="277.34537"
          x="175.29855"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:125%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          xml:space="preserve"><tspan
            y="277.34537"
            x="175.29855"
            id="tspan5925"
-           sodipodi:role="line">warning</tspan></text>
+           sodipodi:role="line"
+           style="font-size:3.17499995px;line-height:1.25">warning</tspan></text>
     </g>
     <g
        id="g6092"
@@ -5065,13 +5066,12 @@
            d="m 179.67377,307.29998 0.32811,0 0.3281,0 -0.0546,1.49589 -0.0546,1.49587 -0.21873,0 -0.21873,0 -0.0546,-1.49587 z"
            style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:#55bbdd;stroke-width:0.95478129;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         <text
-           sodipodi:linespacing="125%"
            id="text5921-2"
            y="317.51752"
            x="179.9996"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.17499995px;line-height:125%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            xml:space="preserve"><tspan
-             style="stroke-width:0.26458332px"
+             style="font-size:3.17499995px;line-height:1.25;stroke-width:0.26458332px"
              y="317.51752"
              x="179.9996"
              id="tspan5925-0"
@@ -5224,6 +5224,97 @@
          width="97.857666"
          id="rect5944"
          style="opacity:1;fill:#cccccc;fill-opacity:1;stroke:#ffffff;stroke-width:0.03816733;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+       id="g6029"
+       inkscape:export-filename="/Users/kawai/git/poipiku/WebContent/img/R18.png_360.jpg"
+       inkscape:export-xdpi="135.92104"
+       inkscape:export-ydpi="135.92104">
+      <rect
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         inkscape:export-filename="/Users/kawai/git/poipiku/WebContent/img/warning.png_360.jpg"
+         y="208.73178"
+         x="211.17668"
+         height="63.5"
+         width="63.5"
+         id="rect5883-3"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.54205167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         id="g5992">
+        <text
+           sodipodi:linespacing="0%"
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.99861121px;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="242.92441"
+           y="249.799"
+           id="text5921-4"><tspan
+             y="249.799"
+             x="242.92441"
+             id="tspan5422"
+             sodipodi:role="line">R-18</tspan></text>
+        <g
+           id="g5994"
+           transform="matrix(0.98751726,0,0,0.98751726,-17.024188,3.0077482)">
+          <circle
+             r="5.8573041"
+             cy="240.47583"
+             cx="263.23679"
+             id="path5990"
+             style="opacity:1;fill:none;fill-opacity:1;stroke:#55bbdd;stroke-width:1.68161333;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path5992"
+             d="m 259.29166,236.41042 7.9375,7.67291"
+             style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:1.68161333;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g6061"
+       inkscape:export-filename="/Users/kawai/git/poipiku/WebContent/img/R-18.png"
+       inkscape:export-xdpi="135.92104"
+       inkscape:export-ydpi="135.92104">
+      <rect
+         inkscape:export-ydpi="96"
+         inkscape:export-xdpi="96"
+         inkscape:export-filename="/Users/kawai/git/poipiku/WebContent/img/warning.png_360.jpg"
+         y="324.11618"
+         x="174.42387"
+         height="42.333332"
+         width="127"
+         id="rect5883-4-17"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.62590736;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         id="g5992-2"
+         transform="translate(-5.0028076,103.44971)">
+        <text
+           sodipodi:linespacing="0%"
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.99861121px;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           x="242.92441"
+           y="249.799"
+           id="text5921-4-1"><tspan
+             y="249.799"
+             x="242.92441"
+             id="tspan5422-6"
+             sodipodi:role="line">R-18</tspan></text>
+        <g
+           id="g5994-6"
+           transform="matrix(0.98751726,0,0,0.98751726,-17.024188,3.0077482)">
+          <circle
+             r="5.8573041"
+             cy="240.47583"
+             cx="263.23679"
+             id="path5990-1"
+             style="opacity:1;fill:none;fill-opacity:1;stroke:#55bbdd;stroke-width:1.68161333;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+          <path
+             inkscape:connector-curvature="0"
+             id="path5992-7"
+             d="m 259.29166,236.41042 7.9375,7.67291"
+             style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:1.68161333;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+        </g>
+      </g>
     </g>
   </g>
 </svg>

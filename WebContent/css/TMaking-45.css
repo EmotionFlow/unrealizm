@@ -280,7 +280,7 @@
 	height: 253px;
 	line-height: 253px;
 	padding: 0;
-	font-size: 36px;
+	font-size: 32px;
 	text-align: center;
 }
 
@@ -343,20 +343,25 @@
 }
 
 .UploadFile .UoloadCmdOption .OptionItem {
-	flex: 0 0 85px;
+	flex: 0 0 68px;
 	display: flex;
 	flex-flow: column;
+	width: 68px;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {
 	display: block;
 	margin: 0;
-	font-size: 9px;
+	font-size: 10px;
 	height: 15px;
 	line-height: 15px;
 	text-align: center;
 	white-space: nowrap;
-	overflow: hidden;
+	transform: scale(0.8);
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionLabel.disabled {
+	color: #ccc;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .onoffswitch {
@@ -571,8 +576,9 @@
 .IllustThumb .Category.C13 {
 	font-size: 10px;
 	height: auto;
-	line-height: 11px;
+	line-height: 10px;
 	white-space: normal;
+	padding: 1px 0;
 }
 
 .IllustItem .IllustItemDesc {

@@ -1,5 +1,5 @@
 java -jar ./closure-compiler-v20180805.jar --js ./js/common-19.js --js_output_file ../WebContent/js/common-19.js
-java -jar ./closure-compiler-v20180805.jar --js ./js/upload-05.js --js_output_file ../WebContent/js/upload-05.js
+java -jar ./closure-compiler-v20180805.jar --js ./js/upload-06.js --js_output_file ../WebContent/js/upload-06.js
 
 #for file in $( ls ./js | grep .js$ ); do
 #echo "${file}"

@@ -476,18 +476,34 @@ function getTweetImageSetting() {
 function updateTweetButton() {
 	var bTweet = $('#OptionTweet').prop('checked');
 	if(!bTweet) {
-		$('#ImageSwitch').addClass('disabled');
+		$('#ImageSwitch .OptionLabel').addClass('disabled');
+		$('#ImageSwitch .onoffswitch').addClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',true);
 	} else {
-		$('#ImageSwitch').removeClass('disabled');
+		$('#ImageSwitch .OptionLabel').removeClass('disabled');
+		$('#ImageSwitch .onoffswitch').removeClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',false);
+	}
+}
+
+function updateOneCushionButton() {
+	var bOneCushion = $('#OptionOneCushion').prop('checked');
+	if(!bOneCushion) {
+		$('#R18Switch .OptionLabel').addClass('disabled');
+		$('#R18Switch .onoffswitch').addClass('disabled');
+		$('#OptionR18:checkbox').prop('disabled',true);
+	} else {
+		$('#R18Switch .OptionLabel').removeClass('disabled');
+		$('#R18Switch .onoffswitch').removeClass('disabled');
+		$('#OptionR18:checkbox').prop('disabled',false);
 	}
 }
 
 function initUploadFile() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
-	updateTweetButton()
+	updateOneCushionButton();
+	updateTweetButton();
 	multiFileUploader = new qq.FineUploader({
 		element: document.getElementById("file-drop-area"),
 		autoUpload: false,
@@ -594,7 +610,10 @@ function UploadFile(user_id) {
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	var nSafeFilter = ($('#OptionR18').prop('checked'))?2:0;	// 0:general, 1:R15, 2:R18, 3:R18G
+	var nSafeFilter = ($('#OptionOneCushion').prop('checked'))?2:0;	// 0:general, 2:R15, 4:R18
+	if(nSafeFilter>0) {
+		nSafeFilter = ($('#OptionR18').prop('checked'))?4:2;	// 0:general, 2:R15, 4:R18
+	}
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -636,7 +655,8 @@ function UploadFile(user_id) {
 function initUploadPaste() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
-	updateTweetButton()
+	updateOneCushionButton();
+	updateTweetButton();
 	$('#InputFile').pastableNonInputable();
 	$('#InputFile').on('pasteImage', function(ev, data){
 		$('.OrgMessage').hide();
@@ -656,7 +676,10 @@ function UploadPaste(user_id) {
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	var nSafeFilter = ($('#OptionR18').prop('checked'))?2:0;	// 0:general, 1:R15, 2:R18, 3:R18G
+	var nSafeFilter = ($('#OptionOneCushion').prop('checked'))?2:0;	// 0:general, 2:R15, 4:R18
+	if(nSafeFilter>0) {
+		nSafeFilter = ($('#OptionR18').prop('checked'))?4:2;	// 0:general, 2:R15, 4:R18
+	}
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var strEncodeImg = $('#imgView').attr('src').replace('data:image/png;base64,', '');

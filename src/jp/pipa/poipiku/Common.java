@@ -34,6 +34,12 @@ public class Common {
 		return pageName + " - " + _TEX.T("TopV.TitleBar");
 	}
 
+	// Safe Filter
+	public static int SAFE_FILTER_ALL = 0;
+	public static int SAFE_FILTER_R15 = 2;
+	public static int SAFE_FILTER_R18 = 4;
+	public static int SAFE_FILTER_R18G = 6;
+
 	// 表示するカテゴリ一覧
 	public static int[] CATEGORY_ID = {
 			13,

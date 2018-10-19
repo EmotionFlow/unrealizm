@@ -58,9 +58,13 @@ public class CCnv {
 			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
 			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
 			strRtn.append("</a>");
-		} else {
+		} else if(cContent.m_nSafeFilter<4) {
 			strRtn.append("<span class=\"IllustItemThumb\">");
 			strRtn.append("<img class=\"IllustItemThumbImg\" src=\"/img/warning.png\" />");
+			strRtn.append("</span>");
+		} else {
+			strRtn.append("<span class=\"IllustItemThumb\">");
+			strRtn.append("<img class=\"IllustItemThumbImg\" src=\"/img/R-18.png\" />");
 			strRtn.append("</span>");
 		}
 
@@ -212,8 +216,10 @@ public class CCnv {
 		strRtn.append(String.format("<span class=\"Category C%d\">%s %s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
 		if(cContent.m_nSafeFilter<2) {
 			strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
-		} else {
+		} else if(cContent.m_nSafeFilter<4) {
 			strRtn.append("<img class=\"IllustThumbImg\" src=\"/img/warning.png_360.jpg\">");
+		} else {
+			strRtn.append("<img class=\"IllustThumbImg\" src=\"/img/R18.png_360.jpg\">");
 		}
 		strRtn.append("</a>");
 

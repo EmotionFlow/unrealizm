@@ -24,7 +24,7 @@ class UploadPasteCParam {
 			m_bTweet			= (Common.ToInt(request.getParameter("TWI"))==1);
 			m_nOptImage			= Common.ToIntN(request.getParameter("IMG"), 0, 1);
 			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 13);
-			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), 0, 3);
+			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), Common.SAFE_FILTER_ALL, Common.SAFE_FILTER_R18G);
 			m_strEncodeImg		= Common.ToString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
 		} catch(Exception e) {
 			e.printStackTrace();

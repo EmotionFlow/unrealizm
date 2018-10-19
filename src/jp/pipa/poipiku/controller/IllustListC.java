@@ -152,9 +152,10 @@ public class IllustListC {
 			if(m_bBlocking || m_bBlocked) return true;
 
 			// gallery
-			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
+			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=? AND safe_filter<=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
+			cState.setInt(2, cCheckLogin.m_nSafeFilter);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
 				m_nContentsNum = cResSet.getInt(1);
@@ -162,11 +163,12 @@ public class IllustListC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "SELECT * FROM contents_0000 WHERE user_id=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
-			cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);
-			cState.setInt(3, SELECT_MAX_GALLERY);
+			cState.setInt(2, cCheckLogin.m_nSafeFilter);
+			cState.setInt(3, m_nPage * SELECT_MAX_GALLERY);
+			cState.setInt(4, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);

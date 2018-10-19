@@ -9,7 +9,7 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 	return;
 }
 
-
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
