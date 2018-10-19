@@ -36,8 +36,9 @@ class UploadFileTweetC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			// 存在チェック
+			// 存在チェック & 本文 & 1枚目取得
 			CContent cContent = null;
+			ArrayList<String> vFileList = new ArrayList<String>();
 			strSql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
@@ -45,45 +46,70 @@ class UploadFileTweetC {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				cContent = new CContent(cResSet);
+				String strFileName = cContent.m_strFileName;
+				if(!strFileName.isEmpty()) {
+					if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R15) {
+						;
+					} else if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R18) {
+						strFileName = "/img/warning.png";
+					} else {
+						strFileName = "/img/R-18.png";
+					}
+					vFileList.add(getServletContext().getRealPath(strFileName));
+				}
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(cContent == null) return nRtn;
 
+			// 2枚目以降取得
+			if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R15 && cContent.m_nFileNum>1) {
+				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 3";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cResSet = cState.executeQuery();
+				while(cResSet.next()) {
+					String strFileName = Common.ToString(cResSet.getString("file_name"));
+					if(!strFileName.isEmpty()) {
+						vFileList.add(getServletContext().getRealPath(strFileName));
+					}
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
+
 			// Tweet
 			CTweet cTweet = new CTweet();
-			if (cTweet.GetResults(cParam.m_nUserId)) {
-				String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
-				String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
-						cParam.m_nUserId,
-						cContent.m_nContentId,
-						_TEX.T("THeader.Title"));
-				if(cContent.m_nFileNum>1) {
-					strFooter = strFooter + " " + String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum);
-				}
-				int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
-				StringBuffer bufMsg = new StringBuffer();
-				bufMsg.append(strHeader);
-				if (nMessageLength < cContent.m_strDescription.length()) {
-					bufMsg.append(cContent.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
-					bufMsg.append(CTweet.ELLIPSE);
-				} else {
-					bufMsg.append(cContent.m_strDescription);
-				}
-				bufMsg.append(strFooter);
-				Log.d(cContent.m_strFileName, bufMsg.toString());
+			if (!cTweet.GetResults(cParam.m_nUserId)) return nRtn;
 
-				if(cParam.m_nOptImage==0) {	// text only
-					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
-					if(!bRsultTweet) Log.d("tweet失敗");
-				} else { // with image
-					String strTweetFile = cContent.m_strFileName;
-					if(cContent.m_nSafeFilter>=2) {
-						strTweetFile = "/img/warning.png";
-					}
-					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strTweetFile));
-					if(!bRsultTweet) Log.d("tweet失敗");
-				}
+			// 本文作成
+			String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
+			String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
+					cParam.m_nUserId,
+					cContent.m_nContentId,
+					_TEX.T("THeader.Title"));
+			if(cContent.m_nFileNum>1) {
+				strFooter = strFooter + " " + String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum);
+			}
+			int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
+			StringBuffer bufMsg = new StringBuffer();
+			bufMsg.append(strHeader);
+			if (nMessageLength < cContent.m_strDescription.length()) {
+				bufMsg.append(cContent.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
+				bufMsg.append(CTweet.ELLIPSE);
+			} else {
+				bufMsg.append(cContent.m_strDescription);
+			}
+			bufMsg.append(strFooter);
+			Log.d(cContent.m_strFileName, bufMsg.toString());
+
+			// ツイート
+			if(cParam.m_nOptImage==0 || vFileList.size()<=0) {	// text only
+				boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
+				if(!bRsultTweet) Log.d("tweet失敗");
+			} else { // with image
+				boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), vFileList);
+				if(!bRsultTweet) Log.d("tweet失敗");
 			}
 			nRtn = cContent.m_nContentId;
 		} catch(Exception e) {

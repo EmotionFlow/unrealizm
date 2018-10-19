@@ -164,8 +164,12 @@ class UploadPasteC {
 						if(!bRsultTweet) Log.d("tweet失敗");
 					} else { // with image
 						String strTweetFile = strFileName;
-						if(cParam.m_nSafeFilter>=2) {
+						if(cParam.m_nSafeFilter<Common.SAFE_FILTER_R15) {
+							;
+						} else if(cParam.m_nSafeFilter<Common.SAFE_FILTER_R18) {
 							strTweetFile = "/img/warning.png";
+						} else {
+							strTweetFile = "/img/R-18.png";
 						}
 						boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), getServletContext().getRealPath(strTweetFile));
 						if(!bRsultTweet) Log.d("tweet失敗");
