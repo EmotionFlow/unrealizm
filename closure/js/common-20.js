@@ -231,13 +231,16 @@ function switchEmojiKeyboard(obj, nContentId, nSelected) {
 function EditDesc(content_id) {
 	$("#IllustItemDesc_"+content_id).hide();
 	$("#IllustItemDescEdit_"+content_id).show();
+	$("#IllustItemCategory_"+content_id).hide();
+	$("#IllustItemCategoryEdit_"+content_id).show();
 }
 
 function UpdateDesc(nUserId, content_id, mode) {
+	var nCategoryId = $('#EditCategory_'+content_id).val();
 	var strDesc = $.trim($("#IllustItemDescEdit_"+content_id+" .IllustItemDescEditTxt").val());
 	$.ajaxSingle({
 		"type": "post",
-		"data": { "UID": nUserId, "IID": content_id, "DES": strDesc, "MOD": mode },
+		"data": { "UID": nUserId, "IID": content_id, "CAT":nCategoryId, "DES": strDesc, "MOD": mode },
 		"url": "/f/UpdateDescF.jsp",
 		"dataType": "json",
 		"success": function(data) {
@@ -245,6 +248,9 @@ function UpdateDesc(nUserId, content_id, mode) {
 			$("#IllustItemDescEdit_"+content_id+" .IllustItemDescEditTxt").val(data.text);
 			$("#IllustItemDesc_"+content_id).show();
 			$("#IllustItemDescEdit_"+content_id).hide();
+			$("#IllustItemCategory_"+content_id+" .Category").removeClass().addClass('Category C'+nCategoryId).text(data.category_name);
+			$("#IllustItemCategory_"+content_id).show();
+			$("#IllustItemCategoryEdit_"+content_id).hide();
 		},
 		"error": function(req, stat, ex){
 			DispMsg('Connection error');

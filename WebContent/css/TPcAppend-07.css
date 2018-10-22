@@ -15,7 +15,9 @@ body {padding: 51px 0 0 0 !important;}
 .IllustItem .IllustItemUser {padding: 10px;}
 .IllustItem .Category {margin: 0px 0 3px 0px;}
 .IllustItem .IllustItemCommand {padding: 0 10px;}
+.IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 5px 0px;}
 .IllustItem .IllustItemDesc {padding: 0 10px;}
+.IllustItem .IllustItemDescEdit {padding: 0 10px;}
 .IllustItem .IllustItemResList {padding: 0 10px 6px 10px}
 .IllustItem .IllustItemResBtnList {padding: 3px 7px;}
 .IllustItem .IllustItemResBtnList .ResEmojiBtn {margin: 4px 1px;}

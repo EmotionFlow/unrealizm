@@ -22,6 +22,8 @@ public class Common {
 	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
 	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
 
+	public static final String TAG_PATTERN = "#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
+
 	public static final int NO_NEED_UPDATE[] = {
 			107, 108, 109,	// 1系 iPhone
 			208, 209, 210, 211	// 2系 Android

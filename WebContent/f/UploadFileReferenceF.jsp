@@ -61,7 +61,7 @@ class UploadReferenceC {
 
 			if (!cParam.m_strDescription.isEmpty()) {
 				// Add my tags
-				Pattern ptn = Pattern.compile("#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", Pattern.MULTILINE);
+				Pattern ptn = Pattern.compile(Common.TAG_PATTERN, Pattern.MULTILINE);
 				Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
 				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
 				cState = cConn.prepareStatement(strSql);

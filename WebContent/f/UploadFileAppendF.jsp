@@ -104,7 +104,7 @@ class UploadFileAppendC {
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strFileName = String.format("%s/%09d_%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId);
+			String strFileName = String.format("%s/%09d_%09d.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId, ext);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
@@ -121,7 +121,7 @@ class UploadFileAppendC {
 				nHeight = size[1];
 				nFileSize = (new File(strRealFileName)).length();
 				nComplexSize = ImageUtil.getConplex(strRealFileName);
-			} catch(IOException e) {
+			} catch(Exception e) {
 				nWidth = 0;
 				nHeight = 0;
 				nFileSize = 0;

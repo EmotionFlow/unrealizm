@@ -11,6 +11,7 @@ cCheckLogin.GetResults2(request, response);
 
 int m_nUserId = Common.ToInt(request.getParameter("UID"));
 int m_nContentId = Common.ToInt(request.getParameter("IID"));
+int m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 13);
 String m_strDesc = Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("DES"))), 200);
 int m_nMode = Common.ToInt(request.getParameter("MOD"));
 m_strDesc = m_strDesc.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
@@ -28,11 +29,12 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 		cConn = dsPostgres.getConnection();
 
 		// Update Description
-		strSql = "UPDATE contents_0000 SET description=? WHERE user_id=? AND content_id=? RETURNING content_id";
+		strSql = "UPDATE contents_0000 SET category_id=?, description=? WHERE user_id=? AND content_id=? RETURNING content_id";
 		cState = cConn.prepareStatement(strSql);
-		cState.setString(1, m_strDesc);
-		cState.setInt(2, m_nUserId);
-		cState.setInt(3, m_nContentId);
+		cState.setInt(1, m_nCategoryId);
+		cState.setString(2, m_strDesc);
+		cState.setInt(3, m_nUserId);
+		cState.setInt(4, m_nContentId);
 		cResSet = cState.executeQuery();
 		if(cResSet.next()) {
 			nRtn = cResSet.getInt("content_id");
@@ -51,7 +53,7 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 
 			if (!m_strDesc.isEmpty()) {
 				// Add my tags
-				Pattern ptn = Pattern.compile("#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", Pattern.MULTILINE);
+				Pattern ptn = Pattern.compile(Common.TAG_PATTERN, Pattern.MULTILINE);
 				Matcher matcher = ptn.matcher(m_strDesc.replaceAll("　", " ")+"\n");
 				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
 				cState = cConn.prepareStatement(strSql);
@@ -81,5 +83,6 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 {
 "result": <%=nRtn%>,
 "html" : "<%=CEnc.E(Common.AutoLink(Common.ToStringHtml(m_strDesc), m_nMode))%>",
-"text" : "<%=CEnc.E(m_strDesc)%>"
+"text" : "<%=CEnc.E(m_strDesc)%>",
+"category_name" : "<%=CEnc.E(_TEX.T(String.format("Category.C%d", m_nCategoryId)))%>"
 }

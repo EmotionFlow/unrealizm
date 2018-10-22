@@ -462,10 +462,12 @@
 	position: relative;
 }
 
+.IllustItem .IllustItemCommand .IllustItemCategory {display: block; float: left;}
+
 .IllustItem .IllustItemCommand .IllustItemCommandSub {
 	position: absolute;
 	right: 0;
-	bottom: 4px;
+	top: 0px;
 	font-size: 18px;
 }
 
@@ -478,6 +480,9 @@
 	color: #aaa;
 	margin: 0 15px 0 10px;
 }
+
+.IllustItem .IllustItemCommand .IllustItemCategoryEdit {display: none; float: left; margin: 0px 0 5px 4px;}
+
 
 .IllustItem .IllustItemExpand {
 	display: block;

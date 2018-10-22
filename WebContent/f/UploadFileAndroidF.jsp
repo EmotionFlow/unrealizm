@@ -108,7 +108,7 @@ class UploadFileC {
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strFileName = String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), m_nContentId);
+			String strFileName = String.format("%s/%09d.%s", Common.getUploadUserPath(cParam.m_nUserId), m_nContentId, ext);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
@@ -125,7 +125,7 @@ class UploadFileC {
 				nHeight = size[1];
 				nFileSize = (new File(strRealFileName)).length();
 				nComplexSize = ImageUtil.getConplex(strRealFileName);
-			} catch(IOException e) {
+			} catch(Exception e) {
 				nWidth = 0;
 				nHeight = 0;
 				nFileSize = 0;
@@ -149,7 +149,7 @@ class UploadFileC {
 
 			// Add my tags
 			// Pattern ptn = Pattern.compile("#(.*?)[\\s\\r\\n]+", Pattern.MULTILINE);
-			Pattern ptn = Pattern.compile("#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", Pattern.MULTILINE);
+			Pattern ptn = Pattern.compile(Common.TAG_PATTERN, Pattern.MULTILINE);
 			Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
 			strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
 			cState = cConn.prepareStatement(strSql);

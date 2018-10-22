@@ -105,7 +105,7 @@ class UploadFileFirstC {
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strFileName = String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId);
+			String strFileName = String.format("%s/%09d.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, ext);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
@@ -122,7 +122,7 @@ class UploadFileFirstC {
 				nHeight = size[1];
 				nFileSize = (new File(strRealFileName)).length();
 				nComplexSize = ImageUtil.getConplex(strRealFileName);
-			} catch(IOException e) {
+			} catch(Exception e) {
 				nWidth = 0;
 				nHeight = 0;
 				nFileSize = 0;
