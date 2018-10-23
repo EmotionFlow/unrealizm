@@ -17,7 +17,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuHome').addClass('Selected');
+			$('#MenuSearch').addClass('Selected');
 		});
 		</script>
 		<style>
@@ -28,7 +28,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<body>
 		<div class="TabMenuWrapper">
 			<div class="TabMenu">
-				<a class="TabMenuItem" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
 				<a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
 				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
@@ -39,9 +38,11 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 		<div class="Wrapper ThumbList">
 
+			<%if(cCheckLogin.m_bLogin) {%>
 			<a style="display: block; width: 100%; float: left;" href="/SearchIllustByCategoryPcV.jsp?CD=13">
 				<img style="display: block; width: 100%;" src="/event/201810/2018_10_13_halloween.png" />
 			</a>
+			<%}%>
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

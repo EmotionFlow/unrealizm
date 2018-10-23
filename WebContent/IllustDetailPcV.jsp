@@ -19,7 +19,7 @@ if(!cResults.getResults(cCheckLogin)) {
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuHome').addClass('Selected');
+			$('#MenuSearch').addClass('Selected');
 		});
 		</script>
 

@@ -17,7 +17,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuHome').addClass('Selected');
+			$('#MenuSearch').addClass('Selected');
 		});
 		</script>
 		<style>
@@ -28,7 +28,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<body>
 		<div class="TabMenuWrapper">
 			<div class="TabMenu">
-				<a class="TabMenuItem" href="/"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
 				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
 				<a class="TabMenuItem Selected" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>

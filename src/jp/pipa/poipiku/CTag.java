@@ -7,6 +7,7 @@ import jp.pipa.poipiku.Common;
 
 public class CTag {
 	public String m_strTagTxt = "";
+	public int m_nTypeId = -1;
 
 	public CTag() {}
 	public CTag(ResultSet resultSet) throws SQLException {

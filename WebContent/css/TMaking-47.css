@@ -114,13 +114,22 @@
 .SearchResultTitle {
 	text-decoration: none;
 	color: #5bd;
-	margin: 10px 0;
+	margin: 10px 0 7px 0;
 	font-size: 16px;
-	height: 25px;
-	line-height: 25px;
+	height: 30px;
+	line-height: 30px;
 	display: block;
 	float: left;
 	width: 100%;
+}
+
+.SearchResultTitle .TitleCmdFollow {
+	float: right;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+	font-size: 14px;
+	margin: 0 0 0 15px;
 }
 
 

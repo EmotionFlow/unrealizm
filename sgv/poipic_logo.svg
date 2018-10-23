@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="862.29954"
-     inkscape:cy="1.4488309"
+     inkscape:zoom="2.8284273"
+     inkscape:cx="93.755033"
+     inkscape:cy="650.36323"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -3003,1292 +3003,6 @@
        inkscape:export-xdpi="360"
        inkscape:export-ydpi="360" />
     <g
-       id="g13061"
-       inkscape:export-filename="/Users/kawai/git/poipiku/WebContent/img/menu_pc-02.png"
-       inkscape:export-xdpi="192"
-       inkscape:export-ydpi="192"
-       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
-      <g
-         id="g6197-7-5-48-2-6-4"
-         transform="matrix(0.13229165,0,0,0.13229165,-3.8721047,82.907067)">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(2.2456991,0,0,2.2456991,-418.27162,-553.64339)"
-           id="path6199-1-9-82-7-9-0"
-           style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <path
-           id="path6201-6-8-4-7-3-9"
-           d="m 493.13444,202.3125 c 0,0 -0.43349,1.63313 -0.9375,4.09375 -1.69375,0.38831 -3.29226,1.03717 -4.71875,1.9375 -2.08592,-1.376 -3.5,-2.21875 -3.5,-2.21875 l -3.5,3.46875 c 0,0 0.83566,1.46681 2.21875,3.5625 -0.8982,1.42981 -1.58421,2.99067 -1.96875,4.6875 -2.44406,0.50137 -4.0625,0.9375 -4.0625,0.9375 l 0,4.9375 c 0,0 1.63313,0.43349 4.09375,0.9375 0.38583,1.68292 1.04584,3.23685 1.9375,4.65625 -1.38309,2.09569 -2.21875,3.5625 -2.21875,3.5625 l 3.5,3.5 c 0,0 1.41408,-0.874 3.5,-2.25 1.43477,0.90556 3.04517,1.58148 4.75,1.96875 0.50095,2.44144 0.90625,4.0625 0.90625,4.0625 l 4.9375,0 c 0,0 0.4053,-1.62106 0.90625,-4.0625 1.70483,-0.38727 3.31523,-1.06319 4.75,-1.96875 2.08592,1.376 3.5,2.25 3.5,2.25 l 3.5,-3.5 c 0,0 -0.83566,-1.46681 -2.21875,-3.5625 0.89166,-1.4194 1.55167,-2.97333 1.9375,-4.65625 2.46062,-0.504 4.0625,-0.9375 4.0625,-0.9375 l 0,-4.9375 c 0,0 -1.58719,-0.43613 -4.03125,-0.9375 -0.38454,-1.69683 -1.07055,-3.25769 -1.96875,-4.6875 1.38309,-2.09569 2.21875,-3.5625 2.21875,-3.5625 l -3.5,-3.46875 c 0,0 -1.41408,0.84275 -3.5,2.21875 -1.42649,-0.90033 -3.025,-1.54919 -4.71875,-1.9375 -0.504,-2.46062 -0.9375,-4.09375 -0.9375,-4.09375 l -4.9375,0 z m 2.46875,12.5625 c 3.52082,0 6.375,2.85418 6.375,6.375 0,3.52082 -2.85418,6.375 -6.375,6.375 -3.52082,0 -6.375,-2.85418 -6.375,-6.375 0,-3.52082 2.85418,-6.375 6.375,-6.375 z"
-           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           inkscape:connector-curvature="0" />
-      </g>
-      <g
-         inkscape:export-ydpi="180"
-         inkscape:export-xdpi="180"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStar@2x.png"
-         style="stroke:#917c6f"
-         id="g6177-2-8-6-8-3-4"
-         transform="matrix(0.13229165,0,0,0.13229165,-5.0227247,91.418501)">
-        <g
-           style="stroke:#917c6f"
-           id="g6179-0-2-8-6-8-5"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           transform="translate(-149.67741,-167.62868)">
-          <g
-             style="stroke:#917c6f"
-             id="g6181-2-9-5-5-4-5">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-               id="path6183-4-1-76-0-8-1"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               inkscape:export-xdpi="90"
-               inkscape:export-ydpi="90" />
-          </g>
-        </g>
-        <path
-           transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)"
-           d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
-           inkscape:randomized="0"
-           inkscape:rounded="-2.4980018e-16"
-           inkscape:flatsided="false"
-           sodipodi:arg2="1.5556137"
-           sodipodi:arg1="0.92729522"
-           sodipodi:r2="11.7"
-           sodipodi:r1="30"
-           sodipodi:cy="152.36218"
-           sodipodi:cx="255"
-           sodipodi:sides="5"
-           id="path6185-7-3-1-2-0-7"
-           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           sodipodi:type="star" />
-      </g>
-      <g
-         style="stroke:#917c6f"
-         id="g5866-9-8-8-1-1"
-         transform="matrix(0.13229165,0,0,0.13229165,4.7250756,91.434535)">
-        <g
-           style="stroke:#917c6f"
-           id="g5868-7-92-6-5-15"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           transform="translate(-283.36157,-167.75)">
-          <g
-             style="stroke:#917c6f"
-             id="g5870-3-7-0-4-2">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-               id="path5872-7-9-2-1-7"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               inkscape:export-xdpi="90"
-               inkscape:export-ydpi="90" />
-          </g>
-        </g>
-        <g
-           style="stroke:#917c6f"
-           transform="matrix(1.0421094,0,0,1.0421094,-4.8732264,-10.118296)"
-           id="g5874-2-54-4-3-6">
-          <g
-             id="g5876-6-3-8-7-1">
-            <rect
-               ry="0"
-               y="149.86218"
-               x="112.25"
-               height="23.255203"
-               width="35.5"
-               id="rect5878-0-1-6-3-4"
-               style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-            <path
-               inkscape:connector-curvature="0"
-               sodipodi:nodetypes="ccccc"
-               id="path5880-1-2-5-5-2"
-               d="m 116.29288,143.4328 13.02512,0 0,5.43673 -15.14644,0 2.12132,-5.43673 z"
-               style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-          </g>
-        </g>
-      </g>
-      <g
-         transform="matrix(0.19843748,0,0,0.19843748,-24.233438,-1.0067157)"
-         id="g6208-6-6-0-8-3">
-        <g
-           id="g4841-7-8-0-9-5-2"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           transform="matrix(0.66666667,0,0,0.66666667,117.02495,354.01241)"
-           style="stroke:#917c6f">
-          <g
-             id="g4845-2-3-2-0-6-21"
-             style="stroke:#917c6f">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-               id="path4847-8-4-4-0-9-6"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               inkscape:export-xdpi="90"
-               inkscape:export-ydpi="90" />
-          </g>
-        </g>
-        <g
-           id="g6123-8-8-6-0-8"
-           transform="translate(0.74999609,1.95)">
-          <rect
-             y="562.36218"
-             x="380"
-             height="15"
-             width="7.5"
-             id="rect5580-4-6-1-8-57"
-             style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-          <rect
-             style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
-             id="rect6092-9-5-3-9-6"
-             width="7.5"
-             height="21"
-             x="388.5"
-             y="556.36218" />
-          <rect
-             y="568.36218"
-             x="397"
-             height="9"
-             width="7.5"
-             id="rect6095-9-0-8-3-1"
-             style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-          <rect
-             y="577.86218"
-             x="380"
-             height="1"
-             width="24.5"
-             id="rect6097-2-90-9-6-8"
-             style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-        </g>
-      </g>
-      <g
-         transform="matrix(0.19843748,0,0,0.19843748,58.223388,-15.129703)"
-         id="g7807-2-20-6-9-4">
-        <g
-           id="g5614-7-9-6-4-31"
-           transform="matrix(1.4815379,0,0,1.4815379,-557.50504,-1284.9883)"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFavorite.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90">
-          <g
-             transform="matrix(1.0255613,0,0,1.0255613,298.61943,-40.205814)"
-             style="fill:#9cd7d1;fill-opacity:1;stroke:none"
-             id="g5553-6-73-1-1-2">
-            <path
-               style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
-               d="m -93,568.78125 c -2.832117,0 -5.125,2.29288 -5.125,5.125 0,1.38414 0.546141,2.63994 1.4375,3.5625 -2.441947,0.37755 -4.28125,2.2363 -4.28125,4.53125 l 0,0.21875 0,0.8125 c 0,0.16056 -0.0177,0.3124 0,0.46875 l 0,4.15625 5.1875,0 5.53125,0 5.21875,0 0,-4.625 0,-0.8125 0,-0.21875 c 0,-2.28558 -1.848378,-4.14296 -4.28125,-4.53125 0.891359,-0.92256 1.4375,-2.17836 1.4375,-3.5625 0,-2.83212 -2.292883,-5.125 -5.125,-5.125 z m 0,9.46875 c 2.454692,0 4.4375,2.01406 4.4375,4.46875 0,2.45469 -1.982808,4.4375 -4.4375,4.4375 -2.454692,0 -4.4375,-1.98281 -4.4375,-4.4375 0,-2.45469 1.982808,-4.46875 4.4375,-4.46875 z"
-               transform="matrix(0.87753487,0,0,0.87753487,89.876176,798.7354)"
-               id="path5544-1-7-8-5-3"
-               inkscape:connector-curvature="0" />
-          </g>
-          <g
-             transform="translate(5.6630671,-0.13253247)"
-             id="g5610-2-2-4-6-3">
-            <path
-               transform="matrix(0.13599707,0,0,0.13599707,266.77295,1283.1485)"
-               d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
-               inkscape:randomized="0"
-               inkscape:rounded="-2.4980018e-16"
-               inkscape:flatsided="false"
-               sodipodi:arg2="1.5556137"
-               sodipodi:arg1="0.92729522"
-               sodipodi:r2="11.7"
-               sodipodi:r1="30"
-               sodipodi:cy="152.36218"
-               sodipodi:cx="255"
-               sodipodi:sides="5"
-               id="path4849-8-1-2-6-9-6-4"
-               style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
-               sodipodi:type="star" />
-          </g>
-        </g>
-        <g
-           transform="matrix(0.66666665,0,0,0.66666665,-388.82215,540.86648)"
-           id="g5630-6-1-2-0-6-6-1"
-           style="stroke:#917c6f">
-          <g
-             transform="translate(15.474933,-173.52466)"
-             inkscape:export-ydpi="90"
-             inkscape:export-xdpi="90"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             id="g5632-1-7-1-16-3-6-1"
-             style="stroke:#917c6f">
-            <g
-               id="g5634-8-1-6-5-7-6-3"
-               style="stroke:#917c6f">
-              <circle
-                 r="12.4375"
-                 cy="345.04968"
-                 cx="406.9375"
-                 inkscape:export-ydpi="90"
-                 inkscape:export-xdpi="90"
-                 inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-                 transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-                 id="path5636-4-1-8-7-8-7-8"
-                 style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-            </g>
-          </g>
-        </g>
-      </g>
-      <g
-         inkscape:export-ydpi="180"
-         inkscape:export-xdpi="180"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuAct@2x.png"
-         transform="matrix(0.19843748,0,0,0.19843748,61.247629,-18.369994)"
-         id="g7838-5-541-8-1-7">
-        <path
-           inkscape:connector-curvature="0"
-           id="path4817-2-7-200-2-4-4"
-           d="m -82.778158,646.21677 c -3.076944,0 -5.566144,2.51181 -5.566144,5.58856 0,1.79685 0.847711,3.38512 2.168339,4.40365 -2.074983,0.79603 -3.556442,2.27449 -3.822534,4.04618 l -0.02227,0 0,0.60359 0,5.43198 9.120426,0 0,-4.53784 0,-0.60359 0.02227,0 c 0.248286,-1.65308 1.561541,-3.03845 3.420167,-3.86722 -1.227495,-1.75832 -0.0833,0.14968 -1.184764,-1.766 -0.446112,-0.79759 -0.581207,-1.83483 -0.581207,-2.8165 0,-1.36877 0.500045,-2.62918 1.318891,-3.59916 -0.9504,-1.71277 -2.775527,-2.88365 -4.873184,-2.88365 z m 10.014598,1.25195 c -3.076933,0 -5.566155,2.51147 -5.566155,5.58845 0,1.79696 0.847722,3.38501 2.16835,4.40376 -2.074983,0.79592 -3.556442,2.27438 -3.822535,4.04607 l -0.02227,0 0,0.60359 0,5.43198 14.485402,0 0,-5.43198 0,-0.60359 -0.02227,0 c -0.266092,-1.77169 -1.747562,-3.25015 -3.822534,-4.04607 1.320628,-1.01875 2.168339,-2.6068 2.168339,-4.40376 0,-3.07698 -2.489211,-5.58845 -5.566166,-5.58845 z"
-           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFriend.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90" />
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path5636-4-1-5-6-1-9-0-2"
-           transform="matrix(1.4971327,0,0,1.4971327,-687.0102,141.27703)"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90" />
-      </g>
-      <path
-         inkscape:export-ydpi="360"
-         inkscape:export-xdpi="360"
-         inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuInfo.png"
-         inkscape:connector-curvature="0"
-         id="rect4853-8-6-1-6-7"
-         d="m 67.574687,109.02689 c -0.911381,0 -1.642243,0.73086 -1.642243,1.64224 l 0,2.1811 c 0,0.91138 0.730862,1.65081 1.642243,1.65081 l 2.899582,0 0.812569,0.82111 0,-0.82111 0.393452,0 c 0.911378,0 1.642239,-0.73943 1.642239,-1.65081 l 0,-2.1811 c 0,-0.91138 -0.730861,-1.64224 -1.642239,-1.64224 l -4.105603,0 z"
-         style="fill:none;stroke:#c0c0b5;stroke-width:0.54742289;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <g
-         inkscape:export-ydpi="180"
-         inkscape:export-xdpi="180"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSetting@2x.png"
-         transform="matrix(0.26458333,0,0,0.26458333,152.97125,-100.6463)"
-         id="g5556-1-7">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(1.1228494,0,0,1.1228494,-741.92957,416.92334)"
-           id="path6199-1-9-82-7-5-2-9"
-           style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <g
-           id="g5545-1-3">
-          <g
-             id="g5495-4-1">
-            <rect
-               style="fill:#c0c0b5;fill-opacity:1;stroke:none"
-               id="rect4671-9-9"
-               width="11.720658"
-               height="4"
-               x="-288.41299"
-               y="796.10187"
-               ry="0" />
-            <rect
-               style="fill:#c0c0b5;fill-opacity:1;stroke:none"
-               id="rect4671-0-52-8"
-               width="4"
-               height="4"
-               x="-293.29999"
-               y="795.98047"
-               ry="0" />
-          </g>
-          <g
-             id="g5495-7-3-6"
-             transform="translate(0,6.2230071)">
-            <rect
-               style="fill:#c0c0b5;fill-opacity:1;stroke:none"
-               id="rect4671-6-4-5"
-               width="11.720658"
-               height="4"
-               x="-288.41299"
-               y="796.10187"
-               ry="0" />
-            <rect
-               style="fill:#c0c0b5;fill-opacity:1;stroke:none"
-               id="rect4671-0-3-1-0"
-               width="4"
-               height="4"
-               x="-293.29999"
-               y="795.98047"
-               ry="0" />
-          </g>
-          <g
-             id="g5495-6-52-2"
-             transform="translate(0,12.446014)">
-            <rect
-               style="fill:#c0c0b5;fill-opacity:1;stroke:none"
-               id="rect4671-1-3-8"
-               width="11.720658"
-               height="4"
-               x="-288.41299"
-               y="796.10187"
-               ry="0" />
-            <rect
-               style="fill:#c0c0b5;fill-opacity:1;stroke:none"
-               id="rect4671-0-5-16-6"
-               width="4"
-               height="4"
-               x="-293.29999"
-               y="795.98047"
-               ry="0" />
-          </g>
-        </g>
-      </g>
-      <g
-         inkscape:export-ydpi="359.98645"
-         inkscape:export-xdpi="359.98645"
-         inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuHeart.png"
-         transform="matrix(0.26458333,0,0,0.26458333,160.90877,-121.81297)"
-         id="g5517-0">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(1.1228494,0,0,1.1228494,-741.9298,496.92334)"
-           id="path6199-1-9-82-7-5-2-7-2"
-           style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#c0c0b5;fill-opacity:1;stroke:none"
-           x="-296.66708"
-           y="893.78766"
-           id="text4745-4"><tspan
-             sodipodi:role="line"
-             id="tspan4747-8"
-             x="-296.66708"
-             y="893.78766"
-             style="font-size:23.33361816px;line-height:1.25">♥</tspan></text>
-      </g>
-      <g
-         inkscape:export-ydpi="180"
-         inkscape:export-xdpi="180"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSearch@2x.png"
-         transform="matrix(0.26458333,0,0,0.26458333,160.90877,-121.81295)"
-         id="g6461-6">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(1.1228494,0,0,1.1228494,-711.92996,496.92334)"
-           id="path6199-1-9-82-7-5-2-7-7-5"
-           style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <g
-           id="g6400-0"
-           transform="matrix(1.1328591,0,0,1.1328591,27.768424,-74.297751)"
-           style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none">
-          <circle
-             r="8.1317282"
-             cy="484.909"
-             cx="472.7009"
-             transform="matrix(0.62763061,0,0,0.61359881,-547.83026,546.3109)"
-             id="path4098-7-60-9-9"
-             style="fill:none;stroke:#c0c0b5;stroke-width:3.45780444;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-          <rect
-             transform="matrix(0.76288627,-0.64653271,0.66344264,0.74822715,0,0)"
-             y="489.22812"
-             x="-748.91199"
-             height="4.2503691"
-             width="1.7557757"
-             id="rect4100-7-5-4-0"
-             style="fill:#c0c0b5;fill-opacity:1;stroke:#c0c0b5;stroke-width:1.42644405;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-        </g>
-      </g>
-      <g
-         id="g6197-7-5-48-2-6-7-1"
-         transform="matrix(0.13229165,0,0,0.13229165,-3.8721047,90.844514)">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(2.2456991,0,0,2.2456991,-418.27162,-553.64339)"
-           id="path6199-1-9-82-7-9-1-3"
-           style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <path
-           id="path6201-6-8-4-7-3-1-8"
-           d="m 493.13444,202.3125 c 0,0 -0.43349,1.63313 -0.9375,4.09375 -1.69375,0.38831 -3.29226,1.03717 -4.71875,1.9375 -2.08592,-1.376 -3.5,-2.21875 -3.5,-2.21875 l -3.5,3.46875 c 0,0 0.83566,1.46681 2.21875,3.5625 -0.8982,1.42981 -1.58421,2.99067 -1.96875,4.6875 -2.44406,0.50137 -4.0625,0.9375 -4.0625,0.9375 l 0,4.9375 c 0,0 1.63313,0.43349 4.09375,0.9375 0.38583,1.68292 1.04584,3.23685 1.9375,4.65625 -1.38309,2.09569 -2.21875,3.5625 -2.21875,3.5625 l 3.5,3.5 c 0,0 1.41408,-0.874 3.5,-2.25 1.43477,0.90556 3.04517,1.58148 4.75,1.96875 0.50095,2.44144 0.90625,4.0625 0.90625,4.0625 l 4.9375,0 c 0,0 0.4053,-1.62106 0.90625,-4.0625 1.70483,-0.38727 3.31523,-1.06319 4.75,-1.96875 2.08592,1.376 3.5,2.25 3.5,2.25 l 3.5,-3.5 c 0,0 -0.83566,-1.46681 -2.21875,-3.5625 0.89166,-1.4194 1.55167,-2.97333 1.9375,-4.65625 2.46062,-0.504 4.0625,-0.9375 4.0625,-0.9375 l 0,-4.9375 c 0,0 -1.58719,-0.43613 -4.03125,-0.9375 -0.38454,-1.69683 -1.07055,-3.25769 -1.96875,-4.6875 1.38309,-2.09569 2.21875,-3.5625 2.21875,-3.5625 l -3.5,-3.46875 c 0,0 -1.41408,0.84275 -3.5,2.21875 -1.42649,-0.90033 -3.025,-1.54919 -4.71875,-1.9375 -0.504,-2.46062 -0.9375,-4.09375 -0.9375,-4.09375 l -4.9375,0 z m 2.46875,12.5625 c 3.52082,0 6.375,2.85418 6.375,6.375 0,3.52082 -2.85418,6.375 -6.375,6.375 -3.52082,0 -6.375,-2.85418 -6.375,-6.375 0,-3.52082 2.85418,-6.375 6.375,-6.375 z"
-           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           inkscape:connector-curvature="0" />
-      </g>
-      <g
-         id="g12961">
-        <path
-           inkscape:connector-curvature="0"
-           id="path6171-8-3-3-3-1-2-3"
-           d="m 6.1274972,117.85259 -2.5560463,2.03177 0.4775021,0 0,2.48701 2.1665725,0 0,-1.7367 0.9550076,0 0,1.7367 1.0355096,0 0,-2.48701 0.477502,0 z"
-           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           sodipodi:nodetypes="cccccccccccc" />
-        <g
-           style="stroke:#917c6f"
-           transform="matrix(0.13229165,0,0,0.13229165,-48.636292,77.180084)"
-           id="g6173-1-7-2-1-0-7-4">
-          <circle
-             r="12.4375"
-             cy="345.04968"
-             cx="406.9375"
-             style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-             id="path6175-9-8-21-9-3-6-4"
-             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             inkscape:export-xdpi="90"
-             inkscape:export-ydpi="90" />
-        </g>
-      </g>
-      <g
-         inkscape:export-ydpi="180"
-         inkscape:export-xdpi="180"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStarB@2x.png"
-         style="stroke:#917c6f"
-         id="g6177-2-8-6-8-3-1-6"
-         transform="matrix(0.13229165,0,0,0.13229165,-5.0227247,99.355948)">
-        <g
-           style="stroke:#917c6f"
-           id="g6179-0-2-8-6-8-4-0"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           transform="translate(-149.67741,-167.62868)">
-          <g
-             style="stroke:#917c6f"
-             id="g6181-2-9-5-5-4-2-6">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               style="fill:none;stroke:#ff9999;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-               id="path6183-4-1-76-0-8-3-6"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               inkscape:export-xdpi="90"
-               inkscape:export-ydpi="90" />
-          </g>
-        </g>
-        <path
-           transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)"
-           d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
-           inkscape:randomized="0"
-           inkscape:rounded="-2.4980018e-16"
-           inkscape:flatsided="false"
-           sodipodi:arg2="1.5556137"
-           sodipodi:arg1="0.92729522"
-           sodipodi:r2="11.7"
-           sodipodi:r1="30"
-           sodipodi:cy="152.36218"
-           sodipodi:cx="255"
-           sodipodi:sides="5"
-           id="path6185-7-3-1-2-0-2-1"
-           style="fill:#ff9999;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           sodipodi:type="star" />
-      </g>
-      <g
-         style="stroke:#917c6f"
-         id="g5866-9-8-8-1-2-8"
-         transform="matrix(0.13229165,0,0,0.13229165,4.7250756,99.372009)">
-        <g
-           style="stroke:#917c6f"
-           id="g5868-7-92-6-5-1-4"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           transform="translate(-283.36157,-167.75)">
-          <g
-             style="stroke:#917c6f"
-             id="g5870-3-7-0-4-6-9">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-               id="path5872-7-9-2-1-8-6"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               inkscape:export-xdpi="90"
-               inkscape:export-ydpi="90" />
-          </g>
-        </g>
-        <g
-           style="stroke:#917c6f"
-           transform="matrix(1.0421094,0,0,1.0421094,-4.8732264,-10.118296)"
-           id="g5874-2-54-4-3-5-3">
-          <g
-             id="g5876-6-3-8-7-7-7">
-            <rect
-               ry="0"
-               y="149.86218"
-               x="112.25"
-               height="23.255203"
-               width="35.5"
-               id="rect5878-0-1-6-3-6-8"
-               style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-            <path
-               inkscape:connector-curvature="0"
-               sodipodi:nodetypes="ccccc"
-               id="path5880-1-2-5-5-1-8"
-               d="m 116.29288,143.4328 13.02512,0 0,5.43673 -15.14644,0 2.12132,-5.43673 z"
-               style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-          </g>
-        </g>
-      </g>
-      <g
-         transform="matrix(0.19843748,0,0,0.19843748,-24.233438,6.9307471)"
-         id="g6208-6-6-0-8-8-2">
-        <g
-           id="g4841-7-8-0-9-5-9-9"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           transform="matrix(0.66666667,0,0,0.66666667,117.02495,354.01241)"
-           style="stroke:#917c6f">
-          <g
-             id="g4845-2-3-2-0-6-2-1"
-             style="stroke:#917c6f">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-               id="path4847-8-4-4-0-9-7-3"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               inkscape:export-xdpi="90"
-               inkscape:export-ydpi="90" />
-          </g>
-        </g>
-        <g
-           id="g6123-8-8-6-0-9-5"
-           transform="translate(0.74999609,1.95)">
-          <rect
-             y="562.36218"
-             x="380"
-             height="15"
-             width="7.5"
-             id="rect5580-4-6-1-8-5-9"
-             style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-          <rect
-             style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
-             id="rect6092-9-5-3-9-4-8"
-             width="7.5"
-             height="21"
-             x="388.5"
-             y="556.36218" />
-          <rect
-             y="568.36218"
-             x="397"
-             height="9"
-             width="7.5"
-             id="rect6095-9-0-8-3-3-4"
-             style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-          <rect
-             y="577.86218"
-             x="380"
-             height="1"
-             width="24.5"
-             id="rect6097-2-90-9-6-1-0"
-             style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none" />
-        </g>
-      </g>
-      <g
-         transform="matrix(0.19843748,0,0,0.19843748,58.223388,-7.1922401)"
-         id="g7807-2-20-6-9-1-5">
-        <g
-           id="g5614-7-9-6-4-3-4"
-           transform="matrix(1.4815379,0,0,1.4815379,-557.50504,-1284.9883)"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFavorite.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90">
-          <g
-             transform="matrix(1.0255613,0,0,1.0255613,298.61943,-40.205814)"
-             style="fill:#9cd7d1;fill-opacity:1;stroke:none"
-             id="g5553-6-73-1-1-8-2">
-            <path
-               style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
-               d="m -93,568.78125 c -2.832117,0 -5.125,2.29288 -5.125,5.125 0,1.38414 0.546141,2.63994 1.4375,3.5625 -2.441947,0.37755 -4.28125,2.2363 -4.28125,4.53125 l 0,0.21875 0,0.8125 c 0,0.16056 -0.0177,0.3124 0,0.46875 l 0,4.15625 5.1875,0 5.53125,0 5.21875,0 0,-4.625 0,-0.8125 0,-0.21875 c 0,-2.28558 -1.848378,-4.14296 -4.28125,-4.53125 0.891359,-0.92256 1.4375,-2.17836 1.4375,-3.5625 0,-2.83212 -2.292883,-5.125 -5.125,-5.125 z m 0,9.46875 c 2.454692,0 4.4375,2.01406 4.4375,4.46875 0,2.45469 -1.982808,4.4375 -4.4375,4.4375 -2.454692,0 -4.4375,-1.98281 -4.4375,-4.4375 0,-2.45469 1.982808,-4.46875 4.4375,-4.46875 z"
-               transform="matrix(0.87753487,0,0,0.87753487,89.876176,798.7354)"
-               id="path5544-1-7-8-5-7-0"
-               inkscape:connector-curvature="0" />
-          </g>
-          <g
-             transform="translate(5.6630671,-0.13253247)"
-             id="g5610-2-2-4-6-4-9">
-            <path
-               transform="matrix(0.13599707,0,0,0.13599707,266.77295,1283.1485)"
-               d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
-               inkscape:randomized="0"
-               inkscape:rounded="-2.4980018e-16"
-               inkscape:flatsided="false"
-               sodipodi:arg2="1.5556137"
-               sodipodi:arg1="0.92729522"
-               sodipodi:r2="11.7"
-               sodipodi:r1="30"
-               sodipodi:cy="152.36218"
-               sodipodi:cx="255"
-               sodipodi:sides="5"
-               id="path4849-8-1-2-6-9-6-2-7"
-               style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
-               sodipodi:type="star" />
-          </g>
-        </g>
-        <g
-           transform="matrix(0.66666665,0,0,0.66666665,-388.82215,540.86648)"
-           id="g5630-6-1-2-0-6-6-7-3"
-           style="stroke:#917c6f">
-          <g
-             transform="translate(15.474933,-173.52466)"
-             inkscape:export-ydpi="90"
-             inkscape:export-xdpi="90"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             id="g5632-1-7-1-16-3-6-7-7"
-             style="stroke:#917c6f">
-            <g
-               id="g5634-8-1-6-5-7-6-9-2"
-               style="stroke:#917c6f">
-              <circle
-                 r="12.4375"
-                 cy="345.04968"
-                 cx="406.9375"
-                 inkscape:export-ydpi="90"
-                 inkscape:export-xdpi="90"
-                 inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-                 transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-                 id="path5636-4-1-8-7-8-7-3-6"
-                 style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-            </g>
-          </g>
-        </g>
-      </g>
-      <g
-         transform="matrix(0.19843748,0,0,0.19843748,61.247629,-10.432531)"
-         id="g7838-5-541-8-1-1-0">
-        <path
-           inkscape:connector-curvature="0"
-           id="path4817-2-7-200-2-4-9-1"
-           d="m -82.778158,646.21677 c -3.076944,0 -5.566144,2.51181 -5.566144,5.58856 0,1.79685 0.847711,3.38512 2.168339,4.40365 -2.074983,0.79603 -3.556442,2.27449 -3.822534,4.04618 l -0.02227,0 0,0.60359 0,5.43198 9.120426,0 0,-4.53784 0,-0.60359 0.02227,0 c 0.248286,-1.65308 1.561541,-3.03845 3.420167,-3.86722 -1.227495,-1.75832 -0.0833,0.14968 -1.184764,-1.766 -0.446112,-0.79759 -0.581207,-1.83483 -0.581207,-2.8165 0,-1.36877 0.500045,-2.62918 1.318891,-3.59916 -0.9504,-1.71277 -2.775527,-2.88365 -4.873184,-2.88365 z m 10.014598,1.25195 c -3.076933,0 -5.566155,2.51147 -5.566155,5.58845 0,1.79696 0.847722,3.38501 2.16835,4.40376 -2.074983,0.79592 -3.556442,2.27438 -3.822535,4.04607 l -0.02227,0 0,0.60359 0,5.43198 14.485402,0 0,-5.43198 0,-0.60359 -0.02227,0 c -0.266092,-1.77169 -1.747562,-3.25015 -3.822534,-4.04607 1.320628,-1.01875 2.168339,-2.6068 2.168339,-4.40376 0,-3.07698 -2.489211,-5.58845 -5.566166,-5.58845 z"
-           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFriend.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90" />
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path5636-4-1-5-6-1-9-0-8-6"
-           transform="matrix(1.4971327,0,0,1.4971327,-687.0102,141.27703)"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90" />
-      </g>
-      <path
-         inkscape:export-ydpi="360"
-         inkscape:export-xdpi="360"
-         inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuInfoB.png"
-         inkscape:connector-curvature="0"
-         id="rect4853-8-6-1-6-6-5"
-         d="m 67.574687,116.96434 c -0.911381,0 -1.642243,0.73088 -1.642243,1.64224 l 0,2.18112 c 0,0.91138 0.730862,1.65079 1.642243,1.65079 l 2.899582,0 0.812569,0.82113 0,-0.82113 0.393452,0 c 0.911378,0 1.642239,-0.73941 1.642239,-1.65079 l 0,-2.18112 c 0,-0.91136 -0.730861,-1.64224 -1.642239,-1.64224 l -4.105603,0 z"
-         style="fill:none;stroke:#55bbdd;stroke-width:0.54742289;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-      <g
-         inkscape:export-ydpi="90"
-         inkscape:export-xdpi="90"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSettingB.png"
-         transform="matrix(0.26458333,0,0,0.26458333,152.97125,-92.70884)"
-         id="g5556-1-5-7">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(1.1228494,0,0,1.1228494,-741.92957,416.92334)"
-           id="path6199-1-9-82-7-5-2-0-5"
-           style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <g
-           id="g5545-1-2-4">
-          <g
-             id="g5495-4-8-1">
-            <rect
-               style="fill:#55bbdd;fill-opacity:1;stroke:none"
-               id="rect4671-9-6-2"
-               width="11.720658"
-               height="4"
-               x="-288.41299"
-               y="796.10187"
-               ry="0" />
-            <rect
-               style="fill:#55bbdd;fill-opacity:1;stroke:none"
-               id="rect4671-0-52-0-0"
-               width="4"
-               height="4"
-               x="-293.29999"
-               y="795.98047"
-               ry="0" />
-          </g>
-          <g
-             id="g5495-7-3-2-0"
-             transform="translate(0,6.2230071)">
-            <rect
-               style="fill:#55bbdd;fill-opacity:1;stroke:none"
-               id="rect4671-6-4-4-1"
-               width="11.720658"
-               height="4"
-               x="-288.41299"
-               y="796.10187"
-               ry="0" />
-            <rect
-               style="fill:#55bbdd;fill-opacity:1;stroke:none"
-               id="rect4671-0-3-1-8-4"
-               width="4"
-               height="4"
-               x="-293.29999"
-               y="795.98047"
-               ry="0" />
-          </g>
-          <g
-             id="g5495-6-52-6-6"
-             transform="translate(0,12.446014)">
-            <rect
-               style="fill:#55bbdd;fill-opacity:1;stroke:none"
-               id="rect4671-1-3-5-0"
-               width="11.720658"
-               height="4"
-               x="-288.41299"
-               y="796.10187"
-               ry="0" />
-            <rect
-               style="fill:#55bbdd;fill-opacity:1;stroke:none"
-               id="rect4671-0-5-16-0-7"
-               width="4"
-               height="4"
-               x="-293.29999"
-               y="795.98047"
-               ry="0" />
-          </g>
-        </g>
-      </g>
-      <g
-         inkscape:export-ydpi="359.98645"
-         inkscape:export-xdpi="359.98645"
-         inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuHeartB.png"
-         transform="matrix(0.26458333,0,0,0.26458333,160.90877,-113.87551)"
-         id="g5517-9-1">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(1.1228494,0,0,1.1228494,-741.9298,496.92334)"
-           id="path6199-1-9-82-7-5-2-7-0-7"
-           style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#55bbdd;fill-opacity:1;stroke:none"
-           x="-296.66708"
-           y="893.78766"
-           id="text4745-0-7"><tspan
-             sodipodi:role="line"
-             id="tspan4747-6-7"
-             x="-296.66708"
-             y="893.78766"
-             style="font-size:23.33361816px;line-height:1.25">♥</tspan></text>
-      </g>
-      <g
-         inkscape:export-ydpi="90"
-         inkscape:export-xdpi="90"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSearchB.png"
-         style="stroke:#ff9999;stroke-opacity:1"
-         id="g6461-4-7"
-         transform="matrix(0.26458333,0,0,0.26458333,160.90877,-113.87551)">
-        <circle
-           r="12.4375"
-           cy="345.04968"
-           cx="406.9375"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           transform="matrix(1.1228494,0,0,1.1228494,-711.92996,496.92334)"
-           id="path6199-1-9-82-7-5-2-7-7-8-3"
-           style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <g
-           id="g6400-8-3"
-           transform="matrix(1.1328591,0,0,1.1328591,27.768424,-74.297751)"
-           style="stroke:#ff9999;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">
-          <circle
-             r="8.1317282"
-             cy="484.909"
-             cx="472.7009"
-             transform="matrix(0.62763061,0,0,0.61359881,-547.83026,546.3109)"
-             id="path4098-7-60-9-2-5"
-             style="fill:none;stroke:#55bbdd;stroke-width:3.45780444;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-          <rect
-             transform="matrix(0.76288627,-0.64653271,0.66344264,0.74822715,0,0)"
-             y="489.22812"
-             x="-748.91199"
-             height="4.2503691"
-             width="1.7557757"
-             id="rect4100-7-5-4-4-9"
-             style="fill:#55bbdd;fill-opacity:1;stroke:#55bbdd;stroke-width:1.42644405;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
-        </g>
-      </g>
-      <g
-         transform="matrix(0.13229165,0,0,0.13229165,-5.0227247,99.355948)"
-         id="g7726"
-         style="stroke:#917c6f"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStarB@2x.png"
-         inkscape:export-xdpi="180"
-         inkscape:export-ydpi="180">
-        <g
-           transform="translate(-149.67741,-167.62868)"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           id="g7728"
-           style="stroke:#917c6f">
-          <g
-             id="g7730"
-             style="stroke:#917c6f">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               inkscape:export-ydpi="90"
-               inkscape:export-xdpi="90"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               id="path7732"
-               style="fill:none;stroke:#ff9999;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          </g>
-        </g>
-        <path
-           sodipodi:type="star"
-           style="fill:#ff9999;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           id="path7734"
-           sodipodi:sides="5"
-           sodipodi:cx="255"
-           sodipodi:cy="152.36218"
-           sodipodi:r1="30"
-           sodipodi:r2="11.7"
-           sodipodi:arg1="0.92729522"
-           sodipodi:arg2="1.5556137"
-           inkscape:flatsided="false"
-           inkscape:rounded="-2.4980018e-16"
-           inkscape:randomized="0"
-           d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
-           transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)" />
-      </g>
-      <g
-         inkscape:export-ydpi="90"
-         inkscape:export-xdpi="90"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStarB.png"
-         style="stroke:#917c6f"
-         id="g7736"
-         transform="matrix(0.13229165,0,0,0.13229165,-5.0227247,99.355948)">
-        <g
-           style="stroke:#917c6f"
-           id="g7738"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           transform="translate(-149.67741,-167.62868)">
-          <g
-             style="stroke:#917c6f"
-             id="g7740">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-               id="path7742"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               inkscape:export-xdpi="90"
-               inkscape:export-ydpi="90" />
-          </g>
-        </g>
-        <path
-           transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)"
-           d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
-           inkscape:randomized="0"
-           inkscape:rounded="-2.4980018e-16"
-           inkscape:flatsided="false"
-           sodipodi:arg2="1.5556137"
-           sodipodi:arg1="0.92729522"
-           sodipodi:r2="11.7"
-           sodipodi:r1="30"
-           sodipodi:cy="152.36218"
-           sodipodi:cx="255"
-           sodipodi:sides="5"
-           id="path7744"
-           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           sodipodi:type="star" />
-      </g>
-      <g
-         transform="matrix(0.26458333,0,0,0.26458333,154.5587,-205.42132)"
-         inkscape:export-ydpi="180"
-         inkscape:export-xdpi="180"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuUpload@2x.png"
-         id="g7857">
-        <g
-           transform="matrix(0.49999995,0,0,0.49999995,-407.98134,1038.1)"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           id="g6966"
-           style="stroke:#917c6f">
-          <g
-             id="g6968"
-             style="stroke:#917c6f">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               inkscape:export-ydpi="90"
-               inkscape:export-xdpi="90"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               id="circle6970"
-               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          </g>
-        </g>
-        <path
-           inkscape:connector-curvature="0"
-           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           d="m -203.75781,1191.7793 -0.85938,3.0859 -1.21484,0 0,-0.8886 -3.03906,0 0,0.8886 -1.84571,0 0,12.92 19.4336,0 0,-12.92 -6.05078,0 -0.81836,-3.0859 -5.60547,0 z m 2.75781,5.2578 a 4.5775847,4.4752445 0 0 1 4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,-4.4746 4.5775847,4.4752445 0 0 1 4.57812,-4.4746 z m 0,1.8945 a 2.6604757,2.6009159 0 0 0 -2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,-2.6016 2.6604757,2.6009159 0 0 0 -2.66016,-2.6016 z"
-           id="rect6974" />
-      </g>
-      <g
-         inkscape:export-ydpi="180"
-         inkscape:export-xdpi="180"
-         inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuUpload@2x.png"
-         id="g7857-0"
-         transform="matrix(0.26458333,0,0,0.26458333,154.5587,-197.48388)">
-        <g
-           transform="matrix(0.49999995,0,0,0.49999995,-407.98134,1038.1)"
-           inkscape:export-ydpi="90"
-           inkscape:export-xdpi="90"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           id="g6966-5"
-           style="stroke:#917c6f">
-          <g
-             id="g6968-7"
-             style="stroke:#917c6f">
-            <circle
-               r="12.4375"
-               cy="345.04968"
-               cx="406.9375"
-               inkscape:export-ydpi="90"
-               inkscape:export-xdpi="90"
-               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-               id="circle6970-9"
-               style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          </g>
-        </g>
-        <path
-           inkscape:connector-curvature="0"
-           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
-           d="m -203.75781,1191.7793 -0.85938,3.0859 -1.21484,0 0,-0.8886 -3.03906,0 0,0.8886 -1.84571,0 0,12.92 19.4336,0 0,-12.92 -6.05078,0 -0.81836,-3.0859 -5.60547,0 z m 2.75781,5.2578 a 4.5775847,4.4752445 0 0 1 4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,-4.4746 4.5775847,4.4752445 0 0 1 4.57812,-4.4746 z m 0,1.8945 a 2.6604757,2.6009159 0 0 0 -2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,-2.6016 2.6604757,2.6009159 0 0 0 -2.66016,-2.6016 z"
-           id="rect6974-4" />
-      </g>
-      <g
-         id="g12886">
-        <path
-           style="opacity:1;fill:none;fill-opacity:1;stroke:#c0c0b5;stroke-width:0.56696195;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="m 109.31494,109.64367 a 1.3547469,1.3547469 0 0 0 -1.35444,1.35496 1.3547469,1.3547469 0 0 0 0.36174,0.91985 c -0.62726,0.0923 -1.11354,0.60391 -1.1653,1.24383 l -0.006,0 0,1.54308 4.3279,0 0,-1.54308 -0.006,0 c -0.0518,-0.63992 -0.53804,-1.15154 -1.16531,-1.24383 a 1.3547469,1.3547469 0 0 0 0.36174,-0.91985 1.3547469,1.3547469 0 0 0 -1.35496,-1.35496 z"
-           id="path8175"
-           inkscape:connector-curvature="0" />
-        <g
-           transform="matrix(0.13229165,0,0,0.13229165,52.503893,92.198493)"
-           id="g5630-6-1-2-0-6-6-1-7"
-           style="stroke:#917c6f">
-          <g
-             transform="translate(15.474933,-173.52466)"
-             inkscape:export-ydpi="90"
-             inkscape:export-xdpi="90"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             id="g5632-1-7-1-16-3-6-1-0"
-             style="stroke:#917c6f">
-            <g
-               id="g5634-8-1-6-5-7-6-3-7"
-               style="stroke:#917c6f">
-              <circle
-                 inkscape:export-ydpi="90"
-                 inkscape:export-xdpi="90"
-                 inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-                 transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-                 id="path5636-4-1-8-7-8-7-8-0"
-                 style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-                 cx="406.9375"
-                 cy="345.04968"
-                 r="12.4375" />
-            </g>
-          </g>
-        </g>
-      </g>
-      <g
-         id="g12477">
-        <g
-           transform="matrix(0.13229165,0,0,0.13229165,60.441353,100.13595)"
-           id="g5630-6-1-2-0-6-6-1-7-7-9"
-           style="stroke:#917c6f">
-          <g
-             transform="translate(15.474933,-173.52466)"
-             inkscape:export-ydpi="90"
-             inkscape:export-xdpi="90"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             id="g5632-1-7-1-16-3-6-1-0-2-4"
-             style="stroke:#917c6f">
-            <g
-               id="g5634-8-1-6-5-7-6-3-7-2-1"
-               style="stroke:#917c6f">
-              <circle
-                 inkscape:export-ydpi="90"
-                 inkscape:export-xdpi="90"
-                 inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-                 transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-                 id="path5636-4-1-8-7-8-7-8-0-5-1"
-                 style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-                 cx="406.9375"
-                 cy="345.04968"
-                 r="12.4375" />
-            </g>
-          </g>
-        </g>
-        <g
-           id="g12434"
-           transform="translate(-9.8809346,7.7911531)">
-          <path
-             sodipodi:nodetypes="ssssssss"
-             inkscape:connector-curvature="0"
-             id="path4602-6-4-8-2-5-4-7-8-4-3-4-5-1-5"
-             d="m 129.6138,112.32083 c 0,1.29744 -1.05178,2.34922 -2.34922,2.34922 -0.32436,0 -0.63337,-0.0657 -0.91442,-0.18461 -0.28106,-0.11888 -1.44622,0.29375 -1.65879,0.0812 -0.21256,-0.21256 0.52748,-1.05032 0.4086,-1.33138 -0.11887,-0.28105 -0.18461,-0.59006 -0.18461,-0.91442 0,-1.29744 1.05178,-2.34922 2.34922,-2.34922 1.29744,0 2.34922,1.05178 2.34922,2.34922 z"
-             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#55bbdd;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <circle
-             r="0.39687499"
-             cy="111.93624"
-             cx="126.45276"
-             id="path5470-0-78-4"
-             style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <circle
-             r="0.39687499"
-             cy="111.95192"
-             cx="128.12875"
-             id="path5470-2-6-60-9"
-             style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path
-             style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             d="m 126.57083,113.24088 1.38749,0"
-             id="path5487-9-9-2"
-             inkscape:connector-curvature="0" />
-        </g>
-      </g>
-      <g
-         id="g12488">
-        <g
-           transform="matrix(0.13229165,0,0,0.13229165,60.441353,92.198493)"
-           id="g5630-6-1-2-0-6-6-1-7-7"
-           style="stroke:#917c6f">
-          <g
-             transform="translate(15.474933,-173.52466)"
-             inkscape:export-ydpi="90"
-             inkscape:export-xdpi="90"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             id="g5632-1-7-1-16-3-6-1-0-2"
-             style="stroke:#917c6f">
-            <g
-               id="g5634-8-1-6-5-7-6-3-7-2"
-               style="stroke:#917c6f">
-              <circle
-                 inkscape:export-ydpi="90"
-                 inkscape:export-xdpi="90"
-                 inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-                 transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-                 id="path5636-4-1-8-7-8-7-8-0-5"
-                 style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-                 cx="406.9375"
-                 cy="345.04968"
-                 r="12.4375" />
-            </g>
-          </g>
-        </g>
-        <g
-           id="g12434-7"
-           transform="translate(-9.8809346,-0.14630395)">
-          <path
-             sodipodi:nodetypes="ssssssss"
-             inkscape:connector-curvature="0"
-             id="path4602-6-4-8-2-5-4-7-8-4-3-4-5-1-5-2"
-             d="m 129.6138,112.32083 c 0,1.29744 -1.05178,2.34922 -2.34922,2.34922 -0.32436,0 -0.63337,-0.0657 -0.91442,-0.18461 -0.28106,-0.11888 -1.44622,0.29375 -1.65879,0.0812 -0.21256,-0.21256 0.52748,-1.05032 0.4086,-1.33138 -0.11887,-0.28105 -0.18461,-0.59006 -0.18461,-0.91442 0,-1.29744 1.05178,-2.34922 2.34922,-2.34922 1.29744,0 2.34922,1.05178 2.34922,2.34922 z"
-             style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#c0c0b5;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <circle
-             r="0.39687499"
-             cy="111.93624"
-             cx="126.45276"
-             id="path5470-0-78-4-3"
-             style="opacity:1;fill:#c0c0b5;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <circle
-             r="0.39687499"
-             cy="111.95192"
-             cx="128.12875"
-             id="path5470-2-6-60-9-4"
-             style="opacity:1;fill:#c0c0b5;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path
-             style="fill:none;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             d="m 126.57083,113.24088 1.38749,0"
-             id="path5487-9-9-2-1"
-             inkscape:connector-curvature="0" />
-        </g>
-      </g>
-      <g
-         id="g12913">
-        <g
-           transform="matrix(0.13229165,0,0,0.13229165,52.503893,100.13595)"
-           id="g5630-6-1-2-0-6-6-1-7-6"
-           style="stroke:#917c6f">
-          <g
-             transform="translate(15.474933,-173.52466)"
-             inkscape:export-ydpi="90"
-             inkscape:export-xdpi="90"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             id="g5632-1-7-1-16-3-6-1-0-3"
-             style="stroke:#917c6f">
-            <g
-               id="g5634-8-1-6-5-7-6-3-7-27"
-               style="stroke:#917c6f">
-              <circle
-                 inkscape:export-ydpi="90"
-                 inkscape:export-xdpi="90"
-                 inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-                 transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-                 id="path5636-4-1-8-7-8-7-8-0-1"
-                 style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-                 cx="406.9375"
-                 cy="345.04968"
-                 r="12.4375" />
-            </g>
-          </g>
-        </g>
-        <path
-           inkscape:connector-curvature="0"
-           id="path8175-5"
-           d="m 109.31494,117.58113 a 1.3547469,1.3547469 0 0 0 -1.35444,1.35496 1.3547469,1.3547469 0 0 0 0.36174,0.91985 c -0.62726,0.0923 -1.11354,0.60391 -1.1653,1.24383 l -0.006,0 0,1.54308 4.3279,0 0,-1.54308 -0.006,0 c -0.0518,-0.63992 -0.53804,-1.15154 -1.16531,-1.24383 a 1.3547469,1.3547469 0 0 0 0.36174,-0.91985 1.3547469,1.3547469 0 0 0 -1.35496,-1.35496 z"
-           style="opacity:1;fill:none;fill-opacity:1;stroke:#55bbdd;stroke-width:0.56696195;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      </g>
-      <g
-         id="g12941">
-        <g
-           style="stroke:#917c6f"
-           transform="matrix(0.13229165,0,0,0.13229165,-48.636292,69.242611)"
-           id="g6173-1-7-2-1-0-8">
-          <circle
-             r="12.4375"
-             cy="345.04968"
-             cx="406.9375"
-             style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-             id="path6175-9-8-21-9-3-2"
-             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
-             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-             inkscape:export-xdpi="90"
-             inkscape:export-ydpi="90" />
-        </g>
-        <path
-           inkscape:connector-curvature="0"
-           id="path6171-8-3-3-3-1-2-3-2"
-           d="m 6.1274972,109.91512 -2.5560463,2.03177 0.4775021,0 0,2.48701 2.1665726,0 0,-1.7367 0.9550075,0 0,1.7367 1.0355096,0 0,-2.48701 0.477502,0 z"
-           style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           sodipodi:nodetypes="cccccccccccc" />
-      </g>
-      <g
-         id="g13010">
-        <circle
-           style="fill:none;stroke:#55bbdd;stroke-width:0.54741389;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-           id="path5559-9-9-4-06-4-9-3-3"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           cx="14.064999"
-           cy="120.11198"
-           r="3.6950226" />
-        <g
-           id="g13006"
-           transform="translate(0.00996213,0.05470841)">
-          <path
-             inkscape:connector-curvature="0"
-             id="path12959"
-             d="m 12.230922,121.64732 0,0.65481 3.648229,0 0,-0.74835"
-             style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path
-             inkscape:connector-curvature="0"
-             d="m 14.051965,117.83377 0,3.1427 m -1.095176,-2.06582 1.098246,-1.09826 1.098248,1.09826"
-             style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             id="path12993" />
-        </g>
-      </g>
-      <g
-         id="g13010-6"
-         transform="translate(-0.05048453,-7.9374591)">
-        <circle
-           style="fill:none;stroke:#55bbdd;stroke-width:0.54741389;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
-           id="path5559-9-9-4-06-4-9-3-3-7"
-           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
-           inkscape:export-xdpi="90"
-           inkscape:export-ydpi="90"
-           cx="14.064999"
-           cy="120.11198"
-           r="3.6950226" />
-        <g
-           id="g13006-9"
-           transform="translate(0.00996213,0.05470841)">
-          <path
-             inkscape:connector-curvature="0"
-             id="path12959-0"
-             d="m 12.230922,121.64732 0,0.65481 3.648229,0 0,-0.74835"
-             style="fill:none;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-          <path
-             inkscape:connector-curvature="0"
-             d="m 14.051965,117.83377 0,3.1427 m -1.095176,-2.06582 1.098246,-1.09826 1.098248,1.09826"
-             style="fill:none;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.56696195;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-             id="path12993-0" />
-        </g>
-      </g>
-    </g>
-    <g
        transform="translate(-1.0444079,50.76408)"
        id="g9787-1"
        inkscape:export-filename="/Users/kawai/eclipse-workspace/poipiku_iPhone/poipiku/icons/180x180.png"
@@ -5243,16 +3957,16 @@
       <g
          id="g5992">
         <text
-           sodipodi:linespacing="0%"
            xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.99861121px;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            x="242.92441"
            y="249.799"
            id="text5921-4"><tspan
              y="249.799"
              x="242.92441"
              id="tspan5422"
-             sodipodi:role="line">R-18</tspan></text>
+             sodipodi:role="line"
+             style="font-size:2.99861097px;line-height:0">R-18</tspan></text>
         <g
            id="g5994"
            transform="matrix(0.98751726,0,0,0.98751726,-17.024188,3.0077482)">
@@ -5289,16 +4003,16 @@
          id="g5992-2"
          transform="translate(-5.0028076,103.44971)">
         <text
-           sodipodi:linespacing="0%"
            xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.99861121px;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Krungthep;-inkscape-font-specification:'Krungthep, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
            x="242.92441"
            y="249.799"
            id="text5921-4-1"><tspan
              y="249.799"
              x="242.92441"
              id="tspan5422-6"
-             sodipodi:role="line">R-18</tspan></text>
+             sodipodi:role="line"
+             style="font-size:2.99861097px;line-height:0">R-18</tspan></text>
         <g
            id="g5994-6"
            transform="matrix(0.98751726,0,0,0.98751726,-17.024188,3.0077482)">
@@ -5314,6 +4028,1267 @@
              d="m 259.29166,236.41042 7.9375,7.67291"
              style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:1.68161333;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
         </g>
+      </g>
+    </g>
+    <g
+       transform="matrix(0.12347272,0,0,0.12347272,8.1478897,85.575426)"
+       id="g6197-7-5-48-2-6-4">
+      <circle
+         style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-9-0"
+         transform="matrix(2.2456991,0,0,2.2456991,-418.27162,-553.64339)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 493.13444,202.3125 c 0,0 -0.43349,1.63313 -0.9375,4.09375 -1.69375,0.38831 -3.29226,1.03717 -4.71875,1.9375 -2.08592,-1.376 -3.5,-2.21875 -3.5,-2.21875 l -3.5,3.46875 c 0,0 0.83566,1.46681 2.21875,3.5625 -0.8982,1.42981 -1.58421,2.99067 -1.96875,4.6875 -2.44406,0.50137 -4.0625,0.9375 -4.0625,0.9375 l 0,4.9375 c 0,0 1.63313,0.43349 4.09375,0.9375 0.38583,1.68292 1.04584,3.23685 1.9375,4.65625 -1.38309,2.09569 -2.21875,3.5625 -2.21875,3.5625 l 3.5,3.5 c 0,0 1.41408,-0.874 3.5,-2.25 1.43477,0.90556 3.04517,1.58148 4.75,1.96875 0.50095,2.44144 0.90625,4.0625 0.90625,4.0625 l 4.9375,0 c 0,0 0.4053,-1.62106 0.90625,-4.0625 1.70483,-0.38727 3.31523,-1.06319 4.75,-1.96875 2.08592,1.376 3.5,2.25 3.5,2.25 l 3.5,-3.5 c 0,0 -0.83566,-1.46681 -2.21875,-3.5625 0.89166,-1.4194 1.55167,-2.97333 1.9375,-4.65625 2.46062,-0.504 4.0625,-0.9375 4.0625,-0.9375 l 0,-4.9375 c 0,0 -1.58719,-0.43613 -4.03125,-0.9375 -0.38454,-1.69683 -1.07055,-3.25769 -1.96875,-4.6875 1.38309,-2.09569 2.21875,-3.5625 2.21875,-3.5625 l -3.5,-3.46875 c 0,0 -1.41408,0.84275 -3.5,2.21875 -1.42649,-0.90033 -3.025,-1.54919 -4.71875,-1.9375 -0.504,-2.46062 -0.9375,-4.09375 -0.9375,-4.09375 z m 2.46875,12.5625 c 3.52082,0 6.375,2.85418 6.375,6.375 0,3.52082 -2.85418,6.375 -6.375,6.375 -3.52082,0 -6.375,-2.85418 -6.375,-6.375 0,-3.52082 2.85418,-6.375 6.375,-6.375 z"
+         id="path6201-6-8-4-7-3-9" />
+    </g>
+    <g
+       transform="matrix(0.12347272,0,0,0.12347272,7.0739733,93.519463)"
+       id="g6177-2-8-6-8-3-4"
+       style="stroke:#917c6f"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStar@2x.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180">
+      <g
+         transform="translate(-149.67741,-167.62868)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="g6179-0-2-8-6-8-5"
+         style="stroke:#917c6f">
+        <g
+           id="g6181-2-9-5-5-4-5"
+           style="stroke:#917c6f">
+          <circle
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             id="path6183-4-1-76-0-8-1"
+             style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <path
+         sodipodi:type="star"
+         style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path6185-7-3-1-2-0-7"
+         sodipodi:sides="5"
+         sodipodi:cx="255"
+         sodipodi:cy="152.36218"
+         sodipodi:r1="30"
+         sodipodi:r2="11.7"
+         sodipodi:arg1="0.92729522"
+         sodipodi:arg2="1.5556137"
+         inkscape:flatsided="false"
+         inkscape:rounded="-2.4980018e-16"
+         inkscape:randomized="0"
+         d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
+         transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)" />
+    </g>
+    <g
+       id="g6208-6-6-0-8-3"
+       transform="matrix(0.18520908,0,0,0.18520908,-10.8561,7.2555722)">
+      <g
+         style="stroke:#917c6f"
+         transform="matrix(0.66666667,0,0,0.66666667,117.02495,354.01241)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="g4841-7-8-0-9-5-2">
+        <g
+           style="stroke:#917c6f"
+           id="g4845-2-3-2-0-6-21">
+          <circle
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             id="path4847-8-4-4-0-9-6"
+             style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <g
+         transform="translate(0.74999609,1.95)"
+         id="g6123-8-8-6-0-8">
+        <rect
+           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect5580-4-6-1-8-57"
+           width="7.5"
+           height="15"
+           x="380"
+           y="562.36218" />
+        <rect
+           y="556.36218"
+           x="388.5"
+           height="21"
+           width="7.5"
+           id="rect6092-9-5-3-9-6"
+           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+        <rect
+           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect6095-9-0-8-3-1"
+           width="7.5"
+           height="9"
+           x="397"
+           y="568.36218" />
+        <rect
+           style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect6097-2-90-9-6-8"
+           width="24.5"
+           height="1"
+           x="380"
+           y="577.86218" />
+      </g>
+    </g>
+    <g
+       id="g7807-2-20-6-9-4"
+       transform="matrix(0.18520908,0,0,0.18520908,66.103922,-5.9259369)">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFavorite.png"
+         transform="matrix(1.4815379,0,0,1.4815379,-557.50504,-1284.9883)"
+         id="g5614-7-9-6-4-31">
+        <g
+           id="g5553-6-73-1-1-2"
+           style="fill:#9cd7d1;fill-opacity:1;stroke:none"
+           transform="matrix(1.0255613,0,0,1.0255613,298.61943,-40.205814)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path5544-1-7-8-5-3"
+             transform="matrix(0.87753487,0,0,0.87753487,89.876176,798.7354)"
+             d="m -93,568.78125 c -2.832117,0 -5.125,2.29288 -5.125,5.125 0,1.38414 0.546141,2.63994 1.4375,3.5625 -2.441947,0.37755 -4.28125,2.2363 -4.28125,4.53125 l 0,0.21875 0,0.8125 c 0,0.16056 -0.0177,0.3124 0,0.46875 l 0,4.15625 5.1875,0 5.53125,0 5.21875,0 0,-4.625 0,-0.8125 0,-0.21875 c 0,-2.28558 -1.848378,-4.14296 -4.28125,-4.53125 0.891359,-0.92256 1.4375,-2.17836 1.4375,-3.5625 0,-2.83212 -2.292883,-5.125 -5.125,-5.125 z m 0,9.46875 c 2.454692,0 4.4375,2.01406 4.4375,4.46875 0,2.45469 -1.982808,4.4375 -4.4375,4.4375 -2.454692,0 -4.4375,-1.98281 -4.4375,-4.4375 0,-2.45469 1.982808,-4.46875 4.4375,-4.46875 z"
+             style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+        </g>
+        <g
+           id="g5610-2-2-4-6-3"
+           transform="translate(5.6630671,-0.13253247)">
+          <path
+             sodipodi:type="star"
+             style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+             id="path4849-8-1-2-6-9-6-4"
+             sodipodi:sides="5"
+             sodipodi:cx="255"
+             sodipodi:cy="152.36218"
+             sodipodi:r1="30"
+             sodipodi:r2="11.7"
+             sodipodi:arg1="0.92729522"
+             sodipodi:arg2="1.5556137"
+             inkscape:flatsided="false"
+             inkscape:rounded="-2.4980018e-16"
+             inkscape:randomized="0"
+             d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
+             transform="matrix(0.13599707,0,0,0.13599707,266.77295,1283.1485)" />
+        </g>
+      </g>
+      <g
+         style="stroke:#917c6f"
+         id="g5630-6-1-2-0-6-6-1"
+         transform="matrix(0.66666665,0,0,0.66666665,-388.82215,540.86648)">
+        <g
+           style="stroke:#917c6f"
+           id="g5632-1-7-1-16-3-6-1"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(15.474933,-173.52466)">
+          <g
+             style="stroke:#917c6f"
+             id="g5634-8-1-6-5-7-6-3">
+            <circle
+               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               id="path5636-4-1-8-7-8-7-8"
+               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+               inkscape:export-xdpi="90"
+               inkscape:export-ydpi="90"
+               cx="406.9375"
+               cy="345.04968"
+               r="12.4375" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g7838-5-541-8-1-7"
+       transform="matrix(0.18520908,0,0,0.18520908,68.926558,-8.950221)"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuAct@2x.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFriend.png"
+         style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m -82.778158,646.21677 c -3.076944,0 -5.566144,2.51181 -5.566144,5.58856 0,1.79685 0.847711,3.38512 2.168339,4.40365 -2.074983,0.79603 -3.556442,2.27449 -3.822534,4.04618 l -0.02227,0 0,0.60359 0,5.43198 9.120426,0 0,-4.53784 0,-0.60359 0.02227,0 c 0.248286,-1.65308 1.561541,-3.03845 3.420167,-3.86722 -1.227495,-1.75832 -0.0833,0.14968 -1.184764,-1.766 -0.446112,-0.79759 -0.581207,-1.83483 -0.581207,-2.8165 0,-1.36877 0.500045,-2.62918 1.318891,-3.59916 -0.9504,-1.71277 -2.775527,-2.88365 -4.873184,-2.88365 z m 10.014598,1.25195 c -3.076933,0 -5.566155,2.51147 -5.566155,5.58845 0,1.79696 0.847722,3.38501 2.16835,4.40376 -2.074983,0.79592 -3.556442,2.27438 -3.822535,4.04607 l -0.02227,0 0,0.60359 0,5.43198 14.485402,0 0,-5.43198 0,-0.60359 -0.02227,0 c -0.266092,-1.77169 -1.747562,-3.25015 -3.822534,-4.04607 1.320628,-1.01875 2.168339,-2.6068 2.168339,-4.40376 0,-3.07698 -2.489211,-5.58845 -5.566166,-5.58845 z"
+         id="path4817-2-7-200-2-4-4"
+         inkscape:connector-curvature="0" />
+      <circle
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         transform="matrix(1.4971327,0,0,1.4971327,-687.0102,141.27703)"
+         id="path5636-4-1-5-6-1-9-0-2"
+         style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+    </g>
+    <path
+       style="fill:none;stroke:#c0c0b5;stroke-width:0.51093012;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 74.831837,109.95403 c -0.850626,0 -1.532767,0.68214 -1.532767,1.53276 l 0,2.0357 c 0,0.85063 0.682141,1.54077 1.532767,1.54077 l 2.706287,0 0.758401,0.76637 0,-0.76637 0.367224,0 c 0.850623,0 1.532762,-0.69014 1.532762,-1.54077 l 0,-2.0357 c 0,-0.85062 -0.682139,-1.53276 -1.532762,-1.53276 z"
+       id="rect4853-8-6-1-6-7"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuInfo.png"
+       inkscape:export-xdpi="360"
+       inkscape:export-ydpi="360" />
+    <g
+       id="g5556-1-7"
+       transform="matrix(0.24694546,0,0,0.24694546,154.53562,-85.741756)"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSetting@2x.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180">
+      <circle
+         style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-5-2-9"
+         transform="matrix(1.1228494,0,0,1.1228494,-741.92957,416.92334)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <g
+         id="g5545-1-3">
+        <g
+           id="g5495-4-1">
+          <rect
+             ry="0"
+             y="796.10187"
+             x="-288.41299"
+             height="4"
+             width="11.720658"
+             id="rect4671-9-9"
+             style="fill:#c0c0b5;fill-opacity:1;stroke:none" />
+          <rect
+             ry="0"
+             y="795.98047"
+             x="-293.29999"
+             height="4"
+             width="4"
+             id="rect4671-0-52-8"
+             style="fill:#c0c0b5;fill-opacity:1;stroke:none" />
+        </g>
+        <g
+           transform="translate(0,6.2230071)"
+           id="g5495-7-3-6">
+          <rect
+             ry="0"
+             y="796.10187"
+             x="-288.41299"
+             height="4"
+             width="11.720658"
+             id="rect4671-6-4-5"
+             style="fill:#c0c0b5;fill-opacity:1;stroke:none" />
+          <rect
+             ry="0"
+             y="795.98047"
+             x="-293.29999"
+             height="4"
+             width="4"
+             id="rect4671-0-3-1-0"
+             style="fill:#c0c0b5;fill-opacity:1;stroke:none" />
+        </g>
+        <g
+           transform="translate(0,12.446014)"
+           id="g5495-6-52-2">
+          <rect
+             ry="0"
+             y="796.10187"
+             x="-288.41299"
+             height="4"
+             width="11.720658"
+             id="rect4671-1-3-8"
+             style="fill:#c0c0b5;fill-opacity:1;stroke:none" />
+          <rect
+             ry="0"
+             y="795.98047"
+             x="-293.29999"
+             height="4"
+             width="4"
+             id="rect4671-0-5-16-6"
+             style="fill:#c0c0b5;fill-opacity:1;stroke:none" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g5517-0"
+       transform="matrix(0.24694546,0,0,0.24694546,161.94401,-105.4974)"
+       inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuHeart.png"
+       inkscape:export-xdpi="359.98645"
+       inkscape:export-ydpi="359.98645">
+      <circle
+         style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-5-2-7-2"
+         transform="matrix(1.1228494,0,0,1.1228494,-741.9298,496.92334)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <text
+         sodipodi:linespacing="0%"
+         id="text4745-4"
+         y="893.78766"
+         x="-296.66708"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#c0c0b5;fill-opacity:1;stroke:none"
+         xml:space="preserve"><tspan
+           style="font-size:23.33361816px;line-height:1.25"
+           y="893.78766"
+           x="-296.66708"
+           id="tspan4747-8"
+           sodipodi:role="line">♥</tspan></text>
+    </g>
+    <g
+       id="g6461-6"
+       transform="matrix(0.24694546,0,0,0.24694546,161.94401,-105.49738)"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSearch@2x.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180">
+      <circle
+         style="fill:none;stroke:#c0c0b5;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-5-2-7-7-5"
+         transform="matrix(1.1228494,0,0,1.1228494,-711.92996,496.92334)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <g
+         style="stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
+         transform="matrix(1.1328591,0,0,1.1328591,27.768424,-74.297751)"
+         id="g6400-0">
+        <circle
+           style="fill:none;stroke:#c0c0b5;stroke-width:3.45780444;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="path4098-7-60-9-9"
+           transform="matrix(0.62763061,0,0,0.61359881,-547.83026,546.3109)"
+           cx="472.7009"
+           cy="484.909"
+           r="8.1317282" />
+        <rect
+           style="fill:#c0c0b5;fill-opacity:1;stroke:#c0c0b5;stroke-width:1.42644405;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4100-7-5-4-0"
+           width="1.7557757"
+           height="4.2503691"
+           x="-748.91199"
+           y="489.22812"
+           transform="matrix(0.76288627,-0.64653271,0.66344264,0.74822715,0,0)" />
+      </g>
+    </g>
+    <g
+       transform="matrix(0.12347272,0,0,0.12347272,8.1478897,92.98374)"
+       id="g6197-7-5-48-2-6-7-1">
+      <circle
+         style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-9-1-3"
+         transform="matrix(2.2456991,0,0,2.2456991,-418.27162,-553.64339)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <path
+         inkscape:connector-curvature="0"
+         style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 493.13444,202.3125 c 0,0 -0.43349,1.63313 -0.9375,4.09375 -1.69375,0.38831 -3.29226,1.03717 -4.71875,1.9375 -2.08592,-1.376 -3.5,-2.21875 -3.5,-2.21875 l -3.5,3.46875 c 0,0 0.83566,1.46681 2.21875,3.5625 -0.8982,1.42981 -1.58421,2.99067 -1.96875,4.6875 -2.44406,0.50137 -4.0625,0.9375 -4.0625,0.9375 l 0,4.9375 c 0,0 1.63313,0.43349 4.09375,0.9375 0.38583,1.68292 1.04584,3.23685 1.9375,4.65625 -1.38309,2.09569 -2.21875,3.5625 -2.21875,3.5625 l 3.5,3.5 c 0,0 1.41408,-0.874 3.5,-2.25 1.43477,0.90556 3.04517,1.58148 4.75,1.96875 0.50095,2.44144 0.90625,4.0625 0.90625,4.0625 l 4.9375,0 c 0,0 0.4053,-1.62106 0.90625,-4.0625 1.70483,-0.38727 3.31523,-1.06319 4.75,-1.96875 2.08592,1.376 3.5,2.25 3.5,2.25 l 3.5,-3.5 c 0,0 -0.83566,-1.46681 -2.21875,-3.5625 0.89166,-1.4194 1.55167,-2.97333 1.9375,-4.65625 2.46062,-0.504 4.0625,-0.9375 4.0625,-0.9375 l 0,-4.9375 c 0,0 -1.58719,-0.43613 -4.03125,-0.9375 -0.38454,-1.69683 -1.07055,-3.25769 -1.96875,-4.6875 1.38309,-2.09569 2.21875,-3.5625 2.21875,-3.5625 l -3.5,-3.46875 c 0,0 -1.41408,0.84275 -3.5,2.21875 -1.42649,-0.90033 -3.025,-1.54919 -4.71875,-1.9375 -0.504,-2.46062 -0.9375,-4.09375 -0.9375,-4.09375 z m 2.46875,12.5625 c 3.52082,0 6.375,2.85418 6.375,6.375 0,3.52082 -2.85418,6.375 -6.375,6.375 -3.52082,0 -6.375,-2.85418 -6.375,-6.375 0,-3.52082 2.85418,-6.375 6.375,-6.375 z"
+         id="path6201-6-8-4-7-3-1-8" />
+    </g>
+    <g
+       id="g12961"
+       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
+      <path
+         sodipodi:nodetypes="cccccccccccc"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 6.1274972,117.85259 -2.5560463,2.03177 0.4775021,0 0,2.48701 2.1665725,0 0,-1.7367 0.9550076,0 0,1.7367 1.0355096,0 0,-2.48701 0.477502,0 z"
+         id="path6171-8-3-3-3-1-2-3"
+         inkscape:connector-curvature="0" />
+      <g
+         id="g6173-1-7-2-1-0-7-4"
+         transform="matrix(0.13229165,0,0,0.13229165,-48.636292,77.180084)"
+         style="stroke:#917c6f">
+        <circle
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+           id="path6175-9-8-21-9-3-6-4"
+           style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+           cx="406.9375"
+           cy="345.04968"
+           r="12.4375" />
+      </g>
+    </g>
+    <g
+       transform="matrix(0.12347272,0,0,0.12347272,7.0739733,100.92778)"
+       id="g6177-2-8-6-8-3-1-6"
+       style="stroke:#917c6f"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStarB@2x.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180">
+      <g
+         transform="translate(-149.67741,-167.62868)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="g6179-0-2-8-6-8-4-0"
+         style="stroke:#917c6f">
+        <g
+           id="g6181-2-9-5-5-4-2-6"
+           style="stroke:#917c6f">
+          <circle
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             id="path6183-4-1-76-0-8-3-6"
+             style="fill:none;stroke:#ff9999;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <path
+         sodipodi:type="star"
+         style="fill:#ff9999;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path6185-7-3-1-2-0-2-1"
+         sodipodi:sides="5"
+         sodipodi:cx="255"
+         sodipodi:cy="152.36218"
+         sodipodi:r1="30"
+         sodipodi:r2="11.7"
+         sodipodi:arg1="0.92729522"
+         sodipodi:arg2="1.5556137"
+         inkscape:flatsided="false"
+         inkscape:rounded="-2.4980018e-16"
+         inkscape:randomized="0"
+         d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
+         transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)" />
+    </g>
+    <g
+       id="g6208-6-6-0-8-8-2"
+       transform="matrix(0.18520908,0,0,0.18520908,-10.8561,14.663901)">
+      <g
+         style="stroke:#917c6f"
+         transform="matrix(0.66666667,0,0,0.66666667,117.02495,354.01241)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="g4841-7-8-0-9-5-9-9">
+        <g
+           style="stroke:#917c6f"
+           id="g4845-2-3-2-0-6-2-1">
+          <circle
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             id="path4847-8-4-4-0-9-7-3"
+             style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <g
+         transform="translate(0.74999609,1.95)"
+         id="g6123-8-8-6-0-9-5">
+        <rect
+           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect5580-4-6-1-8-5-9"
+           width="7.5"
+           height="15"
+           x="380"
+           y="562.36218" />
+        <rect
+           y="556.36218"
+           x="388.5"
+           height="21"
+           width="7.5"
+           id="rect6092-9-5-3-9-4-8"
+           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+        <rect
+           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect6095-9-0-8-3-3-4"
+           width="7.5"
+           height="9"
+           x="397"
+           y="568.36218" />
+        <rect
+           style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+           id="rect6097-2-90-9-6-1-0"
+           width="24.5"
+           height="1"
+           x="380"
+           y="577.86218" />
+      </g>
+    </g>
+    <g
+       id="g7807-2-20-6-9-1-5"
+       transform="matrix(0.18520908,0,0,0.18520908,66.103922,1.4823923)">
+      <g
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFavorite.png"
+         transform="matrix(1.4815379,0,0,1.4815379,-557.50504,-1284.9883)"
+         id="g5614-7-9-6-4-3-4">
+        <g
+           id="g5553-6-73-1-1-8-2"
+           style="fill:#9cd7d1;fill-opacity:1;stroke:none"
+           transform="matrix(1.0255613,0,0,1.0255613,298.61943,-40.205814)">
+          <path
+             inkscape:connector-curvature="0"
+             id="path5544-1-7-8-5-7-0"
+             transform="matrix(0.87753487,0,0,0.87753487,89.876176,798.7354)"
+             d="m -93,568.78125 c -2.832117,0 -5.125,2.29288 -5.125,5.125 0,1.38414 0.546141,2.63994 1.4375,3.5625 -2.441947,0.37755 -4.28125,2.2363 -4.28125,4.53125 l 0,0.21875 0,0.8125 c 0,0.16056 -0.0177,0.3124 0,0.46875 l 0,4.15625 5.1875,0 5.53125,0 5.21875,0 0,-4.625 0,-0.8125 0,-0.21875 c 0,-2.28558 -1.848378,-4.14296 -4.28125,-4.53125 0.891359,-0.92256 1.4375,-2.17836 1.4375,-3.5625 0,-2.83212 -2.292883,-5.125 -5.125,-5.125 z m 0,9.46875 c 2.454692,0 4.4375,2.01406 4.4375,4.46875 0,2.45469 -1.982808,4.4375 -4.4375,4.4375 -2.454692,0 -4.4375,-1.98281 -4.4375,-4.4375 0,-2.45469 1.982808,-4.46875 4.4375,-4.46875 z"
+             style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+        </g>
+        <g
+           id="g5610-2-2-4-6-4-9"
+           transform="translate(5.6630671,-0.13253247)">
+          <path
+             sodipodi:type="star"
+             style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+             id="path4849-8-1-2-6-9-6-2-7"
+             sodipodi:sides="5"
+             sodipodi:cx="255"
+             sodipodi:cy="152.36218"
+             sodipodi:r1="30"
+             sodipodi:r2="11.7"
+             sodipodi:arg1="0.92729522"
+             sodipodi:arg2="1.5556137"
+             inkscape:flatsided="false"
+             inkscape:rounded="-2.4980018e-16"
+             inkscape:randomized="0"
+             d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
+             transform="matrix(0.13599707,0,0,0.13599707,266.77295,1283.1485)" />
+        </g>
+      </g>
+      <g
+         style="stroke:#917c6f"
+         id="g5630-6-1-2-0-6-6-7-3"
+         transform="matrix(0.66666665,0,0,0.66666665,-388.82215,540.86648)">
+        <g
+           style="stroke:#917c6f"
+           id="g5632-1-7-1-16-3-6-7-7"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(15.474933,-173.52466)">
+          <g
+             style="stroke:#917c6f"
+             id="g5634-8-1-6-5-7-6-9-2">
+            <circle
+               style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               id="path5636-4-1-8-7-8-7-3-6"
+               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+               inkscape:export-xdpi="90"
+               inkscape:export-ydpi="90"
+               cx="406.9375"
+               cy="345.04968"
+               r="12.4375" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g7838-5-541-8-1-1-0"
+       transform="matrix(0.18520908,0,0,0.18520908,68.926558,-1.5418917)">
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\BlogThumbFriend.png"
+         style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m -82.778158,646.21677 c -3.076944,0 -5.566144,2.51181 -5.566144,5.58856 0,1.79685 0.847711,3.38512 2.168339,4.40365 -2.074983,0.79603 -3.556442,2.27449 -3.822534,4.04618 l -0.02227,0 0,0.60359 0,5.43198 9.120426,0 0,-4.53784 0,-0.60359 0.02227,0 c 0.248286,-1.65308 1.561541,-3.03845 3.420167,-3.86722 -1.227495,-1.75832 -0.0833,0.14968 -1.184764,-1.766 -0.446112,-0.79759 -0.581207,-1.83483 -0.581207,-2.8165 0,-1.36877 0.500045,-2.62918 1.318891,-3.59916 -0.9504,-1.71277 -2.775527,-2.88365 -4.873184,-2.88365 z m 10.014598,1.25195 c -3.076933,0 -5.566155,2.51147 -5.566155,5.58845 0,1.79696 0.847722,3.38501 2.16835,4.40376 -2.074983,0.79592 -3.556442,2.27438 -3.822535,4.04607 l -0.02227,0 0,0.60359 0,5.43198 14.485402,0 0,-5.43198 0,-0.60359 -0.02227,0 c -0.266092,-1.77169 -1.747562,-3.25015 -3.822534,-4.04607 1.320628,-1.01875 2.168339,-2.6068 2.168339,-4.40376 0,-3.07698 -2.489211,-5.58845 -5.566166,-5.58845 z"
+         id="path4817-2-7-200-2-4-9-1"
+         inkscape:connector-curvature="0" />
+      <circle
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         transform="matrix(1.4971327,0,0,1.4971327,-687.0102,141.27703)"
+         id="path5636-4-1-5-6-1-9-0-8-6"
+         style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+    </g>
+    <path
+       style="fill:none;stroke:#55bbdd;stroke-width:0.51093012;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 74.831837,117.36234 c -0.850626,0 -1.532767,0.68216 -1.532767,1.53277 l 0,2.03572 c 0,0.85062 0.682141,1.54074 1.532767,1.54074 l 2.706287,0 0.758401,0.76639 0,-0.76639 0.367224,0 c 0.850623,0 1.532762,-0.69012 1.532762,-1.54074 l 0,-2.03572 c 0,-0.85061 -0.682139,-1.53277 -1.532762,-1.53277 z"
+       id="rect4853-8-6-1-6-6-5"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuInfoB.png"
+       inkscape:export-xdpi="360"
+       inkscape:export-ydpi="360" />
+    <g
+       id="g5556-1-5-7"
+       transform="matrix(0.24694546,0,0,0.24694546,154.53562,-78.33343)"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSettingB.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <circle
+         style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-5-2-0-5"
+         transform="matrix(1.1228494,0,0,1.1228494,-741.92957,416.92334)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <g
+         id="g5545-1-2-4">
+        <g
+           id="g5495-4-8-1">
+          <rect
+             ry="0"
+             y="796.10187"
+             x="-288.41299"
+             height="4"
+             width="11.720658"
+             id="rect4671-9-6-2"
+             style="fill:#55bbdd;fill-opacity:1;stroke:none" />
+          <rect
+             ry="0"
+             y="795.98047"
+             x="-293.29999"
+             height="4"
+             width="4"
+             id="rect4671-0-52-0-0"
+             style="fill:#55bbdd;fill-opacity:1;stroke:none" />
+        </g>
+        <g
+           transform="translate(0,6.2230071)"
+           id="g5495-7-3-2-0">
+          <rect
+             ry="0"
+             y="796.10187"
+             x="-288.41299"
+             height="4"
+             width="11.720658"
+             id="rect4671-6-4-4-1"
+             style="fill:#55bbdd;fill-opacity:1;stroke:none" />
+          <rect
+             ry="0"
+             y="795.98047"
+             x="-293.29999"
+             height="4"
+             width="4"
+             id="rect4671-0-3-1-8-4"
+             style="fill:#55bbdd;fill-opacity:1;stroke:none" />
+        </g>
+        <g
+           transform="translate(0,12.446014)"
+           id="g5495-6-52-6-6">
+          <rect
+             ry="0"
+             y="796.10187"
+             x="-288.41299"
+             height="4"
+             width="11.720658"
+             id="rect4671-1-3-5-0"
+             style="fill:#55bbdd;fill-opacity:1;stroke:none" />
+          <rect
+             ry="0"
+             y="795.98047"
+             x="-293.29999"
+             height="4"
+             width="4"
+             id="rect4671-0-5-16-0-7"
+             style="fill:#55bbdd;fill-opacity:1;stroke:none" />
+        </g>
+      </g>
+    </g>
+    <g
+       id="g5517-9-1"
+       transform="matrix(0.24694546,0,0,0.24694546,161.94401,-98.08907)"
+       inkscape:export-filename="C:\pleiades\workspace\galleria\WebContent\s\img\MenuHeartB.png"
+       inkscape:export-xdpi="359.98645"
+       inkscape:export-ydpi="359.98645">
+      <circle
+         style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-5-2-7-0-7"
+         transform="matrix(1.1228494,0,0,1.1228494,-741.9298,496.92334)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <text
+         sodipodi:linespacing="0%"
+         id="text4745-0-7"
+         y="893.78766"
+         x="-296.66708"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Meiryo;-inkscape-font-specification:Meiryo;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#55bbdd;fill-opacity:1;stroke:none"
+         xml:space="preserve"><tspan
+           style="font-size:23.33361816px;line-height:1.25"
+           y="893.78766"
+           x="-296.66708"
+           id="tspan4747-6-7"
+           sodipodi:role="line">♥</tspan></text>
+    </g>
+    <g
+       transform="matrix(0.24694546,0,0,0.24694546,161.94401,-98.08907)"
+       id="g6461-4-7"
+       style="stroke:#ff9999;stroke-opacity:1"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuSearchB.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <circle
+         style="fill:none;stroke:#55bbdd;stroke-width:1.84260321;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path6199-1-9-82-7-5-2-7-7-8-3"
+         transform="matrix(1.1228494,0,0,1.1228494,-711.92996,496.92334)"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         cx="406.9375"
+         cy="345.04968"
+         r="12.4375" />
+      <g
+         style="stroke:#ff9999;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         transform="matrix(1.1328591,0,0,1.1328591,27.768424,-74.297751)"
+         id="g6400-8-3">
+        <circle
+           style="fill:none;stroke:#55bbdd;stroke-width:3.45780444;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="path4098-7-60-9-2-5"
+           transform="matrix(0.62763061,0,0,0.61359881,-547.83026,546.3109)"
+           cx="472.7009"
+           cy="484.909"
+           r="8.1317282" />
+        <rect
+           style="fill:#55bbdd;fill-opacity:1;stroke:#55bbdd;stroke-width:1.42644405;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect4100-7-5-4-4-9"
+           width="1.7557757"
+           height="4.2503691"
+           x="-748.91199"
+           y="489.22812"
+           transform="matrix(0.76288627,-0.64653271,0.66344264,0.74822715,0,0)" />
+      </g>
+    </g>
+    <g
+       inkscape:export-ydpi="180"
+       inkscape:export-xdpi="180"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStarB@2x.png"
+       style="stroke:#917c6f"
+       id="g7726"
+       transform="matrix(0.12347272,0,0,0.12347272,7.0739733,100.92778)">
+      <g
+         style="stroke:#917c6f"
+         id="g7728"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         transform="translate(-149.67741,-167.62868)">
+        <g
+           style="stroke:#917c6f"
+           id="g7730">
+          <circle
+             style="fill:none;stroke:#ff9999;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="path7732"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             inkscape:export-xdpi="90"
+             inkscape:export-ydpi="90"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <path
+         transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)"
+         d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
+         inkscape:randomized="0"
+         inkscape:rounded="-2.4980018e-16"
+         inkscape:flatsided="false"
+         sodipodi:arg2="1.5556137"
+         sodipodi:arg1="0.92729522"
+         sodipodi:r2="11.7"
+         sodipodi:r1="30"
+         sodipodi:cy="152.36218"
+         sodipodi:cx="255"
+         sodipodi:sides="5"
+         id="path7734"
+         style="fill:#ff9999;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         sodipodi:type="star" />
+    </g>
+    <g
+       transform="matrix(0.12347272,0,0,0.12347272,7.0739733,100.92778)"
+       id="g7736"
+       style="stroke:#917c6f"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuStarB.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90">
+      <g
+         transform="translate(-149.67741,-167.62868)"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="g7738"
+         style="stroke:#917c6f">
+        <g
+           id="g7740"
+           style="stroke:#917c6f">
+          <circle
+             inkscape:export-ydpi="90"
+             inkscape:export-xdpi="90"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             id="path7742"
+             style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <path
+         sodipodi:type="star"
+         style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         id="path7744"
+         sodipodi:sides="5"
+         sodipodi:cx="255"
+         sodipodi:cy="152.36218"
+         sodipodi:r1="30"
+         sodipodi:r2="11.7"
+         sodipodi:arg1="0.92729522"
+         sodipodi:arg2="1.5556137"
+         inkscape:flatsided="false"
+         inkscape:rounded="-2.4980018e-16"
+         inkscape:randomized="0"
+         d="m 273,176.36218 -17.82237,-12.30135 -17.44068,12.83678 6.19186,-20.75141 -17.59796,-12.62029 21.64915,-0.52373 6.56454,-20.63654 7.18805,20.42773 21.65507,-0.1338 -17.20669,13.14876 z"
+         transform="matrix(0.74326985,0,0,0.74326985,74.855952,43.965324)" />
+    </g>
+    <g
+       id="g7857"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuUpload@2x.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180"
+       transform="matrix(0.24694546,0,0,0.24694546,156.01725,-183.53218)">
+      <g
+         style="stroke:#917c6f"
+         id="g6966"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         transform="matrix(0.49999995,0,0,0.49999995,-407.98134,1038.1)">
+        <g
+           style="stroke:#917c6f"
+           id="g6968">
+          <circle
+             style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="circle6970"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             inkscape:export-xdpi="90"
+             inkscape:export-ydpi="90"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <path
+         id="rect6974"
+         d="m -203.75781,1191.7793 -0.85938,3.0859 -1.21484,0 0,-0.8886 -3.03906,0 0,0.8886 -1.84571,0 0,12.92 19.4336,0 0,-12.92 -6.05078,0 -0.81836,-3.0859 z m 2.75781,5.2578 a 4.5775847,4.4752445 0 0 1 4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,-4.4746 4.5775847,4.4752445 0 0 1 4.57812,-4.4746 z m 0,1.8945 a 2.6604757,2.6009159 0 0 0 -2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,-2.6016 2.6604757,2.6009159 0 0 0 -2.66016,-2.6016 z"
+         style="fill:#c0c0b5;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       transform="matrix(0.24694546,0,0,0.24694546,156.01725,-176.12387)"
+       id="g7857-0"
+       inkscape:export-filename="/Users/kawai/Documents/xcode_project/analogico/MenuUpload@2x.png"
+       inkscape:export-xdpi="180"
+       inkscape:export-ydpi="180">
+      <g
+         style="stroke:#917c6f"
+         id="g6966-5"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         inkscape:export-xdpi="90"
+         inkscape:export-ydpi="90"
+         transform="matrix(0.49999995,0,0,0.49999995,-407.98134,1038.1)">
+        <g
+           style="stroke:#917c6f"
+           id="g6968-7">
+          <circle
+             style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+             id="circle6970-9"
+             transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+             inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+             inkscape:export-xdpi="90"
+             inkscape:export-ydpi="90"
+             cx="406.9375"
+             cy="345.04968"
+             r="12.4375" />
+        </g>
+      </g>
+      <path
+         id="rect6974-4"
+         d="m -203.75781,1191.7793 -0.85938,3.0859 -1.21484,0 0,-0.8886 -3.03906,0 0,0.8886 -1.84571,0 0,12.92 19.4336,0 0,-12.92 -6.05078,0 -0.81836,-3.0859 z m 2.75781,5.2578 a 4.5775847,4.4752445 0 0 1 4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,4.4746 4.5775847,4.4752445 0 0 1 -4.57812,-4.4746 4.5775847,4.4752445 0 0 1 4.57812,-4.4746 z m 0,1.8945 a 2.6604757,2.6009159 0 0 0 -2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,2.6016 2.6604757,2.6009159 0 0 0 2.66016,-2.6016 2.6604757,2.6009159 0 0 0 -2.66016,-2.6016 z"
+         style="fill:#55bbdd;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g12886"
+       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path8175"
+         d="m 109.31494,109.64367 a 1.3547469,1.3547469 0 0 0 -1.35444,1.35496 1.3547469,1.3547469 0 0 0 0.36174,0.91985 c -0.62726,0.0923 -1.11354,0.60391 -1.1653,1.24383 l -0.006,0 0,1.54308 4.3279,0 0,-1.54308 -0.006,0 c -0.0518,-0.63992 -0.53804,-1.15154 -1.16531,-1.24383 a 1.3547469,1.3547469 0 0 0 0.36174,-0.91985 1.3547469,1.3547469 0 0 0 -1.35496,-1.35496 z"
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#c0c0b5;stroke-width:0.56696194;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         style="stroke:#917c6f"
+         id="g5630-6-1-2-0-6-6-1-7"
+         transform="matrix(0.13229165,0,0,0.13229165,52.503893,92.198493)">
+        <g
+           style="stroke:#917c6f"
+           id="g5632-1-7-1-16-3-6-1-0"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(15.474933,-173.52466)">
+          <g
+             style="stroke:#917c6f"
+             id="g5634-8-1-6-5-7-6-3-7">
+            <circle
+               r="12.4375"
+               cy="345.04968"
+               cx="406.9375"
+               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+               id="path5636-4-1-8-7-8-7-8-0"
+               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+               inkscape:export-xdpi="90"
+               inkscape:export-ydpi="90" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g12477"
+       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
+      <g
+         style="stroke:#917c6f"
+         id="g5630-6-1-2-0-6-6-1-7-7-9"
+         transform="matrix(0.13229165,0,0,0.13229165,60.441353,100.13595)">
+        <g
+           style="stroke:#917c6f"
+           id="g5632-1-7-1-16-3-6-1-0-2-4"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(15.474933,-173.52466)">
+          <g
+             style="stroke:#917c6f"
+             id="g5634-8-1-6-5-7-6-3-7-2-1">
+            <circle
+               r="12.4375"
+               cy="345.04968"
+               cx="406.9375"
+               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+               id="path5636-4-1-8-7-8-7-8-0-5-1"
+               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+               inkscape:export-xdpi="90"
+               inkscape:export-ydpi="90" />
+          </g>
+        </g>
+      </g>
+      <g
+         transform="translate(-9.8809346,7.7911531)"
+         id="g12434">
+        <path
+           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#55bbdd;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 129.6138,112.32083 c 0,1.29744 -1.05178,2.34922 -2.34922,2.34922 -0.32436,0 -0.63337,-0.0657 -0.91442,-0.18461 -0.28106,-0.11888 -1.44622,0.29375 -1.65879,0.0812 -0.21256,-0.21256 0.52748,-1.05032 0.4086,-1.33138 -0.11887,-0.28105 -0.18461,-0.59006 -0.18461,-0.91442 0,-1.29744 1.05178,-2.34922 2.34922,-2.34922 1.29744,0 2.34922,1.05178 2.34922,2.34922 z"
+           id="path4602-6-4-8-2-5-4-7-8-4-3-4-5-1-5"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ssssssss" />
+        <circle
+           style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="path5470-0-78-4"
+           cx="126.45276"
+           cy="111.93624"
+           r="0.39687499" />
+        <circle
+           style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="path5470-2-6-60-9"
+           cx="128.12875"
+           cy="111.95192"
+           r="0.39687499" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path5487-9-9-2"
+           d="m 126.57083,113.24088 1.38749,0"
+           style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
+    <g
+       id="g12488"
+       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
+      <g
+         style="stroke:#917c6f"
+         id="g5630-6-1-2-0-6-6-1-7-7"
+         transform="matrix(0.13229165,0,0,0.13229165,60.441353,92.198493)">
+        <g
+           style="stroke:#917c6f"
+           id="g5632-1-7-1-16-3-6-1-0-2"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(15.474933,-173.52466)">
+          <g
+             style="stroke:#917c6f"
+             id="g5634-8-1-6-5-7-6-3-7-2">
+            <circle
+               r="12.4375"
+               cy="345.04968"
+               cx="406.9375"
+               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+               id="path5636-4-1-8-7-8-7-8-0-5"
+               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+               inkscape:export-xdpi="90"
+               inkscape:export-ydpi="90" />
+          </g>
+        </g>
+      </g>
+      <g
+         transform="translate(-9.8809346,-0.14630395)"
+         id="g12434-7">
+        <path
+           style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#c0c0b5;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 129.6138,112.32083 c 0,1.29744 -1.05178,2.34922 -2.34922,2.34922 -0.32436,0 -0.63337,-0.0657 -0.91442,-0.18461 -0.28106,-0.11888 -1.44622,0.29375 -1.65879,0.0812 -0.21256,-0.21256 0.52748,-1.05032 0.4086,-1.33138 -0.11887,-0.28105 -0.18461,-0.59006 -0.18461,-0.91442 0,-1.29744 1.05178,-2.34922 2.34922,-2.34922 1.29744,0 2.34922,1.05178 2.34922,2.34922 z"
+           id="path4602-6-4-8-2-5-4-7-8-4-3-4-5-1-5-2"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ssssssss" />
+        <circle
+           style="opacity:1;fill:#c0c0b5;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="path5470-0-78-4-3"
+           cx="126.45276"
+           cy="111.93624"
+           r="0.39687499" />
+        <circle
+           style="opacity:1;fill:#c0c0b5;fill-opacity:1;stroke:none;stroke-width:0.59531254;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="path5470-2-6-60-9-4"
+           cx="128.12875"
+           cy="111.95192"
+           r="0.39687499" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path5487-9-9-2-1"
+           d="m 126.57083,113.24088 1.38749,0"
+           style="fill:none;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      </g>
+    </g>
+    <g
+       id="g12913"
+       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
+      <g
+         style="stroke:#917c6f"
+         id="g5630-6-1-2-0-6-6-1-7-6"
+         transform="matrix(0.13229165,0,0,0.13229165,52.503893,100.13595)">
+        <g
+           style="stroke:#917c6f"
+           id="g5632-1-7-1-16-3-6-1-0-3"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           inkscape:export-xdpi="90"
+           inkscape:export-ydpi="90"
+           transform="translate(15.474933,-173.52466)">
+          <g
+             style="stroke:#917c6f"
+             id="g5634-8-1-6-5-7-6-3-7-27">
+            <circle
+               r="12.4375"
+               cy="345.04968"
+               cx="406.9375"
+               style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+               id="path5636-4-1-8-7-8-7-8-0-1"
+               transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+               inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+               inkscape:export-xdpi="90"
+               inkscape:export-ydpi="90" />
+          </g>
+        </g>
+      </g>
+      <path
+         style="opacity:1;fill:none;fill-opacity:1;stroke:#55bbdd;stroke-width:0.56696194;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 109.31494,117.58113 a 1.3547469,1.3547469 0 0 0 -1.35444,1.35496 1.3547469,1.3547469 0 0 0 0.36174,0.91985 c -0.62726,0.0923 -1.11354,0.60391 -1.1653,1.24383 l -0.006,0 0,1.54308 4.3279,0 0,-1.54308 -0.006,0 c -0.0518,-0.63992 -0.53804,-1.15154 -1.16531,-1.24383 a 1.3547469,1.3547469 0 0 0 0.36174,-0.91985 1.3547469,1.3547469 0 0 0 -1.35496,-1.35496 z"
+         id="path8175-5"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g12941"
+       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
+      <g
+         id="g6173-1-7-2-1-0-8"
+         transform="matrix(0.13229165,0,0,0.13229165,-48.636292,69.242611)"
+         style="stroke:#917c6f">
+        <circle
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+           id="path6175-9-8-21-9-3-2"
+           style="fill:none;stroke:#c0c0b5;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+           cx="406.9375"
+           cy="345.04968"
+           r="12.4375" />
+      </g>
+      <path
+         sodipodi:nodetypes="cccccccccccc"
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 6.1274972,109.91512 -2.5560463,2.03177 0.4775021,0 0,2.48701 2.1665726,0 0,-1.7367 0.9550075,0 0,1.7367 1.0355096,0 0,-2.48701 0.477502,0 z"
+         id="path6171-8-3-3-3-1-2-3-2"
+         inkscape:connector-curvature="0" />
+    </g>
+    <g
+       id="g13010"
+       transform="matrix(0.93333718,0,0,0.93333718,11.761869,8.1951774)">
+      <circle
+         r="3.6950226"
+         cy="120.11198"
+         cx="14.064999"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="path5559-9-9-4-06-4-9-3-3"
+         style="fill:none;stroke:#55bbdd;stroke-width:0.54741389;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0" />
+      <g
+         transform="translate(0.00996213,0.05470841)"
+         id="g13006">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 12.230922,121.64732 0,0.65481 3.648229,0 0,-0.74835"
+           id="path12959"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path12993"
+           style="fill:none;fill-rule:evenodd;stroke:#55bbdd;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 14.051965,117.83377 0,3.1427 m -1.095176,-2.06582 1.098246,-1.09826 1.098248,1.09826"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <g
+       transform="matrix(0.93333718,0,0,0.93333718,11.71475,0.78685171)"
+       id="g13010-6">
+      <circle
+         r="3.6950226"
+         cy="120.11198"
+         cx="14.064999"
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+         id="path5559-9-9-4-06-4-9-3-3-7"
+         style="fill:none;stroke:#55bbdd;stroke-width:0.54741389;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0" />
+      <g
+         transform="translate(0.00996213,0.05470841)"
+         id="g13006-9">
+        <path
+           style="fill:none;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 12.230922,121.64732 0,0.65481 3.648229,0 0,-0.74835"
+           id="path12959-0"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path12993-0"
+           style="fill:none;fill-rule:evenodd;stroke:#c0c0b5;stroke-width:0.56696194;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 14.051965,117.83377 0,3.1427 m -1.095176,-2.06582 1.098246,-1.09826 1.098248,1.09826"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <g
+       id="g5050">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 47.046239,131.32728 0,1.68107 0.84916,0.66812 m 1.462372,-0.7743 a 2.2841727,2.2841727 0 0 1 -2.284173,2.28417 2.2841727,2.2841727 0 0 1 -2.284173,-2.28417 2.2841727,2.2841727 0 0 1 2.284173,-2.28418 2.2841727,2.2841727 0 0 1 2.284173,2.28418 z"
+         style="fill:none;stroke:#c0c0b5;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path5389-3-8" />
+      <g
+         id="g6173-1-7-2-1-0-7-4-2-0-4"
+         transform="matrix(0.12347272,0,0,0.12347272,-4.039485,92.832221)"
+         style="stroke:#917c6f">
+        <circle
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+           id="path6175-9-8-21-9-3-6-4-1-5-4"
+           style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+           cx="406.9375"
+           cy="345.04968"
+           r="12.4375" />
+      </g>
+    </g>
+    <g
+       transform="translate(-14.775981,-20.010337)"
+       id="g5050-2">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 47.046239,131.32728 0,1.68107 0.84916,0.66812 m 1.462372,-0.7743 a 2.2841727,2.2841727 0 0 1 -2.284173,2.28417 2.2841727,2.2841727 0 0 1 -2.284173,-2.28417 2.2841727,2.2841727 0 0 1 2.284173,-2.28418 2.2841727,2.2841727 0 0 1 2.284173,2.28418 z"
+         style="fill:none;stroke:#c0c0b5;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path5389-3-8-4" />
+      <g
+         id="g6173-1-7-2-1-0-7-4-2-0-4-3"
+         transform="matrix(0.12347272,0,0,0.12347272,-4.039485,92.832221)"
+         style="stroke:#917c6f">
+        <circle
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+           id="path6175-9-8-21-9-3-6-4-1-5-4-5"
+           style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+           cx="406.9375"
+           cy="345.04968"
+           r="12.4375" />
+      </g>
+    </g>
+    <g
+       transform="translate(-14.775981,-12.602012)"
+       id="g5050-2-5">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 47.046239,131.32728 0,1.68107 0.84916,0.66812 m 1.462372,-0.7743 a 2.2841727,2.2841727 0 0 1 -2.284173,2.28417 2.2841727,2.2841727 0 0 1 -2.284173,-2.28417 2.2841727,2.2841727 0 0 1 2.284173,-2.28418 2.2841727,2.2841727 0 0 1 2.284173,2.28418 z"
+         style="fill:none;stroke:#55bbdd;stroke-width:0.5291667;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         id="path5389-3-8-4-2" />
+      <g
+         id="g6173-1-7-2-1-0-7-4-2-0-4-3-4"
+         transform="matrix(0.12347272,0,0,0.12347272,-4.039485,92.832221)"
+         style="stroke:#917c6f">
+        <circle
+           inkscape:export-ydpi="90"
+           inkscape:export-xdpi="90"
+           inkscape:export-filename="C:\Users\kawai\workspace\tegaki\WebContent\img07\HeaderMenuMyPage.png"
+           transform="matrix(2.2456991,0,0,2.2456991,-499.89662,-450.35311)"
+           id="path6175-9-8-21-9-3-6-4-1-5-4-5-6"
+           style="fill:none;stroke:#55bbdd;stroke-width:1.84260309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
+           cx="406.9375"
+           cy="345.04968"
+           r="12.4375" />
       </g>
     </g>
   </g>

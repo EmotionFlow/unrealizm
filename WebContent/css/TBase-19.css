@@ -173,10 +173,6 @@ a {
 	color: #6d6965;
 }
 
-a:hover {
-	color: #5bd;
-}
-
 .Misaki {
 	font-family: Misaki, 'Rounded Mplus 1c', 'ヒラギノ角ゴ Pro W3',
 		'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Verdana, Osaka, 'ＭＳ Ｐゴシック',
@@ -242,16 +238,15 @@ form, button {
 	text-align: center;
 }
 
-.BtnBase.Selected, .BtnBase:hover, input[type="submit"].Selected, input[type="button"].Selected,
+.BtnBase.Selected, input[type="submit"].Selected, input[type="button"].Selected,
 	button.Selected {
 	background: #5bd;
 	color: #fff;
 }
 
-.BtnBase.Disabled, .BtnBase.Disabled:hover, input[type="submit"].Disabled,
-	input[type="submit"].Disabled:hover, input[type="button"].Disabled,
-	input[type="button"].Disabled:hover, button.Disabled, button.Disabled:hover
-	{
+.BtnBase.Disabled, input[type="submit"].Disabled,
+	input[type="button"].Disabled,
+	button.Disabled {
 	border-color: #ebe;
 	color: #ebe;
 	cursor: default;
@@ -263,7 +258,7 @@ form, button {
 	color: #fff;
 }
 
-.BtnBase.Rev:hover, .BtnBase.Rev.Selected {
+.BtnBase.Rev.Selected {
 	border-color: #5bd;
 	background-color: #fff;
 	color: #5bd;

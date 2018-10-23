@@ -62,9 +62,12 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div class="Wrapper">
+
+			<%if(cCheckLogin.m_bLogin) {%>
 			<a style="display: block; width: 100%; float: left;" href="/SearchIllustByCategoryV.jsp?CD=13">
 				<img style="display: block; width: 100%;" src="/event/201810/2018_10_13_halloween.png" />
 			</a>
+			<%}%>
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

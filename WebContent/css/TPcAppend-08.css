@@ -1,5 +1,11 @@
 @charset "utf-8";
 
+/* Base */
+.BtnBase:hover {background: #5bd;color: #fff;}
+a:hover {color: #5bd;}
+.BtnBase.Disabled:hover, input[type="submit"].Disabled:hover, input[type="button"].Disabled:hover, button.Disabled:hover {border-color: #ebe;color: #ebe;cursor: default;}
+.BtnBase.Rev:hover {border-color: #5bd; background-color: #fff;color: #5bd;}
+
 body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; height: 60px; position: relative;}
 .SideBarTop {height: 60px;}
@@ -21,7 +27,9 @@ body {padding: 51px 0 0 0 !important;}
 .IllustItem .IllustItemResList {padding: 0 10px 6px 10px}
 .IllustItem .IllustItemResBtnList {padding: 3px 7px;}
 .IllustItem .IllustItemResBtnList .ResEmojiBtn {margin: 4px 1px;}
-.SearchResultTitle {margin: 15px 0 0 0; font-size: 18px; height: 30px; line-height: 30px;}
+.SearchResultTitle {margin: 15px 0 10px 0; font-size: 18px; height: 30px; line-height: 30px;}
+.SearchResultTitle .TitleCmdFollow {float: none;}
+
 .IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
 
 .IllustThumb .IllustThumbImg {box-sizing: border-box;}
@@ -38,8 +46,8 @@ body {padding: 51px 0 0 0 !important;}
 .Header .HeaderSearch {}
 .Header .HeaderSearch .HeaderSearchBox {width: 200px;}
 .Header .HeaderTitleSearch {display: none;}
-
+.FooterMenu .FooterMenuItem {width: 25%;}
 .UploadFile .UoloadCmdOption .OptionItem {flex: 0 0 20%; width: 116px;}
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {transform: scale(1.0);}
-.FooterMenu {float: right; width: 320px;}
+.FooterMenu {float: right; width: 240px;}
 

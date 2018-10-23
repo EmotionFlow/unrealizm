@@ -28,6 +28,7 @@ public class SearchIllustByKeywordC {
 	public int SELECT_MAX_GALLERY = 45;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
+	public boolean m_bFollowing = false;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -46,6 +47,18 @@ public class SearchIllustByKeywordC {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
+
+			// Check Following
+			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
+			cState = cConn.prepareStatement(strSql);
+			idx = 1;
+			cState.setInt(idx++, cCheckLogin.m_nUserId);
+			cState.setString(idx++, m_strKeyword);
+			cState.setInt(idx++, Common.FOVO_KEYWORD_TYPE_SEARCH);
+			cResSet = cState.executeQuery();
+			m_bFollowing = (cResSet.next());
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
 
 
 			String strMuteKeyword = "";

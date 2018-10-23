@@ -36,6 +36,11 @@ public class Common {
 		return pageName + " - " + _TEX.T("TopV.TitleBar");
 	}
 
+	// favo keyword
+	public static int FOVO_KEYWORD_TYPE_TAG = 0;
+	public static int FOVO_KEYWORD_TYPE_SEARCH = 1;
+
+
 	// Safe Filter
 	public static int SAFE_FILTER_ALL = 0;
 	public static int SAFE_FILTER_R15 = 2;

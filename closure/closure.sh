@@ -1,4 +1,4 @@
-java -jar ./closure-compiler-v20180805.jar --js ./js/common-20.js --js_output_file ../WebContent/js/common-20.js
+java -jar ./closure-compiler-v20180805.jar --js ./js/common-21.js --js_output_file ../WebContent/js/common-21.js
 java -jar ./closure-compiler-v20180805.jar --js ./js/upload-06.js --js_output_file ../WebContent/js/upload-06.js
 
 #for file in $( ls ./js | grep .js$ ); do

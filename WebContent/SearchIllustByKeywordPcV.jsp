@@ -19,7 +19,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuHome').addClass('Selected');
+			$('#MenuSearch').addClass('Selected');
 		});
 		</script>
 
@@ -52,6 +52,17 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper ThumbList">
+			<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
+				<%=Common.ToStringHtml(cResults.m_strKeyword)%>
+				<%if(!cCheckLogin.m_bLogin) {%>
+				<a class="BtnBase TitleCmdFollow" href="/"><%=_TEX.T("IllustV.Favo")%></a>
+				<%} else if(!cResults.m_bFollowing) {%>
+				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_SEARCH%>)"><%=_TEX.T("IllustV.Favo")%></a>
+				<%} else {%>
+				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_SEARCH%>)"><%=_TEX.T("IllustV.Favo")%></a>
+				<%}%>
+			</div>
+
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

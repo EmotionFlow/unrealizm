@@ -12,7 +12,7 @@
 <header class="Header">
 	<div class="HeaderWrapper">
 		<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
-			<a id="HeaderLink" class="HeaderLink" href="<%=URL_HOME%>">
+			<a id="HeaderLink" class="HeaderLink" href="/">
 				<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
 			</a>
 			<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
@@ -59,6 +59,10 @@
 <%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
+		<a id="MenuSearch" class="FooterMenuItem" href="<%=URL_SEARCH%>">
+			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
+		</a>
 		<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
@@ -116,6 +120,9 @@
 			進捗ポイポイ<br />
 			イラストポイポイSNS「ポイピク」
 		</h1>
+		<a style="display: block; margin: 0 0 15px 0; text-align: center; color: #fff; text-decoration: underline; font-weight: bold;" href="/StartPoipikuPcV.jsp">
+			もっと詳しく...
+		</a>
 		<div class="AnalogicoInfoRegist">
 			<a class="BtnBase Rev" href="/LoginFormTwitterPc.jsp">
 				<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン

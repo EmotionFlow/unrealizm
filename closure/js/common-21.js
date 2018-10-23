@@ -258,4 +258,26 @@ function UpdateDesc(nUserId, content_id, mode) {
 	});
 }
 
+function UpdateFollowTag(nUserId, strTagTxt, nTypeId) {
+	$.ajaxSingle({
+		"type": "post",
+		"data": { "UID": nUserId, "TXT": strTagTxt, "TYP": nTypeId},
+		"url": "/f/UpdateFollowTagF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			if(data.result==1) {
+				$('.TitleCmdFollow').addClass('Selected');
+			} else if(data.result==2) {
+				$('.TitleCmdFollow').removeClass('Selected');
+			} else {
+				DispMsg('error');
+			}
+		},
+		"error": function(req, stat, ex){
+			DispMsg('Connection error');
+		}
+	});
+}
+
+
 

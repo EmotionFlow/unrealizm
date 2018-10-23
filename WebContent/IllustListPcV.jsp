@@ -33,7 +33,7 @@ if(!cResults.getResults(cCheckLogin)) {
 			<%if(cResults.m_bOwner) {%>
 			$('#MenuMe').addClass('Selected');
 			<%} else {%>
-			$('#MenuHome').addClass('Selected');
+			$('#MenuSearch').addClass('Selected');
 			<%}%>
 		});
 		</script>

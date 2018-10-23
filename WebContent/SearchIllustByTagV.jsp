@@ -14,6 +14,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>#<%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
+
 		<script>
 			var g_nPage = 1;
 			var g_bAdding = false;
@@ -57,7 +58,16 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div class="Wrapper">
-			<div class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></div>
+			<div class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
+				#<%=Common.ToStringHtml(cResults.m_strKeyword)%>
+				<%if(!cCheckLogin.m_bLogin) {%>
+				<a class="BtnBase TitleCmdFollow" href="/StartPoipikuV.jsp"><%=_TEX.T("IllustV.Favo")%></a>
+				<%} else if(!cResults.m_bFollowing) {%>
+				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><%=_TEX.T("IllustV.Favo")%></a>
+				<%} else {%>
+				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><%=_TEX.T("IllustV.Favo")%></a>
+				<%}%>
+			</div>
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
