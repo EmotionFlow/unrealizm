@@ -46,10 +46,12 @@ body {padding: 51px 0 0 0 !important;}
 .Header .HeaderSearch {}
 .Header .HeaderSearch .HeaderSearchBox {width: 200px;}
 .Header .HeaderTitleSearch {display: none;}
-.FooterMenu .FooterMenuItem {width: 25%;}
+.FooterMenu .FooterMenuItem {width: 60px;}
 .UploadFile .UoloadCmdOption .OptionItem {flex: 0 0 20%; width: 116px;}
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {transform: scale(1.0);}
-.FooterMenu {float: right; width: 240px;}
+.FooterMenu {float: right; width: 320px;}
+.FooterMenu #MenuSearch {margin: 0 10px 0 0;}
+.FooterMenu .MenuSep {display: block; float: left; width: 1px; height: 20px; margin: 10px 9px 20px 0; background-color: #ccc;}
 
 .TabMenu {max-width: 985px;}
 .TabMenu .TabMenuItem {flex: 0 1 120px;}

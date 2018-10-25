@@ -33,6 +33,11 @@
 
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
+			<a id="MenuSearch" class="FooterMenuItem" href="<%=URL_SEARCH%>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
+			</a>
+			<span class="MenuSep"></span>
 			<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>

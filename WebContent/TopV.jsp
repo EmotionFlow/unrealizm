@@ -4,7 +4,7 @@
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-if(Util.isSmartPhone(request) && cCheckLogin.m_bLogin) {
+if(cCheckLogin.m_bLogin) {
 	response.sendRedirect("/MyHomePcV.jsp");
 }
 
