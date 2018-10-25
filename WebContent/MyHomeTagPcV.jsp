@@ -62,6 +62,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				<%}%>
 			</div>
+
+			<div class="PageBar">
+				<%=CPageBar.CreatePageBar("/MyHomeTagPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+			</div>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

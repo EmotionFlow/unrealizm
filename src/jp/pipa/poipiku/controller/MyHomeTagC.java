@@ -23,7 +23,7 @@ public class MyHomeTagC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 100;
+	public int SELECT_MAX_GALLERY = 45;
 	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 

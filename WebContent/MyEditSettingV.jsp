@@ -296,7 +296,6 @@ if(cResults.m_bUpdate) {
 						if(data.result>0) {
 							setCookie('POIPIKU_LK','-1');
 							sendObjectMessage("restart");
-							location.reload(true);
 						}
 					},
 					"error": function(req, stat, ex){
@@ -317,7 +316,6 @@ if(cResults.m_bUpdate) {
 							if(data.result>0) {
 								setCookie('POIPIKU_LK','-1');
 								sendObjectMessage("restart");
-								location.reload(true);
 							}
 						},
 						"error": function(req, stat, ex){
@@ -576,7 +574,7 @@ if(cResults.m_bUpdate) {
 						再度ログインする際はアプリケーションの最初の画面で「Twitterで新規登録/ログイン」を押してログインしてください。
 						<div class="SettingBodyCmd">
 							<div class="RegistMessage" ></div>
-							<a class="BtnBase" href="" onclick="Logout()">ログアウト</a>
+							<a class="BtnBase" href="javascript:void(0)" onclick="Logout()">ログアウト</a>
 						</div>
 					</div>
 				</div>

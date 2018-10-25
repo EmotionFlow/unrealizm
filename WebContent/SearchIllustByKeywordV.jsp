@@ -65,7 +65,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			<div class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
 				<%=Common.ToStringHtml(cResults.m_strKeyword)%>
 				<%if(!cCheckLogin.m_bLogin) {%>
-				<a class="BtnBase TitleCmdFollow" href="/StartPoipikuV.jsp"><%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow" href="/"><%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.m_bFollowing) {%>
 				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_SEARCH%>)"><%=_TEX.T("IllustV.Favo")%></a>
 				<%} else {%>

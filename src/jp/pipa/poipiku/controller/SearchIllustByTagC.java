@@ -55,7 +55,7 @@ public class SearchIllustByTagC {
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setString(idx++, m_strKeyword);
-			cState.setInt(idx++, Common.FOVO_KEYWORD_TYPE_SEARCH);
+			cState.setInt(idx++, Common.FOVO_KEYWORD_TYPE_TAG);
 			cResSet = cState.executeQuery();
 			m_bFollowing = (cResSet.next());
 			cResSet.close();cResSet=null;

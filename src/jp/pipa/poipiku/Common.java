@@ -25,8 +25,8 @@ public class Common {
 	public static final String TAG_PATTERN = "#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 
 	public static final int NO_NEED_UPDATE[] = {
-			107, 108, 109,	// 1系 iPhone
-			208, 209, 210, 211	// 2系 Android
+			108, 109, 110, 111,	// 1系 iPhone
+			211, 212, 213, 214	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
 	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン
