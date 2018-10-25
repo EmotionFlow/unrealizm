@@ -313,7 +313,7 @@ public class ImageUtil {
 					}
 				}
 				if (disposal.equals("restoreToPrevious")) {
-					BufferedImage from = null;
+					BufferedImage from = frames.get(0).getImage();	// エラー対策として先頭フレームを入れておく
 					for (int i = frameIndex - 1; i >= 0; i--) {
 						if (!frames.get(i).getDisposal().equals("restoreToPrevious") || frameIndex == 0) {
 							from = frames.get(i).getImage();
