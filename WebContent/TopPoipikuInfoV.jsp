@@ -55,40 +55,40 @@ cCheckLogin.GetResults2(request, response);
 		<div class="Wrapper ThumbList">
 			<div class="PoipikuInfo">
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS01.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS01.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS02.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS02.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS03.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS03.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS03-2.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS03-2.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS04.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS04.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS04-2.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS04-2.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS05.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS05.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS06.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS06.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS07.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS07.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS08.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS08.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS09.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS09.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_12_02/SS10.png" />
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_10_25/SS10.png" />
 				</div>
 
 				<div class="PoipikuDesc" style="flex: 0 0 610px;">

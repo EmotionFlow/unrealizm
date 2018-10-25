@@ -26,7 +26,7 @@ public class Common {
 
 	public static final int NO_NEED_UPDATE[] = {
 			108, 109, 110, 111,	// 1系 iPhone
-			211, 212, 213, 214	// 2系 Android
+			212, 213, 214, 215	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
 	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン

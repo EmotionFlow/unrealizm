@@ -22,9 +22,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
+
 		<style>
 			body {padding-top: 83px !important;}
 		</style>

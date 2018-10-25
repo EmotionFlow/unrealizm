@@ -51,3 +51,5 @@ body {padding: 51px 0 0 0 !important;}
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {transform: scale(1.0);}
 .FooterMenu {float: right; width: 240px;}
 
+.TabMenu {max-width: 985px;}
+.TabMenu .TabMenuItem {flex: 0 1 120px;}

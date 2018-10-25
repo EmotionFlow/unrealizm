@@ -59,13 +59,13 @@
 <%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
-		<a id="MenuSearch" class="FooterMenuItem" href="<%=URL_SEARCH%>">
-			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
-		</a>
 		<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
+		</a>
+		<a id="MenuSearch" class="FooterMenuItem" href="<%=URL_SEARCH%>">
+			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
 		<a id="MenuUpload" class="FooterMenuItem" href="<%=URL_UPLOAD%>">
 			<span class="FooterMenuItemIcon"></span>
