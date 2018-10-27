@@ -4,7 +4,7 @@
 <%@ page import="java.nio.file.Files"%>
 <%@page import="org.apache.commons.codec.binary.Base64"%>
 <%@include file="/inner/Common.jsp"%>
-<%
+<%!
 class UploadPasteCParam {
 
 	public int m_nUserId = -1;
@@ -16,7 +16,7 @@ class UploadPasteCParam {
 	String m_strEncodeImg = "";
 	public int m_nOptImage = 1;
 
-	public int GetParam(HttpServletRequest cRequest) {
+	public int GetParam(HttpServletRequest request) {
 		try {
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
 			m_strDescription	= Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);

@@ -3,14 +3,14 @@
 <%@ page import="org.apache.commons.fileupload.disk.*"%>
 <%@ page import="org.apache.commons.fileupload.servlet.*"%>
 <%@include file="/inner/Common.jsp"%>
-<%
+<%!
 class UploadReferenceCParam {
 	public int m_nUserId = -1;
 	public int m_nCategoryId = 0;
 	public int m_nSafeFilter = 0;
 	public String m_strDescription = "";
 
-	public int GetParam(HttpServletRequest cRequest) {
+	public int GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));

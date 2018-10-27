@@ -18,7 +18,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-06.js" type="text/javascript"></script>
+		<script src="/js/upload-07.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -49,15 +49,49 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 			}
 
 			$(function() {
-				initUploadPaste();
+				initUploadPaste('<%=_TEX.T("UploadFilePc.PasteImg")%>');
 			});
 		</script>
 
 		<style>
 			body {padding-top: 83px !important;}
-			#InputFile {border: solid 3px #eee;}
-			#InputFile:hover {border-color: #ccc;}
-			#InputFile.pastable-focus {border-color: #5bd;}
+			.PasteZone {display: block;float: left;width: 100%;}
+			.UploadFile .TotalSize {
+				display: block;
+				float: left;
+				width: 100%;
+				text-align: right;
+				font-size: 10px;
+				padding: 0;
+				line-height: 20px;
+			}
+			.UploadFile .InputFile {border: solid 3px #eee; margin: 5px 0; overflow: visible;}
+			.InputFile:hover {border-color: #ccc;}
+			.InputFile.pastable-focus {border-color: #5bd;}
+
+			.InputFile .DeletePaste {
+				display: none;
+			}
+
+			.InputFile.Removable .DeletePaste {
+				display: block;
+				position: absolute;
+				right: -8px;
+				top: -8px;
+				box-sizing: border-box;
+				white-space: nowrap;
+				text-align: center;
+				width: 26px;
+				height: 26px;
+				line-height: 20px;
+				font-size: 12px;
+				padding: 0;
+				border: solid 3px #fafafa;
+				border-radius: 30px;
+				background-color: #525252;
+				color: #F7F7F7;
+				font-weight: bold;
+			}
 		</style>
 	</head>
 
@@ -75,12 +109,8 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 
 		<div class="Wrapper">
 			<div class="UploadFile">
-				<div id="InputFile" class="InputFile">
-					<div class="OrgMessage">
-						<%=_TEX.T("UploadFilePc.PasteImg")%>
-					</div>
-					<img id="imgView" class="imgView" src="" />
-				</div>
+				<div id="PasteZone" class="PasteZone"></div>
+				<span id="TotalSize" class="TotalSize">(multi ver. 0.1beta. 10files)</span>
 				<div class="CategorDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>

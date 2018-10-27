@@ -5,14 +5,14 @@
 <%@page import="org.apache.commons.fileupload.disk.*"%>
 <%@page import="org.apache.commons.fileupload.servlet.*"%>
 <%@include file="/inner/Common.jsp"%>
-<%
+<%!
 class UploadFileAppendCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
 	FileItem item_file = null;
 
-	public int GetParam(HttpServletRequest cRequest) {
+	public int GetParam(HttpServletRequest request) {
 		try {
 			String strRelativePath = Common.GetUploadPath();
 			String strRealPath = getServletContext().getRealPath(strRelativePath);
@@ -23,7 +23,7 @@ class UploadFileAppendCParam {
 			upload.setSizeMax(40*1024*1024);
 			upload.setHeaderEncoding("UTF-8");
 
-			List items = upload.parseRequest(cRequest);
+			List items = upload.parseRequest(request);
 			Iterator iter = items.iterator();
 			while (iter.hasNext()) {
 				FileItem item = (FileItem) iter.next();

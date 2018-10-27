@@ -25,7 +25,7 @@ public class Common {
 	public static final String TAG_PATTERN = "#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 
 	public static final int NO_NEED_UPDATE[] = {
-			108, 109, 110, 111,	// 1系 iPhone
+			109, 110, 111, 112,	// 1系 iPhone
 			212, 213, 214, 215	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動

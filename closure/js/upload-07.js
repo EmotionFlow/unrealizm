@@ -512,7 +512,7 @@ function initUploadFile() {
 		validation: {
 			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
 			itemLimit: 200,
-			sizeLimit: 10000000,
+			sizeLimit: 20000000,
 			stopOnFirstInvalidFile: false
 		},
 		retry: {
@@ -593,9 +593,9 @@ function initUploadFile() {
 		return total;
 	};
 	multiFileUploader.showTotalSize = function(total, submit_num) {
-		var strTotal = "";
+		var strTotal = "(jpeg / png / gif, 200files, total 50MByte)";
 		if(total>0) {
-			strTotal=" (Remaning: "+ (200-submit_num) + " files. " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
+			strTotal="("+ submit_num + " / 200,  " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
 			$('#TimeLineAddImage').removeClass('Light');
 			completeAddFile();
 		}
@@ -609,6 +609,7 @@ function UploadFile(user_id) {
 	if(multiFileUploader.getSubmittedNum()<=0) return;
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
+	strDescription = strDescription.substr(0 , 200);
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nSafeFilter = ($('#OptionOneCushion').prop('checked'))?2:0;	// 0:general, 2:R15, 4:R18
 	if(nSafeFilter>0) {
@@ -618,7 +619,6 @@ function UploadFile(user_id) {
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
-	strDescription = strDescription.substr(0 , 200);
 	startMsg();
 	console.log("start upload");
 
@@ -652,15 +652,42 @@ function UploadFile(user_id) {
 }
 
 
-function initUploadPaste() {
+var g_strPasteMsg = '';
+function initUploadPaste(strMsg) {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
 	updateOneCushionButton();
 	updateTweetButton();
-	$('#InputFile').pastableNonInputable();
-	$('#InputFile').on('pasteImage', function(ev, data){
-		$('.OrgMessage').hide();
-		$('#imgView').attr('src', data.dataURL).show();
+
+	g_strPasteMsg = strMsg;
+	var $elmPaste = createPasteElm();
+	$('#PasteZone').append($elmPaste);
+}
+
+function createPasteElm() {
+	var $InputFile = $('<div />').addClass('InputFile');
+	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+		if($('.InputFile.Removable').length>=10) {
+			var $elmPaste = createPasteElm();
+			$('#PasteZone').append($elmPaste);
+		}
+		$(this).parent().remove();
+		updatePasteNum();
+	});
+	var $OrgMessage = $('<div />').addClass('OrgMessage').text(g_strPasteMsg);
+	var $imgView = $('<img />').addClass('imgView').attr('src', '');
+	$InputFile.append($DeletePaste).append($OrgMessage).append($imgView);
+	$InputFile.pastableNonInputable();
+	$InputFile.on('pasteImage', function(ev, data){
+		$(this).addClass('Removable');
+		$('.OrgMessage', this).hide();
+		$('.imgView', this).attr('src', data.dataURL).show();
+		updatePasteNum();
+
+		if($('.InputFile.Removable').length<10) {
+			var $elmPaste = createPasteElm();
+			$('#PasteZone').append($elmPaste);
+		}
 	}).on('pasteImageError', function(ev, data){
 		if(data.url){
 			alert('error data : ' + data.url)
@@ -668,13 +695,42 @@ function initUploadPaste() {
 	}).on('pasteText', function(ev, data){
 		;
 	});
-	//$('#InputFile').focus();
+
+	return $InputFile
+}
+
+function updatePasteNum() {
+	strTotal="("+ $('.InputFile.Removable').length + " / 10)";
+	$('#TotalSize').html(strTotal);
+}
+
+function initPasteElm($elmPaste) {
+	$elmPaste.on('pasteImage', function(ev, data){
+		$('.OrgMessage', this).hide();
+		$('.imgView', this).attr('src', data.dataURL).show();
+	}).on('pasteImageError', function(ev, data){
+		if(data.url){
+			alert('error data : ' + data.url)
+		}
+	}).on('pasteText', function(ev, data){
+		;
+	});
 }
 
 function UploadPaste(user_id) {
+	// check image
+	var nImageNum = 0;
+	$('.imgView').each(function(){
+		var strSrc = $.trim($(this).attr('src'));
+		if(strSrc.length>0) nImageNum++;
+	});
+	console.log(nImageNum);
+	if(nImageNum<=0) return;
+
 	startMsg();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
+	strDescription = strDescription.substr(0 , 200);
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nSafeFilter = ($('#OptionOneCushion').prop('checked'))?2:0;	// 0:general, 2:R15, 4:R18
 	if(nSafeFilter>0) {
@@ -682,7 +738,6 @@ function UploadPaste(user_id) {
 	}
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
-	var strEncodeImg = $('#imgView').attr('src').replace('data:image/png;base64,', '');
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 
@@ -690,26 +745,73 @@ function UploadPaste(user_id) {
 		"type": "post",
 		"data": {
 			"UID":user_id,
-			"DES":strDescription,
-			"REC":nRecent,
-			"SAF":nSafeFilter,
-			"TWI":nTweet,
-			"IMG":nTweetImage,
 			"CAT":nCategory,
-			"DATA" : strEncodeImg},
-		"url": "/f/UploadPasteF.jsp",
+			"SAF":nSafeFilter,
+			"DES":strDescription,
+		},
+		"url": "/f/UploadFileReferenceF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			if(data.result > 0) {
-				// complete
-				completeMsg();
-				setTimeout(function(){
-					location.href="/MyHomePcV.jsp";
-				}, 1000);
-			} else {
-				errorMsg(data.result);
-			}
+			console.log("UploadFileReferenceF", data.content_id);
+			var first_file = true;
+			$('.imgView').each(function(){
+				var strEncodeImg = $(this).attr('src').replace('data:image/png;base64,', '');
+				if(strEncodeImg.length<=0) return true;
+
+				if(first_file) {
+					first_file = false;
+					$.ajax({
+						"type": "post",
+						"data": {
+							"UID":user_id,
+							"IID":data.content_id,
+							"REC":nRecent,
+							"DATA":strEncodeImg,
+						},
+						"url": "/f/UploadPasteFirstF.jsp",
+						"dataType": "json",
+						"async": false,
+						"success": function(data) {
+							console.log("UploadPasteFirstF");
+						}
+					});
+				} else {
+					$.ajax({
+						"type": "post",
+						"data": {
+							"UID":user_id,
+							"IID":data.content_id,
+							"DATA":strEncodeImg,
+						},
+						"url": "/f/UploadPasteAppendF.jsp",
+						"dataType": "json",
+						"async": false,
+						"success": function(data) {
+							console.log("UploadPasteAppendF");
+						}
+					});
+				}
+			});
+			$.ajax({
+				"type": "post",
+				"data": {
+					UID: user_id,
+					IID: data.content_id,
+					IMG: nTweetImage,
+				},
+				"url": "/f/UploadFileTweetF.jsp",
+				"dataType": "json",
+				"success": function(data) {
+					console.log("UploadFileTweetF");
+					// complete
+					completeMsg();
+					setTimeout(function(){
+						location.href="/MyHomePcV.jsp";
+					}, 1000);
+				}
+			});
 		}
 	});
+	return false;
 }
 
