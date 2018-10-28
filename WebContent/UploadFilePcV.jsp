@@ -26,7 +26,7 @@ if(cCookies != null) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-09.js" type="text/javascript"></script>
+		<script src="/js/upload-11.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">

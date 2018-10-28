@@ -473,6 +473,14 @@ function getTweetImageSetting() {
 	return false;
 }
 
+function setLastCategorySetting(val) {
+	setLocalStrage('last_category', val);
+}
+
+function getLastCategorySetting() {
+	return getLocalStrage('last_category');
+}
+
 function updateTweetButton() {
 	var bTweet = $('#OptionTweet').prop('checked');
 	if(!bTweet) {
@@ -502,6 +510,13 @@ function updateOneCushionButton() {
 function initUploadFile() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
+	var cCategory = getLastCategorySetting();
+	$('#EditCategory option').each(function(){
+		console.log($(this).val());
+		if($(this).val()==cCategory) {
+			$('#EditCategory').val(cCategory);
+		}
+	});
 	updateOneCushionButton();
 	updateTweetButton();
 	multiFileUploader = new qq.FineUploader({
@@ -619,6 +634,7 @@ function UploadFile(user_id) {
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
+	setLastCategorySetting(nCategory);
 	startMsg();
 	console.log("start upload");
 
@@ -656,6 +672,13 @@ var g_strPasteMsg = '';
 function initUploadPaste() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
+	var cCategory = getLastCategorySetting();
+	$('#EditCategory option').each(function(){
+		console.log($(this).val());
+		if($(this).val()==cCategory) {
+			$('#EditCategory').val(cCategory);
+		}
+	});
 	updateOneCushionButton();
 	updateTweetButton();
 
@@ -767,6 +790,7 @@ function UploadPaste(user_id) {
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
+	setLastCategorySetting(nCategory);
 
 	$.ajaxSingle({
 		"type": "post",
