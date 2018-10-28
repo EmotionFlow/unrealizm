@@ -98,6 +98,12 @@
 		U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074,
 		U+E0077, U+E007F;
 }
+
+[contenteditable] {
+	-webkit-user-select: text;
+	user-select: text;
+}
+
 body {
 	font-family: Verdana, 'Rounded Mplus 1c', 'ヒラギノ角ゴ Pro W3',
 		'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック',

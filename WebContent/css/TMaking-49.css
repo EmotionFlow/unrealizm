@@ -242,6 +242,8 @@
 }
 
 /********** UPLOAD **********/
+.PasteZone {display: block;float: left;width: 100%; font-size: 0;min-height: 113px;background: #fff;border-radius: 4px;}
+
 .UploadFile {
 	display: block;
 	float: left;
@@ -251,58 +253,67 @@
 	max-width: 600px;
 	margin: 0 auto;
 }
+.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 15px 0;}
 
 .UploadFile .InputFile {
-	display: block;
-	float: left;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 0;
-	overflow: hidden;
-	border: solid 1px #eee;
+	display: inline-block;
 	position: relative;
-	background: #eee;
-	color: #ccc;
-	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
-	box-sizing: border-box;
-	cursor: pointer;
-}
-
-.UploadFile .InputFile input[type="file"] {
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 99;
-	width: 100%;
-	height: 100%;
-	font-size: 315px;
-	opacity: 0;
-	filter: alpha(opacity = 0);
-	-ms-filter: "alpha(opacity=0)";
-	cursor: pointer;
-}
-
-.UploadFile .InputFile .OrgMessage {
-	display: block;
-	float: left;
-	width: 100%;
-	height: 253px;
-	line-height: 253px;
 	padding: 0;
-	font-size: 32px;
-	text-align: center;
-}
-
-.UploadFile .InputFile .OrgMessage .typcn {
-	font-size: 48px;
+	box-shadow: none;
+	background-color: #f3f3f3;
+	border-radius: 4px;
+	margin: 6px;
+	height: 101px;
+	width: 101px;
 }
 
 .UploadFile .InputFile .imgView {
+	border: none;
+	border-radius: 2px 2px 0 0;
+	bottom: 0;
+	margin: auto;
 	display: block;
-	float: left;
-	width: 100%;
-	display: none;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	max-height: 100%;
+	max-width: 100%;
 }
+
+.InputFile .DeletePaste {
+	display: block;
+	position: absolute;
+	right: -8px;
+	top: -8px;
+	box-sizing: border-box;
+	white-space: nowrap;
+	text-align: center;
+	width: 26px;
+	height: 26px;
+	line-height: 20px;
+	font-size: 12px;
+	padding: 0;
+	border: solid 3px #fafafa;
+	border-radius: 30px;
+	background-color: #525252;
+	color: #F7F7F7;
+	font-weight: bold;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.UploadFile .InputFile.Done {
+	background-color: #EDEDF5;
+	box-shadow: 0 0 1px 0 #5bd;
+	border: 0;
+}
+
+
+.UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
+.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;-webkit-user-select: text;user-select: text;}
 
 .UploadFile .CategorDesc {
 	display: block;

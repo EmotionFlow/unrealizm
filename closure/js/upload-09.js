@@ -593,9 +593,9 @@ function initUploadFile() {
 		return total;
 	};
 	multiFileUploader.showTotalSize = function(total, submit_num) {
-		var strTotal = "(jpeg / png / gif, 200files, total 50MByte)";
+		var strTotal = "(jpeg|png|gif, 200files, total 50MByte)";
 		if(total>0) {
-			strTotal="("+ submit_num + " / 200,  " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
+			strTotal="("+ submit_num + "/200,  " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
 			$('#TimeLineAddImage').removeClass('Light');
 			completeAddFile();
 		}
@@ -653,19 +653,45 @@ function UploadFile(user_id) {
 
 
 var g_strPasteMsg = '';
-function initUploadPaste(strMsg) {
+function initUploadPaste() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
 	updateOneCushionButton();
 	updateTweetButton();
 
-	g_strPasteMsg = strMsg;
-	var $elmPaste = createPasteElm();
-	$('#PasteZone').append($elmPaste);
+	g_strPasteMsg = $('#TimeLineAddImage').html();
+	$('#TimeLineAddImage').pastableContenteditable();
+	$('#TimeLineAddImage').on('pasteImage', function(ev, data){
+		if($('.InputFile').length<10) {
+			var $elmPaste = createPasteElm(data.dataURL);
+			$('#PasteZone').append($elmPaste);
+			$('#TimeLineAddImage').html(g_strPasteMsg);
+		}
+		updatePasteNum();
+	}).on('pasteImageError', function(ev, data){
+		if(data.url){
+			alert('error data : ' + data.url)
+		}
+	}).on('pasteText', function(ev, data){
+		$('#TimeLineAddImage').html(g_strPasteMsg);
+	});
+//	var $elmPaste = createPasteElm();
+//	$('#PasteZone').append($elmPaste);
 }
 
-function createPasteElm() {
+function createPasteElm(src) {
 	var $InputFile = $('<div />').addClass('InputFile');
+	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+		$(this).parent().remove();
+		updatePasteNum();
+	});
+	var $imgView = $('<img />').addClass('imgView').attr('src', src);
+	$InputFile.append($DeletePaste).append($imgView);
+	return $InputFile
+}
+/*
+function createPasteElm() {
+	var $InputFile = $('<div />').addClass('InputFile').attr('contenteditable', 'true');
 	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
 		if($('.InputFile.Removable').length>=10) {
 			var $elmPaste = createPasteElm();
@@ -677,7 +703,7 @@ function createPasteElm() {
 	var $OrgMessage = $('<div />').addClass('OrgMessage').text(g_strPasteMsg);
 	var $imgView = $('<img />').addClass('imgView').attr('src', '');
 	$InputFile.append($DeletePaste).append($OrgMessage).append($imgView);
-	$InputFile.pastableNonInputable();
+	$InputFile.pastableContenteditable();
 	$InputFile.on('pasteImage', function(ev, data){
 		$(this).addClass('Removable');
 		$('.OrgMessage', this).hide();
@@ -698,11 +724,7 @@ function createPasteElm() {
 
 	return $InputFile
 }
-
-function updatePasteNum() {
-	strTotal="("+ $('.InputFile.Removable').length + " / 10)";
-	$('#TotalSize').html(strTotal);
-}
+*/
 
 function initPasteElm($elmPaste) {
 	$elmPaste.on('pasteImage', function(ev, data){
@@ -715,6 +737,11 @@ function initPasteElm($elmPaste) {
 	}).on('pasteText', function(ev, data){
 		;
 	});
+}
+
+function updatePasteNum() {
+	strTotal="("+ $('.InputFile').length + "/10)";
+	$('#TotalSize').html(strTotal);
 }
 
 function UploadPaste(user_id) {
@@ -755,6 +782,7 @@ function UploadPaste(user_id) {
 			console.log("UploadFileReferenceF", data.content_id);
 			var first_file = true;
 			$('.imgView').each(function(){
+				$(this).parent().addClass('Done');
 				var strEncodeImg = $(this).attr('src').replace('data:image/png;base64,', '');
 				if(strEncodeImg.length<=0) return true;
 
