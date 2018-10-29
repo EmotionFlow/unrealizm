@@ -208,12 +208,6 @@ public class CCnv {
 		strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
 		// 全ての絵文字
 		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
-		/*
-		for(String emoji : Common.EMOJI_KEYBORD) {
-			strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
-		}
-		strRtn.append("</div>");	// ResEmojiBtnList
-		*/
 		strRtn.append("</div>");	// IllustItemResBtnList
 		strRtn.append("</div>");	// IllustItem
 

@@ -65,6 +65,7 @@ public class Common {
 	};
 
 	public static int EMOJI_KEYBORD_MAX = 64;
+	/*
 	public static final String[] EMOJI_KEYBORD = {
 			// Unicode Version 6.1 https://emojipedia.org/unicode-6.1/
 			"😀", "😗", "😙", "😑", "😮", "😯", "😴", "😛", "😕", "😟", "😦", "😧", "😬",
@@ -73,7 +74,7 @@ public class Common {
 			// Unicode Version 5.2 https://emojipedia.org/unicode-5.2/
 			"⛷", "⛹", "⛑", "⛰", "⛪", "⛩", "⛲", "⛺", "⛽", "⛵", "⛴", "⛅", "⛈", "⛱", "⛄", "⚽", "⚾", "⛳", "⛸", "⛏", "⛓", "⛔", "⭕", "❗", "🅿", "🈯", "🈚",
 			// Unicode Version 5.1 https://emojipedia.org/unicode-5.1/
-			"⭐", "🀄", "⬛", "⬜",
+			"⭐", "🀄", "⬛",
 			// Unicode Version 5.0 https://emojipedia.org/unicode-5.0/
 
 			// Unicode Version 4.1 https://emojipedia.org/unicode-4.1/
@@ -87,6 +88,7 @@ public class Common {
 			// Unicode Version 1.1 https://emojipedia.org/unicode-1.1/
 			"☺", "☹", "☠", "☝", "✌", "✍", "❤", "❣", "♨", "✈", "⌛", "⌚", "☀", "☁", "☂", "❄", "☃", "☄", "♠", "♥", "♦", "♣", "♟", "☎", "⌨", "✉", "✏", "✒", "✂", "☢", "☣", "↗", "➡", "↘", "↙", "↖", "↕", "↔", "↩", "↪", "✡", "☸", "☯", "✝", "☦", "☪", "☮", "♈", "♉", "♊", "♋", "♌", "♍", "♎", "♏", "♐", "♑", "♒", "♓", "▶", "◀", "♀", "♂", "☑", "✔", "✖", "✳", "✴", "❇", "‼", "〰", "©", "®", "™", "Ⓜ", "㊗", "㊙", "▪", "▫",
 	};
+	*/
 
 	public static final int EMOJI_CAT_RECENT = 0;
 	public static final int EMOJI_CAT_POPULAR = 1;
@@ -125,7 +127,7 @@ public class Common {
 				// Unicode Version 5.2 https://emojipedia.org/unicode-5.2/
 				"⛷", "⛹", "⛑", "⛰", "⛪", "⛩", "⛲", "⛺", "⛽", "⛵", "⛴", "⛅", "⛈", "⛱", "⛄", "⚽", "⚾", "⛳", "⛸", "⛏", "⛓", "⛔", "⭕", "❗", "🅿", "🈯", "🈚",
 				// Unicode Version 5.1 https://emojipedia.org/unicode-5.1/
-				"⭐", "🀄", "⬛", "⬜",
+				"⭐", "🀄", "⬛",
 				// Unicode Version 5.0 https://emojipedia.org/unicode-5.0/
 
 				// Unicode Version 4.1 https://emojipedia.org/unicode-4.1/

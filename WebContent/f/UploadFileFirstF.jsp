@@ -160,7 +160,6 @@ class UploadFileFirstC {
 %><%
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
-Log.d("UploadFileFirstF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
 UploadFileFirstCParam cParam = new UploadFileFirstCParam();
@@ -170,7 +169,6 @@ nRtn = cParam.GetParam(request);
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadFileFirstC cResults = new UploadFileFirstC();
 	nRtn = cResults.GetResults(cParam, _TEX);
-	Log.d("UploadFileFirstF - OK:"+nRtn);
 }
 %>
 {
