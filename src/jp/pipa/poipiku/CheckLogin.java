@@ -90,7 +90,7 @@ public class CheckLogin {
 				cState.close();cState=null;
 
 				if(m_bLogin) {
-					if(tsLastLogin.getTime()<System.currentTimeMillis()-86400000) { //1*24*60*60*1000
+					if(tsLastLogin.getTime()<System.currentTimeMillis()-60000) { //1*24*60*60*1000
 						strSql = "UPDATE users_0000 SET last_login_date=current_timestamp WHERE user_id=?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setInt(1, m_nUserId);
@@ -143,4 +143,33 @@ public class CheckLogin {
 		return strResult;
 	}
 
+
+	public static boolean isOnline(int nUserId) {
+		boolean bRtn = false;
+		DataSource dsPostgres = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+		try {
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
+			strSql = "SELECT * FROM users_0000 WHERE user_id=? AND last_login_date>current_timestamp-interval '1 minute'";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, nUserId);
+			cResSet = cState.executeQuery();
+			bRtn = (cResSet.next());
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+			bRtn = false;
+		} finally {
+			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+		}
+		return bRtn;
+	}
 }

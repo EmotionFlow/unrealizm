@@ -23,7 +23,7 @@ class SendEmojiC {
 		}
 	}
 
-	public boolean getResults(CheckLogin checkLogin) {
+	public boolean getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
 		if(!Arrays.asList(Common.EMOJI_LIST[Common.EMOJI_CAT_ALL]).contains(m_strEmoji)) {
 			Log.d("Invalid Emoji : "+ m_strEmoji);
 			return false;
@@ -42,15 +42,19 @@ class SendEmojiC {
 			cConn = dsPostgres.getConnection();
 
 			// 投稿存在確認(不正アクセス対策)
-			boolean bExist = false;
-			strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
+			CUser cTargUser = null;
+			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id  WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nContentId);
 			cResSet = cState.executeQuery();
-			bExist = cResSet.next();
+			if(cResSet.next()) {
+				cTargUser = new CUser();
+				cTargUser.m_nUserId = cResSet.getInt("user_id");
+				cTargUser.m_nLangId = cResSet.getInt("lang_id");
+			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(!bExist) {
+			if(cTargUser==null) {
 				return false;
 			}
 
@@ -98,6 +102,62 @@ class SendEmojiC {
 
 			bRtn = true; // 以下実行されなくてもOKを返す
 
+			// 通知
+			// オンラインの場合は何もしない
+			if(CheckLogin.isOnline(cTargUser.m_nUserId)) return bRtn;
+
+			// 通知先デバイストークンの取得 iPhone
+			String strToken = "";
+			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=? AND token_type=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cTargUser.m_nUserId);
+			cState.setInt(2, Common.NOTIFICATION_TOKEN_TYPE_IOS);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				strToken = cResSet.getString("notification_token");
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			if(strToken.isEmpty()) return bRtn;
+
+			// バッジに表示する数を取得
+			int nBadgeNum = 0;
+			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cTargUser.m_nUserId);
+			cState.setInt(2, cTargUser.m_nUserId);
+			cState.setInt(3, cTargUser.m_nUserId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				nBadgeNum = cResSet.getInt(1);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			// 送信文字列
+			String strTitle = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Title"):_TEX.TEn("Notification.Reaction.Title");
+			String strSubTitle = "";
+			String strBody = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Body"):_TEX.TEn("Notification.Reaction.Body");
+
+			// 通知DB登録
+			// 連続射しないように同じタイプの未送信の通知を削除
+			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, strToken);
+			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
+			cState.executeUpdate();
+			cState.close();cState=null;
+			// 送信
+			strSql = "INSERT INTO notification_buffers_0000(notification_token, notification_type, badge_num, title, sub_title, body) VALUES(?, ?, ?, ?, ?, ?)";
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, strToken);
+			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
+			cState.setInt(3, nBadgeNum);
+			cState.setString(4, strTitle);
+			cState.setString(5, strSubTitle);
+			cState.setString(6, strBody);
+			cState.executeUpdate();
+			cState.close();cState=null;
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -115,7 +175,7 @@ cCheckLogin.GetResults2(request, response);
 
 SendEmojiC cResults = new SendEmojiC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(cCheckLogin, _TEX);
 %>{
 "result_num" : <%=(bRtn)?1:0%>,
 "result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>"

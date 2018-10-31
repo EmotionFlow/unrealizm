@@ -292,7 +292,8 @@ if(cResults.m_bUpdate) {
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result>0) {
-							setCookie('POIPIKU_LK','-1');
+							//setCookie('POIPIKU_LK','-1');
+							deleteCookie('POIPIKU_LK');
 							sendObjectMessage("restart");
 						}
 					},
@@ -312,7 +313,8 @@ if(cResults.m_bUpdate) {
 						"dataType": "json",
 						"success": function(data) {
 							if(data.result>0) {
-								setCookie('POIPIKU_LK','-1');
+								//setCookie('POIPIKU_LK','-1');
+								deleteCookie('POIPIKU_LK');
 								sendObjectMessage("restart");
 							}
 						},

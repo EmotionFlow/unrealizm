@@ -24,6 +24,12 @@ public class Common {
 
 	public static final String TAG_PATTERN = "#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 
+	public static final int NOTIFICATION_TYPE_REACTION = 1;
+	public static final int NOTIFICATION_TYPE_FOLLOW = 2;
+
+	public static final int NOTIFICATION_TOKEN_TYPE_IOS = 1;
+	public static final int NOTIFICATION_TOKEN_TYPE_ANDROID = 2;
+
 	public static final int NO_NEED_UPDATE[] = {
 			109, 110, 111, 112,	// 1系 iPhone
 			212, 213, 214, 215	// 2系 Android
