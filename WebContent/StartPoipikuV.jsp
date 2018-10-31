@@ -34,6 +34,7 @@ if(strRequestUri != null) {
 		.AnalogicoLogin {margin: 10px 0;}
 		.AnalogicoCode {margin: 10px 0;}
 		.AnalogicoTerm {margin: 30px 0 0 0;}
+		.AnalogicoLang {display: block; width: 90%; margin: 0 auto; font-size: 12px;}
 	</style>
 
 	<body style="color: #fff; background: #5bd;">
@@ -42,16 +43,11 @@ if(strRequestUri != null) {
 
 			<div id="InfoMsg" style="float: left; width: 100%; padding: 60px 0 0 0; text-align: center;">
 				<div class="AnalogicoDesc Title">
-					放置絵ポイポイ<br />
-					練習ポイポイ<br />
-					らくがきポイポイ<br />
-					進捗ポイポイ<br />
-					<br />
-					イラストポイポイSNS「ポイピク」
+					<%=_TEX.T("Poipiku.Info.Message")%>
 				</div>
 				<div class="AnalogicoLogin">
 					<a class="BtnBase" href="/LoginFormTwitter.jsp">
-						<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
+						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 					</a>
 				</div>
 				<div class="AnalogicoCode">
@@ -61,8 +57,13 @@ if(strRequestUri != null) {
 					<a class="AnalogicoLink" href="/RuleS.jsp"><%=_TEX.T("Footer.Term")%></a>
 					<a class="AnalogicoLink" href="/PrivacyPolicyS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 					<p class="AnalogicoLink" style="font-size: 11px;">
-						利用規約は[<%=_TEX.T("THeader.Menu.Me")%>]→[<%=_TEX.T("MyEditSetting.Title.Setting")%>]からいつでも確認することができます。
+						<%=_TEX.T("Footer.Term.Info")%>
 					</p>
+				</div>
+				<div class="AnalogicoLang">
+					<a style="text-decoration: underline; color: #fff;" onclick="ChLang('en')" href="javascript:void(0);">English</a>
+					&nbsp
+					<a style="text-decoration: underline; color: #fff;" onclick="ChLang('ja')" href="javascript:void(0);">日本語</a>
 				</div>
 			</div>
 		</div><!--Wrapper-->

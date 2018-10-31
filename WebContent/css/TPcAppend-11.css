@@ -52,6 +52,7 @@ body {padding: 51px 0 0 0 !important;}
 .FooterMenu {float: right; width: 320px;}
 .FooterMenu #MenuSearch {margin: 0 10px 0 0;}
 .FooterMenu .MenuSep {display: block; float: left; width: 1px; height: 20px; margin: 10px 9px 20px 0; background-color: #ccc;}
+.Footer .FooterLink dl {flex : 0 0 16.66%;}
 
 .TabMenu {max-width: 985px;}
 .TabMenu .TabMenuItem {flex: 0 1 120px;}

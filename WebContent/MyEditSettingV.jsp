@@ -175,7 +175,6 @@ if(cResults.m_bUpdate) {
 				return false;
 			}
 
-
 			function DispMuteCharNum() {
 				var nCharNum = 100 - $("#MuteKeywordText").val().length;
 				$("#MuteKeywordTextNum").html(nCharNum);
@@ -251,13 +250,12 @@ if(cResults.m_bUpdate) {
 						"AW": nAutoTweetWeekDay,
 						"AT": nAutoTweetTime,
 						"AD": strAutoTweetTxt,
-						"ATN": nAutoTweetThumbNum },
+						"ATN": nAutoTweetThumbNum},
 					"url": "/f/UpdateAutoTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						DispMsg('保存しました。');
 						sendObjectMessage("reloadParent");
-						location.reload(true);
 					},
 					"error": function(req, stat, ex){
 						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
@@ -338,6 +336,7 @@ if(cResults.m_bUpdate) {
 				$("#MySetting").addClass("Selected");
 
 				DispDescCharNum();
+				DispMuteCharNum();
 				DispAutoTweetCharNum();
 
 				<%if(cParam.m_strMessage.length()>0) {%>
@@ -355,10 +354,10 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
 					<div class="SettingBody">
-						<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="ユーザ名" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
+						<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
 						<div class="SettingBodyCmd">
 							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()">変更</a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
 					</div>
 				</div>
@@ -374,20 +373,20 @@ if(cResults.m_bUpdate) {
 							<%if(cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
 							<span class="typcn typcn-plus-outline"></span>
 							<%} else {%>
-							<span style="text-shadow: none; color: #6d6965;">画像保存中...</span>
+							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
 							<%}%>
 						</div>
 						<div class="SettingBodyCmd">
 							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image.Format")%></div>
 							<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(1)">デフォルトに戻す</a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(1)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>
 						</div>
 					</div>
 				</div>
 
 				<div class="SettingListItem">
-					<div class="SettingListTitle">ヘッダー画像</div>
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.HeaderImage")%></div>
 					<div class="SettingBody">
 						<div class="FileSelectFrame" style="border: solid 1px #eee;">
 							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 100% auto; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>?<%=Math.random()%>');"></div>
@@ -395,20 +394,20 @@ if(cResults.m_bUpdate) {
 							<%if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 							<span class="typcn typcn-plus-outline"></span>
 							<%} else {%>
-							<span style="text-shadow: none; color: #6d6965;">画像保存中...</span>
+							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
 							<%}%>
 						</div>
 						<div class="SettingBodyCmd">
-							<div id="ProfileImageMessage" class="RegistMessage" >幅360推奨 jpg, png, gif 1MByteまで</div>
+							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
 							<%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(2)">デフォルトに戻す</a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>
 						</div>
 					</div>
 				</div>
 
 				<div class="SettingListItem" style="display: none;">
-					<div class="SettingListTitle">背景画像</div>
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.BgImage")%></div>
 					<div class="SettingBody">
 						<div class="FileSelectFrame" style="border: solid 1px #eee;">
 							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: cover; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>?<%=Math.random()%>');"></div>
@@ -416,13 +415,13 @@ if(cResults.m_bUpdate) {
 							<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
 							<span class="typcn typcn-plus-outline"></span>
 							<%} else {%>
-							<span style="text-shadow: none; color: #6d6965;">画像保存中...</span>
+							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
 							<%}%>
 						</div>
 						<div class="SettingBodyCmd">
-							<div id="ProfileImageMessage" class="RegistMessage" >幅360推奨 jpg, png, gif 1MByteまで</div>
+							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
 							<%if(!cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(3)">デフォルトに戻す</a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(3)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>
 						</div>
 					</div>
@@ -450,7 +449,6 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.DispSetting")%></div>
 					<div class="SettingBody">
@@ -474,7 +472,6 @@ if(cResults.m_bUpdate) {
 						</div>
 					</div>
 				</div>
-
 
 				<div class="SettingListItem" style="border: none;">
 					<a id="TwitterSetting" name="TwitterSetting"></a>
@@ -502,7 +499,7 @@ if(cResults.m_bUpdate) {
 						<%=_TEX.T("EditSettingV.Twitter.Auto.Info")%>
 						<div class="SettingBodyCmd">
 							<div class="onoffswitch OnOff">
-								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AutoTweet" value="1" <%if(cResults.m_cUser.m_nAutoTweetTime>=0){%>checked="checked"<%}%> />
+								<input type="checkbox" name="AutoTweet" class="onoffswitch-checkbox" id="AutoTweet" value="1" <%if(cResults.m_cUser.m_nAutoTweetTime>=0){%>checked="checked"<%}%> />
 								<label class="onoffswitch-label" for="AutoTweet">
 									<span class="onoffswitch-inner"></span>
 									<span class="onoffswitch-switch"></span>
@@ -511,11 +508,11 @@ if(cResults.m_bUpdate) {
 							<script>
 							$('#AutoTweet').change(function(){
 								var bAutoTweet = $('#AutoTweet').prop('checked');
-								console.log(bAutoTweet);
 								$('#AutoTweetWeekDay').prop('disabled', !bAutoTweet);
 								$('#AutoTweetTime').prop('disabled', !bAutoTweet);
 								$('#AutoTweetTxt').prop('disabled', !bAutoTweet);
 								$('#AutoTweetThumb').prop('disabled', !bAutoTweet);
+								//UpdateAutoTweet();
 							});
 							</script>
 						</div>
@@ -566,15 +563,23 @@ if(cResults.m_bUpdate) {
 				</div>
 				<%}%>
 
+				<div class="SettingListItem">
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Language")%></div>
+					<div class="SettingBody">
+						<a style="text-decoration: underline;" onclick="ChLang('en')" href="javascript:void(0);">English</a>
+						<a style="text-decoration: underline;" onclick="ChLang('ja')" href="javascript:void(0);">日本語</a><br />
+					</div>
+				</div>
+
+
 
 				<%if(cResults.m_cUser.m_bTweet){%>
 				<div class="SettingListItem">
-					<div class="SettingListTitle">ログアウト</div>
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Logout")%></div>
 					<div class="SettingBody">
-						再度ログインする際はアプリケーションの最初の画面で「Twitterで新規登録/ログイン」を押してログインしてください。
-						<div class="SettingBodyCmd">
+						<div class="SettingBodyCmd ">
 							<div class="RegistMessage" ></div>
-							<a class="BtnBase" href="javascript:void(0)" onclick="Logout()">ログアウト</a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="Logout()"><%=_TEX.T("EditSettingV.Logout")%></a>
 						</div>
 					</div>
 				</div>

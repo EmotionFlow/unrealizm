@@ -147,7 +147,7 @@ cCheckLogin.GetResults2(request, response);
 			</div>
 			<div class="AnalogicoStart" style="margin-top: 0; padding-top: 30px;">
 				<a class="BtnBase Rev AnalogicoLogin" href="/LoginFormTwitterPc.jsp">
-					<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
+					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 				</a>
 				<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
 				<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>

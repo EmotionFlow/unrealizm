@@ -94,6 +94,11 @@ public class Common {
 	public static final int EMOJI_CAT_POPULAR = 1;
 	public static final int EMOJI_CAT_FOOD = 2;
 	public static final int EMOJI_CAT_ALL = 3;
+	// For Event
+	public static final String[] EMOJI_LIST_EVENT = {
+			"🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃",
+		};
+	// 絵文字
 	public static final String[][] EMOJI_LIST = {
 			// 人気
 			{},

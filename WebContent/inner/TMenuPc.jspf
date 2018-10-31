@@ -116,21 +116,14 @@
 <div id="AnalogicoInfo" class="AnalogicoInfo">
 	<div class="Wrapper">
 		<h1 class="AnalogicoInfoTitle">
-			<div class="TopBanner">
-				<img style="width: 100%;" src="/img/2018_09_30_top_banner.png" />
-			</div>
-			放置絵ポイポイ<br />
-			練習ポイポイ<br />
-			らくがきポイポイ<br />
-			進捗ポイポイ<br />
-			イラストポイポイSNS「ポイピク」
+			<%=_TEX.T("Poipiku.Info.Message")%>
 		</h1>
-		<a style="display: block; margin: 0 0 15px 0; text-align: center; color: #fff; text-decoration: underline; font-weight: bold;" href="/StartPoipikuPcV.jsp">
-			もっと詳しく...
+		<a class="AnalogicoMoreInfo" href="/StartPoipikuPcV.jsp">
+			<%=_TEX.T("Poipiku.Info.MoreInfo")%>
 		</a>
 		<div class="AnalogicoInfoRegist">
 			<a class="BtnBase Rev" href="/LoginFormTwitterPc.jsp">
-				<span class="typcn typcn-social-twitter"></span> Twitterで新規登録/ログイン
+				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 			</a>
 		</div>
 		<!--

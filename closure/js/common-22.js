@@ -71,15 +71,15 @@ function deleteCookie(key, tmp) {
 
 function ChLang(l){
 	if(l.length>0) {
-		setCookie('MK_LANG',l);
+		setCookie('LANG',l);
 	} else {
-		deleteCookie('MK_LANG');
+		deleteCookie('LANG');
 	}
 	var nLangId = (l=="ja")?1:0;
 	$.ajaxSingle({
 		"type": "post",
 		"data": { "LD":nLangId },
-		"url": "/FUpdateLanguage.jsp",
+		"url": "/f/UpdateLanguageF.jsp",
 		"success": function(data) {
 			location.reload(true);
 		}

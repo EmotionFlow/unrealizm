@@ -56,6 +56,7 @@ if(cResults.m_nCategoryId==Common.EMOJI_CAT_POPULAR || (cResults.m_nCategoryId==
 		try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 	}
 }
+EMOJI_LIST = Common.EMOJI_LIST_EVENT;
 %>
 <% for(String emoji : EMOJI_LIST) {%>
 <a class="ResEmojiBtn" href="javascript:void(0)" onclick="SendEmoji(<%=cResults.m_nContentId%>, '<%=emoji%>', <%=cCheckLogin.m_nUserId%>)"><%=CEmoji.parse(emoji)%></a>
