@@ -55,7 +55,6 @@ public class Common {
 
 	// 表示するカテゴリ一覧
 	public static int[] CATEGORY_ID = {
-			13,
 			0,
 			10,
 			1,

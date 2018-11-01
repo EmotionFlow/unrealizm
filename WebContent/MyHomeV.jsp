@@ -76,10 +76,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
-			<a style="display: block; width: 100%; float: left;" href="/SearchIllustByCategoryV.jsp?CD=13">
-				<img style="display: block; width: 100%;" src="/event/201810/2018_10_13_halloween.png" />
-			</a>
-
 			<%if(Util.needUpdate(cResults.n_nVersion)) {%>
 			<div class="UpdateInfo">
 				<div class="UpdateInfoMsg"><%=_TEX.T("UpdateInfo.Msg")%></div>

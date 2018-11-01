@@ -158,6 +158,7 @@ class SendEmojiC {
 			cState.setString(6, strBody);
 			cState.executeUpdate();
 			cState.close();cState=null;
+			Log.d(strToken, ""+nBadgeNum, strTitle, strSubTitle, strBody);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

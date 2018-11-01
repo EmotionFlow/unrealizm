@@ -41,13 +41,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper ThumbList">
-
-			<%if(cCheckLogin.m_bLogin) {%>
-			<a style="display: block; width: 100%; float: left;" href="/SearchIllustByCategoryPcV.jsp?CD=13">
-				<img style="display: block; width: 100%;" src="/event/201810/2018_10_13_halloween.png" />
-			</a>
-			<%}%>
-
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
