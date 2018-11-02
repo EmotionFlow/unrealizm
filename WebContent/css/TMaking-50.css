@@ -170,7 +170,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 	box-sizing: border-box;
-	border-radius: 100px;
+	border-radius: 0px;
 	min-width: 50px;
 	max-width: 108px;
 	height: 22px;

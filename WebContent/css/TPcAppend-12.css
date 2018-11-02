@@ -10,7 +10,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; height: 60px; position: relative;}
 .SideBarTop {height: 60px;}
 .SideBarMid {height: 60px;}
-.SideBarMid.Wide {height: 90px; margin: 5px 0 0 0;}
+.SideBarMid.Wide {height: 90px; margin: 5px 0;}
 .Wrapper.ItemList .SideBarMid.Wide {margin: 0;}
 .SideBarBottom {height: 60px;}
 .UserInfo .UserInfoBg {height: 100px;}
@@ -33,14 +33,14 @@ body {padding: 51px 0 0 0 !important;}
 .IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
 
 .IllustThumb .IllustThumbImg {box-sizing: border-box;}
-.IllustThumb {border-radius: 4px; box-shadow: 0 0 1px #ddd; padding: 0px; margin: 5px 5px 0 0; width: 193px; height: 193px;}
+.IllustThumb {border-radius: 0px; box-shadow: 0 0 1px #ddd; padding: 0px; margin: 9px !important; width: 180px; height: 180px;}
 .IllustThumb:nth-child(16n+3), .IllustThumb:nth-child(16n+6), .IllustThumb:nth-child(16n+9), .IllustThumb:nth-child(16n+12), .IllustThumb:nth-child(16n+15) {margin-right: 5px;}
 .IllustThumb:nth-child(16n+5), .IllustThumb:nth-child(16n+10), .IllustThumb:nth-child(16n+15) {margin-right: 0;}
-.Wrapper.ThumbList {width: 985px;}
+.Wrapper.ThumbList {width: 990px;}
 .Wrapper.ItemList {width: 728px;}
 .Wrapper.ItemList .IllustThumbList, .Wrapper.ItemList .IllustItemList {margin: 30px 0; border: solid 1px #eee; border-radius: 6px; overflow: hidden;}
 .Header {width: 100%; min-width: 700px; padding: 0;}
-.HeaderWrapper {min-width: 700px; max-width: 985px; margin: 0 auto;}
+.HeaderWrapper {min-width: 700px; max-width: 990px; margin: 0 auto;}
 .Header .HeaderTitleWrapper {float: left;  margin: 0 0 0 10px;}
 .Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 5px;}
 .Header .HeaderSearch {}
@@ -54,5 +54,5 @@ body {padding: 51px 0 0 0 !important;}
 .FooterMenu .MenuSep {display: block; float: left; width: 1px; height: 20px; margin: 10px 9px 20px 0; background-color: #ccc;}
 .Footer .FooterLink dl {flex : 0 0 16.66%;}
 
-.TabMenu {max-width: 985px;}
+.TabMenu {max-width: 990px;}
 .TabMenu .TabMenuItem {flex: 0 1 120px;}

@@ -94,12 +94,12 @@
 <script>
 	function UpdateNotify() {
 		$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
-			var ntfy_num = data.check_comment + data.check_follow + data.check_heart;
-			var strNotifyNum = (ntfy_num>9)?"9+":ntfy_num;
-			$('#InfoNumAct').html(strNotifyNum);
-			if(strNotifyNum>0) {
+			var ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
+			//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
+			$('#InfoNumAct').html(ntfy_num);
+			if(ntfy_num>0) {
 				$('#InfoNumAct').show();
-			} else if(strNotifyNum<1) {
+			} else {
 				$('#InfoNumAct').hide();
 			}
 		});

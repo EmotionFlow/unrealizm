@@ -58,8 +58,7 @@ public class CheckLogin {
 	}
 
 
-	private boolean isUserValid()
-	{
+	private boolean isUserValid() {
 		String strSql		= "";
 		Timestamp tsLastLogin = null;
 
@@ -90,8 +89,8 @@ public class CheckLogin {
 				cState.close();cState=null;
 
 				if(m_bLogin) {
-					if(tsLastLogin.getTime()<System.currentTimeMillis()-60000) { //1*24*60*60*1000
-						strSql = "UPDATE users_0000 SET last_login_date=current_timestamp WHERE user_id=?";
+					if(tsLastLogin.getTime()<System.currentTimeMillis()-300000) { //1*24*60*60*1000
+						strSql = "UPDATE users_0000 SET last_login_date=current_timestamp-interval '1 minute' WHERE user_id=?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setInt(1, m_nUserId);
 						cState.executeUpdate();
@@ -111,21 +110,17 @@ public class CheckLogin {
 		return m_bLogin;
 	}
 
-	public String GetResults2(HttpServletRequest request, HttpServletResponse response)
-	{
+	public String GetResults2(HttpServletRequest request, HttpServletResponse response) {
 		String strResult = "OK";
-		try
-		{
+		try {
 			// useridとハッシュパスワードが保存されているcookie情報を取得
 			GetCookie(request);
 
-			if(m_strHashPass.length() <= 0)
-			{
+			if(m_strHashPass.length() <= 0) {
 				return strResult;
 			}
 
-			if(isUserValid() == false)
-			{
+			if(isUserValid() == false) {
 				m_bLogin      = false;
 				m_nUserId     = -1;
 				m_strNickName = "guest";

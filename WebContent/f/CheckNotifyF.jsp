@@ -142,6 +142,13 @@ class CheckNotifyC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
+			// Update Last Login Time
+			strSql = "UPDATE users_0000 SET last_login_date=current_timestamp WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nUserId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
