@@ -3,6 +3,7 @@
 <%!
 public class CContentComlex extends CContent {
 	public int m_nFileComplex = 0;
+	public String m_strEmoji = "";
 
 	public CContentComlex(ResultSet resultSet) throws SQLException {
 		m_nContentId		= resultSet.getInt("content_id");
@@ -35,16 +36,84 @@ public class NewArrivalC {
 		int idx = 1;
 
 		try {
+			int BASE = 1;
+			int nNowHour = (new java.util.Date()).getHours();
+			switch(nNowHour) {
+			case 0:
+				BASE = 5;
+				break;
+			case 1:
+				BASE = 4;
+				break;
+			case 2:
+				BASE = 3;
+				break;
+			case 3:
+				BASE = 2;
+				break;
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+			case 14:
+			case 15:
+			case 16:
+			case 17:
+				BASE = 1;
+				break;
+			case 18:
+				BASE = 2;
+				break;
+			case 19:
+				BASE = 3;
+				break;
+			case 20:
+				BASE = 4;
+				break;
+			case 21:
+				BASE = 5;
+				break;
+			case 22:
+				BASE = 6;
+				break;
+			case 23:
+				BASE = 7;
+				break;
+			default:
+				BASE = 1;
+				break;
+			}
+
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND file_complex>0 AND file_complex<=50000 ORDER BY content_id DESC LIMIT 200");
+
+			strSql = "SELECT * FROM (SELECT * FROM contents_0000 WHERE open_id=0 AND file_complex>70000 ORDER BY content_id DESC OFFSET 10 LIMIT 100) as T1 ORDER BY random() LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, BASE);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				m_vContentList.add(new CContentComlex(cResSet));
 			}
 			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+
+			strSql = "SELECT description FROM (SELECT * FROM vw_rank_emoji_daily WHERE description<>'🎃' ORDER BY rank DESC LIMIT 40) as T2 ORDER BY random() LIMIT 1";
+			cState = cConn.prepareStatement(strSql);
+			for(CContentComlex contentComlex : m_vContentList) {
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					contentComlex.m_strEmoji = cResSet.getString(1);
+				}
+				cResSet.close();cResSet=null;
+			}
 			cState.close();cState=null;
 			bResult = true;
 		} catch(Exception e) {
@@ -78,10 +147,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<div class="Wrapper ThumbList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(CContentComlex cContent : cResults.m_vContentList) {%>
-					<div style="float: left; width: 192px;">
-						<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_NEWARRIVAL_ILLUST, CCnv.MODE_PC, _TEX)%>
-						<div style="width: 100%; float: left; font-weight: bold;"><%=String.format("%,d", cContent.m_nFileComplex)%></div>
-					</div>
+				<a style="float: left; width: 192px;" href="/f/SendEmojiF.jsp?IID=<%=cContent.m_nContentId%>&EMJ=<%=URLEncoder.encode(cContent.m_strEmoji, "UTF-8")%>&UID=0">
+					<img src="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg" style="width:180px;" />
+					<div style="width: 100%; float: left; font-weight: bold;"><%=cContent.m_strEmoji%> <%=String.format("%,d", cContent.m_nFileComplex)%></div>
+				</a>
 				<%}%>
 			</div>
 		</div>

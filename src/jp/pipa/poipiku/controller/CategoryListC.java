@@ -10,24 +10,17 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class SearchIllustByCategoryC {
-	public int m_nCategoryId = 0;
-	public int m_nPage = 0;
-
+public class CategoryListC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nCategoryId = Math.max(Common.ToInt(cRequest.getParameter("CD")), 0);
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
-			m_nCategoryId = 0;
-			m_nPage = 0;
+			;
 		}
 	}
 
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	public int SELECT_MAX_GALLERY = 45;
-	public int m_nContentsNum = 0;
+	public int SELECT_SAMPLE_GALLERY = 5;
+	public ArrayList<ArrayList<CContent>> m_vContentSamplpeList = new ArrayList<ArrayList<CContent>>();
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -63,44 +56,28 @@ public class SearchIllustByCategoryC {
 			}
 
 
-			// NEW ARRIVAL
-			if(!bContentOnly) {
-				strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
-				cState = cConn.prepareStatement(strSql);
+			// CATEGORY
+			strSql = String.format("SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCond);
+			cState = cConn.prepareStatement(strSql);
+			for(int nCategoryId : Common.CATEGORY_ID) {
+				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 				idx = 1;
-				cState.setInt(idx++, m_nCategoryId);
+				cState.setInt(idx++, nCategoryId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
 				}
+				cState.setInt(idx++, SELECT_SAMPLE_GALLERY);
 				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
+				while (cResSet.next()) {
+					CContent cContent = new CContent(cResSet);
+					m_vContentList.add(cContent);
 				}
 				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				m_vContentSamplpeList.add(m_vContentList);
 			}
-
-			strSql = String.format("SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
-			cState = cConn.prepareStatement(strSql);
-			idx = 1;
-			cState.setInt(idx++, m_nCategoryId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			if(!strMuteKeyword.isEmpty()) {
-				cState.setString(idx++, strMuteKeyword);
-			}
-			cState.setInt(idx++, SELECT_MAX_GALLERY*m_nPage);
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
-				m_vContentList.add(cContent);
-			}
-			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 			bResult = true;
@@ -114,5 +91,4 @@ public class SearchIllustByCategoryC {
 		}
 		return bResult;
 	}
-
 }

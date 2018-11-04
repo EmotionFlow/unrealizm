@@ -16,6 +16,7 @@
 }
 
 .Wrapper {
+	clear: both;
 	width: 360px;
 	margin: 0 auto;
 	padding: 0;
@@ -538,62 +539,62 @@
 	min-width: 70px;
 }
 
-.IllustThumb .Category.C0, .IllustItem .Category.C0 {
+.Category.C0 {
 	background-color: #ecec01;
 	color: #555;
 }
 
-.IllustThumb .Category.C10, .IllustItem .Category.C10 {
+.Category.C10 {
 	background-color: #eebb00;
 	color: #555;
 }
 
-.IllustThumb .Category.C1, .IllustItem .Category.C1 {
+.Category.C1 {
 	background-color: #eb7f10;
 }
 
-.IllustThumb .Category.C2, .IllustItem .Category.C2 {
+.Category.C2 {
 	background-color: #ea541a;
 }
 
-.IllustThumb .Category.C12, .IllustItem .Category.C12 {
+.Category.C12 {
 	background-color: #ea541a;
 }
 
-.IllustThumb .Category.C3, .IllustItem .Category.C3 {
+.Category.C3 {
 	background-color: #d20000;
 }
 
-.IllustThumb .Category.C4, .IllustItem .Category.C4 {
+.Category.C4 {
 	background-color: #bfda80;
 	color: #555;
 }
 
-.IllustThumb .Category.C5, .IllustItem .Category.C5 {
+.Category.C5 {
 	background-color: #34cca4;
 }
 
-.IllustThumb .Category.C6, .IllustItem .Category.C6 {
+.Category.C6 {
 	background-color: #55bbdd;
 }
 
-.IllustThumb .Category.C7, .IllustItem .Category.C7 {
+.Category.C7 {
 	background-color: #017ff0;
 }
 
-.IllustThumb .Category.C11, .IllustItem .Category.C11{
+.Category.C11{
 	background-color: #336699;
 }
 
-.IllustThumb .Category.C8, .IllustItem .Category.C8 {
+.Category.C8 {
 	background-color: #333333;
 }
 
-.IllustThumb .Category.C9, .IllustItem .Category.C9 {
+.Category.C9 {
 	background-color: #003399;
 }
 
-.IllustThumb .Category.C13, .IllustItem .Category.C13 {
+.Category.C13 {
 	background-color: #ff9900;
 	color: #000;
 }
