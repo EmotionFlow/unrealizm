@@ -712,42 +712,6 @@ function createPasteElm(src) {
 	$InputFile.append($DeletePaste).append($imgView);
 	return $InputFile
 }
-/*
-function createPasteElm() {
-	var $InputFile = $('<div />').addClass('InputFile').attr('contenteditable', 'true');
-	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
-		if($('.InputFile.Removable').length>=10) {
-			var $elmPaste = createPasteElm();
-			$('#PasteZone').append($elmPaste);
-		}
-		$(this).parent().remove();
-		updatePasteNum();
-	});
-	var $OrgMessage = $('<div />').addClass('OrgMessage').text(g_strPasteMsg);
-	var $imgView = $('<img />').addClass('imgView').attr('src', '');
-	$InputFile.append($DeletePaste).append($OrgMessage).append($imgView);
-	$InputFile.pastableContenteditable();
-	$InputFile.on('pasteImage', function(ev, data){
-		$(this).addClass('Removable');
-		$('.OrgMessage', this).hide();
-		$('.imgView', this).attr('src', data.dataURL).show();
-		updatePasteNum();
-
-		if($('.InputFile.Removable').length<10) {
-			var $elmPaste = createPasteElm();
-			$('#PasteZone').append($elmPaste);
-		}
-	}).on('pasteImageError', function(ev, data){
-		if(data.url){
-			alert('error data : ' + data.url)
-		}
-	}).on('pasteText', function(ev, data){
-		;
-	});
-
-	return $InputFile
-}
-*/
 
 function initPasteElm($elmPaste) {
 	$elmPaste.on('pasteImage', function(ev, data){
@@ -844,24 +808,30 @@ function UploadPaste(user_id) {
 					});
 				}
 			});
-			$.ajax({
-				"type": "post",
-				"data": {
-					UID: user_id,
-					IID: data.content_id,
-					IMG: nTweetImage,
-				},
-				"url": "/f/UploadFileTweetF.jsp",
-				"dataType": "json",
-				"success": function(data) {
-					console.log("UploadFileTweetF");
-					// complete
-					completeMsg();
-					setTimeout(function(){
-						location.href="/MyHomePcV.jsp";
-					}, 1000);
-				}
-			});
+			if(nTweet==1) {
+				$.ajax({
+					"type": "post",
+					"data": {
+						UID: user_id,
+						IID: data.content_id,
+						IMG: nTweetImage,
+					},
+					"url": "/f/UploadFileTweetF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						console.log("UploadFileTweetF");
+						// complete
+						completeMsg();
+						setTimeout(function(){
+							location.href="/MyHomePcV.jsp";
+						}, 1000);
+					}
+				});
+			} else {
+				setTimeout(function(){
+					location.href="/MyHomePcV.jsp";
+				}, 1000);
+			}
 		}
 	});
 	return false;

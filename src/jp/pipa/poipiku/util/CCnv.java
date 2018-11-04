@@ -30,6 +30,7 @@ public class CCnv {
 		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
 		String REPORT_FORM = (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 		String ILLUST_DETAIL = (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
+		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/SearchIllustByCategoryV.jsp":"/SearchIllustByCategoryPcV.jsp";
 		String LINK_TARG = (nMode==MODE_SP)?"":"target=\"_blank\"";
 
 		StringBuilder strRtn = new StringBuilder();
@@ -57,7 +58,7 @@ public class CCnv {
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
 		strRtn.append(String.format("<div id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
-		strRtn.append(String.format("<span class=\"Category C%d\">%s</span>", cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("</div>");	// IllustItemCategory
 
 		// カテゴリー編集要

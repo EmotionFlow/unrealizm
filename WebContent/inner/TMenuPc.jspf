@@ -116,7 +116,7 @@
 <div id="AnalogicoInfo" class="AnalogicoInfo">
 	<div class="Wrapper">
 		<h1 class="AnalogicoInfoTitle">
-			<%=_TEX.T("Poipiku.Info.Message")%>
+			<%=_TEX.T("Poipiku.Info.Message.Short")%>
 		</h1>
 		<a class="AnalogicoMoreInfo" href="/StartPoipikuPcV.jsp">
 			<%=_TEX.T("Poipiku.Info.MoreInfo")%>

@@ -18,7 +18,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-11.js" type="text/javascript"></script>
+		<script src="/js/upload-14.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -57,7 +57,7 @@ if(cCheckLogin.m_strNickName.equals("no_name")) {
 			body {padding-top: 83px !important;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PasteZone {min-height: 193px;}
-			.UploadFile .InputFile {margin: 8px; height: 177px; max-width: 177px;}
+			.UploadFile .InputFile {margin: 8px; height: 177px; width: 177px;}
 			<%}%>
 		</style>
 	</head>

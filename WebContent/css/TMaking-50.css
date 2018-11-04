@@ -530,7 +530,7 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	white-space: nowrap;
-	border-radius: 100px;
+	border-radius: 0;
 	height: 24px;
 	line-height: 24px;
 	margin: 0px 0 5px 4px;
