@@ -249,6 +249,9 @@ function UpdateDesc(nUserId, content_id, mode) {
 			$("#IllustItemDesc_"+content_id).show();
 			$("#IllustItemDescEdit_"+content_id).hide();
 			$("#IllustItemCategory_"+content_id+" .Category").removeClass().addClass('Category C'+nCategoryId).text(data.category_name);
+			var link = $("#IllustItemCategory_"+content_id+" .Category").attr('href');
+			link = link.replace(/CD=\d+/i, 'CD='+nCategoryId);
+			$("#IllustItemCategory_"+content_id+" .Category").attr('href', link);
 			$("#IllustItemCategory_"+content_id).show();
 			$("#IllustItemCategoryEdit_"+content_id).hide();
 		},
