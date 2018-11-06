@@ -6,6 +6,7 @@ cCheckLogin.GetResults2(request, response);
 
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin, true);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

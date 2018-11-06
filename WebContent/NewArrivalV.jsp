@@ -12,6 +12,7 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
