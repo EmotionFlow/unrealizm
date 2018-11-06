@@ -17,7 +17,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
 		<style>

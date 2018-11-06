@@ -9,16 +9,17 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 	return;
 }
 
-PopularTagListC cResults = new PopularTagListC();
+CategoryListC cResults = new CategoryListC();
 cResults.getParam(request);
 cResults.SELECT_SAMPLE_GALLERY = 3;
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
-		<title>HOT tag</title>
+		<title>process</title>
 		<style>
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 40px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
 			.CategoryTitle {display: block; float: left; width: 100%;}
@@ -30,15 +31,13 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<body>
 		<div class="Wrapper">
 
-
-			<div class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
-					ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
-					String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
-				<a class="CategoryListItem" href="/SearchIllustByTagV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
+			<div id="IllustThumbList" class="IllustThumbList">
+				<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeList.size(); nCnt++) {
+				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);%>
+				<a class="CategoryListItem" href="/SearchIllustByCategoryV.jsp?CD=<%=Common.CATEGORY_ID[nCnt]%>">
 					<span class="CategoryTitle">
-						<span class="Category2">
-							<i class="fas fa-hashtag"></i> <%=strKeyWord%>
+						<span class="Category2 C<%=Common.CATEGORY_ID[nCnt]%>">
+							<%=_TEX.T(String.format("Category.C%d", Common.CATEGORY_ID[nCnt]))%>
 							<span class="More"><%=_TEX.T("TopV.ContentsTitle.More")%></span>
 						</span>
 					</span>
@@ -61,19 +60,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<%}%>
 					</span>
 				</a>
-				<%//if((nCnt+1)%10==0) {%>
-				<%//@ include file="/inner/TAdMidWide.jspf"%>
-				<%//}%>
-				<%}%>
-			</div>
-
-			<div id="IllustThumbList" class="IllustItemList">
-				<%for(int nCnt=10; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
-					CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
-					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
-					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMidWide.jspf"%>
-					<%}%>
 				<%}%>
 			</div>
 

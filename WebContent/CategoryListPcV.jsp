@@ -14,18 +14,18 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("PopularIllustList.Title")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("CategoryList.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
 		<style>
 			body {padding-top: 83px !important;}
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 40px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
 			.CategoryTitle {display: block; float: left; width: 100%;}
-			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
+			.CategoryTitle .Category2 {font-size: 18px; padding: 15px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
 		</style>
 	</head>
@@ -33,11 +33,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<body>
 		<div class="TabMenuWrapper">
 			<div class="TabMenu">
+				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
 				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
 				<a class="TabMenuItem Selected" href="/CategoryListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Category")%></a>
-				<!--
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
-				-->
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 			</div>
 		</div>
@@ -73,9 +72,9 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				</span>
 			</a>
-			<%if((nCnt+1)%15==0) {%>
-			<%@ include file="/inner/TAdMidWide.jspf"%>
-			<%}%>
+			<%//if((nCnt+1)%15==0) {%>
+			<%//@ include file="/inner/TAdMidWide.jspf"%>
+			<%//}%>
 			<%}%>
 		</div>
 

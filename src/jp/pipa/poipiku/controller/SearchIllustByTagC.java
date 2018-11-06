@@ -61,15 +61,34 @@ public class SearchIllustByTagC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
+			// MUTE KEYWORD
+			String strMuteKeyword = "";
+			String strCond = "";
+			strSql = "SELECT mute_keyword FROM users_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cCheckLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			if(!strMuteKeyword.isEmpty()) {
+				strCond = "AND description &@~ ?";
+			}
+
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=?) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
+				strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=?) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setString(idx++, m_strKeyword);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				if(!strMuteKeyword.isEmpty()) {
+					cState.setString(idx++, strMuteKeyword);
+				}
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
@@ -78,13 +97,16 @@ public class SearchIllustByTagC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT * FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=?) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = String.format("SELECT * FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=?) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setString(idx++, m_strKeyword);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(!strMuteKeyword.isEmpty()) {
+				cState.setString(idx++, strMuteKeyword);
+			}
 			cState.setInt(idx++, SELECT_MAX_GALLERY*m_nPage);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();

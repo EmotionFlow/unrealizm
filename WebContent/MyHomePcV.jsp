@@ -13,6 +13,7 @@ MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -35,7 +36,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 			$(function(){
 				$('body, .Wrapper').each(function(index, element){
-					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
 				});
 			});
 		</script>
@@ -51,12 +52,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<div class="TabMenu">
 				<a class="TabMenuItem Selected" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
 				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
+				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+				<a class="TabMenuItem" href="/CategoryListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Category")%></a>
+				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 			</div>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper">
+		<div class="Wrapper ViewPc">
 			<div id="IllustItemList" class="IllustItemList">
 
 				<%if(cResults.m_vContentList.size()<=0) {%>
@@ -78,11 +82,40 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%if((nCnt+1)%5==0) {%>
+					<%if((nCnt+1)%5==0 && bSmartPhone) {%>
 					<%@ include file="/inner/TAdMid.jspf"%>
 					<%}%>
 				<%}%>
 			</div>
+
+			<%if(!bSmartPhone) {%>
+			<div class="PcSideBar" style="margin-top: 30px;">
+				<div class="FixFrame">
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+					</div>
+
+					<div class="PcSideBarItem">
+						<div class="PcSideBarItemTitle"><%=_TEX.T("Twitter.Share.MyUrl")%></div>
+						<%
+						String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
+								URLEncoder.encode("https://poipiku.com/"+cCheckLogin.m_nUserId+"/", "UTF-8"),
+								URLEncoder.encode(String.format("%s%s", cCheckLogin.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
+								URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+						%>
+						<div style="text-align: center;">
+							<input id="MyUrl" class="MyUrl" type="text" value="https://poipiku.com/<%=cCheckLogin.m_nUserId%>/" onclick="this.select(); document.execCommand('copy');" style="box-sizing: border-box; width: 100%; padding: 5px; margin: 0 0 10px 0;" />
+							<a class="BtnBase" href="javascript:void(0)" onclick="$('#MyUrl').select(); document.execCommand('Copy');"><i class="far fa-copy"></i> <%=_TEX.T("Twitter.Share.Copy.Btn")%></a>
+							<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
+						</div>
+					</div>
+
+					<div class="PcSideBarItem" style="position: absolute; bottom: 0;">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					</div>
+				</div>
+			</div>
+			<%}%>
 
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

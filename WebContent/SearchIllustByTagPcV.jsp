@@ -29,7 +29,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 		<div class="Wrapper ThumbList">
 			<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
-				#<%=Common.ToStringHtml(cResults.m_strKeyword)%>
+				<i class="fas fa-hashtag"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.m_bFollowing) {%>
