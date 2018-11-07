@@ -57,7 +57,7 @@ body {padding: 51px 0 0 0 !important;}
 .Footer .FooterLink dl {flex : 0 0 16.66%;}
 
 .TabMenu {max-width: 990px;}
-.TabMenu .TabMenuItem {flex: 0 1 120px;}
+.TabMenu .TabMenuItem {flex: 0 1 120px; font-size: 13px;}
 
 .Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: right; margin: 0 0 0 30px; position: relative;}
 .Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px;}

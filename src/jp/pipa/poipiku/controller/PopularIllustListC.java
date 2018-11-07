@@ -62,7 +62,7 @@ public class PopularIllustListC {
 
 			// POPULAR
 			if(!bContentOnly) {
-				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE comment_num>10 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
+				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE comment_num>20 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
