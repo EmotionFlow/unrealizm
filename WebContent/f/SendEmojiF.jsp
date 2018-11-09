@@ -92,8 +92,21 @@ class SendEmojiC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
+			/*
+			// 使ってないので一時的にコメントアウト
+			// update contents_0000 set contents_0000.comment_num=T1.comment_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
 			// update making comment num
 			strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nContentId);
+			cState.setInt(2, m_nContentId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+			*/
+
+			// update making comment num
+			// update contents_0000 set contents_0000.people_num=T1.people_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
+			strSql ="UPDATE contents_0000 SET people_num=(SELECT COUNT(DISTINCT user_id) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nContentId);
 			cState.setInt(2, m_nContentId);

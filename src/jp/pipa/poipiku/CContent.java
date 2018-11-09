@@ -36,7 +36,7 @@ public class CContent {
 		m_strFileName		= Common.ToString(resultSet.getString("file_name"));
 		m_nFileNum			= resultSet.getInt("file_num");
 		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
-		m_nCommentNum		= resultSet.getInt("comment_num");
+		//m_nCommentNum		= resultSet.getInt("comment_num");
 		m_nSafeFilter		= resultSet.getInt("safe_filter");
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 	}

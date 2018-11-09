@@ -10,17 +10,16 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class PopularIllustListC {
-	public int m_nAccessUserId = -1;
-	public int m_nPage = 0;
+public class RandomPickupC {
+
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
 			;
 		}
 	}
+
 
 	public int SELECT_MAX_GALLERY = 45;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
@@ -60,14 +59,14 @@ public class PopularIllustListC {
 			}
 
 
-			// POPULAR
+			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = String.format("SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
+				/*
+				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) %s", strCond);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
 				}
@@ -77,9 +76,11 @@ public class PopularIllustListC {
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
+				*/
+				m_nContentsNum = SELECT_MAX_GALLERY;
 			}
 
-			strSql = String.format("SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY random() LIMIT ?", strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
@@ -88,7 +89,6 @@ public class PopularIllustListC {
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
-			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
