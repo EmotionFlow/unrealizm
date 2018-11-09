@@ -52,9 +52,16 @@ class UpdateProfileFileC {
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strFileName = String.format("%s/profile.jpg", Common.getUploadUserPath(cParam.m_nUserId));
+			String strFileName = String.format("%s/profile_%s.%s",
+					Common.getUploadUserPath(cParam.m_nUserId),
+					(new SimpleDateFormat("YYYYMMddHHmmss")).format(new java.util.Date()),
+					ext);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
-			ImageIO.write(cImage, "png", new File(strRealFileName));
+			//ImageIO.write(cImage, "png", new File(strRealFileName));
+			FileOutputStream output=new FileOutputStream(strRealFileName);
+			output.write(imageBinary);
+			output.flush();
+			output.close();
 			ImageUtil.createThumbProfile(strRealFileName);
 			Log.d(strFileName);
 

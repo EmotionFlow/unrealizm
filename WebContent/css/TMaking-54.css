@@ -211,11 +211,8 @@
 	border-radius: 30px;
 	margin: 0 5px 0 0;
 	box-sizing: border-box;
-}
-
-.UserThumb .UserThumbImg img {
-	display: block;
-	width: 100%;
+	background-size: cover;
+	background-position: 50% 50%;
 }
 
 .UserThumb .UserThumbName {
@@ -442,14 +439,8 @@
 	overflow: hidden;
 	border: solid 2px #ccc;
 	border-radius: 60px;
-}
-
-.IllustItem .IllustItemUser .IllustItemUserThumb .IllustItemUserThumbImg
-	{
-	display: block;
-	width: 100%;
-	height: 100%;
-	border-radius: 60px;
+	background-size: cover;
+	background-position: 50% 50%;
 }
 
 .IllustItem .IllustItemUser .IllustItemUserName {
@@ -1050,13 +1041,8 @@
 	border: solid 2px #ccc;
 	border-radius: 80px;
 	margin: -42px auto 0 auto;
-}
-
-.UserInfo .UserInfoUser .UserInfoUserThumb .UserInfoUserThumbImg {
-	display: block;
-	width: 100%;
-	height: 100%;
-	border-radius: 80px;
+	background-size: cover;
+	background-position: 50% 50%;
 }
 
 .UserInfo .UserInfoUser .UserInfoUserName {

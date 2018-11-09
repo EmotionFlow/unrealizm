@@ -83,7 +83,7 @@ try {
 		cState.close();cState=null;
 
 		if(nUserId>0) {
-			if(strHashPass.equals("")) {
+			if(strHashPass.isEmpty()) {
 				strHashPass = Util.getHashPass(strPassword);
 				// LKをDB登録
 				strSql = "UPDATE users_0000 SET hash_password=? WHERE user_id=?";

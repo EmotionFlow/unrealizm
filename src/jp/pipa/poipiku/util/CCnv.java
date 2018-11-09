@@ -38,8 +38,7 @@ public class CCnv {
 		// ユーザ名とフォローボタン
 		strRtn.append(String.format("<div class=\"IllustItem\" id=\"IllustItem_%d\">", cContent.m_nContentId));
 		strRtn.append("<div class=\"IllustItemUser\">");
-		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s?ID=%d\">", ILLUST_LIST, cContent.m_nUserId));
-		strRtn.append(String.format("<img class=\"IllustItemUserThumbImg\" src=\"%s_120.jpg\" />", Common.GetUrl(cContent.m_cUser.m_strFileName)));
+		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s?ID=%d\" style=\"background-image:url('%s_120.jpg')\">", ILLUST_LIST, cContent.m_nUserId, Common.GetUrl(cContent.m_cUser.m_strFileName)));
 		strRtn.append("</a>");
 		strRtn.append(String.format("<a class=\"IllustItemUserName\" href=\"%s?ID=%d\">", ILLUST_LIST, cContent.m_nUserId));
 		strRtn.append(Common.ToStringHtml(cContent.m_cUser.m_strNickName));
@@ -247,7 +246,7 @@ public class CCnv {
 		StringBuilder strRtn = new StringBuilder();
 
 		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s?ID=%d\">", ILLUST_LIST, cUser.m_nUserId));
-		strRtn.append(String.format("<span class=\"UserThumbImg\"><img src=\"%s\"></span>", Common.GetUrl(cUser.m_strFileName)));
+		strRtn.append(String.format("<span class=\"UserThumbImg\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cUser.m_strFileName)));
 		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", Common.ToStringHtml(cUser.m_strNickName)));
 		strRtn.append("</a>");
 

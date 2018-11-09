@@ -68,7 +68,7 @@ public class CheckLogin {
 		ResultSet cResSet = null;
 
 		try{
-			if(!m_strHashPass.equals(""))
+			if(!m_strHashPass.isEmpty())
 			{
 				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 				cConn = dsPostgres.getConnection();

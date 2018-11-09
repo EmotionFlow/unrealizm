@@ -105,11 +105,7 @@ if(!cResults.getResults(cCheckLogin)) {
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
-					<span class="UserInfoUserThumb">
-						<%if(!cResults.m_cUser.m_strFileName.isEmpty()) {%>
-						<img class="UserInfoUserThumbImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>" />
-						<%}%>
-					</span>
+					<span class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')"></span>
 					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
 					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
 					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></span>

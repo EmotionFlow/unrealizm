@@ -369,7 +369,7 @@ if(cResults.m_bUpdate) {
 					<div class="SettingBody">
 						<div class="FileSelectFrame" style="width: 124px;height: 124px;border: solid 2px #eee; margin: 0 0 5px 108px;border-radius: 120px; overflow: hidden;">
 							<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
-							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 124px 124px;border-radius: 120px; overflow: hidden; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>?<%=Math.random()%>');"></div>
+							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 124px 124px;border-radius: 120px; overflow: hidden; background-size: cover; background-position: 50% 50%; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>?<%=Math.random()%>');"></div>
 							<%}%>
 							<input class="SelectFile" type="file" name="file_thumb" id="file_thumb" onchange="UpdateProfileFile(this)" />
 							<%if(cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>

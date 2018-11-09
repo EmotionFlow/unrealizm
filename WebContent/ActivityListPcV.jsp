@@ -80,9 +80,7 @@ cResults.GetResults(cParam);
 					</a>
 					<%} else if(cComment.m_nCommentType==CComment.TYPE_FOLLOW) {%>
 					<a class="UserThumb" href="/IllustListPcV.jsp?ID=<%=cComment.m_nUserId%>">
-						<span class="UserThumbImg">
-							<img src="<%=Common.GetUrl(cComment.m_strFileName)%>_120.jpg" />
-						</span>
+						<span class="UserThumbImg" style="background-image: url('<%=Common.GetUrl(cComment.m_strFileName)%>_120.jpg')"></span>
 						<span class="UserThumbName">
 							<%//=Common.ToStringHtml(cComment.m_strNickName)%>
 							<span class="UserThumbNameAdditional">

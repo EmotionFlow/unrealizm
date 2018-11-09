@@ -49,10 +49,10 @@ class MyEditSettingC {
 				m_cUser.m_nMailComment		= cResSet.getInt("mail_comment");
 				m_cUser.m_strEmail			= Common.ToStringHtml(cResSet.getString("email"));
 				m_cUser.m_strMuteKeyword	= Common.ToString(cResSet.getString("mute_keyword")).trim();
-				if(m_cUser.m_strProfile.equals(""))  m_cUser.m_strProfile = "(no profile)";
-				if(m_cUser.m_strFileName.equals("")) m_cUser.m_strFileName="/img/default_user.jpg";
-				if(m_cUser.m_strHeaderFileName.equals("")) m_cUser.m_strHeaderFileName="/img/default_transparency.gif";
-				if(m_cUser.m_strBgFileName.equals("")) m_cUser.m_strBgFileName="/img/default_transparency.gif";
+				if(m_cUser.m_strProfile.isEmpty())  m_cUser.m_strProfile = "(no profile)";
+				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
+				if(m_cUser.m_strHeaderFileName.isEmpty()) m_cUser.m_strHeaderFileName="/img/default_transparency.gif";
+				if(m_cUser.m_strBgFileName.isEmpty()) m_cUser.m_strBgFileName="/img/default_transparency.gif";
 				m_cUser.m_bDispFollower		= ((m_cUser.m_nMailComment>>>0 & 0x01) == 0x01);
 				m_cUser.m_bDispR18			= ((m_cUser.m_nMailComment>>>1 & 0x01) == 0x01);
 				//m_cUser.m_bMailBookmark	= ((m_cUser.m_nMailComment>>>2 & 0x01) == 0x01);
