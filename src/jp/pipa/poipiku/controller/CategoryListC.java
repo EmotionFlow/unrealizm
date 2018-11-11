@@ -19,7 +19,9 @@ public class CategoryListC {
 		}
 	}
 
+	public int SELECT_MAX_GALLERY = 12;
 	public int SELECT_SAMPLE_GALLERY = 5;
+	public ArrayList<Integer> m_vContentList = new ArrayList<Integer>();
 	public ArrayList<ArrayList<CContent>> m_vContentSamplpeList = new ArrayList<ArrayList<CContent>>();
 
 	public boolean getResults(CheckLogin cCheckLogin) {
@@ -38,6 +40,18 @@ public class CategoryListC {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
+
+
+			// CATEGORY LIST
+			strSql = "SELECT category_id FROM vw_rank_category_weekly ORDER BY rank DESC LIMIT ?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, SELECT_MAX_GALLERY);
+			cResSet = cState.executeQuery();
+			while (cResSet.next()) {
+				m_vContentList.add(cResSet.getInt("category_id"));
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
 
 
 			String strMuteKeyword = "";
@@ -59,7 +73,7 @@ public class CategoryListC {
 			// CATEGORY
 			strSql = String.format("SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCond);
 			cState = cConn.prepareStatement(strSql);
-			for(int nCategoryId : Common.CATEGORY_ID) {
+			for(int nCategoryId : m_vContentList) {
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 				idx = 1;
 				cState.setInt(idx++, nCategoryId);

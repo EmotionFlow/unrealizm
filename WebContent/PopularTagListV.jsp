@@ -11,7 +11,7 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-cResults.SELECT_SAMPLE_GALLERY = 3;
+cResults.SELECT_SAMPLE_GALLERY = 4;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
@@ -20,10 +20,14 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>HOT tag</title>
 		<style>
-			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 40px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
+			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
 			.CategoryTitle {display: block; float: left; width: 100%;}
 			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
+
+			.IllustThumb .Category {top: 3px; left: 3px;font-size: 10px; min-width: 50px; height: 18px; line-height: 18px; max-width: 80px; padding: 0 3px;}
+			.IllustThumb {margin: 2px !important; width: 86px; height: 86px;}
+			.IllustThumbList {padding: 0;}
 		</style>
 	</head>
 
@@ -68,7 +72,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</div>
 
 			<div id="IllustThumbList" class="IllustItemList">
-				<%for(int nCnt=10; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
+				<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 					CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>

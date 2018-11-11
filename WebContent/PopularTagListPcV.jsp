@@ -6,7 +6,8 @@ cCheckLogin.GetResults2(request, response);
 
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-cResults.SELECT_SAMPLE_GALLERY = (Util.isSmartPhone(request))?3:5;
+cResults.SELECT_MAX_SAMPLE_GALLERY = 15;
+cResults.SELECT_SAMPLE_GALLERY = (Util.isSmartPhone(request))?4:8;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
@@ -20,13 +21,47 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		$(function(){
 			$('#MenuHome').addClass('Selected');
 		});
-		</script>
+
+		$(function() {
+			var loadCount = 0, //loading状況の初期化
+				imgLength = $("img").size(); //読み込む画像の数を取得
+			$("img").each(function() {
+				var src = $(this).attr("src");
+				$("<img>")
+					.attr("src", src)
+					.load(function() {
+						loadCount++; //画像が読み込まれたら、loading状況を更新
+					});
+			});
+
+			var timer = setInterval(function() { //一定間隔でloading状況をローディングバーに反映
+				$(".loadingBar").css({
+					"width": (loadCount / imgLength) * 100 + "%" //読み込まれた画像の数を画像全体で割り、%としてローディングバーのwidthに設定
+				});
+				if((loadCount / imgLength) * 100 == 100){ //100%読み込まれたらローディングバーを隠す
+					clearInterval(timer);
+					$(".loadingBar").delay(200).animate({
+						"opacity": 0
+					}, 200);
+				}
+			}, 5);
+		});		</script>
 		<style>
 			body {padding-top: 83px !important;}
-			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 40px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
+			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
 			.CategoryTitle {display: block; float: left; width: 100%;}
-			.CategoryTitle .Category2 {font-size: 18px; padding: 15px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
+			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
+
+			<%if(Util.isSmartPhone(request)) {%>
+			.IllustThumb .Category {top: 3px; left: 3px;font-size: 10px; min-width: 50px; height: 18px; line-height: 18px; max-width: 80px; padding: 0 3px;}
+			.IllustThumb {margin: 2px !important; width: 86px; height: 86px;}
+			.IllustThumbList {padding: 0;}
+			<%} else {%>
+			.IllustThumb .Category {font-size: 11px; min-width: 50px; height: 22px; line-height: 22px; max-width: 108px;}
+			.IllustThumb {margin: 2px !important; width: 118px; height: 118px;}
+			.IllustThumbList {padding: 0 7px;}
+			<%}%>
 		</style>
 	</head>
 
@@ -75,15 +110,15 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				</span>
 			</a>
-			<%//if((nCnt+1)%10==0) {%>
-			<%//@ include file="/inner/TAdMidWide.jspf"%>
-			<%//}%>
+			<%if((nCnt+1)%5==0) {%>
+			<%@ include file="/inner/TAdMidWide.jspf"%>
+			<%}%>
 			<%}%>
 		</div>
 
 		<div class="Wrapper ItemList">
-			<div id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=10; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
+			<div id="IllustThumbList" class="IllustThumbList" style="padding: 0;">
+				<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 					CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>

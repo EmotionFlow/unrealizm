@@ -11,7 +11,7 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 
 CategoryListC cResults = new CategoryListC();
 cResults.getParam(request);
-cResults.SELECT_SAMPLE_GALLERY = 3;
+cResults.SELECT_SAMPLE_GALLERY = 4;
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
@@ -21,23 +21,30 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>process</title>
 		<style>
-			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 40px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
+			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
 			.CategoryTitle {display: block; float: left; width: 100%;}
 			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
+
+			.IllustThumb .Category {top: 3px; left: 3px;font-size: 10px; min-width: 50px; height: 18px; line-height: 18px; max-width: 80px; padding: 0 3px;}
+			.IllustThumb {margin: 2px !important; width: 86px; height: 86px;}
+			.IllustThumbList {padding: 0;}
 		</style>
 	</head>
 
 	<body>
 		<div class="Wrapper">
 
+
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeList.size(); nCnt++) {
-				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);%>
-				<a class="CategoryListItem" href="/SearchIllustByCategoryV.jsp?CD=<%=Common.CATEGORY_ID[nCnt]%>">
+					ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);
+					int nCategoryId = cResults.m_vContentList.get(nCnt);
+				%>
+				<a class="CategoryListItem" href="/SearchIllustByCategoryV.jsp?CD=<%=nCategoryId%>">
 					<span class="CategoryTitle">
-						<span class="Category2 C<%=Common.CATEGORY_ID[nCnt]%>">
-							<%=_TEX.T(String.format("Category.C%d", Common.CATEGORY_ID[nCnt]))%>
+						<span class="Category2 C<%=nCategoryId%>">
+							<%=_TEX.T(String.format("Category.C%d", nCategoryId))%>
 							<span class="More"><%=_TEX.T("TopV.ContentsTitle.More")%></span>
 						</span>
 					</span>

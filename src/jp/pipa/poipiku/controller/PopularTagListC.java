@@ -24,7 +24,7 @@ public class PopularTagListC {
 
 	public int SELECT_MAX_GALLERY = 50;
 	public int SELECT_MAX_SAMPLE_GALLERY = 10;
-	public int SELECT_SAMPLE_GALLERY = 5;
+	public int SELECT_SAMPLE_GALLERY = 3;
 	//public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public ArrayList<CTag> m_vContentListWeekly = new ArrayList<CTag>();
 	//public ArrayList<ArrayList<CContent>> m_vContentSamplpeList = new ArrayList<ArrayList<CContent>>();
@@ -45,7 +45,7 @@ public class PopularTagListC {
 			cConn = dsPostgres.getConnection();
 
 			// TAG LIST
-			strSql = "select tag_txt FROM vw_rank_tag_weekly order by rank desc offset ? limit ?";
+			strSql = "select tag_txt FROM vw_rank_tag_weekly WHERE tag_txt NOT IN('オリジナル', 'ヒプマイ', 'fgo') order by rank desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
 			cState.setInt(2, SELECT_MAX_GALLERY);

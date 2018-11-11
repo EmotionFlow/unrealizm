@@ -6,7 +6,7 @@ cCheckLogin.GetResults2(request, response);
 
 CategoryListC cResults = new CategoryListC();
 cResults.getParam(request);
-cResults.SELECT_SAMPLE_GALLERY = (Util.isSmartPhone(request))?3:5;
+cResults.SELECT_SAMPLE_GALLERY = (Util.isSmartPhone(request))?4:8;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
@@ -23,10 +23,20 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		</script>
 		<style>
 			body {padding-top: 83px !important;}
-			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 40px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
+			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0; border-top: solid 1px #fff; border-bottom: solid 1px #eee; }
 			.CategoryTitle {display: block; float: left; width: 100%;}
-			.CategoryTitle .Category2 {font-size: 18px; padding: 15px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
+			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
+
+			<%if(Util.isSmartPhone(request)) {%>
+			.IllustThumb .Category {top: 3px; left: 3px;font-size: 10px; min-width: 50px; height: 18px; line-height: 18px; max-width: 80px; padding: 0 3px;}
+			.IllustThumb {margin: 2px !important; width: 86px; height: 86px;}
+			.IllustThumbList {padding: 0;}
+			<%} else {%>
+			.IllustThumb .Category {font-size: 11px; min-width: 50px; height: 22px; line-height: 22px; max-width: 108px;}
+			.IllustThumb {margin: 2px !important; width: 118px; height: 118px;}
+			.IllustThumbList {padding: 0 7px;}
+			<%}%>
 		</style>
 	</head>
 
@@ -45,13 +55,16 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
+
 		<div class="Wrapper ThumbList">
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeList.size(); nCnt++) {
-				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);%>
-			<a class="CategoryListItem" href="/SearchIllustByCategoryPcV.jsp?CD=<%=Common.CATEGORY_ID[nCnt]%>">
+				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);
+				int nCategoryId = cResults.m_vContentList.get(nCnt);
+			%>
+			<a class="CategoryListItem" href="/SearchIllustByCategoryPcV.jsp?CD=<%=nCategoryId%>">
 				<span class="CategoryTitle">
-					<span class="Category2 C<%=Common.CATEGORY_ID[nCnt]%>">
-						<%=_TEX.T(String.format("Category.C%d", Common.CATEGORY_ID[nCnt]))%>
+					<span class="Category2 C<%=nCategoryId%>">
+						<%=_TEX.T(String.format("Category.C%d", nCategoryId))%>
 						<span class="More"><%=_TEX.T("TopV.ContentsTitle.More")%></span>
 					</span>
 				</span>
@@ -74,9 +87,9 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				</span>
 			</a>
-			<%//if((nCnt+1)%15==0) {%>
-			<%//@ include file="/inner/TAdMidWide.jspf"%>
-			<%//}%>
+			<%if((nCnt+1)%5==0) {%>
+			<%@ include file="/inner/TAdMidWide.jspf"%>
+			<%}%>
 			<%}%>
 		</div>
 
