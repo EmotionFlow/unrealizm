@@ -20,6 +20,7 @@ strTitle = Common.SubStrNum(strTitle, 10);
 String strDesc = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"]" +  cResults.m_cContent.m_strDescription.replaceAll("\n", " ").replaceAll("\r", " ");
 if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -129,12 +130,25 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper">
+		<div class="Wrapper ViewPc">
 
-			<div class="IllustItemList">
+			<div id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 			</div>
-			<div id="IllustItemList" class="IllustItemList"></div>
+
+			<%if(!bSmartPhone) {%>
+			<div class="PcSideBar" style="margin-top: 30px;">
+				<div class="FixFrame">
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+					</div>
+
+					<div class="PcSideBarItem" style="position: absolute; bottom: 0;">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					</div>
+				</div>
+			</div>
+			<%}%>
 
 		</div>
 

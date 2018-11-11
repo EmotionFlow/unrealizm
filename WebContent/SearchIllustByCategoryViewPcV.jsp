@@ -8,6 +8,7 @@ SearchIllustByCategoryViewC cResults = new SearchIllustByCategoryViewC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -65,7 +66,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper">
+		<div class="Wrapper ViewPc">
 
 			<div id="IllustItemList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
@@ -76,6 +77,20 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%}%>
 				<%}%>
 			</div>
+
+			<%if(!bSmartPhone) {%>
+			<div class="PcSideBar" style="margin-top: 30px;">
+				<div class="FixFrame">
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+					</div>
+
+					<div class="PcSideBarItem" style="position: absolute; bottom: 0;">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					</div>
+				</div>
+			</div>
+			<%}%>
 
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/SearchIllustByCategoryViewPcV.jsp", "&TD="+cResults.m_nContentId+"&KWD="+cResults.m_nCategoryId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

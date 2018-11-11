@@ -10,6 +10,7 @@
 	String URL_ME		= (cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/";
 %>
 <header class="Header">
+	<div id="HeaderSlider"></div>
 	<div class="HeaderWrapper">
 		<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
 			<a id="HeaderLink" class="HeaderLink" href="/">

@@ -9,7 +9,7 @@ a:hover {color: #5bd;}
 body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; min-height: 60px; position: relative;}
 .Wrapper.ViewPc {width: 930px; position: relative; display: flex; flex-flow: row wrap;}
-.Wrapper.ViewPc .IllustItemList {width: 600px;}
+.Wrapper.ViewPc .IllustItemList {width: 600px; float: none; flex: 0 0 600px;}
 .SideBarTop {height: 60px;}
 .SideBarMid {height: 60px;}
 .SideBarMid.Wide {height: 90px; margin: 5px 0;}
@@ -59,7 +59,7 @@ body {padding: 51px 0 0 0 !important;}
 .TabMenu {max-width: 990px;}
 .TabMenu .TabMenuItem {flex: 0 1 120px; font-size: 13px;}
 
-.Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: right; margin: 0 0 0 30px; position: relative;}
+.Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: none; margin: 0 0 0 30px; position: relative;; float: none; flex: 0 0 300px;}
 .Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem {display: block; width: 100%; margin: 0 0 30px 0;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarItemTitle {display: block; float: left; width: 100%; margin: 0 0 10px 0; font-size: 18px;}

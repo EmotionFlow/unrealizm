@@ -8,6 +8,7 @@ SearchIllustByKeywordViewC cResults = new SearchIllustByKeywordViewC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -65,7 +66,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
-		<div class="Wrapper">
+		<div class="Wrapper ViewPc">
 
 			<div id="IllustItemList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
@@ -76,6 +77,33 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%}%>
 				<%}%>
 			</div>
+
+			<%if(!bSmartPhone) {%>
+			<div class="PcSideBar" style="margin-top: 30px;">
+				<div class="FixFrame">
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+					</div>
+
+					<div class="PcSideBarItem">
+						<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
+							<i class="fas fa-search"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%>
+							<%if(!cCheckLogin.m_bLogin) {%>
+							<a class="BtnBase TitleCmdFollow" href="/"><%=_TEX.T("IllustV.Favo")%></a>
+							<%} else if(!cResults.m_bFollowing) {%>
+							<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_SEARCH%>)"><%=_TEX.T("IllustV.Favo")%></a>
+							<%} else {%>
+							<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_SEARCH%>)"><%=_TEX.T("IllustV.Favo")%></a>
+							<%}%>
+						</div>
+					</div>
+
+					<div class="PcSideBarItem" style="position: absolute; bottom: 0;">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					</div>
+				</div>
+			</div>
+			<%}%>
 
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/SearchIllustByKeywordViewPcV.jsp", "&TD="+cResults.m_nContentId+"&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
