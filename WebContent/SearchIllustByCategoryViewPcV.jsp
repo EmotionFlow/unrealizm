@@ -85,7 +85,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
 					</div>
 
-					<div class="PcSideBarItem" style="position: absolute; bottom: 0;">
+					<div class="PcSideBarItem">
 						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 					</div>
 				</div>

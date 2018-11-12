@@ -22,7 +22,12 @@ public class IllustViewC {
 	}
 
 
+	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
+	public boolean m_bOwner = false;
+	public boolean m_bFollow = false;
+	public boolean m_bBlocking = false;
+	public boolean m_bBlocked = false;
 	public boolean getResults(CheckLogin cCheckLogin) {
 		String strSql = "";
 		boolean bRtn = false;
@@ -52,6 +57,54 @@ public class IllustViewC {
 			cState.close();cState=null;
 			if(m_cContent.m_nContentId<=0) return false;
 
+			// owner
+			if(cCheckLogin.m_nUserId == m_cContent.m_nUserId) {
+				m_bOwner = true;
+			}
+
+			// author profile
+			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_cContent.m_nUserId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				m_cUser.m_nUserId			= cResSet.getInt("user_id");
+				m_cUser.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
+				m_cUser.m_strProfile		= Common.ToString(cResSet.getString("profile"));
+				m_cUser.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
+				m_cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("header_file_name"));
+				m_cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
+				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			if(!m_bOwner) {
+				// blocking
+				strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cCheckLogin.m_nUserId);
+				cState.setInt(2, m_cContent.m_nUserId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					m_bBlocking = true;
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+
+				// blocked
+				strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_cContent.m_nUserId);
+				cState.setInt(2, cCheckLogin.m_nUserId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					m_bBlocked = true;
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
+
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
 			if(m_cContent.m_nUserId != cCheckLogin.m_nUserId) {
@@ -60,7 +113,8 @@ public class IllustViewC {
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cState.setInt(2, m_cContent.m_nUserId);
 				cResSet = cState.executeQuery();
-				m_nFollow = (cResSet.next())?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				m_bFollow = cResSet.next();
+				m_nFollow = (m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 			}

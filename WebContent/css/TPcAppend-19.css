@@ -60,7 +60,9 @@ body {padding: 51px 0 0 0 !important;}
 .TabMenu .TabMenuItem {flex: 0 1 120px; font-size: 13px;}
 
 .Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: none; margin: 0 0 0 30px; position: relative;; float: none; flex: 0 0 300px;}
-.Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px;}
+.Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px; /*position: sticky; top: 81px;*/}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem {display: block; width: 100%; margin: 0 0 30px 0;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarItemTitle {display: block; float: left; width: 100%; margin: 0 0 10px 0; font-size: 18px;}
-.Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: left; width: 300px; height: 250px; background-color: #eee;}
+.Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: none; width: 300px; height: 250px; background-color: #eee;}
+.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: absolute; bottom: 0;}
+}

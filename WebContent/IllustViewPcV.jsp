@@ -125,6 +125,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				});
 			});
 		</script>
+		<style>
+		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
+		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+		<%}%>
+		</style>
 	</head>
 
 	<body>
@@ -143,7 +148,33 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
 					</div>
 
-					<div class="PcSideBarItem" style="position: absolute; bottom: 0;">
+					<div class="PcSideBarItem">
+						<div class="UserInfo">
+							<div class="UserInfoBg"></div>
+							<div class="UserInfoUser">
+								<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
+								<a class="UserInfoUserName" href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a>
+								<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
+								<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></span>
+								<%}%>
+							</div>
+							<span class="UserInfoCmd">
+								<%if(!cCheckLogin.m_bLogin) {%>
+								<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
+								<%} else if(cResults.m_bOwner) {%>
+								<%} else if(cResults.m_bBlocking){%>
+								<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
+								<%} else if(cResults.m_bBlocked){%>
+								<%} else if(cResults.m_bFollow){%>
+								<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
+								<%} else {%>
+								<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
+								<%}%>
+							</span>
+						</div>
+					</div>
+
+					<div class="PcSideBarItem">
 						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 					</div>
 				</div>
