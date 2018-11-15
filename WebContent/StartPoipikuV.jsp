@@ -31,10 +31,11 @@ if(strRequestUri != null) {
 		.AnalogicoDesc {display: block; width: 90%; margin: 0 auto; padding: 10px 0; text-align: center; color: #fff; font-weight: normal;}
 		.AnalogicoDesc.Title {}
 		.AnalogicoLink {display: block; margin: 10px 0; text-align: center; color: #fff; font-weight: normal;font-size: 12px;text-decoration: underline;}
-		.AnalogicoLogin {margin: 10px 0;}
+		.AnalogicoLogin {margin: 20px 0;}
 		.AnalogicoCode {margin: 10px 0;}
 		.AnalogicoTerm {margin: 30px 0 0 0;}
 		.AnalogicoLang {display: block; width: 90%; margin: 0 auto; font-size: 12px;}
+		.AnalogicoInfoRegistBtn {width: 230px;}
 	</style>
 
 	<body style="color: #fff; background: #5bd;">
@@ -46,13 +47,16 @@ if(strRequestUri != null) {
 					<%=_TEX.T("Poipiku.Info.Message")%>
 				</div>
 				<div class="AnalogicoLogin">
-					<a class="BtnBase" href="/LoginFormTwitter.jsp">
+					<a class="BtnBase AnalogicoInfoRegistBtn" href="/LoginFormTwitter.jsp">
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 					</a>
 				</div>
-				<div class="AnalogicoCode">
-					<a class="AnalogicoLink" href="/LoginFormV.jsp">機種変コードの入力</a>
+				<div class="AnalogicoLogin">
+					<a class="BtnBase AnalogicoInfoRegistBtn" href="/LoginFormEmailV.jsp">
+						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+					</a>
 				</div>
+
 				<div class="AnalogicoTerm">
 					<a class="AnalogicoLink" href="/RuleS.jsp"><%=_TEX.T("Footer.Term")%></a>
 					<a class="AnalogicoLink" href="/PrivacyPolicyS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>

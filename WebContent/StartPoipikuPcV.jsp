@@ -146,15 +146,24 @@ cCheckLogin.GetResults2(request, response);
 			</div>
 		</div>
 		<div class="Wrapper">
-			<div class="AnalogicoDesc Title">
-					さあ、はじめよう！
-			</div>
-			<div class="AnalogicoStart" style="margin-top: 0; padding-top: 30px;">
-				<a class="BtnBase Rev AnalogicoLogin" href="/LoginFormTwitterPc.jsp">
-					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
-				</a>
-				<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
-				<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
+			<div class="AnalogicoInfo" style="display: block;">
+				<div class="AnalogicoDesc Title">
+						さあ、はじめよう！
+				</div>
+				<div class="AnalogicoInfoRegist">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
+						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+					</a>
+				</div>
+				<div class="AnalogicoInfoRegist">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormEmailPcV.jsp">
+						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+					</a>
+				</div>
+				<div class="AnalogicoStart" style="margin-top: 0;">
+					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
+					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
+				</div>
 			</div>
 		</div>
 

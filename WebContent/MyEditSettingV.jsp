@@ -46,7 +46,7 @@ if(cResults.m_bUpdate) {
 				try {
 					var strUserName = $.trim($("#RegistUserName").val());
 
-					if(strUserName.length<4) {
+					if(strUserName.length<4 || strUserName.length>16) {
 						strMessage = "<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>";
 						bRtn = false;
 					}
@@ -58,7 +58,7 @@ if(cResults.m_bUpdate) {
 
 			function UpdateNickName() {
 				var strUserName = $.trim($("#RegistUserName").val());
-				if(strUserName.length<4) {
+				if(strUserName.length<4 || strUserName.length>16) {
 					DispMsg("<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>");
 					return;
 				}
@@ -68,7 +68,7 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateNickNameF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('ユーザ名を変更しました。');
+						DispMsg('<%=_TEX.T("EditSettingV.NickName.Message.Ok")%>');
 						sendObjectMessage("reloadParent");
 					},
 					"error": function(req, stat, ex){
@@ -269,14 +269,55 @@ if(cResults.m_bUpdate) {
 				$("#AutoTweetTxtNum").html(nCharNum);
 			}
 
-			function GetAccountCode() {
+			function UpdateEmailAddress(){
+				var strEmail = $("#EM").val();
+				if(!strEmail.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
+					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
+					return false;
+				}
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "ID":<%=cCheckLogin.m_nUserId%>},
-					"url": "/f/GetAccountCodeF.jsp",
+					"data": {"ID": <%=cCheckLogin.m_nUserId%>, "EM": strEmail},
+					"url": "/f/UpdateEmailAddressF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						$("#AccountCodeMessage").html(data.account_code);
+						console.log(data);
+						if(data.result>0) {
+							DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Confirmation")%>');
+						} else {
+							DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Exist")%>');
+						}
+					},
+					"error": function(req, stat, ex){
+						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+					}
+				});
+			}
+
+			function UpdatePassword(){
+				var PW = $("#PW").val();
+				var PW1 = $("#PW1").val();
+				var PW2 = $("#PW2").val();
+				if(PW1.length<4 || PW1.length>16) {
+					DispMsg('<%=_TEX.T("EditSettingV.Password.Message.Empty")%>');
+					return false;
+				}
+				if(PW1!=PW2) {
+					DispMsg('<%=_TEX.T("EditSettingV.Password.Message.NotMatch")%>');
+					return false;
+				}
+				$.ajaxSingle({
+					"type": "post",
+					"data": {"ID": <%=cCheckLogin.m_nUserId%>, "PW": PW, "PW1": PW1, "PW2": PW2},
+					"url": "/f/UpdatePasswordF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						console.log(data);
+						if(data.result>0) {
+							DispMsg('<%=_TEX.T("EditSettingV.Password.Message.Ok")%>');
+						} else {
+							DispMsg('<%=_TEX.T("EditSettingV.Password.Message.Wrong")%>');
+						}
 					},
 					"error": function(req, stat, ex){
 						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
@@ -573,9 +614,40 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
+				<%if(cResults.m_cUser.m_strEmail.contains("@")) {%>
+				<div class="SettingListItem">
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Email.Address")%></div>
+					<div class="SettingBody">
+						<input id="EM" class="SettingBodyTxt" type="text" value="<%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
+						<div class="SettingBodyCmd">
+							<div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%></div>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateEmailAddress()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+						</div>
+					</div>
+				</div>
+				<div class="SettingListItem">
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Password")%></div>
+					<div class="SettingBody">
+						<div class="SettingBodyTxt" style="margin-top: 10px;">
+							<%=_TEX.T("EditSettingV.Password.CurrentPassword")%>
+						</div>
+						<input id="PW" class="SettingBodyTxt" type="password" />
+						<div class="SettingBodyTxt" style="margin-top: 10px;">
+							<%=_TEX.T("EditSettingV.Password.NewPassword")%>
+						</div>
+						<input id="PW1" class="SettingBodyTxt" type="password" />
+						<div class="SettingBodyTxt" style="margin-top: 10px;">
+							<%=_TEX.T("EditSettingV.Password.NewPasswordConfirm")%>
+						</div>
+						<input id="PW2" class="SettingBodyTxt" type="password" />
+						<div class="SettingBodyCmd" style="margin-top: 20px;">
+							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdatePassword()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+						</div>
+					</div>
+				</div>
+				<%}%>
 
-
-				<%if(cResults.m_cUser.m_bTweet){%>
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Logout")%></div>
 					<div class="SettingBody">
@@ -585,7 +657,6 @@ if(cResults.m_bUpdate) {
 						</div>
 					</div>
 				</div>
-				<%}%>
 
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.DeleteAccount")%></div>
