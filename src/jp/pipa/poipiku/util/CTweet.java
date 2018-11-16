@@ -1,6 +1,10 @@
 package jp.pipa.poipiku.util;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -123,8 +127,23 @@ public class CTweet {
 
 			long[] vMediaList = new long[vFileList.size()];
 			for(int index = 0; index<vFileList.size(); index++) {
-				UploadedMedia media = twitter.uploadMedia(new File(vFileList.get(index)));
+				String strSrcFileName = vFileList.get(index);
+				String strDstFileName = strSrcFileName+"_twitter.jpg";
+				BufferedImage cImage = ImageUtil.read(strSrcFileName);
+				int nWidth = cImage.getWidth();
+				int nHeight = cImage.getHeight();
+				if(nWidth<=2048 && nHeight<=2048) {
+					Path pathSrc = Paths.get(strSrcFileName);
+					Path pathDst = Paths.get(strDstFileName);
+					Files.copy(pathSrc, pathDst);
+				} else if(nWidth<nHeight) {
+					ImageUtil.createThumb(strSrcFileName, strDstFileName, 0, 2048, true);
+				} else {
+					ImageUtil.createThumb(strSrcFileName, strDstFileName, 2048, 0, true);
+				}
+				UploadedMedia media = twitter.uploadMedia(new File(strDstFileName));
 				vMediaList[index] = media.getMediaId();
+				ImageUtil.deleteFile(strDstFileName);
 			}
 
 			StatusUpdate update = new StatusUpdate(strTweet);
