@@ -35,17 +35,25 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	<body>
 		<div class="TabMenuWrapper">
 			<div class="TabMenu">
+				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
 				<a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
-				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-				<a class="TabMenuItem" href="/SearchIllustByCategoryPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
-				<%}%>
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
+				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
 			</div>
 		</div>
 
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper ThumbList">
+			<div class="CategoryMenu">
+				<a class="BtnBase CategoryBtn Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
+				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+				<a class="BtnBase CategoryBtn CC<%=nCategoryId%>" href="/SearchIllustByCategoryPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
+				<%}%>
+			</div>
+
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(!bSmartPhone) {%>
 				<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
