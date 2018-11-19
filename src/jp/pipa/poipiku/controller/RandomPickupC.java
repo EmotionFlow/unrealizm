@@ -21,7 +21,7 @@ public class RandomPickupC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 45;
+	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 

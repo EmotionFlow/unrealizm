@@ -129,6 +129,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
+
+		<%if(!Util.isSmartPhone(request)) {%>
+		.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
+		.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
+		<%}%>
 		</style>
 	</head>
 
@@ -144,10 +149,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<%if(!bSmartPhone) {%>
 			<div class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
-					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
-					</div>
-
 					<div class="PcSideBarItem">
 						<div class="UserInfo">
 							<div class="UserInfoBg"></div>
@@ -175,12 +176,51 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 					</div>
 
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
 					</div>
 				</div>
 			</div>
 			<%}%>
+		</div>
 
+		<div class="UserInfo">
+			<div class="UserInfoBg"></div>
+			<div class="UserInfoUser">
+				<span class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')"></span>
+				<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
+				<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
+				<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></span>
+				<%}%>
+			</div>
+			<span class="UserInfoCmd">
+				<%
+				String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
+						URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"),
+						URLEncoder.encode(String.format("%s%s", cResults.m_cUser.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
+						URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+				%>
+				<%if(!cCheckLogin.m_bLogin) {%>
+				<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
+				<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
+				<%} else if(cResults.m_bOwner) {%>
+				&nbsp;
+				<%} else if(cResults.m_bBlocking){%>
+				<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
+				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
+				<%} else if(cResults.m_bBlocked){%>
+				<%} else if(cResults.m_bFollow){%>
+				<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
+				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock " onclick="UpdateBlock()"></span>
+				<%} else {%>
+				<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
+				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
+				<%}%>
+				<%if(!cResults.m_bOwner) {%>
+				<span class="IllustItemCommandSub">
+					<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
+				</span>
+				<%}%>
+			</span>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

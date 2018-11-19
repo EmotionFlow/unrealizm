@@ -26,8 +26,9 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
 
 			.IllustThumb .Category {top: 3px; left: 3px;font-size: 10px; min-width: 50px; height: 18px; line-height: 18px; max-width: 80px; padding: 0 3px;}
-			.IllustThumb {margin: 2px !important; width: 86px; height: 86px;}
+			.IllustThumb {margin: 2px !important; width: 86px; height: 130px;}
 			.IllustThumbList {padding: 0;}
+			.IllustThumb .IllustThumbImg {width: 86px; height: 86px;}
 		</style>
 	</head>
 

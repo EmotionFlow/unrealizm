@@ -164,16 +164,14 @@ if(!cResults.getResults(cCheckLogin)) {
 				</span>
 				<%if(cResults.m_bOwner) {%>
 				<span class="UserInfoState">
+					<span class="UserInfoStateItem Selected">
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
+						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNum%></span>
+					</span>
 					<a class="UserInfoStateItem" href="/FollowListV.jsp">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
-					<%if(cResults.m_cUser.m_bDispFollower) {%>
-					<a class="UserInfoStateItem" href="/FollowerListV.jsp">
-						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
-					</a>
-					<%}%>
 				</span>
 				<%}%>
 			</div>
@@ -182,9 +180,9 @@ if(!cResults.getResults(cCheckLogin)) {
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
-					<%if((nCnt+1)%15==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
-					<%}%>
+					<%//if(nCnt==17) {%>
+					<%//@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					<%//}%>
 				<%}%>
 			</div>
 

@@ -31,12 +31,16 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 			<%if(Util.isSmartPhone(request)) {%>
 			.IllustThumb .Category {top: 3px; left: 3px;font-size: 10px; min-width: 50px; height: 18px; line-height: 18px; max-width: 80px; padding: 0 3px;}
-			.IllustThumb {margin: 2px !important; width: 86px; height: 86px;}
+			.IllustThumb {margin: 2px !important; width: 86px; height: 130px;}
 			.IllustThumbList {padding: 0;}
+			.IllustThumb .IllustThumbImg {width: 86px; height: 86px;}
 			<%} else {%>
-			.IllustThumb .Category {font-size: 11px; min-width: 50px; height: 22px; line-height: 22px; max-width: 108px;}
-			.IllustThumb {margin: 2px !important; width: 118px; height: 118px;}
+			.IllustThumb .Category {font-size: 11px; min-width: 50px; height: 20px; line-height: 20px; padding: 0 5px;}
+			.IllustThumb {margin: 2px !important; width: 118px; height: 164px;}
 			.IllustThumbList {padding: 0 7px;}
+			.IllustThumb .IllustThumbImg {width: 118px; height: 118px;}
+			.IllustThumb .IllustInfo {padding: 3px 3px 0px 3px;}
+			.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 10px; height: 20px; line-height: 20px;}
 			<%}%>
 		</style>
 	</head>
@@ -48,7 +52,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
 				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
 				<a class="TabMenuItem Selected" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="TabMenuItem" href="/CategoryListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Category")%></a>
 				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
 				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
 			</div>
@@ -70,7 +73,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<span class="IllustThumbList">
 					<%for(CContent cContent : m_vContentList) {%>
 					<span class="IllustThumb">
-						<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
 						<%
 						String strSrc;
 						if(cContent.m_nSafeFilter<2) {
@@ -82,6 +84,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						}
 						%>
 						<img class="IllustThumbImg" src="<%=strSrc%>_360.jpg">
+						<span class="IllustInfo">
+							<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
+							<span class="IllustInfoDesc"><%=Common.ToStringHtml(cContent.m_strDescription)%></span>
+						</span>
 					</span>
 					<%}%>
 				</span>

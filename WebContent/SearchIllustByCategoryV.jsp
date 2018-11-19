@@ -51,18 +51,30 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						addContents();
 					}
 				});
+				var frame_width = $('#CategoryMenu').outerWidth();
+				var item_width = $('#CategoryMenu .CategoryBtn.Selected').outerWidth();
+				var item_left = $('#CategoryMenu .CategoryBtn.Selected').position().left
+				var item_pos = item_left + (item_width - frame_width)/2
+				$('#CategoryMenu').scrollLeft(item_pos);
 			});
 		</script>
 	</head>
 
 	<body>
 		<div class="Wrapper">
+			<div id="CategoryMenu" class="CategoryMenu">
+				<a class="BtnBase CategoryBtn" href="/NewArrivalV.jsp"><%=_TEX.T("Category.All")%></a>
+				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" href="/SearchIllustByCategoryV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
+				<%}%>
+			</div>
+
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_CATEGORY_ILLUST, CCnv.MODE_SP, cResults.m_nCategoryId, _TEX)%>
-					<%if((nCnt+1)%15==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, cResults.m_nCategoryId, _TEX)%>
+					<%if(nCnt==17) {%>
+					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 					<%}%>
 				<%}%>
 			</div>

@@ -113,7 +113,7 @@ body {
 	padding: 0;
 	-webkit-text-size-adjust: 100%;
 	color: #6d6965;
-	background: #fafafa;
+	background: #f9fcfd;
 	-webkit-text-size-adjust: none;
 	user-select: none;
 	-webkit-user-select: none;
@@ -397,5 +397,5 @@ form, button {
 	margin: 0;
 	border-radius: 34px;
 	font-size: 16px;
-	line-height: 34px;
+	line-height: 32px;
 }

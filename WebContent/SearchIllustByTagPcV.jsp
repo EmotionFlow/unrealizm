@@ -6,8 +6,10 @@ cCheckLogin.GetResults2(request, response);
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -40,11 +42,14 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			</div>
 
 			<div id="IllustThumbList" class="IllustThumbList">
+				<%if(!bSmartPhone) {%>
+				<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+				<%}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_TAG_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
-					<%if((nCnt+1)%15==0) {%>
-					<%@ include file="/inner/TAdMidWide.jspf"%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
+					<%if(nCnt==17) {%>
+					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 					<%}%>
 				<%}%>
 			</div>

@@ -493,6 +493,7 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
+				<!--
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.DispSetting")%></div>
 					<div class="SettingBody">
@@ -516,6 +517,7 @@ if(cResults.m_bUpdate) {
 						</div>
 					</div>
 				</div>
+				-->
 
 				<div class="SettingListItem" style="border: none;">
 					<a id="TwitterSetting" name="TwitterSetting"></a>

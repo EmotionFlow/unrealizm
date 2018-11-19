@@ -47,7 +47,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Footer .LinkApp {margin: 0 0 15px 0;}
 
 .TabMenuWrapper {width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 9999; width: 100%;top: 51px;}
-.TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto; background: #fff;}
+.TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto; background: #fff; overflow-x: scroll;}
 .TabMenu .TabMenuItem {display: block; flex: 1 1; height: 24px; line-height: 29px; border-bottom: solid 2px #fff; text-align: center; color: #5bd; margin: 0 0 5px 0; font-size: 12px; overflow: hidden;}
 .TabMenu .TabMenuItem.Selected {border-color: #5bd;}
 

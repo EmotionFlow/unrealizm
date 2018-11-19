@@ -9,10 +9,12 @@ cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
+cResults.SELECT_MAX_GALLERY = 30;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
+boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -143,22 +145,14 @@ if(!cResults.getResults(cCheckLogin)) {
 				</span>
 				<%if(cResults.m_bOwner) {%>
 				<span class="UserInfoState">
-					<!--
-					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
+					<span class="UserInfoStateItem Selected">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNum%></span>
-					</a>
-					-->
+					</span>
 					<a class="UserInfoStateItem" href="/FollowListPcV.jsp">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
-					<%if(cResults.m_cUser.m_bDispFollower) {%>
-					<a class="UserInfoStateItem" href="/FollowerListPcV.jsp">
-						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
-					</a>
-					<%}%>
 				</span>
 				<%}%>
 			</div>
@@ -166,12 +160,15 @@ if(!cResults.getResults(cCheckLogin)) {
 
 		<div class="Wrapper ThumbList">
 			<div id="IllustThumbList" class="IllustThumbList">
+				<%//if(!bSmartPhone) {%>
+				<%//@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+				<%//}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
-					<%if((nCnt+1)%15==0) {%>
-					<%@ include file="/inner/TAdMidWide.jspf"%>
-					<%}%>
+					<%//if(nCnt==17) {%>
+					<%//@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					<%//}%>
 				<%}%>
 			</div>
 

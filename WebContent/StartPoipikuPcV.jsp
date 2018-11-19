@@ -37,6 +37,8 @@ cCheckLogin.GetResults2(request, response);
 
 			.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
 
+			.TabMenu .TabMenuItem {min-width: 55px;margin: 0 5px 0 0;}
+
 			<%if(Util.isSmartPhone(request)) {%>
 			<%} else {%>
 			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
@@ -56,13 +58,11 @@ cCheckLogin.GetResults2(request, response);
 	<body>
 		<div class="TabMenuWrapper">
 			<div class="TabMenu">
-				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
-				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
 				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+				<a class="TabMenuItem" href="/SearchIllustByCategoryPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
+				<%}%>
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="TabMenuItem" href="/CategoryListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Category")%></a>
-				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
 			</div>
 		</div>
 

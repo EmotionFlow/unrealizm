@@ -62,12 +62,19 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div class="Wrapper">
+			<div class="CategoryMenu">
+				<a class="BtnBase CategoryBtn Selected" href="/NewArrivalV.jsp"><%=_TEX.T("Category.All")%></a>
+				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+				<a class="BtnBase CategoryBtn CC<%=nCategoryId%>" href="/SearchIllustByCategoryV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
+				<%}%>
+			</div>
+
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_NEWARRIVAL_ILLUST, CCnv.MODE_SP, _TEX)%>
-					<%if((nCnt+1)%15==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
+					<%if(nCnt==17) {%>
+					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 					<%}%>
 				<%}%>
 			</div>

@@ -227,14 +227,17 @@ public class CCnv {
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
-		strRtn.append(String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s %s</span>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
 		if(cContent.m_nSafeFilter<2) {
-			strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\">", Common.GetUrl(cContent.m_strFileName)));
+			strRtn.append(String.format("<span class=\"IllustThumbImg\" style=\"background-image:url('%s_360.jpg')\"></span>", Common.GetUrl(cContent.m_strFileName)));
 		} else if(cContent.m_nSafeFilter<4) {
-			strRtn.append("<img class=\"IllustThumbImg\" src=\"/img/warning.png_360.jpg\">");
+			strRtn.append("<span class=\"IllustThumbImg\" style=\"background-image:url('/img/warning.png_360.jpg')\"></span>");
 		} else {
-			strRtn.append("<img class=\"IllustThumbImg\" src=\"/img/R18.png_360.jpg\">");
+			strRtn.append("<span class=\"IllustThumbImg\" style=\"background-image:url('/img/R18.png_360.jpg')\"></span>");
 		}
+		strRtn.append("<span class=\"IllustInfo\">");
+		strRtn.append(String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s %s</span>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
+		strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Common.ToStringHtml(cContent.m_strDescription)));
+		strRtn.append("</span>");	// IllustInfo
 		strRtn.append("</a>");
 
 		return strRtn.toString();
