@@ -62,13 +62,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div class="Wrapper">
-			<div id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn" href="/NewArrivalV.jsp"><%=_TEX.T("Category.All")%></a>
-				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" href="/SearchIllustByCategoryV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
-				<%}%>
-			</div>
-
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>

@@ -52,7 +52,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<span class="IllustThumbList">
 						<%for(CContent cContent : m_vContentList) {%>
 						<span class="IllustThumb">
-							<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
 							<%
 							String strSrc;
 							if(cContent.m_nSafeFilter<2) {
@@ -64,6 +63,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 							}
 							%>
 							<img class="IllustThumbImg" src="<%=strSrc%>_360.jpg">
+							<span class="IllustInfo">
+								<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
+								<span class="IllustInfoDesc"><%=Common.ToStringHtml(cContent.m_strDescription)%></span>
+							</span>
 						</span>
 						<%}%>
 					</span>
