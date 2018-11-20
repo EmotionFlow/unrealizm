@@ -64,18 +64,21 @@ public class SearchIllustByTagC {
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCond = "";
-			strSql = "SELECT mute_keyword FROM users_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+			if(cCheckLogin.m_bLogin) {
+				strSql = "SELECT mute_keyword FROM users_0000 WHERE user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cCheckLogin.m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+				if(!strMuteKeyword.isEmpty()) {
+					strCond = "AND description &@~ ?";
+				}
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-			if(!strMuteKeyword.isEmpty()) {
-				strCond = "AND description &@~ ?";
-			}
+
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {

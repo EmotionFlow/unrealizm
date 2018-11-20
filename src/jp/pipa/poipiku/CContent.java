@@ -10,6 +10,9 @@ import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.Common;
 
 public class CContent {
+	public static final int BOOKMARK_NONE = 0;
+	public static final int BOOKMARK_BOOKMARKING = 1;
+
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
 	public String m_strDescription = "";
@@ -24,6 +27,8 @@ public class CContent {
 	public CUser m_cUser = new CUser();
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
+
+	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
 	public CContent() {}
 	public CContent(ResultSet resultSet) throws SQLException {

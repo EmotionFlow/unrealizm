@@ -1,25 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
-class UpdateFollowTagCParam {
+class UpdateBookmarkCParam {
 	public int m_nUserId = -1;
-	public String m_strTagTxt = "";
-	public int m_nTypeId = 0;
+	public int m_nContentId = -1;
+
 
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId	= Common.ToInt(cRequest.getParameter("UID"));
-			m_strTagTxt	= Common.TrimAll(cRequest.getParameter("TXT"));
-			m_nTypeId	= Common.ToIntN(cRequest.getParameter("TYP"), Common.FOVO_KEYWORD_TYPE_TAG, Common.FOVO_KEYWORD_TYPE_SEARCH);
+			m_nUserId = Common.ToInt(cRequest.getParameter("UID"));
+			m_nContentId = Common.ToInt(cRequest.getParameter("IID"));
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
 	}
 }
 
-class UpdateFollowTagC {
-	public int GetResults(UpdateFollowTagCParam cParam) {
+class UpdateBookmarkC {
+	public int GetResults(UpdateBookmarkCParam cParam) {
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -27,43 +26,39 @@ class UpdateFollowTagC {
 		ResultSet cResSet = null;
 		String strSql = "";
 
-		if(cParam.m_strTagTxt.isEmpty()) return nRtn;
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
 
-			boolean bFollowing = false;
+			boolean bBookmarking = false;
 			// now following check
-			strSql ="SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
+			strSql ="SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
-			cState.setString(2, cParam.m_strTagTxt);
-			cState.setInt(3, cParam.m_nTypeId);
+			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
-			bFollowing = cResSet.next();
+			bBookmarking = cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 
-			if(!bFollowing) {
-				strSql ="INSERT INTO follow_tags_0000(user_id, tag_txt, type_id) VALUES(?, ?, ?)";
+			if(!bBookmarking) {
+				strSql ="INSERT INTO bookmarks_0000(user_id, content_id) VALUES(?, ?)";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);
-				cState.setString(2, cParam.m_strTagTxt);
-				cState.setInt(3, cParam.m_nTypeId);
+				cState.setInt(2, cParam.m_nContentId);
 				cState.executeUpdate();
 				cState.close();cState=null;
-				nRtn = 1;
+				nRtn = CContent.BOOKMARK_BOOKMARKING;
 			} else {
-				strSql ="DELETE FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
+				strSql ="DELETE FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);
-				cState.setString(2, cParam.m_strTagTxt);
-				cState.setInt(3, cParam.m_nTypeId);
+				cState.setInt(2, cParam.m_nContentId);
 				cState.executeUpdate();
 				cState.close();cState=null;
-				nRtn = 2;
+				nRtn = CContent.BOOKMARK_NONE;
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -80,12 +75,12 @@ class UpdateFollowTagC {
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-UpdateFollowTagCParam cParam = new UpdateFollowTagCParam();
+UpdateBookmarkCParam cParam = new UpdateBookmarkCParam();
 cParam.GetParam(request);
 
 int nRtn = -1;
 if( cCheckLogin.m_bLogin && cParam.m_nUserId == cCheckLogin.m_nUserId ) {
-	UpdateFollowTagC cResults = new UpdateFollowTagC();
+	UpdateBookmarkC cResults = new UpdateBookmarkC();
 	nRtn = cResults.GetResults(cParam);
 }
 %>{"result":<%=nRtn%>}

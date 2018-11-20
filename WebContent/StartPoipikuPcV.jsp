@@ -37,8 +37,6 @@ cCheckLogin.GetResults2(request, response);
 
 			.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
 
-			.TabMenu .TabMenuItem {min-width: 55px;margin: 0 5px 0 0;}
-
 			<%if(Util.isSmartPhone(request)) {%>
 			<%} else {%>
 			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
@@ -60,6 +58,7 @@ cCheckLogin.GetResults2(request, response);
 			<div class="TabMenu">
 				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
 				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
+				<a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
 				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>

@@ -105,6 +105,22 @@ public class IllustViewListC {
 				cResSet.close();cResSet=null;
 			}
 			cState.close();cState=null;
+
+			// Bookmark
+			if(cCheckLogin.m_bLogin) {
+				strSql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				for(CContent cContent : m_vContentList) {
+					cState.setInt(1, cCheckLogin.m_nUserId);
+					cState.setInt(2, cContent.m_nContentId);
+					cResSet = cState.executeQuery();
+					if (cResSet.next()) {
+						cContent.m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
+					}
+					cResSet.close();cResSet=null;
+				}
+				cState.close();cState=null;
+			}
 			bResult = true;
 		} catch(Exception e) {
 			Log.d(strSql);

@@ -4,7 +4,12 @@
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
 
-NewArrivalC cResults = new NewArrivalC();
+if(!cCheckLogin.m_bLogin) {
+	response.sendRedirect("/");
+	return;
+}
+
+MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
@@ -15,7 +20,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyBookmarkList.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -32,8 +37,8 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<div class="TabMenu">
 				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
 				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
-				<a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
-				<a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+				<a class="TabMenuItem Selected" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
+				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
 				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
 				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
@@ -43,11 +48,8 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper ThumbList">
-			<div class="CategoryMenu">
-				<a class="BtnBase CategoryBtn Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
-				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-				<a class="BtnBase CategoryBtn CC<%=nCategoryId%>" href="/SearchIllustByCategoryPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
-				<%}%>
+			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
+				11/20 <span style="color: red; font-size: 9px;">new!</span> お気に入りに追加したイラストは公開されず、相手にも伝わりません。思う存分お気に入りに追加してみてください！
 			</div>
 
 
@@ -65,7 +67,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/NewArrivalPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/MyBookmarkListPcV.jsp", "&ID="+cCheckLogin.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

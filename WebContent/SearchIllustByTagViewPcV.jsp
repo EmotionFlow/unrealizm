@@ -89,11 +89,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 						<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
 							<i class="fas fa-hashtag"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%>
 							<%if(!cCheckLogin.m_bLogin) {%>
-							<a class="BtnBase TitleCmdFollow" href="/"><%=_TEX.T("IllustV.Favo")%></a>
+							<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 							<%} else if(!cResults.m_bFollowing) {%>
-							<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><%=_TEX.T("IllustV.Favo")%></a>
+							<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 							<%} else {%>
-							<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><%=_TEX.T("IllustV.Favo")%></a>
+							<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 							<%}%>
 						</div>
 					</div>

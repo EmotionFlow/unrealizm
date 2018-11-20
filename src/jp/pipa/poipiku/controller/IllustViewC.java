@@ -142,6 +142,20 @@ public class IllustViewC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+
+			// Bookmark
+			if(cCheckLogin.m_bLogin) {
+				strSql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cCheckLogin.m_nUserId);
+				cState.setInt(2, m_cContent.m_nContentId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_cContent.m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

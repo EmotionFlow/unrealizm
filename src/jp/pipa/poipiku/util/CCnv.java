@@ -160,6 +160,15 @@ public class CCnv {
 		}
 		strRtn.append("</div>");	// IllustItemExpand
 
+		// ブクマボタン
+		strRtn.append("<div class=\"IllustItemCmd\">");
+		strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"BtnBase IllustItemBookmarkBtn %s\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"fas fa-star\"></i> %s</a>",
+				cContent.m_nContentId,
+				(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"Selected":"",
+				nLoginUserId,
+				cContent.m_nContentId,
+				_TEX.T("IllustV.Favo")));
+		strRtn.append("</div>");	// IllustItemCmd
 
 		// 絵文字
 		strRtn.append("<div class=\"IllustItemResList\">");

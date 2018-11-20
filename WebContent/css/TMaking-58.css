@@ -575,6 +575,21 @@
 	font-size: 12px;
 }
 
+.IllustItem .IllustItemCmd {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 0 10px;
+	box-sizing: border-box;
+	text-align: right;
+}
+
+.IllustItem .IllustItemCmd .IllustItemBookmarkBtn {
+	display: inline-block;
+	margin: 0 0 0 0;
+	font-size: 12px;
+}
+
 .IllustItem .Category {
 	display: block;
 	float: left;
@@ -794,7 +809,7 @@
 	display: block;
 	position: absolute;
 	top: 1px;
-	right: 1px;
+	right: 10px;
 	box-sizing: border-box;
 	text-align: right;
 	height: 10px;

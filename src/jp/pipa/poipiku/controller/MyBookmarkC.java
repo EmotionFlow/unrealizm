@@ -10,23 +10,22 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class SearchIllustByCategoryC {
-	public int m_nCategoryId = 0;
-	public int m_nPage = 0;
+public class MyBookmarkC {
 
+	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nCategoryId = Math.max(Common.ToInt(cRequest.getParameter("CD")), 0);
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
-			m_nCategoryId = 0;
-			m_nPage = 0;
+			;
 		}
 	}
 
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+
 	public int SELECT_MAX_GALLERY = 36;
+	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
@@ -47,36 +46,12 @@ public class SearchIllustByCategoryC {
 			cConn = dsPostgres.getConnection();
 
 
-			String strMuteKeyword = "";
-			String strCond = "";
-			if(cCheckLogin.m_bLogin) {
-				strSql = "SELECT mute_keyword FROM users_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-				if(!strMuteKeyword.isEmpty()) {
-					strCond = "AND description &@~ ?";
-				}
-			}
-
-
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
+				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE bookmarks_0000.user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, m_nCategoryId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-				if(!strMuteKeyword.isEmpty()) {
-					cState.setString(idx++, strMuteKeyword);
-				}
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
@@ -85,21 +60,16 @@ public class SearchIllustByCategoryC {
 				cState.close();cState=null;
 			}
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = "SELECT contents_0000.* FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE bookmarks_0000.user_id=? ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, m_nCategoryId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			if(!strMuteKeyword.isEmpty()) {
-				cState.setString(idx++, strMuteKeyword);
-			}
-			cState.setInt(idx++, SELECT_MAX_GALLERY*m_nPage);
+			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
+				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
@@ -116,5 +86,4 @@ public class SearchIllustByCategoryC {
 		}
 		return bResult;
 	}
-
 }
