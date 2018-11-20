@@ -28,7 +28,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		</script>
 		<style>
 			body {padding-top: 83px !important;}
-			.TabMenu .TabMenuItem {min-width: 55px;margin: 0 5px 0 0;}
 		</style>
 	</head>
 
