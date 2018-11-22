@@ -151,4 +151,20 @@ public class Util {
 		}
 		return returnVal;
 	}
+
+	public static String toDescString(String strSrc) {
+		if(strSrc == null) {
+			return "";
+		}
+		strSrc = strSrc.replace("\r", "");
+		strSrc = strSrc.replace("\n", "");
+		strSrc = strSrc.replace("&", "&amp;");
+		strSrc = strSrc.replace("<", "&lt;");
+		strSrc = strSrc.replaceAll(">", "&gt;");
+		strSrc = strSrc.replaceAll("'", "&apos;");
+		strSrc = strSrc.replaceAll("\"", "&quot;");
+
+		return strSrc;
+	}
+
 }

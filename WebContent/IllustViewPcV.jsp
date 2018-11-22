@@ -16,8 +16,8 @@ String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
 if(strs.length>0 && strs[0].length()>0) {
 	strTitle = strs[0];
 }
-strTitle = Common.SubStrNum(strTitle, 10);
-String strDesc = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"]" +  cResults.m_cContent.m_strDescription.replaceAll("\n", " ").replaceAll("\r", " ");
+strTitle = Util.toDescString(Common.SubStrNum(strTitle, 10));
+String strDesc = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"]" +  Util.toDescString(cResults.m_cContent.m_strDescription);
 if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 boolean bSmartPhone = Util.isSmartPhone(request);
