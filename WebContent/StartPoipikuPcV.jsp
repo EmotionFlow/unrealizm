@@ -24,7 +24,7 @@ cCheckLogin.GetResults2(request, response);
 			.AnalogicoInfo {display: none;}
 			.FooterAd {display: none;}
 
-			.PoipikuInfo {display: flex; flex-flow: row wrap; width: 100%; margin: 0 auto; justify-content: space-around; background-color: #fafafa; color: #5bd;padding: 15px 0;box-sizing: border-box;}
+			.PoipikuInfo {display: flex; flex-flow: row wrap; width: 100%; margin: 0 auto; justify-content: space-around; background-color: #f1f9fc; color: #5bd;padding: 15px 0;box-sizing: border-box;}
 			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
 			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 15px 0;}
 			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
@@ -40,7 +40,7 @@ cCheckLogin.GetResults2(request, response);
 			<%if(Util.isSmartPhone(request)) {%>
 			<%} else {%>
 			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
-			.PoipikuInfo {padding: 11px;}
+			.PoipikuInfo {padding: 10px 15px;}
 			.PoipikuInfo .PoipikuDesc {margin: 10px 0;}
 			.PoipikuInfo .PoipikuDesc.Full {flex: 0 0 941px;}
 			<%}%>
