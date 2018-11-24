@@ -23,7 +23,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuHome').addClass('Selected');
 		});
 		</script>
 		<style>
