@@ -150,7 +150,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<div class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<div class="UserInfo">
+						<div class="UserInfo" style="border: none;">
 							<div class="UserInfoBg"></div>
 							<div class="UserInfoUser">
 								<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>

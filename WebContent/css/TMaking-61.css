@@ -480,14 +480,14 @@
 .IllustItem {
 	display: block;
 	float: left;
-	width: 344px;
+	width: 346px;
 	padding: 0px 0 8px 0;
 	box-sizing: border-box;
 	overflow: hidden;
 	background: #fff;
 	margin: 15px 8px;
-	box-shadow: 0 0 1px #ddd;
 	border-radius: 6px;
+	border: solid 1px #eee;
 }
 
 .IllustItem .IllustItemUser {

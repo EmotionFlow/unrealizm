@@ -22,7 +22,7 @@ body {padding: 51px 0 0 0 !important;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .IllustThumb {width: 198px; height: 198px;}
 .IllustThumb .Category {font-size: 13px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
-.IllustItem {margin: 30px auto; box-shadow: 0 0 1px #ddd; border-radius: 6px; width: 100%;}
+.IllustItem {margin: 30px auto; width: 100%;}
 .IllustItem .IllustItemUser {padding: 10px;}
 .IllustItem .Category {margin: 0px 0 3px 0px;}
 .IllustItem .IllustItemCommand {padding: 0 10px;}
@@ -30,9 +30,9 @@ body {padding: 51px 0 0 0 !important;}
 .IllustItem .IllustItemDesc {padding: 0 10px;}
 .IllustItem .IllustItemDescEdit {padding: 0 10px;}
 .IllustItem .IllustItemExpand .IllustItemExpandBtn {margin: 2px 0 0px 0;}
-.IllustItem .IllustItemResList {padding: 0 10px 6px 10px}
+.IllustItem .IllustItemResList {padding: 0 9px 6px 9px;}
 .IllustItem .IllustItemResList .ResEmoji {width: 29px; height: 29px;}
-.IllustItem .IllustItemResBtnList {padding: 3px 6px;}
+.IllustItem .IllustItemResBtnList {padding: 3px 5px;}
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn {width: 36px; height: 36px; line-height: 36px; margin: 3px 3px 0 3px;}
 .SearchResultTitle {margin: 15px 0 10px 0; font-size: 18px; height: 32px; line-height: 30px;}
 .SearchResultTitle .TitleCmdFollow {float: none; position: static;}
