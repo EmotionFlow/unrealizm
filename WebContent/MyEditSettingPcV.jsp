@@ -3,10 +3,8 @@
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.basic.DefaultOAuthProvider"%>
 <%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
-<%@ include file="/MyEditSettingC.jsp"%>
+<%@include file="/inner/Common.jsp"%>
 <%
-String strDebug = "";
-
 //login check
 CheckLogin cCheckLogin = new CheckLogin();
 cCheckLogin.GetResults2(request, response);
@@ -17,14 +15,10 @@ if(!cCheckLogin.m_bLogin) {
 }
 
 //パラメータの取得
-MyEditSettingCParam cParam = new MyEditSettingCParam();
-cParam.GetParam(request);
-
-cParam.m_nUserId = cCheckLogin.m_nUserId;
-
 //検索結果の取得
 MyEditSettingC cResults = new MyEditSettingC();
-strDebug = cResults.GetResults(cParam);
+cResults.GetParam(request);
+cResults.GetResults(cCheckLogin);
 
 String strEmailState = "";
 if(cResults.m_bUpdate) {
@@ -171,7 +165,7 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateProfileTxtF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('保存しました。');
+						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
 						sendObjectMessage("reloadParent");
 					},
 					"error": function(req, stat, ex){
@@ -194,7 +188,7 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateMuteKeywordF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('保存しました。');
+						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
 					},
 					"error": function(req, stat, ex){
 						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
@@ -203,15 +197,15 @@ if(cResults.m_bUpdate) {
 				return false;
 			}
 
-			function UpdateDispFollowerLink() {
-				var bDisp = $('#DispFollower').prop('checked');
+			function UpdateNgReaction() {
+				var bMode = $('#NgReaction').prop('checked');
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "NB1": (bDisp)?1:0 },
-					"url": "/f/UpdateDispFollowerLinkF.jsp",
+					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "MID": (bMode)?<%=CUser.REACTION_HIDE%>:<%=CUser.REACTION_SHOW%> },
+					"url": "/f/UpdateNgReactionF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('保存しました。');
+						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
 					},
 					"error": function(req, stat, ex){
 						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
@@ -257,7 +251,7 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateAutoTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('保存しました。');
+						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
 					},
 					"error": function(req, stat, ex){
 						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
@@ -382,8 +376,8 @@ if(cResults.m_bUpdate) {
 				DispMuteCharNum();
 				DispAutoTweetCharNum();
 
-				<%if(cParam.m_strMessage.length()>0) {%>
-				DispMsg("<%=Common.ToStringHtml(cParam.m_strMessage)%>");
+				<%if(cResults.m_strMessage.length()>0) {%>
+				DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
 				<%}%>
 			});
 		</script>
@@ -493,33 +487,31 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<!--
 				<div class="SettingListItem">
-					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.DispSetting")%></div>
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.ReactionMode")%></div>
 					<div class="SettingBody">
-						<%=_TEX.T("EditSettingV.DispSetting.Follower")%>
+						<%=_TEX.T("EditSettingV.ReactionMode.Message")%>
 						<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 							<div class="RegistMessage" >
 								<div class="onoffswitch OnOff">
-									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="DispFollower" value="1" <%if(cResults.m_cUser.m_bDispFollower){%>checked="checked"<%}%> />
-									<label class="onoffswitch-label" for="DispFollower">
+									<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgReaction" value="0" <%if(cResults.m_cUser.m_nReaction!=CUser.REACTION_SHOW){%>checked="checked"<%}%> />
+									<label class="onoffswitch-label" for="NgReaction">
 										<span class="onoffswitch-inner"></span>
 										<span class="onoffswitch-switch"></span>
 									</label>
 								</div>
 								<script>
-								$('#DispFollower').change(function(){
+								$('#NgReaction').change(function(){
 									//UpdateDispFollowerLink();
 								});
 								</script>
 							</div>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateDispFollowerLink()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNgReaction()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
 					</div>
 				</div>
-				-->
 
-				<div class="SettingListItem" style="border: none;">
+				<div class="SettingListItem">
 					<a id="TwitterSetting" name="TwitterSetting"></a>
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter")%></div>
 					<div class="SettingBody">

@@ -10,7 +10,7 @@ public class CUser {
 	public static final int FOLLOW_HIDE = -1;
 
 	public static final int REACTION_SHOW = 0;
-	public static final int REACRION_HIDE = 1;
+	public static final int REACTION_HIDE = 1;
 
 	public int m_nUserId = 0;
 	public String m_strNickName = "";

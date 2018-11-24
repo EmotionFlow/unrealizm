@@ -1,29 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
-<%!
-class MyEditSettingCParam {
-	public int m_nUserId = -1;
-	public String m_strMessage = "";
+package jp.pipa.poipiku.controller;
 
-	public void GetParam(HttpServletRequest cRequest) {
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.sql.DataSource;
+
+import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.util.Log;
+
+public class MyEditSettingC {
+	public String m_strMessage = "";
+	public void GetParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId	= Common.ToInt(cRequest.getParameter("ID"));
-			m_strMessage = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(cRequest.getParameter("MSG")))));
+			request.setCharacterEncoding("UTF-8");
+			m_strMessage = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("MSG")))));
 		}
 		catch(Exception e) {
-			m_nUserId = -1;
+			;
 		}
 	}
-}
 
-class MyEditSettingC {
-	CUser m_cUser = new CUser();
-	boolean m_bUpdate = false;
-	String m_strNewEmail = "";
-
-	public String GetResults(MyEditSettingCParam cParam) {
-		String strResult = "OK";
+	public CUser m_cUser = new CUser();
+	public boolean m_bUpdate = false;
+	public String m_strNewEmail = "";
+	public boolean GetResults(CheckLogin checkLogin) {
+		boolean bRtn = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -37,7 +41,7 @@ class MyEditSettingC {
 
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(1, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_cUser.m_nUserId			= cResSet.getInt("user_id");
@@ -59,6 +63,7 @@ class MyEditSettingC {
 				//m_cUser.m_bMailFollow		= ((m_cUser.m_nMailComment>>>3 & 0x01) == 0x01);
 				//m_cUser.m_bMailMessage	= ((m_cUser.m_nMailComment>>>4 & 0x01) == 0x01);
 				//m_cUser.m_bMailTag		= ((m_cUser.m_nMailComment>>>5 & 0x01) == 0x01);
+				m_cUser.m_nReaction			= cResSet.getInt("ng_reaction");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -81,7 +86,7 @@ class MyEditSettingC {
 
 			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(1, checkLogin.m_nUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
@@ -96,7 +101,7 @@ class MyEditSettingC {
 
 			strSql = "SELECT * FROM temp_emails_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(1, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_bUpdate = true;
@@ -104,15 +109,16 @@ class MyEditSettingC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			bRtn = true;
 		} catch(Exception e) {
-			strResult = e.toString();
+			Log.d(strSql);
 			e.printStackTrace();
+			bRtn = false;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return strResult;
+		return bRtn;
 	}
 }
-%>
