@@ -9,6 +9,9 @@ public class CUser {
 	public static final int FOLLOW_FOLLOWING = 1;
 	public static final int FOLLOW_HIDE = -1;
 
+	public static final int REACTION_SHOW = 0;
+	public static final int REACRION_HIDE = 1;
+
 	public int m_nUserId = 0;
 	public String m_strNickName = "";
 	public String m_strProfile = "";
@@ -30,6 +33,7 @@ public class CUser {
 	public int m_nAutoTweetThumbNum = 9;
 	public boolean m_bDispFollower = false;
 	public boolean m_bDispR18 = false;
+	public int m_nReaction = REACTION_SHOW;
 
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 }

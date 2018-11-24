@@ -42,15 +42,12 @@ public class IllustViewC {
 			cConn = dsPostgres.getConnection();
 
 			// content main
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.content_id=?";
+			strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_cContent = new CContent(cResSet);
-				m_cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				m_cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
-				if(m_cContent.m_cUser.m_strFileName.isEmpty()) m_cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 			}
 			cResSet.close();cResSet=null;
@@ -74,7 +71,11 @@ public class IllustViewC {
 				m_cUser.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
 				m_cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("header_file_name"));
 				m_cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
+				m_cUser.m_nReaction			= cResSet.getInt("ng_reaction");
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
+				m_cContent.m_cUser.m_strNickName	= m_cUser.m_strNickName;
+				m_cContent.m_cUser.m_strFileName	= m_cUser.m_strFileName;
+				m_cContent.m_cUser.m_nReaction		= m_cUser.m_nReaction;
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -132,16 +133,18 @@ public class IllustViewC {
 			cState.close();cState=null;
 
 			// Each Emoji
-			strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_cContent.m_nContentId);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CComment cComment = new CComment(cResSet);
-				m_cContent.m_vComment.add(0, cComment);
+			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
+				strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_cContent.m_nContentId);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					CComment cComment = new CComment(cResSet);
+					m_cContent.m_vComment.add(0, cComment);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			// Bookmark
 			if(cCheckLogin.m_bLogin) {

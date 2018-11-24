@@ -242,6 +242,7 @@ form, button {
 	cursor: pointer;
 	white-space: nowrap;
 	text-align: center;
+	line-height: 1.5em;
 }
 
 .BtnBase.Selected, input[type="submit"].Selected, input[type="button"].Selected,

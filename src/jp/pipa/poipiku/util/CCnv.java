@@ -150,15 +150,19 @@ public class CCnv {
 			strRtn.append("</div>");	// IllustItemThubExpand
 		}
 
-		// 転載禁止表示と2枚目以降ボタン
+		// 転載禁止表示
 		strRtn.append("<div class=\"IllustItemExpand\">");
 		strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
+		// 2枚目以降ボタン
 		if(cContent.m_nFileNum>1) {
-			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s</a>",
-					cContent.m_nContentId,
-					String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
+		strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s</a>",
+				cContent.m_nContentId,
+				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		}
 		strRtn.append("</div>");	// IllustItemExpand
+
+		// 転載禁止表示
+		//strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
 
 		// ブクマボタン
 		strRtn.append("<div class=\"IllustItemCmd\">");
@@ -171,53 +175,55 @@ public class CCnv {
 		strRtn.append("</div>");	// IllustItemCmd
 
 		// 絵文字
-		strRtn.append("<div class=\"IllustItemResList\">");
-		strRtn.append("<div class=\"IllustItemResListTitle\">");
-		if(cContent.m_vComment.size()<=0) {
-			strRtn.append(_TEX.T("Common.IllustItemRes.Title.Init"));
-		} else {
-			strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
-		}
-		strRtn.append("</div>");	// IllustItemResListTitle
-		// もらった絵文字
-		for(CComment comment : cContent.m_vComment) {
-			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
-		}
-		strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
-		strRtn.append("</div>");	// IllustItemResList
-		// 絵文字ボタン
-		strRtn.append("<div class=\"IllustItemResBtnList\">");
-		strRtn.append("<div class=\"ResBtnSetList\">");
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>", (nLoginUserId<1)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
-		strRtn.append("</div>");	// ResBtnSetList
+		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
+			strRtn.append("<div class=\"IllustItemResList\">");
+			strRtn.append("<div class=\"IllustItemResListTitle\">");
+			if(cContent.m_vComment.size()<=0) {
+				strRtn.append(_TEX.T("Common.IllustItemRes.Title.Init"));
+			} else {
+				strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
+			}
+			strRtn.append("</div>");	// IllustItemResListTitle
+			// もらった絵文字
+			for(CComment comment : cContent.m_vComment) {
+				strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
+			}
+			strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
+			strRtn.append("</div>");	// IllustItemResList
+			// 絵文字ボタン
+			strRtn.append("<div class=\"IllustItemResBtnList\">");
+			strRtn.append("<div class=\"ResBtnSetList\">");
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>", (nLoginUserId<1)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
+			strRtn.append("</div>");	// ResBtnSetList
 
-		if(nLoginUserId>0) {
-			// よく使う絵文字
-			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
-			for(String emoji : vResult) {
-				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+			if(nLoginUserId>0) {
+				// よく使う絵文字
+				strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
+				for(String emoji : vResult) {
+					strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+				}
+				strRtn.append("</div>");	// ResEmojiBtnList
+				// 人気の絵文字
+				strRtn.append("<div class=\"ResEmojiBtnList Popular\" style=\"display: none;\"></div>");
+			} else {
+				// よく使う絵文字
+				strRtn.append("<div class=\"ResEmojiBtnList Recent\" style=\"display: none;\"></div>");
+				// 人気の絵文字
+				strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
+				for(String emoji : vResult) {
+					strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+				}
+				strRtn.append("</div>");	// ResEmojiBtnList
 			}
-			strRtn.append("</div>");	// ResEmojiBtnList
-			// 人気の絵文字
-			strRtn.append("<div class=\"ResEmojiBtnList Popular\" style=\"display: none;\"></div>");
-		} else {
-			// よく使う絵文字
-			strRtn.append("<div class=\"ResEmojiBtnList Recent\" style=\"display: none;\"></div>");
-			// 人気の絵文字
-			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
-			for(String emoji : vResult) {
-				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
-			}
-			strRtn.append("</div>");	// ResEmojiBtnList
+			// 食べ物の絵文字
+			strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
+			// 全ての絵文字
+			strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
+			strRtn.append("</div>");	// IllustItemResList
 		}
-		// 食べ物の絵文字
-		strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
-		// 全ての絵文字
-		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
-		strRtn.append("</div>");	// IllustItemResBtnList
 		strRtn.append("</div>");	// IllustItem
 
 		return strRtn.toString();

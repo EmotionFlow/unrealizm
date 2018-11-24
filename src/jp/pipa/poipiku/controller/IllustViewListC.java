@@ -58,8 +58,29 @@ public class IllustViewListC {
 				cState.close();cState=null;
 			}
 
+			// author profile
+			CUser cUser = new CUser();
+			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nUserId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				cUser.m_nUserId				= cResSet.getInt("user_id");
+				cUser.m_strNickName			= Common.ToString(cResSet.getString("nickname"));
+				cUser.m_strProfile			= Common.ToString(cResSet.getString("profile"));
+				cUser.m_strFileName			= Common.ToString(cResSet.getString("file_name"));
+				cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("header_file_name"));
+				cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
+				cUser.m_nReaction			= cResSet.getInt("ng_reaction");
+				if(cUser.m_strFileName.isEmpty()) cUser.m_strFileName="/img/default_user.jpg";
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			if(cUser.m_nUserId<=0) return false;
+
+
 			// NEW ARRIVAL
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND contents_0000.content_id<? AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id<? AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, m_nContentId);
@@ -69,10 +90,10 @@ public class IllustViewListC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nFollowing = m_nFollow;
+				cContent.m_cUser.m_strNickName	= cUser.m_strNickName;
+				cContent.m_cUser.m_strFileName	= cUser.m_strFileName;
+				cContent.m_cUser.m_nFollowing	= m_nFollow;
+				cContent.m_cUser.m_nReaction	= cUser.m_nReaction;
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
@@ -93,18 +114,20 @@ public class IllustViewListC {
 			cState.close();cState=null;
 
 			// Each Comment
-			strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
-			cState = cConn.prepareStatement(strSql);
-			for(CContent cContent : m_vContentList) {
-				cState.setInt(1, cContent.m_nContentId);
-				cResSet = cState.executeQuery();
-				while (cResSet.next()) {
-					CComment cComment = new CComment(cResSet);
-					cContent.m_vComment.add(0, cComment);
+			if(cUser.m_nReaction==CUser.REACTION_SHOW) {
+				strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
+				cState = cConn.prepareStatement(strSql);
+				for(CContent cContent : m_vContentList) {
+					cState.setInt(1, cContent.m_nContentId);
+					cResSet = cState.executeQuery();
+					while (cResSet.next()) {
+						CComment cComment = new CComment(cResSet);
+						cContent.m_vComment.add(0, cComment);
+					}
+					cResSet.close();cResSet=null;
 				}
-				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cState.close();cState=null;
 
 			// Bookmark
 			if(cCheckLogin.m_bLogin) {
