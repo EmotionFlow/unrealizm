@@ -128,7 +128,7 @@ html {
 
 h1 {
 	display: block;
-	font-size: 20px;
+	font-size: 1.5em;
 	font-weight: normal;
 	margin: 0;
 	padding: 0;
@@ -136,7 +136,7 @@ h1 {
 
 h2, h3 {
 	display: block;
-	font-size: 18px;
+	font-size: 1em;
 	font-weight: normal;
 	margin: 0;
 	padding: 0;

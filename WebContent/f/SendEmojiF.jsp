@@ -43,7 +43,7 @@ class SendEmojiC {
 
 			// 投稿存在確認(不正アクセス対策)
 			CUser cTargUser = null;
-			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id  WHERE content_id=?";
+			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nContentId);
 			cResSet = cState.executeQuery();
@@ -51,12 +51,13 @@ class SendEmojiC {
 				cTargUser = new CUser();
 				cTargUser.m_nUserId = cResSet.getInt("user_id");
 				cTargUser.m_nLangId = cResSet.getInt("lang_id");
+				cTargUser.m_nReaction = cResSet.getInt("ng_reaction");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(cTargUser==null) {
-				return false;
-			}
+			if(cTargUser==null) return false;
+			if(cTargUser.m_nReaction!=CUser.REACTION_SHOW) return false;
+
 
 			// max 5 emoji
 			int nEmojiNum = 0;
@@ -153,7 +154,7 @@ class SendEmojiC {
 			String strBody = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Body"):_TEX.TEn("Notification.Reaction.Body");
 
 			// 通知DB登録
-			// 連続射しないように同じタイプの未送信の通知を削除
+			// 連射しないように同じタイプの未送信の通知を削除
 			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strToken);

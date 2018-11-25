@@ -156,8 +156,7 @@ public class Util {
 		if(strSrc == null) {
 			return "";
 		}
-		strSrc = strSrc.replace("\r", "");
-		strSrc = strSrc.replace("\n", "");
+		strSrc = deleteCrLf(strSrc);
 		strSrc = strSrc.replace("&", "&amp;");
 		strSrc = strSrc.replace("<", "&lt;");
 		strSrc = strSrc.replaceAll(">", "&gt;");
@@ -165,6 +164,21 @@ public class Util {
 		strSrc = strSrc.replaceAll("\"", "&quot;");
 
 		return strSrc;
+	}
+
+	public static String deleteCrLf(String strSrc) {
+		if(strSrc == null) {
+			return "";
+		}
+		strSrc = strSrc.replace("\r", "");
+		strSrc = strSrc.replace("\n", "");
+		return strSrc;
+	}
+
+	public static String subStrNum(String strSrc, int nNum) {
+		if(strSrc==null) return "";
+		if(strSrc.length()<=nNum) return strSrc;
+		return strSrc.substring(0, nNum);
 	}
 
 }

@@ -11,14 +11,18 @@ if(!cResults.getResults(cCheckLogin)) {
 	return;
 }
 
-String strTitle = cResults.m_cContent.m_cUser.m_strNickName;
+String strTitle = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"] ";
 String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
 if(strs.length>0 && strs[0].length()>0) {
-	strTitle = strs[0];
+	strTitle += strs[0];
+} else {
+	strTitle += cResults.m_cContent.m_cUser.m_strNickName;
 }
-strTitle = Util.toDescString(Common.SubStrNum(strTitle, 10));
-String strDesc = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"]" +  Util.toDescString(cResults.m_cContent.m_strDescription);
+strTitle = Util.subStrNum(strTitle, 25) + " | " + _TEX.T("THeader.Title");
+String strDesc = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"] " +  Util.deleteCrLf(cResults.m_cContent.m_strDescription) + " - " + cResults.m_cContent.m_cUser.m_strNickName;
 if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
+String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
+String strImageUrl = (cResults.m_cContent.m_nSafeFilter<2)?Common.GetPoipikuUrl(cResults.m_cContent.m_strFileName)+"_640.jpg":Common.GetPoipikuUrl("/img/warning.png");
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 boolean bSmartPhone = Util.isSmartPhone(request);
 %>
@@ -26,17 +30,29 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustView.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
+		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
-		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%>" />
-		<meta name="twitter:description" content="<%=Common.ToStringHtml(String.format(_TEX.T("IllustView.Title.Desc"), strDesc, cResults.m_cContent.m_cUser.m_strNickName))%>" />
-		<%if(cResults.m_cContent.m_nSafeFilter<2) {%>
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(cResults.m_cContent.m_strFileName)%>_640.jpg" />
-		<%} else {%>
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl("/img/warning.png")%>" />
-		<%}%>
-		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(strTitle)%></title>
+		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:image" content="<%=strImageUrl%>" />
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="<%=strUrl%>" />
+		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta property="og:image" content="<%=strImageUrl%>" />
+		<link rel="canonical" href="<%=strUrl%>" />
+		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
+		<title><%=Util.toDescString(strTitle)%></title>
+		<script type="application/ld+json">
+		{
+			"@context":"http://schema.org",
+			"@type":"ItemList",
+			"itemListElement":[
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "http:<%=strImageUrl%>"}
+			]
+		}
+		</script>
 
 		<script type="text/javascript">
 			$(function(){
@@ -154,9 +170,9 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 							<div class="UserInfoBg"></div>
 							<div class="UserInfoUser">
 								<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-								<a class="UserInfoUserName" href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a>
+								<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 								<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-								<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></span>
+								<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></h3>
 								<%}%>
 							</div>
 							<span class="UserInfoCmd">
@@ -187,9 +203,9 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<div class="UserInfoBg"></div>
 			<div class="UserInfoUser">
 				<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-				<a class="UserInfoUserName" href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a>
+				<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 				<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-				<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></span>
+				<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></h3>
 				<%}%>
 			</div>
 			<span class="UserInfoCmd">

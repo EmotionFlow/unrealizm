@@ -29,14 +29,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.0000001"
-     inkscape:cx="520.97722"
-     inkscape:cy="488.97275"
+     inkscape:cx="280.97723"
+     inkscape:cy="288.97276"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1192"
-     inkscape:window-height="941"
-     inkscape:window-x="375"
+     inkscape:window-height="810"
+     inkscape:window-x="70"
      inkscape:window-y="23"
      inkscape:window-maximized="0" />
   <metadata
@@ -2803,7 +2803,10 @@
     </g>
     <g
        id="g9787"
-       transform="translate(-1.0444079,24.717654)">
+       transform="translate(-1.0444079,24.717654)"
+       inkscape:export-filename="/Users/kawai/git/poipiku/WebContent/img/apple-touch-icon.png"
+       inkscape:export-xdpi="74.150002"
+       inkscape:export-ydpi="74.150002">
       <rect
          style="opacity:1;fill:#55bbdd;fill-opacity:1;stroke:none;stroke-width:0.68107444;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="rect8802-9"

@@ -38,11 +38,8 @@ public class CCnv {
 		// ユーザ名とフォローボタン
 		strRtn.append(String.format("<div class=\"IllustItem\" id=\"IllustItem_%d\">", cContent.m_nContentId));
 		strRtn.append("<div class=\"IllustItemUser\">");
-		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s?ID=%d\" style=\"background-image:url('%s_120.jpg')\">", ILLUST_LIST, cContent.m_nUserId, Common.GetUrl(cContent.m_cUser.m_strFileName)));
-		strRtn.append("</a>");
-		strRtn.append(String.format("<a class=\"IllustItemUserName\" href=\"%s?ID=%d\">", ILLUST_LIST, cContent.m_nUserId));
-		strRtn.append(Common.ToStringHtml(cContent.m_cUser.m_strNickName));
-		strRtn.append("</a>");
+		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s?ID=%d\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, cContent.m_nUserId, Common.GetUrl(cContent.m_cUser.m_strFileName)));
+		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s?ID=%d\">%s</a></h2>", ILLUST_LIST, cContent.m_nUserId, Common.ToStringHtml(cContent.m_cUser.m_strNickName)));
 		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
 			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollow(%d, %d)\">%s</span>",
 					cContent.m_nUserId,
@@ -56,9 +53,9 @@ public class CCnv {
 
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
-		strRtn.append(String.format("<div id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
+		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
 		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
-		strRtn.append("</div>");	// IllustItemCategory
+		strRtn.append("</h2>");	// IllustItemCategory
 
 		// カテゴリー編集要
 		if(cContent.m_nUserId==nLoginUserId) {
@@ -97,7 +94,7 @@ public class CCnv {
 
 		// キャプション
 		strRtn.append(
-			String.format("<div id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</div>",
+			String.format("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</h1>",
 				cContent.m_nContentId,
 				(cContent.m_strDescription.isEmpty())?"style=\"display: none;\"":"",
 				Common.AutoLink(Common.ToStringHtml(cContent.m_strDescription), nMode)

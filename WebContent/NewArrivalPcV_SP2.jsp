@@ -94,7 +94,7 @@ public class NewArrivalC {
 			cConn = dsPostgres.getConnection();
 
 
-			strSql = "SELECT * FROM (SELECT * FROM contents_0000 WHERE open_id=0 AND file_complex>70000 ORDER BY content_id DESC OFFSET 10 LIMIT 100) as T1 ORDER BY random() LIMIT ?";
+			strSql = "SELECT * FROM (SELECT contents_0000.* FROM contents_0000 inner join users_0000 on contents_0000.user_id=users_0000.user_id WHERE ng_reaction=0 AND open_id=0 AND file_complex>70000 ORDER BY content_id DESC OFFSET 10 LIMIT 100) as T1 ORDER BY random() LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, BASE);
 			cResSet = cState.executeQuery();
