@@ -36,7 +36,7 @@ class UploadFileCParam {
 					if(strName.equals("UID")) {
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("CAT")) {
-						m_nCategoryId = Common.ToIntN(item.getString(), 0, 13);
+						m_nCategoryId = Common.ToIntN(item.getString(), 0, 16);
 					} else if(strName.equals("DES")) {
 						m_strDescription = Common.TrimAll(Common.ToString(item.getString("UTF-8")));
 						m_strDescription = m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");

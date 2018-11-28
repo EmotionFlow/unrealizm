@@ -11,7 +11,7 @@ cCheckLogin.GetResults2(request, response);
 
 int m_nUserId = Common.ToInt(request.getParameter("UID"));
 int m_nContentId = Common.ToInt(request.getParameter("IID"));
-int m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 13);
+int m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 16);
 String m_strDesc = Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("DES"))), 200);
 int m_nMode = Common.ToInt(request.getParameter("MOD"));
 m_strDesc = m_strDesc.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");

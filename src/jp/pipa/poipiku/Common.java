@@ -60,13 +60,14 @@ public class Common {
 			6,
 			7,
 			5,
-			0,
 			9,
-			3,
-			1,
-			12,
-			11,
-			8,
+//			0,
+//			3,
+//			1,
+//			8,
+			15,
+			16,
+			14,
 	};
 
 	public static int EMOJI_KEYBORD_MAX = 64;

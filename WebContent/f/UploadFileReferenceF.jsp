@@ -14,7 +14,7 @@ class UploadReferenceCParam {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
-			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 13);
+			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 16);
 			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), Common.SAFE_FILTER_ALL, Common.SAFE_FILTER_R18G);
 			m_strDescription	= Common.TrimAll(Common.ToString(request.getParameter("DES")));
 			m_strDescription = m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");

@@ -18,6 +18,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ItemList .SideBarMid.Wide {margin: 0;}
 .SideBarBottom {height: 60px;}
 .CategoryMenu {padding: 20px 0px 12px 0px;}
+.CategoryMenu .CategoryBtn {padding: 0 15px;height: 24px;line-height: 22px;}
 .UserInfo .UserInfoBg {height: 100px;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .IllustThumb {width: 198px; height: 198px;}

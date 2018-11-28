@@ -769,6 +769,32 @@
 	padding: 1px 0;
 }
 
+.Category.C14 {
+	background-color: #55bbdd;
+}
+.CategoryBtn.C14 {
+	border-color: #55bbdd;
+	color: #55bbdd;
+}
+
+.Category.C15 {
+	background-color: #8eb8ea;
+}
+.CategoryBtn.C15 {
+	border-color: #8eb8ea;
+	color: #8eb8ea;
+}
+
+.Category.C16 {
+	background-color: #dd4400;
+}
+.CategoryBtn.C16 {
+	border-color: #dd4400;
+	color: #dd4400;
+}
+
+
+
 .IllustItem .IllustItemDesc {
 	display: block;
 	float: left;
