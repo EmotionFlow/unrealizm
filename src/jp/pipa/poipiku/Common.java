@@ -24,6 +24,10 @@ public class Common {
 
 	public static final String TAG_PATTERN = "#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 
+	public static final String NORMAL_TAG_PATTERN = "[\\s　]([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
+	public static final String HUSH_TAG_PATTERN = "[^#]#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
+	public static final String MY_TAG_PATTERN = "##([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
+
 	public static final int NOTIFICATION_TYPE_REACTION = 1;
 	public static final int NOTIFICATION_TYPE_FOLLOW = 2;
 
@@ -335,13 +339,16 @@ public class Common {
 		return true;
 	}
 
-	public static String AutoLink(String strSrc, int nMode) {
-		String ILLUST_LIST = (nMode==CCnv.MODE_SP)?"/SearchIllustByTagV.jsp":"/SearchIllustByTagPcV.jsp";
+	public static String AutoLink(String strSrc, int nUserId, int nMode) {
+		String ILLUST_LIST = (nMode==CCnv.MODE_SP)?"/SearchIllustByTagV.jsp?KWD=":"/SearchIllustByTagPcV.jsp?KWD=";
+		String MY_ILLUST_LIST = (nMode==CCnv.MODE_SP)?String.format("/IllustListV.jsp?ID=%d&KWD=", nUserId):String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
 		return strSrc
 				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
-				.replaceAll("(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format(" <a class=\"AutoLink\" href=\"%s?KWD=$2\">$0</a>", ILLUST_LIST))
+				.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format(" <a class=\"AutoLink\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$3')\">$0</a>", ILLUST_LIST))
+				.replaceAll("(##)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("<a class=\"AutoLinkMyTag\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$2')\">$0</a>", MY_ILLUST_LIST))
 				.replaceAll("@([0-9a-zA-Z_]{3,15})","<a class='AutoLink' href='https://twitter.com/$1' target='_blank'>$0</a>");
 	}
+
 	public static String EscapeSqlLike(String strSrc, String strEscape) {
 		return "%" + EscapeSqlLikeExact(strSrc, strEscape) + "%";
 	}

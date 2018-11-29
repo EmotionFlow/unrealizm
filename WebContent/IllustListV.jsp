@@ -34,7 +34,7 @@ if(!cResults.getResults(cCheckLogin)) {
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage},
+					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": '<%=cResults.m_strKeyword%>',  "PG" : g_nPage},
 					"url": "/f/IllustListF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -132,7 +132,7 @@ if(!cResults.getResults(cCheckLogin)) {
 					<span class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')"></span>
 					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
 					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_SP)%></span>
+					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></span>
 					<%}%>
 				</div>
 				<span class="UserInfoCmd">

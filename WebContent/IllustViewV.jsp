@@ -123,7 +123,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
 					<a class="UserInfoUserName" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a>
 					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_SP)%></span>
+					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></span>
 					<%}%>
 				</div>
 				<span class="UserInfoCmd">

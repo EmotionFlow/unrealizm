@@ -26,7 +26,7 @@ if(cCookies != null) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<script src="/js/upload-14.js" type="text/javascript"></script>
+		<script src="/js/upload-15.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -113,6 +113,10 @@ if(cCookies != null) {
 				<div class="Description">
 					<textarea id="EditDescription" class="EditDescription" maxlength="200" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
 					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
+				</div>
+				<div class="TagList">
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" />
+					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">
 					<div class="OptionItem">

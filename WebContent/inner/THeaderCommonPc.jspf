@@ -9,8 +9,8 @@
 <meta name="robots" content="index,follow" />
 <link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
-<link href="/css/TBase-25.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-64.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBase-26.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-66.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-26.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
@@ -18,11 +18,11 @@
 <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png" />
 <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon.png" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/js/common-24.js"></script>
+<script type="text/javascript" src="/js/common-25.js"></script>
 <script type="text/javascript" src="/js/commonPc-03.js"></script>
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-27.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-28.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%@ include file="/inner/TGoogleAnalytics.jspf"%>

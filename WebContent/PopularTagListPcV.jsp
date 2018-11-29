@@ -93,7 +93,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				</span>
 			</a>
-			<%if((nCnt+1)%5==0) {%>
+			<%if((nCnt+1)%10==0) {%>
 			<%@ include file="/inner/TAdMidWide.jspf"%>
 			<%}%>
 			<%}%>
@@ -104,7 +104,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 					CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
-					<%if((nCnt+1)%9==0) {%>
+					<%if((nCnt+1)%15==0) {%>
 					<%@ include file="/inner/TAdMidWide.jspf"%>
 					<%}%>
 				<%}%>

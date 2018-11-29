@@ -12,6 +12,7 @@ import jp.pipa.poipiku.util.*;
 
 public class IllustListC {
 	public int m_nUserId = -1;
+	public String m_strKeyword = "";
 	public int m_nPage = 0;
 	public String m_strAccessIp = "";
 
@@ -20,7 +21,8 @@ public class IllustListC {
 
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_strKeyword	= Common.TrimAll(Common.CrLfInjection(cRequest.getParameter("KWD")));
+			m_nPage			= Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 			m_strAccessIp	= cRequest.getRemoteAddr();
 		} catch(Exception e) {
 			m_nUserId = -1;
@@ -47,6 +49,7 @@ public class IllustListC {
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
+		int idx = 1;
 
 		if(m_nUserId < 1) {
 			return false;
@@ -151,11 +154,18 @@ public class IllustListC {
 
 			if(m_bBlocking || m_bBlocked) return true;
 
+			// condition
+			String strCond = (m_strKeyword.isEmpty())?"":" AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3)";
+
 			// gallery
-			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=? AND safe_filter<=?";
+			idx = 1;
+			strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? AND safe_filter<=? %s", strCond);
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, cCheckLogin.m_nSafeFilter);
+			cState.setInt(idx++, m_nUserId);
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(!m_strKeyword.isEmpty()) {
+				cState.setString(idx++, m_strKeyword);
+			}
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
 				m_nContentsNum = cResSet.getInt(1);
@@ -163,12 +173,16 @@ public class IllustListC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			idx = 1;
+			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, cCheckLogin.m_nSafeFilter);
-			cState.setInt(3, m_nPage * SELECT_MAX_GALLERY);
-			cState.setInt(4, SELECT_MAX_GALLERY);
+			cState.setInt(idx++, m_nUserId);
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(!m_strKeyword.isEmpty()) {
+				cState.setString(idx++, m_strKeyword);
+			}
+			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
+			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);

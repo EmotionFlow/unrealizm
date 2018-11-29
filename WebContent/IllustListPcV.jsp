@@ -110,7 +110,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 					<span class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')"></span>
 					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
 					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></span>
+					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></span>
 					<%}%>
 				</div>
 				<span class="UserInfoCmd">
@@ -173,7 +173,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			</div>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", "&ID="+cResults.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

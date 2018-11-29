@@ -24,6 +24,7 @@ public class CContent {
 	public int m_nBookmarkNum = 0;
 	public int m_nCommentNum = 0;
 	public int m_nSafeFilter = 0;
+	public String m_strTagList = "";
 	public CUser m_cUser = new CUser();
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
@@ -43,6 +44,7 @@ public class CContent {
 		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
 		//m_nCommentNum		= resultSet.getInt("comment_num");
 		m_nSafeFilter		= resultSet.getInt("safe_filter");
+		m_strTagList		= Common.ToString(resultSet.getString("tag_list"));
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 	}
 }

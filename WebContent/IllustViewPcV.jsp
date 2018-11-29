@@ -172,7 +172,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 								<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
 								<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 								<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-								<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></h3>
+								<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 								<%}%>
 							</div>
 							<span class="UserInfoCmd">
@@ -205,7 +205,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
 				<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 				<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-				<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), CCnv.MODE_PC)%></h3>
+				<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 				<%}%>
 			</div>
 			<span class="UserInfoCmd">

@@ -97,14 +97,25 @@ public class CCnv {
 			String.format("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</h1>",
 				cContent.m_nContentId,
 				(cContent.m_strDescription.isEmpty())?"style=\"display: none;\"":"",
-				Common.AutoLink(Common.ToStringHtml(cContent.m_strDescription), nMode)
+				Common.AutoLink(Common.ToStringHtml(cContent.m_strDescription), cContent.m_nUserId, nMode)
 			)
 		);
 
-		// キャプション編集用
+		// タグ
+		strRtn.append(
+			String.format("<h2 id=\"IllustItemTag_%d\" class=\"IllustItemTag\" %s>%s</h1>",
+				cContent.m_nContentId,
+				(cContent.m_strTagList.isEmpty())?"style=\"display: none;\"":"",
+				Common.AutoLink(Common.ToStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode)
+			)
+		);
+
+		// 編集
 		if(cContent.m_nUserId==nLoginUserId) {
+			// キャプション
 			strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
-			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\">%s</textarea>", Common.ToStringHtmlTextarea(cContent.m_strDescription)));
+			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Common.ToStringHtmlTextarea(cContent.m_strDescription)));
+			strRtn.append(String.format("<input class=\"IllustItemTagEditTxt\" type=\"text\" maxlength=\"100\" value=\"%s\" />", Util.toDescString(cContent.m_strTagList)));
 			strRtn.append("<div class=\"IllustItemDescEditCmdList\">");
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemDescEditCmd\" onclick=\"UpdateDesc(%d, %d, %d)\">OK</a>", cContent.m_nUserId, cContent.m_nContentId, nMode));
 			strRtn.append("</div>");	// IllustItemDescEditCmdList
