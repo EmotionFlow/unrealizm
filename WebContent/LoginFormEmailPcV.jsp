@@ -27,14 +27,14 @@ if(strRequestUri != null) {
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>
 		<script>
 			function RegistUser() {
-				var strNickname = $.trim($("#RegistNickname").val());
 				var strEmail = $.trim($("#RegistEmail").val());
 				var strPassword = $.trim($("#RegistPassword").val());
+				var strNickname = $.trim($("#RegistNickname").val());
 				if(strNickname.length<4 || strNickname.length>16) {
 					DispMsg('<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>');
 					return false;
 				}
-				if(!strEmail.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
+				if(!strEmail.match(/.+@.+\..+/)) {
 					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
 					return false;
 				}
@@ -63,8 +63,8 @@ if(strRequestUri != null) {
 			}
 
 			function LoginUser() {
-				var strEmail = $.trim($("#LoginEmail").val());
-				var strPassword = $.trim($("#LoginPassword").val());
+				var strEmail = $.trim($("#RegistEmail").val());
+				var strPassword = $.trim($("#RegistPassword").val());
 				$.ajaxSingle({
 					"type": "post",
 					"data": {"EM":strEmail, "PW":strPassword},
@@ -88,6 +88,8 @@ if(strRequestUri != null) {
 		<style>
 		.Wrapper {width: 360px;}
 		.AnalogicoInfo {display: none;}
+		.RegistItem {display: block; float: left; width: 100%;}
+		.LoginItem {display: none; float: left; width: 100%;}
 		</style>
 	</head>
 
@@ -97,53 +99,49 @@ if(strRequestUri != null) {
 		<div class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div id="RegistForm" class="SettingListItem">
-					<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
+					<div class="RegistItem">
+						<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
+					</div>
+					<div class="LoginItem">
+						<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Login")%></div>
+					</div>
 					<div class="SettingBody">
-						<div class="SettingBodyTxt" style="margin-top: 10px;">
-							<%=_TEX.T("LoginFormV.Label.Nickname")%>
-							<span style="font-size: 9px;"> (<%=_TEX.T("LoginFormV.Label.Nickname.Info")%>)</span>
-						</div>
-						<input id="RegistNickname" class="SettingBodyTxt" type="text" />
 						<div class="SettingBodyTxt" style="margin-top: 10px;">
 							<%=_TEX.T("LoginFormV.Label.Email")%>
 						</div>
-						<input id="RegistEmail" class="SettingBodyTxt" type="text" />
+						<input id="RegistEmail" class="SettingBodyTxt" type="email" />
 						<div class="SettingBodyTxt" style="margin-top: 10px;">
 							<%=_TEX.T("LoginFormV.Label.Password")%>
 						</div>
 						<input id="RegistPassword" class="SettingBodyTxt" type="password" />
-						<div class="SettingBodyCmd" style="margin-top: 20px;">
-							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="RegistUser()"><%=_TEX.T("LoginFormV.Button.Regist")%></a>
+						<div class="RegistItem">
+							<div class="SettingBodyTxt" style="margin-top: 10px;">
+								<%=_TEX.T("LoginFormV.Label.Nickname")%>
+								<span style="font-size: 9px;"> (<%=_TEX.T("LoginFormV.Label.Nickname.Info")%>)</span>
+							</div>
+							<input id="RegistNickname" class="SettingBodyTxt" type="text" />
+							<div class="SettingBodyCmd" style="margin-top: 20px;">
+								<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+								<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="RegistUser()"><%=_TEX.T("LoginFormV.Button.Regist")%></a>
+							</div>
+							<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
+								<div class="RegistMessage"></div>
+								<a style="color: #5bd;" href="javascript:void(0);" onclick="$('.RegistItem').slideUp();$('.LoginItem').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
+							</div>
 						</div>
-						<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
-							<div class="RegistMessage"></div>
-							<a style="color: #5bd;" href="javascript:void(0);" onclick="$('#RegistForm').slideUp();$('#LoginForm').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
-						</div>
-					</div>
-				</div>
-				<div id="LoginForm" class="SettingListItem" style="display: none;">
-					<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Login")%></div>
-					<div class="SettingBody">
-						<div class="SettingBodyTxt" style="margin-top: 10px;">
-							<%=_TEX.T("LoginFormV.Label.Email")%>
-						</div>
-						<input id="LoginEmail" class="SettingBodyTxt" type="text" />
-						<div class="SettingBodyTxt" style="margin-top: 10px;">
-							<%=_TEX.T("LoginFormV.Label.Password")%>
-						</div>
-						<input id="LoginPassword" class="SettingBodyTxt" type="password" />
-						<div class="SettingBodyCmd" style="margin-top: 20px;">
-							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="LoginUser()"><%=_TEX.T("LoginFormV.Button.Login")%></a>
-						</div>
-						<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
-							<div class="RegistMessage"></div>
-							<a style="color: #5bd;" href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
-						</div>
-						<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
-							<div class="RegistMessage"></div>
-							<a style="color: #5bd;" href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
+						<div class="LoginItem">
+							<div class="SettingBodyCmd" style="margin-top: 20px;">
+								<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+								<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="LoginUser()"><%=_TEX.T("LoginFormV.Button.Login")%></a>
+							</div>
+							<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
+								<div class="RegistMessage"></div>
+								<a style="color: #5bd;" href="javascript:void(0);" onclick="$('.LoginItem').slideUp();$('.RegistItem').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
+							</div>
+							<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
+								<div class="RegistMessage"></div>
+								<a style="color: #5bd;" href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
+							</div>
 						</div>
 					</div>
 				</div>

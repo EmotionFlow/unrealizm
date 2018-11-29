@@ -84,14 +84,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<%if(cResults.m_vContentList.size()<=0) {%>
-			<div id="InfoMsg" style="float: left; width: 100%; padding: 140px 0 0 0; text-align: center;">
+			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 				ポイピクへようこそ<br />
 				<br />
-				放置絵ポイポイ<br />
-				練習ポイポイ<br />
-				らくがきポイポイ<br />
-				進捗ポイポイ<br />
-				<br />
+				ポイピクはフォローしてもフォロー解除しても<br />
+				相手に伝わりません。<br />
+				とりあえず気になった人をフォローしてみましょう！<br />
 				<br />
 				フォローするとここに最新情報が表示されます<br />
 			</div>

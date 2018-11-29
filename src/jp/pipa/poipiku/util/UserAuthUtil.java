@@ -29,19 +29,23 @@ public class UserAuthUtil {
 
 	public static final int ERROR_EMAIL_EMPTY = -1;
 	public static final int ERROR_PASSWORD_EMPTY = -2;
-	public static final int ERROR_EMAIL_LENGTH = -3;
-	public static final int ERROR_PASSWORD_LENGTH = -4;
-	public static final int ERROR_EMAIL_INVALID = -5;
-	public static final int ERROR_USER_EXIST = -6;
-	public static final int ERROR_HUSH_INVALID = -7;
-	public static final int ERROR_NOT_LOGIN = -8;
-	public static final int ERROR_PASSWORD_ERROR = -9;
+	public static final int ERROR_NICKNAME_EMPTY = -3;
+	public static final int ERROR_EMAIL_LENGTH = -4;
+	public static final int ERROR_PASSWORD_LENGTH = -5;
+	public static final int ERROR_NICKNAME_LENGTH = -6;
+	public static final int ERROR_EMAIL_INVALID = -7;
+	public static final int ERROR_USER_EXIST = -8;
+	public static final int ERROR_HUSH_INVALID = -9;
+	public static final int ERROR_NOT_LOGIN = -10;
+	public static final int ERROR_PASSWORD_ERROR = -11;
 
 
 	public static final int LENGTH_EMAIL_MIN = 4;
-	public static final int LENGTH_EMAIL_MAX = 16;
+	public static final int LENGTH_EMAIL_MAX = 64;
 	public static final int LENGTH_PASSWORD_MIN = 4;
 	public static final int LENGTH_PASSWORD_MAX = 16;
+	public static final int LENGTH_NICKNAME_MIN = 4;
+	public static final int LENGTH_NICKNAME_MAX = 16;
 
 	public static int checkLogin(HttpServletRequest request, HttpServletResponse response) {
 		int nRtn = ERROR_UNKOWN;
@@ -114,23 +118,32 @@ public class UserAuthUtil {
 		cCheckLogin.GetResults2(request, response);
 
 		//パラメータの取得
-		String strNickName = "";
 		String strEmail	= "";
 		String strPassword	= "";
+		String strNickName = "";
 		try {
 			request.setCharacterEncoding("UTF-8");
-			strNickName		= Common.EscapeInjection(Common.ToString(request.getParameter("NN")).trim());
 			strEmail		= Common.EscapeInjection(Common.ToString(request.getParameter("EM")).trim());
 			strPassword		= Common.EscapeInjection(Common.ToString(request.getParameter("PW")).trim());
+			strNickName		= Common.EscapeInjection(Common.ToString(request.getParameter("NN")).trim());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		Log.d("1:"+strEmail);
 		if(strEmail.isEmpty()) return ERROR_EMAIL_EMPTY;
+		Log.d("2:"+strPassword);
 		if(strPassword.isEmpty()) return ERROR_PASSWORD_EMPTY;
+		Log.d("3:"+strNickName);
+		if(strNickName.isEmpty()) return ERROR_NICKNAME_EMPTY;
+		Log.d("4:"+strEmail);
 		if(strEmail.length()<LENGTH_EMAIL_MIN || strEmail.length()>LENGTH_EMAIL_MAX) return ERROR_EMAIL_LENGTH;
+		Log.d("5:"+strPassword);
 		if(strPassword.length()<LENGTH_PASSWORD_MIN || strPassword.length()>LENGTH_PASSWORD_MAX) return ERROR_PASSWORD_LENGTH;
-		if(!strEmail.matches("^([a-zA-Z0-9])+([a-zA-Z0-9\\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\\._-]+)+$")) return ERROR_EMAIL_INVALID;
-
+		Log.d("6:"+strNickName);
+		if(strNickName.length()<LENGTH_NICKNAME_MIN || strNickName.length()>LENGTH_NICKNAME_MAX) return ERROR_NICKNAME_LENGTH;
+		Log.d("7:"+strEmail);
+		if(!strEmail.matches(".+@.+\\..+")) return ERROR_EMAIL_INVALID;
+		Log.d("8:done");
 		int nUserId = 0;
 		String strHashPass = "";
 		DataSource dsPostgres = null;

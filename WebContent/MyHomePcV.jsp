@@ -66,14 +66,12 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<div id="IllustItemList" class="IllustItemList">
 
 				<%if(cResults.m_vContentList.size()<=0) {%>
-				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center;">
+				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 					ポイピクへようこそ<br />
 					<br />
-					放置絵ポイポイ<br />
-					練習ポイポイ<br />
-					らくがきポイポイ<br />
-					進捗ポイポイ<br />
-					<br />
+					ポイピクはフォローしてもフォロー解除しても<br />
+					相手に伝わりません。<br />
+					とりあえず気になった人をフォローしてみましょう！<br />
 					<br />
 					<a class="BtnBase" href="/NewArrivalPcV.jsp">
 						フォローする人を探す

@@ -67,7 +67,7 @@ body {padding: 51px 0 0 0 !important;}
 
 .Wrapper.ThumbList .PcSideBarAd {display: block; float: right; width: 300px !important; height: 250px !important; margin: 8px !important; background-color: #eee !important;}
 
-.Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: none; margin: 0 0 0 30px; position: relative;; float: none; flex: 0 0 300px;}
+.Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: none; margin: 0 0 0 30px; position: relative;; float: none; flex: 0 0 300px; min-height: 1000px;}
 .Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px; /*position: sticky; top: 81px;*/}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem {display: block; width: 100%; margin: 0 0 30px 0;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarItemTitle {display: block; float: left; width: 100%; margin: 0 0 10px 0; font-size: 18px;}
