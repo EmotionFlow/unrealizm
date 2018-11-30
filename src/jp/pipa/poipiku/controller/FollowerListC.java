@@ -32,6 +32,9 @@ public class FollowerListC {
 	}
 
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+		return false;
+
+		/*
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -84,5 +87,6 @@ public class FollowerListC {
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 		return bResult;
+		*/
 	}
 }

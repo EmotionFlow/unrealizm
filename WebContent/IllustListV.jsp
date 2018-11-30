@@ -129,11 +129,9 @@ if(!cResults.getResults(cCheckLogin)) {
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
-					<span class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')"></span>
-					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
-					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></span>
-					<%}%>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
+					<h2 class="UserInfoUserName"><a href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 				</div>
 				<span class="UserInfoCmd">
 					<%
@@ -177,6 +175,15 @@ if(!cResults.getResults(cCheckLogin)) {
 			</div>
 
 			<div id="IllustThumbList" class="IllustThumbList">
+				<%if(cResults.m_vCategoryList.size()>0) {%>
+				<div class="CategoryMenu">
+					<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/IllustListV.jsp?ID=<%=cResults.m_nUserId%>"><%=_TEX.T("Category.All")%></a>
+					<%for(CTag cTag : cResults.m_vCategoryList) {%>
+					<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+					<%}%>
+				</div>
+				<%}%>
+
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>

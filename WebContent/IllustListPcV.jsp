@@ -103,15 +103,15 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
+
+
 		<div class="Wrapper" style="width: 100%;">
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
-					<span class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')"></span>
-					<span class="UserInfoUserName"><%=cResults.m_cUser.m_strNickName%></span>
-					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-					<span class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></span>
-					<%}%>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
+					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 				</div>
 				<span class="UserInfoCmd">
 					<%
@@ -159,6 +159,15 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		</div>
 
 		<div class="Wrapper ThumbList">
+			<%if(cResults.m_vCategoryList.size()>0) {%>
+			<div class="CategoryMenu">
+				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
+				<%for(CTag cTag : cResults.m_vCategoryList) {%>
+				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+				<%}%>
+			</div>
+			<%}%>
+
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%//if(!bSmartPhone) {%>
 				<%//@ include file="/inner/TAdPc300x250_top_right.jspf"%>

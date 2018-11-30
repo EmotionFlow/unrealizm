@@ -68,6 +68,7 @@ class ActivityListC {
 			cState.close();cState=null;
 
 			// Follow
+			/*
 			if(bDispFollower) {
 				if(cParam.m_nMode<=0) {
 					strSql = "SELECT follows_0000.*, nickname, file_name FROM follows_0000 INNER JOIN users_0000 ON follows_0000.user_id=users_0000.user_id WHERE follows_0000.follow_user_id=? ORDER BY follow_id DESC LIMIT 100";
@@ -103,6 +104,7 @@ class ActivityListC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 			}
+			*/
 
 			// Heart
 			/*

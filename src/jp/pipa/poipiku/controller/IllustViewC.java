@@ -10,12 +10,14 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public class IllustViewC {
+	public int m_nUserId = -1;
 	public int m_nContentId = -1;
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nContentId		= Common.ToInt(cRequest.getParameter("TD"));
+			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
+			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 		}
@@ -42,16 +44,31 @@ public class IllustViewC {
 			cConn = dsPostgres.getConnection();
 
 			// content main
-			strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_cContent = new CContent(cResSet);
-				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+			if(m_nContentId>0) {
+				strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nContentId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					m_cContent = new CContent(cResSet);
+					bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			} else if(m_nUserId>0) {
+				strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND safe_filter<=? ORDER BY content_id DESC LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nUserId);
+				cState.setInt(2, cCheckLogin.m_nSafeFilter);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					m_cContent = new CContent(cResSet);
+					m_nContentId = m_cContent.m_nContentId;
+					bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 			if(m_cContent.m_nContentId<=0) return false;
 
 			// owner

@@ -154,6 +154,8 @@
 	font-size: 0;
 	white-space: nowrap;
 	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	overflow-scrolling: touch;
 	text-align: center;
 	position: relative;
 }
@@ -505,7 +507,7 @@
 .IllustItem {
 	display: block;
 	float: left;
-	width: 346px;
+	width: 344px;
 	padding: 0px 0 8px 0;
 	box-sizing: border-box;
 	overflow: hidden;
@@ -1031,7 +1033,7 @@
 	width: 35px;
 	height: 35px;
 	line-height: 35px;
-	margin: 4px 4px 0 4px;
+	margin: 4px 2px 0 5px;
 	border-radius: 100px;
 	user-select: none;
 	font-family: EmojiFontFamily,'Apple Color Emoji',sans-serif;

@@ -32,6 +32,7 @@ public class IllustListC {
 
 	public CUser m_cUser = new CUser();
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public ArrayList<CTag> m_vCategoryList = new ArrayList<CTag>();
 	public int SELECT_MAX_GALLERY = 36;
 	public boolean m_bOwner = false;
 	public boolean m_bFollow = false;
@@ -150,6 +151,17 @@ public class IllustListC {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 				}
+
+				// category
+				strSql = "SELECT tag_txt FROM tags_0000 WHERE tag_type=3 AND content_id IN(SELECT content_id FROM contents_0000 WHERE user_id=?) GROUP BY tag_txt ORDER BY max(upload_date) DESC";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nUserId);
+				cResSet = cState.executeQuery();
+				while(cResSet.next()) {
+					m_vCategoryList.add(new CTag(cResSet));
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
 
 			if(m_bBlocking || m_bBlocked) return true;
