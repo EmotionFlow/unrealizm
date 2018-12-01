@@ -19,8 +19,9 @@ body {padding: 51px 0 0 0 !important;}
 .SideBarBottom {height: 60px;}
 .CategoryMenu {padding: 20px 0px 4px 0px;}
 .CategoryMenu .CategoryBtn {padding: 0 15px;height: 24px;line-height: 22px;}
-.UserInfo .UserInfoBg {height: 100px;}
+.UserInfo .UserInfoBg {height: 150px;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
+.UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
 .IllustThumb {width: 198px; height: 198px;}
 .IllustThumb .Category {font-size: 13px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
 .IllustItem {margin: 30px auto; width: 100%;}
@@ -73,4 +74,12 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarItemTitle {display: block; float: left; width: 100%; margin: 0 0 10px 0; font-size: 18px;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: none; width: 300px; height: 250px; background-color: #eee;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: absolute; bottom: 0;}
-}
+
+/********** AnalogicoInfo Float *********/
+.AnalogicoInfo.Float {bottom: 0; padding: 15px 0;}
+.AnalogicoInfo.Float .AnalogicoInfoTitle {font-size: 14px;}
+.AnalogicoInfo.Float .AnalogicoMoreInfo {font-size: 14px;}
+.AnalogicoInfo.Float .AnalogicoInfoRegist {font-size: 14px; margin: 0;}
+.AnalogicoInfo.Float .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 8px 0 0 0; min-width: 240px; padding: 3px 12px; max-width: 260px; overflow: hidden; white-space: nowrap;}
+
+

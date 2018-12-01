@@ -118,7 +118,7 @@
 <%}%>
 
 <%if(!cCheckLogin.m_bLogin) {%>
-<div id="AnalogicoInfo" class="AnalogicoInfo">
+<div id="AnalogicoInfo" class="AnalogicoInfo Float">
 	<div class="Wrapper">
 		<h1 class="AnalogicoInfoTitle">
 			<%=_TEX.T("Poipiku.Info.Message.Short")%>
@@ -130,8 +130,6 @@
 			<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
 				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 			</a>
-		</div>
-		<div class="AnalogicoInfoRegist">
 			<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormEmailPcV.jsp">
 				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
 			</a>
