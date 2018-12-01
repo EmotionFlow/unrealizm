@@ -114,6 +114,7 @@ public class IllustListC {
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
+					cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 				} else {
 					// follow
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
@@ -123,6 +124,7 @@ public class IllustListC {
 					cResSet = cState.executeQuery();
 					if(cResSet.next()) {
 						m_bFollow = true;
+						cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;

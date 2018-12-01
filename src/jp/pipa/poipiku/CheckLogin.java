@@ -16,7 +16,7 @@ public class CheckLogin {
 	public int m_nUserId = -1;
 	public String m_strNickName = "no name";
 	private String m_strHashPass = "";
-	public int m_nSafeFilter = 4;
+	public int m_nSafeFilter = Common.SAFE_FILTER_R18;
 	public int m_nLangId = 0;
 	private String m_strFileName = "";
 

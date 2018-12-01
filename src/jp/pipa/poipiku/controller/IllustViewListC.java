@@ -53,9 +53,15 @@ public class IllustViewListC {
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cState.setInt(2, m_nUserId);
 				cResSet = cState.executeQuery();
-				m_nFollow = (cResSet.next())?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				boolean bFollow = cResSet.next();
+				m_nFollow = (bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				if(bFollow) {
+					cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
+			} else {	// owner
+				cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 			}
 
 			// author profile

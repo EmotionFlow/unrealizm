@@ -133,8 +133,13 @@ public class IllustViewC {
 				cResSet = cState.executeQuery();
 				m_bFollow = cResSet.next();
 				m_nFollow = (m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				if(m_bFollow) {
+					cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
+			} else {
+				cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 			}
 			m_cContent.m_cUser.m_nFollowing = m_nFollow;
 

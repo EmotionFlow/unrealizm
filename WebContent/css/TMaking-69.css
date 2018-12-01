@@ -326,7 +326,7 @@
 	max-width: 600px;
 	margin: 0 auto;
 }
-.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 15px 0;}
+.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 0 0;}
 
 .UploadFile .InputFile {
 	display: inline-block;
@@ -419,9 +419,9 @@
 	float: left;
 	width: 100%;
 	text-align: right;
-	font-size: 12px;
-	height: 15px;
-	line-height: 15px;
+	font-size: 10px;
+	height: 10px;
+	line-height: 10px;
 }
 
 .UploadFile .TagList .EditTagList {
@@ -445,9 +445,9 @@
 	float: left;
 	width: 100%;
 	text-align: right;
-	font-size: 12px;
-	height: 15px;
-	line-height: 15px;
+	font-size: 10px;
+	height: 10px;
+	line-height: 10px;
 }
 
 .UploadFile .UoloadCmdOption {
