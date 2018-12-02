@@ -12,10 +12,12 @@ import jp.pipa.poipiku.util.*;
 
 public class NewArrivalC {
 
+	public int m_nCategoryId = 0;
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
+			m_nCategoryId = Common.ToInt(cRequest.getParameter("CD"));
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
 			;
@@ -27,7 +29,6 @@ public class NewArrivalC {
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
-
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
 	}
@@ -63,33 +64,41 @@ public class NewArrivalC {
 				}
 			}
 
+			String strCondCat = (m_nCategoryId>=0)?"AND category_id=?":"";
+
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				/*
-				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) %s", strCond);
-				cState = cConn.prepareStatement(strSql);
-				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				if(!strMuteKeyword.isEmpty()) {
-					cState.setString(idx++, strMuteKeyword);
+				if(m_nCategoryId>=0) {
+					strSql = String.format("SELECT count(*) FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s", strCondCat, strCond);
+					cState = cConn.prepareStatement(strSql);
+					idx = 1;
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+					cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+					cState.setInt(idx++, m_nCategoryId);
+					if(!strMuteKeyword.isEmpty()) {
+						cState.setString(idx++, strMuteKeyword);
+					}
+					cResSet = cState.executeQuery();
+					if (cResSet.next()) {
+						m_nContentsNum = cResSet.getInt(1);
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				} else {
+					m_nContentsNum = 9999;
 				}
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-				*/
-				m_nContentsNum = 9999;
 			}
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCondCat, strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(m_nCategoryId>=0) {
+				cState.setInt(idx++, m_nCategoryId);
+			}
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}

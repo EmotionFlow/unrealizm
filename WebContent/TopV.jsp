@@ -50,7 +50,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<div class="CategoryMenu">
 				<a class="BtnBase CategoryBtn Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-				<a class="BtnBase CategoryBtn CC<%=nCategoryId%>" href="/SearchIllustByCategoryPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
+				<a class="BtnBase CategoryBtn CC<%=nCategoryId%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
 				<%}%>
 			</div>
 

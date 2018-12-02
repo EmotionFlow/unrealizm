@@ -26,6 +26,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nPage = 1; // start 1
+			var g_strKeyword = '<%=cResults.m_strKeyword%>';
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -34,7 +35,7 @@ if(!cResults.getResults(cCheckLogin)) {
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": '<%=cResults.m_strKeyword%>',  "PG" : g_nPage},
+					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
 					"url": "/f/IllustListF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -106,6 +107,16 @@ if(!cResults.getResults(cCheckLogin)) {
 				});
 			}
 
+			function changeCategory(elm, param) {
+				g_nPage = 0;
+				g_strKeyword = param;
+				$("#IllustThumbList").empty();
+				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
+				$(elm).addClass('Selected');
+				updateCategoryMenuPos(300);
+				addContents();
+			}
+
 			$(function(){
 				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
 				$(window).bind("scroll", function() {
@@ -115,6 +126,10 @@ if(!cResults.getResults(cCheckLogin)) {
 					}
 				});
 				<%}%>
+			});
+
+			$(function(){
+				updateCategoryMenuPos(0);
 			});
 		</script>
 		<style>
@@ -174,16 +189,16 @@ if(!cResults.getResults(cCheckLogin)) {
 				<%}%>
 			</div>
 
-			<div id="IllustThumbList" class="IllustThumbList">
-				<%if(cResults.m_vCategoryList.size()>0) {%>
-				<div class="CategoryMenu">
-					<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/IllustListV.jsp?ID=<%=cResults.m_nUserId%>"><%=_TEX.T("Category.All")%></a>
-					<%for(CTag cTag : cResults.m_vCategoryList) {%>
-					<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
-					<%}%>
-				</div>
+			<%if(cResults.m_vCategoryList.size()>0) {%>
+			<div id="CategoryMenu" class="CategoryMenu">
+				<span class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" onclick="changeCategory(this, '')"><%=_TEX.T("Category.All")%></span>
+				<%for(CTag cTag : cResults.m_vCategoryList) {%>
+				<span class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" onclick="changeCategory(this, '<%=cTag.m_strTagTxt%>')"><%=Util.toDescString(cTag.m_strTagTxt)%></span>
 				<%}%>
+			</div>
+			<%}%>
 
+			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>

@@ -21,6 +21,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<title>recent</title>
 		<script>
 			var g_nPage = 1;
+			var g_nCategory = <%=cResults.m_nCategoryId%>;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -29,7 +30,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage},
+					"data": {"PG" : g_nPage, "CD" : g_nCategory},
 					"url": "/f/NewArrivalF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -37,7 +38,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 							$('#InfoMsg').hide();
 							$("#IllustThumbList").append(data);
 							g_bAdding = false;
-							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
+							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nCategory+'/'+g_nPage+'.html'});
 						} else {
 							$(window).unbind("scroll.addContents");
 						}
@@ -49,6 +50,16 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				});
 			}
 
+			function changeCategory(elm, param) {
+				g_nPage = 0;
+				g_nCategory = param;
+				$("#IllustThumbList").empty();
+				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
+				$(elm).addClass('Selected');
+				updateCategoryMenuPos(300);
+				addContents();
+			}
+
 			$(function(){
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
@@ -57,11 +68,22 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					}
 				});
 			});
+
+			$(function(){
+				updateCategoryMenuPos(0);
+			});
 		</script>
 	</head>
 
 	<body>
 		<div class="Wrapper">
+			<div id="CategoryMenu" class="CategoryMenu">
+				<a class="BtnBase CategoryBtn <%if(cResults.m_nCategoryId<0){%> Selected<%}%>" onclick="changeCategory(this, -1)"><%=_TEX.T("Category.All")%></a>
+				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" onclick="changeCategory(this, <%=nCategoryId%>)"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
+				<%}%>
+			</div>
+
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>

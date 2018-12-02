@@ -42,7 +42,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);
 					int nCategoryId = cResults.m_vContentList.get(nCnt);
 				%>
-				<a class="CategoryListItem" href="/SearchIllustByCategoryV.jsp?CD=<%=nCategoryId%>">
+				<a class="CategoryListItem" href="/NewArrivalV.jsp?CD=<%=nCategoryId%>">
 					<span class="CategoryTitle">
 						<span class="Category2 C<%=nCategoryId%>">
 							<%=_TEX.T(String.format("Category.C%d", nCategoryId))%>

@@ -322,5 +322,18 @@ function moveTagSearch(url, str) {
 	location.href = url+fixedEncodeURIComponent(str);
 }
 
+function updateCategoryMenuPos(duration) {
+	if($('#CategoryMenu').length) {
+		var frame_width = $('#CategoryMenu').outerWidth();
+		var frame_scroll_left = $('#CategoryMenu').scrollLeft();
+		var item_width = $('#CategoryMenu .CategoryBtn.Selected').outerWidth();
+		var item_left = $('#CategoryMenu .CategoryBtn.Selected').position().left + frame_scroll_left;
+		var item_pos = item_left + (item_width - frame_width)/2
+		$('#CategoryMenu').animate({scrollLeft:item_pos}, duration);
+		console.log(frame_width, frame_scroll_left, item_width, item_left, item_pos);
+	}
+}
+
+
 
 

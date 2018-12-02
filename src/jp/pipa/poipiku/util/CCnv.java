@@ -23,14 +23,14 @@ public class CCnv {
 			{"/PopularIllustListViewPcV.jsp", "/PopularIllustListViewV.jsp"},
 			{"/SearchIllustByKeywordViewPcV.jsp", "/SearchIllustByKeywordViewV.jsp"},
 			{"/SearchIllustByTagViewPcV.jsp", "/SearchIllustByTagViewV.jsp"},
-			{"/SearchIllustByCategoryViewPcV.jsp", "/SearchIllustByCategoryViewV.jsp"},
+			{"/NewArrivalViewPcV.jsp", "/NewArrivalViewV.jsp"},
 	};
 
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException{
 		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
 		String REPORT_FORM = (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 		String ILLUST_DETAIL = (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
-		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/SearchIllustByCategoryV.jsp":"/SearchIllustByCategoryPcV.jsp";
+		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		String LINK_TARG = (nMode==MODE_SP)?"":"target=\"_blank\"";
 
 		StringBuilder strRtn = new StringBuilder();
@@ -246,7 +246,7 @@ public class CCnv {
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
-		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/SearchIllustByCategoryV.jsp":"/SearchIllustByCategoryPcV.jsp";
+		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));

@@ -12,18 +12,20 @@ import jp.pipa.poipiku.util.*;
 
 public class NewArrivalViewC {
 	public int m_nContentId = -1;
+	public int m_nCategoryId = 0;
 	public int m_nPage = 0;
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
-			m_nPage			= Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_nCategoryId = Common.ToInt(cRequest.getParameter("KWD"));
+			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
-			;
+			m_nCategoryId = -1;
+			m_nPage = 0;
 		}
 	}
-
 
 	public int SELECT_MAX_GALLERY = 10;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
@@ -64,30 +66,35 @@ public class NewArrivalViewC {
 				}
 			}
 
+			String strCondCat = (m_nCategoryId>=0)?"AND category_id=?":"";
+
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				/*
-				strSql = String.format("SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND content_id<=? %s", strCond);
-				cState = cConn.prepareStatement(strSql);
-				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, m_nContentId);
-				if(!strMuteKeyword.isEmpty()) {
-					cState.setString(idx++, strMuteKeyword);
+				if(m_nCategoryId>=0) {
+					strSql = String.format("SELECT COUNT(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND content_id<=? AND safe_filter<=? %s %s", strCondCat, strCond);
+					cState = cConn.prepareStatement(strSql);
+					idx = 1;
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+					cState.setInt(idx++, m_nContentId);
+					cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+					cState.setInt(idx++, m_nCategoryId);
+					if(!strMuteKeyword.isEmpty()) {
+						cState.setString(idx++, strMuteKeyword);
+					}
+					cResSet = cState.executeQuery();
+					if (cResSet.next()) {
+						m_nContentsNum = cResSet.getInt(1);
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				} else {
+					m_nContentsNum = 9999;
 				}
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-				*/
-				m_nContentsNum = 9999;
 			}
 
-			strSql = String.format("SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND content_id<=? AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = String.format("SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND content_id<=? AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCondCat, strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
@@ -95,6 +102,7 @@ public class NewArrivalViewC {
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, m_nContentId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			cState.setInt(idx++, m_nCategoryId);
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}

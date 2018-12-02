@@ -38,6 +38,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			$('#MenuSearch').addClass('Selected');
 			<%}%>
 		});
+
+		$(function(){
+			updateCategoryMenuPos(0);
+		});
 		</script>
 
 		<script>
@@ -160,7 +164,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<div class="Wrapper ThumbList">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
-			<div class="CategoryMenu">
+			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
 				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
