@@ -158,6 +158,7 @@
 	overflow-scrolling: touch;
 	text-align: center;
 	position: relative;
+	z-index: 0;
 }
 
 .CategoryMenu .CategoryBtn {

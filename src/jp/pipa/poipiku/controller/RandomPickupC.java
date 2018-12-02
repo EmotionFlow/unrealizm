@@ -43,6 +43,7 @@ public class RandomPickupC {
 			cConn = dsPostgres.getConnection();
 
 
+			/*
 			String strMuteKeyword = "";
 			String strCond = "";
 			if(cCheckLogin.m_bLogin) {
@@ -59,6 +60,7 @@ public class RandomPickupC {
 					strCond = "AND description &@~ ?";
 				}
 			}
+			*/
 
 
 			// NEW ARRIVAL
@@ -82,15 +84,18 @@ public class RandomPickupC {
 				m_nContentsNum = SELECT_MAX_GALLERY;
 			}
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY random() LIMIT ?", strCond);
+			//strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY random() LIMIT ?", strCond);
+			strSql = "SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY random() LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
+			*/
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {

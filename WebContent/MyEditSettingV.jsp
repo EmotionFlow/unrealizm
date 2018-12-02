@@ -479,6 +479,7 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.MuteKeyowrd")%></div>
 					<div class="SettingBody">
+						<%=_TEX.T("EditSettingV.MuteKeyowrd.Message")%>
 						<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100" placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>
 						<div class="SettingBodyCmd">
 							<div id="MuteKeywordTextNum" class="RegistMessage" >100</div>

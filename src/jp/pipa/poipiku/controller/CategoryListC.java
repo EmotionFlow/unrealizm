@@ -54,6 +54,7 @@ public class CategoryListC {
 			cState.close();cState=null;
 
 
+			/*
 			String strMuteKeyword = "";
 			String strCond = "";
 			if(cCheckLogin.m_bLogin) {
@@ -70,10 +71,12 @@ public class CategoryListC {
 					strCond = "AND description &@~ ?";
 				}
 			}
+			*/
 
 
 			// CATEGORY
-			strSql = String.format("SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCond);
+			//strSql = String.format("SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCond);
+			strSql = "SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			for(int nCategoryId : m_vContentList) {
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
@@ -82,9 +85,11 @@ public class CategoryListC {
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				/*
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
 				}
+				*/
 				cState.setInt(idx++, SELECT_SAMPLE_GALLERY);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {

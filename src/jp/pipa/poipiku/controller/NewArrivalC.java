@@ -68,6 +68,8 @@ public class NewArrivalC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
+				m_nContentsNum = 9999;
+				/*
 				if(m_nCategoryId>=0) {
 					strSql = String.format("SELECT count(*) FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s", strCondCat, strCond);
 					cState = cConn.prepareStatement(strSql);
@@ -88,6 +90,7 @@ public class NewArrivalC {
 				} else {
 					m_nContentsNum = 9999;
 				}
+				*/
 			}
 
 			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCondCat, strCond);

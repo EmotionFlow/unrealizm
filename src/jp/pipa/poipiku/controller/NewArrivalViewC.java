@@ -71,6 +71,8 @@ public class NewArrivalViewC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
+				m_nContentsNum = 9999;
+				/*
 				if(m_nCategoryId>=0) {
 					strSql = String.format("SELECT COUNT(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND content_id<=? AND safe_filter<=? %s %s", strCondCat, strCond);
 					cState = cConn.prepareStatement(strSql);
@@ -92,6 +94,7 @@ public class NewArrivalViewC {
 				} else {
 					m_nContentsNum = 9999;
 				}
+				*/
 			}
 
 			strSql = String.format("SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND content_id<=? AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCondCat, strCond);
@@ -102,7 +105,9 @@ public class NewArrivalViewC {
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, m_nContentId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			cState.setInt(idx++, m_nCategoryId);
+			if(m_nCategoryId>=0) {
+				cState.setInt(idx++, m_nCategoryId);
+			}
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
