@@ -130,8 +130,7 @@ class UploadFileFirstC {
 	}
 }
 %><%
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 Log.d("UploadPasteFirstF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;

@@ -4,8 +4,7 @@
 request.setCharacterEncoding("UTF-8");
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int m_nUserId = Common.ToInt(request.getParameter("ID"));
 int m_nModeId = Common.ToInt(request.getParameter("MD"));

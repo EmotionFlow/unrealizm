@@ -5,8 +5,7 @@ request.setCharacterEncoding("UTF-8");
 int nContentId	= Common.ToInt(request.getParameter("TD"));
 
 // login check
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 %>
 <!DOCTYPE html>
 <html>

@@ -72,8 +72,7 @@ class UpdateBookmarkC {
 }
 %>
 <%
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 UpdateBookmarkCParam cParam = new UpdateBookmarkCParam();
 cParam.GetParam(request);

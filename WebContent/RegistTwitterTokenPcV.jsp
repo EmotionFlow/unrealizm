@@ -13,8 +13,7 @@ contentType="text/html; charset=UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 boolean bResult = false;
 

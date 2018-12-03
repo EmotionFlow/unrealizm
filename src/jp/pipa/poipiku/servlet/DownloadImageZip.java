@@ -42,8 +42,7 @@ public class DownloadImageZip extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CheckLogin cCheckLogin = new CheckLogin();
-		cCheckLogin.GetResults2(request, response);
+		CheckLogin cCheckLogin = new CheckLogin(request, response);
 		if(!cCheckLogin.m_bLogin) return;
 
 		CDownloadImageFile cResults = new CDownloadImageFile();

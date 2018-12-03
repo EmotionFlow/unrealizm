@@ -20,6 +20,12 @@ public class CheckLogin {
 	public int m_nLangId = 0;
 	private String m_strFileName = "";
 
+	public CheckLogin() {}
+	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {
+		GetResults2(request, response);
+	}
+
+
 	private void SetCookie(HttpServletResponse cResponse)
 	{
 		try

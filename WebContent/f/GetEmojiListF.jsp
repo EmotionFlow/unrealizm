@@ -20,8 +20,7 @@ class GetEmojiListC {
 }
 %>
 <%
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 GetEmojiListC cResults = new GetEmojiListC();
 cResults.getParam(request);

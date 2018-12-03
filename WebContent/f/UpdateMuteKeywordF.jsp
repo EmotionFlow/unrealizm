@@ -59,8 +59,7 @@ class UpdateMuteKeyword {
 	}
 }
 %><%
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 UpdateMuteKeyword cResults = new UpdateMuteKeyword();
 cResults.getParam(request);

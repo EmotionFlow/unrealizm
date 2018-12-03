@@ -57,8 +57,7 @@ if(nImgWidth<0) nImgWidth=80;
 int nImgNum = Common.ToInt(request.getParameter("INUM"));
 if(nImgNum<0) nImgNum=4;
 
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 BannerListC cResults = new BannerListC();
 cResults.SELECT_MAX_GALLERY = nImgNum;

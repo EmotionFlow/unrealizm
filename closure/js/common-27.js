@@ -330,7 +330,6 @@ function updateCategoryMenuPos(duration) {
 		var item_left = $('#CategoryMenu .CategoryBtn.Selected').position().left + frame_scroll_left;
 		var item_pos = item_left + (item_width - frame_width)/2
 		$('#CategoryMenu').animate({scrollLeft:item_pos}, duration);
-		console.log(frame_width, frame_scroll_left, item_width, item_left, item_pos);
 	}
 }
 

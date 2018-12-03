@@ -6,8 +6,7 @@ request.setCharacterEncoding("UTF-8");
 int nRtn = 0;
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int m_nUserId = Common.ToInt(request.getParameter("UID"));
 int m_nContentId = Common.ToInt(request.getParameter("IID"));

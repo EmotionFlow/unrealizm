@@ -48,8 +48,7 @@ class UpdateNotifyC {
 	}
 }
 %><%
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 UpdateNotifyCParam cParam = new UpdateNotifyCParam();
 cParam.GetParam(request);

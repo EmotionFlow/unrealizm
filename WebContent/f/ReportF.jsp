@@ -5,8 +5,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 //login check
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 //パラメータの取得
 request.setCharacterEncoding("UTF-8");

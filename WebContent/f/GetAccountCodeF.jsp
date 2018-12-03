@@ -69,8 +69,7 @@ class GetAccountCodeC {
 	}
 }
 %><%
-CheckLogin cCheckLogin = new CheckLogin();
-cCheckLogin.GetResults2(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 GetAccountCodeCParam cParam = new GetAccountCodeCParam();
 cParam.GetParam(request);

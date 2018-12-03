@@ -76,7 +76,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: absolute; bottom: 0;}
 
 /********** AnalogicoInfo Float *********/
-.AnalogicoInfo.Float {bottom: 0; padding: 15px 0;}
+.AnalogicoInfo.Float {bottom: 0; padding: 15px 0; position: static;}
 .AnalogicoInfo.Float .AnalogicoInfoTitle {font-size: 14px;}
 .AnalogicoInfo.Float .AnalogicoMoreInfo {font-size: 14px;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist {font-size: 14px; margin: 0;}
