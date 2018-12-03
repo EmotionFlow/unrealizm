@@ -11,7 +11,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ThumbList {width: 990px;}
 .Wrapper.ItemList {width: 728px;}
 .Wrapper.ViewPc {width: 930px; position: relative; display: flex; flex-flow: row wrap;}
-.Wrapper.ViewPc .IllustItemList {width: 600px; float: none; flex: 0 0 600px;}
+.Wrapper.ViewPc .IllustItemList {width: 600px; float: none; flex: 0 0 600px; margin: 0;}
 .SideBarTop {height: 60px;}
 .SideBarMid {height: 60px;}
 .SideBarMid.Wide {height: 90px; margin: 5px 0;}

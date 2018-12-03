@@ -109,16 +109,26 @@ if(!cResults.getResults(cCheckLogin)) {
 			function changeCategory(elm, param) {
 				g_nPage = 0;
 				g_strKeyword = param;
+				g_bAdding = false;
 				$("#IllustThumbList").empty();
 				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
 				$(elm).addClass('Selected');
 				updateCategoryMenuPos(300);
+				$(window).unbind("scroll.addContents");
+				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
+				$(window).bind("scroll.addContents", function() {
+					$(window).height();
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
+						addContents();
+					}
+				});
 				addContents();
+				<%}%>
 			}
 
 			$(function(){
 				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
-				$(window).bind("scroll", function() {
+				$(window).bind("scroll.addContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();
