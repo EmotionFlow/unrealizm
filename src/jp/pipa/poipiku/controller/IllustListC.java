@@ -92,6 +92,18 @@ public class IllustListC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 
+				if(m_cUser.m_strHeaderFileName.isEmpty()) {
+					strSql = "SELECT * FROM contents_0000 WHERE open_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, m_nUserId);
+					cResSet = cState.executeQuery();
+					if(cResSet.next()) {
+						m_cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("file_name"));
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				}
+
 
 				// flags
 				if(m_bOwner) {

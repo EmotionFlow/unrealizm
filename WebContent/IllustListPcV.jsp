@@ -40,6 +40,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		$(function(){
 			updateCategoryMenuPos(0);
+			/*
+			$(window).bind("scroll.slideHeader", function() {
+				$('.UserInfo.Float').css('background-position-y', $(this).scrollTop()/5 + 'px');
+			});
+			*/
 		});
 		</script>
 
@@ -109,7 +114,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 
 		<div class="Wrapper" style="width: 100%;">
-			<div class="UserInfo">
+			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
