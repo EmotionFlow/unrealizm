@@ -35,19 +35,22 @@ public class ImageUtil {
 		int nWidth = cImage.getWidth();
 		int nHeight = cImage.getHeight();
 
-		if(nWidth<=640) {
+		if(nWidth<=800) {
 			Path pathSrc = Paths.get(strSrcFileName);
 			Path pathDst = Paths.get(strSrcFileName+"_640.jpg");
 			Files.copy(pathSrc, pathDst);
 		} else {
-			ImageUtil.createThumb(strSrcFileName, strSrcFileName+"_640.jpg", 640, 0, bLoop);
+			ImageUtil.createThumb(strSrcFileName, strSrcFileName+"_640.jpg", 800, 0, bLoop);
 		}
-		if(nWidth<=360 && nHeight<=360) {
+		double lfZoom = Math.max(240.0/nWidth, 240.0/nHeight);
+		if(lfZoom>=1.0) {
 			Path pathSrc = Paths.get(strSrcFileName);
 			Path pathDst = Paths.get(strSrcFileName+"_360.jpg");
 			Files.copy(pathSrc, pathDst);
 		} else {
-			ImageUtil.createThumbNormalize(strSrcFileName, strSrcFileName+"_360.jpg", 360, bLoop);
+			//ImageUtil.createThumbNormalize(strSrcFileName, strSrcFileName+"_360.jpg", 360, bLoop);
+			int nCalWidth = (int)(nWidth * lfZoom);
+			ImageUtil.createThumb(strSrcFileName, strSrcFileName+"_360.jpg", nCalWidth, 0, bLoop);
 		}
 	}
 	public static void createThumbIllust(String strSrcFileName) throws IOException {
