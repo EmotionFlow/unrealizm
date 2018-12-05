@@ -12,7 +12,7 @@ g_strSearchWord = cResults.m_strKeyword;
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
-		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
+		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchTagByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchTagByKeyword.Title")%></title>
 
 		<script type="text/javascript">

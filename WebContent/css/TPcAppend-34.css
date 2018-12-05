@@ -46,7 +46,7 @@ body {padding: 51px 0 0 0 !important;}
 .IllustThumb:nth-child(16n+3), .IllustThumb:nth-child(16n+6), .IllustThumb:nth-child(16n+9), .IllustThumb:nth-child(16n+12), .IllustThumb:nth-child(16n+15) {margin-right: 5px;}
 .IllustThumb:nth-child(16n+5), .IllustThumb:nth-child(16n+10), .IllustThumb:nth-child(16n+15) {margin-right: 0;}
 .IllustThumb .IllustInfo {padding: 10px 5px 0px 5px;}
-.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 12px; height: 35px; line-height: 35px;}
+.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 12px; height: 36px; line-height: 36px;}
 .Wrapper.ItemList .IllustThumbList, .Wrapper.ItemList .IllustItemList {margin: 30px 0; border: solid 1px #eee; border-radius: 6px; overflow: hidden;}
 .Header {width: 100%; min-width: 700px; padding: 0;}
 .HeaderWrapper {min-width: 700px; max-width: 990px; margin: 0 auto;}

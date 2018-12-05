@@ -11,8 +11,8 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 10px 0; box-sizing: border-box; overflow: hidden;}
 .Header .HeaderSearch {display: flex; flex-flow: row nowrap; justify-content: center; padding: 3px 10px 1px 10px;}
 .Header .HeaderSearch .HeaderSearchBox {display: block; flex: 1 1; height: 26px; padding: 0 5px; box-sizing: border-box; border: solid 1px #5bd;}
-.Header .HeaderSearch .HeaderSearchBox:placeholder-shown, .Header .HeaderSearch .HeaderSearchBox::placeholder {color: #bbb; font-style: italic;font-size: 12px;}
-.Header .HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 26px; height: 26px; box-sizing: border-box; margin: 0; background-color: #5bd; color: #fff; border: solid 1px #5bd; cursor: pointer; border-left: none;line-height: 25px;}
+.Header .HeaderSearch .HeaderSearchBox:placeholder-shown, .Header .HeaderSearch .HeaderSearchBox::placeholder {color: #bbb; font-style: italic;font-size: 12px;border-radius: 15px 0 0 15px;}
+.Header .HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 34px; height: 26px; box-sizing: border-box; margin: 0; background-color: #5bd; color: #fff; border: solid 1px #5bd; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0;}
 .Header .HeaderSearch .HeaderSearchBtn:hover {background-color: #fff; color: #5bd;}
 .FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ddd; background-color: #fff; z-index: 9999; }
 .FooterMenu {display: block; max-width: 600px; height: 50px; margin: 0 auto; overflow: hidden;}

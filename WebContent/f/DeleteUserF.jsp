@@ -105,6 +105,13 @@ try {
 	cState.executeUpdate();
 	cState.close();cState=null;
 
+	// delete token
+	strSql = "DELETE FROM notification_tokens_0000 WHERE user_id=?";
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, m_nUserId);
+	cState.executeUpdate();
+	cState.close();cState=null;
+
 	// delete user
 	strSql = "DELETE FROM users_0000 WHERE user_id=?";
 	cState = cConn.prepareStatement(strSql);

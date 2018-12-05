@@ -117,22 +117,23 @@ class SendEmojiC {
 			bRtn = true; // 以下実行されなくてもOKを返す
 
 			// 通知
+			/*
 			// オンラインの場合は何もしない
 			if(CheckLogin.isOnline(cTargUser.m_nUserId)) return bRtn;
+			*/
 
-			// 通知先デバイストークンの取得 iPhone
-			String strToken = "";
-			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=? AND token_type=?";
+			// 通知先デバイストークンの取得
+			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<CNotificationToken>();
+			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cTargUser.m_nUserId);
-			cState.setInt(2, Common.NOTIFICATION_TOKEN_TYPE_IOS);
 			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				strToken = cResSet.getString("notification_token");
+			while(cResSet.next()) {
+				cNotificationTokens.add(new CNotificationToken(cResSet));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(strToken.isEmpty()) return bRtn;
+			if(cNotificationTokens.isEmpty()) return bRtn;
 
 			// バッジに表示する数を取得
 			int nBadgeNum = 0;
@@ -155,24 +156,30 @@ class SendEmojiC {
 
 			// 通知DB登録
 			// 連射しないように同じタイプの未送信の通知を削除
-			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=?";
+			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=? AND token_type=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strToken);
-			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-			cState.executeUpdate();
+			for(CNotificationToken cNotificationToken : cNotificationTokens) {
+				cState.setString(1, cNotificationToken.m_strNotificationToken);
+				cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
+				cState.setInt(3, cNotificationToken.m_nTokenType);
+				cState.executeUpdate();
+			}
 			cState.close();cState=null;
 			// 送信
-			strSql = "INSERT INTO notification_buffers_0000(notification_token, notification_type, badge_num, title, sub_title, body) VALUES(?, ?, ?, ?, ?, ?)";
+			strSql = "INSERT INTO notification_buffers_0000(notification_token, notification_type, badge_num, title, sub_title, body, token_type) VALUES(?, ?, ?, ?, ?, ?, ?)";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strToken);
-			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-			cState.setInt(3, nBadgeNum);
-			cState.setString(4, strTitle);
-			cState.setString(5, strSubTitle);
-			cState.setString(6, strBody);
-			cState.executeUpdate();
+			for(CNotificationToken cNotificationToken : cNotificationTokens) {
+				cState.setString(1, cNotificationToken.m_strNotificationToken);
+				cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
+				cState.setInt(3, nBadgeNum);
+				cState.setString(4, strTitle);
+				cState.setString(5, strSubTitle);
+				cState.setString(6, strBody);
+				cState.setInt(7, cNotificationToken.m_nTokenType);
+				cState.executeUpdate();
+				Log.d(cNotificationToken.m_strNotificationToken, ""+cNotificationToken.m_nTokenType, ""+nBadgeNum, strTitle, strSubTitle, strBody);
+			}
 			cState.close();cState=null;
-			Log.d(strToken, ""+nBadgeNum, strTitle, strSubTitle, strBody);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
