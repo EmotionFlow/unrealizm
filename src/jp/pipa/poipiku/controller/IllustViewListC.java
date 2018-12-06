@@ -31,7 +31,7 @@ public class IllustViewListC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 20;
+	public int SELECT_MAX_GALLERY = 10;
 	public int SELECT_MAX_EMOJI = 60;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public boolean getResults(CheckLogin cCheckLogin) {

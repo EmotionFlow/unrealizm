@@ -37,13 +37,19 @@ public class NewArrivalC {
 
 		try {
 			int BASE = 1;
+			boolean USER = false;
+			boolean CONTENT = false;
 			int nNowHour = (new java.util.Date()).getHours();
 			switch(nNowHour) {
 			case 0:
 				BASE = 5;
+				USER = true;
+				CONTENT = true;
 				break;
 			case 1:
 				BASE = 4;
+				//USER = true;
+				CONTENT = true;
 				break;
 			case 2:
 				BASE = 3;
@@ -81,9 +87,13 @@ public class NewArrivalC {
 				break;
 			case 22:
 				BASE = 6;
+				//USER = true;
+				CONTENT = true;
 				break;
 			case 23:
 				BASE = 7;
+				USER = true;
+				CONTENT = true;
 				break;
 			default:
 				BASE = 1;
@@ -92,6 +102,43 @@ public class NewArrivalC {
 
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
+
+			if(USER) {
+				strSql = "SELECT nextval('users_0000_user_id_seq')";
+				cState = cConn.prepareStatement(strSql);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					int user_id = cResSet.getInt(1);
+					Log.d("user_id:"+user_id);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
+			if(CONTENT) {
+				for(int nCnt=0; nCnt<2; nCnt++) {
+					strSql = "SELECT nextval('contents_0000_content_id_seq')";
+					cState = cConn.prepareStatement(strSql);
+					cResSet = cState.executeQuery();
+					while (cResSet.next()) {
+						int content_id = cResSet.getInt(1);
+						Log.d("content_id:"+content_id);
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				}
+
+				for(int nCnt=0; nCnt<3; nCnt++) {
+					strSql = "SELECT nextval('contents_appends_0000_append_id_seq')";
+					cState = cConn.prepareStatement(strSql);
+					cResSet = cState.executeQuery();
+					while (cResSet.next()) {
+						int append_id = cResSet.getInt(1);
+						Log.d("append_id:"+append_id);
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				}
+			}
 
 
 			strSql = "SELECT * FROM (SELECT contents_0000.* FROM contents_0000 inner join users_0000 on contents_0000.user_id=users_0000.user_id WHERE ng_reaction=0 AND open_id=0 AND file_complex>70000 ORDER BY content_id DESC OFFSET 10 LIMIT 200) as T1 ORDER BY random() LIMIT ?";

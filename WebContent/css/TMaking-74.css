@@ -631,12 +631,15 @@
 	width: 100%;
 	box-sizing: border-box;
 	text-align: right;
-	height: 10px;
+	height: 15px;
 	line-height: 10px;
-	padding: 0;
+	padding: 1px 0 4px 0;
 	font-size: 9px;
 	color: #999;
-	position: absolute;
+}
+
+.IllustItem .IllustItemTProhibit .TapToFull {
+	display: inline;
 }
 
 .IllustItem .IllustItemCmd {
@@ -1075,7 +1078,7 @@
 
 .IllustItem .IllustItemResList .IllustItemResListTitle .TitleShowAll {
 	display: inline-block;
-	margin: 0 0 0 10px;
+	margin: 0 0 0 5px;
 	color: #5bd;
 	text-decoration: underline;
 	cursor: pointer;

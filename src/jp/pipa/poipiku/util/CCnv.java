@@ -160,7 +160,7 @@ public class CCnv {
 
 		// 転載禁止表示
 		strRtn.append("<div class=\"IllustItemExpand\">");
-		strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
+		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>", _TEX.T("IllustView.ProhibitMsg.TapToFull"), _TEX.T("IllustView.ProhibitMsg")));
 		// 2枚目以降ボタン
 		if(cContent.m_nFileNum>1) {
 		strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s</a>",

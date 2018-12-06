@@ -46,9 +46,10 @@ public class IllustViewC {
 
 			// content main
 			if(m_nContentId>0) {
-				strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
+				strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nContentId);
+				cState.setInt(1, m_nUserId);
+				cState.setInt(2, m_nContentId);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
 					m_cContent = new CContent(cResSet);
