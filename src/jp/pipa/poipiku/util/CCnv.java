@@ -184,13 +184,14 @@ public class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			strRtn.append("<div class=\"IllustItemResList\">");
+			strRtn.append(String.format("<div id=\"IllustItemResList_%d\" class=\"IllustItemResList\">", cContent.m_nContentId));
 			strRtn.append("<div class=\"IllustItemResListTitle\">");
 			if(cContent.m_vComment.size()<=0) {
 				strRtn.append(_TEX.T("Common.IllustItemRes.Title.Init"));
 			} else {
 				strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
 			}
+			strRtn.append(String.format("<span class=\"TitleShowAll\" onclick=\"ShowAllReaction(%d, this)\">%s</span>", cContent.m_nContentId ,_TEX.T("Common.IllustItemRes.Title.ShowAll")));
 			strRtn.append("</div>");	// IllustItemResListTitle
 			// もらった絵文字
 			for(CComment comment : cContent.m_vComment) {

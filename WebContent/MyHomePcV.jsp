@@ -2,6 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!cCheckLogin.m_bLogin) {
 	response.sendRedirect("/");
@@ -10,9 +11,9 @@ if(!cCheckLogin.m_bLogin) {
 
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
+cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>

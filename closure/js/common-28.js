@@ -333,6 +333,26 @@ function updateCategoryMenuPos(duration) {
 	}
 }
 
+function ShowAllReaction(content_id, elm) {
+	$.ajax({
+		"type": "post",
+		"data": {"IID": content_id},
+		"url": "/f/ShowAllReactionF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			console.log(data);
+			if(data.result_num>0) {
+				$(elm).hide();
+				$('#IllustItemResList_'+content_id + " .ResEmoji").remove();
+				$("#ResEmojiAdd_"+content_id).before(data.html);
+			} else {
+				$(elm).html(data.html);
+			}
+		}
+	});
+	return false;
+}
+
 
 
 

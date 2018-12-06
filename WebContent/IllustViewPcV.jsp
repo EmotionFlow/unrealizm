@@ -2,9 +2,11 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
+cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
@@ -23,7 +25,6 @@ if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
 String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 String strImageUrl = (cResults.m_cContent.m_nSafeFilter<2)?Common.GetPoipikuUrl(cResults.m_cContent.m_strFileName)+"_640.jpg":Common.GetPoipikuUrl("/img/warning.png");
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>

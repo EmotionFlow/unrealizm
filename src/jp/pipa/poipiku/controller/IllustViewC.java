@@ -24,6 +24,7 @@ public class IllustViewC {
 	}
 
 
+	public int SELECT_MAX_EMOJI = 60;
 	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
 	public boolean m_bOwner = false;
@@ -169,9 +170,10 @@ public class IllustViewC {
 
 			// Each Emoji
 			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-				strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
+				strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, m_cContent.m_nContentId);
+				cState.setInt(2, SELECT_MAX_EMOJI);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
 					CComment cComment = new CComment(cResSet);

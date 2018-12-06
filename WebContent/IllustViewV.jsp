@@ -2,9 +2,11 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
+cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;

@@ -17,46 +17,64 @@ class GetEmojiListC {
 			;
 		}
 	}
+
+	public String[] getResults(CheckLogin cCheckLogin) {
+		String EMOJI_LIST[] = Common.EMOJI_LIST[m_nCategoryId];
+		if(m_nCategoryId==Common.EMOJI_CAT_POPULAR || (m_nCategoryId==Common.EMOJI_CAT_RECENT && cCheckLogin.m_bLogin)) {
+			DataSource dsPostgres = null;
+			Connection cConn = null;
+			PreparedStatement cState = null;
+			ResultSet cResSet = null;
+			String strSql = "";
+
+			try {
+				Class.forName("org.postgresql.Driver");
+				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+				cConn = dsPostgres.getConnection();
+
+				// Follow
+				ArrayList<String> vEmoji = new ArrayList<String>();
+				if(m_nCategoryId==Common.EMOJI_CAT_RECENT) {
+					vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+				} else {
+					vEmoji = Util.getDefaultEmoji(-1, Common.EMOJI_KEYBORD_MAX);
+				}
+				EMOJI_LIST = vEmoji.toArray(new String[vEmoji.size()]);
+			} catch(Exception e) {
+				Log.d(strSql);
+				e.printStackTrace();
+			} finally {
+				try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			}
+		}
+		return EMOJI_LIST;
+	}
 }
 %>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
+StringBuilder sbResult = new StringBuilder();
 GetEmojiListC cResults = new GetEmojiListC();
 cResults.getParam(request);
-
-String EMOJI_LIST[] = Common.EMOJI_LIST[cResults.m_nCategoryId];
-if(cResults.m_nCategoryId==Common.EMOJI_CAT_POPULAR || (cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT && cCheckLogin.m_bLogin)) {
-	DataSource dsPostgres = null;
-	Connection cConn = null;
-	PreparedStatement cState = null;
-	ResultSet cResSet = null;
-	String strSql = "";
-
-	try {
-		Class.forName("org.postgresql.Driver");
-		dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-		cConn = dsPostgres.getConnection();
-
-		// Follow
-		ArrayList<String> vEmoji = new ArrayList<String>();
-		if(cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT) {
-			vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-		} else {
-			vEmoji = Util.getDefaultEmoji(-1, Common.EMOJI_KEYBORD_MAX);
-		}
-		EMOJI_LIST = vEmoji.toArray(new String[vEmoji.size()]);
-	} catch(Exception e) {
-		Log.d(strSql);
-		e.printStackTrace();
-	} finally {
-		try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-		try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-		try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT) {
+	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.Recent.NeedLogin")));
+} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_ALL) {
+	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
+} else {
+	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
+	//EMOJI_LIST = Common.EMOJI_LIST_EVENT;
+	for(String emoji : EMOJI_LIST) {
+		sbResult.append(
+				String.format("<span class=\"ResEmojiBtn\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</span>",
+						cResults.m_nContentId,
+						emoji,
+						cCheckLogin.m_nUserId,
+						CEmoji.parse(emoji))
+				);
 	}
 }
-//EMOJI_LIST = Common.EMOJI_LIST_EVENT;
 %>
-<% for(String emoji : EMOJI_LIST) {%>
-<a class="ResEmojiBtn" href="javascript:void(0)" onclick="SendEmoji(<%=cResults.m_nContentId%>, '<%=emoji%>', <%=cCheckLogin.m_nUserId%>)"><%=CEmoji.parse(emoji)%></a>
-<%}%>
+<%=sbResult.toString()%>

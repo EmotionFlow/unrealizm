@@ -5,8 +5,10 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 IllustViewListC cResults = new IllustViewListC();
 cResults.getParam(request);
+cResults.SELECT_MAX_EMOJI = (Util.isSmartPhone(request))?60:100;
 if(cResults.m_nMode==CCnv.MODE_SP) {
 	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+	cResults.SELECT_MAX_EMOJI = 60;
 }
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);

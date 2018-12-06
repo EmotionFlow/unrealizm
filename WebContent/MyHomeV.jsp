@@ -2,6 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!cCheckLogin.m_bLogin) {
 	response.sendRedirect("/StartPoipikuV.jsp");
@@ -11,6 +12,7 @@ if(!cCheckLogin.m_bLogin) {
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
 //cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>

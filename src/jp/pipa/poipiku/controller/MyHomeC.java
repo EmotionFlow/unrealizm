@@ -25,6 +25,7 @@ public class MyHomeC {
 
 
 	public int SELECT_MAX_GALLERY = 20;
+	public int SELECT_MAX_EMOJI = 60;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 
@@ -129,11 +130,12 @@ public class MyHomeC {
 			cState.close();cState=null;
 
 			// Each Comment
-			strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT 240";
+			strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			for(CContent cContent : m_vContentList) {
 				if(cContent.m_cUser.m_nReaction!=CUser.REACTION_SHOW) continue;
 				cState.setInt(1, cContent.m_nContentId);
+				cState.setInt(2, SELECT_MAX_EMOJI);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
 					CComment cComment = new CComment(cResSet);
