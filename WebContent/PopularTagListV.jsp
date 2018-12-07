@@ -50,17 +50,17 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<%for(CContent cContent : m_vContentList) {%>
 						<span class="IllustThumb">
 							<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
-							<%
-							String strSrc;
-							if(cContent.m_nSafeFilter<2) {
-								strSrc = Common.GetUrl(cContent.m_strFileName);
-							} else if(cContent.m_nSafeFilter<4) {
-								strSrc = "/img/warning.png";
-							} else {
-								strSrc = "/img/R18.png";
-							}
-							%>
-							<img class="IllustThumbImg" src="<%=strSrc%>_360.jpg">
+						<%
+						String strSrc;
+						if(cContent.m_nSafeFilter<2) {
+							strSrc = cContent.m_strFileName;
+						} else if(cContent.m_nSafeFilter<4) {
+							strSrc = "/img/warning.png";
+						} else {
+							strSrc = "/img/R18.png";
+						}
+						%>
+						<span class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(strSrc)%>_360.jpg')"></span>
 						</span>
 						<%}%>
 					</span>
