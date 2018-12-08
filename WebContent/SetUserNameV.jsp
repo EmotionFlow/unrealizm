@@ -21,8 +21,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				var strMessage = "&nbsp;";
 				try {
 					var strUserName = $.trim($("#RegistUserName").val());
-
-					if(strUserName.length<4) {
+					if(strUserName.length<<%=UserAuthUtil.LENGTH_NICKNAME_MIN%> || strUserName.length><%=UserAuthUtil.LENGTH_NICKNAME_MAX%>) {
 						strMessage = "<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>";
 						bRtn = false;
 					}
@@ -34,7 +33,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 			function UpdateNickName() {
 				var strUserName = $.trim($("#RegistUserName").val());
-				if(strUserName.length<4) {
+				if(strUserName.length<<%=UserAuthUtil.LENGTH_NICKNAME_MIN%> || strUserName.length><%=UserAuthUtil.LENGTH_NICKNAME_MAX%>) {
 					$("#RegistMessage").html("<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>");
 					return;
 				}

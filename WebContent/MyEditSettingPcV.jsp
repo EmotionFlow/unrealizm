@@ -45,8 +45,7 @@ if(cResults.m_bUpdate) {
 				var strMessage = "&nbsp;";
 				try {
 					var strUserName = $.trim($("#RegistUserName").val());
-
-					if(strUserName.length<4 || strUserName.length>16) {
+					if(strUserName.length<<%=UserAuthUtil.LENGTH_NICKNAME_MIN%> || strUserName.length><%=UserAuthUtil.LENGTH_NICKNAME_MAX%>) {
 						strMessage = "<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>";
 						bRtn = false;
 					}
@@ -58,7 +57,7 @@ if(cResults.m_bUpdate) {
 
 			function UpdateNickName() {
 				var strUserName = $.trim($("#RegistUserName").val());
-				if(strUserName.length<4 || strUserName.length>16) {
+				if(strUserName.length<<%=UserAuthUtil.LENGTH_NICKNAME_MIN%> || strUserName.length><%=UserAuthUtil.LENGTH_NICKNAME_MAX%>) {
 					DispMsg("<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>");
 					return;
 				}

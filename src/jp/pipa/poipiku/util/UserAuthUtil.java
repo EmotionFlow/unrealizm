@@ -56,7 +56,7 @@ public class UserAuthUtil {
 	public static final int LENGTH_EMAIL_MAX = 64;
 	public static final int LENGTH_PASSWORD_MIN = 4;
 	public static final int LENGTH_PASSWORD_MAX = 16;
-	public static final int LENGTH_NICKNAME_MIN = 4;
+	public static final int LENGTH_NICKNAME_MIN = 3;
 	public static final int LENGTH_NICKNAME_MAX = 16;
 
 	public static int checkLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -672,8 +672,9 @@ public class UserAuthUtil {
 				}
 
 				// User名被りチェック
-				boolean bUserName = false;
 				String strUserName = screen_name;
+				/*
+				boolean bUserName = false;
 				strSql = "SELECT * FROM users_0000 WHERE nickname=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, strUserName);
@@ -688,6 +689,7 @@ public class UserAuthUtil {
 					cResSet.close();cResSet=null;
 				}
 				cState.close();cState=null;
+				*/
 
 				// User作成
 				strSql = "INSERT INTO users_0000(nickname, password, hash_password, email, profile, lang_id) VALUES(?, ?, ?, ?, ?, ?)";
@@ -702,9 +704,9 @@ public class UserAuthUtil {
 				cState.close();cState=null;
 
 				// User ID 取得
-				strSql = "SELECT * FROM users_0000 WHERE nickname=? AND password=?";
+				strSql = "SELECT * FROM users_0000 WHERE email=? AND password=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, strUserName);
+				cState.setString(1, strEmail);
 				cState.setString(2, strPassword);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {

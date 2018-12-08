@@ -29,7 +29,7 @@ if(strRequestUri != null) {
 				var strNickname = $.trim($("#RegistNickname").val());
 				var strEmail = $.trim($("#RegistEmail").val());
 				var strPassword = $.trim($("#RegistPassword").val());
-				if(strNickname.length<4 || strNickname.length>16) {
+				if(strNickname.length<<%=UserAuthUtil.LENGTH_NICKNAME_MIN%> || strNickname.length><%=UserAuthUtil.LENGTH_NICKNAME_MAX%>) {
 					DispMsg('<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>');
 					return false;
 				}
@@ -37,7 +37,7 @@ if(strRequestUri != null) {
 					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
 					return false;
 				}
-				if(strPassword.length<4 || strNickname.length>16) {
+				if(strPassword.length<4 || strPassword.length>16) {
 					DispMsg('<%=_TEX.T("EditSettingV.Password.Message.Empty")%>');
 					return false;
 				}

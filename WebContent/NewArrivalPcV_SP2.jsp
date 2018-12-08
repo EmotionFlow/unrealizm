@@ -84,6 +84,7 @@ public class NewArrivalC {
 				break;
 			case 21:
 				BASE = 5;
+				CONTENT = true;
 				break;
 			case 22:
 				BASE = 6;

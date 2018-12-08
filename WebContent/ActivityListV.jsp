@@ -40,7 +40,7 @@ cResults.GetResults(cParam);
 					<%for(int nCnt=0; nCnt<cResults.m_vComment.size(); nCnt++) {
 						CComment cComment = cResults.m_vComment.get(nCnt);%>
 					<%if(cComment.m_nCommentType==CComment.TYPE_COMMENT) {%>
-					<a class="ItemCommentItem" href="/IllustViewV.jsp?TD=<%=cComment.m_nContentId%>">
+					<a class="ItemCommentItem" href="/IllustViewV.jsp?ID=<%=cCheckLogin.m_nUserId%>&TD=<%=cComment.m_nContentId%>">
 						<span class="CommentThumb Heart">
 							<span class="Emoji"><%=CEmoji.parse(cComment.m_strDescription)%></span>
 						</span>

@@ -105,6 +105,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
+		<%if(!bSmartPhone) {%>
+		@media screen and (min-width:1188px){
+		.Wrapper.ThumbList {width: 1188px;}
+		}
+		<%}%>
 		</style>
 	</head>
 
@@ -194,6 +199,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooterBase.jspf"%>
+		<%//@ include file="/inner/TFooter.jspf"%>
 	</body>
 </html>
