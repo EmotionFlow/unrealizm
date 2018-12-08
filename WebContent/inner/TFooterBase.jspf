@@ -6,7 +6,7 @@
 		<h1 class="AnalogicoInfoTitle">
 			<%=_TEX.T("Poipiku.Info.Message")%>
 		</h1>
-		<a class="AnalogicoMoreInfo" href="/StartPoipikuPcV.jsp">
+		<a class="AnalogicoMoreInfo" href="/">
 			<%=_TEX.T("Poipiku.Info.MoreInfo")%>
 		</a>
 		<div class="AnalogicoInfoRegist">
@@ -15,7 +15,7 @@
 			</a>
 		</div>
 		<div class="AnalogicoInfoRegist">
-			<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormEmailPcV.jsp">
+			<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/MyHomePcV.jsp">
 				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
 			</a>
 		</div>
@@ -37,9 +37,10 @@
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Usage")%></dt>
-			<dd><a class="FooterHref" href="/RulePcS.jsp" target="_blank"><%=_TEX.T("Footer.Term")%></a></dd>
-			<dd><a class="FooterHref" href="/GuideLinePcV.jsp" target="_blank"><%=_TEX.T("Footer.GuideLine")%></a></dd>
-			<dd><a class="FooterHref" href="/PrivacyPolicyPcS.jsp" target="_blank"><%=_TEX.T("Footer.PrivacyPolicy")%></a></dd>
+			<dd><a class="FooterHref" href="/StartPoipikuPcV.jsp"><%=_TEX.T("Footer.Whats")%></a></dd>
+			<dd><a class="FooterHref" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a></dd>
+			<dd><a class="FooterHref" href="/GuideLinePcV.jsp"><%=_TEX.T("Footer.GuideLine")%></a></dd>
+			<dd><a class="FooterHref" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a></dd>
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Info")%></dt>

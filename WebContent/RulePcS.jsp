@@ -8,6 +8,9 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<title><%=_TEX.T("THeader.Title")%> - 利用規約</title>
+		<style>
+			.AnalogicoInfo {display: none;}
+		</style>
 	</head>
 	<body>
 		<div id="DispMsg"></div>
@@ -298,6 +301,6 @@ pipa.jpは、本サービスの利用および本規約に起因する損害に�
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooterBase.jspf"%>
 	</body>
 </html>

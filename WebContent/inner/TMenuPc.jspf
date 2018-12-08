@@ -1,14 +1,6 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-{
-	String URL_HOME		= (cCheckLogin.m_bLogin)?"/MyHomePcV.jsp":"/";
-	String URL_SEARCH	= (cCheckLogin.m_bLogin)?"/NewArrivalPcV.jsp":"/NewArrivalPcV.jsp";
-	String URL_UPLOAD	= (cCheckLogin.m_bLogin)?"/UploadFilePcV.jsp":"/";
-	String URL_ACT		= (cCheckLogin.m_bLogin)?"/ActivityListPcV.jsp":"/";
-	String URL_ME		= (cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/";
-%>
 <header class="Header">
 	<div id="HeaderSlider"></div>
 	<div class="HeaderWrapper">
@@ -34,31 +26,40 @@
 
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
+			<%if(!cCheckLogin.m_bLogin) {%>
+			<a class="BtnBase Rev FooterMenuBtn" href="/LoginFormTwitterPc.jsp">
+				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+			</a>
+			<a class="BtnBase Rev FooterMenuBtn" href="/MyHomePcV.jsp">
+				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+			</a>
+			<%} else {%>
 			<!--
-			<a id="MenuSearch" class="FooterMenuItem" href="<%=URL_SEARCH%>">
+			<a id="MenuSearch" class="FooterMenuItem" href="/NewArrivalPcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
 			<span class="MenuSep"></span>
 			-->
-			<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
+			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 			</a>
-			<a id="MenuUpload" class="FooterMenuItem" href="<%=URL_UPLOAD%>">
+			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 			</a>
-			<a id="MenuAct" class="FooterMenuItem" href="<%=URL_ACT%>">
+			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
 				<span class="FooterMenuItemIcon">
 					<div id="InfoNumAct" class="InfoNum">0</div>
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			</a>
-			<a id="MenuMe" class="FooterMenuItem" href="<%=URL_ME%>">
+			<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
+			<%}%>
 		</nav>
 		<%}%>
 	</div>
@@ -67,33 +68,41 @@
 <%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
-		<a id="MenuHome" class="FooterMenuItem" href="<%=URL_HOME%>">
+		<%if(!cCheckLogin.m_bLogin) {%>
+		<a class="BtnBase Rev FooterMenuBtn" href="/LoginFormTwitterPc.jsp">
+			<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+		</a>
+		<a class="BtnBase Rev FooterMenuBtn" href="/MyHomePcV.jsp">
+			<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+		</a>
+		<%} else {%>
+		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>
 		<!--
-		<a id="MenuSearch" class="FooterMenuItem" href="<%=URL_SEARCH%>">
+		<a id="MenuSearch" class="FooterMenuItem" href="/NewArrivalPcV.jsp">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
 		-->
-		<a id="MenuUpload" class="FooterMenuItem" href="<%=URL_UPLOAD%>">
+		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 		</a>
-		<a id="MenuAct" class="FooterMenuItem" href="<%=URL_ACT%>">
+		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
 			<span class="FooterMenuItemIcon">
 				<div id="InfoNumAct" class="InfoNum">0</div>
 			</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 		</a>
-		<a id="MenuMe" class="FooterMenuItem" href="<%=URL_ME%>">
+		<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>
+		<%}%>
 	</nav>
 </div>
-<%}%>
 <%}%>
 <%if(cCheckLogin.m_bLogin) {%>
 <script>
@@ -119,27 +128,17 @@
 
 <%if(!cCheckLogin.m_bLogin) {%>
 <div id="AnalogicoInfo" class="AnalogicoInfo Float">
-	<div class="Wrapper">
-		<h1 class="AnalogicoInfoTitle">
-			<%=_TEX.T("Poipiku.Info.Message.Short")%>
-		</h1>
-		<a class="AnalogicoMoreInfo" href="/StartPoipikuPcV.jsp">
-			<%=_TEX.T("Poipiku.Info.MoreInfo")%>
-		</a>
-		<div class="AnalogicoInfoRegist">
-			<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
-				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
-			</a>
-			<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormEmailPcV.jsp">
-				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
-			</a>
-		</div>
-		<!--
-		<div class="LinkApp">
-			<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
-			<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
-		</div>
-		-->
+	<h1 class="AnalogicoInfoTitle">
+		<%=_TEX.T("Poipiku.Info.Message.Short")%>
+	</h1>
+	<a class="AnalogicoMoreInfo" href="/">
+		<%=_TEX.T("Poipiku.Info.MoreInfo")%>
+	</a>
+	<!--
+	<div class="LinkApp">
+		<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
+		<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
 	</div>
+	-->
 </div>
 <%}%>

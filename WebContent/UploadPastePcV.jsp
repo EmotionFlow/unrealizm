@@ -4,12 +4,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/");
-	return;
-}
-
-if(cCheckLogin.m_strNickName.equals("no_name")) {
-	getServletContext().getRequestDispatcher("/SetUserNameV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 %>

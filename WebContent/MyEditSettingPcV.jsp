@@ -9,7 +9,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/");
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 

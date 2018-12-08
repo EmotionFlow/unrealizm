@@ -22,6 +22,9 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			text-align: center;
 		}
 		</style>
+		<style>
+			.AnalogicoInfo {display: none;}
+		</style>
 	</head>
 
 	<body>
@@ -242,6 +245,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooterBase.jspf"%>
 	</body>
 </html>

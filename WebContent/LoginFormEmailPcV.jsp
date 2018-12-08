@@ -48,7 +48,7 @@ if(strRequestUri != null) {
 					"success": function(data) {
 						if(data.result>0) {
 							DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
-							location.href="/MyHomePcV.jsp?"+data.result;
+							location.reload(true);
 						} else {
 							DispMsg('<%=_TEX.T("LoginV.Faild.Regist.Message")%>');
 						}
@@ -71,7 +71,7 @@ if(strRequestUri != null) {
 					"success": function(data) {
 						if(data.result>0) {
 							DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
-							location.href="/MyHomePcV.jsp";
+							location.reload(true);
 						} else {
 							DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
 						}
@@ -88,6 +88,8 @@ if(strRequestUri != null) {
 		.AnalogicoInfo {display: none;}
 		.RegistItem {display: block; float: left; width: 100%;}
 		.LoginItem {display: none; float: left; width: 100%;}
+		.FooterMenu {display: none;}
+		.FooterMenuWrapper {display: none;}
 		</style>
 	</head>
 
@@ -96,7 +98,21 @@ if(strRequestUri != null) {
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
-				<div id="RegistForm" class="SettingListItem">
+				<div class="SettingListItem">
+
+					<div  style="text-align: center;">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
+						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+					</a>
+					</div>
+
+					<div style="display: flex; line-height: 15px; margin: 30px 0;">
+						<div style="flex: 1 0; height: 1px; background-color: #999; margin: 7px 0;"></div>
+						<div style="flex: 0 0; background-color: #f1f9fc; padding: 0px 10px;">or</div>
+						<div style="flex: 1 0; height: 1px; background-color: #999; margin: 7px 0;"></div>
+					</div>
+
+
 					<div class="RegistItem">
 						<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
 					</div>

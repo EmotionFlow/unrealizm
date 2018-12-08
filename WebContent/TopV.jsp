@@ -2,16 +2,9 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
-
 if(cCheckLogin.m_bLogin) {
 	response.sendRedirect("/MyHomePcV.jsp");
 }
-
-NewArrivalC cResults = new NewArrivalC();
-cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 36;
-boolean bRtn = cResults.getResults(cCheckLogin);
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html style="height: 100%;">
@@ -20,57 +13,147 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%></title>
 
+		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
+		<style>
+			.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
+			.AnalogicoDesc {display: block;width: 100%; padding: 30px 0; box-sizing: border-box; text-align: center; font-size: 24px; color: #fff; font-weight: bold;}
+			.AnalogicoLogin {margin: 0 0 10px 0;}
+			.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
+			.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 30px 0;}
+			.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
+			.AnalogicoInfo {display: none;}
+
+			.PoipikuInfo {display: flex; flex-flow: row wrap; width: 100%; margin: 0 auto; justify-content: space-around; background-color: #f1f9fc; color: #5bd;padding: 15px 0;box-sizing: border-box;}
+			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
+			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 15px 0;}
+			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
+			.PoipikuInfo .PoipikuDesc .DescTitle {font-size: 17px; margin: 0 0 15px 0; font-weight: bold;}
+			.PoipikuInfo .PoipikuDesc .DescTitle .DescSubTitle {font-size: 15px; font-weight: normal;}
+
+
+			.poipikuDesc.TextOnly {height: auto;}
+			.poipikuDesc .DescTitle {font-size: 18px; font-weight: bold;}
+
+			.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
+
+			<%if(Util.isSmartPhone(request)) {%>
+			<%} else {%>
+			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
+			.PoipikuInfo {padding: 10px 15px;}
+			.PoipikuInfo .PoipikuDesc {margin: 10px 0;}
+			.PoipikuInfo .PoipikuDesc.Full {flex: 0 0 941px;}
+			<%}%>
+		</style>
+
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuHome').addClass('Selected');
+			//$('#MenuHome').addClass('Selected');
 		});
 		</script>
-		<style>
-			body {padding-top: 83px !important;}
-		</style>
 	</head>
 
 	<body>
-		<div class="TabMenuWrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
-				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
-				<a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
-				<a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
-				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
-			</div>
-		</div>
-
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
+		<div class="Wrapper">
+			<h1 class="AnalogicoDesc Title">
+				ポイピクで始まる<br />
+				楽ちんイラストライフ！<br />
+			</h1>
+		</div>
+
+
+
 		<div class="Wrapper ThumbList">
-			<div class="CategoryMenu">
-				<a class="BtnBase CategoryBtn Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
-				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-				<a class="BtnBase CategoryBtn CC<%=nCategoryId%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
-				<%}%>
-			</div>
+			<div class="PoipikuInfo">
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS01.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS02.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS02-2.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS03.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS03-2.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS04.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS04-2.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS05.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS07.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS08.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS09.png" />
+				</div>
+				<div class="PoipikuDesc">
+					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2018_12_03/SS10.png" />
+				</div>
 
-			<div id="IllustThumbList" class="IllustThumbList">
-				<%if(!bSmartPhone) {%>
-				<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
-				<%}%>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
-					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
-					<%}%>
-				<%}%>
+				<div class="PoipikuDesc Full">
+					<div class="DescTitle">
+						転載対策もOK！
+						<div class="DescSubTitle">
+							転載禁止表示と右クリック禁止対策
+						</div>
+					</div>
+					<div class="DescTitle">
+						動くイラストもOK！
+						<div class="DescSubTitle">
+							アニメーションGIFにもフル対応
+						</div>
+					</div>
+					<div class="DescTitle">
+						ポイピクの活動を定期ツイート！
+						<div class="DescSubTitle">
+							週1回もしくは毎日の指定時間に定期ツイート ＆ 古い定期ツイート自動削除でTwitterの画像一覧が埋まらない
+						</div>
+					</div>
+					<div class="DescTitle">
+						イラストSNS11年の運営実績
+						<div class="DescSubTitle">
+							2007年から手書きブログを開始し、イラストSNS運営実績は11年。
+							安心してご利用ください。
+						</div>
+					</div>
+				</div>
 			</div>
-
-			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/NewArrivalPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+		</div>
+		<div class="Wrapper">
+			<div class="AnalogicoInfo" style="display: block;">
+				<div class="AnalogicoDesc Title">
+						さあ、はじめよう！
+				</div>
+				<div class="AnalogicoInfoRegist">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
+						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+					</a>
+				</div>
+				<div class="AnalogicoInfoRegist">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/MyHomePcV.jsp">
+						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+					</a>
+				</div>
+				<div class="AnalogicoStart" style="margin-top: 0;">
+					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
+					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
+				</div>
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooterBase.jspf"%>
 	</body>
 </html>
