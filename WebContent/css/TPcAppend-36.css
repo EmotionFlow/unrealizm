@@ -77,9 +77,10 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: absolute; bottom: 0;}
 
 /********** AnalogicoInfo Float *********/
-.AnalogicoInfo.Float {bottom: 0; padding: 5px 0; position: static;}
-.AnalogicoInfo.Float .AnalogicoInfoTitle {font-size: 14px;}
-.AnalogicoInfo.Float .AnalogicoMoreInfo {font-size: 14px;}
+.AnalogicoInfo.Float {bottom: 0; padding: 5px 0; position: static; border: none;}
+.AnalogicoInfo.Float .AnalogicoInfoTitle {font-size: 12px;}
+.AnalogicoInfo.Float .AnalogicoInfoSubTitle {display: inline; font-size: 12px;}
+.AnalogicoInfo.Float .AnalogicoMoreInfo {font-size: 12px;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist {font-size: 14px; margin: 0;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 8px 0 0 0; min-width: 240px; padding: 3px 12px; max-width: 260px; overflow: hidden; white-space: nowrap;}
 

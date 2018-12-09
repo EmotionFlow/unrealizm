@@ -129,8 +129,11 @@
 <%if(!cCheckLogin.m_bLogin) {%>
 <div id="AnalogicoInfo" class="AnalogicoInfo Float">
 	<h1 class="AnalogicoInfoTitle">
-		<%=_TEX.T("Poipiku.Info.Message.Short")%>
+		<%=_TEX.T("THeader.Title")%>
 	</h1>
+	<h2 class="AnalogicoInfoSubTitle">
+		<%=_TEX.T("THeader.Title.Desc")%>
+	</h2>
 	<a class="AnalogicoMoreInfo" href="/">
 		<%=_TEX.T("Poipiku.Info.MoreInfo")%>
 	</a>

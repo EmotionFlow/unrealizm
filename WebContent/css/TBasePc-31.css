@@ -63,10 +63,11 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 
 /********** AnalogicoInfo Float *********/
 .AnalogicoInfo.Float {color: #fff; background: #fff; height: auto; padding: 3px 0;float: none;width: 100%; text-align: center; position: fixed; bottom: 51px; z-index: 9999;border-top: solid 1px #eee;}
-.AnalogicoInfo.Float .AnalogicoInfoTitle {display: inline-block; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #5bd;}
-.AnalogicoInfo.Float .AnalogicoMoreInfo {display: inline-block; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; color: #fff; text-decoration: underline; font-weight: normal; color: #5bd;}
+.AnalogicoInfo.Float .AnalogicoInfoTitle {display: inline; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #5bd;}
+.AnalogicoInfo.Float .AnalogicoInfoSubTitle {display: none; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #5bd;}
+.AnalogicoInfo.Float .AnalogicoMoreInfo {display: inline; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #5bd; text-decoration: underline;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist {display: flex; justify-content: space-around; font-size: 10px; margin: 0;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 8px 0 0 0; min-width: 150px; padding: 1px 3px; max-width: 160px; overflow: hidden; white-space: nowrap;}
 
 /********** Ad **********/
-.FooterAd {text-align: center;}
+.FooterAd {text-align: center;background: #5bd; padding: 30px 0 0 0;}

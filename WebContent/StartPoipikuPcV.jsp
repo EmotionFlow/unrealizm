@@ -13,10 +13,13 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
 			.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
-			.AnalogicoDesc {display: block;width: 100%; padding: 30px 0; box-sizing: border-box; text-align: center; font-size: 24px; color: #fff; font-weight: bold;}
+			.AnalogicoDesc {display: block;width: 80%; margin: 0 auto; padding: 15px 0; box-sizing: border-box; text-align: center; font-size: 24px; color: #fff; font-weight: bold;}
+			.TopTitleLogo {display: inline; width: auto; height: 28px;}
+			.TopTitleInfo {font-size: 15px; margin: 10px 0 0 0;}
+			.TopTitleInfoSub {font-size: 14px; margin: 10px 0 0 0;}
 			.AnalogicoLogin {margin: 0 0 10px 0;}
 			.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
-			.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 30px 0;}
+			.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 10px 0;}
 			.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 			.AnalogicoInfo {display: none;}
 
@@ -35,6 +38,10 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 			<%if(Util.isSmartPhone(request)) {%>
 			<%} else {%>
+			.TopTitleLogo {display: inline; width: 120px; height: auto;}
+			.TopTitleInfo {font-size: 22px; margin: 20px 0 0 0;}
+			.TopTitleInfoSub {font-size: 14px; margin: 10px 0 0 0;}
+			.AnalogicoDesc {display: block; width: 800px;}
 			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
 			.PoipikuInfo {padding: 10px 15px;}
 			.PoipikuInfo .PoipikuDesc {margin: 10px 0;}
@@ -53,10 +60,29 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper">
-			<h1 class="AnalogicoDesc Title">
-				ポイピクで始まる<br />
-				楽ちんイラストライフ！<br />
-			</h1>
+			<div class="AnalogicoInfo" style="display: block;">
+				<div class="AnalogicoDesc Title">
+					<div style="margin : 0;">
+						<img class="TopTitleLogo" src="/img/pc_top_title_W.jpg" alt="<%=_TEX.T("THeader.Title")%>">
+					</div>
+					<h1 class="TopTitleInfo"><%=_TEX.T("THeader.Title.Desc")%></h1>
+					<h2 class="TopTitleInfoSub"><%=_TEX.T("THeader.Title.DescSub")%></h2>
+				</div>
+				<div class="AnalogicoInfoRegist">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
+						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+					</a>
+				</div>
+				<div class="AnalogicoInfoRegist">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/MyHomePcV.jsp">
+						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+					</a>
+				</div>
+				<div class="AnalogicoStart" style="margin-top: 0;">
+					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
+					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
+				</div>
+			</div>
 		</div>
 
 
