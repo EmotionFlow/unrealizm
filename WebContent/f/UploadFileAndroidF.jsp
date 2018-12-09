@@ -170,7 +170,7 @@ class UploadFileC {
 				String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
 						cParam.m_nUserId,
 						m_nContentId,
-						_TEX.T("THeader.Title"));
+						_TEX.T("Common.Title"));
 				int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
 				StringBuffer bufMsg = new StringBuffer();
 				bufMsg.append(strHeader);

@@ -101,7 +101,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
 								URLEncoder.encode("https://poipiku.com/"+cCheckLogin.m_nUserId+"/", "UTF-8"),
 								URLEncoder.encode(String.format("%s%s", cCheckLogin.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
-								URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+								URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
 						%>
 						<div style="text-align: center;">
 							<input id="MyUrl" class="MyUrl" type="text" value="https://poipiku.com/<%=cCheckLogin.m_nUserId%>/" onclick="this.select(); document.execCommand('copy');" style="box-sizing: border-box; width: 100%; padding: 5px; margin: 0 0 10px 0;" />

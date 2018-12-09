@@ -94,7 +94,7 @@ try
 		cPreState.setString(6, screen_name);
 		cPreState.setInt(7, -1);
 		cPreState.setInt(8, -1);
-		cPreState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://poipiku.com/%d/", cCheckLogin.m_nUserId));
+		cPreState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", cCheckLogin.m_nUserId));
 		cPreState.executeUpdate();
 	}
 	cPreState.close();cPreState=null;

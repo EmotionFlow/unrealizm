@@ -78,7 +78,7 @@ public class CCnv {
 		String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
 				URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"),
 				URLEncoder.encode(String.format(_TEX.T("Twitter.Illust.Desc"), strDesc, cContent.m_cUser.m_strNickName), "UTF-8"),
-				URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+				URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
 		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" %s></a>", strTwitterUrl, LINK_TARG));
 		if(cContent.m_nUserId==nLoginUserId) {
 			strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"javascript:void(0)\" onclick=\"EditDesc(%d)\"></a>", cContent.m_nContentId));

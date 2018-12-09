@@ -87,7 +87,7 @@ class UploadFileTweetC {
 			String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
 					cParam.m_nUserId,
 					cContent.m_nContentId,
-					_TEX.T("THeader.Title"));
+					_TEX.T("Common.Title"));
 			if(cContent.m_nFileNum>1) {
 				strFooter = strFooter + " " + String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum);
 			}

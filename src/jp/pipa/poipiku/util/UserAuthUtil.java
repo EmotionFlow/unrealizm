@@ -727,7 +727,7 @@ public class UserAuthUtil {
 					cState.setString(6, screen_name);
 					cState.setInt(7, -1);
 					cState.setInt(8, -1);
-					cState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("THeader.Title")+String.format(" https://poipiku.com/%d/", nUserId));
+					cState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", nUserId));
 					cState.executeUpdate();
 					cState.close();cState=null;
 

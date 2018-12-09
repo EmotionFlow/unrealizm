@@ -575,7 +575,7 @@ if(cResults.m_bUpdate) {
 										cResults.m_cUser.m_strNickName,
 										_TEX.T("Twitter.UserAddition"),
 										cResults.m_cUser.m_nUserId,
-										_TEX.T("THeader.Title"));
+										_TEX.T("Common.Title"));
 							}%>
 							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()" maxlength="100"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
 						</div>

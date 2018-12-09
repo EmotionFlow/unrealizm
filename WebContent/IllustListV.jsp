@@ -161,7 +161,7 @@ if(!cResults.getResults(cCheckLogin)) {
 						String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"),
 								URLEncoder.encode(String.format("%s%s", cResults.m_cUser.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
-								URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+								URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
 						%>
 						<%if(cResults.m_bOwner) {%>
 						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>

@@ -178,7 +178,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"),
 								URLEncoder.encode(String.format("%s%s", cResults.m_cUser.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
-								URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+								URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
 						%>
 						<%if(!cCheckLogin.m_bLogin) {%>
 						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
@@ -262,7 +262,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
 							URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"),
 							URLEncoder.encode(String.format("%s%s", cResults.m_cUser.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
-							URLEncoder.encode(_TEX.T("THeader.Title"), "UTF-8"));
+							URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
 					%>
 					<%if(!cCheckLogin.m_bLogin) {%>
 					<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
