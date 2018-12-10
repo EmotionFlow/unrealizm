@@ -55,7 +55,7 @@ body {padding: 51px 0 0 0 !important;}
 .Header .HeaderSearch {}
 .Header .HeaderSearch .HeaderSearchBox {width: 200px;}
 .Header .HeaderTitleSearch {display: none;}
-.FooterMenu .FooterMenuItem {}
+.FooterMenu .FooterMenuItem {width: 60px;}
 .UploadFile .UoloadCmdOption .OptionItem {flex: 0 0 20%; width: 116px;}
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {transform: scale(1.0);}
 .FooterMenu {float: right; width: 500px; justify-content: flex-end;}
