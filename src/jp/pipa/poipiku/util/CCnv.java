@@ -256,7 +256,7 @@ public class CCnv {
 		} else if(cContent.m_nSafeFilter<4) {
 			strRtn.append("<span class=\"IllustThumbImg\" style=\"background-image:url('/img/warning.png_360.jpg')\"></span>");
 		} else {
-			strRtn.append("<span class=\"IllustThumbImg\" style=\"background-image:url('/img/R18.png_360.jpg')\"></span>");
+			strRtn.append("<span class=\"IllustThumbImg\" style=\"background-image:url('/img/R-18.png_360.jpg')\"></span>");
 		}
 		strRtn.append("<span class=\"IllustInfo\">");
 		strRtn.append(String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s %s</span>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));

@@ -80,7 +80,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						} else if(cContent.m_nSafeFilter<4) {
 							strSrc = "/img/warning.png";
 						} else {
-							strSrc = "/img/R18.png";
+							strSrc = "/img/R-18.png";
 						}
 						%>
 						<span class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(strSrc)%>_360.jpg')"></span>
