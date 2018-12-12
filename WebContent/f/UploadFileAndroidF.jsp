@@ -135,7 +135,8 @@ class UploadFileC {
 			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE content_id=?";
+			CContent cContent = null;
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE content_id=? RETURNING *";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setInt(2, cParam.m_nOpenId);
@@ -144,7 +145,11 @@ class UploadFileC {
 			cState.setLong(5, nFileSize);
 			cState.setLong(6, nComplexSize);
 			cState.setInt(7, m_nContentId);
-			cState.executeUpdate();
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				cContent = new CContent(cResSet);
+			}
+			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
 			// Add my tags
@@ -166,28 +171,16 @@ class UploadFileC {
 
 			CTweet cTweet = new CTweet();
 			if (cParam.m_bTweet && cTweet.GetResults(cParam.m_nUserId)) {
-				String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cParam.m_nCategoryId)));
-				String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
-						cParam.m_nUserId,
-						m_nContentId,
-						_TEX.T("Common.Title"));
-				int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
-				StringBuffer bufMsg = new StringBuffer();
-				bufMsg.append(strHeader);
-				if (nMessageLength < cParam.m_strDescription.length()) {
-					bufMsg.append(cParam.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
-					bufMsg.append(CTweet.ELLIPSE);
-				} else {
-					bufMsg.append(cParam.m_strDescription);
-				}
-				bufMsg.append(strFooter);
-				Log.d(strFileName, bufMsg.toString());
+				// 本文作成
+				String strTwitterMsg = CTweet.generateIllustMsgFull(cContent, _TEX);
+				Log.d(strFileName, strTwitterMsg);
 
+				// ツイート
 				if(cParam.m_nOptImage==0) {	// text only
-					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
+					boolean bRsultTweet = cTweet.Tweet(strTwitterMsg);
 					if(!bRsultTweet) Log.d("tweet失敗");
 				} else { // with image
-					boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), strRealFileName);
+					boolean bRsultTweet = cTweet.Tweet(strTwitterMsg, strRealFileName);
 					if(!bRsultTweet) Log.d("tweet失敗");
 				}
 			}

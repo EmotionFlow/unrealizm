@@ -34,7 +34,6 @@ public class CCnv {
 		String LINK_TARG = (nMode==MODE_SP)?"":"target=\"_blank\"";
 
 		StringBuilder strRtn = new StringBuilder();
-
 		// ユーザ名とフォローボタン
 		strRtn.append(String.format("<div class=\"IllustItem\" id=\"IllustItem_%d\">", cContent.m_nContentId));
 		strRtn.append("<div class=\"IllustItemUser\">");
@@ -49,7 +48,6 @@ public class CCnv {
 					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
 		}
 		strRtn.append("</div>");	// IllustItemUser
-
 
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
@@ -73,12 +71,7 @@ public class CCnv {
 
 		// コマンド
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
-		String strDesc = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"]" + cContent.m_strDescription.replaceAll("\n", " ").replaceAll("\r", " ");
-		if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
-		String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
-				URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"),
-				URLEncoder.encode(String.format(_TEX.T("Twitter.Illust.Desc"), strDesc, cContent.m_cUser.m_strNickName), "UTF-8"),
-				URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
+		String strTwitterUrl = CTweet.generateIllustMsgUrl(cContent, _TEX);
 		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" %s></a>", strTwitterUrl, LINK_TARG));
 		if(cContent.m_nUserId==nLoginUserId) {
 			strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"javascript:void(0)\" onclick=\"EditDesc(%d)\"></a>", cContent.m_nContentId));
@@ -160,7 +153,13 @@ public class CCnv {
 
 		// 転載禁止表示
 		strRtn.append("<div class=\"IllustItemExpand\">");
-		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>", _TEX.T("IllustView.ProhibitMsg.TapToFull"), _TEX.T("IllustView.ProhibitMsg")));
+		String strSizeAppendex = "";
+		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
+			strSizeAppendex = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
+		}
+		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
+				String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendex),
+				_TEX.T("IllustView.ProhibitMsg")));
 		// 2枚目以降ボタン
 		if(cContent.m_nFileNum>1) {
 		strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s</a>",
@@ -250,7 +249,11 @@ public class CCnv {
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
-		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
+		if(nMode==MODE_SP) {
+			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
+		} else {
+			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"/%d/%d.html\">", cContent.m_nUserId, cContent.m_nContentId));
+		}
 		if(cContent.m_nSafeFilter<2) {
 			strRtn.append(String.format("<span class=\"IllustThumbImg\" style=\"background-image:url('%s_360.jpg')\"></span>", Common.GetUrl(cContent.m_strFileName)));
 		} else if(cContent.m_nSafeFilter<4) {

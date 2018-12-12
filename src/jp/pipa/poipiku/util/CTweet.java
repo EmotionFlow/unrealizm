@@ -2,6 +2,7 @@ package jp.pipa.poipiku.util;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,14 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.*;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
@@ -154,5 +153,56 @@ public class CTweet {
 			bResult = false;
 		}
 		return bResult;
+	}
+
+	static public String generateIllustMsgFull(CContent cContent, ResourceBundleControl _TEX) {
+		String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
+				cContent.m_nUserId,
+				cContent.m_nContentId,
+				_TEX.T("Common.Title"));
+		return generateIllustMsg(cContent, _TEX) + strFooter;
+	}
+
+	static public String generateIllustMsgUrl(CContent cContent, ResourceBundleControl _TEX) {
+		String strTwitterUrl="";
+		try {
+			strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
+				URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"),
+				URLEncoder.encode(generateIllustMsg(cContent, _TEX), "UTF-8"),
+				URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
+		} catch (Exception e) {
+			;
+		}
+		return strTwitterUrl;
+	}
+
+	static public String generateIllustMsg(CContent cContent, ResourceBundleControl _TEX) {
+		String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
+		String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
+				cContent.m_nUserId,
+				cContent.m_nContentId,
+				_TEX.T("Common.Title"));
+		List<String> arrAppendex = new ArrayList<String>();
+		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
+			arrAppendex.add(String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight));
+		}
+		if(cContent.m_nFileNum>1) {
+			arrAppendex.add(String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum));
+		}
+		String strAppendex = "(" + String.join(" ", arrAppendex) + ")";
+		//strFooter = strAppendex + strFooter;
+		int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strAppendex.length() - strFooter.length();
+		StringBuffer bufMsg = new StringBuffer();
+		bufMsg.append(strHeader);
+		if (nMessageLength < cContent.m_strDescription.length()) {
+			bufMsg.append(cContent.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
+			bufMsg.append(CTweet.ELLIPSE);
+		} else {
+			bufMsg.append(cContent.m_strDescription);
+		}
+		bufMsg.append(strAppendex);
+		//bufMsg.append(strFooter);
+
+		return bufMsg.toString();
 	}
 }

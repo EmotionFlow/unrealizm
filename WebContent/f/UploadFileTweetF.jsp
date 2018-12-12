@@ -83,32 +83,15 @@ class UploadFileTweetC {
 			if (!cTweet.GetResults(cParam.m_nUserId)) return nRtn;
 
 			// 本文作成
-			String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
-			String strFooter = String.format(" https://poipiku.com/%d/%d.html #%s",
-					cParam.m_nUserId,
-					cContent.m_nContentId,
-					_TEX.T("Common.Title"));
-			if(cContent.m_nFileNum>1) {
-				strFooter = strFooter + " " + String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum);
-			}
-			int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strFooter.length();
-			StringBuffer bufMsg = new StringBuffer();
-			bufMsg.append(strHeader);
-			if (nMessageLength < cContent.m_strDescription.length()) {
-				bufMsg.append(cContent.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
-				bufMsg.append(CTweet.ELLIPSE);
-			} else {
-				bufMsg.append(cContent.m_strDescription);
-			}
-			bufMsg.append(strFooter);
-			Log.d(cContent.m_strFileName, bufMsg.toString());
+			String strTwitterMsg = CTweet.generateIllustMsgFull(cContent, _TEX);
+			Log.d(cContent.m_strFileName, strTwitterMsg);
 
 			// ツイート
 			if(cParam.m_nOptImage==0 || vFileList.size()<=0) {	// text only
-				boolean bRsultTweet = cTweet.Tweet(bufMsg.toString());
+				boolean bRsultTweet = cTweet.Tweet(strTwitterMsg);
 				if(!bRsultTweet) Log.d("tweet失敗");
 			} else { // with image
-				boolean bRsultTweet = cTweet.Tweet(bufMsg.toString(), vFileList);
+				boolean bRsultTweet = cTweet.Tweet(strTwitterMsg, vFileList);
 				if(!bRsultTweet) Log.d("tweet失敗");
 			}
 			nRtn = cContent.m_nContentId;
