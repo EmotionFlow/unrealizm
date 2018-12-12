@@ -87,15 +87,17 @@ if(!cResults.getResults(cCheckLogin)) {
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result==1) {
-							$('#UserInfoCmdBlock').addClass('Selected');
-							$('#UserInfoCmdFollow').removeClass('Selected');
-							$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('#UserInfoCmdFollow').hide();
+							$('.UserInfoCmdBlock').addClass('Selected');
+							$('.UserInfoCmdFollow').removeClass('Selected');
+							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+							$('.UserInfoCmdFollow').hide();
+							location.reload(true);
 						} else if(data.result==2) {
-							$('#UserInfoCmdBlock').removeClass('Selected');
-							$('#UserInfoCmdFollow').removeClass('Selected');
-							$('#UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('#UserInfoCmdFollow').show();
+							$('.UserInfoCmdBlock').removeClass('Selected');
+							$('.UserInfoCmdFollow').removeClass('Selected');
+							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+							$('.UserInfoCmdFollow').show();
+							location.reload(true);
 						} else {
 							DispMsg('ブロックできませんでした');
 						}

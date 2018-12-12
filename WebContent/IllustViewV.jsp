@@ -92,6 +92,36 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				return false;
 			}
 
+			function UpdateBlock() {
+				var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
+				$.ajaxSingle({
+					"type": "post",
+					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
+					"url": "/f/UpdateBlockF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						if(data.result==1) {
+							$('.UserInfoCmdBlock').addClass('Selected');
+							$('.UserInfoCmdFollow').removeClass('Selected');
+							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+							$('.UserInfoCmdFollow').hide();
+							location.reload(true);
+						} else if(data.result==2) {
+							$('.UserInfoCmdBlock').removeClass('Selected');
+							$('.UserInfoCmdFollow').removeClass('Selected');
+							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+							$('.UserInfoCmdFollow').show();
+							location.reload(true);
+						} else {
+							DispMsg('ブロックできませんでした');
+						}
+					},
+					"error": function(req, stat, ex){
+						DispMsg('Connection error');
+					}
+				});
+			}
+
 			$(function(){
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});

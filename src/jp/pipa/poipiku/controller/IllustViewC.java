@@ -138,6 +138,10 @@ public class IllustViewC {
 				cState.close();cState=null;
 			}
 
+			if(m_bBlocking || m_bBlocked) {
+				return false;
+			}
+
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
 			if(m_cContent.m_nUserId != cCheckLogin.m_nUserId) {
