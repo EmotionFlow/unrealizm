@@ -54,7 +54,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<div class="Wrapper ThumbList">
 			<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
-				<%=Common.ToStringHtml(cResults.m_strKeyword)%>
+				<i class="fas fa-search"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.m_bFollowing) {%>

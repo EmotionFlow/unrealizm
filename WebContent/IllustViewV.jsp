@@ -153,10 +153,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 					<span class="UserInfoCmd">
 						<%
-						String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
-								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"),
-								URLEncoder.encode(String.format("%s%s", cResults.m_cUser.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
-								URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
+						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+								URLEncoder.encode(String.format("%s%s %s #%s",
+										cResults.m_cUser.m_strNickName,
+										_TEX.T("Twitter.UserAddition"),
+										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+										_TEX.T("Common.Title")), "UTF-8"),
+								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(cResults.m_bOwner) {%>
 						&nbsp;
@@ -178,6 +181,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						<%}%>
 					</span>
 				</div>
+				<span class="UserInfoState">
+					<a class="UserInfoStateItem Selected" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
+						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
+					</a>
+				</span>
 			</div>
 			<%}%>
 

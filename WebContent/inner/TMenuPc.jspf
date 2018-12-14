@@ -14,7 +14,7 @@
 			<div class="HeaderSearch">
 				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Common.ToStringHtml(g_strSearchWord)%>" />
 				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
-					<span class="fas fa-search"></span>
+					<i class="fas fa-search"></i>
 				</div>
 			</div>
 		</form>

@@ -160,10 +160,13 @@ if(!cResults.getResults(cCheckLogin)) {
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 					<span class="UserInfoCmd">
 						<%
-						String strTwitterUrl=String.format("https://twitter.com/share?url=%s&text=%s&hashtags=%s",
-								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"),
-								URLEncoder.encode(String.format("%s%s", cResults.m_cUser.m_strNickName, _TEX.T("Twitter.UserAddition")), "UTF-8"),
-								URLEncoder.encode(_TEX.T("Common.Title"), "UTF-8"));
+						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+								URLEncoder.encode(String.format("%s%s %s #%s",
+										cResults.m_cUser.m_strNickName,
+										_TEX.T("Twitter.UserAddition"),
+										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+										_TEX.T("Common.Title")), "UTF-8"),
+								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(cResults.m_bOwner) {%>
 						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
@@ -186,18 +189,18 @@ if(!cResults.getResults(cCheckLogin)) {
 						<%}%>
 					</span>
 				</div>
-				<%if(cResults.m_bOwner) {%>
 				<span class="UserInfoState">
-					<span class="UserInfoStateItem Selected">
+					<a class="UserInfoStateItem Selected" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNum%></span>
-					</span>
+						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
+					</a>
+					<%if(cResults.m_bOwner) {%>
 					<a class="UserInfoStateItem" href="/FollowListV.jsp">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
+					<%}%>
 				</span>
-				<%}%>
 			</div>
 
 			<%if(cResults.m_vCategoryList.size()>0) {%>

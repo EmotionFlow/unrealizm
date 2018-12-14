@@ -39,6 +39,7 @@ public class IllustListC {
 	public boolean m_bBlocking = false;
 	public boolean m_bBlocked = false;
 	public int m_nContentsNum = 0;
+	public int m_nContentsNumTotal = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -165,6 +166,18 @@ public class IllustListC {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 				}
+
+				// User contents total number
+				idx = 1;
+				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(idx++, m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nContentsNumTotal = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 
 				// category
 				strSql = "SELECT tag_txt FROM tags_0000 WHERE tag_type=3 AND content_id IN(SELECT content_id FROM contents_0000 WHERE user_id=?) GROUP BY tag_txt ORDER BY max(upload_date) DESC";

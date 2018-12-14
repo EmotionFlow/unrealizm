@@ -31,6 +31,7 @@ public class IllustViewC {
 	public boolean m_bFollow = false;
 	public boolean m_bBlocking = false;
 	public boolean m_bBlocked = false;
+	public int m_nContentsNumTotal = 0;
 	public boolean getResults(CheckLogin cCheckLogin) {
 		String strSql = "";
 		boolean bRtn = false;
@@ -137,6 +138,17 @@ public class IllustViewC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 			}
+
+			// User contents total number
+			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nUserId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				m_nContentsNumTotal = cResSet.getInt(1);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
 
 			if(m_bBlocking || m_bBlocked) {
 				return false;

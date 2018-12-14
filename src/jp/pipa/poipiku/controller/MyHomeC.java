@@ -28,6 +28,7 @@ public class MyHomeC {
 	public int SELECT_MAX_EMOJI = 60;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
+	public int m_nContentsNumTotal = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -83,6 +84,19 @@ public class MyHomeC {
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+
+
+				// User contents total number
+				idx = 1;
+				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nContentsNumTotal = cResSet.getInt(1);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
