@@ -4,21 +4,16 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/IllustListGridPcV.jsp").forward(request,response);
-	return;
-}
-
-IllustListC cResults = new IllustListC();
+IllustListGridC cResults = new IllustListGridC();
 cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
-cResults.SELECT_MAX_GALLERY = 30;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -41,11 +36,10 @@ if(!cResults.getResults(cCheckLogin)) {
 			<%} else {%>
 			$('#MenuSearch').addClass('Selected');
 			<%}%>
+			updateCategoryMenuPos(0);
 		});
 
 		$(function(){
-			updateCategoryMenuPos(0);
-
 			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
 			<%if(!bSmartPhone) {%>
 			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
@@ -59,6 +53,40 @@ if(!cResults.getResults(cCheckLogin)) {
 		</script>
 
 		<script>
+		var g_nPage = 1;
+		var g_strKeyword = '<%=cResults.m_strKeyword%>';
+		var g_bAdding = false;
+		function addContents() {
+			if(g_bAdding) return;
+			g_bAdding = true;
+			var $objMessage = $("<div/>").addClass("Waiting");
+			$("#IllustThumbList").append($objMessage);
+			$.ajax({
+				"type": "post",
+				"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword, "PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
+				"url": "/f/IllustListGridF.jsp",
+				"success": function(data) {
+					if(data) {
+						g_nPage++;
+						$("#IllustThumbList").append(data);
+						$(".Waiting").remove();
+						if(vg)vg.vgrefresh();
+						g_bAdding = false;
+						if(g_nPage>0) {
+							console.log(location.pathname+'/'+g_nPage+'.html');
+							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
+						}
+					} else {
+						$(window).unbind("scroll.addContents");
+					}
+					$(".Waiting").remove();
+				},
+				"error": function(req, stat, ex){
+					DispMsg('Connection error');
+				}
+			});
+		}
+
 		function UpdateFollow(nUserId, nFollowUserId) {
 			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 			$.ajaxSingle({
@@ -81,6 +109,12 @@ if(!cResults.getResults(cCheckLogin)) {
 					DispMsg('Connection error');
 				}
 			});
+		}
+
+		function DeleteContent(nUserId, nContentId) {
+			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
+			DeleteContentBase(nUserId, nContentId);
+			return false;
 		}
 
 		function UpdateBlock() {
@@ -112,23 +146,73 @@ if(!cResults.getResults(cCheckLogin)) {
 				}
 			});
 		}
+
+		$(function(){
+			$('body, .Wrapper').each(function(index, element){
+				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+			});
+			$(window).bind("scroll.addContents", function() {
+				$(window).height();
+				if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 500) {
+					addContents();
+				}
+			});
+		});
 		</script>
 		<style>
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
-		<%if(!bSmartPhone) {%>
-		@media screen and (min-width:1188px){
-		.Wrapper.ThumbList {width: 1188px;}
-		}
-		<%}%>
 		</style>
+
+
+		<style>
+			.IllustThumb .IllustInfo {bottom: 0; background: #fff;}
+			.CategoryMenu {float: none;}
+			#IllustThumbList {opacity: 0; float: none;}
+		</style>
+		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>
+		<script>
+		//setup
+		var vg = null;
+		$(function() {
+			vg = $("#IllustThumbList").vgrid({
+				easing: "easeOutQuint",
+				useLoadImageEvent: true,
+				useFontSizeListener: true,
+				time: 1,
+				delay: 1,
+				wait: 1,
+				fadeIn: {
+					time: 1,
+					delay: 1
+				},
+				onStart: function(){
+					$("#message1")
+						.css("visibility", "visible")
+						.fadeOut("slow",function(){
+							$(this).show().css("visibility", "hidden");
+						});
+				},
+				onFinish: function(){
+					$("#message2")
+						.css("visibility", "visible")
+						.fadeOut("slow",function(){
+							$(this).show().css("visibility", "hidden");
+						});
+				}
+			});
+			//$(window).load(function(e){
+				$("#IllustThumbList").css('opacity', 1);
+				//vg.vgrefresh();
+			//});
+		});
+		</script>
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jspf"%>
-
-
 
 		<div class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
@@ -186,7 +270,7 @@ if(!cResults.getResults(cCheckLogin)) {
 			</div>
 		</div>
 
-		<div class="Wrapper ThumbList">
+		<div class="Wrapper GridList">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
@@ -202,15 +286,12 @@ if(!cResults.getResults(cCheckLogin)) {
 				<%//}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%//=CCnv.Thumb2Html(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
 					<%//if(nCnt==17) {%>
 					<%//@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 					<%//}%>
 				<%}%>
-			</div>
-
-			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

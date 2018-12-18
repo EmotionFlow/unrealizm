@@ -18,24 +18,25 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ItemList .SideBarMid.Wide {margin: 0;}
 .SideBarBottom {height: 60px;}
 .CategoryMenu {padding: 20px 0px 4px 0px;}
-.CategoryMenu .CategoryBtn {padding: 0 15px;height: 24px;line-height: 22px;}
+.CategoryMenu .CategoryBtn {padding: 0 12px;height: 24px;line-height: 22px;}
 .UserInfo .UserInfoBg {height: 180px;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
 .IllustThumb {width: 198px; height: 198px;}
 .IllustThumb .Category {font-size: 13px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
-.IllustItem {margin: 30px auto; width: 100%;}
-.IllustItem .IllustItemUser {padding: 10px;}
-.IllustItem .Category {margin: 0px 0 3px 0px;}
-.IllustItem .IllustItemCommand {padding: 0 10px;}
-.IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
-.IllustItem .IllustItemDesc {padding: 0 10px;}
-.IllustItem .IllustItemDescEdit {padding: 0 10px;}
-.IllustItem .IllustItemExpand .IllustItemExpandBtn {margin: 2px 0 0px 0;}
-.IllustItem .IllustItemResList {padding: 0 9px 6px 9px;}
-.IllustItem .IllustItemResList .ResEmoji {width: 29px; height: 29px;}
-.IllustItem .IllustItemResBtnList {padding: 3px 5px;}
-.IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn {width: 36px; height: 36px; line-height: 36px; margin: 3px 3px 0 3px;}
+.IllustItem {margin: 15px;}
+.Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
+.Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
+.Wrapper.ViewPc .IllustItem .Category {margin: 0px 0 3px 0px;}
+.Wrapper.ViewPc .IllustItem .IllustItemCommand {padding: 0 10px;}
+.Wrapper.ViewPc .IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
+.Wrapper.ViewPc .IllustItem .IllustItemDesc {padding: 0 10px;}
+.Wrapper.ViewPc .IllustItem .IllustItemDescEdit {padding: 0 10px;}
+.Wrapper.ViewPc .IllustItem .IllustItemExpand .IllustItemExpandBtn {margin: 2px 0 0px 0;}
+.Wrapper.ViewPc .IllustItem .IllustItemResList {padding: 0 9px 6px 9px;}
+.Wrapper.ViewPc .IllustItem .IllustItemResList .ResEmoji {width: 29px; height: 29px;}
+.Wrapper.ViewPc .IllustItem .IllustItemResBtnList {padding: 3px 5px;}
+.Wrapper.ViewPc .IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn {width: 36px; height: 36px; line-height: 36px; margin: 3px 3px 0 3px;}
 .SearchResultTitle {margin: 15px 0 10px 0; font-size: 18px; height: 32px; line-height: 30px;}
 .SearchResultTitle .TitleCmdFollow {float: none; position: static;}
 
@@ -83,5 +84,12 @@ body {padding: 51px 0 0 0 !important;}
 .AnalogicoInfo.Float .AnalogicoMoreInfo {font-size: 12px;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist {font-size: 14px; margin: 0;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 8px 0 0 0; min-width: 240px; padding: 3px 12px; max-width: 260px; overflow: hidden; white-space: nowrap;}
+
+
+/********** GRID ***********/
+.Wrapper.GridList {width: 1122px;}
+.Wrapper.GridList #IllustThumbList {opacity: 0; float: none;}
+.Wrapper.GridList .PageBar {float: none;}
+.Wrapper.GridList .PcSideBarAd {width: 300px; height: 250px; float: none; display: inline-block; margin: 15px; background: #eee; padding: 22px; background-color: #5bd;}
 
 

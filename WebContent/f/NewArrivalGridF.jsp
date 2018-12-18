@@ -3,7 +3,7 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-NewArrivalViewC cResults = new NewArrivalViewC();
+NewArrivalGridC cResults = new NewArrivalGridC();
 cResults.getParam(request);
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin, true);
@@ -11,8 +11,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
-	<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
-	<%if((nCnt+1)%5==0) {%>
-	<%@ include file="/inner/TAdMid.jspf"%>
+	<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult)%>
+	<%if(nCnt==8) {%>
+	<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 	<%}%>
 <%}%>

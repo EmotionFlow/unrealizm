@@ -15,7 +15,7 @@ class UploadReferenceCParam {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
-			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, 16);
+			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
 			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), Common.SAFE_FILTER_ALL, Common.SAFE_FILTER_R18G);
 			m_strDescription	= Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("DES"))), 200);
 			m_strTagList		= Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("TAG"))), 100);

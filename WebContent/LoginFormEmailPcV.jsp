@@ -108,7 +108,7 @@ if(strRequestUri != null) {
 
 					<div style="display: flex; line-height: 15px; margin: 30px 0;">
 						<div style="flex: 1 0; height: 1px; background-color: #999; margin: 7px 0;"></div>
-						<div style="flex: 0 0; background-color: #f1f9fc; padding: 0px 10px;">or</div>
+						<div style="flex: 0 0; background-color: #b8d6e0; padding: 0px 10px;">or</div>
 						<div style="flex: 1 0; height: 1px; background-color: #999; margin: 7px 0;"></div>
 					</div>
 

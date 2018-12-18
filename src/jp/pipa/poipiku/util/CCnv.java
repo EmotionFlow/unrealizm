@@ -8,22 +8,12 @@ import jp.pipa.poipiku.*;
 
 public class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
-	public static final int TYPE_NEWARRIVAL_ILLUST = 1;
-	public static final int TYPE_POPULAR_ILLUST = 2;
-	public static final int TYPE_KEYWORD_ILLUST = 3;
-	public static final int TYPE_TAG_ILLUST = 4;
-	public static final int TYPE_CATEGORY_ILLUST = 5;
 
 	public static final int MODE_PC = 0;
 	public static final int MODE_SP = 1;
 
 	private static final String ILLUST_VIEW[][] ={
 			{"/IllustViewPcV.jsp", "/IllustViewV.jsp"},
-			{"/NewArrivalViewPcV.jsp", "/NewArrivalViewV.jsp"},
-			{"/PopularIllustListViewPcV.jsp", "/PopularIllustListViewV.jsp"},
-			{"/SearchIllustByKeywordViewPcV.jsp", "/SearchIllustByKeywordViewV.jsp"},
-			{"/SearchIllustByTagViewPcV.jsp", "/SearchIllustByTagViewV.jsp"},
-			{"/NewArrivalViewPcV.jsp", "/NewArrivalViewV.jsp"},
 	};
 
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException{
@@ -164,7 +154,7 @@ public class CCnv {
 				_TEX.T("IllustView.ProhibitMsg")));
 		// 2枚目以降ボタン
 		if(cContent.m_nFileNum>1) {
-		strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"$('#IllustItem_%d .IllustItemThubExpand').slideDown(300);$(this).hide();\"><i class=\"far fa-clone\"></i> %s</a>",
+		strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ExpandItem(%d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
 				cContent.m_nContentId,
 				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		}
@@ -238,6 +228,33 @@ public class CCnv {
 
 		return strRtn.toString();
 	}
+
+
+	public static String Thumb2Html(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
+		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
+		StringBuilder strRtn = new StringBuilder();
+		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
+		if(nMode==MODE_SP) {
+			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId));
+		} else {
+			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"/%d/%d.html\">", cContent.m_nUserId, cContent.m_nContentId));
+		}
+		if(cContent.m_nSafeFilter<2) {
+			strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
+		} else if(cContent.m_nSafeFilter<4) {
+			strRtn.append("<img class=\"IllustThumbImg\" src=\"/img/warning.png_360.jpg\" />");
+		} else {
+			strRtn.append("<img class=\"IllustThumbImg\" src=\"/img/R-18.png_360.jpg\" />");
+		}
+		strRtn.append("<span class=\"IllustInfo\">");
+		strRtn.append(String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s %s</span>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
+		strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Common.ToStringHtml(cContent.m_strDescription)));
+		strRtn.append("</span>");	// IllustInfo
+		strRtn.append("</a>");
+
+		return strRtn.toString();
+	}
+
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
 		return toThumbHtml(cContent, nType, nMode, "", _TEX);

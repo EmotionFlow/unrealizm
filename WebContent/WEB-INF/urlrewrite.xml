@@ -28,10 +28,26 @@
 
 	<rule>
 		<note>
-			for IllustViewPcV.jsp
+			for IllustListPcV.jsp
+		</note>
+		<from>^/([0-9]+)/gallery\.htm.?$</from>
+		<to>/IllustListPcV.jsp?ID=$1</to>
+	</rule>
+
+	<rule>
+		<note>
+			for IllustListPcV.jsp
 		</note>
 		<from>^/([0-9]+)/index_([0-9]+)\.htm.?$</from>
 		<to>/IllustListPcV.jsp?ID=$1&amp;PG=$2</to>
+	</rule>
+
+	<rule>
+		<note>
+			for IllustViewPcV.jsp
+		</note>
+		<from>^/([0-9]+)/timeline\.htm.$</from>
+		<to>/IllustViewPcV.jsp?ID=$1</to>
 	</rule>
 
 	<rule>

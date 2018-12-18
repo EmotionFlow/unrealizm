@@ -190,6 +190,7 @@ function DeleteContentBase(nUserId, nContentId) {
 		"success": function(data) {
 			$('#IllustItem_'+nContentId).slideUp(300, function(){
 				$('#IllustItem_'+nContentId).remove();
+				if(vg)vg.vgrefresh();
 			});
 		},
 		"error": function(req, stat, ex){
@@ -215,6 +216,7 @@ function switchEmojiKeyboard(obj, nContentId, nSelected) {
 			"success": function(data) {
 				$ResEmojiBtnListTarg.html(data);
 				$ResEmojiBtnListTarg.loading = false;
+				if(vg)vg.vgrefresh();
 			},
 			"error": function(req, stat, ex){
 				$(".Waiting").remove();
@@ -351,6 +353,11 @@ function ShowAllReaction(content_id, elm) {
 		}
 	});
 	return false;
+}
+
+function ExpandItem(id, elm) {
+	$(this).hide();
+	$('#IllustItem_' + id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
 }
 
 

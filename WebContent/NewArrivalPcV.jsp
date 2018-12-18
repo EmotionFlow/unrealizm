@@ -2,12 +2,17 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
+
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/NewArrivalGridPcV.jsp").forward(request,response);
+	return;
+}
 
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -59,7 +64,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				<%}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 					<%if(nCnt==17) {%>
 					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
 					<%}%>

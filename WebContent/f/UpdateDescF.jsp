@@ -10,7 +10,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int m_nUserId = Common.ToInt(request.getParameter("UID"));
 int m_nContentId = Common.ToInt(request.getParameter("IID"));
-int m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, 16);
+int m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
 String m_strDescription = Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("DES"))), 200);
 String m_strTagList = Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("TAG"))), 100);
 int m_nMode = Common.ToInt(request.getParameter("MOD"));
