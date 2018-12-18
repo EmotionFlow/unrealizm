@@ -13,14 +13,14 @@ import jp.pipa.poipiku.util.*;
 public class NewArrivalGridC {
 
 	public int m_nCategoryId = 0;
-	public int m_nPage = 0;
 	public int m_nMode = 0;
+	public int m_nStartId = -1;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nCategoryId = Common.ToInt(cRequest.getParameter("CD"));
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
+			m_nStartId = Common.ToInt(cRequest.getParameter("SD"));
 		} catch(Exception e) {
 			;
 		}
@@ -30,7 +30,7 @@ public class NewArrivalGridC {
 	public int SELECT_MAX_GALLERY = 17;
 	public int SELECT_MAX_EMOJI = 60;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	int m_nEndId = -1;
+	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -68,6 +68,7 @@ public class NewArrivalGridC {
 			}
 
 			String strCondCat = (m_nCategoryId>=0)?"AND category_id=?":"";
+			String strCondStart = (m_nStartId>0)?"AND content_id<?":"";
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
@@ -97,20 +98,22 @@ public class NewArrivalGridC {
 			}
 
 
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCondCat, strCond);
+			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s %s ORDER BY content_id DESC LIMIT ?", strCondStart, strCondCat, strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(m_nStartId>0) {
+				cState.setInt(idx++, m_nStartId);
+			}
 			if(m_nCategoryId>=0) {
 				cState.setInt(idx++, m_nCategoryId);
 			}
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
-			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {

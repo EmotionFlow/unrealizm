@@ -153,7 +153,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 			$(window).bind("scroll.addContents", function() {
 				$(window).height();
-				if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 500) {
+				if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
 					addContents();
 				}
 			});

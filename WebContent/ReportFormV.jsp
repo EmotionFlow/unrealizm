@@ -2,6 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
+int nUserId = Common.ToInt(request.getParameter("ID"));
 int nContentId	= Common.ToInt(request.getParameter("TD"));
 
 // login check
@@ -21,7 +22,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			var strDesc = $.trim($("#ReportDesc").val());
 			$.ajaxSingle({
 				"type": "post",
-				"data": {"TD":<%=nContentId%>, "DES":strDesc},
+				"data": {"ID":<%=nUserId%>, "TD":<%=nContentId%>, "DES":strDesc},
 				"url": "/f/ReportF.jsp",
 				"dataType": "json",
 				"success": function(data) {

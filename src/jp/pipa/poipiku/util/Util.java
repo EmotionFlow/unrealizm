@@ -181,4 +181,35 @@ public class Util {
 		return strSrc.substring(0, nNum);
 	}
 
+	public static String poipiku_320x250_sp_mid() {
+		StringBuilder sbRtn = new StringBuilder();
+		sbRtn.append("<div class=\"SideBarMid\">");
+		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+		sbRtn.append("<!-- poipiku_320x250_sp_mid -->");
+		sbRtn.append("<ins class=\"adsbygoogle\"");
+		sbRtn.append("style=\"display:inline-block;width:300px;height:250px\"");
+		sbRtn.append("data-ad-client=\"ca-pub-9388519601000159\"");
+		sbRtn.append("data-ad-slot=\"8188361534\"></ins>");
+		sbRtn.append("<script>");
+		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
+		sbRtn.append("</script>");
+		sbRtn.append("</div>");
+		return sbRtn.toString();
+	}
+
+	public static String poipiku_300x250_bottom_right() {
+		StringBuilder sbRtn = new StringBuilder();
+		sbRtn.append("<div class=\"PcSideBarAd\">");
+		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+		sbRtn.append("<!-- poipiku_300x250_bottom_right -->");
+		sbRtn.append("<ins class=\"adsbygoogle\"");
+		sbRtn.append("style=\"display:inline-block;width:300px;height:250px\"");
+		sbRtn.append("data-ad-client=\"ca-pub-9388519601000159\"");
+		sbRtn.append("data-ad-slot=\"6315134980\"></ins>");
+		sbRtn.append("<script>");
+		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
+		sbRtn.append("</script>");
+		sbRtn.append("</div>");
+		return sbRtn.toString();
+	}
 }

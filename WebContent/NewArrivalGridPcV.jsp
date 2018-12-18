@@ -24,7 +24,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		</script>
 
 		<script type="text/javascript">
-			var g_nPage = 1;
+			var g_nEndId = <%=cResults.m_nEndId%>;
 			var g_nCategory = <%=cResults.m_nCategoryId%>;
 			var g_bAdding = false;
 			function addContents() {
@@ -34,19 +34,18 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "CD" : g_nCategory, "MD" : <%=CCnv.MODE_PC%>},
+					"data": {"SD" : g_nEndId, "CD" : g_nCategory, "MD" : <%=CCnv.MODE_PC%>},
+					"dataType": "json",
 					"url": "/f/NewArrivalGridF.jsp",
 					"success": function(data) {
-						if(data) {
-							g_nPage++;
-							$("#IllustThumbList").append(data);
+						if(data.end_id>0) {
+							g_nEndId = data.end_id;
+							$("#IllustThumbList").append(data.html);
 							$(".Waiting").remove();
 							if(vg)vg.vgrefresh();
 							g_bAdding = false;
-							if(g_nPage>0) {
-								console.log(location.pathname+'/'+g_nPage+'.html');
-								gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
-							}
+							console.log(location.pathname+'/'+g_nEndId+'.html');
+							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nEndId+'.html'});
 						} else {
 							$(window).unbind("scroll.addContents");
 						}
@@ -94,7 +93,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				});
 				$(window).bind("scroll.addContents", function() {
 					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 500) {
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
 						addContents();
 					}
 				});
