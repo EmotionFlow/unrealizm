@@ -28,20 +28,63 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		</script>
 
 		<script>
-			function DeleteContent(nUserId, nContentId) {
-				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				DeleteContentBase(nUserId, nContentId);
-				return false;
-			}
-
-			$(function(){
-				$('body, .Wrapper').each(function(index, element){
-					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
-				});
+		var g_nEndId = <%=cResults.m_nEndId%>;
+		var g_bAdding = false;
+		function addContents() {
+			if(g_bAdding) return;
+			g_bAdding = true;
+			var $objMessage = $("<div/>").addClass("Waiting");
+			$("#IllustItemList").append($objMessage);
+			$.ajax({
+				"type": "post",
+				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_PC%>},
+				"dataType": "json",
+				"url": "/f/MyHomeF.jsp",
+				"success": function(data) {
+					if(data.end_id>0) {
+						g_nEndId = data.end_id;
+						$("#IllustItemList").append(data.html);
+						$(".Waiting").remove();
+						if(vg)vg.vgrefresh();
+						g_bAdding = false;
+						console.log(location.pathname+'/'+g_nEndId+'.html');
+						gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nEndId+'.html'});
+					} else {
+						$(window).unbind("scroll.addContents");
+					}
+					$(".Waiting").remove();
+				},
+				"error": function(req, stat, ex){
+					DispMsg('Connection error');
+				}
 			});
+		}
+
+		function DeleteContent(nUserId, nContentId) {
+			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
+			DeleteContentBase(nUserId, nContentId);
+			return false;
+		}
+
+		$(function(){
+			$('body, .Wrapper').each(function(index, element){
+				$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
+			});
+			$(window).bind("scroll.addContents", function() {
+				$(window).height();
+				if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 600) {
+					addContents();
+				}
+			});
+		});
 		</script>
 		<style>
 			body {padding-top: 83px !important;}
+
+			<%if(!Util.isSmartPhone(request)) {%>
+			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
+			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
+			<%}%>
 		</style>
 	</head>
 
@@ -112,17 +155,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 							<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
 						</div>
 					</div>
-
-					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
-					</div>
 				</div>
 			</div>
 			<%}%>
-
-			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-			</div>
 		</div>
 
 		<%@ include file="/inner/TFooter.jspf"%>

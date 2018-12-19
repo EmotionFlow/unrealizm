@@ -175,7 +175,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>
 		<script>
 		//setup
-		var vg = null;
 		$(function() {
 			vg = $("#IllustThumbList").vgrid({
 				easing: "easeOutQuint",

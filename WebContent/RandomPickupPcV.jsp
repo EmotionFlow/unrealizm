@@ -2,12 +2,17 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
+
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/RandomPickupGridPcV.jsp").forward(request,response);
+	return;
+}
 
 RandomPickupC cResults = new RandomPickupC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -19,6 +24,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
+			$('#MenuRandom').addClass('Selected');
 		});
 		</script>
 		<style>

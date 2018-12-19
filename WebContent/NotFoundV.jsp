@@ -16,14 +16,10 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 	<body>
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
-
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 70px 10px;">
 				<h1><%=_TEX.T("NotFound.TitleBar")%></h1>
 				<%=_TEX.T("NotFound.Detail")%>
 			</div>
-
-			<%@ include file="/inner/TAdBottom.jspf"%>
 		</div>
 	</body>
 </html>

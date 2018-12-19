@@ -2,9 +2,15 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	return;
+}
+
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/MyBookmarkListGridPcV.jsp").forward(request,response);
 	return;
 }
 
@@ -12,7 +18,6 @@ MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +53,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<div class="Wrapper ThumbList">
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
-				11/20 <span style="color: red; font-size: 9px;">new!</span> お気に入りに追加したイラストは公開されず、相手にも伝わりません。思う存分お気に入りに追加してみてください！
+				11/20 <span style="color: red; font-size: 9px;">new!</span> お気に入りは非公開で、追加も削除も相手に伝わりません。思う存分お気に入りに追加してみよう！
 			</div>
 
 

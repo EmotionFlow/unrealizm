@@ -4,7 +4,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-NewArrivalGridC cResults = new NewArrivalGridC();
+RandomPickupGridC cResults = new RandomPickupGridC();
 cResults.getParam(request);
 if(cResults.m_nMode==CCnv.MODE_SP) {
 	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;

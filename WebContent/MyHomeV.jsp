@@ -22,55 +22,59 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>home</title>
 		<script>
-			var g_nPage = 1;
-			var g_bAdding = false;
-			function addContents() {
-				if(g_bAdding) return;
-				g_bAdding = true;
-				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustItemList").append($objMessage);
-				$.ajax({
-					"type": "post",
-					"data": {"PG" : g_nPage},
-					"url": "/f/MyHomeF.jsp",
-					"success": function(data) {
-						if(data) {
-							g_nPage++;
-							$("#IllustItemList").append(data);
-							g_bAdding = false;
-							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
-						} else {
-							$(window).unbind("scroll.addContents");
-						}
+		var g_nEndId = <%=cResults.m_nEndId%>;
+		var g_bAdding = false;
+		function addContents() {
+			if(g_bAdding) return;
+			g_bAdding = true;
+			var $objMessage = $("<div/>").addClass("Waiting");
+			$("#IllustItemList").append($objMessage);
+			$.ajax({
+				"type": "post",
+				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_SP%>},
+				"dataType": "json",
+				"url": "/f/MyHomeF.jsp",
+				"success": function(data) {
+					if(data.end_id>0) {
+						g_nEndId = data.end_id;
+						$("#IllustItemList").append(data.html);
 						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
+						if(vg)vg.vgrefresh();
+						g_bAdding = false;
+						console.log(location.pathname+'/'+g_nEndId+'.html');
+						gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nEndId+'.html'});
+					} else {
+						$(window).unbind("scroll.addContents");
 					}
-				});
-			}
-
-			function DeleteContent(nUserId, nContentId) {
-				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				DeleteContentBase(nUserId, nContentId);
-				return false;
-			}
-
-			function MoveTab() {
-				sendObjectMessage("moveTabNewArrival")
-			}
-
-			$(function(){
-				$('body, .Wrapper').each(function(index, element){
-					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
-				});
-				$(window).bind("scroll.addContents", function() {
-					$(window).height();
-					if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 400) {
-						addContents();
-					}
-				});
+					$(".Waiting").remove();
+				},
+				"error": function(req, stat, ex){
+					DispMsg('Connection error');
+				}
 			});
+		}
+
+		function DeleteContent(nUserId, nContentId) {
+			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
+			DeleteContentBase(nUserId, nContentId);
+			return false;
+		}
+
+		function MoveTab() {
+			sendObjectMessage("moveTabNewArrival")
+		}
+
+		$(function(){
+			$('body, .Wrapper').each(function(index, element){
+				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+			});
+			$(window).bind("scroll.addContents", function() {
+				$(window).height();
+				if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 400) {
+					addContents();
+				}
+			});
+		});
 		</script>
 	</head>
 

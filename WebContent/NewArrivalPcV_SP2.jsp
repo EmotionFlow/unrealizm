@@ -42,12 +42,12 @@ public class NewArrivalC {
 			int nNowHour = (new java.util.Date()).getHours();
 			switch(nNowHour) {
 			case 0:
-				BASE = 5;
+				BASE = 8;
 				USER = true;
 				CONTENT = true;
 				break;
 			case 1:
-				BASE = 4;
+				BASE = 5;
 				//USER = true;
 				CONTENT = true;
 				break;
@@ -62,37 +62,43 @@ public class NewArrivalC {
 			case 6:
 			case 7:
 			case 8:
+				BASE = 1;
+				break;
 			case 9:
 			case 10:
 			case 11:
 			case 12:
 			case 13:
 			case 14:
+				BASE = 2;
+				break;
 			case 15:
 			case 16:
 			case 17:
-				BASE = 1;
-				break;
-			case 18:
-				BASE = 2;
-				break;
-			case 19:
 				BASE = 3;
 				break;
-			case 20:
+			case 18:
 				BASE = 4;
 				break;
-			case 21:
+			case 19:
 				BASE = 5;
 				CONTENT = true;
 				break;
-			case 22:
+			case 20:
 				BASE = 6;
-				//USER = true;
+				CONTENT = true;
+				break;
+			case 21:
+				BASE = 7;
+				CONTENT = true;
+				break;
+			case 22:
+				BASE = 8;
+				USER = true;
 				CONTENT = true;
 				break;
 			case 23:
-				BASE = 7;
+				BASE = 9;
 				USER = true;
 				CONTENT = true;
 				break;
@@ -142,7 +148,7 @@ public class NewArrivalC {
 			}
 
 
-			strSql = "SELECT * FROM (SELECT contents_0000.* FROM contents_0000 inner join users_0000 on contents_0000.user_id=users_0000.user_id WHERE ng_reaction=0 AND open_id=0 AND file_complex>70000 ORDER BY content_id DESC OFFSET 10 LIMIT 200) as T1 ORDER BY random() LIMIT ?";
+			strSql = "SELECT * FROM (SELECT contents_0000.* FROM contents_0000 inner join users_0000 on contents_0000.user_id=users_0000.user_id WHERE ng_reaction=0 AND open_id=0 AND file_complex>70000 ORDER BY content_id DESC LIMIT 300) as T1 ORDER BY random() LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, BASE);
 			cResSet = cState.executeQuery();
@@ -153,7 +159,7 @@ public class NewArrivalC {
 			cState.close();cState=null;
 
 
-			strSql = "SELECT description FROM (SELECT * FROM vw_rank_emoji_daily WHERE description<>'🎃' ORDER BY rank DESC LIMIT 40) as T2 ORDER BY random() LIMIT 1";
+			strSql = "SELECT description FROM (SELECT * FROM vw_rank_emoji_daily WHERE description NOT IN('🎃', '💯', '🍓', '💒', '🐙', '❄') ORDER BY rank DESC LIMIT 20) as T2 ORDER BY random() LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			for(CContentComlex contentComlex : m_vContentList) {
 				cResSet = cState.executeQuery();

@@ -18,6 +18,44 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<head>
 		<%@ include file="/inner/THeaderCommon.jspf"%>
 		<title>random</title>
+		<script>
+			var g_nPage = 1;
+			var g_bAdding = false;
+			function addContents() {
+				if(g_bAdding) return;
+				g_bAdding = true;
+				var $objMessage = $("<div/>").addClass("Waiting");
+				$("#IllustThumbList").append($objMessage);
+				$.ajax({
+					"type": "post",
+					"data": {"PG" : g_nPage},
+					"url": "/f/RandomPickupF.jsp",
+					"success": function(data) {
+						if(data) {
+							g_nPage++;
+							$('#InfoMsg').hide();
+							$("#IllustThumbList").append(data);
+							g_bAdding = false;
+							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
+						} else {
+							$(window).unbind("scroll.addContents");
+						}
+						$(".Waiting").remove();
+					},
+					"error": function(req, stat, ex){
+						DispMsg('Connection error');
+					}
+				});
+			}
+			$(function(){
+				$(window).bind("scroll.addContents", function() {
+					$(window).height();
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
+						addContents();
+					}
+				});
+			});
+		</script>
 	</head>
 
 	<body>

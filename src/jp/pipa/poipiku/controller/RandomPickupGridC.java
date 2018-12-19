@@ -10,21 +10,25 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class PopularIllustListC {
-	public int m_nAccessUserId = -1;
-	public int m_nPage = 0;
+public class RandomPickupGridC {
+
+	public int m_nMode = 0;
+	public int m_nStartId = -1;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
+			m_nStartId = Common.ToInt(cRequest.getParameter("SD"));
 		} catch(Exception e) {
 			;
 		}
 	}
 
-	public int SELECT_MAX_GALLERY = 36;
+
+	public int SELECT_MAX_GALLERY = 17;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
+	public int m_nEndId = -1;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -64,32 +68,32 @@ public class PopularIllustListC {
 			*/
 
 
-			// POPULAR
+			// NEW ARRIVAL
 			if(!bContentOnly) {
-				//strSql = String.format("SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
-				strSql = "SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
+				/*
+				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) %s", strCond);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-				/*
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
 				}
-				*/
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
+				*/
+				m_nContentsNum = SELECT_MAX_GALLERY;
 			}
 
-			//strSql = String.format("SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
-			strSql = "SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			//strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY random() LIMIT ?", strCond);
+			strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? AND content_id<(SELECT (max(content_id) * random())::int FROM contents_0000) ORDER BY content_id DESC LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
+			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
@@ -98,17 +102,33 @@ public class PopularIllustListC {
 				cState.setString(idx++, strMuteKeyword);
 			}
 			*/
-			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
+				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
+				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
+				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			bRtn = true;
+			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+
+			// Each append image
+			GridUtil.getEachImage(cConn, m_vContentList);
+
+			// Each Comment
+			GridUtil.getEachComment(cConn, m_vContentList);
+
+			// Bookmark
+			if(cCheckLogin.m_bLogin) {
+				GridUtil.getEachBookmark(cConn, m_vContentList, cCheckLogin);
+			}
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

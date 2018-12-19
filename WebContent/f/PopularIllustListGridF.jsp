@@ -4,7 +4,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-NewArrivalGridC cResults = new NewArrivalGridC();
+PopularIllustListGridC cResults = new PopularIllustListGridC();
 cResults.getParam(request);
 if(cResults.m_nMode==CCnv.MODE_SP) {
 	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
@@ -20,6 +20,6 @@ for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	}
 }
 %>{
-"end_id" : <%=cResults.m_nEndId%>,
+"end_id" : <%=cResults.m_vContentList.size()%>,
 "html" : "<%=CEnc.E(sbHtml.toString())%>"
 }

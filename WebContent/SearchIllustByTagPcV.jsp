@@ -2,13 +2,18 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
+
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/SearchIllustByTagGridPcV.jsp").forward(request,response);
+	return;
+}
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>

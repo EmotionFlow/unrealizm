@@ -3,17 +3,24 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) return;
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
-cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+if(cResults.m_nMode==CCnv.MODE_SP) {
+	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+}
 boolean bRtn = cResults.getResults(cCheckLogin, true);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-%>
-<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CContent cContent = cResults.m_vContentList.get(nCnt);%>
-	<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
-	<%if((nCnt+1)%10==0) {%>
-	<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
-	<%}%>
-<%}%>
+StringBuilder sbHtml = new StringBuilder();
+for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+	CContent cContent = cResults.m_vContentList.get(nCnt);
+	sbHtml.append(CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult));
+	if(nCnt==5 && bSmartPhone) {
+		sbHtml.append(Util.poipiku_320x250_sp_mid());
+	}
+}
+%>{
+"end_id" : <%=cResults.m_nEndId%>,
+"html" : "<%=CEnc.E(sbHtml.toString())%>"
+}

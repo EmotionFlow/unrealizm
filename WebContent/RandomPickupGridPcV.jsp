@@ -4,7 +4,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-NewArrivalGridC cResults = new NewArrivalGridC();
+RandomPickupGridC cResults = new RandomPickupGridC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
@@ -14,19 +14,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jspf"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("RandomPickup.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
-			$('#MenuRecent').addClass('Selected');
-			updateCategoryMenuPos(0);
+			$('#MenuRandom').addClass('Selected');
 		});
 		</script>
-
 		<script type="text/javascript">
 			var g_nEndId = <%=cResults.m_nEndId%>;
-			var g_nCategory = <%=cResults.m_nCategoryId%>;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -35,9 +32,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"SD" : g_nEndId, "CD" : g_nCategory, "MD" : <%=CCnv.MODE_PC%>},
+					"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_PC%>},
 					"dataType": "json",
-					"url": "/f/NewArrivalGridF.jsp",
+					"url": "/f/RandomPickupGridF.jsp",
 					"success": function(data) {
 						if(data.end_id>0) {
 							g_nEndId = data.end_id;
@@ -56,12 +53,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						DispMsg('Connection error');
 					}
 				});
-			}
-
-			function DeleteContent(nUserId, nContentId) {
-				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				DeleteContentBase(nUserId, nContentId);
-				return false;
 			}
 
 			function UpdateFollow(nUserId, nFollowUserId) {
@@ -100,9 +91,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				});
 			});
 		</script>
-
 		<style>
 			body {padding-top: 83px !important;}
+			.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete {display: none;}
 		</style>
 
 		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
@@ -151,9 +142,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
 				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
 				<a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
-				<a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
 				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
+				<a class="TabMenuItem Selected" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
 				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
 			</div>
 		</div>
@@ -161,13 +152,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/TMenuPc.jspf"%>
 
 		<div class="Wrapper GridList">
-			<div id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_nCategoryId<0){%> Selected<%}%>" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
-				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
-				<%}%>
-			</div>
-
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>

@@ -1,3 +1,4 @@
+// extension
 $(function(){
 	jQuery.extend({
 		ajaxSingle: (function(options){
@@ -23,6 +24,9 @@ $(function(){
 		})()
 	});
 });
+
+// for v-grid;
+var vg = null;
 
 function setCookie(key, val, tmp) {
 	tmp = key + "=" + encodeURIComponent(val) + "; ";

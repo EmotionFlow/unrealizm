@@ -10,6 +10,14 @@
 			</a>
 			<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
 		</div>
+		<%if(!Util.isSmartPhone(request)) {%>
+		<nav class="GlobalLink">
+			<a id="MenuRecent" class="LinkItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+			<a id="MenuHotTag" class="LinkItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+			<a id="MenuRandom" class="LinkItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
+			<a id="MenuHotIllust" class="LinkItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+		</nav>
+		<%}%>
 		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
 			<div class="HeaderSearch">
 				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Common.ToStringHtml(g_strSearchWord)%>" />

@@ -10,28 +10,26 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class MyHomeC {
-	public int n_nVersion = 0;
+public class SearchIllustByTagGridC {
+	public String m_strKeyword = "";
+	public int m_nPage = 0;
 	public int m_nMode = 0;
-	public int m_nStartId = -1;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			n_nVersion = Common.ToInt(cRequest.getParameter("VER"));
+			m_strKeyword	= Common.TrimAll(Common.ToString(cRequest.getParameter("KWD")));
+			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
-			m_nStartId = Common.ToInt(cRequest.getParameter("SD"));
 		} catch(Exception e) {
-			;
+			m_strKeyword = "";
+			m_nPage = 0;
 		}
 	}
 
-
-	public int SELECT_MAX_GALLERY = 10;
-	public int SELECT_MAX_EMOJI = 60;
+	public int SELECT_MAX_GALLERY = 17;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
-	public int m_nContentsNumTotal = 0;
-	public int m_nEndId = -1;
+	public boolean m_bFollowing = false;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -46,11 +44,26 @@ public class MyHomeC {
 		String strSql = "";
 		int idx = 1;
 
+		if(m_strKeyword.isEmpty()) return false;
+
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+			// Check Following
+			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
+			cState = cConn.prepareStatement(strSql);
+			idx = 1;
+			cState.setInt(idx++, cCheckLogin.m_nUserId);
+			cState.setString(idx++, m_strKeyword);
+			cState.setInt(idx++, Common.FOVO_KEYWORD_TYPE_TAG);
+			cResSet = cState.executeQuery();
+			m_bFollowing = (cResSet.next());
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
 			/*
+			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCond = "";
 			if(cCheckLogin.m_bLogin) {
@@ -68,15 +81,15 @@ public class MyHomeC {
 				}
 			}
 			*/
-			String strCondStart = (m_nStartId>0)?"AND content_id<?":"";
 
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				//strSql = String.format("SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=? %s", strCond);
-				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=?";
+				//strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
+				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
+				cState.setString(idx++, m_strKeyword);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
@@ -91,35 +104,23 @@ public class MyHomeC {
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
-
-
-				// User contents total number
-				idx = 1;
-				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNumTotal = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
 			}
 
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCondStart);
+			//strSql = String.format("SELECT * FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
+			cState.setString(idx++, m_strKeyword);
+			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			if(m_nStartId>0) {
-				cState.setInt(idx++, m_nStartId);
-			}
 			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
 			*/
+			cState.setInt(idx++, SELECT_MAX_GALLERY*m_nPage);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
@@ -128,8 +129,7 @@ public class MyHomeC {
 				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
-				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
-				m_nEndId = cContent.m_nContentId;
+				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
@@ -139,10 +139,8 @@ public class MyHomeC {
 
 			// Each append image
 			GridUtil.getEachImage(cConn, m_vContentList);
-
 			// Each Comment
 			GridUtil.getEachComment(cConn, m_vContentList);
-
 			// Bookmark
 			if(cCheckLogin.m_bLogin) {
 				GridUtil.getEachBookmark(cConn, m_vContentList, cCheckLogin);
@@ -157,5 +155,4 @@ public class MyHomeC {
 		}
 		return bRtn;
 	}
-
 }

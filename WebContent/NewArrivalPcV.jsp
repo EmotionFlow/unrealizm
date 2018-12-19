@@ -24,6 +24,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuHome').addClass('Selected');
+			$('#MenuRecent').addClass('Selected');
 		});
 
 		$(function(){

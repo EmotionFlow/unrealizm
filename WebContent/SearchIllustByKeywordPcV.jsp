@@ -2,6 +2,12 @@
 <%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
+
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/SearchIllustByKeywordGridPcV.jsp").forward(request,response);
+	return;
+}
 
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
@@ -9,7 +15,6 @@ cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 g_strSearchWord = cResults.m_strKeyword;
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html>
