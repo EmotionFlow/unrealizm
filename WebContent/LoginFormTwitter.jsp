@@ -18,7 +18,8 @@ try{
 	OAuthProvider provider = new DefaultOAuthProvider(
 			"https://api.twitter.com/oauth/request_token",
 			"https://api.twitter.com/oauth/access_token",
-			"https://api.twitter.com/oauth/authorize");
+			//"https://api.twitter.com/oauth/authorize");
+			"https://api.twitter.com/oauth/authenticate");
 	provider.setOAuth10a(true);
 	session.setAttribute("consumer", consumer);
 	session.setAttribute("provider", provider);

@@ -13,6 +13,9 @@ request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
+if(nResult>0) {
+	response.sendRedirect("/MyHomePcV.jsp");
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -23,6 +26,11 @@ int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TE
 		<style>
 		.AnalogicoInfo {display: none;}
 		</style>
+		<script>
+		$(function(){
+			location.href = "/MyHomePcV.jsp";
+		});
+		</script>
 	</head>
 
 	<body>

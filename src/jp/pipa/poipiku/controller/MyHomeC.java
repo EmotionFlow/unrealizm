@@ -11,6 +11,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public class MyHomeC {
+	public int n_nUserId = -1;
 	public int n_nVersion = 0;
 	public int m_nMode = 0;
 	public int m_nStartId = -1;
@@ -20,6 +21,7 @@ public class MyHomeC {
 			n_nVersion = Common.ToInt(cRequest.getParameter("VER"));
 			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
 			m_nStartId = Common.ToInt(cRequest.getParameter("SD"));
+			n_nUserId = Common.ToInt(cRequest.getParameter("ID"));
 		} catch(Exception e) {
 			;
 		}

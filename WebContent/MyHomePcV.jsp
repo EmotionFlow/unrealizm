@@ -4,13 +4,18 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
+MyHomeC cResults = new MyHomeC();
+cResults.getParam(request);
+
 if(!cCheckLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	if(cResults.n_nUserId>0) {
+		response.sendRedirect("/"+cResults.n_nUserId+"/");
+	} else {
+		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	}
 	return;
 }
 
-MyHomeC cResults = new MyHomeC();
-cResults.getParam(request);
 cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);

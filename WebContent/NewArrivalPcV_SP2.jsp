@@ -47,31 +47,33 @@ public class NewArrivalC {
 				CONTENT = true;
 				break;
 			case 1:
-				BASE = 5;
+				BASE = 6;
 				//USER = true;
 				CONTENT = true;
 				break;
 			case 2:
-				BASE = 3;
+				BASE = 4;
 				break;
 			case 3:
-				BASE = 2;
+				BASE = 3;
 				break;
 			case 4:
+				BASE = 2;
+				break;
 			case 5:
 			case 6:
 			case 7:
-			case 8:
 				BASE = 1;
 				break;
+			case 8:
 			case 9:
 			case 10:
 			case 11:
+				BASE = 2;
+				break;
 			case 12:
 			case 13:
 			case 14:
-				BASE = 2;
-				break;
 			case 15:
 			case 16:
 			case 17:
