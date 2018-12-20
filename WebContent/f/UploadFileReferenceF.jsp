@@ -87,7 +87,7 @@ class UploadReferenceC {
 				// hush tag
 				Pattern ptn = Pattern.compile(Common.HUSH_TAG_PATTERN, Pattern.MULTILINE);
 				Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
@@ -102,7 +102,7 @@ class UploadReferenceC {
 				// my tag
 				ptn = Pattern.compile(Common.MY_TAG_PATTERN, Pattern.MULTILINE);
 				matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3)";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
@@ -120,7 +120,7 @@ class UploadReferenceC {
 				// normal tag
 				Pattern ptn = Pattern.compile(Common.NORMAL_TAG_PATTERN, Pattern.MULTILINE);
 				Matcher matcher = ptn.matcher(" "+cParam.m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
@@ -135,7 +135,7 @@ class UploadReferenceC {
 				// hush tag
 				ptn = Pattern.compile(Common.HUSH_TAG_PATTERN, Pattern.MULTILINE);
 				matcher = ptn.matcher(" "+cParam.m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1)";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
@@ -150,7 +150,7 @@ class UploadReferenceC {
 				// my tag
 				ptn = Pattern.compile(Common.MY_TAG_PATTERN, Pattern.MULTILINE);
 				matcher = ptn.matcher(" "+cParam.m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3)";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {

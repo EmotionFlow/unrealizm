@@ -148,9 +148,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		}
 
 		$(function(){
+			<%if(!cResults.m_bOwner) {%>
 			$('body, .Wrapper').each(function(index, element){
 				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 			});
+			<%}%>
 			$(window).bind("scroll.addContents", function() {
 				$(window).height();
 				if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
