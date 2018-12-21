@@ -16,7 +16,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("IllustListV.Follower")%></title>
 
 		<script type="text/javascript">
@@ -27,7 +27,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper ViewPc">
 			<div id="IllustThumbList" class="IllustItemList">
@@ -35,7 +35,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMidWide.jspf"%>
+					<%@ include file="/inner/TAdMidWide.jsp"%>
 					<%}%>
 				<%}%>
 			</div>
@@ -44,11 +44,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<div class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 					</div>
 
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					</div>
 				</div>
 			</div>
@@ -59,6 +59,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

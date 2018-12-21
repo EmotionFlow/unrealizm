@@ -19,6 +19,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
 	<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult)%>
 	<%if(nCnt==8) {%>
-	<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+	<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
 	<%}%>
 <%}%>

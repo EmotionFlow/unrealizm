@@ -22,7 +22,7 @@ if(strRequestUri != null) {
 <!DOCTYPE html>
 <html style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>Start</title>
 	</head>
 

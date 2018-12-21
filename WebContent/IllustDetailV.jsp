@@ -13,7 +13,7 @@ if(!cResults.getResults(cCheckLogin)) {
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
 		<title><%=_TEX.T("THeader.Title")%></title>
 

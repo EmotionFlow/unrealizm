@@ -37,11 +37,11 @@ if(!authUrl.isEmpty()) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
 	</head>
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper" style="text-align: center;">
 			<p>
@@ -50,6 +50,6 @@ if(!authUrl.isEmpty()) {
 			</p>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

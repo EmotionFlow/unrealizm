@@ -23,7 +23,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyHomePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -108,7 +108,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 		</div>
 
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper ViewPc">
 			<div id="IllustItemList" class="IllustItemList">
@@ -131,7 +131,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 					<%if((nCnt+1)%5==0 && bSmartPhone) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%@ include file="/inner/TAdMid.jsp"%>
 					<%}%>
 				<%}%>
 			</div>
@@ -140,7 +140,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<div class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 					</div>
 
 					<div class="PcSideBarItem">
@@ -165,6 +165,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%}%>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

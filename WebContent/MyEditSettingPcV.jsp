@@ -27,7 +27,7 @@ if(cResults.m_bUpdate) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
@@ -383,7 +383,7 @@ if(cResults.m_bUpdate) {
 
 	<body>
 		<div id="DispMsg"></div>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
 			<div class="SettingList">
@@ -672,6 +672,6 @@ if(cResults.m_bUpdate) {
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

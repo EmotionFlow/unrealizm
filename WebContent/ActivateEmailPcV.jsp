@@ -8,13 +8,13 @@ int nRtn = UserAuthUtil.activateEmail(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivateEmailV.Title")%></title>
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 		<div class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div class="SettingListItem">
@@ -30,6 +30,6 @@ int nRtn = UserAuthUtil.activateEmail(request, response);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

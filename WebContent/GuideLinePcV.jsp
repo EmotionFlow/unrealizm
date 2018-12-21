@@ -6,7 +6,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=Common.GetPageTitle2(_TEX, _TEX.T("Footer.GuideLine"))%></title>
 		<style>
 		table {
@@ -28,7 +28,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
 			<div class="SettingList">
@@ -245,6 +245,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooterBase.jspf"%>
+		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

@@ -16,7 +16,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 <!DOCTYPE html>
 <html style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%></title>
 
@@ -43,7 +43,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper ThumbList">
 			<div class="CategoryMenu">
@@ -55,13 +55,13 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(!bSmartPhone) {%>
-				<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 				<%}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
 					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
 			</div>
@@ -71,6 +71,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

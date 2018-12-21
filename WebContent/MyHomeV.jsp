@@ -19,7 +19,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>home</title>
 		<script>
 		var g_nEndId = <%=cResults.m_nEndId%>;
@@ -104,7 +104,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
 					<%if((nCnt+1)%5==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%@ include file="/inner/TAdMid.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

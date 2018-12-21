@@ -11,7 +11,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>問題の報告</title>
 	</head>
 	<script>

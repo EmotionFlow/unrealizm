@@ -23,7 +23,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=strTitle%></title>
 		<script type="text/javascript">
 			var g_nPage = 0;

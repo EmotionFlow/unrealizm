@@ -10,12 +10,12 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("NotFound.TitleBar")%></title>
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 70px 10px;">
@@ -24,6 +24,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooterBase.jspf"%>
+		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

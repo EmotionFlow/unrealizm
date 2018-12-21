@@ -114,7 +114,7 @@ response.sendRedirect("/MyEditSettingPcV.jsp#TwitterSetting");
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
 		<meta http-equiv="refresh" content="3;URL=/MyEditSettingPcV.jsp#TwitterSetting" />
 		<style>
@@ -123,7 +123,7 @@ response.sendRedirect("/MyEditSettingPcV.jsp#TwitterSetting");
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper" style="text-align: center; margin: 150px auto;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
@@ -136,6 +136,6 @@ response.sendRedirect("/MyEditSettingPcV.jsp#TwitterSetting");
 			</a>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

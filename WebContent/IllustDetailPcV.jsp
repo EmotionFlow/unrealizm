@@ -13,7 +13,7 @@ if(!cResults.getResults(cCheckLogin)) {
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript">
@@ -50,7 +50,7 @@ if(!cResults.getResults(cCheckLogin)) {
 	<body>
 		<div id="DispMsg" style="top: 51px;"></div>
 
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper" style="overflow: scroll; width: 100%; height: 100%;">
 			<table class="IllustDetail">
@@ -79,6 +79,6 @@ if(!cResults.getResults(cCheckLogin)) {
 			</table>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

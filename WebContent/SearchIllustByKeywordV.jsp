@@ -16,7 +16,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
 		<script>
 			var g_nPage = 1;
@@ -77,7 +77,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), _TEX)%>
 					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

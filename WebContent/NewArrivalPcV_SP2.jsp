@@ -192,7 +192,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<style>
 		.IllustThumb {margin: 6px !important;}
 		</style>

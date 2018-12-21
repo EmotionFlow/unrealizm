@@ -10,7 +10,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("NotFound.TitleBar")%></title>
 	</head>
 

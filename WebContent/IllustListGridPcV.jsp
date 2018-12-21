@@ -18,7 +18,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%> - <%=_TEX.T("THeader.Title")%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -213,7 +213,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
@@ -283,20 +283,20 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%//if(!bSmartPhone) {%>
-				<%//@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+				<%//@ include file="/inner/TAdPc336x280_top_right.jsp"%>
 				<%//}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 					<%//=CCnv.Thumb2Html(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
 					<%//if(nCnt==17) {%>
-					<%//@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					<%//@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
 					<%//}%>
 				<%}%>
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooterBase.jspf"%>
-		<%//@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooterBase.jsp"%>
+		<%//@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

@@ -12,7 +12,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%></title>
 
@@ -158,7 +158,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 		</div>
 
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper GridList">
 			<div id="CategoryMenu" class="CategoryMenu">
@@ -173,15 +173,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 					<%if(nCnt==1 && !bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc300x250_top_right.jspf"%>
+					<%@ include file="/inner/TAdPc336x280_top_right.jsp"%>
 					<%}%>
 					<%if(nCnt==8 && bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jspf"%>
+					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

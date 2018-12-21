@@ -6,7 +6,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - 利用規約</title>
 		<style>
 			.AnalogicoInfo {display: none;}
@@ -14,7 +14,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	</head>
 	<body>
 		<div id="DispMsg"></div>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper">
 			<div class="SettingList">
@@ -301,6 +301,6 @@ pipa.jpは、本サービスの利用および本規約に起因する損害に�
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooterBase.jspf"%>
+		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

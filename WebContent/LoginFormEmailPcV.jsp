@@ -21,7 +21,7 @@ if(strRequestUri != null) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>
 		<script>
 			function RegistUser() {
@@ -94,7 +94,7 @@ if(strRequestUri != null) {
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
@@ -162,6 +162,6 @@ if(strRequestUri != null) {
 			</div>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooterBase.jspf"%>
+		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

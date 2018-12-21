@@ -16,7 +16,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>HOT tag</title>
 		<style>
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0; border-top: solid 1px #fafaff; border-bottom: solid 1px #eee; }
@@ -69,7 +69,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					</span>
 				</a>
 				<%//if((nCnt+1)%10==0) {%>
-				<%//@ include file="/inner/TAdMidWide.jspf"%>
+				<%//@ include file="/inner/TAdMidWide.jsp"%>
 				<%//}%>
 				<%}%>
 			</div>
@@ -79,7 +79,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
 					<%if((nCnt+1)%15==0) {%>
-					<%@ include file="/inner/TAdMidWide.jspf"%>
+					<%@ include file="/inner/TAdMidWide.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

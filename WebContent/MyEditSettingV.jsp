@@ -29,7 +29,7 @@ if(cResults.m_bUpdate) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf" %>
+		<%@ include file="/inner/THeaderCommon.jsp" %>
 		<title>setting</title>
 		<script type="text/javascript">
 			$.ajaxSetup({

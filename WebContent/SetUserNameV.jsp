@@ -10,7 +10,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>ユーザ名の設定</title>
 		<script>
 			$.ajaxSetup({
@@ -58,7 +58,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	<body>
 		<div id="DispMsg"></div>
 		<div class="Wrapper">
-			<%@ include file="/inner/TAdTop.jspf"%>
+			<%@ include file="/inner/TAdTop.jsp"%>
 
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 130px 10px;">
 				<p>ユーザ名を設定してください</p>
@@ -67,7 +67,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				<a class="BtnBase" href="javascript:void(0)" onclick="UpdateNickName()">設定</a>
 			</div>
 
-			<%@ include file="/inner/TAdBottom.jspf"%>
+			<%@ include file="/inner/TAdBottom.jsp"%>
 		</div>
 	</body>
 </html>

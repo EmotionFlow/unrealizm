@@ -16,6 +16,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_SP, _TEX)%>
 	<%}%>
 	<%if((nCnt+1)%9==0) {%>
-	<%@ include file="/inner/TAdMid.jspf"%>
+	<%@ include file="/inner/TAdMid.jsp"%>
 	<%}%>
 <%}%>

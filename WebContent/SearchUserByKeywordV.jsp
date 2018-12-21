@@ -15,7 +15,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
 		<script>
 			var g_nPage = 1;
@@ -66,7 +66,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%@ include file="/inner/TAdMid.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

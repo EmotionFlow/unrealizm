@@ -23,7 +23,7 @@ cResults.GetResults(cParam);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jspf"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("ActivityList.Title")%></title>
 	</head>
 
@@ -75,7 +75,7 @@ cResults.GetResults(cParam);
 					</a>
 					<%}%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMid.jspf"%>
+					<%@ include file="/inner/TAdMid.jsp"%>
 					<%}%>
 					<%}%>
 				</div>

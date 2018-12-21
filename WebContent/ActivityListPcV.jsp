@@ -23,7 +23,7 @@ cResults.GetResults(cParam);
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">
@@ -52,7 +52,7 @@ cResults.GetResults(cParam);
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper ItemList">
 
@@ -101,13 +101,13 @@ cResults.GetResults(cParam);
 					</a>
 					<%}%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMidWide.jspf"%>
+					<%@ include file="/inner/TAdMidWide.jsp"%>
 					<%}%>
 					<%}%>
 				</div>
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

@@ -11,7 +11,7 @@ g_strSearchWord = cResults.m_strKeyword;
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchUserByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchUserByKeyword.Title")%></title>
 
@@ -47,7 +47,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			</div>
 		</div>
 
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper ItemList">
 
@@ -56,7 +56,7 @@ g_strSearchWord = cResults.m_strKeyword;
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMidWide.jspf"%>
+					<%@ include file="/inner/TAdMidWide.jsp"%>
 					<%}%>
 				<%}%>
 			</div>
@@ -66,6 +66,6 @@ g_strSearchWord = cResults.m_strKeyword;
 			</div>
 		</div>
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

@@ -20,7 +20,7 @@ if(nResult>0) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jspf"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
 		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp" />
 		<style>
@@ -34,7 +34,7 @@ if(nResult>0) {
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jspf"%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper" style="text-align: center; margin: 150px auto;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
@@ -47,6 +47,6 @@ if(nResult>0) {
 			</a>
 		</div><!--Wrapper-->
 
-		<%@ include file="/inner/TFooter.jspf"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>
