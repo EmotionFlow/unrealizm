@@ -16,17 +16,21 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
+import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.UploadedMedia;
+import twitter4j.UserList;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class CTweet {
 	public boolean m_bIsTweetEnable = false;
 	public String m_strUserAccessToken = "";
 	public String m_strSecretToken = "";
+	public long m_lnTwitterUserId = -1;
+	public ResponseList<UserList> m_listUserList = null;
 	public static final int MAX_LENGTH = 140;
 	public static final String ELLIPSE = "...";
 
@@ -38,18 +42,20 @@ public class CTweet {
 		ResultSet cResSet = null;
 		String strSql = "";
 
+		String strUserId = "";
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-			strSql = "SELECT fldaccesstoken, fldsecrettoken FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()){
 				// Token格納
-				m_strUserAccessToken = cResSet.getString(1);
-				m_strSecretToken = cResSet.getString(2);
+				m_strUserAccessToken = cResSet.getString("fldaccesstoken");
+				m_strSecretToken = cResSet.getString("fldsecrettoken");
+				strUserId = cResSet.getString("twitter_user_id");
 				m_bIsTweetEnable = true;
 			} else {
 				m_bIsTweetEnable = false;
@@ -64,12 +70,40 @@ public class CTweet {
 			try {if(cState!=null)cState.close();}catch(Exception e){}
 			try {if(cConn!=null)cConn.close();}catch(Exception e){}
 		}
+		try {
+			if(!strSql.isEmpty()) {
+				m_lnTwitterUserId = Util.toLong(strUserId);
+			}
+		} catch (Exception e) {}
+		return bResult;
+	}
+
+	public boolean getList(int nUserId) {
+		if (!m_bIsTweetEnable) return false;
+		boolean bResult = true;
+		try {
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+			m_listUserList = twitter.getUserLists(m_lnTwitterUserId, true);
+			Log.d("m_listUserList:"+m_listUserList.size());
+			for(UserList list : m_listUserList) {
+				Log.d("list:"+list.getName()+":"+list.getId());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			bResult = false;
+		}
 		return bResult;
 	}
 
 	public boolean Tweet(String strTweet) {
 		if (!m_bIsTweetEnable) return false;
-
 		boolean bResult = true;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();

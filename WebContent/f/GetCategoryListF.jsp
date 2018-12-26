@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) return;
+//if(!cCheckLogin.m_bLogin) return;
 %>
 {
 "result": <%=Common.CATEGORY_ID.length%>,

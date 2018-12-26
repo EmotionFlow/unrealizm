@@ -113,6 +113,32 @@ public class Util {
 	}
 
 
+	public static int toInt(String strSrc) {
+		int nRet = -1;
+		if(strSrc == null) {
+			return -1;
+		}
+		try {
+			nRet = Integer.parseInt(strSrc);
+		} catch (Exception e) {
+			nRet = -1;
+		}
+		return nRet;
+	}
+
+	public static long toLong(String strSrc) {
+		long nRet = -1;
+		if(strSrc == null) {
+			return -1;
+		}
+		try {
+			nRet = Long.parseLong(strSrc);
+		} catch (Exception e) {
+			nRet = -1;
+		}
+		return nRet;
+	}
+
 	public static boolean isSmartPhone(HttpServletRequest request) {
 		String strUuserAgent = toString(request.getHeader("user-agent"));
 		String strReferer = toString(request.getHeader("Referer"));
