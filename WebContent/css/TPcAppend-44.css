@@ -33,7 +33,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
 .Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
 .Wrapper.ViewPc .IllustItem .Category {margin: 0px 0 3px 0px;}
-.Wrapper.ViewPc .IllustItem .IllustItemCommand {padding: 0 10px;}
+.Wrapper.ViewPc .IllustItem .IllustItemCommand {}
 .Wrapper.ViewPc .IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
 .Wrapper.ViewPc .IllustItem .IllustItemDesc {padding: 0 10px;}
 .Wrapper.ViewPc .IllustItem .IllustItemDescEdit {padding: 0 10px;}
