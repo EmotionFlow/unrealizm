@@ -11,10 +11,15 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public class FollowListC {
+	public static int MODE_FOLLOW = 0;
+	public static int MODE_BLOCK = 1;
+
+	public int m_nMode = -1;
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
+			m_nMode = Math.max(Common.ToInt(cRequest.getParameter("MD")), MODE_FOLLOW);
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		}
 		catch(Exception e) {
@@ -45,7 +50,11 @@ public class FollowListC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM follows_0000 WHERE user_id=?";
+				if(m_nMode==MODE_FOLLOW) {
+					strSql = "SELECT count(*) FROM follows_0000 WHERE user_id=?";
+				} else {
+					strSql = "SELECT count(*) FROM blocks_0000 WHERE user_id=?";
+				}
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
@@ -56,7 +65,11 @@ public class FollowListC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT follows_0000.*, nickname, file_name FROM follows_0000 INNER JOIN users_0000 ON follows_0000.follow_user_id=users_0000.user_id WHERE follows_0000.user_id=? ORDER BY follow_id DESC OFFSET ? LIMIT ?";
+			if(m_nMode==MODE_FOLLOW) {
+				strSql = "SELECT follow_user_id, nickname, file_name FROM follows_0000 INNER JOIN users_0000 ON follows_0000.follow_user_id=users_0000.user_id WHERE follows_0000.user_id=? ORDER BY upload_date DESC OFFSET ? LIMIT ?";
+			} else {
+				strSql = "SELECT block_user_id as follow_user_id, nickname, file_name FROM blocks_0000 INNER JOIN users_0000 ON blocks_0000.block_user_id=users_0000.user_id WHERE blocks_0000.user_id=? ORDER BY upload_date DESC OFFSET ? LIMIT ?";
+			}
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cCheckLogin.m_nUserId);
 			cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);

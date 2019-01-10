@@ -46,7 +46,7 @@ class ActivityListC {
 
 			// Comment
 			if(cParam.m_nMode<=0) {
-				strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname FROM comments_0000 LEFT JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? ORDER BY comment_id DESC LIMIT 100";
+				strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname FROM comments_0000 LEFT JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE open_id<>2 AND user_id=?) AND comments_0000.user_id!=? ORDER BY comment_id DESC LIMIT 100";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);
 				cState.setInt(2, cParam.m_nUserId);
@@ -109,9 +109,9 @@ class ActivityListC {
 			// Heart
 			/*
 			if(cParam.m_nMode<=0) {
-				strSql = "SELECT bookmarks_0000.*, users_0000.file_name, users_0000.nickname FROM bookmarks_0000 LEFT JOIN users_0000 ON bookmarks_0000.user_id=users_0000.user_id WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) ORDER BY bookmark_id DESC LIMIT 200";
+				strSql = "SELECT bookmarks_0000.*, users_0000.file_name, users_0000.nickname FROM bookmarks_0000 LEFT JOIN users_0000 ON bookmarks_0000.user_id=users_0000.user_id WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE open_id<>2 AND user_id=?) ORDER BY bookmark_id DESC LIMIT 200";
 			} else {
-				strSql = "SELECT T3.user_id, T1.content_id, T1.upload_date, T3.file_name, T3.nickname FROM (bookmarks_0000 as T1 LEFT JOIN contents_0000 as T2 ON T1.content_id=T2.content_id) LEFT JOIN users_0000 as T3 ON T2.user_id=T3.user_id WHERE T1.user_id=? ORDER BY bookmark_id DESC LIMIT 200";
+				strSql = "SELECT T3.user_id, T1.content_id, T1.upload_date, T3.file_name, T3.nickname FROM (bookmarks_0000 as T1 LEFT JOIN contents_0000 as T2 ON T1.content_id=T2.content_id) LEFT JOIN users_0000 as T3 ON T2.user_id=T3.user_id WHERE open_id<>2 AND T1.user_id=? ORDER BY bookmark_id DESC LIMIT 200";
 			}
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);

@@ -172,6 +172,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			.IllustThumb .IllustInfo {bottom: 0; background: #fff;}
 			.CategoryMenu {float: none;}
 			#IllustThumbList {opacity: 0; float: none;}
+			.IllustItem .IllustItemUser {display: none;}
 		</style>
 		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
 		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>

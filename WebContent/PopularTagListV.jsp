@@ -19,15 +19,15 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>HOT tag</title>
 		<style>
-			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0; border-top: solid 1px #fafaff; border-bottom: solid 1px #eee; }
+			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0;}
 			.CategoryTitle {display: block; float: left; width: 100%;}
 			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
 
 			.IllustThumb .Category {top: 3px; left: 3px;font-size: 10px; min-width: 50px; height: 18px; line-height: 18px; max-width: 80px; padding: 0 3px;}
-			.IllustThumb {margin: 2px !important; width: 86px; height: 130px;}
+			.IllustThumb {margin: 2px !important; width: 86px; height: 86px;}
 			.IllustThumbList {padding: 0;}
-			.IllustThumb .IllustThumbImg {width: 86px; height: 86px;}
+			.IllustThumb .IllustThumbImg {width: 84px; height: 84px;}
 		</style>
 	</head>
 

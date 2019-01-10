@@ -48,7 +48,7 @@ public class MyBookmarkC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE bookmarks_0000.user_id=?";
+				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE open_id<>2 AND bookmarks_0000.user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
@@ -60,7 +60,7 @@ public class MyBookmarkC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT contents_0000.* FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE bookmarks_0000.user_id=? ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.* FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE open_id<>2 AND bookmarks_0000.user_id=? ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);

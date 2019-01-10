@@ -47,19 +47,47 @@ public class Common {
 	}
 
 	// favo keyword
-	public static int FOVO_KEYWORD_TYPE_TAG = 0;
-	public static int FOVO_KEYWORD_TYPE_SEARCH = 1;
+	public static final int FOVO_KEYWORD_TYPE_TAG = 0;
+	public static final int FOVO_KEYWORD_TYPE_SEARCH = 1;
+
+	// Publish ID
+	public static final int PUBLISH_ID_ALL			= 0;	// ALL
+	public static final int PUBLISH_ID_R15			= 1;	// R15
+	public static final int PUBLISH_ID_R18			= 2;	// R18
+	public static final int PUBLISH_ID_R18G			= 3;	// R18G
+	public static final int PUBLISH_ID_PASS			= 4;	// パスワード
+	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン
+	public static final int PUBLISH_ID_FOLLOWER		= 6;	// フォロワー
+	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー
+	public static final int PUBLISH_ID_T_FOLLOW		= 8;	// ツイッターフォロー
+	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー
+	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト
+	public static final int PUBLISH_ID_HIDDEN		= 99;	// 非公開
+	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
+	public static final String[] PUBLISH_ID_FILE = {
+			"",								// 0
+			"/img/warning.png",				// 1
+			"/img/R-18.png",				// 2
+			"/img/R-18.png",				// 3
+			"/img/publish_pass.png",		// 4
+			"/img/publish_login.png",		// 5
+			"/img/publish_follower.png",	// 6
+			"/img/publish_t_follower.png",	// 7
+			"/img/publish_t_follow.png",	// 8
+			"/img/publish_t_each.png",		// 9
+			"/img/publish_t_list.png",		// 10
+	};
 
 
 	// Safe Filter
-	public static int SAFE_FILTER_ALL = 0;
-	public static int SAFE_FILTER_R15 = 2;
-	public static int SAFE_FILTER_R18 = 4;
-	public static int SAFE_FILTER_R18G = 6;
+	public static final int SAFE_FILTER_ALL = 0;
+	public static final int SAFE_FILTER_R15 = 2;
+	public static final int SAFE_FILTER_R18 = 4;
+	public static final int SAFE_FILTER_R18G = 6;
 
 	// 表示するカテゴリ一覧
-	public static int CATEGORY_ID_MAX = 20;
-	public static int[] CATEGORY_ID = {
+	public static final int CATEGORY_ID_MAX = 20;
+	public static final int[] CATEGORY_ID = {
 			16,	// 描けねえ
 			1,	// 飽きた
 			18, // ほぼ白紙
@@ -85,7 +113,7 @@ public class Common {
 //			20, // あけおめ
 	};
 
-	public static int EMOJI_KEYBORD_MAX = 64;
+	public static final int EMOJI_KEYBORD_MAX = 64;
 	public static final int EMOJI_CAT_RECENT = 0;
 	public static final int EMOJI_CAT_POPULAR = 1;
 	public static final int EMOJI_CAT_FOOD = 2;

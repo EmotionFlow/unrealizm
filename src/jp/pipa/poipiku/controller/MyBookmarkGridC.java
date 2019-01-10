@@ -49,7 +49,7 @@ public class MyBookmarkGridC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE bookmarks_0000.user_id=?";
+				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id WHERE open_id<>2 AND bookmarks_0000.user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
@@ -61,7 +61,7 @@ public class MyBookmarkGridC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM ((contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE bookmarks_0000.user_id=? ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM ((contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id<>2 AND bookmarks_0000.user_id=? ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);

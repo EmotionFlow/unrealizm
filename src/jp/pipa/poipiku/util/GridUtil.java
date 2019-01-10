@@ -13,6 +13,7 @@ public class GridUtil {
 
 	public static void getEachImage(Connection connection, ArrayList<CContent> contents) throws SQLException {
 		// Each append image
+		/*
 		String sql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		for(CContent content : contents) {
@@ -25,6 +26,7 @@ public class GridUtil {
 			resultSet.close();resultSet=null;
 		}
 		statement.close();statement=null;
+		*/
 	}
 
 	public static void getEachComment(Connection connection, ArrayList<CContent> contents) throws SQLException {

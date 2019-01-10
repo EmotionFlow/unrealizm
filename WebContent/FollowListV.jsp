@@ -20,6 +20,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<title>follow</title>
 		<script>
 			var g_nPage = 1;
+			var g_nMode = <%=cResults.m_nMode%>;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -28,7 +29,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage},
+					"data": {"MD" : g_nMode, "PG" : g_nPage},
 					"url": "/f/FollowListF.jsp",
 					"success": function(data) {
 						if(data) {
@@ -38,7 +39,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 							g_bAdding = false;
 							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
 						} else {
-							$(window).unbind("scroll.addContents");
+							//$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -48,8 +49,20 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				});
 			}
 
+			function changeCategory(elm, param) {
+				g_nPage = 0;
+				g_nMode = param;
+				$("#IllustThumbList").empty();
+				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
+				$(elm).addClass('Selected');
+				updateCategoryMenuPos(300);
+				g_bAdding = false;
+				addContents();
+			}
+
 			$(function(){
 				$(window).bind("scroll.addContents", function() {
+					if(g_bAdding) return;
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();
@@ -61,6 +74,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div class="Wrapper">
+			<div id="CategoryMenu" class="CategoryMenu">
+				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_FOLLOW){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_FOLLOW%>)"><%=_TEX.T("IllustListV.Follow")%></a>
+				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_BLOCK){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_BLOCK%>)"><%=_TEX.T("IllustListV.Block")%></a>
+			</div>
 
 			<div id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

@@ -8,10 +8,8 @@ import jp.pipa.poipiku.*;
 
 public class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
-
 	public static final int MODE_PC = 0;
 	public static final int MODE_SP = 1;
-
 	private static final String ILLUST_VIEW[][] ={
 			{"/IllustViewPcV.jsp", "/IllustViewV.jsp"},
 	};
@@ -19,18 +17,31 @@ public class CCnv {
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException{
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
+		String ILLUST_LIST = (nMode==MODE_SP)?String.format("/IllustListV.jsp?ID=%d", cContent.m_nUserId):String.format("/%d/", cContent.m_nUserId);
 		String REPORT_FORM = (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 		String ILLUST_DETAIL = (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		String LINK_TARG = (nMode==MODE_SP)?"":"target=\"_blank\"";
 
+		String strThumbClass = "";
+		if(cContent.m_nOpenId==2) strThumbClass += " Hidden";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_R15) strThumbClass += " R15";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_R18) strThumbClass += " R18";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_R18G) strThumbClass += " R18G";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_PASS) strThumbClass += " Password";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN) strThumbClass += " Login";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) strThumbClass += " Follower";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER) strThumbClass += " TFollower";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW) strThumbClass += " TFollow";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) strThumbClass += " TEach";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST) strThumbClass += " TList";
+
 		StringBuilder strRtn = new StringBuilder();
 		// ユーザ名とフォローボタン
-		strRtn.append(String.format("<div class=\"IllustItem\" id=\"IllustItem_%d\">", cContent.m_nContentId));
+		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbClass, cContent.m_nContentId));
 		strRtn.append("<div class=\"IllustItemUser\">");
-		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s?ID=%d\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, cContent.m_nUserId, Common.GetUrl(cContent.m_cUser.m_strFileName)));
-		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s?ID=%d\">%s</a></h2>", ILLUST_LIST, cContent.m_nUserId, Common.ToStringHtml(cContent.m_cUser.m_strNickName)));
+		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, Common.GetUrl(cContent.m_cUser.m_strFileName)));
+		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Common.ToStringHtml(cContent.m_cUser.m_strNickName)));
 		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
 			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollow(%d, %d)\">%s</span>",
 					cContent.m_nUserId,
@@ -73,6 +84,15 @@ public class CCnv {
 			if(nLoginUserId==1) {
 				strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d)\"></a>", nLoginUserId, cContent.m_nContentId));
 			}
+			// ブクマボタン
+			strRtn.append("<div class=\"IllustItemCmd\">");
+			strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"BtnBase IllustItemBookmarkBtn %s\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"fas fa-star\"></i> %s</a>",
+					cContent.m_nContentId,
+					(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"Selected":"",
+					nLoginUserId,
+					cContent.m_nContentId,
+					_TEX.T("IllustV.Favo")));
+			strRtn.append("</div>");	// IllustItemCmd
 		}
 		strRtn.append("</div>");	// IllustItemCommandSub
 		strRtn.append("</div>");	// IllustItemCommand
@@ -109,42 +129,52 @@ public class CCnv {
 
 
 		// 画像
-		if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R15) {
+		String strFileUrl = "";
+		switch(cContent.m_nPublishId) {
+		case Common.PUBLISH_ID_R15:
+		case Common.PUBLISH_ID_R18:
+		case Common.PUBLISH_ID_R18G:
+		case Common.PUBLISH_ID_PASS:
+		case Common.PUBLISH_ID_LOGIN:
+		case Common.PUBLISH_ID_FOLLOWER:
+		case Common.PUBLISH_ID_T_FOLLOWER:
+		case Common.PUBLISH_ID_T_FOLLOW:
+		case Common.PUBLISH_ID_T_EACH:
+		case Common.PUBLISH_ID_T_LIST:
+			// R18の時は1枚目にWarningを出すのでずらす
+			cContent.m_nFileNum++;
+			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+			strRtn.append("<span class=\"IllustItemThumb\">");
+			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
+			strRtn.append("</span>");
+			break;
+		case Common.PUBLISH_ID_ALL:
+		case Common.PUBLISH_ID_HIDDEN:
+		default:
+			strFileUrl = Common.GetUrl(cContent.m_strFileName);
 			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
+			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
 			strRtn.append("</a>");
-		} else if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R18) {
-			strRtn.append("<span class=\"IllustItemThumb\">");
-			strRtn.append("<img class=\"IllustItemThumbImg\" src=\"/img/warning.png\" />");
-			strRtn.append("</span>");
-		} else {
-			strRtn.append("<span class=\"IllustItemThumb\">");
-			strRtn.append("<img class=\"IllustItemThumbImg\" src=\"/img/R-18.png\" />");
-			strRtn.append("</span>");
+			break;
 		}
 
-		// R18の時は1枚目にWarningを出すのでずらす
-		if(cContent.m_nSafeFilter>1) cContent.m_nFileNum++;
+		// 2枚目以降用の場所
+		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
 
-		// 2枚目以降
+		// 2枚目以降ボタン
+		strRtn.append("<div class=\"IllustItemExpand\">");
 		if(cContent.m_nFileNum>1) {
-			strRtn.append("<div class=\"IllustItemThubExpand\">");
-			// R18の時は1枚めをここで表示
-			if(cContent.m_nSafeFilter>=Common.SAFE_FILTER_R15) {
-				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContent.m_strFileName)));
-				strRtn.append("</a>");
-			}
-			for(CContentAppend cContentAppend : cContent.m_vContentAppend) {
-				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId, cContentAppend.m_nAppendId));
-				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
-				strRtn.append("</a>");
-			}
-			strRtn.append("</div>");	// IllustItemThubExpand
+			strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\"><input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"password\" maxlength=\"16\" placeholder=\"%s\" /></div>",
+					_TEX.T("ShowAppendFileC.EnterPassword")));
+			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
+				cContent.m_nUserId,
+				cContent.m_nContentId,
+				nMode,
+				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		}
+		strRtn.append("</div>");	// IllustItemExpand
 
 		// 転載禁止表示
-		strRtn.append("<div class=\"IllustItemExpand\">");
 		String strSizeAppendex = "";
 		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
 			strSizeAppendex = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
@@ -152,46 +182,39 @@ public class CCnv {
 		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
 				String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendex),
 				_TEX.T("IllustView.ProhibitMsg")));
-		// 2枚目以降ボタン
-		if(cContent.m_nFileNum>1) {
-		strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ExpandItem(%d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
-				cContent.m_nContentId,
-				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
-		}
-		strRtn.append("</div>");	// IllustItemExpand
-
-		// 転載禁止表示
-		//strRtn.append(String.format("<div class=\"IllustItemTProhibit\">%s</div>", _TEX.T("IllustView.ProhibitMsg")));
-
-		// ブクマボタン
-		strRtn.append("<div class=\"IllustItemCmd\">");
-		strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"BtnBase IllustItemBookmarkBtn %s\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"fas fa-star\"></i> %s</a>",
-				cContent.m_nContentId,
-				(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"Selected":"",
-				nLoginUserId,
-				cContent.m_nContentId,
-				_TEX.T("IllustV.Favo")));
-		strRtn.append("</div>");	// IllustItemCmd
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
 			strRtn.append(String.format("<div id=\"IllustItemResList_%d\" class=\"IllustItemResList\">", cContent.m_nContentId));
+			// もらった絵文字展開リンク
+			if(cContent.m_vComment.size()>=GridUtil.SELECT_MAX_EMOJI) {
+				// 全て表示リンク
+				strRtn.append("<div class=\"IllustItemResListTitle\">");
+				//if(cContent.m_vComment.size()<=0) {
+				//	strRtn.append(_TEX.T("Common.IllustItemRes.Title.Init"));
+				//} else {
+				//	strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
+				//}
+				strRtn.append(String.format("<span class=\"TitleShowAll\" onclick=\"ShowAllReaction(%d, this)\">%s</span>", cContent.m_nContentId ,_TEX.T("Common.IllustItemRes.Title.ShowAll")));
+				strRtn.append("</div>");	// IllustItemResListTitle
+			}
+			// もらった絵文字
+			for(CComment comment : cContent.m_vComment) {
+				strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
+			}
+			// 絵文字追加マーク
+			strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
+			strRtn.append("</div>");	// IllustItemResList
+			// 絵文字ボタン
+			strRtn.append("<div class=\"IllustItemResBtnList\">");
+			// リアクション促し文言
 			strRtn.append("<div class=\"IllustItemResListTitle\">");
 			if(cContent.m_vComment.size()<=0) {
 				strRtn.append(_TEX.T("Common.IllustItemRes.Title.Init"));
 			} else {
 				strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
 			}
-			strRtn.append(String.format("<span class=\"TitleShowAll\" onclick=\"ShowAllReaction(%d, this)\">%s</span>", cContent.m_nContentId ,_TEX.T("Common.IllustItemRes.Title.ShowAll")));
 			strRtn.append("</div>");	// IllustItemResListTitle
-			// もらった絵文字
-			for(CComment comment : cContent.m_vComment) {
-				strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
-			}
-			strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
-			strRtn.append("</div>");	// IllustItemResList
-			// 絵文字ボタン
-			strRtn.append("<div class=\"IllustItemResBtnList\">");
 			strRtn.append("<div class=\"ResBtnSetList\">");
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>", (nLoginUserId<1)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
@@ -268,21 +291,37 @@ public class CCnv {
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
+		String strThumbClass = (cContent.m_nOpenId==2)?"Hidden":"";
 		if(nMode==MODE_SP) {
-			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
+			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s?ID=%d&TD=%d&KWD=%s\">", strThumbClass, ILLUST_VIEW[nType][nMode], cContent.m_nUserId, cContent.m_nContentId, strKeyword));
 		} else {
-			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"/%d/%d.html\">", cContent.m_nUserId, cContent.m_nContentId));
+			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"/%d/%d.html\">", strThumbClass, cContent.m_nUserId, cContent.m_nContentId));
 		}
-		if(cContent.m_nSafeFilter<2) {
-			strRtn.append(String.format("<span class=\"IllustThumbImg\" style=\"background-image:url('%s_360.jpg')\"></span>", Common.GetUrl(cContent.m_strFileName)));
-		} else if(cContent.m_nSafeFilter<4) {
-			strRtn.append("<span class=\"IllustThumbImg\" style=\"background-image:url('/img/warning.png_360.jpg')\"></span>");
-		} else {
-			strRtn.append("<span class=\"IllustThumbImg\" style=\"background-image:url('/img/R-18.png_360.jpg')\"></span>");
+		String strFileUrl = "";
+		switch(cContent.m_nPublishId) {
+		case Common.PUBLISH_ID_R15:
+		case Common.PUBLISH_ID_R18:
+		case Common.PUBLISH_ID_R18G:
+		case Common.PUBLISH_ID_PASS:
+		case Common.PUBLISH_ID_LOGIN:
+		case Common.PUBLISH_ID_FOLLOWER:
+		case Common.PUBLISH_ID_T_FOLLOWER:
+		case Common.PUBLISH_ID_T_FOLLOW:
+		case Common.PUBLISH_ID_T_EACH:
+		case Common.PUBLISH_ID_T_LIST:
+			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+			break;
+		case Common.PUBLISH_ID_ALL:
+		case Common.PUBLISH_ID_HIDDEN:
+		default:
+			strFileUrl = Common.GetUrl(cContent.m_strFileName);
+			break;
 		}
+		strRtn.append(String.format("<span class=\"IllustThumbImg\" style=\"background-image:url('%s_360.jpg')\"></span>", strFileUrl));
+		//strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\" />", strFileUrl));
 		strRtn.append("<span class=\"IllustInfo\">");
 		strRtn.append(String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s %s</span>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
-		strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Common.ToStringHtml(cContent.m_strDescription)));
+		//strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Common.ToStringHtml(cContent.m_strDescription)));
 		strRtn.append("</span>");	// IllustInfo
 		strRtn.append("</a>");
 

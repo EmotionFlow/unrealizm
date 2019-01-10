@@ -22,8 +22,13 @@ body {padding: 51px 0 0 0 !important;}
 .UserInfo .UserInfoBg {height: 180px;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
-.IllustThumb {width: 198px; height: 198px;}
+.IllustThumbList {margin: 0 0;}
+.IllustThumb {margin: 8px !important; width: 202px; height: 202px;}
 .IllustThumb .Category {font-size: 13px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
+.IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
+.IllustThumb .IllustThumbImg {box-sizing: border-box; width: 200px; height: 200px;}
+.IllustThumb .IllustInfo {padding: 5px;}
+.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 12px; height: 36px; line-height: 36px;}
 .IllustItem {margin: 15px;}
 .Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
 .Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
@@ -40,15 +45,7 @@ body {padding: 51px 0 0 0 !important;}
 .SearchResultTitle {margin: 25px 0 10px 0; font-size: 18px; height: 32px; line-height: 30px;}
 .SearchResultTitle .TitleCmdFollow {float: none; position: static;}
 
-.IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
-
-.IllustThumb .IllustThumbImg {box-sizing: border-box; width: 180px; height: 180px;}
-.IllustThumb {margin: 16px 8px 0px 8px !important; width: 182px; height: 250px;}
-.IllustThumb:nth-child(16n+3), .IllustThumb:nth-child(16n+6), .IllustThumb:nth-child(16n+9), .IllustThumb:nth-child(16n+12), .IllustThumb:nth-child(16n+15) {margin-right: 5px;}
-.IllustThumb:nth-child(16n+5), .IllustThumb:nth-child(16n+10), .IllustThumb:nth-child(16n+15) {margin-right: 0;}
-.IllustThumb .IllustInfo {padding: 10px 5px 0px 5px;}
-.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 12px; height: 36px; line-height: 36px;}
-.Wrapper.ItemList .IllustThumbList, .Wrapper.ItemList .IllustItemList {margin: 30px 0; border: solid 1px #eee; border-radius: 6px; overflow: hidden;}
+.Wrapper.ItemList .IllustThumbList, .Wrapper.ItemList .IllustItemList {margin: 30px 0; border: solid 1px #eee; border-radius: 6px; overflow: hidden; background-color: #fff;}
 .Header {width: 100%; min-width: 700px; padding: 0;}
 .HeaderWrapper {min-width: 700px; max-width: 990px; margin: 0 auto;}
 .Header .HeaderTitleWrapper {float: left;  margin: 0;}

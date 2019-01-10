@@ -75,8 +75,7 @@ public class MyHomeC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				//strSql = String.format("SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=? %s", strCond);
-				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=?";
+				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
@@ -95,7 +94,7 @@ public class MyHomeC {
 				cState.close();cState=null;
 
 
-				// User contents total number
+				// Owner contents total number
 				idx = 1;
 				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
@@ -108,7 +107,7 @@ public class MyHomeC {
 				cState.close();cState=null;
 			}
 
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCondStart);
+			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCondStart);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);

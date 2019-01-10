@@ -10,7 +10,7 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class FollowerListC {
+public class MyHomeTagSettingC {
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
@@ -23,8 +23,8 @@ public class FollowerListC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 36;
-	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
+	public int SELECT_MAX_GALLERY = 100;
+	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
@@ -32,15 +32,13 @@ public class FollowerListC {
 	}
 
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
-		return false;
-
-		/*
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
+		int idx = 1;
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -48,9 +46,10 @@ public class FollowerListC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM follows_0000 WHERE follow_user_id=?";
+				strSql = "SELECT count(*) FROM follow_tags_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
+				idx = 1;
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
@@ -59,20 +58,18 @@ public class FollowerListC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT follows_0000.*, nickname, file_name FROM follows_0000 INNER JOIN users_0000 ON follows_0000.user_id=users_0000.user_id WHERE follows_0000.follow_user_id=? ORDER BY follow_id DESC OFFSET ? LIMIT ?";
+
+			strSql = "select * FROM follow_tags_0000 WHERE user_id=? order by upload_date desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);
-			cState.setInt(3, SELECT_MAX_GALLERY);
+			idx = 1;
+			cState.setInt(idx++, cCheckLogin.m_nUserId);
+			cState.setInt(idx++, m_nPage*SELECT_MAX_GALLERY);
+			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CUser cContent = new CUser();
-				cContent.m_nUserId		= cResSet.getInt("user_id");
-				cContent.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_strFileName	= Common.ToString(cResSet.getString("file_name"));
-				if(cContent.m_strFileName.length()<=0) cContent.m_strFileName="/img/default_user.jpg";
-
-				m_vContentList.add(cContent);
+				CTag cTag = new CTag(cResSet);
+				cTag.m_nTypeId = cResSet.getInt("type_id");
+				m_vContentList.add(cTag);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -87,6 +84,5 @@ public class FollowerListC {
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 		return bResult;
-		*/
 	}
 }

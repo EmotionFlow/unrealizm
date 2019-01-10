@@ -24,12 +24,23 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			$('#MenuMe').addClass('Selected');
 		});
 		</script>
+		<style>
+		<%if(bSmartPhone){%>
+		.Wrapper.ItemList .IllustItemList {margin-top: 6px;}
+		<%} else {%>
+		.Wrapper.ItemList .IllustItemList {margin-top: 16px;}
+		<%}%>
+		</style>
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div class="Wrapper ItemList ViewPc">
+			<div id="CategoryMenu" class="CategoryMenu">
+				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_FOLLOW){%>Selected<%}%>" href="/FollowListPcV.jsp"><%=_TEX.T("IllustListV.Follow")%></a>
+				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_BLOCK){%>Selected<%}%>" href="/FollowListPcV.jsp?MD=1"><%=_TEX.T("IllustListV.Block")%></a>
+			</div>
 			<div id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
@@ -41,7 +52,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			</div>
 
 			<%if(!bSmartPhone) {%>
-			<div class="PcSideBar" style="margin-top: 30px;">
+			<div class="PcSideBar" style="margin-top: 16px;">
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
@@ -55,7 +66,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<%}%>
 
 			<div class="PageBar">
-				<%=CPageBar.CreatePageBar("/FollowListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBar("/FollowListPcV.jsp", String.format("&MD=%d", cResults.m_nMode), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
 		</div>
 

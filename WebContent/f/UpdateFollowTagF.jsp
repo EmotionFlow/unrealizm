@@ -1,45 +1,50 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
-class UpdateFollowTagCParam {
+class UpdateFollowTagC {
+	public static final int FAVO_MAX = 10;
+	public static final int OK_INSERT = 1;
+	public static final int OK_DELETE = 0;
+	public static final int ERR_NOT_LOGIN = -1;
+	public static final int ERR_MAX = -2;
+	public static final int ERR_UNKNOWN = -99;
+
 	public int m_nUserId = -1;
 	public String m_strTagTxt = "";
 	public int m_nTypeId = 0;
-
-	public void GetParam(HttpServletRequest cRequest) {
+	public void getParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId	= Common.ToInt(cRequest.getParameter("UID"));
-			m_strTagTxt	= Common.TrimAll(cRequest.getParameter("TXT"));
-			m_nTypeId	= Common.ToIntN(cRequest.getParameter("TYP"), Common.FOVO_KEYWORD_TYPE_TAG, Common.FOVO_KEYWORD_TYPE_SEARCH);
+			request.setCharacterEncoding("UTF-8");
+			m_nUserId	= Common.ToInt(request.getParameter("UID"));
+			m_strTagTxt	= Common.TrimAll(request.getParameter("TXT"));
+			m_nTypeId	= Common.ToIntN(request.getParameter("TYP"), Common.FOVO_KEYWORD_TYPE_TAG, Common.FOVO_KEYWORD_TYPE_SEARCH);
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
 	}
-}
 
-class UpdateFollowTagC {
-	public int GetResults(UpdateFollowTagCParam cParam) {
-		int nRtn = -1;
+	public int m_nContentsNum = 0;
+	public int getResults(CheckLogin checkLogin) {
+		if(m_strTagTxt.isEmpty()) return ERR_UNKNOWN;
+
+		int nRtn = ERR_UNKNOWN;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 
-		if(cParam.m_strTagTxt.isEmpty()) return nRtn;
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-
 
 			boolean bFollowing = false;
 			// now following check
 			strSql ="SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setString(2, cParam.m_strTagTxt);
-			cState.setInt(3, cParam.m_nTypeId);
+			cState.setInt(1, m_nUserId);
+			cState.setString(2, m_strTagTxt);
+			cState.setInt(3, m_nTypeId);
 			cResSet = cState.executeQuery();
 			bFollowing = cResSet.next();
 			cResSet.close();cResSet=null;
@@ -47,26 +52,38 @@ class UpdateFollowTagC {
 
 
 			if(!bFollowing) {
+				strSql = "SELECT count(*) FROM follow_tags_0000 WHERE user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, checkLogin.m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nContentsNum = cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+				if(m_nContentsNum>=FAVO_MAX) return ERR_MAX;
+
 				strSql ="INSERT INTO follow_tags_0000(user_id, tag_txt, type_id) VALUES(?, ?, ?)";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nUserId);
-				cState.setString(2, cParam.m_strTagTxt);
-				cState.setInt(3, cParam.m_nTypeId);
+				cState.setInt(1, m_nUserId);
+				cState.setString(2, m_strTagTxt);
+				cState.setInt(3, m_nTypeId);
 				cState.executeUpdate();
 				cState.close();cState=null;
-				nRtn = 1;
+				nRtn = OK_INSERT;
 			} else {
 				strSql ="DELETE FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nUserId);
-				cState.setString(2, cParam.m_strTagTxt);
-				cState.setInt(3, cParam.m_nTypeId);
+				cState.setInt(1, m_nUserId);
+				cState.setString(2, m_strTagTxt);
+				cState.setInt(3, m_nTypeId);
 				cState.executeUpdate();
 				cState.close();cState=null;
-				nRtn = 2;
+				nRtn = OK_DELETE;
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			nRtn = ERR_UNKNOWN;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
@@ -77,14 +94,31 @@ class UpdateFollowTagC {
 }
 %>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateFollowTagCParam cParam = new UpdateFollowTagCParam();
-cParam.GetParam(request);
+UpdateFollowTagC cResults = new UpdateFollowTagC();
+cResults.getParam(request);
 
-int nRtn = -1;
-if( cCheckLogin.m_bLogin && cParam.m_nUserId == cCheckLogin.m_nUserId ) {
-	UpdateFollowTagC cResults = new UpdateFollowTagC();
-	nRtn = cResults.GetResults(cParam);
+int nRtn = UpdateFollowTagC.ERR_NOT_LOGIN;
+if(checkLogin.m_bLogin && cResults.m_nUserId==checkLogin.m_nUserId) {
+	nRtn = cResults.getResults(checkLogin);
 }
-%>{"result":<%=nRtn%>}
+String strMessage = "";
+if(nRtn<0) {
+	switch(nRtn) {
+	case UpdateFollowTagC.ERR_NOT_LOGIN:
+		strMessage = _TEX.T("UpdateFollowTagC.ERR_NOT_LOGIN");
+		break;
+	case UpdateFollowTagC.ERR_MAX:
+		strMessage = String.format(_TEX.T("UpdateFollowTagC.ERR_MAX"), UpdateFollowTagC.FAVO_MAX);
+		break;
+	case UpdateFollowTagC.ERR_UNKNOWN:
+	default:
+		strMessage = _TEX.T("UpdateFollowTagC.ERR_UNKNOWN");
+		break;
+	}
+}
+%>{
+"result":<%=nRtn%>,
+"message" : "<%=CEnc.E(strMessage.toString())%>"
+}

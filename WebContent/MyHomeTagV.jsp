@@ -11,6 +11,7 @@ if(!cCheckLogin.m_bLogin) {
 MyHomeTagC cResults = new MyHomeTagC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -18,7 +19,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>home</title>
 		<script>
-		var g_nPage = 1;
+		var g_nEndId = <%=cResults.m_nEndId%>;
 		var g_bAdding = false;
 		function addContents() {
 			if(g_bAdding) return;
@@ -27,15 +28,18 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			$("#IllustThumbList").append($objMessage);
 			$.ajax({
 				"type": "post",
-				"data": {"PG" : g_nPage},
+				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_PC%>},
+				"dataType": "json",
 				"url": "/f/MyHomeTagF.jsp",
 				"success": function(data) {
-					if(data) {
-						g_nPage++;
-						$('#InfoMsg').hide();
-						$("#IllustThumbList").append(data);
+					if(data.end_id>0) {
+						g_nEndId = data.end_id;
+						$("#IllustThumbList").append(data.html);
+						$(".Waiting").remove();
+						if(vg)vg.vgrefresh();
 						g_bAdding = false;
-						gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
+						console.log(location.pathname+'/'+g_nEndId+'.html');
+						gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nEndId+'.html'});
 					} else {
 						$(window).unbind("scroll.addContents");
 					}
@@ -45,6 +49,12 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					DispMsg('Connection error');
 				}
 			});
+		}
+
+		function DeleteContent(nUserId, nContentId) {
+			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
+			DeleteContentBase(nUserId, nContentId);
+			return false;
 		}
 
 		$(function(){
@@ -62,22 +72,19 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<div id="DispMsg"></div>
 		<div class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
+				<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
+					<a style="color: #5bd;" href="/MyHomeTagSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
+				</div>
 				<%if(cResults.m_vContentList.size()<=0) {%>
-				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center; background-color: #fff;">
-					タグやキーワードを<br />
-					お気に入り登録すると<br />
-					ここに表示されます<br />
+				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
+					<%=_TEX.T("MyHomeTag.FirstMsg")%>
 				</div>
 				<%}%>
 
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CTag cTag = cResults.m_vContentList.get(nCnt);%>
-					<%if(cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG) {%>
-					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
-					<%} else {%>
-					<%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_SP, _TEX)%>
-					<%}%>
-					<%if((nCnt+1)%9==0) {%>
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
+					<%if((nCnt+1)%5==0) {%>
 					<%@ include file="/inner/TAdMid.jsp"%>
 					<%}%>
 				<%}%>

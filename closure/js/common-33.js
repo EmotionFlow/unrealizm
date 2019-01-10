@@ -148,6 +148,9 @@ function GotoLogin() {
 }
 
 function DispMsg(strMessage) {
+	if($('#DispMsg').length<=0) {
+		$('body').append($("<div/>").attr("id", "DispMsg"));
+	}
 	$("#DispMsg").html(strMessage);
 	$("#DispMsg").slideDown(200, function() {
 		setTimeout(function() {
@@ -283,9 +286,11 @@ function UpdateFollowTag(nUserId, strTagTxt, nTypeId) {
 		"url": "/f/UpdateFollowTagF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			if(data.result==1) {
+			if(data.result<0) {
+				DispMsg(data.message);
+			} else if(data.result==1) {
 				$('.TitleCmdFollow').addClass('Selected');
-			} else if(data.result==2) {
+			} else if(data.result==0) {
 				$('.TitleCmdFollow').removeClass('Selected');
 			} else {
 				DispMsg('You need to login');
@@ -359,9 +364,26 @@ function ShowAllReaction(content_id, elm) {
 	return false;
 }
 
-function ExpandItem(id, elm) {
-	$(this).hide();
-	$('#IllustItem_' + id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
+function ShowAppendFile(user_id, content_id, mode, elm) {
+	var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val()
+	$.ajax({
+		"type": "post",
+		"data": {"UID":user_id, "IID":content_id, "PAS":password, "MD":mode},
+		"url": "/f/ShowAppendFileF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			console.log(data);
+			if(data.result_num>0) {
+				$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
+				$(elm).parent().hide();
+				$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
+				$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
+			} else {
+				DispMsg(data.html);
+			}
+		}
+	});
+
 }
 
 

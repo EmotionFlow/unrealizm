@@ -118,8 +118,8 @@ if(!cResults.getResults(cCheckLogin)) {
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		<%if(!bSmartPhone) {%>
-		@media screen and (min-width:1188px){
-		.Wrapper.ThumbList {width: 1188px;}
+		@media screen and (min-width:1090px){
+		.Wrapper.ThumbList {width: 1090px;}
 		}
 		<%}%>
 		</style>

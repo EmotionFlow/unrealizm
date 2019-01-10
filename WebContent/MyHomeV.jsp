@@ -90,13 +90,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%}%>
 			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
-				ポイピクへようこそ<br />
-				<br />
-				ポイピクはフォローしてもフォロー解除しても<br />
-				相手に伝わりません。<br />
-				とりあえず気になった人をフォローしてみましょう！<br />
-				<br />
-				フォローするとここに最新情報が表示されます<br />
+				<%=_TEX.T("MyHome.FirstMsg")%>
 			</div>
 			<%}%>
 			<div id="IllustItemList" class="IllustItemList">

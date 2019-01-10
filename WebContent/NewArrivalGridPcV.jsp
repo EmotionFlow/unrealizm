@@ -105,10 +105,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			body {padding-top: 83px !important;}
 		</style>
 
+		<%if(!bSmartPhone){%>
 		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
 		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>
 		<script>
-		//setup
 		$(function() {
 			vg = $("#IllustThumbList").vgrid({
 				easing: "easeOutQuint",
@@ -117,30 +117,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				time: 1,
 				delay: 1,
 				wait: 1,
-				fadeIn: {
-					time: 1,
-					delay: 1
-				},
-				onStart: function(){
-					$("#message1")
-						.css("visibility", "visible")
-						.fadeOut("slow",function(){
-							$(this).show().css("visibility", "hidden");
-						});
-				},
-				onFinish: function(){
-					$("#message2")
-						.css("visibility", "visible")
-						.fadeOut("slow",function(){
-							$(this).show().css("visibility", "hidden");
-						});
-				}
+				fadeIn: {time: 1, delay: 1}
 			});
-
-			//$(window).load(function(e){
-				$("#IllustThumbList").css('opacity', 1);
-				//vg.vgrefresh();
-			//});
+		});
+		</script>
+		<%}%>
+		<script>
+		$(function() {
+			$("#IllustThumbList").css('opacity', 1);
 		});
 		</script>
 	</head>

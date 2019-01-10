@@ -87,7 +87,8 @@ public class IllustViewListC {
 
 
 			// NEW ARRIVAL
-			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id<? AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			String strOpenCnd = (m_nUserId!=cCheckLogin.m_nUserId)?" AND open_id<>2":"";
+			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id<? AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, m_nContentId);

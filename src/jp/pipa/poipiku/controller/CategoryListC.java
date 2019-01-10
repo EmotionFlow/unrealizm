@@ -75,8 +75,7 @@ public class CategoryListC {
 
 
 			// CATEGORY
-			//strSql = String.format("SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCond);
-			strSql = "SELECT * FROM contents_0000 WHERE category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC LIMIT ?";
+			strSql = "SELECT * FROM contents_0000 WHERE open_id<>2 AND category_id=? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			for(int nCategoryId : m_vContentList) {
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();

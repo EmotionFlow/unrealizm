@@ -4,13 +4,17 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) return;
 
-FollowerListC cResults = new FollowerListC();
+MyHomeTagSettingC cResults = new MyHomeTagSettingC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CUser cUser = cResults.m_vContentList.get(nCnt);%>
-	<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX)%>
+	CTag cTag = cResults.m_vContentList.get(nCnt);%>
+	<%if(cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG) {%>
+	<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
+	<%} else {%>
+	<%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_SP, _TEX)%>
+	<%}%>
 	<%if((nCnt+1)%9==0) {%>
 	<%@ include file="/inner/TAdMid.jsp"%>
 	<%}%>

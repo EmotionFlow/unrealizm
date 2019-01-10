@@ -27,6 +27,8 @@ public class CContent {
 	public int m_nFileWidth = 0;
 	public int m_nFileHeight = 0;
 	public String m_strTagList = "";
+	public int m_nPublishId = 0;
+	public String m_strPassword = "";
 	public CUser m_cUser = new CUser();
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
@@ -40,7 +42,7 @@ public class CContent {
 		m_strDescription	= Common.ToString(resultSet.getString("description"));
 		m_timeUploadDate	= resultSet.getTimestamp("upload_date");
 		m_nUserId			= resultSet.getInt("user_id");
-		//m_nOpenId			= resultSet.getInt("open_id");
+		m_nOpenId			= resultSet.getInt("open_id");
 		m_strFileName		= Common.ToString(resultSet.getString("file_name"));
 		m_nFileNum			= resultSet.getInt("file_num");
 		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
@@ -49,6 +51,22 @@ public class CContent {
 		m_nFileWidth		= resultSet.getInt("file_width");
 		m_nFileHeight		= resultSet.getInt("file_height");
 		m_strTagList		= Common.ToString(resultSet.getString("tag_list"));
+		m_nPublishId		= resultSet.getInt("publish_id");
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
+
+		if(m_nPublishId==0 && m_nSafeFilter>0) {
+			switch(m_nSafeFilter) {
+			case Common.SAFE_FILTER_R15:
+				m_nPublishId = Common.PUBLISH_ID_R15;
+				break;
+			case Common.SAFE_FILTER_R18:
+				m_nPublishId = Common.PUBLISH_ID_R18;
+				break;
+			case Common.SAFE_FILTER_R18G:
+			default:
+				m_nPublishId = Common.PUBLISH_ID_R18G;
+				break;
+			}
+		}
 	}
 }

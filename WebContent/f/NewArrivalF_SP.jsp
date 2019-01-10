@@ -55,7 +55,7 @@ public class NewArrivalC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s", strCond);
+				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE open_id<>2 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s", strCond);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
@@ -71,7 +71,7 @@ public class NewArrivalC {
 				cState.close();cState=null;
 			}
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id<>2 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);

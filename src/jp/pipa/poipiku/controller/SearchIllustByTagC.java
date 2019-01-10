@@ -84,8 +84,7 @@ public class SearchIllustByTagC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				//strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
-				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
+				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setString(idx++, m_strKeyword);
@@ -105,8 +104,7 @@ public class SearchIllustByTagC {
 				cState.close();cState=null;
 			}
 
-			//strSql = String.format("SELECT * FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
-			strSql = "SELECT * FROM contents_0000 WHERE content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT * FROM contents_0000 WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setString(idx++, m_strKeyword);

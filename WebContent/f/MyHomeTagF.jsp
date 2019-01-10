@@ -3,19 +3,24 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) return;
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 MyHomeTagC cResults = new MyHomeTagC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin);
-%>
-<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CTag cTag = cResults.m_vContentList.get(nCnt);%>
-	<%if(cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG) {%>
-	<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
-	<%} else {%>
-	<%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_SP, _TEX)%>
-	<%}%>
-	<%if((nCnt+1)%9==0) {%>
-	<%@ include file="/inner/TAdMid.jsp"%>
-	<%}%>
-<%}%>
+if(cResults.m_nMode==CCnv.MODE_SP) {
+	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+}
+boolean bRtn = cResults.getResults(cCheckLogin, true);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+StringBuilder sbHtml = new StringBuilder();
+for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+	CContent cContent = cResults.m_vContentList.get(nCnt);
+	sbHtml.append(CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult));
+	if(nCnt==5 && bSmartPhone) {
+		sbHtml.append(Util.poipiku_320x250_sp_mid());
+	}
+}
+%>{
+"end_id" : <%=cResults.m_nEndId%>,
+"html" : "<%=CEnc.E(sbHtml.toString())%>"
+}

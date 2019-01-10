@@ -41,7 +41,8 @@ public class IllustDetailC {
 
 
 			// content main
-			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
+			String strOpenCnd = (m_nUserId!=cCheckLogin.m_nUserId)?" AND open_id<>2":"";
+			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, m_nContentId);

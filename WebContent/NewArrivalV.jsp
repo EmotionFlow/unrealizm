@@ -39,7 +39,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 							g_bAdding = false;
 							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nCategory+'/'+g_nPage+'.html'});
 						} else {
-							$(window).unbind("scroll.addContents");
+							//$(window).unbind("scroll.addContents");
 						}
 						$(".Waiting").remove();
 					},
@@ -56,11 +56,13 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
 				$(elm).addClass('Selected');
 				updateCategoryMenuPos(300);
+				g_bAdding = false;
 				addContents();
 			}
 
 			$(function(){
 				$(window).bind("scroll.addContents", function() {
+					if(g_bAdding) return;
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
 						addContents();

@@ -89,7 +89,6 @@ public class RandomPickupGridC {
 				m_nContentsNum = SELECT_MAX_GALLERY;
 			}
 
-			//strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY random() LIMIT ?", strCond);
 			strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? AND content_id<(SELECT (max(content_id) * random())::int FROM contents_0000) ORDER BY content_id DESC LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;

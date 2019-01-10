@@ -43,7 +43,7 @@ class SendEmojiC {
 
 			// 投稿存在確認(不正アクセス対策)
 			CUser cTargUser = null;
-			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE content_id=?";
+			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nContentId);
 			cResSet = cState.executeQuery();
@@ -137,7 +137,7 @@ class SendEmojiC {
 
 			// バッジに表示する数を取得
 			int nBadgeNum = 0;
-			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE open_id<>2 AND user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cTargUser.m_nUserId);
 			cState.setInt(2, cTargUser.m_nUserId);
@@ -177,7 +177,7 @@ class SendEmojiC {
 				cState.setString(6, strBody);
 				cState.setInt(7, cNotificationToken.m_nTokenType);
 				cState.executeUpdate();
-				Log.d(cNotificationToken.m_strNotificationToken, ""+cNotificationToken.m_nTokenType, ""+nBadgeNum, strTitle, strSubTitle, strBody);
+				//Log.d(cNotificationToken.m_strNotificationToken, ""+cNotificationToken.m_nTokenType, ""+nBadgeNum, strTitle, strSubTitle, strBody);
 			}
 			cState.close();cState=null;
 		} catch(Exception e) {

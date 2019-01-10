@@ -171,9 +171,10 @@ public class IllustListGridC {
 				}
 
 				// User contents total number
-				idx = 1;
-				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
+				String strOpenCnd = (!m_bOwner)?" AND open_id<>2":"";
+				strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? %s", strOpenCnd);
 				cState = cConn.prepareStatement(strSql);
+				idx = 1;
 				cState.setInt(idx++, m_nUserId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
@@ -183,7 +184,7 @@ public class IllustListGridC {
 				cState.close();cState=null;
 
 				// category
-				strSql = "SELECT tag_txt FROM tags_0000 WHERE tag_type=3 AND content_id IN(SELECT content_id FROM contents_0000 WHERE user_id=?) GROUP BY tag_txt ORDER BY max(upload_date) DESC";
+				strSql = String.format("SELECT tag_txt FROM tags_0000 WHERE tag_type=3 AND content_id IN(SELECT content_id FROM contents_0000 WHERE user_id=? %s) GROUP BY tag_txt ORDER BY max(upload_date) DESC", strOpenCnd);
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, m_nUserId);
 				cResSet = cState.executeQuery();
@@ -200,9 +201,10 @@ public class IllustListGridC {
 			String strCond = (m_strKeyword.isEmpty())?"":" AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3)";
 
 			// gallery
-			idx = 1;
-			strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? AND safe_filter<=? %s", strCond);
+			String strOpenCnd = (!m_bOwner)?" AND open_id<>2":"";
+			strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? AND safe_filter<=? %s %s", strCond, strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
+			idx = 1;
 			cState.setInt(idx++, m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			if(!m_strKeyword.isEmpty()) {
@@ -216,7 +218,7 @@ public class IllustListGridC {
 			cState.close();cState=null;
 
 			idx = 1;
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond, strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(idx++, m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);

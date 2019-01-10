@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.lang3.RandomStringUtils"%>
 <%@page import="java.awt.image.BufferedImage"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.nio.file.Files"%>
@@ -85,7 +86,8 @@ class UploadFileAppendC {
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strFileName = String.format("%s/%09d_%09d.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId, ext);
+			String strRandom = RandomStringUtils.randomAlphanumeric(9);
+			String strFileName = String.format("%s/%09d_%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId, strRandom, ext);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			ImageIO.write(cImage, "png", new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);

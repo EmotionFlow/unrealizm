@@ -45,39 +45,25 @@ public class IllustViewC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			// content main
-			if(m_nContentId>0) {
-				strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nUserId);
-				cState.setInt(2, m_nContentId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					m_cContent = new CContent(cResSet);
-					bRtn = true;	// 以下エラーが有ってもOK.表示は行う
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-			} else if(m_nUserId>0) {
-				strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND safe_filter<=? ORDER BY content_id DESC LIMIT 1";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nUserId);
-				cState.setInt(2, cCheckLogin.m_nSafeFilter);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					m_cContent = new CContent(cResSet);
-					m_nContentId = m_cContent.m_nContentId;
-					bRtn = true;	// 以下エラーが有ってもOK.表示は行う
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-			}
-			if(m_cContent.m_nContentId<=0) return false;
-
 			// owner
-			if(cCheckLogin.m_nUserId == m_cContent.m_nUserId) {
+			if(m_nUserId == cCheckLogin.m_nUserId) {
 				m_bOwner = true;
 			}
+
+			// content main
+			String strOpenCnd = (!m_bOwner)?" AND open_id<>2":"";
+			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nUserId);
+			cState.setInt(2, m_nContentId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				m_cContent = new CContent(cResSet);
+				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			if(m_cContent.m_nContentId<=0) return false;
 
 			// author profile
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
@@ -140,7 +126,7 @@ public class IllustViewC {
 			}
 
 			// User contents total number
-			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
+			strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? %s", strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cResSet = cState.executeQuery();

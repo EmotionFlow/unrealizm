@@ -1,0 +1,74 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/inner/Common.jsp"%>
+<%
+CheckLogin cCheckLogin = new CheckLogin(request, response);
+
+if(!cCheckLogin.m_bLogin) {
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	return;
+}
+
+MyHomeTagSettingC cResults = new MyHomeTagSettingC();
+cResults.getParam(request);
+boolean bRtn = cResults.getResults(cCheckLogin);
+%>
+<!DOCTYPE html>
+<html>
+	<head>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyHomeTagSetting.Title")%></title>
+
+		<script type="text/javascript">
+		$(function(){
+			$('#MenuHome').addClass('Selected');
+		});
+		</script>
+
+		<style>
+			body {padding-top: 83px !important;}
+		</style>
+	</head>
+
+	<body>
+		<div class="TabMenuWrapper">
+			<div class="TabMenu">
+				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
+				<a class="TabMenuItem Selected" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
+				<a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
+				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
+				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
+				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+			</div>
+		</div>
+
+		<%@ include file="/inner/TMenuPc.jsp"%>
+
+		<div class="Wrapper ItemList">
+			<div id="IllustThumbList" class="IllustThumbList">
+				<%if(cResults.m_vContentList.size()<=0) {%>
+				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center; background-color: #fff;">
+					タグやキーワードを<br />
+					お気に入り登録すると<br />
+					ここに表示されます<br />
+				</div>
+				<%}%>
+
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CTag cTag = cResults.m_vContentList.get(nCnt);%>
+					<%if(cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG) {%>
+					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
+					<%} else {%>
+					<%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_PC, _TEX)%>
+					<%}%>
+					<%if((nCnt+1)%9==0) {%>
+					<%@ include file="/inner/TAdMidWide.jsp"%>
+					<%}%>
+				<%}%>
+			</div>
+		</div>
+
+		<%@ include file="/inner/TFooter.jsp"%>
+	</body>
+</html>

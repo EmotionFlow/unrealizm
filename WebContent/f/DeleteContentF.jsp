@@ -19,7 +19,7 @@ class DeleteMakingCParam {
 }
 
 class DeleteMakingC {
-	CContent cContent = new CContent();
+	CContent cContent = null;
 
 	public boolean GetResults(DeleteMakingCParam cParam) {
 		boolean bRtn = false;
@@ -34,15 +34,13 @@ class DeleteMakingC {
 			cConn = dsPostgres.getConnection();
 
 			// イラスト存在確認(不正アクセス対策)
-			boolean bExist = false;
 			if(cParam.m_nUserId==1) {
 				strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nContentId);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
-					cParam.m_nUserId = cResSet.getInt("user_id");
-					bExist = true;
+					cContent = new CContent(cResSet);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
@@ -53,12 +51,12 @@ class DeleteMakingC {
 				cState.setInt(2, cParam.m_nUserId);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
-					bExist = true;
+					cContent = new CContent(cResSet);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 			}
-			if(!bExist) {
+			if(cContent==null) {
 				return false;
 			}
 
@@ -112,7 +110,11 @@ class DeleteMakingC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 			// delete files
-			ImageUtil.deleteFiles(getServletContext().getRealPath(String.format("%s/%09d.jpg", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId)));
+			try{
+				ImageUtil.deleteFiles(getServletContext().getRealPath(cContent.m_strFileName));
+			} catch (Exception e) {
+				Log.d("connot delete content file : " + cContent.m_strFileName);
+			}
 
 			bRtn = true;
 		} catch(Exception e) {
