@@ -68,7 +68,7 @@ public class PopularIllustListGridC {
 
 			// POPULAR
 			if(!bContentOnly) {
-				//strSql = String.format("SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
+				//strSql = "SELECT count(*) FROM vw_hot_contents_hour WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
 				strSql = "SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
@@ -88,7 +88,7 @@ public class PopularIllustListGridC {
 				cState.close();cState=null;
 			}
 
-			//strSql = String.format("SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			//strSql = "SELECT vw_hot_contents_hour.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (vw_hot_contents_hour INNER JOIN users_0000 ON vw_hot_contents_hour.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON vw_hot_contents_hour.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND vw_hot_contents_hour.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND vw_hot_contents_hour.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			strSql = "SELECT vw_rank_contents_total.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (vw_rank_contents_total INNER JOIN users_0000 ON vw_rank_contents_total.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON vw_rank_contents_total.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND vw_rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND vw_rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;

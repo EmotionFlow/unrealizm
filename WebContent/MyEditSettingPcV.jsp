@@ -516,7 +516,7 @@ if(cResults.m_bUpdate) {
 					<div class="SettingBody">
 						<%=_TEX.T("EditSettingV.Twitter.Info")%>
 						<div class="SettingBodyCmd">
-							<div class="RegistMessage" >[<%=(cResults.m_cUser.m_bTweet)?_TEX.T("EditSettingV.Twitter.Info.State.On"):_TEX.T("EditSettingV.Twitter.Info.State.Off")%>]</div>
+							<div class="RegistMessage" >[<%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%>]</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="location.href='/TokenFormTwitterPc.jsp'"><%=_TEX.T("EditSettingV.Twitter.Button")%></a>
 						</div>
 						<%if(cResults.m_cUser.m_bTweet){%>

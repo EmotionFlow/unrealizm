@@ -27,13 +27,16 @@ public class CUser {
 	public int m_nFollowNum = 0;
 	public int m_nFollowerNum = 0;
 	public boolean m_bTweet = false;
+	public boolean m_bDispFollower = false;
+	public boolean m_bDispR18 = false;
+	public int m_nReaction = REACTION_SHOW;
+
+	// tblOAuth
 	public int m_nAutoTweetTime=-99;
 	public String m_strAutoTweetDesc="";
 	public int m_nAutoTweetWeekDay = -1;
 	public int m_nAutoTweetThumbNum = 9;
-	public boolean m_bDispFollower = false;
-	public boolean m_bDispR18 = false;
-	public int m_nReaction = REACTION_SHOW;
+	public String m_strTwitterScreenName = "";
 
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 }

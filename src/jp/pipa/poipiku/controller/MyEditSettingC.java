@@ -95,6 +95,7 @@ public class MyEditSettingC {
 				m_cUser.m_nAutoTweetTime = cResSet.getInt("auto_tweet_time");
 				m_cUser.m_strAutoTweetDesc = Common.ToString(cResSet.getString("auto_tweet_desc"));
 				m_cUser.m_nAutoTweetThumbNum = cResSet.getInt("auto_tweet_thumb_num");
+				m_cUser.m_strTwitterScreenName = Common.ToString(cResSet.getString("twitter_screen_name"));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
