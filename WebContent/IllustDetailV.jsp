@@ -9,6 +9,10 @@ if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
+if(Util.isBot(request.getHeader("user-agent"))) {
+	response.sendRedirect("/NotFoundV.jsp");
+	return;
+}
 %>
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">

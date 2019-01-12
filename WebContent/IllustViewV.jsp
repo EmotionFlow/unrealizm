@@ -11,11 +11,49 @@ if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
+if(Util.isBot(request.getHeader("user-agent"))) {
+	response.sendRedirect("/NotFoundV.jsp");
+	return;
+}
 
-String strTitle = cResults.m_cContent.m_cUser.m_strNickName;
-String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
-if(strs.length>0 && strs[0].length()>0) {
-	strTitle = strs[0];
+
+String strTitle = "";
+switch(cResults.m_cContent.m_nPublishId) {
+case Common.PUBLISH_ID_PASS:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
+	break;
+case Common.PUBLISH_ID_LOGIN:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.Login");
+	break;
+case Common.PUBLISH_ID_FOLLOWER:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.Follower");
+	break;
+case Common.PUBLISH_ID_T_FOLLOWER:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follower");
+	break;
+case Common.PUBLISH_ID_T_FOLLOW:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follow");
+	break;
+case Common.PUBLISH_ID_T_EACH:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Each");
+	break;
+case Common.PUBLISH_ID_T_LIST:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_List");
+	break;
+case Common.PUBLISH_ID_HIDDEN:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.Hidden");
+	break;
+case Common.PUBLISH_ID_ALL:
+case Common.PUBLISH_ID_R15:
+case Common.PUBLISH_ID_R18:
+case Common.PUBLISH_ID_R18G:
+default:
+	strTitle = cResults.m_cContent.m_cUser.m_strNickName;
+	String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
+	if(strs.length>0 && strs[0].length()>0) {
+		strTitle = strs[0];
+	}
+	break;
 }
 strTitle = Common.SubStrNum(strTitle, 10);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);

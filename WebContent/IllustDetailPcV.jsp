@@ -9,11 +9,15 @@ if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
+if(Util.isBot(request.getHeader("user-agent"))) {
+	response.sendRedirect("/NotFoundPcV.jsp");
+	return;
+}
 %>
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript">

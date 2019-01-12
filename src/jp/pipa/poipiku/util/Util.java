@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -253,5 +255,39 @@ public class Util {
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
+	}
+
+	public static boolean isBot(String strUuserAgent) {
+		if(strUuserAgent==null) return false;
+		final List<String> vBot = Arrays.asList(
+				"ia_archiver",
+				"archive.org_bot",
+				"Baidu",
+				"BecomeBot",
+				"bingbot",
+				"DotBot",
+				"Googlebot",
+				"Hatena",
+				"heritr",
+				"ICC-Crawler",
+				"ichiro",
+				"MJ12bo",
+				"msnbot",
+				"NaverBot",
+				"OutfoxBot",
+				"Pockey",
+				"Purebot",
+				"SiteBot",
+				"Steeler",
+				"TurnitinBot",
+				"Twiceler",
+				"Websi",
+				"Wget",
+				"Y!J",
+				"Yahoo!",
+				"YandexBot",
+				"Yeti",
+				"YodaoBot");
+		return vBot.contains(strUuserAgent);
 	}
 }
