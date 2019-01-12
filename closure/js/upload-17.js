@@ -499,16 +499,12 @@ function updateTweetButton() {
 	}
 }
 
-function updateOneCushionButton() {
-	var bOneCushion = $('#OptionOneCushion').prop('checked');
-	if(!bOneCushion) {
-		$('#R18Switch .OptionLabel').addClass('disabled');
-		$('#R18Switch .onoffswitch').addClass('disabled');
-		$('#OptionR18:checkbox').prop('disabled',true);
+function updatePublish() {
+	var val = $('#EditPublish').val();
+	if (val==4) {
+		$('#ItemPassword').slideDown(300);
 	} else {
-		$('#R18Switch .OptionLabel').removeClass('disabled');
-		$('#R18Switch .onoffswitch').removeClass('disabled');
-		$('#OptionR18:checkbox').prop('disabled',false);
+		$('#ItemPassword').slideUp(300);
 	}
 }
 
@@ -522,7 +518,6 @@ function initUploadFile() {
 			$('#EditCategory').val(cCategory);
 		}
 	});
-	updateOneCushionButton();
 	updateTweetButton();
 	multiFileUploader = new qq.FineUploader({
 		element: document.getElementById("file-drop-area"),
@@ -632,11 +627,9 @@ function UploadFile(user_id) {
 	strDescription = strDescription.substr(0 , 200);
 	var strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
+	var nPublishId = $('#EditPublish').val();
+	var strPassword = $('#EditPassword').val();
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	var nSafeFilter = ($('#OptionOneCushion').prop('checked'))?2:0;	// 0:general, 2:R15, 4:R18
-	if(nSafeFilter>0) {
-		nSafeFilter = ($('#OptionR18').prop('checked'))?4:2;	// 0:general, 2:R15, 4:R18
-	}
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -650,11 +643,13 @@ function UploadFile(user_id) {
 		"data": {
 			"UID":user_id,
 			"CAT":nCategory,
-			"SAF":nSafeFilter,
 			"DES":strDescription,
 			"TAG":strTagList,
+			"PID":nPublishId,
+			"PPW":strPassword,
+			"PLD":"",
 		},
-		"url": "/f/UploadFileReferenceF.jsp",
+		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileReferenceF");
@@ -687,7 +682,6 @@ function initUploadPaste() {
 			$('#EditCategory').val(cCategory);
 		}
 	});
-	updateOneCushionButton();
 	updateTweetButton();
 
 	g_strPasteMsg = $('#TimeLineAddImage').html();
@@ -755,11 +749,9 @@ function UploadPaste(user_id) {
 	strDescription = strDescription.substr(0 , 200);
 	var strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
+	var nPublishId = $('#EditPublish').val();
+	var strPassword = $('#EditPassword').val();
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	var nSafeFilter = ($('#OptionOneCushion').prop('checked'))?2:0;	// 0:general, 2:R15, 4:R18
-	if(nSafeFilter>0) {
-		nSafeFilter = ($('#OptionR18').prop('checked'))?4:2;	// 0:general, 2:R15, 4:R18
-	}
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -771,11 +763,13 @@ function UploadPaste(user_id) {
 		"data": {
 			"UID":user_id,
 			"CAT":nCategory,
-			"SAF":nSafeFilter,
 			"DES":strDescription,
 			"TAG":strTagList,
+			"PID":nPublishId,
+			"PPW":strPassword,
+			"PLD":"",
 		},
-		"url": "/f/UploadFileReferenceF.jsp",
+		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileReferenceF", data.content_id);

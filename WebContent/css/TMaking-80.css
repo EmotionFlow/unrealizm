@@ -111,21 +111,6 @@
 	overflow: hidden;
 }
 
-#DispMsg {
-	display: block;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	padding: 40px 10px;
-	background: rgba(0, 0, 0, 0.8);
-	display: none;
-	color: #fff;
-	box-sizing: border-box;
-	z-index: 999;
-	text-align: center;
-}
-
 .SearchResultTitle {
 	text-decoration: none;
 	color: #5bd;
@@ -471,36 +456,47 @@
 .UploadFile .UoloadCmdOption {
 	display: flex;
 	float: left;
-	flex-flow: row wrap;
+	flex-flow: column;
 	width: 100%;
 	margin: 3px 0 10px 0;
 	align-items: flex-end;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem {
-	flex: 0 0 68px;
+	flex: 0 0 100%;
+	width: 100%;
 	display: flex;
-	flex-flow: column;
-	width: 68px;
+	flex-flow: row;
+	margin: 5px 0;
+	align-items: center;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {
 	display: block;
 	margin: 0;
-	font-size: 10px;
+	font-size: 14px;
 	height: 15px;
 	line-height: 15px;
-	text-align: center;
+	text-align: left;
 	white-space: nowrap;
-	transform: scale(0.8);
+	flex: 0 0 40%;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel.disabled {
 	color: #ccc;
 }
 
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish {
+	margin: 0 0 0 auto;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPublish,
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPassword {
+	width: 180px;
+}
+
 .UploadFile .UoloadCmdOption .OptionItem .onoffswitch {
-	margin: 0 auto;
+	margin: 0 0 0 auto;
 }
 
 .UploadFile .UoloadCmd {

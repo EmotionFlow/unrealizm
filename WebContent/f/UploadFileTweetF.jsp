@@ -48,12 +48,24 @@ class UploadFileTweetC {
 				cContent = new CContent(cResSet);
 				String strFileName = cContent.m_strFileName;
 				if(!strFileName.isEmpty()) {
-					if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R15) {
-						;
-					} else if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R18) {
-						strFileName = "/img/warning.png";
-					} else {
-						strFileName = "/img/R-18.png";
+					switch(cContent.m_nPublishId) {
+					case Common.PUBLISH_ID_R15:
+					case Common.PUBLISH_ID_R18:
+					case Common.PUBLISH_ID_R18G:
+					case Common.PUBLISH_ID_PASS:
+					case Common.PUBLISH_ID_LOGIN:
+					case Common.PUBLISH_ID_FOLLOWER:
+					case Common.PUBLISH_ID_T_FOLLOWER:
+					case Common.PUBLISH_ID_T_FOLLOW:
+					case Common.PUBLISH_ID_T_EACH:
+					case Common.PUBLISH_ID_T_LIST:
+						strFileName = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+						break;
+					case Common.PUBLISH_ID_ALL:
+					case Common.PUBLISH_ID_HIDDEN:
+					default:
+						strFileName = cContent.m_strFileName;
+						break;
 					}
 					vFileList.add(getServletContext().getRealPath(strFileName));
 				}
@@ -63,7 +75,7 @@ class UploadFileTweetC {
 			if(cContent == null) return nRtn;
 
 			// 2枚目以降取得
-			if(cContent.m_nSafeFilter<Common.SAFE_FILTER_R15 && cContent.m_nFileNum>1) {
+			if(cContent.m_nPublishId==Common.PUBLISH_ID_ALL && cContent.m_nSafeFilter<Common.SAFE_FILTER_R15 && cContent.m_nFileNum>1) {
 				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 3";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nContentId);

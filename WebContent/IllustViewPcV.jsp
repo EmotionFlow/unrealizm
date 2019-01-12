@@ -16,30 +16,59 @@ if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request
 	return;
 }
 
+String strFileUrl = "";
+switch(cResults.m_cContent.m_nPublishId) {
+case Common.PUBLISH_ID_R15:
+case Common.PUBLISH_ID_R18:
+case Common.PUBLISH_ID_R18G:
+case Common.PUBLISH_ID_PASS:
+case Common.PUBLISH_ID_LOGIN:
+case Common.PUBLISH_ID_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOW:
+case Common.PUBLISH_ID_T_EACH:
+case Common.PUBLISH_ID_T_LIST:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
+	break;
+case Common.PUBLISH_ID_ALL:
+case Common.PUBLISH_ID_HIDDEN:
+default:
+	strFileUrl = cResults.m_cContent.m_strFileName;
+	break;
+}
+
 String strTitle = "";
 switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_PASS:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
 	break;
 case Common.PUBLISH_ID_LOGIN:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Login");
 	break;
 case Common.PUBLISH_ID_FOLLOWER:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Follower");
 	break;
 case Common.PUBLISH_ID_T_FOLLOWER:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follower");
 	break;
 case Common.PUBLISH_ID_T_FOLLOW:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follow");
 	break;
 case Common.PUBLISH_ID_T_EACH:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Each");
 	break;
 case Common.PUBLISH_ID_T_LIST:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_List");
 	break;
 case Common.PUBLISH_ID_HIDDEN:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Hidden");
 	break;
 case Common.PUBLISH_ID_ALL:
@@ -57,11 +86,9 @@ default:
 	break;
 }
 strTitle = Util.subStrNum(strTitle, 25) + " | " + _TEX.T("THeader.Title");
-
 String strDesc = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"] " +  Util.deleteCrLf(cResults.m_cContent.m_strDescription) + " - " + cResults.m_cContent.m_cUser.m_strNickName;
 if(strDesc.length()>100) strDesc = strDesc.substring(0, 100);
 String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
-String strImageUrl = (cResults.m_cContent.m_nSafeFilter<2)?Common.GetPoipikuUrl(cResults.m_cContent.m_strFileName)+"_640.jpg":Common.GetPoipikuUrl("/img/warning.png");
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
@@ -77,12 +104,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:image" content="<%=strImageUrl%>" />
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
 		<meta property="og:type" content="article" />
 		<meta property="og:url" content="<%=strUrl%>" />
 		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta property="og:image" content="<%=strImageUrl%>" />
+		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
@@ -91,7 +118,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "http:<%=strImageUrl%>"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "http:<%=Common.GetPoipikuUrl(strFileUrl)%>"}
 			]
 		}
 		</script>

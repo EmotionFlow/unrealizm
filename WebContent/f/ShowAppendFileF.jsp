@@ -117,7 +117,7 @@ if(nRtn<ShowAppendFileC.OK) {
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_LOGIN"));
 		break;
 	case ShowAppendFileC.ERR_FOLLOWER:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_FOLLOWER"));
+		strHtml.append((checkLogin.m_bLogin)?_TEX.T("ShowAppendFileC.ERR_FOLLOWER"):_TEX.T("ShowAppendFileC.ERR_FOLLOWER.NeedLogin"));
 		break;
 	case ShowAppendFileC.ERR_T_FOLLOWER:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOWER"));
