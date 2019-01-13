@@ -2,12 +2,23 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 %>
 <!DOCTYPE html>
 <html style="height: 100%;">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@pipajp" />
+		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%>" />
+		<meta name="twitter:description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="https://poipiku.com/StartPoipikuPcV.jsp" />
+		<meta property="og:title" content="<%=_TEX.T("THeader.Title")%>" />
+		<meta property="og:description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
+		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
