@@ -266,7 +266,7 @@ public class Util {
 				"BecomeBot",
 				"bingbot",
 				"DotBot",
-				"Googlebot",
+				//"Googlebot",
 				"Hatena",
 				"heritr",
 				"ICC-Crawler",
