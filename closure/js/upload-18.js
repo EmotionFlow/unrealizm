@@ -635,6 +635,10 @@ function UploadFile(user_id) {
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
+	if(nPublishId == 99) {
+		nRecent = 2;
+		nTweet = 0;
+	}
 	startMsg();
 	console.log("start upload");
 
@@ -743,7 +747,6 @@ function UploadPaste(user_id) {
 	console.log(nImageNum);
 	if(nImageNum<=0) return;
 
-	startMsg();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	strDescription = strDescription.substr(0 , 200);
@@ -757,6 +760,11 @@ function UploadPaste(user_id) {
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
+	if(nPublishId == 99) {
+		nRecent = 2;
+		nTweet = 0;
+	}
+	startMsg();
 
 	$.ajaxSingle({
 		"type": "post",

@@ -12,7 +12,7 @@ if(!cCheckLogin.m_bLogin) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<script src="/js/upload-17.js" type="text/javascript"></script>
+		<script src="/js/upload-18.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
