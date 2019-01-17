@@ -40,35 +40,27 @@ default:
 String strTitle = "";
 switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_PASS:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
 	break;
 case Common.PUBLISH_ID_LOGIN:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Login");
 	break;
 case Common.PUBLISH_ID_FOLLOWER:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Follower");
 	break;
 case Common.PUBLISH_ID_T_FOLLOWER:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follower");
 	break;
 case Common.PUBLISH_ID_T_FOLLOW:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follow");
 	break;
 case Common.PUBLISH_ID_T_EACH:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Each");
 	break;
 case Common.PUBLISH_ID_T_LIST:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_List");
 	break;
 case Common.PUBLISH_ID_HIDDEN:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.Hidden");
 	break;
 case Common.PUBLISH_ID_ALL:
@@ -104,12 +96,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg" />
 		<meta property="og:type" content="article" />
 		<meta property="og:url" content="<%=strUrl%>" />
 		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
@@ -118,7 +110,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "http:<%=Common.GetPoipikuUrl(strFileUrl)%>"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg"}
 			]
 		}
 		</script>

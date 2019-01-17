@@ -77,6 +77,7 @@ class ShowAppendFileC {
 				}
 				if(!bFollow) return ERR_FOLLOWER;
 			}
+			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN && m_cContent.m_nUserId!=checkLogin.m_nUserId) return ERR_HIDDEN;
 
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";

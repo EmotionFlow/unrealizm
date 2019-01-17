@@ -19,20 +19,31 @@ if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
+String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
+String strTitle = _TEX.T("THeader.Title") + " - " + Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName));
+String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
+String strFileUrl = cResults.m_cUser.m_strFileName;
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<meta name="description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%> - <%=_TEX.T("THeader.Title")%>" />
+		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
-		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName))%>" />
-		<meta name="twitter:description" content="<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%> - <%=_TEX.T("THeader.Title")%>" />
-		<%if(!cResults.m_cUser.m_strFileName.isEmpty()) {%>
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(cResults.m_cUser.m_strFileName)%>" />
+		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(!strFileUrl.isEmpty()) {%>
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
 		<%}%>
-		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName))%></title>
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="<%=strUrl%>" />
+		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(!strFileUrl.isEmpty()) {%>
+		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<%}%>
+		<title><%=Util.toDescString(strTitle)%></title>
 
 		<script type="text/javascript">
 		$(function(){
