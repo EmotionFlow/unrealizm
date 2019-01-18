@@ -122,9 +122,10 @@ public class MyHomeTagC {
 				cState.close();cState=null;
 			}
 
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? AND ((content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt IN(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0) AND tag_type=1) %s) %s) %s ORDER BY content_id DESC LIMIT ?", strCondMute, strCondSearch, strCondStart);
+			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id<>2 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? AND ((content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt IN(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0) AND tag_type=1) %s) %s) %s ORDER BY content_id DESC LIMIT ?", strCondMute, strCondSearch, strCondStart);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
+			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
@@ -146,7 +147,7 @@ public class MyHomeTagC {
 				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
-				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
+				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);
 			}
