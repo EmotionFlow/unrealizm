@@ -66,8 +66,7 @@ public class PopularIllustListC {
 
 			// POPULAR
 			if(!bContentOnly) {
-				//strSql = String.format("SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s", strCond);
-				strSql = "SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
+				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id WHERE rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND open_id<>2 AND safe_filter<=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
@@ -86,8 +85,8 @@ public class PopularIllustListC {
 				cState.close();cState=null;
 			}
 
-			//strSql = String.format("SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
-			strSql = "SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			//strSql = "SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.* FROM contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id WHERE rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND open_id<>2 AND safe_filter<=? ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
