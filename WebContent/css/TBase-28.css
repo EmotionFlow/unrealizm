@@ -370,6 +370,21 @@ form, button {
 	background-color: #eee;
 }
 
+#DispMsg {
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 20px 5px;
+	background: rgba(0, 0, 0, 0.8);
+	display: none;
+	color: #fff;
+	box-sizing: border-box;
+	z-index: 9999;
+	text-align: center;
+}
+
 
 .PageBar {
 	display: block;
