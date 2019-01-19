@@ -38,41 +38,53 @@ public class NewArrivalC {
 		try {
 			int BASE = 1;
 			boolean USER = false;
-			boolean CONTENT = false;
+			int CONTENT = 0;
 			int nNowHour = (new java.util.Date()).getHours();
 			switch(nNowHour) {
 			case 0:
-				BASE = 9;
+				BASE = 10;
 				USER = true;
-				CONTENT = true;
+				CONTENT = 2;
 				break;
 			case 1:
-				BASE = 7;
-				//USER = true;
-				CONTENT = true;
+				BASE = 8;
+				USER = false;
+				CONTENT = 2;
 				break;
 			case 2:
 				BASE = 4;
+				USER = false;
+				CONTENT = 1;
 				break;
 			case 3:
 				BASE = 3;
+				USER = false;
+				CONTENT = 1;
 				break;
 			case 4:
 				BASE = 2;
+				USER = false;
+				CONTENT = 0;
 				break;
 			case 5:
 			case 6:
 				BASE = 1;
+				USER = false;
+				CONTENT = 0;
 				break;
 			case 7:
 			case 8:
 				BASE = 2;
+				USER = false;
+				CONTENT = 0;
 				break;
 			case 9:
 			case 10:
 			case 11:
 			case 12:
 				BASE = 3;
+				USER = false;
+				CONTENT = 0;
 				break;
 			case 13:
 			case 14:
@@ -80,34 +92,43 @@ public class NewArrivalC {
 			case 16:
 			case 17:
 				BASE = 4;
+				USER = false;
+				CONTENT = 1;
 				break;
 			case 18:
 				BASE = 5;
+				USER = false;
+				CONTENT = 1;
 				break;
 			case 19:
 				BASE = 6;
-				CONTENT = true;
+				USER = false;
+				CONTENT = 1;
 				break;
 			case 20:
 				BASE = 7;
-				CONTENT = true;
+				USER = false;
+				CONTENT = 1;
 				break;
 			case 21:
 				BASE = 8;
-				CONTENT = true;
+				USER = false;
+				CONTENT = 1;
 				break;
 			case 22:
-				BASE = 9;
-				USER = true;
-				CONTENT = true;
-				break;
-			case 23:
 				BASE = 10;
 				USER = true;
-				CONTENT = true;
+				CONTENT = 2;
+				break;
+			case 23:
+				BASE = 12;
+				USER = true;
+				CONTENT = 3;
 				break;
 			default:
 				BASE = 1;
+				USER = false;
+				CONTENT = 0;
 				break;
 			}
 
@@ -115,42 +136,44 @@ public class NewArrivalC {
 			cConn = dsPostgres.getConnection();
 
 			if(USER) {
+				int user_id = 0;
 				strSql = "SELECT nextval('users_0000_user_id_seq')";
 				cState = cConn.prepareStatement(strSql);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
-					int user_id = cResSet.getInt(1);
-					Log.d("user_id:"+user_id);
+					user_id = cResSet.getInt(1);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
+				Log.d("user_id:"+user_id);
 			}
-			if(CONTENT) {
-				for(int nCnt=0; nCnt<2; nCnt++) {
+			if(CONTENT>0) {
+				int content_id = 0;
+				int append_id = 0;
+				for(int nCnt=0; nCnt<CONTENT; nCnt++) {
 					strSql = "SELECT nextval('contents_0000_content_id_seq')";
 					cState = cConn.prepareStatement(strSql);
 					cResSet = cState.executeQuery();
-					while (cResSet.next()) {
-						int content_id = cResSet.getInt(1);
-						Log.d("content_id:"+content_id);
+					if (cResSet.next()) {
+						content_id = cResSet.getInt(1);
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
-				}
 
-				for(int nCnt=0; nCnt<3; nCnt++) {
 					strSql = "SELECT nextval('contents_appends_0000_append_id_seq')";
 					cState = cConn.prepareStatement(strSql);
 					cResSet = cState.executeQuery();
-					while (cResSet.next()) {
-						int append_id = cResSet.getInt(1);
-						Log.d("append_id:"+append_id);
+					cResSet.close();cResSet=null;
+					cResSet = cState.executeQuery();	// 繰り返し
+					if (cResSet.next()) {
+						append_id = cResSet.getInt(1);
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 				}
+				Log.d("content_id:"+content_id);
+				Log.d("append_id:"+append_id);
 			}
-
 
 			strSql = "SELECT * FROM (SELECT contents_0000.* FROM contents_0000 inner join users_0000 on contents_0000.user_id=users_0000.user_id WHERE ng_reaction=0 AND open_id=0 AND publish_id<4 AND file_complex>70000 ORDER BY content_id DESC LIMIT 300) as T1 ORDER BY random() LIMIT ?";
 			cState = cConn.prepareStatement(strSql);

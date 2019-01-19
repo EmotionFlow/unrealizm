@@ -51,6 +51,12 @@ class UpdateBookmarkC {
 				cState.executeUpdate();
 				cState.close();cState=null;
 				nRtn = CContent.BOOKMARK_BOOKMARKING;
+				strSql ="UPDATE contents_0000 SET bookmark_num=bookmark_num+1 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cState.executeUpdate();
+				cState.close();cState=null;
+
 			} else {
 				strSql ="DELETE FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				cState = cConn.prepareStatement(strSql);
@@ -59,6 +65,11 @@ class UpdateBookmarkC {
 				cState.executeUpdate();
 				cState.close();cState=null;
 				nRtn = CContent.BOOKMARK_NONE;
+				strSql ="UPDATE contents_0000 SET bookmark_num=bookmark_num-1 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cState.executeUpdate();
+				cState.close();cState=null;
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
