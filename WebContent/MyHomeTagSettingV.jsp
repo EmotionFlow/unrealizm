@@ -21,7 +21,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper ItemList">
+		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center; background-color: #fff;">
@@ -41,6 +41,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				<%}%>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

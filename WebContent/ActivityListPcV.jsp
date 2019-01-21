@@ -54,7 +54,7 @@ cResults.GetResults(cParam);
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper ItemList">
+		<article class="Wrapper ItemList">
 
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
@@ -106,7 +106,7 @@ cResults.GetResults(cParam);
 					<%}%>
 				</div>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

@@ -73,7 +73,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_FOLLOW){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_FOLLOW%>)"><%=_TEX.T("IllustListV.Follow")%></a>
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_BLOCK){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_BLOCK%>)"><%=_TEX.T("IllustListV.Block")%></a>
@@ -88,7 +88,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

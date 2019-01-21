@@ -55,7 +55,7 @@ if(strRequestUri != null) {
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem" style="margin-top: 50px;">
 					<div class="SettingListTitle"><%=_TEX.T("TopV.ContentsTitle.Login")%></div>
@@ -71,6 +71,6 @@ if(strRequestUri != null) {
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

@@ -385,7 +385,7 @@ if(cResults.m_bUpdate) {
 		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
@@ -670,7 +670,7 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

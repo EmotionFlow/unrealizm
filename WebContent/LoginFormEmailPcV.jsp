@@ -96,7 +96,7 @@ if(strRequestUri != null) {
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<div id="DispMsg"></div>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div class="SettingListItem">
 
@@ -160,7 +160,7 @@ if(strRequestUri != null) {
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 
 		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>

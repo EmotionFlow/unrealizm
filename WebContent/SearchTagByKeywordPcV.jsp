@@ -5,6 +5,12 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 SearchTagByKeywordC cResults = new SearchTagByKeywordC();
 cResults.getParam(request);
+String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
+if(strKeywordHan.matches("^[0-9]+$")) {
+	String strUrl = "/";
+	response.sendRedirect("/" + strKeywordHan + "/");
+	return;
+}
 boolean bRtn = cResults.getResults(cCheckLogin);
 g_strSearchWord = cResults.m_strKeyword;
 %>
@@ -39,18 +45,17 @@ g_strSearchWord = cResults.m_strKeyword;
 	</head>
 
 	<body>
-		<div class="TabMenuWrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
-				<a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
-				<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
-			</div>
-		</div>
-
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper ItemList">
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+			</ul>
+		</nav>
 
+		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CTag cTag = cResults.m_vContentList.get(nCnt);%>
@@ -64,7 +69,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/SearchTagByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

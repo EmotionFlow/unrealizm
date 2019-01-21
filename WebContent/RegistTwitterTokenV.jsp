@@ -120,7 +120,7 @@ response.sendRedirect("/MyEditSettingV.jsp#TwitterSetting");
 	</head>
 
 	<body>
-		<div class="Wrapper" style="text-align: center;">
+		<article class="Wrapper" style="text-align: center;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
 			<a href="/MyEditSettingV.jsp#TwitterSetting">
 			<%if(bResult) {%>
@@ -129,6 +129,6 @@ response.sendRedirect("/MyEditSettingV.jsp#TwitterSetting");
 			<%=_TEX.T("RegistUserV.UpdateError")%>
 			<%}%>
 			</a>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

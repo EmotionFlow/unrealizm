@@ -26,7 +26,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<h1 class="AnalogicoDesc Title">
 				放置絵ポイポイ<br />
 				練習ポイポイ<br />
@@ -39,6 +39,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 					<img class="Logo" src="/img/pc_top_title.jpg" alt="ポイピク">
 				</a>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

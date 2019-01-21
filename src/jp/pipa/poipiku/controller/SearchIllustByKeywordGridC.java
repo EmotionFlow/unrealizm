@@ -31,6 +31,7 @@ public class SearchIllustByKeywordGridC {
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 	public boolean m_bFollowing = false;
+	public String m_strRepFileName = "";
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -129,6 +130,9 @@ public class SearchIllustByKeywordGridC {
 				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_vContentList.add(cContent);
+				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
+					m_strRepFileName = cContent.m_strFileName;
+				}
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

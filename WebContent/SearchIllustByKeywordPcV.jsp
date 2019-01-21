@@ -11,17 +11,43 @@ if(!bSmartPhone) {
 
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
+String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
+if(strKeywordHan.matches("^[0-9]+$")) {
+	String strUrl = "/";
+	response.sendRedirect("/" + strKeywordHan + "/");
+	return;
+}
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 g_strSearchWord = cResults.m_strKeyword;
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
+String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKeyword;
+String strFileUrl = cResults.m_strRepFileName;
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByKeyword.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum))%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByKeyword.Title"), cResults.m_strKeyword))%></title>
+		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@pipajp" />
+		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(!strFileUrl.isEmpty()) {%>
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<%}%>
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="<%=strUrl%>" />
+		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(!strFileUrl.isEmpty()) {%>
+		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<%}%>
+		<link rel="canonical" href="<%=strUrl%>" />
+		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
+		<title><%=Util.toDescString(strTitle)%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -47,19 +73,19 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 	</head>
 
 	<body>
-		<div class="TabMenuWrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem Selected" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a>
-				<a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a>
-				<a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a>
-			</div>
-		</div>
-
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper ThumbList">
-			<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
-				<i class="fas fa-search"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%>
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem Selected" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+			</ul>
+		</nav>
+
+		<article class="Wrapper ThumbList">
+			<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%></h2>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.m_bFollowing) {%>
@@ -67,10 +93,10 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 				<%} else {%>
 				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_SEARCH%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%}%>
-			</div>
+			</header>
 
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%if(!bSmartPhone) {%>
 				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 				<%}%>
@@ -81,12 +107,12 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 
-			<div class="PageBar">
+			<nav class="PageBar">
 				<%=CPageBar.CreatePageBar("/SearchIllustByKeywordPcV.jsp", "&KWD="+strEncodedKeyword, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-			</div>
-		</div>
+			</nav>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

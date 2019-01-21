@@ -23,7 +23,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<style>
 			body {padding-top: 83px !important;}
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0;}
-			.CategoryTitle {display: block; float: left; width: 100%;}
+			.CategoryTitle {display: block; float: left; width: 100%; margin: 0; padding: 0;}
 			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
 
@@ -44,61 +44,44 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="TabMenuWrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
-				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
-				<a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
-				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
-				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="TabMenuItem Selected" href="/CategoryListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Category")%></a>
-				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
-			</div>
-		</div>
-
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a></li>
+				<li><a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a></li>
+				<li><a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a></li>
+				<li><a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a></li>
+				<li><a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/CategoryListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Category")%></a></li>
+				<li><a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a></li>
+				<li><a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
+			</ul>
+		</nav>
 
-		<div class="Wrapper ThumbList">
+		<article class="Wrapper ThumbList">
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeList.size(); nCnt++) {
 				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);
 				int nCategoryId = cResults.m_vContentList.get(nCnt);
 			%>
-			<a class="CategoryListItem" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>">
-				<span class="CategoryTitle">
-					<span class="Category2 C<%=nCategoryId%>">
-						<%=_TEX.T(String.format("Category.C%d", nCategoryId))%>
+			<section class="CategoryListItem">
+				<h2 class="CategoryTitle">
+					<a class="Category2 C<%=nCategoryId%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>">
+						<span class="Keyword"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></span>
 						<span class="More"><%=_TEX.T("TopV.ContentsTitle.More")%></span>
-					</span>
-				</span>
-				<span class="IllustThumbList">
+					</a>
+				</h2>
+				<div class="IllustThumbList" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>">
 					<%for(CContent cContent : m_vContentList) {%>
-					<span class="IllustThumb">
-						<%
-						String strSrc;
-						if(cContent.m_nSafeFilter<2) {
-							strSrc = cContent.m_strFileName;
-						} else if(cContent.m_nSafeFilter<4) {
-							strSrc = "/img/warning.png";
-						} else {
-							strSrc = "/img/R-18.png";
-						}
-						%>
-						<span class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(strSrc)%>_360.jpg')"></span>
-						<span class="IllustInfo">
-							<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
-							<span class="IllustInfoDesc"><%=Common.ToStringHtml(cContent.m_strDescription)%></span>
-						</span>
-					</span>
+					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 					<%}%>
-				</span>
-			</a>
+				</div>
+			</section>
 			<%if((nCnt+1)%5==0) {%>
 			<%@ include file="/inner/TAdMidWide.jsp"%>
 			<%}%>
 			<%}%>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

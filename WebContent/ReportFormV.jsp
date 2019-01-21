@@ -43,7 +43,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem" style="margin-top: 50px;">
 					<div class="SettingListTitle">問題の報告</div>
@@ -59,6 +59,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

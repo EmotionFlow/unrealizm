@@ -22,7 +22,7 @@
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」ガイドライン</div>
@@ -238,6 +238,6 @@
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

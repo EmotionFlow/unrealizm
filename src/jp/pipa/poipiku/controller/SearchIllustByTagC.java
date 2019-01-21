@@ -29,6 +29,7 @@ public class SearchIllustByTagC {
 	public int SELECT_MAX_GALLERY = 36;
 	public int m_nContentsNum = 0;
 	public boolean m_bFollowing = false;
+	public String m_strRepFileName = "";
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -122,6 +123,9 @@ public class SearchIllustByTagC {
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
 				m_vContentList.add(cContent);
+				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
+					m_strRepFileName = cContent.m_strFileName;
+				}
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

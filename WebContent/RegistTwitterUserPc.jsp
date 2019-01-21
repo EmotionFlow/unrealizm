@@ -36,7 +36,7 @@ if(nResult>0) {
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper" style="text-align: center; margin: 150px auto;">
+		<article class="Wrapper" style="text-align: center; margin: 150px auto;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
 			<a href="/MyHomePcV.jsp">
 			<%if(nResult>0) {%>
@@ -45,7 +45,7 @@ if(nResult>0) {
 			<%=_TEX.T("RegistUserV.UpdateError")%>
 			<%}%>
 			</a>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

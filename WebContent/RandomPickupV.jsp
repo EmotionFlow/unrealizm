@@ -59,7 +59,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
@@ -69,7 +69,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

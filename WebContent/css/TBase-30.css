@@ -274,7 +274,7 @@ form, button {
 
 .onoffswitch {
 	position: relative;
-	width: 46px;
+	width: 50px;
 	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -305,9 +305,9 @@ form, button {
 	display: block;
 	float: left;
 	width: 50%;
-	height: 18px;
+	height: 20px;
 	padding: 0;
-	line-height: 18px;
+	line-height: 20px;
 	font-size: 9px;
 	color: white;
 	font-family: Trebuchet, Arial, sans-serif;
@@ -343,13 +343,13 @@ form, button {
 
 .onoffswitch .onoffswitch-switch {
 	display: block;
-	width: 12px;
+	width: 14px;
 	margin: 3px;
 	background: #FFFFFF;
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	right: 26px;
+	right: 28px;
 	border: 1px solid #eee;
 	border-radius: 20px;
 	transition: all 0.3s ease-in 0s;

@@ -47,7 +47,7 @@ boolean bMobile = Util.isSmartPhone(request);
 		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem" style="margin-top: 50px;">
 					<div class="SettingListTitle">問題の報告</div>
@@ -63,7 +63,7 @@ boolean bMobile = Util.isSmartPhone(request);
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

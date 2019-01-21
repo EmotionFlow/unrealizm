@@ -290,4 +290,15 @@ public class Util {
 				"YodaoBot");
 		return vBot.contains(strUuserAgent);
 	}
+
+	public static String toSingle(String strSrc) {
+		String han = "1234567890";
+		String zen = "１２３４５６７８９０";
+		String strDst = strSrc;
+		for(int i=0; i<zen.length(); i++) {
+			strDst = strDst.replace(zen.charAt(i), han.charAt(i));
+		}
+		return strDst;
+	}
+
 }

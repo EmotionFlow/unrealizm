@@ -26,7 +26,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="AnalogicoStart">
 				<a class="BtnBase" href="https://poipiku.com/">
 					<img class="Logo" src="/img/pc_top_title.jpg" alt="ポイピク">
@@ -36,6 +36,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				<div>放置絵ポイポイ 練習ポイポイ 進捗ポイポイ</div>
 				<div>「ポイピク」正式オープン！</div>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

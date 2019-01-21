@@ -385,7 +385,7 @@ if(cResults.m_bUpdate) {
 	<body>
 		<div id="DispMsg"></div>
 
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
@@ -678,6 +678,6 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

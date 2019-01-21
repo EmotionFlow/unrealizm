@@ -36,7 +36,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper ItemList ViewPc">
+		<article class="Wrapper ItemList ViewPc">
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_FOLLOW){%>Selected<%}%>" href="/FollowListPcV.jsp"><%=_TEX.T("IllustListV.Follow")%></a>
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_BLOCK){%>Selected<%}%>" href="/FollowListPcV.jsp?MD=1"><%=_TEX.T("IllustListV.Block")%></a>
@@ -68,7 +68,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/FollowListPcV.jsp", String.format("&MD=%d", cResults.m_nMode), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

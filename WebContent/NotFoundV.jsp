@@ -15,11 +15,11 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 70px 10px;">
 				<h1><%=_TEX.T("NotFound.TitleBar")%></h1>
 				<%=_TEX.T("NotFound.Detail")%>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

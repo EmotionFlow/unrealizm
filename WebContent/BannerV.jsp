@@ -27,23 +27,24 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="AnalogicoStart">
 				<div style="margin: 0 0 5px 0;">
-				放置絵ポイポイ<br />
-				練習ポイポイ<br />
-				らくがきポイポイ<br />
-				進捗ポイポイ<br />
-				<br />
-				<a class="BtnBase" href="https://poipiku.com/">
-					<img class="Logo" src="/img/pc_top_title.jpg" alt="ポイピク">
-				</a>
+					放置絵ポイポイ<br />
+					練習ポイポイ<br />
+					らくがきポイポイ<br />
+					進捗ポイポイ<br />
+					<br />
+					<a class="BtnBase" href="https://poipiku.com/">
+						<img class="Logo" src="/img/pc_top_title.jpg" alt="ポイピク">
+					</a>
+				</div>
 			</div>
 			<div class="AnalogicoDesc Foot" style="margin-top: 10px;">
 				<div style="font-size: 18px;">
 					正式オープン！
 				</div>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

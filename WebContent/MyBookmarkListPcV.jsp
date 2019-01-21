@@ -37,21 +37,21 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="TabMenuWrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a>
-				<a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a>
-				<a class="TabMenuItem Selected" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a>
-				<a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
-				<a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
-				<a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
-			</div>
-		</div>
-
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper ThumbList">
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a></li>
+				<li><a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a></li>
+				<li><a class="TabMenuItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a></li>
+				<li><a class="TabMenuItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a></li>
+				<li><a class="TabMenuItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a></li>
+				<li><a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
+			</ul>
+		</nav>
+
+		<article class="Wrapper ThumbList">
 			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
 				お気に入りは非公開で、追加も削除も相手に伝わりません。思う存分お気に入りに追加してみよう！
@@ -75,7 +75,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/MyBookmarkListPcV.jsp", "&ID="+cCheckLogin.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

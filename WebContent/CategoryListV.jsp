@@ -21,7 +21,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<title>process</title>
 		<style>
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0;}
-			.CategoryTitle {display: block; float: left; width: 100%;}
+			.CategoryTitle {display: block; float: left; width: 100%; padding: 0; margin: 0;}
 			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
 
@@ -33,46 +33,27 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper">
-
-
+		<article class="Wrapper">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeList.size(); nCnt++) {
 					ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeList.get(nCnt);
 					int nCategoryId = cResults.m_vContentList.get(nCnt);
 				%>
-				<a class="CategoryListItem" href="/NewArrivalV.jsp?CD=<%=nCategoryId%>">
-					<span class="CategoryTitle">
-						<span class="Category2 C<%=nCategoryId%>">
-							<%=_TEX.T(String.format("Category.C%d", nCategoryId))%>
+				<section class="CategoryListItem">
+					<h2 class="CategoryTitle">
+						<a class="Category2 C<%=nCategoryId%>" href="/NewArrivalV.jsp?CD=<%=nCategoryId%>">
+							<span class="Keyword"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></span>
 							<span class="More"><%=_TEX.T("TopV.ContentsTitle.More")%></span>
-						</span>
-					</span>
-					<span class="IllustThumbList">
+						</a>
+					</h2>
+					<div class="IllustThumbList">
 						<%for(CContent cContent : m_vContentList) {%>
-						<span class="IllustThumb">
-						<%
-						String strSrc;
-						if(cContent.m_nSafeFilter<2) {
-							strSrc = cContent.m_strFileName;
-						} else if(cContent.m_nSafeFilter<4) {
-							strSrc = "/img/warning.png";
-						} else {
-							strSrc = "/img/R-18.png";
-						}
-						%>
-						<span class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(strSrc)%>_360.jpg')"></span>
-							<span class="IllustInfo">
-								<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
-								<span class="IllustInfoDesc"><%=Common.ToStringHtml(cContent.m_strDescription)%></span>
-							</span>
-						</span>
+						<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
 						<%}%>
-					</span>
-				</a>
+					</div>
+				</section>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

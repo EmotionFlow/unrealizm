@@ -11,6 +11,12 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
+String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
+if(strKeywordHan.matches("^[0-9]+$")) {
+	String strUrl = "/";
+	response.sendRedirect("/IllustListV.jsp?ID=" + strKeywordHan);
+	return;
+}
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
@@ -60,9 +66,9 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper">
-			<div class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
-				<i class="fas fa-search"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%>
+		<article class="Wrapper">
+			<header class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%></h2>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.m_bFollowing) {%>
@@ -70,9 +76,9 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<%} else {%>
 				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_SEARCH%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%}%>
-			</div>
+			</header>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), _TEX)%>
@@ -80,8 +86,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
-
-		</div>
+			</section>
+		</article>
 	</body>
 </html>

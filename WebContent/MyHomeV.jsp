@@ -80,7 +80,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<%if(Util.needUpdate(cResults.n_nVersion)) {%>
 			<div class="UpdateInfo">
 				<div class="UpdateInfoMsg"><%=_TEX.T("UpdateInfo.Msg")%></div>
@@ -102,7 +102,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

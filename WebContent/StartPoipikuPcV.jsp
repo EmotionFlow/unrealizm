@@ -70,7 +70,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="AnalogicoInfo" style="display: block;">
 				<div class="AnalogicoDesc Title">
 					<div style="margin : 0;">
@@ -94,11 +94,9 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 				</div>
 			</div>
-		</div>
+		</article>
 
-
-
-		<div class="Wrapper ThumbList">
+		<article class="Wrapper ThumbList">
 			<div class="PoipikuInfo">
 				<div class="PoipikuDesc">
 					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS01.png" />
@@ -159,8 +157,9 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="Wrapper">
+		</article>
+
+		<article class="Wrapper">
 			<div class="AnalogicoInfo" style="display: block;">
 				<div class="AnalogicoDesc Title">
 						さあ、はじめよう！
@@ -180,7 +179,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 				</div>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>

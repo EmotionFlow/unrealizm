@@ -57,7 +57,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<%@ include file="/inner/TAdTop.jsp"%>
 
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 130px 10px;">
@@ -68,6 +68,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			</div>
 
 			<%@ include file="/inner/TAdBottom.jsp"%>
-		</div>
+		</article>
 	</body>
 </html>

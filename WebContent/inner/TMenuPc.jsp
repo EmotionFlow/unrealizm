@@ -5,17 +5,21 @@
 	<div id="HeaderSlider"></div>
 	<div class="HeaderWrapper">
 		<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
-			<a id="HeaderLink" class="HeaderLink" href="/">
-				<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
-			</a>
+			<h1 class="HeaderTitle">
+				<a id="HeaderLink" class="HeaderLink" href="/">
+					<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
+				</a>
+			</h1>
 			<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
 		</div>
 		<%if(!Util.isSmartPhone(request)) {%>
-		<nav class="GlobalLink">
-			<a id="MenuRecent" class="LinkItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a>
-			<a id="MenuHotTag" class="LinkItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-			<a id="MenuRandom" class="LinkItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
-			<a id="MenuHotIllust" class="LinkItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a>
+		<nav class="GlobalLinkWrapper">
+			<ul class="GlobalLink">
+				<li><a id="MenuRecent" class="LinkItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a></li>
+				<li><a id="MenuHotTag" class="LinkItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a></li>
+				<li><a id="MenuRandom" class="LinkItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a></li>
+				<li><a id="MenuHotIllust" class="LinkItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
+			</ul>
 		</nav>
 		<%}%>
 		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
@@ -136,9 +140,9 @@
 
 <%if(!cCheckLogin.m_bLogin) {%>
 <div id="AnalogicoInfo" class="AnalogicoInfo Float">
-	<h1 class="AnalogicoInfoTitle">
+	<h2 class="AnalogicoInfoTitle">
 		<%=_TEX.T("THeader.Title")%>
-	</h1>
+	</h2>
 	<h2 class="AnalogicoInfoSubTitle">
 		<%=_TEX.T("THeader.Title.Desc")%>
 	</h2>

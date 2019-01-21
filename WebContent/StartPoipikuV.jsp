@@ -38,9 +38,8 @@ if(strRequestUri != null) {
 	</style>
 
 	<body style="color: #fff; background: #5bd;">
-		<div id="DispMsg"></div>
-		<div class="Wrapper">
 
+		<article class="Wrapper">
 			<div id="InfoMsg" style="float: left; width: 100%; padding: 60px 0 0 0; text-align: center;">
 				<div class="AnalogicoDesc Title">
 					<%=_TEX.T("Poipiku.Info.Message")%>
@@ -69,6 +68,6 @@ if(strRequestUri != null) {
 					<a style="text-decoration: underline; color: #fff;" onclick="ChLang('ja')" href="javascript:void(0);">日本語</a>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

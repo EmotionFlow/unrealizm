@@ -91,7 +91,7 @@ if(strRequestUri != null) {
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div id="RegistForm" class="SettingListItem">
 					<div class="RegistItem">
@@ -141,6 +141,6 @@ if(strRequestUri != null) {
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

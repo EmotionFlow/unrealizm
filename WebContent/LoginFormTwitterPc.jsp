@@ -43,12 +43,12 @@ if(!authUrl.isEmpty()) {
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper" style="text-align: center;">
+		<article class="Wrapper" style="text-align: center;">
 			<p>
 				Twitter is not working.<br />
 				Wait for a moment.
 			</p>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

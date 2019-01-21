@@ -181,7 +181,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 		<%{%>
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
@@ -266,6 +266,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					</span>
 				</div>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

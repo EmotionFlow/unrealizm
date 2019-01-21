@@ -224,7 +224,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper ThumbList">
+		<article class="Wrapper ThumbList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(CContentComlex cContent : cResults.m_vContentList) {%>
 				<a style="float: left; width: 192px;" href="/f/SendEmojiF.jsp?IID=<%=cContent.m_nContentId%>&EMJ=<%=URLEncoder.encode(cContent.m_strEmoji, "UTF-8")%>&UID=0">
@@ -233,6 +233,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				</a>
 				<%}%>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

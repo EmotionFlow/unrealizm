@@ -55,7 +55,7 @@
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, -1)"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
@@ -64,7 +64,6 @@
 			</div>
 
 			<div id="IllustThumbList" class="IllustThumbList"></div>
-
-		</div>
+		</article>
 	</body>
 </html>

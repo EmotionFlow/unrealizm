@@ -77,7 +77,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nCategoryId<0){%> Selected<%}%>" onclick="changeCategory(this, -1)"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
@@ -94,7 +94,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

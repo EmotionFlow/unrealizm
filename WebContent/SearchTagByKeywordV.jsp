@@ -10,6 +10,12 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 
 SearchTagByKeywordC cResults = new SearchTagByKeywordC();
 cResults.getParam(request);
+String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
+if(strKeywordHan.matches("^[0-9]+$")) {
+	String strUrl = "/";
+	response.sendRedirect("/IllustListV.jsp?ID=" + strKeywordHan);
+	return;
+}
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
@@ -59,7 +65,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 
 			<div id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
@@ -70,7 +76,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

@@ -56,7 +56,7 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper" style="overflow: scroll; width: 100%; height: 100%;">
+		<article class="Wrapper" style="overflow: scroll; width: 100%; height: 100%;">
 			<table class="IllustDetail">
 			<tr>
 			<td>
@@ -81,7 +81,7 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 			</td>
 			</tr>
 			</table>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

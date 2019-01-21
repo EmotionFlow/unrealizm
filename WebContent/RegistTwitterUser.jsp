@@ -28,7 +28,7 @@ int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TE
 	</head>
 
 	<body>
-		<div class="Wrapper" style="text-align: center;">
+		<article class="Wrapper" style="text-align: center;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
 			<a href="/MyHomeV.jsp">
 			<%if(nResult>0) {%>
@@ -37,6 +37,6 @@ int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TE
 			<%=_TEX.T("RegistUserV.UpdateError")%>
 			<%}%>
 			</a>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

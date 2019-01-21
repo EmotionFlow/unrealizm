@@ -15,7 +15,7 @@ int nRtn = UserAuthUtil.activateEmail(request, response);
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("ActivateEmailV.Title")%></div>
@@ -28,7 +28,7 @@ int nRtn = UserAuthUtil.activateEmail(request, response);
 					</div>
 				</div>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

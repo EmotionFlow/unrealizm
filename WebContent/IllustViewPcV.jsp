@@ -260,7 +260,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<%{%>
-		<div class="Wrapper" style="width: 100%;">
+		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
@@ -309,10 +309,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					</a>
 				</span>
 			</div>
-		</div>
+		</article>
 		<%}%>
 
-		<div class="Wrapper ViewPc">
+		<article class="Wrapper ViewPc">
 			<div id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 			</div>
@@ -350,10 +350,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				</div>
 			</div>
 			<%}%>
-		</div>
+		</article>
 
 		<%if(bSmartPhone) {%>
-		<div class="UserInfo">
+		<section class="UserInfo">
 			<div class="UserInfoBgImg"></div>
 			<div class="UserInfoBg"></div>
 			<div class="UserInfoUser">
@@ -392,7 +392,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%}%>
 				</span>
 			</div>
-		</div>
+		</article>
 		<%}%>
 
 		<%@ include file="/inner/TFooter.jsp"%>

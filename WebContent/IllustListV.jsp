@@ -151,7 +151,7 @@ if(!cResults.getResults(cCheckLogin)) {
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
@@ -221,7 +221,6 @@ if(!cResults.getResults(cCheckLogin)) {
 					<%//}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

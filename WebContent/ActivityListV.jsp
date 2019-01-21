@@ -28,7 +28,7 @@ cResults.GetResults(cParam);
 	</head>
 
 	<body>
-		<div class="Wrapper">
+		<article class="Wrapper">
 
 			<%if(cResults.m_vComment.size()<=0) {%>
 			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
@@ -80,6 +80,6 @@ cResults.GetResults(cParam);
 					<%}%>
 				</div>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

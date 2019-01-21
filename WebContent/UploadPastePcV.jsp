@@ -57,18 +57,16 @@ if(!cCheckLogin.m_bLogin) {
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
-
-		<div class="TabMenuWrapper">
-			<div class="TabMenu">
-				<a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a>
-				<a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a>
-			</div>
-		</div>
-
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper">
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
+				<li><a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
+			</ul>
+		</nav>
+
+		<article class="Wrapper">
 			<div class="UploadFile">
 				<div class="TimeLineIllustCmd">
 					<div id="PasteZone" class="PasteZone"></div>
@@ -149,7 +147,7 @@ if(!cCheckLogin.m_bLogin) {
 					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				</div>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>

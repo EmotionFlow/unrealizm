@@ -20,7 +20,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<title>HOT tag</title>
 		<style>
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0 0 20px 0;}
-			.CategoryTitle {display: block; float: left; width: 100%;}
+			.CategoryTitle {display: block; float: left; width: 100%; padding: 0; margin: 0;}
 			.CategoryTitle .Category2 {font-size: 18px; padding: 10px 5px 5px 5px; display: block; font-weight: bold; color: #5bd;}
 			.CategoryTitle .Category2 .More {display: block; float: right; font-size: 13px; font-weight: normal; color: #5bd;}
 
@@ -32,42 +32,24 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	</head>
 
 	<body>
-		<div class="Wrapper">
-
-
+		<article class="Wrapper">
 			<div class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 					ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
 					String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
-				<a class="CategoryListItem" href="/SearchIllustByTagV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
-					<span class="CategoryTitle">
-						<span class="Category2">
-							<i class="fas fa-hashtag"></i> <%=strKeyWord%>
+				<section class="CategoryListItem">
+					<h2 class="CategoryTitle">
+						<a class="Category2" href="/SearchIllustByTagV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
+							<span class="Keyword">#<%=strKeyWord%></span>
 							<span class="More"><%=_TEX.T("TopV.ContentsTitle.More")%></span>
-						</span>
-					</span>
+						</a>
+					</h2>
 					<span class="IllustThumbList">
 						<%for(CContent cContent : m_vContentList) {%>
-						<span class="IllustThumb">
-							<%
-							String strSrc;
-							if(cContent.m_nSafeFilter<2) {
-								strSrc = cContent.m_strFileName;
-							} else if(cContent.m_nSafeFilter<4) {
-								strSrc = "/img/warning.png";
-							} else {
-								strSrc = "/img/R-18.png";
-							}
-							%>
-							<span class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(strSrc)%>_360.jpg')"></span>
-							<span class="IllustInfo">
-								<span class="Category C<%=cContent.m_nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))%></span>
-								<span class="IllustInfoDesc"><%=Common.ToStringHtml(cContent.m_strDescription)%></span>
-							</span>
-						</span>
+						<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
 						<%}%>
 					</span>
-				</a>
+				</section>
 				<%//if((nCnt+1)%10==0) {%>
 				<%//@ include file="/inner/TAdMidWide.jsp"%>
 				<%//}%>
@@ -83,7 +65,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

@@ -16,7 +16,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」利用規約</div>
@@ -299,7 +299,7 @@ pipa.jpは、本サービスの利用および本規約に起因する損害に�
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 
 		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>

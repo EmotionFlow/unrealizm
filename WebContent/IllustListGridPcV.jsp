@@ -227,7 +227,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper" style="width: 100%;">
+		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
@@ -281,9 +281,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%}%>
 				</span>
 			</div>
-		</div>
+		</article>
 
-		<div class="Wrapper GridList">
+		<article class="Wrapper GridList">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
@@ -306,7 +306,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%//}%>
 				<%}%>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooterBase.jsp"%>
 		<%//@ include file="/inner/TFooter.jsp"%>

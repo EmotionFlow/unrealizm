@@ -51,7 +51,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
-		<div class="Wrapper ThumbList">
+		<article class="Wrapper ThumbList">
 			<div class="PoipikuInfo">
 				<div class="PoipikuDesc">
 					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS01.png" />
@@ -114,6 +114,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 					</div>
 				</div>
 			</div>
-		</div>
+		</article>
 	</body>
 </html>

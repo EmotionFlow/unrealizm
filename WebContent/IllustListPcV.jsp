@@ -141,7 +141,7 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 
 
 
-		<div class="Wrapper" style="width: 100%;">
+		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<div class="UserInfoUser">
@@ -195,9 +195,9 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 					<%}%>
 				</span>
 			</div>
-		</div>
+		</article>
 
-		<div class="Wrapper ThumbList">
+		<article class="Wrapper ThumbList">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
@@ -223,7 +223,7 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 			<div class="PageBar">
 				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</div>
-		</div>
+		</article>
 
 		<%@ include file="/inner/TFooterBase.jsp"%>
 		<%//@ include file="/inner/TFooter.jsp"%>

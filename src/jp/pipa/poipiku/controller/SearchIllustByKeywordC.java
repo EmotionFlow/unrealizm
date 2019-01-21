@@ -29,6 +29,7 @@ public class SearchIllustByKeywordC {
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 	public boolean m_bFollowing = false;
+	public String m_strRepFileName = "";
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -121,6 +122,9 @@ public class SearchIllustByKeywordC {
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
 				m_vContentList.add(cContent);
+				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
+					m_strRepFileName = cContent.m_strFileName;
+				}
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

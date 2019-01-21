@@ -70,7 +70,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper ItemList">
+		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
 					<a style="color: #5bd;" href="/MyHomeTagSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
@@ -89,7 +89,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%}%>
 				<%}%>
 			</div>
-
-		</div>
+		</article>
 	</body>
 </html>

@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div id="DispMsg"></div>
-		<div class="Wrapper">
+		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」プライバシーポリシー</div>
@@ -66,6 +66,6 @@ pipa.jpがサービスを提供するために必要な範囲でのみユーザ�
 					</div>
 				</div>
 			</div>
-		</div><!--Wrapper-->
+		</article><!--Wrapper-->
 	</body>
 </html>

@@ -8,14 +8,34 @@ SearchIllustByTagGridC cResults = new SearchIllustByTagGridC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
+String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKeyword;
+String strFileUrl = cResults.m_strRepFileName;
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum))%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=Common.ToStringHtml(String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword))%></title>
+		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@pipajp" />
+		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(!strFileUrl.isEmpty()) {%>
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<%}%>
+		<meta property="og:type" content="article" />
+		<meta property="og:url" content="<%=strUrl%>" />
+		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(!strFileUrl.isEmpty()) {%>
+		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<%}%>
+		<link rel="canonical" href="<%=strUrl%>" />
+		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
+		<title><%=Util.toDescString(strTitle)%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -138,9 +158,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<div class="Wrapper GridList">
-			<div class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
-				<i class="fas fa-hashtag"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%>
+		<article class="Wrapper GridList">
+			<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
+				<h2 class="Keyword">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></h2>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.m_bFollowing) {%>
@@ -148,9 +168,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<%} else {%>
 				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%}%>
-			</div>
+			</header>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
@@ -161,8 +181,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
-		</div>
+			</section>
+		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
