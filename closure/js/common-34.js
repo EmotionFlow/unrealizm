@@ -182,6 +182,7 @@ function SendEmoji(nContentId, strEmoji , nUserId) {
 			if(data.result_num>0) {
 				var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
 				$("#ResEmojiAdd_"+nContentId).before($objResEmoji);
+				if(vg)vg.vgrefresh();
 			}
 		}
 	});
@@ -356,6 +357,7 @@ function ShowAllReaction(content_id, elm) {
 				$(elm).hide();
 				$('#IllustItemResList_'+content_id + " .ResEmoji").remove();
 				$("#ResEmojiAdd_"+content_id).before(data.html);
+				if(vg)vg.vgrefresh();
 			} else {
 				$(elm).html(data.html);
 			}

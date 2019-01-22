@@ -154,7 +154,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		<article class="Wrapper">
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
-				<div class="UserInfoUser">
+				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
 					<h2 class="UserInfoUserName"><a href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
@@ -188,8 +188,8 @@ if(!cResults.getResults(cCheckLogin)) {
 						</span>
 						<%}%>
 					</span>
-				</div>
-				<span class="UserInfoState">
+				</section>
+				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
@@ -200,19 +200,21 @@ if(!cResults.getResults(cCheckLogin)) {
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
 					<%}%>
-				</span>
+				</section>
 			</div>
+		</article>
 
+		<article class="Wrapper">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
-			<div id="CategoryMenu" class="CategoryMenu">
+			<nav id="CategoryMenu" class="CategoryMenu">
 				<span class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" onclick="changeCategory(this, '')"><%=_TEX.T("Category.All")%></span>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
 				<span class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" onclick="changeCategory(this, '<%=cTag.m_strTagTxt%>')"><%=Util.toDescString(cTag.m_strTagTxt)%></span>
 				<%}%>
-			</div>
+			</nav>
 			<%}%>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
@@ -220,7 +222,7 @@ if(!cResults.getResults(cCheckLogin)) {
 					<%//@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%//}%>
 				<%}%>
-			</div>
+			</section>
 		</article>
 	</body>
 </html>

@@ -15,7 +15,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 StringBuilder sbHtml = new StringBuilder();
 for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);
-	sbHtml.append(CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult));
+	sbHtml.append(CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult, cResults.m_nViewMode));
 	if(nCnt==5 && bSmartPhone) {
 		sbHtml.append(Util.poipiku_320x250_sp_mid());
 	}

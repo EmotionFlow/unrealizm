@@ -139,12 +139,10 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-
-
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
-				<div class="UserInfoUser">
+				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
@@ -181,8 +179,8 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 						</span>
 						<%}%>
 					</span>
-				</div>
-				<span class="UserInfoState">
+				</section>
+				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
@@ -193,21 +191,21 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
 					<%}%>
-				</span>
+				</section>
 			</div>
 		</article>
 
 		<article class="Wrapper ThumbList">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
-			<div id="CategoryMenu" class="CategoryMenu">
+			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
 				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
 				<%}%>
-			</div>
+			</nav>
 			<%}%>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%//if(!bSmartPhone) {%>
 				<%//@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 				<%//}%>
@@ -218,11 +216,11 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 					<%//@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%//}%>
 				<%}%>
-			</div>
+			</section>
 
-			<div class="PageBar">
+			<nav class="PageBar">
 				<%=CPageBar.CreatePageBar("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-			</div>
+			</nav>
 		</article>
 
 		<%@ include file="/inner/TFooterBase.jsp"%>

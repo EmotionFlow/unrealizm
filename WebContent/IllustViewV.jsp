@@ -6,7 +6,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
-cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
@@ -181,11 +180,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	</head>
 
 	<body>
-		<article class="Wrapper">
 		<%{%>
+		<article class="Wrapper">
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
-				<div class="UserInfoUser">
+				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
 					<h2 class="UserInfoUserName"><a href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
@@ -218,23 +217,25 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						</span>
 						<%}%>
 					</span>
-				</div>
-				<span class="UserInfoState">
+				</section>
+				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
-				</span>
+				</section>
 			</div>
-			<%}%>
+		</article>
+		<%}%>
 
-			<div id="IllustItemList" class="IllustItemList">
-				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
-			</div>
+		<article class="Wrapper ViewPc">
+			<section id="IllustItemList" class="IllustItemList">
+				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+			</section>
 
-			<div class="UserInfo">
+			<aside class="UserInfo">
 				<div class="UserInfoBg"></div>
-				<div class="UserInfoUser">
+				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
 					<h2 class="UserInfoUserName"><a href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
@@ -264,8 +265,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						</span>
 						<%}%>
 					</span>
-				</div>
-			</div>
+				</section>
+			</aside>
 		</article>
 	</body>
 </html>

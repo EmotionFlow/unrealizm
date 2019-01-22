@@ -24,7 +24,7 @@ public class IllustViewC {
 	}
 
 
-	public int SELECT_MAX_EMOJI = 60;
+	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
 	public boolean m_bOwner = false;

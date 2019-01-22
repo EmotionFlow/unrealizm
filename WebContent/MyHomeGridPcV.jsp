@@ -4,11 +4,6 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-if(!bSmartPhone) {
-	//getServletContext().getRequestDispatcher("/MyHomeGridPcV.jsp").forward(request,response);
-	//return;
-}
-
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
 
@@ -28,7 +23,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyHomePc.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -43,16 +38,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			if(g_bAdding) return;
 			g_bAdding = true;
 			var $objMessage = $("<div/>").addClass("Waiting");
-			$("#IllustItemList").append($objMessage);
+			$("#IllustThumbList").append($objMessage);
 			$.ajax({
 				"type": "post",
-				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_PC%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
+				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_PC%>},
 				"dataType": "json",
 				"url": "/f/MyHomeF.jsp",
 				"success": function(data) {
 					if(data.end_id>0) {
 						g_nEndId = data.end_id;
-						$("#IllustItemList").append(data.html);
+						$("#IllustThumbList").append(data.html);
 						$(".Waiting").remove();
 						if(vg)vg.vgrefresh();
 						g_bAdding = false;
@@ -81,20 +76,43 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 			$(window).bind("scroll.addContents", function() {
 				$(window).height();
-				if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 600) {
+				if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
 					addContents();
 				}
 			});
 		});
 		</script>
-
 		<style>
 			body {padding-top: 83px !important;}
+
 			<%if(!Util.isSmartPhone(request)) {%>
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
 			<%}%>
 		</style>
+
+		<%if(!bSmartPhone){%>
+		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>
+		<script>
+		$(function() {
+			vg = $("#IllustThumbList").vgrid({
+				easing: "easeOutQuint",
+				useLoadImageEvent: true,
+				useFontSizeListener: true,
+				time: 1,
+				delay: 1,
+				wait: 1,
+				fadeIn: {time: 1, delay: 1}
+			});
+		});
+		</script>
+		<%}%>
+		<script>
+		$(function() {
+			$("#IllustThumbList").css('opacity', 1);
+		});
+		</script>
 	</head>
 
 	<body>
@@ -112,8 +130,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</ul>
 		</nav>
 
-		<article class="Wrapper ViewPc">
-			<section id="IllustItemList" class="IllustItemList">
+		<article class="Wrapper GridList">
+			<div id="IllustThumbList" class="IllustThumbList">
 
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
@@ -127,40 +145,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%if(nCnt==1 && !bSmartPhone) {%>
+					<%@ include file="/inner/TAdPc336x280_top_right.jsp"%>
+					<%}%>
 					<%if(nCnt==8 && bSmartPhone) {%>
 					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</section>
-
-			<%if(!bSmartPhone) {%>
-			<aside class="PcSideBar" style="margin-top: 30px;">
-				<div class="FixFrame">
-					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
-					</div>
-
-					<div class="PcSideBarItem">
-						<div class="PcSideBarItemTitle"><%=_TEX.T("Twitter.Share.MyUrl")%></div>
-						<%
-						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-								URLEncoder.encode(String.format("%s%s %s #%s",
-										cCheckLogin.m_strNickName,
-										_TEX.T("Twitter.UserAddition"),
-										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
-										_TEX.T("Common.Title")), "UTF-8"),
-								URLEncoder.encode("https://poipiku.com/"+cCheckLogin.m_nUserId+"/", "UTF-8"));
-						%>
-						<div style="text-align: center;">
-							<input id="MyUrl" class="MyUrl" type="text" value="https://poipiku.com/<%=cCheckLogin.m_nUserId%>/" onclick="this.select(); document.execCommand('copy');" style="box-sizing: border-box; width: 100%; padding: 5px; margin: 0 0 10px 0;" />
-							<a class="BtnBase" href="javascript:void(0)" onclick="$('#MyUrl').select(); document.execCommand('Copy');"><i class="far fa-copy"></i> <%=_TEX.T("Twitter.Share.Copy.Btn")%></a>
-							<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
-						</div>
-					</div>
-				</div>
-			</aside>
-			<%}%>
+			</div>
 		</article>
 
 		<%@ include file="/inner/TFooterBase.jsp"%>

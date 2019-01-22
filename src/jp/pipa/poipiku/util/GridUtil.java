@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import jp.pipa.poipiku.*;
 
 public class GridUtil {
-	public static int SELECT_MAX_EMOJI = 60;
+	public static int SELECT_MAX_EMOJI = 59;
 
 	public static void getEachImage(Connection connection, ArrayList<CContent> contents) throws SQLException {
 		// Each append image

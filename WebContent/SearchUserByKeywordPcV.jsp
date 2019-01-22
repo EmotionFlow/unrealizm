@@ -56,7 +56,7 @@ g_strSearchWord = cResults.m_strKeyword;
 		</nav>
 
 		<article class="Wrapper ItemList">
-			<div id="IllustThumbList" class="IllustItemList">
+			<section id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
@@ -64,11 +64,11 @@ g_strSearchWord = cResults.m_strKeyword;
 					<%@ include file="/inner/TAdMidWide.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 
-			<div class="PageBar">
+			<nav class="PageBar">
 				<%=CPageBar.CreatePageBar("/SearchUserByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-			</div>
+			</nav>
 		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>

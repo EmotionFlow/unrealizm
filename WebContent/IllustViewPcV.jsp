@@ -6,7 +6,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
-cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
@@ -263,7 +262,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
-				<div class="UserInfoUser">
+				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
@@ -301,23 +300,23 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						</span>
 						<%}%>
 					</span>
-				</div>
-				<span class="UserInfoState">
+				</section>
+				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
-				</span>
+				</section>
 			</div>
 		</article>
 		<%}%>
 
 		<article class="Wrapper ViewPc">
-			<div id="IllustItemList" class="IllustItemList">
-				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-			</div>
+			<section id="IllustItemList" class="IllustItemList">
+				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+			</section>
 			<%if(!bSmartPhone) {%>
-			<div class="PcSideBar" style="margin-top: 30px;">
+			<aside class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
@@ -348,15 +347,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						</div>
 					</div>
 				</div>
-			</div>
+			</aside>
 			<%}%>
 		</article>
 
 		<%if(bSmartPhone) {%>
-		<section class="UserInfo">
+		<aside class="UserInfo">
 			<div class="UserInfoBgImg"></div>
 			<div class="UserInfoBg"></div>
-			<div class="UserInfoUser">
+			<section class="UserInfoUser">
 				<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
 				<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 				<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
@@ -391,8 +390,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					</span>
 					<%}%>
 				</span>
-			</div>
-		</article>
+			</section>
+		</aside>
 		<%}%>
 
 		<%@ include file="/inner/TFooter.jsp"%>

@@ -67,7 +67,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<body>
 		<article class="Wrapper">
 
-			<div id="IllustThumbList" class="IllustItemList">
+			<section id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CTag cTag = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
@@ -75,7 +75,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%@ include file="/inner/TAdMid.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 		</article>
 	</body>
 </html>

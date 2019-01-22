@@ -32,7 +32,7 @@ public class IllustViewListC {
 
 
 	public int SELECT_MAX_GALLERY = 10;
-	public int SELECT_MAX_EMOJI = 60;
+	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public boolean getResults(CheckLogin cCheckLogin) {
 		boolean bRtn = false;

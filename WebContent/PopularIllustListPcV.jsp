@@ -61,9 +61,9 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<%}%>
 			</div>
 
-			<div class="PageBar">
+			<nav class="PageBar">
 				<%=CPageBar.CreatePageBar("/PopularIllustListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-			</div>
+			</nav>
 		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>

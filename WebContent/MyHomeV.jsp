@@ -12,7 +12,6 @@ if(!cCheckLogin.m_bLogin) {
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
 //cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-cResults.SELECT_MAX_EMOJI = (bSmartPhone)?60:100;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
@@ -31,7 +30,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			$("#IllustItemList").append($objMessage);
 			$.ajax({
 				"type": "post",
-				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_SP%>},
+				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_SP%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
 				"dataType": "json",
 				"url": "/f/MyHomeF.jsp",
 				"success": function(data) {
@@ -93,15 +92,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<%=_TEX.T("MyHome.FirstMsg")%>
 			</div>
 			<%}%>
-			<div id="IllustItemList" class="IllustItemList">
+			<section id="IllustItemList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult)%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 					<%if((nCnt+1)%5==0) {%>
 					<%@ include file="/inner/TAdMid.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 		</article>
 	</body>
 </html>

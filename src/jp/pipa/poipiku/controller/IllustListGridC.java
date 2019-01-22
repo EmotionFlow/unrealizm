@@ -36,7 +36,6 @@ public class IllustListGridC {
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public ArrayList<CTag> m_vCategoryList = new ArrayList<CTag>();
 	public int SELECT_MAX_GALLERY = 17;
-	public int SELECT_MAX_EMOJI = 60;
 	public boolean m_bOwner = false;
 	public boolean m_bFollow = false;
 	public boolean m_bBlocking = false;

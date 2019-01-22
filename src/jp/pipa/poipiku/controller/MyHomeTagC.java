@@ -13,8 +13,9 @@ import jp.pipa.poipiku.util.*;
 public class MyHomeTagC {
 	public int n_nUserId = -1;
 	public int n_nVersion = 0;
-	public int m_nMode = 0;
+	public int m_nMode = CCnv.MODE_PC;
 	public int m_nStartId = -1;
+	public int m_nViewMode = CCnv.VIEW_LIST;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
@@ -22,6 +23,7 @@ public class MyHomeTagC {
 			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
 			m_nStartId = Common.ToInt(cRequest.getParameter("SD"));
 			n_nUserId = Common.ToInt(cRequest.getParameter("ID"));
+			m_nViewMode = Common.ToInt(cRequest.getParameter("VD"));
 		} catch(Exception e) {
 			;
 		}
@@ -29,7 +31,7 @@ public class MyHomeTagC {
 
 
 	public int SELECT_MAX_GALLERY = 10;
-	public int SELECT_MAX_EMOJI = 60;
+	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 	public int m_nContentsNumTotal = 0;
