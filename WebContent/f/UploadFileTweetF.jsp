@@ -39,13 +39,14 @@ class UploadFileTweetC {
 			// 存在チェック & 本文 & 1枚目取得
 			CContent cContent = null;
 			ArrayList<String> vFileList = new ArrayList<String>();
-			strSql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
+			strSql ="SELECT contents_0000.*, nickname FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				cContent = new CContent(cResSet);
+				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
 				String strFileName = cContent.m_strFileName;
 				if(!strFileName.isEmpty()) {
 					switch(cContent.m_nPublishId) {

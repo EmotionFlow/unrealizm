@@ -190,8 +190,12 @@ public class CTweet {
 	}
 
 	static public String generateIllustMsgFull(CContent cContent, ResourceBundleControl _TEX) {
-		String strFooter = String.format(" #%s https://poipiku.com/%d/%d.html",
-				_TEX.T("Common.Title"),
+		String strNickName = "";
+		if(!cContent.m_cUser.m_strNickName.isEmpty()) {
+			strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+		}
+		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html",
+				strNickName,
 				cContent.m_nUserId,
 				cContent.m_nContentId);
 		return generateIllustMsg(cContent, _TEX) + strFooter;
@@ -200,8 +204,12 @@ public class CTweet {
 	static public String generateIllustMsgUrl(CContent cContent, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
+			String strNickName = "";
+			if(!cContent.m_cUser.m_strNickName.isEmpty()) {
+				strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+			}
 			strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-					URLEncoder.encode(generateIllustMsg(cContent, _TEX)+" #"+_TEX.T("Common.Title"), "UTF-8"),
+					URLEncoder.encode(generateIllustMsg(cContent, _TEX)+strNickName+"\n", "UTF-8"),
 					URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"));
 		} catch (Exception e) {
 			;
@@ -210,9 +218,17 @@ public class CTweet {
 	}
 
 	static public String generateIllustMsg(CContent cContent, ResourceBundleControl _TEX) {
-		String strHeader = String.format("[%s]\n", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
-		String strFooter = String.format(" #%s https://poipiku.com/%d/%d.html",
-				_TEX.T("Common.Title"),
+		return String.format("[%s] ", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))) + generateIllustMsgBase(cContent, _TEX);
+	}
+
+	static public String generateIllustMsgBase(CContent cContent, ResourceBundleControl _TEX) {
+		String strHeader = String.format("[%s] ", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
+		String strNickName = "";
+		if(!cContent.m_cUser.m_strNickName.isEmpty()) {
+			strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+		}
+		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html",
+				strNickName,
 				cContent.m_nUserId,
 				cContent.m_nContentId);
 		List<String> arrAppendex = new ArrayList<String>();
@@ -226,10 +242,8 @@ public class CTweet {
 		if(arrAppendex.size()>0) {
 			strAppendex = "(" + String.join(" ", arrAppendex) + ")";
 		}
-		//strFooter = strAppendex + strFooter;
 		int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strAppendex.length() - strFooter.length();
 		StringBuffer bufMsg = new StringBuffer();
-		bufMsg.append(strHeader);
 		if (nMessageLength < cContent.m_strDescription.length()) {
 			bufMsg.append(cContent.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
 			bufMsg.append(CTweet.ELLIPSE);
@@ -237,8 +251,6 @@ public class CTweet {
 			bufMsg.append(cContent.m_strDescription);
 		}
 		bufMsg.append(strAppendex);
-		//bufMsg.append(strFooter);
-
 		return bufMsg.toString();
 	}
 }
