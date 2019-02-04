@@ -71,7 +71,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
-			<div class="AnalogicoInfo" style="display: block;">
+			<section class="AnalogicoInfo" style="display: block;">
 				<div class="AnalogicoDesc Title">
 					<div style="margin : 0;">
 						<img class="TopTitleLogo" src="/img/pc_top_title_W.jpg" alt="<%=_TEX.T("THeader.Title")%>">
@@ -93,11 +93,11 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
 					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 				</div>
-			</div>
+			</section>
 		</article>
 
 		<article class="Wrapper ThumbList">
-			<div class="PoipikuInfo">
+			<section class="PoipikuInfo">
 				<div class="PoipikuDesc">
 					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS01.png" />
 				</div>
@@ -156,11 +156,11 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		</article>
 
 		<article class="Wrapper">
-			<div class="AnalogicoInfo" style="display: block;">
+			<section class="AnalogicoInfo" style="display: block;">
 				<div class="AnalogicoDesc Title">
 						さあ、はじめよう！
 				</div>
@@ -178,7 +178,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
 					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 				</div>
-			</div>
+			</section>
 		</article>
 
 		<%@ include file="/inner/TFooterBase.jsp"%>

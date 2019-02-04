@@ -78,14 +78,14 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<article class="Wrapper">
-			<div id="CategoryMenu" class="CategoryMenu">
+			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nCategoryId<0){%> Selected<%}%>" onclick="changeCategory(this, -1)"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" onclick="changeCategory(this, <%=nCategoryId%>)"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
 				<%}%>
-			</div>
+			</nav>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
@@ -93,7 +93,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 		</article>
 	</body>
 </html>

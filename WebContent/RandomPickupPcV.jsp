@@ -48,7 +48,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		</nav>
 
 		<article class="Wrapper ThumbList">
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%if(!bSmartPhone) {%>
 				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 				<%}%>
@@ -59,7 +59,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>

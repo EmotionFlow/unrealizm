@@ -3,10 +3,10 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-PopularTagListC cResults = new PopularTagListC();
+EventTagListC cResults = new EventTagListC();
 cResults.getParam(request);
-cResults.SELECT_MAX_SAMPLE_GALLERY = 15;
-cResults.SELECT_SAMPLE_GALLERY = (Util.isSmartPhone(request))?4:8;
+cResults.SELECT_MAX_SAMPLE_GALLERY = 0;
+cResults.SELECT_SAMPLE_GALLERY = 0;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("PopularTagList.Title")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EventTagList.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -60,39 +60,19 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</ul>
 		</nav>
 
-		<article class="Wrapper ThumbList">
-			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn Selected" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="BtnBase CategoryBtn" href="/EventTagListPcV.jsp"><%=_TEX.T("EventTagList.Title")%></a>
-			</nav>
-			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
-				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
-				String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
-			<section class="CategoryListItem">
-				<h2 class="CategoryTitle">
-					<a class="CategoryKeyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
-						#<%=strKeyWord%>
-					</a>
-				</h2>
-				<div class="IllustThumbList">
-					<%for(CContent cContent : m_vContentList) {%>
-					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
-					<%}%>
-				</div>
-				<a class="CategoryMore" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
-					<%=_TEX.T("TopV.ContentsTitle.More")%>&nbsp;<i class="fas fa-angle-right"></i>
-				</a>
-			</section>
-			<%if((nCnt+1)%10==0) {%>
-			<%@ include file="/inner/TAdMidWide.jsp"%>
-			<%}%>
-			<%}%>
-		</article>
-
 		<article class="Wrapper ItemList">
+			<nav id="CategoryMenu" class="CategoryMenu">
+				<a class="BtnBase CategoryBtn" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
+				<a class="BtnBase CategoryBtn Selected" href="/EventTagListPcV.jsp"><%=_TEX.T("EventTagList.Title")%></a>
+			</nav>
+			<div style="font-size: 11px; padding: 20px 0 0 0 ;">
+				<span style="color: red;">new!</span>
+				(βテスト中)
+				タグに「企画」という文字を入れるとこの一覧に表示させることができます。企画に活用してください！
+			</div>
 			<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
-			<section id="IllustThumbList" class="IllustThumbList" style="padding: 0;">
+			<section id="IllustThumbList" class="IllustThumbList" style="">
 				<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
 			</section>
 				<%if((nCnt+1)%15==0) {%>

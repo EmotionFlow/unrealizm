@@ -52,14 +52,14 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		</nav>
 
 		<article class="Wrapper ThumbList">
-			<div id="CategoryMenu" class="CategoryMenu">
+			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nCategoryId<0){%> Selected<%}%>" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
 				<%}%>
-			</div>
+			</nav>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%if(!bSmartPhone) {%>
 				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 				<%}%>
@@ -70,7 +70,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 
 			<nav class="PageBar">
 				<%=CPageBar.CreatePageBar("/NewArrivalPcV.jsp", String.format("&CD=%d", cResults.m_nCategoryId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

@@ -15,10 +15,10 @@
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="GlobalLinkWrapper">
 			<ul class="GlobalLink">
-				<li><a id="MenuRecent" class="LinkItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a></li>
+				<li><a id="MenuHotIllust" class="LinkItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
 				<li><a id="MenuHotTag" class="LinkItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a></li>
 				<li><a id="MenuRandom" class="LinkItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a></li>
-				<li><a id="MenuHotIllust" class="LinkItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
+				<li><a id="MenuRecent" class="LinkItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a></li>
 			</ul>
 		</nav>
 		<%}%>

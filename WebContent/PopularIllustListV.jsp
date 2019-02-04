@@ -61,7 +61,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<article class="Wrapper">
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
@@ -69,7 +69,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					<%}%>
 				<%}%>
-			</div>
+			</section>
 		</article>
 	</body>
 </html>
