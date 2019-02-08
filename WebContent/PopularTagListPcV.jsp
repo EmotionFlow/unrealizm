@@ -90,15 +90,15 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		</article>
 
 		<article class="Wrapper ItemList">
+			<section id="IllustThumbList" class="IllustThumbList" style="padding: 0;">
 			<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
-			<section id="IllustThumbList" class="IllustThumbList" style="padding: 0;">
 				<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
-			</section>
 				<%if((nCnt+1)%15==0) {%>
 				<%@ include file="/inner/TAdMidWide.jsp"%>
 				<%}%>
 			<%}%>
+			</section>
 		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>

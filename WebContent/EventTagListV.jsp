@@ -39,15 +39,15 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				(βテスト中)
 				タグに「企画」という文字を入れるとこの一覧に表示させることができます。企画に活用してください！
 			</div>
+			<section id="IllustThumbList" class="IllustThumbList">
 			<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
-			<section id="IllustThumbList" class="IllustThumbList">
 				<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX)%>
-			</section>
 				<%if((nCnt+1)%15==0) {%>
 				<%@ include file="/inner/TAdMidWide.jsp"%>
 				<%}%>
 			<%}%>
+			</section>
 		</article>
 	</body>
 </html>

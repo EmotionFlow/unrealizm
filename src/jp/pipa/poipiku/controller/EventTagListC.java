@@ -45,7 +45,7 @@ public class EventTagListC {
 			cConn = dsPostgres.getConnection();
 
 			// TAG LIST
-			strSql = "select tag_txt FROM vw_event_tag ORDER BY first_date ASC OFFSET ? LIMIT ?";
+			strSql = "select tag_txt FROM vw_event_tag ORDER BY first_date DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
 			cState.setInt(2, SELECT_MAX_GALLERY);
