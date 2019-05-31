@@ -20,6 +20,7 @@ switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_R18:
 case Common.PUBLISH_ID_R18G:
 	g_nSafeFilter = Common.AD_ID_R18;
+	break;
 default:
 	g_nSafeFilter = Common.AD_ID_ALL;
 	break;
