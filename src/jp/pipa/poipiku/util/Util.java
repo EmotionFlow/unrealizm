@@ -212,6 +212,7 @@ public class Util {
 	public static String poipiku_320x250_sp_mid() {
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"SideBarMid\">");
+		/*
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
 		sbRtn.append("<!-- poipiku_320x250_sp_mid -->");
 		sbRtn.append("<ins class=\"adsbygoogle\"");
@@ -221,13 +222,17 @@ public class Util {
 		sbRtn.append("<script>");
 		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
 		sbRtn.append("</script>");
+		*/
+		sbRtn.append("<script src=\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\"></script>");
 		sbRtn.append("</div>");
+
 		return sbRtn.toString();
 	}
 
 	public static String poipiku_300x250_bottom_right() {
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
+		/*
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
 		sbRtn.append("<!-- poipiku_300x250_bottom_right -->");
 		sbRtn.append("<ins class=\"adsbygoogle\"");
@@ -237,6 +242,8 @@ public class Util {
 		sbRtn.append("<script>");
 		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
 		sbRtn.append("</script>");
+		*/
+		sbRtn.append("<script src=\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\"></script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
@@ -244,6 +251,7 @@ public class Util {
 	public static String poipiku_336x280_bottom_right() {
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
+		/*
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
 		sbRtn.append("<!-- poipiku_336x280_bottom_right -->");
 		sbRtn.append("<ins class=\"adsbygoogle\"");
@@ -253,6 +261,8 @@ public class Util {
 		sbRtn.append("<script>");
 		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
 		sbRtn.append("</script>");
+		*/
+		sbRtn.append("<script src=\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\"></script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
