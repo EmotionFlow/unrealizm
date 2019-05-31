@@ -47,8 +47,12 @@ public class Common {
 	}
 
 	// favo keyword
-	public static final int FOVO_KEYWORD_TYPE_TAG = 0;
-	public static final int FOVO_KEYWORD_TYPE_SEARCH = 1;
+	public static final int FOVO_KEYWORD_TYPE_TAG		= 0;
+	public static final int FOVO_KEYWORD_TYPE_SEARCH	= 1;
+
+	// Ad ID
+	public static final int AD_ID_ALL	= 0;	// ALL
+	public static final int AD_ID_R18	= 1;	// R18
 
 	// Publish ID
 	public static final int PUBLISH_ID_ALL			= 0;	// ALL

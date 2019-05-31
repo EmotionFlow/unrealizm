@@ -2,13 +2,22 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <div class="PcSideBarAd">
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- poipiku_336x280_bottom_right -->
-<ins class="adsbygoogle"
-	 style="display:inline-block;width:336px;height:280px"
-	 data-ad-client="ca-pub-9388519601000159"
-	 data-ad-slot="5086719699"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+<%/*
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- poipiku_336x280_bottom_right -->
+	<ins class="adsbygoogle"
+		style="display:inline-block;width:336px;height:280px"
+		data-ad-client="ca-pub-9388519601000159"
+		data-ad-slot="5086719699"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+*/%>
+
+<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
+<script src="//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91"></script>
+<%}else{%>
+<script src="//ad.adpon.jp/fr.js?fid=d097c4bd-72cd-4687-9449-44e7702d7885"></script>
+<%}%>
+
 </div>

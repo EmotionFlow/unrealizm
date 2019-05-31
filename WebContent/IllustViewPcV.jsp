@@ -15,6 +15,16 @@ if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request
 	return;
 }
 
+// R18によるアドの切り替え
+switch(cResults.m_cContent.m_nPublishId) {
+case Common.PUBLISH_ID_R18:
+case Common.PUBLISH_ID_R18G:
+	g_nSafeFilter = Common.AD_ID_R18;
+default:
+	g_nSafeFilter = Common.AD_ID_ALL;
+	break;
+}
+
 String strFileUrl = "";
 switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_R15:

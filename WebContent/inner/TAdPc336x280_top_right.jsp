@@ -2,6 +2,7 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <div class="PcSideBarAd">
+<%/*
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- poipiku_336x280_top_right -->
 <ins class="adsbygoogle"
@@ -11,4 +12,12 @@
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+*/%>
+
+<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
+<script src="//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91"></script>
+<%}else{%>
+<script src="//ad.adpon.jp/fr.js?fid=d097c4bd-72cd-4687-9449-44e7702d7885"></script>
+<%}%>
+
 </div>
