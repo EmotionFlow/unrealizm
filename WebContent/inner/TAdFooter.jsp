@@ -18,9 +18,9 @@
 */%>
 
 <%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-<script src="//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91"></script>
+<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
 <%}else{%>
-<script src="//ad.adpon.jp/fr.js?fid=d097c4bd-72cd-4687-9449-44e7702d7885"></script>
+<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
 <%}%>
 
 	<%} else {%>

@@ -210,6 +210,8 @@ public class Util {
 	}
 
 	public static String poipiku_320x250_sp_mid() {
+		return adpon_all();
+		/*
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"SideBarMid\">");
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
@@ -223,9 +225,12 @@ public class Util {
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
+		*/
 	}
 
 	public static String poipiku_300x250_bottom_right() {
+		return adpon_all();
+		/*
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
@@ -239,9 +244,12 @@ public class Util {
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
+		*/
 	}
 
 	public static String poipiku_336x280_bottom_right() {
+		return adpon_all();
+		/*
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
@@ -252,6 +260,20 @@ public class Util {
 		sbRtn.append("data-ad-slot=\"5086719699\"></ins>");
 		sbRtn.append("<script>");
 		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
+		sbRtn.append("</script>");
+		sbRtn.append("</div>");
+		return sbRtn.toString();
+		*/
+	}
+
+	public static String adpon_all () {
+		int nRand=(int)(Math.random()*10000);
+		StringBuilder sbRtn = new StringBuilder();
+		sbRtn.append("<div id=\""+nRand+"\" class=\"PcSideBarAd\">");
+		sbRtn.append("<script async>");
+		sbRtn.append("getScriptOutput(\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\", function(html) {");
+		sbRtn.append("$(\"#"+nRand+"\").append(html)");
+		sbRtn.append("});");
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
