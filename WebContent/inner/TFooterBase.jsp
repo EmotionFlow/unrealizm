@@ -55,13 +55,6 @@
 			<dd><a class="FooterHref" href="https://tegaki.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Link.Service.Tegaki")%></a></dd>
 			<dd><a class="FooterHref" href="https://galleria.emotionflow.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Galleria")%></a></dd>
 			<dd><a class="FooterHref" href="https://poipiku.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Poipiku")%></a></dd>
-			<dd><a class="FooterHref" href="https://analogico.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Link.Service.Analogico")%></a></dd>
-		</dl>
-		<dl>
-			<dt>&nbsp;</dt>
-			<dd><a class="FooterHref" href="http://making.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Link.Service.Making")%></a></dd>
-			<dd><a class="FooterHref" href="http://tegakitweet.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.TegakiTweet")%></a></dd>
-			<dd><a class="FooterHref" href="http://temp.emotionflow.com/" target="_blank">/temp</a></dd>
 		</dl>
 	</nav>
 
