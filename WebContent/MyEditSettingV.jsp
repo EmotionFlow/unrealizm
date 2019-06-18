@@ -674,7 +674,7 @@ if(cResults.m_bUpdate) {
 						<a href="/RuleS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.Term")%></a><br />
 						<a href="/GuideLineV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.GuideLine")%></a><br />
 						<a href="/PrivacyPolicyS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
-						<a href="https://twitter.com/pipajp" style="font-size: 14px; text-decoration: underline;" target="_blank"><%=_TEX.T("Footer.Information")%></a><br />
+						<a href="https://twitter.com/pipajp" style="font-size: 14px; text-decoration: underline;" target="_blank"><%=_TEX.T("Footer.Link.Info")%> (<%=_TEX.T("Footer.Information")%>)</a><br />
 					</div>
 				</div>
 			</div>
