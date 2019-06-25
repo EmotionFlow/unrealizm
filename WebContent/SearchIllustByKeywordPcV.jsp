@@ -21,7 +21,7 @@ cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 g_strSearchWord = cResults.m_strKeyword;
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
+String strTitle = cResults.m_strKeyword + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
 String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKeyword;
 String strFileUrl = cResults.m_strRepFileName;
