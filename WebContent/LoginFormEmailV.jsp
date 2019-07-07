@@ -135,7 +135,7 @@ if(strRequestUri != null) {
 							</div>
 							<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
 								<div class="RegistMessage"></div>
-								<a style="color: #5bd;" href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
+								<a style="color: #5bd;" href="/ForgetPasswordV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
 							</div>
 						</div>
 					</div>

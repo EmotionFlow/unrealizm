@@ -338,7 +338,7 @@ public class CCnv {
 	public static String toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX) throws UnsupportedEncodingException {
 		String SEARCH_ILLUST_KEYWORD = (nMode==MODE_SP)?"/SearchIllustByKeywordV.jsp":"/SearchIllustByKeywordPcV.jsp";
 		StringBuilder strRtn = new StringBuilder();
-		strRtn.append(String.format("<a class=\"TagItem\" href=\"%s?KWD=%s\"><i class=\"fas fa-search\"></i> %s</a>", SEARCH_ILLUST_KEYWORD, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)));
+		strRtn.append(String.format("<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\"><i class=\"fas fa-search\"></i> %s</a></h2>", SEARCH_ILLUST_KEYWORD, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)));
 		return strRtn.toString();
 	}
 }

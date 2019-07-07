@@ -98,6 +98,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 
 		<article class="Wrapper ThumbList">
 			<section class="PoipikuInfo">
+
 				<div class="PoipikuDesc">
 					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS01.png" />
 				</div>

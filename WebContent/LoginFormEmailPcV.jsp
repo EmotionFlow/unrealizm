@@ -22,7 +22,7 @@ if(strRequestUri != null) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>
+		<title><%=_TEX.T("TopV.ContentsTitle.Login")%> | <%=_TEX.T("THeader.Title")%></title>
 		<script>
 			function RegistUser() {
 				var strEmail = $.trim($("#RegistEmail").val());

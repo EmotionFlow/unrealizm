@@ -96,22 +96,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <!DOCTYPE html>
 <html>
 	<head>
-		<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {%>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<%} else {%>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
-		<%}%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg" />
-		<meta property="og:type" content="article" />
-		<meta property="og:url" content="<%=strUrl%>" />
-		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
-		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
@@ -326,9 +317,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<section id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 			</section>
+
+
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
+
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 					</div>

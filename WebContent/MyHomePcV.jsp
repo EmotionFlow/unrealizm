@@ -90,7 +90,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 		<style>
 			body {padding-top: 83px !important;}
+			.PoipikuDesc.Event {margin: 10px 0;}
 			<%if(!Util.isSmartPhone(request)) {%>
+			.PoipikuDesc.Event {margin: 30px 0 0 0;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
 			<%}%>
@@ -137,6 +139,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
+
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 					</div>
