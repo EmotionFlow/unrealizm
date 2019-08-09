@@ -210,8 +210,7 @@ public class Util {
 	}
 
 	public static String poipiku_320x250_sp_mid() {
-		return adpon_all();
-		/*
+		//return adpon_all();
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"SideBarMid\">");
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
@@ -225,12 +224,10 @@ public class Util {
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
-		*/
 	}
 
 	public static String poipiku_300x250_bottom_right() {
-		return adpon_all();
-		/*
+		//return adpon_all();
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
@@ -244,12 +241,10 @@ public class Util {
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
-		*/
 	}
 
 	public static String poipiku_336x280_bottom_right() {
-		return adpon_all();
-		/*
+		//return adpon_all();
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
 		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
@@ -263,7 +258,6 @@ public class Util {
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
-		*/
 	}
 
 	public static String adpon_all () {

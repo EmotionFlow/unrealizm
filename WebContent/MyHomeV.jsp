@@ -75,6 +75,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 		});
 		</script>
+		<style>
+		.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
+		.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
+		.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
+		</style>
 	</head>
 
 	<body>
@@ -87,6 +92,22 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
 			</div>
 			<%}%>
+			<section class="EventItemList">
+				<a class="EventItem" href="/event/20190801/TopV.jsp">
+					<img class="EventBanner" src="/event/20190801/banner.png" />
+				</a>
+				<a class="EventItem" href="/event/20190802/TopV.jsp">
+					<img class="EventBanner" src="/event/20190802/banner.png" />
+				</a>
+				<!--
+				<a class="EventItem" href="/event/20190803/TopV.jsp">
+					<img class="EventBanner" src="/event/20190803/banner.png" />
+				</a>
+				<a class="EventItem" href="/event/20190804/TopV.jsp">
+					<img class="EventBanner" src="/event/20190804/banner.png" />
+				</a>
+				-->
+			</section>
 			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 				<%=_TEX.T("MyHome.FirstMsg")%>

@@ -3,7 +3,6 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%if(Util.isSmartPhone(request)) {%>
 <div class="SideBarMid">
-<%/*
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_320x250_sp_mid -->
 	<ins class="adsbygoogle"
@@ -13,18 +12,16 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
-*/%>
 
-<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
-<%}else{%>
-<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
-<%}%>
+<%//if(g_nSafeFilter==Common.AD_ID_ALL){%>
+<%//@ include file="/inner/TAdBaseAdponAll.jsp"%>
+<%//}else{%>
+<%//@ include file="/inner/TAdBaseAdponR18.jsp"%>
+<%//}%>
 
 </div>
 <%} else {%>
 <div class="PcSideBarAd">
-<%/*
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_300x250_bottom_right -->
 	<ins class="adsbygoogle"
@@ -34,13 +31,12 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
-*/%>
 
-<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
-<%}else{%>
-<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
-<%}%>
+<%//if(g_nSafeFilter==Common.AD_ID_ALL){%>
+<%//@ include file="/inner/TAdBaseAdponAll.jsp"%>
+<%//}else{%>
+<%//@ include file="/inner/TAdBaseAdponR18.jsp"%>
+<%//}%>
 
 </div>
 <%}%>

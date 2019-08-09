@@ -3,7 +3,6 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <div class="SideBarMid Wide">
 	<%if(Util.isSmartPhone(request)) {%>
-<%/*
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_320x250_sp_mid -->
 	<ins class="adsbygoogle"
@@ -13,13 +12,12 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
-*/%>
 
-<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
-<%}else{%>
-<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
-<%}%>
+<%//if(g_nSafeFilter==Common.AD_ID_ALL){%>
+<%//@ include file="/inner/TAdBaseAdponAll.jsp"%>
+<%//}else{%>
+<%//@ include file="/inner/TAdBaseAdponR18.jsp"%>
+<%//}%>
 
 	<%} else {%>
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>

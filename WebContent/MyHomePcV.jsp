@@ -91,10 +91,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<style>
 			body {padding-top: 83px !important;}
 			.PoipikuDesc.Event {margin: 10px 0;}
+			.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
+			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
+			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PoipikuDesc.Event {margin: 30px 0 0 0;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
+			.EventItemList {display: block; float: left; width: 100%; margin: 0 0 0 0;}
+			.EventItemList .EventItem {display: block; margin: 0 0 20px 0;}
+			.EventItemList .EventItem .EventBanner {width: 300px; display: block;}
 			<%}%>
 		</style>
 	</head>
@@ -115,6 +121,25 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		</nav>
 
 		<article class="Wrapper ViewPc">
+			<%if(bSmartPhone) {%>
+			<section class="EventItemList">
+				<a class="EventItem" href="/event/20190801/TopPcV.jsp">
+					<img class="EventBanner" src="/event/20190801/banner.png" />
+				</a>
+				<a class="EventItem" href="/event/20190802/TopPcV.jsp">
+					<img class="EventBanner" src="/event/20190802/banner.png" />
+				</a>
+				<!--
+				<a class="EventItem" href="/event/20190803/TopV.jsp">
+					<img class="EventBanner" src="/event/20190803/banner.png" />
+				</a>
+				<a class="EventItem" href="/event/20190804/TopV.jsp">
+					<img class="EventBanner" src="/event/20190804/banner.png" />
+				</a>
+				-->
+			</section>
+			<%}%>
+
 			<section id="IllustItemList" class="IllustItemList">
 
 				<%if(cResults.m_vContentList.size()<=0) {%>
@@ -139,6 +164,25 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
 				<div class="FixFrame">
+
+					<div class="PcSideBarItem">
+						<section class="EventItemList">
+							<a class="EventItem" href="/event/20190801/TopPcV.jsp">
+								<img class="EventBanner" src="/event/20190801/banner.png" />
+							</a>
+							<a class="EventItem" href="/event/20190802/TopPcV.jsp">
+								<img class="EventBanner" src="/event/20190802/banner.png" />
+							</a>
+							<!--
+							<a class="EventItem" href="/event/20190803/TopV.jsp">
+								<img class="EventBanner" src="/event/20190803/banner.png" />
+							</a>
+							<a class="EventItem" href="/event/20190804/TopV.jsp">
+								<img class="EventBanner" src="/event/20190804/banner.png" />
+							</a>
+							-->
+						</section>
+					</div>
 
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
