@@ -93,20 +93,20 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
-				<a class="EventItem" href="/event/20190801/TopV.jsp">
-					<img class="EventBanner" src="/event/20190801/banner.png" />
-				</a>
-				<a class="EventItem" href="/event/20190802/TopV.jsp">
-					<img class="EventBanner" src="/event/20190802/banner.png" />
-				</a>
 				<!--
-				<a class="EventItem" href="/event/20190803/TopV.jsp">
-					<img class="EventBanner" src="/event/20190803/banner.png" />
-				</a>
 				<a class="EventItem" href="/event/20190804/TopV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
 				</a>
 				-->
+				<a class="EventItem" href="/event/20190803/TopV.jsp">
+					<img class="EventBanner" src="/event/20190803/banner.png" />
+				</a>
+				<a class="EventItem" href="/event/20190802/TopV.jsp">
+					<img class="EventBanner" src="/event/20190802/banner.png" />
+				</a>
+				<a class="EventItem" href="/event/20190801/TopV.jsp">
+					<img class="EventBanner" src="/event/20190801/banner.png" />
+				</a>
 			</section>
 			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">

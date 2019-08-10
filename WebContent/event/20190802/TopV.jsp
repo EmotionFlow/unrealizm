@@ -30,13 +30,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			.SettingBody {font-size: 20px;}
 			<%}%>
 		</style>
-		<script>
-		$(function(){
-			$(window).scroll(function(){
-				console.log($(window).scrollTop());
-			});
-		});
-		</script>
 	</head>
 	<body>
 		<div id="DispMsg"></div>
@@ -44,7 +37,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190802/main.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190802/main-2.png" />
 					<map name="MapLinks">
 						<area shape="rect" coords="0, 638, 180, 683" onclick="$(window).scrollTop(824);">
 						<area shape="rect" coords="180, 638, 360, 683" onclick="$(window).scrollTop(1145);">
