@@ -39,13 +39,13 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				<div class="SettingBody">
 					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190802/main-2.png" />
 					<map name="MapLinks">
-						<area shape="rect" coords="0, 638, 180, 683" onclick="$(window).scrollTop(824);">
-						<area shape="rect" coords="180, 638, 360, 683" onclick="$(window).scrollTop(1145);">
-						<area shape="rect" coords="0, 683 180, 733" onclick="$(window).scrollTop(1984);">
-						<area shape="rect" coords="180, 683 360, 733" onclick="$(window).scrollTop(2619);">
-						<area shape="rect" coords="0, 733 180, 783" onclick="$(window).scrollTop(3424);">
-						<area shape="rect" coords="180, 733 360, 783" onclick="$(window).scrollTop(3745);">
-						<area shape="rect" coords="0, 783 180, 823" onclick="$(window).scrollTop(4214);">
+						<area shape="rect" coords="0, 638, 180, 683" onclick="$('html, body').animate({scrollTop:824});">
+						<area shape="rect" coords="180, 638, 360, 683" onclick="$('html, body').animate({scrollTop:1145});">
+						<area shape="rect" coords="0, 683 180, 733" onclick="$('html, body').animate({scrollTop:1984});">
+						<area shape="rect" coords="180, 683 360, 733" onclick="$('html, body').animate({scrollTop:2619});">
+						<area shape="rect" coords="0, 733 180, 783" onclick="$('html, body').animate({scrollTop:3424});">
+						<area shape="rect" coords="180, 733 360, 783" onclick="$('html, body').animate({scrollTop:3745});">
+						<area shape="rect" coords="0, 783 180, 823" onclick="$('html, body').animate({scrollTop:4214});">
 
 						<area shape="circle" href="/event/20190802/godya_pro.png" coords="100, 1297, 70">
 						<area shape="circle" href="/event/20190802/mashu_pro.png" coords="260, 1297, 70">

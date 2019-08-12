@@ -3,6 +3,8 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <div class="SideBarMid">
 	<%if(Util.isSmartPhone(request)) {%>
+
+<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_320x250_sp_mid -->
 	<ins class="adsbygoogle"
@@ -12,14 +14,13 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
-
-<%//if(g_nSafeFilter==Common.AD_ID_ALL){%>
-<%//@ include file="/inner/TAdBaseAdponAll.jsp"%>
-<%//}else{%>
-<%//@ include file="/inner/TAdBaseAdponR18.jsp"%>
-<%//}%>
+<%}else{%>
+<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+<%}%>
 
 	<%} else {%>
+
+<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_468x60_bottom -->
 	<ins class="adsbygoogle"
@@ -29,5 +30,9 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
+<%}else{%>
+<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+<%}%>
+
 	<%}%>
 </div>

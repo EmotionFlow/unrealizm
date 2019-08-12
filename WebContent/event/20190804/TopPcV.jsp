@@ -27,6 +27,13 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			.SettingBody {font-size: 20px;}
 			<%}%>
 		</style>
+		<script>
+			$(function(){
+				$('#MainImage').on('click', function(e){
+					console.log(e.offsetX, e.offsetY);
+				});
+			})
+		</script>
 	</head>
 	<body>
 		<div id="DispMsg"></div>
@@ -35,7 +42,23 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img style="width: 100%;" src="/event/20190804/main.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190804/main.png" />
+					<map name="MapLinks">
+						<area shape="circle" coords="51, 738, 40" onclick="$('html, body').animate({scrollTop:1020});">
+						<area shape="circle" coords="138, 738, 40" onclick="$('html, body').animate({scrollTop:1515});">
+						<area shape="circle" coords="225, 738, 40" onclick="$('html, body').animate({scrollTop:2010});">
+						<area shape="circle" coords="311, 738, 40" onclick="$('html, body').animate({scrollTop:2505});">
+						<area shape="circle" coords="51, 825, 40" onclick="$('html, body').animate({scrollTop:3005});">
+						<area shape="circle" coords="138, 825, 40" onclick="$('html, body').animate({scrollTop:3503});">
+						<area shape="circle" coords="225, 825, 40" onclick="$('html, body').animate({scrollTop:4000});">
+						<area shape="circle" coords="311, 825, 40" onclick="$('html, body').animate({scrollTop:4495});">
+						<area shape="circle" coords="51, 912, 40" onclick="$('html, body').animate({scrollTop:4990});">
+						<area shape="circle" coords="138, 912, 40" onclick="$('html, body').animate({scrollTop:5482});">
+						<area shape="circle" coords="225, 912, 40" onclick="$('html, body').animate({scrollTop:5975});">
+						<area shape="circle" coords="311, 912, 40" onclick="$('html, body').animate({scrollTop:6467});">
+
+						<area shape="rect" coords="31, 6965, 330, 7015" onclick="$('html, body').animate({scrollTop:0});">
+					</map>
 				</div>
 			</div>
 		</article>
