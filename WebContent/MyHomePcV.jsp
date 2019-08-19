@@ -94,6 +94,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
 			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
 			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
+			.EventItemList .EventItem.Updated {position: relative;}
+			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 50px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PoipikuDesc.Event {margin: 30px 0 0 0;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
@@ -123,7 +125,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
-				<a class="EventItem" href="/event/20190804/TopPcV.jsp">
+				<a class="EventItem Updated" href="/event/20190804/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
 				</a>
 				<a class="EventItem" href="/event/20190803/TopPcV.jsp">
@@ -165,7 +167,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
-							<a class="EventItem" href="/event/20190804/TopPcV.jsp">
+							<a class="EventItem Updated" href="/event/20190804/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190804/banner.png" />
 							</a>
 							<a class="EventItem" href="/event/20190803/TopPcV.jsp">

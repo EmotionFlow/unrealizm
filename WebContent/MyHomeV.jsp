@@ -76,9 +76,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		});
 		</script>
 		<style>
-		.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
-		.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
-		.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
+			.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
+			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
+			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
+			.EventItemList .EventItem.Updated {position: relative;}
+			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 50px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 		</style>
 	</head>
 
@@ -93,7 +95,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
-				<a class="EventItem" href="/event/20190804/TopV.jsp">
+				<a class="EventItem Updated" href="/event/20190804/TopV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
 				</a>
 				<a class="EventItem" href="/event/20190803/TopV.jsp">
