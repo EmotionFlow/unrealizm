@@ -15,12 +15,14 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			.AnalogicoInfo {display: none;}
 			.SettingList .SettingListItem .SettingListTitle {text-align: center; font-size: 20x; font-weight: bold; margin: 20px 0 0 0;}
 			.SettingList .SettingListItem {margin: 0 0 20px 0;}
-			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 330px; left: 15px; top: 1318px; }
+			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 338px; left: 12px; top: 1319px; }
 			.SlotFrame .SlotItem {display: flex; flex-flow: column; align-items: center;}
 			.SlotItem .RouletteFrame {}
-			.SlotItem .RouletteFrame .Roulette {display: none; width: 100px; background-color: #fff; border-radius: 25px; overflow: hidden;}
-			.SlotItem .RouletteFrame .Roulette img {display: block; width: 100px;}
-			.SlotItem .StopBtn {display: block; width: 50px; height: 50px; margin: 10px 0 0 0; background-image: url('/event/20190803/button.png'); background-size: contain;}
+			.SlotItem .RouletteFrame .Roulette {display: none; width: 107px; background-color: #fff; border-radius: 10px; overflow: hidden;}
+			.SlotItem .RouletteFrame .Roulette img {display: block; width: 107px;}
+			.SlotItem .StopBtn {display: block; width: 60px; height: 60px; margin: 20px 0 0 0; background-image: url('/event/20190803/button.png'); background-size: contain;}
+			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 338px; left: 12px; top: 1605px; z-index: 1;}
+			.SlotCmdFrame .SlotCmdBtn {display: block; width: 170px; height: 66px;}
 			<%if(!Util.isSmartPhone(request)){%>
 			.Wrapper {
 				width: 360px;
@@ -34,7 +36,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			.SettingBody {font-size: 20px;}
 			<%}%>
 		</style>
-		<script type="text/javascript" src="/event/20190803/js/roulette.js"></script>
+		<script type="text/javascript" src="/event/20190803/js/roulette_01.js"></script>
 		<script>
 			$(function() {
 				var option = {
@@ -45,10 +47,13 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				$('#r1').roulette(option);
 				$('#r2').roulette(option);
 				$('#r3').roulette(option);
+				StartRoulette();
+			});
+			function StartRoulette() {
 				$('#r1').roulette('start');
 				$('#r2').roulette('start');
 				$('#r3').roulette('start');
-			});
+			}
 		</script>
 	</head>
 	<body>
@@ -57,7 +62,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190803/main.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190803/odai_1.png" />
 				</div>
 				<div class="SlotFrame">
 					<div class="SlotItem">
@@ -156,6 +161,9 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 						</div>
 						<div class="StopBtn" onclick="$('#r3').roulette('stop');"></div>
 					</div>
+				</div>
+				<div class="SlotCmdFrame">
+					<div class="SlotCmdBtn" onclick="StartRoulette()"></div>
 				</div>
 			</div>
 		</article>

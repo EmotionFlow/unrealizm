@@ -29,6 +29,8 @@
 			isSlowdown : false,
 			isStop : false,
 
+			isStart : false,
+
 			distance : 0,
 			runUpDistance : null,
 			slowdownTimer : null,
@@ -43,6 +45,7 @@
 			p.isRunUp = defaultProperty.isRunUp;
 			p.isSlowdown = defaultProperty.isSlowdown;
 			p.isStop = defaultProperty.isStop;
+			p.isStart = defaultProperty.isStart;
 			p.topPosition = defaultProperty.topPosition;
 
 			clearTimeout(p.slowDownTimer);
@@ -136,6 +139,7 @@
 		}
 
 		var start = function() {
+			if(p.isStart) return;
 			p.playCount++;
 			if (p.maxPlayCount && p.playCount > p.maxPlayCount) {
 				return;
@@ -147,9 +151,11 @@
 			p.slowDownTimer = setTimeout(function(){
 				slowDownSetup();
 			}, p.duration * 1000);
+			p.isStart = true;
 		}
 
 		var stop = function(option) {
+			if(!p.isStart) return;
 			if (!p.isSlowdown) {
 				if (option) {
 					var stopImageNumber = Number(option.stopImageNumber);
@@ -159,6 +165,7 @@
 				}
 				slowDownSetup();
 			}
+			p.isStart = false;
 		}
 		var option = function(options) {
 			p = $.extend(p, options);
