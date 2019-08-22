@@ -45,7 +45,14 @@ public class PopularTagListC {
 			cConn = dsPostgres.getConnection();
 
 			// TAG LIST
-			strSql = "select tag_txt FROM vw_rank_tag_weekly WHERE tag_txt NOT IN('オリジナル', 'ヒプマイ', 'fgo') order by rank desc offset ? limit ?";
+			CTag cPriprityTag = new CTag();
+			cPriprityTag.m_strTagTxt = "星座占い";
+			m_vContentListWeekly.add(cPriprityTag);
+			cPriprityTag = new CTag();
+			cPriprityTag.m_strTagTxt = "お題ルーレット";
+			m_vContentListWeekly.add(cPriprityTag);
+
+			strSql = "select tag_txt FROM vw_rank_tag_weekly WHERE tag_txt NOT IN('星座占い', 'お題ルーレット') order by rank desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
 			cState.setInt(2, SELECT_MAX_GALLERY);
