@@ -46,7 +46,7 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 		</script>
 		<%}%>
 		<style>
-		body {height: 100%;background: #ffffff;}
+		body {height: 100%;background: #333333;}
 		.AnalogicoInfo {display: none;}
 		</style>
 	</head>

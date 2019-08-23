@@ -29,7 +29,7 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 		});
 		</script>
 		<style>
-		body {height: 100%;background: #ffffff; padding: 0 !important;}
+		body {height: 100%;background: #333333; padding: 0 !important;}
 		</style>
 	</head>
 
