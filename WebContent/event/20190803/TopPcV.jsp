@@ -20,9 +20,10 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			.SlotItem .RouletteFrame {}
 			.SlotItem .RouletteFrame .Roulette {display: none; width: 107px; background-color: #fff; border-radius: 10px; overflow: hidden;}
 			.SlotItem .RouletteFrame .Roulette img {display: block; width: 107px;}
-			.SlotItem .StopBtn {display: block; width: 60px; height: 60px; margin: 20px 0 0 0; background-image: url('/event/20190803/button.png'); background-size: contain;}
-			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 338px; left: 12px; top: 1605px; z-index: 1;}
-			.SlotCmdFrame .SlotCmdBtn {display: block; width: 170px; height: 66px;}
+			.SlotItem .StopBtn {display: block; width: 60px; height: 60px; margin: 10px 0 0 0; background-image: url('/event/20190803/button.png'); background-size: contain; cursor: pointer;}
+			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 340px; left: 10px; top: 1587px; z-index: 1;}
+			.SlotCmdFrame .SlotCmdBtnDownload {display: block; width: 340px; height: 66px; cursor: pointer;}
+			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 170px; height: 66px; margin-top: 29px; cursor: pointer;}
 			<%if(!Util.isSmartPhone(request)){%>
 			.Wrapper {
 				width: 360px;
@@ -36,13 +37,16 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			.SettingBody {font-size: 20px;}
 			<%}%>
 		</style>
-		<script type="text/javascript" src="/event/20190803/js/roulette_01.js"></script>
+		<script type="text/javascript" src="/event/20190803/js/roulette_02.js"></script>
 		<script>
 			$(function() {
 				var option = {
 					speed : 10,
 					duration : 100,
 					stopImageNumber : -1,
+					stopCallback : function(pos) {
+						console.log(pos);
+					}
 				}
 				$('#r1').roulette(option);
 				$('#r2').roulette(option);
@@ -54,6 +58,19 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				$('#r2').roulette('start');
 				$('#r3').roulette('start');
 			}
+			function DownloadRouletteFile() {
+				$('#r1').roulette('stop');
+				$('#r2').roulette('stop');
+				$('#r3').roulette('stop');
+				var option = {stopImageNumber : -1};
+				$('#r1').roulette('get_pos', option);
+				var r1 = option.stopImageNumber+1;
+				$('#r2').roulette('get_pos', option);
+				var r2 = option.stopImageNumber+1;
+				$('#r3').roulette('get_pos', option);
+				var r3 = option.stopImageNumber+1;
+				location.href = "/DownloadRouletteFile?R1="+r1+"&R2="+r2+"&R3="+r3;
+			}
 		</script>
 	</head>
 	<body>
@@ -63,7 +80,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190803/odai_1.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190803/odai_2.png" />
 				</div>
 				<div class="SlotFrame">
 					<div class="SlotItem">
@@ -164,7 +181,8 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 					</div>
 				</div>
 				<div class="SlotCmdFrame">
-					<div class="SlotCmdBtn" onclick="StartRoulette()"></div>
+					<div class="SlotCmdBtnDownload" onclick="DownloadRouletteFile()"></div>
+					<div class="SlotCmdBtnStart" onclick="StartRoulette()"></div>
 				</div>
 			</div>
 		</article>

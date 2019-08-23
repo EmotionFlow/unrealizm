@@ -86,7 +86,8 @@
 			if (p.maxDistance && p.distance >= p.maxDistance) {
 				p.isStop = true;
 				reset();
-				p.stopCallback(p.$rouletteTarget.find('img').eq(p.stopImageNumber));
+				//p.stopCallback(p.$rouletteTarget.find('img').eq(p.stopImageNumber));
+				p.stopCallback(p.stopImageNumber);
 				return;
 			}
 			p.distance += speed_;
@@ -175,11 +176,16 @@
 			defaultProperty.originalStopImageNumber = options.stopImageNumber;
 		}
 
+		var get_pos = function(options) {
+			options.stopImageNumber = Number(p.stopImageNumber);
+		}
+
 		var ret = {
 			start : start,
 			stop : stop,
 			init : init,
-			option : option
+			option : option,
+			get_pos : get_pos
 		}
 		return ret;
 	}
