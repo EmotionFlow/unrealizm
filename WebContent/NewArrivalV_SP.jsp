@@ -18,7 +18,7 @@
 					"data": {"PG" : g_nPage},
 					"url": "/f/NewArrivalF_SP.jsp",
 					"success": function(data) {
-						if(data) {
+						if($.trim(data).length>0) {
 							g_nPage++;
 							$('#InfoMsg').hide();
 							$("#IllustThumbList").append(data);

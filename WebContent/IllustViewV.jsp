@@ -90,7 +90,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						"ADF" : <%=cResults.m_cContent.m_nSafeFilter%>},
 					"url": "/f/IllustViewF.jsp",
 					"success": function(data) {
-						if(data) {
+						if($.trim(data).length>0) {
 							g_nPage++;
 							$("#IllustItemList").append(data);
 							$(".Waiting").remove();

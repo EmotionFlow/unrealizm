@@ -77,7 +77,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword, "PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
 				"url": "/f/IllustListGridF.jsp",
 				"success": function(data) {
-					if(data) {
+					if($.trim(data).length>0) {
 						g_nPage++;
 						$("#IllustThumbList").append(data);
 						$(".Waiting").remove();

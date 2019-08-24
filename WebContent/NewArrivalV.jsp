@@ -32,7 +32,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					"data": {"PG" : g_nPage, "CD" : g_nCategory},
 					"url": "/f/NewArrivalF.jsp",
 					"success": function(data) {
-						if(data) {
+						if($.trim(data).length>0) {
 							g_nPage++;
 							$('#InfoMsg').hide();
 							$("#IllustThumbList").append(data);

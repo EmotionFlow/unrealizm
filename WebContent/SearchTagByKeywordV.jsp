@@ -36,7 +36,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>")},
 					"url": "/f/SearchTagByKeywordF.jsp",
 					"success": function(data) {
-						if(data) {
+						if($.trim(data).length>0) {
 							g_nPage++;
 							$('#InfoMsg').hide();
 							$("#IllustThumbList").append(data);

@@ -37,7 +37,7 @@ if(!cResults.getResults(cCheckLogin)) {
 					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
 					"url": "/f/IllustListF.jsp",
 					"success": function(data) {
-						if(data) {
+						if($.trim(data).length>0) {
 							g_nPage++;
 							$('#InfoMsg').hide();
 							$("#IllustThumbList").append(data);
