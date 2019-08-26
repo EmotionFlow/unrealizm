@@ -72,6 +72,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			.SettingList .SettingListItem .SettingListTitle {font-size: 24px;}
 			.SettingBody {font-size: 20px;}
 			<%}%>
+			.SettingBody {position: relative;}
+			.temp_dl_btn {display: block; position: absolute; width: 340px; height: 47px; left: 10px; z-index: 1;}
 		</style>
 	</head>
 	<body>
@@ -80,7 +82,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190804/seiza_20190819.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190804/seiza_20190826.png" />
 					<map name="MapLinks">
 						<area shape="circle" coords="51, 738, 40" onclick="$('html, body').animate({scrollTop:1020});">
 						<area shape="circle" coords="138, 738, 40" onclick="$('html, body').animate({scrollTop:1560});">
@@ -95,22 +97,20 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<area shape="circle" coords="225, 912, 40" onclick="$('html, body').animate({scrollTop:6410});">
 						<area shape="circle" coords="311, 912, 40" onclick="$('html, body').animate({scrollTop:6950});">
 
-						<area shape="rect" coords="10, 1500, 350, 1547" href="/event/20190804/pallete_20190819/pallete_ohithuji.png">
-						<area shape="rect" coords="10, 2040, 350, 2087" href="/event/20190804/pallete_20190819/pallete_oushi.png">
-						<area shape="rect" coords="10, 2580, 350, 2627" href="/event/20190804/pallete_20190819/pallete_futago.png">
-						<area shape="rect" coords="10, 3120, 350, 3167" href="/event/20190804/pallete_20190819/pallete_kani.png">
-						<area shape="rect" coords="10, 3660, 350, 3707" href="/event/20190804/pallete_20190819/pallete_shishi.png">
-						<area shape="rect" coords="10, 4198, 350, 4245" href="/event/20190804/pallete_20190819/pallete_otome.png">
-						<area shape="rect" coords="10, 4737, 350, 4784" href="/event/20190804/pallete_20190819/pallete_tenbin.png">
-						<area shape="rect" coords="10, 5276, 350, 5323" href="/event/20190804/pallete_20190819/pallete_sasori.png">
-						<area shape="rect" coords="10, 5815, 350, 5862" href="/event/20190804/pallete_20190819/pallete_ite.png">
-						<area shape="rect" coords="10, 6353, 350, 6400" href="/event/20190804/pallete_20190819/pallete_yagi.png">
-						<area shape="rect" coords="10, 6890, 350, 6937" href="/event/20190804/pallete_20190819/pallete_mizugame.png">
-						<area shape="rect" coords="10, 7430, 350, 7475" href="/event/20190804/pallete_20190819/pallete_uo.png">
-
-
 						<area shape="rect" coords="31, 7500, 330, 7550" onclick="$('html, body').animate({scrollTop:0});">
 					</map>
+					<a class="temp_dl_btn" style="top: 1500px" href="/event/20190804/seiza__20190826/seiza_tenp_ohitsuji.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 2040px" href="/event/20190804/seiza__20190826/seiza_tenp_oushi.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 2580px" href="/event/20190804/seiza__20190826/seiza_tenp_futago.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 3120px" href="/event/20190804/seiza__20190826/seiza_tenp_kani.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 3660px" href="/event/20190804/seiza__20190826/seiza_tenp_shishi.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 4198px" href="/event/20190804/seiza__20190826/seiza_tenp_otome.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 4737px" href="/event/20190804/seiza__20190826/seiza_tenp_tenbin.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 5276px" href="/event/20190804/seiza__20190826/seiza_tenp_sasori.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 5815px" href="/event/20190804/seiza__20190826/seiza_tenp_ite.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 6353px" href="/event/20190804/seiza__20190826/seiza_tenp_yagi.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 6890px" href="/event/20190804/seiza__20190826/seiza_tenp_mizugame.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 7430px" href="/event/20190804/seiza__20190826/seiza_tenp_uo.png" download="template.png"></a>
 				</div>
 			</div>
 		</article>

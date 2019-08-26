@@ -203,26 +203,26 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
-								<img src="/event/20190803/r1/01.png" />
-								<img src="/event/20190803/r1/02.png" />
-								<img src="/event/20190803/r1/03.png" />
-								<img src="/event/20190803/r1/04.png" />
-								<img src="/event/20190803/r1/05.png" />
-								<img src="/event/20190803/r1/06.png" />
-								<img src="/event/20190803/r1/07.png" />
-								<img src="/event/20190803/r1/08.png" />
-								<img src="/event/20190803/r1/09.png" />
-								<img src="/event/20190803/r1/10.png" />
-								<img src="/event/20190803/r1/11.png" />
-								<img src="/event/20190803/r1/12.png" />
-								<img src="/event/20190803/r1/13.png" />
-								<img src="/event/20190803/r1/14.png" />
-								<img src="/event/20190803/r1/15.png" />
-								<img src="/event/20190803/r1/16.png" />
-								<img src="/event/20190803/r1/17.png" />
-								<img src="/event/20190803/r1/18.png" />
-								<img src="/event/20190803/r1/19.png" />
-								<img src="/event/20190803/r1/20.png" />
+								<img src="/event/20190803/r1_03/01.png" />
+								<img src="/event/20190803/r1_03/02.png" />
+								<img src="/event/20190803/r1_03/03.png" />
+								<img src="/event/20190803/r1_03/04.png" />
+								<img src="/event/20190803/r1_03/05.png" />
+								<img src="/event/20190803/r1_03/06.png" />
+								<img src="/event/20190803/r1_03/07.png" />
+								<img src="/event/20190803/r1_03/08.png" />
+								<img src="/event/20190803/r1_03/09.png" />
+								<img src="/event/20190803/r1_03/10.png" />
+								<img src="/event/20190803/r1_03/11.png" />
+								<img src="/event/20190803/r1_03/12.png" />
+								<img src="/event/20190803/r1_03/13.png" />
+								<img src="/event/20190803/r1_03/14.png" />
+								<img src="/event/20190803/r1_03/15.png" />
+								<img src="/event/20190803/r1_03/16.png" />
+								<img src="/event/20190803/r1_03/17.png" />
+								<img src="/event/20190803/r1_03/18.png" />
+								<img src="/event/20190803/r1_03/19.png" />
+								<img src="/event/20190803/r1_03/20.png" />
 							</div>
 						</div>
 						<div class="StopBtn" onclick="$('#r1').roulette('stop');"></div>
@@ -230,30 +230,30 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
-								<img src="/event/20190803/r2/01.png" />
-								<img src="/event/20190803/r2/02.png" />
-								<img src="/event/20190803/r2/03.png" />
-								<img src="/event/20190803/r2/04.png" />
-								<img src="/event/20190803/r2/05.png" />
-								<img src="/event/20190803/r2/06.png" />
-								<img src="/event/20190803/r2/07.png" />
-								<img src="/event/20190803/r2/08.png" />
-								<img src="/event/20190803/r2/09.png" />
-								<img src="/event/20190803/r2/10.png" />
-								<img src="/event/20190803/r2/11.png" />
-								<img src="/event/20190803/r2/12.png" />
-								<img src="/event/20190803/r2/13.png" />
-								<img src="/event/20190803/r2/14.png" />
-								<img src="/event/20190803/r2/15.png" />
-								<img src="/event/20190803/r2/16.png" />
-								<img src="/event/20190803/r2/17.png" />
-								<img src="/event/20190803/r2/18.png" />
-								<img src="/event/20190803/r2/19.png" />
-								<img src="/event/20190803/r2/20.png" />
-								<img src="/event/20190803/r2/21.png" />
-								<img src="/event/20190803/r2/22.png" />
-								<img src="/event/20190803/r2/23.png" />
-								<img src="/event/20190803/r2/24.png" />
+								<img src="/event/20190803/r2_03/01.png" />
+								<img src="/event/20190803/r2_03/02.png" />
+								<img src="/event/20190803/r2_03/03.png" />
+								<img src="/event/20190803/r2_03/04.png" />
+								<img src="/event/20190803/r2_03/05.png" />
+								<img src="/event/20190803/r2_03/06.png" />
+								<img src="/event/20190803/r2_03/07.png" />
+								<img src="/event/20190803/r2_03/08.png" />
+								<img src="/event/20190803/r2_03/09.png" />
+								<img src="/event/20190803/r2_03/10.png" />
+								<img src="/event/20190803/r2_03/11.png" />
+								<img src="/event/20190803/r2_03/12.png" />
+								<img src="/event/20190803/r2_03/13.png" />
+								<img src="/event/20190803/r2_03/14.png" />
+								<img src="/event/20190803/r2_03/15.png" />
+								<img src="/event/20190803/r2_03/16.png" />
+								<img src="/event/20190803/r2_03/17.png" />
+								<img src="/event/20190803/r2_03/18.png" />
+								<img src="/event/20190803/r2_03/19.png" />
+								<img src="/event/20190803/r2_03/20.png" />
+								<img src="/event/20190803/r2_03/21.png" />
+								<img src="/event/20190803/r2_03/22.png" />
+								<img src="/event/20190803/r2_03/23.png" />
+								<img src="/event/20190803/r2_03/24.png" />
 							</div>
 						</div>
 						<div class="StopBtn" onclick="$('#r2').roulette('stop');"></div>
@@ -261,37 +261,140 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r3" class="Roulette">
-								<img src="/event/20190803/r3/01.png" />
-								<img src="/event/20190803/r3/02.png" />
-								<img src="/event/20190803/r3/03.png" />
-								<img src="/event/20190803/r3/04.png" />
-								<img src="/event/20190803/r3/05.png" />
-								<img src="/event/20190803/r3/06.png" />
-								<img src="/event/20190803/r3/07.png" />
-								<img src="/event/20190803/r3/08.png" />
-								<img src="/event/20190803/r3/09.png" />
-								<img src="/event/20190803/r3/10.png" />
-								<img src="/event/20190803/r3/11.png" />
-								<img src="/event/20190803/r3/12.png" />
-								<img src="/event/20190803/r3/13.png" />
-								<img src="/event/20190803/r3/14.png" />
-								<img src="/event/20190803/r3/15.png" />
-								<img src="/event/20190803/r3/16.png" />
-								<img src="/event/20190803/r3/17.png" />
-								<img src="/event/20190803/r3/18.png" />
-								<img src="/event/20190803/r3/19.png" />
-								<img src="/event/20190803/r3/20.png" />
-								<img src="/event/20190803/r3/21.png" />
-								<img src="/event/20190803/r3/22.png" />
-								<img src="/event/20190803/r3/23.png" />
-								<img src="/event/20190803/r3/24.png" />
-								<img src="/event/20190803/r3/25.png" />
-								<img src="/event/20190803/r3/26.png" />
-								<img src="/event/20190803/r3/27.png" />
-								<img src="/event/20190803/r3/28.png" />
-								<img src="/event/20190803/r3/29.png" />
-								<img src="/event/20190803/r3/30.png" />
-								<img src="/event/20190803/r3/31.png" />
+								<img src="/event/20190803/r3_03/01.png" />
+								<img src="/event/20190803/r3_03/02.png" />
+								<img src="/event/20190803/r3_03/03.png" />
+								<img src="/event/20190803/r3_03/04.png" />
+								<img src="/event/20190803/r3_03/05.png" />
+								<img src="/event/20190803/r3_03/06.png" />
+								<img src="/event/20190803/r3_03/07.png" />
+								<img src="/event/20190803/r3_03/08.png" />
+								<img src="/event/20190803/r3_03/09.png" />
+								<img src="/event/20190803/r3_03/10.png" />
+								<img src="/event/20190803/r3_03/11.png" />
+								<img src="/event/20190803/r3_03/12.png" />
+								<img src="/event/20190803/r3_03/13.png" />
+								<img src="/event/20190803/r3_03/14.png" />
+								<img src="/event/20190803/r3_03/15.png" />
+								<img src="/event/20190803/r3_03/16.png" />
+								<img src="/event/20190803/r3_03/17.png" />
+								<img src="/event/20190803/r3_03/18.png" />
+								<img src="/event/20190803/r3_03/19.png" />
+								<img src="/event/20190803/r3_03/20.png" />
+								<img src="/event/20190803/r3_03/21.png" />
+								<img src="/event/20190803/r3_03/22.png" />
+								<img src="/event/20190803/r3_03/23.png" />
+								<img src="/event/20190803/r3_03/24.png" />
+								<img src="/event/20190803/r3_03/25.png" />
+								<img src="/event/20190803/r3_03/26.png" />
+								<img src="/event/20190803/r3_03/27.png" />
+								<img src="/event/20190803/r3_03/28.png" />
+								<img src="/event/20190803/r3_03/29.png" />
+								<img src="/event/20190803/r3_03/30.png" />
+								<img src="/event/20190803/r3_03/31.png" />
+								<img src="/event/20190803/r3_03/32.png" />
+								<img src="/event/20190803/r3_03/33.png" />
+								<img src="/event/20190803/r3_03/34.png" />
+							</div>
+						</div>
+						<div class="StopBtn" onclick="$('#r3').roulette('stop');"></div>
+					</div>
+				<div class="SlotFrame">
+					<div class="SlotItem">
+						<div class="RouletteFrame">
+							<div id="r1" class="Roulette">
+								<img src="/event/20190803/r1_03/01.png" />
+								<img src="/event/20190803/r1_03/02.png" />
+								<img src="/event/20190803/r1_03/03.png" />
+								<img src="/event/20190803/r1_03/04.png" />
+								<img src="/event/20190803/r1_03/05.png" />
+								<img src="/event/20190803/r1_03/06.png" />
+								<img src="/event/20190803/r1_03/07.png" />
+								<img src="/event/20190803/r1_03/08.png" />
+								<img src="/event/20190803/r1_03/09.png" />
+								<img src="/event/20190803/r1_03/10.png" />
+								<img src="/event/20190803/r1_03/11.png" />
+								<img src="/event/20190803/r1_03/12.png" />
+								<img src="/event/20190803/r1_03/13.png" />
+								<img src="/event/20190803/r1_03/14.png" />
+								<img src="/event/20190803/r1_03/15.png" />
+								<img src="/event/20190803/r1_03/16.png" />
+								<img src="/event/20190803/r1_03/17.png" />
+								<img src="/event/20190803/r1_03/18.png" />
+								<img src="/event/20190803/r1_03/19.png" />
+								<img src="/event/20190803/r1_03/20.png" />
+							</div>
+						</div>
+						<div class="StopBtn" onclick="$('#r1').roulette('stop');"></div>
+					</div>
+					<div class="SlotItem">
+						<div class="RouletteFrame">
+							<div id="r2" class="Roulette">
+								<img src="/event/20190803/r2_03/01.png" />
+								<img src="/event/20190803/r2_03/02.png" />
+								<img src="/event/20190803/r2_03/03.png" />
+								<img src="/event/20190803/r2_03/04.png" />
+								<img src="/event/20190803/r2_03/05.png" />
+								<img src="/event/20190803/r2_03/06.png" />
+								<img src="/event/20190803/r2_03/07.png" />
+								<img src="/event/20190803/r2_03/08.png" />
+								<img src="/event/20190803/r2_03/09.png" />
+								<img src="/event/20190803/r2_03/10.png" />
+								<img src="/event/20190803/r2_03/11.png" />
+								<img src="/event/20190803/r2_03/12.png" />
+								<img src="/event/20190803/r2_03/13.png" />
+								<img src="/event/20190803/r2_03/14.png" />
+								<img src="/event/20190803/r2_03/15.png" />
+								<img src="/event/20190803/r2_03/16.png" />
+								<img src="/event/20190803/r2_03/17.png" />
+								<img src="/event/20190803/r2_03/18.png" />
+								<img src="/event/20190803/r2_03/19.png" />
+								<img src="/event/20190803/r2_03/20.png" />
+								<img src="/event/20190803/r2_03/21.png" />
+								<img src="/event/20190803/r2_03/22.png" />
+								<img src="/event/20190803/r2_03/23.png" />
+								<img src="/event/20190803/r2_03/24.png" />
+							</div>
+						</div>
+						<div class="StopBtn" onclick="$('#r2').roulette('stop');"></div>
+					</div>
+					<div class="SlotItem">
+						<div class="RouletteFrame">
+							<div id="r3" class="Roulette">
+								<img src="/event/20190803/r3_03/01.png" />
+								<img src="/event/20190803/r3_03/02.png" />
+								<img src="/event/20190803/r3_03/03.png" />
+								<img src="/event/20190803/r3_03/04.png" />
+								<img src="/event/20190803/r3_03/05.png" />
+								<img src="/event/20190803/r3_03/06.png" />
+								<img src="/event/20190803/r3_03/07.png" />
+								<img src="/event/20190803/r3_03/08.png" />
+								<img src="/event/20190803/r3_03/09.png" />
+								<img src="/event/20190803/r3_03/10.png" />
+								<img src="/event/20190803/r3_03/11.png" />
+								<img src="/event/20190803/r3_03/12.png" />
+								<img src="/event/20190803/r3_03/13.png" />
+								<img src="/event/20190803/r3_03/14.png" />
+								<img src="/event/20190803/r3_03/15.png" />
+								<img src="/event/20190803/r3_03/16.png" />
+								<img src="/event/20190803/r3_03/17.png" />
+								<img src="/event/20190803/r3_03/18.png" />
+								<img src="/event/20190803/r3_03/19.png" />
+								<img src="/event/20190803/r3_03/20.png" />
+								<img src="/event/20190803/r3_03/21.png" />
+								<img src="/event/20190803/r3_03/22.png" />
+								<img src="/event/20190803/r3_03/23.png" />
+								<img src="/event/20190803/r3_03/24.png" />
+								<img src="/event/20190803/r3_03/25.png" />
+								<img src="/event/20190803/r3_03/26.png" />
+								<img src="/event/20190803/r3_03/27.png" />
+								<img src="/event/20190803/r3_03/28.png" />
+								<img src="/event/20190803/r3_03/29.png" />
+								<img src="/event/20190803/r3_03/30.png" />
+								<img src="/event/20190803/r3_03/31.png" />
+								<img src="/event/20190803/r3_03/32.png" />
+								<img src="/event/20190803/r3_03/33.png" />
+								<img src="/event/20190803/r3_03/34.png" />
 							</div>
 						</div>
 						<div class="StopBtn" onclick="$('#r3').roulette('stop');"></div>
