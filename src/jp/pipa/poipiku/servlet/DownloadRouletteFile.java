@@ -46,11 +46,17 @@ public class DownloadRouletteFile extends HttpServlet {
 		BufferedImage imgFile = cResults.getResults(cCheckLogin);
 		if(imgFile == null) return;
 
+		response.setHeader("Cache-Control", "public");
 		response.setContentType("image/png");
+		//{
 		//response.setContentType("application/octet-stream");
 		//response.setHeader("Content-Transfer-Encoding", "binary");
+		//}
 
-		response.setHeader("Content-Disposition", "attachment;filename=\"template.png\"");
+		//{
+		//response.setHeader("Content-Disposition", "attachment;filename=\"template.png\"");
+		response.setHeader("Content-Disposition", "inline;filename=\"template.png\"");
+		//}
 		//response.setStatus(HttpServletResponse.SC_OK);
 
 		try {

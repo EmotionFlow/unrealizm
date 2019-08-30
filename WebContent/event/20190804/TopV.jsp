@@ -99,18 +99,18 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 						<area shape="rect" coords="31, 7500, 330, 7550" onclick="$('html, body').animate({scrollTop:0});">
 					</map>
-					<a class="temp_dl_btn" style="top: 1500px" href="/event/20190804/seiza__20190826/seiza_tenp_ohitsuji.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 2040px" href="/event/20190804/seiza__20190826/seiza_tenp_oushi.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 2580px" href="/event/20190804/seiza__20190826/seiza_tenp_futago.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 3120px" href="/event/20190804/seiza__20190826/seiza_tenp_kani.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 3660px" href="/event/20190804/seiza__20190826/seiza_tenp_shishi.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 4198px" href="/event/20190804/seiza__20190826/seiza_tenp_otome.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 4737px" href="/event/20190804/seiza__20190826/seiza_tenp_tenbin.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 5276px" href="/event/20190804/seiza__20190826/seiza_tenp_sasori.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 5815px" href="/event/20190804/seiza__20190826/seiza_tenp_ite.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 6353px" href="/event/20190804/seiza__20190826/seiza_tenp_yagi.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 6890px" href="/event/20190804/seiza__20190826/seiza_tenp_mizugame.png" download="template.png"></a>
-					<a class="temp_dl_btn" style="top: 7430px" href="/event/20190804/seiza__20190826/seiza_tenp_uo.png" download="template.png"></a>
+					<a class="temp_dl_btn" style="top: 1500px" href="/event/20190804/seiza__20190826/seiza_tenp_ohitsuji.png"></a>
+					<a class="temp_dl_btn" style="top: 2040px" href="/event/20190804/seiza__20190826/seiza_tenp_oushi.png"></a>
+					<a class="temp_dl_btn" style="top: 2580px" href="/event/20190804/seiza__20190826/seiza_tenp_futago.png"></a>
+					<a class="temp_dl_btn" style="top: 3120px" href="/event/20190804/seiza__20190826/seiza_tenp_kani.png"></a>
+					<a class="temp_dl_btn" style="top: 3660px" href="/event/20190804/seiza__20190826/seiza_tenp_shishi.png"></a>
+					<a class="temp_dl_btn" style="top: 4198px" href="/event/20190804/seiza__20190826/seiza_tenp_otome.png"></a>
+					<a class="temp_dl_btn" style="top: 4737px" href="/event/20190804/seiza__20190826/seiza_tenp_tenbin.png"></a>
+					<a class="temp_dl_btn" style="top: 5276px" href="/event/20190804/seiza__20190826/seiza_tenp_sasori.png"></a>
+					<a class="temp_dl_btn" style="top: 5815px" href="/event/20190804/seiza__20190826/seiza_tenp_ite.png"></a>
+					<a class="temp_dl_btn" style="top: 6353px" href="/event/20190804/seiza__20190826/seiza_tenp_yagi.png"></a>
+					<a class="temp_dl_btn" style="top: 6890px" href="/event/20190804/seiza__20190826/seiza_tenp_mizugame.png"></a>
+					<a class="temp_dl_btn" style="top: 7430px" href="/event/20190804/seiza__20190826/seiza_tenp_uo.png"></a>
 				</div>
 			</div>
 		</article>
