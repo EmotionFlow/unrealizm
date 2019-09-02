@@ -80,7 +80,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
 			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
 			.EventItemList .EventItem.Updated {position: relative;}
-			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 50px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
+			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 		</style>
 	</head>
 
@@ -95,7 +95,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
-				<a class="EventItem" href="/event/20190804/TopV.jsp">
+				<a class="EventItem Updated" href="/event/20190804/TopV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
 				</a>
 				<!--
