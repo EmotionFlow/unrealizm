@@ -95,17 +95,17 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
+				<!--
+				<a class="EventItem Updated" href="/event/20190902/TopV.jsp">
+					<img class="EventBanner" src="/event/20190902/gap.png" />
+				</a>
+				<a class="EventItem Updated" href="/event/20190901/TopV.jsp">
+					<img class="EventBanner" src="/event/20190901/coupling.png" />
+				</a>
+				-->
 				<a class="EventItem" href="/event/20190804/TopV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
 				</a>
-				<!--
-				<a class="EventItem Updated" href="/event/20190803/TopV.jsp">
-					<img class="EventBanner" src="/event/20190803/banner.png" />
-				</a>
-				<a class="EventItem" href="/event/20190802/TopV.jsp">
-					<img class="EventBanner" src="/event/20190802/banner.png" />
-				</a>
-				-->
 				<a class="EventItem" href="/event/20190801/TopV.jsp">
 					<img class="EventBanner" src="/event/20190801/banner.png" />
 				</a>
