@@ -95,7 +95,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
-				<a class="EventItem Updated" href="/event/20190804/TopV.jsp">
+				<a class="EventItem" href="/event/20190804/TopV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
 				</a>
 				<!--
