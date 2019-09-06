@@ -86,7 +86,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190902/gap_20190906.png" />
 				</div>
 				<div class="CmdFrame">
-					<a class="TwitterLink" href="https://twitter.com/pipajp" target="_blank"></a>
+					<a class="TwitterLink" href="/2/" target="_blank"></a>
 				</div>
 			</div>
 		</article>
