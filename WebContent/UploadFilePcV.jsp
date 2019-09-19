@@ -8,18 +8,30 @@ if(!cCheckLogin.m_bLogin) {
 	return;
 }
 
+String strTag = "";
+try {
+	request.setCharacterEncoding("UTF-8");
+	strTag = Common.TrimAll(request.getParameter("TAG"));
+} catch(Exception e) {
+	;
+}
+
+/*
 Cookie cCookies[] = request.getCookies();
 if(cCookies != null) {
 	for(int i = 0; i < cCookies.length; i++) {
 		if(cCookies[i].getName().equals("MOD")) {
 			int nDispMode = Common.ToInt(cCookies[i].getValue());
 			if(nDispMode == 1) {
-				response.sendRedirect("/UploadPastePcV.jsp");
+				String strUrl = "/UploadPastePcV.jsp";
+				if(!strTag.isEmpty()) {strUrl+="?TAG="+URLEncoder.encode(strTag, "UTF-8");}
+				response.sendRedirect(strUrl);
 				return;
 			}
 		}
 	}
 }
+*/
 %>
 <!DOCTYPE html>
 <html>
@@ -85,8 +97,8 @@ if(cCookies != null) {
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
+				<li><a class="TabMenuItem" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			</ul>
 		</nav>
 
@@ -112,7 +124,7 @@ if(cCookies != null) {
 					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
 				</div>
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" />
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Common.ToStringHtml(strTag)%>"<%}%> />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">

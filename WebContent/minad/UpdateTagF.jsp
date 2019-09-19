@@ -13,7 +13,7 @@ class UpdateTagCParam {
 }
 
 class UpdateTagC {
-	public Vector<CContent> m_vContentList = new Vector<CContent>();
+	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 
 	public int GetResults(UpdateTagCParam cParam) {
 		DataSource dsPostgres = null;
@@ -31,42 +31,30 @@ class UpdateTagC {
 			// Get description data
 
 			//CContent
-			strSql = "SELECT * FROM contents_0000 WHERE description!=''";
+			strSql = "SELECT * FROM tags_0000 WHERE tag_kana_txt isNull";
 			cState = cConn.prepareStatement(strSql);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CContent cContent = new CContent();
-				cContent.m_nContentId		= cResSet.getInt("content_id");
-				cContent.m_strDescription	= Common.ToString(cResSet.getString("description"));
-				m_vContentList.addElement(cContent);
+				CTag cTag = new CTag(cResSet);
+				cTag.m_nTagId = cResSet.getInt("tag_id");
+				m_vContentList.add(cTag);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			// Clean all tags
-			strSql ="TRUNCATE tags_0000";
+			// Update Kana
+			strSql ="UPDATE tags_0000 SET tag_kana_txt=? WHERE tag_id=?;";
 			cState = cConn.prepareStatement(strSql);
-			cState.executeUpdate();
-			cState.close();cState=null;
-
-			// Add my tags
-			for(CContent cContent : m_vContentList) {
-				Pattern ptn = Pattern.compile(Common.TAG_PATTERN, Pattern.MULTILINE);
-				Matcher matcher = ptn.matcher(cContent.m_strDescription.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
-				cState = cConn.prepareStatement(strSql);
-				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-					try {
-						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-						cState.setInt(2, cContent.m_nContentId);
-						cState.executeUpdate();
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
+			for(CTag cTag : m_vContentList) {
+				try {
+					cState.setString(1, Util.getKana(cTag.m_strTagTxt));
+					cState.setInt(2, cTag.m_nTagId);
+					cState.executeUpdate();
+				} catch(Exception e) {
+					e.printStackTrace();
 				}
-				cState.close();cState=null;
 			}
-
+			cState.close();cState=null;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

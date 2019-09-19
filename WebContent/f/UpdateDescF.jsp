@@ -79,12 +79,13 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 				// hush tag
 				Pattern ptn = Pattern.compile(Common.HUSH_TAG_PATTERN, Pattern.MULTILINE);
 				Matcher matcher = ptn.matcher(m_strDescription.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type, tag_kana_txt) VALUES(?, ?, 1, ?) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
 						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
 						cState.setInt(2, m_nContentId);
+						cState.setString(3, Util.getKana(Common.SubStrNum(matcher.group(1), 64)));
 						cState.executeUpdate();
 					} catch(Exception e) {
 						Log.d("tag duplicate:"+matcher.group(1));
@@ -94,12 +95,13 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 				// my tag
 				ptn = Pattern.compile(Common.MY_TAG_PATTERN, Pattern.MULTILINE);
 				matcher = ptn.matcher(m_strDescription.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3) ON CONFLICT DO NOTHING;";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type, tag_kana_txt) VALUES(?, ?, 3, ?) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
 						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
 						cState.setInt(2, m_nContentId);
+						cState.setString(3, Util.getKana(Common.SubStrNum(matcher.group(1), 64)));
 						cState.executeUpdate();
 					} catch(Exception e) {
 						Log.d("tag duplicate:"+matcher.group(1));
@@ -112,12 +114,13 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 				// normal tag
 				Pattern ptn = Pattern.compile(Common.NORMAL_TAG_PATTERN, Pattern.MULTILINE);
 				Matcher matcher = ptn.matcher(" "+m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type, tag_kana_txt) VALUES(?, ?, 1, ?) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
 						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
 						cState.setInt(2, m_nContentId);
+						cState.setString(3, Util.getKana(Common.SubStrNum(matcher.group(1), 64)));
 						cState.executeUpdate();
 					} catch(Exception e) {
 						Log.d("tag duplicate:"+matcher.group(1));
@@ -127,12 +130,13 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 				// hush tag
 				ptn = Pattern.compile(Common.HUSH_TAG_PATTERN, Pattern.MULTILINE);
 				matcher = ptn.matcher(" "+m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type, tag_kana_txt) VALUES(?, ?, 1, ?) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
 						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
 						cState.setInt(2, m_nContentId);
+						cState.setString(3, Util.getKana(Common.SubStrNum(matcher.group(1), 64)));
 						cState.executeUpdate();
 					} catch(Exception e) {
 						Log.d("tag duplicate:"+matcher.group(1));
@@ -142,12 +146,13 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 				// my tag
 				ptn = Pattern.compile(Common.MY_TAG_PATTERN, Pattern.MULTILINE);
 				matcher = ptn.matcher(" "+m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3) ON CONFLICT DO NOTHING;";
+				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type, tag_kana_txt) VALUES(?, ?, 3, ?) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
 					try {
 						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
 						cState.setInt(2, m_nContentId);
+						cState.setString(3, Util.getKana(Common.SubStrNum(matcher.group(1), 64)));
 						cState.executeUpdate();
 					} catch(Exception e) {
 						Log.d("tag duplicate:"+matcher.group(1));

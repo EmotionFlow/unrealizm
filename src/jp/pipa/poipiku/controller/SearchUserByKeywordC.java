@@ -66,12 +66,7 @@ public class SearchUserByKeywordC {
 			cState.setInt(3, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CUser cContent = new CUser();
-				cContent.m_nUserId		= cResSet.getInt("user_id");
-				cContent.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_strFileName	= Common.ToString(cResSet.getString("file_name"));
-				if(cContent.m_strFileName.length()<=0) cContent.m_strFileName="/img/default_user.jpg";
-				m_vContentList.add(cContent);
+				m_vContentList.add(new CUser(cResSet));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

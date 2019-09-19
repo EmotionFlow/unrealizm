@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import jp.pipa.poipiku.Common;
 
 public class CTag {
+	public int m_nTagId = -1;
 	public String m_strTagTxt = "";
 	public int m_nTypeId = -1;
 

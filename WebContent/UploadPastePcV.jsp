@@ -7,6 +7,14 @@ if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
+
+String strTag = "";
+try {
+	request.setCharacterEncoding("UTF-8");
+	strTag = Common.TrimAll(request.getParameter("TAG"));
+} catch(Exception e) {
+	;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -61,8 +69,8 @@ if(!cCheckLogin.m_bLogin) {
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="javascript:void(0);" onclick="OnChangeTab(0)"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><a class="TabMenuItem Selected" href="javascript:void(0);" onclick="OnChangeTab(1)"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
+				<li><a class="TabMenuItem" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			</ul>
 		</nav>
 
@@ -88,7 +96,7 @@ if(!cCheckLogin.m_bLogin) {
 					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
 				</div>
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" />
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Common.ToStringHtml(strTag)%>"<%}%> />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">

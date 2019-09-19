@@ -1,5 +1,7 @@
 package jp.pipa.poipiku;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import jp.pipa.poipiku.CContent;
@@ -39,4 +41,12 @@ public class CUser {
 	public String m_strTwitterScreenName = "";
 
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
+
+	public CUser() {}
+	public CUser(ResultSet resultSet) throws SQLException {
+		m_nUserId		= resultSet.getInt("user_id");
+		m_strNickName	= Common.ToString(resultSet.getString("nickname"));
+		m_strFileName	= Common.ToString(resultSet.getString("file_name"));
+		if(m_strFileName.isEmpty()) m_strFileName="/img/default_user.jpg";
+	}
 }

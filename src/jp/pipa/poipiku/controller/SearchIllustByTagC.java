@@ -17,7 +17,7 @@ public class SearchIllustByTagC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_strKeyword	= Common.TrimAll(Common.ToString(cRequest.getParameter("KWD")));
+			m_strKeyword	= Common.TrimAll(cRequest.getParameter("KWD"));
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
 			m_strKeyword = "";

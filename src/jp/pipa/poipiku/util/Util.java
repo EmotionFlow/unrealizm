@@ -13,6 +13,9 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
+import com.atilika.kuromoji.ipadic.neologd.Token;
+import com.atilika.kuromoji.ipadic.neologd.Tokenizer;
+
 import jp.pipa.poipiku.*;
 
 public class Util {
@@ -315,6 +318,28 @@ public class Util {
 			strDst = strDst.replace(zen.charAt(i), han.charAt(i));
 		}
 		return strDst;
+	}
+
+	public static String getKana(String strTxt) {
+		if(strTxt.trim().isEmpty()) return "";
+		StringBuilder sbRet = new StringBuilder();
+		try {
+			Tokenizer tokenizer = new Tokenizer();
+			List<Token> tokens = tokenizer.tokenize(strTxt.trim());
+			for (Token token : tokens) {
+				sbRet.append(token.getReading());
+			}
+		} catch(Exception e) {
+			;
+		}
+		boolean bConvert = false;
+		for(int i=0; i<sbRet.length(); i++) {
+			if(sbRet.charAt(i)!='*') {
+				bConvert = true;
+				break;
+			}
+		}
+		return (bConvert)?sbRet.toString():"";
 	}
 
 }
