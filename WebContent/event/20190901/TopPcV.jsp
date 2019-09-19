@@ -86,14 +86,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_3.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_4.png" />
 				</div>
 				<div class="SlotFrame">
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
 								<%for(int i=1; i<=10; i++) {%>
-								<img src="/event/20190901/r_05/r1_05/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r_06/r1_06/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -103,7 +103,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
 								<%for(int i=1; i<=10; i++) {%>
-								<img src="/event/20190901/r_05/r2_05/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r_06/r2_06/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>

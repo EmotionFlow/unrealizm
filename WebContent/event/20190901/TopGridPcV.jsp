@@ -129,33 +129,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		});
 		</script>
 		<style>
-			.Wrapper {position: relative;}
-			.SettingListItem a {color: #fff; text-decoration: underline; font-weight: bold;}
-			.SettingListItem a:hover {color: #5db;}
-			.AnalogicoInfo {display: none;}
-			.SettingList .SettingListItem .SettingListTitle {text-align: center; font-size: 20x; font-weight: bold; margin: 20px 0 0 0;}
-			.SettingList .SettingListItem {margin: 0 0 20px 0;}
-			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 336px; left: 12px; top: 1348px; z-index: 1;}
+			.SettingBody.Roulette {background: top center url('/event/20190901/odai_4.png') no-repeat; background-size: 600px; height: 3058px;}
+			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 560px; left: 20px; top: 2246px; z-index: 1;}
 			.SlotFrame .SlotItem {display: flex; flex-flow: column; align-items: center;}
 			.SlotItem .RouletteFrame {}
-			.SlotItem .RouletteFrame .Roulette {display: none; width: 163px; background-color: #fff; border-radius: 10px; overflow: hidden;}
-			.SlotItem .RouletteFrame .Roulette img {display: block; width: 163px;}
-			.SlotItem .StopBtn {display: block; width: 60px; height: 60px; margin: 16px 0 0 0; cursor: pointer;}
-			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 340px; left: 10px; top: 1622px; z-index: 1;}
-			.SlotCmdFrame .SlotCmdBtnDownload {display: block; width: 340px; height: 66px; cursor: pointer;}
-			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 170px; height: 66px; margin-top: 25px; cursor: pointer;}
-			<%if(!Util.isSmartPhone(request)){%>
-			.Wrapper {
-				width: 360px;
-				min-height: 60px;
-				position: relative;
-			}
-			.SettingList {
-				max-width: 360px;
-			}
-			.SettingList .SettingListItem .SettingListTitle {font-size: 24px;}
-			.SettingBody {font-size: 20px;}
-			<%}%>
+			.SlotItem .RouletteFrame .Roulette {display: none; width: 272px; background-color: #fff; border-radius: 10px; overflow: hidden;}
+			.SlotItem .RouletteFrame .Roulette img {display: block; width: 272px;}
+			.SlotItem .StopBtn {display: block; width: 100px; height: 100px; margin: 23px 0 0 0; cursor: pointer;}
+			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 570px; left: 15px; top: 2703px; z-index: 1;}
+			.SlotCmdFrame .SlotCmdBtnDownload {display: block; width: 570px; height: 110px; cursor: pointer;}
+			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 280px; height: 110px; margin-top: 42px; cursor: pointer;}
 		</style>
 		<script type="text/javascript" src="/event/20190901/js/roulette_02.js"></script>
 		<script>
@@ -192,14 +175,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_3.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_4.png" />
 				</div>
 				<div class="SlotFrame">
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
 								<%for(int i=1; i<=10; i++) {%>
-								<img src="/event/20190901/r_05/r1_05/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r_06/r1_06/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -209,7 +192,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
 								<%for(int i=1; i<=10; i++) {%>
-								<img src="/event/20190901/r_05/r2_05/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r_06/r2_06/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
