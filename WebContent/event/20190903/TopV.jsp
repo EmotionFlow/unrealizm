@@ -18,8 +18,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<style>
 			.Wrapper {background: top center url('/event/20190903/1st_100cm_2.png') no-repeat; padding: 909px 0 0 0; background-size: 360px;	position: relative;float: none;}
 			.IllustThumbList {display: flex; flex-flow: row wrap; width: 280px; margin: 0 40px; float: none;}
-			.UserThumb {display: flex; width: 70px; height: 72px;background: none; border: none; padding: 9px 0px 19px 0px;justify-content: flex-end;}
-			.UserThumb:nth-child(8n+1), .UserThumb:nth-child(8n+2), .UserThumb:nth-child(8n+3), .UserThumb:nth-child(8n+4) {padding: 24px 0px 4px 0px; justify-content: flex-start;}
+			.UserThumb {display: flex; width: 70px; height: 71.3px;background: none; border: none; padding: 9px 0px 18px 0px;justify-content: flex-end;}
+			.UserThumb:nth-child(8n+1), .UserThumb:nth-child(8n+2), .UserThumb:nth-child(8n+3), .UserThumb:nth-child(8n+4) {padding: 24px 0px 3px 0px; justify-content: flex-start;}
 			.UserThumb .UserThumbImg {width: 44px; height: 44px; margin: 0; padding: 0;flex: 0 0 44px;}
 			.CmdList {display: flex; position: absolute; z-index: 1; width: 360px; height: 150px; top: 565px; justify-content: center; flex-flow: row wrap;}
 			.CmdList .CmdPost {display: block; width: 311px; height: 110px; margin-bottom: 35px;}

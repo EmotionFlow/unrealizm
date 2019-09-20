@@ -25,8 +25,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<style>
 			.Wrapper {background: top center url('/event/20190903/1st_100cm.png') no-repeat; padding: 1044px 0 0 0; background-size: 360px;	position: relative;float: none;}
 			.IllustThumbList {display: flex; flex-flow: row wrap; width: 280px; margin: 0 40px; float: none;}
-			.UserThumb {display: flex; width: 70px; height: 72px;background: none; border: none; padding: 9px 0px 19px 0px;justify-content: flex-end;}
-			.UserThumb:nth-child(8n+1), .UserThumb:nth-child(8n+2), .UserThumb:nth-child(8n+3), .UserThumb:nth-child(8n+4) {padding: 24px 0px 4px 0px; justify-content: flex-start;}
+			.UserThumb {display: flex; width: 70px; height: 71.3px;background: none; border: none; padding: 9px 0px 18px 0px;justify-content: flex-end;}
+			.UserThumb:nth-child(8n+1), .UserThumb:nth-child(8n+2), .UserThumb:nth-child(8n+3), .UserThumb:nth-child(8n+4) {padding: 24px 0px 3px 0px; justify-content: flex-start;}
 			.UserThumb .UserThumbImg {width: 44px; height: 44px; margin: 0; padding: 0;flex: 0 0 44px;}
 			.CmdList {display: flex; position: absolute; z-index: 1; width: 360px; height: 296px; top: 555px; justify-content: center; flex-flow: row wrap;}
 			.CmdList .CmdPost {display: block; width: 311px; height: 110px; margin-bottom: 35px;}
@@ -37,8 +37,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			<%if(!Util.isSmartPhone(request)) {%>
 			.Wrapper {background-size: 600px; padding-top: 1743px;}
 			.IllustThumbList {width: 466px; margin: 0 67px; float: none;}
-			.UserThumb {width: 116px; height: 119px; padding: 16px 0px 30px 0px;}
-			.UserThumb:nth-child(8n+1), .UserThumb:nth-child(8n+2), .UserThumb:nth-child(8n+3), .UserThumb:nth-child(8n+4) {padding: 36px 0px 10px 0px;}
+			.UserThumb {width: 116px; height: 118.5px; padding: 16px 0px 29px 0px;}
+			.UserThumb:nth-child(8n+1), .UserThumb:nth-child(8n+2), .UserThumb:nth-child(8n+3), .UserThumb:nth-child(8n+4) {padding: 35px 0px 10px 0px;}
 			.UserThumb .UserThumbImg {width: 73px; height: 73px; margin: 0; padding: 0;flex: 0 0 73px; border-radius: 73px;}
 			.CmdList {width: 600px; height: 493px; top: 925px; justify-content: center; flex-flow: row wrap;}
 			.CmdList .CmdPost {display: block; width: 518px; height: 183px; margin-bottom: 58px;}
