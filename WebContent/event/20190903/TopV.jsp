@@ -16,7 +16,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - ポイピク誕生祭</title>
 		<style>
-			.Wrapper {background: top center url('/event/20190903/1st_50cm_3.png') no-repeat; padding: 909px 0 0 0; background-size: 360px;	position: relative;float: none;}
+			.Wrapper {background: top center url('/event/20190903/1st_100cm_2.png') no-repeat; padding: 909px 0 0 0; background-size: 360px;	position: relative;float: none;}
 			.IllustThumbList {display: flex; flex-flow: row wrap; width: 280px; margin: 0 40px; float: none;}
 			.UserThumb {display: flex; width: 70px; height: 72px;background: none; border: none; padding: 9px 0px 19px 0px;justify-content: flex-end;}
 			.UserThumb:nth-child(8n+1), .UserThumb:nth-child(8n+2), .UserThumb:nth-child(8n+3), .UserThumb:nth-child(8n+4) {padding: 24px 0px 4px 0px; justify-content: flex-start;}
