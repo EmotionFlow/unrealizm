@@ -129,7 +129,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		});
 		</script>
 		<style>
-			.SettingBody.Seiza {display: block; height:12640px; background: top center url('/event/20190804/seiza_20190920.png') no-repeat; background-size: 600px;}
+			.SettingBody.Seiza {display: block; height:12640px; background: top center url('/event/20190804/seiza_20190920-2.png') no-repeat; background-size: 600px;}
 			.SettingBody {font-size: 20px;}
 			.SeizaLinkList {display: flex; flex-flow: row wrap; width: 580px; margin: 0 10px; position: absolute; z-index: 1; top: 1158px;}
 			.SeizaLinkList .SeizaLink {display: block; width: 25%; height: 145px;}

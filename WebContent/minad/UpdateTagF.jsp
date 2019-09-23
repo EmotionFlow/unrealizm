@@ -13,7 +13,8 @@ class UpdateTagCParam {
 }
 
 class UpdateTagC {
-	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
+	public int m_nCountNum = 0;
+	public int m_nCountNumEnd = 0;
 
 	public int GetResults(UpdateTagCParam cParam) {
 		DataSource dsPostgres = null;
@@ -30,31 +31,58 @@ class UpdateTagC {
 
 			// Get description data
 
-			//CContent
-			strSql = "SELECT * FROM tags_0000 WHERE tag_kana_txt isNull";
+			// Get count
+			strSql = "SELECT COUNT(*) FROM tags_0000 WHERE tag_kana_txt IS NULL";
 			cState = cConn.prepareStatement(strSql);
 			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CTag cTag = new CTag(cResSet);
-				cTag.m_nTagId = cResSet.getInt("tag_id");
-				m_vContentList.add(cTag);
+			if (cResSet.next()) {
+				m_nCountNum = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			Log.d("m_nCountNum:" + m_nCountNum);
 
-			// Update Kana
-			strSql ="UPDATE tags_0000 SET tag_kana_txt=? WHERE tag_id=?;";
-			cState = cConn.prepareStatement(strSql);
-			for(CTag cTag : m_vContentList) {
+			for(int i=0; i<10; i++) {
+				//CContent
+				CTag cTag = null;
+				strSql = "SELECT COUNT(*), tag_txt FROM tags_0000 WHERE tag_kana_txt IS NULL GROUP BY tag_txt ORDER BY COUNT(*) DESC LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					cTag = new CTag();
+					cTag.m_nTagId = cResSet.getInt(1);
+					cTag.m_strTagTxt = Common.TrimAll(cResSet.getString("tag_txt"));
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+				if(cTag==null) break;
+
+				// Update Kana
+				strSql ="UPDATE tags_0000 SET tag_kana_txt=? WHERE tag_txt=? AND tag_kana_txt IS NULL;";
+				cState = cConn.prepareStatement(strSql);
 				try {
-					cState.setString(1, Util.getKana(cTag.m_strTagTxt));
-					cState.setInt(2, cTag.m_nTagId);
+					String strKana = Util.getKana(cTag.m_strTagTxt);
+					cState.setString(1, strKana);
+					cState.setString(2, cTag.m_strTagTxt);
 					cState.executeUpdate();
+					Log.d("i:" + (i+1));
+					Log.d("cTag.m_strTagTxt:" + cTag.m_strTagTxt + ":" +strKana+" : "+cTag.m_nTagId);
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
+				cState.close();cState=null;
 			}
+
+			// Get count
+			strSql = "SELECT COUNT(*) FROM tags_0000 WHERE tag_kana_txt IS NULL";
+			cState = cConn.prepareStatement(strSql);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				m_nCountNumEnd = cResSet.getInt(1);
+			}
+			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			Log.d("m_nCountNumEnd:" + m_nCountNumEnd);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -63,7 +91,8 @@ class UpdateTagC {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return 1;
+		Log.d("end");
+		return m_nCountNumEnd;
 	}
 }
 %><%
@@ -79,4 +108,4 @@ nRtn = cParam.GetParam(request);
 
 UpdateTagC cResults = new UpdateTagC();
 nRtn = cResults.GetResults(cParam);
-%><%=nRtn%>
+%><%=cResults.m_nCountNum%>, <%=cResults.m_nCountNumEnd%>

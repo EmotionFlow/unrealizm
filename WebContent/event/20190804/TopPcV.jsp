@@ -58,7 +58,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190804/seiza_20190920.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190804/seiza_20190920-2.png" />
 					<map name="MapLinks">
 						<area shape="circle" coords="51, 738, 40" onclick="$('html, body').animate({scrollTop:1020});">
 						<area shape="circle" coords="138, 738, 40" onclick="$('html, body').animate({scrollTop:1560});">
