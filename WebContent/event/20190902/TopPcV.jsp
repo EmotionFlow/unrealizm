@@ -52,7 +52,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190902/gap_20190917.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190902/gap_20190924.png" />
 				</div>
 				<div class="CmdFrame">
 					<a class="TwitterLink" href="/2/" target="_blank"></a>
