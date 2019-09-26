@@ -42,7 +42,7 @@ class UpdateTagC {
 			cState.close();cState=null;
 			Log.d("m_nCountNum:" + m_nCountNum);
 
-			for(int i=0; i<10; i++) {
+			for(int i=0; i<15; i++) {
 				//CContent
 				CTag cTag = null;
 				strSql = "SELECT COUNT(*), tag_txt FROM tags_0000 WHERE tag_kana_txt IS NULL GROUP BY tag_txt ORDER BY COUNT(*) DESC LIMIT 1";
