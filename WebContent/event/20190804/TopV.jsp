@@ -55,7 +55,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			});
 		</script>
 		<style>
-			.SettingBody.Seiza {display: block; height:7374px; background: top center url('/event/20190804/seiza_20190920-2.png') no-repeat; background-size: 360px; position: relative;}
+			.SettingBody.Seiza {display: block; height:7374px; background: top center url('/event/20190804/seiza_20190927.png') no-repeat; background-size: 360px; position: relative;}
 			.SettingBody {font-size: 20px;}
 			.SeizaLinkList {display: flex; flex-flow: row wrap; width: 348px; margin: 0 6px; position: absolute; z-index: 1; top: 654px;}
 			.SeizaLinkList .SeizaLink {display: block; width: 25%; height: 87px;}
@@ -88,18 +88,18 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<a class="SeizaLink" href="javascript:void(0);" onclick="$('html, body').animate({scrollTop:<%=POS+DIFF*10%>});"></a>
 						<a class="SeizaLink" href="javascript:void(0);" onclick="$('html, body').animate({scrollTop:<%=POS+DIFF*11%>});"></a>
 					</div>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*1+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_ohitsuji.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*2+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_oushi.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*3+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_futago.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*4+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_kani.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*5+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_shishi.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*6+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_otome.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*7+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_tenbin.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*8+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_sasori.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*9+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_ite.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*10+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_yagi.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*11+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_mizugame.png"></a>
-					<a class="temp_dl_btn" style="top: <%=POS+DIFF*12+MARG%>px" href="/event/20190804/seiza_20190920/seiza_tenp_uo.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*1+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_ohitsuji.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*2+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_oushi.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*3+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_futago.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*4+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_kani.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*5+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_shishi.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*6+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_otome.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*7+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_tenbin.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*8+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_sasori.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*9+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_ite.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*10+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_yagi.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*11+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_mizugame.png"></a>
+					<a class="temp_dl_btn" style="top: <%=POS+DIFF*12+MARG%>px" href="/event/20190804/seiza_20190927/seiza_tenp_uo.png"></a>
 
 					<a class="SeizaCmdUp" href="javascript:void(0);" onclick="$('html, body').animate({scrollTop:0});"></a>
 				</div>
