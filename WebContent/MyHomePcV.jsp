@@ -126,16 +126,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
 				<a class="EventItem Updated" href="/event/20190901/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20190901/coupling.png" />
+					<img class="EventBanner" src="/event/20190901/banner_autumn.png" />
 				</a>
-				<a class="EventItem Updated" href="/event/20190804/TopPcV.jsp">
+				<a class="EventItem" href="/event/20190804/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
-				</a>
-				<a class="EventItem" href="/event/20190902/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20190902/gap.png" />
-				</a>
-				<a class="EventItem" href="/event/20190903/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20190903/1st_anniversary.png" />
 				</a>
 				<a class="EventItem" href="/event/20190801/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190801/banner.png" />
@@ -171,16 +165,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
 							<a class="EventItem Updated" href="/event/20190901/TopPcV.jsp">
-								<img class="EventBanner" src="/event/20190901/coupling.png" />
+								<img class="EventBanner" src="/event/20190901/banner_autumn.png" />
 							</a>
-							<a class="EventItem Updated" href="/event/20190804/TopPcV.jsp">
+							<a class="EventItem" href="/event/20190804/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190804/banner.png" />
-							</a>
-							<a class="EventItem" href="/event/20190902/TopPcV.jsp">
-								<img class="EventBanner" src="/event/20190902/gap.png" />
-							</a>
-							<a class="EventItem" href="/event/20190903/TopPcV.jsp">
-								<img class="EventBanner" src="/event/20190903/1st_anniversary.png" />
 							</a>
 							<a class="EventItem" href="/event/20190801/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190801/banner.png" />

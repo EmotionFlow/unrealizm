@@ -96,16 +96,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%}%>
 			<section class="EventItemList">
 				<a class="EventItem Updated" href="/event/20190901/TopV.jsp">
-					<img class="EventBanner" src="/event/20190901/coupling.png" />
+					<img class="EventBanner" src="/event/20190901/banner_autumn.png" />
 				</a>
-				<a class="EventItem Updated" href="/event/20190804/TopV.jsp">
+				<a class="EventItem" href="/event/20190804/TopV.jsp">
 					<img class="EventBanner" src="/event/20190804/banner.png" />
-				</a>
-				<a class="EventItem" href="/event/20190902/TopV.jsp">
-					<img class="EventBanner" src="/event/20190902/gap.png" />
-				</a>
-				<a class="EventItem" href="/event/20190903/TopV.jsp">
-					<img class="EventBanner" src="/event/20190903/1st_anniversary.png" />
 				</a>
 				<a class="EventItem" href="/event/20190801/TopV.jsp">
 					<img class="EventBanner" src="/event/20190801/banner.png" />

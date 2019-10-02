@@ -13,9 +13,6 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-import com.atilika.kuromoji.ipadic.neologd.Token;
-import com.atilika.kuromoji.ipadic.neologd.Tokenizer;
-
 import jp.pipa.poipiku.*;
 
 public class Util {
@@ -320,6 +317,7 @@ public class Util {
 		return strDst;
 	}
 
+	/*
 	public static String getKana(String strTxt) {
 		if(strTxt.trim().isEmpty()) return "";
 		StringBuilder sbRet = new StringBuilder();
@@ -341,5 +339,6 @@ public class Util {
 		}
 		return (bConvert)?sbRet.toString():"";
 	}
+	*/
 
 }

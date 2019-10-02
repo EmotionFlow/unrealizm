@@ -61,7 +61,7 @@ class UpdateTagC {
 				strSql ="UPDATE tags_0000 SET tag_kana_txt=? WHERE tag_txt=? AND tag_kana_txt IS NULL;";
 				cState = cConn.prepareStatement(strSql);
 				try {
-					String strKana = Util.getKana(cTag.m_strTagTxt);
+					String strKana = "";//Util.getKana(cTag.m_strTagTxt);
 					cState.setString(1, strKana);
 					cState.setString(2, cTag.m_strTagTxt);
 					cState.executeUpdate();
