@@ -141,8 +141,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
-					<a href="/how_to/TopV.jsp"><%=_TEX.T("HowTo.Title")%></a>
-					<br />
 					<%=_TEX.T("MyHome.FirstMsg")%>
 					<br />
 					<a class="BtnBase" href="/NewArrivalPcV.jsp"><%=_TEX.T("MyHome.FirstMsg.FindPeople")%></a>
