@@ -38,6 +38,10 @@
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Usage")%></dt>
 			<dd><a class="FooterHref" href="/StartPoipikuPcV.jsp"><%=_TEX.T("Footer.Whats")%></a></dd>
+			<dd><a class="FooterHref" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a></dd>
+		</dl>
+		<dl>
+			<dt><%=_TEX.T("Footer.Link.Term")%></dt>
 			<dd><a class="FooterHref" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a></dd>
 			<dd><a class="FooterHref" href="/GuideLinePcV.jsp"><%=_TEX.T("Footer.GuideLine")%></a></dd>
 			<dd><a class="FooterHref" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a></dd>
