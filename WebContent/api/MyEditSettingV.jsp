@@ -16,7 +16,7 @@ String strDebug = "";
 //login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) {
-	nResult = 1;
+	nResult = -1;
 }
 
 //パラメータの取得
@@ -25,7 +25,7 @@ cResults.GetParam(request);
 
 //検索結果の取得
 if (!cResults.GetResults(cCheckLogin)) {
-	nResult = 2;
+	nResult = -2;
 }
 
 //JSON元データを格納する連想配列
