@@ -273,6 +273,20 @@ public class Util {
 		return sbRtn.toString();
 	}
 
+	public static String jikoku_hyou (HttpServletRequest request) {
+		String strUuserAgent = toString(request.getHeader("user-agent"));
+		String strLink = (strUuserAgent.indexOf("Android")>=0)?
+				"https://play.google.com/store/apps/details?id=jp.pipa.timetable&hl=ja":
+				"https://apps.apple.com/jp/app/%E6%99%82%E5%88%BB%E8%A1%A8zero/id1474329285?mt=8";
+		StringBuilder sbRtn = new StringBuilder();
+		sbRtn.append("<div class=\"SideBarMid\">");
+		sbRtn.append(String.format("<a style=\"display:block;text-align:center;\" href=\"%s\">", strLink));
+		sbRtn.append("<img src=\"/event/20191016/banner03.png\" />");
+		sbRtn.append("</a>");
+		sbRtn.append("</div>");
+		return sbRtn.toString();
+	}
+
 	public static boolean isBot(String strUuserAgent) {
 		if(strUuserAgent==null) return false;
 		final List<String> vBot = Arrays.asList(
