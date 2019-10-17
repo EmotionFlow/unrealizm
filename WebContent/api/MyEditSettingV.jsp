@@ -64,6 +64,7 @@ try {
 	user.put("guidelines_url", "/GuideLineV.jsp");
 	user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");
 	user.put("official_twitter_url", "https://twitter.com/pipajp");
+	user.put("how_to_use", "/how_to/TopV.jsp");
 
 	//JSONに変換して出力
 	mapper = new ObjectMapper();
