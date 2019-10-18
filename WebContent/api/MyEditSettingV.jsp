@@ -34,38 +34,41 @@ Map<String, Object> twitter = null;
 ObjectMapper mapper = null;
 
 try {
-	//Twitterの情報
-	user = new HashMap<String, Object>();
-	if (cResults.m_cUser.m_strTwitterScreenName.isEmpty()) {
-		user.put("twitter_link_info", null);
-	} else {
-		twitter = new HashMap<String, Object>();
-		twitter.put("twitter_account_name", Common.ToStringHtml(cResults.m_cUser.m_strTwitterScreenName));
-		twitter.put("tweet_regularly_enabled", cResults.m_cUser.m_bTweet);
-		twitter.put("tweet_day", cResults.m_cUser.m_nAutoTweetWeekDay);
-		twitter.put("tweet_time", cResults.m_cUser.m_nAutoTweetTime);
-		twitter.put("default_tweet_message", Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc));
-		twitter.put("tweet_with_thumbnail_enabled", cResults.m_cUser.m_nAutoTweetThumbNum);
-		user.put("twitter_link_info", twitter);
-	}
-
 	//ユーザの情報
+	user = new HashMap<String, Object>();
 	user.put("result", nResult);
-	user.put("user_id", cResults.m_cUser.m_nUserId);
-	user.put("user_name", Common.ToStringHtml(cResults.m_cUser.m_strNickName));
-	user.put("profile_icon_image_url", Common.ToStringHtml(cResults.m_cUser.m_strFileName));
-	user.put("profile_header_image_url", Common.ToStringHtml(cResults.m_cUser.m_strHeaderFileName));
-	user.put("profile_message", Common.ToStringHtml(cResults.m_cUser.m_strProfile));
-	user.put("mute_keyword", Common.ToStringHtml(cResults.m_cUser.m_strMuteKeyword));
-	user.put("reaction_enabled", cResults.m_cUser.m_nReaction);
-	user.put("email_address", Common.ToStringHtml(cResults.m_cUser.m_strEmail));
-	user.put("new_email_address", Common.ToStringHtml(cResults.m_strNewEmail));
-	user.put("email_address_confirmed", !cResults.m_bUpdate);
-	user.put("terms_of_service_url", "/RuleS.jsp");
-	user.put("guidelines_url", "/GuideLineV.jsp");
-	user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");
-	user.put("official_twitter_url", "https://twitter.com/pipajp");
-	user.put("how_to_use", "/how_to/TopV.jsp");
+	user.put("user_id", cCheckLogin.m_nUserId);
+
+	if (nResult == 0) {
+		//Twitterの情報
+		if (cResults.m_cUser.m_strTwitterScreenName.isEmpty()) {
+			user.put("twitter_link_info", null);
+		} else {
+			twitter = new HashMap<String, Object>();
+			twitter.put("twitter_account_name", Common.ToStringHtml(cResults.m_cUser.m_strTwitterScreenName));
+			twitter.put("tweet_regularly_enabled", cResults.m_cUser.m_bTweet);
+			twitter.put("tweet_day", cResults.m_cUser.m_nAutoTweetWeekDay);
+			twitter.put("tweet_time", cResults.m_cUser.m_nAutoTweetTime);
+			twitter.put("default_tweet_message", Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc));
+			twitter.put("tweet_with_thumbnail_enabled", cResults.m_cUser.m_nAutoTweetThumbNum);
+			user.put("twitter_link_info", twitter);
+		}
+
+		user.put("user_name", Common.ToStringHtml(cResults.m_cUser.m_strNickName));
+		user.put("profile_icon_image_url", Common.ToStringHtml(cResults.m_cUser.m_strFileName));
+		user.put("profile_header_image_url", Common.ToStringHtml(cResults.m_cUser.m_strHeaderFileName));
+		user.put("profile_message", Common.ToStringHtml(cResults.m_cUser.m_strProfile));
+		user.put("mute_keyword", Common.ToStringHtml(cResults.m_cUser.m_strMuteKeyword));
+		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
+		user.put("email_address", Common.ToStringHtml(cResults.m_cUser.m_strEmail));
+		user.put("new_email_address", Common.ToStringHtml(cResults.m_strNewEmail));
+		user.put("email_address_confirmed", !cResults.m_bUpdate);
+		user.put("terms_of_service_url", "/RuleS.jsp");
+		user.put("guidelines_url", "/GuideLineV.jsp");
+		user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");
+		user.put("official_twitter_url", "https://twitter.com/pipajp");
+		user.put("how_to_use", "/how_to/TopV.jsp");
+	}
 
 	//JSONに変換して出力
 	mapper = new ObjectMapper();
