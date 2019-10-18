@@ -70,7 +70,7 @@ try {
 		Map<String, Object> img = new HashMap<String, Object>();
 		img.put("content_id", cContent.m_nContentId);
 		img.put("url", Common.GetUrl(cContent.m_strFileName));
-		img.put("tags", cContent.m_strTagList);
+		img.put("tags", Common.ToStringHtml(cContent.m_strTagList));
 		img.put("description", Common.ToStringHtml(cContent.m_strDescription));
 		img.put("category", strCategory);
 		img.put("content_twitter_link", CTweet.generateIllustMsgUrl(cContent, _TEX));

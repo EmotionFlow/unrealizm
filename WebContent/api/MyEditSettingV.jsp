@@ -58,7 +58,8 @@ try {
 	user.put("profile_message", Common.ToStringHtml(cResults.m_cUser.m_strProfile));
 	user.put("mute_keyword", Common.ToStringHtml(cResults.m_cUser.m_strMuteKeyword));
 	user.put("reaction_enabled", cResults.m_cUser.m_nReaction);
-	user.put("email_address", Common.ToStringHtmlTextarea(cResults.m_cUser.m_strEmail));
+	user.put("email_address", Common.ToStringHtml(cResults.m_cUser.m_strEmail));
+	user.put("new_email_address", Common.ToStringHtml(cResults.m_strNewEmail));
 	user.put("email_address_confirmed", !cResults.m_bUpdate);
 	user.put("terms_of_service_url", "/RuleS.jsp");
 	user.put("guidelines_url", "/GuideLineV.jsp");
