@@ -33,50 +33,56 @@ Map<String, Object> user = null;
 ObjectMapper mapper = null;
 
 try {
-	String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-			URLEncoder.encode(String.format("%s%s %s #%s",
-					cResults.m_cUser.m_strNickName,
-					_TEX.T("Twitter.UserAddition"),
-					String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
-					_TEX.T("Common.Title")), "UTF-8"),
-			URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
-
 	//ユーザの情報
 	user = new HashMap<String, Object>();
 	user.put("result", nResult);
-	user.put("page_num", cResults.m_nPage);
-	user.put("content_num", cResults.m_nContentsNumTotal);
 	user.put("user_id", cResults.m_cUser.m_nUserId);
-	user.put("user_name", Common.ToStringHtml(cResults.m_cUser.m_strNickName));
-	user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
-	user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
-	user.put("profile_message", Common.ToStringHtml(cResults.m_cUser.m_strProfile));
-	user.put("follow_num", cResults.m_cUser.m_nFollowNum);
-	user.put("follower_num", cResults.m_cUser.m_nFollowerNum);
-	user.put("twitter_link", strTwitterUrl);
 
-	//画像の情報(配列)
-	List<Map<String, Object>> imglist = new ArrayList<Map<String, Object>>();
-	for(CContent cContent : cResults.m_vContentList) {
-		//カテゴリ名設定
-		String strCategory = "";
-		for(int nCategoryId : Common.CATEGORY_ID) {
-			if (nCategoryId==cContent.m_nCategoryId) {
-				strCategory = _TEX.T(String.format("Category.C%d", nCategoryId));
-				break;
+	if (nResult == 0) {
+		user.put("page_num", cResults.m_nPage);
+		user.put("content_num", cResults.m_nContentsNum);
+		user.put("content_num_total", cResults.m_nContentsNumTotal);
+		user.put("user_name", Common.ToStringHtml(cResults.m_cUser.m_strNickName));
+		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
+		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
+		user.put("profile_message", Common.ToStringHtml(cResults.m_cUser.m_strProfile));
+		user.put("follow_num", cResults.m_cUser.m_nFollowNum);
+		user.put("follower_num", cResults.m_cUser.m_nFollowerNum);
+
+		//Twitterリンク
+		String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+				URLEncoder.encode(String.format("%s%s %s #%s",
+						cResults.m_cUser.m_strNickName,
+						_TEX.T("Twitter.UserAddition"),
+						String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+						_TEX.T("Common.Title")), "UTF-8"),
+				URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+		user.put("twitter_link", strTwitterUrl);
+
+		//画像の情報(配列)
+		List<Map<String, Object>> imglist = new ArrayList<Map<String, Object>>();
+		for(CContent cContent : cResults.m_vContentList) {
+			//カテゴリ名設定
+			String strCategory = "";
+			for(int nCategoryId : Common.CATEGORY_ID) {
+				if (nCategoryId==cContent.m_nCategoryId) {
+					strCategory = _TEX.T(String.format("Category.C%d", nCategoryId));
+					break;
+				}
 			}
-		}
 
-		Map<String, Object> img = new HashMap<String, Object>();
-		img.put("content_id", cContent.m_nContentId);
-		img.put("url", Common.GetUrl(cContent.m_strFileName));
-		img.put("tags", Common.ToStringHtml(cContent.m_strTagList));
-		img.put("description", Common.ToStringHtml(cContent.m_strDescription));
-		img.put("category", strCategory);
-		img.put("content_twitter_link", CTweet.generateIllustMsgUrl(cContent, _TEX));
-		imglist.add(img);
+			Map<String, Object> img = new HashMap<String, Object>();
+			img.put("content_id", cContent.m_nContentId);
+			img.put("url", Common.GetUrl(cContent.m_strFileName));
+			img.put("tags", Common.ToStringHtml(cContent.m_strTagList));
+			img.put("description", Common.ToStringHtml(cContent.m_strDescription));
+			img.put("category", strCategory);
+			img.put("content_twitter_link", CTweet.generateIllustMsgUrl(cContent, _TEX));
+			img.put("img_num", cContent.m_nFileNum);
+			imglist.add(img);
+		}
+		user.put("content_list", imglist);
 	}
-	user.put("uploaded_image_infos", imglist);
 
 	//JSONに変換して出力
 	mapper = new ObjectMapper();
