@@ -28,6 +28,7 @@ public class NewArrivalGridC {
 
 
 	public int SELECT_MAX_GALLERY = 17;
+	public int SELECT_MAX_DATE = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
@@ -97,7 +98,7 @@ public class NewArrivalGridC {
 			}
 
 
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-30 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s %s ORDER BY content_id DESC LIMIT ?", strCondStart, strCondCat, strCond);
+			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s %s ORDER BY content_id DESC LIMIT ?", SELECT_MAX_DATE, strCondStart, strCondCat, strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
