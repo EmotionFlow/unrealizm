@@ -73,7 +73,7 @@ try {
 	//JSONに変換して出力
 	mapper = new ObjectMapper();
 	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user));
-} catch(JsonGenerationException e)  {
+} catch(JsonGenerationException e) {
 	strDebug = e.toString();
 } finally {
 	user = null;
