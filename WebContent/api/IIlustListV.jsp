@@ -11,7 +11,6 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 int nResult = 0;
-String strDebug = "";
 
 //login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
@@ -88,7 +87,7 @@ try {
 	mapper = new ObjectMapper();
 	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user));
 } catch(JsonGenerationException e)  {
-	strDebug = e.toString();
+	e.printStackTrace();
 } finally {
 	user = null;
 	mapper = null;
