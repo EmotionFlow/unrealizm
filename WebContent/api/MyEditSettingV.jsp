@@ -44,8 +44,13 @@ try {
 			user.put("twitter_link_info", null);
 		} else {
 			twitter = new HashMap<String, Object>();
+			if (cResults.m_cUser.m_nAutoTweetWeekDay == -1 &&
+				cResults.m_cUser.m_nAutoTweetTime == -1) {
+				twitter.put("tweet_regularly_enabled", false);
+			} else {
+				twitter.put("tweet_regularly_enabled", true);
+			}
 			twitter.put("twitter_account_name", Common.ToStringHtml(cResults.m_cUser.m_strTwitterScreenName));
-			twitter.put("tweet_regularly_enabled", cResults.m_cUser.m_bTweet);
 			twitter.put("tweet_day", cResults.m_cUser.m_nAutoTweetWeekDay);
 			twitter.put("tweet_time", cResults.m_cUser.m_nAutoTweetTime);
 			twitter.put("default_tweet_message", Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc));
