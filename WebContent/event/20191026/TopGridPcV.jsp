@@ -24,7 +24,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="Mainmage" src="/event/20191026/tukaimawashi_halloween_sumaho.png" />
+				<img class="Mainmage" src="/event/20191026/tukaimawashi_halloween-2.png" />
 				</div>
 			</div>
 		</article>
