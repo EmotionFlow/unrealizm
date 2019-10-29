@@ -108,5 +108,5 @@ try
 	try{if(cPreState!=null){cPreState.close();cPreState=null;}}catch(Exception e){;}
 	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
-response.sendRedirect("myurlscheme://closed");
+response.sendRedirect("myurlscheme://back");
 %>
