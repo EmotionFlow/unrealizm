@@ -46,6 +46,7 @@ public class Util {
 	public static ArrayList<String> getDefaultEmoji(int nUserId, int nLimitNum) {
 		ArrayList<String> vResult = new ArrayList<String>();
 		/*
+
 		for(String emoji : Common.EMOJI_LIST_EVENT) {
 			vResult.add(emoji);
 		}
