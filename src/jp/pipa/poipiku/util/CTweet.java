@@ -168,7 +168,11 @@ public class CTweet {
 				if(nWidth<=2048 && nHeight<=2048) {
 					Path pathSrc = Paths.get(strSrcFileName);
 					Path pathDst = Paths.get(strDstFileName);
-					Files.copy(pathSrc, pathDst);
+					try {
+						Files.copy(pathSrc, pathDst);
+					} catch (Exception e) {
+						;
+					}
 				} else if(nWidth<nHeight) {
 					ImageUtil.createThumb(strSrcFileName, strDstFileName, 0, 2048, true);
 				} else {
