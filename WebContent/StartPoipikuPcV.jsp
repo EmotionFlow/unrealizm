@@ -11,10 +11,6 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
-		<meta name="twitter:title" content="<%=_TEX.T("THeader.Title")%>" />
-		<meta name="twitter:description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
-		<meta property="og:type" content="article" />
 		<meta property="og:url" content="https://poipiku.com/StartPoipikuPcV.jsp" />
 		<meta property="og:title" content="<%=_TEX.T("THeader.Title")%>" />
 		<meta property="og:description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
