@@ -28,11 +28,11 @@ if(!bSmartPhone) {
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="Mainmage" src="/event/20191001/karaparekosume_sumaho.png" />
+				<img class="Mainmage" src="/event/20191001/karaparekosume_sumaho_2.png" />
 				<div class="LinkList">
-					<a class="LinkItem" href="/event/20191001/karapare_temple_3color.png"></a>
-					<a class="LinkItem" href="/event/20191001/karapare_temple_4color.png"></a>
-					<a class="LinkItem" href="/event/20191001/karapare_temple_5color.png"></a>
+					<a class="LinkItem" href="/event/20191001/karapare_temple_3color_2.png"></a>
+					<a class="LinkItem" href="/event/20191001/karapare_temple_4color_2.png"></a>
+					<a class="LinkItem" href="/event/20191001/karapare_temple_5color_2.png"></a>
 				</div>
 			</div>
 		</article>
