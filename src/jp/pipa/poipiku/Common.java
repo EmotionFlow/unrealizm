@@ -92,7 +92,6 @@ public class Common {
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 21;
 	public static final int[] CATEGORY_ID = {
-			13,	// 使い回しハロウィン
 			16,	// 描けねえ
 			1,	// 飽きた
 			18, // ほぼ白紙
@@ -115,6 +114,7 @@ public class Common {
 //			8,	// 黒歴史
 //			11,	// 放置絵を晒す
 //			12,	// 挫折
+//			13,	// 使い回しハロウィン
 //			20, // あけおめ
 	};
 

@@ -335,7 +335,7 @@ function moveTagSearch(url, str) {
 }
 
 function updateCategoryMenuPos(duration) {
-	if($('#CategoryMenu').length) {
+	if($('#CategoryMenu').length && $('#CategoryMenu .CategoryBtn.Selected').length) {
 		var frame_width = $('#CategoryMenu').outerWidth();
 		var frame_scroll_left = $('#CategoryMenu').scrollLeft();
 		var item_width = $('#CategoryMenu .CategoryBtn.Selected').outerWidth();
