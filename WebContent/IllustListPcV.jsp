@@ -30,20 +30,10 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
-		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
-		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
-		<%if(!strFileUrl.isEmpty()) {%>
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
-		<%}%>
-		<meta property="og:type" content="article" />
 		<meta property="og:url" content="<%=strUrl%>" />
 		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
-		<%if(!strFileUrl.isEmpty()) {%>
-		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
-		<%}%>
 		<title><%=Util.toDescString(strTitle)%></title>
 
 		<script type="text/javascript">
