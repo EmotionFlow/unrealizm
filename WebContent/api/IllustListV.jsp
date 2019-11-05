@@ -23,7 +23,7 @@ IllustListC cResults = new IllustListC();
 cResults.getParam(request);
 
 //検索結果の取得
-if (!cResults.getResults(cCheckLogin, false)) {
+if (cCheckLogin.m_nUserId!=cResults.m_nUserId || !cResults.getResults(cCheckLogin, false)) {
 	nResult = -2;
 }
 
@@ -35,9 +35,9 @@ try {
 	//ユーザの情報
 	user = new HashMap<String, Object>();
 	user.put("result", nResult);
-	user.put("user_id", cResults.m_cUser.m_nUserId);
 
 	if (nResult == 0) {
+		user.put("user_id", cResults.m_cUser.m_nUserId);
 		user.put("page_num", cResults.m_nPage);
 		user.put("content_num", cResults.m_nContentsNum);
 		user.put("content_num_total", cResults.m_nContentsNumTotal);
@@ -73,11 +73,11 @@ try {
 			Map<String, Object> img = new HashMap<String, Object>();
 			img.put("content_id", cContent.m_nContentId);
 			img.put("url", Common.GetUrl(cContent.m_strFileName));
-			img.put("tags", Common.ToStringHtml(cContent.m_strTagList));
+			img.put("tag_list", Common.ToStringHtml(cContent.m_strTagList));
 			img.put("description", Common.ToStringHtml(cContent.m_strDescription));
 			img.put("category", strCategory);
 			img.put("content_twitter_link", CTweet.generateIllustMsgUrl(cContent, _TEX));
-			img.put("img_num", cContent.m_nFileNum);
+			img.put("file_num", cContent.m_nFileNum);
 			imglist.add(img);
 		}
 		user.put("content_list", imglist);
