@@ -8,7 +8,7 @@ cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=_TEX.T("THeader.Title")%> - 使い回しハロウィン</title>
+		<title><%=_TEX.T("THeader.Title")%> - ポッキープリッツの日</title>
 
 		<style>
 			.SettingBody {display: block; width: 100%; position: relative;}
@@ -20,7 +20,7 @@ cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="/event/20191026/tukaimawashi_halloween_sumaho-2.png" />
+				<img class="MainImage" src="./pocky_sumaho.png" />
 			</div>
 		</article>
 	</body>
