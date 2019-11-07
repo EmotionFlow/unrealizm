@@ -13,9 +13,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<style>
 			.Wrapper {width: 990px;}
 			.SettingBody {display: block; width: 100%; position: relative;}
-			.Mainmage {display: block; width: 100%;}
-			.LinkList {display: flex; flex-flow: row nowrap; justify-content: space-between; box-sizing: border-box; width: 100%; padding: 0 187px 0 197px; position: absolute; top: 749px; z-index: 1;}
-			.LinkItem {display: block; width: 179px; height: 179px;}
+			.MainImage {display: block; width: 100%;}
 		</style>
 	</head>
 	<body>
@@ -24,8 +22,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="Mainmage" src="/event/20191026/tukaimawashi_halloween-2.png" />
-				</div>
+				<img class="MainImage" src="/event/20191026/tukaimawashi_halloween-2.png" />
 			</div>
 		</article>
 

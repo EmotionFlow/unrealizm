@@ -1127,6 +1127,18 @@
 	color: #fff;
 }
 
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Pocky {
+	border-color: #dd2e43;
+	background-color: #fff;
+	color: #dd2e43;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Pocky.Selected {
+	border-color: #dd2e43;
+	background-color: #dd2e43;
+	color: #fff;
+}
+
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList {
 	display: block;
 	float: left;

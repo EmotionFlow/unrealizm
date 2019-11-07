@@ -12,9 +12,9 @@ cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 		<style>
 			.SettingBody {display: block; width: 100%; position: relative;}
-			.Mainmage {display: block; width: 100%;}
-			.LinkList {display: flex; flex-flow: row nowrap; justify-content: space-between; box-sizing: border-box; width: 100%; padding: 0 53px 0 53px; position: absolute; top: 292px; z-index: 1;}
-			.LinkItem {display: block; width: 76px; height: 76px;}
+			.MainImage {display: block; width: 100%;}
+			.PalleteLinkList {display: flex; flex-flow: row nowrap; justify-content: space-between; box-sizing: border-box; width: 100%; padding: 0 53px 0 53px; position: absolute; top: 292px; z-index: 1;}
+			.PalleteLinkItem {display: block; width: 76px; height: 76px;}
 		</style>
 	</head>
 	<body>
@@ -22,11 +22,11 @@ cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="Mainmage" src="/event/20191001/karaparekosume_sumaho_2.png" />
-				<div class="LinkList">
-					<a class="LinkItem" href="/event/20191001/karapare_temple_3color_2.png"></a>
-					<a class="LinkItem" href="/event/20191001/karapare_temple_4color_2.png"></a>
-					<a class="LinkItem" href="/event/20191001/karapare_temple_5color_2.png"></a>
+				<img class="MainImage" src="/event/20191001/karaparekosume_sumaho_2.png" />
+				<div class="PalleteLinkList">
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_3color_2.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_4color_2.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_5color_2.png"></a>
 				</div>
 			</div>
 		</article>

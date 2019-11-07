@@ -17,9 +17,7 @@ if(!bSmartPhone) {
 
 		<style>
 			.SettingBody {display: block; width: 100%; position: relative;}
-			.Mainmage {display: block; width: 100%;}
-			.LinkList {display: flex; flex-flow: row nowrap; justify-content: space-between; box-sizing: border-box; width: 100%; padding: 0 53px 0 53px; position: absolute; top: 292px; z-index: 1;}
-			.LinkItem {display: block; width: 76px; height: 76px;}
+			.MainImage {display: block; width: 100%;}
 		</style>
 	</head>
 	<body>
@@ -28,7 +26,7 @@ if(!bSmartPhone) {
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="Mainmage" src="/event/20191026/tukaimawashi_halloween_sumaho-2.png" />
+				<img class="MainImage" src="/event/20191026/tukaimawashi_halloween_sumaho-2.png" />
 			</div>
 		</article>
 
