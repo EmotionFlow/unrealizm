@@ -2,24 +2,31 @@
 <%@ page import="org.apache.commons.fileupload.*"%>
 <%@ page import="org.apache.commons.fileupload.disk.*"%>
 <%@ page import="org.apache.commons.fileupload.servlet.*"%>
+<%@page import="org.codehaus.jackson.JsonGenerationException"%>
+<%@page import="org.codehaus.jackson.map.JsonMappingException"%>
+<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UpdateFileRefTwitterCParam {
+<%!class UpdateFileRefTwitterCParam {
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
 	public int m_nCategoryId = 0;
+	public int m_nOpenId = 0;
+	public int m_nEditorId = 0;
 	public String m_strDescription = "";
 	public String m_strTagList = "";
 	public int m_nPublishId = 0;
 	public String m_strPassword = "";
 	public String m_strListId = "";
+	//public CEditedContent[] m_vImgList = null;
 
 	public int GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
-			m_nContentId		= Common.ToInt(request.getParameter("TD"));
+			m_nContentId		= Common.ToInt(request.getParameter("IID"));
+			m_nEditorId			= Common.ToInt(request.getParameter("ED"));
 			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
+			m_nOpenId			= Common.ToInt(request.getParameter("REC"));
 			m_strDescription	= Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
 			m_strTagList		= Common.SubStrNum(Common.TrimAll(request.getParameter("TAG")), 100);
 			m_nPublishId		= Common.ToIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
@@ -28,6 +35,7 @@ class UpdateFileRefTwitterCParam {
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 			m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
+
 			// format tag list
 			if(!m_strTagList.isEmpty()) {
 				ArrayList<String> listTag = new ArrayList<String>();
@@ -48,6 +56,12 @@ class UpdateFileRefTwitterCParam {
 					}
 				}
 			}
+
+			//変更後のファイルリストを配列に格納
+			/*String strJson = Common.TrimAll(request.getParameter("JIL"));
+			ObjectMapper mapper = new ObjectMapper();
+			m_vImgList = mapper.readValue(strJson, CEditedContent[].class);
+			Log.d("Json:" + strJson);*/
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
@@ -57,13 +71,15 @@ class UpdateFileRefTwitterCParam {
 	}
 }
 
-
 class UpdateFileRefTwitterC {
+	int m_nContentId = -99;
 	public int GetResults(UpdateFileRefTwitterCParam cParam, ResourceBundleControl _TEX) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
+		ResultSet cResSet = null;
 		String strSql = "";
+		int safe_filter = Common.SAFE_FILTER_ALL;
 		int idx = 0;
 
 		try {
@@ -71,7 +87,6 @@ class UpdateFileRefTwitterC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			int safe_filter = Common.SAFE_FILTER_ALL;
 			switch(cParam.m_nPublishId) {
 				case Common.PUBLISH_ID_R15:
 					safe_filter = Common.SAFE_FILTER_R15;
@@ -83,13 +98,18 @@ class UpdateFileRefTwitterC {
 					safe_filter = Common.SAFE_FILTER_R18G;
 					break;
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 
+		try {
 			// get content id
-			strSql = "UPDATE contents_0000 SET category_id=?, description=?, tag_list=?, publish_id=?, password=?, list_id=?, safe_filter=? WHERE user_id=? AND content_id=?";
+			strSql = "UPDATE contents_0000 SET category_id=?, open_id=?, description=?, tag_list=?, publish_id=?, password=?, list_id=?, safe_filter=? WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			try {
 				idx = 1;
 				cState.setInt(idx++, cParam.m_nCategoryId);
+				cState.setInt(idx++, cParam.m_nOpenId);
 				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, 200));
 				cState.setString(idx++, cParam.m_strTagList);
 				cState.setInt(idx++, cParam.m_nPublishId);
@@ -206,7 +226,7 @@ class UpdateFileRefTwitterC {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return 0;
+		return cParam.m_nContentId;
 	}
 }
 %><%
@@ -218,12 +238,12 @@ UpdateFileRefTwitterCParam cParam = new UpdateFileRefTwitterCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
-Log.d("UpdateFileRefTwitterCParam:"+nRtn);
-Log.d("UpdateFileRefTwitterCParam.m_nUserId:"+cParam.m_nUserId);
-Log.d("UpdateFileRefTwitterCParam.m_nContentId:"+cParam.m_nContentId);
-Log.d("UpdateFileRefTwitterCParam.m_nCategoryId:"+cParam.m_nCategoryId);
-Log.d("UpdateFileRefTwitterCParam.m_strDescription:"+cParam.m_strDescription);
-Log.d("UpdateFileRefTwitterCParam.m_strTagList:"+cParam.m_strTagList);
+//Log.d("UpdateFileRefTwitterCParam:"+nRtn);
+//Log.d("UpdateFileRefTwitterCParam.m_nUserId:"+cParam.m_nUserId);
+//Log.d("UpdateFileRefTwitterCParam.m_nContentId:"+cParam.m_nContentId);
+//Log.d("UpdateFileRefTwitterCParam.m_nCategoryId:"+cParam.m_nCategoryId);
+//Log.d("UpdateFileRefTwitterCParam.m_strDescription:"+cParam.m_strDescription);
+//Log.d("UpdateFileRefTwitterCParam.m_strTagList:"+cParam.m_strTagList);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UpdateFileRefTwitterC cResults = new UpdateFileRefTwitterC();
@@ -232,5 +252,5 @@ if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 )
 }
 %>
 {
-"result":<%=nRtn%>
+"content_id":<%=nRtn%>
 }

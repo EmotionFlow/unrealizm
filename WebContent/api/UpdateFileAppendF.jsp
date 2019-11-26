@@ -1,19 +1,19 @@
-<%@page import="org.apache.commons.lang3.RandomStringUtils"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="org.apache.commons.lang3.RandomStringUtils"%>
 <%@page import="java.nio.file.Files"%>
 <%@page import="javax.imageio.ImageIO"%>
 <%@page import="org.apache.commons.fileupload.*"%>
 <%@page import="org.apache.commons.fileupload.disk.*"%>
 <%@page import="org.apache.commons.fileupload.servlet.*"%>
+<%@page import="org.codehaus.jackson.JsonGenerationException"%>
+<%@page import="org.codehaus.jackson.map.JsonMappingException"%>
+<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
 class UploadFileAppendCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
-	public int m_nFileIndex = 0;
-	public int m_nTotalFileNum = 0;
-	public String m_strFilename = "";
 	FileItem item_file = null;
 
 	public int GetParam(HttpServletRequest request) {
@@ -37,12 +37,6 @@ class UploadFileAppendCParam {
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("IID")) {
 						m_nContentId = Common.ToInt(item.getString());
-					} else if(strName.equals("FN")) {
-						m_strFilename = item.getString();
-					} else if(strName.equals("NN")) {
-						m_nFileIndex = Common.ToInt(item.getString());
-					} else if(strName.equals("TN")) {
-						m_nTotalFileNum = Common.ToInt(item.getString());
 					}
 					item.delete();
 				} else {
@@ -62,7 +56,6 @@ class UploadFileAppendCParam {
 }
 
 class UploadFileAppendC {
-	public String m_strFileName = "";
 	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
 		Log.d("UpdateFileAppendF.jsp");
 
@@ -86,42 +79,6 @@ class UploadFileAppendC {
 				return nRtn;
 			}
 
-			// 存在チェック
-			String strOldFileName = "";
-			strSql = "SELECT file_name FROM contents_0000 WHERE user_id=? AND content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setInt(2, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				strOldFileName = Common.ToString(cResSet.getString("file_name"));
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-
-			boolean bReuse = false;
-			if(strOldFileName.length() == 0) {
-				return nRtn;
-			} else if (cParam.m_strFilename.equals(strOldFileName)) {
-				Log.d("Same file:" + cParam.m_strFilename);
-				return nRtn;
-			// 並び替えによって他のファイルを再利用するケース
-			} else if (!cParam.m_strFilename.equals(strOldFileName)) {
-				// 他人のユーザIDフォルダだったらエラー
-				String[] strPath = cParam.m_strFilename.split("/", 0);
-				if (strPath.length>2 &&  Integer.parseInt(strPath[2])!=cParam.m_nUserId) {
-					Log.d("Not file owner:" + cParam.m_strFilename);
-					return nRtn;
-				}
-
-				// 元のファイルとは異なるが、保存済の場合は再利用する
-				File cFile = new File(getServletContext().getRealPath(cParam.m_strFilename));
-				if (cFile.exists()) {
-					bReuse = true;
-					Log.d("Reuse file:" + cParam.m_strFilename);
-				}
-			}
-
 			// get comment id
 			int nAppendId = -1;
 			strSql ="INSERT INTO contents_appends_0000(content_id) VALUES(?) RETURNING append_id";
@@ -133,24 +90,20 @@ class UploadFileAppendC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			Log.d("append_id:" + nAppendId);
 
 			// save file
+			String strFileName = "";
 			String strRealFileName = "";
-			if (bReuse) {
-				m_strFileName = cParam.m_strFilename;
-				strRealFileName = getServletContext().getRealPath(m_strFileName);
-			} else {
-				File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
-				if(!cDir.exists()) {
-					cDir.mkdirs();
-				}
-				String strRandom = RandomStringUtils.randomAlphanumeric(9);
-				m_strFileName = String.format("%s/%09d_%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId, strRandom, ext);
-				strRealFileName = getServletContext().getRealPath(m_strFileName);
-				cParam.item_file.write(new File(strRealFileName));
-				ImageUtil.createThumbIllust(strRealFileName);
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			if(!cDir.exists()) {
+				cDir.mkdirs();
 			}
+
+			String strRandom = RandomStringUtils.randomAlphanumeric(9);
+			strFileName = String.format("%s/%09d_%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId, strRandom, ext);
+			strRealFileName = getServletContext().getRealPath(strFileName);
+			cParam.item_file.write(new File(strRealFileName));
+			ImageUtil.createThumbIllust(strRealFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -175,7 +128,7 @@ class UploadFileAppendC {
 			// update file name
 			strSql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, m_strFileName);
+			cState.setString(1, strFileName);
 			cState.setInt(2, nWidth);
 			cState.setInt(3, nHeight);
 			cState.setLong(4, nFileSize);
@@ -183,22 +136,14 @@ class UploadFileAppendC {
 			cState.setInt(6, nAppendId);
 			cState.executeUpdate();
 			cState.close();cState=null;
+			Log.d(nAppendId + ": " + strFileName);
 
 			// update comment num
-			strSql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
+			/*strSql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);
 			cState.executeUpdate();
-			cState.close();cState=null;
-
-			// 最後の1枚なので使わなくなったファイルを削除する
-			if (cParam.m_nFileIndex == cParam.m_nTotalFileNum) {
-				Log.d("Start deleting unused files.");
-				//Commom.DeleteUnusedFiles(コンテンツID, 総ファイル数, 今回追加したファイル数);
-			}
-
-			Log.d(strRealFileName);
-			Log.d(cParam.m_nFileIndex + "/" + cParam.m_nTotalFileNum);
+			cState.close();cState=null;*/
 
 			nRtn = nAppendId;
 		} catch(Exception e) {

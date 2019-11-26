@@ -6,6 +6,9 @@
 <%@page import="org.apache.commons.fileupload.*"%>
 <%@page import="org.apache.commons.fileupload.disk.*"%>
 <%@page import="org.apache.commons.fileupload.servlet.*"%>
+<%@page import="org.codehaus.jackson.JsonGenerationException"%>
+<%@page import="org.codehaus.jackson.map.JsonMappingException"%>
+<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
 class UploadFileFirstCParam {
@@ -160,6 +163,7 @@ class UploadFileFirstC {
 	}
 }
 %><%
+Log.d("UploadFileFirstC");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
@@ -167,11 +171,18 @@ UploadFileFirstCParam cParam = new UploadFileFirstCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
-if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
+if (cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadFileFirstC cResults = new UploadFileFirstC();
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 %>
-{
-"content_id":<%=nRtn%>
-}
+ {"files": [
+      {
+        "name": "picture1.jpg",
+        "size": 902604,
+        "url": "http:\/\/example.org\/files\/picture1.jpg",
+        "thumbnailUrl": "http:\/\/example.org\/files\/thumbnail\/picture1.jpg",
+        "deleteUrl": "http:\/\/example.org\/files\/picture1.jpg",
+        "deleteType": "DELETE"
+      }
+    ]}

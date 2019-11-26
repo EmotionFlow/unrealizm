@@ -109,12 +109,13 @@ if (nRtn > 0) {
 		Map<String, Object> first = new HashMap<String, Object>();
 
 		//1枚目
-		first.put("append_id", 0);
+		first.put("append_id", -1);
+		//first.put("name", 0);
 		first.put("name", cResults.m_cContent.m_strFileName);
 		//first.put("size", 0);
 		first.put("thumbnailUrl", "http://localhost" + cResults.m_cContent.m_strFileName + "_360.jpg");
-		first.put("deleteUrl", cResults.m_cContent.m_strFileName);
-		first.put("deleteType", "DELETE");
+		//first.put("deleteUrl", cResults.m_cContent.m_strFileName);
+		//first.put("deleteType", "DELETE");
 		first.put("uuid", UUID.randomUUID().toString());
 		imglist.add(first);
 
@@ -123,10 +124,11 @@ if (nRtn > 0) {
 			Map<String, Object> append = new HashMap<String, Object>();
 			append.put("append_id", cContent.m_nAppendId);
 			append.put("name", cContent.m_strFileName);
+			//append.put("name", cContent.m_nAppendId);
 			//append.put("size", 0);
 			append.put("thumbnailUrl", "http://localhost" + cContent.m_strFileName + "_360.jpg");
-			append.put("deleteUrl", cContent.m_strFileName);
-			append.put("deleteType", "DELETE");
+			//append.put("deleteUrl", cContent.m_strFileName);
+			//append.put("deleteType", "DELETE");
 			append.put("uuid", UUID.randomUUID().toString());
 			imglist.add(append);
 		}
