@@ -17,7 +17,6 @@
 	public int m_nPublishId = 0;
 	public String m_strPassword = "";
 	public String m_strListId = "";
-	//public CEditedContent[] m_vImgList = null;
 
 	public int GetParam(HttpServletRequest request) {
 		try {
@@ -56,12 +55,6 @@
 					}
 				}
 			}
-
-			//変更後のファイルリストを配列に格納
-			/*String strJson = Common.TrimAll(request.getParameter("JIL"));
-			ObjectMapper mapper = new ObjectMapper();
-			m_vImgList = mapper.readValue(strJson, CEditedContent[].class);
-			Log.d("Json:" + strJson);*/
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
