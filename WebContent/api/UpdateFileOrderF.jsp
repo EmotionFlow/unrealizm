@@ -138,14 +138,6 @@ class UpdateFileOrderC {
 				}
 			}
 
-			//append_idの振り直し
-			for (int i=0; i<vNewFileList.size(); i++) {
-				CEditedContent cTmp = vNewFileList.get(i);
-				Log.d("Change appendId:" + cTmp.append_id + "->" + vOldFileList.get(i).append_id);
-				cTmp.append_id = vOldFileList.get(i).append_id;
-				vNewFileList.set(i, cTmp);
-			}
-
 			//不要ファイルの削除
 			boolean bHead = false;
 			if (cDiff.size() > 0) {
@@ -163,7 +155,7 @@ class UpdateFileOrderC {
 					//元リストからも削除
 					Iterator<CEditedContent> it = vOldFileList.iterator();
 					while (it.hasNext()) {
-						if (it.next().append_id == append_id) {
+						if (it.next().append_id == append_id && append_id != -1) {
 							it.remove();
 						}
 					}
@@ -191,6 +183,23 @@ class UpdateFileOrderC {
 					cState.setInt(2, vOldFileList.get(vOldFileList.size() - 1).append_id);
 					cState.executeUpdate();
 					cState.close();cState=null;
+					Log.d("先頭が削除されたので末尾1個削除(" + vOldFileList.get(vOldFileList.size() - 1).append_id + "):" + vOldFileList.get(vOldFileList.size() - 1).name);
+					//vOldFileList.remove(vOldFileList.size() - 1);
+				}
+			}
+
+			//append_idの振り直し
+			int p = 0;
+			for (int i=0; i<vNewFileList.size(); i++) {
+				CEditedContent cTmp = vNewFileList.get(i);
+				if (i==0 && vOldFileList.get(i).append_id != -1) {
+					p = 1;	//
+					Log.d("こないはず");
+				}
+				if((i+p) < vOldFileList.size()) {
+					cTmp.append_id = vOldFileList.get(i+p).append_id;
+					Log.d("New appendId:"+cTmp.append_id);
+					vNewFileList.set(i, cTmp);
 				}
 			}
 
