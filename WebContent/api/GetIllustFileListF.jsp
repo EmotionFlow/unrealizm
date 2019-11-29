@@ -33,6 +33,7 @@ class GetIllustFileListCParam {
 }
 
 class GetIllustFileListC {
+	public CContent m_cContent = new CContent();
 	public ArrayList<Object> m_vContent = new ArrayList<Object>();
 
 	public int GetResults(GetIllustFileListCParam cParam, ResourceBundleControl _TEX) {
@@ -58,12 +59,29 @@ class GetIllustFileListC {
 				Map<String, Object> image = new HashMap<String, Object>();
 				image.put("append_id", cResSet.getString("append_id"));
 				image.put("name", cResSet.getString("file_name"));
-				image.put("thumbnailUrl", Common.GetUrl(cResSet.getString("file_name")) + "_360.jpg");
+				image.put("thumbnailUrl", "http://localhost" + cResSet.getString("file_name") + "_360.jpg");
 				image.put("uuid", UUID.randomUUID().toString());
 				m_vContent.add(image);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+
+			// メタデータを取得
+			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?;";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(2, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				m_cContent.m_nCategoryId = cResSet.getInt("category_id");
+				m_cContent.m_nOpenId = cResSet.getInt("open_id");
+				m_cContent.m_nPublishId = cResSet.getInt("publish_id");
+				m_cContent.m_strTagList = cResSet.getString("tag_list");
+				m_cContent.m_strDescription = cResSet.getString("description");
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
 			nRtn = cParam.m_nContentId;
 		} catch(Exception e) {
 			Log.d(strSql);
@@ -94,8 +112,24 @@ if (nRtn > 0) {
 	//オブジェクト配列をJSONに変換
 	ObjectMapper mapper = null;
 	try {
+		HashMap<String, Object> content = new HashMap<String, Object>();
+		CTweet cTweet = new CTweet();
+
+		if (cTweet.GetResults(cParam.m_nUserId)) {
+			content.put("tweet_flag", cTweet.m_bIsTweetEnable);
+		}
+
+		content.put("user_id", cParam.m_nUserId);
+		content.put("content_id", cParam.m_nContentId);
+		content.put("category", cResults.m_cContent.m_nCategoryId);
+		content.put("description", cResults.m_cContent.m_strDescription);
+		content.put("tag_list", cResults.m_cContent.m_strTagList);
+		content.put("open_id", cResults.m_cContent.m_nOpenId);
+		content.put("publish_id", cResults.m_cContent.m_nPublishId);
+		content.put("files", cResults.m_vContent);
+
 		mapper = new ObjectMapper();
-		out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(cResults.m_vContent));
+		out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(content));
 	} catch(JsonGenerationException e) {
 		e.printStackTrace();
 	} finally {
