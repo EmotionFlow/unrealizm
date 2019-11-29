@@ -33,7 +33,7 @@ class GetIllustFileListCParam {
 }
 
 class GetIllustFileListC {
-	public CContent m_cContent = new CContent();
+	public ArrayList<Object> m_vContent = new ArrayList<Object>();
 
 	public int GetResults(GetIllustFileListCParam cParam, ResourceBundleControl _TEX) {
 		int nRtn = -1;
@@ -44,33 +44,26 @@ class GetIllustFileListC {
 		String strSql = "";
 
 		try {
-			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			// 1枚目
-			strSql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
+			// append_id,ファイル名を取得
+			strSql = "(SELECT -1 as append_id,file_name FROM contents_0000 WHERE user_id=? AND content_id=?) UNION (SELECT append_id,file_name FROM contents_appends_0000 WHERE content_id=?) ORDER BY append_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_cContent.m_strFileName = Common.ToString(cResSet.getString("file_name"));
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-
-			// Each append image
-			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
+			cState.setInt(3, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				m_cContent.m_vContentAppend.add(new CContentAppend(cResSet));
+				Map<String, Object> image = new HashMap<String, Object>();
+				image.put("append_id", cResSet.getString("append_id"));
+				image.put("name", cResSet.getString("file_name"));
+				image.put("thumbnailUrl", Common.GetUrl(cResSet.getString("file_name")) + "_360.jpg");
+				image.put("uuid", UUID.randomUUID().toString());
+				m_vContent.add(image);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-
 			nRtn = cParam.m_nContentId;
 		} catch(Exception e) {
 			Log.d(strSql);
@@ -92,49 +85,17 @@ GetIllustFileListCParam cParam = new GetIllustFileListCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
-//Log.d(Integer.toString(nRtn));
-//Log.d(Integer.toString(cParam.m_nUserId));
-//Log.d(Integer.toString(cParam.m_nContentId));
-
 GetIllustFileListC cResults = new GetIllustFileListC();
 if (cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0) {
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 
 if (nRtn > 0) {
-	//JSON元データを格納する連想配列
-	ArrayList<Object> imglist = new ArrayList<Object>();
+	//オブジェクト配列をJSONに変換
 	ObjectMapper mapper = null;
 	try {
-		Map<String, Object> first = new HashMap<String, Object>();
-
-		//1枚目
-		first.put("append_id", -1);
-		//first.put("name", 0);
-		first.put("name", cResults.m_cContent.m_strFileName);
-		//first.put("size", 0);
-		first.put("thumbnailUrl", "http://localhost" + cResults.m_cContent.m_strFileName + "_360.jpg");
-		//first.put("deleteUrl", cResults.m_cContent.m_strFileName);
-		//first.put("deleteType", "DELETE");
-		first.put("uuid", UUID.randomUUID().toString());
-		imglist.add(first);
-
-		//2枚目以降
-		for (CContentAppend cContent : cResults.m_cContent.m_vContentAppend) {
-			Map<String, Object> append = new HashMap<String, Object>();
-			append.put("append_id", cContent.m_nAppendId);
-			append.put("name", cContent.m_strFileName);
-			//append.put("name", cContent.m_nAppendId);
-			//append.put("size", 0);
-			append.put("thumbnailUrl", "http://localhost" + cContent.m_strFileName + "_360.jpg");
-			//append.put("deleteUrl", cContent.m_strFileName);
-			//append.put("deleteType", "DELETE");
-			append.put("uuid", UUID.randomUUID().toString());
-			imglist.add(append);
-		}
-
 		mapper = new ObjectMapper();
-		out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(imglist));
+		out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(cResults.m_vContent));
 	} catch(JsonGenerationException e) {
 		e.printStackTrace();
 	} finally {

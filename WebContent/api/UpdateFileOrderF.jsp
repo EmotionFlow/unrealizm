@@ -97,10 +97,12 @@ class UpdateFileOrderC {
 			cState.close();cState=null;
 
 			//画像情報を新ファイルリストにコピー
+			boolean bExists = false;
 			List<CEditedContent> vNewFileList = new ArrayList<CEditedContent>(cParam.m_vNewIdList.length);
 			for (int append_id: cParam.m_vNewIdList) {
 				for (CEditedContent cOld: vOldFileList) {
 					if (append_id == cOld.append_id) {
+						bExists = true;
 						CEditedContent cNew = new CEditedContent();
 						cNew.append_id = cOld.append_id;
 						cNew.name = cOld.name;
@@ -113,6 +115,12 @@ class UpdateFileOrderC {
 						break;
 					}
 				}
+			}
+
+			//新リストのappend_idが元リストと1つもマッチしなかったら不正データなので終了
+			if (!bExists) {
+				Log.d("Unknown append_id.");
+				return -3;
 			}
 
 			//元リストにあって新リストにないファイルを抽出（削除候補）
@@ -128,6 +136,14 @@ class UpdateFileOrderC {
 				if(!bExist) {
 					cDiff.add(cOld);
 				}
+			}
+
+			//append_idの振り直し
+			for (int i=0; i<vNewFileList.size(); i++) {
+				CEditedContent cTmp = vNewFileList.get(i);
+				Log.d("Change appendId:" + cTmp.append_id + "->" + vOldFileList.get(i).append_id);
+				cTmp.append_id = vOldFileList.get(i).append_id;
+				vNewFileList.set(i, cTmp);
 			}
 
 			//不要ファイルの削除
@@ -168,6 +184,7 @@ class UpdateFileOrderC {
 
 				//先頭が削除されて1個ずつズレるケース
 				if (bHead) {
+					//余る要素の削除
 					strSql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id=?;";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, cParam.m_nContentId);
@@ -179,34 +196,31 @@ class UpdateFileOrderC {
 
 			//並び替え
 			for (int i=0; i<vNewFileList.size(); i++) {
-				Log.d("New:" + vNewFileList.get(i).append_id + "-> Old:" + vOldFileList.get(i).append_id);
-				if (vNewFileList.get(i).append_id != vOldFileList.get(i).append_id) {
-					//先頭画像はcontents_0000にセット
-					if (i == 0) {
-						strSql = "UPDATE contents_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=?;";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, vNewFileList.get(i).name);
-						cState.setInt(2, vNewFileList.get(i).file_width);
-						cState.setInt(3, vNewFileList.get(i).file_height);
-						cState.setLong(4, vNewFileList.get(i).files_size);
-						cState.setLong(5, vNewFileList.get(i).file_complex);
-						cState.setInt(6, cParam.m_nContentId);
-						cState.executeUpdate();
-					//2枚目以降はcontents_appends_0000にセット
-					} else {
-						strSql = "UPDATE contents_appends_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=? AND append_id=?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, vNewFileList.get(i).name);
-						cState.setInt(2, vNewFileList.get(i).file_width);
-						cState.setInt(3, vNewFileList.get(i).file_height);
-						cState.setLong(4, vNewFileList.get(i).files_size);
-						cState.setLong(5, vNewFileList.get(i).file_complex);
-						cState.setInt(6, cParam.m_nContentId);
-						cState.setInt(7, vOldFileList.get(i).append_id);
-						cState.executeUpdate();
-					}
-					cState.close();cState=null;
+				//先頭画像はcontents_0000にセット
+				if (i == 0) {
+					strSql = "UPDATE contents_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=?;";
+					cState = cConn.prepareStatement(strSql);
+					cState.setString(1, vNewFileList.get(i).name);
+					cState.setInt(2, vNewFileList.get(i).file_width);
+					cState.setInt(3, vNewFileList.get(i).file_height);
+					cState.setLong(4, vNewFileList.get(i).files_size);
+					cState.setLong(5, vNewFileList.get(i).file_complex);
+					cState.setInt(6, cParam.m_nContentId);
+					cState.executeUpdate();
+				//2枚目以降はcontents_appends_0000にセット
+				} else {
+					strSql = "UPDATE contents_appends_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=? AND append_id=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setString(1, vNewFileList.get(i).name);
+					cState.setInt(2, vNewFileList.get(i).file_width);
+					cState.setInt(3, vNewFileList.get(i).file_height);
+					cState.setLong(4, vNewFileList.get(i).files_size);
+					cState.setLong(5, vNewFileList.get(i).file_complex);
+					cState.setInt(6, cParam.m_nContentId);
+					cState.setInt(7, vNewFileList.get(i).append_id);
+					cState.executeUpdate();
 				}
+				cState.close();cState=null;
 			}
 
 			//画像枚数の更新

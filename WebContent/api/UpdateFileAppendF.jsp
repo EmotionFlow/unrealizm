@@ -138,13 +138,6 @@ class UploadFileAppendC {
 			cState.close();cState=null;
 			Log.d(nAppendId + ": " + strFileName);
 
-			// update comment num
-			/*strSql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;*/
-
 			nRtn = nAppendId;
 		} catch(Exception e) {
 			Log.d(strSql);

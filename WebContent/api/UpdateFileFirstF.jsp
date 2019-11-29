@@ -15,9 +15,7 @@
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
-	public String m_strFilename = "";
 	FileItem item_file = null;
-	public CEditedContent[] m_vImgList = null;
 
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
@@ -41,14 +39,6 @@
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("IID")) {
 						m_nContentId = Common.ToInt(item.getString());
-					} else if(strName.equals("JIL")) {
-						String strJson = Common.ToString(item.getString());
-						ObjectMapper mapper = new ObjectMapper();
-						m_vImgList = mapper.readValue(strJson, CEditedContent[].class);
-						if (m_vImgList.length<=0) {
-							Log.d("m_vImgList.length<=0");
-							nRtn = -3;
-						}
 					}
 					item.delete();
 				} else {
@@ -107,70 +97,32 @@ class UpdateFileFirstC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			boolean bReuse = false;
-			String strNewFile = cParam.m_vImgList[0].name;
-
-			// 元ファイルが無いので終了
-			if(strOldFileName.length() == 0) {
-				Log.d("content not exist error : cParam.m_nUserId="+ cParam.m_nUserId + ", cParam.m_nContentId="+cParam.m_nContentId);
-				return -2;
-			// 同じファイルなので終了
-			} else if (strNewFile.equals(strOldFileName)) {
-				Log.d("Same file:" + strNewFile);
-				return cParam.m_nContentId;
-			// 並び替えによって他のファイルを再利用するケース
-			} else {
-				// 他人のユーザIDフォルダだったらエラー
-				String[] strPath = strNewFile.split("/", 0);
-				if (strPath.length>2 &&  Integer.parseInt(strPath[2])!=cParam.m_nUserId) {
-					Log.d("Not file owner:" + strNewFile);
-					return -3;
-				}
-
-				// 指定ファイルが保存済でかつ編集されてなければ再利用する
-				File cFile = new File(getServletContext().getRealPath(strNewFile));
-				if (cFile.exists()) {
-					if (!cParam.m_vImgList[0].edited) {
-						bReuse = true;
-						Log.d("Reuse file:" + strNewFile);
-					}
-				}
-			}
-
 			// save file
-			String strFileName = "";
-			String strRealFileName = "";
-			if (bReuse) {
-				strFileName = strNewFile;
-				strRealFileName = getServletContext().getRealPath(strNewFile);
-			} else {
-				File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
-				if(!cDir.exists()) {
-					cDir.mkdirs();
-				}
-				String strRandom = RandomStringUtils.randomAlphanumeric(9);
-				strFileName = String.format("%s/%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
-				strRealFileName = getServletContext().getRealPath(strFileName);
-				cParam.item_file.write(new File(strRealFileName));
-				ImageUtil.createThumbIllust(strRealFileName);
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			if(!cDir.exists()) {
+				cDir.mkdirs();
 			}
+			String strRandom = RandomStringUtils.randomAlphanumeric(9);
+			String strFileName = String.format("%s/%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
+			String strRealFileName = getServletContext().getRealPath(strFileName);
+			cParam.item_file.write(new File(strRealFileName));
+			ImageUtil.createThumbIllust(strRealFileName);
 
-			Log.d("OldFile:" + strOldFileName);
-			Log.d("UploadFile:" + cParam.m_vImgList[0].name);
-			Log.d("NewFile:" + strFileName);
-
-			//1枚しかなければ旧ファイル削除
-			if (cParam.m_vImgList.length == 1) {
-				File cDelete = new File(getServletContext().getRealPath(strOldFileName));
-				cDelete.delete();
-			}
+			//旧ファイル削除
+			Log.d("Delete old files:" + strOldFileName);
+			File cDelete = new File(getServletContext().getRealPath(strOldFileName));
+			File cDeleteS = new File(getServletContext().getRealPath(strOldFileName + "_360.jpg"));
+			File cDeleteM = new File(getServletContext().getRealPath(strOldFileName + "_640.jpg"));
+			if(cDelete.exists()) cDelete.delete();
+			if(cDeleteS.exists()) cDeleteS.delete();
+			if(cDeleteM.exists()) cDeleteM.delete();
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
 			int nHeight = 0;
 			long nFileSize = 0;
-
 			long nComplexSize = 0;
+
 			try {
 				int size[] = ImageUtil.getImageSize(strRealFileName);
 				nWidth = size[0];
@@ -198,6 +150,7 @@ class UpdateFileFirstC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
+			Log.d(cParam.m_nContentId + ": " + strFileName);
 			nRtn = cParam.m_nContentId;
 		} catch(Exception e) {
 			Log.d(strSql);
