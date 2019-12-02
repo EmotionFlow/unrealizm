@@ -73,7 +73,7 @@ class UpdateFileOrderC {
 			cConn = dsPostgres.getConnection();
 
 			//元のファイルリストを取得
-			strSql = "(SELECT -1 as append_id,file_name,file_width,file_height,file_size,file_complex FROM contents_0000 WHERE user_id=? AND content_id=?) UNION (SELECT append_id,file_name,file_width,file_height,file_size,file_complex FROM contents_appends_0000 WHERE content_id=?) ORDER BY append_id";
+			strSql = "(SELECT 0 as append_id,file_name,file_width,file_height,file_size,file_complex FROM contents_0000 WHERE user_id=? AND content_id=?) UNION (SELECT append_id,file_name,file_width,file_height,file_size,file_complex FROM contents_appends_0000 WHERE content_id=?) ORDER BY append_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
@@ -155,13 +155,13 @@ class UpdateFileOrderC {
 					//元リストからも削除
 					Iterator<CEditedContent> it = vOldFileList.iterator();
 					while (it.hasNext()) {
-						if (it.next().append_id == append_id && append_id != -1) {
+						if (it.next().append_id == append_id && append_id != 0) {
 							it.remove();
 						}
 					}
 
 					//先頭画像の削除有無
-					if (append_id == -1) bHead = true;
+					if (append_id == 0) bHead = true;
 				}
 				Log.d("Delete appendId:" + String.join(",", strDelList));
 
@@ -183,8 +183,6 @@ class UpdateFileOrderC {
 					cState.setInt(2, vOldFileList.get(vOldFileList.size() - 1).append_id);
 					cState.executeUpdate();
 					cState.close();cState=null;
-					Log.d("先頭が削除されたので末尾1個削除(" + vOldFileList.get(vOldFileList.size() - 1).append_id + "):" + vOldFileList.get(vOldFileList.size() - 1).name);
-					//vOldFileList.remove(vOldFileList.size() - 1);
 				}
 			}
 
@@ -192,14 +190,13 @@ class UpdateFileOrderC {
 			int p = 0;
 			for (int i=0; i<vNewFileList.size(); i++) {
 				CEditedContent cTmp = vNewFileList.get(i);
-				if (i==0 && vOldFileList.get(i).append_id != -1) {
-					p = 1;	//
-					Log.d("こないはず");
+				if (i==0 && vOldFileList.get(i).append_id != 0) {
+					p = 1;	//先頭削除によりcontents_appendsのファイルを繰り上げるためのオフセット
 				}
 				if((i+p) < vOldFileList.size()) {
 					cTmp.append_id = vOldFileList.get(i+p).append_id;
-					Log.d("New appendId:"+cTmp.append_id);
 					vNewFileList.set(i, cTmp);
+					Log.d("New appendId:" + cTmp.append_id);
 				}
 			}
 
