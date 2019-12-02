@@ -24,11 +24,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="/event/20191001/karaparekosume_pc_2.png" />
+				<img class="MainImage" src="/event/20191001/karaparekosume_pc-3.png" />
 				<div class="PalleteLinkList">
-					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_3color_2.png"></a>
-					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_4color_2.png"></a>
-					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_5color_2.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_3color-3.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_4color-3.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_5color-3.png"></a>
 				</div>
 			</div>
 		</article>

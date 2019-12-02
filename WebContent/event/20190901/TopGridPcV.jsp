@@ -129,16 +129,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		});
 		</script>
 		<style>
-			.SettingBody.Roulette {background: top center url('/event/20190901/odai_autumn.png') no-repeat; background-size: 600px; height: 3058px;}
-			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 560px; left: 20px; top: 2134px; z-index: 1;}
+			.SettingBody.Roulette {background: top center url('/event/20190901/odai_winter.png') no-repeat; background-size: 600px; height: 3058px;}
+			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 560px; left: 20px; top: 2093px; z-index: 1;}
 			.SlotFrame .SlotItem {display: flex; flex-flow: column; align-items: center;}
 			.SlotItem .RouletteFrame {}
 			.SlotItem .RouletteFrame .Roulette {display: none; width: 272px; background-color: #fff; border-radius: 10px; overflow: hidden;}
 			.SlotItem .RouletteFrame .Roulette img {display: block; width: 272px;}
 			.SlotItem .StopBtn {display: block; width: 100px; height: 100px; margin: 23px 0 0 0; cursor: pointer;}
-			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 570px; left: 15px; top: 2607px; z-index: 1;}
+			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 570px; left: 15px; top: 2547px; z-index: 1;}
 			.SlotCmdFrame .SlotCmdBtnDownload {display: block; width: 570px; height: 110px; cursor: pointer;}
-			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 280px; height: 110px; margin-top: 26px; cursor: pointer;}
+			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 280px; height: 110px; margin-top: 42px; cursor: pointer;}
 		</style>
 		<script type="text/javascript" src="/event/20190901/js/roulette_02.js"></script>
 		<script>
@@ -175,14 +175,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_autumn.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_winter.png" />
 				</div>
 				<div class="SlotFrame">
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
 								<%for(int i=1; i<=21; i++) {%>
-								<img src="/event/20190901/r_autumn02/r1_autumn02/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r_winter01/r1_winter01/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -191,8 +191,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
-								<%for(int i=1; i<=19; i++) {%>
-								<img src="/event/20190901/r_autumn02/r2_autumn02/<%=String.format("%02d", i)%>.png" />
+								<%for(int i=1; i<=20; i++) {%>
+								<img src="/event/20190901/r_winter01/r1_winter02/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
