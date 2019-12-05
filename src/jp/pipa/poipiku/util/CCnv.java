@@ -289,21 +289,30 @@ public class CCnv {
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
-		return toThumbHtml(cContent, nType, nMode, "", _TEX);
+		return toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, int nId, ResourceBundleControl _TEX) {
-		return toThumbHtml(cContent, nType, nMode, ""+nId, _TEX);
+		return toThumbHtml(cContent, nType, nMode, ""+nId, _TEX, SP_MODE_WVIEW);
 	}
 
-	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, ResourceBundleControl _TEX, int nSpMode) {
+		return toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode);
+	}
+
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX, int nSpMode) {
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+		String ILLUST_VIEW_APP = (nMode==MODE_SP)?String.format("/IllustViewApp.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
 
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		String strThumbClass = (cContent.m_nOpenId==2)?"Hidden":"";
-		strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW));
+		if (nSpMode==SP_MODE_APP) {
+			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW_APP));
+		} else {
+			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW));
+		}
 		String strFileUrl = "";
 		switch(cContent.m_nPublishId) {
 		case Common.PUBLISH_ID_R15:
