@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.pipa.poipiku.util.*;
+import jp.pipa.poipiku.util.CCnv;
 
 public class Common {
 	public static final int PAGE_BAR_NUM = 2;
@@ -119,6 +119,11 @@ public class Common {
 //			13,	// 使い回しハロウィン
 //			20, // あけおめ
 	};
+
+	public static final int EDITOR_CAMERAROLE = 0;
+	public static final int EDITOR_PASTE = 1;
+	public static final int EDITOR_BASIC_PAINT = 2;
+	public static final int EDITOR_DOT_TOOL = 3;
 
 	public static final int EMOJI_KEYBORD_MAX = 64;
 	public static final int EMOJI_CAT_RECENT = 0;

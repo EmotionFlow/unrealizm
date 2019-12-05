@@ -95,7 +95,7 @@ public class CCnv {
 			if (nSpMode == SP_MODE_APP) {
 				strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"myurlscheme://?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
 			} else {
-				if (cContent.m_nEditorId==1) {
+				if (cContent.m_nEditorId == Common.EDITOR_PASTE) {
 					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"UpdatePastePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
 				} else {
 					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"UpdateFilePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
