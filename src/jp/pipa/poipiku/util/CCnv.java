@@ -96,9 +96,9 @@ public class CCnv {
 				strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"myurlscheme://?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
 			} else {
 				if (cContent.m_nEditorId == Common.EDITOR_PASTE) {
-					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"UpdatePastePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdatePastePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
 				} else {
-					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"UpdateFilePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdateFilePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
 				}
 			}
 			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d)\"></a>", nLoginUserId, cContent.m_nContentId));
@@ -294,6 +294,10 @@ public class CCnv {
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
 		return toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW);
+	}
+
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
+		return toThumbHtml(cContent, nType, nMode, strKeyword, _TEX, SP_MODE_WVIEW);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, int nId, ResourceBundleControl _TEX) {

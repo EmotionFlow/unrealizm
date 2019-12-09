@@ -97,7 +97,7 @@ class UpdateFileRefTwitterC {
 
 		try {
 			// get content id
-			strSql = "UPDATE contents_0000 SET category_id=?, open_id=?, description=?, tag_list=?, publish_id=?, password=?, list_id=?, safe_filter=? WHERE user_id=? AND content_id=?";
+			strSql = "UPDATE contents_0000 SET category_id=?, open_id=?, description=?, tag_list=?, publish_id=?, password=?, list_id=?, safe_filter=?, upload_date=current_timestamp WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			try {
 				idx = 1;
@@ -231,12 +231,12 @@ UpdateFileRefTwitterCParam cParam = new UpdateFileRefTwitterCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
-//Log.d("UpdateFileRefTwitterCParam:"+nRtn);
-//Log.d("UpdateFileRefTwitterCParam.m_nUserId:"+cParam.m_nUserId);
-//Log.d("UpdateFileRefTwitterCParam.m_nContentId:"+cParam.m_nContentId);
-//Log.d("UpdateFileRefTwitterCParam.m_nCategoryId:"+cParam.m_nCategoryId);
-//Log.d("UpdateFileRefTwitterCParam.m_strDescription:"+cParam.m_strDescription);
-//Log.d("UpdateFileRefTwitterCParam.m_strTagList:"+cParam.m_strTagList);
+Log.d("UpdateFileRefTwitterCParam:"+nRtn);
+Log.d("UpdateFileRefTwitterCParam.m_nUserId:"+cParam.m_nUserId);
+Log.d("UpdateFileRefTwitterCParam.m_nContentId:"+cParam.m_nContentId);
+Log.d("UpdateFileRefTwitterCParam.m_nCategoryId:"+cParam.m_nCategoryId);
+Log.d("UpdateFileRefTwitterCParam.m_strDescription:"+cParam.m_strDescription);
+Log.d("UpdateFileRefTwitterCParam.m_strTagList:"+cParam.m_strTagList);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UpdateFileRefTwitterC cResults = new UpdateFileRefTwitterC();

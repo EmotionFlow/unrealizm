@@ -88,7 +88,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						"PG" : g_nPage,
 						"MD" : <%=CCnv.MODE_SP%>,
 						"ADF" : <%=cResults.m_cContent.m_nSafeFilter%>},
-					"url": "/f/IllustViewF.jsp",
+					"url": "/f/IllustViewApp.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
 							g_nPage++;

@@ -1,4 +1,6 @@
 // Fine Uploader 5.15.4 - MIT licensed. http://fineuploader.com
+_appendIds = [];	//add for sortable (poipiku)
+
 (function(global) {
     var qq = function(element) {
         "use strict";
@@ -61,6 +63,16 @@
             hasClass: function(name, considerParent) {
                 var re = new RegExp("(^| )" + name + "( |$)");
                 return re.test(element.className) || !!(considerParent && re.test(element.parentNode.className));
+            },
+            // add for sortable (poipiku)
+            addId: function(id, name) {
+                element.setAttribute('data-filename', name);
+                if (_appendIds[id]) {
+                	element.setAttribute('id', _appendIds[id]);
+            	} else {
+                	element.setAttribute('id', -1);
+            	}
+            	return this;
             },
             addClass: function(name) {
                 if (!qq(element).hasClass(name)) {
@@ -1334,6 +1346,9 @@
                     onBeforeStatusChange: function(id) {
                         sessionData.deleteFileEndpoint && self.setDeleteFileEndpoint(sessionData.deleteFileEndpoint, id);
                         sessionData.deleteFileParams && self.setDeleteFileParams(sessionData.deleteFileParams, id);
+                        if (sessionData.append_id) {
+                        	_appendIds[id] = sessionData.append_id;
+                        }
                         if (sessionData.thumbnailUrl) {
                             self._thumbnailUrls[id] = sessionData.thumbnailUrl;
                         }
@@ -2041,6 +2056,9 @@
                         this._preventRetries[id] = true;
                     }
                 } else {
+                    if (result.append_id) {
+                        _appendIds[id] = result.append_id;
+                    }
                     if (result.thumbnailUrl) {
                         this._thumbnailUrls[id] = result.thumbnailUrl;
                     }
@@ -6482,7 +6500,7 @@
                     notAvailablePath: null,
                     waitingPath: null
                 },
-                timeBetweenThumbs: 750
+                timeBetweenThumbs: 50	//changed for poipiku (default:750)
             },
             scaling: {
                 hideScaled: false
@@ -6576,7 +6594,7 @@
             log: null,
             limits: {
                 maxThumbs: 0,
-                timeBetweenThumbs: 750
+                timeBetweenThumbs: 50	//changed for poipiku (default:750)
             },
             templateIdOrEl: "qq-template",
             containerEl: null,
@@ -6966,6 +6984,7 @@
                 if (batch) {
                     fileBatch.map[id] = fileEl;
                 }
+                qq(fileEl).addId(id, name);		// add for sortable (popipiku)
                 qq(fileEl).addClass(FILE_CLASS_PREFIX + id);
                 uploaderEl.removeAttribute(DROPZPONE_TEXT_ATTR);
                 if (fileNameEl) {

@@ -12,6 +12,7 @@ class UploadReferenceCParam {
 	public int m_nPublishId = 0;
 	public String m_strPassword = "";
 	public String m_strListId = "";
+	public int m_nEditorId = 0;
 
 	public int GetParam(HttpServletRequest request) {
 		try {
@@ -23,6 +24,7 @@ class UploadReferenceCParam {
 			m_nPublishId		= Common.ToIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
 			m_strPassword		= Common.SubStrNum(Common.TrimAll(request.getParameter("PPW")), 16);
 			m_strListId			= Common.TrimAll(request.getParameter("PLD"));
+			m_nEditorId			= Common.ToIntN(request.getParameter("ED"), 0, Common.PUBLISH_ID_MAX);
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 			m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
@@ -85,7 +87,7 @@ class UploadReferenceC {
 			}
 
 			// get content id
-			strSql = "INSERT INTO contents_0000(user_id, category_id, description, tag_list, publish_id, password, list_id, safe_filter) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING content_id";
+			strSql = "INSERT INTO contents_0000(user_id, category_id, description, tag_list, publish_id, password, list_id, safe_filter, editor_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING content_id";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cParam.m_nUserId);
@@ -96,6 +98,7 @@ class UploadReferenceC {
 			cState.setString(idx++, cParam.m_strPassword);
 			cState.setString(idx++, cParam.m_strListId);
 			cState.setInt(idx++, safe_filter);
+			cState.setInt(idx++, cParam.m_nEditorId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nContentId = cResSet.getInt("content_id");
