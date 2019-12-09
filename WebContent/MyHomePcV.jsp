@@ -125,10 +125,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
-				<a class="EventItem Updated" href="/event/20190901/TopPcV.jsp">
+				<a class="EventItem" href="/event/20191206_xmas/TopPcV.jsp">
+					<img class="EventBanner" src="/event/20191206_xmas/banner_wacom.png" />
+				</a>
+				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_winter.png" />
 				</a>
-				<a class="EventItem Updated" href="/event/20191001/TopPcV.jsp">
+				<a class="EventItem" href="/event/20191001/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20191001/banner_karapare.png" />
 				</a>
 			</section>
@@ -163,10 +166,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
-							<a class="EventItem Updated" href="/event/20190901/TopPcV.jsp">
+							<a class="EventItem" href="/event/20191206_xmas/TopPcV.jsp">
+								<img class="EventBanner" src="/event/20191206_xmas/banner_wacom.png" />
+							</a>
+							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_winter.png" />
 							</a>
-							<a class="EventItem Updated" href="/event/20191001/TopPcV.jsp">
+							<a class="EventItem" href="/event/20191001/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20191001/banner_karapare.png" />
 							</a>
 							<a class="EventItem" href="/event/20190801/TopPcV.jsp">

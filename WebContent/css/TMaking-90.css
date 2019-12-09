@@ -917,6 +917,16 @@
 	color: #999999;
 }
 
+.Category.C19 {
+	background-color: #dd0000;
+	color: #00bb00;
+
+}
+.CategoryBtn.C19 {
+	background-color: #dd0000;
+	color: #00bb00;
+}
+
 .Category.C22 {
 	background-color: #3377ff;
 	color: #fff;
@@ -1173,6 +1183,18 @@
 .IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Pocky.Selected {
 	border-color: #dd2e43;
 	background-color: #dd2e43;
+	color: #fff;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Xmas {
+	border-color: #dd2e43;
+	background-color: #fff;
+	color: #ff0000;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Xmas.Selected {
+	border-color: #ff0000;
+	background-color: #ff0000;
 	color: #fff;
 }
 
