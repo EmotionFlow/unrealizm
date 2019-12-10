@@ -16,6 +16,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
+import twitter4j.Friendship;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
@@ -33,6 +34,10 @@ public class CTweet {
 	public ResponseList<UserList> m_listUserList = null;
 	public static final int MAX_LENGTH = 140;
 	public static final String ELLIPSE = "...";
+	public static final int FRIENDSHIP_NONE = 0;		//無関係
+	public static final int FRIENDSHIP_FRIEND = 1;		// フォローしている
+	public static final int FRIENDSHIP_FOLLOWER = 2;	// フォローされている
+	public static final int FRIENDSHIP_EACH = 3;		// 相互フォロー
 
 	public boolean GetResults(int nUserId) {
 		boolean bResult = true;
@@ -191,6 +196,60 @@ public class CTweet {
 			bResult = false;
 		}
 		return bResult;
+	}
+
+	public int LookupFriendship(int nTargetUserId){
+		int nResult = FRIENDSHIP_NONE;
+		DataSource dsPostgres = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+
+		try {
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
+			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, nTargetUserId);
+			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
+			cResSet = cState.executeQuery();
+			System.out.println(String.format("ua: %s, st: %s", m_strUserAccessToken, m_strSecretToken));
+			if(cResSet.next()){
+				ConfigurationBuilder cb = new ConfigurationBuilder();
+				cb.setDebugEnabled(true)
+					.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+					.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+					.setOAuthAccessToken(m_strUserAccessToken)
+					.setOAuthAccessTokenSecret(m_strSecretToken);
+				TwitterFactory tf = new TwitterFactory(cb.build());
+				Twitter twitter = tf.getInstance();
+	
+				// 関係をlookup
+				long tgtIds[] = {Long.parseLong(cResSet.getString("twitter_user_id"))};
+				ResponseList<Friendship> lookupResults = twitter.lookupFriendships(tgtIds);
+				if(lookupResults.size() > 0){
+					Friendship f = lookupResults.get(0);
+					if(f.isFollowing() && f.isFollowedBy()){
+						nResult = FRIENDSHIP_EACH;
+					} else if(f.isFollowing() && !f.isFollowedBy()){
+						nResult = FRIENDSHIP_FRIEND;
+					} else if(!f.isFollowing() && !f.isFollowedBy()){
+						nResult = FRIENDSHIP_NONE;
+					}
+				}
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			nResult = -1;
+		} finally {
+			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
+			try {if(cState!=null)cState.close();}catch(Exception e){}
+			try {if(cConn!=null)cConn.close();}catch(Exception e){}
+		}
+		return nResult;
 	}
 
 	static public String generateIllustMsgFull(CContent cContent, ResourceBundleControl _TEX) {

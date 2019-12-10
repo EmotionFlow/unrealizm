@@ -1,4 +1,5 @@
 <%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
+<%@page import="jp.pipa.poipiku.util.CTweet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -36,6 +37,7 @@ class ShowAppendFileC {
 
 	CContent m_cContent = null;
 	public int getResults(CheckLogin checkLogin) {
+		System.out.println("enter");
 		int nRtn = OK;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -79,6 +81,15 @@ class ShowAppendFileC {
 			}
 			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN && m_cContent.m_nUserId!=checkLogin.m_nUserId) return ERR_HIDDEN;
 
+			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER){
+				CTweet cTweet = new CTweet();
+				if(cTweet.GetResults(checkLogin.m_nUserId)){
+					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
+					int nFriendship = cTweet.LookupFriendship(m_nUserId);
+					if(!(nFriendship==CTweet.FRIENDSHIP_FRIEND || nFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
+				}
+			}
+
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
 			cState = cConn.prepareStatement(strSql);
@@ -103,6 +114,7 @@ class ShowAppendFileC {
 }
 %>
 <%
+System.out.println("ENTER");
 CheckLogin checkLogin = new CheckLogin(request, response);
 int nRtn = 0;
 StringBuilder strHtml = new StringBuilder();

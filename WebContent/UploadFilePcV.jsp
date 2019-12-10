@@ -8,6 +8,8 @@ if(!cCheckLogin.m_bLogin) {
 	return;
 }
 
+boolean hasTwitterToken = cCheckLogin.hasTwitterToken();
+
 String strTag = "";
 try {
 	request.setCharacterEncoding("UTF-8");
@@ -139,6 +141,9 @@ if(cCookies != null) {
 								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
 								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
+								<%if(hasTwitterToken){%>
+									<option value="<%=Common.PUBLISH_ID_T_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follower")%></option>
+								<%}%>
 							</select>
 						</div>
 					</div>
