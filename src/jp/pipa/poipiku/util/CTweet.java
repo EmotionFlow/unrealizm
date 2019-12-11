@@ -21,6 +21,7 @@ import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.UploadedMedia;
 import twitter4j.UserList;
@@ -34,10 +35,13 @@ public class CTweet {
 	public ResponseList<UserList> m_listUserList = null;
 	public static final int MAX_LENGTH = 140;
 	public static final String ELLIPSE = "...";
-	public static final int FRIENDSHIP_NONE = 0;		//無関係
+	public static final int FRIENDSHIP_UNDEF = -1;		// 未定義
+	public static final int FRIENDSHIP_NONE = 0;		// 無関係
 	public static final int FRIENDSHIP_FRIEND = 1;		// フォローしている
 	public static final int FRIENDSHIP_FOLLOWER = 2;	// フォローされている
 	public static final int FRIENDSHIP_EACH = 3;		// 相互フォロー
+	public static final int ERR_RATE_LIMIT_EXCEEDED = -10088;
+	public static final int ERR_OTHER = -99999;
 
 	public boolean GetResults(int nUserId) {
 		boolean bResult = true;
@@ -199,7 +203,7 @@ public class CTweet {
 	}
 
 	public int LookupFriendship(int nTargetUserId){
-		int nResult = FRIENDSHIP_NONE;
+		int nResult = FRIENDSHIP_UNDEF;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -234,16 +238,25 @@ public class CTweet {
 						nResult = FRIENDSHIP_EACH;
 					} else if(f.isFollowing() && !f.isFollowedBy()){
 						nResult = FRIENDSHIP_FRIEND;
-					} else if(!f.isFollowing() && !f.isFollowedBy()){
+					} else if(!f.isFollowing() && f.isFollowedBy()){
+						nResult = FRIENDSHIP_FOLLOWER;
+					} else {
 						nResult = FRIENDSHIP_NONE;
 					}
 				}
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+		} catch (TwitterException te) {
+			if(te.getErrorCode() == 88){
+				nResult = ERR_RATE_LIMIT_EXCEEDED;
+			} else {
+				te.printStackTrace();
+				nResult = ERR_OTHER;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			nResult = -1;
+			nResult = ERR_OTHER;
 		} finally {
 			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
 			try {if(cState!=null)cState.close();}catch(Exception e){}

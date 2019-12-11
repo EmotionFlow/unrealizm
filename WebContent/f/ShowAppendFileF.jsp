@@ -13,6 +13,7 @@ class ShowAppendFileC {
 	public static final int ERR_T_FOLLOW = -6;
 	public static final int ERR_T_EACH = -7;
 	public static final int ERR_T_LIST = -8;
+	public static final int ERR_T_RATE_LIMIT_EXCEEDED = -10088;
 	public static final int ERR_HIDDEN = -9;
 	public static final int ERR_UNKNOWN = -99;
 
@@ -22,6 +23,7 @@ class ShowAppendFileC {
 	public int m_nContentId = -1;
 	public String m_strPassword = "";
 	public int m_nMode = 0;
+	public int m_nTwFriendship = CTweet.FRIENDSHIP_UNDEF;
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -29,6 +31,7 @@ class ShowAppendFileC {
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
 			m_strPassword = request.getParameter("PAS");
 			m_nMode = Common.ToInt(request.getParameter("MD"));
+			m_nTwFriendship = Common.ToInt(request.getParameter("TWF"));
 			request.setCharacterEncoding("UTF-8");
 		} catch(Exception e) {
 			m_nContentId = -1;
@@ -37,7 +40,6 @@ class ShowAppendFileC {
 
 	CContent m_cContent = null;
 	public int getResults(CheckLogin checkLogin) {
-		System.out.println("enter");
 		int nRtn = OK;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -85,8 +87,15 @@ class ShowAppendFileC {
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
-					int nFriendship = cTweet.LookupFriendship(m_nUserId);
-					if(!(nFriendship==CTweet.FRIENDSHIP_FRIEND || nFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
+					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF){
+						m_nTwFriendship = cTweet.LookupFriendship(m_nUserId);
+						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
+							return ERR_T_RATE_LIMIT_EXCEEDED;
+						}else if(m_nTwFriendship==CTweet.ERR_OTHER){
+							return ERR_UNKNOWN;
+						}
+					}
+					if(!(m_nTwFriendship==CTweet.FRIENDSHIP_FRIEND || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
 				}
 			}
 
@@ -114,7 +123,6 @@ class ShowAppendFileC {
 }
 %>
 <%
-System.out.println("ENTER");
 CheckLogin checkLogin = new CheckLogin(request, response);
 int nRtn = 0;
 StringBuilder strHtml = new StringBuilder();
@@ -143,6 +151,9 @@ if(nRtn<ShowAppendFileC.OK) {
 		break;
 	case ShowAppendFileC.ERR_T_LIST:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_LIST"));
+		break;
+	case ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED:
+		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED"));
 		break;
 	case ShowAppendFileC.ERR_NOT_FOUND:
 	case ShowAppendFileC.ERR_HIDDEN :
@@ -184,5 +195,6 @@ if(nRtn<ShowAppendFileC.OK) {
 }
 %>{
 "result_num" : <%=nRtn%>,
-"html" : "<%=CEnc.E(strHtml.toString())%>"
+"html" : "<%=CEnc.E(strHtml.toString())%>",
+"tw_friendship" : "<%=cResults.m_nTwFriendship%>"
 }
