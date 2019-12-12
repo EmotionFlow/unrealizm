@@ -12,7 +12,7 @@ function UpdateFileOrder(user_id, content_id) {
 			IID: content_id,
 			AID: JSON.stringify(json_array)
 		},
-		"url": "/api/UpdateFileOrderF.jsp",
+		"url": "/f/UpdateFileOrderF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileOrderF:" + data.result);
@@ -34,7 +34,7 @@ function UpdatePasteOrder(user_id, content_id) {
 			IID: content_id,
 			AID: JSON.stringify(json_array)
 		},
-		"url": "/api/UpdateFileOrderF.jsp",
+		"url": "/f/UpdateFileOrderF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileOrderF:" + data.result);
@@ -69,7 +69,7 @@ function initUpdateFile(userid, contentid) {
 		callbacks: {
 			onUpload: function(id, name) {
 				if (this.newfile_num && this.newfile_num > 0) {
-					this.setEndpoint('/api/UpdateFileAppendF.jsp', id);
+					this.setEndpoint('/f/UpdateFileAppendF.jsp', id);
 					this.setParams({
 						UID: this.user_id,
 						IID: this.illust_id,
@@ -92,7 +92,7 @@ function initUpdateFile(userid, contentid) {
 								IID: this.illust_id,
 								IMG: this.tweet_image
 							},
-							"url": "/api/UploadFileTweetF.jsp",
+							"url": "/f/UploadFileTweetF.jsp",
 							"dataType": "json",
 							"success": function(data) {
 								console.log("UploadFileTweetF");
@@ -201,7 +201,7 @@ function UpdateFile(user_id, content_id) {
 			"REC": nRecent,
 			"ED":0
 		},
-		"url": "/api/UpdateFileRefTwitterF.jsp",
+		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UpdateFileRefTwitterF:" + data.content_id);
@@ -323,7 +323,7 @@ function UpdatePaste(user_id, content_id) {
 			"REC": nRecent,
 			"ED":1
 		},
-		"url": "/api/UpdateFileRefTwitterF.jsp",
+		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UpdateFileRefTwitterF", data.content_id);
@@ -340,7 +340,7 @@ function UpdatePaste(user_id, content_id) {
 						"IID":data.content_id,
 						"DATA":strEncodeImg,
 					},
-					"url": "/api/UpdatePasteAppendF.jsp",
+					"url": "/f/UpdatePasteAppendF.jsp",
 					"dataType": "json",
 					"async": false,
 					"success": function(data) {
@@ -356,7 +356,7 @@ function UpdatePaste(user_id, content_id) {
 						IID: data.content_id,
 						IMG: nTweetImage,
 					},
-					"url": "/api/UploadFileTweetF.jsp",
+					"url": "/f/UploadFileTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						console.log("UpdateFileTweetF");
