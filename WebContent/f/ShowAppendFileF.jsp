@@ -83,10 +83,12 @@ class ShowAppendFileC {
 			}
 			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN && m_cContent.m_nUserId!=checkLogin.m_nUserId) return ERR_HIDDEN;
 
-			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER){
+			// twitter friendship
+			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
+
 					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF){
 						m_nTwFriendship = cTweet.LookupFriendship(m_nUserId);
 						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
@@ -95,9 +97,13 @@ class ShowAppendFileC {
 							return ERR_UNKNOWN;
 						}
 					}
-					if(!(m_nTwFriendship==CTweet.FRIENDSHIP_FRIEND || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && !(m_nTwFriendship==CTweet.FRIENDSHIP_FRIEND || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW && !(m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOW;}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH && !(m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_EACH;}
 				}
 			}
+
+			//TODO twitter openlist
 
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
