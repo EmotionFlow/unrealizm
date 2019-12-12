@@ -59,8 +59,7 @@ class GetIllustFileListC {
 				Map<String, Object> image = new HashMap<String, Object>();
 				image.put("append_id", cResSet.getString("append_id"));
 				image.put("name", cResSet.getString("file_name"));
-				image.put("thumbnailUrl", "http:" + Common.GetUrl(cResSet.getString("file_name")) + "_360.jpg");
-				image.put("uuid", UUID.randomUUID().toString());
+				image.put("thumbnailUrl", Common.GetPoipikuUrl(cResSet.getString("file_name")) + "_360.jpg");
 				m_vContent.add(image);
 			}
 			cResSet.close();cResSet=null;
