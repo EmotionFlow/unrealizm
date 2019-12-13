@@ -32,7 +32,7 @@ public class CTweet {
 	public String m_strUserAccessToken = "";
 	public String m_strSecretToken = "";
 	public long m_lnTwitterUserId = -1;
-	public ResponseList<UserList> m_listUserList = null;
+	public ResponseList<UserList> m_listOpenList = null;
 	public static final int MAX_LENGTH = 140;
 	public static final String ELLIPSE = "...";
 	public static final int FRIENDSHIP_UNDEF = -1;		// 未定義
@@ -87,7 +87,7 @@ public class CTweet {
 		return bResult;
 	}
 
-	public boolean getList(int nUserId) {
+	public boolean GetMyOpenLists() {
 		if (!m_bIsTweetEnable) return false;
 		boolean bResult = true;
 		try {
@@ -99,10 +99,13 @@ public class CTweet {
 				.setOAuthAccessTokenSecret(m_strSecretToken);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
-			m_listUserList = twitter.getUserLists(m_lnTwitterUserId, true);
-			Log.d("m_listUserList:"+m_listUserList.size());
-			for(UserList list : m_listUserList) {
-				Log.d("list:"+list.getName()+":"+list.getId());
+			m_listOpenList = twitter.getUserLists(m_lnTwitterUserId, true);
+			for(UserList l : m_listOpenList){
+				Log.d(String.format("%s, %d, %b", l.getName(), l.getId(), l.isPublic()));
+			}
+			m_listOpenList.removeIf(a -> !a.isPublic());
+			for(UserList l : m_listOpenList){
+				Log.d(String.format("%s, %d, %b", l.getName(), l.getId(), l.isPublic()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

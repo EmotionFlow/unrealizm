@@ -173,36 +173,4 @@ public class CheckLogin {
 		}
 		return bRtn;
 	}
-
-	public boolean hasTwitterToken(){
-		boolean bRtn = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
-		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
-			strSql = "select count(flduserid) as cnt from tbloauth where flduserid=? and fldaccesstoken is not null and fldsecrettoken is not null limit 1";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, this.m_nUserId);
-			cResSet = cState.executeQuery();
-			cResSet.next();
-			bRtn = cResSet.getInt("cnt") == 1 ? true : false;
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-		} catch(Exception e) {
-			Log.d(strSql);
-			e.printStackTrace();
-			bRtn = false;
-		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-		}
-		return bRtn;
-
-
-	}
 }

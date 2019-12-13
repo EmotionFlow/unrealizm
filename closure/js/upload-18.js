@@ -500,12 +500,36 @@ function updateTweetButton() {
 }
 
 function updatePublish() {
-	var val = $('#EditPublish').val();
-	if (val==4) {
-		$('#ItemPassword').slideDown(300);
-	} else {
-		$('#ItemPassword').slideUp(300);
-	}
+    var val = $('#EditPublish').val();
+    var nSlideSpeed = 300;
+    var nChangeDelay = 150;
+
+    if (val==4 || val==10){
+        if (val==4) {
+            if($('#ItemTwitterList').is(':visible')){
+                $('#ItemTwitterList').slideUp(nSlideSpeed,
+                function(){
+                    $('#ItemPassword').delay(nChangeDelay).slideDown(nSlideSpeed);
+                });
+            } else {
+                $('#ItemPassword').slideDown(nSlideSpeed);
+            }
+        }
+        
+        if (val==10) {
+            if($('#ItemPassword').is(':visible')){
+                $('#ItemPassword').slideUp(nSlideSpeed,
+                function(){
+                    $('#ItemTwitterList').delay(nChangeDelay).slideDown(nSlideSpeed);
+                });
+            } else {
+                $('#ItemTwitterList').slideDown(nSlideSpeed);
+            }
+        }
+    } else {
+        $('#ItemPassword').slideUp(nSlideSpeed);
+        $('#ItemTwitterList').slideUp(nSlideSpeed);
+    }
 }
 
 function initUploadFile() {
