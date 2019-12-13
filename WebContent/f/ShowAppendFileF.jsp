@@ -103,7 +103,19 @@ class ShowAppendFileC {
 				}
 			}
 
-			//TODO twitter openlist
+			// twitter openlist
+			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){
+				CTweet cTweet = new CTweet();
+				if(cTweet.GetResults(checkLogin.m_nUserId)){
+					if(!cTweet.m_bIsTweetEnable){return ERR_T_LIST;}
+					int nRet = cTweet.LookupListMember(m_cContent);
+					if(nRet==0) return ERR_T_LIST;
+					if(nRet==CTweet.ERR_RATE_LIMIT_EXCEEDED) return ERR_T_RATE_LIMIT_EXCEEDED;
+					if(nRet<0) return ERR_UNKNOWN;
+				} else {
+					return ERR_UNKNOWN;
+				}
+			}
 
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";

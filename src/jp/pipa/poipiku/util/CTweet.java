@@ -19,6 +19,7 @@ import jp.pipa.poipiku.*;
 import twitter4j.Friendship;
 import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.User;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -41,6 +42,7 @@ public class CTweet {
 	public static final int FRIENDSHIP_FOLLOWER = 2;	// フォローされている
 	public static final int FRIENDSHIP_EACH = 3;		// 相互フォロー
 	public static final int ERR_RATE_LIMIT_EXCEEDED = -10088;
+	public static final int ERR_TWEET_DISABLE = -10000;
 	public static final int ERR_OTHER = -99999;
 
 	public boolean GetResults(int nUserId) {
@@ -207,6 +209,8 @@ public class CTweet {
 
 	public int LookupFriendship(int nTargetUserId){
 		int nResult = FRIENDSHIP_UNDEF;
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -264,6 +268,39 @@ public class CTweet {
 			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
 			try {if(cState!=null)cState.close();}catch(Exception e){}
 			try {if(cConn!=null)cConn.close();}catch(Exception e){}
+		}
+		return nResult;
+	}
+
+	public int LookupListMember(CContent cContent){
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		if (cContent.m_strListId.isEmpty()) return ERR_OTHER;
+
+		int nResult;
+		try{
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+            User u = twitter.showUserListMembership(Long.parseLong(cContent.m_strListId), m_lnTwitterUserId);
+			System.out.println(String.format("%s", u.getId()));
+			nResult = 1;
+        }catch(TwitterException te){
+            if(te.getStatusCode()==404){
+                nResult = 0; // リストが消されちゃった場合もここにくる。
+			} else if(te.getErrorCode() == 88){
+				nResult = ERR_RATE_LIMIT_EXCEEDED;
+			} else {
+				te.printStackTrace();
+				nResult = ERR_OTHER;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			nResult = ERR_OTHER;
 		}
 		return nResult;
 	}

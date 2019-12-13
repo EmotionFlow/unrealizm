@@ -30,6 +30,7 @@ public class CContent {
 	public int m_nPublishId = 0;
 	public String m_strPassword = "";
 	public CUser m_cUser = new CUser();
+	public String m_strListId = "";
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
 
@@ -52,6 +53,7 @@ public class CContent {
 		m_nFileHeight		= resultSet.getInt("file_height");
 		m_strTagList		= Common.ToString(resultSet.getString("tag_list"));
 		m_nPublishId		= resultSet.getInt("publish_id");
+		m_strListId			= Common.ToString(resultSet.getString("list_id"));
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
