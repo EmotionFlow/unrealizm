@@ -500,32 +500,52 @@ function updateTweetButton() {
 }
 
 function updatePublish() {
-    var val = $('#EditPublish').val();
+    var val = parseInt($('#EditPublish').val(), 10);
     var nSlideSpeed = 300;
     var nChangeDelay = 150;
 
-    if (val==4 || val==10){
-        if (val==4) {
-            if($('#ItemTwitterList').is(':visible')){
-                $('#ItemTwitterList').slideUp(nSlideSpeed,
-                function(){
-                    $('#ItemPassword').delay(nChangeDelay).slideDown(nSlideSpeed);
-                });
-            } else {
-                $('#ItemPassword').slideDown(nSlideSpeed);
-            }
-        }
-        
-        if (val==10) {
-            if($('#ItemPassword').is(':visible')){
-                $('#ItemPassword').slideUp(nSlideSpeed,
-                function(){
-                    $('#ItemTwitterList').delay(nChangeDelay).slideDown(nSlideSpeed);
-                });
-            } else {
-                $('#ItemTwitterList').slideDown(nSlideSpeed);
-            }
-        }
+    if (val==4 || val==10 || val==11){
+		var elToHide = null;
+		var elToVisible = null;
+		switch (val) {
+			case 4:
+				elToVisible = $('#ItemPassword');
+				break;
+			case 10:
+				elToVisible = $('#ItemTwitterList');
+				break;
+			case 11:
+				elToVisible = $('#ItemTimeLimited');
+				break;
+			default:
+				;
+		}
+
+		var elements = [$('#ItemTwitterList'), $('#ItemPassword'), $('#ItemTimeLimited')];
+		for (var i=0; i<elements.length; i++){
+			var el = elements[i];
+			if(el.is(':visible')){
+				elToHide = el;
+				break;
+			}
+		}
+
+		if (elToHide==null){
+			elToVisible.slideDown(nSlideSpeed);
+		} else {
+			elToHide.slideUp(nSlideSpeed,
+				function(){
+					elToVisible.delay(nChangeDelay).slideDown(nSlideSpeed);
+				});
+		}
+		if(val==11){
+			$('.timelimited-datetime').flatpickr({
+				enableTime: true,
+				dateFormat: "Y/m/d H:i",
+				time_24hr: true,
+			});
+		}
+		
     } else {
         $('#ItemPassword').slideUp(nSlideSpeed);
         $('#ItemTwitterList').slideUp(nSlideSpeed);

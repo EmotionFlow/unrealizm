@@ -45,7 +45,10 @@ if(cCookies != null) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-18.js" type="text/javascript"></script>
+
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -155,6 +158,7 @@ if(cCookies != null) {
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}%>
 								<%}%>
+								<option value="<%=Common.PUBLISH_ID_LIMITED_TIME%>"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></option>
 							</select>
 						</div>
 					</div>
@@ -164,7 +168,6 @@ if(cCookies != null) {
 							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
-
 					<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
 					<div id="ItemTwitterList" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
@@ -177,7 +180,14 @@ if(cCookies != null) {
 						</div>
 					</div>
 					<%}%>
-	
+					<div id="ItemTimeLimited" class="OptionItem" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<input id="ItemTimeLimitedStart" class="timelimited-datetime" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+							<input id="ItemTimeLimitedEnd" class="timelimited-datetime" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+						</div>
+					</div>
+		
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
