@@ -25,16 +25,18 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
 .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
 #DispMsg {top: 51px;padding: 40px 10px;}
-#MenuHome .FooterMenuItemIcon {background-position: 0 0;}
+#MenuMe .FooterMenuItemIcon {background-position: 0 0;}
+#MenuHome .FooterMenuItemIcon {background-position: -56px 0;}
+/*#MenuMe .FooterMenuItemIcon {background-position: -364px 0;}*/
 #MenuSearch .FooterMenuItemIcon {background-position: -56px 0;}
 #MenuUpload .FooterMenuItemIcon {background-position: -28px 0;}
 #MenuAct .FooterMenuItemIcon {background-position: -392px 0;}
-#MenuMe .FooterMenuItemIcon {background-position: -364px 0;}
-#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: 0 -28px;}
+#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: 0 -28px;}
+/*#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}*/
+#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -28px -28px;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
-#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}
 
 .LinkApp {display:block; float: left; width: 100%; text-align: center; margin: 15px 0 0 0; font-size: 0;}

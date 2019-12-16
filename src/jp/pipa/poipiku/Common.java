@@ -92,8 +92,8 @@ public class Common {
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 23;
 	public static final int[] CATEGORY_ID = {
-			19, // ポイピククリスマス
 			22,	// リハビリ
+			19, // ポイピククリスマス
 			23,	// ネタバレ
 			17, // メモ
 			16,	// 描けねえ
@@ -137,7 +137,7 @@ public class Common {
 			{},
 			// x'mas
 			{
-				"🎅", "🎄",
+				"🎅", "🎄", "🎁", "💝", "🍰", "🎉", "🎀", "⛄", "❄", "🌟",
 			},
 			/*
 			// シェアハピ(ポッキーの日)

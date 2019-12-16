@@ -88,6 +88,10 @@
 			<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
 		</a>
 		<%} else {%>
+		<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
+			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
+		</a>
 		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
@@ -107,10 +111,6 @@
 				<div id="InfoNumAct" class="InfoNum">0</div>
 			</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
-		</a>
-		<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
-			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>
 		<%}%>
 	</nav>
