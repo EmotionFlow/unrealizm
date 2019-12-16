@@ -169,7 +169,7 @@ if(!cResults.getResults(cCheckLogin)) {
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(cResults.m_bOwner) {%>
-						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
+						<a class="BtnBase UserInfoCmdFollow" href="myurlscheme://openSetting"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
 						<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
 						<%} else if(cResults.m_bBlocking){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>

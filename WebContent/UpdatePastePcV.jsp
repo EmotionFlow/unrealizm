@@ -33,7 +33,7 @@ try {
 		});
 		</script>
 		<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
-		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js?<%=Math.random()%>"></script>
+		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui.js"></script>
 	    <script type="text/javascript">

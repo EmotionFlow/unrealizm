@@ -25,6 +25,8 @@ final int[] PUBLISH_ID = {
 		6,			// フォロワー限定
 		99			// 非公開
 };
+
+response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 %>
 <!DOCTYPE html>
 <html>
@@ -42,7 +44,7 @@ final int[] PUBLISH_ID = {
 
 		<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
 		<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
-		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js?<%=Math.random()%>"></script>
+		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<script>
 			function startMsg() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
