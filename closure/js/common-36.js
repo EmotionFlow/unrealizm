@@ -368,7 +368,6 @@ function ShowAllReaction(content_id, elm) {
 
 function generateShowAppendFile(){
     var tw_friendships = {}; // target user id -> friendship id (see CTweet)
-    var tw_listmembers = {}; // list id -> isMember?
 	return function(user_id, content_id, mode, elm) {
 		console.log("twitter friendships: " + tw_friendships);
 		var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();

@@ -69,6 +69,14 @@ if(cCookies != null) {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
 			}
 
+			function dateTimeEmptyMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
+			}
+
+			function dateTimeReverseMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
+			}
+
 			function completeMsg() {
 				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
 			}
@@ -180,14 +188,15 @@ if(cCookies != null) {
 						</div>
 					</div>
 					<%}%>
+					
 					<div id="ItemTimeLimited" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
-							<input id="ItemTimeLimitedStart" class="timelimited-datetime" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
-							<input id="ItemTimeLimitedEnd" class="timelimited-datetime" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							<input id="EditTimeLimitedStart" class="EditTimeLimited " type="text" maxlength="10" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+							<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="10" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
 						</div>
 					</div>
-		
+
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">

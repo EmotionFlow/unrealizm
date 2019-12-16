@@ -502,7 +502,8 @@ function updateTweetButton() {
 function updatePublish() {
     var val = parseInt($('#EditPublish').val(), 10);
     var nSlideSpeed = 300;
-    var nChangeDelay = 150;
+	var nChangeDelay = 150;
+	var elements = [$('#ItemTwitterList'), $('#ItemPassword'), $('#ItemTimeLimited')];
 
     if (val==4 || val==10 || val==11){
 		var elToHide = null;
@@ -521,7 +522,6 @@ function updatePublish() {
 				;
 		}
 
-		var elements = [$('#ItemTwitterList'), $('#ItemPassword'), $('#ItemTimeLimited')];
 		for (var i=0; i<elements.length; i++){
 			var el = elements[i];
 			if(el.is(':visible')){
@@ -539,16 +539,24 @@ function updatePublish() {
 				});
 		}
 		if(val==11){
-			$('.timelimited-datetime').flatpickr({
+			var dateNow = new Date();
+			dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
+			$(".EditTimeLimited").flatpickr({
 				enableTime: true,
 				dateFormat: "Y/m/d H:i",
 				time_24hr: true,
+				minuteIncrement: 30,
+				minDate: dateNow
 			});
 		}
 		
     } else {
-        $('#ItemPassword').slideUp(nSlideSpeed);
-        $('#ItemTwitterList').slideUp(nSlideSpeed);
+		for (var i=0; i<elements.length; i++){
+			var el = elements[i];
+			if(el.is(':visible')){
+				el.slideUp(nSlideSpeed);
+			}
+		}
     }
 }
 
@@ -679,7 +687,19 @@ function UploadFile(user_id) {
     var nTwListId = null;
     if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
-    }
+	}
+	
+	if(nPublishId==11){
+		var strStart = $('#EditTimeLimitedStart').val();
+		var strEnd = $('#EditTimeLimitedEnd').val();
+		if(strStart=='' || strEnd==''){
+			dateTimeEmptyMsg();
+			return;
+		}else if(Date.parse(strStart) > Date.parse(strEnd)){
+			dateTimeReverseMsg();
+			return;
+		}
+	}
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
