@@ -88,8 +88,10 @@ class ShowAppendFileC {
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
-
-					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF){
+					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF
+						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
+						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH     && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
+						){
 						m_nTwFriendship = cTweet.LookupFriendship(m_nUserId);
 						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
 							return ERR_T_RATE_LIMIT_EXCEEDED;
