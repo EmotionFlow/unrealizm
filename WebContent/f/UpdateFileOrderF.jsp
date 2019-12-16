@@ -12,7 +12,6 @@
 <%@page import="org.codehaus.jackson.JsonGenerationException"%>
 <%@page import="org.codehaus.jackson.map.JsonMappingException"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
-<%@page import="org.apache.commons.collections4.*"%>
 <%@include file="/inner/Common.jsp"%>
 <%!class UpdateFileOrderCParam {
 	public int m_nUserId = -1;
