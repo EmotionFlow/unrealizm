@@ -55,8 +55,8 @@ class UploadReferenceCParam {
 					}
 				}
 			}
-			if(!strPublishStart.isEmpty()){m_tsPublishStart = Timestamp.valueOf(strPublishStart)};
-			if(!strPublishEnd.isEmpty()){m_tsPublishEnd = Timestamp.valueOf(strPublishEnd)};
+			if(!strPublishStart.isEmpty()){m_tsPublishStart = Timestamp.valueOf(strPublishStart);};
+			if(!strPublishEnd.isEmpty()){m_tsPublishEnd = Timestamp.valueOf(strPublishEnd);};
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
@@ -99,8 +99,9 @@ class UploadReferenceC {
 			ArrayList<String> lColumns = new ArrayList<String>();
 			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id"));
 
+			/*
 			if(cParam.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
-				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.")};
+				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
 
 				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
 				if(cParam.m_tsPublishStart != null ){
@@ -115,6 +116,7 @@ class UploadReferenceC {
 					lColumns.add("end_date");
 				}
 			}
+			*/
 
 			ArrayList<String> lVals = new ArrayList<String>();
 			lColumns.forEach(c -> lVals.add("?"));
