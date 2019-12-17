@@ -25,7 +25,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="./wacom_pc.png" />
+				<img class="MainImage" src="./wacom_pc-2.png" />
 				<a class="LinkButton Link1" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
 				<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
 			</div>
