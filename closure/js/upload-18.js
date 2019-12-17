@@ -685,17 +685,20 @@ function UploadFile(user_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
     var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
     var nTwListId = null;
-    if(nPublishId==10){
+	var strPublishStart = $('#EditTimeLimitedStart').val();
+	var strPublishEnd = $('#EditTimeLimitedEnd').val();
+	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
 	
 	if(nPublishId==11){
-		var strStart = $('#EditTimeLimitedStart').val();
-		var strEnd = $('#EditTimeLimitedEnd').val();
-		if(strStart=='' || strEnd==''){
+		if(strPublishStart=='' || strPublishEnd==''){
 			dateTimeEmptyMsg();
 			return;
-		}else if(Date.parse(strStart) > Date.parse(strEnd)){
+		} else if(Date.parse(strPublishStart) < Date.now()) {
+			dateTimePastMsg();
+			return;
+		} else if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
 			dateTimeReverseMsg();
 			return;
 		}
@@ -721,6 +724,8 @@ function UploadFile(user_id) {
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",

@@ -62,7 +62,7 @@ if(cCookies != null) {
 		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<script>
 			function startMsg() {
-				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+				DispMsgStatic('<%=_TEX.T("EditIllustVCommon.Uploading")%>');
 			}
 
 			function errorMsg() {
@@ -73,12 +73,12 @@ if(cCookies != null) {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
 			}
 
-			function dateTimeReverseMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
+			function dateTimePastMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
 			}
 
 			function completeMsg() {
-				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Uploaded")%>');
 			}
 
 			function completeAddFile() {
@@ -189,6 +189,7 @@ if(cCookies != null) {
 					</div>
 					<%}%>
 					
+					<%if(false){ // twitterフォロー限定機能先行リリースのため、一時コメントアウト%>
 					<div id="ItemTimeLimited" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
@@ -196,6 +197,7 @@ if(cCookies != null) {
 							<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="10" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
 						</div>
 					</div>
+					<%}%>
 
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
