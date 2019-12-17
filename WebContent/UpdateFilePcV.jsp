@@ -11,48 +11,11 @@ if(!cCheckLogin.m_bLogin) {
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 
-/*
-String strTag = "";
-try {
-	request.setCharacterEncoding("UTF-8");
-	strTag = Common.TrimAll(request.getParameter("TAG"));
-} catch(Exception e) {
-	;
-}*/
-
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
-Log.d(Integer.toString(cResults.m_nUserId));
-Log.d(Integer.toString(cResults.m_nContentId));
-Log.d(Integer.toString(cResults.m_cContent.m_nCategoryId));
-Log.d(cResults.m_cContent.m_strDescription);
-Log.d(cResults.m_cContent.m_strFileName);
-Log.d(Integer.toString(cResults.m_cContent.m_nOpenId));
-Log.d(Integer.toString(cResults.m_cContent.m_nSafeFilter));
-
-for (CContentAppend cAppend: cResults.m_cContent.m_vContentAppend) {
-	Log.d(cAppend.m_strFileName);
-}
-
-/*
-Cookie cCookies[] = request.getCookies();
-if(cCookies != null) {
-	for(int i = 0; i < cCookies.length; i++) {
-		if(cCookies[i].getName().equals("MOD")) {
-			int nDispMode = Common.ToInt(cCookies[i].getValue());
-			if(nDispMode == 1) {
-				String strUrl = "/UploadPastePcV.jsp";
-				if(!strTag.isEmpty()) {strUrl+="?TAG="+URLEncoder.encode(strTag, "UTF-8");}
-				response.sendRedirect(strUrl);
-				return;
-			}
-		}
-	}
-}
-*/
 final int[] PUBLISH_ID = {
 		0,			// 全体
 		1,			// ワンクッション
@@ -62,12 +25,15 @@ final int[] PUBLISH_ID = {
 		6,			// フォロワー限定
 		99			// 非公開
 };
+
+response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<script src="/js/upload-18s.js" type="text/javascript"></script>
+		<script src="/js/upload-18.js" type="text/javascript"></script>
+		<script src="/js/update.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -96,8 +62,8 @@ final int[] PUBLISH_ID = {
 				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
 
-			$(function(){
-				initUploadFile();
+			$(function() {
+				initUpdateFile(<%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 			});
 		</script>
 
@@ -119,7 +85,26 @@ final int[] PUBLISH_ID = {
 			.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
 			<%}%>
+
+			#FineUploaderPane { display:visible; }
 		</style>
+
+		<!-- 画像並び替え用 -->
+		<script src="/js/jquery-ui.js"></script>
+	    <script type="text/javascript">
+		$(function(){
+			$(".qq-upload-list-selector.qq-upload-list").sortable({
+				placeholder: 'placeholder',
+				opacity: 0.6,
+				update: function(event, ui) {
+						$.each($('.qq-upload-list-selector.qq-upload-list').sortable('toArray'), function(i, item) {
+					});
+				}
+			})
+		.disableSelection();
+		});
+		</script>
+		<!-- 画像並び替え用 -->
 	</head>
 
 	<body>
@@ -128,13 +113,16 @@ final int[] PUBLISH_ID = {
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
 				<li><a class="TabMenuItem Selected" href="/UpdateFilePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><a class="TabMenuItem" href="/UpdatePastePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			</ul>
 		</nav>
 
 		<article class="Wrapper">
 			<div class="UploadFile">
-				<div class="TimeLineIllustCmd">
+				<div id="jQueryUploaderPane" class="TimeLineIllustCmd">
+				</div>
+
+				<!-- 元々の方式 -->
+				<div id="FineUploaderPane" class="TimeLineIllustCmd">
 					<span id="file-drop-area"></span>
 					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, 200files, total 50MByte)</span>
 					<a id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" href="javascript:void(0)">
@@ -142,6 +130,7 @@ final int[] PUBLISH_ID = {
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
 					</a>
 				</div>
+
 				<div class="CategorDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>

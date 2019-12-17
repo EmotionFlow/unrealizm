@@ -1,22 +1,22 @@
-<%@page import="org.apache.commons.lang3.RandomStringUtils"%>
-<%@page import="java.awt.image.BufferedImage"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="org.apache.commons.lang3.RandomStringUtils"%>
 <%@page import="java.nio.file.Files"%>
 <%@page import="javax.imageio.ImageIO"%>
 <%@page import="org.apache.commons.fileupload.*"%>
 <%@page import="org.apache.commons.fileupload.disk.*"%>
 <%@page import="org.apache.commons.fileupload.servlet.*"%>
+<%@page import="org.codehaus.jackson.JsonGenerationException"%>
+<%@page import="org.codehaus.jackson.map.JsonMappingException"%>
+<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
-class UploadFileFirstCParam {
+class UploadFileAppendCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
-	public int m_nOpenId = 0;
 	FileItem item_file = null;
 
 	public int GetParam(HttpServletRequest request) {
-		int nRtn = -1;
 		try {
 			String strRelativePath = Common.GetUploadPath();
 			String strRealPath = getServletContext().getRealPath(strRelativePath);
@@ -37,38 +37,34 @@ class UploadFileFirstCParam {
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("IID")) {
 						m_nContentId = Common.ToInt(item.getString());
-					} else if(strName.equals("REC")) {
-						m_nOpenId = Common.ToIntN(item.getString(), 0, 2);
 					}
 					item.delete();
 				} else {
 					item_file = item;
-					nRtn = 0;
 				}
 			}
 		} catch(FileUploadException e) {
 			e.printStackTrace();
-			m_nUserId = -1;
-			nRtn = -2;
+			return -1;
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
-			nRtn = -99;
+			return -99;
 		}
-		return nRtn;
+		return 0;
 	}
 }
 
+class UploadFileAppendC {
+	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
+		Log.d("UpdateFileAppendF.jsp");
 
-class UploadFileFirstC {
-	public int GetResults(UploadFileFirstCParam cParam, ResourceBundleControl _TEX) {
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
-
 
 		try {
 			// regist to DB
@@ -80,38 +76,34 @@ class UploadFileFirstC {
 			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
 			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
-				String strFileName = String.format("/error_file/%d_%d.error", cParam.m_nUserId, cParam.m_nContentId);
-				String strRealFileName = getServletContext().getRealPath(strFileName);
-				cParam.item_file.write(new File(strRealFileName));
 				return nRtn;
 			}
 
-			// 存在チェック
-			boolean bExist = false;
-			strSql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
+			// get comment id
+			int nAppendId = -1;
+			strSql ="INSERT INTO contents_appends_0000(content_id) VALUES(?) RETURNING append_id";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setInt(2, cParam.m_nContentId);
+			cState.setInt(1, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
-			bExist = cResSet.next();
+			if(cResSet.next()) {
+				nAppendId = cResSet.getInt("append_id");
+			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(!bExist) {
-				Log.d("content not exist error : cParam.m_nUserId="+ cParam.m_nUserId + ", cParam.m_nContentId="+cParam.m_nContentId);
-				return nRtn;
-			}
 
 			// save file
+			String strFileName = "";
+			String strRealFileName = "";
 			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
+
 			String strRandom = RandomStringUtils.randomAlphanumeric(9);
-			String strFileName = String.format("%s/%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
-			String strRealFileName = getServletContext().getRealPath(strFileName);
+			strFileName = String.format("%s/%09d_%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId, strRandom, ext);
+			strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
-			Log.d(strFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -133,20 +125,20 @@ class UploadFileFirstC {
 			}
 			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
-			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
+			// update file name
+			strSql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
-			cState.setInt(2, cParam.m_nOpenId);
-			cState.setInt(3, nWidth);
-			cState.setInt(4, nHeight);
-			cState.setLong(5, nFileSize);
-			cState.setLong(6, nComplexSize);
-			cState.setInt(7, cParam.m_nContentId);
+			cState.setInt(2, nWidth);
+			cState.setInt(3, nHeight);
+			cState.setLong(4, nFileSize);
+			cState.setLong(5, nComplexSize);
+			cState.setInt(6, nAppendId);
 			cState.executeUpdate();
 			cState.close();cState=null;
+			Log.d(nAppendId + ": " + strFileName);
 
-			nRtn = cParam.m_nContentId;
+			nRtn = nAppendId;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -163,15 +155,13 @@ class UploadFileFirstC {
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
-UploadFileFirstCParam cParam = new UploadFileFirstCParam();
+UploadFileAppendCParam cParam = new UploadFileAppendCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
-	UploadFileFirstC cResults = new UploadFileFirstC();
+	UploadFileAppendC cResults = new UploadFileAppendC();
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 %>
-{
-"content_id":<%=nRtn%>
-}
+{"append_id": <%=nRtn%>}

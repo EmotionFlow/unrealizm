@@ -5,10 +5,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import jp.pipa.poipiku.CComment;
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.Common;
-
 public class CContent {
 	public static final int BOOKMARK_NONE = 0;
 	public static final int BOOKMARK_BOOKMARKING = 1;
@@ -19,6 +15,7 @@ public class CContent {
 	public Timestamp m_timeUploadDate = new Timestamp(0);
 	public int m_nUserId = 0;
 	public int m_nOpenId = 0;
+	public int m_nEditorId = 0;
 	public String m_strFileName = "";
 	public int m_nFileNum = 0;
 	public int m_nBookmarkNum = 0;
@@ -53,6 +50,7 @@ public class CContent {
 		m_strTagList		= Common.ToString(resultSet.getString("tag_list"));
 		m_nPublishId		= resultSet.getInt("publish_id");
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
+		m_nEditorId			= resultSet.getInt("editor_id");
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {

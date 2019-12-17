@@ -59,7 +59,7 @@ class GetIllustFileListC {
 				Map<String, Object> image = new HashMap<String, Object>();
 				image.put("append_id", cResSet.getString("append_id"));
 				image.put("name", cResSet.getString("file_name"));
-				image.put("thumbnailUrl", "http://localhost" + cResSet.getString("file_name") + "_360.jpg");
+				image.put("thumbnailUrl", Common.GetPoipikuUrl(cResSet.getString("file_name")) + "_360.jpg");
 				image.put("uuid", UUID.randomUUID().toString());
 				m_vContent.add(image);
 			}
@@ -93,7 +93,9 @@ if (cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0) 
 }
 
 if (nRtn > 0) {
-	//オブジェクト配列をJSONに変換
+	response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
+
+//オブジェクト配列をJSONに変換
 	ObjectMapper mapper = null;
 	try {
 		mapper = new ObjectMapper();
