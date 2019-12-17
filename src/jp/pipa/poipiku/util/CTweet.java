@@ -102,13 +102,7 @@ public class CTweet {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			m_listOpenList = twitter.getUserLists(m_lnTwitterUserId, true);
-			for(UserList l : m_listOpenList){
-				Log.d(String.format("%s, %d, %b", l.getName(), l.getId(), l.isPublic()));
-			}
 			m_listOpenList.removeIf(a -> !a.isPublic());
-			for(UserList l : m_listOpenList){
-				Log.d(String.format("%s, %d, %b", l.getName(), l.getId(), l.isPublic()));
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
