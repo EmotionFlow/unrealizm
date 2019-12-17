@@ -366,28 +366,41 @@ function ShowAllReaction(content_id, elm) {
 	return false;
 }
 
-function ShowAppendFile(user_id, content_id, mode, elm) {
-	var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val()
-	$.ajax({
-		"type": "post",
-		"data": {"UID":user_id, "IID":content_id, "PAS":password, "MD":mode},
-		"url": "/f/ShowAppendFileF.jsp",
-		"dataType": "json",
-		"success": function(data) {
-			console.log(data);
-			if(data.result_num>0) {
-				$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
-				$(elm).parent().hide();
-				$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
-				$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
-			} else {
-				DispMsg(data.html);
-			}
-		}
-	});
+function generateShowAppendFile(){
+    var tw_friendships = {}; // target user id -> friendship id (see CTweet)
+	return function(user_id, content_id, mode, elm) {
+		console.log("twitter friendships: " + tw_friendships);
+		var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
+		var tw_f = tw_friendships[user_id];
+		if(!tw_f){
+			tw_f = -1;
+		};
 
+		$.ajax({
+			"type": "post",
+			"data": {"UID":user_id, "IID":content_id, "PAS":password, "MD":mode, "TWF":tw_f},
+			"url": "/f/ShowAppendFileF.jsp",
+			"dataType": "json",
+			"success": function(data) {
+				console.log(data);
+				if(data.result_num>0) {
+					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
+					$(elm).parent().hide();
+					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
+					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
+				} else {
+					DispMsg(data.html);
+				}
+				if(data.tw_friendship >= 0){
+					tw_friendships[user_id] = data.tw_friendship;
+				}
+            },
+            "error": function(err){
+                console.log(err);
+            }
+		});
+	
+	}
 }
 
-
-
-
+var ShowAppendFile = generateShowAppendFile();

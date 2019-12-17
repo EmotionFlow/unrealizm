@@ -514,11 +514,16 @@
 
 .UploadFile .UoloadCmdOption .OptionItem .OptionPublish {
 	margin: 0 0 0 auto;
+	text-align: right;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPublish,
 .UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPassword {
 	width: 180px;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditTimeLimited{
+	width: 145px;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .onoffswitch {

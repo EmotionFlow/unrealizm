@@ -1,3 +1,5 @@
+<%@ page import="jp.pipa.poipiku.util.CTweet"%>
+<%@ page import="twitter4j.UserList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -6,6 +8,12 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
+}
+
+CTweet cTweet = new CTweet();
+boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+if(bTwRet && cTweet.m_bIsTweetEnable){
+	cTweet.GetMyOpenLists();
 }
 
 String strTag = "";
@@ -37,7 +45,10 @@ if(cCookies != null) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-18.js" type="text/javascript"></script>
+
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -51,15 +62,23 @@ if(cCookies != null) {
 		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<script>
 			function startMsg() {
-				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+				DispMsgStatic('<%=_TEX.T("EditIllustVCommon.Uploading")%>');
 			}
 
 			function errorMsg() {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
 			}
 
+			function dateTimeEmptyMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
+			}
+
+			function dateTimePastMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
+			}
+
 			function completeMsg() {
-				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Uploaded")%>');
 			}
 
 			function completeAddFile() {
@@ -139,6 +158,15 @@ if(cCookies != null) {
 								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
 								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
+								<%if(cTweet.m_bIsTweetEnable){%>
+								<option value="<%=Common.PUBLISH_ID_T_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follower")%></option>
+								<option value="<%=Common.PUBLISH_ID_T_FOLLOW%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follow")%></option>
+								<option value="<%=Common.PUBLISH_ID_T_EACH%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Each")%></option>
+								<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
+								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
+								<%}%>
+								<%}%>
+								<option value="<%=Common.PUBLISH_ID_LIMITED_TIME%>"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></option>
 							</select>
 						</div>
 					</div>
@@ -148,6 +176,29 @@ if(cCookies != null) {
 							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
+					<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
+					<div id="ItemTwitterList" class="OptionItem" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<select id="EditTwitterList" class="EditPublish">
+								<%for(UserList l:cTweet.m_listOpenList){%>
+								<option value="<%=l.getId()%>"><%=l.getName()%></option>
+								<%}%>
+							</select>
+						</div>
+					</div>
+					<%}%>
+					
+					<%if(false){ // twitterフォロー限定機能先行リリースのため、一時コメントアウト%>
+					<div id="ItemTimeLimited" class="OptionItem" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<input id="EditTimeLimitedStart" class="EditTimeLimited " type="text" maxlength="10" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+							<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="10" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+						</div>
+					</div>
+					<%}%>
+
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">

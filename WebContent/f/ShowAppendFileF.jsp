@@ -1,4 +1,5 @@
 <%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
+<%@page import="jp.pipa.poipiku.util.CTweet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -12,6 +13,7 @@ class ShowAppendFileC {
 	public static final int ERR_T_FOLLOW = -6;
 	public static final int ERR_T_EACH = -7;
 	public static final int ERR_T_LIST = -8;
+	public static final int ERR_T_RATE_LIMIT_EXCEEDED = -10088;
 	public static final int ERR_HIDDEN = -9;
 	public static final int ERR_UNKNOWN = -99;
 
@@ -21,6 +23,7 @@ class ShowAppendFileC {
 	public int m_nContentId = -1;
 	public String m_strPassword = "";
 	public int m_nMode = 0;
+	public int m_nTwFriendship = CTweet.FRIENDSHIP_UNDEF;
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -28,6 +31,7 @@ class ShowAppendFileC {
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
 			m_strPassword = request.getParameter("PAS");
 			m_nMode = Common.ToInt(request.getParameter("MD"));
+			m_nTwFriendship = Common.ToInt(request.getParameter("TWF"));
 			request.setCharacterEncoding("UTF-8");
 		} catch(Exception e) {
 			m_nContentId = -1;
@@ -78,6 +82,42 @@ class ShowAppendFileC {
 				if(!bFollow) return ERR_FOLLOWER;
 			}
 			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN && m_cContent.m_nUserId!=checkLogin.m_nUserId) return ERR_HIDDEN;
+
+			// twitter friendship
+			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)){
+				CTweet cTweet = new CTweet();
+				if(cTweet.GetResults(checkLogin.m_nUserId)){
+					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
+					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF
+						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
+						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH     && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
+						){
+						m_nTwFriendship = cTweet.LookupFriendship(m_nUserId);
+						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
+							return ERR_T_RATE_LIMIT_EXCEEDED;
+						}else if(m_nTwFriendship==CTweet.ERR_OTHER){
+							return ERR_UNKNOWN;
+						}
+					}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && !(m_nTwFriendship==CTweet.FRIENDSHIP_FRIEND || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW && !(m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOW;}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH && !(m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_EACH;}
+				}
+			}
+
+			// twitter openlist
+			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){
+				CTweet cTweet = new CTweet();
+				if(cTweet.GetResults(checkLogin.m_nUserId)){
+					if(!cTweet.m_bIsTweetEnable){return ERR_T_LIST;}
+					int nRet = cTweet.LookupListMember(m_cContent);
+					if(nRet==0) return ERR_T_LIST;
+					if(nRet==CTweet.ERR_RATE_LIMIT_EXCEEDED) return ERR_T_RATE_LIMIT_EXCEEDED;
+					if(nRet<0) return ERR_UNKNOWN;
+				} else {
+					return ERR_UNKNOWN;
+				}
+			}
 
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
@@ -132,6 +172,9 @@ if(nRtn<ShowAppendFileC.OK) {
 	case ShowAppendFileC.ERR_T_LIST:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_LIST"));
 		break;
+	case ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED:
+		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED"));
+		break;
 	case ShowAppendFileC.ERR_NOT_FOUND:
 	case ShowAppendFileC.ERR_HIDDEN :
 	case ShowAppendFileC.ERR_UNKNOWN:
@@ -172,5 +215,6 @@ if(nRtn<ShowAppendFileC.OK) {
 }
 %>{
 "result_num" : <%=nRtn%>,
-"html" : "<%=CEnc.E(strHtml.toString())%>"
+"html" : "<%=CEnc.E(strHtml.toString())%>",
+"tw_friendship" : "<%=cResults.m_nTwFriendship%>"
 }
