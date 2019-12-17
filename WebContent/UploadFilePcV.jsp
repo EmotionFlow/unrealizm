@@ -166,7 +166,9 @@ if(cCookies != null) {
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}%>
 								<%}%>
+								<%if(false){ // twitterフォロー限定機能先行リリースのため、一時コメントアウト%>
 								<option value="<%=Common.PUBLISH_ID_LIMITED_TIME%>"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></option>
+								<%}%>
 							</select>
 						</div>
 					</div>
