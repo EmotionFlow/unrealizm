@@ -854,6 +854,7 @@ function UploadPaste(user_id) {
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
+			"ED":1,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
