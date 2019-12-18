@@ -157,10 +157,14 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							</select>
 						</div>
 					</div>
-					<div id="ItemPassword" class="OptionItem" style="display: none;">
+					<div id="ItemPassword" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_PASS){%>style="display: none;"<%}%>
+						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
-							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
+							<input id="EditPassword" class="EditPassword" type="text" maxlength="16"
+								<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS){%>value="<%=cResults.m_cContent.m_strPassword%>"<%}%>
+								placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
 					<div class="OptionItem">
