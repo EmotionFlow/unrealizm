@@ -1,3 +1,5 @@
+<%@ page import="jp.pipa.poipiku.util.CTweet"%>
+<%@ page import="twitter4j.UserList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -6,6 +8,12 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
+}
+
+CTweet cTweet = new CTweet();
+boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+if(bTwRet && cTweet.m_bIsTweetEnable){
+	cTweet.GetMyOpenLists();
 }
 
 IllustViewC cResults = new IllustViewC();
@@ -23,6 +31,10 @@ final int[] PUBLISH_ID = {
 		4,			// パスワード
 		5,			// ログイン限定
 		6,			// フォロワー限定
+		7,			// ツイッターフォロワー限定
+		8,			// ツイッターフォロー限定
+		9,			// ツイッター相互フォロー限定
+		10,			// ツイッターリスト限定
 		99			// 非公開
 };
 
@@ -167,6 +179,21 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 								placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
+					<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
+					<div id="ItemTwitterList" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_T_LIST){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<select id="EditTwitterList" class="EditPublish">
+								<%for(UserList l:cTweet.m_listOpenList){%>
+									<!-- TODO リストがなくなっちゃっていた場合-->
+								<option value="<%=l.getId()%>"　<%if(l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){%> selected <%}%>　><%=l.getName()%></option>
+								<%}%>
+							</select>
+						</div>
+					</div>
+					<%}%>	
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
