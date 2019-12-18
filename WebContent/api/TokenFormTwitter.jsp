@@ -22,7 +22,7 @@ try{
 	provider.setOAuth10a(true);
 	session.setAttribute("consumer", consumer);
 	session.setAttribute("provider", provider);
-	String callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/api/RegistTwitterTokenV.jsp";
+	String callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/api/RegistTwitterTokenF.jsp";
 	authUrl = provider.retrieveRequestToken(consumer, callbackUri);
 }catch(Exception e){
 	e.printStackTrace();
