@@ -804,6 +804,17 @@ function createPasteListItem(src, append_id) {
 	return $InputFile
 }
 
+function createPasteListItem(src, append_id) {
+	var $InputFile = $('<li />').addClass('InputFile').attr('id', append_id);
+	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+		$(this).parent().remove();
+		updatePasteNum();
+	});
+	var $imgView = $('<img />').addClass('imgView').attr('src', src);
+	$InputFile.append($DeletePaste).append($imgView);
+	return $InputFile
+}
+
 function initPasteElm($elmPaste) {
 	$elmPaste.on('pasteImage', function(ev, data){
 		$('.OrgMessage', this).hide();
