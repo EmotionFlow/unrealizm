@@ -187,8 +187,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<div class="OptionPublish">
 							<select id="EditTwitterList" class="EditPublish">
 								<%for(UserList l:cTweet.m_listOpenList){%>
-									<!-- TODO リストがなくなっちゃっていた場合-->
-								<option value="<%=l.getId()%>"　<%if(l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){%> selected <%}%>　><%=l.getName()%></option>
+									<!-- TODO リストがなくなっちゃっていた場合, リスト限定のリストID更新-->
+								<option value="<%=l.getId()%>"　<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){%> selected <%}%>　><%=l.getName()%></option>
 								<%}%>
 							</select>
 						</div>
