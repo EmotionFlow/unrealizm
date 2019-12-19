@@ -53,6 +53,7 @@ public class CContent {
 		m_strListId			= Common.ToString(resultSet.getString("list_id"));
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 		m_nEditorId			= resultSet.getInt("editor_id");
+		m_strPassword		= Common.ToString(resultSet.getString("password"));
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {

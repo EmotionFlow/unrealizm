@@ -842,6 +842,10 @@ function UploadPaste(user_id) {
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var nTwListId = null;
+	if(nPublishId==10){
+        nTwListId = $('#EditTwitterList').val();
+	}
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
@@ -860,7 +864,8 @@ function UploadPaste(user_id) {
 			"TAG":strTagList,
 			"PID":nPublishId,
 			"PPW":strPassword,
-			"PLD":"",
+			"PLD":nTwListId,
+			"ED":1,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
