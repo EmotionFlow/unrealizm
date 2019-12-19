@@ -179,7 +179,7 @@ final int[] PUBLISH_ID = {
 										%> selected<%}%>　><%=l.getName()%></option>
 								<%}%>
 							</select>
-							<%if(!bTwListFound){%>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
 							<script>twtterListNotFoundMsg()</script>
 							<%}%>
 						</div>
