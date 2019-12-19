@@ -549,7 +549,7 @@ function updatePublish() {
 				minDate: dateNow
 			});
 		}
-		
+
     } else {
 		for (var i=0; i<elements.length; i++){
 			var el = elements[i];
@@ -690,7 +690,7 @@ function UploadFile(user_id) {
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
-	
+
 	if(nPublishId==11){
 		if(strPublishStart=='' || strPublishEnd==''){
 			dateTimeEmptyMsg();
@@ -784,6 +784,17 @@ function initUploadPaste() {
 
 function createPasteElm(src) {
 	var $InputFile = $('<div />').addClass('InputFile');
+	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+		$(this).parent().remove();
+		updatePasteNum();
+	});
+	var $imgView = $('<img />').addClass('imgView').attr('src', src);
+	$InputFile.append($DeletePaste).append($imgView);
+	return $InputFile
+}
+
+function createPasteListItem(src, append_id) {
+	var $InputFile = $('<li />').addClass('InputFile').attr('id', append_id);
 	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
 		$(this).parent().remove();
 		updatePasteNum();
