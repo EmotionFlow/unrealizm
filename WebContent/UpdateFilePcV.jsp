@@ -66,6 +66,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
 			}
 
+			function twtterListNotFoundMsg(){
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Update.Error.TwListNotFond")%>');
+			}
+
 			function completeMsg() {
 				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
 			}
@@ -186,11 +190,19 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
 							<select id="EditTwitterList" class="EditPublish">
-								<%for(UserList l:cTweet.m_listOpenList){%>
-									<!-- TODO リストがなくなっちゃっていた場合, リスト限定のリストID更新-->
-								<option value="<%=l.getId()%>"　<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){%> selected <%}%>　><%=l.getName()%></option>
+								<%
+								boolean bTwListFound = false;
+								for(UserList l:cTweet.m_listOpenList){
+								%>
+								<option value="<%=l.getId()%>"
+									<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){ 
+										bTwListFound = true;
+										%> selected<%}%>　><%=l.getName()%></option>
 								<%}%>
 							</select>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
+							<script>twtterListNotFoundMsg()</script>
+							<%}%>
 						</div>
 					</div>
 					<%}%>	

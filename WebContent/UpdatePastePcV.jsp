@@ -1,3 +1,5 @@
+<%@ page import="jp.pipa.poipiku.util.CTweet"%>
+<%@ page import="twitter4j.UserList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -8,16 +10,34 @@ if(!cCheckLogin.m_bLogin) {
 	return;
 }
 
+CTweet cTweet = new CTweet();
+boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+if(bTwRet && cTweet.m_bIsTweetEnable){
+	cTweet.GetMyOpenLists();
+}
+
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 
-String strTag = "";
-try {
-	request.setCharacterEncoding("UTF-8");
-	strTag = Common.TrimAll(request.getParameter("TAG"));
-} catch(Exception e) {
-	;
+if(!cResults.getResults(cCheckLogin)) {
+	response.sendRedirect("/NotFoundPcV.jsp");
+	return;
 }
+
+final int[] PUBLISH_ID = {
+		0,			// 全体
+		1,			// ワンクッション
+		2,			// R18
+		4,			// パスワード
+		5,			// ログイン限定
+		6,			// フォロワー限定
+		7,			// ツイッターフォロワー限定
+		8,			// ツイッターフォロー限定
+		9,			// ツイッター相互フォロー限定
+		10,			// ツイッターリスト限定
+		99			// 非公開
+};
+
 %>
 <!DOCTYPE html>
 <html>
@@ -109,16 +129,16 @@ try {
 				<div class="CategorDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
+						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
 						<%}%>
 					</select>
 				</div>
 				<div class="Description">
-					<textarea id="EditDescription" class="EditDescription" maxlength="200" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
+					<textarea id="EditDescription" class="EditDescription" maxlength="200" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=cResults.m_cContent.m_strDescription%></textarea>
 					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
 				</div>
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Common.ToStringHtml(strTag)%>"<%}%> />
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Common.ToStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">
@@ -126,14 +146,10 @@ try {
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish()">
-								<option value="<%=Common.PUBLISH_ID_ALL%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.All")%></option>
-								<option value="<%=Common.PUBLISH_ID_R15%>"><%=_TEX.T("UploadFilePc.Option.Publish.R15")%></option>
-								<option value="<%=Common.PUBLISH_ID_R18%>"><%=_TEX.T("UploadFilePc.Option.Publish.R18")%></option>
-								<option value="<%=Common.PUBLISH_ID_PASS%>"><%=_TEX.T("UploadFilePc.Option.Publish.Pass")%></option>
-								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
-								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
-								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
-							</select>
+								<%for(int nPublishId : PUBLISH_ID) {%>
+								<option value="<%=nPublishId%>" <%if(nPublishId==cResults.m_cContent.m_nPublishId){%>selected<%}%>><%=_TEX.T(String.format("Publish.C%d", nPublishId))%></option>
+								<%}%>
+								</select>
 						</div>
 					</div>
 					<div id="ItemPassword" class="OptionItem"
@@ -146,6 +162,29 @@ try {
 								placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
+					<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
+					<div id="ItemTwitterList" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_T_LIST){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<select id="EditTwitterList" class="EditPublish">
+								<%
+								boolean bTwListFound = false;
+								for(UserList l:cTweet.m_listOpenList){
+								%>
+								<option value="<%=l.getId()%>"
+									<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){ 
+										bTwListFound = true;
+										%> selected<%}%>　><%=l.getName()%></option>
+								<%}%>
+							</select>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
+							<script>twtterListNotFoundMsg()</script>
+							<%}%>
+						</div>
+					</div>
+					<%}%>	
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
