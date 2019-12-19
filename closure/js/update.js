@@ -177,6 +177,11 @@ function UpdateFile(user_id, content_id) {
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var nTwListId = null;
+	if(nPublishId==10){
+        nTwListId = $('#EditTwitterList').val();
+	}
+
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
@@ -197,7 +202,7 @@ function UpdateFile(user_id, content_id) {
 			"TAG":strTagList,
 			"PID":nPublishId,
 			"PPW":strPassword,
-			"PLD":"",
+			"PLD":nTwListId,
 			"REC": nRecent,
 			"ED":0
 		},
@@ -300,6 +305,10 @@ function UpdatePaste(user_id, content_id) {
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var nTwListId = null;
+	if(nPublishId==10){
+        nTwListId = $('#EditTwitterList').val();
+	}
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
@@ -319,8 +328,8 @@ function UpdatePaste(user_id, content_id) {
 			"TAG":strTagList,
 			"PID":nPublishId,
 			"PPW":strPassword,
-			"PLD":"",
-			"REC": nRecent,
+			"PLD":nTwListId,
+			"REC":nRecent,
 			"ED":1
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
