@@ -200,7 +200,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 										%> selected<%}%>　><%=l.getName()%></option>
 								<%}%>
 							</select>
-							<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
 							<script>twtterListNotFoundMsg()</script>
 							<%}%>
 						</div>
