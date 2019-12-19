@@ -167,6 +167,7 @@ function initUpdateFile(userid, contentid) {
 //画像ファイルの更新アップロード
 function UpdateFile(user_id, content_id) {
 	if(!multiFileUploader) return;
+	if(multiFileUploader.getSubmittedNum()<=0) return;
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	strDescription = strDescription.substr(0 , 200);
