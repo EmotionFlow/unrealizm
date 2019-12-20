@@ -61,7 +61,7 @@ public class Common {
 	public static final int PUBLISH_ID_R18G			= 3;	// R18G
 	public static final int PUBLISH_ID_PASS			= 4;	// パスワード
 	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン
-	public static final int PUBLISH_ID_FOLLOWER		= 6;	// フォロワー
+	public static final int PUBLISH_ID_FOLLOWER		= 6;	// ふぁぼ限定
 	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー
 	public static final int PUBLISH_ID_T_FOLLOW		= 8;	// ツイッターフォロー
 	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー
