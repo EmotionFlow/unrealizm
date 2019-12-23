@@ -41,7 +41,6 @@ function UpdatePasteOrder(user_id, content_id) {
 		},
 		"error": function(err){
 			console.log(err);
-			console.log("hoge");
 		}
 	});
 }
