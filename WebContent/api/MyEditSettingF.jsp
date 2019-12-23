@@ -49,22 +49,22 @@ try {
 			} else {
 				twitter.put("tweet_regularly_enabled", true);
 			}
-			twitter.put("twitter_account_name", Common.ToStringHtml(cResults.m_cUser.m_strTwitterScreenName));
+			twitter.put("twitter_account_name", cResults.m_cUser.m_strTwitterScreenName);
 			twitter.put("tweet_day", cResults.m_cUser.m_nAutoTweetWeekDay);
 			twitter.put("tweet_time", cResults.m_cUser.m_nAutoTweetTime);
-			twitter.put("default_tweet_message", Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc));
+			twitter.put("default_tweet_message", cResults.m_cUser.m_strAutoTweetDesc);
 			twitter.put("tweet_with_thumbnail_enabled", cResults.m_cUser.m_nAutoTweetThumbNum);
 			user.put("twitter_link_info", twitter);
 		}
 
-		user.put("user_name", Common.ToStringHtml(cResults.m_cUser.m_strNickName));
+		user.put("user_name", cResults.m_cUser.m_strNickName);
 		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
 		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
-		user.put("profile_message", Common.ToStringHtml(cResults.m_cUser.m_strProfile));
-		user.put("mute_keyword", Common.ToStringHtml(cResults.m_cUser.m_strMuteKeyword));
+		user.put("profile_message", cResults.m_cUser.m_strProfile);
+		user.put("mute_keyword", cResults.m_cUser.m_strMuteKeyword);
 		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
-		user.put("email_address", Common.ToStringHtml(cResults.m_cUser.m_strEmail));
-		user.put("new_email_address", Common.ToStringHtml(cResults.m_strNewEmail));
+		user.put("email_address", cResults.m_cUser.m_strEmail);
+		user.put("new_email_address", cResults.m_strNewEmail);
 		user.put("email_address_confirmed", !cResults.m_bUpdate);
 		user.put("terms_of_service_url", "/RuleS.jsp");
 		user.put("guidelines_url", "/GuideLineV.jsp");
@@ -75,7 +75,9 @@ try {
 
 	//JSONに変換して出力
 	mapper = new ObjectMapper();
-	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user));
+	String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
+	out.print(json);
+	//Log.d(json);
 } catch(JsonGenerationException e) {
 	e.printStackTrace();
 } finally {
