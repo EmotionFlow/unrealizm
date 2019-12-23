@@ -243,7 +243,7 @@ function UpdateFile(user_id, content_id) {
 					location.href="/MyHomePcV.jsp";
 				}
 			} else {
-				errorMsg();
+				errorMsg(data.result);
 			}
 		}
 	});
@@ -418,8 +418,8 @@ function UpdatePaste(user_id, content_id) {
 				};
 			}
 
-			$.when.apply(null, aryFunc)
-			.done(function(){
+			$.when.apply($, aryFunc)
+			.then(function(){
 				var json_array = [];
 				$.each($('#PasteZone').sortable('toArray'), function(i, item) {
 					json_array.push(parseInt(item))
@@ -438,15 +438,15 @@ function UpdatePaste(user_id, content_id) {
 						break;
 					}
 				}
-				console.log("append_ids" + json_array);
 				return UpdatePasteOrderAjax(user_id, data.content_id, json_array);
-			})
-			.done(fTweet)
-			.done(
+			},function(err){errorMsg(-10);})
+			.then(fTweet, function(err){errorMsg(-11)})
+			.then(
 				function(){
 					completeMsg();
 					setTimeout(function(){location.href="/MyHomePcV.jsp";}, 1000);
-				}
+				},
+				function(err){errorMsg(-12)}
 			);
 		}
 	);

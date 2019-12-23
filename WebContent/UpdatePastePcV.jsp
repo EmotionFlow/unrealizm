@@ -80,10 +80,10 @@ final int[] PUBLISH_ID = {
 			}
 
 			function errorMsg(result) {
-				if(data.result == -1) {
+				if(result == -1) {
 					// file size error
 					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-				} else if(data.result == -2) {
+				} else if(result == -2) {
 					// file type error
 					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
 				} else {
