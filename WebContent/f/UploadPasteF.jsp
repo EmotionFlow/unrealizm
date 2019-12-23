@@ -167,6 +167,16 @@ class UploadPasteC {
 						}
 						boolean bRsultTweet = cTweet.Tweet(strTwitterMsg, getServletContext().getRealPath(strTweetFile));
 						if(!bRsultTweet) Log.d("tweet失敗");
+
+						if(cTweet.getLastTweetId()>0) {
+							strSql ="UPDATE contents_0000 SET tweet_id=? WHERE contents_0000.user_id=? AND content_id=?";
+							cState = cConn.prepareStatement(strSql);
+							cState.setString(1, Long.toString(cTweet.getLastTweetId()));
+							cState.setInt(2, cParam.m_nUserId);
+							cState.setInt(3, m_nContentId);
+							cState.executeUpdate();
+							cState.close();cState=null;
+						}
 					}
 				}
 			}

@@ -126,8 +126,15 @@ public class Common {
 	public static final int EMOJI_CAT_FOOD = 2;
 	public static final int EMOJI_CAT_ALL = 3;
 	// For Event
+	/*
+	//Halloween
 	public static final String[] EMOJI_LIST_EVENT = {
 			"🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃",
+		};
+	*/
+	// X'mas
+	public static final String[] EMOJI_LIST_EVENT = {
+			"🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁",
 		};
 	// 絵文字
 	public static final String[][] EMOJI_LIST = {

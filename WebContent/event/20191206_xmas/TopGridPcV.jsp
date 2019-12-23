@@ -17,6 +17,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			.LinkButton {display: block; position: absolute; width: 100%;}
 			.LinkButton.Link1 {height: 208px; top:1200px;}
 			.LinkButton.Link2 {height: 160px; top:1668px;}
+			.LinkButton.Link3 {width: 113px; height: 36px; top: 3542px; left: 552px; border-bottom: solid 3px #ad4247;}
 		</style>
 	</head>
 	<body>
@@ -28,6 +29,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				<img class="MainImage" src="./wacom_pc-2.png" />
 				<a class="LinkButton Link1" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
 				<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
+				<a class="LinkButton Link3" href="https://twitter.com/pipajp" target="_blank"></a>
 			</div>
 		</article>
 
