@@ -38,9 +38,27 @@ function UpdatePasteOrder(user_id, content_id) {
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileOrderF:" + data.result);
+		},
+		"error": function(err){
+			console.log(err);
+			console.log("hoge");
 		}
 	});
 }
+
+function UpdatePasteOrderAjax(user_id, content_id, append_ids){
+	return $.ajax({
+		"type": "post",
+		"data": {
+			UID: user_id,
+			IID: content_id,
+			AID: JSON.stringify(append_ids),
+		},
+		"url": "/f/UpdateFileOrderF.jsp",
+		"dataType": "json",
+	});
+}
+
 
 //ファイル選択エリアの初期化
 function initUpdateFile(userid, contentid) {
@@ -167,7 +185,7 @@ function initUpdateFile(userid, contentid) {
 //画像ファイルの更新アップロード
 function UpdateFile(user_id, content_id) {
 	if(!multiFileUploader) return;
-	if(multiFileUploader.getSubmittedNum()<=0) return;
+	if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) return;
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	strDescription = strDescription.substr(0 , 200);
@@ -285,6 +303,60 @@ function initUpdatePaste(user_id, content_id) {
 	});
 }
 
+function UpdatePasteAppendFAjax(img_element, user_id, content_id){
+	img_element.parent().addClass('Done');
+	var strEncodeImg = img_element.attr('src').replace('data:image/png;base64,', '');
+	if(strEncodeImg.length<=0) return null;
+
+	return $.ajax({
+		"type": "post",
+		"data": {
+			"UID":user_id,
+			"IID":content_id,
+			"DATA":strEncodeImg,
+		},
+		"url": "/f/UpdatePasteAppendF.jsp",
+		"dataType": "json",
+		"async": false,
+	});
+}
+
+function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescription,
+	strTagList, nPublishId, strPassword, nTwListId, nRecent){
+	//return $.ajaxSingle({
+	return $.ajax({
+		"type": "post",
+		"data": {
+			"UID":user_id,
+			"IID":content_id,
+			"CAT":nCategory,
+			"DES":strDescription,
+			"TAG":strTagList,
+			"PID":nPublishId,
+			"PPW":strPassword,
+			"PLD":nTwListId,
+			"REC":nRecent,
+			"ED":1
+		},
+		"url": "/f/UpdateFileRefTwitterF.jsp",
+		"dataType": "json",
+	});
+}
+
+function UploadFileTweetFAjax(user_id, content_id, nTweetImage){
+	return $.ajax({
+		"type": "post",
+		"data": {
+			UID: user_id,
+			IID: content_id,
+			IMG: nTweetImage,
+		},
+		"url": "/f/UploadFileTweetF.jsp",
+		"dataType": "json",
+	});
+
+}
+
 //ペースト画像のアップロード
 function UpdatePaste(user_id, content_id) {
 	// check image
@@ -319,75 +391,66 @@ function UpdatePaste(user_id, content_id) {
 	}
 	startMsg();
 
-	$.ajaxSingle({
-		"type": "post",
-		"data": {
-			"UID":user_id,
-			"IID":content_id,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"REC":nRecent,
-			"ED":1
-		},
-		"url": "/f/UpdateFileRefTwitterF.jsp",
-		"dataType": "json",
-		"success": function(data) {
-			console.log("UpdateFileRefTwitterF", data.content_id);
-			var first_file = true;
+	var fUpdateFile = UpdateFileRefTwitterFAjax(
+		user_id, content_id, nCategory, strDescription, strTagList,
+		nPublishId, strPassword, nTwListId, nRecent);
+
+	var aryFunc = [];
+	var fTweet = null;
+
+	fUpdateFile.done(
+		function(data){
+			var f = null;
+
 			$('.imgView').each(function(){
-				$(this).parent().addClass('Done');
-				var strEncodeImg = $(this).attr('src').replace('data:image/png;base64,', '');
-				if(strEncodeImg.length<=0) return true;
-
-				$.ajax({
-					"type": "post",
-					"data": {
-						"UID":user_id,
-						"IID":data.content_id,
-						"DATA":strEncodeImg,
-					},
-					"url": "/f/UpdatePasteAppendF.jsp",
-					"dataType": "json",
-					"async": false,
-					"success": function(data) {
-						console.log("UploadPasteAppendF");
-					}
-				});
+				f = UpdatePasteAppendFAjax($(this),user_id,data.content_id);
+				if (f != null){
+					aryFunc.push(f);
+				}
 			});
+			
 			if(nTweet==1) {
-				$.ajax({
-					"type": "post",
-					"data": {
-						UID: user_id,
-						IID: data.content_id,
-						IMG: nTweetImage,
-					},
-					"url": "/f/UploadFileTweetF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						console.log("UpdateFileTweetF");
-						// complete
-						completeMsg();
-						setTimeout(function(){
-							location.href="/MyHomePcV.jsp";
-						}, 1000);
-					}
-				});
+				fTweet = UploadFileTweetFAjax(user_id, data.content_id, nTweetImage);
 			} else {
-				setTimeout(function(){
-					location.href="/MyHomePcV.jsp";
-				}, 1000);
+				fTweet = function() {
+					var dfd = $.Deferred();
+					dfd.resolve();
+					return dfd.promise();
+				};
 			}
+
+			$.when.apply(null, aryFunc)
+			.done(function(){
+				var json_array = [];
+				$.each($('#PasteZone').sortable('toArray'), function(i, item) {
+					json_array.push(parseInt(item))
+				});			
+				for (var i = 0; i < arguments.length; i++) {
+					var aid;
+					if(json_array.length==1){
+						aid = arguments[0].append_id;
+					}else{
+						aid = arguments[i][0].append_id;
+					}
+					if(aid >= 0){
+						json_array[i] = aid;
+					}
+					if(json_array.length==1){
+						break;
+					}
+				}
+				console.log("append_ids" + json_array);
+				return UpdatePasteOrderAjax(user_id, data.content_id, json_array);
+			})
+			.done(fTweet)
+			.done(
+				function(){
+					completeMsg();
+					setTimeout(function(){location.href="/MyHomePcV.jsp";}, 1000);
+				}
+			);
 		}
-	});
-
-	//並べ替え情報の送信
-	UpdatePasteOrder(user_id, content_id);
-
+	);
 	return false;
 }
 
