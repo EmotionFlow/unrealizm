@@ -196,8 +196,14 @@ function UpdateFile(user_id, content_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
+	var strPublishStart = $('#EditTimeLimitedStart').val();
+	var strPublishEnd = $('#EditTimeLimitedEnd').val();
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
+	}
+
+	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd)){
+		return;
 	}
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
