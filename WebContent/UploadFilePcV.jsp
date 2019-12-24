@@ -194,11 +194,11 @@ if(cCookies != null) {
 						<div class="OptionPublish">
 							<%if(Util.isSmartPhone(request)) {%>
 							<div style="display: block;">
-								<span>開始</span>
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
 								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
 							</div>
 							<div style="display: block;">
-								<span>終了</span>
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
 								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
 							</div>
 							<%}else{%>
