@@ -65,7 +65,7 @@ if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
 } else {
 	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
-	EMOJI_LIST = Common.EMOJI_LIST_EVENT;
+	//EMOJI_LIST = Common.EMOJI_LIST_EVENT;
 	for(String emoji : EMOJI_LIST) {
 		sbResult.append(
 				String.format("<span class=\"ResEmojiBtn\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</span>",

@@ -191,9 +191,9 @@ public class NewArrivalC {
 			for(CContentComlex contentComlex : m_vContentList) {
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
-					//contentComlex.m_strEmoji = cResSet.getString(1);
+					contentComlex.m_strEmoji = cResSet.getString(1);
 					//contentComlex.m_strEmoji = "🎃";
-					contentComlex.m_strEmoji = "🎁";
+					//contentComlex.m_strEmoji = "🎁";
 				}
 				cResSet.close();cResSet=null;
 			}
