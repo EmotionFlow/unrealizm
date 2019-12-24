@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.pipa.poipiku.util.*;
+import jp.pipa.poipiku.util.CCnv;
 
 public class Common {
 	public static final int PAGE_BAR_NUM = 2;
@@ -61,11 +61,12 @@ public class Common {
 	public static final int PUBLISH_ID_R18G			= 3;	// R18G
 	public static final int PUBLISH_ID_PASS			= 4;	// パスワード
 	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン
-	public static final int PUBLISH_ID_FOLLOWER		= 6;	// フォロワー
+	public static final int PUBLISH_ID_FOLLOWER		= 6;	// ふぁぼ限定
 	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー
 	public static final int PUBLISH_ID_T_FOLLOW		= 8;	// ツイッターフォロー
 	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー
 	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト
+	public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// 期間限定
 	public static final int PUBLISH_ID_HIDDEN		= 99;	// 非公開
 	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
 	public static final String[] PUBLISH_ID_FILE = {
@@ -120,6 +121,11 @@ public class Common {
 //			20, // あけおめ
 	};
 
+	public static final int EDITOR_CAMERAROLE = 0;
+	public static final int EDITOR_PASTE = 1;
+	public static final int EDITOR_BASIC_PAINT = 2;
+	public static final int EDITOR_DOT_TOOL = 3;
+
 	public static final int EMOJI_KEYBORD_MAX = 64;
 	public static final int EMOJI_CAT_RECENT = 0;
 	public static final int EMOJI_CAT_POPULAR = 1;
@@ -132,12 +138,10 @@ public class Common {
 			"🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃",
 		};
 	*/
-	/*
 	// X'mas
 	public static final String[] EMOJI_LIST_EVENT = {
 			"🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁","🎁",
 		};
-	*/
 	// 絵文字
 	public static final String[][] EMOJI_LIST = {
 			// 人気

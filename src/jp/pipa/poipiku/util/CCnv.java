@@ -4,7 +4,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.CComment;
+import jp.pipa.poipiku.CContent;
+import jp.pipa.poipiku.CTag;
+import jp.pipa.poipiku.CUser;
+import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.ResourceBundleControl;
 
 public class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
@@ -12,12 +17,18 @@ public class CCnv {
 	public static final int MODE_SP = 1;
 	public static final int VIEW_LIST = 0;
 	public static final int VIEW_DETAIL = 1;
+	public static final int SP_MODE_WVIEW = 0;
+	public static final int SP_MODE_APP = 1;
 
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException {
-		return Content2Html(cContent,  nLoginUserId, nMode, _TEX, vResult, VIEW_LIST);
+		return Content2Html(cContent,  nLoginUserId, nMode, _TEX, vResult, VIEW_LIST, SP_MODE_WVIEW);
 	}
 
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode) throws UnsupportedEncodingException {
+		return Content2Html(cContent,  nLoginUserId, nMode, _TEX, vResult, nViewMode, SP_MODE_WVIEW);
+	}
+
+	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
 		String ILLUST_LIST = (nMode==MODE_SP)?String.format("/IllustListV.jsp?ID=%d", cContent.m_nUserId):String.format("/%d/", cContent.m_nUserId);
@@ -81,7 +92,15 @@ public class CCnv {
 		String strTwitterUrl = CTweet.generateIllustMsgUrl(cContent, _TEX);
 		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" %s></a>", strTwitterUrl, LINK_TARG));
 		if(cContent.m_nUserId==nLoginUserId) {
-			strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"javascript:void(0)\" onclick=\"EditDesc(%d)\"></a>", cContent.m_nContentId));
+			if (nSpMode == SP_MODE_APP) {
+				strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"myurlscheme://reEdit?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+			} else {
+				if (cContent.m_nEditorId == Common.EDITOR_PASTE) {
+					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdatePastePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+				} else {
+					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdateFilePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+				}
+			}
 			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d)\"></a>", nLoginUserId, cContent.m_nContentId));
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?ID=%d&TD=%d\"></a>", REPORT_FORM, cContent.m_nUserId, cContent.m_nContentId));
@@ -276,21 +295,34 @@ public class CCnv {
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
-		return toThumbHtml(cContent, nType, nMode, "", _TEX);
-	}
-
-	public static String toThumbHtml(CContent cContent, int nType, int nMode, int nId, ResourceBundleControl _TEX) {
-		return toThumbHtml(cContent, nType, nMode, ""+nId, _TEX);
+		return toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
+		return toThumbHtml(cContent, nType, nMode, strKeyword, _TEX, SP_MODE_WVIEW);
+	}
+
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, int nId, ResourceBundleControl _TEX) {
+		return toThumbHtml(cContent, nType, nMode, ""+nId, _TEX, SP_MODE_WVIEW);
+	}
+
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, ResourceBundleControl _TEX, int nSpMode) {
+		return toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode);
+	}
+
+	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX, int nSpMode) {
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+		String ILLUST_VIEW_APP = (nMode==MODE_SP)?String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
 
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		String strThumbClass = (cContent.m_nOpenId==2)?"Hidden":"";
-		strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW));
+		if (nSpMode==SP_MODE_APP) {
+			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW_APP));
+		} else {
+			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW));
+		}
 		String strFileUrl = "";
 		switch(cContent.m_nPublishId) {
 		case Common.PUBLISH_ID_R15:
