@@ -146,10 +146,15 @@ final int[] PUBLISH_ID = {
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish()">
-								<%for(int nPublishId : PUBLISH_ID) {%>
+								<%for(int nPublishId : PUBLISH_ID) {
+									if(7<=nPublishId && nPublishId<=10){
+										if(cTweet.m_bIsTweetEnable==false){continue;}
+										if(nPublishId==10 && cTweet.m_listOpenList.size()==0){continue;}
+									}
+								%>
 								<option value="<%=nPublishId%>" <%if(nPublishId==cResults.m_cContent.m_nPublishId){%>selected<%}%>><%=_TEX.T(String.format("Publish.C%d", nPublishId))%></option>
 								<%}%>
-								</select>
+							</select>
 						</div>
 					</div>
 					<div id="ItemPassword" class="OptionItem"
