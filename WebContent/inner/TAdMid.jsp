@@ -4,7 +4,10 @@
 	<%if(Util.isSmartPhone(request)) {%>
 
 <%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-	<%=Util.jikoku_hyou(request)%>
+<div class="SideBarMid">
+	<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
+</div>
+	<%//=Util.jikoku_hyou(request)%>
 	<%//=Util.poipiku_320x250_sp_mid()%>
 <%}else{%>
 <div class="SideBarMid">
@@ -16,6 +19,8 @@
 
 <%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 <div class="SideBarMid">
+	<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
+	<%/*
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_468x60_bottom -->
 	<ins class="adsbygoogle"
@@ -25,6 +30,7 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
+	 */%>
 </div>
 <%}else{%>
 <div class="SideBarMid">

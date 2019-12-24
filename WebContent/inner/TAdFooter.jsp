@@ -5,6 +5,8 @@
 	<%if(Util.isSmartPhone(request)) {%>
 
 <%if(g_nSafeFilter==Common.AD_ID_ALL){%>
+	<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
+	<%/*
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_sp_footer -->
 	<ins class="adsbygoogle"
@@ -16,6 +18,7 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
+	*/%>
 <%}else{%>
 <%@ include file="/inner/TAdBaseAdponR18.jsp"%>
 <%}%>
@@ -23,6 +26,8 @@
 	<%} else {%>
 
 <%if(g_nSafeFilter==Common.AD_ID_ALL){%>
+	<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
+	<%/*
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- poipiku_pc_footer -->
 	<ins class="adsbygoogle"
@@ -34,6 +39,7 @@
 	<script>
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
+	*/%>
 <%}else{%>
 <%@ include file="/inner/TAdBaseAdponR18.jsp"%>
 <%}%>
