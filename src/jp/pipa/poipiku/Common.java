@@ -8,6 +8,7 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -312,6 +313,11 @@ public class Common {
 		} else {
 			return null;
 		}
+	}
+
+	public static String ToYMDHMString(Timestamp ts){
+		final String TIME_FORMAT = "yyyy/MM/dd HH:mm";
+		return new SimpleDateFormat(TIME_FORMAT).format(ts);
 	}
 
 	public static String EscapeInjection(String strSrc) {

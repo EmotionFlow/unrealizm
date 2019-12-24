@@ -35,6 +35,7 @@ final int[] PUBLISH_ID = {
 		8,			// ツイッターフォロー限定
 		9,			// ツイッター相互フォロー限定
 		10,			// ツイッターリスト限定
+		11,			// 期間限定
 		99			// 非公開
 };
 
@@ -44,7 +45,7 @@ final int[] PUBLISH_ID = {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<script src="/js/upload-20.js" type="text/javascript"></script>
-		<script src="/js/update.js" type="text/javascript"></script>
+		<script src="/js/update-02.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -184,7 +185,8 @@ final int[] PUBLISH_ID = {
 							<%}%>
 						</div>
 					</div>
-					<%}%>	
+					<%}%>
+
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">

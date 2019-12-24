@@ -35,6 +35,7 @@ final int[] PUBLISH_ID = {
 		8,			// ツイッターフォロー限定
 		9,			// ツイッター相互フォロー限定
 		10,			// ツイッターリスト限定
+		11,			// 期間限定
 		99			// 非公開
 };
 
@@ -44,8 +45,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-20.js" type="text/javascript"></script>
-		<script src="/js/update.js" type="text/javascript"></script>
+		<script src="/js/update-02.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -205,7 +208,33 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							<%}%>
 						</div>
 					</div>
-					<%}%>	
+					<%}%>
+					<div id="ItemTimeLimited" class="OptionItem" 
+						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_LIMITED_TIME){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<%if(Util.isSmartPhone(request)) {%>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+							</div>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							</div>
+							<%}else{%>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							<%}%>
+						</div>
+						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_LIMITED_TIME){%>
+						<script>
+							initStartDatetime("<%=Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate)%>");
+							initEndDatetime("<%=Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate)%>");
+						</script>
+						<%}%>
+					</div>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
