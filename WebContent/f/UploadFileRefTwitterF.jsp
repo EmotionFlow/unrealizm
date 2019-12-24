@@ -19,8 +19,6 @@ class UploadReferenceCParam {
 	public Timestamp m_tsPublishEnd = null;
 
 	public int GetParam(HttpServletRequest request) {
-		String strPublishStart = "";
-		String strPublishEnd = "";
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
@@ -31,8 +29,8 @@ class UploadReferenceCParam {
 			m_strPassword		= Common.SubStrNum(Common.TrimAll(request.getParameter("PPW")), 16);
 			m_strListId			= Common.TrimAll(request.getParameter("PLD"));
 			m_nEditorId			= Common.ToIntN(request.getParameter("ED"), 0, Common.PUBLISH_ID_MAX);
-			strPublishStart		= Common.SubStrNum(Common.TrimAll(request.getParameter("PST")), 16).replace("/", "-") + ":00";
-			strPublishEnd		= Common.SubStrNum(Common.TrimAll(request.getParameter("PED")), 16).replace("/", "-") + ":00";
+			m_tsPublishStart	= Common.ToSqlTimestamp(request.getParameter("PST"));
+			m_tsPublishEnd		= Common.ToSqlTimestamp(request.getParameter("PED"));
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 			m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
@@ -56,10 +54,6 @@ class UploadReferenceCParam {
 					}
 				}
 			}
-			Log.d(strPublishStart);
-			Log.d(strPublishEnd);
-			if(!strPublishStart.isEmpty()){m_tsPublishStart = Timestamp.valueOf(strPublishStart);};
-			if(!strPublishEnd.isEmpty()){m_tsPublishEnd = Timestamp.valueOf(strPublishEnd);};
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;

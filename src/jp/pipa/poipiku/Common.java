@@ -7,6 +7,7 @@ import java.nio.channels.FileChannel;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -299,6 +300,18 @@ public class Common {
 			lnRet = -1;
 		}
 		return lnRet;
+	}
+
+	public static Timestamp ToSqlTimestamp(String strDateTime){
+		// YYYY/MM/DD HH:MMを想定
+		String s = Common.SubStrNum(Common.TrimAll(strDateTime), 16)
+		.replace("/", "-") + ":00";
+
+		if(!s.isEmpty()){
+			return Timestamp.valueOf(s);
+		} else {
+			return null;
+		}
 	}
 
 	public static String EscapeInjection(String strSrc) {
