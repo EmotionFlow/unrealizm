@@ -73,6 +73,18 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Update.Error.TwListNotFond")%>');
 			}
 
+			function dateTimeEmptyMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
+			}
+
+			function dateTimePastMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
+			}
+
+			function dateTimeReverseMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
+			}
+
 			function completeMsg() {
 				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
 			}

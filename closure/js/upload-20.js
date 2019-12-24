@@ -486,11 +486,11 @@ function getLastCategorySetting() {
 	return getLocalStrage('last_category');
 }
 
-function checkPublishDatetime(strPublishStart, strPublishEnd){
+function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate){
 	if(strPublishStart=='' || strPublishEnd==''){
 		dateTimeEmptyMsg();
 		return false;
-	} else if(Date.parse(strPublishStart) < Date.now()) {
+	} else if(!isUpdate && Date.parse(strPublishStart) < Date.now()) {
 		dateTimePastMsg();
 		return false;
 	} else if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
@@ -728,7 +728,7 @@ function UploadFile(user_id) {
         nTwListId = $('#EditTwitterList').val();
 	}
 
-	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd)){
+	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, false)){
 		return;
 	}
 
@@ -879,7 +879,6 @@ function UploadPaste(user_id) {
 	strTagList = strTagList.substr(0 , 100);
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
-
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
     var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
@@ -889,11 +888,9 @@ function UploadPaste(user_id) {
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
-
-	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd)){
+	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, false)){
 		return;
 	}
-
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);

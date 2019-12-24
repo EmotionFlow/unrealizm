@@ -77,6 +77,10 @@ if(cCookies != null) {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
 			}
 
+			function dateTimeReverseMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
+			}
+
 			function completeMsg() {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Uploaded")%>');
 			}

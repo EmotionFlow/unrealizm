@@ -202,7 +202,7 @@ function UpdateFile(user_id, content_id) {
         nTwListId = $('#EditTwitterList').val();
 	}
 
-	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd)){
+	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true)){
 		return;
 	}
 
@@ -328,7 +328,6 @@ function UpdatePasteAppendFAjax(img_element, user_id, content_id){
 
 function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescription,
 	strTagList, nPublishId, strPassword, nTwListId, nRecent){
-	//return $.ajaxSingle({
 	return $.ajax({
 		"type": "post",
 		"data": {
@@ -363,99 +362,110 @@ function UploadFileTweetFAjax(user_id, content_id, nTweetImage){
 }
 
 //ペースト画像のアップロード
-function UpdatePaste(user_id, content_id) {
-	// check image
-	var nImageNum = 0;
-	$('.imgView').each(function(){
-		var strSrc = $.trim($(this).attr('src'));
-		if(strSrc.length>0) nImageNum++;
-	});
-	console.log(nImageNum);
-	if(nImageNum<=0) return;
+var UpdatePaste = function(){
+	var bEntered = false;
+	return function UpdatePaste(user_id, content_id) {
+		if(bEntered) return;
+		bEntered = true;
 
-	var nCategory = $('#EditCategory').val();
-	var strDescription = $.trim($("#EditDescription").val());
-	strDescription = strDescription.substr(0 , 200);
-	var strTagList = $.trim($("#EditTagList").val());
-	strTagList = strTagList.substr(0 , 100);
-	var nPublishId = $('#EditPublish').val();
-	var strPassword = $('#EditPassword').val();
-	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
-	var nTwListId = null;
-	if(nPublishId==10){
-        nTwListId = $('#EditTwitterList').val();
-	}
-	setTweetSetting($('#OptionTweet').prop('checked'));
-	setTweetImageSetting($('#OptionImage').prop('checked'));
-	setLastCategorySetting(nCategory);
-	if(nPublishId == 99) {
-		nRecent = 2;
-		nTweet = 0;
-	}
-	startMsg();
-
-	var fUpdateFile = UpdateFileRefTwitterFAjax(
-		user_id, content_id, nCategory, strDescription, strTagList,
-		nPublishId, strPassword, nTwListId, nRecent);
-
-	var aryFunc = [];
-	var fTweet = null;
-
-	fUpdateFile.done(
-		function(data){
-			var f = null;
-
-			$('.imgView').each(function(){
-				f = UpdatePasteAppendFAjax($(this),user_id,data.content_id);
-				if (f != null){
-					aryFunc.push(f);
-				}
-			});
-			
-			if(nTweet==1) {
-				fTweet = UploadFileTweetFAjax(user_id, data.content_id, nTweetImage);
-			} else {
-				fTweet = function() {
-					var dfd = $.Deferred();
-					dfd.resolve();
-					return dfd.promise();
-				};
-			}
-
-			$.when.apply($, aryFunc)
-			.then(function(){
-				var json_array = [];
-				$.each($('#PasteZone').sortable('toArray'), function(i, item) {
-					json_array.push(parseInt(item))
-				});			
-				for (var i = 0; i < arguments.length; i++) {
-					var aid;
-					if(json_array.length==1){
-						aid = arguments[0].append_id;
-					}else{
-						aid = arguments[i][0].append_id;
-					}
-					if(aid >= 0){
-						json_array[i] = aid;
-					}
-					if(json_array.length==1){
-						break;
-					}
-				}
-				return UpdatePasteOrderAjax(user_id, data.content_id, json_array);
-			},function(err){errorMsg(-10);})
-			.then(fTweet, function(err){errorMsg(-11)})
-			.then(
-				function(){
-					completeMsg();
-					setTimeout(function(){location.href="/MyHomePcV.jsp";}, 1000);
-				},
-				function(err){errorMsg(-12)}
-			);
+		// check image
+		var nImageNum = 0;
+		$('.imgView').each(function(){
+			var strSrc = $.trim($(this).attr('src'));
+			if(strSrc.length>0) nImageNum++;
+		});
+		console.log(nImageNum);
+		if(nImageNum<=0) return;
+	
+		var nCategory = $('#EditCategory').val();
+		var strDescription = $.trim($("#EditDescription").val());
+		strDescription = strDescription.substr(0 , 200);
+		var strTagList = $.trim($("#EditTagList").val());
+		strTagList = strTagList.substr(0 , 100);
+		var nPublishId = $('#EditPublish').val();
+		var strPassword = $('#EditPassword').val();
+		var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
+		var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+		var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+		var nTwListId = null;
+		var strPublishStart = $('#EditTimeLimitedStart').val();
+		var strPublishEnd = $('#EditTimeLimitedEnd').val();
+		if(nPublishId==10){
+			nTwListId = $('#EditTwitterList').val();
 		}
-	);
-	return false;
+		if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true)){
+			return;
+		}
+		setTweetSetting($('#OptionTweet').prop('checked'));
+		setTweetImageSetting($('#OptionImage').prop('checked'));
+		setLastCategorySetting(nCategory);
+		if(nPublishId == 99) {
+			nRecent = 2;
+			nTweet = 0;
+		}
+		startMsg();
+	
+		var fUpdateFile = UpdateFileRefTwitterFAjax(
+			user_id, content_id, nCategory, strDescription, strTagList,
+			nPublishId, strPassword, nTwListId, nRecent);
+	
+		var aryFunc = [];
+		var fTweet = null;
+	
+		fUpdateFile.done(
+			function(data){
+				var f = null;
+	
+				$('.imgView').each(function(){
+					f = UpdatePasteAppendFAjax($(this),user_id,data.content_id);
+					if (f != null){
+						aryFunc.push(f);
+					}
+				});
+				
+				if(nTweet==1) {
+					fTweet = UploadFileTweetFAjax(user_id, data.content_id, nTweetImage);
+				} else {
+					fTweet = function() {
+						var dfd = $.Deferred();
+						dfd.resolve();
+						return dfd.promise();
+					};
+				}
+	
+				$.when.apply($, aryFunc)
+				.then(function(){
+					var json_array = [];
+					$.each($('#PasteZone').sortable('toArray'), function(i, item) {
+						json_array.push(parseInt(item))
+					});			
+					for (var i = 0; i < arguments.length; i++) {
+						var aid;
+						if(json_array.length==1){
+							aid = arguments[0].append_id;
+						}else{
+							aid = arguments[i][0].append_id;
+						}
+						if(aid >= 0){
+							json_array[i] = aid;
+						}
+						if(json_array.length==1){
+							break;
+						}
+					}
+					return UpdatePasteOrderAjax(user_id, data.content_id, json_array);
+				},function(err){errorMsg(-10);})
+				.then(fTweet, function(err){errorMsg(-11)})
+				.then(
+					function(){
+						completeMsg();
+						setTimeout(function(){location.href="/MyHomePcV.jsp";}, 1000);
+					},
+					function(err){errorMsg(-12)}
+				);
+			}
+		);
+		return false;
+	}
 }
 
