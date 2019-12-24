@@ -44,6 +44,7 @@ public class CTweet {
 	public static final int ERR_RATE_LIMIT_EXCEEDED = -10088;
 	public static final int ERR_TWEET_DISABLE = -10000;
 	public static final int ERR_OTHER = -99999;
+	public Status m_statusLastTweet = null;
 
 	public boolean GetResults(int nUserId) {
 		boolean bResult = true;
@@ -113,6 +114,7 @@ public class CTweet {
 	public boolean Tweet(String strTweet) {
 		if (!m_bIsTweetEnable) return false;
 		boolean bResult = true;
+		m_statusLastTweet = null;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
@@ -122,7 +124,7 @@ public class CTweet {
 				.setOAuthAccessTokenSecret(m_strSecretToken);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
-			Status status = twitter.updateStatus(strTweet);
+			m_statusLastTweet = twitter.updateStatus(strTweet);
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -132,8 +134,8 @@ public class CTweet {
 
 	public boolean Tweet(String strTweet, String strFileName) {
 		if (!m_bIsTweetEnable) return false;
-
 		boolean bResult = true;
+		m_statusLastTweet = null;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
@@ -143,7 +145,7 @@ public class CTweet {
 				.setOAuthAccessTokenSecret(m_strSecretToken);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
-			Status status = twitter.updateStatus(new StatusUpdate(strTweet).media(new File(strFileName)));
+			m_statusLastTweet = twitter.updateStatus(new StatusUpdate(strTweet).media(new File(strFileName)));
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -154,8 +156,8 @@ public class CTweet {
 	public boolean Tweet(String strTweet, ArrayList<String> vFileList) {
 		if(!m_bIsTweetEnable) return false;
 		if(vFileList.size()<=0) return false;
-
 		boolean bResult = true;
+		m_statusLastTweet = null;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
@@ -193,7 +195,7 @@ public class CTweet {
 
 			StatusUpdate update = new StatusUpdate(strTweet);
 			update.setMediaIds(vMediaList);
-			Status status = twitter.updateStatus(update);
+			m_statusLastTweet = twitter.updateStatus(update);
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -297,6 +299,11 @@ public class CTweet {
 			nResult = ERR_OTHER;
 		}
 		return nResult;
+	}
+	
+	public long getLastTweetId() {
+		if(m_statusLastTweet==null) return -1;
+		return m_statusLastTweet.getId();
 	}
 
 	static public String generateIllustMsgFull(CContent cContent, ResourceBundleControl _TEX) {

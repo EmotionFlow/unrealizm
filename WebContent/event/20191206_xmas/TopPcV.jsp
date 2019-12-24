@@ -21,6 +21,7 @@ if(!bSmartPhone) {
 			.LinkButton {display: block; position: absolute; width: 100%;}
 			.LinkButton.Link1 {height: 80px; top:629px;}
 			.LinkButton.Link2 {height: 63px; top:832px;}
+			.LinkButton.Link3 {width: 61px; height: 21px; top: 2131px; left: 46px; border-bottom: solid 2px #ad4247;}
 		</style>
 	</head>
 	<body>
@@ -29,9 +30,10 @@ if(!bSmartPhone) {
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="./wacom_sumaho.png" />
+				<img class="MainImage" src="./wacom_sumaho-2.png" />
 				<a class="LinkButton Link1" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
 				<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
+				<a class="LinkButton Link3" href="https://twitter.com/pipajp" target="_blank"></a>
 			</div>
 		</article>
 

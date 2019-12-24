@@ -45,12 +45,11 @@ public class Util {
 
 	public static ArrayList<String> getDefaultEmoji(int nUserId, int nLimitNum) {
 		ArrayList<String> vResult = new ArrayList<String>();
-		/*
 
 		for(String emoji : Common.EMOJI_LIST_EVENT) {
 			vResult.add(emoji);
 		}
-		*/
+		/*
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -104,6 +103,7 @@ public class Util {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
+		*/
 		return vResult;
 	}
 
