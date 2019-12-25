@@ -78,11 +78,23 @@ class UpdateFileRefTwitterC {
 		String strSql = "";
 		int safe_filter = Common.SAFE_FILTER_ALL;
 		int idx = 0;
+		int nPublishIdPresend = -1;
 
 		try {
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
+
+			strSql = "SELECT publish_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(2, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				nPublishIdPresend = cResSet.getInt("publish_id");
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
 
 			switch(cParam.m_nPublishId) {
 				case Common.PUBLISH_ID_R15:
@@ -100,8 +112,6 @@ class UpdateFileRefTwitterC {
 		}
 
 		try {
-			// update content
-
 			// create statement
 			int nOpenId = cParam.m_nOpenId;
 			String sqlUpdate =  "UPDATE contents_0000";
@@ -109,7 +119,9 @@ class UpdateFileRefTwitterC {
 				lColumns.addAll(Arrays.asList("category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?", "password=?", "list_id=?", "safe_filter=?"));
 	
 			if(cParam.m_nPublishId != Common.PUBLISH_ID_LIMITED_TIME){
-				lColumns.add("upload_date=current_timestamp");
+				if(nPublishIdPresend==Common.PUBLISH_ID_HIDDEN && cParam.m_nPublishId!=Common.PUBLISH_ID_HIDDEN){
+					lColumns.add("upload_date=current_timestamp");
+				}
 			} else {
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
 				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
@@ -135,7 +147,7 @@ class UpdateFileRefTwitterC {
 			cState = cConn.prepareStatement(strSql);
 			try {
 				idx = 1;
-				// set 
+				// set values
 				cState.setInt(idx++, cParam.m_nCategoryId);
 				cState.setInt(idx++, nOpenId);
 				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, 200));
@@ -150,7 +162,7 @@ class UpdateFileRefTwitterC {
 					cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
 				}
 				
-				// where
+				// set where params
 				cState.setInt(idx++, cParam.m_nUserId);
 				cState.setInt(idx++, cParam.m_nContentId);
 				

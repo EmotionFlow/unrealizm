@@ -305,11 +305,10 @@ public class Common {
 
 	public static Timestamp ToSqlTimestamp(String strDateTime){
 		// YYYY/MM/DD HH:MMを想定
-		String s = Common.SubStrNum(Common.TrimAll(strDateTime), 16)
-		.replace("/", "-") + ":00";
+		String s = Common.SubStrNum(Common.TrimAll(strDateTime), 16);
 
 		if(!s.isEmpty()){
-			return Timestamp.valueOf(s);
+			return Timestamp.valueOf(s.replace("/", "-") + ":00");
 		} else {
 			return null;
 		}
