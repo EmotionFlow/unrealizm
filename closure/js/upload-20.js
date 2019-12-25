@@ -494,8 +494,8 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 		dateTimeEmptyMsg();
 		return false;
 	}
-	if(!isUpdate || isUpdate && strPublishStartPresent !== strPublishStart){
-		if(Date.parse(strPublishStart) < Date.now()) {
+	if(!isUpdate || isUpdate && (strPublishStartPresent !== strPublishStart || strPublishEndPresent !== strPublishEnd)){
+		if(Date.parse(strPublishStart) < Date.now() || Date.parse(strPublishEnd) < Date.now()) {
 			dateTimePastMsg();
 			return false;
 		}

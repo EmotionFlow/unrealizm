@@ -44,6 +44,8 @@ final int[] PUBLISH_ID = {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-20.js" type="text/javascript"></script>
 		<script src="/js/update-02.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
@@ -76,8 +78,32 @@ final int[] PUBLISH_ID = {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 			}
 
+			function errorMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
+			}
+
+			function twtterListNotFoundMsg(){
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Update.Error.TwListNotFond")%>');
+			}
+
+			function dateTimeEmptyMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
+			}
+
+			function dateTimePastMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
+			}
+
+			function dateTimeReverseMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
+			}
+
 			function completeMsg() {
 				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+			}
+
+			function completeAddFile() {
+				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
 
 			function errorMsg(result) {
@@ -186,7 +212,37 @@ final int[] PUBLISH_ID = {
 						</div>
 					</div>
 					<%}%>
-
+					<div id="ItemTimeLimited" class="OptionItem" 
+						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_LIMITED_TIME){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<%if(Util.isSmartPhone(request)) {%>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+							</div>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							</div>
+							<%}else{%>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							<%}%>
+						</div>
+						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_LIMITED_TIME){
+							String strStartDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate);
+							String strEndDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate);
+							%>
+						<input id="EditTimeLimitedStartPresent" value="<%=strStartDateTime%>" type="hidden" />
+						<input id="EditTimeLimitedEndPresent" value="<%=strEndDateTime%>" type="hidden" />
+						<script>
+							initStartDatetime("<%=strStartDateTime%>");
+							initEndDatetime("<%=strEndDateTime%>");
+						</script>
+						<%}%>
+					</div>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">

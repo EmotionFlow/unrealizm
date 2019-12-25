@@ -131,7 +131,7 @@ class UpdateFileRefTwitterC {
 			String sqlSet = "SET " + String.join(",", lColumns);
 			String sqlWhere = "WHERE user_id=? AND content_id=?";
 			
-			strSql = String.join(" ", Arrays.asList(sqlUpdate, strSet, sqlWhere));
+			strSql = String.join(" ", Arrays.asList(sqlUpdate, sqlSet, sqlWhere));
 			cState = cConn.prepareStatement(strSql);
 			try {
 				idx = 1;

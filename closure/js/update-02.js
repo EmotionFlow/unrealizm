@@ -329,7 +329,7 @@ function UpdatePasteAppendFAjax(img_element, user_id, content_id){
 }
 
 function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescription,
-	strTagList, nPublishId, strPassword, nTwListId, nRecent){
+	strTagList, nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd){
 	return $.ajax({
 		"type": "post",
 		"data": {
@@ -342,6 +342,8 @@ function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescriptio
 			"PPW":strPassword,
 			"PLD":nTwListId,
 			"REC":nRecent,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
 			"ED":1
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
@@ -364,7 +366,7 @@ function UploadFileTweetFAjax(user_id, content_id, nTweetImage){
 }
 
 //ペースト画像のアップロード
-var UpdatePaste = function(){
+function createUpdatePaste(){
 	var bEntered = false;
 	return function UpdatePaste(user_id, content_id) {
 		if(bEntered) return;
@@ -395,7 +397,7 @@ var UpdatePaste = function(){
 		if(nPublishId==10){
 			nTwListId = $('#EditTwitterList').val();
 		}
-		if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true)){
+		if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true, $('#EditTimeLimitedStartPresent').val(), $('#EditTimeLimitedEndPresent').val())){
 			return;
 		}
 		setTweetSetting($('#OptionTweet').prop('checked'));
@@ -409,7 +411,7 @@ var UpdatePaste = function(){
 	
 		var fUpdateFile = UpdateFileRefTwitterFAjax(
 			user_id, content_id, nCategory, strDescription, strTagList,
-			nPublishId, strPassword, nTwListId, nRecent);
+			nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd);
 	
 		var aryFunc = [];
 		var fTweet = null;
@@ -470,4 +472,5 @@ var UpdatePaste = function(){
 		return false;
 	}
 }
+var UpdatePaste = createUpdatePaste();
 
