@@ -17,24 +17,28 @@
 	public int m_nPublishId = 0;
 	public String m_strPassword = "";
 	public String m_strListId = "";
+	public Timestamp m_tsPublishStart = null;
+	public Timestamp m_tsPublishEnd = null;
 
 	public int GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId			= Common.ToInt(request.getParameter("UID"));
 			m_nContentId		= Common.ToInt(request.getParameter("IID"));
-			m_nEditorId			= Common.ToInt(request.getParameter("ED"));
-			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
 			m_nOpenId			= Common.ToInt(request.getParameter("REC"));
+
+			m_nUserId			= Common.ToInt(request.getParameter("UID"));
+			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
 			m_strDescription	= Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
 			m_strTagList		= Common.SubStrNum(Common.TrimAll(request.getParameter("TAG")), 100);
 			m_nPublishId		= Common.ToIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
 			m_strPassword		= Common.SubStrNum(Common.TrimAll(request.getParameter("PPW")), 16);
 			m_strListId			= Common.TrimAll(request.getParameter("PLD"));
+			m_nEditorId			= Common.ToInt(request.getParameter("ED"));
+			m_tsPublishStart	= Common.ToSqlTimestamp(request.getParameter("PST"));
+			m_tsPublishEnd		= Common.ToSqlTimestamp(request.getParameter("PED"));
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 			m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
-
 			// format tag list
 			if(!m_strTagList.isEmpty()) {
 				ArrayList<String> listTag = new ArrayList<String>();
@@ -96,8 +100,36 @@ class UpdateFileRefTwitterC {
 		}
 
 		try {
-			// get content id
-			strSql = "UPDATE contents_0000 SET category_id=?, open_id=?, description=?, tag_list=?, publish_id=?, password=?, list_id=?, safe_filter=?, upload_date=current_timestamp WHERE user_id=? AND content_id=?";
+			// update content
+			String strUpdate =  "UPDATE contents_0000";
+			ArrayList<String> lColumns = new ArrayList<String>();
+				lColumns.addAll(Arrays.asList("category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?", "password=?", "list_id=?", "safe_filter=?"));
+	
+			if(cParam.m_nPublishId != Common.PUBLISH_ID_LIMITED_TIME){
+				lColumns.add("upload_date=current_timestamp");
+			} else {
+				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
+				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
+				if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
+					lColumns.add("open_id");
+					if(cParam.m_tsPublishStart != null ){
+						lColumns.add("upload_date");
+						if(cParam.m_tsPublishStart.after(tsNow)){
+							cParam.m_nOpenId = 0;
+						} else {
+							cParam.m_nOpenId = 3;
+						}
+					}
+					if(cParam.m_tsPublishEnd != null ){
+						lColumns.add("end_date");
+					}
+				}
+			}
+
+			String strSet = "SET " + String.join(",", lColumns);
+			String strWhere = "WHERE user_id=? AND content_id=?";
+			
+			strSql = String.join(" ", [strUpdate, strSet, strWhere]);
 			cState = cConn.prepareStatement(strSql);
 			try {
 				idx = 1;

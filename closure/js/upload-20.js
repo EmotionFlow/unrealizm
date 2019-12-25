@@ -486,11 +486,14 @@ function getLastCategorySetting() {
 	return getLocalStrage('last_category');
 }
 
-function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate){
+function checkPublishDatetimeUpload(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
+	if(!isUpdate && strPublishStartPresent === strPublishStart && strPublishEndPresent === strPublishEnd){
+		return true;
+	}
 	if(strPublishStart=='' || strPublishEnd==''){
 		dateTimeEmptyMsg();
 		return false;
-	} else if(!isUpdate && Date.parse(strPublishStart) < Date.now()) {
+	} else if(Date.parse(strPublishStart) < Date.now()) {
 		dateTimePastMsg();
 		return false;
 	} else if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){

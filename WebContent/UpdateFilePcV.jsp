@@ -240,10 +240,15 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
 							<%}%>
 						</div>
-						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_LIMITED_TIME){%>
+						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_LIMITED_TIME){
+							String strStartDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate);
+							String strEndDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate
+							%>
+						<input id="EditTimeLimitedStartPresent" value="<%=strStartDateTime%>" type="hidden" />
+						<input id="EditTimeLimitedEndPresent" value="<%=strEndDateTime%>" type="hidden" />
 						<script>
-							initStartDatetime("<%=Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate)%>");
-							initEndDatetime("<%=Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate)%>");
+							initStartDatetime("<%=strStartDateTime%>");
+							initEndDatetime("<%=strEndDateTime%>");
 						</script>
 						<%}%>
 					</div>
