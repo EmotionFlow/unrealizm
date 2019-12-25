@@ -132,15 +132,14 @@ public class Common {
 	public static final int EMOJI_CAT_FOOD = 2;
 	public static final int EMOJI_CAT_ALL = 3;
 	// For Event
-	/*
-	//Halloween
-	public static final String[] EMOJI_LIST_EVENT = {
-			"🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃","🎃",
-		};
-	*/
-	// X'mas
-	public static final String[] EMOJI_LIST_EVENT = {
-			"💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝","💝",
+	public static final boolean EMOJI_EVENT = false;
+	public static final String EMOJI_EVENT_CHAR = "💝";		// X'mas
+	//public static final String EMOJI_EVENT_CHAR = "🎃";	//Halloween
+	public static final String[] EMOJI_EVENT_LIST = {
+			EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,
+			EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,
+			EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,
+			EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,
 		};
 	// 絵文字
 	public static final String[][] EMOJI_LIST = {
