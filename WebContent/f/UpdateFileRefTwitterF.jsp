@@ -101,7 +101,10 @@ class UpdateFileRefTwitterC {
 
 		try {
 			// update content
-			String strUpdate =  "UPDATE contents_0000";
+
+			// create statement
+			int nOpenId = cParam.m_nOpenId;
+			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<String>();
 				lColumns.addAll(Arrays.asList("category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?", "password=?", "list_id=?", "safe_filter=?"));
 	
@@ -111,38 +114,46 @@ class UpdateFileRefTwitterC {
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
 				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
 				if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
-					lColumns.add("open_id");
 					if(cParam.m_tsPublishStart != null ){
-						lColumns.add("upload_date");
+						lColumns.add("upload_date=?");
 						if(cParam.m_tsPublishStart.after(tsNow)){
-							cParam.m_nOpenId = 0;
+							nOpenId = 0;
 						} else {
-							cParam.m_nOpenId = 3;
+							nOpenId = 3;
 						}
 					}
 					if(cParam.m_tsPublishEnd != null ){
-						lColumns.add("end_date");
+						lColumns.add("end_date=?");
 					}
 				}
 			}
 
-			String strSet = "SET " + String.join(",", lColumns);
-			String strWhere = "WHERE user_id=? AND content_id=?";
+			String sqlSet = "SET " + String.join(",", lColumns);
+			String sqlWhere = "WHERE user_id=? AND content_id=?";
 			
-			strSql = String.join(" ", [strUpdate, strSet, strWhere]);
+			strSql = String.join(" ", Arrays.asList(sqlUpdate, strSet, sqlWhere));
 			cState = cConn.prepareStatement(strSql);
 			try {
 				idx = 1;
+				// set 
 				cState.setInt(idx++, cParam.m_nCategoryId);
-				cState.setInt(idx++, cParam.m_nOpenId);
+				cState.setInt(idx++, nOpenId);
 				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, 200));
 				cState.setString(idx++, cParam.m_strTagList);
 				cState.setInt(idx++, cParam.m_nPublishId);
 				cState.setString(idx++, cParam.m_strPassword);
 				cState.setString(idx++, cParam.m_strListId);
 				cState.setInt(idx++, safe_filter);
+
+				if(cParam.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
+					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
+					cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
+				}
+				
+				// where
 				cState.setInt(idx++, cParam.m_nUserId);
 				cState.setInt(idx++, cParam.m_nContentId);
+				
 				cState.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();

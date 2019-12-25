@@ -486,17 +486,21 @@ function getLastCategorySetting() {
 	return getLocalStrage('last_category');
 }
 
-function checkPublishDatetimeUpload(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
-	if(!isUpdate && strPublishStartPresent === strPublishStart && strPublishEndPresent === strPublishEnd){
+function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
+	if(isUpdate && strPublishStartPresent === strPublishStart && strPublishEndPresent === strPublishEnd){
 		return true;
 	}
 	if(strPublishStart=='' || strPublishEnd==''){
 		dateTimeEmptyMsg();
 		return false;
-	} else if(Date.parse(strPublishStart) < Date.now()) {
-		dateTimePastMsg();
-		return false;
-	} else if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
+	}
+	if(!isUpdate || isUpdate && strPublishStartPresent !== strPublishStart){
+		if(Date.parse(strPublishStart) < Date.now()) {
+			dateTimePastMsg();
+			return false;
+		}
+	}
+	if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
 		dateTimeReverseMsg();
 		return false;
 	}
@@ -517,6 +521,8 @@ function updateTweetButton() {
 }
 
 function initStartDatetime(datetime){
+	var dateNow = new Date();
+	dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
 	$("#EditTimeLimitedStart").flatpickr({
 		enableTime: true,
 		dateFormat: "Y/m/d H:i",
@@ -525,7 +531,10 @@ function initStartDatetime(datetime){
 		defaultDate: datetime,
 	});
 }
+
 function initEndDatetime(datetime){
+	var dateNow = new Date();
+	dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
 	$("#EditTimeLimitedEnd").flatpickr({
 		enableTime: true,
 		dateFormat: "Y/m/d H:i",

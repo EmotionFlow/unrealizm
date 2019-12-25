@@ -202,7 +202,7 @@ function UpdateFile(user_id, content_id) {
         nTwListId = $('#EditTwitterList').val();
 	}
 
-	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true)){
+	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true, $('#EditTimeLimitedStartPresent').val(), $('#EditTimeLimitedEndPresent').val())){
 		return;
 	}
 
@@ -227,7 +227,9 @@ function UpdateFile(user_id, content_id) {
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
-			"REC": nRecent,
+			"REC":nRecent,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
 			"ED":0
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",

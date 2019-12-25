@@ -242,7 +242,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						</div>
 						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_LIMITED_TIME){
 							String strStartDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate);
-							String strEndDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate
+							String strEndDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate);
 							%>
 						<input id="EditTimeLimitedStartPresent" value="<%=strStartDateTime%>" type="hidden" />
 						<input id="EditTimeLimitedEndPresent" value="<%=strEndDateTime%>" type="hidden" />
