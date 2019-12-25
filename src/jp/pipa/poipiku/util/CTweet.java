@@ -16,10 +16,13 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
+import twitter4j.Friendship;
 import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.User;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.UploadedMedia;
 import twitter4j.UserList;
@@ -30,9 +33,17 @@ public class CTweet {
 	public String m_strUserAccessToken = "";
 	public String m_strSecretToken = "";
 	public long m_lnTwitterUserId = -1;
-	public ResponseList<UserList> m_listUserList = null;
+	public ResponseList<UserList> m_listOpenList = null;
 	public static final int MAX_LENGTH = 140;
 	public static final String ELLIPSE = "...";
+	public static final int FRIENDSHIP_UNDEF = -1;		// 未定義
+	public static final int FRIENDSHIP_NONE = 0;		// 無関係
+	public static final int FRIENDSHIP_FRIEND = 1;		// フォローしている
+	public static final int FRIENDSHIP_FOLLOWER = 2;	// フォローされている
+	public static final int FRIENDSHIP_EACH = 3;		// 相互フォロー
+	public static final int ERR_RATE_LIMIT_EXCEEDED = -10088;
+	public static final int ERR_TWEET_DISABLE = -10000;
+	public static final int ERR_OTHER = -99999;
 	public Status m_statusLastTweet = null;
 
 	public boolean GetResults(int nUserId) {
@@ -79,7 +90,7 @@ public class CTweet {
 		return bResult;
 	}
 
-	public boolean getList(int nUserId) {
+	public boolean GetMyOpenLists() {
 		if (!m_bIsTweetEnable) return false;
 		boolean bResult = true;
 		try {
@@ -91,11 +102,8 @@ public class CTweet {
 				.setOAuthAccessTokenSecret(m_strSecretToken);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
-			m_listUserList = twitter.getUserLists(m_lnTwitterUserId, true);
-			Log.d("m_listUserList:"+m_listUserList.size());
-			for(UserList list : m_listUserList) {
-				Log.d("list:"+list.getName()+":"+list.getId());
-			}
+			m_listOpenList = twitter.getUserLists(m_lnTwitterUserId, true);
+			m_listOpenList.removeIf(a -> !a.isPublic());
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -195,6 +203,104 @@ public class CTweet {
 		return bResult;
 	}
 
+	public int LookupFriendship(int nTargetUserId){
+		int nResult = FRIENDSHIP_UNDEF;
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		
+		DataSource dsPostgres = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+
+		try {
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
+			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, nTargetUserId);
+			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
+			cResSet = cState.executeQuery();
+			System.out.println(String.format("ua: %s, st: %s", m_strUserAccessToken, m_strSecretToken));
+			if(cResSet.next()){
+				ConfigurationBuilder cb = new ConfigurationBuilder();
+				cb.setDebugEnabled(true)
+					.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+					.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+					.setOAuthAccessToken(m_strUserAccessToken)
+					.setOAuthAccessTokenSecret(m_strSecretToken);
+				TwitterFactory tf = new TwitterFactory(cb.build());
+				Twitter twitter = tf.getInstance();
+	
+				// 関係をlookup
+				long tgtIds[] = {Long.parseLong(cResSet.getString("twitter_user_id"))};
+				ResponseList<Friendship> lookupResults = twitter.lookupFriendships(tgtIds);
+				if(lookupResults.size() > 0){
+					Friendship f = lookupResults.get(0);
+					if(f.isFollowing() && f.isFollowedBy()){
+						nResult = FRIENDSHIP_EACH;
+					} else if(f.isFollowing() && !f.isFollowedBy()){
+						nResult = FRIENDSHIP_FRIEND;
+					} else if(!f.isFollowing() && f.isFollowedBy()){
+						nResult = FRIENDSHIP_FOLLOWER;
+					} else {
+						nResult = FRIENDSHIP_NONE;
+					}
+				}
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+		} catch (TwitterException te) {
+			if(te.getErrorCode() == 88){
+				nResult = ERR_RATE_LIMIT_EXCEEDED;
+			} else {
+				te.printStackTrace();
+				nResult = ERR_OTHER;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			nResult = ERR_OTHER;
+		} finally {
+			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
+			try {if(cState!=null)cState.close();}catch(Exception e){}
+			try {if(cConn!=null)cConn.close();}catch(Exception e){}
+		}
+		return nResult;
+	}
+
+	public int LookupListMember(CContent cContent){
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		if (cContent.m_strListId.isEmpty()) return ERR_OTHER;
+
+		int nResult;
+		try{
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+            User u = twitter.showUserListMembership(Long.parseLong(cContent.m_strListId), m_lnTwitterUserId);
+			System.out.println(String.format("%s", u.getId()));
+			nResult = 1;
+        }catch(TwitterException te){
+            if(te.getStatusCode()==404){
+                nResult = 0; // リストが消されちゃった場合もここにくる。
+			} else if(te.getErrorCode() == 88){
+				nResult = ERR_RATE_LIMIT_EXCEEDED;
+			} else {
+				te.printStackTrace();
+				nResult = ERR_OTHER;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			nResult = ERR_OTHER;
+		}
+		return nResult;
+	}
+	
 	public long getLastTweetId() {
 		if(m_statusLastTweet==null) return -1;
 		return m_statusLastTweet.getId();

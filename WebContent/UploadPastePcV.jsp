@@ -1,3 +1,5 @@
+<%@ page import="jp.pipa.poipiku.util.CTweet"%>
+<%@ page import="twitter4j.UserList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -6,6 +8,12 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
+}
+
+CTweet cTweet = new CTweet();
+boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+if(bTwRet && cTweet.m_bIsTweetEnable){
+	cTweet.GetMyOpenLists();
 }
 
 String strTag = "";
@@ -20,7 +28,7 @@ try {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<script src="/js/upload-18.js" type="text/javascript"></script>
+		<script src="/js/upload-19.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -110,6 +118,14 @@ try {
 								<option value="<%=Common.PUBLISH_ID_PASS%>"><%=_TEX.T("UploadFilePc.Option.Publish.Pass")%></option>
 								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
 								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
+								<%if(cTweet.m_bIsTweetEnable){%>
+								<option value="<%=Common.PUBLISH_ID_T_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follower")%></option>
+								<option value="<%=Common.PUBLISH_ID_T_FOLLOW%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follow")%></option>
+								<option value="<%=Common.PUBLISH_ID_T_EACH%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Each")%></option>
+								<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
+								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
+								<%}%>
+								<%}%>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
 							</select>
 						</div>
@@ -120,6 +136,19 @@ try {
 							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
+					<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
+					<div id="ItemTwitterList" class="OptionItem" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<select id="EditTwitterList" class="EditPublish">
+								<%for(UserList l:cTweet.m_listOpenList){%>
+								<option value="<%=l.getId()%>"><%=l.getName()%></option>
+								<%}%>
+							</select>
+						</div>
+					</div>
+					<%}%>
+
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">

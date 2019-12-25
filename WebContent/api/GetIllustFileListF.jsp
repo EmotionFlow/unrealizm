@@ -58,9 +58,8 @@ class GetIllustFileListC {
 			while (cResSet.next()) {
 				Map<String, Object> image = new HashMap<String, Object>();
 				image.put("append_id", cResSet.getString("append_id"));
-				image.put("name", cResSet.getString("file_name"));
-				image.put("thumbnailUrl", "http://localhost" + cResSet.getString("file_name") + "_360.jpg");
-				image.put("uuid", UUID.randomUUID().toString());
+				image.put("name", Common.GetPoipikuUrl(cResSet.getString("file_name")));
+				image.put("thumbnailUrl", Common.GetPoipikuUrl(cResSet.getString("file_name")) + "_360.jpg");
 				m_vContent.add(image);
 			}
 			cResSet.close();cResSet=null;
@@ -129,7 +128,9 @@ if (nRtn > 0) {
 		content.put("files", cResults.m_vContent);
 
 		mapper = new ObjectMapper();
-		out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(content));
+		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(content);
+		out.print(json);
+		Log.d(json);
 	} catch(JsonGenerationException e) {
 		e.printStackTrace();
 	} finally {

@@ -1,3 +1,5 @@
+<%@ page import="jp.pipa.poipiku.util.CTweet"%>
+<%@ page import="twitter4j.UserList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -8,66 +10,41 @@ if(!cCheckLogin.m_bLogin) {
 	return;
 }
 
+CTweet cTweet = new CTweet();
+boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+if(bTwRet && cTweet.m_bIsTweetEnable){
+	cTweet.GetMyOpenLists();
+}
+
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
-
-/*
-String strTag = "";
-try {
-	request.setCharacterEncoding("UTF-8");
-	strTag = Common.TrimAll(request.getParameter("TAG"));
-} catch(Exception e) {
-	;
-}*/
 
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
-Log.d(Integer.toString(cResults.m_nUserId));
-Log.d(Integer.toString(cResults.m_nContentId));
-Log.d(Integer.toString(cResults.m_cContent.m_nCategoryId));
-Log.d(cResults.m_cContent.m_strDescription);
-Log.d(cResults.m_cContent.m_strFileName);
-Log.d(Integer.toString(cResults.m_cContent.m_nOpenId));
-Log.d(Integer.toString(cResults.m_cContent.m_nSafeFilter));
-
-for (CContentAppend cAppend: cResults.m_cContent.m_vContentAppend) {
-	Log.d(cAppend.m_strFileName);
-}
-
-/*
-Cookie cCookies[] = request.getCookies();
-if(cCookies != null) {
-	for(int i = 0; i < cCookies.length; i++) {
-		if(cCookies[i].getName().equals("MOD")) {
-			int nDispMode = Common.ToInt(cCookies[i].getValue());
-			if(nDispMode == 1) {
-				String strUrl = "/UploadPastePcV.jsp";
-				if(!strTag.isEmpty()) {strUrl+="?TAG="+URLEncoder.encode(strTag, "UTF-8");}
-				response.sendRedirect(strUrl);
-				return;
-			}
-		}
-	}
-}
-*/
 final int[] PUBLISH_ID = {
 		0,			// 全体
 		1,			// ワンクッション
 		2,			// R18
 		4,			// パスワード
 		5,			// ログイン限定
-		6,			// フォロワー限定
+		6,			// ふぁぼ限定
+		7,			// ツイッターフォロワー限定
+		8,			// ツイッターフォロー限定
+		9,			// ツイッター相互フォロー限定
+		10,			// ツイッターリスト限定
 		99			// 非公開
 };
+
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<script src="/js/upload-18s.js" type="text/javascript"></script>
+		<script src="/js/upload-19.js" type="text/javascript"></script>
+		<script src="/js/update.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -75,49 +52,56 @@ final int[] PUBLISH_ID = {
 			$('#MenuUpload').addClass('Selected');
 		});
 		</script>
-
 		<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
-		<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
 		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
+		<!-- 画像並び替え用 -->
+		<script src="/js/jquery-ui.js"></script>
+	    <script type="text/javascript">
+		$(function(){
+			$(".qq-upload-list-selector.qq-upload-list").sortable({
+				placeholder: 'placeholder',
+				opacity: 0.6,
+				update: function(event, ui) {
+						$.each($('.qq-upload-list-selector.qq-upload-list').sortable('toArray'), function(i, item) {
+					});
+				}
+			})
+			.disableSelection();
+		});
+		</script>
+		<!-- 画像並び替え用 -->
 		<script>
 			function startMsg() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
-			}
-
-			function errorMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
 			}
 
 			function completeMsg() {
 				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
 			}
 
-			function completeAddFile() {
-				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
+			function errorMsg(result) {
+				if(result == -1) {
+					// file size error
+					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
+				} else if(result == -2) {
+					// file type error
+					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
+				} else {
+					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
+				}
 			}
 
-			$(function(){
-				initUploadFile();
+			$(function() {
+				$('#PasteZone').sortable();
+				initUpdatePaste(<%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 			});
 		</script>
 
 		<style>
 			body {padding-top: 83px !important;}
-
-			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; max-height: none;}
-			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
-			.qq-gallery .qq-total-progress-bar-container {display: none;}
-			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
-			.qq-gallery .qq-file-info {display: none;}
-			.qq-upload-retry-selector qq-upload-retry {display: none;}
-			.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
-			.qq-gallery .qq-upload-retry {display: none;}
-			.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
-			.qq-gallery .qq-upload-cancel {right: -8px; top: -8px; width: 26px; height: 26px; line-height: 20px; font-size: 12px; padding: 0; border: solid 3px #fafafa; border-radius: 30px;}
 			<%if(!Util.isSmartPhone(request)) {%>
-			.qq-gallery.qq-uploader {min-height: 193px;}
-			.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
-			.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
+			.PasteZone {min-height: 193px;}
+			.UploadFile .InputFile {margin: 8px; height: 177px; width: 177px;}
 			<%}%>
 		</style>
 	</head>
@@ -127,20 +111,20 @@ final int[] PUBLISH_ID = {
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem Selected" href="/UpdateFilePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><a class="TabMenuItem" href="/UpdatePastePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
+				<!-- <li><a class="TabMenuItem" href="/UpdateFilePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li> -->
+				<li><a class="TabMenuItem Selected" href="/UpdatePastePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			</ul>
 		</nav>
 
 		<article class="Wrapper">
 			<div class="UploadFile">
 				<div class="TimeLineIllustCmd">
-					<span id="file-drop-area"></span>
-					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, 200files, total 50MByte)</span>
-					<a id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" href="javascript:void(0)">
-						<i class="far fa-images"></i>
-						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
-					</a>
+					<div id="PasteZone" class="PasteZone"></div>
+					<span id="TotalSize" class="TotalSize">(multi ver. 0.2beta. 10pastes)</span>
+					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" contenteditable>
+						<i class="fas fa-paste"></i>
+						<%=(Util.isSmartPhone(request))?_TEX.T("UploadFilePc.PasteImg.SP"):_TEX.T("UploadFilePc.PasteImg")%>
+					</div>
 				</div>
 				<div class="CategorDesc">
 					<select id="EditCategory">
@@ -162,22 +146,54 @@ final int[] PUBLISH_ID = {
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish()">
-								<%for(int nPublishId : PUBLISH_ID) {%>
+								<%for(int nPublishId : PUBLISH_ID) {
+									if(7<=nPublishId && nPublishId<=10){
+										if(cTweet.m_bIsTweetEnable==false){continue;}
+										if(nPublishId==10 && cTweet.m_listOpenList.size()==0){continue;}
+									}
+								%>
 								<option value="<%=nPublishId%>" <%if(nPublishId==cResults.m_cContent.m_nPublishId){%>selected<%}%>><%=_TEX.T(String.format("Publish.C%d", nPublishId))%></option>
 								<%}%>
 							</select>
 						</div>
 					</div>
-					<div id="ItemPassword" class="OptionItem" style="display: none;">
+					<div id="ItemPassword" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_PASS){%>style="display: none;"<%}%>
+						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
-							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
+							<input id="EditPassword" class="EditPassword" type="text" maxlength="16"
+								<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS){%>value="<%=cResults.m_cContent.m_strPassword%>"<%}%>
+								placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
+					<%if(cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0){%>
+					<div id="ItemTwitterList" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_T_LIST){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<select id="EditTwitterList" class="EditPublish">
+								<%
+								boolean bTwListFound = false;
+								for(UserList l:cTweet.m_listOpenList){
+								%>
+								<option value="<%=l.getId()%>"
+									<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){ 
+										bTwListFound = true;
+										%> selected<%}%>　><%=l.getName()%></option>
+								<%}%>
+							</select>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
+							<script>twtterListNotFoundMsg()</script>
+							<%}%>
+						</div>
+					</div>
+					<%}%>	
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" <%if(cResults.m_cContent.m_nOpenId==1){%>checked<%}%> />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
 							<label class="onoffswitch-label" for="OptionRecent">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -206,7 +222,7 @@ final int[] PUBLISH_ID = {
 					</div>
 				</div>
 				<div class="UoloadCmd">
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFile(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				</div>
 			</div>
 		</article>

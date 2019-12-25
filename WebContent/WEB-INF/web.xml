@@ -24,6 +24,14 @@
 			<param-name>checkInterval</param-name>
 			<param-value>3</param-value>
 		</init-param>
+		<init-param>
+            <param-name>compilerSourceVM</param-name>
+            <param-value>1.8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>compilerTargetVM</param-name>
+            <param-value>1.8</param-value>
+        </init-param>
 	</servlet>
 	<filter>
 		<filter-name>UrlRewriteFilter</filter-name>

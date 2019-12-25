@@ -41,10 +41,10 @@ try {
 		user.put("page_num", cResults.m_nPage);
 		user.put("content_num", cResults.m_nContentsNum);
 		user.put("content_num_total", cResults.m_nContentsNumTotal);
-		user.put("user_name", Common.ToStringHtml(cResults.m_cUser.m_strNickName));
+		user.put("user_name", cResults.m_cUser.m_strNickName);
 		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
 		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
-		user.put("profile_message", Common.ToStringHtml(cResults.m_cUser.m_strProfile));
+		user.put("profile_message", cResults.m_cUser.m_strProfile);
 		user.put("follow_num", cResults.m_cUser.m_nFollowNum);
 		user.put("follower_num", cResults.m_cUser.m_nFollowerNum);
 
@@ -73,8 +73,8 @@ try {
 			Map<String, Object> img = new HashMap<String, Object>();
 			img.put("content_id", cContent.m_nContentId);
 			img.put("url", Common.GetUrl(cContent.m_strFileName));
-			img.put("tag_list", Common.ToStringHtml(cContent.m_strTagList));
-			img.put("description", Common.ToStringHtml(cContent.m_strDescription));
+			img.put("tag_list", cContent.m_strTagList);
+			img.put("description", cContent.m_strDescription);
 			img.put("category", strCategory);
 			img.put("content_twitter_link", CTweet.generateIllustMsgUrl(cContent, _TEX));
 			img.put("file_num", cContent.m_nFileNum);
