@@ -35,7 +35,7 @@ if (cCheckLogin.m_nUserId!=m_nUserId) {
 
 
 //データ取得
-int nLimit = 5;
+int nLimit = 30;
 String strSql = "";
 Vector<CComment> m_vComment = new Vector<CComment>();
 try{
