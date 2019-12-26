@@ -24,7 +24,7 @@ import jp.pipa.poipiku.util.*;
 public class DownloadRouletteFile02 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String BASE_FILEN_NAME = "/event/20190901/template_winter.png";
-	private static final String ROULETTE_BASE[] = {"/event/20190901/r_winter01/r1_winter01/", "/event/20190901/r_winter01/r1_winter02/"};
+	private static final String ROULETTE_BASE[] = {"/event/20190901/r_winter02/r2_winter01/", "/event/20190901/r_winter02/r2_winter02/"};
 	private static final int BASE_POINT[][] = {{505, 11}, {757, 11}};
 	private static final int BASE_WIDTH = 233;
 

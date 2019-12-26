@@ -124,7 +124,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
 								<%for(int i=1; i<=21; i++) {%>
-								<img src="/event/20190901/r_winter01/r1_winter01/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r_winter02/r2_winter01/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -134,7 +134,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
 								<%for(int i=1; i<=20; i++) {%>
-								<img src="/event/20190901/r_winter01/r1_winter02/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r_winter02/r2_winter02/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
