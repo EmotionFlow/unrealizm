@@ -93,11 +93,10 @@ try{
     }
     cResSet.close();cResSet=null;
     cState.close();cState=null;
-
-
 } catch(Exception e) {
     Log.d(strSql);
     e.printStackTrace();
+    nResult=-3;
 }
 
 //JSON元データを格納する連想配列
@@ -133,7 +132,7 @@ try {
 	mapper = new ObjectMapper();
 	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));
 } catch(JsonGenerationException e)  {
-	e.printStackTrace();
+    e.printStackTrace();
 } finally {
 	root = null;
 	mapper = null;
