@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import org.apache.commons.lang3.StringUtils;
 
 public class CEmoji {
-	private static final String URL = "<img class=\"Twemoji\" draggable=\"false\" alt=\"%s\" src=\"https://twemoji.maxcdn.com/2/72x72/%s.png\" />";
+	private static final String PROTOCOL = "https:";
+	private static final String BASE = "//twemoji.maxcdn.com/2/";
+	private static final String SIZE = "72x72";
+	private static final String EXTENSION = ".png";
+	private static final String CDN_URL = PROTOCOL + BASE + SIZE + "/%s" + EXTENSION;
+	private static final String IMG_TAG = "<img class=\"Twemoji\" draggable=\"false\" alt=\"%s\" src=\"" + CDN_URL+ "\" />";
 
 	/*
 	private static final Pattern pattern = Pattern.compile("((([\uD83C\uDF00-\uD83D\uDDFF]|[\uD83D\uDE00-\uD83D\uDE4F]|[\uD83D\uDE80-\uD83D\uDEFF]|[\u2600-\u26FF]|[\u2700-\u27BF])[\\x{1F3FB}-\\x{1F3FF}]?))");
-	public static String PROTOCOL = "https:";
-	public static String BASE = "//twemoji.maxcdn.com/2/";
-	public static String SIZE = "72x72";
-	public static String EXTENSION = ".png";
 	public static String CLASSNAME = "emoji";
 
 	public static String parse2(String text) {
@@ -30,9 +31,13 @@ public class CEmoji {
 	}
 	*/
 
+	public static String parseToUrl(String rawCode){
+		return String.format(CDN_URL, grabTheRightIcon(rawCode));
+	}
+
 	public static String parse(String rawCode) {
 		//return rawCode;
-		return String.format(URL, rawCode, grabTheRightIcon(rawCode));
+		return String.format(IMG_TAG, rawCode, grabTheRightIcon(rawCode));
 	}
 
 
