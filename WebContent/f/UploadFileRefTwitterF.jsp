@@ -104,12 +104,13 @@ class UploadReferenceC {
 					lColumns.add("open_id");
 					if(cParam.m_tsPublishStart != null ){
 						lColumns.add("upload_date");
-						if(cParam.m_tsPublishStart.after(tsNow)){
+						if(cParam.m_tsPublishStart.before(tsNow)){
 							cParam.m_nOpenId = 0;
 						} else {
 							cParam.m_nOpenId = 3;
 						}
 					}
+					Log.d(String.format("openid: %d", cParam.m_nOpenId));
 					if(cParam.m_tsPublishEnd != null ){
 						lColumns.add("end_date");
 					}

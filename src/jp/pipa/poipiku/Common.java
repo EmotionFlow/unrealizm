@@ -304,11 +304,11 @@ public class Common {
 	}
 
 	public static Timestamp ToSqlTimestamp(String strDateTime){
-		// YYYY/MM/DD HH:MMを想定
-		String s = Common.SubStrNum(Common.TrimAll(strDateTime), 16);
+		// ISO format 2011-10-05T14:48:00.000Z を想定
+		String s = Common.SubStrNum(Common.TrimAll(strDateTime), 19);
 
 		if(!s.isEmpty()){
-			return Timestamp.valueOf(s.replace("/", "-") + ":00");
+			return Timestamp.valueOf(s.replace("T", " "));
 		} else {
 			return null;
 		}

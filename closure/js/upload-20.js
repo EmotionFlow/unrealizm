@@ -594,7 +594,7 @@ function updatePublish() {
 						time_24hr: true,
 						minuteIncrement: 30,
 						minDate: dateNow
-					});	
+					});
 				}
 			});
 		}
@@ -720,6 +720,12 @@ function initUploadFile() {
 	multiFileUploader.total_size = 50*1024*1024;
 }
 
+function getPublishDateTime(local_datetime_str){
+	if(local_datetime_str == '') return '';
+	var date = new Date(local_datetime_str);
+	return date.toISOString();
+}
+
 function UploadFile(user_id) {
 	if(!multiFileUploader) return;
 	if(multiFileUploader.getSubmittedNum()<=0) return;
@@ -734,8 +740,8 @@ function UploadFile(user_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
     var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
     var nTwListId = null;
-	var strPublishStart = $('#EditTimeLimitedStart').val();
-	var strPublishEnd = $('#EditTimeLimitedEnd').val();
+	var strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+	var strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
@@ -998,4 +1004,3 @@ function UploadPaste(user_id) {
 	});
 	return false;
 }
-
