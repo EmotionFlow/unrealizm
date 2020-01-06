@@ -31,12 +31,12 @@ if (cCheckLogin.m_nUserId!=m_nUserId) {
 //twitter連携確認
 CTweet cTweet = new CTweet();
 if (!cTweet.GetResults(m_nUserId)) {
-    nResult = -3;
+    nResult = -101;
 }
 
 //リスト取得
 if (!cTweet.GetMyOpenLists()) {
-    nResult = -4;
+    nResult = -102;
 }
 
 //JSON元データを格納する連想配列
