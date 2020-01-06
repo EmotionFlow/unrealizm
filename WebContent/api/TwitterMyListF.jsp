@@ -50,11 +50,9 @@ try {
 
 	if (nResult == 0) {
         //twitter list情報(配列)
-        int order = 0;
 		List<Map<String, Object>> twitterListList = new ArrayList<Map<String, Object>>();
 		for(UserList u : cTweet.m_listOpenList) {
 			Map<String, Object> twitterList = new HashMap<String, Object>();
-            twitterList.put("order", order++);
 			twitterList.put("id", u.getId());
 			twitterList.put("name", u.getName());
 			twitterListList.add(twitterList);
