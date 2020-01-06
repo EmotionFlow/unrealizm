@@ -647,6 +647,7 @@ function initUploadFile() {
 				this.setParams({
 					UID: this.user_id,
 					IID: this.illust_id,
+					PID: this.publish_id,
 					REC: this.recent
 				}, id);
 			},
@@ -786,6 +787,7 @@ function UploadFile(user_id) {
 					multiFileUploader.recent = nRecent;
 					multiFileUploader.tweet = nTweet;
 					multiFileUploader.tweet_image = nTweetImage;
+					multiFileUploader.publish_id = nPublishId;
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					errorMsg();
