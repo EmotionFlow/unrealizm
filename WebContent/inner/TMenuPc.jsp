@@ -10,7 +10,21 @@
 					<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
 				</a>
 			</h1>
+			<%if(Util.isSmartPhone(request) && !cCheckLogin.m_bLogin) {%>
+				<form method="post" name="login_from_twitter_00" action="/LoginFormTwitterPc.jsp">
+					<input id="login_from_twitter_callback_00" type="hidden" name="CBPATH" value=""/>
+					<script>{
+						let s = document.URL.split("/");
+						for(let i=0; i<3; i++){s.shift();}
+						$('#login_from_twitter_callback_00').val("/" + s.join("/"));
+					}</script>
+					<a class="BtnBase Rev HeaderLoginBtn" href="javascript:login_from_twitter_00.submit()">
+						<span class="typcn typcn-social-twitter"></span> 新規登録/ログイン
+					</a>
+				</form>
+			<%}else{%>
 			<a class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+			<%}%>
 		</div>
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="GlobalLinkWrapper">
@@ -85,25 +99,9 @@
 	</div>
 </header>
 
-<%if(Util.isSmartPhone(request)) {%>
+<%if(Util.isSmartPhone(request) && cCheckLogin.m_bLogin) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
-		<%if(!cCheckLogin.m_bLogin) {%>
-		<form method="post" name="login_from_twitter_02" action="/LoginFormTwitterPc.jsp">
-			<input id="login_from_twitter_callback_02" type="hidden" name="CBPATH" value=""/>
-			<script>{
-				let s = document.URL.split("/");
-				for(let i=0; i<3; i++){s.shift();}
-				$('#login_from_twitter_callback_02').val("/" + s.join("/"));
-			}</script>
-		<a class="BtnBase Rev FooterMenuBtn" href="javascript:login_from_twitter_02.submit()">
-				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
-			</a>
-		</form>
-		<a class="BtnBase Rev FooterMenuBtn" href="/MyHomePcV.jsp">
-			<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
-		</a>
-		<%} else {%>
 		<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
@@ -128,7 +126,6 @@
 			</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 		</a>
-		<%}%>
 	</nav>
 </div>
 <%}%>
