@@ -41,7 +41,11 @@
 			<%if(!cCheckLogin.m_bLogin) {%>
 			<form method="post" name="login_from_twitter_01" action="/LoginFormTwitterPc.jsp">
 				<input id="login_from_twitter_callback_01" type="hidden" name="CBPATH" value=""/>
-				<script>$('#login_from_twitter_callback_01').val("/" + document.URL.split("/").pop());</script>
+				<script>{
+					let s = document.URL.split("/");
+					for(let i=0; i<3; i++){s.shift();}
+					$('#login_from_twitter_callback_01').val("/" + s.join("/"));
+				}</script>
 				<a class="BtnBase Rev FooterMenuBtn" href="javascript:login_from_twitter_01.submit()">
 					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 				</a>
@@ -87,8 +91,12 @@
 		<%if(!cCheckLogin.m_bLogin) {%>
 		<form method="post" name="login_from_twitter_02" action="/LoginFormTwitterPc.jsp">
 			<input id="login_from_twitter_callback_02" type="hidden" name="CBPATH" value=""/>
-			<script>$('#login_from_twitter_callback_02').val("/" + document.URL.split("/").pop());</script>
-			<a class="BtnBase Rev FooterMenuBtn" href="javascript:login_from_twitter_02.submit()">
+			<script>{
+				let s = document.URL.split("/");
+				for(let i=0; i<3; i++){s.shift();}
+				$('#login_from_twitter_callback_02').val("/" + s.join("/"));
+			}</script>
+		<a class="BtnBase Rev FooterMenuBtn" href="javascript:login_from_twitter_02.submit()">
 				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 			</a>
 		</form>

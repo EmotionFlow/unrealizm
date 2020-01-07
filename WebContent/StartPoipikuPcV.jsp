@@ -76,9 +76,17 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					<h2 class="TopTitleInfoSub"><%=_TEX.T("THeader.Title.DescSub")%></h2>
 				</div>
 				<div class="AnalogicoInfoRegist">
-					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
-						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
-					</a>
+					<form method="post" name="login_from_twitter_01" action="/LoginFormTwitter.jsp">
+						<input id="login_from_twitter_callback_01" type="hidden" name="CBPATH" value=""/>
+						<script>{
+							let s = document.URL.split("/");
+							for(let i=0; i<3; i++){s.shift();}
+							$('#login_from_twitter_callback_01').val("/" + s.join("/"));
+						}</script>
+						<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_01.submit()">
+							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+						</a>
+					</form>
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/MyHomePcV.jsp">
