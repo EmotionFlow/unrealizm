@@ -19,7 +19,7 @@
 						$('#login_from_twitter_callback_00').val("/" + s.join("/"));
 					}</script>
 					<a class="BtnBase Rev HeaderLoginBtn" href="javascript:login_from_twitter_00.submit()">
-						<span class="typcn typcn-social-twitter"></span> 新規登録/ログイン
+						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 					</a>
 				</form>
 			<%}else{%>
