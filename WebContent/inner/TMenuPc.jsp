@@ -39,9 +39,13 @@
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
 			<%if(!cCheckLogin.m_bLogin) {%>
-			<a class="BtnBase Rev FooterMenuBtn" href="/LoginFormTwitterPc.jsp">
-				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
-			</a>
+			<form method="post" name="login_from_twitter_01" action="/LoginFormTwitterPc.jsp">
+				<input id="login_from_twitter_callback_01" type="hidden" name="CBPATH" value=""/>
+				<script>$('#login_from_twitter_callback_01').val("/" + document.URL.split("/").pop());</script>
+				<a class="BtnBase Rev FooterMenuBtn" href="javascript:login_from_twitter_01.submit()">
+					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+				</a>
+			</form>
 			<a class="BtnBase Rev FooterMenuBtn" href="/MyHomePcV.jsp">
 				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
 			</a>
@@ -81,9 +85,13 @@
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
 		<%if(!cCheckLogin.m_bLogin) {%>
-		<a class="BtnBase Rev FooterMenuBtn" href="/LoginFormTwitterPc.jsp">
-			<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
-		</a>
+		<form method="post" name="login_from_twitter_02" action="/LoginFormTwitterPc.jsp">
+			<input id="login_from_twitter_callback_02" type="hidden" name="CBPATH" value=""/>
+			<script>$('#login_from_twitter_callback_02').val("/" + document.URL.split("/").pop());</script>
+			<a class="BtnBase Rev FooterMenuBtn" href="javascript:login_from_twitter_02.submit()">
+				<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+			</a>
+		</form>
 		<a class="BtnBase Rev FooterMenuBtn" href="/MyHomePcV.jsp">
 			<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
 		</a>

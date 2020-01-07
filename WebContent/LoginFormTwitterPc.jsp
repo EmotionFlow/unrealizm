@@ -23,7 +23,16 @@ try{
 	provider.setOAuth10a(true);
 	session.setAttribute("consumer", consumer);
 	session.setAttribute("provider", provider);
-	String callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserPc.jsp";
+	String callbackUri = Common.ToString(request.getParameter("CBPATH"));
+	if(callbackUri.isEmpty()){
+		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserPc.jsp";
+	} else {
+		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
+	}
+
+	callbackUri = Common.ToString(request.getParameter("CBPATH"));
+	Log.d("callbackuri: " + callbackUri);
+
 	authUrl = provider.retrieveRequestToken(consumer, callbackUri);
 }catch(Exception e){
 	e.printStackTrace();
