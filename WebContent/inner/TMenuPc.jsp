@@ -60,13 +60,10 @@
 					for(let i=0; i<3; i++){s.shift();}
 					$('#login_from_twitter_callback_01').val("/" + s.join("/"));
 				}</script>
-				<a class="BtnBase Rev FooterMenuBtn" href="javascript:login_from_twitter_01.submit()">
-					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+				<a class="BtnBase Rev HeaderLoginBtnPc" href="javascript:login_from_twitter_01.submit()">
+					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 				</a>
 			</form>
-			<a class="BtnBase Rev FooterMenuBtn" href="/MyHomePcV.jsp">
-				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
-			</a>
 			<%} else {%>
 			<!--
 			<a id="MenuSearch" class="FooterMenuItem" href="/NewArrivalPcV.jsp">
