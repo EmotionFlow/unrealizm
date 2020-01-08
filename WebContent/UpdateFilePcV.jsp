@@ -170,7 +170,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 								<%for(int nPublishId : PUBLISH_ID) {
 									if(7<=nPublishId && nPublishId<=10){
 										if(cTweet.m_bIsTweetEnable==false){continue;}
-										if(nPublishId==10 && cTweet.m_listOpenList.size()==0){continue;}
+										else if(nPublishId==10 && (cTweet.m_listOpenList==null || cTweet.m_listOpenList.size()==0)){
+											%><script>twtterListNotFoundMsg()</script><%
+											continue;
+										}
 									}
 								%>
 								<option value="<%=nPublishId%>" <%if(nPublishId==cResults.m_cContent.m_nPublishId){%>selected<%}%>><%=_TEX.T(String.format("Publish.C%d", nPublishId))%></option>
@@ -200,7 +203,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 								for(UserList l:cTweet.m_listOpenList){
 								%>
 								<option value="<%=l.getId()%>"
-									<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){ 
+									<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId()==Long.parseLong(cResults.m_cContent.m_strListId)){
 										bTwListFound = true;
 										%> selected<%}%>　><%=l.getName()%></option>
 								<%}%>
@@ -210,7 +213,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							<%}%>
 						</div>
 					</div>
-					<%}%>	
+					<%}%>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
