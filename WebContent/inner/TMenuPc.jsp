@@ -11,14 +11,14 @@
 				</a>
 			</h1>
 			<%if(Util.isSmartPhone(request) && !cCheckLogin.m_bLogin) {%>
-				<form method="post" name="login_from_twitter_00" action="/LoginFormTwitterPc.jsp">
-					<input id="login_from_twitter_callback_00" type="hidden" name="CBPATH" value=""/>
+				<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitterPc.jsp">
+					<input id="login_from_twitter_tmenupc_callback_00" type="hidden" name="CBPATH" value=""/>
 					<script>{
 						let s = document.URL.split("/");
 						for(let i=0; i<3; i++){s.shift();}
-						$('#login_from_twitter_callback_00').val("/" + s.join("/"));
+						$('#login_from_twitter_tmenupc_callback_00').val("/" + s.join("/"));
 					}</script>
-					<a class="BtnBase Rev HeaderLoginBtn" href="javascript:login_from_twitter_00.submit()">
+					<a class="BtnBase Rev HeaderLoginBtn" href="javascript:login_from_twitter_tmenupc_00.submit()">
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 					</a>
 				</form>
@@ -53,14 +53,14 @@
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
 			<%if(!cCheckLogin.m_bLogin) {%>
-			<form method="post" name="login_from_twitter_01" action="/LoginFormTwitterPc.jsp">
-				<input id="login_from_twitter_callback_01" type="hidden" name="CBPATH" value=""/>
+			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitterPc.jsp">
+				<input id="login_from_twitter_tmenupc_callback_01" type="hidden" name="CBPATH" value=""/>
 				<script>{
 					let s = document.URL.split("/");
 					for(let i=0; i<3; i++){s.shift();}
-					$('#login_from_twitter_callback_01').val("/" + s.join("/"));
+					$('#login_from_twitter_tmenupc_callback_01').val("/" + s.join("/"));
 				}</script>
-				<a class="BtnBase Rev HeaderLoginBtnPc" href="javascript:login_from_twitter_01.submit()">
+				<a class="BtnBase Rev HeaderLoginBtnPc" href="javascript:login_from_twitter_tmenupc_01.submit()">
 					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 				</a>
 			</form>

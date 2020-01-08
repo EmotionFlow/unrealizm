@@ -10,14 +10,14 @@
 			<%=_TEX.T("Poipiku.Info.MoreInfo")%>
 		</a>
 		<div class="AnalogicoInfoRegist">
-			<form method="post" name="login_from_twitter_03" action="/LoginFormTwitterPc.jsp">
-				<input id="login_from_twitter_callback_03" type="hidden" name="CBPATH" value=""/>
+			<form method="post" name="login_from_twitter_tfooterbase_00" action="/LoginFormTwitterPc.jsp">
+				<input id="login_from_twitter_tfooterbase_callback_00" type="hidden" name="CBPATH" value=""/>
 				<script>{
 					let s = document.URL.split("/");
 					for(let i=0; i<3; i++){s.shift();}
-					$('#login_from_twitter_callback_03').val("/" + s.join("/"));
+					$('#login_from_twitter_tfooterbase_callback_00').val("/" + s.join("/"));
 				}</script>
-				<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_03.submit()">
+				<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_tfooterbase_00.submit()">
 					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 				</a>
 			</form>
