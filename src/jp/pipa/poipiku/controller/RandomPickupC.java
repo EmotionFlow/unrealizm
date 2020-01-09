@@ -84,12 +84,22 @@ public class RandomPickupC {
 				m_nContentsNum = SELECT_MAX_GALLERY;
 			}
 
-			strSql = "SELECT * FROM contents_0000 WHERE open_id=0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? AND content_id<(SELECT (max(content_id) * random())::int FROM contents_0000) ORDER BY content_id DESC LIMIT ?";
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("SELECT * FROM contents_0000 WHERE open_id=0");
+			if(cCheckLogin.m_bLogin){
+				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?");
+			}
+			sb.append(" AND content_id<(SELECT (max(content_id) * random())::int FROM contents_0000) ORDER BY content_id DESC LIMIT ?");
+
+			strSql = new String(sb);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(cCheckLogin.m_bLogin){
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			}
 			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
