@@ -97,24 +97,57 @@ public class NewArrivalGridC {
 				*/
 			}
 
-
 			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s %s ORDER BY content_id DESC LIMIT ?", SELECT_MAX_DATE, strCondStart, strCondCat, strCond);
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name,");
+			if(cCheckLogin.m_bLogin){
+				sb.append(" follows_0000.follow_user_id");
+			} else {
+				sb.append(" NULL as follow_user_id");
+			}
+			sb.append(" FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id)");
+			if(cCheckLogin.m_bLogin){
+				sb.append(" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=?");
+			}
+			sb.append(String.format(" WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d", SELECT_MAX_DATE));
+			if(cCheckLogin.m_bLogin){
+				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?");
+			}
+
+			if(m_nStartId>0){
+				sb.append(" ").append(strCondStart);
+			}
+			if(m_nCategoryId>=0){
+				sb.append(" ").append(strCondCat);
+			}
+
+			if(cCheckLogin.m_bLogin && !strMuteKeyword.isEmpty()){
+				sb.append(" ").append(strCond);
+			}
+			sb.append(" ORDER BY content_id DESC LIMIT ?");
+			strSql = new String(sb);
+
+			Log.d(strSql);
+
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(cCheckLogin.m_bLogin){
+				cState.setInt(idx++, cCheckLogin.m_nUserId); // follows_0000.user_id=?
+				cState.setInt(idx++, cCheckLogin.m_nUserId); // user_id=?
+				cState.setInt(idx++, cCheckLogin.m_nUserId); // block_user_id=?
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
+			}
 			if(m_nStartId>0) {
-				cState.setInt(idx++, m_nStartId);
+				cState.setInt(idx++, m_nStartId); // content_id<?
 			}
 			if(m_nCategoryId>=0) {
-				cState.setInt(idx++, m_nCategoryId);
+				cState.setInt(idx++, m_nCategoryId); // AND category_id=?
 			}
-			if(!strMuteKeyword.isEmpty()) {
+			if(cCheckLogin.m_bLogin && !strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
+			cState.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);

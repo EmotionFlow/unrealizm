@@ -94,16 +94,31 @@ public class NewArrivalC {
 				*/
 			}
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", SELECT_MAX_DATE, strCondCat, strCond);
+			StringBuilder sb = new StringBuilder();
+			sb.append(String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d", SELECT_MAX_DATE));
+			if(cCheckLogin.m_bLogin){
+				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?");
+			}
+			if(!strCondCat.isEmpty()){
+				sb.append(" ").append(strCondCat);
+			}
+			if(cCheckLogin.m_bLogin && !strCond.isEmpty()){
+				sb.append(" ").append(strCond);
+			}
+			sb.append(" ORDER BY content_id DESC OFFSET ? LIMIT ?");
+			strSql = new String(sb);
+
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(cCheckLogin.m_bLogin){
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			}
 			if(m_nCategoryId>=0) {
 				cState.setInt(idx++, m_nCategoryId);
 			}
-			if(!strMuteKeyword.isEmpty()) {
+			if(cCheckLogin.m_bLogin && !strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
 			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
