@@ -65,16 +65,30 @@ public class PopularIllustListGridC {
 			}
 			*/
 
+			StringBuilder sb = new StringBuilder();
 
 			// POPULAR
 			if(!bContentOnly) {
 				//strSql = "SELECT count(*) FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
-				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id WHERE rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND open_id<>2 AND safe_filter<=?";
+				sb.append("SELECT count(*)")
+				.append(" FROM contents_0000")
+				.append(" INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id")
+				.append(" WHERE open_id<>2");
+				if(cCheckLogin.m_bLogin){
+					sb.append(" AND safe_filter<=?")
+					.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
+					.append(" AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
+				}
+
+				strSql = new String(sb);
+				sb.setLength(0);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				if(cCheckLogin.m_bLogin){
+					cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+				}
 				/*
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
@@ -89,13 +103,38 @@ public class PopularIllustListGridC {
 			}
 
 			//strSql = "SELECT vw_rank_contents_total.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (vw_rank_contents_total INNER JOIN users_0000 ON vw_rank_contents_total.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON vw_rank_contents_total.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND vw_rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND vw_rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
-			strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM ((contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id) INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND open_id<>2 AND safe_filter<=? ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?";
+			//strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM ((contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id) INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND open_id<>2 AND safe_filter<=? ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?";
+			sb.append("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name,");
+			if(cCheckLogin.m_bLogin){
+				sb.append(" follows_0000.follow_user_id");
+			} else {
+				sb.append(" NULL as follow_user_id");
+			}
+			sb.append(" FROM (")
+			.append(" (contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id)")
+			.append(" INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id")
+			.append(" )");
+			if(cCheckLogin.m_bLogin){
+				sb.append(" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=?");
+			}
+			sb.append(" WHERE open_id<>2");
+			if(cCheckLogin.m_bLogin){
+				sb.append(" AND safe_filter<=?")
+				.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
+				.append(" AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
+			}
+			sb.append(" ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?");
+
+			strSql = new String(sb);
+
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(cCheckLogin.m_bLogin){
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+			}
 			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
