@@ -101,8 +101,17 @@ if(strRequestUri != null) {
 				<div class="SettingListItem">
 
 					<div  style="text-align: center;">
-					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitterPc.jsp">
-						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
+							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value=""/>
+							<script>{
+								let s = document.URL.split("/");
+								for(let i=0; i<3; i++){s.shift();}
+								$('#login_from_twitter_loginfromemailpcv_callback_00').val("/" + s.join("/"));
+							}</script>
+							<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
+								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+							</a>
+						</form>
 					</a>
 					</div>
 
