@@ -27,8 +27,8 @@ public class NewArrivalGridC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 17;
-	public int SELECT_MAX_DATE = 30;
+	final public int SELECT_MAX_GALLERY = 17;
+	// public int SELECT_MAX_DATE = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
@@ -44,6 +44,13 @@ public class NewArrivalGridC {
 		ResultSet cResSet = null;
 		String strSql = "";
 		int idx = 1;
+		int select_max_hour = 24;
+
+		if(m_nCategoryId < 0 || Common.CATEGORY_ID_REGULER.contains(m_nCategoryId)){
+			select_max_hour = 12;
+		} else {
+			select_max_hour = 24 * 365;
+		}
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -110,7 +117,7 @@ public class NewArrivalGridC {
 			if(cCheckLogin.m_bLogin){
 				sb.append(" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=?");
 			}
-			sb.append(String.format(" WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d", SELECT_MAX_DATE));
+			sb.append(String.format(" WHERE open_id=0 AND contents_0000.upload_date>CURRENT_TIMESTAMP - interval '%d hour'", select_max_hour));
 			if(cCheckLogin.m_bLogin){
 				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?");
 			}
