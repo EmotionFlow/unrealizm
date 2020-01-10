@@ -25,7 +25,7 @@ try{
 	session.setAttribute("provider", provider);
 	String callbackUri = Common.ToString(request.getParameter("CBPATH"));
 	if(callbackUri.isEmpty()){
-		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp";
+		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomeV.jsp";
 	} else {
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
 	}

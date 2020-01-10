@@ -76,7 +76,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					<h2 class="TopTitleInfoSub"><%=_TEX.T("THeader.Title.DescSub")%></h2>
 				</div>
 				<div class="AnalogicoInfoRegist">
-					<form method="post" name="login_from_twitter_startpoipikupcv_00" action="/LoginFormTwitter.jsp">
+					<form method="post" name="login_from_twitter_startpoipikupcv_00" action="/LoginFormTwitterPc.jsp">
 						<input id="login_from_twitter_startpoipikupcv_callback_00" type="hidden" name="CBPATH" value=""/>
 						<script>{
 							let s = document.URL.split("/");
