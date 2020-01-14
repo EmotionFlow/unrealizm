@@ -43,7 +43,7 @@ final int[] PUBLISH_ID = {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<script src="/js/upload-19.js" type="text/javascript"></script>
+		<script src="/js/upload-20.js" type="text/javascript"></script>
 		<script src="/js/update.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 

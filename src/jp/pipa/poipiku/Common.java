@@ -329,6 +329,23 @@ public class Common {
 		return lnRet;
 	}
 
+	public static boolean ToBoolean(String strSrc){
+		try{
+			int n = Integer.parseInt(strSrc, 10);
+			return ToBoolean(n);
+		} catch (NumberFormatException ne){
+			boolean b = false;
+			b = Boolean.parseBoolean(strSrc);
+			return b;
+		}
+	}
+
+	public static boolean ToBoolean(int strSrc){
+		boolean b = false;
+		if(strSrc >= 1) b = true;
+		return b;
+	}
+
 	public static String EscapeInjection(String strSrc) {
 		if(strSrc == null) {
 			return "";

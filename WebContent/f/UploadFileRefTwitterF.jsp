@@ -16,6 +16,8 @@ class UploadReferenceCParam {
 	public int m_nEditorId = 0;
 	public Timestamp m_tsPublishStart = null;
 	public Timestamp m_tsPublishEnd = null;
+	public boolean m_bTweetTxt = false;
+	public boolean m_bTweetImg = false;
 
 	public int GetParam(HttpServletRequest request) {
 		String strPublishStart = "";
@@ -35,6 +37,9 @@ class UploadReferenceCParam {
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 			m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
+			m_bTweetTxt			= Common.ToBoolean(request.getParameter("TWT"));
+			m_bTweetImg			= Common.ToBoolean(request.getParameter("TWI"));
+
 			// format tag list
 			if(!m_strTagList.isEmpty()) {
 				ArrayList<String> listTag = new ArrayList<String>();
@@ -67,7 +72,7 @@ class UploadReferenceCParam {
 }
 
 
-class UploadReferenceC {
+class UploadReferenceC extends UploadC{
 	int m_nContentId = -99;
 	public int GetResults(UploadReferenceCParam cParam, ResourceBundleControl _TEX) {
 		DataSource dsPostgres = null;
@@ -97,7 +102,7 @@ class UploadReferenceC {
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<String>();
-			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id"));
+			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "tweet_when_published"));
 
 			/*
 			if(cParam.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
@@ -133,6 +138,7 @@ class UploadReferenceC {
 			cState.setString(idx++, cParam.m_strListId);
 			cState.setInt(idx++, safe_filter);
 			cState.setInt(idx++, cParam.m_nEditorId);
+			cState.setInt(idx++, TweetParamToDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
 			if(cParam.m_tsPublishStart != null ){
 				cState.setTimestamp(idx++, cParam.m_tsPublishStart);
 			}
