@@ -46,9 +46,11 @@ public class NewArrivalGridC {
 		int idx = 1;
 		int select_max_hour = 24;
 
-		if(m_nCategoryId < 0 || Common.CATEGORY_ID_REGULER.contains(m_nCategoryId)){
+		if(m_nCategoryId < 0){ // すべて
 			select_max_hour = 12;
-		} else {
+		} else if(Common.CATEGORY_ID_REGULER.contains(m_nCategoryId)){ // 常時表示カテゴリ
+			select_max_hour = 48;
+		} else { // 企画カテゴリ
 			select_max_hour = 24 * 365;
 		}
 
