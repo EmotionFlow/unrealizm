@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -344,6 +346,22 @@ public class Common {
 		boolean b = false;
 		if(strSrc >= 1) b = true;
 		return b;
+	}
+
+	public static Timestamp ToSqlTimestamp(String strDateTime){
+		// ISO format 2011-10-05T14:48:00.000Z を想定
+		String s = Common.SubStrNum(Common.TrimAll(strDateTime), 19);
+
+		if(!s.isEmpty()){
+			return Timestamp.valueOf(s.replace("T", " "));
+		} else {
+			return null;
+		}
+	}
+
+	public static String ToYMDHMString(Timestamp ts){
+		final String TIME_FORMAT = "yyyy/MM/dd HH:mm";
+		return new SimpleDateFormat(TIME_FORMAT).format(ts);
 	}
 
 	public static String EscapeInjection(String strSrc) {

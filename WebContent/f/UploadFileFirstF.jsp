@@ -13,6 +13,8 @@ class UploadFileFirstCParam {
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
 	public int m_nOpenId = 0;
+	public int m_nPublishId = 0;
+	public String m_strRecentId;
 	FileItem item_file = null;
 
 	public int GetParam(HttpServletRequest request) {
@@ -33,12 +35,15 @@ class UploadFileFirstCParam {
 				FileItem item = (FileItem) iter.next();
 				if (item.isFormField()) {
 					String strName = item.getFieldName();
+					Log.d("strName: " + strName);
 					if(strName.equals("UID")) {
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("IID")) {
 						m_nContentId = Common.ToInt(item.getString());
 					} else if(strName.equals("REC")) {
-						m_nOpenId = Common.ToIntN(item.getString(), 0, 2);
+						m_strRecentId = item.getString();
+					} else if(strName.equals("PID")) {
+						m_nPublishId = Common.ToIntN(item.getString(), 0, Common.PUBLISH_ID_MAX);
 					}
 					item.delete();
 				} else {
@@ -46,6 +51,17 @@ class UploadFileFirstCParam {
 					nRtn = 0;
 				}
 			}
+
+			if(m_nPublishId != Common.PUBLISH_ID_LIMITED_TIME){
+				m_nOpenId = Common.ToIntN(m_strRecentId, 0, 2);
+			} else {
+				if(Common.ToIntN(m_strRecentId, 0, 1)==0){
+					m_nOpenId = 3;
+				} else {
+					m_nOpenId = 4;
+				}
+			}
+
 		} catch(FileUploadException e) {
 			e.printStackTrace();
 			m_nUserId = -1;
@@ -161,6 +177,8 @@ class UploadFileFirstC {
 }
 %><%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+
+Log.d("UploadFileFirstF.jsp entered");
 
 int nRtn = 0;
 UploadFileFirstCParam cParam = new UploadFileFirstCParam();

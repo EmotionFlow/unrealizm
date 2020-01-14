@@ -77,6 +77,10 @@ if(cCookies != null) {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
 			}
 
+			function dateTimeReverseMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
+			}
+
 			function completeMsg() {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Uploaded")%>');
 			}
@@ -165,9 +169,7 @@ if(cCookies != null) {
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}%>
 								<%}%>
-								<%if(false){ // twitterフォロー限定機能先行リリースのため、一時コメントアウト%>
 								<option value="<%=Common.PUBLISH_ID_LIMITED_TIME%>"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></option>
-								<%}%>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
 							</select>
 						</div>
@@ -190,17 +192,24 @@ if(cCookies != null) {
 						</div>
 					</div>
 					<%}%>
-
-					<%if(false){ // twitterフォロー限定機能先行リリースのため、一時コメントアウト%>
 					<div id="ItemTimeLimited" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
-							<input id="EditTimeLimitedStart" class="EditTimeLimited " type="text" maxlength="10" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
-							<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="10" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							<%if(Util.isSmartPhone(request)) {%>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+							</div>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							</div>
+							<%}else{%>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							<%}%>
 						</div>
 					</div>
-					<%}%>
-
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">

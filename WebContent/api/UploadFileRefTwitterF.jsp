@@ -12,6 +12,9 @@ class UploadReferenceCParam {
 	public int m_nPublishId = 0;
 	public String m_strPassword = "";
 	public String m_strListId = "";
+	public Timestamp m_tsPublishStart = null;
+	public Timestamp m_tsPublishEnd = null;
+
 
 	public int GetParam(HttpServletRequest request) {
 		try {
@@ -23,6 +26,8 @@ class UploadReferenceCParam {
 			m_nPublishId		= Common.ToIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
 			m_strPassword		= Common.SubStrNum(Common.TrimAll(request.getParameter("PPW")), 16);
 			m_strListId			= Common.TrimAll(request.getParameter("PLD"));
+			m_tsPublishStart	= Common.ToSqlTimestamp(request.getParameter("PST"));
+			m_tsPublishEnd		= Common.ToSqlTimestamp(request.getParameter("PED"));
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 			m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
@@ -85,7 +90,34 @@ class UploadReferenceC {
 			}
 
 			// get content id
-			strSql = "INSERT INTO contents_0000(user_id, category_id, description, tag_list, publish_id, password, list_id, safe_filter) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING content_id";
+			ArrayList<String> lColumns = new ArrayList<String>();
+			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter"));
+
+			if(cParam.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
+				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
+
+				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
+				if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
+					lColumns.add("open_id");
+					if(cParam.m_tsPublishStart != null ){
+						lColumns.add("upload_date");
+						if(cParam.m_tsPublishStart.before(tsNow)){
+							cParam.m_nOpenId = 0;
+						} else {
+							cParam.m_nOpenId = 3;
+						}
+					}
+					Log.d(String.format("openid: %d", cParam.m_nOpenId));
+					if(cParam.m_tsPublishEnd != null ){
+						lColumns.add("end_date");
+					}
+				}
+			}
+
+			ArrayList<String> lVals = new ArrayList<String>();
+			lColumns.forEach(c -> lVals.add("?"));
+			strSql = String.format("INSERT INTO contents_0000(%s) VALUES(%s) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
+
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cParam.m_nUserId);
@@ -96,6 +128,17 @@ class UploadReferenceC {
 			cState.setString(idx++, cParam.m_strPassword);
 			cState.setString(idx++, cParam.m_strListId);
 			cState.setInt(idx++, safe_filter);
+			cState.setInt(idx++, cParam.m_nEditorId);
+			if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
+				cState.setInt(idx++, cParam.m_nOpenId);
+				if(cParam.m_tsPublishStart != null){
+					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
+				}
+				if(cParam.m_tsPublishEnd != null ){
+					cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
+				}
+			}
+
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nContentId = cResSet.getInt("content_id");

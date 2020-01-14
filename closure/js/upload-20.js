@@ -485,7 +485,26 @@ function setLastCategorySetting(val) {
 function getLastCategorySetting() {
 	return getLocalStrage('last_category');
 }
-
+function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
+	if(isUpdate && strPublishStartPresent === strPublishStart && strPublishEndPresent === strPublishEnd){
+		return true;
+	}
+	if(strPublishStart=='' || strPublishEnd==''){
+		dateTimeEmptyMsg();
+		return false;
+	}
+	if(!isUpdate || isUpdate && (strPublishStartPresent !== strPublishStart || strPublishEndPresent !== strPublishEnd)){
+		if(Date.parse(strPublishStart) < Date.now() || Date.parse(strPublishEnd) < Date.now()) {
+			dateTimePastMsg();
+			return false;
+		}
+	}
+	if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
+		dateTimeReverseMsg();
+		return false;
+	}
+	return true;
+}
 function updateTweetButton() {
 	var bTweet = $('#OptionTweet').prop('checked');
 	if(!bTweet) {
@@ -499,6 +518,29 @@ function updateTweetButton() {
 	}
 }
 
+function initStartDatetime(datetime){
+	var dateNow = new Date();
+	dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
+	$("#EditTimeLimitedStart").flatpickr({
+		enableTime: true,
+		dateFormat: "Y/m/d H:i",
+		time_24hr: true,
+		minuteIncrement: 30,
+		defaultDate: datetime,
+	});
+}
+
+function initEndDatetime(datetime){
+	var dateNow = new Date();
+	dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
+	$("#EditTimeLimitedEnd").flatpickr({
+		enableTime: true,
+		dateFormat: "Y/m/d H:i",
+		time_24hr: true,
+		minuteIncrement: 30,
+		defaultDate: datetime,
+	});
+}
 function updatePublish() {
     var val = parseInt($('#EditPublish').val(), 10);
     var nSlideSpeed = 300;
@@ -539,17 +581,20 @@ function updatePublish() {
 				});
 		}
 		if(val==11){
-			var dateNow = new Date();
-			dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
-			$(".EditTimeLimited").flatpickr({
-				enableTime: true,
-				dateFormat: "Y/m/d H:i",
-				time_24hr: true,
-				minuteIncrement: 30,
-				minDate: dateNow
+			$.each(["#EditTimeLimitedStart", "#EditTimeLimitedEnd"], function(index, value){
+				if($(value)[0].classList.value.indexOf("flatpickr-input")<0){
+					var dateNow = new Date();
+					dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
+					$(value).flatpickr({
+						enableTime: true,
+						dateFormat: "Y/m/d H:i",
+						time_24hr: true,
+						minuteIncrement: 30,
+						minDate: dateNow
+					});
+				}
 			});
 		}
-
     } else {
 		for (var i=0; i<elements.length; i++){
 			var el = elements[i];
@@ -598,6 +643,7 @@ function initUploadFile() {
 				this.setParams({
 					UID: this.user_id,
 					IID: this.illust_id,
+					PID: this.publish_id,
 					REC: this.recent
 				}, id);
 			},
@@ -671,6 +717,11 @@ function initUploadFile() {
 	multiFileUploader.total_size = 50*1024*1024;
 }
 
+function getPublishDateTime(local_datetime_str){
+	if(local_datetime_str == '') return '';
+	var date = new Date(local_datetime_str);
+	return date.toISOString();
+}
 function UploadFile(user_id) {
 	if(!multiFileUploader) return;
 	if(multiFileUploader.getSubmittedNum()<=0) return;
@@ -685,24 +736,16 @@ function UploadFile(user_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
     var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
     var nTwListId = null;
-	var strPublishStart = $('#EditTimeLimitedStart').val();
-	var strPublishEnd = $('#EditTimeLimitedEnd').val();
+	var strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+	var strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
 
-	if(nPublishId==11){
-		if(strPublishStart=='' || strPublishEnd==''){
-			dateTimeEmptyMsg();
-			return;
-		} else if(Date.parse(strPublishStart) < Date.now()) {
-			dateTimePastMsg();
-			return;
-		} else if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
-			dateTimeReverseMsg();
-			return;
-		}
+	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+		return;
 	}
+
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
@@ -741,6 +784,7 @@ function UploadFile(user_id) {
 					multiFileUploader.recent = nRecent;
 					multiFileUploader.tweet = nTweet;
 					multiFileUploader.tweet_image = nTweetImage;
+					multiFileUploader.publish_id = nPublishId;
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					errorMsg();
@@ -856,8 +900,13 @@ function UploadPaste(user_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
+	var strPublishStart = $('#EditTimeLimitedStart').val();
+	var strPublishEnd = $('#EditTimeLimitedEnd').val();
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
+	}
+	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+		return;
 	}
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
@@ -878,6 +927,8 @@ function UploadPaste(user_id) {
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
 			"ED":1,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",

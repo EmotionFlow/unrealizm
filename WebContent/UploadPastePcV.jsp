@@ -28,7 +28,10 @@ try {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-20.js" type="text/javascript"></script>
+
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -40,6 +43,18 @@ try {
 		<script>
 			function startMsg() {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+			}
+
+			function dateTimeEmptyMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
+			}
+
+			function dateTimePastMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
+			}
+
+			function dateTimeReverseMsg() {
+				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
 			}
 
 			function completeMsg() {
@@ -126,6 +141,7 @@ try {
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}%>
 								<%}%>
+								<option value="<%=Common.PUBLISH_ID_LIMITED_TIME%>"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></option>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
 							</select>
 						</div>
@@ -148,6 +164,25 @@ try {
 						</div>
 					</div>
 					<%}%>
+
+					<div id="ItemTimeLimited" class="OptionItem" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish">
+							<%if(Util.isSmartPhone(request)) {%>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+							</div>
+							<div style="display: block;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							</div>
+							<%}else{%>
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+							<%}%>
+						</div>
+					</div>
 
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>

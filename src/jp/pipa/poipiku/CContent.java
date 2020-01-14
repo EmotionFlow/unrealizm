@@ -13,6 +13,7 @@ public class CContent {
 	public int m_nCategoryId = 0;
 	public String m_strDescription = "";
 	public Timestamp m_timeUploadDate = new Timestamp(0);
+	public Timestamp m_timeEndDate = new Timestamp(0);
 	public int m_nUserId = 0;
 	public int m_nOpenId = 0;
 	public int m_nEditorId = 0;
@@ -39,6 +40,7 @@ public class CContent {
 		m_nCategoryId		= resultSet.getInt("category_id");
 		m_strDescription	= Common.ToString(resultSet.getString("description"));
 		m_timeUploadDate	= resultSet.getTimestamp("upload_date");
+		m_timeEndDate		= resultSet.getTimestamp("end_date");
 		m_nUserId			= resultSet.getInt("user_id");
 		m_nOpenId			= resultSet.getInt("open_id");
 		m_strFileName		= Common.ToString(resultSet.getString("file_name"));
