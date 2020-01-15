@@ -30,7 +30,7 @@ public class UpC {
     protected static int GetTweetParamDB(boolean isTweetTxt, boolean isTweetImg){
         int ret = 0;
         if(isTweetTxt) ret += 1;
-        if(isTweetImg) ret += 2;
+        if(isTweetTxt && isTweetImg) ret += 2;
         return ret;
     }
 
