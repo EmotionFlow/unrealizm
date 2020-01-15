@@ -11,11 +11,12 @@
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
+/*
 class UploadFileFirstCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
-	public int m_nOpenId = 0;
+	public int m_nRecentId = 0;
 	FileItem item_file = null;
 
 	public int GetParam(HttpServletRequest request) {
@@ -41,7 +42,7 @@ class UploadFileFirstCParam {
 					} else if(strName.equals("IID")) {
 						m_nContentId = Common.ToInt(item.getString());
 					} else if(strName.equals("REC")) {
-						m_nOpenId = Common.ToIntN(item.getString(), 0, 2);
+						m_nRecentId = Common.ToIntN(item.getString(), 0, 2);
 					}
 					item.delete();
 				} else {
@@ -162,17 +163,18 @@ class UploadFileFirstC {
 		return nRtn;
 	}
 }
+*/
 %><%
 Log.d("UploadFileFirstC");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
-UploadFileFirstCParam cParam = new UploadFileFirstCParam();
+UploadFileFirstCParam cParam = new UploadFileFirstCParam(getServletContext());
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 if (cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
-	UploadFileFirstC cResults = new UploadFileFirstC();
+	UploadFileFirstC cResults = new UploadFileFirstC(getServletContext());
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 %>

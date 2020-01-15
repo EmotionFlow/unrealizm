@@ -35,18 +35,19 @@ public class UploadC extends UpC {
 			if(cParam.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
 
-				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
+//				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
 				if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
-					lColumns.add("open_id");
+					// lColumns.add("open_id");
 					if(cParam.m_tsPublishStart != null ){
 						lColumns.add("upload_date");
+						/*
 						if(cParam.m_tsPublishStart.before(tsNow)){
 							cParam.m_nOpenId = 0;
 						} else {
 							cParam.m_nOpenId = 3;
 						}
+						*/
 					}
-					Log.d(String.format("openid: %d", cParam.m_nOpenId));
 					if(cParam.m_tsPublishEnd != null ){
 						lColumns.add("end_date");
 					}
@@ -71,7 +72,7 @@ public class UploadC extends UpC {
 			cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
 
 			if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
-				cState.setInt(idx++, cParam.m_nOpenId);
+				// cState.setInt(idx++, cParam.m_nOpenId);
 				if(cParam.m_tsPublishStart != null){
 					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
 				}
