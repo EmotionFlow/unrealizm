@@ -360,7 +360,7 @@ public class Common {
 	}
 
 	public static String ToYMDHMString(Timestamp ts){
-		final String TIME_FORMAT = "yyyy/MM/dd HH:mm";
+		final String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 		return new SimpleDateFormat(TIME_FORMAT).format(ts);
 	}
 

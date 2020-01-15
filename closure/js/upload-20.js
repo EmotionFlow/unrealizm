@@ -519,11 +519,11 @@ function updateTweetButton() {
 }
 
 function initStartDatetime(datetime){
-	var dateNow = new Date();
-	dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
 	$("#EditTimeLimitedStart").flatpickr({
 		enableTime: true,
-		dateFormat: "Y/m/d H:i",
+		dateFormat: "Z",
+		altInput: true,
+		altFormat: "Y/m/d H:i",
 		time_24hr: true,
 		minuteIncrement: 30,
 		defaultDate: datetime,
@@ -531,16 +531,17 @@ function initStartDatetime(datetime){
 }
 
 function initEndDatetime(datetime){
-	var dateNow = new Date();
-	dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
 	$("#EditTimeLimitedEnd").flatpickr({
 		enableTime: true,
-		dateFormat: "Y/m/d H:i",
+		dateFormat: "Z",
+		altInput: true,
+		altFormat: "Y/m/d H:i",
 		time_24hr: true,
 		minuteIncrement: 30,
 		defaultDate: datetime,
 	});
 }
+
 function updatePublish() {
     var val = parseInt($('#EditPublish').val(), 10);
     var nSlideSpeed = 300;
@@ -587,10 +588,12 @@ function updatePublish() {
 					dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
 					$(value).flatpickr({
 						enableTime: true,
-						dateFormat: "Y/m/d H:i",
+						dateFormat: "Z",
+						altInput: true,
+						altFormat: "Y/m/d H:i",
 						time_24hr: true,
 						minuteIncrement: 30,
-						minDate: dateNow
+						defaultDate: dateNow,
 					});
 				}
 			});
