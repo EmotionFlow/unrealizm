@@ -10,7 +10,7 @@ import jp.pipa.poipiku.Common;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UpParamC {
+public class UpCParam {
     public int m_nUserId = -1;
 	public int m_nCategoryId = 0;
 	public String m_strDescription = "";

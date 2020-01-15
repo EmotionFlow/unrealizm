@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.Common;
 
-public class UpdateParamC extends UpParamC{
+public class UpdateCParam extends UpCParam{
     public int m_nContentId = -1;
 
     public int GetParam(HttpServletRequest request){

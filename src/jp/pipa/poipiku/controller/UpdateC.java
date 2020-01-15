@@ -13,7 +13,7 @@ import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
 public class UpdateC extends UpC {
-	public int GetResults(UpdateParamC cParam) {
+	public int GetResults(UpdateCParam cParam) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;

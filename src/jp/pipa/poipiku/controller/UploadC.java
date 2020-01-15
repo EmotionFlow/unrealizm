@@ -15,7 +15,7 @@ import jp.pipa.poipiku.*;
 
 public class UploadC extends UpC {
     protected int m_nContentId = -99;
-	public int GetResults(UploadParamC cParam) {
+	public int GetResults(UploadCParam cParam) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;

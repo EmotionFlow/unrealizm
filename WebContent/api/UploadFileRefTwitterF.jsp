@@ -8,13 +8,13 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 Log.d("UploadReferenceF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
-UploadParamC cParam = new UploadParamC();
+UploadCParam cParam = new UploadCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
-//Log.d("UploadParamC:"+nRtn);
-//Log.d("UploadParamC.m_nUserId:"+cParam.m_nUserId);
-//Log.d("UploadParamC.m_nCategoryId:"+cParam.m_nCategoryId);
-//Log.d("UploadParamC.m_strDescription:"+cParam.m_strDescription);
+//Log.d("UploadCParam:"+nRtn);
+//Log.d("UploadCParam.m_nUserId:"+cParam.m_nUserId);
+//Log.d("UploadCParam.m_nCategoryId:"+cParam.m_nCategoryId);
+//Log.d("UploadCParam.m_strDescription:"+cParam.m_strDescription);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadC cResults = new UploadC();

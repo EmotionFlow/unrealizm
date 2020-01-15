@@ -5,7 +5,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 Log.d("UpdateFileRefTwitterF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
-UpdateParamC cParam = new UpdateParamC();
+UpdateCParam cParam = new UpdateCParam();
 cParam.m_nUserId = cCheckLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 

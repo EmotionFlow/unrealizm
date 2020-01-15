@@ -2,7 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UploadParamC extends UpParamC{
+public class UploadCParam extends UpCParam{
     public int GetParam(HttpServletRequest request){
         try {
 			super.GetParams(request);
