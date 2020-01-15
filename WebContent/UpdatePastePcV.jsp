@@ -264,7 +264,7 @@ final int[] PUBLISH_ID = {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" <%if(cResults.m_cContent.m_nTweetWhenPublished%2==1){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionTweet">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -274,7 +274,7 @@ final int[] PUBLISH_ID = {
 					<div id="ImageSwitch" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" <%if(cResults.m_cContent.m_nTweetWhenPublished==3){%>checked<%}%>/>
 							<label class="onoffswitch-label" for="OptionImage">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>

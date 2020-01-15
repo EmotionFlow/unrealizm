@@ -61,8 +61,6 @@ function UpdatePasteOrderAjax(user_id, content_id, append_ids){
 
 //ファイル選択エリアの初期化
 function initUpdateFile(userid, contentid) {
-	$('#OptionTweet').prop('checked', getTweetSetting());
-	$('#OptionImage').prop('checked', getTweetImageSetting());
 	updateTweetButton();
 
 	multiFileUploader = new qq.FineUploader({
@@ -230,6 +228,8 @@ function UpdateFile(user_id, content_id) {
 			"REC":nRecent,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
+			"TWT":getTweetSetting(),
+			"TWI":getTweetImageSetting(),
 			"ED":0
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
@@ -259,18 +259,14 @@ function UpdateFile(user_id, content_id) {
 
 //画像ペーストエリアの初期化
 function initUpdatePaste(user_id, content_id) {
-	console.log("initUpdatePaste");
+	updateTweetButton();
 
-	$('#OptionTweet').prop('checked', getTweetSetting());
-	$('#OptionImage').prop('checked', getTweetImageSetting());
 	var cCategory = getLastCategorySetting();
 	$('#EditCategory option').each(function(){
-		console.log($(this).val());
 		if($(this).val()==cCategory) {
 			$('#EditCategory').val(cCategory);
 		}
 	});
-	updateTweetButton();
 
 	g_strPasteMsg = $('#TimeLineAddImage').html();
 	$('#TimeLineAddImage').pastableContenteditable();
@@ -329,7 +325,8 @@ function UpdatePasteAppendFAjax(img_element, user_id, content_id){
 }
 
 function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescription,
-	strTagList, nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd){
+	strTagList, nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd,
+	bTweetText, bTweetImage){
 	return $.ajax({
 		"type": "post",
 		"data": {
@@ -344,7 +341,9 @@ function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescriptio
 			"REC":nRecent,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
-			"ED":1
+			"TWT":bTweetText,
+			"TWI":bTweetImage,
+			"ED":1,
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -380,7 +379,7 @@ function createUpdatePaste(){
 		});
 		console.log(nImageNum);
 		if(nImageNum<=0) return;
-	
+
 		var nCategory = $('#EditCategory').val();
 		var strDescription = $.trim($("#EditDescription").val());
 		strDescription = strDescription.substr(0 , 200);
@@ -408,25 +407,26 @@ function createUpdatePaste(){
 			nTweet = 0;
 		}
 		startMsg();
-	
+
 		var fUpdateFile = UpdateFileRefTwitterFAjax(
 			user_id, content_id, nCategory, strDescription, strTagList,
-			nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd);
-	
+			nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd,
+			getTweetSetting(), getTweetImageSetting());
+
 		var aryFunc = [];
 		var fTweet = null;
-	
+
 		fUpdateFile.done(
 			function(data){
 				var f = null;
-	
+
 				$('.imgView').each(function(){
 					f = UpdatePasteAppendFAjax($(this),user_id,data.content_id);
 					if (f != null){
 						aryFunc.push(f);
 					}
 				});
-				
+
 				if(nTweet==1) {
 					fTweet = UploadFileTweetFAjax(user_id, data.content_id, nTweetImage);
 				} else {
@@ -436,13 +436,13 @@ function createUpdatePaste(){
 						return dfd.promise();
 					};
 				}
-	
+
 				$.when.apply($, aryFunc)
 				.then(function(){
 					var json_array = [];
 					$.each($('#PasteZone').sortable('toArray'), function(i, item) {
 						json_array.push(parseInt(item))
-					});			
+					});
 					for (var i = 0; i < arguments.length; i++) {
 						var aid;
 						if(json_array.length==1){
@@ -473,4 +473,3 @@ function createUpdatePaste(){
 	}
 }
 var UpdatePaste = createUpdatePaste();
-

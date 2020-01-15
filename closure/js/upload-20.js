@@ -929,6 +929,8 @@ function UploadPaste(user_id) {
 			"PLD":nTwListId,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
+			"TWT":getTweetSetting(),
+			"TWI":getTweetImageSetting(),
 			"ED":1,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",

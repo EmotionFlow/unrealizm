@@ -184,8 +184,9 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish()">
 								<%for(int nPublishId : PUBLISH_ID) {
 									if(7<=nPublishId && nPublishId<=10){
-										if(cTweet.m_bIsTweetEnable==false){continue;}
-										else if(nPublishId==10 && (cTweet.m_listOpenList==null || cTweet.m_listOpenList.size()==0)){
+										if(cTweet.m_bIsTweetEnable==false){
+											continue;
+										}else if(nPublishId==10 && (cTweet.m_listOpenList==null || cTweet.m_listOpenList.size()==0)){
 											%><script>twtterListNotFoundMsg()</script><%
 											continue;
 										}
@@ -223,7 +224,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 										%> selected<%}%>　><%=l.getName()%></option>
 								<%}%>
 							</select>
-							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){
+								Log.d("ここ？");%>
 							<script>twtterListNotFoundMsg()</script>
 							<%}%>
 						</div>
@@ -273,7 +275,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" <%if(cResults.m_cContent.m_nTweetWhenPublished%2==1){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionTweet">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -283,7 +285,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div id="ImageSwitch" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" <%if(cResults.m_cContent.m_nTweetWhenPublished==3){%>checked<%}%>/>
 							<label class="onoffswitch-label" for="OptionImage">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
