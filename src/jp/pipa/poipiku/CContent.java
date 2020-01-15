@@ -29,6 +29,7 @@ public class CContent {
 	public String m_strPassword = "";
 	public CUser m_cUser = new CUser();
 	public String m_strListId = "";
+	public int m_nTweetWhenPublished = 0;
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
 
@@ -56,6 +57,7 @@ public class CContent {
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 		m_nEditorId			= resultSet.getInt("editor_id");
 		m_strPassword		= Common.ToString(resultSet.getString("password"));
+		m_nTweetWhenPublished=resultSet.getInt("tweet_when_published");
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {
