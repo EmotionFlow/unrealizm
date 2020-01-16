@@ -169,7 +169,6 @@ if(cCookies != null) {
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}%>
 								<%}%>
-								<option value="<%=Common.PUBLISH_ID_LIMITED_TIME%>"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></option>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
 							</select>
 						</div>
@@ -192,7 +191,17 @@ if(cCookies != null) {
 						</div>
 					</div>
 					<%}%>
-					<div id="ItemTimeLimited" class="OptionItem" style="display: none;">
+					<div id="ItemTimeLimitedFlg" class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionLimitedTimePublish" id="OptionLimitedTimePublish" value="0" onchange="updateOptionLimitedTimePublish()"/>
+							<label class="onoffswitch-label" for="OptionLimitedTimePublish">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<div id="ItemTimeLimitedVal" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
 							<%if(Util.isSmartPhone(request)) {%>
@@ -206,6 +215,7 @@ if(cCookies != null) {
 							</div>
 							<%}else{%>
 								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								〜
 								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
 							<%}%>
 						</div>
@@ -213,7 +223,7 @@ if(cCookies != null) {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0"/>
 							<label class="onoffswitch-label" for="OptionRecent">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
