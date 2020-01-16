@@ -30,23 +30,13 @@ public class UploadC extends UpC {
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<String>();
-			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "tweet_when_published"));
+			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "tweet_when_published", "not_recently", "limited_time_publish"));
 
-			if(cParam.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
+			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
-
-//				Timestamp tsNow = new Timestamp(System.currentTimeMillis());
 				if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
-					// lColumns.add("open_id");
 					if(cParam.m_tsPublishStart != null ){
 						lColumns.add("upload_date");
-						/*
-						if(cParam.m_tsPublishStart.before(tsNow)){
-							cParam.m_nOpenId = 0;
-						} else {
-							cParam.m_nOpenId = 3;
-						}
-						*/
 					}
 					if(cParam.m_tsPublishEnd != null ){
 						lColumns.add("end_date");
@@ -70,9 +60,10 @@ public class UploadC extends UpC {
 			cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
 			cState.setInt(idx++, cParam.m_nEditorId);
 			cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+			cState.setBoolean(idx++, cParam.m_bNotRecenty);
+			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
-			if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
-				// cState.setInt(idx++, cParam.m_nOpenId);
+			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart != null){
 					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
 				}

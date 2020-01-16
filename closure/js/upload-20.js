@@ -542,11 +542,58 @@ function initEndDatetime(datetime){
 	});
 }
 
+function updateOptionLimitedTimePublish(){
+	var elVal = $('#ItemTimeLimitedVal');
+	var nSlideSpeed = 300;
+	if($('#OptionLimitedTimePublish').prop('checked')){
+		elVal.slideDown(nSlideSpeed, function(){
+			$.each(["#EditTimeLimitedStart", "#EditTimeLimitedEnd"], function(index, value){
+				if($(value)[0].classList.value.indexOf("flatpickr-input")<0){
+					var dateNow = new Date();
+					dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
+					$(value).flatpickr({
+						enableTime: true,
+						dateFormat: "Z",
+						altInput: true,
+						altFormat: "Y/m/d H:i",
+						time_24hr: true,
+						minuteIncrement: 30,
+						minDate: dateNow,
+					});
+				}
+			});
+		});
+	} else {
+		elVal.slideUp(nSlideSpeed);
+	}
+}
+
+function updateAreaLimitedTimePublish(publishId) {
+	var nSlideSpeed = 300;
+	var elFlg = $('#ItemTimeLimitedFlg');
+	var elVal = $('#ItemTimeLimitedVal');
+	if(publishId!=99){
+		elFlg.slideDown(nSlideSpeed, function(){
+			updateOptionLimitedTimePublish();
+		});
+	} else {
+		if($('#OptionLimitedTimePublish').prop('checked')){
+			elVal.slideUp(nSlideSpeed, function(){
+				elFlg.slideUp(nSlideSpeed);
+			});
+		} else {
+			elFlg.slideUp(nSlideSpeed);
+		}
+	}
+}
+
 function updatePublish() {
-    var val = parseInt($('#EditPublish').val(), 10);
+	var val = parseInt($('#EditPublish').val(), 10);
+	updateAreaLimitedTimePublish(val);
+
     var nSlideSpeed = 300;
 	var nChangeDelay = 150;
-	var elements = [$('#ItemTwitterList'), $('#ItemPassword'), $('#ItemTimeLimited')];
+	var elements = [$('#ItemTwitterList'), $('#ItemPassword')];
 
     if (val==4 || val==10 || val==11){
 		var elToHide = null;
@@ -557,9 +604,6 @@ function updatePublish() {
 				break;
 			case 10:
 				elToVisible = $('#ItemTwitterList');
-				break;
-			case 11:
-				elToVisible = $('#ItemTimeLimited');
 				break;
 			default:
 				;
@@ -581,23 +625,6 @@ function updatePublish() {
 					elToVisible.delay(nChangeDelay).slideDown(nSlideSpeed);
 				});
 		}
-		if(val==11){
-			$.each(["#EditTimeLimitedStart", "#EditTimeLimitedEnd"], function(index, value){
-				if($(value)[0].classList.value.indexOf("flatpickr-input")<0){
-					var dateNow = new Date();
-					dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
-					$(value).flatpickr({
-						enableTime: true,
-						dateFormat: "Z",
-						altInput: true,
-						altFormat: "Y/m/d H:i",
-						time_24hr: true,
-						minuteIncrement: 30,
-						defaultDate: dateNow,
-					});
-				}
-			});
-		}
     } else {
 		for (var i=0; i<elements.length; i++){
 			var el = elements[i];
@@ -605,7 +632,7 @@ function updatePublish() {
 				el.slideUp(nSlideSpeed);
 			}
 		}
-    }
+	}
 }
 
 function initUploadFile() {
@@ -738,17 +765,20 @@ function UploadFile(user_id) {
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
     var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
-    var nTwListId = null;
-	var strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
-	var strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+	var nTwListId = null;
+	var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+	var strPublishStart = null;
+	var strPublishEnd = null;
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
-
-	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, false)){
-		return;
+	if(nLimitedTime==1){
+		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+			return;
+		}
 	}
-
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
@@ -770,8 +800,10 @@ function UploadFile(user_id) {
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
+			"LTP":nLimitedTime,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
+			"REC":nRecent,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
 		},

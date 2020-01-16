@@ -37,6 +37,43 @@ public class UpFileFirstC {
 		m_cServletContext = context;
 	}
 
+	private static int _getOpenId(boolean bNotRecently){
+        return bNotRecently ? 1 : 0;
+    }
+
+	protected static int GetOpenId(int nPublishId, boolean bNotRecently, boolean bLimitedTimePublish, Timestamp tsPublishStart, Timestamp tsPublishEnd){
+        int nOpenId = 2;
+        Timestamp tsNow = new Timestamp(System.currentTimeMillis());
+        if(nPublishId == Common.PUBLISH_ID_HIDDEN){
+            nOpenId = 2;
+        } else if(bLimitedTimePublish){
+            if(tsPublishStart!=null && tsPublishEnd!=null){
+                if(tsPublishStart.before(tsNow) && tsPublishEnd.after(tsNow)){
+                    nOpenId = _getOpenId(bNotRecently);
+                } else {
+                    nOpenId = 2;
+                }
+            } else if(tsPublishStart!=null && tsPublishEnd==null){
+                if(tsPublishStart.before(tsNow)){
+                    nOpenId = _getOpenId(bNotRecently);
+                } else {
+                    nOpenId = 2;
+                }
+            } else if(tsPublishStart==null && tsPublishEnd!=null){
+                if(tsPublishEnd.after(tsNow)){
+                    nOpenId = _getOpenId(bNotRecently);
+                } else {
+                    nOpenId = 2;
+                }
+            } else {
+                nOpenId = _getOpenId(bNotRecently);
+            }
+        } else {
+            nOpenId = _getOpenId(bNotRecently);
+        }
+        return nOpenId;
+    }
+
 	public int GetResults(UploadFileFirstCParam cParam) {
 		int nRtn = -1;
 		DataSource dsPostgres = null;
@@ -113,19 +150,13 @@ public class UpFileFirstC {
 			}
 			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
-			// publish_idや公開期間から、open_idを決定する。
-			int nOpenId=2;
-			if(cContent.m_nPublishId == Common.PUBLISH_ID_HIDDEN){
-				nOpenId = 2;
-			} else if(cContent.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
-				if(cContent.m_timeUploadDate.before(new Timestamp(System.currentTimeMillis()))){
-					nOpenId = cParam.m_nRecentId==0 ? 0 : 1;
-				} else {
-					nOpenId = cParam.m_nRecentId==0 ? 3 : 4;
-				}
-			} else {
-				nOpenId = cParam.m_nRecentId==0 ? 0 : 1;
-			}
+			// open_id更新
+			int nOpenId = GetOpenId(
+				cContent.m_nPublishId,
+				cContent.m_bNotRecently,
+				cContent.m_bLimitedTimePublish,
+				cContent.m_timeUploadDate,
+				cContent.m_timeEndDate);
 
 			// update making file_name
 			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
