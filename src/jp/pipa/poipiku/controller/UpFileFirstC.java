@@ -30,49 +30,12 @@ import jp.pipa.poipiku.util.Log;
 
 import javax.servlet.ServletContext;
 
-public class UpFileFirstC {
+public class UpFileFirstC extends UpC{
 	protected ServletContext m_cServletContext = null;
 
 	UpFileFirstC(ServletContext context){
 		m_cServletContext = context;
 	}
-
-	private static int _getOpenId(boolean bNotRecently){
-        return bNotRecently ? 1 : 0;
-    }
-
-	protected static int GetOpenId(int nPublishId, boolean bNotRecently, boolean bLimitedTimePublish, Timestamp tsPublishStart, Timestamp tsPublishEnd){
-        int nOpenId = 2;
-        Timestamp tsNow = new Timestamp(System.currentTimeMillis());
-        if(nPublishId == Common.PUBLISH_ID_HIDDEN){
-            nOpenId = 2;
-        } else if(bLimitedTimePublish){
-            if(tsPublishStart!=null && tsPublishEnd!=null){
-                if(tsPublishStart.before(tsNow) && tsPublishEnd.after(tsNow)){
-                    nOpenId = _getOpenId(bNotRecently);
-                } else {
-                    nOpenId = 2;
-                }
-            } else if(tsPublishStart!=null && tsPublishEnd==null){
-                if(tsPublishStart.before(tsNow)){
-                    nOpenId = _getOpenId(bNotRecently);
-                } else {
-                    nOpenId = 2;
-                }
-            } else if(tsPublishStart==null && tsPublishEnd!=null){
-                if(tsPublishEnd.after(tsNow)){
-                    nOpenId = _getOpenId(bNotRecently);
-                } else {
-                    nOpenId = 2;
-                }
-            } else {
-                nOpenId = _getOpenId(bNotRecently);
-            }
-        } else {
-            nOpenId = _getOpenId(bNotRecently);
-        }
-        return nOpenId;
-    }
 
 	public int GetResults(UploadFileFirstCParam cParam) {
 		int nRtn = -1;

@@ -45,21 +45,32 @@ public class UpdateC extends UpC {
 
 		try {
 			// create statement
-			int nOpenId = cParam.m_nOpenId;
+			int nOpenId = GetOpenId(
+				cParam.m_nPublishId,
+				cParam.m_bNotRecently,
+				cParam.m_bLimitedTimePublish,
+				cParam.m_tsPublishStart,
+				cParam.m_tsPublishEnd);
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<String>();
-				lColumns.addAll(Arrays.asList("category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?", "password=?", "list_id=?", "safe_filter=?", "tweet_when_published=?"));
+				lColumns.addAll(Arrays.asList(
+					"category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?",
+					"password=?", "list_id=?", "safe_filter=?", "tweet_when_published=?",
+					"not_recently=?", "limited_time_publish=?"
+					));
 
-			if(cParam.m_nPublishId != Common.PUBLISH_ID_LIMITED_TIME){
+			if(!cParam.m_bLimitedTimePublish){
+				// これまで非公開で、今後公開したい。
 				if(nPublishIdPresend==Common.PUBLISH_ID_HIDDEN && cParam.m_nPublishId!=Common.PUBLISH_ID_HIDDEN){
 					lColumns.add("upload_date=current_timestamp");
 				}
 			} else {
-				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
-				if(cParam.m_tsPublishStart != null || cParam.m_tsPublishEnd != null){
+				// 期間限定
+				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){
+					throw new Exception("m_nPublishId is 'limited time', but start and end is null.");
+				} else {
 					if(cParam.m_tsPublishStart != null ){
 						lColumns.add("upload_date=?");
-						nOpenId = GetOpenIdDB(cParam.m_tsPublishStart);
 					}
 					if(cParam.m_tsPublishEnd != null ){
 						lColumns.add("end_date=?");
@@ -84,10 +95,16 @@ public class UpdateC extends UpC {
 				cState.setString(idx++, cParam.m_strListId);
 				cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
 				cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+				cState.setBoolean(idx++, cParam.m_bNotRecently);
+				cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
-				if(cParam.m_nPublishId == Common.PUBLISH_ID_LIMITED_TIME){
-					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
-					cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
+				if(cParam.m_bLimitedTimePublish){
+					if(cParam.m_tsPublishStart != null ){
+						cState.setTimestamp(idx++, cParam.m_tsPublishStart);
+					}
+					if(cParam.m_tsPublishEnd != null ){
+						cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
+					}
 				}
 
 				// set where params

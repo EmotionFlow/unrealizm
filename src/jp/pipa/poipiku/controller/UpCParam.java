@@ -24,7 +24,6 @@ public class UpCParam {
 	public boolean m_bTweetTxt = false;
     public boolean m_bTweetImg = false;
     public int m_nEditorId = 0;
-    public int m_nOpenId = 2;
 
     protected void GetParams(HttpServletRequest request) throws Exception{
         request.setCharacterEncoding("UTF-8");
