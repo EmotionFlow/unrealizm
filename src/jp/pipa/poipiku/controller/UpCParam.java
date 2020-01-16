@@ -23,7 +23,6 @@ public class UpCParam {
 	public Timestamp m_tsPublishEnd = null;
 	public boolean m_bTweetTxt = false;
     public boolean m_bTweetImg = false;
-    public boolean m_bNotRecenty = false;
     public int m_nEditorId = 0;
     public int m_nOpenId = 2;
 
@@ -43,7 +42,6 @@ public class UpCParam {
         if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
         m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
         m_nEditorId			= Common.ToIntN(request.getParameter("ED"), 0, Common.PUBLISH_ID_MAX);
-        m_bNotRecenty       = Common.ToBoolean(request.getParameter("REC"));
         m_bTweetTxt			= Common.ToBoolean(request.getParameter("TWT"));
         m_bTweetImg			= Common.ToBoolean(request.getParameter("TWI"));
 

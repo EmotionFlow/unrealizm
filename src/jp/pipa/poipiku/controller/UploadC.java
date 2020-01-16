@@ -3,7 +3,6 @@ package jp.pipa.poipiku.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -30,7 +29,7 @@ public class UploadC extends UpC {
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<String>();
-			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "tweet_when_published", "not_recently", "limited_time_publish"));
+			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "tweet_when_published", "limited_time_publish"));
 
 			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
@@ -60,7 +59,6 @@ public class UploadC extends UpC {
 			cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
 			cState.setInt(idx++, cParam.m_nEditorId);
 			cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
-			cState.setBoolean(idx++, cParam.m_bNotRecenty);
 			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
 			if(cParam.m_bLimitedTimePublish){

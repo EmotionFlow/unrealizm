@@ -153,21 +153,23 @@ public class UpFileFirstC {
 			// open_id更新
 			int nOpenId = GetOpenId(
 				cContent.m_nPublishId,
-				cContent.m_bNotRecently,
+				cParam.m_bNotRecently,
 				cContent.m_bLimitedTimePublish,
 				cContent.m_timeUploadDate,
 				cContent.m_timeEndDate);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
+			int idx=1;
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strFileName);
-			cState.setInt(2, nOpenId);
-			cState.setInt(3, nWidth);
-			cState.setInt(4, nHeight);
-			cState.setLong(5, nFileSize);
-			cState.setLong(6, nComplexSize);
-			cState.setInt(7, cParam.m_nContentId);
+			cState.setString(idx++, strFileName);
+			cState.setInt(idx++, nOpenId);
+			cState.setBoolean(idx++, cParam.m_bNotRecently);
+			cState.setInt(idx++, nWidth);
+			cState.setInt(idx++, nHeight);
+			cState.setLong(idx++, nFileSize);
+			cState.setLong(idx++, nComplexSize);
+			cState.setInt(idx++, cParam.m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 

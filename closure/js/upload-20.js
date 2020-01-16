@@ -803,7 +803,6 @@ function UploadFile(user_id) {
 			"LTP":nLimitedTime,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
-			"REC":nRecent,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
 		},

@@ -26,6 +26,7 @@ public class UpFileFirstCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
+	public boolean m_bNotRecently = false;
     FileItem item_file = null;
 
     UpFileFirstCParam(ServletContext context){
@@ -54,6 +55,8 @@ public class UpFileFirstCParam {
 						m_nUserId = Common.ToInt(item.getString());
 					} else if(strName.equals("IID")) {
 						m_nContentId = Common.ToInt(item.getString());
+					} else if(strName.equals("REC")) {
+						m_bNotRecently = Common.ToBoolean(item.getString());
 					}
 					item.delete();
 				} else {
