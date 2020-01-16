@@ -35,7 +35,6 @@ final int[] PUBLISH_ID = {
 		8,			// ツイッターフォロー限定
 		9,			// ツイッター相互フォロー限定
 		10,			// ツイッターリスト限定
-		11,			// 期間限定
 		99			// 非公開
 };
 
@@ -224,15 +223,29 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 										%> selected<%}%>　><%=l.getName()%></option>
 								<%}%>
 							</select>
-							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){
-								Log.d("ここ？");%>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
 							<script>twtterListNotFoundMsg()</script>
 							<%}%>
 						</div>
 					</div>
 					<%}%>
-					<div id="ItemTimeLimited" class="OptionItem"
-						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_LIMITED_TIME){%>style="display: none;"<%}%>
+					<div id="ItemTimeLimitedFlg" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionLimitedTimePublish"
+									id="OptionLimitedTimePublish" value="0"
+									onchange="updateOptionLimitedTimePublish()"
+									<%if(cResults.m_cContent.m_bLimitedTimePublish){%>checked<%}%> />
+							<label class="onoffswitch-label" for="OptionLimitedTimePublish">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<div id="ItemTimeLimitedVal" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN || !cResults.m_cContent.m_bLimitedTimePublish){%>style="display: none;"<%}%>
 						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
@@ -247,10 +260,12 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							</div>
 							<%}else{%>
 								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								〜
 								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+
 							<%}%>
 						</div>
-						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_LIMITED_TIME){
+						<%if(cResults.m_cContent.m_bLimitedTimePublish){
 							String strStartDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate);
 							String strEndDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate);
 							%>
@@ -265,7 +280,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" <%if(cResults.m_cContent.m_nOpenId==1){%>checked<%}%> />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" <%if(cResults.m_cContent.m_bNotRecently){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionRecent">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>

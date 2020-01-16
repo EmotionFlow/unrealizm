@@ -194,14 +194,18 @@ function UpdateFile(user_id, content_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var strPublishStart = $('#EditTimeLimitedStart').val();
-	var strPublishEnd = $('#EditTimeLimitedEnd').val();
+	var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+	var strPublishStart = null;
+	var strPublishEnd = null;
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
-
-	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true, $('#EditTimeLimitedStartPresent').val(), $('#EditTimeLimitedEndPresent').val())){
-		return;
+	if(nLimitedTime==1){
+		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+			return;
+		}
 	}
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -217,14 +221,15 @@ function UpdateFile(user_id, content_id) {
 	$.ajaxSingle({
 		"type": "post",
 		"data": {
-			"UID":user_id,
 			"IID":content_id,
+			"UID":user_id,
 			"CAT":nCategory,
 			"DES":strDescription,
 			"TAG":strTagList,
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
+			"LTP":nLimitedTime,
 			"REC":nRecent,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,

@@ -788,7 +788,6 @@ function UploadFile(user_id) {
 		nTweet = 0;
 	}
 	startMsg();
-	console.log("start upload");
 
 	$.ajaxSingle({
 		"type": "post",
