@@ -945,7 +945,6 @@ function UploadPaste(user_id) {
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId == 99) {
-		nRecent = 2;
 		nTweet = 0;
 	}
 	startMsg();

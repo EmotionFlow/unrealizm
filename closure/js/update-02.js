@@ -212,7 +212,6 @@ function UpdateFile(user_id, content_id) {
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId == 99) {
-		nRecent = 2;
 		nTweet = 0;
 	}
 
@@ -245,8 +244,6 @@ function UpdateFile(user_id, content_id) {
 				if (multiFileUploader.getSubmittedNum()>0) {
 					multiFileUploader.user_id = user_id;
 					multiFileUploader.illust_id = content_id;
-					multiFileUploader.recent = nRecent;
-					multiFileUploader.first_file = true;
 					multiFileUploader.tweet = nTweet;
 					multiFileUploader.tweet_image = nTweetImage;
 					multiFileUploader.newfile_num = multiFileUploader.getSubmittedNum();
