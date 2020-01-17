@@ -215,6 +215,9 @@ function UpdateFile(user_id, content_id) {
 		nTweet = 0;
 	}
 
+	var nTweetNow = nTweet;
+	if(nLimitedTime==1) nTweetNow = 0;
+
 	startMsg();
 
 	$.ajaxSingle({
@@ -244,7 +247,7 @@ function UpdateFile(user_id, content_id) {
 				if (multiFileUploader.getSubmittedNum()>0) {
 					multiFileUploader.user_id = user_id;
 					multiFileUploader.illust_id = content_id;
-					multiFileUploader.tweet = nTweet;
+					multiFileUploader.tweet = nTweetNow;
 					multiFileUploader.tweet_image = nTweetImage;
 					multiFileUploader.newfile_num = multiFileUploader.getSubmittedNum();
 					multiFileUploader.uploadStoredFiles();
@@ -326,8 +329,10 @@ function UpdatePasteAppendFAjax(img_element, user_id, content_id){
 	});
 }
 
-function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescription,
-	strTagList, nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd,
+function UpdateFileRefTwitterFAjax(
+	user_id, content_id, nCategory, strDescription, strTagList,
+	nPublishId, strPassword, nTwListId, nRecent,
+	nLimitedTime, strPublishStart, strPublishEnd,
 	bTweetText, bTweetImage){
 	return $.ajax({
 		"type": "post",
@@ -340,6 +345,7 @@ function UpdateFileRefTwitterFAjax(user_id, content_id, nCategory, strDescriptio
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
+			"LTP":nLimitedTime,
 			"REC":nRecent,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
@@ -393,26 +399,35 @@ function createUpdatePaste(){
 		var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 		var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 		var nTwListId = null;
-		var strPublishStart = $('#EditTimeLimitedStart').val();
-		var strPublishEnd = $('#EditTimeLimitedEnd').val();
+		var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+		var strPublishStart = null;
+		var strPublishEnd = null;
 		if(nPublishId==10){
 			nTwListId = $('#EditTwitterList').val();
 		}
-		if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, true, $('#EditTimeLimitedStartPresent').val(), $('#EditTimeLimitedEndPresent').val())){
-			return;
+		if(nLimitedTime==1){
+			strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+			strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+			if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+				return;
+			}
 		}
+
 		setTweetSetting($('#OptionTweet').prop('checked'));
 		setTweetImageSetting($('#OptionImage').prop('checked'));
 		setLastCategorySetting(nCategory);
 		if(nPublishId == 99) {
-			nRecent = 2;
 			nTweet = 0;
 		}
 		startMsg();
 
+		var nTweetNow = nTweet;
+		if(nLimitedTime==1) nTweetNow = 0;
+
 		var fUpdateFile = UpdateFileRefTwitterFAjax(
 			user_id, content_id, nCategory, strDescription, strTagList,
-			nPublishId, strPassword, nTwListId, nRecent, strPublishStart, strPublishEnd,
+			nPublishId, strPassword, nTwListId, nRecent,
+			nLimitedTime, strPublishStart, strPublishEnd,
 			getTweetSetting(), getTweetImageSetting());
 
 		var aryFunc = [];
@@ -429,7 +444,7 @@ function createUpdatePaste(){
 					}
 				});
 
-				if(nTweet==1) {
+				if(nTweetNow==1) {
 					fTweet = UploadFileTweetFAjax(user_id, data.content_id, nTweetImage);
 				} else {
 					fTweet = function() {

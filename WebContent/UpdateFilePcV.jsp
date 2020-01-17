@@ -186,7 +186,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 										if(cTweet.m_bIsTweetEnable==false){
 											continue;
 										}else if(nPublishId==10 && (cTweet.m_listOpenList==null || cTweet.m_listOpenList.size()==0)){
-											%><script>twtterListNotFoundMsg()</script><%
 											continue;
 										}
 									}

@@ -784,10 +784,12 @@ function UploadFile(user_id) {
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId == 99) {
-		nRecent = 2;
 		nTweet = 0;
 	}
 	startMsg();
+
+	var nTweetNow = nTweet;
+	if(nLimitedTime==1) nTweetNow = 0;
 
 	$.ajaxSingle({
 		"type": "post",
@@ -815,7 +817,7 @@ function UploadFile(user_id) {
 					multiFileUploader.user_id = user_id;
 					multiFileUploader.illust_id = data.content_id;
 					multiFileUploader.recent = nRecent;
-					multiFileUploader.tweet = nTweet;
+					multiFileUploader.tweet = nTweetNow;
 					multiFileUploader.tweet_image = nTweetImage;
 					multiFileUploader.publish_id = nPublishId;
 					multiFileUploader.uploadStoredFiles();
@@ -933,14 +935,20 @@ function UploadPaste(user_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var strPublishStart = $('#EditTimeLimitedStart').val();
-	var strPublishEnd = $('#EditTimeLimitedEnd').val();
+	var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+	var strPublishStart = null;
+	var strPublishEnd = null;
 	if(nPublishId==10){
         nTwListId = $('#EditTwitterList').val();
 	}
-	if(nPublishId==11 && !checkPublishDatetime(strPublishStart, strPublishEnd, false)){
-		return;
+	if(nLimitedTime==1){
+		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+			return;
+		}
 	}
+
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
@@ -948,6 +956,9 @@ function UploadPaste(user_id) {
 		nTweet = 0;
 	}
 	startMsg();
+
+	var nTweetNow = nTweet;
+	if(nLimitedTime==1) nTweetNow = 0;
 
 	$.ajaxSingle({
 		"type": "post",
@@ -959,6 +970,7 @@ function UploadPaste(user_id) {
 			"PID":nPublishId,
 			"PPW":strPassword,
 			"PLD":nTwListId,
+			"LTP":nLimitedTime,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
 			"TWT":getTweetSetting(),
@@ -1009,7 +1021,7 @@ function UploadPaste(user_id) {
 					});
 				}
 			});
-			if(nTweet==1) {
+			if(nTweetNow==1) {
 				$.ajax({
 					"type": "post",
 					"data": {

@@ -43,24 +43,8 @@ public class UpC {
         if(nPublishId == Common.PUBLISH_ID_HIDDEN){
             nOpenId = 2;
         } else if(bLimitedTimePublish){
-            if(tsPublishStart!=null && tsPublishEnd!=null){
-                if(tsPublishStart.before(tsNow) && tsPublishEnd.after(tsNow)){
-                    nOpenId = _getOpenId(bNotRecently);
-                } else {
-                    nOpenId = 2;
-                }
-            } else if(tsPublishStart!=null && tsPublishEnd==null){
-                if(tsPublishStart.before(tsNow)){
-                    nOpenId = _getOpenId(bNotRecently);
-                } else {
-                    nOpenId = 2;
-                }
-            } else if(tsPublishStart==null && tsPublishEnd!=null){
-                if(tsPublishEnd.after(tsNow)){
-                    nOpenId = _getOpenId(bNotRecently);
-                } else {
-                    nOpenId = 2;
-                }
+            if(tsPublishStart != null || tsPublishEnd != null){
+                nOpenId = 2; // 1分毎のcronに処理を任せるので、ひとまず非公開にしておく。
             } else {
                 nOpenId = _getOpenId(bNotRecently);
             }

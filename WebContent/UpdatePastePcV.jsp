@@ -35,7 +35,6 @@ final int[] PUBLISH_ID = {
 		8,			// ツイッターフォロー限定
 		9,			// ツイッター相互フォロー限定
 		10,			// ツイッターリスト限定
-		11,			// 期間限定
 		99			// 非公開
 };
 
@@ -177,7 +176,6 @@ final int[] PUBLISH_ID = {
 									if(7<=nPublishId && nPublishId<=10){
 										if(cTweet.m_bIsTweetEnable==false){continue;}
 										else if(nPublishId==10 && (cTweet.m_listOpenList==null || cTweet.m_listOpenList.size()==0)){
-											%><script>twtterListNotFoundMsg()</script><%
 											continue;
 										}
 									}
@@ -220,8 +218,23 @@ final int[] PUBLISH_ID = {
 						</div>
 					</div>
 					<%}%>
-					<div id="ItemTimeLimited" class="OptionItem"
-						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_LIMITED_TIME){%>style="display: none;"<%}%>
+					<div id="ItemTimeLimitedFlg" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionLimitedTimePublish"
+									id="OptionLimitedTimePublish" value="0"
+									onchange="updateOptionLimitedTimePublish()"
+									<%if(cResults.m_cContent.m_bLimitedTimePublish){%>checked<%}%> />
+							<label class="onoffswitch-label" for="OptionLimitedTimePublish">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<div id="ItemTimeLimitedVal" class="OptionItem"
+						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN || !cResults.m_cContent.m_bLimitedTimePublish){%>style="display: none;"<%}%>
 						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
@@ -236,10 +249,12 @@ final int[] PUBLISH_ID = {
 							</div>
 							<%}else{%>
 								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								〜
 								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+
 							<%}%>
 						</div>
-						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_LIMITED_TIME){
+						<%if(cResults.m_cContent.m_bLimitedTimePublish){
 							String strStartDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate);
 							String strEndDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate);
 							%>
@@ -254,7 +269,7 @@ final int[] PUBLISH_ID = {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" <%if(cResults.m_cContent.m_bNotRecently){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionRecent">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
