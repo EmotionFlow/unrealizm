@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -360,8 +363,10 @@ public class Common {
 	}
 
 	public static String ToYMDHMString(Timestamp ts){
-		final String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-		return new SimpleDateFormat(TIME_FORMAT).format(ts);
+		LocalDateTime ldt = ts.toLocalDateTime();
+		ZonedDateTime zdtSystemDefault = ldt.atZone(ZoneId.systemDefault());
+		ZonedDateTime zdtGmt = zdtSystemDefault.withZoneSameInstant(ZoneId.of("GMT"));
+		return zdtGmt.format(DateTimeFormatter.ISO_INSTANT);
 	}
 
 	public static String EscapeInjection(String strSrc) {
