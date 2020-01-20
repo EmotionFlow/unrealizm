@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.time.ZonedDateTime;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -350,10 +351,9 @@ public class Common {
 
 	public static Timestamp ToSqlTimestamp(String strDateTime){
 		// ISO format 2011-10-05T14:48:00.000Z を想定
-		String s = Common.SubStrNum(Common.TrimAll(strDateTime), 19);
-
-		if(!s.isEmpty()){
-			return Timestamp.valueOf(s.replace("T", " "));
+		if(!strDateTime.isEmpty()){
+			ZonedDateTime zdt = ZonedDateTime.parse(strDateTime);
+			return Timestamp.from(zdt.toInstant());
 		} else {
 			return null;
 		}

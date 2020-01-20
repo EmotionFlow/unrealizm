@@ -64,12 +64,11 @@ public class UploadC extends UpC {
 			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
 			if(cParam.m_bLimitedTimePublish){
-				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 				if(cParam.m_tsPublishStart != null){
-					cState.setTimestamp(idx++, cParam.m_tsPublishStart, cal);
+					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
 				}
 				if(cParam.m_tsPublishEnd != null ){
-					cState.setTimestamp(idx++, cParam.m_tsPublishEnd, cal);
+					cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
 				}
 			}
 
