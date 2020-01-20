@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -62,11 +64,12 @@ public class UploadC extends UpC {
 			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
 			if(cParam.m_bLimitedTimePublish){
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 				if(cParam.m_tsPublishStart != null){
-					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
+					cState.setTimestamp(idx++, cParam.m_tsPublishStart, cal);
 				}
 				if(cParam.m_tsPublishEnd != null ){
-					cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
+					cState.setTimestamp(idx++, cParam.m_tsPublishEnd, cal);
 				}
 			}
 
