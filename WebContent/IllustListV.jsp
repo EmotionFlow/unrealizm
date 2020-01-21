@@ -21,7 +21,7 @@ if(!cResults.getResults(cCheckLogin)) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nPage = 1; // start 1
@@ -168,10 +168,12 @@ if(!cResults.getResults(cCheckLogin)) {
 										_TEX.T("Common.Title")), "UTF-8"),
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<%if(cResults.m_bOwner) {%>
-						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
-						<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
-						<%} else if(cResults.m_bBlocking){%>
+						<%if(!cCheckLogin.m_bLogin) {%>
+						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
+						<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
+						<%} else if(cResults.m_bOwner){
+								// 何も表示しない
+						} else if(cResults.m_bBlocking){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
 						<%} else if(cResults.m_bBlocked){%>
@@ -194,12 +196,6 @@ if(!cResults.getResults(cCheckLogin)) {
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
-					<%if(cResults.m_bOwner) {%>
-					<a class="UserInfoStateItem" href="/FollowListV.jsp">
-						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
-					</a>
-					<%}%>
 				</section>
 			</div>
 		</article>

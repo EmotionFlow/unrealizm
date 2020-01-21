@@ -13,6 +13,7 @@ if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+cResults.m_bDispUnPublished = true;
 if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
@@ -83,54 +84,6 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
-		.IllustThumb .IllustInfoBottom {
-			display: block;
-			width: 100%;
-			box-sizing: border-box;
-			padding: 0px 3px 3px 3px;
-			position: absolute;
-			bottom: 0;
-		}
-		.IllustThumb .Num {
-			background-repeat: no-repeat;
-			min-width: 32px;
-			display: block;
-			float: left;
-			color: white;
-			font-size: 11px;
-			background: #5bd;
-			box-sizing: border-box;
-			border-radius: 22px;
-			height: 20px;
-			padding: 0 5px;
-			line-height: 20px;
-			text-align: center;
-			z-index: 2;
-		}
-		.IllustThumb .Publish {
-			background-repeat: no-repeat;
-			min-width: 29px;
-			display: block;
-			float: left;
-			background: #5bd;
-			box-sizing: border-box;
-			border-radius: 7px;
-			height: 20px;
-			padding: 0 5px;
-			z-index: 2;
-		}
-		.IllustThumb .PublishIco01{ background-size: contain; background-image: url(/img/ico_warning.png);}
-		.IllustThumb .PublishIco04{ background-size: contain; background-image: url(/img/ico_pass.png);}
-		.IllustThumb .PublishIco05{ background-size: contain; background-image: url(/img/ico_signin.png);}
-		.IllustThumb .PublishIco06{ background-size: contain; background-image: url(/img/ico_favorite.png);}
-		.IllustThumb .PublishIco07{ background-size: contain; background-image: url(/img/ico_follower.png);}
-		.IllustThumb .PublishIco08{ background-size: contain; background-image: url(/img/ico_follow.png);}
-		.IllustThumb .PublishIco09{ background-size: contain; background-image: url(/img/ico_ff.png);}
-		.IllustThumb .PublishIco10{ background-size: contain; background-image: url(/img/ico_list.png);}
-		.IllustThumb .PublishIco99{ background-size: contain; background-image: url(/img/ico_visible.png);}
-		.IllustThumb .PublishLimitedPublished{ background-size: contain; background-image: url(/img/ico_clock.png); background-color: #5585dd;}
-		.IllustThumb .PublishLimitedNotPublished{ background-size: contain; background-image: url(/img/ico_clock.png); background-color: #dd5555;}
-
 		</style>
 	</head>
 

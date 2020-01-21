@@ -15,6 +15,7 @@ public class IllustListC {
 	public String m_strKeyword = "";
 	public int m_nPage = 0;
 	public String m_strAccessIp = "";
+	public boolean m_bDispUnPublished = false;
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
@@ -28,7 +29,6 @@ public class IllustListC {
 			m_nUserId = -1;
 		}
 	}
-
 
 	public CUser m_cUser = new CUser();
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
@@ -56,15 +56,14 @@ public class IllustListC {
 		if(m_nUserId < 1) {
 			return false;
 		}
+		if(cCheckLogin.m_nUserId == m_nUserId) {
+			m_bOwner = true;
+		}
 
 		try {
 			Class.forName("org.postgresql.Driver");
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-
-			if(cCheckLogin.m_nUserId == m_nUserId) {
-				m_bOwner = true;
-			}
 
 			if(!bContentOnly) {
 				// author profile
@@ -166,7 +165,7 @@ public class IllustListC {
 				}
 
 				// User contents total number
-				String strOpenCnd = (!m_bOwner)?" AND open_id<>2":"";
+				String strOpenCnd = (!m_bOwner || (m_bOwner&&!m_bDispUnPublished))?" AND open_id<>2":"";
 				strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? %s", strOpenCnd);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
@@ -196,7 +195,7 @@ public class IllustListC {
 			String strCond = (m_strKeyword.isEmpty())?"":" AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3)";
 
 			// gallery
-			String strOpenCnd = (!m_bOwner)?" AND open_id<>2":"";
+			String strOpenCnd = (!m_bOwner || (m_bOwner&&!m_bDispUnPublished))?" AND open_id<>2":"";
 			strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? AND safe_filter<=? %s %s", strCond, strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
