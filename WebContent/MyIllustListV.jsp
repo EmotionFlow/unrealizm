@@ -13,7 +13,7 @@ if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-if(!cResults.getResults(cCheckLogin)) {
+if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
@@ -27,7 +27,7 @@ if(!cResults.getResults(cCheckLogin)) {
 			var g_nPage = 1; // start 1
 			var g_strKeyword = '<%=cResults.m_strKeyword%>';
 			var g_bAdding = false;
-			function addContents() {
+			function addMyContents() {
 				if(g_bAdding) return;
 				g_bAdding = true;
 				var $objMessage = $("<div/>").addClass("Waiting");
@@ -35,7 +35,7 @@ if(!cResults.getResults(cCheckLogin)) {
 				$.ajax({
 					"type": "post",
 					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
-					"url": "/f/IllustListF.jsp",
+					"url": "/f/MyIllustListF.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
 							g_nPage++;
@@ -44,63 +44,9 @@ if(!cResults.getResults(cCheckLogin)) {
 							g_bAdding = false;
 							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
 						} else {
-							$(window).unbind("scroll.addContents");
+							$(window).unbind("scroll.addMyContents");
 						}
 						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			function UpdateFollow(nUserId, nFollowUserId) {
-				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": nUserId, "IID": nFollowUserId },
-					"url": "/f/UpdateFollowF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result==1) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
-						} else if(data.result==2) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
-						} else {
-							DispMsg('フォローできませんでした');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			function UpdateBlock() {
-				var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
-					"url": "/f/UpdateBlockF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result==1) {
-							$('.UserInfoCmdBlock').addClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').hide();
-							location.reload(true);
-						} else if(data.result==2) {
-							$('.UserInfoCmdBlock').removeClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').show();
-							location.reload(true);
-						} else {
-							DispMsg('ブロックできませんでした');
-						}
 					},
 					"error": function(req, stat, ex){
 						DispMsg('Connection error');
@@ -116,28 +62,17 @@ if(!cResults.getResults(cCheckLogin)) {
 				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
 				$(elm).addClass('Selected');
 				updateCategoryMenuPos(300);
-				$(window).unbind("scroll.addContents");
+				$(window).unbind("scroll.addMyContents");
 				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
-				$(window).bind("scroll.addContents", function() {
+				$(window).bind("scroll.addMyContents", function() {
 					$(window).height();
 					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
-						addContents();
+						addMyContents();
 					}
 				});
-				addContents();
+				addMyContents();
 				<%}%>
 			}
-
-			$(function(){
-				<%if(!cResults.m_bBlocking && !cResults.m_bBlocked){%>
-				$(window).bind("scroll.addContents", function() {
-					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
-						addContents();
-					}
-				});
-				<%}%>
-			});
 
 			$(function(){
 				updateCategoryMenuPos(0);
@@ -148,6 +83,54 @@ if(!cResults.getResults(cCheckLogin)) {
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
+		.IllustThumb .IllustInfoBottom {
+			display: block;
+			width: 100%;
+			box-sizing: border-box;
+			padding: 0px 3px 3px 3px;
+			position: absolute;
+			bottom: 0;
+		}
+		.IllustThumb .Num {
+			background-repeat: no-repeat;
+			min-width: 32px;
+			display: block;
+			float: left;
+			color: white;
+			font-size: 11px;
+			background: #5bd;
+			box-sizing: border-box;
+			border-radius: 22px;
+			height: 20px;
+			padding: 0 5px;
+			line-height: 20px;
+			text-align: center;
+			z-index: 2;
+		}
+		.IllustThumb .Publish {
+			background-repeat: no-repeat;
+			min-width: 29px;
+			display: block;
+			float: left;
+			background: #5bd;
+			box-sizing: border-box;
+			border-radius: 7px;
+			height: 20px;
+			padding: 0 5px;
+			z-index: 2;
+		}
+		.IllustThumb .PublishIco01{ background-size: contain; background-image: url(/img/ico_warning.png);}
+		.IllustThumb .PublishIco04{ background-size: contain; background-image: url(/img/ico_pass.png);}
+		.IllustThumb .PublishIco05{ background-size: contain; background-image: url(/img/ico_signin.png);}
+		.IllustThumb .PublishIco06{ background-size: contain; background-image: url(/img/ico_favorite.png);}
+		.IllustThumb .PublishIco07{ background-size: contain; background-image: url(/img/ico_follower.png);}
+		.IllustThumb .PublishIco08{ background-size: contain; background-image: url(/img/ico_follow.png);}
+		.IllustThumb .PublishIco09{ background-size: contain; background-image: url(/img/ico_ff.png);}
+		.IllustThumb .PublishIco10{ background-size: contain; background-image: url(/img/ico_list.png);}
+		.IllustThumb .PublishIco99{ background-size: contain; background-image: url(/img/ico_visible.png);}
+		.IllustThumb .PublishLimitedPublished{ background-size: contain; background-image: url(/img/ico_clock.png); background-color: #5585dd;}
+		.IllustThumb .PublishLimitedNotPublished{ background-size: contain; background-image: url(/img/ico_clock.png); background-color: #dd5555;}
+
 		</style>
 	</head>
 
@@ -206,6 +189,51 @@ if(!cResults.getResults(cCheckLogin)) {
 					</a>
 					<%}%>
 				</nav>
+				<%}%>
+				<%if(Util.isSmartPhone(request) && cCheckLogin.m_bLogin) {%>
+				<div class="FooterMenuWrapper">
+					<nav class="FooterMenu">
+						<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
+							<span class="FooterMenuItemIcon"></span>
+							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
+						</a>
+						<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
+							<span class="FooterMenuItemIcon"></span>
+							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
+						</a>
+						<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
+							<span class="FooterMenuItemIcon"></span>
+							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+						</a>
+						<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
+							<span class="FooterMenuItemIcon">
+								<div id="InfoNumAct" class="InfoNum">0</div>
+							</span>
+							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
+						</a>
+					</nav>
+				</div>
+				<%}%>
+				<%if(cCheckLogin.m_bLogin) {%>
+				<script>
+					function UpdateNotify() {
+						$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
+							var ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
+							//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
+							$('#InfoNumAct').html(ntfy_num);
+							if(ntfy_num>0) {
+								$('#InfoNumAct').show();
+							} else {
+								$('#InfoNumAct').hide();
+							}
+						});
+					}
+					var g_timerUpdateNotify = null;
+					$(function(){
+						UpdateNotify();
+						g_timerUpdateNotify = setInterval(UpdateNotify, 1000*60);
+					});
+				</script>
 				<%}%>
 			</div>
 		</header>

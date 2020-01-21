@@ -297,7 +297,7 @@ public class CCnv {
 		return strRtn.toString();
 	}
 
-	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin cCheckLogin) {
+	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin cCheckLogin) {
 		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, cCheckLogin);
 	}
 
@@ -322,7 +322,7 @@ public class CCnv {
 	}
 
 	private static String _toThumbHtml(
-		CContent cContent, int nType, int nMode, String strKeyword
+		CContent cContent, int nType, int nMode, String strKeyword,
 		ResourceBundleControl _TEX, int nSpMode, CheckLogin cCheckLogin) {
 
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
@@ -333,42 +333,70 @@ public class CCnv {
 		String strFileNum = (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
 		String strThumbClass = (cContent.m_nOpenId==2)?"Hidden":"";
 		if (nSpMode==SP_MODE_APP) {
-			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW_APP));
+			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s\">", ILLUST_VIEW_APP));
 		} else {
-			strRtn.append(String.format("<a class=\"IllustThumb %s\" href=\"%s\">", strThumbClass, ILLUST_VIEW));
+			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s\">", ILLUST_VIEW));
 		}
 		String strFileUrl = "";
-		switch(cContent.m_nPublishId) {
-		case Common.PUBLISH_ID_R15:
-		case Common.PUBLISH_ID_R18:
-		case Common.PUBLISH_ID_R18G:
-		case Common.PUBLISH_ID_PASS:
-		case Common.PUBLISH_ID_LOGIN:
-		case Common.PUBLISH_ID_FOLLOWER:
-		case Common.PUBLISH_ID_T_FOLLOWER:
-		case Common.PUBLISH_ID_T_FOLLOW:
-		case Common.PUBLISH_ID_T_EACH:
-		case Common.PUBLISH_ID_T_LIST:
-			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-			break;
-		case Common.PUBLISH_ID_ALL:
-		case Common.PUBLISH_ID_HIDDEN:
-		default:
+
+		if(cCheckLogin != null && cContent.m_nUserId == cCheckLogin.m_nUserId){
 			strFileUrl = Common.GetUrl(cContent.m_strFileName);
-			break;
+		} else {
+			switch(cContent.m_nPublishId) {
+				case Common.PUBLISH_ID_R15:
+				case Common.PUBLISH_ID_R18:
+				case Common.PUBLISH_ID_R18G:
+				case Common.PUBLISH_ID_PASS:
+				case Common.PUBLISH_ID_LOGIN:
+				case Common.PUBLISH_ID_FOLLOWER:
+				case Common.PUBLISH_ID_T_FOLLOWER:
+				case Common.PUBLISH_ID_T_FOLLOW:
+				case Common.PUBLISH_ID_T_EACH:
+				case Common.PUBLISH_ID_T_LIST:
+					strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+					break;
+				case Common.PUBLISH_ID_ALL:
+				case Common.PUBLISH_ID_HIDDEN:
+			default:
+				strFileUrl = Common.GetUrl(cContent.m_strFileName);
+				break;
+			}
 		}
+
 		strRtn.append(String.format("<span class=\"IllustThumbImg\" style=\"background-image:url('%s_360.jpg')\"></span>", strFileUrl));
-		//strRtn.append(String.format("<img class=\"IllustThumbImg\" src=\"%s_360.jpg\" />", strFileUrl));
 		strRtn.append("<span class=\"IllustInfo\">");
-		strRtn.append(String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s %s</span>", cContent.m_nCategoryId, SEARCH_CAYEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)), strFileNum));
-		//strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Common.ToStringHtml(cContent.m_strDescription)));
+		strRtn.append(
+			String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s</span>",
+			cContent.m_nCategoryId,
+			SEARCH_CAYEGORY,
+			cContent.m_nCategoryId,
+			_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+			)
+		);
 		strRtn.append("</span>");	// IllustInfo
+
+		strRtn.append("<span class=\"IllustInfoBottom\">");
+
+		if(cContent.m_bLimitedTimePublish){
+			if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
+				strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
+			} else {
+				strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
+			}
+		}
+
+		if(cContent.m_nPublishId==99 || cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {
+			strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
+		}
+		if(cContent.m_nFileNum>1){
+			strRtn.append("<span class=\"Num\">").append(strFileNum).append("</span>");
+		}
+
+		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");
 
 		return strRtn.toString();
 	}
-
-
 
 	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
 		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";

@@ -62,12 +62,11 @@ public class IllustListC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+			if(cCheckLogin.m_nUserId == m_nUserId) {
+				m_bOwner = true;
+			}
+
 			if(!bContentOnly) {
-
-				if(cCheckLogin.m_nUserId == m_nUserId) {
-					m_bOwner = true;
-				}
-
 				// author profile
 				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
