@@ -13,9 +13,6 @@ request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
-if(nResult>0) {
-	response.sendRedirect(session.getAttribute("callback_uri").toString());
-}
 %>
 <!DOCTYPE html>
 <html>
@@ -33,7 +30,7 @@ if(nResult>0) {
 	<body>
 		<article class="Wrapper" style="text-align: center;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
-			<a href="/MyHomeV.jsp">
+			<a href="/MyHomeAppV.jsp">
 			<%if(nResult>0) {%>
 			<%=_TEX.T("RegistUserV.UpdateComplete")%>
 			<%} else {%>
