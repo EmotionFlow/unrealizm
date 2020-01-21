@@ -9,6 +9,7 @@ import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.CTag;
 import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.ResourceBundleControl;
 
 public class CCnv {
@@ -296,23 +297,34 @@ public class CCnv {
 		return strRtn.toString();
 	}
 
+	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin cCheckLogin) {
+		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, cCheckLogin);
+	}
+
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
-		return toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW);
+		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, null);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
-		return toThumbHtml(cContent, nType, nMode, strKeyword, _TEX, SP_MODE_WVIEW);
+		return _toThumbHtml(cContent, nType, nMode, strKeyword, _TEX, SP_MODE_WVIEW, null);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, int nId, ResourceBundleControl _TEX) {
-		return toThumbHtml(cContent, nType, nMode, ""+nId, _TEX, SP_MODE_WVIEW);
+		return _toThumbHtml(cContent, nType, nMode, ""+nId, _TEX, SP_MODE_WVIEW, null);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, ResourceBundleControl _TEX, int nSpMode) {
-		return toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode);
+		return _toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode, null);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX, int nSpMode) {
+		return _toThumbHtml(cContent, nType, nMode, strKeyword, _TEX, nSpMode, null);
+	}
+
+	private static String _toThumbHtml(
+		CContent cContent, int nType, int nMode, String strKeyword
+		ResourceBundleControl _TEX, int nSpMode, CheckLogin cCheckLogin) {
+
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
 		String ILLUST_VIEW_APP = (nMode==MODE_SP)?String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
@@ -355,6 +367,8 @@ public class CCnv {
 
 		return strRtn.toString();
 	}
+
+
 
 	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
 		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
