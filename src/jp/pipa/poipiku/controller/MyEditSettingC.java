@@ -26,6 +26,7 @@ public class MyEditSettingC {
 	public CUser m_cUser = new CUser();
 	public boolean m_bUpdate = false;
 	public String m_strNewEmail = "";
+	public int m_nPublishedContentsTotal = 0;
 	public boolean GetResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
@@ -110,6 +111,17 @@ public class MyEditSettingC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+
+			strSql = "SELECT count(*) as cnt FROM contents_0000 WHERE user_id=? AND open_id<>2";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, checkLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				m_nPublishedContentsTotal = cResSet.getInt("cnt");
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
 			bRtn = true;
 		} catch(Exception e) {
 			Log.d(strSql);

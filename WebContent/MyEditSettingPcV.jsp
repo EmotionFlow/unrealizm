@@ -379,6 +379,58 @@ if(cResults.m_bUpdate) {
 				<%}%>
 			});
 		</script>
+
+		<style>
+		.UserInfo .UserInfoUser .UserInfoUserThumbEdit {
+			display: block;
+			width: 84px;
+			height: 84px;
+			overflow: hidden;
+			margin: -42px auto 0 auto;
+			background-size: cover;
+			position: relative;
+		}
+
+		.UserInfo .UserInfoUser .UserInfoUserThumbEdit .UserInfoUserImg {
+			background-image: url(//img.poipiku.com/img/default_user.jpg);
+			border-radius: 80px;
+			border: solid 2px #ccc;
+			width: 80px;
+			height: 80px;
+			background-color: #fff;
+			margin: 0 auto 0 auto;
+			background-position: 50% 50%;
+		}
+
+		.UserInfo .UserInfoUser .UserInfoUserThumbEdit .UserInfoUserImgUpload {
+			background: url(/img/menu_pc-03.png) no-repeat;
+			background-position: -30px 0px;
+			background-size: 450px;
+			background-color: #fff;
+			width: 30px;
+			height: 30px;
+			top: 50px;
+			left: 50px;
+			overflow: overlay;
+			position: absolute;
+			border-radius: 30px;
+			border: solid 2px #ccc;
+		}
+		.UserInfo .UserInfoBg .UserInfoBackgroundUpload {
+			background: url(/img/menu_pc-03.png) no-repeat;
+			background-position: -30px 0px;
+			background-size: 450px;
+			background-color: #fff;
+			width: 30px;
+			height: 30px;
+			top: 4px;
+			right: 4px;
+			overflow: overlay;
+			position: absolute;
+			border-radius: 30px;
+			border: solid 2px #ccc;
+		}
+		</style>
 	</head>
 
 	<body>
@@ -386,6 +438,52 @@ if(cResults.m_bUpdate) {
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
+			<div class="UserInfo Float">
+				<div class="UserInfoBg" style="position: relative;">
+					<div class="UserInfoBackgroundUpload"></div>
+				</div>
+				<section class="UserInfoUser">
+					<div class="UserInfoUserThumbEdit">
+						<div class="UserInfoUserImg"></div>
+						<div class="UserInfoUserImgUpload"></div>
+					</div>
+					<h2 class="UserInfoUserName">
+						<div class="SettingBody">
+							<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+						</div>
+					</h2>
+					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+					<span class="UserInfoCmd">
+						<%
+						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+								URLEncoder.encode(String.format("%s%s %s #%s",
+										cResults.m_cUser.m_strNickName,
+										_TEX.T("Twitter.UserAddition"),
+										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nPublishedContentsTotal),
+										_TEX.T("Common.Title")), "UTF-8"),
+								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+						%>
+						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
+						<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
+						<span class="IllustItemCommandSub">
+							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
+						</span>
+					</span>
+				</section>
+				<section class="UserInfoState">
+					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
+						<span class="UserInfoStateItemNum"><%=cResults.m_nPublishedContentsTotal%></span>
+					</a>
+					<a class="UserInfoStateItem" href="/FollowListPcV.jsp">
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
+						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
+					</a>
+				</section>
+			</div>
+
 			<div class="SettingList">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
