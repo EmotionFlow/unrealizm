@@ -97,7 +97,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 							<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
 						</a>
 					</h1>
-					<a class="HeaderSetting BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
+					<a class="HeaderSetting BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
 				</div>
 
 				<%if(!Util.isSmartPhone(request)) {%>
@@ -136,7 +136,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 						</span>
 						<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 					</a>
-					<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
+					<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 						<span class="FooterMenuItemIcon"></span>
 						<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 					</a>
@@ -146,7 +146,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 				<%if(Util.isSmartPhone(request) && cCheckLogin.m_bLogin) {%>
 				<div class="FooterMenuWrapper">
 					<nav class="FooterMenu">
-						<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
+						<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 							<span class="FooterMenuItemIcon"></span>
 							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 						</a>

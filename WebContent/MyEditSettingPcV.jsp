@@ -402,7 +402,7 @@ if(cResults.m_bUpdate) {
 			background-position: 50% 50%;
 		}
 
-		.UserInfo .UserInfoUser .UserInfoUserThumbEdit .UserInfoUserImgUpload {
+		.UserInfo .UserInfoUser .UserInfoUserThumbEdit .UserInfoUserImgUpload{
 			background: url(/img/menu_pc-03.png) no-repeat;
 			background-position: -30px 0px;
 			background-size: 450px;
@@ -416,19 +416,33 @@ if(cResults.m_bUpdate) {
 			border-radius: 30px;
 			border: solid 2px #ccc;
 		}
-		.UserInfo .UserInfoBg .UserInfoBackgroundUpload {
+		.SelectFile{
+			opacity: 0;
+			width: 30px;
+			height: 30px;
+		}
+		.UserInfo .UserInfoBg .UserInfoHeaderUpload {
 			background: url(/img/menu_pc-03.png) no-repeat;
 			background-position: -30px 0px;
 			background-size: 450px;
 			background-color: #fff;
 			width: 30px;
 			height: 30px;
-			top: 4px;
+			top: 7px;
 			right: 4px;
 			overflow: overlay;
 			position: absolute;
 			border-radius: 30px;
 			border: solid 2px #ccc;
+		}
+		.UserInfo .UserInfoBg .UserInfoPreview {
+			top: 7px;
+			left: 4px;
+			overflow: overlay;
+			position: absolute;
+		}
+		.SettingBody .SettingBodyCmdRegist {
+			font-size: 14px;
 		}
 		</style>
 	</head>
@@ -440,12 +454,24 @@ if(cResults.m_bUpdate) {
 		<article class="Wrapper">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg" style="position: relative;">
-					<div class="UserInfoBackgroundUpload"></div>
+					<div class="UserInfoHeaderUpload">
+						<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
+					</div>
+					<div class="UserInfoPreview">
+						<a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/"><i class="fas fa-home"></i> プレビュー</a>
+					</div>
 				</div>
 				<section class="UserInfoUser">
 					<div class="UserInfoUserThumbEdit">
-						<div class="UserInfoUserImg"></div>
-						<div class="UserInfoUserImgUpload"></div>
+						<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
+							<div class="UserInfoUserImg" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>');"></div>
+						<%} else { %>
+							<div class="UserInfoUserImg"></div>
+						<%}%>
+
+						<div class="UserInfoUserImgUpload">
+							<input class="SelectFile" type="file" name="file_thumb" id="file_thumb" onchange="UpdateProfileFile(this)" />
+						</div>
 					</div>
 					<h2 class="UserInfoUserName">
 						<div class="SettingBody">
@@ -454,7 +480,9 @@ if(cResults.m_bUpdate) {
 							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 						</div>
 					</h2>
+					<!--
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+					-->
 					<span class="UserInfoCmd">
 						<%
 						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
@@ -465,8 +493,8 @@ if(cResults.m_bUpdate) {
 										_TEX.T("Common.Title")), "UTF-8"),
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
-						<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
+						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp">★ 一覧</a>
+						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp?MD=1"><i class="typcn typcn-cancel"></i>一覧</a>
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
 						</span>
@@ -486,19 +514,8 @@ if(cResults.m_bUpdate) {
 
 			<div class="SettingList">
 				<div class="SettingListItem">
-					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
-					<div class="SettingBody">
-						<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
-						<div class="SettingBodyCmd">
-							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-						</div>
-					</div>
-				</div>
-
-				<div class="SettingListItem">
-					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Image")%></div>
 					<div class="SettingBody" style="text-align: center;">
+					<!--
 						<div class="FileSelectFrame" style="display: inline-block; width: 124px;height: 124px;border: solid 2px #eee; border-radius: 120px; overflow: hidden;display: inline-block;float: none;">
 							<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
 							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 124px 124px;border-radius: 120px; overflow: hidden; background-size: cover; background-position: 50% 50%; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>');"></div>
@@ -510,29 +527,15 @@ if(cResults.m_bUpdate) {
 							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
 							<%}%>
 						</div>
+						-->
 						<div class="SettingBodyCmd">
-							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image.Format")%></div>
+							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image")%><br/>*<%=_TEX.T("EditSettingV.Image.Format")%></div>
 							<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(1)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>
 						</div>
-					</div>
-				</div>
-
-				<div class="SettingListItem">
-					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.HeaderImage")%></div>
-					<div class="SettingBody">
-						<div class="FileSelectFrame" style="border: solid 1px #eee;">
-							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: 100% auto; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');"></div>
-							<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
-							<%if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
-							<span class="typcn typcn-plus-outline"></span>
-							<%} else {%>
-							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
-							<%}%>
-						</div>
 						<div class="SettingBodyCmd">
-							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
+							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage")%><br/>*<%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
 							<%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>

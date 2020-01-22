@@ -487,7 +487,7 @@ public class Common {
 
 	public static String AutoLink(String strSrc, int nUserId, int nMode) {
 		String ILLUST_LIST = (nMode==CCnv.MODE_SP)?"/SearchIllustByTagV.jsp?KWD=":"/SearchIllustByTagPcV.jsp?KWD=";
-		String MY_ILLUST_LIST = (nMode==CCnv.MODE_SP)?String.format("/IllustListV.jsp?ID=%d&KWD=", nUserId):String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
+		String MY_ILLUST_LIST = (nMode==CCnv.MODE_SP)?String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId):String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
 		return strSrc
 				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
 				//.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("$1<a class=\"AutoLink\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$3')\">$2$3</a>", ILLUST_LIST))

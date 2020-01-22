@@ -36,7 +36,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
-					<a id="user_id_<%=cUser.m_nUserId%>" class="UserThumb" href="/IllustListV.jsp?ID=<%=cUser.m_nUserId%>" title="<%=Common.ToStringHtml(cUser.m_strNickName)%>">
+					<a id="user_id_<%=cUser.m_nUserId%>" class="UserThumb" href="/IllustListPcV.jsp?ID=<%=cUser.m_nUserId%>" title="<%=Common.ToStringHtml(cUser.m_strNickName)%>">
 						<span class="UserThumbImg" style="background-image:url('<%=Common.GetUrl(cUser.m_strFileName)%>_120.jpg')"></span>
 					</a>
 				<%}%>

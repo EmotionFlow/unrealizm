@@ -32,12 +32,12 @@ public class CCnv {
 	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = (nMode==MODE_SP)?String.format("/IllustListV.jsp?ID=%d", cContent.m_nUserId):String.format("/%d/", cContent.m_nUserId);
+		String ILLUST_LIST = (nMode==MODE_SP)?String.format("/IllustListPcV.jsp?ID=%d", cContent.m_nUserId):String.format("/%d/", cContent.m_nUserId);
 		String REPORT_FORM = (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 		String ILLUST_DETAIL = (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
 		String LINK_TARG = (nMode==MODE_SP)?"":"target=\"_blank\"";
-		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewPcV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
 
 		String strThumbClass = "";
 		if(cContent.m_nOpenId==2) strThumbClass += " Hidden";
@@ -92,7 +92,18 @@ public class CCnv {
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
 		String strTwitterUrl = CTweet.generateIllustMsgUrl(cContent, _TEX);
 		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" %s></a>", strTwitterUrl, LINK_TARG));
-		if(cContent.m_nUserId!=nLoginUserId) {
+		if(cContent.m_nUserId==nLoginUserId) {
+			if (nSpMode == SP_MODE_APP) {
+				strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"myurlscheme://reEdit?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+			} else {
+				if (cContent.m_nEditorId == Common.EDITOR_PASTE) {
+					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdatePastePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+				} else {
+					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdateFilePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+				}
+			}
+			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d)\"></a>", nLoginUserId, cContent.m_nContentId));
+		} else {
 			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?ID=%d&TD=%d\"></a>", REPORT_FORM, cContent.m_nUserId, cContent.m_nContentId));
 			if(nLoginUserId==1) {
 				strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d)\"></a>", nLoginUserId, cContent.m_nContentId));
@@ -315,7 +326,7 @@ public class CCnv {
 		ResourceBundleControl _TEX, int nSpMode, CheckLogin cCheckLogin) {
 
 		String SEARCH_CAYEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
-		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewPcV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
 		String ILLUST_VIEW_APP = (nMode==MODE_SP)?String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
 
 		StringBuilder strRtn = new StringBuilder();
@@ -366,17 +377,19 @@ public class CCnv {
 
 		strRtn.append("<span class=\"IllustInfoBottom\">");
 
-		if(cContent.m_bLimitedTimePublish){
-			if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
-				strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
-			} else {
-				strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
+		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId){
+			if(cContent.m_bLimitedTimePublish){
+				if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
+					strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
+				} else {
+					strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
+				}
+			}
+			if(cContent.m_nPublishId==99 || cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {
+				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 		}
 
-		if(cContent.m_nPublishId==99 || cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {
-			strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
-		}
 		if(cContent.m_nFileNum>1){
 			strRtn.append("<span class=\"Num\">").append(strFileNum).append("</span>");
 		}
@@ -388,7 +401,7 @@ public class CCnv {
 	}
 
 	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
-		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListV.jsp":"/IllustListPcV.jsp";
+		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListPcV.jsp":"/IllustListGridPcV.jsp";
 
 		StringBuilder strRtn = new StringBuilder();
 
