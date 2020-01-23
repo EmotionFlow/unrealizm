@@ -383,26 +383,29 @@ public class CCnv {
 		);
 		strRtn.append("</span>");	// IllustInfo
 
-		strRtn.append("<span class=\"IllustInfoBottom\">");
-
-		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId){
-			if(cContent.m_bLimitedTimePublish){
-				if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
-					strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
-				} else {
-					strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
-				}
+		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId && (cContent.m_nPublishId==99 || cContent.m_bLimitedTimePublish)){
+			strRtn.append("<span class=\"IllustInfoCenter\">");
+			if(cContent.m_nPublishId==99){
+				strRtn.append("<span class=\"Publish Private\"></span>");
+			} else if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
+				strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
+			} else {
+				strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
 			}
-			if(cContent.m_nPublishId==99 || cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {
+			strRtn.append("</span>");
+		}
+
+		strRtn.append("<span class=\"IllustInfoBottom\">");
+		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId){
+			if(cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 		}
-
 		if(cContent.m_nFileNum>1){
 			strRtn.append("<span class=\"Num\">").append(strFileNum).append("</span>");
 		}
-
 		strRtn.append("</span>");	// IllustInfoBottom
+
 		strRtn.append("</a>");
 
 		return strRtn.toString();

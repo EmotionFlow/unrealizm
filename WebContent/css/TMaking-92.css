@@ -282,6 +282,12 @@
 	line-height: 20px;
 	overflow: hidden;
 }
+.IllustThumb .IllustInfoCenter {
+	display: block;
+	box-sizing: border-box;
+	padding: 0px;
+	position: absolute;
+}
 .IllustThumb .IllustInfoBottom {
 	display: block;
 	width: 100%;
@@ -327,9 +333,40 @@
 .IllustThumb .PublishIco09{ background-size: contain; background-image: url(/img/ico_ff.png);}
 .IllustThumb .PublishIco10{ background-size: contain; background-image: url(/img/ico_list.png);}
 .IllustThumb .PublishIco99{ background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
-.IllustThumb .PublishLimitedPublished{ background-size: contain; background-image: url(/img/ico_clock.png); background-color: #5bd;}
-.IllustThumb .PublishLimitedNotPublished{ background-size: contain; background-image: url(/img/ico_clock.png); background-color: #a0a0a0;}
 
+.IllustThumb .PublishLimitedPublished{
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+    background-size: contain;
+    background-image: url(/img/ico_clock.png);
+    background-color: #5bd;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+.IllustThumb .PublishLimitedNotPublished{
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+    background-size: contain;
+    background-image: url(/img/ico_clock.png);
+    background-color: #a0a0a0;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+.IllustThumb .Private {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+    background-size: contain;
+    background-image: url(/img/ico_visible.png);
+    background-color: #a0a0a0;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
 
 /********** USER LIST **********/
 .UserThumb {
