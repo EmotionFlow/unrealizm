@@ -363,7 +363,15 @@ public class CCnv {
 			}
 		}
 
-		strRtn.append(String.format("<span class=\"IllustThumbImg\" style=\"background-image:url('%s_360.jpg')\"></span>", strFileUrl));
+		strRtn.append("<span class=\"IllustThumbImg\"");
+
+		if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
+			strRtn.append(String.format("style=\"background-image:url('%s_360.jpg')\"></span>", strFileUrl));
+		} else {
+			strRtn.append(String.format("style=\"background: rgba(0,0,0,.7) url('%s_360.jpg');", strFileUrl))
+			.append("background-blend-mode: darken;background-size: cover;background-position: 50% 50%;\"></span>");
+		}
+
 		strRtn.append("<span class=\"IllustInfo\">");
 		strRtn.append(
 			String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s</span>",
