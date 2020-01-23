@@ -94,13 +94,8 @@ try {
 				</div>
 				<div class="CategorDesc">
 					<select id="EditCategory">
-						<%
-						boolean bCategoryFound = false;
-						for(int nCategoryId : Common.CATEGORY_ID) {%>
-						<option value="<%=nCategoryId%>" <% if(nCategoryId==cResults.m_cContent.m_nCategoryId){ bCategoryFound = true; %>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
-						<%}
-						if(!bCategoryFound){%>
-							<option value="<%=cResults.m_cContent.m_nCategoryId%>" selected><%=_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))%></option>
+						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
 						<%}%>
 					</select>
 				</div>
