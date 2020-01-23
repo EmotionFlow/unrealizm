@@ -381,6 +381,9 @@ if(cResults.m_bUpdate) {
 		</script>
 
 		<style>
+		.UserInfo {
+			background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');
+		}
 		.UserInfo .UserInfoUser .UserInfoUserThumbEdit {
 			display: block;
 			width: 84px;
@@ -421,6 +424,12 @@ if(cResults.m_bUpdate) {
 			width: 30px;
 			height: 30px;
 		}
+		.UserInfo .UserInfoBg .UserInfoPreview {
+			top: 9px;
+			left: 7px;
+			overflow: overlay;
+			position: absolute;
+		}
 		.UserInfo .UserInfoBg .UserInfoHeaderUpload {
 			background: url(/img/menu_pc-03.png) no-repeat;
 			background-position: -30px 0px;
@@ -428,18 +437,12 @@ if(cResults.m_bUpdate) {
 			background-color: #fff;
 			width: 30px;
 			height: 30px;
-			top: 7px;
-			right: 4px;
+			top: 5px;
+			right: 7px;
 			overflow: overlay;
 			position: absolute;
 			border-radius: 30px;
 			border: solid 2px #ccc;
-		}
-		.UserInfo .UserInfoBg .UserInfoPreview {
-			top: 7px;
-			left: 4px;
-			overflow: overlay;
-			position: absolute;
 		}
 		.SettingBody .SettingBodyCmdRegist {
 			font-size: 14px;
@@ -454,11 +457,11 @@ if(cResults.m_bUpdate) {
 		<article class="Wrapper">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg" style="position: relative;">
-					<div class="UserInfoHeaderUpload">
-						<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
-					</div>
 					<div class="UserInfoPreview">
 						<a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/"><i class="fas fa-home"></i> プレビュー</a>
+					</div>
+					<div class="UserInfoHeaderUpload">
+						<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
 					</div>
 				</div>
 				<section class="UserInfoUser">
@@ -529,16 +532,20 @@ if(cResults.m_bUpdate) {
 						</div>
 						-->
 						<div class="SettingBodyCmd">
-							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image")%><br/>*<%=_TEX.T("EditSettingV.Image.Format")%></div>
-							<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(1)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
-							<%}%>
+							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image")%><br/>
+								(<%=_TEX.T("EditSettingV.Image.Format")%>)
+								<%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
+								<br/><a class="BtnBase" href="javascript:void(0)" onclick="ResetProfileFile(1)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
+								<%}%>
+							</div>
 						</div>
 						<div class="SettingBodyCmd">
-							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage")%><br/>*<%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
-							<%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
-							<%}%>
+							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage")%><br/>
+								(<%=_TEX.T("EditSettingV.HeaderImage.Format")%>)
+								<%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
+								<br/><a class="BtnBase" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
+								<%}%>
+							</div>
 						</div>
 					</div>
 				</div>

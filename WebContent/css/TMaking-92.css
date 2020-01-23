@@ -1560,7 +1560,7 @@
 	display: block;
 	float: left;
 	width: 100%;
-	padding: 5px 0 0 0;
+	padding: 15px 0 0 0;
 	text-align: center;
 	font-weight: bold;
 	font-size: 18px;
@@ -1715,8 +1715,14 @@
 	margin: 10px 0 0 0;
 }
 
-.SettingList .SettingListItem .SettingBody .SettingBodyCmd .SettingBodyCmdRegist
-	{
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .RegistMessage {
+	display: block;
+	flex: 1 1;
+	font-size: 14px;
+}
+
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .SettingBodyCmdRegist {
 	display: block;
 	flex: 0 0;
 	align-self: flex-start;
