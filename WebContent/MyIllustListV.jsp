@@ -2,6 +2,12 @@
 <%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
+
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/MyIllustListPcV.jsp").forward(request,response);
+	return;
+}
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
