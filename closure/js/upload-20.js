@@ -752,6 +752,15 @@ function getPublishDateTime(local_datetime_str){
 	var date = new Date(local_datetime_str);
 	return date.toISOString();
 }
+
+function getLimitedTimeFlg(strPublishElementId, strLimitedTimeElementId){
+	if($('#'+strPublishElementId).val() == 99){
+		return 0;
+	} else {
+		return ($('#'+strLimitedTimeElementId).prop('checked'))?1:0;
+	}
+}
+
 function UploadFile(user_id) {
 	if(!multiFileUploader) return;
 	if(multiFileUploader.getSubmittedNum()<=0) return;
@@ -766,7 +775,7 @@ function UploadFile(user_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
     var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
@@ -935,7 +944,7 @@ function UploadPaste(user_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+	var nLimitedTime = getLimitedTimeFlg('EditPublish','OptionLimitedTimePublish');
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){

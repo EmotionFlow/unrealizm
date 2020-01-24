@@ -17,11 +17,13 @@ import java.nio.file.Files;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.ByteArrayInputStream;
 
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.codec.binary.Base64;
 
 import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.Common;
@@ -47,13 +49,33 @@ public class UpFileFirstC extends UpC{
 		CContent cContent = null;
 
 		try {
+			byte[] imageBinary = null;
+			BufferedImage cImage = null;
+			if(cParam.m_bPasteUpload){
+				imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
+				if(imageBinary == null) return nRtn;
+				if(imageBinary.length>1024*1024*10) return nRtn;
+				cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
+				if(cImage == null) return nRtn;
+			}
+
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
 			// check ext
-			if(cParam.item_file==null) return nRtn;
-			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
+			if(!cParam.m_bPasteUpload && cParam.item_file==null){
+				Log.d("multipart upload file item is null.");
+				return nRtn;
+			}
+
+			String ext = null;
+			if(!cParam.m_bPasteUpload){
+				ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
+			} else {
+				ext = ImageUtil.getExt(ImageIO.createImageInputStream(new ByteArrayInputStream(imageBinary)));
+			}
+			Log.d("ext: " + ext);
 			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
 				String strFileName = String.format("/error_file/%d_%d.error", cParam.m_nUserId, cParam.m_nContentId);
@@ -87,9 +109,15 @@ public class UpFileFirstC extends UpC{
 				cDir.mkdirs();
 			}
 			String strRandom = RandomStringUtils.randomAlphanumeric(9);
-			String strFileName = String.format("%s/%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
+			String strFileName = "";
+			strFileName = String.format("%s/%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
 			String strRealFileName = m_cServletContext.getRealPath(strFileName);
-			cParam.item_file.write(new File(strRealFileName));
+
+			if(!cParam.m_bPasteUpload){
+				cParam.item_file.write(new File(strRealFileName));
+			} else {
+				ImageIO.write(cImage, "png", new File(strRealFileName));
+			}
 			ImageUtil.createThumbIllust(strRealFileName);
 			Log.d(strFileName);
 

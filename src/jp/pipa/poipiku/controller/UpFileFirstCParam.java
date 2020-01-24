@@ -17,6 +17,7 @@ import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Log;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,8 @@ public class UpFileFirstCParam {
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
 	public boolean m_bNotRecently = false;
+	public String m_strEncodeImg = "";
+	public boolean m_bPasteUpload = false;
     FileItem item_file = null;
 
     UpFileFirstCParam(ServletContext context){
@@ -36,33 +39,43 @@ public class UpFileFirstCParam {
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
 		try {
-			String strRelativePath = Common.GetUploadPath();
-			String strRealPath = m_cServletContext.getRealPath(strRelativePath);
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			factory.setSizeThreshold(40*1024*1024);	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
-			factory.setRepository(new File(strRealPath));
-			ServletFileUpload upload = new ServletFileUpload(factory);
-			upload.setSizeMax(40*1024*1024);
-			upload.setHeaderEncoding("UTF-8");
+			if(request.getContentType().indexOf("multipart")>=0){
+				m_bPasteUpload = false;
+				String strRelativePath = Common.GetUploadPath();
+				String strRealPath = m_cServletContext.getRealPath(strRelativePath);
+				DiskFileItemFactory factory = new DiskFileItemFactory();
+				factory.setSizeThreshold(40*1024*1024);	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+				factory.setRepository(new File(strRealPath));
+				ServletFileUpload upload = new ServletFileUpload(factory);
+				upload.setSizeMax(40*1024*1024);
+				upload.setHeaderEncoding("UTF-8");
 
-			List items = upload.parseRequest(request);
-			Iterator iter = items.iterator();
-			while (iter.hasNext()) {
-				FileItem item = (FileItem) iter.next();
-				if (item.isFormField()) {
-					String strName = item.getFieldName();
-					if(strName.equals("UID")) {
-						m_nUserId = Common.ToInt(item.getString());
-					} else if(strName.equals("IID")) {
-						m_nContentId = Common.ToInt(item.getString());
-					} else if(strName.equals("REC")) {
-						m_bNotRecently = Common.ToBoolean(item.getString());
+				List items = upload.parseRequest(request);
+				Iterator iter = items.iterator();
+				while (iter.hasNext()) {
+					FileItem item = (FileItem) iter.next();
+					if (item.isFormField()) {
+						String strName = item.getFieldName();
+						if(strName.equals("UID")) {
+							m_nUserId = Common.ToInt(item.getString());
+						} else if(strName.equals("IID")) {
+							m_nContentId = Common.ToInt(item.getString());
+						} else if(strName.equals("REC")) {
+							m_bNotRecently = Common.ToBoolean(item.getString());
+						}
+						item.delete();
+					} else {
+						item_file = item;
+						nRtn = 0;
 					}
-					item.delete();
-				} else {
-					item_file = item;
-					nRtn = 0;
 				}
+			} else {
+				m_bPasteUpload = true;
+				m_nUserId		= Common.ToInt(request.getParameter("UID"));
+				m_nContentId	= Common.ToInt(request.getParameter("IID"));
+				m_strEncodeImg	= Common.ToString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+				Log.d(m_strEncodeImg);
+				nRtn = 0;
 			}
 		} catch(FileUploadException e) {
 			nRtn = ErrorOccured(e, -2);

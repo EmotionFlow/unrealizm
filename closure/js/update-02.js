@@ -194,7 +194,7 @@ function UpdateFile(user_id, content_id) {
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
@@ -401,7 +401,7 @@ function createUpdatePaste(){
 		var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 		var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 		var nTwListId = null;
-		var nLimitedTime = ($('#OptionLimitedTimePublish').prop('checked'))?1:0;
+		var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 		var strPublishStart = null;
 		var strPublishEnd = null;
 		if(nPublishId==10){
