@@ -26,9 +26,9 @@ public class NewArrivalC {
 
 
 	public int SELECT_MAX_GALLERY = 36;
-	public int SELECT_MAX_DATE = 30;
+	//public int SELECT_MAX_DATE = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	int m_nEndId = -1;
+	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
@@ -47,11 +47,12 @@ public class NewArrivalC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+			String strCondCat = (m_nCategoryId>=0)?" AND category_id=?":"";
 
 			String strMuteKeyword = "";
-			String strCond = "";
+			String strCondMute = "";
 			if(cCheckLogin.m_bLogin) {
-				strSql = "SELECT mute_keyword FROM users_0000 WHERE user_id=?";
+				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
@@ -61,11 +62,9 @@ public class NewArrivalC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 				if(!strMuteKeyword.isEmpty()) {
-					strCond = "AND description &@~ ?";
+					strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
 				}
 			}
-
-			String strCondCat = (m_nCategoryId>=0)?"AND category_id=?":"";
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
@@ -95,15 +94,15 @@ public class NewArrivalC {
 			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.append(String.format("SELECT * FROM contents_0000 WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d", SELECT_MAX_DATE));
+			sb.append("SELECT * FROM contents_0000 WHERE open_id=0");
 			if(cCheckLogin.m_bLogin){
-				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?");
+				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ");
 			}
 			if(!strCondCat.isEmpty()){
-				sb.append(" ").append(strCondCat);
+				sb.append(strCondCat);
 			}
-			if(cCheckLogin.m_bLogin && !strCond.isEmpty()){
-				sb.append(" ").append(strCond);
+			if(!strCondMute.isEmpty()){
+				sb.append(strCondMute);
 			}
 			sb.append(" ORDER BY content_id DESC OFFSET ? LIMIT ?");
 			strSql = new String(sb);
@@ -115,10 +114,10 @@ public class NewArrivalC {
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			}
-			if(m_nCategoryId>=0) {
+			if(!strCondCat.isEmpty()){
 				cState.setInt(idx++, m_nCategoryId);
 			}
-			if(cCheckLogin.m_bLogin && !strMuteKeyword.isEmpty()) {
+			if(!strCondMute.isEmpty()){
 				cState.setString(idx++, strMuteKeyword);
 			}
 			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);

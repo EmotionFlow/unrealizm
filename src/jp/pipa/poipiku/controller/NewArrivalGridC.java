@@ -37,32 +37,25 @@ public class NewArrivalGridC {
 	}
 
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
-		boolean bRtn = false;
+		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 		int idx = 1;
-		int select_max_hour = 24;
-
-		if(m_nCategoryId < 0){ // すべて
-			select_max_hour = 12;
-		} else if(Common.CATEGORY_ID_REGULER.contains(m_nCategoryId)){ // 常時表示カテゴリ
-			select_max_hour = 48;
-		} else { // 企画カテゴリ
-			select_max_hour = 24 * 365;
-		}
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+			String strCondStart = (m_nStartId>0)?" AND content_id<?":"";
+			String strCondCat = (m_nCategoryId>=0)?" AND category_id=?":"";
 
 			String strMuteKeyword = "";
-			String strCond = "";
+			String strCondMute = "";
 			if(cCheckLogin.m_bLogin) {
-				strSql = "SELECT mute_keyword FROM users_0000 WHERE user_id=?";
+				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
@@ -72,12 +65,9 @@ public class NewArrivalGridC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 				if(!strMuteKeyword.isEmpty()) {
-					strCond = "AND description &@~ ?";
+					strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
 				}
 			}
-
-			String strCondCat = (m_nCategoryId>=0)?"AND category_id=?":"";
-			String strCondStart = (m_nStartId>0)?"AND content_id<?":"";
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
@@ -106,8 +96,6 @@ public class NewArrivalGridC {
 				*/
 			}
 
-			//strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND contents_0000.upload_date>CURRENT_DATE-%d AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s %s ORDER BY content_id DESC LIMIT ?", SELECT_MAX_DATE, strCondStart, strCondCat, strCond);
-
 			StringBuilder sb = new StringBuilder();
 			sb.append("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name,");
 			if(cCheckLogin.m_bLogin){
@@ -119,20 +107,18 @@ public class NewArrivalGridC {
 			if(cCheckLogin.m_bLogin){
 				sb.append(" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=?");
 			}
-			sb.append(String.format(" WHERE open_id=0 AND contents_0000.upload_date>CURRENT_TIMESTAMP - interval '%d hour'", select_max_hour));
+			sb.append(" WHERE open_id=0");
 			if(cCheckLogin.m_bLogin){
 				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?");
 			}
-
-			if(m_nStartId>0){
-				sb.append(" ").append(strCondStart);
+			if(!strCondStart.isEmpty()){
+				sb.append(strCondStart);
 			}
-			if(m_nCategoryId>=0){
-				sb.append(" ").append(strCondCat);
+			if(!strCondCat.isEmpty()){
+				sb.append(strCondCat);
 			}
-
-			if(cCheckLogin.m_bLogin && !strMuteKeyword.isEmpty()){
-				sb.append(" ").append(strCond);
+			if(!strCondMute.isEmpty()){
+				sb.append(strCondMute);
 			}
 			sb.append(" ORDER BY content_id DESC LIMIT ?");
 			strSql = new String(sb);
@@ -145,13 +131,13 @@ public class NewArrivalGridC {
 				cState.setInt(idx++, cCheckLogin.m_nUserId); // block_user_id=?
 				cState.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
 			}
-			if(m_nStartId>0) {
+			if(!strCondStart.isEmpty()){
 				cState.setInt(idx++, m_nStartId); // content_id<?
 			}
-			if(m_nCategoryId>=0) {
+			if(!strCondCat.isEmpty()){
 				cState.setInt(idx++, m_nCategoryId); // AND category_id=?
 			}
-			if(cCheckLogin.m_bLogin && !strMuteKeyword.isEmpty()) {
+			if(!strCondMute.isEmpty()){
 				cState.setString(idx++, strMuteKeyword);
 			}
 			cState.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
@@ -169,7 +155,7 @@ public class NewArrivalGridC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+			bResult = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each append image
 			GridUtil.getEachImage(cConn, m_vContentList);
@@ -187,6 +173,6 @@ public class NewArrivalGridC {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return bRtn;
+		return bResult;
 	}
 }
