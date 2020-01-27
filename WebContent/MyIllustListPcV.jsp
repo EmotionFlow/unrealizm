@@ -32,11 +32,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 		<script type="text/javascript">
 		$(function(){
-			<%if(cResults.m_bOwner) {%>
 			$('#MenuMe').addClass('Selected');
-			<%} else {%>
-			$('#MenuSearch').addClass('Selected');
-			<%}%>
 			updateCategoryMenuPos(0);
 		});
 
@@ -65,7 +61,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			$.ajax({
 				"type": "post",
 				"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword, "PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
-				"url": "/f/IllustListGridF.jsp",
+				"url": "/f/MyIllustListPcF.jsp",
 				"success": function(data) {
 					if($.trim(data).length>0) {
 						g_nPage++;
@@ -88,72 +84,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 		}
 
-		function UpdateFollow(nUserId, nFollowUserId) {
-			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
-			$.ajaxSingle({
-				"type": "post",
-				"data": { "UID": nUserId, "IID": nFollowUserId },
-				"url": "/f/UpdateFollowF.jsp",
-				"dataType": "json",
-				"success": function(data) {
-					if(data.result==1) {
-						$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
-						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
-					} else if(data.result==2) {
-						$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
-						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
-					} else {
-						DispMsg('フォローできませんでした');
-					}
-				},
-				"error": function(req, stat, ex){
-					DispMsg('Connection error');
-				}
-			});
-		}
-
 		function DeleteContent(nUserId, nContentId) {
 			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
 			DeleteContentBase(nUserId, nContentId);
 			return false;
 		}
 
-		function UpdateBlock() {
-			var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
-			$.ajaxSingle({
-				"type": "post",
-				"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
-				"url": "/f/UpdateBlockF.jsp",
-				"dataType": "json",
-				"success": function(data) {
-					if(data.result==1) {
-						$('.UserInfoCmdBlock').addClass('Selected');
-						$('.UserInfoCmdFollow').removeClass('Selected');
-						$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-						$('.UserInfoCmdFollow').hide();
-						location.reload(true);
-					} else if(data.result==2) {
-						$('.UserInfoCmdBlock').removeClass('Selected');
-						$('.UserInfoCmdFollow').removeClass('Selected');
-						$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-						$('.UserInfoCmdFollow').show();
-						location.reload(true);
-					} else {
-						DispMsg('ブロックできませんでした');
-					}
-				},
-				"error": function(req, stat, ex){
-					DispMsg('Connection error');
-				}
-			});
-		}
-
 		$(function(){
-			<%if(!cResults.m_bOwner) {%>
-			$('body, .Wrapper').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
-			});
-			<%}%>
 			$(window).bind("scroll.addContents", function() {
 				$(window).height();
 				if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
@@ -162,12 +99,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 		});
 		</script>
-		<style>
-		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
-		<%}%>
-		</style>
-
 
 		<style>
 			.IllustThumb .IllustInfo {bottom: 0; background: #fff;}
@@ -212,69 +143,37 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			//});
 		});
 		</script>
+		<style>
+			.IllustItem .IllustItemThumb { position: relative; }
+			.CategoryMenu {height: 53px;}
+			.CategoryMenu .CategoryBtn:nth-last-child(2) {border-radius: 0 20px 20px 0;}
+			.CategoryMenu .CategoryBtn:last-child {border-radius: 0;}
+			.CategoryMenu .MyEditSettingBtn{
+				font-size: 15px;
+				top: 20px;
+				right: 15px;
+				position: absolute;
+				height: 24px;
+				line-height: 22px;
+			}
+		</style>
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<article class="Wrapper" style="width: 100%;">
-			<div class="UserInfo Float">
-				<div class="UserInfoBg"></div>
-				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
-					<span class="UserInfoCmd">
-						<%
-						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-								URLEncoder.encode(String.format("%s%s %s #%s",
-										cResults.m_cUser.m_strNickName,
-										_TEX.T("Twitter.UserAddition"),
-										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
-										_TEX.T("Common.Title")), "UTF-8"),
-								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
-						%>
-						<%if(!cCheckLogin.m_bLogin) {%>
-						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
-						<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
-						<%} else if(cResults.m_bOwner) {
-							// 何も表示しない
-						} else if(cResults.m_bBlocking){%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
-						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
-						<%} else if(cResults.m_bBlocked){%>
-						<%} else if(cResults.m_bFollow){%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
-						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock " onclick="UpdateBlock()"></span>
-						<%} else {%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
-						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
-						<%}%>
-						<%if(!cResults.m_bOwner) {%>
-						<span class="IllustItemCommandSub">
-							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
-						</span>
-						<%}%>
-					</span>
-				</section>
-				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
-						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
-					</a>
-				</section>
-			</div>
-		</article>
+
 
 		<article class="Wrapper GridList">
-			<%if(cResults.m_vCategoryList.size()>0) {%>
-			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
-				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+				<nav id="CategoryMenu" class="CategoryMenu">
+				<%if(cResults.m_vCategoryList.size()>10) {%>
+					<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
+					<%for(CTag cTag : cResults.m_vCategoryList) {%>
+					<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+					<%}%>
 				<%}%>
-			</nav>
-			<%}%>
+				<a class="BtnBase MyEditSettingBtn" href="/MyEditSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
+				</nav>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%//if(!bSmartPhone) {%>

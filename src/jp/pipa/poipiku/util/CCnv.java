@@ -119,17 +119,22 @@ public class CCnv {
 			strFileUrl = Common.GetUrl(cContent.m_strFileName);
 			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\" target=\"_blank\">", ILLUST_VIEW));
 			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
-			if(cContent.m_nPublishId==99 || cContent.m_bLimitedTimePublish){
+
+			if(cContent.m_nOpenId==2){
 				strRtn.append("<span class=\"IllustInfoPrivate\">");
-				if(cContent.m_nPublishId==99){
-					strRtn.append("<span class=\"Publish Private\"></span>");
-				} else if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
-					strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
-				} else {
-					strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
-				}
-				strRtn.append("</span>");
+			} else {
+				strRtn.append("<span class=\"IllustInfoPublic\">");
 			}
+			if(cContent.m_nPublishId==99){
+				strRtn.append("<span class=\"Publish Private\"></span>");
+			} else if(cContent.m_bLimitedTimePublish){
+ 				if(cContent.m_nOpenId==2){
+					strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
+				} else {
+					strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
+				}
+			}
+			strRtn.append("</span>");
 
 			strRtn.append("<span class=\"IllustInfoBottom\">");
 			if(cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {

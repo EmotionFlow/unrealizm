@@ -283,19 +283,18 @@
 	bottom: 0;
 }
 .IllustItemThumb .Num {
-	margin: 3px;
+    margin: 0 3px;
     background-repeat: no-repeat;
     min-width: 40px;
     display: block;
     float: left;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     background: #5bd;
     box-sizing: border-box;
     border-radius: 11px;
-    height: 22px;
-    padding: 0 5px;
-    line-height: 20px;
+    height: 25px;
+    line-height: 25px;
     text-align: center;
     z-index: 2;
 }
@@ -1116,7 +1115,6 @@
 }
 
 .IllustItem .IllustItemThumb {
-	position: relative;
 	display: block;
 	float: left;
 	width: 100%;
@@ -1127,6 +1125,13 @@
 	font-size: 0;
 }
 
+.IllustItem .IllustItemThumb .IllustInfoPublic {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
 .IllustItem .IllustItemThumb .IllustInfoPrivate {
     width: 100%;
     height: 100%;
@@ -1148,7 +1153,7 @@
 	opacity: 0.75;
 }
 
-.IllustInfoPrivate .PublishLimitedPublished{
+.IllustInfoPublic .PublishLimitedPublished{
 	display: block;
 	margin: 5px;
 	border-radius: 14px;
