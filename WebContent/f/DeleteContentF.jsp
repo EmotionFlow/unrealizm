@@ -119,7 +119,7 @@ class DeleteMakingC {
 			}
 
 			// delete tweet
-			if(cParam.m_strTweetId.equals(cContent.m_strTweetId)){
+			if(!cParam.m_strTweetId.isEmpty() && cParam.m_strTweetId.equals(cContent.m_strTweetId)){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(cParam.m_nUserId)) {
 					if(!cTweet.Delete(cContent.m_strTweetId)){
