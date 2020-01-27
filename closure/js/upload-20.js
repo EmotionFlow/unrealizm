@@ -694,7 +694,7 @@ function initUploadFile() {
 							// complete
 							completeMsg();
 							setTimeout(function(){
-								location.href="/MyHomePcV.jsp";
+								location.href="/MyIllustListV.jsp";
 							}, 1000);
 						}
 					});
@@ -702,7 +702,7 @@ function initUploadFile() {
 					// complete
 					completeMsg();
 					setTimeout(function(){
-						location.href="/MyHomePcV.jsp";
+						location.href="/MyIllustListV.jsp";
 					}, 1000);
 				}
 			},
@@ -1045,13 +1045,13 @@ function UploadPaste(user_id) {
 						// complete
 						completeMsg();
 						setTimeout(function(){
-							location.href="/MyHomePcV.jsp";
+							location.href="/MyIllustListV.jsp";
 						}, 1000);
 					}
 				});
 			} else {
 				setTimeout(function(){
-					location.href="/MyHomePcV.jsp";
+					location.href="/MyIllustListV.jsp";
 				}, 1000);
 			}
 		}

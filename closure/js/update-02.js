@@ -114,7 +114,7 @@ function initUpdateFile(userid, contentid) {
 								// complete
 								completeMsg();
 								setTimeout(function(){
-									location.href="/MyHomePcV.jsp";
+									location.href="/MyIllustListV.jsp";
 								}, 1000);
 							}
 						});
@@ -122,7 +122,7 @@ function initUpdateFile(userid, contentid) {
 						// complete
 						completeMsg();
 						setTimeout(function(){
-							location.href="/MyHomePcV.jsp";
+							location.href="/MyIllustListV.jsp";
 						}, 1000);
 					}
 
@@ -255,7 +255,7 @@ function UpdateFile(user_id, content_id) {
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					UpdateFileOrder(user_id, content_id);
-					location.href="/MyHomePcV.jsp";
+					location.href="/MyIllustListV.jsp";
 				}
 			} else {
 				errorMsg(data.result);
@@ -484,7 +484,7 @@ function createUpdatePaste(){
 				.then(
 					function(){
 						completeMsg();
-						setTimeout(function(){location.href="/MyHomePcV.jsp";}, 1000);
+						setTimeout(function(){location.href="/MyIllustListV.jsp";}, 1000);
 					},
 					function(err){errorMsg(-12)}
 				);
