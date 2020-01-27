@@ -511,10 +511,17 @@ function updateTweetButton() {
 		$('#ImageSwitch .OptionLabel').addClass('disabled');
 		$('#ImageSwitch .onoffswitch').addClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',true);
+
+		$('#DeleteTweetSwitch .OptionLabel').addClass('disabled');
+		$('#DeleteTweetSwitch .onoffswitch').addClass('disabled');
+		$('#OptionDeleteTweet:checkbox').prop('disabled',true);
 	} else {
 		$('#ImageSwitch .OptionLabel').removeClass('disabled');
 		$('#ImageSwitch .onoffswitch').removeClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',false);
+		$('#DeleteTweetSwitch .OptionLabel').removeClass('disabled');
+		$('#DeleteTweetSwitch .onoffswitch').removeClass('disabled');
+		$('#OptionDeleteTweet:checkbox').prop('disabled',false);
 	}
 }
 
