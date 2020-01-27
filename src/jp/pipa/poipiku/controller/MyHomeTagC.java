@@ -54,20 +54,16 @@ public class MyHomeTagC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			String strMuteKeyword = "";
-			String strCondMute = "";
-			strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
+			String strSearchTag = "";
+			strSql = "SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0 LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cCheckLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+				strSearchTag = Common.ToString(cResSet.getString(1)).trim();
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(!strMuteKeyword.isEmpty()) {
-				strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
-			}
 
 			String m_strSearchKeyword = "";
 			String strCondSearch = "";
@@ -80,10 +76,29 @@ public class MyHomeTagC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+
+			// 探すものが無いときはそのまま終了(0件確定時に実行するとすごく遅い::content_id IN (null) が9.6で遅いため。新バージョンでは改良している可能性あり)
+			if (strSearchTag.isEmpty() && m_strSearchKeyword.isEmpty()) return true;
+
+			// ミュートキーワード
+			String strMuteKeyword = "";
+			String strCondMute = "";
+			strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cCheckLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			if(!strMuteKeyword.isEmpty()) {
+				strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
+			}
 			if(!m_strSearchKeyword.isEmpty()) {
 				strCondSearch = " OR content_id IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
 			}
-
 			String strCondStart = (m_nStartId>0)?" AND content_id<?":"";
 
 			// NEW ARRIVAL
