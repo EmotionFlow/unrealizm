@@ -64,6 +64,30 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 		}
 
+		function UpdateFollow(nUserId, nFollowUserId) {
+			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
+			$.ajaxSingle({
+				"type": "post",
+				"data": { "UID": nUserId, "IID": nFollowUserId },
+				"url": "/f/UpdateFollowF.jsp",
+				"dataType": "json",
+				"success": function(data) {
+					if(data.result==1) {
+						$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
+						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
+					} else if(data.result==2) {
+						$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
+						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
+					} else {
+						DispMsg('フォローできませんでした');
+					}
+				},
+				"error": function(req, stat, ex){
+					DispMsg('Connection error');
+				}
+			});
+		}
+
 		function DeleteContent(nUserId, nContentId) {
 			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
 			DeleteContentBase(nUserId, nContentId);
