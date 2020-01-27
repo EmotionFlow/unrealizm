@@ -33,17 +33,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 
 	<body>
 		<article class="Wrapper">
-			<section class="CategoryListItem">
-				<h2 class="CategoryTitle">
-					<a class="CategoryKeyword" href="/EventTagListV.jsp">
-						#企画キーワード
-					</a>
-				</h2>
-				<a class="CategoryMore" href="/EventTagListV.jsp">
-					<%=_TEX.T("TopV.ContentsTitle.More")%>&nbsp;<i class="fas fa-angle-right"></i>
-				</a>
-			</section>
-
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
 				String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>

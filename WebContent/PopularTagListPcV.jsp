@@ -61,10 +61,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		</nav>
 
 		<article class="Wrapper ThumbList">
-			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn Selected" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a>
-				<a class="BtnBase CategoryBtn" href="/EventTagListPcV.jsp"><%=_TEX.T("EventTagList.Title")%></a>
-			</nav>
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
 				String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
