@@ -31,20 +31,12 @@ class UpdateMuteKeyword {
 			cConn = dsPostgres.getConnection();
 
 			// update mute keyword
-			String strKeywords[] = m_strDescription.split(" ");
-			StringBuilder strMuteKeyword = new StringBuilder();
-			for(String word : strKeywords) {
-				word = word.trim();
-				if(!word.isEmpty()) {
-					strMuteKeyword.append("-");
-					strMuteKeyword.append(word);
-					strMuteKeyword.append(" ");
-				}
-			}
+			String strKeywords[] = m_strDescription.split("[\\s.]");
+			String strMuteKeyword = String.join(" OR ", strKeywords);
 
-			strSql = "UPDATE users_0000 SET mute_keyword=? WHERE user_id=?";
+			strSql = "UPDATE users_0000 SET mute_keyword_list=? WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strMuteKeyword.toString());
+			cState.setString(1, strMuteKeyword);
 			cState.setInt(2, cCheckLogin.m_nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;

@@ -56,7 +56,7 @@ public class MyHomeTagC {
 
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			strSql = "SELECT mute_keyword FROM users_0000 WHERE user_id=?";
+			strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cCheckLogin.m_nUserId);
 			cResSet = cState.executeQuery();
