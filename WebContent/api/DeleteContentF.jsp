@@ -5,12 +5,14 @@
 class DeleteMakingCParam {
 	public int m_nContentId = -1;
 	public int m_nUserId = -1;
+	public String m_strTweetId = "";
 
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nUserId			= Common.ToInt(cRequest.getParameter("UID"));
 			m_nContentId		= Common.ToInt(cRequest.getParameter("CID"));
+			m_strTweetId		= Common.ToString(cRequest.getParameter("TID"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
@@ -114,6 +116,18 @@ class DeleteMakingC {
 				ImageUtil.deleteFiles(getServletContext().getRealPath(cContent.m_strFileName));
 			} catch (Exception e) {
 				Log.d("connot delete content file : " + cContent.m_strFileName);
+			}
+
+			// delete tweet
+			if(cParam.m_strTweetId.equals(cContent.m_strTweetId)){
+				CTweet cTweet = new CTweet();
+				if(cTweet.GetResults(cParam.m_nUserId)) {
+					if(!cTweet.Delete(cContent.m_strTweetId)){
+						Log.d("cTweet.Delete() failed");
+					}
+				} else {
+					Log.d("cTweet.GetResult() failed");
+				}
 			}
 
 			bRtn = true;

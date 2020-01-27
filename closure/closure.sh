@@ -1,4 +1,4 @@
-java -jar ./closure-compiler-v20181125.jar --js ./js/common-37.js --js_output_file ../WebContent/js/common-37.js
+java -jar ./closure-compiler-v20181125.jar --js ./js/common-38.js --js_output_file ../WebContent/js/common-38.js
 #java -jar ./closure-compiler-v20181125.jar --js ./js/commonPc-03.js --js_output_file ../WebContent/js/commonPc-03.js
 java -jar ./closure-compiler-v20181125.jar --js ./js/upload-20.js --js_output_file ../WebContent/js/upload-20.js
 java -jar ./closure-compiler-v20181125.jar --js ./js/update-02.js --js_output_file ../WebContent/js/update-02.js

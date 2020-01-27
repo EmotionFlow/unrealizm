@@ -9,10 +9,12 @@ cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
-if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+
+if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
+
 String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
 String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
@@ -22,7 +24,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+		<script src="js/sweetalert2/sweetalert2.min.js"></script>
+		<link rel="stylesheet" href="js/sweetalert2/sweetalert2.min.css">
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta property="og:url" content="<%=strUrl%>" />
@@ -84,10 +88,36 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			});
 		}
 
-		function DeleteContent(nUserId, nContentId) {
-			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-			DeleteContentBase(nUserId, nContentId);
-			return false;
+		function DeleteContent(nUserId, nContentId, strTweetId) {
+			Swal.fire({
+				title: '',
+				text: '<%=_TEX.T("IllustListV.CheckDelete")%>',
+				type: 'question',
+				showCancelButton: true,
+				confirmButtonText: '<%=_TEX.T("IllustListV.CheckDelete.Yes")%>',
+				cancelButtonText: '<%=_TEX.T("IllustListV.CheckDelete.No")%>',
+			}).then((result) => {
+				if (result.value) {
+					if(strTweetId.length>0){
+						Swal.fire({
+							title: '',
+							text: '<%=_TEX.T("IllustListV.CheckDeleteTweet")%>',
+							type: 'question',
+							showCancelButton: true,
+							confirmButtonText: '<%=_TEX.T("IllustListV.CheckDeleteTweet.Yes")%>',
+							cancelButtonText: '<%=_TEX.T("IllustListV.CheckDeleteTweet.No")%>',
+						}).then((result) => {
+							if(result.value){
+								DeleteContentBase(nUserId, nContentId, strTweetId);
+							}else{
+								DeleteContentBase(nUserId, nContentId, "");
+							}
+						});
+					}else{
+						DeleteContentBase(nUserId, nContentId, "");
+					}
+				}
+			});
 		}
 
 		$(function(){
