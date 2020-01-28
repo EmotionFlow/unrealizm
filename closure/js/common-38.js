@@ -189,6 +189,40 @@ function SendEmoji(nContentId, strEmoji , nUserId) {
 	return false;
 }
 
+function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
+	strCheckDeleteMsg, strCheckDeleteYesMsg, strCheckDeleteNoMsg,
+	strDeleteTweetMsg, strDeleteTweetYesMsg, strDeleteTweetNoMsg) {
+	Swal.fire({
+		title: '',
+		text: strCheckDeleteMsg,
+		type: 'question',
+		showCancelButton: true,
+		confirmButtonText: strCheckDeleteYesMsg,
+		cancelButtonText: strCheckDeleteNoMsg,
+	}).then((result) => {
+		if (result.value) {
+			if(bPreviousTweetExist){
+				Swal.fire({
+					title: '',
+					text: strDeleteTweetMsg,
+					type: 'question',
+					showCancelButton: true,
+					confirmButtonText: strDeleteTweetYesMsg,
+					cancelButtonText: strDeleteTweetNoMsg,
+				}).then((result) => {
+					if(result.value){
+						DeleteContentBase(nUserId, nContentId, true);
+					}else{
+						DeleteContentBase(nUserId, nContentId, false);
+					}
+				});
+			}else{
+				DeleteContentBase(nUserId, nContentId, false);
+			}
+		}
+	});
+}
+
 function DeleteContentBase(nUserId, nContentId, bDeleteTweet) {
 	$.ajaxSingle({
 		"type": "post",

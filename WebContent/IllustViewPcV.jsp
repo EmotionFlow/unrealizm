@@ -97,8 +97,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
-		<script src="js/sweetalert2/sweetalert2.min.js"></script>
-		<link rel="stylesheet" href="js/sweetalert2/sweetalert2.min.css">
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -123,6 +122,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				$('#MenuSearch').addClass('Selected');
 			});
 		</script>
+
+		<%@ include file="/inner/TDeleteContent.jsp"%>
 
 		<script type="text/javascript">
 			var g_nPage = 0;
@@ -182,38 +183,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					},
 					"error": function(req, stat, ex){
 						DispMsg('Connection error');
-					}
-				});
-			}
-
-			function DeleteContent(nUserId, nContentId, bPreviousTweetExist) {
-				Swal.fire({
-					title: '',
-					text: '<%=_TEX.T("IllustListV.CheckDelete")%>',
-					type: 'question',
-					showCancelButton: true,
-					confirmButtonText: '<%=_TEX.T("IllustListV.CheckDelete.Yes")%>',
-					cancelButtonText: '<%=_TEX.T("IllustListV.CheckDelete.No")%>',
-				}).then((result) => {
-					if (result.value) {
-						if(bPreviousTweetExist){
-							Swal.fire({
-								title: '',
-								text: '<%=_TEX.T("IllustListV.CheckDeleteTweet")%>',
-								type: 'question',
-								showCancelButton: true,
-								confirmButtonText: '<%=_TEX.T("IllustListV.CheckDeleteTweet.Yes")%>',
-								cancelButtonText: '<%=_TEX.T("IllustListV.CheckDeleteTweet.No")%>',
-							}).then((result) => {
-								if(result.value){
-									DeleteContentBase(nUserId, nContentId, true);
-								}else{
-									DeleteContentBase(nUserId, nContentId, false);
-								}
-							});
-						}else{
-							DeleteContentBase(nUserId, nContentId, false);
-						}
 					}
 				});
 			}

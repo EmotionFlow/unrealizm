@@ -23,6 +23,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta property="og:url" content="<%=strUrl%>" />
@@ -52,6 +53,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			*/
 		});
 		</script>
+
+		<%@ include file="/inner/TDeleteContent.jsp"%>
 
 		<script>
 		var g_nPage = 1;
@@ -110,12 +113,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					DispMsg('Connection error');
 				}
 			});
-		}
-
-		function DeleteContent(nUserId, nContentId) {
-			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-			DeleteContentBase(nUserId, nContentId);
-			return false;
 		}
 
 		function UpdateBlock() {
