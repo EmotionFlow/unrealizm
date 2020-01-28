@@ -309,7 +309,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div id="DeleteTweetSwitch" class="OptionItem"
 						<%if(cResults.m_cContent.m_strTweetId.isEmpty()){%>style="display: none;"<%}%>
 						>
-						<div class="OptionLabel">前のツイートを削除</div>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.DeleteTweet")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionDeleteTweet" id="OptionDeleteTweet" value="0" />
 							<label class="onoffswitch-label" for="OptionDeleteTweet">
