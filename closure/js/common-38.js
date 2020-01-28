@@ -189,10 +189,10 @@ function SendEmoji(nContentId, strEmoji , nUserId) {
 	return false;
 }
 
-function DeleteContentBase(nUserId, nContentId, strTweetId) {
+function DeleteContentBase(nUserId, nContentId, bDeleteTweet) {
 	$.ajaxSingle({
 		"type": "post",
-		"data": { "UID":nUserId, "CID":nContentId, "TID":strTweetId },
+		"data": { "UID":nUserId, "CID":nContentId, "DELTW":bDeleteTweet?1:0 },
 		"url": "/f/DeleteContentF.jsp",
 		"dataType": "json",
 		"success": function(data) {

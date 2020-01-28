@@ -186,7 +186,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				});
 			}
 
-			function DeleteContent(nUserId, nContentId, strTweetId) {
+			function DeleteContent(nUserId, nContentId, bPreviousTweetExist) {
 				Swal.fire({
 					title: '',
 					text: '<%=_TEX.T("IllustListV.CheckDelete")%>',
@@ -196,7 +196,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					cancelButtonText: '<%=_TEX.T("IllustListV.CheckDelete.No")%>',
 				}).then((result) => {
 					if (result.value) {
-						if(strTweetId.length>0){
+						if(bPreviousTweetExist){
 							Swal.fire({
 								title: '',
 								text: '<%=_TEX.T("IllustListV.CheckDeleteTweet")%>',
@@ -206,13 +206,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 								cancelButtonText: '<%=_TEX.T("IllustListV.CheckDeleteTweet.No")%>',
 							}).then((result) => {
 								if(result.value){
-									DeleteContentBase(nUserId, nContentId, strTweetId);
+									DeleteContentBase(nUserId, nContentId, true);
 								}else{
-									DeleteContentBase(nUserId, nContentId, "");
+									DeleteContentBase(nUserId, nContentId, false);
 								}
 							});
 						}else{
-							DeleteContentBase(nUserId, nContentId, "");
+							DeleteContentBase(nUserId, nContentId, false);
 						}
 					}
 				});
