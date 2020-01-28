@@ -46,6 +46,10 @@ public class CTweet {
 	public static final int ERR_OTHER = -99999;
 	public Status m_statusLastTweet = null;
 
+	private void LoggingTwitterException(TwitterException te){
+		Log.d(String.format("TwitterException, %d, %s, %d, %s", te.getStatusCode() , m_strUserAccessToken, te.getErrorCode(), te.getMessage()));
+	}
+
 	public boolean GetResults(int nUserId) {
 		boolean bResult = true;
 		DataSource dsPostgres = null;
@@ -104,6 +108,10 @@ public class CTweet {
 			Twitter twitter = tf.getInstance();
 			m_listOpenList = twitter.getUserLists(m_lnTwitterUserId, true);
 			m_listOpenList.removeIf(a -> !a.isPublic());
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			LoggingTwitterException(te);
+			bResult = false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -125,6 +133,10 @@ public class CTweet {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			m_statusLastTweet = twitter.updateStatus(strTweet);
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			LoggingTwitterException(te);
+			bResult = false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -146,6 +158,10 @@ public class CTweet {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			m_statusLastTweet = twitter.updateStatus(new StatusUpdate(strTweet).media(new File(strFileName)));
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			LoggingTwitterException(te);
+			bResult = false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -196,6 +212,10 @@ public class CTweet {
 			StatusUpdate update = new StatusUpdate(strTweet);
 			update.setMediaIds(vMediaList);
 			m_statusLastTweet = twitter.updateStatus(update);
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			LoggingTwitterException(te);
+			bResult = false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
@@ -206,7 +226,7 @@ public class CTweet {
 	public int LookupFriendship(int nTargetUserId){
 		int nResult = FRIENDSHIP_UNDEF;
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
-		
+
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -221,7 +241,6 @@ public class CTweet {
 			cState.setInt(1, nTargetUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 			cResSet = cState.executeQuery();
-			System.out.println(String.format("ua: %s, st: %s", m_strUserAccessToken, m_strSecretToken));
 			if(cResSet.next()){
 				ConfigurationBuilder cb = new ConfigurationBuilder();
 				cb.setDebugEnabled(true)
@@ -231,7 +250,7 @@ public class CTweet {
 					.setOAuthAccessTokenSecret(m_strSecretToken);
 				TwitterFactory tf = new TwitterFactory(cb.build());
 				Twitter twitter = tf.getInstance();
-	
+
 				// 関係をlookup
 				long tgtIds[] = {Long.parseLong(cResSet.getString("twitter_user_id"))};
 				ResponseList<Friendship> lookupResults = twitter.lookupFriendships(tgtIds);
@@ -251,6 +270,7 @@ public class CTweet {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 		} catch (TwitterException te) {
+			LoggingTwitterException(te);
 			if(te.getErrorCode() == 88){
 				nResult = ERR_RATE_LIMIT_EXCEEDED;
 			} else {
@@ -286,6 +306,7 @@ public class CTweet {
 			System.out.println(String.format("%s", u.getId()));
 			nResult = 1;
         }catch(TwitterException te){
+			LoggingTwitterException(te);
             if(te.getStatusCode()==404){
                 nResult = 0; // リストが消されちゃった場合もここにくる。
 			} else if(te.getErrorCode() == 88){
@@ -300,7 +321,7 @@ public class CTweet {
 		}
 		return nResult;
 	}
-	
+
 	public long getLastTweetId() {
 		if(m_statusLastTweet==null) return -1;
 		return m_statusLastTweet.getId();
