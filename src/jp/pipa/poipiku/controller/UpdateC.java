@@ -138,9 +138,7 @@ public class UpdateC extends UpC {
 			AddTags(cParam.m_strDescription, cParam.m_strTagList, cParam.m_nContentId, cConn, cState);
 
 			// もし、期間限定&開始日時変更＆同時ツイートON＆前のツイートを削除だったら、ツイート削除→ツイート→UPDATE tweet_id=NULL
-			Log.d(String.format("%b, %b, %b, %b, %s", cParam.m_bLimitedTimePublish, cParam.m_bTweetTxt, cParam.m_bTweetImg, cParam.m_bDeleteTweet, strTweetId));
 			if ( cParam.m_bLimitedTimePublish && (cParam.m_bTweetTxt || cParam.m_bTweetImg) && cParam.m_bDeleteTweet && !strTweetId.isEmpty()){
-				Log.d("delete tweet " + strTweetId);
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(cParam.m_nUserId)){
 					cTweet.Delete(strTweetId);
@@ -148,7 +146,6 @@ public class UpdateC extends UpC {
 					cState = cConn.prepareStatement(strSql);
 					try {
 						cState.setInt(1, cParam.m_nContentId);
-						Log.d("executeUpdate");
 						cState.executeUpdate();
 					} catch(Exception e) {
 						e.printStackTrace();
