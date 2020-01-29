@@ -115,7 +115,7 @@ public class DeleteContentC {
 			}
 
 			// delete tweet
-			if(cParam.m_nDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
+			if(cParam.m_nUserId==cContent.m_nUserId && cParam.m_nDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(cParam.m_nUserId)) {
 					if(!cTweet.Delete(cContent.m_strTweetId)){
