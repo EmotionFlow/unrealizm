@@ -46,7 +46,7 @@ ObjectMapper mapper = null;
 try {
 	//ユーザの情報
 	root = new HashMap<String, Object>();
-    root.put("result", nResult);
+    root.put("result", 0);
 
 	if (nResult == 0) {
         //twitter list情報(配列)
@@ -57,6 +57,9 @@ try {
 			twitterList.put("name", u.getName());
 			twitterListList.add(twitterList);
 		}
+		root.put("twitter_open_list", twitterListList);
+	} else {
+		List<Map<String, Object>> twitterListList = new ArrayList<Map<String, Object>>();
 		root.put("twitter_open_list", twitterListList);
 	}
 
