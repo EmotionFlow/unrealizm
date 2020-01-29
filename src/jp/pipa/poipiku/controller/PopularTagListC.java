@@ -57,7 +57,8 @@ public class PopularTagListC {
 			*/
 
 			//strSql = "select tag_txt FROM vw_rank_tag_weekly WHERE tag_txt NOT IN('カラパレコスメ', 'お題ルーレット') order by rank desc offset ? limit ?";
-			strSql = "select tag_txt FROM vw_rank_tag_weekly order by rank desc offset ? limit ?";
+			//strSql = "select tag_txt FROM vw_rank_tag_weekly order by rank desc offset ? limit ?";
+			strSql = "select tag_txt FROM vw_rank_tag_daily order by rank desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
 			cState.setInt(2, SELECT_MAX_GALLERY);
@@ -67,19 +68,6 @@ public class PopularTagListC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-
-			/*
-			strSql = "select tag_txt FROM vw_rank_tag_daily order by rank desc offset ? limit ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
-			cState.setInt(2, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				m_vContentList.add(new CTag(cResSet));
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-			*/
 
 
 			/*
