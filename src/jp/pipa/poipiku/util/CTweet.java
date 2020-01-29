@@ -47,7 +47,15 @@ public class CTweet {
 	public Status m_statusLastTweet = null;
 
 	private void LoggingTwitterException(TwitterException te){
-		Log.d(String.format("TwitterException, %d, %s, %d, %s", te.getStatusCode() , m_strUserAccessToken, te.getErrorCode(), te.getMessage()));
+		String strCallFrom = "";
+		StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
+        if (steArray.length <= 3) {
+            strCallFrom =  "???";
+        } else {
+			StackTraceElement ste = steArray[2];
+			strCallFrom = ste.getMethodName();
+		}
+		Log.d(String.format("TwitterException, %s, %d, %s, %d, %s", strCallFrom, te.getStatusCode() , m_strUserAccessToken, te.getErrorCode(), te.getMessage()));
 	}
 
 	public boolean GetResults(int nUserId) {
