@@ -24,18 +24,20 @@ public class UpdateC extends UpC {
 		int safe_filter = Common.SAFE_FILTER_ALL;
 		int idx = 0;
 		int nPublishIdPresend = -1;
+		String strTweetId = "";
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "SELECT publish_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+			strSql = "SELECT publish_id, tweet_id FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				nPublishIdPresend = cResSet.getInt("publish_id");
+				strTweetId = cResSet.getString("tweet_id");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -134,6 +136,27 @@ public class UpdateC extends UpC {
 
 			// Add tags
 			AddTags(cParam.m_strDescription, cParam.m_strTagList, cParam.m_nContentId, cConn, cState);
+
+			// もし、期間限定&開始日時変更＆同時ツイートON＆前のツイートを削除だったら、ツイート削除→ツイート→UPDATE tweet_id=NULL
+			Log.d(String.format("%b, %b, %b, %b, %s", cParam.m_bLimitedTimePublish, cParam.m_bTweetTxt, cParam.m_bTweetImg, cParam.m_bDeleteTweet, strTweetId));
+			if ( cParam.m_bLimitedTimePublish && (cParam.m_bTweetTxt || cParam.m_bTweetImg) && cParam.m_bDeleteTweet && !strTweetId.isEmpty()){
+				Log.d("delete tweet " + strTweetId);
+				CTweet cTweet = new CTweet();
+				if(cTweet.GetResults(cParam.m_nUserId)){
+					cTweet.Delete(strTweetId);
+					strSql = "UPDATE contents_0000 SET tweet_id=NULL WHERE content_id=?";
+					cState = cConn.prepareStatement(strSql);
+					try {
+						cState.setInt(1, cParam.m_nContentId);
+						Log.d("executeUpdate");
+						cState.executeUpdate();
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+					cState.close();cState=null;
+				}
+			}
+
 
 		} catch(Exception e) {
 			Log.d(strSql);

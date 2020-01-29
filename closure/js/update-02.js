@@ -225,6 +225,7 @@ function UpdateFile(user_id, content_id) {
 			"PED":strPublishEnd,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
+			"DELTW":nDeleteTweet,
 			"ED":0
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
@@ -241,7 +242,7 @@ function UpdateFile(user_id, content_id) {
 					multiFileUploader.newfile_num = multiFileUploader.getSubmittedNum();
 					multiFileUploader.uploadStoredFiles();
 				} else {
-					if(nTweet==1){
+					if(nTweetNow==1){
 						UpdateFileOrder(user_id, content_id, null);
 						Tweet(user_id, content_id, nTweetImage, nDeleteTweet);
 					}else{
@@ -326,7 +327,7 @@ function UpdateFileRefTwitterFAjax(
 	user_id, content_id, nCategory, strDescription, strTagList,
 	nPublishId, strPassword, nTwListId, nRecent,
 	nLimitedTime, strPublishStart, strPublishEnd,
-	bTweetText, bTweetImage){
+	nTweetText, nTweetImage, nDeleteTweet){
 	return $.ajax({
 		"type": "post",
 		"data": {
@@ -342,8 +343,9 @@ function UpdateFileRefTwitterFAjax(
 			"REC":nRecent,
 			"PST":strPublishStart,
 			"PED":strPublishEnd,
-			"TWT":bTweetText,
-			"TWI":bTweetImage,
+			"TWT":nTweetText,
+			"TWI":nTweetImage,
+			"DELTW":nDeleteTweet,
 			"ED":1,
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
@@ -424,7 +426,7 @@ function createUpdatePaste(){
 			user_id, content_id, nCategory, strDescription, strTagList,
 			nPublishId, strPassword, nTwListId, nRecent,
 			nLimitedTime, strPublishStart, strPublishEnd,
-			getTweetSetting(), getTweetImageSetting());
+			getTweetSetting(), getTweetImageSetting(), nDeleteTweet);
 
 		var aryFunc = [];
 		var fTweet = null;
