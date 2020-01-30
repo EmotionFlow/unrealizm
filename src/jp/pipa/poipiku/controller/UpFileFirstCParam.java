@@ -74,7 +74,6 @@ public class UpFileFirstCParam {
 				m_nUserId		= Common.ToInt(request.getParameter("UID"));
 				m_nContentId	= Common.ToInt(request.getParameter("IID"));
 				m_strEncodeImg	= Common.ToString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
-				Log.d(m_strEncodeImg);
 				nRtn = 0;
 			}
 		} catch(FileUploadException e) {

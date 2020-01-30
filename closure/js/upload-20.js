@@ -485,15 +485,24 @@ function setLastCategorySetting(val) {
 function getLastCategorySetting() {
 	return getLocalStrage('last_category');
 }
+function comparePublishDate(a, b){
+	if(a==null && b==null){
+		return false;
+	} else if(a==null && b==null){
+		return true;
+	} else {
+		return a.substr(0, 16) === b.substr(0, 16);
+	}
+}
 function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
-	if(isUpdate && strPublishStartPresent === strPublishStart && strPublishEndPresent === strPublishEnd){
+	if(isUpdate && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
 		return true;
 	}
 	if(strPublishStart=='' || strPublishEnd==''){
 		dateTimeEmptyMsg();
 		return false;
 	}
-	if(!isUpdate || isUpdate && (strPublishStartPresent !== strPublishStart || strPublishEndPresent !== strPublishEnd)){
+	if(!isUpdate || isUpdate && (!comparePublishDate(strPublishStartPresent,strPublishStart) || !comparePublishDate(strPublishEndPresent, strPublishEnd))){
 		if(Date.parse(strPublishStart) < Date.now() || Date.parse(strPublishEnd) < Date.now()) {
 			dateTimePastMsg();
 			return false;
@@ -511,10 +520,17 @@ function updateTweetButton() {
 		$('#ImageSwitch .OptionLabel').addClass('disabled');
 		$('#ImageSwitch .onoffswitch').addClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',true);
+
+		$('#DeleteTweetSwitch .OptionLabel').addClass('disabled');
+		$('#DeleteTweetSwitch .onoffswitch').addClass('disabled');
+		$('#OptionDeleteTweet:checkbox').prop('disabled',true);
 	} else {
 		$('#ImageSwitch .OptionLabel').removeClass('disabled');
 		$('#ImageSwitch .onoffswitch').removeClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',false);
+		$('#DeleteTweetSwitch .OptionLabel').removeClass('disabled');
+		$('#DeleteTweetSwitch .onoffswitch').removeClass('disabled');
+		$('#OptionDeleteTweet:checkbox').prop('disabled',false);
 	}
 }
 

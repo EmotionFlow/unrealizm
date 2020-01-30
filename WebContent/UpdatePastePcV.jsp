@@ -296,6 +296,18 @@ final int[] PUBLISH_ID = {
 							</label>
 						</div>
 					</div>
+					<div id="DeleteTweetSwitch" class="OptionItem"
+						<%if(cResults.m_cContent.m_strTweetId.isEmpty()){%>style="display: none;"<%}%>
+						>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.DeleteTweet")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionDeleteTweet" id="OptionDeleteTweet" value="0" />
+							<label class="onoffswitch-label" for="OptionDeleteTweet">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
 				</div>
 				<div class="UoloadCmd">
 					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>

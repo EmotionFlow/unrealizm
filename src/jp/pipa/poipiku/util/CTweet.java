@@ -203,10 +203,31 @@ public class CTweet {
 		return bResult;
 	}
 
+	public boolean Delete(String strTweetId){
+		if (!m_bIsTweetEnable) return false;
+		boolean bResult = true;
+		m_statusLastTweet = null;
+		try {
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+			m_statusLastTweet = twitter.destroyStatus(Long.parseLong(strTweetId));
+		} catch (Exception e) {
+			e.printStackTrace();
+			bResult = false;
+		}
+		return bResult;
+	}
+
 	public int LookupFriendship(int nTargetUserId){
 		int nResult = FRIENDSHIP_UNDEF;
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
-		
+
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -231,7 +252,7 @@ public class CTweet {
 					.setOAuthAccessTokenSecret(m_strSecretToken);
 				TwitterFactory tf = new TwitterFactory(cb.build());
 				Twitter twitter = tf.getInstance();
-	
+
 				// 関係をlookup
 				long tgtIds[] = {Long.parseLong(cResSet.getString("twitter_user_id"))};
 				ResponseList<Friendship> lookupResults = twitter.lookupFriendships(tgtIds);
@@ -300,7 +321,7 @@ public class CTweet {
 		}
 		return nResult;
 	}
-	
+
 	public long getLastTweetId() {
 		if(m_statusLastTweet==null) return -1;
 		return m_statusLastTweet.getId();

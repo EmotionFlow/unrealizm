@@ -6,12 +6,14 @@ class UploadFileTweetCParam {
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
 	public int m_nOptImage = 1;
+	public int m_nOptDeleteTweet = 0;
 
 	public int GetParam(HttpServletRequest request) {
 		try {
 			m_nUserId		= Common.ToInt(request.getParameter("UID"));
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
 			m_nOptImage		= Common.ToIntN(request.getParameter("IMG"), 0, 1);
+			m_nOptDeleteTweet	= Common.ToIntN(request.getParameter("DELTW"), 0, 1);
 		} catch(Exception e) {
 			e.printStackTrace();
 			m_nUserId = -1;
@@ -98,6 +100,11 @@ class UploadFileTweetC {
 			// 本文作成
 			String strTwitterMsg = CTweet.generateIllustMsgFull(cContent, _TEX);
 			Log.d(cContent.m_strFileName, strTwitterMsg);
+
+			// 前のツイート削除
+			if(cParam.m_nOptDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
+				cTweet.Delete(cContent.m_strTweetId);
+			}
 
 			// ツイート
 			if(cParam.m_nOptImage==0 || vFileList.size()<=0) {	// text only
