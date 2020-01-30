@@ -67,10 +67,10 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateNickNameF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('<%=_TEX.T("EditSettingV.NickName.Message.Ok")%>');
+						DispMsg("<%=_TEX.T("EditSettingV.NickName.Message.Ok")%>");
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 				return false;
@@ -100,11 +100,11 @@ if(cResults.m_bUpdate) {
 									break;
 								case -1:
 									// file size error
-									DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
+									DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>");
 									break;
 								case -2:
 									// file type error
-									DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
+									DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>");
 									break;
 								default:
 									DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + res.result);
@@ -112,7 +112,7 @@ if(cResults.m_bUpdate) {
 								}
 							},
 							"error": function(req, stat, ex){
-								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+								DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 							}
 						});
 					}
@@ -144,7 +144,7 @@ if(cResults.m_bUpdate) {
 						location.reload(true);
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 				return false;
@@ -163,11 +163,11 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateProfileTxtF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
+						DispMsg("<%=_TEX.T("EditSettingV.Upload.Updated")%>");
 						sendObjectMessage("reloadParent");
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 				return false;
@@ -186,10 +186,10 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateMuteKeywordF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
+						DispMsg("<%=_TEX.T("EditSettingV.Upload.Updated")%>");
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 				return false;
@@ -203,10 +203,10 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateNgReactionF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
+						DispMsg("<%=_TEX.T("EditSettingV.Upload.Updated")%>");
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 				return false;
@@ -222,7 +222,7 @@ if(cResults.m_bUpdate) {
 						location.reload(true);
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 				return false;
@@ -249,10 +249,10 @@ if(cResults.m_bUpdate) {
 					"url": "/f/UpdateAutoTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
+						DispMsg("<%=_TEX.T("EditSettingV.Upload.Updated")%>");
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 				return false;
@@ -266,7 +266,7 @@ if(cResults.m_bUpdate) {
 			function UpdateEmailAddress(){
 				var strEmail = $("#EM").val();
 				if(!strEmail.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
-					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
+					DispMsg("<%=_TEX.T("EditSettingV.Email.Message.Empty")%>");
 					return false;
 				}
 				$.ajaxSingle({
@@ -277,13 +277,13 @@ if(cResults.m_bUpdate) {
 					"success": function(data) {
 						console.log(data);
 						if(data.result>0) {
-							DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Confirmation")%>');
+							DispMsg("<%=_TEX.T("EditSettingV.Email.Message.Confirmation")%>");
 						} else {
-							DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Exist")%>');
+							DispMsg("<%=_TEX.T("EditSettingV.Email.Message.Exist")%>");
 						}
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 			}
@@ -293,11 +293,11 @@ if(cResults.m_bUpdate) {
 				var PW1 = $("#PW1").val();
 				var PW2 = $("#PW2").val();
 				if(PW1.length<4 || PW1.length>16) {
-					DispMsg('<%=_TEX.T("EditSettingV.Password.Message.Empty")%>');
+					DispMsg("<%=_TEX.T("EditSettingV.Password.Message.Empty")%>");
 					return false;
 				}
 				if(PW1!=PW2) {
-					DispMsg('<%=_TEX.T("EditSettingV.Password.Message.NotMatch")%>');
+					DispMsg("<%=_TEX.T("EditSettingV.Password.Message.NotMatch")%>");
 					return false;
 				}
 				$.ajaxSingle({
@@ -308,13 +308,13 @@ if(cResults.m_bUpdate) {
 					"success": function(data) {
 						console.log(data);
 						if(data.result>0) {
-							DispMsg('<%=_TEX.T("EditSettingV.Password.Message.Ok")%>');
+							DispMsg("<%=_TEX.T("EditSettingV.Password.Message.Ok")%>");
 						} else {
-							DispMsg('<%=_TEX.T("EditSettingV.Password.Message.Wrong")%>');
+							DispMsg("<%=_TEX.T("EditSettingV.Password.Message.Wrong")%>");
 						}
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 			}
@@ -332,14 +332,14 @@ if(cResults.m_bUpdate) {
 						}
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 					}
 				});
 			}
 
 			function CheckDeregist(){
 				if(!$("#CheckDeregistCheckBox").prop('checked')) return;
-				if(window.confirm('<%=_TEX.T("EditSettingV.DeleteAccount.CheckDeregist")%>')){
+				if(window.confirm("<%=_TEX.T("EditSettingV.DeleteAccount.CheckDeregist")%>")){
 					$.ajaxSingle({
 						"type": "post",
 						"data": {"ID":<%=cCheckLogin.m_nUserId%>},
@@ -352,7 +352,7 @@ if(cResults.m_bUpdate) {
 							}
 						},
 						"error": function(req, stat, ex){
-							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+							DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 						}
 					});
 				}
