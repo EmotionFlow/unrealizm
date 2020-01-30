@@ -206,7 +206,9 @@ function UpdateFile(user_id, content_id) {
 
 	var nTweetNow = nTweet;
 	if(nLimitedTime==1){
-		if(nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
+		if(nOpenId!=2 && (strPublishStartPresent==null||strPublishEndPresent==null)){
+			nTweetNow = 0;
+		} else if(nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
 			nTweetNow = 1;
 		} else {
 			nTweetNow = 0;
@@ -395,6 +397,7 @@ function createUpdatePaste(){
 		strDescription = strDescription.substr(0 , 200);
 		var strTagList = $.trim($("#EditTagList").val());
 		strTagList = strTagList.substr(0 , 100);
+		var nOpenId = $('#ContentOpenId').val();
 		var nPublishId = $('#EditPublish').val();
 		var strPassword = $('#EditPassword').val();
 		var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
@@ -424,10 +427,19 @@ function createUpdatePaste(){
 		if(nPublishId == 99) {
 			nTweet = 0;
 		}
-		startMsg();
 
 		var nTweetNow = nTweet;
-		if(nLimitedTime==1) nTweetNow = 0;
+		if(nLimitedTime==1){
+			if(nOpenId!=2 && (strPublishStartPresent==null||strPublishEndPresent==null)){
+				nTweetNow = 0;
+			} else if(nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
+				nTweetNow = 1;
+			} else {
+				nTweetNow = 0;
+			}
+		}
+
+		startMsg();
 
 		var fUpdateFile = UpdateFileRefTwitterFAjax(
 			user_id, content_id, nCategory, strDescription, strTagList,
@@ -441,7 +453,6 @@ function createUpdatePaste(){
 		fUpdateFile.done(
 			function(data){
 				var f = null;
-
 				$('.imgView').each(function(){
 					f = UpdatePasteAppendFAjax($(this),user_id,data.content_id);
 					if (f != null){

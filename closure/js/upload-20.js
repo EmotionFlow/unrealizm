@@ -495,6 +495,9 @@ function comparePublishDate(a, b){
 	}
 }
 function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
+	if(isUpdate && (strPublishStartPresent==null || strPublishEndPresent==null)){
+		return true;
+	}
 	if(isUpdate && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
 		return true;
 	}
