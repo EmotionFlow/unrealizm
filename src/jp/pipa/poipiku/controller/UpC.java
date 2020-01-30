@@ -37,16 +37,28 @@ public class UpC {
     private static int _getOpenId(boolean bNotRecently){
         return bNotRecently ? 1 : 0;
     }
-    protected static int GetOpenId(int nPublishId, boolean bNotRecently, boolean bLimitedTimePublish, Timestamp tsPublishStart, Timestamp tsPublishEnd){
+    protected static int GetOpenId(int nOpenIdPresent, int nPublishId, boolean bNotRecently,
+        boolean bLimitedTimePublish, boolean bLimitedTimePublishPresent,
+        Timestamp tsPublishStart, Timestamp tsPublishEnd,
+        Timestamp tsPublishStartPresent, Timestamp tsPublishEndPresent){
+
         int nOpenId = 2;
         Timestamp tsNow = new Timestamp(System.currentTimeMillis());
         if(nPublishId == Common.PUBLISH_ID_HIDDEN){
             nOpenId = 2;
         } else if(bLimitedTimePublish){
-            if(tsPublishStart != null || tsPublishEnd != null){
-                nOpenId = 2; // 1分毎のcronに処理を任せるので、ひとまず非公開にしておく。
+            if(!bLimitedTimePublishPresent || tsPublishStartPresent==null || tsPublishEndPresent==null){
+                nOpenId = 2;
             } else {
-                nOpenId = _getOpenId(bNotRecently);
+                if(tsPublishStart != null || tsPublishEnd != null){
+                    if(tsPublishStart.equals(tsPublishStartPresent) && tsPublishEnd.equals(tsPublishEndPresent)){
+                        nOpenId = nOpenIdPresent;   // 公開期間に変更がないのなら、今の公開状態を維持する。
+                    } else {
+                        nOpenId = 2; // 1分毎のcronに処理を任せるので、ひとまず非公開にしておく。
+                    }
+                } else {
+                    nOpenId = _getOpenId(bNotRecently);
+                }
             }
         } else {
             nOpenId = _getOpenId(bNotRecently);

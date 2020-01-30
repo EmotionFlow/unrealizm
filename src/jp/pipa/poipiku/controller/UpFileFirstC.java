@@ -143,11 +143,14 @@ public class UpFileFirstC extends UpC{
 
 			// open_id更新
 			int nOpenId = GetOpenId(
+				-1,
 				cContent.m_nPublishId,
 				cParam.m_bNotRecently,
 				cContent.m_bLimitedTimePublish,
+				cContent.m_bLimitedTimePublish,
 				cContent.m_timeUploadDate,
-				cContent.m_timeEndDate);
+				cContent.m_timeEndDate,
+				null,null);
 
 			// update making file_name
 			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";

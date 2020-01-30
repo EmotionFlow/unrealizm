@@ -1,8 +1,6 @@
 package jp.pipa.poipiku.controller;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -25,19 +23,27 @@ public class UpdateC extends UpC {
 		int idx = 0;
 		int nPublishIdPresend = -1;
 		String strTweetId = "";
+		int nOpenIdPresent = 2;
+		Timestamp tsUploadDatePresent = new Timestamp(0);
+		Timestamp tsEndDatePresent = new Timestamp(0);
+		boolean bLimitedTimePublishPresent = false;
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "SELECT publish_id, tweet_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+			strSql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
+				nOpenIdPresent = cResSet.getInt("open_id");
 				nPublishIdPresend = cResSet.getInt("publish_id");
 				strTweetId = cResSet.getString("tweet_id");
+				bLimitedTimePublishPresent = cResSet.getBoolean("limited_time_publish");
+				tsUploadDatePresent = cResSet.getTimestamp("upload_date");
+				tsEndDatePresent = cResSet.getTimestamp("end_date");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -50,11 +56,15 @@ public class UpdateC extends UpC {
 		try {
 			// create statement
 			int nOpenId = GetOpenId(
+				nOpenIdPresent,
 				cParam.m_nPublishId,
 				cParam.m_bNotRecently,
 				cParam.m_bLimitedTimePublish,
+				bLimitedTimePublishPresent,
 				cParam.m_tsPublishStart,
-				cParam.m_tsPublishEnd);
+				cParam.m_tsPublishEnd,
+				tsUploadDatePresent,
+				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<String>();
 				lColumns.addAll(Arrays.asList(
@@ -137,8 +147,18 @@ public class UpdateC extends UpC {
 			// Add tags
 			AddTags(cParam.m_strDescription, cParam.m_strTagList, cParam.m_nContentId, cConn, cState);
 
-			// もし、期間限定&開始日時変更＆同時ツイートON＆前のツイートを削除だったら、ツイート削除→ツイート→UPDATE tweet_id=NULL
-			if ( cParam.m_bLimitedTimePublish && (cParam.m_bTweetTxt || cParam.m_bTweetImg) && cParam.m_bDeleteTweet && !strTweetId.isEmpty()){
+			// もし、(期間限定OFFからONに変更 || (期間限定 & (非公開中|公開中&期間変更あり))
+			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
+			// だったら、ツイート削除→UPDATE tweet_id=NULL
+			Log.d(String.format("timestamp: %b", !tsUploadDatePresent.equals(cParam.m_tsPublishStart)));
+			if ((
+					(!bLimitedTimePublishPresent && cParam.m_bLimitedTimePublish)
+					|| (cParam.m_bLimitedTimePublish && (nOpenIdPresent==2 || nOpenIdPresent!=2 && (!tsUploadDatePresent.equals(cParam.m_tsPublishStart) || !tsEndDatePresent.equals(cParam.m_tsPublishEnd))))
+				)
+				&& (cParam.m_bTweetTxt || cParam.m_bTweetImg)
+				&& cParam.m_bDeleteTweet
+				&& !strTweetId.isEmpty()
+				){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(cParam.m_nUserId)){
 					cTweet.Delete(strTweetId);
@@ -153,8 +173,6 @@ public class UpdateC extends UpC {
 					cState.close();cState=null;
 				}
 			}
-
-
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

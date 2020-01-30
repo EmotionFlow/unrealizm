@@ -173,6 +173,7 @@ function UpdateFile(user_id, content_id) {
 	strDescription = strDescription.substr(0 , 200);
 	var strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
+	var nOpenId = $('#ContentOpenId').val();
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
@@ -204,7 +205,13 @@ function UpdateFile(user_id, content_id) {
 	}
 
 	var nTweetNow = nTweet;
-	if(nLimitedTime==1) nTweetNow = 0;
+	if(nLimitedTime==1){
+		if(nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
+			nTweetNow = 1;
+		} else {
+			nTweetNow = 0;
+		}
+	}
 
 	startMsg();
 

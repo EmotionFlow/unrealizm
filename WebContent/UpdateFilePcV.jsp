@@ -177,6 +177,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">
+					<input id="ContentOpenId" value="<%=cResults.m_cContent.m_nOpenId%>" type="hidden"/>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
