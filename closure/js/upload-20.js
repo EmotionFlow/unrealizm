@@ -606,7 +606,46 @@ function updateAreaLimitedTimePublish(publishId) {
 	}
 }
 
-function updatePublish() {
+function udpateMyTwitterList() {
+	var isExecuted = false;
+	var apiResp = null;
+	function dispMyTwitterList(){
+		if(isExecuted) return;
+		isExecuted = true;
+		$("#TwitterListLoading").hide();
+		if(apiResp.result!=0 || (apiResp.result==0 && apiResp.twitter_open_list.length == 0)){
+			$("#TwitterListNotFound").show();
+			$("#EditTwitterList").hide();
+		} else {
+			$("#TwitterListNotFound").hide();
+			$("#EditTwitterList").show();
+			apiResp.twitter_open_list.forEach(function(l, idx, ar){
+				$("#EditTwitterList").append('<option value=' + l.id +  '">' + l.name + '</option>');
+			});
+		}
+	}
+
+	return function _updateMyTwitterList(nUserId){
+		if(apiResp != null){
+			dispMyTwitterList();
+		} else {
+			$.ajax({
+				"type": "post",
+				"data": {"ID": nUserId},
+				"url": "/api/TwitterMyListF.jsp",
+				"dataType": "json",
+				"success": function(data) {
+					apiResp = data;
+					dispMyTwitterList();
+				}
+			});
+		}
+	};
+}
+
+var updateMyTwitterListF = udpateMyTwitterList();
+
+function updatePublish(nUserId) {
 	var val = parseInt($('#EditPublish').val(), 10);
 	updateAreaLimitedTimePublish(val);
 
@@ -643,6 +682,10 @@ function updatePublish() {
 				function(){
 					elToVisible.delay(nChangeDelay).slideDown(nSlideSpeed);
 				});
+		}
+
+		if(val == 10){
+			updateMyTwitterListF(nUserId);
 		}
     } else {
 		for (var i=0; i<elements.length; i++){
@@ -798,6 +841,10 @@ function UploadFile(user_id) {
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
+		if($("#TwitterListNotFound").is(':visible')){
+			twitterListNotFoundMsg();
+			return;
+		}
         nTwListId = $('#EditTwitterList').val();
 	}
 	if(nLimitedTime==1){
