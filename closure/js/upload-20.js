@@ -611,6 +611,10 @@ function udpateMyTwitterList() {
 	var apiResp = null;
 	function dispMyTwitterList(){
 		if(isExecuted) return;
+		if($("#EditTwitterList").children().length>0){
+			isExecuted = true;
+			return;
+		}
 		isExecuted = true;
 		$("#TwitterListLoading").hide();
 		if(apiResp.result!=0 || (apiResp.result==0 && apiResp.twitter_open_list.length == 0)){
@@ -620,7 +624,7 @@ function udpateMyTwitterList() {
 			$("#TwitterListNotFound").hide();
 			$("#EditTwitterList").show();
 			apiResp.twitter_open_list.forEach(function(l, idx, ar){
-				$("#EditTwitterList").append('<option value=' + l.id +  '">' + l.name + '</option>');
+				$("#EditTwitterList").append('<option value="' + l.id +  '">' + l.name + '</option>');
 			});
 		}
 	}
@@ -632,7 +636,7 @@ function udpateMyTwitterList() {
 			$.ajax({
 				"type": "post",
 				"data": {"ID": nUserId},
-				"url": "/api/TwitterMyListF.jsp",
+				"url": "/f/TwitterMyListF.jsp",
 				"dataType": "json",
 				"success": function(data) {
 					apiResp = data;

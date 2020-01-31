@@ -12,9 +12,6 @@ if(!cCheckLogin.m_bLogin) {
 
 CTweet cTweet = new CTweet();
 boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
-if(bTwRet && cTweet.m_bIsTweetEnable){
-	cTweet.GetMyOpenLists();
-}
 
 String strTag = "";
 try {
