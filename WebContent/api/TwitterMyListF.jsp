@@ -13,30 +13,36 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 int nResult = 0;
-
-//login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) {
-	nResult = -1;
-}
-
-//パラメータの取得
-int m_nUserId = Common.ToInt(request.getParameter("ID"));
-
-//認証
-if (cCheckLogin.m_nUserId!=m_nUserId) {
-	nResult = -2;
-}
-
-//twitter連携確認
 CTweet cTweet = new CTweet();
-if (!cTweet.GetResults(m_nUserId)) {
-    nResult = -101;
-}
 
-//リスト取得
-if (!cTweet.GetMyOpenLists()) {
-    nResult = -102;
+PROCESS: {
+	//login check
+	CheckLogin cCheckLogin = new CheckLogin(request, response);
+	if(!cCheckLogin.m_bLogin) {
+		nResult = -1;
+		break PROCESS;
+	}
+
+	//パラメータの取得
+	int m_nUserId = Common.ToInt(request.getParameter("ID"));
+
+	//認証
+	if (cCheckLogin.m_nUserId!=m_nUserId) {
+		nResult = -2;
+		break PROCESS;
+	}
+
+	//twitter連携確認
+	if (!cTweet.GetResults(m_nUserId)) {
+		nResult = -101;
+		break PROCESS;
+	}
+
+	//リスト取得
+	if (!cTweet.GetMyOpenLists()) {
+		nResult = -102;
+		break PROCESS;
+	}
 }
 
 //JSON元データを格納する連想配列
