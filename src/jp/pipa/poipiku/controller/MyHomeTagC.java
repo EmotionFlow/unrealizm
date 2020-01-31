@@ -54,79 +54,39 @@ public class MyHomeTagC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			String strSearchTag = "";
+			// サーチタグの存在確認
+			boolean bSearchTag = false;
 			strSql = "SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0 LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cCheckLogin.m_nUserId);
 			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				strSearchTag = Common.ToString(cResSet.getString(1)).trim();
-			}
+			bSearchTag = cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			String m_strSearchKeyword = "";
-			String strCondSearch = "";
-			strSql = "SELECT ARRAY_TO_STRING(ARRAY(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=1 LIMIT 100), ' OR ')";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_strSearchKeyword = Common.ToString(cResSet.getString(1)).trim();
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			// サーチキーワード
+			String strSearchKeyword = SqlUtil.getSearhKeyWord(cConn, cCheckLogin.m_nUserId);
 
-			// 探すものが無いときはそのまま終了(0件確定時に実行するとすごく遅い::content_id IN (null) が9.6で遅いため。新バージョンでは改良している可能性あり)
-			if (strSearchTag.isEmpty() && m_strSearchKeyword.isEmpty()) return true;
+			// サーチタグ&サーチキーワード共に無い場合はそのまま終了
+			if (!bSearchTag && strSearchKeyword.isEmpty()) return true;
 
 			// ミュートキーワード
-			String strMuteKeyword = "";
-			String strCondMute = "";
-			strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			String strMuteKeyword = SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
 
-			if(!strMuteKeyword.isEmpty()) {
-				strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
-			}
-			if(!m_strSearchKeyword.isEmpty()) {
-				strCondSearch = " OR content_id IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
-			}
-			String strCondStart = (m_nStartId>0)?" AND content_id<?":"";
+			// ブロックユーザクエリ
+			String strCondBlock = SqlUtil.getBlockUserSql(cConn, cCheckLogin.m_nUserId);
+			// 非ブロックユーザクエリ
+			String strCondBlocked = SqlUtil.getBlockedUserSql(cConn, cCheckLogin.m_nUserId);
+			// サーチキーワードクエリ
+			String strCondSearch = (!strSearchKeyword.isEmpty())?" OR contents_0000.content_id IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)":"";
+			// ミュートキーワードクエリ
+			String strCondMute = (!strMuteKeyword.isEmpty())?" AND contents_0000.content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)":"";
+			// 無限スクロール用のスタートポジションクエリ
+			String strCondStart = (m_nStartId>0)?" AND contents_0000.content_id<?":"";
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				/*
-				strSql = String.format("SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? AND ((content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt IN(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0) AND tag_type=1) %s) %s)", strCondMute, strCondSearch);
-				cState = cConn.prepareStatement(strSql);
-				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				if(!strMuteKeyword.isEmpty()) {
-					cState.setString(idx++, strMuteKeyword);
-				}
-				if(!m_strSearchKeyword.isEmpty()) {
-					cState.setString(idx++, m_strSearchKeyword);
-				}
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-				*/
-
-
-				// Owner contents total number
+				// PC版右ペイン用
 				idx = 1;
 				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
@@ -139,24 +99,31 @@ public class MyHomeTagC {
 				cState.close();cState=null;
 			}
 
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id<>2 /*AND contents_0000.upload_date>CURRENT_DATE-30*/ AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? AND (content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt IN(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0) AND tag_type=1) %s %s) %s ORDER BY content_id DESC LIMIT ?", strCondMute, strCondSearch, strCondStart);
-			cState = cConn.prepareStatement(strSql);
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id");
+			sb.append(" FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id");
+			sb.append(" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=?");
+			sb.append(" WHERE open_id<>2");
+			sb.append(strCondBlock);
+			sb.append(strCondBlocked);
+			sb.append(" AND safe_filter<=?");
+			sb.append(" AND (content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt IN(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0) AND tag_type=1)");
+			sb.append(strCondSearch);
+			sb.append(")");
+			sb.append(strCondMute);
+			sb.append(strCondStart);
+			sb.append(" ORDER BY content_id DESC LIMIT ?");
+			cState = cConn.prepareStatement(sb.toString());
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			if(!strMuteKeyword.isEmpty()) {
-				cState.setString(idx++, strMuteKeyword);
-			}
-			if(!m_strSearchKeyword.isEmpty()) {
-				cState.setString(idx++, m_strSearchKeyword);
-			}
-			if(m_nStartId>0) {
-				cState.setInt(idx++, m_nStartId);
-			}
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
+			cState.setInt(idx++, cCheckLogin.m_nUserId); // follows_0000.user_id=?
+			if(!strCondBlock.isEmpty()) cState.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.user_id=?
+			if(!strCondBlocked.isEmpty()) cState.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.block_user_id=?
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
+			cState.setInt(idx++, cCheckLogin.m_nUserId); // follow_tags_0000.user_id=?
+			if(!strCondSearch.isEmpty()) cState.setString(idx++, strSearchKeyword);
+			if(!strCondMute.isEmpty()) cState.setString(idx++, strMuteKeyword);
+			if(!strCondStart.isEmpty()) cState.setInt(idx++, m_nStartId); // content_id<?
+			cState.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
@@ -172,9 +139,6 @@ public class MyHomeTagC {
 			cState.close();cState=null;
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
-
-			// Each append image
-			GridUtil.getEachImage(cConn, m_vContentList);
 
 			// Each Comment
 			GridUtil.getEachComment(cConn, m_vContentList);
@@ -195,3 +159,4 @@ public class MyHomeTagC {
 	}
 
 }
+

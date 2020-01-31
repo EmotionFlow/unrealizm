@@ -139,8 +139,6 @@ public class SearchIllustByTagGridC {
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
-			// Each append image
-			GridUtil.getEachImage(cConn, m_vContentList);
 			// Each Comment
 			GridUtil.getEachComment(cConn, m_vContentList);
 			// Bookmark

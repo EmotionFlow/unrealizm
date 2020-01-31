@@ -11,24 +11,6 @@ import jp.pipa.poipiku.*;
 public class GridUtil {
 	public static int SELECT_MAX_EMOJI = 59;
 
-	public static void getEachImage(Connection connection, ArrayList<CContent> contents) throws SQLException {
-		// Each append image
-		/*
-		String sql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
-		PreparedStatement statement = connection.prepareStatement(sql);
-		for(CContent content : contents) {
-			if(content.m_nFileNum<=1) continue;
-			statement.setInt(1, content.m_nContentId);
-			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				content.m_vContentAppend.add(new CContentAppend(resultSet));
-			}
-			resultSet.close();resultSet=null;
-		}
-		statement.close();statement=null;
-		*/
-	}
-
 	public static void getEachComment(Connection connection, ArrayList<CContent> contents) throws SQLException {
 		// Each Comment
 		String sql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";

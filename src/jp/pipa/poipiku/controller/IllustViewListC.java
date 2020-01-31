@@ -109,9 +109,6 @@ public class IllustViewListC {
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
-			// Each append image
-			GridUtil.getEachImage(cConn, m_vContentList);
-
 			// Each Comment
 			if(cUser.m_nReaction==CUser.REACTION_SHOW) {
 				GridUtil.getEachComment(cConn, m_vContentList);
