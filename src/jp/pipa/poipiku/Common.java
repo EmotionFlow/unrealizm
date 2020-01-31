@@ -363,6 +363,7 @@ public class Common {
 	}
 
 	public static String ToYMDHMString(Timestamp ts){
+		if(ts==null){return "";}
 		LocalDateTime ldt = ts.toLocalDateTime();
 		ZonedDateTime zdtSystemDefault = ldt.atZone(ZoneId.systemDefault());
 		ZonedDateTime zdtGmt = zdtSystemDefault.withZoneSameInstant(ZoneId.of("GMT"));
