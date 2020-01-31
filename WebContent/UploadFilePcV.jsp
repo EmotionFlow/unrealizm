@@ -2,4 +2,4 @@
 <%
 int nEditorId = 0;
 %>
-<%@ include file="/UploadPcV.jsp"%>
+<%@ include file="/inner/UploadPcV.jsp"%>
