@@ -135,6 +135,7 @@ public class UpdateC extends UpC {
 			cState.close();cState=null;
 
 			// content_idを振り直す
+			// 処理更新時は、 https://github.com/gochipon/poipiku_script にもその内容を反映させること。
 			if(bToPublish){
 				try{
 					strSql = "INSERT INTO content_id_histories VALUES(?, nextval('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
