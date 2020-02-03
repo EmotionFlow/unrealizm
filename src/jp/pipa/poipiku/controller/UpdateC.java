@@ -27,6 +27,7 @@ public class UpdateC extends UpC {
 		Timestamp tsUploadDatePresent = new Timestamp(0);
 		Timestamp tsEndDatePresent = new Timestamp(0);
 		boolean bLimitedTimePublishPresent = false;
+		Integer nNewContentId = null;
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -55,6 +56,7 @@ public class UpdateC extends UpC {
 
 		try {
 			// create statement
+			boolean bToPublish = false;
 			int nOpenId = GetOpenId(
 				nOpenIdPresent,
 				cParam.m_nPublishId,
@@ -76,6 +78,7 @@ public class UpdateC extends UpC {
 			if(!cParam.m_bLimitedTimePublish){
 				// これまで非公開で、今後公開したい。
 				if(nPublishIdPresend==Common.PUBLISH_ID_HIDDEN && cParam.m_nPublishId!=Common.PUBLISH_ID_HIDDEN){
+					bToPublish = true;
 					lColumns.add("upload_date=current_timestamp");
 				}
 			} else {
@@ -131,12 +134,74 @@ public class UpdateC extends UpC {
 			}
 			cState.close();cState=null;
 
+			// content_idを振り直す
+			if(bToPublish){
+				try{
+					strSql = "INSERT INTO content_id_histories VALUES(?, nextval('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, cParam.m_nContentId);
+					cResSet = cState.executeQuery();
+					if(cResSet.next()) {
+						nNewContentId = cResSet.getInt("new_id");
+					} else {
+						throw new Exception("new content id is null.");
+					}
+				}catch(Exception e){
+					Log.d(e.getMessage());
+					e.printStackTrace();
+				}finally{
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				}
+
+				if(nNewContentId!=null){
+					boolean bUpdateFaild = false;
+					try{
+						// transaction
+						cConn.setAutoCommit(false);
+						String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "contents_appends_0000", "rank_contents_total", "tags_0000"};
+						for(String t : lUpdateTable){
+							strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
+							cState = cConn.prepareStatement(strSql);
+							cState.setInt(1, nNewContentId);
+							cState.setInt(2, cParam.m_nContentId);
+							cState.executeUpdate();
+						}
+						cConn.commit();
+					}catch(Exception e){
+						bUpdateFaild = true;
+						Log.d(e.getMessage());
+						e.printStackTrace();
+						cConn.rollback();
+					}finally{
+						cState.close();cState=null;
+						cConn.setAutoCommit(true);
+					}
+					if(bUpdateFaild){
+						try{
+							nNewContentId=null;
+							strSql = "DELETE FROM content_id_histories WEHRE old_id=?";
+							cState = cConn.prepareStatement(strSql);
+							cState.setInt(1, cParam.m_nContentId);
+							cState.executeUpdate();
+						}catch(Exception e){
+							Log.d(e.getMessage());
+							e.printStackTrace();
+							cConn.rollback();
+						}finally{
+							cState.close();cState=null;
+							cConn.setAutoCommit(true);
+						}
+					}
+				}
+			}
+
 			// Delete old tags
 			if (!cParam.m_strDescription.isEmpty() || !cParam.m_strTagList.isEmpty()) {
 				strSql = "DELETE FROM tags_0000 WHERE content_id=?;";
 				cState = cConn.prepareStatement(strSql);
 				try {
-					cState.setInt(1, cParam.m_nContentId);
+					cState.setInt(1, nNewContentId==null?cParam.m_nContentId:nNewContentId);
 					cState.executeUpdate();
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -145,7 +210,7 @@ public class UpdateC extends UpC {
 			}
 
 			// Add tags
-			AddTags(cParam.m_strDescription, cParam.m_strTagList, cParam.m_nContentId, cConn, cState);
+			AddTags(cParam.m_strDescription, cParam.m_strTagList, nNewContentId==null?cParam.m_nContentId:nNewContentId, cConn, cState);
 
 			// もし、(期間限定OFFからONに変更 || (期間限定 & (非公開中|公開中&期間変更あり))
 			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
@@ -165,7 +230,7 @@ public class UpdateC extends UpC {
 					strSql = "UPDATE contents_0000 SET tweet_id=NULL WHERE content_id=?";
 					cState = cConn.prepareStatement(strSql);
 					try {
-						cState.setInt(1, cParam.m_nContentId);
+						cState.setInt(1,  nNewContentId==null?cParam.m_nContentId:nNewContentId);
 						cState.executeUpdate();
 					} catch(Exception e) {
 						e.printStackTrace();
@@ -180,6 +245,6 @@ public class UpdateC extends UpC {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return cParam.m_nContentId;
+		return  nNewContentId==null?cParam.m_nContentId:nNewContentId;
 	}
 }
