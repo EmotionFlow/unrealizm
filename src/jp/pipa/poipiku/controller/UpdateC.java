@@ -216,7 +216,6 @@ public class UpdateC extends UpC {
 			// もし、(期間限定OFFからONに変更 || (期間限定 & (非公開中|公開中&期間変更あり))
 			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
 			// だったら、ツイート削除→UPDATE tweet_id=NULL
-			Log.d(String.format("timestamp: %b", !tsUploadDatePresent.equals(cParam.m_tsPublishStart)));
 			if ((
 					(!bLimitedTimePublishPresent && cParam.m_bLimitedTimePublish)
 					|| (cParam.m_bLimitedTimePublish && (nOpenIdPresent==2 || nOpenIdPresent!=2 && (!tsUploadDatePresent.equals(cParam.m_tsPublishStart) || !tsEndDatePresent.equals(cParam.m_tsPublishEnd))))
