@@ -185,6 +185,10 @@ function UpdateFile(user_id, content_id) {
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
+		if($("#TwitterListNotFound").is(':visible')){
+			twitterListNotFoundMsg();
+			return;
+		}
         nTwListId = $('#EditTwitterList').val();
 	}
 	if(nLimitedTime==1){
@@ -409,9 +413,13 @@ function createUpdatePaste(){
 		var strPublishStart = null;
 		var strPublishEnd = null;
 		if(nPublishId==10){
+			if($("#TwitterListNotFound").is(':visible')){
+				twitterListNotFoundMsg();
+				return;
+			}
 			nTwListId = $('#EditTwitterList').val();
 		}
-		if(nLimitedTime==1){
+			if(nLimitedTime==1){
 			strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
 			strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
 			strPublishStartPresent = $('#EditTimeLimitedStartPresent').val();

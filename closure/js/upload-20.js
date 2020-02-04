@@ -1018,6 +1018,10 @@ function UploadPaste(user_id) {
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
+		if($("#TwitterListNotFound").is(':visible')){
+			twitterListNotFoundMsg();
+			return;
+		}
         nTwListId = $('#EditTwitterList').val();
 	}
 	if(nLimitedTime==1){

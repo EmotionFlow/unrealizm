@@ -91,10 +91,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
 			}
 
-			function twtterListNotFoundMsg(){
-				DispMsg('<%=_TEX.T("EditIllustVCommon.Update.Error.TwListNotFond")%>');
-			}
-
 			function dateTimeEmptyMsg() {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
 			}
@@ -105,6 +101,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 			function dateTimeReverseMsg() {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
+			}
+
+			function twitterListNotFoundMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%>");
 			}
 
 			function completeMsg() {
@@ -265,16 +265,22 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						</div>
 					</div>
 					<div id="ItemTwitterList" class="OptionItem"
-						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_T_LIST){%>style="display: none;"<%}%>
+						<% boolean bPublishTwitterList = cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST; %>
+						<%if(!bPublishTwitterList){%>style="display: none;"<%}%>
 						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
 							<span id="TwitterListLoading"
-								<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_T_LIST){%>style="display: none;"<%}%>
+								<%if(!bPublishTwitterList){%>style="display: none;"<%}%>
 							></span>
-							<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
+							<span id="TwitterListNotFound"
+								<%if(!bPublishTwitterList || bPublishTwitterList && cTweet.m_listOpenList!=null && cTweet.m_listOpenList.size()>0) { %>
+									style="display: none;"
+								<%}%>
+								><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
 							<select id="EditTwitterList" class="EditPublish"
-								<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_T_LIST){%>style="display: none;"<%}%>
+								<%
+								if(!bPublishTwitterList || (bPublishTwitterList && (cTweet.m_listOpenList==null || cTweet.m_listOpenList.size()==0))){%>style="display: none;"<%}%>
 							>
 								<%
 								boolean bTwListFound = false;
