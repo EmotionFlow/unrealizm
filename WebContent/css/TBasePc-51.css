@@ -33,12 +33,15 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 #MenuSearch .FooterMenuItemIcon {background-position: -56px 0;}
 #MenuUpload .FooterMenuItemIcon {background-position: -28px 0;}
 #MenuAct .FooterMenuItemIcon {background-position: -392px 0;}
+#MenuSettings .FooterMenuItemIcon {background: url(/img/menu_settings.png); background-size: 82%; background-repeat: no-repeat; top: 3px; left: 2px;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: 0 -28px;}
 /*#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}*/
 #MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -28px -28px;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
+#MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background: url(/img/menu_settings_active.png); background-size: 82%; background-repeat: no-repeat; top: 3px; left: 2px;}
+
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}
 .FooterMenu .MyEditSettingBtn {font-size: 14px; padding: 3px 7px; margin-left: 8px;}
 

@@ -90,6 +90,32 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
+		#MenuSettings {
+			position: absolute;
+			top: 3px;
+			right: 9px;
+			display: block;
+		}
+		#MenuSettings .MenuSettingsIcon{
+			background: url(/img/menu_settings_active.png);
+			background-size: 90%;
+			background-repeat: no-repeat;
+			top: 5px;
+			left: 1px;
+			position: relative;
+			width: 28px;
+			display: inline-block;
+			height: 28px;
+		}
+		#MenuSettings .MenuSettingsName{
+			display: block;
+			width: 100%;
+			height: 10px;
+			line-height: 10px;
+			text-align: center;
+			font-size: 9px;
+			color: #5bd;
+		}
 		</style>
 	</head>
 
@@ -103,13 +129,16 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 							<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
 						</a>
 					</h1>
-					<a class="HeaderSetting BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
+					<a id="MenuSettings" href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId %>">
+						<span class="MenuSettingsIcon"></span>
+						<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
+					</a>
 				</div>
 
 				<%if(cCheckLogin.m_bLogin) {%>
 				<div class="FooterMenuWrapper">
 					<nav class="FooterMenu">
-						<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
+						<a id="MenuMe" class="FooterMenuItem Selected" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 							<span class="FooterMenuItemIcon"></span>
 							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 						</a>

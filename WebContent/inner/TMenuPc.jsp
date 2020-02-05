@@ -92,8 +92,9 @@
 			</a>
 			<%
 			if(request.getRequestURL().toString().indexOf("MyIllustListPcV.jsp")>0){%>
-			<a class="BtnBase MyEditSettingBtn" href="/MyEditSettingPcV.jsp">
-				<i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%>
+			<a id="MenuSettings" class="FooterMenuItem" href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId %>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
 			<%}%>
 
