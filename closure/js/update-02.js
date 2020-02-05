@@ -248,7 +248,7 @@ function UpdateFile(user_id, content_id) {
 			if (data && data.content_id > 0) {
 				if (multiFileUploader.getSubmittedNum()>0) {
 					multiFileUploader.user_id = user_id;
-					multiFileUploader.content_id = content_id;
+					multiFileUploader.content_id = data.content_id;
 					multiFileUploader.tweet = nTweetNow;
 					multiFileUploader.tweet_image = nTweetImage;
 					multiFileUploader.delete_tweet = nDeleteTweet;
@@ -256,10 +256,10 @@ function UpdateFile(user_id, content_id) {
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					if(nTweetNow==1){
-						UpdateFileOrder(user_id, content_id, null);
-						Tweet(user_id, content_id, nTweetImage, nDeleteTweet);
+						UpdateFileOrder(user_id, data.content_id, null);
+						Tweet(user_id, data.content_id, nTweetImage, nDeleteTweet);
 					}else{
-						UpdateFileOrder(user_id, content_id, "/MyIllustListV.jsp");
+						UpdateFileOrder(user_id, data.content_id, "/MyIllustListV.jsp");
 					}
 				}
 			} else {
