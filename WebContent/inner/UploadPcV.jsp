@@ -65,8 +65,17 @@ try {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
 			}
 
+			function twtterListRateLimiteExceededMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
+			}
+			function twtterListInvalidTokenMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.InvalidToken")%>");
+			}
 			function twitterListNotFoundMsg() {
 				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%>");
+			}
+			function twtterListOtherErrMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.OtherErr")%>");
 			}
 
 			function completeMsg() {

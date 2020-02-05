@@ -620,6 +620,13 @@ function udpateMyTwitterList() {
 		if(apiResp.result!=0 || (apiResp.result==0 && apiResp.twitter_open_list.length == 0)){
 			$("#TwitterListNotFound").show();
 			$("#EditTwitterList").hide();
+			if(apiResp.result==-102){
+				twtterListRateLimiteExceededMsg();
+			}else if(apiResp.result==-103){
+				twtterListInvalidTokenMsg();
+			}else if(apiResp.result<0){
+				twtterListOtherErrMsg();
+			}
 		} else {
 			$("#TwitterListNotFound").hide();
 			$("#EditTwitterList").show();

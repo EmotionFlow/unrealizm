@@ -118,7 +118,7 @@ public class DeleteContentC {
 			if(cParam.m_nUserId==cContent.m_nUserId && cParam.m_nDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(cParam.m_nUserId)) {
-					if(!cTweet.Delete(cContent.m_strTweetId)){
+					if(cTweet.Delete(cContent.m_strTweetId)!=CTweet.OK){
 						Log.d("cTweet.Delete() failed");
 					}
 				} else {

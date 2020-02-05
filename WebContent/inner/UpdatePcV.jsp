@@ -20,8 +20,9 @@ if(!cResults.getResults(cCheckLogin)) {
 
 CTweet cTweet = new CTweet();
 boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+int nTwLstRet = 0;
 if(bTwRet && cTweet.m_bIsTweetEnable && cResults.m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST){
-	cTweet.GetMyOpenLists();
+	nTwLstRet = cTweet.GetMyOpenLists();
 }
 
 final int[] PUBLISH_ID = {
@@ -103,8 +104,17 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
 			}
 
+			function twtterListRateLimiteExceededMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
+			}
+			function twtterListInvalidTokenMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.InvalidToken")%>");
+			}
 			function twitterListNotFoundMsg() {
 				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%>");
+			}
+			function twtterListOtherErrMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.OtherErr")%>");
 			}
 
 			function completeMsg() {
@@ -286,8 +296,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 								boolean bTwListFound = false;
 								if(cTweet.m_listOpenList!=null){
 									for(UserList l:cTweet.m_listOpenList){
-									System.out.println("ListId: " + Long.parseLong(cResults.m_cContent.m_strListId));
-									System.out.println("_getId: " + l.getId());
 								%>
 								<option value="<%=l.getId()%>"
 									<%if(!cResults.m_cContent.m_strListId.isEmpty() && l.getId() == Long.parseLong(cResults.m_cContent.m_strListId)) {
@@ -298,8 +306,16 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 								<%	}%>
 								<%}%>
 							</select>
-							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST && !bTwListFound){%>
-							<script>twtterListNotFoundMsg()</script>
+							<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){%>
+								<%if(nTwLstRet==CTweet.ERR_RATE_LIMIT_EXCEEDED){%>
+								<script>twtterListRateLimiteExceededMsg()</script>
+								<%}else if(nTwLstRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){%>
+								<script>twtterListInvalidTokenMsg()</script>
+								<%}else if(nTwLstRet==CTweet.ERR_OTHER){%>
+								<script>twtterListOtherErrMsg()</script>
+								<%}else if(nTwLstRet==CTweet.OK && !bTwListFound){%>
+								<script>twtterListNotFoundMsg()</script>
+								<%}%>
 							<%}%>
 						</div>
 					</div>

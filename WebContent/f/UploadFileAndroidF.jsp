@@ -177,11 +177,11 @@ class UploadFileC {
 
 				// ツイート
 				if(cParam.m_nOptImage==0) {	// text only
-					boolean bRsultTweet = cTweet.Tweet(strTwitterMsg);
-					if(!bRsultTweet) Log.d("tweet失敗");
+					int nRsultTweet = cTweet.Tweet(strTwitterMsg);
+					if(nRsultTweet!=CTweet.OK) Log.d("tweet失敗");
 				} else { // with image
-					boolean bRsultTweet = cTweet.Tweet(strTwitterMsg, strRealFileName);
-					if(!bRsultTweet) Log.d("tweet失敗");
+					int nRsultTweet = cTweet.Tweet(strTwitterMsg, strRealFileName);
+					if(nRsultTweet!=CTweet.OK) Log.d("tweet失敗");
 				}
 
 				if(cTweet.getLastTweetId()>0) {
