@@ -11,25 +11,26 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<style>
 			.AnalogicoInfo {display: none;}
 			.EntryButtonArea{
-			    position: relative;
-			    height: 26px;
-			    width: 100%;
-			    float:left;
-			    margin: 20px 0px;
+					position: relative;
+					height: 26px;
+					width: 100%;
+					float:left;
+					margin: 20px 0px;
 			}
 			.EntryButton{
-			    border: 1px solid #5bd;
-			    padding:5px;
-			    width: 200px;
-			    height: 26px;
-			    top: 0;
-			    bottom: 0;
-			    left: 0;
-			    right: 0;
-			    position: absolute;
-			    margin: auto;
-			    text-align: center;
-			    background-color: #fff;
+				display: block;
+					border: 1px solid #5bd;
+					padding:5px;
+					width: 200px;
+					height: 26px;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					position: absolute;
+					margin: auto;
+					text-align: center;
+					background-color: #fff;
 			}
 			.SettingList .SettingListItem {
 				display: block;
@@ -160,7 +161,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				</div>
 
 				<div class="EntryButtonArea">
-					<div class="EntryButton"><a href="https://reazon.jp/recruit/apply/">応募する</a></div>
+					<a class="EntryButton" href="https://reazon.jp/recruit/apply/">応募する</a>
 				</div>
 			</div>
 		</article><!--Wrapper-->
