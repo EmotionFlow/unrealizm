@@ -50,6 +50,7 @@ public class UpdateC extends UpC {
 			cState.close();cState=null;
 		} catch(Exception e) {
 			e.printStackTrace();
+			return -100;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 		}
@@ -131,6 +132,7 @@ public class UpdateC extends UpC {
 				cState.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
+				return -200;
 			}
 			cState.close();cState=null;
 
@@ -150,6 +152,7 @@ public class UpdateC extends UpC {
 				}catch(Exception e){
 					Log.d(e.getMessage());
 					e.printStackTrace();
+					return -300;
 				}finally{
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
@@ -193,6 +196,7 @@ public class UpdateC extends UpC {
 							cState.close();cState=null;
 							cConn.setAutoCommit(true);
 						}
+						return -400;
 					}
 				}
 			}
@@ -206,6 +210,7 @@ public class UpdateC extends UpC {
 					cState.executeUpdate();
 				} catch(Exception e) {
 					e.printStackTrace();
+					return -500;
 				}
 				cState.close();cState=null;
 			}
@@ -226,7 +231,10 @@ public class UpdateC extends UpC {
 				){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(cParam.m_nUserId)){
-					cTweet.Delete(strTweetId);
+					if(cTweet.Delete(strTweetId)!=CTweet.OK){
+						Log.d("Delete tweet failed.");
+						// 処理自体は続行する
+					}
 					strSql = "UPDATE contents_0000 SET tweet_id=NULL WHERE content_id=?";
 					cState = cConn.prepareStatement(strSql);
 					try {
@@ -234,6 +242,7 @@ public class UpdateC extends UpC {
 						cState.executeUpdate();
 					} catch(Exception e) {
 						e.printStackTrace();
+						return -600;
 					}
 					cState.close();cState=null;
 				}
@@ -241,6 +250,7 @@ public class UpdateC extends UpC {
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			return -700;
 		} finally {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
