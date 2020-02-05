@@ -495,26 +495,42 @@ function comparePublishDate(a, b){
 	}
 }
 function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
-	if(isUpdate && (strPublishStartPresent==null || strPublishEndPresent==null)){
-		return true;
-	}
-	if(isUpdate && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
-		return true;
-	}
 	if(strPublishStart=='' || strPublishEnd==''){
 		dateTimeEmptyMsg();
 		return false;
 	}
-	if(!isUpdate || isUpdate && (!comparePublishDate(strPublishStartPresent,strPublishStart) || !comparePublishDate(strPublishEndPresent, strPublishEnd))){
+
+	if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
+		dateTimeReverseMsg();
+		return false;
+	}
+
+	if(isUpdate){
+		if((strPublishStartPresent==null || strPublishEndPresent==null)){
+			return false;
+		}
+		var startEquals = comparePublishDate(strPublishStartPresent,strPublishStart);
+		var endEquals = comparePublishDate(strPublishEndPresent, strPublishEnd);
+		if(startEquals && endEquals){
+			return true;
+		}else if(!startEquals){
+			if(Date.parse(strPublishStart) < Date.now()){
+				dateTimePastMsg();
+				return false;
+			}
+		}else if(!endEquals){
+			if(Date.parse(strPublishEnd) < Date.now()) {
+				dateTimePastMsg();
+				return false;
+			}
+		}
+	}else {
 		if(Date.parse(strPublishStart) < Date.now() || Date.parse(strPublishEnd) < Date.now()) {
 			dateTimePastMsg();
 			return false;
 		}
 	}
-	if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
-		dateTimeReverseMsg();
-		return false;
-	}
+
 	return true;
 }
 function updateTweetButton() {
