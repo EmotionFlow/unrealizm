@@ -41,9 +41,14 @@ public class CTweet {
 	public static final int FRIENDSHIP_FRIEND = 1;		// フォローしている
 	public static final int FRIENDSHIP_FOLLOWER = 2;	// フォローされている
 	public static final int FRIENDSHIP_EACH = 3;		// 相互フォロー
-	public static final int ERR_RATE_LIMIT_EXCEEDED = -10088;
-	public static final int ERR_TWEET_DISABLE = -10000;
-	public static final int ERR_OTHER = -99999;
+
+	public static final int OK = 1;
+	public static final int ERR_NOT_FOUND = -404000;
+	public static final int ERR_RATE_LIMIT_EXCEEDED = -429088;
+	public static final int ERR_INVALID_OR_EXPIRED_TOKEN = -404089;
+	public static final int ERR_USER_IS_OVER_DAILY_STATUS_UPDATE_LIMIT = -403185;
+	public static final int ERR_TWEET_DISABLE = -999998;
+	public static final int ERR_OTHER = -999999;
 	public Status m_statusLastTweet = null;
 
 	private void LoggingTwitterException(TwitterException te){
@@ -56,6 +61,21 @@ public class CTweet {
 			strCallFrom = ste.getMethodName();
 		}
 		Log.d(String.format("TwitterException, %s, %d, %s, %d, %s", strCallFrom, te.getStatusCode() , m_strUserAccessToken, te.getErrorCode(), te.getMessage()));
+	}
+
+	private static int GetErrorCode(TwitterException te){
+		int nErrCode = ERR_OTHER;
+		int nTwErrCode = te.getErrorCode();
+		if(nTwErrCode==89){
+			nErrCode = ERR_INVALID_OR_EXPIRED_TOKEN;
+		} else if(nTwErrCode==88) {
+			nErrCode = ERR_RATE_LIMIT_EXCEEDED;
+		} else if(nTwErrCode==185) {
+			nErrCode = ERR_USER_IS_OVER_DAILY_STATUS_UPDATE_LIMIT;
+		} else if(te.getStatusCode()==404){
+			nErrCode = ERR_NOT_FOUND;
+		}
+		return nErrCode;
 	}
 
 	public boolean GetResults(int nUserId) {
@@ -102,9 +122,9 @@ public class CTweet {
 		return bResult;
 	}
 
-	public boolean GetMyOpenLists() {
-		if (!m_bIsTweetEnable) return false;
-		boolean bResult = true;
+	public int GetMyOpenLists() {
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		int nResult = OK;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
@@ -119,17 +139,17 @@ public class CTweet {
 		} catch (TwitterException te) {
 			te.printStackTrace();
 			LoggingTwitterException(te);
-			bResult = false;
+			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
-			bResult = false;
+			nResult = ERR_OTHER;
 		}
-		return bResult;
+		return nResult;
 	}
 
-	public boolean Tweet(String strTweet) {
-		if (!m_bIsTweetEnable) return false;
-		boolean bResult = true;
+	public int Tweet(String strTweet) {
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		int nResult = OK;
 		m_statusLastTweet = null;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -144,17 +164,17 @@ public class CTweet {
 		} catch (TwitterException te) {
 			te.printStackTrace();
 			LoggingTwitterException(te);
-			bResult = false;
+			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
-			bResult = false;
+			nResult = ERR_OTHER;
 		}
-		return bResult;
+		return nResult;
 	}
 
-	public boolean Tweet(String strTweet, String strFileName) {
-		if (!m_bIsTweetEnable) return false;
-		boolean bResult = true;
+	public int Tweet(String strTweet, String strFileName) {
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		int nResult = OK;
 		m_statusLastTweet = null;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -169,18 +189,18 @@ public class CTweet {
 		} catch (TwitterException te) {
 			te.printStackTrace();
 			LoggingTwitterException(te);
-			bResult = false;
+			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
-			bResult = false;
+			nResult = ERR_OTHER;
 		}
-		return bResult;
+		return nResult;
 	}
 
-	public boolean Tweet(String strTweet, ArrayList<String> vFileList) {
-		if(!m_bIsTweetEnable) return false;
-		if(vFileList.size()<=0) return false;
-		boolean bResult = true;
+	public int Tweet(String strTweet, ArrayList<String> vFileList) {
+		if(!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		if(vFileList.size()<=0) return ERR_OTHER;
+		int nResult = OK;
 		m_statusLastTweet = null;
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -223,12 +243,37 @@ public class CTweet {
 		} catch (TwitterException te) {
 			te.printStackTrace();
 			LoggingTwitterException(te);
-			bResult = false;
+			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
-			bResult = false;
+			nResult = ERR_OTHER;
 		}
-		return bResult;
+		return nResult;
+	}
+
+	public int Delete(String strTweetId){
+		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		int nResult = OK;
+		m_statusLastTweet = null;
+		try {
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+			m_statusLastTweet = twitter.destroyStatus(Long.parseLong(strTweetId));
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			LoggingTwitterException(te);
+			nResult = GetErrorCode(te);
+		} catch (Exception e) {
+			e.printStackTrace();
+			nResult = ERR_OTHER;
+		}
+		return nResult;
 	}
 
 	public int LookupFriendship(int nTargetUserId){
@@ -279,12 +324,7 @@ public class CTweet {
 			cState.close();cState=null;
 		} catch (TwitterException te) {
 			LoggingTwitterException(te);
-			if(te.getErrorCode() == 88){
-				nResult = ERR_RATE_LIMIT_EXCEEDED;
-			} else {
-				te.printStackTrace();
-				nResult = ERR_OTHER;
-			}
+			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
 			nResult = ERR_OTHER;
@@ -311,18 +351,10 @@ public class CTweet {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
             User u = twitter.showUserListMembership(Long.parseLong(cContent.m_strListId), m_lnTwitterUserId);
-			System.out.println(String.format("%s", u.getId()));
 			nResult = 1;
         }catch(TwitterException te){
 			LoggingTwitterException(te);
-            if(te.getStatusCode()==404){
-                nResult = 0; // リストが消されちゃった場合もここにくる。
-			} else if(te.getErrorCode() == 88){
-				nResult = ERR_RATE_LIMIT_EXCEEDED;
-			} else {
-				te.printStackTrace();
-				nResult = ERR_OTHER;
-			}
+			nResult = GetErrorCode(te);
 		}catch(Exception e) {
 			e.printStackTrace();
 			nResult = ERR_OTHER;

@@ -14,7 +14,7 @@ cResults.getParam(request);
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = "/";
-	response.sendRedirect("/IllustListV.jsp?ID=" + strKeywordHan);
+	response.sendRedirect("/IllustListPcV.jsp?ID=" + strKeywordHan);
 	return;
 }
 boolean bRtn = cResults.getResults(cCheckLogin);

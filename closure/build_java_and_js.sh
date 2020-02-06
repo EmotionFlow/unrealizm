@@ -17,7 +17,7 @@ done
 
 echo build ok
 
-rsync -av $DEST_PATH/ $DEPLOY_PATH/
+rsync -a $DEST_PATH/ $DEPLOY_PATH/
 
 echo rsync ok
 

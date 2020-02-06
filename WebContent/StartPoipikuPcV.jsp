@@ -88,11 +88,6 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 						</a>
 					</form>
 				</div>
-				<div class="AnalogicoInfoRegist">
-					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/MyHomePcV.jsp">
-						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
-					</a>
-				</div>
 				<div class="AnalogicoStart" style="margin-top: 0;">
 					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
 					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
@@ -175,7 +170,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 					</a>
 				</div>
 				<div class="AnalogicoInfoRegist">
-					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/MyHomePcV.jsp">
+					<a class="RegistByMainLink" href="/MyHomePcV.jsp">
 						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
 					</a>
 				</div>

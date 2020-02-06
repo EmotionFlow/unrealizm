@@ -23,6 +23,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta property="og:url" content="<%=strUrl%>" />
@@ -52,6 +53,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			*/
 		});
 		</script>
+
+		<%@ include file="/inner/TDeleteContent.jsp"%>
 
 		<script>
 		var g_nPage = 1;
@@ -110,12 +113,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					DispMsg('Connection error');
 				}
 			});
-		}
-
-		function DeleteContent(nUserId, nContentId) {
-			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-			DeleteContentBase(nUserId, nContentId);
-			return false;
 		}
 
 		function UpdateBlock() {
@@ -237,10 +234,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						<%if(!cCheckLogin.m_bLogin) {%>
 						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
 						<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
-						<%} else if(cResults.m_bOwner) {%>
-						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
-						<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
-						<%} else if(cResults.m_bBlocking){%>
+						<%} else if(cResults.m_bOwner) {
+							// 何も表示しない
+						} else if(cResults.m_bBlocking){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
 						<%} else if(cResults.m_bBlocked){%>
@@ -263,12 +259,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
-					<%if(cResults.m_bOwner) {%>
-					<a class="UserInfoStateItem" href="/FollowListPcV.jsp">
-						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
-					</a>
-					<%}%>
 				</section>
 			</div>
 		</article>

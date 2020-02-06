@@ -485,26 +485,282 @@ function setLastCategorySetting(val) {
 function getLastCategorySetting() {
 	return getLocalStrage('last_category');
 }
+function comparePublishDate(a, b){
+	if(a==null && b==null){
+		return false;
+	} else if(a==null && b==null){
+		return true;
+	} else {
+		return a.substr(0, 16) === b.substr(0, 16);
+	}
+}
+function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
+	if(strPublishStart=='' || strPublishEnd==''){
+		dateTimeEmptyMsg();
+		return false;
+	}
 
+	if(Date.parse(strPublishStart) > Date.parse(strPublishEnd)){
+		dateTimeReverseMsg();
+		return false;
+	}
+
+	if(isUpdate){
+		if((strPublishStartPresent==null || strPublishEndPresent==null)){
+			return false;
+		}
+		var startEquals = comparePublishDate(strPublishStartPresent,strPublishStart);
+		var endEquals = comparePublishDate(strPublishEndPresent, strPublishEnd);
+		if(startEquals && endEquals){
+			return true;
+		}else if(!startEquals){
+			if(Date.parse(strPublishStart) < Date.now()){
+				dateTimePastMsg();
+				return false;
+			}
+		}else if(!endEquals){
+			if(Date.parse(strPublishEnd) < Date.now()) {
+				dateTimePastMsg();
+				return false;
+			}
+		}
+	}else {
+		if(Date.parse(strPublishStart) < Date.now() || Date.parse(strPublishEnd) < Date.now()) {
+			dateTimePastMsg();
+			return false;
+		}
+	}
+
+	return true;
+}
 function updateTweetButton() {
 	var bTweet = $('#OptionTweet').prop('checked');
 	if(!bTweet) {
 		$('#ImageSwitch .OptionLabel').addClass('disabled');
 		$('#ImageSwitch .onoffswitch').addClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',true);
+
+		$('#DeleteTweetSwitch .OptionLabel').addClass('disabled');
+		$('#DeleteTweetSwitch .onoffswitch').addClass('disabled');
+		$('#OptionDeleteTweet:checkbox').prop('disabled',true);
 	} else {
 		$('#ImageSwitch .OptionLabel').removeClass('disabled');
 		$('#ImageSwitch .onoffswitch').removeClass('disabled');
 		$('#OptionImage:checkbox').prop('disabled',false);
+		$('#DeleteTweetSwitch .OptionLabel').removeClass('disabled');
+		$('#DeleteTweetSwitch .onoffswitch').removeClass('disabled');
+		$('#OptionDeleteTweet:checkbox').prop('disabled',false);
 	}
 }
 
-function updatePublish() {
-	var val = $('#EditPublish').val();
-	if (val==4) {
-		$('#ItemPassword').slideDown(300);
+function initStartDatetime(datetime){
+	$("#EditTimeLimitedStart").flatpickr({
+		enableTime: true,
+		dateFormat: "Z",
+		altInput: true,
+		altFormat: "Y/m/d H:i",
+		time_24hr: true,
+		minuteIncrement: 30,
+		defaultDate: datetime,
+	});
+}
+
+function initEndDatetime(datetime){
+	$("#EditTimeLimitedEnd").flatpickr({
+		enableTime: true,
+		dateFormat: "Z",
+		altInput: true,
+		altFormat: "Y/m/d H:i",
+		time_24hr: true,
+		minuteIncrement: 30,
+		defaultDate: datetime,
+	});
+}
+
+function updateOptionLimitedTimePublish(){
+	var elVal = $('#ItemTimeLimitedVal');
+	var nSlideSpeed = 300;
+	if($('#OptionLimitedTimePublish').prop('checked')){
+		elVal.slideDown(nSlideSpeed, function(){
+			$.each(["#EditTimeLimitedStart", "#EditTimeLimitedEnd"], function(index, value){
+				if($(value)[0].classList.value.indexOf("flatpickr-input")<0){
+					var dateNow = new Date();
+					dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
+					$(value).flatpickr({
+						enableTime: true,
+						dateFormat: "Z",
+						altInput: true,
+						altFormat: "Y/m/d H:i",
+						time_24hr: true,
+						minuteIncrement: 30,
+						minDate: dateNow,
+					});
+				}
+			});
+		});
 	} else {
-		$('#ItemPassword').slideUp(300);
+		elVal.slideUp(nSlideSpeed);
+	}
+}
+
+function updateAreaLimitedTimePublish(publishId) {
+	var nSlideSpeed = 300;
+	var elFlg = $('#ItemTimeLimitedFlg');
+	var elVal = $('#ItemTimeLimitedVal');
+	if(publishId!=99){
+		elFlg.slideDown(nSlideSpeed, function(){
+			updateOptionLimitedTimePublish();
+		});
+	} else {
+		if($('#OptionLimitedTimePublish').prop('checked')){
+			elVal.slideUp(nSlideSpeed, function(){
+				elFlg.slideUp(nSlideSpeed);
+			});
+		} else {
+			elFlg.slideUp(nSlideSpeed);
+		}
+	}
+}
+
+function udpateMyTwitterList() {
+	var isExecuted = false;
+	var apiResp = null;
+	function dispMyTwitterList(){
+		if(isExecuted) return;
+		if($("#EditTwitterList").children().length>0){
+			isExecuted = true;
+			return;
+		}
+		isExecuted = true;
+		$("#TwitterListLoading").hide();
+		if(apiResp.result!=0 || (apiResp.result==0 && apiResp.twitter_open_list.length == 0)){
+			$("#TwitterListNotFound").show();
+			$("#EditTwitterList").hide();
+			if(apiResp.result==-102){
+				twtterListRateLimiteExceededMsg();
+			}else if(apiResp.result==-103){
+				twtterListInvalidTokenMsg();
+			}else if(apiResp.result<0){
+				twtterListOtherErrMsg();
+			}
+		} else {
+			$("#TwitterListNotFound").hide();
+			$("#EditTwitterList").show();
+			apiResp.twitter_open_list.forEach(function(l, idx, ar){
+				$("#EditTwitterList").append('<option value="' + l.id +  '">' + l.name + '</option>');
+			});
+		}
+	}
+
+	return function _updateMyTwitterList(nUserId){
+		if(apiResp != null){
+			dispMyTwitterList();
+		} else {
+			$.ajax({
+				"type": "post",
+				"data": {"ID": nUserId},
+				"url": "/f/TwitterMyListF.jsp",
+				"dataType": "json",
+				"success": function(data) {
+					apiResp = data;
+					dispMyTwitterList();
+				}
+			});
+		}
+	};
+}
+
+var updateMyTwitterListF = udpateMyTwitterList();
+
+function updatePublish(nUserId) {
+	var val = parseInt($('#EditPublish').val(), 10);
+	updateAreaLimitedTimePublish(val);
+
+    var nSlideSpeed = 300;
+	var nChangeDelay = 150;
+	var elements = [$('#ItemTwitterList'), $('#ItemPassword')];
+
+    if (val==4 || val==10 || val==11){
+		var elToHide = null;
+		var elToVisible = null;
+		switch (val) {
+			case 4:
+				elToVisible = $('#ItemPassword');
+				break;
+			case 10:
+				elToVisible = $('#ItemTwitterList');
+				break;
+			default:
+				;
+		}
+
+		for (var i=0; i<elements.length; i++){
+			var el = elements[i];
+			if(el.is(':visible')){
+				elToHide = el;
+				break;
+			}
+		}
+
+		if (elToHide==null){
+			elToVisible.slideDown(nSlideSpeed);
+		} else {
+			elToHide.slideUp(nSlideSpeed,
+				function(){
+					elToVisible.delay(nChangeDelay).slideDown(nSlideSpeed);
+				});
+		}
+
+		if(val == 10){
+			updateMyTwitterListF(nUserId);
+		}
+    } else {
+		for (var i=0; i<elements.length; i++){
+			var el = elements[i];
+			if(el.is(':visible')){
+				el.slideUp(nSlideSpeed);
+			}
+		}
+	}
+}
+
+function tweetSucceeded(data){
+	var toContext = "/MyIllustListV.jsp";
+	if(data!=null){
+		if(data>0){ // 異常無し
+			completeMsg();
+			setTimeout(function(){
+				location.href=toContext;
+			}, 1000);
+		}else{
+			var nTimeOut = 5000;
+			if(data == -103 || data == -203){
+				twtterTweetInvalidTokenMsg();
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}else if(data == -102){
+				twtterTweetRateLimitMsg();
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}else if(data == -104){
+				twtterTweetTooMuchMsg();
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}else{
+				twtterTweetOtherErrMsg(data);
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}
+		}
+	}else{
+		twtterTweetOtherErrMsg(data);
+		setTimeout(function(){
+			location.href=toContext;
+		}, nTimeOut);
 	}
 }
 
@@ -546,6 +802,7 @@ function initUploadFile() {
 				this.setParams({
 					UID: this.user_id,
 					IID: this.illust_id,
+					PID: this.publish_id,
 					REC: this.recent
 				}, id);
 			},
@@ -562,19 +819,14 @@ function initUploadFile() {
 						"url": "/f/UploadFileTweetF.jsp",
 						"dataType": "json",
 						"success": function(data) {
-							console.log("UploadFileTweetF");
-							// complete
-							completeMsg();
-							setTimeout(function(){
-								location.href="/MyHomePcV.jsp";
-							}, 1000);
+							tweetSucceeded(data);
 						}
 					});
 				} else {
 					// complete
 					completeMsg();
 					setTimeout(function(){
-						location.href="/MyHomePcV.jsp";
+						location.href="/MyIllustListV.jsp";
 					}, 1000);
 				}
 			},
@@ -619,6 +871,20 @@ function initUploadFile() {
 	multiFileUploader.total_size = 50*1024*1024;
 }
 
+function getPublishDateTime(local_datetime_str){
+	if(local_datetime_str == '') return '';
+	var date = new Date(local_datetime_str);
+	return date.toISOString();
+}
+
+function getLimitedTimeFlg(strPublishElementId, strLimitedTimeElementId){
+	if($('#'+strPublishElementId).val() == 99){
+		return 0;
+	} else {
+		return ($('#'+strLimitedTimeElementId).prop('checked'))?1:0;
+	}
+}
+
 function UploadFile(user_id) {
 	if(!multiFileUploader) return;
 	if(multiFileUploader.getSubmittedNum()<=0) return;
@@ -631,16 +897,36 @@ function UploadFile(user_id) {
 	var strPassword = $('#EditPassword').val();
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+    var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var nTwListId = null;
+	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
+	var strPublishStart = null;
+	var strPublishEnd = null;
+	if(nPublishId==10){
+		if($("#TwitterListNotFound").is(':visible')){
+			twitterListNotFoundMsg();
+			return;
+		}
+        nTwListId = $('#EditTwitterList').val();
+	}
+	if(nLimitedTime==1){
+		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+			return;
+		}
+	}
+
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId == 99) {
-		nRecent = 2;
 		nTweet = 0;
 	}
 	startMsg();
-	console.log("start upload");
+
+	var nTweetNow = nTweet;
+	if(nLimitedTime==1) nTweetNow = 0;
 
 	$.ajaxSingle({
 		"type": "post",
@@ -651,7 +937,12 @@ function UploadFile(user_id) {
 			"TAG":strTagList,
 			"PID":nPublishId,
 			"PPW":strPassword,
-			"PLD":"",
+			"PLD":nTwListId,
+			"LTP":nLimitedTime,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
+			"TWT":getTweetSetting(),
+			"TWI":getTweetImageSetting(),
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -663,8 +954,9 @@ function UploadFile(user_id) {
 					multiFileUploader.user_id = user_id;
 					multiFileUploader.illust_id = data.content_id;
 					multiFileUploader.recent = nRecent;
-					multiFileUploader.tweet = nTweet;
+					multiFileUploader.tweet = nTweetNow;
 					multiFileUploader.tweet_image = nTweetImage;
+					multiFileUploader.publish_id = nPublishId;
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					errorMsg();
@@ -719,6 +1011,28 @@ function createPasteElm(src) {
 	return $InputFile
 }
 
+function createPasteListItem(src, append_id) {
+	var $InputFile = $('<li />').addClass('InputFile').attr('id', append_id);
+	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+		$(this).parent().remove();
+		updatePasteNum();
+	});
+	var $imgView = $('<img />').addClass('imgView').attr('src', src);
+	$InputFile.append($DeletePaste).append($imgView);
+	return $InputFile
+}
+
+function createPasteListItem(src, append_id) {
+	var $InputFile = $('<li />').addClass('InputFile').attr('id', append_id);
+	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+		$(this).parent().remove();
+		updatePasteNum();
+	});
+	var $imgView = $('<img />').addClass('imgView').attr('src', src);
+	$InputFile.append($DeletePaste).append($imgView);
+	return $InputFile
+}
+
 function initPasteElm($elmPaste) {
 	$elmPaste.on('pasteImage', function(ev, data){
 		$('.OrgMessage', this).hide();
@@ -757,14 +1071,35 @@ function UploadPaste(user_id) {
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var nTwListId = null;
+	var nLimitedTime = getLimitedTimeFlg('EditPublish','OptionLimitedTimePublish');
+	var strPublishStart = null;
+	var strPublishEnd = null;
+	if(nPublishId==10){
+		if($("#TwitterListNotFound").is(':visible')){
+			twitterListNotFoundMsg();
+			return;
+		}
+        nTwListId = $('#EditTwitterList').val();
+	}
+	if(nLimitedTime==1){
+		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+			return;
+		}
+	}
+
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId == 99) {
-		nRecent = 2;
 		nTweet = 0;
 	}
 	startMsg();
+
+	var nTweetNow = nTweet;
+	if(nLimitedTime==1) nTweetNow = 0;
 
 	$.ajaxSingle({
 		"type": "post",
@@ -775,7 +1110,13 @@ function UploadPaste(user_id) {
 			"TAG":strTagList,
 			"PID":nPublishId,
 			"PPW":strPassword,
-			"PLD":"",
+			"PLD":nTwListId,
+			"LTP":nLimitedTime,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
+			"TWT":getTweetSetting(),
+			"TWI":getTweetImageSetting(),
+			"ED":1,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -821,7 +1162,7 @@ function UploadPaste(user_id) {
 					});
 				}
 			});
-			if(nTweet==1) {
+			if(nTweetNow==1) {
 				$.ajax({
 					"type": "post",
 					"data": {
@@ -832,21 +1173,15 @@ function UploadPaste(user_id) {
 					"url": "/f/UploadFileTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						console.log("UploadFileTweetF");
-						// complete
-						completeMsg();
-						setTimeout(function(){
-							location.href="/MyHomePcV.jsp";
-						}, 1000);
+						tweetSucceeded(data);
 					}
 				});
 			} else {
 				setTimeout(function(){
-					location.href="/MyHomePcV.jsp";
+					location.href="/MyIllustListV.jsp";
 				}, 1000);
 			}
 		}
 	});
 	return false;
 }
-

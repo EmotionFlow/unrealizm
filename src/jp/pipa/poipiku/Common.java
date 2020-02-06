@@ -4,12 +4,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -329,6 +335,41 @@ public class Common {
 		return lnRet;
 	}
 
+	public static boolean ToBoolean(String strSrc){
+		try{
+			int n = Integer.parseInt(strSrc, 10);
+			return ToBoolean(n);
+		} catch (NumberFormatException ne){
+			boolean b = false;
+			b = Boolean.parseBoolean(strSrc);
+			return b;
+		}
+	}
+
+	public static boolean ToBoolean(int strSrc){
+		boolean b = false;
+		if(strSrc >= 1) b = true;
+		return b;
+	}
+
+	public static Timestamp ToSqlTimestamp(String strDateTime){
+		// ISO format 2011-10-05T14:48:00.000Z を想定
+		if(!strDateTime.isEmpty()){
+			ZonedDateTime zdt = ZonedDateTime.parse(strDateTime);
+			return Timestamp.from(zdt.toInstant());
+		} else {
+			return null;
+		}
+	}
+
+	public static String ToYMDHMString(Timestamp ts){
+		if(ts==null){return "";}
+		LocalDateTime ldt = ts.toLocalDateTime();
+		ZonedDateTime zdtSystemDefault = ldt.atZone(ZoneId.systemDefault());
+		ZonedDateTime zdtGmt = zdtSystemDefault.withZoneSameInstant(ZoneId.of("GMT"));
+		return zdtGmt.format(DateTimeFormatter.ISO_INSTANT);
+	}
+
 	public static String EscapeInjection(String strSrc) {
 		if(strSrc == null) {
 			return "";
@@ -447,7 +488,7 @@ public class Common {
 
 	public static String AutoLink(String strSrc, int nUserId, int nMode) {
 		String ILLUST_LIST = (nMode==CCnv.MODE_SP)?"/SearchIllustByTagV.jsp?KWD=":"/SearchIllustByTagPcV.jsp?KWD=";
-		String MY_ILLUST_LIST = (nMode==CCnv.MODE_SP)?String.format("/IllustListV.jsp?ID=%d&KWD=", nUserId):String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
+		String MY_ILLUST_LIST = (nMode==CCnv.MODE_SP)?String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId):String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
 		return strSrc
 				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
 				//.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("$1<a class=\"AutoLink\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$3')\">$2$3</a>", ILLUST_LIST))

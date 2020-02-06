@@ -33,13 +33,17 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 #MenuSearch .FooterMenuItemIcon {background-position: -56px 0;}
 #MenuUpload .FooterMenuItemIcon {background-position: -28px 0;}
 #MenuAct .FooterMenuItemIcon {background-position: -392px 0;}
+#MenuSettings .FooterMenuItemIcon {background: url(/img/menu_settings.png); background-size: 82%; background-repeat: no-repeat; top: 3px; left: 2px;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: 0 -28px;}
 /*#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}*/
 #MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -28px -28px;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
+#MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background: url(/img/menu_settings_active.png); background-size: 82%; background-repeat: no-repeat; top: 3px; left: 2px;}
+
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}
+.FooterMenu .MyEditSettingBtn {font-size: 14px; padding: 3px 7px; margin-left: 8px;}
 
 .LinkApp {display:block; float: left; width: 100%; text-align: center; margin: 15px 0 0 0; font-size: 0;}
 
@@ -63,8 +67,9 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .AnalogicoInfo {display: block; color: #fff; background: #5bd; height: auto; padding: 15px 0;float: none;width: 100%;}
 .AnalogicoInfo .AnalogicoInfoTitle {display: block; margin: 0 0 0 0; padding: 0; font-size: 16px; text-align: center; float: left; width: 100%;font-weight: normal;}
 .AnalogicoInfo .AnalogicoMoreInfo {display: block; margin: 0 0 0 0; padding: 0; font-size: 16px; text-align: center; color: #fff; text-decoration: underline; font-weight: normal;}
-.AnalogicoInfo .AnalogicoInfoRegist {display: block; text-align: center; font-size: 14px; float: none; width: 100%; margin: 0;}
-.AnalogicoInfo .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 10px 0 0 0; width: 230px;}
+.AnalogicoInfo .AnalogicoInfoRegist {display: block; text-align: center; font-size: 14px; float: none; width: 100%; margin: 6px 0;}
+.AnalogicoInfo .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 10px 0 0 0; width: 161px;}
+.AnalogicoInfo .AnalogicoInfoRegist .RegistByMainLink {text-decoration: underline; display: block; margin: 6px 0 10px 0; font-size: 12px; color: #fff;}
 .Footer .AnalogicoInfo {background: none; padding: 0 0 15px 0;}
 
 

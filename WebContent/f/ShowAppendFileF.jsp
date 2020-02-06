@@ -13,7 +13,8 @@ class ShowAppendFileC {
 	public static final int ERR_T_FOLLOW = -6;
 	public static final int ERR_T_EACH = -7;
 	public static final int ERR_T_LIST = -8;
-	public static final int ERR_T_RATE_LIMIT_EXCEEDED = -10088;
+	public static final int ERR_T_RATE_LIMIT_EXCEEDED = -429088;
+	public static final int ERR_T_INVALID_OR_EXPIRED_TOKEN = -404089;
 	public static final int ERR_HIDDEN = -9;
 	public static final int ERR_UNKNOWN = -99;
 
@@ -95,6 +96,8 @@ class ShowAppendFileC {
 						m_nTwFriendship = cTweet.LookupFriendship(m_nUserId);
 						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
 							return ERR_T_RATE_LIMIT_EXCEEDED;
+						}else if(m_nTwFriendship==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){
+							return ERR_T_INVALID_OR_EXPIRED_TOKEN;
 						}else if(m_nTwFriendship==CTweet.ERR_OTHER){
 							return ERR_UNKNOWN;
 						}
@@ -111,7 +114,8 @@ class ShowAppendFileC {
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){return ERR_T_LIST;}
 					int nRet = cTweet.LookupListMember(m_cContent);
-					if(nRet==0) return ERR_T_LIST;
+					if(nRet==CTweet.ERR_NOT_FOUND) return ERR_T_LIST;
+					if(nRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) return ERR_T_INVALID_OR_EXPIRED_TOKEN;
 					if(nRet==CTweet.ERR_RATE_LIMIT_EXCEEDED) return ERR_T_RATE_LIMIT_EXCEEDED;
 					if(nRet<0) return ERR_UNKNOWN;
 				} else {
@@ -174,6 +178,9 @@ if(nRtn<ShowAppendFileC.OK) {
 		break;
 	case ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED"));
+		break;
+	case ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN:
+		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN"));
 		break;
 	case ShowAppendFileC.ERR_NOT_FOUND:
 	case ShowAppendFileC.ERR_HIDDEN :

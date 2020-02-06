@@ -77,7 +77,10 @@ class GetIllustFileListC {
 				m_cContent.m_nPublishId = cResSet.getInt("publish_id");
 				m_cContent.m_strTagList = cResSet.getString("tag_list");
 				m_cContent.m_strDescription = cResSet.getString("description");
+				m_cContent.m_nTweetWhenPublished = cResSet.getInt("tweet_when_published");
 				m_cContent.m_strListId = cResSet.getString("list_id");
+				m_cContent.m_timeUploadDate = cResSet.getTimestamp("upload_date");
+				m_cContent.m_timeEndDate = cResSet.getTimestamp("end_date");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -126,6 +129,9 @@ if (nRtn > 0) {
 		content.put("tag_list", cResults.m_cContent.m_strTagList);
 		content.put("open_id", cResults.m_cContent.m_nOpenId);
 		content.put("publish_id", cResults.m_cContent.m_nPublishId);
+		content.put("start_date", Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate));
+		content.put("end_date", Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate));
+		content.put("tweet_when_published", cResults.m_cContent.m_nTweetWhenPublished);
 		content.put("twitter_list_id", cResults.m_cContent.m_strListId);
 		content.put("files", cResults.m_vContent);
 

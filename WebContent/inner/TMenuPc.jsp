@@ -86,10 +86,18 @@
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			</a>
-			<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
+			<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
+			<%
+			if(request.getRequestURL().toString().indexOf("MyIllustListPcV.jsp")>0){%>
+			<a id="MenuSettings" class="FooterMenuItem" href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId %>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
+			</a>
+			<%}%>
+
 			<%}%>
 		</nav>
 		<%}%>
@@ -99,7 +107,7 @@
 <%if(Util.isSmartPhone(request) && cCheckLogin.m_bLogin) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
-		<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin)?"/"+cCheckLogin.m_nUserId+"/":"/"%>">
+		<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>

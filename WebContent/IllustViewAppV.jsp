@@ -71,7 +71,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=strTitle%></title>
+
+		<%@ include file="/inner/TDeleteContent.jsp"%>
+
 		<script type="text/javascript">
 			var g_nPage = 0;
 			var g_bAdding = false;
@@ -133,12 +137,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				});
 			}
 
-			function DeleteContent(nUserId, nContentId) {
-				if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-				DeleteContentBase(nUserId, nContentId);
-				return false;
-			}
-
 			function UpdateBlock() {
 				var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
 				$.ajaxSingle({
@@ -195,8 +193,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
-					<h2 class="UserInfoUserName"><a href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
+					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 					<span class="UserInfoCmd">
 						<%
@@ -229,7 +227,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					</span>
 				</section>
 				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+					<a class="UserInfoStateItem Selected" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
@@ -246,8 +244,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<aside class="UserInfo">
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
-					<h2 class="UserInfoUserName"><a href="/IllustListV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
+					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 					<span class="UserInfoCmd">
 						<%

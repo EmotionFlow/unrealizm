@@ -39,8 +39,15 @@ PROCESS: {
 	}
 
 	//リスト取得
-	if (!cTweet.GetMyOpenLists()) {
-		nResult = -102;
+	int r = cTweet.GetMyOpenLists();
+	if (r != CTweet.OK) {
+		if (r == CTweet.ERR_RATE_LIMIT_EXCEEDED){
+			nResult = -102;
+		} else if (r == CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){
+			nResult = -103;
+		} else {
+			nResult = r;
+		}
 		break PROCESS;
 	}
 }

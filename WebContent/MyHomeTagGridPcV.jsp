@@ -18,6 +18,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyHomePc.Title")%></title>
 
@@ -26,6 +27,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			$('#MenuHome').addClass('Selected');
 		});
 		</script>
+
+		<%@ include file="/inner/TDeleteContent.jsp"%>
 
 		<script>
 		var g_nEndId = <%=cResults.m_nEndId%>;
@@ -58,12 +61,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					DispMsg('Connection error');
 				}
 			});
-		}
-
-		function DeleteContent(nUserId, nContentId) {
-			if(!window.confirm('<%=_TEX.T("IllustListV.CheckDelete")%>')) return;
-			DeleteContentBase(nUserId, nContentId);
-			return false;
 		}
 
 		$(function(){

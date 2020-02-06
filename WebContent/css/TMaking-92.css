@@ -242,20 +242,6 @@
 	z-index: 2;
 }
 
-.IllustThumb.Hidden .Category:before {
-	content: "\f070";
-	font-family: "Font Awesome 5 Free";
-	font-weight: 400;
-	-webkit-font-smoothing: antialiased;
-	display: inline-block;
-	font-style: normal;
-	font-variant: normal;
-	text-rendering: auto;
-	line-height: 1;
-	font-size: 11px;
-	margin: 0 2px 0 0;
-}
-
 .IllustThumb .IllustThumbImg {
 	display: block;
 	width: 100%;
@@ -282,7 +268,120 @@
 	line-height: 20px;
 	overflow: hidden;
 }
+.IllustThumb .IllustInfoCenter {
+	display: block;
+	box-sizing: border-box;
+	padding: 0px;
+	position: absolute;
+}
+.IllustThumb .IllustInfoBottom, .IllustItemThumb .IllustInfoBottom{
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0px 3px 3px 3px;
+	position: absolute;
+	bottom: 0;
+}
+.IllustItemThumb .Num {
+    margin: 0 3px;
+    background-repeat: no-repeat;
+    min-width: 40px;
+    display: block;
+    float: left;
+    color: white;
+    font-size: 15px;
+    background: #5bd;
+    box-sizing: border-box;
+    border-radius: 11px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    z-index: 2;
+}
+.IllustThumb .Num {
+	background-repeat: no-repeat;
+	min-width: 32px;
+	display: block;
+	float: left;
+	color: white;
+	font-size: 11px;
+	background: #5bd;
+	box-sizing: border-box;
+	border-radius: 22px;
+	height: 20px;
+	padding: 0 5px;
+	line-height: 20px;
+	text-align: center;
+	z-index: 2;
+}
+.IllustThumb .Publish {
+	background-repeat: no-repeat;
+	min-width: 29px;
+	display: block;
+	float: left;
+	background-color: #5bd;
+	box-sizing: border-box;
+	border-radius: 7px;
+	height: 20px;
+	padding: 0 5px;
+	z-index: 2;
+}
+.IllustItemThumb .Publish {
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	min-width: 40px;
+	display: block;
+	float: left;
+	background-color: #5bd;
+	box-sizing: border-box;
+	border-radius: 7px;
+	height: 25px;
+	padding: 0 5px;
+	z-index: 2;
+}
+.PublishIco01{ background-size: contain; background-image: url(/img/ico_warning.png);}
+.PublishIco04{ background-size: contain; background-image: url(/img/ico_pass.png);}
+.PublishIco05{ background-size: contain; background-image: url(/img/ico_signin.png);}
+.PublishIco06{ background-size: contain; background-image: url(/img/ico_favorite.png);}
+.PublishIco07{ background-size: contain; background-image: url(/img/ico_follower.png);}
+.PublishIco08{ background-size: contain; background-image: url(/img/ico_follow.png);}
+.PublishIco09{ background-size: contain; background-image: url(/img/ico_ff.png);}
+.PublishIco10{ background-size: contain; background-image: url(/img/ico_list.png);}
+.PublishIco99{ background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
 
+.IllustThumb .PublishLimitedPublished{
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+    background-size: contain;
+    background-image: url(/img/ico_clock.png);
+    background-color: #5bd;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+.IllustThumb .PublishLimitedNotPublished{
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+    background-size: contain;
+    background-image: url(/img/ico_clock.png);
+    background-color: #a0a0a0;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+.IllustThumb .Private {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+    background-size: contain;
+    background-image: url(/img/ico_visible.png);
+    background-color: #a0a0a0;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
 
 /********** USER LIST **********/
 .UserThumb {
@@ -1026,6 +1125,58 @@
 	font-size: 0;
 }
 
+.IllustItem .IllustItemThumb .IllustInfoPublic {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.IllustItem .IllustItemThumb .IllustInfoPrivate {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.IllustInfoPrivate .Private {
+	display: block;
+	margin: 5px;
+	border-radius: 14px;
+    background-size: contain;
+    background-image: url(/img/ico_visible.png);
+    background-color: #a0a0a0;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+
+.IllustInfoPublic .PublishLimitedPublished{
+	display: block;
+	margin: 5px;
+	border-radius: 14px;
+    background-size: contain;
+    background-image: url(/img/ico_clock.png);
+    background-color: #5bd;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+
+.IllustInfoPrivate .PublishLimitedNotPublished{
+	display: block;
+	margin: 5px;
+	border-radius: 14px;
+    background-size: contain;
+    background-image: url(/img/ico_clock.png);
+    background-color: #a0a0a0;
+    background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+
 .IllustItem.Password .IllustItemThumb {
 	min-height: 180px;
 }
@@ -1277,24 +1428,8 @@
 
 /*.IllustItem.Hidden {opacity: 0.7 !important;}*/
 
-.IllustItem.Hidden .Category:before {
-	content: "\f070";
-	font-family: "Font Awesome 5 Free";
-	font-weight: 400;
-	-webkit-font-smoothing: antialiased;
-	display: inline-block;
-	font-style: normal;
-	font-variant: normal;
-	text-rendering: auto;
-	line-height: 1;
-	font-size: 14px;
-	margin: 0 2px 0 0;
-}
-
 .IllustItem.Hidden .IllustItemResList {display: none;}
 .IllustItem.Hidden .IllustItemResBtnList {display: none;}
-
-
 
 /********** COMMENT **********/
 .IllustItemList .ItemComment {
@@ -1490,6 +1625,12 @@
 	background: rgba(255, 2555, 255, 0.80);
 }
 
+.UserInfoUser .UserInfoUserName .SettingBody .RegistMessage {
+	display: block;
+	flex: 1 1;
+	font-size: 13px;
+}
+
 .UserInfo .UserInfoUser .UserInfoUserThumb {
 	display: block;
 	width: 80px;
@@ -1507,7 +1648,7 @@
 	display: block;
 	float: left;
 	width: 100%;
-	padding: 5px 0 0 0;
+	padding: 15px 0 0 0;
 	text-align: center;
 	font-weight: bold;
 	font-size: 18px;
@@ -1662,15 +1803,14 @@
 	margin: 10px 0 0 0;
 }
 
-.SettingList .SettingListItem .SettingBody .SettingBodyCmd .RegistMessage
-	{
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .RegistMessage {
 	display: block;
 	flex: 1 1;
 	font-size: 14px;
 }
 
-.SettingList .SettingListItem .SettingBody .SettingBodyCmd .SettingBodyCmdRegist
-	{
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .SettingBodyCmdRegist {
 	display: block;
 	flex: 0 0;
 	align-self: flex-start;
@@ -1734,4 +1874,3 @@
 	font-family: sans-serif;
 	border-radius: 5px;
 }
-
