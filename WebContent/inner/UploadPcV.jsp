@@ -74,8 +74,21 @@ try {
 			function twitterListNotFoundMsg() {
 				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%>");
 			}
-			function twtterListOtherErrMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.OtherErr")%>");
+			function twtterListOtherErrMsg(nErrCode) {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.OtherErr")%>: " + nErrCode);
+			}
+
+			function twtterTweetInvalidTokenMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.InvalidToken")%>");
+			}
+			function twtterTweetRateLimitMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.RateLimiteExceeded")%>");
+			}
+			function twtterTweetTooMuchMsg() {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.TooMuch")%>");
+			}
+			function twtterTweetOtherErrMsg(nErrCode) {
+				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.OtherErr")%>: " + nErrCode);
 			}
 
 			function completeMsg() {

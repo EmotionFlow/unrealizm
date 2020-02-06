@@ -724,6 +724,46 @@ function updatePublish(nUserId) {
 	}
 }
 
+function tweetSucceeded(data){
+	var toContext = "/MyIllustListV.jsp";
+	if(data!=null){
+		if(data>0){ // 異常無し
+			completeMsg();
+			setTimeout(function(){
+				location.href=toContext;
+			}, 1000);
+		}else{
+			var nTimeOut = 5000;
+			if(data == -103 || data == -203){
+				twtterTweetInvalidTokenMsg();
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}else if(data == -102){
+				twtterTweetRateLimitMsg();
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}else if(data == -104){
+				twtterTweetTooMuchMsg();
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}else{
+				twtterTweetOtherErrMsg(data);
+				setTimeout(function(){
+					location.href=toContext;
+				}, nTimeOut);
+			}
+		}
+	}else{
+		twtterTweetOtherErrMsg(data);
+		setTimeout(function(){
+			location.href=toContext;
+		}, nTimeOut);
+	}
+}
+
 function initUploadFile() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
@@ -779,12 +819,7 @@ function initUploadFile() {
 						"url": "/f/UploadFileTweetF.jsp",
 						"dataType": "json",
 						"success": function(data) {
-							console.log("UploadFileTweetF");
-							// complete
-							completeMsg();
-							setTimeout(function(){
-								location.href="/MyIllustListV.jsp";
-							}, 1000);
+							tweetSucceeded(data);
 						}
 					});
 				} else {
@@ -1138,12 +1173,7 @@ function UploadPaste(user_id) {
 					"url": "/f/UploadFileTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						console.log("UploadFileTweetF");
-						// complete
-						completeMsg();
-						setTimeout(function(){
-							location.href="/MyIllustListV.jsp";
-						}, 1000);
+						tweetSucceeded(data);
 					}
 				});
 			} else {

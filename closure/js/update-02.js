@@ -154,12 +154,7 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 		"url": "/f/UploadFileTweetF.jsp",
 		"dataType": "json",
 		"success": function (data) {
-			console.log("UploadFileTweetF");
-			// complete
-			completeMsg();
-			setTimeout(function () {
-				location.href = "/MyIllustListV.jsp";
-			}, 1000);
+			tweetSucceeded(data);
 		}
 	});
 }
@@ -502,9 +497,8 @@ function createUpdatePaste(){
 				},function(err){errorMsg(-10);})
 				.then(fTweet, function(err){errorMsg(-11)})
 				.then(
-					function(){
-						completeMsg();
-						setTimeout(function(){location.href="/MyIllustListV.jsp";}, 1000);
+					function(data){
+						tweetSucceeded(data);
 					},
 					function(err){errorMsg(-12)}
 				);
