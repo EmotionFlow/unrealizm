@@ -125,7 +125,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
-				<a class="EventItem" href="/RecruitS.jsp">
+				<a class="EventItem" href="/RecruitPcS.jsp">
 					<img class="EventBanner" src="/img/recruit.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
@@ -166,7 +166,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
-							<a class="EventItem" href="/RecruitS.jsp">
+							<a class="EventItem" href="/RecruitPcS.jsp">
 								<img class="EventBanner" src="/img/recruit.png" />
 							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
