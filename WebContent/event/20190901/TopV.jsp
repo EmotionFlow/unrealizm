@@ -61,15 +61,15 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			.AnalogicoInfo {display: none;}
 			.SettingList .SettingListItem .SettingListTitle {text-align: center; font-size: 20x; font-weight: bold; margin: 20px 0 0 0;}
 			.SettingList .SettingListItem {margin: 0 0 20px 0;}
-			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 336px; left: 12px; top: 1256px; z-index: 1;}
+			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 336px; left: 12px; top: 1283px; z-index: 1;}
 			.SlotFrame .SlotItem {display: flex; flex-flow: column; align-items: center;}
 			.SlotItem .RouletteFrame {}
 			.SlotItem .RouletteFrame .Roulette {display: none; width: 163px; background-color: #fff; border-radius: 10px; overflow: hidden;}
-			.SlotItem .RouletteFrame .Roulette img {display: block; width: 163px;}
+			.SlotItem .RouletteFrame .Roulette img {display: block; width: 163px; height: 165px;}
 			.SlotItem .StopBtn {display: block; width: 60px; height: 60px; margin: 16px 0 0 0; cursor: pointer;}
-			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 340px; left: 10px; top: 1529px; z-index: 1;}
+			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 340px; left: 10px; top: 1566px; z-index: 1;}
 			.SlotCmdFrame .SlotCmdBtnDownload {display: block; width: 340px; height: 66px; cursor: pointer;}
-			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 170px; height: 66px; margin-top: 25px; cursor: pointer;}
+			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 170px; height: 66px; margin-top: 15px; cursor: pointer;}
 			<%if(!Util.isSmartPhone(request)){%>
 			.Wrapper {
 				width: 360px;
@@ -117,14 +117,14 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_winter.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_spring.png" />
 				</div>
 				<div class="SlotFrame">
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
-								<%for(int i=1; i<=21; i++) {%>
-								<img src="/event/20190901/r_winter02/r2_winter01/<%=String.format("%02d", i)%>.png" />
+								<%for(int i=1; i<=40; i++) {%>
+								<img src="/event/20190901/r1_spring/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -133,8 +133,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
-								<%for(int i=1; i<=20; i++) {%>
-								<img src="/event/20190901/r_winter02/r2_winter02/<%=String.format("%02d", i)%>.png" />
+								<%for(int i=1; i<=40; i++) {%>
+								<img src="/event/20190901/r2_spring/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>

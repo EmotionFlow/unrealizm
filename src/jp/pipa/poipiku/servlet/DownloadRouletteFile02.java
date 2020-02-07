@@ -23,8 +23,8 @@ import jp.pipa.poipiku.util.*;
 @WebServlet(name="DownloadRouletteFile02", urlPatterns={"/DownloadRouletteFile02"})
 public class DownloadRouletteFile02 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String BASE_FILEN_NAME = "/event/20190901/template_winter.png";
-	private static final String ROULETTE_BASE[] = {"/event/20190901/r_winter02/r2_winter01/", "/event/20190901/r_winter02/r2_winter02/"};
+	private static final String BASE_FILEN_NAME = "/event/20190901/template_spring.png";
+	private static final String ROULETTE_BASE[] = {"/event/20190901/r1_spring/", "/event/20190901/r2_spring/"};
 	private static final int BASE_POINT[][] = {{505, 11}, {757, 11}};
 	private static final int BASE_WIDTH = 233;
 
