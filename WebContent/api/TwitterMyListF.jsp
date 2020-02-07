@@ -71,9 +71,6 @@ try {
 			twitterListList.add(twitterList);
 		}
 		root.put("twitter_open_list", twitterListList);
-	} else {
-		List<Map<String, Object>> twitterListList = new ArrayList<Map<String, Object>>();
-		root.put("twitter_open_list", twitterListList);
 	}
 
 	//JSONに変換して出力
