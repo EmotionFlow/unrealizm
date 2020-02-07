@@ -43,7 +43,6 @@ public class UpC {
         Timestamp tsPublishStartPresent, Timestamp tsPublishEndPresent){
 
         int nOpenId = 2;
-        Timestamp tsNow = new Timestamp(System.currentTimeMillis());
         if(nPublishId == Common.PUBLISH_ID_HIDDEN){
             nOpenId = 2;
         } else if(bLimitedTimePublish){

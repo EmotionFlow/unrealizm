@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

@@ -1,14 +1,8 @@
 package jp.pipa.poipiku.controller;
 
-import java.sql.*;
-import java.util.ArrayList;
-
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
-import jp.pipa.poipiku.util.*;
 
 public class DeleteContentCParam {
 	public int m_nContentId = -1;

@@ -1,16 +1,9 @@
 package jp.pipa.poipiku.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -18,7 +11,6 @@ import javax.servlet.ServletContext;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
-import twitter4j.Friendship;
 
 public class UploadFileTweetC {
 	private ServletContext m_cServletContext = null;

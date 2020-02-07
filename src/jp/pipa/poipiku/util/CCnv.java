@@ -468,7 +468,6 @@ public class CCnv {
 
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = getContentsFileNumHtml(cContent);
-		String strThumbClass = (cContent.m_nOpenId==2)?"Hidden":"";
 		if (nSpMode==SP_MODE_APP) {
 			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s\">", ILLUST_VIEW_APP));
 		} else {

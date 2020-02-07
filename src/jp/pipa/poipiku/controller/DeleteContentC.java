@@ -1,10 +1,8 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 import javax.naming.InitialContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContext;
 import javax.sql.*;
 

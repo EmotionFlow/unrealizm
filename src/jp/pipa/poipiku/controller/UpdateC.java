@@ -3,8 +3,6 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -19,7 +17,6 @@ public class UpdateC extends UpC {
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
-		int safe_filter = Common.SAFE_FILTER_ALL;
 		int idx = 0;
 		int nPublishIdPresend = -1;
 		String strTweetId = "";
