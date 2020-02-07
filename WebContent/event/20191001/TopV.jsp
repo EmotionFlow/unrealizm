@@ -22,11 +22,11 @@ cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="/event/20191001/karaparekosume_sumaho-4.png" />
+				<img class="MainImage" src="/event/20191001/karaparekosume_sumaho-5.png" />
 				<div class="PalleteLinkList">
-					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_3color-4.png"></a>
-					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_4color-4.png"></a>
-					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_5color-4.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_3color-5.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_4color-5.png"></a>
+					<a class="PalleteLinkItem" href="/event/20191001/karapare_temple_5color-5.png"></a>
 				</div>
 			</div>
 		</article>
