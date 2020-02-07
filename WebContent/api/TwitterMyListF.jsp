@@ -59,7 +59,7 @@ ObjectMapper mapper = null;
 try {
 	//ユーザの情報
 	root = new HashMap<String, Object>();
-    root.put("result", 0);
+    root.put("result", nResult);
 
 	if (nResult == 0) {
         //twitter list情報(配列)
