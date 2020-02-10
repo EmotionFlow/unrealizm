@@ -188,14 +188,12 @@
 .CategoryMenu .CategoryBtn:last-child {border-radius: 0 20px 20px 0;}
 .CategoryMenu .CategoryBtn.Selected {background-color: #5bd;color: #fff;}
 
-
-
-
 .IllustThumbList {
 	display: block;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
+	padding-bottom: 70px;
 }
 
 /********** ILLUST LIST **********/
@@ -275,12 +273,18 @@
 	position: absolute;
 }
 .IllustThumb .IllustInfoBottom, .IllustItemThumb .IllustInfoBottom{
-	display: block;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 0px 3px 3px 3px;
-	position: absolute;
-	bottom: 0;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+}
+.IllustThumb .IllustInfoBottom{
+    bottom: 3px;
+    left: 4px;
+}
+.IllustItemThumb .IllustInfoBottom{
+    bottom: 4px;
+    left: 8px;
 }
 .IllustItemThumb .Num {
     margin: 0 3px;
@@ -304,26 +308,27 @@
 	display: block;
 	float: left;
 	color: white;
-	font-size: 11px;
+	font-size: 13px;
 	background: #5bd;
 	box-sizing: border-box;
-	border-radius: 22px;
+	border-radius: 11px;
 	height: 20px;
-	padding: 0 5px;
+	padding: 0 7px;
+	margin: 0 2px;
 	line-height: 20px;
 	text-align: center;
 	z-index: 2;
 }
 .IllustThumb .Publish {
 	background-repeat: no-repeat;
-	min-width: 29px;
+	min-width: 35px;
 	display: block;
 	float: left;
 	background-color: #5bd;
 	box-sizing: border-box;
-	border-radius: 7px;
+	border-radius: 11px;
 	height: 20px;
-	padding: 0 5px;
+	padding: 0 7px;
 	z-index: 2;
 }
 .IllustItemThumb .Publish {
@@ -334,20 +339,20 @@
 	float: left;
 	background-color: #5bd;
 	box-sizing: border-box;
-	border-radius: 7px;
+	border-radius: 11px;
 	height: 25px;
-	padding: 0 5px;
+	padding: 0 7px;
 	z-index: 2;
 }
-.PublishIco01{ background-size: contain; background-image: url(/img/ico_warning.png);}
-.PublishIco04{ background-size: contain; background-image: url(/img/ico_pass.png);}
-.PublishIco05{ background-size: contain; background-image: url(/img/ico_signin.png);}
-.PublishIco06{ background-size: contain; background-image: url(/img/ico_favorite.png);}
-.PublishIco07{ background-size: contain; background-image: url(/img/ico_follower.png);}
-.PublishIco08{ background-size: contain; background-image: url(/img/ico_follow.png);}
-.PublishIco09{ background-size: contain; background-image: url(/img/ico_ff.png);}
-.PublishIco10{ background-size: contain; background-image: url(/img/ico_list.png);}
-.PublishIco99{ background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
+.PublishIco01{ background-position: center; background-size: contain; background-image: url(/img/ico_warning.png);}
+.PublishIco04{ background-position: center; background-size: contain; background-image: url(/img/ico_pass.png);}
+.PublishIco05{ background-position: center; background-size: contain; background-image: url(/img/ico_signin.png);}
+.PublishIco06{ background-position: center; background-size: contain; background-image: url(/img/ico_favorite.png);}
+.PublishIco07{ background-position: center; background-size: contain; background-image: url(/img/ico_follower.png);}
+.PublishIco08{ background-position: center; background-size: contain; background-image: url(/img/ico_follow.png);}
+.PublishIco09{ background-position: center; background-size: contain; background-image: url(/img/ico_ff.png);}
+.PublishIco10{ background-position: center; background-size: contain; background-image: url(/img/ico_list.png);}
+.PublishIco99{ background-position: center; background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
 
 .IllustThumb .PublishLimitedPublished{
 	width: 40px;
@@ -1143,8 +1148,8 @@
 
 .IllustInfoPrivate .Private {
 	display: block;
-	margin: 5px;
-	border-radius: 14px;
+	margin: 5px 8px;
+	border-radius: 11px;
     background-size: contain;
     background-image: url(/img/ico_visible.png);
     background-color: #a0a0a0;
@@ -1155,8 +1160,8 @@
 
 .IllustInfoPublic .PublishLimitedPublished{
 	display: block;
-	margin: 5px;
-	border-radius: 14px;
+	margin: 5px 8px;
+	border-radius: 11px;
     background-size: contain;
     background-image: url(/img/ico_clock.png);
     background-color: #5bd;
@@ -1167,8 +1172,8 @@
 
 .IllustInfoPrivate .PublishLimitedNotPublished{
 	display: block;
-	margin: 5px;
-	border-radius: 14px;
+	margin: 5px 8px;
+	border-radius: 11px;
     background-size: contain;
     background-image: url(/img/ico_clock.png);
     background-color: #a0a0a0;

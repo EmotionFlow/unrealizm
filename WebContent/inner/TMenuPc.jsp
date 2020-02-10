@@ -90,14 +90,10 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
-			<%
-			if(request.getRequestURL().toString().indexOf("MyIllustListPcV.jsp")>0){%>
 			<a id="MenuSettings" class="FooterMenuItem" href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId %>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
-			<%}%>
-
 			<%}%>
 		</nav>
 		<%}%>
