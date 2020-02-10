@@ -126,7 +126,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 				<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
 					<h1 class="HeaderTitle">
 						<a id="HeaderLink" class="HeaderLink" href="/">
-							<img  class="HeaderImg" src="/img/pc_top_title.jpg" alt="<%=_TEX.T("THeader.Title")%>" />
+							<img  class="HeaderImg" src="/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>" />
 						</a>
 					</h1>
 					<a id="MenuSettings" href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId %>">

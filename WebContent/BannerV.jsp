@@ -36,7 +36,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 					進捗ポイポイ<br />
 					<br />
 					<a class="BtnBase" href="https://poipiku.com/">
-						<img class="Logo" src="/img/pc_top_title.jpg" alt="ポイピク">
+						<img class="Logo" src="/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</a>
 				</div>
 			</div>
