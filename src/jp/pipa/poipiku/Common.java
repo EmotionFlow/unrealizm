@@ -353,7 +353,7 @@ public class Common {
 
 	public static Timestamp ToSqlTimestamp(String strDateTime){
 		// ISO format 2011-10-05T14:48:00.000Z を想定
-		if(!strDateTime.isEmpty()){
+		if(strDateTime!=null && !strDateTime.isEmpty()){
 			ZonedDateTime zdt = ZonedDateTime.parse(strDateTime);
 			return Timestamp.from(zdt.toInstant());
 		} else {
