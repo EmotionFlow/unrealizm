@@ -13,6 +13,11 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>問題の報告</title>
+		<style>
+			.SettingBodyCmdRegist {
+				min-width: 60px;
+			}
+		</style>
 	</head>
 	<script>
 		$.ajaxSetup({
