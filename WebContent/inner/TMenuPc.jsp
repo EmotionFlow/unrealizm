@@ -90,7 +90,7 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
-			<a id="MenuSettings" class="FooterMenuItem" href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId %>">
+			<a id="MenuSettings" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>

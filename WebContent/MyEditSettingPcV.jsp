@@ -31,12 +31,6 @@ if(cResults.m_bUpdate) {
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
-		$(function(){
-			$('#MenuMe').addClass('Selected');
-		});
-		</script>
-
-		<script type="text/javascript">
 			$.ajaxSetup({
 				cache: false,
 			});
@@ -368,7 +362,11 @@ if(cResults.m_bUpdate) {
 				}
 			}
 			$(function(){
-				$("#MySetting").addClass("Selected");
+				<%if(Util.isSmartPhone(request)){%>
+				$("#MenuMe").addClass("Selected");
+				<%}else{%>
+				$("#MenuSettings").addClass("Selected");
+				<%}%>
 
 				DispDescCharNum();
 				DispMuteCharNum();

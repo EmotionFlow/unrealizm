@@ -21,26 +21,26 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ddd; background-color: #fff; z-index: 999; }
 .FooterMenu {width: 100%; display: flex; align-items: center; justify-content: center;  height: 50px; overflow: hidden; align-items: center;}
 .FooterMenu .FooterMenuItem {display: block; float: left; width: 90px; height: 50px; text-align: center; font-size: 0;}
-.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-04.png') no-repeat; background-size: 1500%; position: relative;}
+.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-05.png') no-repeat; background-size: 1600%; position: relative;}
 .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; min-width: 9px; padding: 0 3px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
 .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
 .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
 .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
 #DispMsg {top: 51px;padding: 40px 10px;}
 #MenuMe .FooterMenuItemIcon {background-position: 0 0;}
-#MenuHome .FooterMenuItemIcon {background-position: -56px 0;}
+#MenuHome .FooterMenuItemIcon {background-position: -56px 1px;}
 /*#MenuMe .FooterMenuItemIcon {background-position: -364px 0;}*/
 #MenuSearch .FooterMenuItemIcon {background-position: -56px 0;}
 #MenuUpload .FooterMenuItemIcon {background-position: -28px 0;}
 #MenuAct .FooterMenuItemIcon {background-position: -392px 0;}
-#MenuSettings .FooterMenuItemIcon {background: url(/img/menu_settings.png); background-size: 82%; background-repeat: no-repeat; top: 3px; left: 2px;}
+#MenuSettings .FooterMenuItemIcon {background-position: -421px 0;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: 0 -28px;}
 /*#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}*/
-#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: -56px -28px;}
+#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: -56px -27px;}
 #MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -28px -28px;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
-#MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background: url(/img/menu_settings_active.png); background-size: 82%; background-repeat: no-repeat; top: 3px; left: 2px;}
+#MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background-position: -421px -28px;}
 
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}
 .FooterMenu .MyEditSettingBtn {font-size: 14px; padding: 3px 7px; margin-left: 8px;}

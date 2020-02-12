@@ -92,14 +92,15 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
 		#MenuSettings {
 			position: absolute;
-			top: 3px;
+			top: 5px;
 			right: 9px;
 			display: block;
 		}
 		#MenuSettings .MenuSettingsIcon{
-			background: url(/img/menu_settings_active.png);
-			background-size: 90%;
+			background: url(/img/menu_pc-05.png);
+			background-size: 1500%;
 			background-repeat: no-repeat;
+			background-position: -395px -28px;
 			top: 5px;
 			left: 1px;
 			position: relative;
