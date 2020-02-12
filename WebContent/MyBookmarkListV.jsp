@@ -62,7 +62,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 	<body>
 		<article class="Wrapper">
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
-				11/20 <span style="color: red; font-size: 9px;">new!</span> お気に入りは非公開で、追加も削除も相手に伝わりません。思う存分お気に入りに追加してみよう！
+				<%=_TEX.T("MyBookmarkList.LetsMessage")%>
 			</div>
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
