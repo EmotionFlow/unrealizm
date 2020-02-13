@@ -11,6 +11,8 @@ if(cResults.m_nUserId==-1) {
 		return;
 	}
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
+} else if(cCheckLogin.m_nUserId == cResults.m_nUserId) {
+	cResults.m_bDispUnPublished = true;
 }
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 if(!cResults.getResults(cCheckLogin)) {
@@ -35,7 +37,7 @@ if(!cResults.getResults(cCheckLogin)) {
 				$.ajax({
 					"type": "post",
 					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
-					"url": "/f/IllustListF.jsp",
+					"url": "/f/IllustListAppF.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
 							g_nPage++;

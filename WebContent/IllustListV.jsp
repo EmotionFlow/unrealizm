@@ -11,7 +11,7 @@ if(cResults.m_nUserId==-1) {
 		return;
 	}
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
-}else if(cCheckLogin.m_nUserId == cResults.m_nUserId){
+} else if(cCheckLogin.m_nUserId == cResults.m_nUserId) {
 	cResults.m_bDispUnPublished = true;
 }
 
@@ -38,7 +38,7 @@ if(!cResults.getResults(cCheckLogin)) {
 				$.ajax({
 					"type": "post",
 					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
-					"url": "/f/IllustListF.jsp",
+					"url": "/f/IllustListAppF.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
 							g_nPage++;
@@ -220,7 +220,7 @@ if(!cResults.getResults(cCheckLogin)) {
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 				<%}%>
 			</section>
 		</article>
