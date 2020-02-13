@@ -403,7 +403,7 @@ public class Common {
 
 	public static String GetUrl(String strFileName) {
 		if(strFileName==null) return "";
-		return "//img-cdn.poipiku.com" + strFileName;
+		return "//img.poipiku.com" + strFileName;
 	}
 
 	public static String GetPoipikuUrl(String strFileName) {
