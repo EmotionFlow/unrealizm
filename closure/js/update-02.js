@@ -388,8 +388,10 @@ function createUpdatePaste(){
 			var strSrc = $.trim($(this).attr('src'));
 			if(strSrc.length>0) nImageNum++;
 		});
-		console.log(nImageNum);
-		if(nImageNum<=0) return;
+		if(nImageNum<=0){
+			bEntered = false;
+			return;
+		}
 
 		var nCategory = $('#EditCategory').val();
 		var strDescription = $.trim($("#EditDescription").val());
@@ -409,6 +411,7 @@ function createUpdatePaste(){
 		var strPublishEnd = null;
 		if(nPublishId==10){
 			if($("#TwitterListNotFound").is(':visible')){
+				bEntered = false;
 				twitterListNotFoundMsg();
 				return;
 			}
@@ -420,7 +423,8 @@ function createUpdatePaste(){
 			strPublishStartPresent = $('#EditTimeLimitedStartPresent').val();
 			strPublishEndPresent = $('#EditTimeLimitedEndPresent').val();
 			if(!checkPublishDatetime(strPublishStart, strPublishEnd, true, strPublishStartPresent, strPublishEndPresent)){
-					return;
+				bEntered = false;
+				return;
 			}
 		}
 
