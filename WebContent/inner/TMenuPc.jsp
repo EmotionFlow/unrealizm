@@ -65,13 +65,6 @@
 				</a>
 			</form>
 			<%} else {%>
-			<!--
-			<a id="MenuSearch" class="FooterMenuItem" href="/NewArrivalPcV.jsp">
-				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
-			</a>
-			<span class="MenuSep"></span>
-			-->
 			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
@@ -111,12 +104,6 @@
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>
-		<!--
-		<a id="MenuSearch" class="FooterMenuItem" href="/NewArrivalPcV.jsp">
-			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
-		</a>
-		-->
 		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
