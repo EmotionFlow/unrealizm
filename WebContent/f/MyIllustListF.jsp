@@ -8,6 +8,8 @@ IllustListC cResults = new IllustListC();
 cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
+}else if(cResults.m_nUserId==cCheckLogin.m_nUserId){
+	cResults.m_bDispUnPublished = true;
 }
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin, true);
