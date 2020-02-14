@@ -627,7 +627,14 @@
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditTimeLimited{
-	width: 145px;
+	width: 180px;
+}
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditTimeLimitedPc{
+	width: 150px;
+	text-align: right;
+}
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditTimeLimitedPcTo{
+	line-height: 2em;
 }
 
 .UploadFile .UoloadCmdOption .OptionItem .onoffswitch {

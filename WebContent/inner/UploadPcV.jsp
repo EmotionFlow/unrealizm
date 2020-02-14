@@ -257,16 +257,16 @@ try {
 							<%if(Util.isSmartPhone(request)) {%>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
-								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" />
 							</div>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
-								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" />
 							</div>
 							<%}else{%>
-								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%>" />
-								〜
-								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" maxlength="15" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%>" />
+								<input id="EditTimeLimitedStart" class="EditTimeLimitedPc" type="text" maxlength="15" />
+								<span class="EditTimeLimitedPcTo">〜</span>
+								<input id="EditTimeLimitedEnd" class="EditTimeLimitedPc" type="text" maxlength="15" />
 							<%}%>
 						</div>
 					</div>

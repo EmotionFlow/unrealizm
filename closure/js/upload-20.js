@@ -585,7 +585,9 @@ function updateOptionLimitedTimePublish(){
 			$.each(["#EditTimeLimitedStart", "#EditTimeLimitedEnd"], function(index, value){
 				if($(value)[0].classList.value.indexOf("flatpickr-input")<0){
 					var dateNow = new Date();
-					dateNow.setMinutes(Math.floor((dateNow.getMinutes()+45)/30)*30);
+					dateNow.setSeconds(0);
+					var minDate = new Date();
+					minDate.setMinutes(Math.floor((minDate.getMinutes()-30)/30)*30);
 					$(value).flatpickr({
 						enableTime: true,
 						dateFormat: "Z",
@@ -593,7 +595,8 @@ function updateOptionLimitedTimePublish(){
 						altFormat: "Y/m/d H:i",
 						time_24hr: true,
 						minuteIncrement: 30,
-						minDate: dateNow,
+						minDate: minDate,
+						defaultDate: dateNow,
 					});
 				}
 			});
