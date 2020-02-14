@@ -21,8 +21,16 @@ public class CCnv {
 	public static final int SP_MODE_WVIEW = 0;
 	public static final int SP_MODE_APP = 1;
 
-	private static String getIllustListContext(int nMode, CContent cContent){
-		return (nMode==MODE_SP)?String.format("/IllustListPcV.jsp?ID=%d", cContent.m_nUserId):String.format("/%d/", cContent.m_nUserId);
+	private static String getIllustListContext(int nMode, int nSpMode, CContent cContent){
+		String s = "";
+		if(nSpMode==SP_MODE_APP){
+			s = String.format("/IllustListAppV.jsp?ID=%d", cContent.m_nUserId);
+		}else if(nMode==MODE_SP){
+			s = String.format("/IllustListPcV.jsp?ID=%d", cContent.m_nUserId);
+		}else{
+			s = String.format("/%d/", cContent.m_nUserId);
+		}
+		return s;
 	}
 	private static String getReportFormContext(int nMode){
 		return (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
@@ -30,8 +38,16 @@ public class CCnv {
 	private static String getIllustFromContext(int nMode){
 		return (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 	}
-	private static String getSearchCategoryContext(int nMode){
-		return (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
+	private static String getSearchCategoryContext(int nMode, int nSpMode){
+		String s = "";
+		if(nSpMode==SP_MODE_APP){
+			s = "/NewArrivalAppV.jsp";
+		}else if(nMode==MODE_SP){
+			s = "/NewArrivalV.jsp";
+		}else{
+			s = "/NewArrivalPcV.jsp";
+		}
+		return s;
 	}
 	private static String getLinkTarget(int nMode){
 		return (nMode==MODE_SP)?"":"target=\"_blank\"";
@@ -267,10 +283,10 @@ public class CCnv {
 	public static String toMyThumbHtmlPc(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, cContent);
+		String ILLUST_LIST = getIllustListContext(nMode, SP_MODE_WVIEW, cContent);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode);
-		String SEARCH_CATEGORY = getSearchCategoryContext(nMode);
+		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, SP_MODE_WVIEW);
 		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, cContent);
 
@@ -331,10 +347,10 @@ public class CCnv {
 	public static String Content2Html(CContent cContent, int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, cContent);
+		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode);
-		String SEARCH_CATEGORY = getSearchCategoryContext(nMode);
+		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, cContent);
 
@@ -464,17 +480,28 @@ public class CCnv {
 		CContent cContent, int nType, int nMode, String strKeyword,
 		ResourceBundleControl _TEX, int nSpMode, CheckLogin cCheckLogin) {
 
-		String SEARCH_CATEGORY = (nMode==MODE_SP)?"/NewArrivalV.jsp":"/NewArrivalPcV.jsp";
-		String ILLUST_VIEW = (nMode==MODE_SP)?String.format("/IllustViewPcV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
-		String ILLUST_VIEW_APP = (nMode==MODE_SP)?String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+		String SEARCH_CATEGORY = "";
+		if(nSpMode==SP_MODE_APP){
+			SEARCH_CATEGORY = "/NewArrivalAppV.jsp";
+		}else if(nMode==MODE_SP){
+			SEARCH_CATEGORY = "/NewArrivalV.jsp";
+		}else{
+			SEARCH_CATEGORY = "/NewArrivalPcV.jsp";
+		}
+		String ILLUST_VIEW = "";
+		if(nSpMode==SP_MODE_APP){
+			ILLUST_VIEW = String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId);
+		}else if(nMode==MODE_SP){
+			ILLUST_VIEW = String.format("/IllustViewPcV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId);
+		}else{
+			ILLUST_VIEW = String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+		}
 
 		StringBuilder strRtn = new StringBuilder();
 		String strFileNum = getContentsFileNumHtml(cContent);
-		if (nSpMode==SP_MODE_APP) {
-			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s\">", ILLUST_VIEW_APP));
-		} else {
-			strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s\">", ILLUST_VIEW));
-		}
+
+		strRtn.append(String.format("<a class=\"IllustThumb\" href=\"%s\">", ILLUST_VIEW));
+
 		String strFileUrl = "";
 
 		if(cCheckLogin != null && cContent.m_nUserId == cCheckLogin.m_nUserId){
