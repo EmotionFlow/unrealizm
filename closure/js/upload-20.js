@@ -505,10 +505,7 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 		return false;
 	}
 
-	if(isUpdate){
-		if((strPublishStartPresent==null || strPublishEndPresent==null)){
-			return false;
-		}
+	if(isUpdate && strPublishStartPresent!=null && strPublishEndPresent!=null){
 		var startEquals = comparePublishDate(strPublishStartPresent,strPublishStart);
 		var endEquals = comparePublishDate(strPublishEndPresent, strPublishEnd);
 		if(startEquals && endEquals){
@@ -524,11 +521,9 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 				return false;
 			}
 		}
-	}else {
-		if(Date.parse(strPublishStart) < Date.now() || Date.parse(strPublishEnd) < Date.now()) {
-			dateTimePastMsg();
-			return false;
-		}
+	} else if(Date.parse(strPublishStart) < Date.now() || Date.parse(strPublishEnd) < Date.now()) {
+		dateTimePastMsg();
+		return false;
 	}
 
 	return true;

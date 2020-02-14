@@ -207,7 +207,7 @@ function UpdateFile(user_id, content_id) {
 	if(nLimitedTime==1){
 		if(nOpenId!=2 && (strPublishStartPresent==null||strPublishEndPresent==null)){
 			nTweetNow = 0;
-		} else if(nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
+		} else if(nTweet==1 && nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
 			nTweetNow = 1;
 		} else {
 			nTweetNow = 0;
@@ -417,7 +417,7 @@ function createUpdatePaste(){
 			}
 			nTwListId = $('#EditTwitterList').val();
 		}
-			if(nLimitedTime==1){
+		if(nLimitedTime==1){
 			strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
 			strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
 			strPublishStartPresent = $('#EditTimeLimitedStartPresent').val();
@@ -439,7 +439,7 @@ function createUpdatePaste(){
 		if(nLimitedTime==1){
 			if(nOpenId!=2 && (strPublishStartPresent==null||strPublishEndPresent==null)){
 				nTweetNow = 0;
-			} else if(nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
+			} else if(nTweet==1 && nOpenId!=2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
 				nTweetNow = 1;
 			} else {
 				nTweetNow = 0;
@@ -472,7 +472,7 @@ function createUpdatePaste(){
 				} else {
 					fTweet = function() {
 						var dfd = $.Deferred();
-						dfd.resolve();
+						dfd.resolve(1);
 						return dfd.promise();
 					};
 				}
