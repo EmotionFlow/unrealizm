@@ -1,21 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
-<%!
-class ActivityListCParam {
-	public int m_nUserId = -1;
-	public int m_nMode = -1;
+package jp.pipa.poipiku.controller;
 
-	public void GetParam(HttpServletRequest cRequest) {
-		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nMode = Common.ToInt(cRequest.getParameter("MOD"));
-		} catch(Exception e) {
-			m_nUserId = -1;
-		}
-	}
-}
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.Comparator;
+import java.util.Collections;
 
-class ActivityListC {
+import javax.naming.InitialContext;
+import javax.sql.*;
+
+import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.util.*;
+
+public class ActivityListC {
 	public Vector<CComment> m_vComment = new Vector<CComment>();
 
 	public boolean GetResults(ActivityListCParam cParam) {
@@ -155,4 +152,3 @@ class ActivityListC {
 		return bRtn;
 	}
 }
-%>
