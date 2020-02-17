@@ -1,3 +1,3 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% boolean isApp = false; %>
-<%@include file="/inner/MyBookmarkListV.jsp"%>
+<% boolean isApp = true; %>
+<%@include file="/inner/MyHomeTagF.jsp"%>

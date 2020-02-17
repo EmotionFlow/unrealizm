@@ -576,9 +576,15 @@ public class CCnv {
 		return strRtn.toString();
 	}
 
-	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
-		String ILLUST_LIST = (nMode==MODE_SP)?"/IllustListPcV.jsp":"/IllustListGridPcV.jsp";
-
+	private static String _toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){
+		String ILLUST_LIST = "";
+		if(nSpMode==SP_MODE_APP){
+			ILLUST_LIST = "/IllustListAppV.jsp";
+		}else if(nMode==MODE_SP){
+			ILLUST_LIST = "/IllustListPcV.jsp";
+		}else{
+			ILLUST_LIST = "/IllustListGridPcV.jsp";
+		}
 		StringBuilder strRtn = new StringBuilder();
 
 		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s?ID=%d\">", ILLUST_LIST, cUser.m_nUserId));
@@ -589,17 +595,59 @@ public class CCnv {
 		return strRtn.toString();
 	}
 
+	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
+		return  _toHtml(cUser, nMode, _TEX, SP_MODE_WVIEW);
+	}
+
+	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode) {
+		return  _toHtml(cUser, nMode, _TEX, nSpMode);
+	}
+
+	private static String _toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
+		String SEARCH_ILLUST_TAG = "";
+		if(nSpMode==SP_MODE_APP){
+			SEARCH_ILLUST_TAG = "/SearchIllustByTagAppV.jsp";
+		}else if(nMode==MODE_SP){
+			SEARCH_ILLUST_TAG = "/SearchIllustByTagV.jsp";
+		}else{
+			SEARCH_ILLUST_TAG = "/SearchIllustByTagPcV.jsp";
+		}
+
+		return String.format(
+			"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\">#%s</a></h2>",
+			SEARCH_ILLUST_TAG, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)
+		);
+	}
+
 	public static String toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX) throws UnsupportedEncodingException {
-		String SEARCH_ILLUST_TAG = (nMode==MODE_SP)?"/SearchIllustByTagV.jsp":"/SearchIllustByTagPcV.jsp";
-		StringBuilder strRtn = new StringBuilder();
-		strRtn.append(String.format("<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\">#%s</a></h2>", SEARCH_ILLUST_TAG, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)));
-		return strRtn.toString();
+		return _toHtml(cTag, nMode, _TEX, SP_MODE_WVIEW);
+	}
+
+	public static String toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
+		return _toHtml(cTag, nMode, _TEX, nSpMode);
+	}
+
+
+	private static String _toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
+		String SEARCH_ILLUST_KEYWORD = "";
+		if(nSpMode==SP_MODE_APP){
+			SEARCH_ILLUST_KEYWORD = "/SearchIllustByKeywordAppV.jsp";
+		}else if(nMode==MODE_SP){
+			SEARCH_ILLUST_KEYWORD = "/SearchIllustByKeywordV.jsp";
+		}else{
+			SEARCH_ILLUST_KEYWORD = "/SearchIllustByKeywordPcV.jsp";
+		}
+		return String.format(
+			"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\"><i class=\"fas fa-search\"></i> %s</a></h2>",
+			SEARCH_ILLUST_KEYWORD, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)
+		);
 	}
 
 	public static String toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX) throws UnsupportedEncodingException {
-		String SEARCH_ILLUST_KEYWORD = (nMode==MODE_SP)?"/SearchIllustByKeywordV.jsp":"/SearchIllustByKeywordPcV.jsp";
-		StringBuilder strRtn = new StringBuilder();
-		strRtn.append(String.format("<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\"><i class=\"fas fa-search\"></i> %s</a></h2>", SEARCH_ILLUST_KEYWORD, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)));
-		return strRtn.toString();
+		return _toHtml(cTag, nMode, _TEX, SP_MODE_WVIEW);
+	}
+
+	public static String toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
+		return _toHtml(cTag, nMode, _TEX, nSpMode);
 	}
 }
