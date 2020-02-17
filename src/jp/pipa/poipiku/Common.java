@@ -521,9 +521,19 @@ public class Common {
 		return true;
 	}
 
-	public static String AutoLink(String strSrc, int nUserId, int nMode) {
-		String ILLUST_LIST = (nMode==CCnv.MODE_SP)?"/SearchIllustByTagV.jsp?KWD=":"/SearchIllustByTagPcV.jsp?KWD=";
-		String MY_ILLUST_LIST = (nMode==CCnv.MODE_SP)?String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId):String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
+	private static String _AutoLink(String strSrc, int nUserId, int nMode, int nSpMode) {
+		String ILLUST_LIST = "";
+		String MY_ILLUST_LIST = "";
+		if(nSpMode==CCnv.SP_MODE_APP){
+			ILLUST_LIST = "/SearchIllustByTagAppV.jsp?KWD=";
+			MY_ILLUST_LIST = String.format("/IllustListAppV.jsp?ID=%d&KWD=", nUserId);
+		}else if(nMode==CCnv.MODE_SP){
+			ILLUST_LIST = "/SearchIllustByTagV.jsp?KWD=";
+			MY_ILLUST_LIST = String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
+		}else{
+			ILLUST_LIST = "/SearchIllustByTagPcV.jsp?KWD=";
+			MY_ILLUST_LIST = String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
+		}
 		return strSrc
 				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
 				//.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("$1<a class=\"AutoLink\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$3')\">$2$3</a>", ILLUST_LIST))
@@ -531,6 +541,15 @@ public class Common {
 				//.replaceAll("(##)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("<a class=\"AutoLinkMyTag\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$2')\">$0</a>", MY_ILLUST_LIST))
 				.replaceAll("(##)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("<a class=\"AutoLinkMyTag\" href=\"%s$2\">$0</a>", MY_ILLUST_LIST))
 				.replaceAll("@([0-9a-zA-Z_]{3,15})","<a class='AutoLink' href='https://twitter.com/$1' target='_blank'>$0</a>");
+
+	}
+
+	public static String AutoLink(String strSrc, int nUserId, int nMode) {
+		return _AutoLink(strSrc, nUserId, nMode, CCnv.SP_MODE_WVIEW);
+	}
+
+	public static String AutoLink(String strSrc, int nUserId, int nMode, int nSpMode) {
+		return _AutoLink(strSrc, nUserId, nMode, nSpMode);
 	}
 
 	public static String EscapeSqlLike(String strSrc, String strEscape) {

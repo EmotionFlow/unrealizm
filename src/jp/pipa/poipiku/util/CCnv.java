@@ -52,8 +52,16 @@ public class CCnv {
 	private static String getLinkTarget(int nMode){
 		return (nMode==MODE_SP)?"":"target=\"_blank\"";
 	}
-	private static String getIllustViewContext(int nMode, CContent cContent){
-		return (nMode==MODE_SP)?String.format("/IllustViewPcV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId):String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+	private static String getIllustViewContext(int nMode, int nSpMode,  CContent cContent){
+		String s = "";
+		if(nSpMode==SP_MODE_APP){
+			s = String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId);
+		}else if(nMode==MODE_SP){
+			s = String.format("/IllustViewPcV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId);
+		}else{
+			s = String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
+		}
+		return s;
 	}
 	private static String getThumbClass(CContent cContent){
 		String strThumbClass = "";
@@ -120,12 +128,12 @@ public class CCnv {
 			)
 		);
 	}
-	private static void appendTag(StringBuilder strRtn, CContent cContent, int nMode){
+	private static void appendTag(StringBuilder strRtn, CContent cContent, int nMode, int nSpMode){
 		strRtn.append(
 			String.format("<h2 id=\"IllustItemTag_%d\" class=\"IllustItemTag\" %s>%s</h1>",
 				cContent.m_nContentId,
 				(cContent.m_strTagList.isEmpty())?"style=\"display: none;\"":"",
-				Common.AutoLink(Common.ToStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode)
+				Common.AutoLink(Common.ToStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode, nSpMode)
 			)
 		);
 	}
@@ -288,7 +296,7 @@ public class CCnv {
 		String ILLUST_DETAIL = getIllustFromContext(nMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, SP_MODE_WVIEW);
 		String LINK_TARGET = getLinkTarget(nMode);
-		String ILLUST_VIEW = getIllustViewContext(nMode, cContent);
+		String ILLUST_VIEW = getIllustViewContext(nMode, SP_MODE_WVIEW, cContent);
 
 		String strThumbClass = getThumbClass(cContent);
 
@@ -321,7 +329,7 @@ public class CCnv {
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// タグ
-		appendTag(strRtn, cContent, nMode);
+		appendTag(strRtn, cContent, nMode, SP_MODE_WVIEW);
 
 		// 画像
 		appendIllustItemThumb(strRtn, cContent, VIEW_LIST, ILLUST_VIEW, ILLUST_DETAIL, true);
@@ -352,7 +360,7 @@ public class CCnv {
 		String ILLUST_DETAIL = getIllustFromContext(nMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String LINK_TARGET = getLinkTarget(nMode);
-		String ILLUST_VIEW = getIllustViewContext(nMode, cContent);
+		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
 		String strThumbClass = getThumbClass(cContent);
 
@@ -399,7 +407,7 @@ public class CCnv {
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// タグ
-		appendTag(strRtn, cContent, nMode);
+		appendTag(strRtn, cContent, nMode, nSpMode);
 
 		// 編集
 		if(cContent.m_nUserId==nLoginUserId) {
