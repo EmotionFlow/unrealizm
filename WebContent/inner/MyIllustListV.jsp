@@ -135,52 +135,52 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 						<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 					</a>
 				</div>
-
-				<%if(!isApp && cCheckLogin.m_bLogin) {%>
-				<div class="FooterMenuWrapper">
-					<nav class="FooterMenu">
-						<a id="MenuMe" class="FooterMenuItem Selected" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
-							<span class="FooterMenuItemIcon"></span>
-							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
-						</a>
-						<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
-							<span class="FooterMenuItemIcon"></span>
-							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
-						</a>
-						<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
-							<span class="FooterMenuItemIcon"></span>
-							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
-						</a>
-						<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
-							<span class="FooterMenuItemIcon">
-								<div id="InfoNumAct" class="InfoNum">0</div>
-							</span>
-							<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
-						</a>
-					</nav>
-				</div>
-				<script>
-					function UpdateNotify() {
-						$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
-							var ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
-							//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
-							$('#InfoNumAct').html(ntfy_num);
-							if(ntfy_num>0) {
-								$('#InfoNumAct').show();
-							} else {
-								$('#InfoNumAct').hide();
-							}
-						});
-					}
-					var g_timerUpdateNotify = null;
-					$(function(){
-						UpdateNotify();
-						g_timerUpdateNotify = setInterval(UpdateNotify, 1000*60);
-					});
-				</script>
-				<%}%>
 			</div>
 		</header>
+
+		<%if(!isApp && cCheckLogin.m_bLogin) {%>
+		<div class="FooterMenuWrapper">
+			<nav class="FooterMenu">
+				<a id="MenuMe" class="FooterMenuItem Selected" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
+					<span class="FooterMenuItemIcon"></span>
+					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
+				</a>
+				<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
+					<span class="FooterMenuItemIcon"></span>
+					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
+				</a>
+				<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
+					<span class="FooterMenuItemIcon"></span>
+					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+				</a>
+				<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
+					<span class="FooterMenuItemIcon">
+						<div id="InfoNumAct" class="InfoNum">0</div>
+					</span>
+					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
+				</a>
+			</nav>
+		</div>
+		<script>
+			function UpdateNotify() {
+				$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
+					var ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
+					//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
+					$('#InfoNumAct').html(ntfy_num);
+					if(ntfy_num>0) {
+						$('#InfoNumAct').show();
+					} else {
+						$('#InfoNumAct').hide();
+					}
+				});
+			}
+			var g_timerUpdateNotify = null;
+			$(function(){
+				UpdateNotify();
+				g_timerUpdateNotify = setInterval(UpdateNotify, 1000*60);
+			});
+		</script>
+		<%}%>
 
 		<article class="Wrapper">
 			<%if(cResults.m_vCategoryList.size()>0) {%>

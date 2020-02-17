@@ -9,11 +9,14 @@ if(cResults.m_nUserId==-1) {
 	if(!cCheckLogin.m_bLogin) {
 		response.sendRedirect("/StartPoipikuV.jsp");
 		return;
+	} else {
+		cResults.m_nUserId = cCheckLogin.m_nUserId;
+		cResults.m_bDispUnPublished = true;
 	}
-	cResults.m_nUserId = cCheckLogin.m_nUserId;
 } else if(cCheckLogin.m_nUserId == cResults.m_nUserId) {
 	cResults.m_bDispUnPublished = true;
 }
+
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
@@ -197,7 +200,7 @@ if(!cResults.getResults(cCheckLogin)) {
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
 					<%if(cResults.m_bOwner) {%>
-					<a class="UserInfoStateItem" href="/FollowListV.jsp">
+					<a class="UserInfoStateItem" href="/FollowListAppV.jsp">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
