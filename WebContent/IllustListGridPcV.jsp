@@ -25,10 +25,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta property="og:url" content="<%=strUrl%>" />
 		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta property="og:image" content="https://poipiku.com/img/poipiku_twitter_card.png" />
 		<title><%=Util.toDescString(strTitle)%></title>
 
 		<script type="text/javascript">
