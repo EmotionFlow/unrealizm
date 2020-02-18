@@ -54,7 +54,7 @@ public class UpFileFirstC extends UpC{
 			if(cParam.m_bPasteUpload){
 				imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
 				if(imageBinary == null) return nRtn;
-				if(imageBinary.length>1024*1024*10) return nRtn;
+				if(imageBinary.length>1024*1024*20) return nRtn;
 				cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
 				if(cImage == null) return nRtn;
 			}

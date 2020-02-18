@@ -42,7 +42,7 @@ class UploadFileAppendC {
 		try {
 			byte[] imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
 			if(imageBinary == null) return nRtn;
-			if(imageBinary.length>1024*1024*10) return nRtn;
+			if(imageBinary.length>1024*1024*20) return nRtn;
 			BufferedImage cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
 			if(cImage == null) return nRtn;
 
