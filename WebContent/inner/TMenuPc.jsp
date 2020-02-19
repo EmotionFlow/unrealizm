@@ -65,6 +65,10 @@
 				</a>
 			</form>
 			<%} else {%>
+			<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
+			</a>
 			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
@@ -78,10 +82,6 @@
 					<div id="InfoNumAct" class="InfoNum">0</div>
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
-			</a>
-			<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
-				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
 			<a id="MenuSettings" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 				<span class="FooterMenuItemIcon"></span>
