@@ -29,6 +29,7 @@ try{
 	} else {
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
 	}
+	Log.d("callbackUri: " + callbackUri);
 	session.setAttribute("callback_uri", callbackUri);
 
 	authUrl = provider.retrieveRequestToken(consumer, Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp");

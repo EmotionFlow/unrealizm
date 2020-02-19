@@ -13,7 +13,11 @@ IllustListC cResults = new IllustListC();
 cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	if(!cCheckLogin.m_bLogin) {
-		response.sendRedirect("/StartPoipikuV.jsp");
+		if(isApp){
+			response.sendRedirect("/StartPoipikuAppV.jsp");
+		} else {
+			response.sendRedirect("/StartPoipikuV.jsp");
+		}
 		return;
 	}
 	cResults.m_nUserId = cCheckLogin.m_nUserId;

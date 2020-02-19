@@ -4,7 +4,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 if(SP_REVIEW && !cCheckLogin.m_bLogin) {
-	response.sendRedirect("/StartPoipikuV.jsp");
+	response.sendRedirect("/StartPoipikuAppV.jsp");
 	return;
 }
 
