@@ -464,6 +464,10 @@ public class CCnv {
 		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, cCheckLogin);
 	}
 
+	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin cCheckLogin, int nSpMode) {
+		return _toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode, cCheckLogin);
+	}
+
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
 		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, null);
 	}
