@@ -45,12 +45,9 @@ if(strRequestUri != null) {
 					<%=_TEX.T("Poipiku.Info.Message")%>
 				</div>
 				<div class="AnalogicoLogin">
-					<form method="post" name="login_from_twitter_startpoipikuv_00" action="/LoginFormTwitter.jsp">
-						<input id="login_from_twitter_startpoipikuv_callback_00" type="hidden" name="CBPATH" value="app"/>
-						<a class="BtnBase AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_startpoipikuv_00.submit()">
+					<a class="BtnBase AnalogicoInfoRegistBtn" href="/LoginFormTwitter.jsp?CBPATH=app">
 							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
-						</a>
-					</form>
+					</a>
 				</div>
 				<div class="AnalogicoLogin">
 					<a class="BtnBase AnalogicoInfoRegistBtn" href="/LoginFormEmailV.jsp">
