@@ -10,7 +10,7 @@
 			<%=_TEX.T("Poipiku.Info.MoreInfo")%>
 		</a>
 		<div class="AnalogicoInfoRegist">
-			<form method="post" name="login_from_twitter_tfooterbase_00" action="/LoginFormTwitterPc.jsp">
+			<form method="post" name="login_from_twitter_tfooterbase_00" action="/LoginFormTwitter.jsp">
 				<input id="login_from_twitter_tfooterbase_callback_00" type="hidden" name="CBPATH" value=""/>
 				<script>{
 					let s = document.URL.split("/");

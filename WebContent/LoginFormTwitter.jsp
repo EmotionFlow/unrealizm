@@ -27,7 +27,11 @@ try{
 	boolean isApp = callbackUri.equals("app");
 
 	if(callbackUri.isEmpty() || callbackUri.equals("/")){
-		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyIllustListV.jsp";
+		if(Util.isSmartPhone(request)){
+			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyIllustListV.jsp";
+		}else{
+			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyIllustListPcV.jsp";
+		}
 	}else{
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
 	}

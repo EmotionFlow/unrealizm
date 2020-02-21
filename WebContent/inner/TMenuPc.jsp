@@ -11,7 +11,7 @@
 				</a>
 			</h1>
 			<%if(Util.isSmartPhone(request) && !cCheckLogin.m_bLogin) {%>
-				<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitterPc.jsp">
+				<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitter.jsp">
 					<input id="login_from_twitter_tmenupc_callback_00" type="hidden" name="CBPATH" value=""/>
 					<script>{
 						let s = document.URL.split("/");
@@ -53,7 +53,7 @@
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
 			<%if(!cCheckLogin.m_bLogin) {%>
-			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitterPc.jsp">
+			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitter.jsp">
 				<input id="login_from_twitter_tmenupc_callback_01" type="hidden" name="CBPATH" value=""/>
 				<script>{
 					let s = document.URL.split("/");

@@ -101,7 +101,7 @@ if(strRequestUri != null) {
 				<div class="SettingListItem">
 
 					<div  style="text-align: center;">
-						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitterPc.jsp">
+						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
 							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value=""/>
 							<script>{
 								let s = document.URL.split("/");
