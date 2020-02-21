@@ -108,12 +108,22 @@ public class MyEditSettingC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "SELECT count(*) as cnt FROM contents_0000 WHERE user_id=? AND open_id<>2";
+			strSql = "SELECT count(*) as cnt FROM contents_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nPublishedContentsTotal = cResSet.getInt("cnt");
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			strSql = "SELECT COUNT(user_id) as cnt FROM follows_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, checkLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				m_cUser.m_nFollowNum = cResSet.getInt("cnt");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
