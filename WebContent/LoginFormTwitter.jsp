@@ -24,15 +24,20 @@ try{
 	session.setAttribute("consumer", consumer);
 	session.setAttribute("provider", provider);
 	String callbackUri = Common.ToString(request.getParameter("CBPATH"));
+	boolean isApp = callbackUri.equals("app");
+
 	if(callbackUri.isEmpty() || callbackUri.equals("/")){
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyIllustListV.jsp";
-	} else {
+	}else{
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
 	}
-	Log.d("callbackUri: " + callbackUri);
 	session.setAttribute("callback_uri", callbackUri);
 
-	authUrl = provider.retrieveRequestToken(consumer, Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp");
+	if(isApp){
+		authUrl = provider.retrieveRequestToken(consumer, Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserApp.jsp");
+	}else{
+		authUrl = provider.retrieveRequestToken(consumer, Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp");
+	}
 }catch(Exception e){
 	e.printStackTrace();
 }
