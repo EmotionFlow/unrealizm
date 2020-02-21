@@ -121,6 +121,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 			font-size: 9px;
 			color: #5bd;
 		}
+		.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
 		</style>
 	</head>
 
@@ -197,9 +198,13 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin)%>
+				<%if(cResults.m_vContentList.size()>0){%>
+					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin)%>
+					<%}%>
+				<%}else{%>
+					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
 				<%}%>
 			</section>
 		</article>

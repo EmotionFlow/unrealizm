@@ -152,6 +152,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
+		.NoContents {display: block; padding: 130px 0; width: 100%; text-align: center;}
 		</style>
 	</head>
 
@@ -226,9 +227,13 @@ if(!cResults.getResults(cCheckLogin)) {
 						<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 					<%}%>
 				<%}else{%>
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin, CCnv.SP_MODE_APP)%>
+					<%if(cResults.m_vContentList.size()>0){%>
+						<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+							CContent cContent = cResults.m_vContentList.get(nCnt);%>
+							<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin, CCnv.SP_MODE_APP)%>
+						<%}%>
+					<%}else{%>
+						<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
 					<%}%>
 				<%}%>
 			</section>

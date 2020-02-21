@@ -144,6 +144,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		</script>
 		<style>
 			.IllustItem .IllustItemThumb { position: relative; }
+			.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
 		</style>
 	</head>
 
@@ -161,15 +162,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%//if(!bSmartPhone) {%>
-				<%//@ include file="/inner/TAdPc336x280_top_right.jsp"%>
-				<%//}%>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toMyThumbHtmlPc(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%//if(nCnt==17) {%>
-					<%//@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
-					<%//}%>
+				<%if(cResults.m_vContentList.size()>0){%>
+					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%=CCnv.toMyThumbHtmlPc(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				<%}else{%>
+					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
 				<%}%>
 			</section>
 		</article>

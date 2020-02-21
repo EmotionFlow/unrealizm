@@ -57,10 +57,10 @@ cResults.GetResults(cParam);
 		<article class="Wrapper ItemList">
 
 			<%if(cResults.m_vComment.size()<=0) {%>
-			<div style="float: left; width: 100%; padding: 250px 0 0 0; text-align: center;">
+			<div style="display:block; width: 100%; padding: 250px 0; text-align: center;">
 				<%=(cParam.m_nMode<=0)?_TEX.T("ActivityList.Message.Default.Recive"):_TEX.T("ActivityList.Message.Default.Send")%>
 			</div>
-			<%}%>
+			<%}else{%>
 			<div class="IllustItemList" style="min-height: 600px;">
 				<div class="ItemComment">
 					<%for(int nCnt=0; nCnt<cResults.m_vComment.size(); nCnt++) {
@@ -106,6 +106,7 @@ cResults.GetResults(cParam);
 					<%}%>
 				</div>
 			</div>
+			<%}%>
 		</article>
 
 		<%@ include file="/inner/TFooter.jsp"%>
