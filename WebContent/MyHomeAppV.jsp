@@ -93,9 +93,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
+				<%/* apple審査対応のため一時コメントアウト
 				<a class="EventItem" href="/event/20200214_valentain/TopV.jsp">
 					<img class="EventBanner" src="/event/20200214_valentain/valentine_banner.png" />
 				</a>
+				*/%>
 				<a class="EventItem" href="/RecruitS.jsp">
 					<img class="EventBanner" src="/img/recruit.png" />
 				</a>
