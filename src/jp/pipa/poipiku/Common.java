@@ -442,6 +442,11 @@ public class Common {
 		return "//img-cdn.poipiku.com" + strFileName;
 	}
 
+	public static String GetLocalImgUrl(String strFileName) {
+		if(strFileName==null) return "";
+		return "//img.poipiku.com" + strFileName;
+	}
+
 	public static String GetPoipikuUrl(String strFileName) {
 		if(strFileName==null) return "";
 		return "https://poipiku.com" + strFileName;
