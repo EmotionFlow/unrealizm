@@ -99,11 +99,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg" />
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_360.jpg" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
