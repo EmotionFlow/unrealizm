@@ -345,6 +345,8 @@
 	z-index: 2;
 }
 .PublishIco01{ background-position: center; background-size: contain; background-image: url(/img/ico_warning.png);}
+.PublishIco02{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.PublishIco03{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
 .PublishIco04{ background-position: center; background-size: contain; background-image: url(/img/ico_pass.png);}
 .PublishIco05{ background-position: center; background-size: contain; background-image: url(/img/ico_signin.png);}
 .PublishIco06{ background-position: center; background-size: contain; background-image: url(/img/ico_favorite.png);}

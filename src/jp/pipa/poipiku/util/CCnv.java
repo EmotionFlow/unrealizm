@@ -161,7 +161,7 @@ public class CCnv {
 			strRtn.append("</span>");
 
 			strRtn.append("<span class=\"IllustInfoBottom\">");
-			if(cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {
+			if(cContent.m_nPublishId>=1 && cContent.m_nPublishId<=10) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 			if(cContent.m_nFileNum>1){
@@ -574,7 +574,7 @@ public class CCnv {
 
 		strRtn.append("<span class=\"IllustInfoBottom\">");
 		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId){
-			if(cContent.m_nPublishId==1 || (cContent.m_nPublishId>=4 && cContent.m_nPublishId<=10)) {
+			if(cContent.m_nPublishId>=1 && cContent.m_nPublishId<=10) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 		}

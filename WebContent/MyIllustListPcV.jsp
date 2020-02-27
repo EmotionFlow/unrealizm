@@ -10,6 +10,8 @@ if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
 
+cResults.m_bDispUnPublished = true;
+
 if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
