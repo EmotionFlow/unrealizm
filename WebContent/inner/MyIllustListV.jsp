@@ -22,7 +22,11 @@ if(cResults.m_nUserId==-1) {
 	}
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
-cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+
+if(isApp){
+	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+}
+
 cResults.m_bDispUnPublished = true;
 if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
@@ -46,7 +50,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 				$.ajax({
 					"type": "post",
 					"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword,  "PG" : g_nPage},
-					"url": "/f/MyIllustListF.jsp",
+					"url": "/f/MyIllustList<%=isApp?"App":""%>F.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
 							g_nPage++;
@@ -87,6 +91,12 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 
 			$(function(){
 				updateCategoryMenuPos(0);
+				$(window).bind("scroll.addMyContents", function() {
+					$(window).height();
+					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
+						addMyContents();
+					}
+				});
 			});
 		</script>
 		<style>
