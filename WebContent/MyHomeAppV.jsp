@@ -94,7 +94,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%}%>
 			<section class="EventItemList">
 				<a class="EventItem" href="/RecruitS.jsp">
-					<img class="EventBanner" src="/img/recruit.png" />
+					<img class="EventBanner" src="/img/recruit<%=(int)(Math.random()*3+1)%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />

@@ -123,7 +123,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
 				<a class="EventItem" href="/RecruitPcS.jsp">
-					<img class="EventBanner" src="/img/recruit.png" />
+					<img class="EventBanner" src="/img/recruit<%=(int)(Math.random()*3+1)%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
@@ -164,7 +164,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
 							<a class="EventItem" href="/RecruitPcS.jsp">
-								<img class="EventBanner" src="/img/recruit.png" />
+								<img class="EventBanner" src="/img/recruit<%=(int)(Math.random()*3+1)%>.png" />
 							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />

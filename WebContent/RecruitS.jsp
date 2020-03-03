@@ -5,6 +5,9 @@
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>株式会社pipa.jp スタッフ募集のお知らせ</title>
 		<style>
+			body {
+				background: #fff;
+			}
 			.AnalogicoInfo {display: none;}
 			.EntryButtonArea{
 					position: relative;
@@ -44,6 +47,9 @@
 				margin: 5px 0;
 				font-size: 18px;
 			}
+			.SettingList .SettingListItem .SettingListTitle.Head {
+				margin-bottom:30px; text-align: center; font-size: 18px;
+			}
 		</style>
 	</head>
 	<body>
@@ -52,7 +58,7 @@
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
-					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">株式会社pipa.jp スタッフ募集のお知らせ</div>
+					<div class="SettingListTitle Head">株式会社pipa.jp スタッフ募集のお知らせ</div>
 					<div class="SettingBody">
 						株式会社pipa.jpが提供する各種サービスの運営業務を担って頂ける人材を募集します。<br/>
 						イラストを始めとする創作活動の支援や、インターネットサービスの仕事を通して共に成長したい方はぜひご応募ください。<br/><br/>
@@ -67,11 +73,12 @@
 				</div>
 
 				<div class="SettingListItem">
-					<div class="SettingListTitle">必要スキル・経験</div>
+					<div class="SettingListTitle">必要条件</div>
 					<div class="SettingBody">
 						<ul>
 							<li>基本的なPCスキル（メール、Word/Excel、インターネット）</li>
-							<li>PCによる簡単なイラスト制作</li>
+							<li>PCによる簡単なデザイン、イラスト制作経験</li>
+							<li>ポイピクをもっと面白くしたいという野望</li>
 						</ul>
 					</div>
 				</div>
@@ -83,6 +90,7 @@
 							<li>ユーザから寄せられる各種問い合わせへの対応</li>
 							<li>文書やWebサイト用イラスト素材の作成</li>
 							<li>サイト内イベントの企画、運営</li>
+							<li>ポイピクの広報活動</li>
 						</ul>
 					</div>
 				</div>
@@ -117,6 +125,7 @@
 							<li>書籍購入手当</li>
 							<li>部活動補助</li>
 							<li>フリードリンク</li>
+							<li>pipaさんのお菓子差し入れ（ブルボン商品、うまい棒めんたい味）</li>
 							<li>単月ごとのインセンティブ査定有り</li>
 							<li>単月ごとの昇給・昇格の査定有り</li>
 						</ul>
