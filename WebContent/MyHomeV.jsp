@@ -14,6 +14,8 @@ cResults.getParam(request);
 //cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+
+int nRnd = (int)(Math.random()*3+1);
 %>
 <!DOCTYPE html>
 <html>
@@ -93,8 +95,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
-				<a class="EventItem" href="/RecruitS.jsp">
-					<img class="EventBanner" src="/img/recruit<%=(int)(Math.random()*3+1)%>.png" />
+				<a class="EventItem" href="/RecruitS.jsp?BD=<%=nRnd%>">
+					<img class="EventBanner" src="/img/recruit<%=nRnd%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />

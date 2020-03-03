@@ -23,6 +23,8 @@ if(!cCheckLogin.m_bLogin) {
 
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+
+int nRnd = (int)(Math.random()*3+1);
 %>
 <!DOCTYPE html>
 <html>
@@ -122,8 +124,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
-				<a class="EventItem" href="/RecruitPcS.jsp">
-					<img class="EventBanner" src="/img/recruit<%=(int)(Math.random()*3+1)%>.png" />
+				<a class="EventItem" href="/RecruitPcS.jsp?b=<%=nRnd%>">
+					<img class="EventBanner" src="/img/recruit<%=nRnd%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
@@ -163,8 +165,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
-							<a class="EventItem" href="/RecruitPcS.jsp">
-								<img class="EventBanner" src="/img/recruit<%=(int)(Math.random()*3+1)%>.png" />
+							<a class="EventItem" href="/RecruitPcS.jsp?BD=<%=nRnd%>">
+								<img class="EventBanner" src="/img/recruit<%=nRnd%>.png" />
 							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />
