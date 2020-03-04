@@ -78,12 +78,20 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				</div>
 
 				<div class="SettingListItem">
-					<div class="SettingListTitle">必要条件</div>
+					<div class="SettingListTitle">必須条件</div>
+					<div class="SettingBody">
+						<ul>
+							<li>ポイピク愛❤︎︎</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="SettingListItem">
+					<div class="SettingListTitle">推奨条件</div>
 					<div class="SettingBody">
 						<ul>
 							<li>基本的なPCスキル（メール、Word/Excel、インターネット）</li>
 							<li>PCによる簡単なデザイン、イラスト制作経験</li>
-							<li>ポイピクをもっと面白くしたいという野望</li>
 						</ul>
 					</div>
 				</div>
