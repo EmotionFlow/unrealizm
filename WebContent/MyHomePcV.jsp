@@ -125,7 +125,7 @@ int nRnd = (int)(Math.random()*3+1);
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
 				<a class="EventItem" href="/RecruitPcS.jsp?b=<%=nRnd%>">
-					<img class="EventBanner" src="/img/recruit<%=nRnd%>.png" />
+					<img class="EventBanner" src="/img/recruit0<%=nRnd%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
@@ -166,7 +166,7 @@ int nRnd = (int)(Math.random()*3+1);
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
 							<a class="EventItem" href="/RecruitPcS.jsp?BD=<%=nRnd%>">
-								<img class="EventBanner" src="/img/recruit<%=nRnd%>.png" />
+								<img class="EventBanner" src="/img/recruit0<%=nRnd%>.png" />
 							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />

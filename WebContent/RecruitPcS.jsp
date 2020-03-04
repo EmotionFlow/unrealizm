@@ -138,7 +138,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 							<li>書籍購入手当</li>
 							<li>部活動補助</li>
 							<li>フリードリンク</li>
-							<li>pipaさんのお菓子差し入れ（ブルボン商品、うまい棒めんたい味）</li>
+							<li>pipaさんのお菓子差し入れ🍪（ブルボン商品、うまい棒めんたい味）</li>
 							<li>単月ごとのインセンティブ査定有り</li>
 							<li>単月ごとの昇給・昇格の査定有り</li>
 						</ul>
