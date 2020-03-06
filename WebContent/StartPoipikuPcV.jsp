@@ -42,15 +42,14 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 			.poipikuDesc .DescTitle {font-size: 18px; font-weight: bold;}
 
 			.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
-			.AnalogicoInfo.Title {display: block; padding: 100px 0;}
+			.AnalogicoInfo.Title {display: block; padding: 10px 0;}
 			.AnalogicoInfo.Flyer {display: flex; align-content: center; justify-content: center;}
 			.AnalogicoInfo.Flyer.Omote {padding: 0; background-color: #232323;}
-			.AnalogicoInfo.Flyer.Ura {padding: 50px 0; background-color: #fff;}
+			.AnalogicoInfo.Flyer.Ura {padding: 10px 0; background-color: #fff;}
+			.PoipikuFlyerImgFrame {display: flex; flex: 0 0 100%;}
+			.PoipikuFlyerImgFrame .PoipikuFlyerImg {width: 100%; height: 100%;}
 
 			<%if(Util.isSmartPhone(request)) {%>
-			.AnalogicoInfo.Title {padding: 10px 0;}
-			.AnalogicoInfo.Flyer.Ura {padding: 10px 0;}
-			.PoipikuFlyerImg {width: 100%;}
 			<%} else {%>
 			.TopTitleLogo {display: inline; width: 120px; height: auto;}
 			.TopTitleInfo {font-size: 22px; margin: 20px 0 0 0;}
@@ -60,7 +59,9 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 			.PoipikuInfo {padding: 10px 15px;}
 			.PoipikuInfo .PoipikuDesc {margin: 10px 0;}
 			.PoipikuInfo .PoipikuDesc.Full {flex: 0 0 620px; padding: 45px;}
-			.PoipikuFlyerImg {width: 990px;}
+			.AnalogicoInfo.Title {padding: 100px 0;}
+			.AnalogicoInfo.Flyer.Ura {padding: 50px 0;}
+			.PoipikuFlyerImgFrame {flex: 0 0 990px;}
 			<%}%>
 		</style>
 
@@ -76,10 +77,14 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 
 		<article class="Wrapper">
 			<section class="AnalogicoInfo Flyer Omote">
-				<img class="PoipikuFlyerImg" src="//poipiku.com/img/poipiku_flyer_b8.png" />
+				<div class="PoipikuFlyerImgFrame">
+					<img class="PoipikuFlyerImg" src="//poipiku.com/img/poipiku_flyer_b8.png" />
+				</div>
 			</section>
 			<section class="AnalogicoInfo Flyer Ura">
-				<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/poipiku_flyer_ura12.png" />
+				<div class="PoipikuFlyerImgFrame">
+					<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/poipiku_flyer_ura12.png" />
+				</div>
 			</section>
 			<section class="AnalogicoInfo Title">
 				<div class="AnalogicoDesc Title">
