@@ -36,7 +36,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			<div class="AnalogicoStart">
 				<div style="margin: 0 0 5px 0; font-size: 16px;">イラストポイポイSNS</div>
 				<a class="BtnBase Rev" style="background-color: #fff;" href="https://poipiku.com/">
-					<img class="Logo" src="/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>">
+					<img class="Logo" src="//img-cdn.poipiku.com/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>">
 				</a>
 			</div>
 		</article>

@@ -96,7 +96,7 @@ int nRnd = (int)(Math.random()*3+1);
 			<%}%>
 			<section class="EventItemList">
 				<a class="EventItem" href="/RecruitS.jsp?BD=<%=nRnd%>">
-					<img class="EventBanner" src="/img/recruit0<%=nRnd%>.png" />
+					<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />

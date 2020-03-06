@@ -42,8 +42,15 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 			.poipikuDesc .DescTitle {font-size: 18px; font-weight: bold;}
 
 			.TopBanner {display: block; width: 350px; margin: 0 auto 20px auto;}
+			.AnalogicoInfo.Title {display: block; padding: 100px 0;}
+			.AnalogicoInfo.Flyer {display: flex; align-content: center; justify-content: center;}
+			.AnalogicoInfo.Flyer.Omote {padding: 0; background-color: #232323;}
+			.AnalogicoInfo.Flyer.Ura {padding: 50px 0; background-color: #fff;}
 
 			<%if(Util.isSmartPhone(request)) {%>
+			.AnalogicoInfo.Title {padding: 10px 0;}
+			.AnalogicoInfo.Flyer.Ura {padding: 10px 0;}
+			.PoipikuFlyerImg {width: 100%;}
 			<%} else {%>
 			.TopTitleLogo {display: inline; width: 120px; height: auto;}
 			.TopTitleInfo {font-size: 22px; margin: 20px 0 0 0;}
@@ -53,6 +60,7 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 			.PoipikuInfo {padding: 10px 15px;}
 			.PoipikuInfo .PoipikuDesc {margin: 10px 0;}
 			.PoipikuInfo .PoipikuDesc.Full {flex: 0 0 620px; padding: 45px;}
+			.PoipikuFlyerImg {width: 990px;}
 			<%}%>
 		</style>
 
@@ -67,13 +75,21 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
-			<section class="AnalogicoInfo" style="display: block;">
+			<section class="AnalogicoInfo Flyer Omote">
+				<img class="PoipikuFlyerImg" src="//poipiku.com/img/poipiku_flyer_b8.png" />
+			</section>
+			<section class="AnalogicoInfo Flyer Ura">
+				<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/poipiku_flyer_ura12.png" />
+			</section>
+			<section class="AnalogicoInfo Title">
 				<div class="AnalogicoDesc Title">
 					<div style="margin : 0;">
-						<img class="TopTitleLogo" src="/img/pc_top_title_W.jpg" alt="<%=_TEX.T("THeader.Title")%>">
+						<img class="TopTitleLogo" src="//img-cdn.poipiku.com/img/pc_top_title_W.jpg" alt="<%=_TEX.T("THeader.Title")%>">
 					</div>
 					<h1 class="TopTitleInfo"><%=_TEX.T("THeader.Title.Desc")%></h1>
+					<!--
 					<h2 class="TopTitleInfoSub"><%=_TEX.T("THeader.Title.DescSub")%></h2>
+					-->
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<form method="post" name="login_from_twitter_startpoipikupcv_00" action="/LoginFormTwitter.jsp">
@@ -99,34 +115,25 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 			<section class="PoipikuInfo">
 
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS01.png" />
+					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS02.png" />
+					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS03.png" />
+					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS04.png" />
+					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS05.png" />
+					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS06.png" />
+					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS07.png" />
-				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS08.png" />
-				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS09.png" />
-				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="/img/PoipikuInfo_2019_01_12/SS10.png" />
+					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
 				</div>
 
 				<div class="PoipikuDesc Full">
@@ -149,9 +156,9 @@ String strFileUrl = "/img/PoipikuInfo_2019_01_12/SS01.png";
 						</div>
 					</div>
 					<div class="DescTitle">
-						イラストSNS11年の運営実績
+						イラストSNS12年の運営実績
 						<div class="DescSubTitle">
-							2007年から手書きブログを開始し、イラストSNS運営実績は11年。
+							2007年から手書きブログを開始し、イラストSNS運営実績は12年。
 							安心してご利用ください。
 						</div>
 					</div>

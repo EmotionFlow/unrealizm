@@ -7,7 +7,7 @@
 		<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
 			<h1 class="HeaderTitle">
 				<a id="HeaderLink" class="HeaderLink" href="/">
-					<img  class="HeaderImg" src="/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>" />
+					<img  class="HeaderImg" src="//img-cdn.poipiku.com/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>" />
 				</a>
 			</h1>
 			<%if(Util.isSmartPhone(request) && !cCheckLogin.m_bLogin) {%>
@@ -140,6 +140,7 @@
 <%}%>
 
 <%if(!cCheckLogin.m_bLogin) {%>
+<!--
 <div id="AnalogicoInfo" class="AnalogicoInfo Float">
 	<h2 class="AnalogicoInfoTitle">
 		<%=_TEX.T("THeader.Title")%>
@@ -150,11 +151,10 @@
 	<a class="AnalogicoMoreInfo" href="/">
 		<%=_TEX.T("Poipiku.Info.MoreInfo")%>
 	</a>
-	<!--
-	<div class="LinkApp">
+	<div class="LinkApp" style="display: none;">
 		<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
 		<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
 	</div>
-	-->
 </div>
+-->
 <%}%>
