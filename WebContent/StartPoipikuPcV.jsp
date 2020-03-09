@@ -19,7 +19,8 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
-			.Wrapper {width: 100%; color: #fff; background: #5bd; height: auto;}
+			.Wrapper {width: 100%; color: #fff; background: #fff; height: auto;}
+			.Wrapper.ThumbList {width: 100%; display: flex; align-content: center; justify-content: center; background: #fff;}
 			.AnalogicoDesc {display: block;width: 80%; margin: 0 auto; padding: 15px 0; box-sizing: border-box; text-align: center; font-size: 24px; color: #fff; font-weight: bold;}
 			.TopTitleLogo {display: inline; width: auto; height: 28px;}
 			.TopTitleInfo {font-size: 15px; margin: 10px 0 0 0;}
@@ -30,7 +31,7 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 			.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 			.AnalogicoInfo {display: none;}
 
-			.PoipikuInfo {display: flex; flex-flow: row wrap; width: 100%; margin: 0 auto; justify-content: space-around; background-color: #b8d6e0; color: #5bd;padding: 15px 0;box-sizing: border-box;}
+			.PoipikuInfo {display: flex; flex-flow: row wrap; flex: 0 0 100%; margin: 0 auto; justify-content: space-around; background-color: #fff; color: #5bd;padding: 15px 0;box-sizing: border-box;}
 			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
 			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 15px 0;}
 			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
@@ -56,7 +57,7 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 			.TopTitleInfoSub {font-size: 14px; margin: 10px 0 0 0;}
 			.AnalogicoDesc {display: block; width: 800px;}
 			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
-			.PoipikuInfo {padding: 10px 15px;}
+			.PoipikuInfo {flex: 0 0 990px; padding: 10px 15px;}
 			.PoipikuInfo .PoipikuDesc {margin: 10px 0;}
 			.PoipikuInfo .PoipikuDesc.Full {flex: 0 0 620px; padding: 45px;}
 			.AnalogicoInfo.Title {padding: 100px 0;}
@@ -78,12 +79,12 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 		<article class="Wrapper">
 			<section class="AnalogicoInfo Flyer Omote">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" src="//poipiku.com/img/poipiku_flyer_b8.png" />
+					<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Flyer Ura">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/poipiku_flyer_ura12.png" />
+					<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Title">
@@ -120,25 +121,25 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 			<section class="PoipikuInfo">
 
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
+					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
+					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
+					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
+					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
+					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
+					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
+					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
 				</div>
 
 				<div class="PoipikuDesc Full">
