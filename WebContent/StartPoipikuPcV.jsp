@@ -22,7 +22,9 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 			.Wrapper {width: 100%; color: #fff; background: #fff; height: auto;}
 			.Wrapper.ThumbList {width: 100%; display: flex; align-content: center; justify-content: center; background: #fff;}
 			.AnalogicoDesc {display: block;width: 80%; margin: 0 auto; padding: 15px 0; box-sizing: border-box; text-align: center; font-size: 24px; color: #fff; font-weight: bold;}
-			.TopTitleLogo {display: inline; width: auto; height: 28px;}
+			.AnalogicoDesc.Title {display: flex; flex-flow: column; align-items: center; justify-content: center;}
+			.TopTitleLogo {width: 100px; height: 100px; border-radius: 200px; padding: 10px; background: #fff; box-sizing: border-box;}
+			.TopTitleLogo .TopTitleLogoImg {width: 100%;}
 			.TopTitleInfo {font-size: 15px; margin: 10px 0 0 0;}
 			.TopTitleInfoSub {font-size: 14px; margin: 10px 0 0 0;}
 			.AnalogicoLogin {margin: 0 0 10px 0;}
@@ -89,8 +91,8 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 			</section>
 			<section class="AnalogicoInfo Title">
 				<div class="AnalogicoDesc Title">
-					<div style="margin : 0;">
-						<img class="TopTitleLogo" src="//img-cdn.poipiku.com/img/pc_top_title_W.jpg" alt="<%=_TEX.T("THeader.Title")%>">
+					<div>
+						<img class="TopTitleLogo" src="//img-cdn.poipiku.com/img/poipiku_icon_512x512.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</div>
 					<h1 class="TopTitleInfo"><%=_TEX.T("THeader.Title.Desc")%></h1>
 					<!--
