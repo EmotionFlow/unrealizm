@@ -465,9 +465,10 @@ public class UserAuthUtil {
 			cConn = dsPostgres.getConnection();
 
 			boolean bFind = false;
-			strSql = "SELECT * FROM users_0000 WHERE email=?";
+			strSql = "SELECT * FROM users_0000 WHERE email=? AND user_id<>?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strEmail);
+			cState.setInt(2, cCheckLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			bFind = cResSet.next();
 			cResSet.close();cResSet=null;
@@ -522,7 +523,7 @@ public class UserAuthUtil {
 			objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
 			objMime.setHeader("Content-Transfer-Encoding", "7bit");
 			objMime.setSentDate(new java.util.Date());
-			Transport.send(objMime);
+//			Transport.send(objMime);
 			nRtn = nUserId;
 		} catch(Exception e) {
 			Log.d(strSql);
