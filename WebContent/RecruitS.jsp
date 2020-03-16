@@ -111,6 +111,28 @@
 				</div>
 
 				<div class="SettingListItem">
+					<div class="SettingListTitle">労働条件</div>
+					<div class="SettingBody">
+						<ul>
+							<li>週3日以上（応相談）</li>
+							<li>14時から19時の間で3時間以上（応相談）</li>
+							<li>通勤が片道1時間以内の方</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="SettingListItem">
+					<div class="SettingListTitle">労働条件</div>
+					<div class="SettingBody">
+						<ul>
+							<li>週3日以上（応相談）</li>
+							<li>14時から19時の間で3時間以上（応相談）</li>
+							※備考：通勤は片道1時間以内が望ましい（応相談）
+						</ul>
+					</div>
+				</div>
+
+				<div class="SettingListItem">
 					<div class="SettingListTitle">勤務地</div>
 					<div class="SettingBody">
 					東京都新宿区四谷1-22-5 WESTALL四谷ビル 1F

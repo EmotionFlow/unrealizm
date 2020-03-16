@@ -81,7 +81,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 					<div class="SettingListTitle">必須条件</div>
 					<div class="SettingBody">
 						<ul>
-							<li>ポイピク愛❤︎︎</li>
+							<li>ポイピク愛❤︎</li>
 						</ul>
 					</div>
 				</div>
@@ -116,6 +116,17 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				</div>
 
 				<div class="SettingListItem">
+					<div class="SettingListTitle">労働条件</div>
+					<div class="SettingBody">
+						<ul>
+							<li>週3日以上（応相談）</li>
+							<li>14時から19時の間で3時間以上（応相談）</li>
+							※備考：通勤は片道1時間以内が望ましい（応相談）
+						</ul>
+					</div>
+				</div>
+
+				<div class="SettingListItem">
 					<div class="SettingListTitle">勤務地</div>
 					<div class="SettingBody">
 					東京都新宿区四谷1-22-5 WESTALL四谷ビル 1F
@@ -132,6 +143,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				<div class="SettingListItem">
 					<div class="SettingListTitle">待遇・条件・その他</div>
 					<div class="SettingBody">
+						■待遇
 						<ul>
 							<li>社会保険（関東ITソフトウェア健康保険組合）/ 雇用保険 / 厚生年金 / 労災保険</li>
 							<li>通勤手当（月上限2万）</li>
