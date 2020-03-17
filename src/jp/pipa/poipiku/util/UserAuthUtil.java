@@ -647,7 +647,7 @@ public class UserAuthUtil {
 
 					// メアド未設定かつ確認中のメアドもなく、twitterから登録メアドを取得できたら、DBに反映させる。
 					if(!strEmail.contains("@")){
-						strSql = "SELECT user_id FROM temp_emails_0000 WEHRE user_id=?";
+						strSql = "SELECT user_id FROM temp_emails_0000 WHERE user_id=?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setInt(1, nUserId);
 						cResSet = cState.executeQuery();
