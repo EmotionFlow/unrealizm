@@ -610,6 +610,7 @@ public class UserAuthUtil {
 			if (nUserId>0){	// Login
 				Log.d("Login : " + nUserId);
 				String strPassword = "";
+				String strEmail = "";
 				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, nUserId);
@@ -618,21 +619,20 @@ public class UserAuthUtil {
 					nUserId		= cResSet.getInt("user_id");
 					strHashPass = Common.ToString(cResSet.getString("hash_password"));
 					strPassword = Common.ToString(cResSet.getString("password"));
+					strEmail = Common.ToString((cResSet.getString("email")));
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 
 				if(nUserId>0) {
-					{
-						// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンを更新
-						strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=? WHERE fldUserId=?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, accessToken);
-						cState.setString(2, tokenSecret);
-						cState.setInt(3, nUserId);
-						cState.executeUpdate();
-						cState.close();cState=null;
-					}
+					// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンを更新
+					strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=? WHERE fldUserId=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setString(1, accessToken);
+					cState.setString(2, tokenSecret);
+					cState.setInt(3, nUserId);
+					cState.executeUpdate();
+					cState.close();cState=null;
 
 					if(strHashPass.isEmpty()) {
 						strHashPass = Util.getHashPass(strPassword);
@@ -643,6 +643,30 @@ public class UserAuthUtil {
 						cState.setInt(2, nUserId);
 						cState.executeUpdate();
 						cState.close();cState=null;
+					}
+
+					// メアド未設定かつ確認中のメアドもなく、twitterから登録メアドを取得できたら、DBに反映させる。
+					if(!strEmail.contains("@")){
+						strSql = "SELECT user_id FROM temp_emails_0000 WEHRE user_id=?";
+						cState = cConn.prepareStatement(strSql);
+						cState.setInt(1, nUserId);
+						cResSet = cState.executeQuery();
+						boolean bChecking = cResSet.next();
+						cResSet.close();cResSet=null;
+						cState.close();cState=null;
+
+						if(!bChecking){
+							CTweet tweet = new CTweet();
+							String strTwEmail = null;
+							if(tweet.GetResults(nUserId) && (strTwEmail = tweet.GetEmailAddress()) != null){
+								strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+								cState = cConn.prepareStatement(strSql);
+								cState.setString(1, strTwEmail);
+								cState.setInt(2, nUserId);
+								cState.executeUpdate();
+								cState.close();cState=null;
+							}
+						}
 					}
 				} else {
 					Log.d("Login error : no user : " + nUserId);

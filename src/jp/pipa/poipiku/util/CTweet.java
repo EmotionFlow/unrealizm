@@ -362,6 +362,30 @@ public class CTweet {
 		return nResult;
 	}
 
+	public String GetEmailAddress(){
+		if (!m_bIsTweetEnable) return null;
+		User u = null;
+		try{
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+					.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+					.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+					.setOAuthAccessToken(m_strUserAccessToken)
+					.setOAuthAccessTokenSecret(m_strSecretToken)
+					.setIncludeEmailEnabled(true);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+			u = twitter.verifyCredentials();
+		}catch(TwitterException te){
+			LoggingTwitterException(te);
+			return null;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return u.getEmail();
+	}
+
 	public long getLastTweetId() {
 		if(m_statusLastTweet==null) return -1;
 		return m_statusLastTweet.getId();
