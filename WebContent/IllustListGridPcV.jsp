@@ -10,7 +10,7 @@ if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
 	return;
 }
 String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";

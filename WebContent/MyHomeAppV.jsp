@@ -5,7 +5,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/StartPoipikuAppV.jsp");
+	response.sendRedirect("https://poipiku.com/StartPoipikuAppV.jsp");
 	return;
 }
 

@@ -6,11 +6,11 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 IllustDetailC cResults = new IllustDetailC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
 	return;
 }
 if(Util.isBot(request.getHeader("user-agent"))) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
 	return;
 }
 %>

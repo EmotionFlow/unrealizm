@@ -14,7 +14,7 @@ cResults.getParam(request);
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = "/";
-	response.sendRedirect("/" + strKeywordHan + "/");
+	response.sendRedirect("https://poipiku.com/" + strKeywordHan + "/");
 	return;
 }
 cResults.SELECT_MAX_GALLERY = 36;

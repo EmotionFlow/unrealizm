@@ -5,9 +5,9 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 	if(isApp){
-		response.sendRedirect("/StartPoipikuAppV.jsp");
+		response.sendRedirect("https://poipiku.com/StartPoipikuAppV.jsp");
 	} else {
-		response.sendRedirect("/StartPoipikuV.jsp");
+		response.sendRedirect("https://poipiku.com/StartPoipikuV.jsp");
 	}
 	return;
 }

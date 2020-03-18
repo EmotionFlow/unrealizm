@@ -11,7 +11,7 @@ String strDebug = "";
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("/StartPoipikuV.jsp");
+	response.sendRedirect("https://poipiku.com/StartPoipikuV.jsp");
 	return;
 }
 

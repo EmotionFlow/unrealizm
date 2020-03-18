@@ -14,9 +14,9 @@ cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	if(!cCheckLogin.m_bLogin) {
 		if(isApp){
-			response.sendRedirect("/StartPoipikuAppV.jsp");
+			response.sendRedirect("https://poipiku.com/StartPoipikuAppV.jsp");
 		} else {
-			response.sendRedirect("/StartPoipikuV.jsp");
+			response.sendRedirect("https://poipiku.com/StartPoipikuV.jsp");
 		}
 		return;
 	}
@@ -29,7 +29,7 @@ if(isApp){
 
 cResults.m_bDispUnPublished = true;
 if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
-	response.sendRedirect("/NotFoundV.jsp");
+	response.sendRedirect("https://poipiku.com/NotFoundV.jsp");
 	return;
 }
 %>

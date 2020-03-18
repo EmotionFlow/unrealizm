@@ -7,7 +7,7 @@ IllustListC cResults = new IllustListC();
 cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	if(!cCheckLogin.m_bLogin) {
-		response.sendRedirect("/StartPoipikuAppV.jsp");
+		response.sendRedirect("https://poipiku.com/StartPoipikuAppV.jsp");
 		return;
 	} else {
 		cResults.m_nUserId = cCheckLogin.m_nUserId;
@@ -19,7 +19,7 @@ if(cResults.m_nUserId==-1) {
 
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("/NotFoundV.jsp");
+	response.sendRedirect("https://poipiku.com/NotFoundV.jsp");
 	return;
 }
 %>

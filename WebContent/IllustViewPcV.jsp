@@ -7,11 +7,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
 	return;
 }
 if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request.getHeader("user-agent"))) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
 	return;
 }
 

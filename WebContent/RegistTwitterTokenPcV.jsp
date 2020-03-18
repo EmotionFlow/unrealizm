@@ -109,7 +109,7 @@ try
 	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
 
-response.sendRedirect("/MyEditSettingPcV.jsp#TwitterSetting");
+response.sendRedirect("https://poipiku.com/MyEditSettingPcV.jsp#TwitterSetting");
 %>
 <!DOCTYPE html>
 <html>

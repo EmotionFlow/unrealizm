@@ -19,7 +19,7 @@ boolean bResult = false;
 
 //login check
 if(!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId < 1){
-	response.sendRedirect("/StartPoipikuV.jsp");
+	response.sendRedirect("https://poipiku.com/StartPoipikuV.jsp");
 	return;
 }
 
@@ -109,7 +109,7 @@ try
 	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
 
-response.sendRedirect("/MyEditSettingV.jsp#TwitterSetting");
+response.sendRedirect("https://poipiku.com/MyEditSettingV.jsp#TwitterSetting");
 %>
 <!DOCTYPE html>
 <html>
