@@ -768,6 +768,7 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Password")%></div>
 					<div class="SettingBody">
+						<%=_TEX.T("EditSettingV.Password.Message.Info")%>
 						<div class="SettingBodyTxt" style="margin-top: 10px;">
 							<%=_TEX.T("EditSettingV.Password.CurrentPassword")%>
 						</div>
