@@ -28,6 +28,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta property="og:url" content="<%=strUrl%>" />
@@ -167,6 +168,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			.TweetMyBoxHr {
 				border: 0.5px solid #bbbbbb;
 				margin-top: 37px;
+			}
+			.DownloadMyBoxQR {
+				bottom: 8px;
+				margin-left: 15px;
+				position: relative;
+			}
+			#DownloadMyBoxQRBtn{
+				font-size: 14px;
 			}
 		</style>
 	</head>
