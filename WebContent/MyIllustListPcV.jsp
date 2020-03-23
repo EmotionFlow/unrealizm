@@ -147,6 +147,27 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<style>
 			.IllustItem .IllustItemThumb { position: relative; }
 			.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
+			.MyBoxTweet {padding-top: 5px; text-align: center;}
+
+			.TweetMyBoxTitle {
+				font-size: 18px;
+				padding: 29px 0 9px 0;
+			}
+			.TweetMyBoxInfo {
+				font-size: 13px;
+				font-weight: 400;
+				padding: 9px 0;
+				color: #c76a6a;
+			}
+			.TweetMyBoxBtn {
+				font-size: 14px;
+				font-weight: 400;
+				margin: 0 4px;
+			}
+			.TweetMyBoxHr {
+				border: 0.5px solid #bbbbbb;
+				margin-top: 37px;
+			}
 		</style>
 	</head>
 
@@ -154,6 +175,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper GridList">
+			<div class="MyBoxTweet">
+				<a href="javascript:void(0);" class="BtnBase" onclick="TweetMyBox(-1)">公開用のイラスト箱を設置する</a>
+			</div>
+
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>"><%=_TEX.T("Category.All")%></a>
