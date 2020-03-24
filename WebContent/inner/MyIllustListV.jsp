@@ -5,7 +5,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/MyIllustListPcV.jsp").forward(request,response);
+	request.getRequestDispatcher("/MyIllustListPcV.jsp").forward(request,response);
 	return;
 }
 
@@ -37,7 +37,9 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
+		<%@ include file="/inner/TTweetMyBox.jsp"%>
 		<script>
 			var g_nPage = 1; // start 1
 			var g_strKeyword = '<%=cResults.m_strKeyword%>';
@@ -132,6 +134,9 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 			color: #5bd;
 		}
 		.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
+
+		.TweetMyBox {padding-top: 5px; text-align: center;}
+
 		</style>
 	</head>
 
@@ -198,6 +203,11 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 		<%}%>
 
 		<article class="Wrapper">
+			<div class="TweetMyBox">
+				<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
+					<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Tweet")%>
+				</a>
+			</div>
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<span class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" onclick="changeCategory(this, '')"><%=_TEX.T("Category.All")%></span>

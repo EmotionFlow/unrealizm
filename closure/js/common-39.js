@@ -439,44 +439,48 @@ function generateShowAppendFile(){
 
 var ShowAppendFile = generateShowAppendFile();
 
-function TweetMyBox(strMyBoxURL, strTweetURL, hMessages) {
+function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
+	let strHtml = '<h2 class="TweetMyBoxTitle">' +
+		hMessages.TweetTitle +
+		'</h2>' +
+		'<div class="TweetMyBoxInfo">' +
+		'<i class="fa fa-info-circle"></i>' +
+		hMessages.TweetInfo1 +
+		'</div>' +
+		'<a class="BtnBase TweetMyBoxBtn" href="' + strTweetURL + '" target="_blank">' +
+		'<i class="fab fa-twitter"></i>' +
+		hMessages.TweetTweet +
+		'</a>' +
+		'<div class="TweetMyBoxInfo" style="color:#6a82c7">' +
+		'<i class="fa fa-info-circle"></i>' +
+		hMessages.TweetInfo2 +
+		'</div>' +
+		'<hr class="TweetMyBoxHr"/>' +
+		'<h2 class="TweetMyBoxTitle">' +
+		hMessages.ShareURLTitle +
+		'</h2>' +
+		'<div>' +
+		'<input id="MyBoxUrlTxt" type="text" readonly value="' + strMyBoxURL + '">' +
+		'<a id="CopyMyBoxUrlBtn" class="BtnBase TweetMyBoxBtn" href="javascript:void(0);">' +
+		hMessages.ShareURLCopy +
+		'</a>' +
+		'</div>' +
+		'<h2 class="TweetMyBoxTitle">' +
+		hMessages.ShareQRTitle +
+		'</h2>' +
+		'<div class="MyBoxQRCode">' +
+		'<div class="QRCode"><span id="QRCodeImg"></span>';
+		if(!bIsApp){
+			strHtml +=
+				'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase" href="javascript:void(0);">' +
+				hMessages.ShareQRDownload +
+				'</a></span>';
+		}
+		 strHtml += '</div>' +
+		'</div>';
+
 	Swal.fire({
-		html:
-			'<h2 class="TweetMyBoxTitle">' +
-			hMessages.TweetTitle +
-			'</h2>' +
-			'<div class="TweetMyBoxInfo">' +
-			'<i class="fa fa-info-circle"></i>' +
-			hMessages.TweetInfo1 +
-			'</div>' +
-			'<a class="BtnBase TweetMyBoxBtn" href="' + strTweetURL + '" target="_blank">' +
-			'<i class="fab fa-twitter"></i>' +
-			hMessages.TweetTweet +
-			'</a>' +
-			'<div class="TweetMyBoxInfo" style="color:#6a82c7">' +
-			'<i class="fa fa-info-circle"></i>' +
-			hMessages.TweetInfo2 +
-			'</div>' +
-			'<hr class="TweetMyBoxHr"/>' +
-			'<h2 class="TweetMyBoxTitle">' +
-			hMessages.ShareURLTitle +
-			'</h2>' +
-			'<div>' +
-			'<input id="MyBoxUrlTxt" type="text" readonly value="' + strMyBoxURL + '">' +
-			'<a id="CopyMyBoxUrlBtn" class="BtnBase TweetMyBoxBtn" href="javascript:void(0);">' +
-			hMessages.ShareURLCopy +
-			'</a>' +
-			'</div>' +
-			'<h2 class="TweetMyBoxTitle">' +
-			hMessages.ShareQRTitle +
-			'</h2>' +
-			'<div class="MyBoxQRCode">' +
-			'<div class="QRCode"><span id="QRCodeImg"></span>' +
-			'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase" href="javascript:void(0);">' +
-			hMessages.ShareQRDownload +
-			'</a></span></div>' +
-			'</div>'
-		,
+		html: strHtml,
 		showCloseButton: true,
 		showCancelButton: false,
 		showConfirmButton: false,

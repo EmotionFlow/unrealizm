@@ -3,6 +3,7 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+boolean isApp = false;
 
 IllustListGridC cResults = new IllustListGridC();
 cResults.getParam(request);
@@ -17,16 +18,10 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	return;
 }
 
-String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
 String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-
-String strTwitterIntentURL = Util.getTwitterIntentURL(
-		String.format(_TEX.T("MyIllutListV.TweetMyBox.Tweet.Msg"), cResults.m_cUser.m_strNickName),
-		strUrl
-);
 
 %>
 <!DOCTYPE html>
@@ -34,35 +29,15 @@ String strTwitterIntentURL = Util.getTwitterIntentURL(
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
-		<script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:site" content="@pipajp" />
-		<meta property="og:url" content="<%=strUrl%>" />
-		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
-		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
+
+		<%@ include file="/inner/TTweetMyBox.jsp"%>
 
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateCategoryMenuPos(0);
-			$("#OpenTweetMyBoxDlgBtn").click(function(){
-				var hMessages = {
-					"TweetTitle": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Title")%>",
-					"TweetInfo1": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Info1")%>",
-					"TweetTweet": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Tweet")%>",
-					"TweetInfo2": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Info2")%>",
-					"ShareURLTitle": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareURL.Title")%>",
-					"ShareURLCopy": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareURL.Copy")%>",
-					"ShareURLCopied": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareURL.Copied")%>",
-					"ShareQRTitle": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareQR.Title")%>",
-					"ShareQRDownload": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareQR.Download")%>",
-				};
-				TweetMyBox("<%=strUrl%>", "<%=strTwitterIntentURL%>", hMessages);
-			});
-		});
-
-		$(function(){
 			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
 			<%if(!bSmartPhone) {%>
 			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
@@ -169,34 +144,6 @@ String strTwitterIntentURL = Util.getTwitterIntentURL(
 			.IllustItem .IllustItemThumb { position: relative; }
 			.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
 			.TweetMyBox {padding-top: 5px; text-align: center;}
-
-			.TweetMyBoxTitle {
-				font-size: 18px;
-				padding: 29px 0 9px 0;
-			}
-			.TweetMyBoxInfo {
-				font-size: 13px;
-				font-weight: 400;
-				padding: 9px 0;
-				color: #c76a6a;
-			}
-			.TweetMyBoxBtn {
-				font-size: 14px;
-				font-weight: 400;
-				margin: 0 4px;
-			}
-			.TweetMyBoxHr {
-				border: 1px solid #CCCCCC;
-				margin-top: 37px;
-			}
-			.DownloadMyBoxQR {
-				bottom: 8px;
-				margin-left: 15px;
-				position: relative;
-			}
-			#DownloadMyBoxQRBtn{
-				font-size: 14px;
-			}
 		</style>
 	</head>
 
@@ -205,7 +152,9 @@ String strTwitterIntentURL = Util.getTwitterIntentURL(
 
 		<article class="Wrapper GridList">
 			<div class="TweetMyBox">
-				<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">公開用のイラスト箱を設置する</a>
+				<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
+					<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Tweet")%>
+				</a>
 			</div>
 
 			<%if(cResults.m_vCategoryList.size()>0) {%>
