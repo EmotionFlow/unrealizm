@@ -439,29 +439,42 @@ function generateShowAppendFile(){
 
 var ShowAppendFile = generateShowAppendFile();
 
-function TweetMyBox(nUserId) {
+function TweetMyBox(strMyBoxURL, strTweetURL, hMessages) {
 	Swal.fire({
 		html:
-			'<h2 class="TweetMyBoxTitle">自分の公開用のイラスト箱をツイートしてみよう</h2>' +
+			'<h2 class="TweetMyBoxTitle">' +
+			hMessages.TweetTitle +
+			'</h2>' +
 			'<div class="TweetMyBoxInfo">' +
 			'<i class="fa fa-info-circle"></i>' +
-			'Twitter上で入力フォームが開きます</div>' +
-			'<a class="BtnBase TweetMyBoxBtn">' +
+			hMessages.TweetInfo1 +
+			'</div>' +
+			'<a class="BtnBase TweetMyBoxBtn" href="' + strTweetURL + '" target="_blank">' +
 			'<i class="fab fa-twitter"></i>' +
-			'公開用のイラスト箱を設置する</a>' +
+			hMessages.TweetTweet +
+			'</a>' +
 			'<div class="TweetMyBoxInfo" style="color:#6a82c7">' +
 			'<i class="fa fa-info-circle"></i>' +
-			'Twitterでピン留めするとたくさんの人に見てもらうことができます</div>' +
-			'<hr class="TweetMyBoxHr"/>' +
-			'<h2 class="TweetMyBoxTitle">URLをシェアしたい方はこちら</h2>' +
-			'<div>' +
-			'<input id="MyBoxUrlTxt" type="text" readonly value="https://poipiku.com/XXXXXX/">' +
-			'<a id="CopyMyBoxUrlBtn" class="BtnBase TweetMyBoxBtn" href="javascript:void(0);">コピー</a>' +
+			hMessages.TweetInfo2 +
 			'</div>' +
-			'<h2 class="TweetMyBoxTitle">QRコードでシェアしたい方はこちら</h2>' +
+			'<hr class="TweetMyBoxHr"/>' +
+			'<h2 class="TweetMyBoxTitle">' +
+			hMessages.ShareURLTitle +
+			'</h2>' +
+			'<div>' +
+			'<input id="MyBoxUrlTxt" type="text" readonly value="' + strMyBoxURL + '">' +
+			'<a id="CopyMyBoxUrlBtn" class="BtnBase TweetMyBoxBtn" href="javascript:void(0);">' +
+			hMessages.ShareURLCopy +
+			'</a>' +
+			'</div>' +
+			'<h2 class="TweetMyBoxTitle">' +
+			hMessages.ShareQRTitle +
+			'</h2>' +
 			'<div class="MyBoxQRCode">' +
 			'<div class="QRCode"><span id="QRCodeImg"></span>' +
-			'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase" href="javascript:void(0);">ダウンロード</a></span></div>'+
+			'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase" href="javascript:void(0);">' +
+			hMessages.ShareQRDownload +
+			'</a></span></div>' +
 			'</div>'
 		,
 		showCloseButton: true,
@@ -472,7 +485,7 @@ function TweetMyBox(nUserId) {
 			$("#CopyMyBoxUrlBtn").click(() => {
 				$("#MyBoxUrlTxt").select();
 				document.execCommand("Copy");
-				alert("URLをコピーしました");
+				alert(hMessages.ShareURLCopied);
 			});
 			$("#DownloadMyBoxQRBtn").click(() => {
 				let canvas = $('#QRCode canvas')[0];

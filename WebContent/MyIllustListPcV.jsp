@@ -22,6 +22,12 @@ String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title")
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+
+String strTwitterIntentURL = Util.getTwitterIntentURL(
+		String.format(_TEX.T("MyIllutListV.TweetMyBox.Tweet.Msg"), cResults.m_cUser.m_strNickName),
+		strUrl
+);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -40,6 +46,20 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateCategoryMenuPos(0);
+			$("#OpenTweetMyBoxDlgBtn").click(function(){
+				var hMessages = {
+					"TweetTitle": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Title")%>",
+					"TweetInfo1": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Info1")%>",
+					"TweetTweet": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Tweet")%>",
+					"TweetInfo2": "<%=_TEX.T("MyIllutListV.TweetMyBox.Tweet.Info2")%>",
+					"ShareURLTitle": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareURL.Title")%>",
+					"ShareURLCopy": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareURL.Copy")%>",
+					"ShareURLCopied": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareURL.Copied")%>",
+					"ShareQRTitle": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareQR.Title")%>",
+					"ShareQRDownload": "<%=_TEX.T("MyIllutListV.TweetMyBox.ShareQR.Download")%>",
+				};
+				TweetMyBox("<%=strUrl%>", "<%=strTwitterIntentURL%>", hMessages);
+			});
 		});
 
 		$(function(){
@@ -148,7 +168,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<style>
 			.IllustItem .IllustItemThumb { position: relative; }
 			.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
-			.MyBoxTweet {padding-top: 5px; text-align: center;}
+			.TweetMyBox {padding-top: 5px; text-align: center;}
 
 			.TweetMyBoxTitle {
 				font-size: 18px;
@@ -166,7 +186,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				margin: 0 4px;
 			}
 			.TweetMyBoxHr {
-				border: 0.5px solid #bbbbbb;
+				border: 1px solid #CCCCCC;
 				margin-top: 37px;
 			}
 			.DownloadMyBoxQR {
@@ -184,8 +204,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper GridList">
-			<div class="MyBoxTweet">
-				<a href="javascript:void(0);" class="BtnBase" onclick="TweetMyBox(-1)">公開用のイラスト箱を設置する</a>
+			<div class="TweetMyBox">
+				<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">公開用のイラスト箱を設置する</a>
 			</div>
 
 			<%if(cResults.m_vCategoryList.size()>0) {%>
