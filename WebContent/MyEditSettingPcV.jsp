@@ -823,6 +823,14 @@ if(cResults.m_bUpdate) {
 						<a href="/GuideLinePcV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.GuideLine")%></a><br />
 						<a href="/PrivacyPolicyPcS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
 						<a href="https://twitter.com/pipajp" style="font-size: 14px; text-decoration: underline;" target="_blank"><%=_TEX.T("Footer.Information")%></a><br />
+						<form method="post" name="go_inquiry" action="https://cs.poipiku.com/InquiryPcV.jsp">
+							<input type="hidden" name="SRV" value="Poipiku"/>
+							<input type="hidden" name="EMAIL" value="<%=cResults.m_cUser.m_strEmail%>"/>
+							<input type="hidden" name="NNAME" value="<%=cResults.m_cUser.m_strNickName%>"/>
+							<input type="hidden" name="TWNAME" value="<%=cResults.m_cUser.m_strTwitterScreenName%>"/>
+							<input type="hidden" name="UID" value="<%=cCheckLogin.m_nUserId%>"/>
+							<a href="javascript:go_inquiry.submit()" style="font-size: 14px; text-decoration: underline;" ><%=_TEX.T("Inquiry.Title")%></a>
+						</form>
 					</div>
 				</div>
 			</div>
