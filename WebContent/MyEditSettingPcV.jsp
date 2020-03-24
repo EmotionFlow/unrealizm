@@ -491,7 +491,7 @@ if(cResults.m_bUpdate) {
 			<div class="UserInfo Float">
 				<div class="UserInfoBg" style="position: relative;">
 					<div class="UserInfoPreview">
-						<a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/"><i class="fas fa-home"></i> プレビュー</a>
+						<a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/"><i class="fas fa-home"></i> <%=_TEX.T("EditSettingV.Preview")%></a>
 					</div>
 					<div class="UserInfoHeaderUpload">
 						<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
@@ -529,8 +529,8 @@ if(cResults.m_bUpdate) {
 										_TEX.T("Common.Title")), "UTF-8"),
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp">★ 一覧</a>
-						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp?MD=1"><i class="typcn typcn-cancel"></i>一覧</a>
+						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp">★ <%=_TEX.T("EditSettingV.List")%></a>
+						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp?MD=1"><i class="typcn typcn-cancel"></i><%=_TEX.T("EditSettingV.List")%></a>
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
 						</span>
