@@ -616,18 +616,29 @@ public class CCnv {
 	}
 
 	private static String _toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
-		String SEARCH_ILLUST_TAG = "";
-		if(nSpMode==SP_MODE_APP){
-			SEARCH_ILLUST_TAG = "/SearchIllustByTagAppV.jsp";
-		}else if(nMode==MODE_SP){
-			SEARCH_ILLUST_TAG = "/SearchIllustByTagV.jsp";
+		StringBuffer sb = new StringBuffer();
+		sb.append("/SearchIllustBy");
+		if(cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG){
+			sb.append("Tag");
 		}else{
-			SEARCH_ILLUST_TAG = "/SearchIllustByTagPcV.jsp";
+			sb.append("Keyword");
 		}
 
+		if(nSpMode==SP_MODE_APP){
+			sb.append("AppV");
+		}else if(nMode==MODE_SP){
+			sb.append("V");
+		}else{
+			sb.append("PcV");
+		}
+		sb.append(".jsp");
+
 		return String.format(
-			"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\">#%s</a></h2>",
-			SEARCH_ILLUST_TAG, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)
+				"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\">%s%s</a></h2>",
+				sb.toString(),
+				URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"),
+				cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG ? "#" : "",
+				Common.ToStringHtml(cTag.m_strTagTxt)
 		);
 	}
 

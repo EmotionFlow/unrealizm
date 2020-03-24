@@ -66,7 +66,9 @@ public class SearchTagByKeywordC {
 			cState.setInt(3, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				m_vContentList.add(new CTag(cResSet));
+				CTag tag = new CTag(cResSet);
+				tag.m_nTypeId = Common.FOVO_KEYWORD_TYPE_TAG;
+				m_vContentList.add(tag);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
