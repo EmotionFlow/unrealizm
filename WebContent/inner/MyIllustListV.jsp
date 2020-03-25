@@ -205,7 +205,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 		<article class="Wrapper">
 			<div class="TweetMyBox">
 				<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
-					<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Tweet")%>
+					<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 				</a>
 			</div>
 			<%if(cResults.m_vCategoryList.size()>0) {%>

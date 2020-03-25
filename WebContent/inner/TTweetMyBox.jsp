@@ -13,30 +13,65 @@
 <style>
     .TweetMyBoxTitle {
         font-size: 18px;
-        padding: 29px 0 9px 0;
+        padding: 20px 0 9px 0;
+    }
+    .TweetMyBoxSubTitle{
+        font-size: 16px;
+        padding: 13px 0 0 0;
+        text-align: left;
     }
     .TweetMyBoxInfo {
         font-size: 13px;
         font-weight: 400;
         padding: 9px 0;
-        color: #c76a6a;
+        color: #999;
+    }
+    .TweetMyBoxInfoStep2{
+        font-size: 13px;
+        font-weight: 400;
+        padding: 9px 0;
+        text-align: left;
+        margin: 0px 10px;
     }
     .TweetMyBoxBtn {
         font-size: 14px;
         font-weight: 400;
-        margin: 0 4px;
+        width: 200px;
+        margin: 1px auto 2px auto;
+        padding: 7px 0;
+        display: block;
+    }
+    .TweetMyBoxPinLink a{
+        font-size: 14px;
+        font-weight: 400;
+        text-decoration: underline;
+        color: #5bd;
     }
     .TweetMyBoxHr {
-        border: 1px solid #CCCCCC;
-        margin-top: 37px;
+        border: 1px solid #dddddd;
+        margin-top: 20px;
     }
     .DownloadMyBoxQR {
         bottom: 8px;
         margin-left: 15px;
         position: relative;
     }
+    #CopyMyBoxUrlBtn{
+        margin-left: 5px;
+        font-size: 14px;
+    }
     #DownloadMyBoxQRBtn{
         font-size: 14px;
+        position: relative;
+        top: -18px;
+        left: 12px;
+    }
+
+    element.style {
+        display: flex;
+    }
+    .swal2-popup .swal2-close {
+        color: #88b9ca;
     }
 </style>
 <script type="text/javascript">

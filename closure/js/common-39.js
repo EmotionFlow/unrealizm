@@ -440,20 +440,25 @@ function generateShowAppendFile(){
 var ShowAppendFile = generateShowAppendFile();
 
 function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
-	let strHtml = '<h2 class="TweetMyBoxTitle">' +
+	let strHtml =
+		'<h2 class="TweetMyBoxTitle" style="padding: 10px 0 0 0;">' +
 		hMessages.TweetTitle +
 		'</h2>' +
+		'<h3 class="TweetMyBoxSubTitle">1. ツイートする</h3>' +
 		'<div class="TweetMyBoxInfo">' +
-		'<i class="fa fa-info-circle"></i>' +
-		hMessages.TweetInfo1 +
-		'</div>' +
-		'<a class="BtnBase TweetMyBoxBtn" href="' + strTweetURL + '" target="_blank">' +
-		'<i class="fab fa-twitter"></i>' +
+		'<a class="BtnBase Selected TweetMyBoxBtn" href="' + strTweetURL + '" target="_blank">' +
+		'<i class="fab fa-twitter"></i> ' +
 		hMessages.TweetTweet +
 		'</a>' +
-		'<div class="TweetMyBoxInfo" style="color:#6a82c7">' +
-		'<i class="fa fa-info-circle"></i>' +
+		'<i class="fa fa-info-circle"></i> ' +
+		hMessages.TweetInfo1 +
+		'</div>' +
+		'<h3 class="TweetMyBoxSubTitle">2. ツイートをピン留めする</h3>' +
+		'<div class="TweetMyBoxInfoStep2">' +
 		hMessages.TweetInfo2 +
+		'</div>' +
+		'<div class="TweetMyBoxPinLink">' +
+		'<a href="#">詳しい手順を見る</a>' +
 		'</div>' +
 		'<hr class="TweetMyBoxHr"/>' +
 		'<h2 class="TweetMyBoxTitle">' +
@@ -461,7 +466,7 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
 		'</h2>' +
 		'<div>' +
 		'<input id="MyBoxUrlTxt" type="text" readonly value="' + strMyBoxURL + '">' +
-		'<a id="CopyMyBoxUrlBtn" class="BtnBase TweetMyBoxBtn" href="javascript:void(0);">' +
+		'<a id="CopyMyBoxUrlBtn" class="BtnBase Selected" href="javascript:void(0);">' +
 		hMessages.ShareURLCopy +
 		'</a>' +
 		'</div>' +
@@ -472,7 +477,7 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
 		'<div class="QRCode"><span id="QRCodeImg"></span>';
 		if(!bIsApp){
 			strHtml +=
-				'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase" href="javascript:void(0);">' +
+				'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase Selected" href="javascript:void(0);">' +
 				hMessages.ShareQRDownload +
 				'</a></span>';
 		}
