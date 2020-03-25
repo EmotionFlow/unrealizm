@@ -149,12 +149,17 @@ public class Util {
 
 		if(strReferer.indexOf("galleria.emotionflow.com")<0) {
 			if(	(strUuserAgent.indexOf("iPhone")>=0 && strUuserAgent.indexOf("iPad")<0) ||
-				strUuserAgent.indexOf("iPod")>=0 ||
-				(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf("Mobile")>=0)) {
+					strUuserAgent.indexOf("iPod")>=0 ||
+					(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf("Mobile")>=0)) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public static boolean isIOS(HttpServletRequest request) {
+		String strUa = toString(request.getHeader("user-agent"));
+		return (strUa.indexOf("iPhone")>=0 || strUa.indexOf("iPad")>=0 || strUa.indexOf("iPod")>=0);
 	}
 
 	public static boolean needUpdate(int nVersion) {

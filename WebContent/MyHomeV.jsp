@@ -90,8 +90,12 @@ int nRnd = (int)(Math.random()*3+1);
 			<%if(Util.needUpdate(cResults.n_nVersion)) {%>
 			<div class="UpdateInfo">
 				<div class="UpdateInfoMsg"><%=_TEX.T("UpdateInfo.Msg")%></div>
+				<%if(!Util.isIOS(request)){%>
 				<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
+				<%}else{%>
 				<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
+				<%}%>
+
 			</div>
 			<%}%>
 			<section class="EventItemList">
