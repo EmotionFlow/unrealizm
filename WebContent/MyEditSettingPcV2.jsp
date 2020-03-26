@@ -165,10 +165,10 @@ if(cResults.m_bUpdate) {
 				return false;
 			}
 
-			function DispDescCharNum() {
-				var nCharNum = 1000 - $("#EditBio").val().length;
-				$("#ProfileTextMessage").html(nCharNum);
-			}
+			// function DispDescCharNum() {
+			// 	var nCharNum = 1000 - $("#EditBio").val().length;
+			// 	$("#ProfileTextMessage").html(nCharNum);
+			// }
 
 			function UpdateProfileTxt() {
 				var strProfileTxt = $.trim($("#EditBio").val());
@@ -403,9 +403,9 @@ if(cResults.m_bUpdate) {
 				$("#MenuSettings").addClass("Selected");
 				<%}%>
 
-				DispDescCharNum();
-				DispMuteCharNum();
-				DispAutoTweetCharNum();
+				// DispDescCharNum();
+				// DispMuteCharNum();
+				// DispAutoTweetCharNum();
 
 				<%if(cResults.m_strMessage.length()>0) {%>
 				DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
@@ -477,14 +477,25 @@ if(cResults.m_bUpdate) {
 			border-radius: 30px;
 			border: solid 2px #ccc;
 		}
+
+		.SettingMenuHeader{
+			font-size: 18px;
+			font-weight: 400;
+			padding: 7px;
+			background-color: white;
+			border-bottom: 1px solid #555;
+		}
+
 		.SettingBody .SettingBodyCmdRegist {
 			font-size: 14px;
 		}
 		.SettingMenuItemLink{
+			background-color: #FFFFFF;
 			min-height: calc(41.625px);
 			width: 100%;
 			display: block;
 			line-height: 40px;
+			border-bottom: calc(0.5px) solid #ccc;
 		}
 
 		.SettingMenuItem{
@@ -492,7 +503,7 @@ if(cResults.m_bUpdate) {
 		}
 
 		.SettingMenuItemTitle {
-
+			margin-left: 8px;
 		}
 
 			.SettingMenuItemArrow{
@@ -503,6 +514,9 @@ if(cResults.m_bUpdate) {
 				padding: 0 9px;
 			}
 
+			.SettingMenuReturnArrow{
+				color: #5bd;
+			}
 		</style>
 	</head>
 
@@ -510,12 +524,70 @@ if(cResults.m_bUpdate) {
 		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
+
+		<%!
+			class SettingMenuItem {
+				String title;
+				String id;
+				public SettingMenuItem(String _title, String _context){
+					title = _title;
+					id = _context;
+				}
+			}
+		%>
+		<%
+			List<SettingMenuItem> aryMenu = new ArrayList<>();
+			aryMenu.add(new SettingMenuItem("ふぁぼ一覧", "Favorite"));
+			aryMenu.add(new SettingMenuItem("ブロック一覧", "Block"));
+			aryMenu.add(new SettingMenuItem("プロフィール", "Profile"));
+		%>
+
+		<script>
+			$(function(){
+				$(".SettingChangePageLink").click((ev)=>{
+					const el = $(ev.toElement);
+					el.parents(".SettingPage").hide();
+					$("#"+el.attr("data-to")).show();
+				});
+			})
+		</script>
+
 		<article class="Wrapper">
-			<div class="SettingMenu">
-				<a class="SettingMenuItemLink" ><span class="SettingMenuItemTitle">ふぁぼ一覧</span><i class="SettingMenuItemArrow fas fa-angle-right"></i></a>
-				<div class="SettingMenuItem" >ブロック一覧</div>
-				<div class="SettingMenuItem" >プロフィール</div>
+			<div id="MenuRoot" class="SettingPage">
+				<div class="SettingMenuHeader">
+					<h2 class="SettinMenuTitle">
+						hogehogeの設定
+					</h2>
+				</div>
+				<div class="SettingMenu">
+					<% for(SettingMenuItem item : aryMenu){%>
+					<a data-to="Favorite" class="SettingMenuItemLink SettingChangePageLink" >
+						<span class="SettingMenuItemTitle"><%=item.title%></span>
+						<i class="SettingMenuItemArrow fas fa-angle-right"></i>
+					</a>
+					<%}%>
+				</div>
 			</div>
+			<div id="Favorite" class="SettingPage" style="display: none;">
+				<div class="SettingMenuHeader">
+					<h2 class="SettinMenuTitle">
+						<i data-to="MenuRoot" class="SettingChangePageLink fas fa-arrow-left"></i> ふぁぼ一覧
+					</h2>
+				</div>
+				<div class="SettingBody">
+				</div>
+			</div>
+			<div id="Profile" class="SettingPage" style="display: none;">
+				<div class="SettingMenuHeader">
+					<h2 class="SettinMenuTitle">
+						<i data-to="MenuRoot" class="SettingChangePageLink fas fa-arrow-left"></i> プロフィール
+					</h2>
+				</div>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingProfileV.jsp"%>
+				</div>
+			</div>
+
 		</article><!--Wrapper-->
 
 		<%@ include file="/inner/TFooter.jsp"%>
