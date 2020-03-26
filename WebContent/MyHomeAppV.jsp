@@ -112,10 +112,10 @@ int nRnd = (int)(Math.random()*3+1);
 			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 				<%=_TEX.T("MyHome.FirstMsg")%>
 				<br />
-				<a class="BtnBase" href="/NewArrivalPcV.jsp"><%=_TEX.T("MyHome.FirstMsg.FindPeople")%></a>
+				<a class="BtnBase" href="/NewArrivalAppV.jsp"><%=_TEX.T("MyHome.FirstMsg.FindPeople")%></a>
 				<br />
 				<br />
-				<a class="BtnBase" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a>
+				<a class="BtnBase" href="/how_to/TopV.jsp"><%=_TEX.T("HowTo.Title")%></a>
 			</div>
 			<%}%>
 			<section id="IllustItemList" class="IllustItemList">
