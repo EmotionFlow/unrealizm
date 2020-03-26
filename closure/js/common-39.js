@@ -444,7 +444,9 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
 		'<h2 class="TweetMyBoxTitle" style="padding: 10px 0 0 0;">' +
 		hMessages.TweetTitle +
 		'</h2>' +
-		'<h3 class="TweetMyBoxSubTitle">1. ツイートする</h3>' +
+		'<h3 class="TweetMyBoxSubTitle">' +
+		hMessages.TweetStep1 +
+		'</h3>' +
 		'<div class="TweetMyBoxInfo">' +
 		'<a class="BtnBase Selected TweetMyBoxBtn" href="' + strTweetURL + '" target="_blank">' +
 		'<i class="fab fa-twitter"></i> ' +
@@ -453,12 +455,16 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
 		'<i class="fa fa-info-circle"></i> ' +
 		hMessages.TweetInfo1 +
 		'</div>' +
-		'<h3 class="TweetMyBoxSubTitle">2. ツイートをピン留めする</h3>' +
+		'<h3 class="TweetMyBoxSubTitle">' +
+		hMessages.TweetStep2 +
+		'</h3>' +
 		'<div class="TweetMyBoxInfoStep2">' +
 		hMessages.TweetInfo2 +
 		'</div>' +
 		'<div class="TweetMyBoxPinLink">' +
-		'<a href="#">詳しい手順を見る</a>' +
+		'<a href="/how_to/TwPinPcV.jsp" target="_blank">' +
+		hMessages.TweetHowToPin +
+		'</a>' +
 		'</div>' +
 		'<hr class="TweetMyBoxHr"/>' +
 		'<h2 class="TweetMyBoxTitle">' +
@@ -481,7 +487,7 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
 				hMessages.ShareQRDownload +
 				'</a></span>';
 		}
-		 strHtml += '</div>' +
+		strHtml += '</div>' +
 		'</div>';
 
 	Swal.fire({

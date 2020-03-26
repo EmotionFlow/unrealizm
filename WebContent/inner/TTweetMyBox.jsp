@@ -81,9 +81,12 @@
         $("#OpenTweetMyBoxDlgBtn").click(function(){
             var hMessages = {
                 "TweetTitle": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Title")%>",
+                "TweetStep1": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Step1")%>",
+                "TweetStep2": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Step2")%>",
                 "TweetInfo1": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Info1")%>",
-                "TweetTweet": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Tweet")%>",
                 "TweetInfo2": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Info2")%>",
+                "TweetHowToPin": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.HowToPin")%>",
+                "TweetTweet": "<%=_TEX.T("MyIllustListV.TweetMyBox.Tweet.Tweet")%>",
                 "ShareURLTitle": "<%=_TEX.T("MyIllustListV.TweetMyBox.ShareURL.Title")%>",
                 "ShareURLCopy": "<%=_TEX.T("MyIllustListV.TweetMyBox.ShareURL.Copy")%>",
                 "ShareURLCopied": "<%=_TEX.T("MyIllustListV.TweetMyBox.ShareURL.Copied")%>",
