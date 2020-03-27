@@ -23,9 +23,9 @@ public class CPageBar {
 					strPageName, nPageNext, strOption);
 
 		} else {
-			strPagePre = String.format("<span class=\"PageBarItemFrame\"><a data-pg=\"%d\" class=\"BtnBase PageBarItem\" href=\"javascript:void(0);\"><i class=\"fas fa-chevron-left\"></i></a></span>",
+			strPagePre = String.format("<span class=\"PageBarItemFrame\"><a data-page=\"%d\" class=\"BtnBase PageBarItem\" href=\"javascript:void(0);\"><i class=\"fas fa-chevron-left\"></i></a></span>",
 					nPagePre);
-			strPageNext = String.format("<span class=\"PageBarItemFrame\"><a data-pg=\"%d\"  class=\"BtnBase PageBarItem\" href=\"javascript:void(0);\"><i class=\"fas fa-chevron-right\"></i></a></span>",
+			strPageNext = String.format("<span class=\"PageBarItemFrame\"><a data-page=\"%d\"  class=\"BtnBase PageBarItem\" href=\"javascript:void(0);\"><i class=\"fas fa-chevron-right\"></i></a></span>",
 					nPageNext);
 		}
 
@@ -48,7 +48,7 @@ public class CPageBar {
 			}
 		} else {
 			for (int nPageCnt = nPageNumLeft; nPageCnt <= nPageNumRight; nPageCnt++) {
-				strPageMenu.append(String.format("<span class=\"PageBarItemFrame\"><a data-pg=\"%d\" class=\"BtnBase PageBarItem %s\" href=\"javascript:void(0)\">%d</a></span>",
+				strPageMenu.append(String.format("<span class=\"PageBarItemFrame\"><a data-page=\"%d\" class=\"BtnBase PageBarItem %s\" href=\"javascript:void(0)\">%d</a></span>",
 						nPageCnt, (nPageCnt == nPageNum) ? "Selected" : "", nPageCnt + 1));
 			}
 		}
