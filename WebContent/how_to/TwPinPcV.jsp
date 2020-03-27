@@ -21,7 +21,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 		<style>
 			.HowToFarme {display: block; position: relative;}
-			.HowToImage {width: 100%;}
+			.HowToImage {width: 100%; border: 1px solid #999;}
 			.HowToLinkList {display: flex; flex-flow: column; justify-content: center; width: 100%; position: absolute; z-index: 1; top: 94px;}
 			.HowToLinkList .HowToLink {display: block; width: 100%; height: 62px; margin: 0 0 8.5px 0;}
 			.CmdUp {display: block; position: absolute; width: 100%; height: 57px; left: 0; z-index: 1; bottom: 17px;}
