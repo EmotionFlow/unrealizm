@@ -34,18 +34,18 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
-			<h1>Twitterへのイラスト箱の設置方法</h1>
+			<h1><%=_TEX.T("TwPin.Title")%></h1>
 			<div class="HowToFarme">
 				<div class="HowToPin">
-					<h2>①ツイート右上の「V」マークを選択します。</h2>
+					<h2><%=_TEX.T("TwPin.Step1")%></h2>
 					<img id="HowToImage" class="HowToImage" src="/how_to/tw_pin_01.png" />
 				</div>
 				<div class="HowToPin">
-					<h2>②「プロフィールに固定する」を選択します。</h2>
+					<h2><%=_TEX.T("TwPin.Step2")%></h2>
 					<img id="HowToImage" class="HowToImage" src="/how_to/tw_pin_02.png" />
 				</div>
 				<div class="HowToPin">
-					<h2>③ツイートが固定され、常にタイムライン最上部に表示されます。</h2>
+					<h2><%=_TEX.T("TwPin.Step3")%></h2>
 					<img id="HowToImage" class="HowToImage" src="/how_to/tw_pin_03.png" />
 				</div>
 			</div>
