@@ -13,10 +13,14 @@ import jp.pipa.poipiku.util.Log;
 
 public class MyEditSettingC {
 	public String m_strMessage = "";
+	public String m_strSelectedMenuId = "";
+	public int m_nListPage = 1;
 	public void GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_strMessage = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("MSG")))));
+			m_strSelectedMenuId = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("MENUID")))));
+			m_nListPage = Common.ToIntN(request.getParameter("PG"), 0, 100);
 		}
 		catch(Exception e) {
 			;
