@@ -21,10 +21,15 @@
         });
         return false;
     }
+
+    $(function(){
+       DispMuteCharNum();
+    });
 </script>
 
 <div class="SettingList">
     <div class="SettingListItem">
+        <div class="SettingListTitle">キーワード設定</div>
         <div class="SettingBody">
             <%=_TEX.T("EditSettingV.MuteKeyowrd.Message")%>
             <textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100" placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>

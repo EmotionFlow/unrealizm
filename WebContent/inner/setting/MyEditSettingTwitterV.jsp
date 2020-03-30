@@ -52,6 +52,10 @@
         var nCharNum = 100 - $("#AutoTweetTxt").val().length;
         $("#AutoTweetTxtNum").html(nCharNum);
     }
+
+    $(function () {
+        DispAutoTweetCharNum();
+    })
 </script>
 
 <div class="SettingList">

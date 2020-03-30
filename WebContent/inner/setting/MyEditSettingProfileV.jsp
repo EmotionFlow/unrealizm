@@ -110,10 +110,10 @@
         return false;
     }
 
-    // function DispDescCharNum() {
-    // 	var nCharNum = 1000 - $("#EditBio").val().length;
-    // 	$("#ProfileTextMessage").html(nCharNum);
-    // }
+    function DispDescCharNum() {
+    	var nCharNum = 1000 - $("#EditBio").val().length;
+    	$("#ProfileTextMessage").html(nCharNum);
+    }
 
     function UpdateProfileTxt() {
         var strProfileTxt = $.trim($("#EditBio").val());
@@ -132,6 +132,10 @@
         });
         return false;
     }
+
+    $(function () {
+        DispDescCharNum();
+    })
 </script>
 
 <style>
@@ -203,9 +207,6 @@
 <div class="SettingList">
     <div class="UserInfo Float">
         <div class="UserInfoBg" style="position: relative;">
-            <div class="UserInfoPreview">
-                <a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/">公開用イラスト箱表示</a>
-            </div>
             <div class="UserInfoHeaderUpload">
                 <input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
             </div>
@@ -309,12 +310,17 @@
     </div>
 
     <div class="SettingListItem">
-        <div class="SettingListTitle">公開用イラスト箱</div>
+        <div class="SettingListTitle">
+            <a style="text-decoration: underline;" href="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/">公開用イラスト箱</a>
+        </div>
         <div class="SettingBody">
-            <textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
-            <div class="SettingBodyCmd">
-                <div id="ProfileTextMessage" class="RegistMessage" >1000</div>
-                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+            <div style="display: table; width:100%">
+                <div style="display: table-cell; text-align: left; vertical-align: top;">
+                <input style="width: 100%;" id="MyBoxUrlTxt" type="text" readonly="" value="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/">
+                </div>
+                <div style="display: table-cell; text-align: right; vertical-align: top;width: 76px;">
+                <a id="CopyMyBoxUrlBtn" class="BtnBase" href="javascript:void(0);">コピー</a>
+                </div>
             </div>
         </div>
     </div>

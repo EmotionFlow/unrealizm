@@ -70,6 +70,7 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 			function changePage(elFromPage, elToPage){
 				elFromPage.hide();
 				elToPage.show();
+				$("*").scrollTop(0);
 			}
 
 			$(function(){
@@ -78,10 +79,6 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 				<%}else{%>
 				$("#MenuSettings").addClass("Selected");
 				<%}%>
-
-				// DispDescCharNum();
-				// DispMuteCharNum();
-				// DispAutoTweetCharNum();
 
 				<%if(cResults.m_strMessage.length()>0) {%>
 				DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
