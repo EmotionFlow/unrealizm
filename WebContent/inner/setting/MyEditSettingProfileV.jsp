@@ -201,113 +201,121 @@
 </style>
 
 <div class="SettingList">
-<div class="UserInfo Float">
-    <div class="UserInfoBg" style="position: relative;">
-        <div class="UserInfoPreview">
-            <a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/"><i class="fas fa-home"></i> プレビュー</a>
-        </div>
-        <div class="UserInfoHeaderUpload">
-            <input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
-        </div>
-    </div>
-    <section class="UserInfoUser">
-        <div class="UserInfoUserThumbEdit">
-            <%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
-            <div class="UserInfoUserImg" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>');"></div>
-            <%} else { %>
-            <div class="UserInfoUserImg"></div>
-            <%}%>
-
-            <div class="UserInfoUserImgUpload">
-                <input class="SelectFile" type="file" name="file_thumb" id="file_thumb" onchange="UpdateProfileFile(this)" />
+    <div class="UserInfo Float">
+        <div class="UserInfoBg" style="position: relative;">
+            <div class="UserInfoPreview">
+                <a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/">公開用イラスト箱表示</a>
+            </div>
+            <div class="UserInfoHeaderUpload">
+                <input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
             </div>
         </div>
-        <h2 class="UserInfoUserName">
-            <div class="SettingBody">
-                <input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
-                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-                <div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-            </div>
-        </h2>
-        <span class="UserInfoCmd">
-            <%
-                String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-                        URLEncoder.encode(String.format("%s%s %s #%s",
-                                cResults.m_cUser.m_strNickName,
-                                _TEX.T("Twitter.UserAddition"),
-                                String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nPublishedContentsTotal),
-                                _TEX.T("Common.Title")), "UTF-8"),
-                        URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
-            %>
-            <a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp">★ 一覧</a>
-            <a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp?MD=1"><i class="typcn typcn-cancel"></i>一覧</a>
-            <span class="IllustItemCommandSub">
-                <a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
-            </span>
-        </span>
-    </section>
-    <section class="UserInfoState">
-        <a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
-            <span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
-            <span class="UserInfoStateItemNum"><%=cResults.m_nPublishedContentsTotal%></span>
-        </a>
-        <a class="UserInfoStateItem" href="/FollowListPcV.jsp">
-            <span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
-            <span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
-        </a>
-    </section>
-</div>
-
-<div class="SettingListItem">
-    <div class="SettingBody" style="text-align: center;">
-        <div class="SettingBodyCmd">
-            <div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image")%><br/>
-                (<%=_TEX.T("EditSettingV.Image.Format")%>)
+        <section class="UserInfoUser">
+            <div class="UserInfoUserThumbEdit">
                 <%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
-                <br/><a class="BtnBase" href="javascript:void(0)" onclick="ResetProfileFile(1)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
+                <div class="UserInfoUserImg" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>');"></div>
+                <%} else { %>
+                <div class="UserInfoUserImg"></div>
+                <%}%>
+
+                <div class="UserInfoUserImgUpload">
+                    <input class="SelectFile" type="file" name="file_thumb" id="file_thumb" onchange="UpdateProfileFile(this)" />
+                </div>
+            </div>
+            <h2 class="UserInfoUserName">
+                <div class="SettingBody">
+                    <input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
+                    <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+                    <div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+                </div>
+            </h2>
+            <span class="UserInfoCmd">
+                <%
+                    String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+                            URLEncoder.encode(String.format("%s%s %s #%s",
+                                    cResults.m_cUser.m_strNickName,
+                                    _TEX.T("Twitter.UserAddition"),
+                                    String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nPublishedContentsTotal),
+                                    _TEX.T("Common.Title")), "UTF-8"),
+                            URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+                %>
+                <span class="IllustItemCommandSub">
+                    <a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
+                </span>
+            </span>
+        </section>
+        <section class="UserInfoState">
+            <a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
+                <span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
+                <span class="UserInfoStateItemNum"><%=cResults.m_nPublishedContentsTotal%></span>
+            </a>
+            <a class="UserInfoStateItem" href="/FollowListPcV.jsp">
+                <span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
+                <span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
+            </a>
+        </section>
+    </div>
+
+    <div class="SettingListItem">
+        <div class="SettingBody" style="text-align: center;">
+            <div class="SettingBodyCmd">
+                <div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image")%><br/>
+                    (<%=_TEX.T("EditSettingV.Image.Format")%>)
+                    <%if(!cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
+                    <br/><a class="BtnBase" href="javascript:void(0)" onclick="ResetProfileFile(1)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
+                    <%}%>
+                </div>
+            </div>
+            <div class="SettingBodyCmd">
+                <div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage")%><br/>
+                    (<%=_TEX.T("EditSettingV.HeaderImage.Format")%>)
+                    <%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
+                    <br/><a class="BtnBase" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="SettingListItem" style="display: none;">
+        <div class="SettingListTitle"><%=_TEX.T("EditSettingV.BgImage")%></div>
+        <div class="SettingBody">
+            <div class="FileSelectFrame" style="border: solid 1px #eee;">
+                <div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: cover; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>?<%=Math.random()%>');"></div>
+                <input class="SelectFile" type="file" name="file_bg" id="file_bg" onchange="UpdateProfileBgFile(this)" />
+                <%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
+                <span class="typcn typcn-plus-outline"></span>
+                <%} else {%>
+                <span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
+                <%}%>
+            </div>
+            <div class="SettingBodyCmd">
+                <div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
+                <%if(!cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(3)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
                 <%}%>
             </div>
         </div>
-        <div class="SettingBodyCmd">
-            <div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage")%><br/>
-                (<%=_TEX.T("EditSettingV.HeaderImage.Format")%>)
-                <%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
-                <br/><a class="BtnBase" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
-                <%}%>
+    </div>
+    <div class="SettingListItem">
+        <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
+        <div class="SettingBody">
+            <textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
+            <div class="SettingBodyCmd">
+                <div id="ProfileTextMessage" class="RegistMessage" >1000</div>
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
             </div>
         </div>
     </div>
-</div>
 
-<div class="SettingListItem" style="display: none;">
-    <div class="SettingListTitle"><%=_TEX.T("EditSettingV.BgImage")%></div>
-    <div class="SettingBody">
-        <div class="FileSelectFrame" style="border: solid 1px #eee;">
-            <div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: cover; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>?<%=Math.random()%>');"></div>
-            <input class="SelectFile" type="file" name="file_bg" id="file_bg" onchange="UpdateProfileBgFile(this)" />
-            <%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
-            <span class="typcn typcn-plus-outline"></span>
-            <%} else {%>
-            <span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
-            <%}%>
-        </div>
-        <div class="SettingBodyCmd">
-            <div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
-            <%if(!cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
-            <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(3)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
-            <%}%>
+    <div class="SettingListItem">
+        <div class="SettingListTitle">公開用イラスト箱</div>
+        <div class="SettingBody">
+            <textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
+            <div class="SettingBodyCmd">
+                <div id="ProfileTextMessage" class="RegistMessage" >1000</div>
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+            </div>
         </div>
     </div>
-</div>
-
-<div class="SettingListItem">
-    <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
-    <div class="SettingBody">
-        <textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
-        <div class="SettingBodyCmd">
-            <div id="ProfileTextMessage" class="RegistMessage" >1000</div>
-            <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-        </div>
-    </div>
-</div>
 </div>

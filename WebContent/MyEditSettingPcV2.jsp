@@ -118,6 +118,7 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 		.SettingBody .SettingBodyCmdRegist {
 			font-size: 14px;
 		}
+
 		.SettingMenuItemLink{
 			background-color: #FFFFFF;
 			min-height: calc(41.625px);
@@ -133,6 +134,9 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 
 		.SettingMenuItemTitle {
 			margin-left: 8px;
+		}
+		.SettinMenuTitle .SettingChangePageLink {
+			color: #5bd;
 		}
 
 			.SettingMenuItemArrow{
@@ -157,7 +161,7 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 			<div id="MENUROOT" class="SettingPage" style="display: none;">
 				<div class="SettingMenuHeader">
 					<h2 class="SettinMenuTitle">
-						hogehogeの設定
+						<%=cResults.m_cUser.m_strNickName%>の設定
 					</h2>
 				</div>
 				<div class="SettingMenu">
