@@ -4,6 +4,14 @@
 <%@page import="oauth.signpost.basic.DefaultOAuthProvider"%>
 <%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
 <%@include file="/inner/Common.jsp"%>
+<%!
+	enum EmailStatus {
+		UNDEF,
+		UNREGISTED,
+		COMFIRMATION,
+		REGISTED
+	}
+%>
 <%
 //login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
@@ -19,10 +27,23 @@ MyEditSettingC cResults = new MyEditSettingC();
 cResults.GetParam(request);
 cResults.GetResults(cCheckLogin);
 
+EmailStatus emailState = EmailStatus.UNDEF;
+boolean bNotEmailAddress = false;
+
+if(cResults.m_cUser.m_strEmail.contains("@")){
+	bNotEmailAddress = false;
+	emailState = EmailStatus.REGISTED;
+} else {
+	bNotEmailAddress = true;
+	emailState = EmailStatus.UNREGISTED;
+}
+
 String strEmailState = "";
 if(cResults.m_bUpdate) {
 	strEmailState = _TEX.T("EditSettingV.Email.EmailState.Confirmation") + cResults.m_strNewEmail;
+	emailState = EmailStatus.COMFIRMATION;
 }
+
 %>
 <!DOCTYPE html>
 <html>
@@ -257,12 +278,34 @@ if(cResults.m_bUpdate) {
 				$("#AutoTweetTxtNum").html(nCharNum);
 			}
 
-			function UpdateEmailAddress(){
+			function getEmail() {
 				var strEmail = $("#EM").val();
 				if(!strEmail.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
 					DispMsg("<%=_TEX.T("EditSettingV.Email.Message.Empty")%>");
-					return false;
+					strEmail = null;
 				}
+				return strEmail;
+			}
+
+			function getPasswords() {
+				var PW = $("#PW").val();
+				var PW1 = $("#PW1").val();
+				var PW2 = $("#PW2").val();
+				if(PW1.length<4 || PW1.length>16) {
+					DispMsg("<%=_TEX.T("EditSettingV.Password.Message.Empty")%>");
+					return null;
+				}
+				if(PW1!==PW2) {
+					DispMsg("<%=_TEX.T("EditSettingV.Password.Message.NotMatch")%>");
+					return null;
+				}
+
+				return [PW, PW1, PW2];
+			}
+
+			function UpdateEmailAddress(){
+				var strEmail = getEmail();
+				if(strEmail===null) return false;
 				$.ajaxSingle({
 					"type": "post",
 					"data": {"ID": <%=cCheckLogin.m_nUserId%>, "EM": strEmail},
@@ -283,20 +326,12 @@ if(cResults.m_bUpdate) {
 			}
 
 			function UpdatePassword(){
-				var PW = $("#PW").val();
-				var PW1 = $("#PW1").val();
-				var PW2 = $("#PW2").val();
-				if(PW1.length<4 || PW1.length>16) {
-					DispMsg("<%=_TEX.T("EditSettingV.Password.Message.Empty")%>");
-					return false;
-				}
-				if(PW1!=PW2) {
-					DispMsg("<%=_TEX.T("EditSettingV.Password.Message.NotMatch")%>");
-					return false;
-				}
+				var pw = getPasswords();
+				if(pw===null) return false;
+
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"ID": <%=cCheckLogin.m_nUserId%>, "PW": PW, "PW1": PW1, "PW2": PW2},
+					"data": {"ID": <%=cCheckLogin.m_nUserId%>, "PW": pw[0], "PW1": pw[1], "PW2": pw[2]},
 					"url": "/f/UpdatePasswordF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -456,7 +491,7 @@ if(cResults.m_bUpdate) {
 			<div class="UserInfo Float">
 				<div class="UserInfoBg" style="position: relative;">
 					<div class="UserInfoPreview">
-						<a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/"><i class="fas fa-home"></i> プレビュー</a>
+						<a class="BtnBase UserInfoCmdFollow" href="/<%=cResults.m_cUser.m_nUserId%>/"><i class="fas fa-home"></i> <%=_TEX.T("EditSettingV.Preview")%></a>
 					</div>
 					<div class="UserInfoHeaderUpload">
 						<input class="SelectFile" type="file" name="file_header" id="file_header" onchange="UpdateProfileHeaderFile(this)" />
@@ -494,8 +529,8 @@ if(cResults.m_bUpdate) {
 										_TEX.T("Common.Title")), "UTF-8"),
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp">★ 一覧</a>
-						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp?MD=1"><i class="typcn typcn-cancel"></i>一覧</a>
+						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp">★ <%=_TEX.T("EditSettingV.List")%></a>
+						<a class="BtnBase UserInfoCmdFollow" href="/FollowListPcV.jsp?MD=1"><i class="typcn typcn-cancel"></i><%=_TEX.T("EditSettingV.List")%></a>
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
 						</span>
@@ -706,11 +741,24 @@ if(cResults.m_bUpdate) {
 				</div>
 				<%}%>
 
-				<%if(cResults.m_cUser.m_strEmail.contains("@")) {%>
+				<%if(emailState ==EmailStatus.UNREGISTED){%>
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Email.Address")%></div>
 					<div class="SettingBody">
-						<input id="EM" class="SettingBodyTxt" type="text" value="<%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
+						<%=_TEX.T("EditSettingV.Email.Message.Info")%>
+						<input id="EM" class="SettingBodyTxt" type="text" value="" />
+						<div class="SettingBodyCmd">
+							<div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%></div>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateEmailAddress()"><%=_TEX.T("EditSettingV.Button.Register")%></a>
+						</div>
+					</div>
+				</div>
+				<%}else{%>
+				<div class="SettingListItem">
+					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Email.Address")%></div>
+					<div class="SettingBody">
+						<%=_TEX.T("EditSettingV.Email.Message.Info")%>
+						<input id="EM" class="SettingBodyTxt" type="text" value="<%=bNotEmailAddress?"":Common.ToStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
 						<div class="SettingBodyCmd">
 							<div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateEmailAddress()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -720,6 +768,7 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Password")%></div>
 					<div class="SettingBody">
+						<%=_TEX.T("EditSettingV.Password.Message.Info")%>
 						<div class="SettingBodyTxt" style="margin-top: 10px;">
 							<%=_TEX.T("EditSettingV.Password.CurrentPassword")%>
 						</div>
@@ -733,7 +782,7 @@ if(cResults.m_bUpdate) {
 						</div>
 						<input id="PW2" class="SettingBodyTxt" type="password" />
 						<div class="SettingBodyCmd" style="margin-top: 20px;">
-							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+							<div id="PasswordMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdatePassword()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
 					</div>
@@ -774,6 +823,14 @@ if(cResults.m_bUpdate) {
 						<a href="/GuideLinePcV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.GuideLine")%></a><br />
 						<a href="/PrivacyPolicyPcS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
 						<a href="https://twitter.com/pipajp" style="font-size: 14px; text-decoration: underline;" target="_blank"><%=_TEX.T("Footer.Information")%></a><br />
+						<form method="post" name="go_inquiry" action="https://cs.poipiku.com/InquiryPcV.jsp">
+							<input type="hidden" name="SRV" value="Poipiku"/>
+							<input type="hidden" name="EMAIL" value="<%=cResults.m_cUser.m_strEmail%>"/>
+							<input type="hidden" name="NNAME" value="<%=cResults.m_cUser.m_strNickName%>"/>
+							<input type="hidden" name="TWNAME" value="<%=cResults.m_cUser.m_strTwitterScreenName%>"/>
+							<input type="hidden" name="UID" value="<%=cCheckLogin.m_nUserId%>"/>
+							<a href="javascript:go_inquiry.submit()" style="font-size: 14px; text-decoration: underline;" ><%=_TEX.T("Inquiry.Title")%></a>
+						</form>
 					</div>
 				</div>
 			</div>
