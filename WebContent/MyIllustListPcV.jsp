@@ -3,6 +3,7 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+boolean isApp = false;
 
 IllustListGridC cResults = new IllustListGridC();
 cResults.getParam(request);
@@ -17,11 +18,11 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	return;
 }
 
-String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
 String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -29,19 +30,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:site" content="@pipajp" />
-		<meta property="og:url" content="<%=strUrl%>" />
-		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
-		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
+
+		<%@ include file="/inner/TTweetMyBox.jsp"%>
 
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateCategoryMenuPos(0);
-		});
-
-		$(function(){
 			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
 			<%if(!bSmartPhone) {%>
 			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
@@ -147,6 +143,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<style>
 			.IllustItem .IllustItemThumb { position: relative; }
 			.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
+			.TweetMyBox {padding-top: 5px; text-align: center;}
 		</style>
 	</head>
 
@@ -154,6 +151,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper GridList">
+			<div class="TweetMyBox">
+				<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
+					<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
+				</a>
+			</div>
+
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>"><%=_TEX.T("Category.All")%></a>
