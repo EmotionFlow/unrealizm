@@ -15,12 +15,14 @@
 				.append("</a>");
 		return sb.toString();
 	}
-	static String getSettingMenuHeader(String title){
+	static String getSettingMenuHeader(String title, boolean bSmartPhone){
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class=\"SettingMenuHeader\">\n")
-				.append("<h2 class=\"SettinMenuTitle\">\n")
-				.append("<i data-to=\"MENUROOT\" class=\"SettingChangePageLink fas fa-arrow-left\"></i>\n")
-				.append(title)
+				.append("<h2 class=\"SettinMenuTitle\">\n");
+		if(bSmartPhone){
+			sb.append("<i data-to=\"MENUROOT\" class=\"SettingChangePageLink fas fa-arrow-left\"></i>\n");
+		}
+		sb.append(title)
 				.append("</h2>\n")
 				.append("</div>\n");
 		return sb.toString();
@@ -68,13 +70,23 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 			});
 
 			function changePage(elFromPage, elToPage){
+				<%if(bSmartPhone){%>
 				elFromPage.hide();
 				elToPage.show();
 				$("*").scrollTop(0);
+				<%}else{%>
+				var contents = $("#SettingContent > .SettingPage:visible");
+				if(elToPage.attr("id")!==$(contents[0]).attr("id")) {
+					$(contents[0]).hide();
+					elToPage.show();
+				}
+				$("*").scrollTop(0);
+				return true;
+				<%}%>
 			}
 
 			$(function(){
-				<%if(Util.isSmartPhone(request)){%>
+				<%if(bSmartPhone){%>
 				$("#MenuMe").addClass("Selected");
 				<%}else{%>
 				$("#MenuSettings").addClass("Selected");
@@ -147,6 +159,23 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 			.SettingMenuReturnArrow{
 				color: #5bd;
 			}
+
+		<%if(!bSmartPhone){%>
+		.Wrapper{
+			width: 850px;
+		}
+		#MENUROOT{
+			width: 250px;
+			display: inline-block;
+			float: left;
+		}
+		#SettingContent{
+			display: inline-block;
+			background: #fff;
+			width: 600px;
+			min-height: 420px;
+		}
+		<%}%>
 		</style>
 	</head>
 
@@ -163,9 +192,9 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 				</div>
 				<div class="SettingMenu">
 					<%String[] menuOrder = {
+							"PROFILE",
 							"FOLLOW",
 							"BLOCK",
-							"PROFILE",
 							"MUTEKEYWORD",
 							"REACTION",
 							"TWITTER",
@@ -179,10 +208,23 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 				</div>
 			</div>
 
+			<%if(!bSmartPhone){%>
+			<div id="SettingContent">
+			<%}%>
+
 			<%String strPageId = "";%>
+
+			<%strPageId = "PROFILE";%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingProfileV.jsp"%>
+				</div>
+			</div>
+
 			<%strPageId = "FOLLOW";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingFollowV.jsp"%>
 				</div>
@@ -190,23 +232,15 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 
 			<%strPageId = "BLOCK";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingBlockV.jsp"%>
 				</div>
 			</div>
 
-			<%strPageId = "PROFILE";%>
-			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
-				<div class="SettingBody">
-					<%@include file="/inner/setting/MyEditSettingProfileV.jsp"%>
-				</div>
-			</div>
-
 			<%strPageId = "MUTEKEYWORD";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMuteKeywordV.jsp"%>
 				</div>
@@ -214,7 +248,7 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 
 			<%strPageId = "REACTION";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingReactionV.jsp"%>
 				</div>
@@ -222,7 +256,7 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 
 			<%strPageId = "TWITTER";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingTwitterV.jsp"%>
 				</div>
@@ -230,7 +264,7 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 
 			<%strPageId = "MAIL";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMailV.jsp"%>
 				</div>
@@ -238,7 +272,7 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 
 			<%strPageId = "ACCOUNT";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingAccountV.jsp"%>
 				</div>
@@ -246,11 +280,15 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 
 			<%strPageId = "INFO";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId))%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingInfoV.jsp"%>
 				</div>
 			</div>
+
+			<%if(!bSmartPhone){%>
+			</div>
+			<%}%>
 		</article><!--Wrapper-->
 
 		<%@ include file="/inner/TFooter.jsp"%>
