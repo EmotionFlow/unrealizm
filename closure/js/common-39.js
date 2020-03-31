@@ -503,7 +503,7 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
 				alert(hMessages.ShareURLCopied);
 			});
 			$("#DownloadMyBoxQRBtn").click(() => {
-				let canvas = $('#QRCode canvas')[0];
+				let canvas = $('#QRCodeImg canvas')[0];
 				let link = document.createElement("a");
 				link.href = canvas.toDataURL("image/png");
 				link.download = "poipiku_qrcode.png";
