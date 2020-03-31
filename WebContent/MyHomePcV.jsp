@@ -124,10 +124,10 @@ int nRnd = (int)(Math.random()*3+1);
 		<article class="Wrapper ViewPc">
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
+				<!--
 				<a class="EventItem" href="/RecruitPcS.jsp?b=<%=nRnd%>">
 					<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
 				</a>
-				<!--
 				<a class="EventItem" href="https://poipiku.com/2/1647694.html">
 					<img class="EventBanner" src="/img/maintenance_20200330.png" />
 				</a>
@@ -170,10 +170,10 @@ int nRnd = (int)(Math.random()*3+1);
 
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
+							<!--
 							<a class="EventItem" href="/RecruitPcS.jsp?BD=<%=nRnd%>">
 								<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
 							</a>
-							<!--
 							<a class="EventItem" href="https://poipiku.com/2/1647694.html">
 								<img class="EventBanner" src="/img/maintenance_20200330.png" />
 							</a>
