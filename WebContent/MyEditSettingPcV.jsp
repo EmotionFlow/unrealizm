@@ -69,42 +69,48 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 				cache: false,
 			});
 
-			function changePage(elFromPage, elToPage){
+			function changePage(elCurrentTarget, elFromPage, elToPage){
 				<%if(bSmartPhone){%>
-				elFromPage.hide();
-				elToPage.show();
-				$("*").scrollTop(0);
-				<%}else{%>
-				var contents = $("#SettingContent > .SettingPage:visible");
-				if(elToPage.attr("id")!==$(contents[0]).attr("id")) {
-					$(contents[0]).hide();
+					elFromPage.hide();
 					elToPage.show();
-				}
-				$("*").scrollTop(0);
-				return true;
+					$("*").scrollTop(0);
+				<%}else{%>
+					var contents = $("#SettingContent > .SettingPage:visible");
+					if(elToPage.attr("id")!==$(contents[0]).attr("id")) {
+						$(contents[0]).hide();
+						elToPage.show();
+					}
+
+					var selected = $("#MENUROOT>.SettingMenu .Selected")[0];
+					if(selected) {
+						$(selected).removeClass("Selected");
+					}
+					$(elCurrentTarget).addClass("Selected");
+
+					$("*").scrollTop(0);
 				<%}%>
 			}
 
 			$(function(){
 				<%if(bSmartPhone){%>
-				$("#MenuMe").addClass("Selected");
+					$("#MenuMe").addClass("Selected");
 				<%}else{%>
-				$("#MenuSettings").addClass("Selected");
+					$("#MenuSettings").addClass("Selected");
 				<%}%>
 
 				<%if(cResults.m_strMessage.length()>0) {%>
-				DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
+					DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
 				<%}%>
 
 				$(".SettingChangePageLink").click((ev)=>{
 					const el = $(ev.currentTarget);
-					changePage(el.parents(".SettingPage"), $("#"+el.attr("data-to")));
+					changePage(ev.currentTarget, el.parents(".SettingPage"), $("#"+el.attr("data-to")));
 				});
 
 				<%if(cResults.m_strSelectedMenuId.isEmpty()){%>
-				$("#MENUROOT").show();
+					$("#MENUROOT").show();
 				<%}else{%>
-				$("#<%=cResults.m_strSelectedMenuId%>").show();
+					$("#<%=cResults.m_strSelectedMenuId%>").show();
 				<%}%>
 			});
 		</script>
@@ -149,32 +155,39 @@ MENU.put("INFO", "使い方/利用規約/公式Twitter");
 			color: #5bd;
 		}
 
-			.SettingMenuItemArrow{
-				display: inline-block;
-				float: right;
-				position: relative;
-				top: 10px;
-				padding: 0 9px;
-			}
+		.SettingMenuItemArrow{
+			display: inline-block;
+			float: right;
+			position: relative;
+			top: 10px;
+			padding: 0 9px;
+		}
 
-			.SettingMenuReturnArrow{
-				color: #5bd;
-			}
+		.SettingMenuReturnArrow{
+			color: #5bd;
+		}
 
 		<%if(!bSmartPhone){%>
 		.Wrapper{
 			width: 850px;
 		}
 		#MENUROOT{
-			width: 250px;
+			width: 249px;
 			display: inline-block;
 			float: left;
+			border-left: calc(0.5px) solid #ccc;
 		}
 		#SettingContent{
 			display: inline-block;
 			background: #fff;
-			width: 600px;
+			width: 599px;
 			min-height: 420px;
+			border: calc(0.5px) solid #ccc;
+			border-top: 0;
+		}
+		.SettingMenuItemLink.Selected{
+			color: #000;
+			background-color: #f3f3f3;
 		}
 		<%}%>
 		</style>
