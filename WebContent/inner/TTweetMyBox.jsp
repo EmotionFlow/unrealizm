@@ -93,7 +93,7 @@
                 "ShareQRTitle": "<%=_TEX.T("MyIllustListV.TweetMyBox.ShareQR.Title")%>",
                 "ShareQRDownload": "<%=_TEX.T("MyIllustListV.TweetMyBox.ShareQR.Download")%>",
             };
-            TweetMyBox("<%=strMyBoxUrl%>", "<%=strTwitterIntentURL%>", hMessages, <%=isApp%>);
+            TweetMyBox("<%=strMyBoxUrl%>", "<%=strTwitterIntentURL%>", hMessages, <%=Util.isSmartPhone(request)%>);
         });
     });
 </script>

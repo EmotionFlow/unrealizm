@@ -439,7 +439,7 @@ function generateShowAppendFile(){
 
 var ShowAppendFile = generateShowAppendFile();
 
-function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
+function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsSmartPhone,) {
 	let strHtml =
 		'<h2 class="TweetMyBoxTitle" style="padding: 10px 0 0 0;">' +
 		hMessages.TweetTitle +
@@ -481,7 +481,7 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsApp) {
 		'</h2>' +
 		'<div class="MyBoxQRCode">' +
 		'<div class="QRCode"><span id="QRCodeImg"></span>';
-		if(!bIsApp){
+		if(!bIsSmartPhone){
 			strHtml +=
 				'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase Selected" href="javascript:void(0);">' +
 				hMessages.ShareQRDownload +
