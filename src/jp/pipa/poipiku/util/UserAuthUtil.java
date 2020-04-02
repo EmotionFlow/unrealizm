@@ -464,15 +464,32 @@ public class UserAuthUtil {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			boolean bFind = false;
-			strSql = "SELECT * FROM users_0000 WHERE email=?";
+			boolean bFound = false;
+			strSql = "SELECT * FROM users_0000 WHERE email=? AND user_id<>?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strEmail);
+			cState.setInt(2, cCheckLogin.m_nUserId);
 			cResSet = cState.executeQuery();
-			bFind = cResSet.next();
+			bFound = cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(bFind) return ERROR_USER_EXIST;
+			if(bFound) return ERROR_USER_EXIST;
+
+			boolean bRegistNew = false;
+			String strNowEmail = null;
+			String strPassword = null;
+			strSql = "SELECT email, password FROM users_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cCheckLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			cResSet.next();
+			strNowEmail = cResSet.getString("email");
+			bRegistNew = !strNowEmail.contains("@");
+			if(bRegistNew){
+				strPassword = cResSet.getString("password");
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
 
 			// hash password
 			MessageDigest md5 = MessageDigest.getInstance("SHA-256");
@@ -508,7 +525,22 @@ public class UserAuthUtil {
 			final String FROM_NAME = "POIPIKU";
 			final String FROM_ADDR = "info@poipiku.com";
 			final String EMAIL_TITLE = _TEX.T("UpdateEmailAddressV.Mail.Title");
-			final String EMAIL_TXT = String.format(_TEX.T("UpdateEmailAddressV.Mail.MessageFormat"), cCheckLogin.m_strNickName, strHashKey);
+			String strEmailText = null;
+
+			// メアド更新ではなく新規登録だったら、メール本文に仮パスワードを含める
+			if(!bRegistNew){
+				strEmailText = String.format(
+						_TEX.T("UpdateEmailAddressV.Mail.MessageFormat"),
+						cCheckLogin.m_strNickName,
+						strHashKey);
+			}else{
+				strEmailText = String.format(
+						_TEX.T("UpdateEmailAddressV.Mail.MessageFormatNewRegist"),
+						cCheckLogin.m_strNickName,
+						strHashKey,
+						strPassword);
+			}
+
 			Properties objSmtp = System.getProperties();
 			objSmtp.put("mail.smtp.host", SMTP_HOST);
 			objSmtp.put("mail.host", SMTP_HOST);
@@ -518,7 +550,7 @@ public class UserAuthUtil {
 			objMime.setFrom(new InternetAddress(FROM_ADDR, FROM_NAME, "iso-2022-jp"));
 			objMime.setRecipients(Message.RecipientType.TO, strEmail);
 			objMime.setSubject(EMAIL_TITLE, "iso-2022-jp");
-			objMime.setText(EMAIL_TXT, "iso-2022-jp");
+			objMime.setText(strEmailText, "iso-2022-jp");
 			objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
 			objMime.setHeader("Content-Transfer-Encoding", "7bit");
 			objMime.setSentDate(new java.util.Date());
@@ -609,6 +641,7 @@ public class UserAuthUtil {
 			if (nUserId>0){	// Login
 				Log.d("Login : " + nUserId);
 				String strPassword = "";
+				String strEmail = "";
 				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, nUserId);
@@ -617,21 +650,20 @@ public class UserAuthUtil {
 					nUserId		= cResSet.getInt("user_id");
 					strHashPass = Common.ToString(cResSet.getString("hash_password"));
 					strPassword = Common.ToString(cResSet.getString("password"));
+					strEmail = Common.ToString((cResSet.getString("email")));
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 
 				if(nUserId>0) {
-					{
-						// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンを更新
-						strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=? WHERE fldUserId=?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, accessToken);
-						cState.setString(2, tokenSecret);
-						cState.setInt(3, nUserId);
-						cState.executeUpdate();
-						cState.close();cState=null;
-					}
+					// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンを更新
+					strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=? WHERE fldUserId=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setString(1, accessToken);
+					cState.setString(2, tokenSecret);
+					cState.setInt(3, nUserId);
+					cState.executeUpdate();
+					cState.close();cState=null;
 
 					if(strHashPass.isEmpty()) {
 						strHashPass = Util.getHashPass(strPassword);
@@ -642,6 +674,30 @@ public class UserAuthUtil {
 						cState.setInt(2, nUserId);
 						cState.executeUpdate();
 						cState.close();cState=null;
+					}
+
+					// メアド未設定かつ確認中のメアドもなく、twitterから登録メアドを取得できたら、DBに反映させる。
+					if(!strEmail.contains("@")){
+						strSql = "SELECT user_id FROM temp_emails_0000 WHERE user_id=?";
+						cState = cConn.prepareStatement(strSql);
+						cState.setInt(1, nUserId);
+						cResSet = cState.executeQuery();
+						boolean bChecking = cResSet.next();
+						cResSet.close();cResSet=null;
+						cState.close();cState=null;
+
+						if(!bChecking){
+							CTweet tweet = new CTweet();
+							String strTwEmail = null;
+							if(tweet.GetResults(nUserId) && (strTwEmail = tweet.GetEmailAddress()) != null){
+								strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+								cState = cConn.prepareStatement(strSql);
+								cState.setString(1, strTwEmail);
+								cState.setInt(2, nUserId);
+								cState.executeUpdate();
+								cState.close();cState=null;
+							}
+						}
 					}
 				} else {
 					Log.d("Login error : no user : " + nUserId);
@@ -730,6 +786,18 @@ public class UserAuthUtil {
 					cState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", nUserId));
 					cState.executeUpdate();
 					cState.close();cState=null;
+
+
+					CTweet tweet = new CTweet();
+					String strTwEmail = null;
+					if(tweet.GetResults(nUserId) && (strTwEmail = tweet.GetEmailAddress()) != null){
+						strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+						cState = cConn.prepareStatement(strSql);
+						cState.setString(1, strTwEmail);
+						cState.setInt(2, nUserId);
+						cState.executeUpdate();
+						cState.close();cState=null;
+					}
 
 					Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
 					cLK.setMaxAge(Integer.MAX_VALUE);

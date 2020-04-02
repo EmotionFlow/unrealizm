@@ -1,6 +1,8 @@
 package jp.pipa.poipiku.util;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -336,6 +338,15 @@ public class Util {
 			strDst = strDst.replace(zen.charAt(i), han.charAt(i));
 		}
 		return strDst;
+	}
+
+	public static String getTwitterIntentURL(String strText, String strUrl) throws UnsupportedEncodingException {
+		StringBuffer sb = new StringBuffer();
+		sb.append("https://twitter.com/intent/tweet?text=")
+				.append(URLEncoder.encode(strText, "UTF-8"))
+				.append("&url=")
+				.append(URLEncoder.encode(strUrl, "UTF-8"));
+		return sb.toString();
 	}
 
 	/*
