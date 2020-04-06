@@ -141,7 +141,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			width: 100%;
 			display: block;
 			line-height: 40px;
-			border-bottom: calc(0.5px) solid #ccc;
+			border-bottom: 1px solid #ccc;
 		}
 
 		.SettingMenuItem{
@@ -175,14 +175,14 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			width: 249px;
 			display: inline-block;
 			float: left;
-			border-left: calc(0.5px) solid #ccc;
+			border-left: 1px solid #ccc;
 		}
 		#SettingContent{
 			display: inline-block;
 			background: #fff;
-			width: 599px;
-			min-height: 420px;
-			border: calc(0.5px) solid #ccc;
+			width: 598px;
+			min-height: 425px;
+			border: 1px solid #ccc;
 			border-top: 0;
 		}
 		.SettingMenuItemLink.Selected{
