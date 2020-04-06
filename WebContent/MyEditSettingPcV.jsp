@@ -47,15 +47,15 @@ cResults.GetParam(request);
 cResults.GetResults(cCheckLogin);
 
 HashMap<String, String> MENU = new HashMap<>();
-MENU.put("FOLLOW", "ふぁぼ一覧");
-MENU.put("BLOCK", "ブロック一覧");
-MENU.put("PROFILE", "プロフィール");
-MENU.put("MUTEKEYWORD", "ミュートキーワード");
-MENU.put("REACTION", "リアクション");
-MENU.put("TWITTER", "Twitter連携");
-MENU.put("MAIL", "メールアドレス");
-MENU.put("ACCOUNT", "アカウント");
-MENU.put("INFO", "使い方/利用規約/公式Twitter");
+MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
+MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
+MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
+MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
+MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
+MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
+MENU.put("MAIL", _TEX.T("EditSettingV.Email.Address"));
+MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
+MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
 %>
 <!DOCTYPE html>

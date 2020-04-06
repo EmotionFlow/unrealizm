@@ -311,7 +311,7 @@
 
     <div class="SettingListItem">
         <div class="SettingListTitle">
-            <a style="text-decoration: underline;" href="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/">公開用イラスト箱</a>
+            <a style="text-decoration: underline;" href="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/"><%=_TEX.T("EditSettingV.Profile.PublicIllustBox")%></a>
         </div>
         <div class="SettingBody">
             <div style="display: table; width:100%">
@@ -319,7 +319,7 @@
                 <input style="width: 100%;" id="MyBoxUrlTxt" type="text" readonly="" value="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/">
                 </div>
                 <div style="display: table-cell; text-align: right; vertical-align: top;width: 76px;">
-                <a id="CopyMyBoxUrlBtn" class="BtnBase" href="javascript:void(0);">コピー</a>
+                <a id="CopyMyBoxUrlBtn" class="BtnBase" href="javascript:void(0);"><%=_TEX.T("EditSettingV.Profile.PublicIllustBox.Copy")%></a>
                 </div>
             </div>
         </div>
