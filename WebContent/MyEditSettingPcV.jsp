@@ -201,7 +201,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			<div id="MENUROOT" class="SettingPage" style="display: none;">
 				<div class="SettingMenuHeader">
 					<h2 class="SettinMenuTitle">
-						<%=cResults.m_cUser.m_strNickName%>の設定
+						<%=String.format(_TEX.T("EditSettingV.Title"), cResults.m_cUser.m_strNickName)%>
 					</h2>
 				</div>
 				<div class="SettingMenu">

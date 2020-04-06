@@ -110,11 +110,24 @@ enum EmailStatus {
 </script>
 
 <div class="SettingList">
-    <%if(cResults.m_cUser.m_strEmail.contains("@")) {%>
+    <%if(emailState ==EmailStatus.UNREGISTED){%>
     <div class="SettingListItem">
         <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Email.Address")%></div>
         <div class="SettingBody">
-            <input id="EM" class="SettingBodyTxt" type="text" value="<%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
+            <%=_TEX.T("EditSettingV.Email.Message.Info")%>
+            <input id="EM" class="SettingBodyTxt" type="text" value="" />
+            <div class="SettingBodyCmd">
+                <div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%></div>
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateEmailAddress()"><%=_TEX.T("EditSettingV.Button.Register")%></a>
+            </div>
+        </div>
+    </div>
+    <%}else{%>
+    <div class="SettingListItem">
+        <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Email.Address")%></div>
+        <div class="SettingBody">
+            <%=_TEX.T("EditSettingV.Email.Message.Info")%>
+            <input id="EM" class="SettingBodyTxt" type="text" value="<%=bNotEmailAddress?"":Common.ToStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
             <div class="SettingBodyCmd">
                 <div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%></div>
                 <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateEmailAddress()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -124,6 +137,7 @@ enum EmailStatus {
     <div class="SettingListItem">
         <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Password")%></div>
         <div class="SettingBody">
+            <%=_TEX.T("EditSettingV.Password.Message.Info")%>
             <div class="SettingBodyTxt" style="margin-top: 10px;">
                 <%=_TEX.T("EditSettingV.Password.CurrentPassword")%>
             </div>
@@ -137,7 +151,7 @@ enum EmailStatus {
             </div>
             <input id="PW2" class="SettingBodyTxt" type="password" />
             <div class="SettingBodyCmd" style="margin-top: 20px;">
-                <div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+                <div id="PasswordMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
                 <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdatePassword()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
             </div>
         </div>
