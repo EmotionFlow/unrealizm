@@ -8,9 +8,8 @@
             "dataType": "json",
             "success": function(data) {
                 if(data.result>0) {
-                    //setCookie('POIPIKU_LK','-1');
                     deleteCookie('POIPIKU_LK');
-                    sendObjectMessage("restart");
+                    location.href="/";
                 }
             },
             "error": function(req, stat, ex){
@@ -29,9 +28,8 @@
                 "dataType": "json",
                 "success": function(data) {
                     if(data.result>0) {
-                        //setCookie('POIPIKU_LK','-1');
                         deleteCookie('POIPIKU_LK');
-                        sendObjectMessage("restart");
+                        location.href="/";
                     }
                 },
                 "error": function(req, stat, ex){

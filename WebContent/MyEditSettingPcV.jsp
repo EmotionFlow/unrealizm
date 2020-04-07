@@ -92,12 +92,6 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			}
 
 			$(function(){
-				<%if(bSmartPhone){%>
-					$("#MenuMe").addClass("Selected");
-				<%}else{%>
-					$("#MenuSettings").addClass("Selected");
-				<%}%>
-
 				<%if(cResults.m_strMessage.length()>0) {%>
 					DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
 				<%}%>
@@ -111,6 +105,13 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 					$("#MENUROOT").show();
 				<%}else{%>
 					$("#<%=cResults.m_strSelectedMenuId%>").show();
+				<%}%>
+
+				<%if(bSmartPhone){%>
+					$("#MenuMe").addClass("Selected");
+				<%}else{%>
+					$("#MenuSettings").addClass("Selected");
+					$("#MENUROOT>.SettingMenu").children()[0].click()
 				<%}%>
 			});
 		</script>
