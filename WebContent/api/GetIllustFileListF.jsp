@@ -82,6 +82,7 @@ class GetIllustFileListC {
 				m_cContent.m_timeUploadDate = cResSet.getTimestamp("upload_date");
 				m_cContent.m_timeEndDate = cResSet.getTimestamp("end_date");
 				m_cContent.m_bNotRecently = cResSet.getBoolean("not_recently");
+				m_cContent.m_strTweetId = cResSet.getString("tweet_id");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -135,6 +136,7 @@ if (nRtn > 0) {
 		content.put("end_date", Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate));
 		content.put("tweet_when_published", cResults.m_cContent.m_nTweetWhenPublished);
 		content.put("twitter_list_id", cResults.m_cContent.m_strListId);
+		content.put("tweeted", cResults.m_cContent.m_strTweetId!=null && !cResults.m_cContent.m_strTweetId.isEmpty());
 		content.put("files", cResults.m_vContent);
 
 		mapper = new ObjectMapper();
