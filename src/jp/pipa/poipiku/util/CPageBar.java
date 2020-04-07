@@ -13,10 +13,21 @@ public class CPageBar {
 		int nPageLast = Math.max((int) Math.ceil((double) nContentsNum / (double) SELECT_MAX) - 1, 0);
 		int nPageNext = Math.min(nPageNum + 1, nPageLast);
 
-		String strPagePre = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\"><i class=\"fas fa-chevron-left\"></i></a></span>",
-				strPageName, nPagePre, strOption);
-		String strPageNext = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\"><i class=\"fas fa-chevron-right\"></i></a></span>",
-				strPageName, nPageNext, strOption);
+		String strPagePre = "";
+		String strPageNext = "";
+
+		if(strPageName != null){
+			strPagePre = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\"><i class=\"fas fa-chevron-left\"></i></a></span>",
+					strPageName, nPagePre, strOption);
+			strPageNext = String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem\" href=\"%s?PG=%d%s\"><i class=\"fas fa-chevron-right\"></i></a></span>",
+					strPageName, nPageNext, strOption);
+
+		} else {
+			strPagePre = String.format("<span class=\"PageBarItemFrame\"><a data-page=\"%d\" class=\"BtnBase PageBarItem\" href=\"javascript:void(0);\"><i class=\"fas fa-chevron-left\"></i></a></span>",
+					nPagePre);
+			strPageNext = String.format("<span class=\"PageBarItemFrame\"><a data-page=\"%d\"  class=\"BtnBase PageBarItem\" href=\"javascript:void(0);\"><i class=\"fas fa-chevron-right\"></i></a></span>",
+					nPageNext);
+		}
 
 		final int nPageNumLeftTmp1 = Math.min(nPageNum, nPageBarNum);
 		final int nPageNumRightTmp1 = Math.min(nPageLast - nPageNum, nPageBarNum);
@@ -30,9 +41,16 @@ public class CPageBar {
 		StringBuilder strPageMenu = new StringBuilder();
 
 		strPageMenu.append(strPagePre);
-		for (int nPageCnt = nPageNumLeft; nPageCnt <= nPageNumRight; nPageCnt++) {
-			strPageMenu.append(String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem %s\" href=\"%s?PG=%d%s\">%d</a></span>",
-					(nPageCnt == nPageNum) ? "Selected" : "", strPageName, nPageCnt, strOption, nPageCnt + 1));
+		if(strPageName != null) {
+			for (int nPageCnt = nPageNumLeft; nPageCnt <= nPageNumRight; nPageCnt++) {
+				strPageMenu.append(String.format("<span class=\"PageBarItemFrame\"><a class=\"BtnBase PageBarItem %s\" href=\"%s?PG=%d%s\">%d</a></span>",
+						(nPageCnt == nPageNum) ? "Selected" : "", strPageName, nPageCnt, strOption, nPageCnt + 1));
+			}
+		} else {
+			for (int nPageCnt = nPageNumLeft; nPageCnt <= nPageNumRight; nPageCnt++) {
+				strPageMenu.append(String.format("<span class=\"PageBarItemFrame\"><a data-page=\"%d\" class=\"BtnBase PageBarItem %s\" href=\"javascript:void(0)\">%d</a></span>",
+						nPageCnt, (nPageCnt == nPageNum) ? "Selected" : "", nPageCnt + 1));
+			}
 		}
 		strPageMenu.append(strPageNext);
 
