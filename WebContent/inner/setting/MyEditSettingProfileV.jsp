@@ -316,11 +316,20 @@
         <div class="SettingBody">
             <div style="display: table; width:100%">
                 <div style="display: table-cell; text-align: left; vertical-align: top;">
-                <input style="width: 100%;" id="MyBoxUrlTxt" type="text" readonly="" value="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/">
+                    <input style="width: 100%;" id="MyBoxUrlTxt" type="text" readonly="" value="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/">
                 </div>
                 <div style="display: table-cell; text-align: right; vertical-align: top;width: 76px;">
-                <a id="CopyMyBoxUrlBtn" class="BtnBase" href="javascript:void(0);"><%=_TEX.T("EditSettingV.Profile.PublicIllustBox.Copy")%></a>
+                    <a id="CopyMyBoxUrlBtn" class="BtnBase" href="javascript:void(0);"><%=_TEX.T("EditSettingV.Profile.PublicIllustBox.Copy")%></a>
                 </div>
+                <script>
+                    $(function () {
+                        $("#CopyMyBoxUrlBtn").click(function() {
+                            $("#MyBoxUrlTxt").select();
+                            document.execCommand("Copy");
+                            alert("<%=_TEX.T("MyIllustListV.TweetMyBox.ShareURL.Copied")%>");
+                        });
+                    })
+                </script>
             </div>
         </div>
     </div>
