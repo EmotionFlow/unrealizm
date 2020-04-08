@@ -106,33 +106,6 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
-		#MenuSettings {
-			position: absolute;
-			top: 5px;
-			right: 9px;
-			display: block;
-		}
-		#MenuSettings .MenuSettingsIcon{
-			background: url(/img/menu_pc-05.png);
-			background-size: 1500%;
-			background-repeat: no-repeat;
-			background-position: -395px -28px;
-			top: 5px;
-			left: 1px;
-			position: relative;
-			width: 28px;
-			display: inline-block;
-			height: 28px;
-		}
-		#MenuSettings .MenuSettingsName{
-			display: block;
-			width: 100%;
-			height: 10px;
-			line-height: 10px;
-			text-align: center;
-			font-size: 9px;
-			color: #5bd;
-		}
 		.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
 
 		.TweetMyBox {padding-top: 5px; text-align: center;}
@@ -141,65 +114,16 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	</head>
 
 	<body>
-		<header class="Header">
-			<div id="HeaderSlider"></div>
-			<div class="HeaderWrapper">
-				<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
-					<h1 class="HeaderTitle">
-						<a id="HeaderLink" class="HeaderLink" href="/">
-							<img  class="HeaderImg" src="//img-cdn.poipiku.com/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>" />
-						</a>
-					</h1>
-					<a id="MenuSettings" href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId %>">
-						<span class="MenuSettingsIcon"></span>
-						<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
-					</a>
-				</div>
-			</div>
-		</header>
-
-		<%if(!isApp && cCheckLogin.m_bLogin) {%>
-		<div class="FooterMenuWrapper">
-			<nav class="FooterMenu">
-				<a id="MenuMe" class="FooterMenuItem Selected" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
-					<span class="FooterMenuItemIcon"></span>
-					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
-				</a>
-				<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
-					<span class="FooterMenuItemIcon"></span>
-					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
-				</a>
-				<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
-					<span class="FooterMenuItemIcon"></span>
-					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
-				</a>
-				<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
-					<span class="FooterMenuItemIcon">
-						<div id="InfoNumAct" class="InfoNum">0</div>
-					</span>
-					<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
-				</a>
-			</nav>
-		</div>
-		<script>
-			function UpdateNotify() {
-				$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
-					var ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
-					//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
-					$('#InfoNumAct').html(ntfy_num);
-					if(ntfy_num>0) {
-						$('#InfoNumAct').show();
-					} else {
-						$('#InfoNumAct').hide();
-					}
-				});
-			}
-			var g_timerUpdateNotify = null;
-			$(function(){
-				UpdateNotify();
-				g_timerUpdateNotify = setInterval(UpdateNotify, 1000*60);
-			});
-		</script>
+		<%if(!isApp){%>
+			<%@ include file="/inner/TMenuPc.jsp" %>
+			<%if(bSmartPhone){%>
+			<script>$(function () {
+				$("#MenuSearch").hide();
+				$("#MenuSettings").show();
+			})</script>
+			<%}%>
+		<%}else{%>
+			<%@ include file="/inner/TMenuApp.jsp" %>
 		<%}%>
 
 		<article class="Wrapper">
@@ -219,10 +143,18 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%if(cResults.m_vContentList.size()>0){%>
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%if(isApp){%>
+						<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+							CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin, CCnv.SP_MODE_APP)%>
+						<%}%>
+					<%}else{%>
+						<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+							CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin)%>
+						<%}%>
 					<%}%>
+
 				<%}else{%>
 					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
 				<%}%>
