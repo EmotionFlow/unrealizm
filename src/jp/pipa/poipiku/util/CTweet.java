@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -391,15 +392,22 @@ public class CTweet {
 		return m_statusLastTweet.getId();
 	}
 
+	static private int getRnd(){
+		Random rnd = new Random();
+		return rnd.nextInt(1000) + 10000;
+	}
+
 	static public String generateIllustMsgFull(CContent cContent, ResourceBundleControl _TEX) {
 		String strNickName = "";
 		if(!cContent.m_cUser.m_strNickName.isEmpty()) {
 			strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
 		}
-		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html",
+
+		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html?%d",
 				strNickName,
 				cContent.m_nUserId,
-				cContent.m_nContentId);
+				cContent.m_nContentId,
+				getRnd());
 		return generateIllustMsg(cContent, _TEX) + strFooter;
 	}
 
@@ -412,7 +420,7 @@ public class CTweet {
 			}
 			strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
 					URLEncoder.encode(generateIllustMsg(cContent, _TEX)+strNickName+"\n", "UTF-8"),
-					URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html", "UTF-8"));
+					URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html?"+getRnd(), "UTF-8"));
 		} catch (Exception e) {
 			;
 		}
@@ -429,10 +437,11 @@ public class CTweet {
 		if(!cContent.m_cUser.m_strNickName.isEmpty()) {
 			strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
 		}
-		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html",
+		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html?%d",
 				strNickName,
 				cContent.m_nUserId,
-				cContent.m_nContentId);
+				cContent.m_nContentId,
+				getRnd());
 		List<String> arrAppendex = new ArrayList<String>();
 		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
 			//arrAppendex.add(String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight));
