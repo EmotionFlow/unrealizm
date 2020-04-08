@@ -482,10 +482,6 @@ public class CCnv {
 		return strRtn.toString();
 	}
 
-	public static String MyContent2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode) throws UnsupportedEncodingException {
-		return MyContent2Html(cContent, nLoginUserId, nMode, _TEX, vResult, nViewMode, SP_MODE_WVIEW);
-	}
-
 	public static String MyContent2Html(CContent cContent, int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 

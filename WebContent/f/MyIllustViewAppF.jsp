@@ -9,9 +9,7 @@ if(!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId!=cResults.m_nUserId){
 	return;
 }
 
-if(cResults.m_nMode==CCnv.MODE_SP) {
-	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-}
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 boolean bRtn = cResults.getResults(cCheckLogin);
 if(!bRtn || Util.isBot(request.getHeader("user-agent"))) {
@@ -22,7 +20,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
-	<%= CCnv.MyContent2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
+	<%= CCnv.MyContent2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 	<%if(!cResults.m_bAdFilter && (nCnt+1)%10==0) {%>
 	<%@ include file="/inner/TAdMid.jsp"%>
 	<%}%>

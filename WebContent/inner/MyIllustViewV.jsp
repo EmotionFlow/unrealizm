@@ -147,7 +147,7 @@
 					"PG" : g_nPage,
 					"MD" : <%=CCnv.MODE_PC%>,
 					"ADF" : <%=cResults.m_cContent.m_nSafeFilter%>},
-				"url": "/f/MyIllustViewF.jsp",
+				"url": "/f/MyIllustView<%=isApp?"App":""%>F.jsp",
 				"success": function(data) {
 					if($.trim(data).length>0) {
 						g_nPage++;
@@ -212,7 +212,11 @@
 
 <article class="Wrapper ViewPc">
 	<section id="IllustItemList" class="IllustItemList">
-		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+		<%if(isApp){%>
+		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+		<%}else{%>
+		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
+		<%}%>
 	</section>
 
 	<%if(!bSmartPhone&&!isApp) {%>
