@@ -23,6 +23,24 @@ public class IllustViewC {
 		}
 	}
 
+	private Integer searchContentIdHistory(Connection cConn, PreparedStatement cState, ResultSet cResSet, int nContentId) throws SQLException {
+		int SEARCH_MAX = 100;
+		Integer cid = nContentId;
+		String strSql = "SELECT new_id FROM content_id_histories WHERE old_id=?";
+		cState = cConn.prepareStatement(strSql);
+
+		for(int i=0; i<SEARCH_MAX; i++){
+			cState.setInt(1, cid);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()){
+				cid = cResSet.getInt("new_id");
+			}else{
+				break;
+			}
+		}
+		return cid;
+	}
+
 
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public CUser m_cUser = new CUser();
@@ -32,6 +50,7 @@ public class IllustViewC {
 	public boolean m_bBlocking = false;
 	public boolean m_bBlocked = false;
 	public int m_nContentsNumTotal = 0;
+	public Integer m_nNewContentId = null;
 	public boolean getResults(CheckLogin cCheckLogin) {
 		String strSql = "";
 		boolean bRtn = false;
@@ -57,12 +76,19 @@ public class IllustViewC {
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, m_nContentId);
 			cResSet = cState.executeQuery();
+			boolean bContentExist = false;
 			if(cResSet.next()) {
 				m_cContent = new CContent(cResSet);
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+				bContentExist = true;
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			if(!bContentExist){
+				m_nNewContentId = searchContentIdHistory(cConn, cState, cResSet, m_nContentId);
+				return false;
+			}
+
 			if(m_cContent.m_nContentId<=0) return false;
 
 			// author profile

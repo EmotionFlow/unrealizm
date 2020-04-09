@@ -7,7 +7,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("https://poipiku.com/NotFoundV.jsp");
+	if(cResults.m_nNewContentId==cResults.m_nContentId) {
+		response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+	}else{
+		response.sendRedirect(Common.GetPoipikuUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId)));
+	}
 	return;
 }
 if(Util.isBot(request.getHeader("user-agent"))) {
