@@ -48,6 +48,8 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 		<style>
 		body {height: 100%;background: #333333;}
 		.AnalogicoInfo {display: none;}
+		.IllustItemLink {padding: 4px;}
+		.IllustItemImage {max-width: 100%; height: auto;}
 		</style>
 	</head>
 
