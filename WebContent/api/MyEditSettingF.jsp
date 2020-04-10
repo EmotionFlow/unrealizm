@@ -70,7 +70,7 @@ try {
 		user.put("guidelines_url", "/GuideLineV.jsp");
 		user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");
 		user.put("official_twitter_url", "https://twitter.com/pipajp");
-		user.put("inquiry_url", "https://cs.pipa.jp/InquiryAppV.jsp");
+		user.put("inquiry_url", "https://cs.pipa.jp/InquiryPcV.jsp");
 		user.put("how_to_use", "/how_to/TopV.jsp");
 	}
 
