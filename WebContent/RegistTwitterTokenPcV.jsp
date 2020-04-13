@@ -109,14 +109,14 @@ try
 	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
 
-response.sendRedirect("https://poipiku.com/MyEditSettingPcV.jsp#TwitterSetting");
+response.sendRedirect("https://poipiku.com/MyEditSettingPcV.jsp?MENUID=TWITTER");
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
-		<meta http-equiv="refresh" content="3;URL=/MyEditSettingPcV.jsp#TwitterSetting" />
+		<meta http-equiv="refresh" content="3;URL=/MyEditSettingPcV.jsp?MENUID=TWITTER" />
 		<style>
 		.AnalogicoInfo {display: none;}
 		</style>
@@ -127,7 +127,7 @@ response.sendRedirect("https://poipiku.com/MyEditSettingPcV.jsp#TwitterSetting")
 
 		<article class="Wrapper" style="text-align: center; margin: 150px auto;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
-			<a href="/MyEditSettingPcV.jsp#TwitterSetting">
+			<a href="/MyEditSettingPcV.jsp?MENUID=TWITTER">
 			<%if(bResult) {%>
 			<%=_TEX.T("RegistUserV.UpdateComplete")%>
 			<%} else {%>
