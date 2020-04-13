@@ -70,6 +70,7 @@ try {
 			content.put("description", cContent.m_strDescription);
 			content.put("category", strCategory);
 			content.put("category_id", cContent.m_nCategoryId);
+			content.put("open_id", cContent.m_nOpenId);
 			content.put("publish_id", cContent.m_nPublishId);
 			content.put("content_twitter_link", CTweet.generateIllustMsgUrl(cContent, _TEX));
 			content.put("file_num", cContent.m_nFileNum);
