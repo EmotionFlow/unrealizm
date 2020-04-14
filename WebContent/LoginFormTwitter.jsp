@@ -35,13 +35,18 @@ try{
 	}else{
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
 	}
+	Log.d("USERAUTH callbackuri:" + callbackUri);
 	session.setAttribute("callback_uri", callbackUri);
 
+	String strTwCallBackUri = "";
 	if(isApp){
-		authUrl = provider.retrieveRequestToken(consumer, Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserApp.jsp");
+		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserApp.jsp";
 	}else{
-		authUrl = provider.retrieveRequestToken(consumer, Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp");
+		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp";
 	}
+	Log.d("USERAUTH twCallBackUri:" + strTwCallBackUri);
+	authUrl = provider.retrieveRequestToken(consumer, strTwCallBackUri);
+
 }catch(Exception e){
 	e.printStackTrace();
 }

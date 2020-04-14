@@ -12,6 +12,7 @@
 request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
+Log.d("RetistTwitterUserApp enter");
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
 %>
 <!DOCTYPE html>

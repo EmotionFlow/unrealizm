@@ -638,6 +638,7 @@ public class UserAuthUtil {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			Log.d("USERAUTH poipiku user_id: ", nUserId);
 
 			if (nUserId>0){	// Login
 				Log.d("USERAUTH Login : " + nUserId);
@@ -813,7 +814,7 @@ public class UserAuthUtil {
 			Log.d(strSql);
 			Log.d("USERAUTH EXCEPTION");
 			Log.d(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			nRtn = ERROR_DB;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
