@@ -592,7 +592,7 @@ public class UserAuthUtil {
 			if(provider==null) return ERROR_TWITTER_PROVIDER_ERROR;
 
 			String oauth_verifier = request.getParameter("oauth_verifier");
-			if(oauth_verifier==null || oauth_verifier.isEmpty()) throw(new Exception("oauth_verifier error"));
+			if(oauth_verifier==null || oauth_verifier.isEmpty()) throw(new Exception("USERAUTH oauth_verifier error"));
 
 			provider.retrieveAccessToken(consumer, oauth_verifier);
 			accessToken = consumer.getToken();
@@ -628,6 +628,7 @@ public class UserAuthUtil {
 			*/
 
 			// 再登録も可能な認証
+			Log.d("USERAUTH twitter userid : ", user_id);
 			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? ORDER BY fldUserId DESC LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, user_id);
@@ -639,7 +640,7 @@ public class UserAuthUtil {
 			cState.close();cState=null;
 
 			if (nUserId>0){	// Login
-				Log.d("Login : " + nUserId);
+				Log.d("USERAUTH Login : " + nUserId);
 				String strPassword = "";
 				String strEmail = "";
 				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
@@ -700,7 +701,7 @@ public class UserAuthUtil {
 						}
 					}
 				} else {
-					Log.d("Login error : no user : " + nUserId);
+					Log.d("USERAUTH Login error : no user : " + nUserId);
 				}
 
 				Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
@@ -710,7 +711,7 @@ public class UserAuthUtil {
 
 				nRtn = nUserId;
 			} else {		// Regist
-				Log.d("Regist start");
+				Log.d("USERAUTH Regist start");
 				String strPassword = RandomStringUtils.randomAlphanumeric(16);
 				strHashPass = Util.getHashPass(strPassword);
 				String strEmail = RandomStringUtils.randomAlphanumeric(16);
@@ -805,12 +806,14 @@ public class UserAuthUtil {
 					response.addCookie(cLK);
 
 					nRtn = nUserId;
-					Log.d("Regist : " + nUserId);
+					Log.d("USERAUTH Regist : " + nUserId);
 				}
 			}
 		} catch(Exception e) {
 			Log.d(strSql);
+			Log.d("USERAUTH EXCEPTION");
 			Log.d(e.getMessage());
+			e.printStackTrace();
 			nRtn = ERROR_DB;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
