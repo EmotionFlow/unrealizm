@@ -69,28 +69,6 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				cache: false,
 			});
 
-			function changePage(elCurrentTarget, elFromPage, elToPage){
-				<%if(bSmartPhone){%>
-					elFromPage.hide();
-					elToPage.show();
-					$("*").scrollTop(0);
-				<%}else{%>
-					var contents = $("#SettingContent > .SettingPage:visible");
-					if(elToPage.attr("id")!==$(contents[0]).attr("id")) {
-						$(contents[0]).hide();
-						elToPage.show();
-					}
-
-					var selected = $("#MENUROOT>.SettingMenu .Selected")[0];
-					if(selected) {
-						$(selected).removeClass("Selected");
-					}
-					$(elCurrentTarget).addClass("Selected");
-
-					$("*").scrollTop(0);
-				<%}%>
-			}
-
 			$(function(){
 				<%if(cResults.m_strMessage.length()>0) {%>
 					DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
@@ -98,21 +76,28 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
 				$(".SettingChangePageLink").click((ev)=>{
 					const el = $(ev.currentTarget);
-					changePage(ev.currentTarget, el.parents(".SettingPage"), $("#"+el.attr("data-to")));
+					location.href = "/MyEditSettingPcV.jsp?MENUID=" + el.attr("data-to");
+					return true;
 				});
-
-				<%if(cResults.m_strSelectedMenuId.isEmpty()){%>
-					$("#MENUROOT").show();
-				<%}else{%>
-					$("#<%=cResults.m_strSelectedMenuId%>").show();
-				<%}%>
 
 				<%if(bSmartPhone){%>
 					$("#MenuMe").addClass("Selected");
+					<%if(cResults.m_strSelectedMenuId.isEmpty()){%>
+						$("#MENUROOT").show();
+					<%}else{%>
+						$("#<%=cResults.m_strSelectedMenuId%>").show();
+					<%}%>
 				<%}else{%>
 					$("#MenuSettings").addClass("Selected");
-					$("#MENUROOT>.SettingMenu").children()[0].click()
+					$("#MENUROOT").show();
+					var menuId = "<%=cResults.m_strSelectedMenuId%>";
+					if(menuId===""){
+						menuId = "PROFILE";
+					}
+					$(".SettingMenu>a[data-to="+menuId+"]").addClass("Selected");
+					$("#"+menuId).show();
 				<%}%>
+
 			});
 		</script>
 
