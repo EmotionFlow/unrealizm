@@ -108,7 +108,7 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 				<div class="AnalogicoInfoRegist">
 					<form method="post" name="login_from_twitter_startpoipikupcv_00" action="/LoginFormTwitter.jsp">
 						<input id="login_from_twitter_startpoipikupcv_callback_00" type="hidden" name="CBPATH" value="" />
-						<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_startpoipikupcv_00.submit()">
+						<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="javascript:login_from_twitter_startpoipikupcv_00.submit()">
 							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 						</a>
 					</form>
@@ -181,7 +181,7 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 						さあ、はじめよう！
 				</div>
 				<div class="AnalogicoInfoRegist">
-					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitter.jsp?CBPATH=">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="/LoginFormTwitter.jsp?CBPATH=">
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 					</a>
 				</div>

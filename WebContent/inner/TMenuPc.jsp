@@ -18,7 +18,7 @@
 						for(let i=0; i<3; i++){s.shift();}
 						$('#login_from_twitter_tmenupc_callback_00').val("/" + s.join("/"));
 					}</script>
-					<a class="BtnBase Rev HeaderLoginBtn" href="javascript:login_from_twitter_tmenupc_00.submit()">
+					<a class="BtnBase Rev HeaderLoginBtn LoginButton" href="javascript:login_from_twitter_tmenupc_00.submit()">
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 					</a>
 				</form>
@@ -60,7 +60,7 @@
 					for(let i=0; i<3; i++){s.shift();}
 					$('#login_from_twitter_tmenupc_callback_01').val("/" + s.join("/"));
 				}</script>
-				<a class="BtnBase Rev HeaderLoginBtnPc" href="javascript:login_from_twitter_tmenupc_01.submit()">
+				<a class="BtnBase Rev HeaderLoginBtnPc LoginButton" href="javascript:login_from_twitter_tmenupc_01.submit()">
 					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 				</a>
 			</form>
@@ -140,6 +140,19 @@
 <%}%>
 
 <%if(!cCheckLogin.m_bLogin) {%>
+<script>
+	$(function () {
+		var bLoginButtonClicked = false;
+		$(".LoginButton").click(function () {
+			if(bLoginButtonClicked){
+				$(this).attr("href", "javascript:void(0);");
+			}else{
+				bLoginButtonClicked=true;
+			}
+		})
+	})
+</script>
+
 <!--
 <div id="AnalogicoInfo" class="AnalogicoInfo Float">
 	<h2 class="AnalogicoInfoTitle">
