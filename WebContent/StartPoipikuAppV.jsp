@@ -37,6 +37,19 @@ if(strRequestUri != null) {
 		.AnalogicoInfoRegistBtn {width: 230px;}
 	</style>
 
+	<script>
+		$(function () {
+			var bLoginButtonClicked = false;
+			$(".LoginButton").click(function () {
+				if(bLoginButtonClicked){
+					$(this).attr("href", "javascript:void(0);");
+				}else{
+					bLoginButtonClicked=true;
+				}
+			})
+		})
+	</script>
+
 	<body style="color: #fff; background: #5bd;">
 
 		<article class="Wrapper">
@@ -45,7 +58,7 @@ if(strRequestUri != null) {
 					<%=_TEX.T("Poipiku.Info.Message")%>
 				</div>
 				<div class="AnalogicoLogin">
-					<a class="BtnBase AnalogicoInfoRegistBtn" href="/LoginFormTwitter.jsp?CBPATH=app">
+					<a class="BtnBase AnalogicoInfoRegistBtn LoginButton" href="/LoginFormTwitter.jsp?CBPATH=app">
 							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 					</a>
 				</div>

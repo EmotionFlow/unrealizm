@@ -12,7 +12,12 @@
 request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
+Log.d("USERAUTH RetistTwitterUser enter");
+
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
+
+Log.d("USERAUTH RetistTwitterUser nResult", nResult);
+Log.d("USERAUTH Callback uri", session.getAttribute("callback_uri").toString());
 if(nResult>0) {
 	response.sendRedirect(session.getAttribute("callback_uri").toString());
 }

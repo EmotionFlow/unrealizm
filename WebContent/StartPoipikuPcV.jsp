@@ -71,6 +71,12 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 		<script type="text/javascript">
 		$(function(){
 			//$('#MenuHome').addClass('Selected');
+			if($('#login_from_twitter_tmenupc_callback_00')){
+				$('#login_from_twitter_tmenupc_callback_00').val("/");
+			}
+			if($('#login_from_twitter_tmenupc_callback_01')){
+				$('#login_from_twitter_tmenupc_callback_01').val("/");
+			}
 		});
 		</script>
 	</head>
@@ -101,13 +107,8 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<form method="post" name="login_from_twitter_startpoipikupcv_00" action="/LoginFormTwitter.jsp">
-						<input id="login_from_twitter_startpoipikupcv_callback_00" type="hidden" name="CBPATH" value=""/>
-						<script>{
-							let s = document.URL.split("/");
-							for(let i=0; i<3; i++){s.shift();}
-							$('#login_from_twitter_startpoipikupcv_callback_00').val("/" + s.join("/"));
-						}</script>
-						<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_startpoipikupcv_00.submit()">
+						<input id="login_from_twitter_startpoipikupcv_callback_00" type="hidden" name="CBPATH" value="" />
+						<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="javascript:login_from_twitter_startpoipikupcv_00.submit()">
 							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 						</a>
 					</form>
@@ -180,7 +181,7 @@ String strFileUrl = "/img/poipiku_twitter_card.png";
 						さあ、はじめよう！
 				</div>
 				<div class="AnalogicoInfoRegist">
-					<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/LoginFormTwitter.jsp">
+					<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="/LoginFormTwitter.jsp?CBPATH=">
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 					</a>
 				</div>

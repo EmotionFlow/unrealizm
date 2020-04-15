@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 SOURCE_PATH="../src"
 DEST_PATH="../build"

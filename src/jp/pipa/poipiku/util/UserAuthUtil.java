@@ -630,14 +630,22 @@ public class UserAuthUtil {
 			// 再登録も可能な認証
 			Log.d("USERAUTH twitter userid : ", user_id);
 			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? ORDER BY fldUserId DESC LIMIT 1";
+			Log.d("USERAUTH twitter userid : ", user_id);
 			cState = cConn.prepareStatement(strSql);
+			Log.d("USERAUTH twitter userid : ", user_id);
 			cState.setString(1, user_id);
+			Log.d("USERAUTH twitter userid : ", user_id);
 			cResSet = cState.executeQuery();
+			Log.d("USERAUTH twitter userid : ", user_id);
 			if(cResSet.next()) {
+				Log.d("USERAUTH twitter userid : ", user_id);
 				nUserId = cResSet.getInt("fldUserId");
 			}
+			Log.d("USERAUTH twitter userid : ", user_id);
 			cResSet.close();cResSet=null;
+			Log.d("USERAUTH twitter userid : ", user_id);
 			cState.close();cState=null;
+			Log.d("USERAUTH poipiku user_id: ", nUserId);
 
 			if (nUserId>0){	// Login
 				Log.d("USERAUTH Login : " + nUserId);
@@ -813,7 +821,7 @@ public class UserAuthUtil {
 			Log.d(strSql);
 			Log.d("USERAUTH EXCEPTION");
 			Log.d(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			nRtn = ERROR_DB;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}

@@ -36,7 +36,18 @@ if(strRequestUri != null) {
 		.AnalogicoLang {display: block; width: 90%; margin: 0 auto; font-size: 12px;}
 		.AnalogicoInfoRegistBtn {width: 230px;}
 	</style>
-
+	<script>
+		$(function () {
+			var bLoginButtonClicked = false;
+			$(".LoginButton").click(function () {
+				if(bLoginButtonClicked){
+					$(this).attr("href", "javascript:void(0);");
+				}else{
+					bLoginButtonClicked=true;
+				}
+			})
+		})
+	</script>
 	<body style="color: #fff; background: #5bd;">
 
 		<article class="Wrapper">
@@ -47,12 +58,7 @@ if(strRequestUri != null) {
 				<div class="AnalogicoLogin">
 					<form method="post" name="login_from_twitter_startpoipikuv_00" action="/LoginFormTwitter.jsp">
 						<input id="login_from_twitter_startpoipikuv_callback_00" type="hidden" name="CBPATH" value=""/>
-						<script>{
-							let s = document.URL.split("/");
-							for(let i=0; i<3; i++){s.shift();}
-							$('#login_from_twitter_startpoipikuv_callback_00').val("/" + s.join("/"));
-						}</script>
-						<a class="BtnBase AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_startpoipikuv_00.submit()">
+						<a class="BtnBase AnalogicoInfoRegistBtn LoginButton" href="javascript:login_from_twitter_startpoipikuv_00.submit()">
 							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 						</a>
 					</form>
