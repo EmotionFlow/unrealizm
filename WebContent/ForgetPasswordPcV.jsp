@@ -21,26 +21,28 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				var strEmail = $.trim($("#RegistEmail").val());
 				var strTwScreenName = $.trim($("#RegistTwScreenName").val());
 				if(strEmail.length==0 && strTwScreenName.length==0){
-					DispMsg("ツイッターのユーザー名かメールアドレスを入力してください");
+					DispMsg("<%=_TEX.T("ForgetPassword.Err.Empty")%>");
 					return false;
 				}
 				if(strEmail.length>0 && !strEmail.match(/.+@.+\..+/)) {
-					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
+					DispMsg('<%=_TEX.T("ForgetPassword.Err.InvalidEmail")%>');
 					return false;
 				}
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"EM":toHalfWidth(strEmail), "TW":toHalfWidth(strTwScreenName)},
+					"data": {
+						"EM":toHalfWidth(strEmail),
+						"TW":toHalfWidth(strTwScreenName).replace(/^@/, '')
+					},
 					"url": "/f/SendPasswordF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						$("#InquiryPage").hide();
 						$("#MessagePage").show();
-						// DispMsg('<%=_TEX.T("LoginFormV.Message.EmailForget")%>');
 						return false;
 					},
 					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+						DispMsg('<%=_TEX.T("ForgetPassword.Err.UploadErr")%>');
 					}
 				});
 				return false;
@@ -96,15 +98,14 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			<div id="InquiryPage" class="SettingList">
 				<div class="SettingListItem">
 					<div class="LoginItem">
-						<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></div>
+						<div class="SettingListTitle"><%=_TEX.T("ForgetPassword.Title")%></div>
 					</div>
 					<div class="SettingBody">
 						<div class="SettingBodyInfo" style="margin-top: 10px;">
-							<p>ツイッターアカウントのユーザー名かメールアドレスを入力して、 送信ボタンをクリックしてください。<br/>(どちらか片方でも可)</p>
-							<p>メールにて、パスワードを再送します。</p>
+							<%=_TEX.T("ForgetPassword.Message.Info")%>
 						</div>
 						<div class="SettingBodyTxt" style="margin-top: 30px;">
-							連携したツイッターアカウントのユーザー名
+							<%=_TEX.T("ForgetPassword.Title.TwScreenName")%>
 						</div>
 						<div class="InputArea">
 							<div class="TwitterAtMark">@</div>
@@ -113,7 +114,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 					</div>
 					<div class="SettingBody">
 						<div class="SettingBodyTxt" style="margin-top: 30px;">
-							<%=_TEX.T("LoginFormV.Label.EmailForget")%>
+							<%=_TEX.T("ForgetPassword.Title.Email")%>
 						</div>
 						<div class="InputArea">
 							<input id="RegistEmail" class="SettingBodyTxt" type="email" placeholder="poipiku@example.com"/>
@@ -127,12 +128,11 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			<div id="MessagePage" class="SettingList" style="display: none">
 				<div class="SettingListItem">
 					<div class="LoginItem">
-						<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></div>
+						<div class="SettingListTitle"><%=_TEX.T("ForgetPassword.Title")%></div>
 					</div>
 					<div class="SettingBody">
 						<div class="SettingBodyInfo">
-							<p>poipiku.comより、メールにて、アカウント情報を送信しました。</p>
-							<p>ツイッターに登録しているアドレス、またはポイピクに登録しているアドレスのメールをチェックしてください。</p>
+							<%=_TEX.T("ForgetPassword.Message.Thanks")%>
 						</div>
 					</div>
 				</div>

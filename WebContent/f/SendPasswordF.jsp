@@ -29,8 +29,6 @@ class SendPasswordC {
 		String FROM_NAME	= "POIPIKU";
 		String FROM_ADDR	= "info@poipiku.com";
 
-		String strMessage = _TEX.T("SendPasswordV.Message.Err");
-
 		List<CUser> foundUsers = new ArrayList<>();
 
 		Connection cConn = null;
@@ -40,8 +38,6 @@ class SendPasswordC {
 		try{
 			DataSource dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-
-			Log.d("rcv:", m_strEmail, m_strTwScreenName);
 
 			if(!m_strEmail.isEmpty()) {
 				strSql = "SELECT user_id, email, password FROM users_0000 WHERE email ILIKE ? LIMIT 1";
@@ -76,7 +72,11 @@ class SendPasswordC {
 				cState.close();
 			}
 
+			String strSendEmailAddr="";
 			for(CUser u : foundUsers){
+				if(strSendEmailAddr.equals(u.m_strEmail)){
+					continue;
+				}
 				Properties objSmtp = System.getProperties();
 				objSmtp.put("mail.smtp.host", SMTP_HOST);
 				objSmtp.put("mail.host", SMTP_HOST);
@@ -90,8 +90,9 @@ class SendPasswordC {
 				objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
 				objMime.setHeader("Content-Transfer-Encoding", "7bit");
 				objMime.setSentDate(new java.util.Date());
-				Log.d("mail", u.m_strEmail, u.m_strPassword);
-				//Transport.send(objMime);
+				Log.d("REMIND MAIL SENT (userid, email)", Integer.toString(m_nUserId), u.m_strEmail);
+				Transport.send(objMime);
+				strSendEmailAddr = u.m_strEmail;
 			}
 			return foundUsers.size();
 
