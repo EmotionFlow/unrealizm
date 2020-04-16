@@ -9,11 +9,13 @@
 class SendPasswordC {
 	public int m_nUserId = -1;
 	public String m_strEmail = "";
+	public String m_strTwScreenName = "";
 
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_strEmail = Common.EscapeInjection(Common.ToString(request.getParameter("EM"))).toLowerCase();
+			m_strTwScreenName = Common.EscapeInjection(Common.ToString(request.getParameter("TW"))).toLowerCase();
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
@@ -25,35 +27,56 @@ class SendPasswordC {
 		String SMTP_HOST	= "localhost";
 		String SMTP_ADDR	= "127.0.0.1";
 		String FROM_NAME	= "POIPIKU";
-		String FROM_ADDR	= "info@pipa.jp";
+		String FROM_ADDR	= "info@poipiku.com";
 
 		String strMessage = _TEX.T("SendPasswordV.Message.Err");
 
-		CUser user = null;
+		List<CUser> foundUsers = new ArrayList<>();
 
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 		try{
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			DataSource dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "SELECT * FROM users_0000 WHERE email ILIKE ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, m_strEmail);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				user = new CUser();
-				user.m_nUserId = cResSet.getInt("user_id");
-				user.m_strPassword = Common.ToString(cResSet.getString("password"));
+			Log.d("rcv:", m_strEmail, m_strTwScreenName);
+
+			if(!m_strEmail.isEmpty()) {
+				strSql = "SELECT user_id, email, password FROM users_0000 WHERE email ILIKE ? LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setString(1, m_strEmail);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					CUser user = new CUser();
+					user.m_nUserId = cResSet.getInt("user_id");
+					user.m_strEmail = cResSet.getString("email");
+					user.m_strPassword = Common.ToString(cResSet.getString("password"));
+					foundUsers.add(user);
+				}
+				cResSet.close();
+				cState.close();
 			}
-			cResSet.close();
-			cState.close();
+			if(!m_strTwScreenName.isEmpty()) {
+				strSql = "SELECT u.user_id, u.email, u.password FROM users_0000 AS u INNER JOIN tbloauth AS a ON u.user_id = a.flduserid WHERE a.twitter_screen_name ILIKE ? ORDER BY user_id DESC LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setString(1, m_strTwScreenName);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					CUser user = new CUser();
+					user.m_strEmail = cResSet.getString("email");
+					if (user.m_strEmail.contains("@")) {
+						user.m_nUserId = cResSet.getInt("user_id");
+						user.m_strPassword = Common.ToString(cResSet.getString("password"));
+						foundUsers.add(user);
+					}
+				}
+				cResSet.close();
+				cState.close();
+			}
 
-
-			if (null != user){
+			for(CUser u : foundUsers){
 				Properties objSmtp = System.getProperties();
 				objSmtp.put("mail.smtp.host", SMTP_HOST);
 				objSmtp.put("mail.host", SMTP_HOST);
@@ -61,15 +84,17 @@ class SendPasswordC {
 				Session objSession = Session.getDefaultInstance(objSmtp, null);
 				MimeMessage objMime = new MimeMessage(objSession);
 				objMime.setFrom(new InternetAddress(FROM_ADDR, FROM_NAME, "iso-2022-jp"));
-				objMime.setRecipients(Message.RecipientType.TO, m_strEmail);
+				objMime.setRecipients(Message.RecipientType.TO, u.m_strEmail);
 				objMime.setSubject(EMAIL_TITLE, "iso-2022-jp");
-				objMime.setText(String.format(EMAIL_TXT, user.m_strPassword), "iso-2022-jp");
+				objMime.setText(String.format(EMAIL_TXT, u.m_strPassword), "iso-2022-jp");
 				objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
 				objMime.setHeader("Content-Transfer-Encoding", "7bit");
 				objMime.setSentDate(new java.util.Date());
-				Transport.send(objMime);
-				return user.m_nUserId;
+				Log.d("mail", u.m_strEmail, u.m_strPassword);
+				//Transport.send(objMime);
 			}
+			return foundUsers.size();
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
