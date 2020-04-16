@@ -15,7 +15,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			function toHalfWidth(value) {
 				return value.replace(/[^\x01-\x7E\xA1-\xDF]/g, function (s) {
 					return String.fromCharCode(s.charCodeAt(0) - 0xfee0)
-				})
+				});
 			}
 			function SendPassword() {
 				var strEmail = $.trim($("#RegistEmail").val());
