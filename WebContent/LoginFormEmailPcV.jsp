@@ -18,8 +18,19 @@ if(strRequestUri != null) {
 	session.setAttribute("LoginUri", strRequestUri);
 }
 
-String strCallBackUri = request.getParameter("CBPATH");
-if(strCallBackUri.isEmpty()){strCallBackUri="/";}
+
+String strNextUrl = "";
+String strReturnUrl = "";
+if(Common.ToBoolean(request.getParameter("INQUIRY"))) {
+	strReturnUrl = request.getParameter("RET");
+	if(strReturnUrl==null || strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
+		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyIllustListV.jsp","UTF-8");;
+	} else {
+		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode(strReturnUrl,"UTF-8");
+	}
+} else {
+	strNextUrl = "/MyIllustListV.jsp";
+}
 
 %>
 <!DOCTYPE html>
@@ -52,7 +63,7 @@ if(strCallBackUri.isEmpty()){strCallBackUri="/";}
 					"success": function(data) {
 						if(data.result>0) {
 							DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
-							location.href = "<%=strCallBackUri.equals("/")?"/MyIllustListV.jsp":strCallBackUri%>";
+							location.href = "<%=strNextUrl%>";
 						} else {
 							DispMsg('<%=_TEX.T("LoginV.Faild.Regist.Message")%>');
 						}
@@ -75,7 +86,7 @@ if(strCallBackUri.isEmpty()){strCallBackUri="/";}
 					"success": function(data) {
 						if(data.result>0) {
 							DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
-							location.href = "<%=strCallBackUri.equals("/")?"/MyIllustListV.jsp":strCallBackUri%>";
+							location.href = "<%=strNextUrl%>";
 						} else {
 							DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
 						}
@@ -106,7 +117,7 @@ if(strCallBackUri.isEmpty()){strCallBackUri="/";}
 
 					<div  style="text-align: center;">
 						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
-							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strCallBackUri%>"/>
+							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strNextUrl%>"/>
 							<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
 								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 							</a>

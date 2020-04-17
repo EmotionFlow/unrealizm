@@ -37,8 +37,6 @@
 		<%}%>
 	</nav>
 
-
-
 	<nav class="FooterLink">
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Language")%></dt>
@@ -60,17 +58,13 @@
 			<dt><%=_TEX.T("Footer.Link.Info")%></dt>
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.Information")%></a></dd>
 			<%{
-				StringBuilder sb = new StringBuilder();
-				sb.append(request.getRequestURL().toString().replaceFirst(Common.GetPoipikuUrl(""), ""));
+				StringBuilder sbFooterHref = new StringBuilder();
+				sbFooterHref.append(request.getRequestURL().toString().replaceFirst(Common.GetPoipikuUrl(""), ""));
 				if(request.getQueryString()!=null) {
-					sb.append("?").append(Common.ToString(request.getQueryString()));
+					sbFooterHref.append("?").append(Common.ToString(request.getQueryString()));
 				}
-				String retUrl="";
-				try{
-					retUrl = URLEncoder.encode(sb.toString(), "UTF-8");
-				} catch (UnsupportedEncodingException e){
-					;
-				}
+				String retUrl = "";
+				try{ retUrl = URLEncoder.encode(sbFooterHref.toString(), "UTF-8"); } catch (UnsupportedEncodingException e){ ; }
 				%>
 				<%if(cCheckLogin.m_bLogin){%>
 				<dd><a class="FooterHref" href="/GoToInquiryPcV.jsp?RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
