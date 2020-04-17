@@ -17,6 +17,10 @@ if(strRequestUri != null) {
 	}
 	session.setAttribute("LoginUri", strRequestUri);
 }
+
+String strCallBackUri = request.getParameter("CBPATH");
+if(strCallBackUri.isEmpty()){strCallBackUri="/";}
+
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +52,7 @@ if(strRequestUri != null) {
 					"success": function(data) {
 						if(data.result>0) {
 							DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
-							location.href = "/MyIllustListV.jsp";
+							location.href = "<%=strCallBackUri.equals("/")?"/MyIllustListV.jsp":strCallBackUri%>";
 						} else {
 							DispMsg('<%=_TEX.T("LoginV.Faild.Regist.Message")%>');
 						}
@@ -71,7 +75,7 @@ if(strRequestUri != null) {
 					"success": function(data) {
 						if(data.result>0) {
 							DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
-							location.href = "/MyIllustListV.jsp";
+							location.href = "<%=strCallBackUri.equals("/")?"/MyIllustListV.jsp":strCallBackUri%>";
 						} else {
 							DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
 						}
@@ -102,12 +106,11 @@ if(strRequestUri != null) {
 
 					<div  style="text-align: center;">
 						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
-							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="/"/>
+							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strCallBackUri%>"/>
 							<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
 								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 							</a>
 						</form>
-					</a>
 					</div>
 
 					<div style="display: flex; line-height: 15px; margin: 30px 0;">
@@ -115,7 +118,6 @@ if(strRequestUri != null) {
 						<div style="flex: 0 0; background-color: #b8d6e0; padding: 0px 10px;">or</div>
 						<div style="flex: 1 0; height: 1px; background-color: #999; margin: 7px 0;"></div>
 					</div>
-
 
 					<div class="RegistItem">
 						<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>

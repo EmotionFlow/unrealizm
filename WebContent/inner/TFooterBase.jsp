@@ -59,6 +59,26 @@
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Info")%></dt>
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.Information")%></a></dd>
+			<%{
+				StringBuilder sb = new StringBuilder();
+				sb.append(request.getRequestURL().toString().replaceFirst(Common.GetPoipikuUrl(""), ""));
+				if(request.getQueryString()!=null) {
+					sb.append("?").append(Common.ToString(request.getQueryString()));
+				}
+				String retUrl="";
+				try{
+					retUrl = URLEncoder.encode(sb.toString(), "UTF-8");
+				} catch (UnsupportedEncodingException e){
+					;
+				}
+				%>
+				<%if(cCheckLogin.m_bLogin){%>
+				<dd><a class="FooterHref" href="/GoToInquiryPcV.jsp?RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
+				<%}else{%>
+				<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
+				<%}%>
+			<%}%>
+			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.CannotLogin")%></a></dd>
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Company")%></dt>
