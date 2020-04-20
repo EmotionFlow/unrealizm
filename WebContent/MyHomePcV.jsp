@@ -132,6 +132,9 @@ int nRnd = (int)(Math.random()*3+1);
 					<img class="EventBanner" src="/img/maintenance_20200330.png" />
 				</a>
 				 -->
+				<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
+					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc.png" />
+				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 				</a>
@@ -178,6 +181,9 @@ int nRnd = (int)(Math.random()*3+1);
 								<img class="EventBanner" src="/img/maintenance_20200330.png" />
 							</a>
 							 -->
+							<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
+								<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc.png" />
+							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 							</a>
