@@ -69,7 +69,7 @@
 				<%if(cCheckLogin.m_bLogin){%>
 				<dd><a class="FooterHref" href="/GoToInquiryPcV.jsp?RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
 				<%}else{%>
-				<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
+				<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry.NeedSignIn")%></a></dd>
 				<%}%>
 			<%}%>
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.CannotLogin")%></a></dd>

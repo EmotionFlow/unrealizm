@@ -3,8 +3,10 @@
 <%
     CheckLogin cCheckLogin = new CheckLogin(request, response);
     GoToInquiryC cResults = new GoToInquiryC();
-    cResults.GetParam(request);
-    cResults.GetResults(cCheckLogin);
+    if(cCheckLogin.m_bLogin){
+        cResults.GetParam(request);
+        cResults.GetResults(cCheckLogin);
+    }
 %>
 
 <!DOCTYPE html>
@@ -15,7 +17,11 @@
     <script>
         $(function () {
             setTimeout(function () {
-                //go_inquiry.submit();
+                <%if(cCheckLogin.m_bLogin){%>
+                go_inquiry.submit();
+                <%}else{%>
+                location.href = "<%=Common.GetPoipikuUrl("/")%>";
+                <%}%>
             }, 2000);
         })
     </script>
@@ -24,6 +30,7 @@
 <body>
 <%@ include file="/inner/TMenuPc.jsp"%>
 <article class="Wrapper" style="min-height: 400px; text-align: center;">
+    <%if(cCheckLogin.m_bLogin){%>
     <div class="SettingList" style="margin: 50px 0;">
         <%=_TEX.T("GoToInquiry.Info")%>
     </div>
@@ -36,6 +43,11 @@
         <input type="hidden" name="RET" value="<%=cResults.m_strReturnUrl%>" />
         <a class="BtnBase" href="javascript:go_inquiry.submit()" style="font-size: 14px; padding: 10px 20px;" ><%=_TEX.T("Inquiry.Title")%></a>
     </form>
+    <%}else{%>
+    <div class="SettingList" style="margin: 50px 0;">
+        <%=_TEX.T("GoToInquiry.NeedSignIn")%>
+    </div>
+    <%}%>
 </article>
 
 <%@ include file="/inner/TFooterBase.jsp"%>
