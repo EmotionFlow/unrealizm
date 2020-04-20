@@ -14,6 +14,7 @@
                 <input type="hidden" name="NNAME" value="<%=cResults.m_cUser.m_strNickName%>"/>
                 <input type="hidden" name="TWNAME" value="<%=cResults.m_cUser.m_strTwitterScreenName%>"/>
                 <input type="hidden" name="UID" value="<%=cCheckLogin.m_nUserId%>"/>
+                <input type="hidden" name="RET" value="/MyEditSettingPcV.jsp?MENUID=INFO"/>
                 <a href="javascript:go_inquiry.submit()" style="font-size: 14px; text-decoration: underline;" ><%=_TEX.T("Inquiry.Title")%></a>
             </form>
         </div>
