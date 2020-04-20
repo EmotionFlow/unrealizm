@@ -17,13 +17,13 @@
 					for(let i=0; i<3; i++){s.shift();}
 					$('#login_from_twitter_tfooterbase_callback_00').val("/" + s.join("/"));
 				}</script>
-				<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_tfooterbase_00.submit()">
+				<a class="BtnBase Rev AnalogicoInfoRegistBtn" style="width:200px;" href="javascript:login_from_twitter_tfooterbase_00.submit()">
 					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 				</a>
 			</form>
 		</div>
 		<div class="AnalogicoInfoRegist">
-			<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="/MyHomePcV.jsp">
+			<a class="BtnBase Rev AnalogicoInfoRegistBtn" style="width:200px;" href="/MyHomePcV.jsp">
 				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
 			</a>
 		</div>
@@ -57,21 +57,21 @@
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Info")%></dt>
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.Information")%></a></dd>
-			<%{
-				StringBuilder sbFooterHref = new StringBuilder();
-				sbFooterHref.append(request.getRequestURL().toString().replaceFirst(Common.GetPoipikuUrl(""), ""));
-				if(request.getQueryString()!=null) {
-					sbFooterHref.append("?").append(Common.ToString(request.getQueryString()));
-				}
-				String retUrl = "";
-				try{ retUrl = URLEncoder.encode(sbFooterHref.toString(), "UTF-8"); } catch (UnsupportedEncodingException e){ ; }
-				%>
-				<%if(cCheckLogin.m_bLogin){%>
-				<dd><a class="FooterHref" href="/GoToInquiryPcV.jsp?RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
-				<%}else{%>
-				<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry.NeedSignIn")%></a></dd>
-				<%}%>
+			<%
+			StringBuilder sbFooterHref = new StringBuilder();
+			sbFooterHref.append(request.getRequestURL().toString().replaceFirst(Common.GetPoipikuUrl(""), ""));
+			if(request.getQueryString()!=null) {
+				sbFooterHref.append("?").append(Common.ToString(request.getQueryString()));
+			}
+			String retUrl = "";
+			try{ retUrl = URLEncoder.encode(sbFooterHref.toString(), "UTF-8"); } catch (UnsupportedEncodingException e){ ; }
+			%>
+			<%if(cCheckLogin.m_bLogin){%>
+			<dd><a class="FooterHref" href="/GoToInquiryPcV.jsp?RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
+			<%}else{%>
+			<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry.NeedSignIn")%></a></dd>
 			<%}%>
+
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.CannotLogin")%></a></dd>
 		</dl>
 		<dl>
