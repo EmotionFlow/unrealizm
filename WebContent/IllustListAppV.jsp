@@ -5,16 +5,33 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
+
 if(cResults.m_nUserId==-1) {
 	if(!cCheckLogin.m_bLogin) {
 		response.sendRedirect("https://poipiku.com/StartPoipikuAppV.jsp");
 		return;
 	} else {
 		cResults.m_nUserId = cCheckLogin.m_nUserId;
+	}
+}
+
+if(cCheckLogin.m_nUserId != cResults.m_nUserId) {
+	// 他人のリスト
+	cResults.m_bDispUnPublished = false;
+} else {
+	// 自分のリスト
+	CAppVersion cAppVersion = new CAppVersion(request.getCookies());
+	Log.d(String.format("COOKIE: %d", cAppVersion.m_nNum));
+	if(cAppVersion.isValid()){
+		if(cAppVersion.isAndroid() && cAppVersion.m_nNum >= 225){
+			cResults.m_bDispUnPublished = false;
+		} else {
+			cResults.m_bDispUnPublished = true;
+		}
+	}else{
+		// 古いアプリはCookieにバージョン番号が含まれていないため取得できない。
 		cResults.m_bDispUnPublished = true;
 	}
-} else if(cCheckLogin.m_nUserId == cResults.m_nUserId) {
-	cResults.m_bDispUnPublished = true;
 }
 
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
