@@ -29,7 +29,8 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 		});
 		</script>
 		<style>
-		body {height: 100%;background: #333333; padding: 0 !important;}
+			body {height: 100%;background: #333333; padding: 0 !important;}
+			.IllustItemImage {max-width: 100%; height: auto;}
 		</style>
 	</head>
 
