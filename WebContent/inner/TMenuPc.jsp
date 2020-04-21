@@ -24,7 +24,7 @@
 				</form>
 			<%}else{%>
 			<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
-			<a id="MenuSettings" style="display: none;"  href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId%>" >
+			<a id="MenuSettings" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>"  href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId%>" >
 				<span class="MenuSettingsIcon"></span>
 				<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
