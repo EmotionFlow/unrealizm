@@ -6,9 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="robots" content="noindex" />
 <meta name="viewport" content="width=360, user-scalable=no" />
-<!--
+<%/*
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
--->
+*/%>
 <link href="/css/TBase-30.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-93.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
