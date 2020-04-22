@@ -106,7 +106,7 @@ int nRnd = (int)(Math.random()*3+1);
 					<img class="EventBanner" src="/img/maintenance_20200330.png" />
 				</a>
 				 -->
-				<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
+				<a class="EventItem" href="/event/20200414_mangaMovie/TopV.jsp">
 					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
