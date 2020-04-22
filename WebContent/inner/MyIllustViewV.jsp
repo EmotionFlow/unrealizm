@@ -213,7 +213,7 @@
 <article class="Wrapper ViewPc">
 	<section id="IllustItemList" class="IllustItemList">
 		<%if(isApp){%>
-		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 		<%}else{%>
 		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 		<%}%>

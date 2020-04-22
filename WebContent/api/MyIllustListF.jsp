@@ -45,12 +45,8 @@ try {
 		result.put("follower_num", cResults.m_cUser.m_nFollowerNum);
 
 		String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-				URLEncoder.encode(String.format("%s%s %s #%s",
-						cResults.m_cUser.m_strNickName,
-						_TEX.T("Twitter.UserAddition"),
-						String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
-						_TEX.T("Common.Title")), "UTF-8"),
-				URLEncoder.encode(Common.GetPoipikuUrl(cResults.m_cUser.m_nUserId+"/"), "UTF-8"));
+				URLEncoder.encode(String.format(_TEX.T("MyIllustListV.TweetMyBox.Tweet.Msg"), cResults.m_cUser.m_strNickName), "UTF-8"),
+				URLEncoder.encode(Common.GetPoipikuUrl("/"+cResults.m_cUser.m_nUserId+"/"), "UTF-8"));
 		result.put("twitter_link", strTwitterUrl);
 
 		List<Map<String, Object>> contentList = new ArrayList<>();
