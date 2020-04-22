@@ -100,12 +100,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%=isApp?"<!--":""%>
+	<%=isApp?"<!-- ":""%>
 	<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
-	<%=isApp?"-->":""%>
-	<%=!isApp?"<!--":""%>
+	<%=isApp?" -->":""%>
+	<%=!isApp?"<!-- ":""%>
 	<%@ include file="/inner/THeaderCommon.jsp"%>
-	<%=!isApp?"-->":""%>
+	<%=!isApp?" -->":""%>
 
 	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
