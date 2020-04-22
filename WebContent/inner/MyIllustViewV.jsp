@@ -100,7 +100,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<%=isApp?"<!--":""%>
 	<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+	<%=isApp?"-->":""%>
+	<%=!isApp?"<!--":""%>
+	<%@ include file="/inner/THeaderCommon.jsp"%>
+	<%=!isApp?"-->":""%>
+
 	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 	<meta name="twitter:card" content="summary" />
