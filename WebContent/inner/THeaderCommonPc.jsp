@@ -7,6 +7,7 @@
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="robots" content="index,follow" />
+<meta name=“pinterest” content=“nopin” />
 <link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-30.css" type="text/css" rel="stylesheet" />

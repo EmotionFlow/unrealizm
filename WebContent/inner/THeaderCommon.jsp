@@ -5,6 +5,7 @@
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="robots" content="noindex" />
+<meta name=“pinterest” content=“nopin” />
 <meta name="viewport" content="width=360, user-scalable=no" />
 <!--
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
