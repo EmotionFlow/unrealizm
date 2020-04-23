@@ -53,6 +53,12 @@ try {
 				URLEncoder.encode(Common.GetPoipikuUrl(cResults.m_cUser.m_nUserId+"/"), "UTF-8"));
 		result.put("twitter_link", strTwitterUrl);
 
+		List<String> myTagList = new ArrayList<>();
+		for(CTag tag : cResults.m_vCategoryList){
+			myTagList.add(tag.m_strTagTxt);
+		}
+		result.put("mytag_list", myTagList);
+
 		List<Map<String, Object>> contentList = new ArrayList<>();
 		for(CContent cContent : cResults.m_vContentList) {
 			String strCategory = "";
