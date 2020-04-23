@@ -8,12 +8,20 @@ if(!bSmartPhone) {
 	getServletContext().getRequestDispatcher("/event/20200414_mangaMovie/TopGridPcV.jsp").forward(request,response);
 	return;
 }
+
+SearchIllustByTagC cResults = new SearchIllustByTagC();
+cResults.getParam(request);
+cResults.m_strKeyword = "私の漫画を動画にしたい";
+cResults.SELECT_MAX_GALLERY = 36;
+boolean bRtn = cResults.getResults(cCheckLogin);
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>ポイピクバレンタイン | <%=_TEX.T("THeader.Title")%></title>
+		<title>私の漫画を動画にしたい | <%=_TEX.T("THeader.Title")%></title>
 
 <!-- #私の漫画を動画にしたい -->
 <style>
@@ -137,6 +145,36 @@ if(!bSmartPhone) {
 	</div>
 </article>
 <!-- /#私の漫画を動画にしたい -->
+
+		<article class="Wrapper ThumbList">
+			<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
+				<h2 class="Keyword">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></h2>
+				<%if(!cCheckLogin.m_bLogin) {%>
+				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<%} else if(!cResults.m_bFollowing) {%>
+				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<%} else {%>
+				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=cCheckLogin.m_nUserId%>, '<%=Common.ToStringHtml(cResults.m_strKeyword)%>', <%=Common.FOVO_KEYWORD_TYPE_TAG%>)"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<%}%>
+			</header>
+
+			<section id="IllustThumbList" class="IllustThumbList">
+				<%if(!bSmartPhone) {%>
+				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+				<%}%>
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
+					<%if(nCnt==17) {%>
+					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+					<%}%>
+				<%}%>
+			</section>
+
+			<nav class="PageBar">
+				<%=CPageBar.CreatePageBar("/SearchIllustByTagPcV.jsp", String.format("&KWD=%s", strEncodedKeyword) , cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+			</nav>
+		</article>
 		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>
