@@ -8,7 +8,7 @@ cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title>ポイピクバレンタイン | <%=_TEX.T("THeader.Title")%></title>
+		<title>私の漫画を動画にしたい | <%=_TEX.T("THeader.Title")%></title>
 
 		<style>
 			.SettingBody {display: block; width: 100%; position: relative;}

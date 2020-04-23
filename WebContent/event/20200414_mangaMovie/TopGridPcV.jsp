@@ -8,7 +8,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>ポイピクバレンタイン | <%=_TEX.T("THeader.Title")%></title>
+		<title>私の漫画を動画にしたい | <%=_TEX.T("THeader.Title")%></title>
 
 		<style>
 		</style>
