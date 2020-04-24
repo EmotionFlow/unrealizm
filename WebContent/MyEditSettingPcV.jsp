@@ -62,6 +62,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
@@ -104,9 +105,12 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 		<style>
 		<%if(bSmartPhone){%>
 		.Wrapper.ItemList .IllustItemList {margin-top: 6px;}
+		.SettingList {background-color: #fff;}
 		<%} else {%>
 		.Wrapper.ItemList .IllustItemList {margin-top: 16px;}
 		<%}%>
+
+		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #ccc;}
 
 		.SettingMenuHeader{
 			height: 27px;

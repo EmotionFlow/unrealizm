@@ -1,21 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
-    function DeregistTwitter() {
-        <%if(cResults.m_cUser.m_strEmail.contains("@")){%>
+    function UnlinkTwitter() {
+        <%if(cResults.m_cUser.m_strEmail!=null && cResults.m_cUser.m_strEmail.contains("@")){%>
         $.ajaxSingle({
             "type": "post",
             "data": { "ID":<%=cCheckLogin.m_nUserId%>},
-            "url": "/f/DeregistTwitterF.jsp",
+            "url": "/f/UnlinkTwitterF.jsp",
             "dataType": "json",
             "success": function(data) {
-                location.reload(true);
+                location.reload();
             },
             "error": function(req, stat, ex){
                 DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
             }
         });
         <%}else{%>
-        alert("連携解除の前に、メールアドレスの設定が必要です。このまま連携を解除すると、ログアウトしたときに、ログインができなくなてしまいます。");
+        Swal.fire({
+            type: "info",
+            text: "<%=_TEX.T("EditSettingV.Twitter.Deregist.NeedEmail")%>",
+        });
         <%}%>
         return false;
     }
@@ -57,7 +60,16 @@
     }
 
     $(function () {
+        <%if(cResults.m_strErr.equals("TW_LINKED")){%>
+        Swal.fire({
+            type: "info",
+            title: "<%=_TEX.T("EditSettingV.Twitter.Regist.Error.Title ")%>",
+            text: "<%=_TEX.T("EditSettingV.Twitter.Regist.Error.FoundLinkedUser")%>",
+        })
+        <%}%>
+        <%if(cResults.m_cUser.m_bTweet){%>
         DispAutoTweetCharNum();
+        <%}%>
     })
 </script>
 <style>
@@ -98,7 +110,7 @@
             <%=_TEX.T("EditSettingV.Twitter.Deregist.Info")%>
             <div class="SettingBodyCmd">
                 <div class="RegistMessage" ></div>
-                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="DeregistTwitter()"><%=_TEX.T("EditSettingV.Twitter.Button.Deregist")%></a>
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UnlinkTwitter()"><%=_TEX.T("EditSettingV.Twitter.Button.Deregist")%></a>
             </div>
         </div>
     </div>

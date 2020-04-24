@@ -213,7 +213,7 @@ if(cResults.m_bUpdate) {
 				$.ajaxSingle({
 					"type": "post",
 					"data": { "ID":<%=cCheckLogin.m_nUserId%>},
-					"url": "/f/DeregistTwitterF.jsp",
+					"url": "/f/UnlinkTwitterF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						sendObjectMessage("reloadParent");
