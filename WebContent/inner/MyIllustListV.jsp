@@ -36,7 +36,12 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%=isApp?"<!-- ":""%>
+		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+		<%=isApp?" -->":""%>
+		<%=!isApp?"<!-- ":""%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%=!isApp?" -->":""%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
