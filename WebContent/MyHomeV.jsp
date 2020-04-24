@@ -102,12 +102,12 @@ int nRnd = (int)(Math.random()*3+1);
 				<a class="EventItem" href="/RecruitS.jsp?BD=<%=nRnd%>">
 					<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
 				</a>
-				<a class="EventItem" href="https://poipiku.com/2/1647694.html">
-					<img class="EventBanner" src="/img/maintenance_20200330.png" />
-				</a>
 				 -->
 				<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc.png" />
+				</a>
+				<a class="EventItem" href="https://poipiku.com/2/1783042.html">
+					<img class="EventBanner" src="/img/maintenance.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
