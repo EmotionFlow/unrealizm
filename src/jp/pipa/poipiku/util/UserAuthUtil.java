@@ -697,8 +697,8 @@ public class UserAuthUtil {
 
 						if(!bChecking){
 							CTweet tweet = new CTweet();
-							String strTwEmail = null;
-							if(tweet.GetResults(nUserId) && (strTwEmail = tweet.GetEmailAddress()) != null){
+							String strTwEmail = tweet.GetEmailAddress();
+							if(tweet.GetResults(nUserId) && strTwEmail != null && !strTwEmail.isEmpty()){
 								strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 								cState = cConn.prepareStatement(strSql);
 								cState.setString(1, strTwEmail);
