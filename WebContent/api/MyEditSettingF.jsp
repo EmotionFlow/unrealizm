@@ -58,8 +58,8 @@ try {
 		}
 
 		user.put("user_name", cResults.m_cUser.m_strNickName);
-		user.put("profile_icon_image_url", Common.GetLocalImgUrl(cResults.m_cUser.m_strFileName));
-		user.put("profile_header_image_url", Common.GetLocalImgUrl(cResults.m_cUser.m_strHeaderFileName));
+		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
+		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
 		user.put("profile_message", cResults.m_cUser.m_strProfile);
 		user.put("mute_keyword", cResults.m_cUser.m_strMuteKeyword);
 		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
@@ -70,6 +70,7 @@ try {
 		user.put("guidelines_url", "/GuideLineV.jsp");
 		user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");
 		user.put("official_twitter_url", "https://twitter.com/pipajp");
+		user.put("inquiry_url", "https://cs.pipa.jp/InquiryAppV.jsp");
 		user.put("how_to_use", "/how_to/TopV.jsp");
 	}
 
