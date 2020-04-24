@@ -67,7 +67,6 @@
         font-size: 15px;
         background-color: #f5f5f5;
         padding: 4px 0px;
-        margin-top: 5px;
         text-align: center;
     }
 </style>
