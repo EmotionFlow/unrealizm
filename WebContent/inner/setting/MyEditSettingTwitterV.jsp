@@ -63,9 +63,9 @@
         <%if(cResults.m_strErr.equals("TW_LINKED")){%>
         Swal.fire({
             type: "info",
-            title: "<%=_TEX.T("EditSettingV.Twitter.Regist.Error.Title ")%>",
+            title: "<%=_TEX.T("EditSettingV.Twitter.Regist.Error.Title")%>",
             text: "<%=_TEX.T("EditSettingV.Twitter.Regist.Error.FoundLinkedUser")%>",
-        })
+        });
         <%}%>
         <%if(cResults.m_cUser.m_bTweet){%>
         DispAutoTweetCharNum();
