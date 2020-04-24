@@ -68,9 +68,16 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 			</a>
 			<div class="IllustItemTProhibit">
 				<%if(cResults.m_cContent.m_cUser.m_nUserId==cCheckLogin.m_nUserId) {
-					String file_name = Util.changeExtension(
-							(new File(cResults.m_cContent.m_strFileName)).getName(),
-							ImageUtil.getExt(getServletContext().getRealPath(cResults.m_cContent.m_strFileName)));
+					String file_name = null;
+					try {
+						file_name = Util.changeExtension(
+								(new File(cResults.m_cContent.m_strFileName)).getName(),
+								ImageUtil.getExt(getServletContext().getRealPath(cResults.m_cContent.m_strFileName))
+						);
+					}catch (IllegalArgumentException ioe) {
+						Log.d("IllegalArgumentException(not found)", getServletContext().getRealPath(cResults.m_cContent.m_strFileName));
+						file_name = "";
+					}
 				%>
 				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 				<%} else {%>

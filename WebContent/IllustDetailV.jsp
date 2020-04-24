@@ -43,11 +43,7 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 			<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 		</span>
 		<div class="IllustItemTProhibit">
-			<%if(cResults.m_cContent.m_cUser.m_nUserId==cCheckLogin.m_nUserId) {
-				String file_name = Util.changeExtension(
-						(new File(cResults.m_cContent.m_strFileName)).getName(),
-						ImageUtil.getExt(getServletContext().getRealPath(cResults.m_cContent.m_strFileName)));
-			%>
+			<%if(cResults.m_cContent.m_cUser.m_nUserId==cCheckLogin.m_nUserId) {%>
 			<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 			<%} else {%>
 			<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
