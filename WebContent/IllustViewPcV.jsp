@@ -7,7 +7,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
-	if(cResults.m_nNewContentId==cResults.m_nContentId) {
+	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
 		response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
 	}else{
 		response.sendRedirect(Common.GetPoipikuUrl(String.format("/%d/%d.html", cResults.m_nUserId, cResults.m_nNewContentId)));
