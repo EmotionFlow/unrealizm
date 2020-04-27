@@ -38,13 +38,14 @@ if (cCheckLogin.m_nUserId!=m_nUserId) {
 int nLimit = 30;
 String strSql = "";
 Vector<CComment> m_vComment = new Vector<CComment>();
-try{
-    DataSource dsPostgres = null;
-    Connection cConn = null;
-    PreparedStatement cState = null;
-    ResultSet cResSet = null;
 
+Connection cConn = null;
+PreparedStatement cState = null;
+ResultSet cResSet = null;
+
+try{
     Class.forName("org.postgresql.Driver");
+    DataSource dsPostgres = null;
     dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
     cConn = dsPostgres.getConnection();
 
@@ -93,10 +94,15 @@ try{
     }
     cResSet.close();cResSet=null;
     cState.close();cState=null;
+    cConn.close();cConn=null;
 } catch(Exception e) {
     Log.d(strSql);
     e.printStackTrace();
     nResult=-3;
+} finally {
+    if(cResSet!=null){cResSet.close();}
+    if(cState!=null){cState.close();}
+    if(cConn!=null){cConn.close();}
 }
 
 //JSON元データを格納する連想配列
