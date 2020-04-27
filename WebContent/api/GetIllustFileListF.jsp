@@ -135,7 +135,7 @@ if (nRtn > 0) {
 		content.put("start_date", Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate));
 		content.put("end_date", Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate));
 		content.put("tweet_when_published", cResults.m_cContent.m_nTweetWhenPublished);
-		content.put("twitter_list_id", cResults.m_cContent.m_strListId);
+		content.put("twitter_list_id", Common.ToString(cResults.m_cContent.m_strListId));
 		content.put("tweeted", cResults.m_cContent.m_strTweetId!=null && !cResults.m_cContent.m_strTweetId.isEmpty());
 		content.put("files", cResults.m_vContent);
 
