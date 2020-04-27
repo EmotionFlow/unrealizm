@@ -236,6 +236,8 @@
 	<%}%>
 </article>
 
+<%if(!isApp){%>
 <%@ include file="/inner/TFooter.jsp"%>
+<%}%>
 </body>
 </html>

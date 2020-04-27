@@ -35,8 +35,16 @@ public class CCnv {
 	private static String getReportFormContext(int nMode){
 		return (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
 	}
-	private static String getIllustFromContext(int nMode){
-		return (nMode==MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
+	private static String getIllustFromContext(int nMode, int nSpMode){
+		String s = "";
+		if(nSpMode==SP_MODE_APP){
+			s = "/IllustDetailV.jsp";
+		}else if(nMode==MODE_SP){
+			s = "/IllustDetailV.jsp";
+		}else{
+			s = "/IllustDetailPcV.jsp";
+		}
+		return s;
 	}
 	private static String getSearchCategoryContext(int nMode, int nSpMode){
 		String s = "";
@@ -315,7 +323,7 @@ public class CCnv {
 
 		String ILLUST_LIST = getIllustListContext(nMode, SP_MODE_WVIEW, cContent);
 		String REPORT_FORM = getReportFormContext(nMode);
-		String ILLUST_DETAIL = getIllustFromContext(nMode);
+		String ILLUST_DETAIL = getIllustFromContext(nMode, SP_MODE_WVIEW);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, SP_MODE_WVIEW);
 		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getMyIllustViewContext(nMode, SP_MODE_WVIEW, cContent);
@@ -379,7 +387,7 @@ public class CCnv {
 
 		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent);
 		String REPORT_FORM = getReportFormContext(nMode);
-		String ILLUST_DETAIL = getIllustFromContext(nMode);
+		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
@@ -487,7 +495,7 @@ public class CCnv {
 
 		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent);
 		String REPORT_FORM = getReportFormContext(nMode);
-		String ILLUST_DETAIL = getIllustFromContext(nMode);
+		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
