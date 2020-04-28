@@ -107,7 +107,8 @@
     <div class="SettingListItem" style="border: none;">
         <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Deregist")%></div>
         <div class="SettingBody">
-            <%=_TEX.T("EditSettingV.Twitter.Deregist.Info")%>
+            <p><%=_TEX.T("EditSettingV.Twitter.Deregist.Info1")%></p>
+            <p><%=_TEX.T("EditSettingV.Twitter.Deregist.Info2")%></p>
             <div class="SettingBodyCmd">
                 <div class="RegistMessage" ></div>
                 <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UnlinkTwitter()"><%=_TEX.T("EditSettingV.Twitter.Button.Deregist")%></a>
