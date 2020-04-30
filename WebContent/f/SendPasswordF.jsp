@@ -65,18 +65,25 @@ class SendPasswordC {
 					if (user.m_strEmail.contains("@")) {
 						user.m_nUserId = cResSet.getInt("user_id");
 						user.m_strPassword = Common.ToString(cResSet.getString("password"));
-						foundUsers.add(user);
+
+						// メアドで検索済みだったら、メール送信リストに追加しない。
+						boolean bFound = false;
+						for(CUser u : foundUsers){
+							if(u.m_nUserId==user.m_nUserId){
+								bFound = true;
+								break;
+							}
+						}
+						if(!bFound){
+							foundUsers.add(user);
+						}
 					}
 				}
 				cResSet.close();
 				cState.close();
 			}
 
-			String strSendEmailAddr="";
 			for(CUser u : foundUsers){
-				if(strSendEmailAddr.equals(u.m_strEmail)){
-					continue;
-				}
 				Properties objSmtp = System.getProperties();
 				objSmtp.put("mail.smtp.host", SMTP_HOST);
 				objSmtp.put("mail.host", SMTP_HOST);
@@ -90,9 +97,11 @@ class SendPasswordC {
 				objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
 				objMime.setHeader("Content-Transfer-Encoding", "7bit");
 				objMime.setSentDate(new java.util.Date());
-				Log.d("REMIND MAIL SENT (userid, email)", Integer.toString(m_nUserId), u.m_strEmail);
+				Log.d("REMIND MAIL SENT (loginid, userid, email)",
+						Integer.toString(m_nUserId),
+						Integer.toString(u.m_nUserId),
+						u.m_strEmail);
 				Transport.send(objMime);
-				strSendEmailAddr = u.m_strEmail;
 			}
 			return foundUsers.size();
 
