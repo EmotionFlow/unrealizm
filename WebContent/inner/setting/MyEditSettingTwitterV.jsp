@@ -1,19 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
-
-    function DeregistTwitter() {
+    function UnlinkTwitter() {
+        <%if(cResults.m_cUser.m_strEmail!=null && cResults.m_cUser.m_strEmail.contains("@")){%>
         $.ajaxSingle({
             "type": "post",
             "data": { "ID":<%=cCheckLogin.m_nUserId%>},
-            "url": "/f/DeregistTwitterF.jsp",
+            "url": "/f/UnlinkTwitterF.jsp",
             "dataType": "json",
             "success": function(data) {
-                location.reload(true);
+                location.reload();
             },
             "error": function(req, stat, ex){
                 DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
             }
         });
+        <%}else{%>
+        Swal.fire({
+            type: "info",
+            text: "<%=_TEX.T("EditSettingV.Twitter.Deregist.NeedEmail")%>",
+        });
+        <%}%>
         return false;
     }
 
@@ -54,31 +60,62 @@
     }
 
     $(function () {
+        <%if(cResults.m_strErr.equals("TW_LINKED")){%>
+        Swal.fire({
+            type: "info",
+            title: "<%=_TEX.T("EditSettingV.Twitter.Regist.Error.Title")%>",
+            text: "<%=_TEX.T("EditSettingV.Twitter.Regist.Error.FoundLinkedUser")%>",
+        });
+        <%}%>
+        <%if(cResults.m_cUser.m_bTweet){%>
         DispAutoTweetCharNum();
+        <%}%>
     })
 </script>
+<style>
+    p:first-child {margin-top: 0}
+    p {margin-bottom: 0}
+    .RegistStatus{
+        font-size: 15px;
+        background-color: #f5f5f5;
+        padding: 4px 0px;
+        text-align: center;
+    }
+</style>
 
 <div class="SettingList">
+    <div class="RegistStatus" ><%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%></div>
     <div class="SettingListItem" style="border: none;">
         <a id="TwitterSetting" name="TwitterSetting"></a>
         <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter")%></div>
         <div class="SettingBody">
-            <%=_TEX.T("EditSettingV.Twitter.Info")%>
+            <%if(!cResults.m_cUser.m_bTweet){%>
+            <%=_TEX.T("EditSettingV.Twitter.Info1")%>
+            <%}%>
+            <%=_TEX.T("EditSettingV.Twitter.Info2")%>
+            <%if(cResults.m_cUser.m_bTweet){%>
+            <%=_TEX.T("EditSettingV.Twitter.Info3")%>
+            <%}%>
             <div class="SettingBodyCmd">
-                <div class="RegistMessage" >[<%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%>]</div>
+                <div class="RegistMessage" ></div>
                 <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="location.href='/TokenFormTwitterPc.jsp'"><%=_TEX.T("EditSettingV.Twitter.Button")%></a>
             </div>
-            <%if(cResults.m_cUser.m_bTweet){%>
-            <!--
-						<div class="SettingBodyCmd">
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="DeregistTwitter()"><%=_TEX.T("EditSettingV.Twitter.Button.Deregist")%></a>
-						</div>
-						-->
-            <%}%>
         </div>
     </div>
 
     <%if(cResults.m_cUser.m_bTweet){%>
+    <div class="SettingListItem" style="border: none;">
+        <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Deregist")%></div>
+        <div class="SettingBody">
+            <p><%=_TEX.T("EditSettingV.Twitter.Deregist.Info1")%></p>
+            <p><%=_TEX.T("EditSettingV.Twitter.Deregist.Info2")%></p>
+            <div class="SettingBodyCmd">
+                <div class="RegistMessage" ></div>
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UnlinkTwitter()"><%=_TEX.T("EditSettingV.Twitter.Button.Deregist")%></a>
+            </div>
+        </div>
+    </div>
+
     <div id="SectionAutoTweet" class="SettingListItem">
         <div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
         <div class="SettingBody">
