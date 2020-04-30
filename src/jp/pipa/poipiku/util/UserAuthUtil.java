@@ -630,20 +630,13 @@ public class UserAuthUtil {
 			// 再登録も可能な認証
 			Log.d("USERAUTH twitter userid : ", user_id);
 			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? ORDER BY fldUserId DESC LIMIT 1";
-			Log.d("USERAUTH twitter userid : ", user_id);
 			cState = cConn.prepareStatement(strSql);
-			Log.d("USERAUTH twitter userid : ", user_id);
 			cState.setString(1, user_id);
-			Log.d("USERAUTH twitter userid : ", user_id);
 			cResSet = cState.executeQuery();
-			Log.d("USERAUTH twitter userid : ", user_id);
 			if(cResSet.next()) {
-				Log.d("USERAUTH twitter userid : ", user_id);
 				nUserId = cResSet.getInt("fldUserId");
 			}
-			Log.d("USERAUTH twitter userid : ", user_id);
 			cResSet.close();cResSet=null;
-			Log.d("USERAUTH twitter userid : ", user_id);
 			cState.close();cState=null;
 			Log.d("USERAUTH poipiku user_id: ", nUserId);
 
@@ -685,7 +678,8 @@ public class UserAuthUtil {
 						cState.close();cState=null;
 					}
 
-					// メアド未設定かつ確認中のメアドもなく、twitterから登録メアドを取得できたら、DBに反映させる。
+					// メアド未設定かつ確認中のメアドもなく、twitterから登録メアドを取得でき、
+					// 取得したメアドがusers_0000上で他に使われていなかったら、DBに反映させる。
 					if(!strEmail.contains("@")){
 						strSql = "SELECT user_id FROM temp_emails_0000 WHERE user_id=?";
 						cState = cConn.prepareStatement(strSql);
@@ -699,12 +693,24 @@ public class UserAuthUtil {
 							CTweet tweet = new CTweet();
 							String strTwEmail = tweet.GetEmailAddress();
 							if(tweet.GetResults(nUserId) && strTwEmail != null && !strTwEmail.isEmpty()){
-								strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+								strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 								cState = cConn.prepareStatement(strSql);
 								cState.setString(1, strTwEmail);
-								cState.setInt(2, nUserId);
-								cState.executeUpdate();
+								cResSet = cState.executeQuery();
+								boolean bEmailRegistered = cResSet.next();
+								cResSet.close();cResSet=null;
 								cState.close();cState=null;
+
+								// twitterから取得したメアドが、他に登録されていなかったら、このポイピクアカウントの
+								// メアドとして登録する。
+								if(!bEmailRegistered){
+									strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+									cState = cConn.prepareStatement(strSql);
+									cState.setString(1, strTwEmail);
+									cState.setInt(2, nUserId);
+									cState.executeUpdate();
+									cState.close();cState=null;
+								}
 							}
 						}
 					}
@@ -800,12 +806,22 @@ public class UserAuthUtil {
 					CTweet tweet = new CTweet();
 					String strTwEmail = null;
 					if(tweet.GetResults(nUserId) && (strTwEmail = tweet.GetEmailAddress()) != null){
-						strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+						strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setString(1, strTwEmail);
-						cState.setInt(2, nUserId);
-						cState.executeUpdate();
+						cResSet = cState.executeQuery();
+						boolean bEmailRegistered = cResSet.next();
+						cResSet.close();cResSet=null;
 						cState.close();cState=null;
+
+						if(!bEmailRegistered) {
+							strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+							cState = cConn.prepareStatement(strSql);
+							cState.setString(1, strTwEmail);
+							cState.setInt(2, nUserId);
+							cState.executeUpdate();
+							cState.close();cState=null;
+						}
 					}
 
 					Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
