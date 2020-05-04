@@ -67,9 +67,19 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		</div>
 		<div class="ppmc_sub">
 			<a href="./odai.pdf">
-				<img src="./ppmc_sp_img/btn_odai.png">
+				<img class="ppmc_sub_img" src="./ppmc_sp_img/btn_odai.png">
 			</a>
 		</div>
+
+		<div class="ppmc_sub">
+			<div>
+				<iframe width="360" height="202" src="https://www.youtube.com/embed/4UUC2fLh-NQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</div>
+			<div>
+				<img src="./ppmc_sp_img/img_sample2.png">
+			</div>
+		</div>
+
 		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_syou.png">
 		</div>

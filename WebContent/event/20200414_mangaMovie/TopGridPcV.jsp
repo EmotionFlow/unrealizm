@@ -177,6 +177,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<img src="./ppmc_pc_img/btn_odai.png">
 			</a>
 		</div>
+
+		<div class="ppmc_sub">
+			<div>
+				<iframe width="600" height="337" src="https://www.youtube.com/embed/4UUC2fLh-NQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			</div>
+			<div>
+				<img src="./ppmc_pc_img/img_sample2.png">
+			</div>
+		</div>
+
 		<div class="ppmc_sub">
 			<img src="./ppmc_pc_img/sub_syou.png">
 		</div>

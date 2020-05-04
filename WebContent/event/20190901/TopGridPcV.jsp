@@ -191,7 +191,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<div class="SlotItem">
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
-								<%for(int i=1; i<=40; i++) {%>
+								<%for(int i=1; i<=39; i++) {%>
 								<img src="/event/20190901/r2_spring/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
