@@ -15,7 +15,7 @@ cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 
-int nRnd = (int)(Math.random()*3+1);
+int nRnd = (int)(Math.random()*2);
 %>
 <!DOCTYPE html>
 <html>
@@ -107,7 +107,7 @@ int nRnd = (int)(Math.random()*3+1);
 				</a>
 				-->
 				<a class="EventItem" href="/event/20200414_mangaMovie/TopV.jsp">
-					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc.png" />
+					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc<%=nRnd%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
