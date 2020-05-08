@@ -170,15 +170,8 @@ public class ImageUtil {
 		return bRtn;
 	}
 
-	public static void createThumbJpg(String strSrcFileName, String strDstFileName, int newWidth, int newHeight)
-			throws IOException {
-		BufferedImage image = resizeImage(ImageUtil.read(strSrcFileName), newWidth, newHeight);
-		long lnJpegSize = saveJpeg(image, strDstFileName);
-		long lnPngSize = savePng(image, strDstFileName);
-		//Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
-		if(lnJpegSize < lnPngSize*.7) {
-			saveJpeg(image, strDstFileName);
-		}
+	public static void createThumbJpg(String strSrcFileName, String strDstFileName, int newWidth, int newHeight) {
+		ImageMagickUtil.createThumbnail(strSrcFileName, strDstFileName, newWidth, newHeight);
 	}
 
 	public static void createThumbPng(String strSrcFileName, String strDstFileName, int newWidth, int newHeight)
