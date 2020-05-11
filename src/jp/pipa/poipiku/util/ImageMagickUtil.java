@@ -14,7 +14,8 @@ public class ImageMagickUtil {
         int exitCode = -1;
         List<String> cmd = new ArrayList<>();
 
-        //
+        // メモリ制限などのオプションは、policy.xml参照のこと。
+        // ファイルの場所は、$ convert -list configure | grep etc で確認できる。
         cmd.add(CONVERT_CMD_PATH.toString());
         cmd.add(srcPath);
         cmd.add("-auto-orient");
