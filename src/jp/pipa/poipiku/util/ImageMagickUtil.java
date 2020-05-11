@@ -14,15 +14,9 @@ public class ImageMagickUtil {
         int exitCode = -1;
         List<String> cmd = new ArrayList<>();
 
-        // convert ./org/000001107.jpeg  -limit memory 256MB -limit disk 0 -auto-orient -resize 800x imagemagick/000001107.jpeg_800.jpg
+        //
         cmd.add(CONVERT_CMD_PATH.toString());
         cmd.add(srcPath);
-        cmd.add("-limit");
-        cmd.add("memory");
-        cmd.add("512MB");
-        cmd.add("-limit");
-        cmd.add("disk");
-        cmd.add("0");
         cmd.add("-auto-orient");
         cmd.add("-thumbnail");
         cmd.add(String.format(
@@ -32,7 +26,7 @@ public class ImageMagickUtil {
         );
         cmd.add(dstPath);
 
-        runExternalCommand(cmd, null);
+        exitCode = runExternalCommand(cmd, null);
 
         return exitCode;
     }

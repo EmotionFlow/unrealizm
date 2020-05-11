@@ -171,7 +171,10 @@ public class ImageUtil {
 	}
 
 	public static void createThumbJpg(String strSrcFileName, String strDstFileName, int newWidth, int newHeight) {
-		ImageMagickUtil.createThumbnail(strSrcFileName, strDstFileName, newWidth, newHeight);
+		int ret = ImageMagickUtil.createThumbnail(strSrcFileName, strDstFileName, newWidth, newHeight);
+		if(ret!=0){
+			Log.d("createThumbJpg error. code: ", Integer.toString(ret));
+		}
 	}
 
 	public static void createThumbPng(String strSrcFileName, String strDstFileName, int newWidth, int newHeight)
