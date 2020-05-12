@@ -83,7 +83,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <article class="Wrapper">
 	<div class="ppmc_content">
 		<div class="ppmc_head">
-			<img src="./ppmc_sp_img/head.png">
+			<img src="./ppmc_sp_img/head_20200512.png">
 		</div>
 		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_about.png">
@@ -115,14 +115,15 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			<img src="./ppmc_sp_img/sub_syou.png">
 		</div>
 		<div class="ppmc_sub">
-			<img src="./ppmc_sp_img/img_syou.png">
+			<img src="./ppmc_sp_img/img_syou_20200512.png">
 			<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-displays/wacom-one" target="_blank"></a>
 		</div>
 		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_term.png">
 			<div class="ppmc_sub_text">
-				応募期間：2020年4月22日〜2020年5月13日（23：59）<br>
-				結果発表：2020年5月27日〜2020年6月2日（予定）<br>
+				応募期間：2020年4月22日〜2020年5月27日（23：59）<br>
+				結果発表：2020年6月2日<br>
+				※制作期間をもう少し欲しいとのご要望にお答えし応募期間を延長させていただきました<br>
 			</div>
 		</div>
 		<div class="ppmc_sub">
