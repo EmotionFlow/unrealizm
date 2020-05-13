@@ -53,7 +53,7 @@ MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
 MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
-MENU.put("MAIL", _TEX.T("EditSettingV.Email.Address"));
+MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 

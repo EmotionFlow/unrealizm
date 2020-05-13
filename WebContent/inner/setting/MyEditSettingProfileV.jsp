@@ -231,18 +231,6 @@
                 </div>
             </h2>
             <span class="UserInfoCmd">
-                <%
-                    String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-                            URLEncoder.encode(String.format("%s%s %s #%s",
-                                    cResults.m_cUser.m_strNickName,
-                                    _TEX.T("Twitter.UserAddition"),
-                                    String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nPublishedContentsTotal),
-                                    _TEX.T("Common.Title")), "UTF-8"),
-                            URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
-                %>
-                <span class="IllustItemCommandSub">
-                    <a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
-                </span>
             </span>
         </section>
         <section class="UserInfoState">
@@ -305,31 +293,6 @@
             <div class="SettingBodyCmd">
                 <div id="ProfileTextMessage" class="RegistMessage" >1000</div>
                 <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-            </div>
-        </div>
-    </div>
-
-    <div class="SettingListItem">
-        <div class="SettingListTitle">
-            <a style="text-decoration: underline;" href="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/"><%=_TEX.T("EditSettingV.Profile.PublicIllustBox")%></a>
-        </div>
-        <div class="SettingBody">
-            <div style="display: table; width:100%">
-                <div style="display: table-cell; text-align: left; vertical-align: top;">
-                    <input style="width: 100%;" id="MyBoxUrlTxt" type="text" readonly="" value="https://poipiku.com/<%=cResults.m_cUser.m_nUserId%>/">
-                </div>
-                <div style="display: table-cell; text-align: right; vertical-align: top;width: 76px;">
-                    <a id="CopyMyBoxUrlBtn" class="BtnBase" href="javascript:void(0);"><%=_TEX.T("EditSettingV.Profile.PublicIllustBox.Copy")%></a>
-                </div>
-                <script>
-                    $(function () {
-                        $("#CopyMyBoxUrlBtn").click(function() {
-                            $("#MyBoxUrlTxt").select();
-                            document.execCommand("Copy");
-                            alert("<%=_TEX.T("MyIllustListV.TweetMyBox.ShareURL.Copied")%>");
-                        });
-                    })
-                </script>
             </div>
         </div>
     </div>
