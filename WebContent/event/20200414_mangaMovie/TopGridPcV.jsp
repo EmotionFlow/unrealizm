@@ -159,7 +159,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 <article class="Wrapper">
 	<div class="ppmc_content">
 		<div class="ppmc_head">
-			<img src="./ppmc_pc_img/head.png">
+			<img src="./ppmc_pc_img/head_20200512.png">
 		</div>
 		<div class="ppmc_sub">
 			<img src="./ppmc_pc_img/sub_about.png">
@@ -191,14 +191,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<img src="./ppmc_pc_img/sub_syou.png">
 		</div>
 		<div class="ppmc_sub">
-			<img src="./ppmc_pc_img/img_syou.png">
+			<img src="./ppmc_pc_img/img_syou_20200512.png">
 			<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-displays/wacom-one" target="_blank"></a>
 		</div>
 		<div class="ppmc_sub">
 			<img src="./ppmc_pc_img/sub_term.png">
 			<div class="ppmc_sub_text">
-				応募期間：2020年4月22日〜2020年5月13日（23：59）<br>
-				結果発表：2020年5月27日〜2020年6月2日（予定）<br>
+				応募期間：2020年4月22日〜2020年5月27日（23：59）<br>
+				結果発表：2020年6月2日<br>
+				※制作期間をもう少し欲しいとのご要望にお応えし応募期間を延長させていただきました<br>
 			</div>
 		</div>
 		<div class="ppmc_sub">
@@ -206,8 +207,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<div class="ppmc_sub_text">
 			・日本国内在住で国籍は不問。<br>
 			・日本国内に銀行口座をお持ちの方。<br>
-			・アマチュアで継続的にお仕事を受けられるかた。<br>
-			・応募時に満18歳以上のかた。<br>
+			・アマチュアで継続的にお仕事を受けられる方。<br>
+			　※お仕事の内容は、月に1本、指示されたシナリオに従って25コマ程度の漫画制作（着彩まで含む）を想定<br>
+			・応募時に満18歳以上の方。<br>
 			</div>
 		</div>
 		<div class="ppmc_sub">
