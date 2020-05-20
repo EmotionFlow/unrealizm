@@ -293,6 +293,17 @@ public class CCnv {
 		strRtn.append("</div>");	// ResBtnSetList
 
 		if(nLoginUserId>0) {
+			// 投げ銭金額入力
+			strRtn.append("<div class=\"ResEmojiNagesen\" style=\"display:none\">")
+					.append("<select class=\"NagesenAmount\">")
+					.append("<option value=\"\">0</option>")
+					.append("<option value=\"\">100</option>")
+					.append("<option value=\"\">1,000</option>")
+					.append("<option value=\"\">10,000</option>")
+					.append("</select>" +
+							"<span class=\"NagesenMsg\">円乗っける</span>" +
+							"<span class=\"NagesenInfo\"><a href=\"#\" class=\"IllustItemCommandEdit fas fa-info-circle\"></a></span>")
+					.append("</div>");	// ResEmojiNagesen
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
 			for(String emoji : vResult) {
