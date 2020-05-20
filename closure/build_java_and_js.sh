@@ -6,7 +6,7 @@ DEPLOY_PATH="../WebContent/WEB-INF/classes"
 CLASSES_WEB_INF="../WebContent/WEB-INF/lib/*"
 CLASSES_TOMCAT="/usr/local/tomcat/lib/*"
 JAVA_FILE_ROOT="../src/jp/pipa/poipiku"
-JAVA_FILE_DIRS=("/controller" "/servlet" "/util")
+JAVA_FILE_DIRS=("/controller" "/servlet" "/util" "/payment")
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home"
 

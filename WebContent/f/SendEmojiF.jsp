@@ -1,4 +1,5 @@
-<%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
+<%@ page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
+<%@ page import="jp.pipa.poipiku.payment.AuthorizeExec"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -8,6 +9,8 @@ class SendEmojiC {
 	public int m_nContentId = -1;
 	public String m_strEmoji = "";
 	public int m_nUserId = -1;
+	public int m_nAmount = -1;
+	public String m_strMDKToken = "";
 	public String m_strIpAddress = "";
 
 	public void getParam(HttpServletRequest request) {
@@ -17,6 +20,8 @@ class SendEmojiC {
 			m_strEmoji		= Common.ToString(request.getParameter("EMJ")).trim();
 			m_nUserId		= Common.ToInt(request.getParameter("UID"));
 			m_strIpAddress	= request.getRemoteAddr();
+			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
+			m_strMDKToken	= Common.ToString(request.getParameter("MDK"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
@@ -82,6 +87,35 @@ class SendEmojiC {
 			if(nEmojiNum>=EMOJI_MAX) {
 				return false;
 			}
+
+			if(m_nAmount>0){
+				boolean isTokenNew = !m_strMDKToken.isEmpty();
+				if(!isTokenNew){
+					strSql = "SELECT token FROM mdk_tokens WHERE user_id=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, m_nUserId);
+					cResSet = cState.executeQuery();
+					if(cResSet.next()){
+						m_strMDKToken = cResSet.getString(1);
+					}else{
+						Log.d("有料リアクションなのにトークンがないので決済できない(uid)", m_nUserId);
+						return false;
+					}
+				}
+
+				AuthorizeExec authorizeExec = new AuthorizeExec(m_nUserId, m_nContentId, m_nAmount, m_strMDKToken);
+				boolean bPaymentResult = authorizeExec.doProcess();
+				if(!bPaymentResult){
+					Log.d("決済処理に失敗");
+					return false;
+				}
+				//TODO 決済ログINSERT
+
+				if(isTokenNew){
+					//TODO トークンテーブルINSERT
+				}
+			}
+
 
 			// add new comment
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id, ip_address) VALUES(?, ?, ?, ?)";

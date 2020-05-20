@@ -178,7 +178,7 @@ function CreateMDKToken(){
 
 function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken) {
 	let token = "";
-	let amount = "";
+	let amount = -1;
 	if(strMdkToken!=null) {token=strMdkToken;}
 	if(nAmount!=null) {amount=nAmount}
 
