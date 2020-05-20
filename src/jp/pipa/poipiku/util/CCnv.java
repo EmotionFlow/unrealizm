@@ -296,10 +296,10 @@ public class CCnv {
 			// 投げ銭金額入力
 			strRtn.append("<div class=\"ResEmojiNagesen\" style=\"display:none\">")
 					.append("<select class=\"NagesenAmount\">")
-					.append("<option value=\"\">0</option>")
-					.append("<option value=\"\">100</option>")
-					.append("<option value=\"\">1,000</option>")
-					.append("<option value=\"\">10,000</option>")
+					.append("<option value=\"0\">0</option>")
+					.append("<option value=\"100\">100</option>")
+					.append("<option value=\"1000\">1,000</option>")
+					.append("<option value=\"10000\">10,000</option>")
 					.append("</select>" +
 							"<span class=\"NagesenMsg\">円乗っける</span>" +
 							"<span class=\"NagesenInfo\"><a href=\"#\" class=\"IllustItemCommandEdit fas fa-info-circle\"></a></span>")
@@ -307,7 +307,7 @@ public class CCnv {
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
 			for(String emoji : vResult) {
-				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
 			// 人気の絵文字
@@ -318,7 +318,7 @@ public class CCnv {
 			// 人気の絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
 			for(String emoji : vResult) {
-				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
 		}

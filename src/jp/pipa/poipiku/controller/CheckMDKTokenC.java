@@ -25,7 +25,7 @@ public class CheckMDKTokenC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "SELECT 1 FROM mdk_token WHERE user_id=?";
+			strSql = "SELECT 1 FROM mdk_tokens WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cCheckLogin.m_nUserId);
 			Log.d("cCheckLogin.m_nUserId", Integer.toString(cCheckLogin.m_nUserId));

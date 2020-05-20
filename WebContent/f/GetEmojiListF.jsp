@@ -69,7 +69,7 @@ if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT) {
 	}
 	for(String emoji : EMOJI_LIST) {
 		sbResult.append(
-				String.format("<span class=\"ResEmojiBtn\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</span>",
+				String.format("<span class=\"ResEmojiBtn\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</span>",
 						cResults.m_nContentId,
 						emoji,
 						cCheckLogin.m_nUserId,
