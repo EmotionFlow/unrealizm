@@ -172,19 +172,22 @@ function HideMsgStatic() {
 	}, 1000);
 }
 
-function CreateMDKToken(){
-
-}
-
-function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken) {
-	let token = "";
+function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strCardExp, strCardSec) {
 	let amount = -1;
-	if(strMdkToken!=null) {token=strMdkToken;}
+	let token = "";
+	let exp = "";
+	let sec = "";
 	if(nAmount!=null) {amount=nAmount}
+	if(strMdkToken!=null) {token=strMdkToken;}
+	if(strCardExp!=null) {exp=strCardExp;}
+	if(strCardSec!=null) {sec=strCardSec;}
 
 	$.ajax({
 		"type": "post",
-		"data": {"IID": nContentId, "EMJ": strEmoji, "UID": nUserId, "AMT": amount, "MDK": token},
+		"data": {
+			"IID": nContentId, "EMJ": strEmoji, "UID": nUserId, "AMT": nAmount,
+			"MDK": token, "EXP": exp, "SEC": sec,
+		},
 		"url": "/f/SendEmojiF.jsp",
 		"dataType": "json",
 	}).then( function(data) {
@@ -230,11 +233,14 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 						]
 					}
 				}).then(function (formValues) {
+					const cardNum = formValues.value[0];
+					const cardExp = formValues.value[1];
+					const cardSec  = formValues.value[2];
 					const postData = {
 						"token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
-						"card_number": formValues.value[0],
-						"card_expire": formValues.value[1],
-						"security_code": formValues.value[2],
+						"card_number": cardNum,
+						"card_expire": cardExp,
+						"security_code": cardSec,
 						"lang": "ja",
 					};
 					const apiUrl = "https://api.veritrans.co.jp/4gtoken";
@@ -251,7 +257,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 						var response = JSON.parse(xhr.response);
 						if (xhr.status == 200) {
 							console.log(response.token);
-							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token);
+							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token, cardExp, cardSec);
 						} else {
 							alert(response.message);
 						}
@@ -260,6 +266,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 				});
 			} else if (result == 1) {
 				console.log("与信済み");
+				SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, null, null, null);
 			} else {
 				console.log("その他エラー");
 			}

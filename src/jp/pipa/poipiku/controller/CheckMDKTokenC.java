@@ -25,7 +25,8 @@ public class CheckMDKTokenC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "SELECT 1 FROM mdk_tokens WHERE user_id=?";
+			//TODO カードの有効期限チェック・レコード登録日時チェック（登録日から四百日しか使えないっぽい）
+			strSql = "SELECT 1 FROM mdk_creditcards WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cCheckLogin.m_nUserId);
 			Log.d("cCheckLogin.m_nUserId", Integer.toString(cCheckLogin.m_nUserId));

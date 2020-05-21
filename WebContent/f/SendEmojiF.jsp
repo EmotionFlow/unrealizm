@@ -1,5 +1,4 @@
-<%@ page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
-<%@ page import="jp.pipa.poipiku.payment.AuthorizeExec"%>
+<%@ page import="jp.pipa.poipiku.payment.CardPayment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -12,6 +11,8 @@ class SendEmojiC {
 	public int m_nAmount = -1;
 	public String m_strMDKToken = "";
 	public String m_strIpAddress = "";
+	public String m_strCardExpire = "";
+	public String m_strCardSecurityCode = "";
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -22,6 +23,8 @@ class SendEmojiC {
 			m_strIpAddress	= request.getRemoteAddr();
 			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
 			m_strMDKToken	= Common.ToString(request.getParameter("MDK"));
+			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
+			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
@@ -89,30 +92,91 @@ class SendEmojiC {
 			}
 
 			if(m_nAmount>0){
-				boolean isTokenNew = !m_strMDKToken.isEmpty();
-				if(!isTokenNew){
-					strSql = "SELECT token FROM mdk_tokens WHERE user_id=?";
+				// 注文生成
+				Integer orderId = null;
+				strSql = "INSERT INTO orders(" +
+						" customer_id, seller_id, payment_total)" +
+						" VALUES (?, ?, ?)";
+				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
+				cState.setInt(1, m_nUserId);
+				cState.setInt(2, 0);
+				cState.setInt(3, m_nAmount);
+				cState.executeUpdate();
+				cResSet = cState.getGeneratedKeys();
+				if(cResSet.next()){
+					orderId = cResSet.getInt(1);
+					Log.d("orders.id", orderId.toString());
+				}
+				cResSet.close(); cResSet=null;
+				cState.close(); cState=null;
+
+				strSql = "INSERT INTO order_details(" +
+						" order_id, content_id, product_name, list_price, amount_paid, quantity)" +
+						" VALUES (?, ?, ?, ?, ?, ?)";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, orderId);
+				cState.setInt(2, m_nContentId);
+				cState.setString(3, m_strEmoji);
+				cState.setInt(4, 0);
+				cState.setInt(5, m_nAmount);
+				cState.setInt(6, 1);
+				cState.executeUpdate();
+				cState.close(); cState=null;
+
+				CardPayment cardPayment = new CardPayment(m_nUserId, m_nContentId, m_nAmount);
+				boolean authorizeResult = false;
+				if(!m_strMDKToken.isEmpty()){
+					authorizeResult = cardPayment.authorize(m_strMDKToken);
+					if(authorizeResult){
+						strSql = "INSERT INTO" +
+								" mdk_creditcards(user_id, expire, security_code, authorized_order_id)" +
+								" VALUES (?, ?, ?, ?)";
+						cState = cConn.prepareStatement(strSql);
+						cState.setInt(1, m_nUserId);
+						cState.setString(2, m_strCardExpire);
+						cState.setString(3, m_strCardSecurityCode);
+						cState.setString(4, cardPayment.getAgencyOrderId());
+						cState.executeUpdate();
+						cState.close(); cState=null;
+					}else{
+						Log.d("決済処理に失敗");
+					}
+				}else{
+					strSql = "SELECT expire, security_code, authorized_order_id FROM mdk_creditcards WHERE user_id=?";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, m_nUserId);
 					cResSet = cState.executeQuery();
+
+					String expire = "";
+					String securityCode = "";
+					String authOrderId = "";
 					if(cResSet.next()){
-						m_strMDKToken = cResSet.getString(1);
+						expire = cResSet.getString("expire");
+						securityCode = cResSet.getString("security_code");
+						authOrderId = cResSet.getString("authorized_order_id");
 					}else{
-						Log.d("有料リアクションなのにトークンがないので決済できない(uid)", m_nUserId);
+						Log.d("与信済みの決済情報が見つからない(uid)", m_nUserId);
 						return false;
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+
+					authorizeResult = cardPayment.reAuthorize(authOrderId, expire, securityCode);
+					if(!authorizeResult){
+						Log.d("決済処理に失敗");
 					}
 				}
 
-				AuthorizeExec authorizeExec = new AuthorizeExec(m_nUserId, m_nContentId, m_nAmount, m_strMDKToken);
-				boolean bPaymentResult = authorizeExec.doProcess();
-				if(!bPaymentResult){
-					Log.d("決済処理に失敗");
-					return false;
-				}
-				//TODO 決済ログINSERT
+				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, authorizeResult?20:-10);
+				cState.setString(2, authorizeResult?cardPayment.getAgencyOrderId():null);
+				cState.setInt(3, orderId);
+				cState.executeUpdate();
+				cState.close();cState=null;
 
-				if(isTokenNew){
-					//TODO トークンテーブルINSERT
+				if(!authorizeResult){
+					return false;
 				}
 			}
 
