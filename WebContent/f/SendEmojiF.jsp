@@ -162,7 +162,14 @@ class SendEmojiC {
 					cState.close();cState=null;
 
 					authorizeResult = cardPayment.reAuthorize(authOrderId, expire, securityCode);
-					if(!authorizeResult){
+					if(authorizeResult){
+						strSql = "UPDATE mdk_creditcards SET authorized_order_id=? WHERE user_id=?";
+						cState = cConn.prepareStatement(strSql);
+						cState.setString(1, cardPayment.getAgencyOrderId());
+						cState.setInt(2, m_nUserId);
+						cState.executeUpdate();
+						cState.close();cState=null;
+					}else{
 						Log.d("決済処理に失敗");
 					}
 				}

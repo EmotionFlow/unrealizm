@@ -185,7 +185,8 @@ function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strC
 	$.ajax({
 		"type": "post",
 		"data": {
-			"IID": nContentId, "EMJ": strEmoji, "UID": nUserId, "AMT": nAmount,
+			"IID": nContentId, "EMJ": strEmoji,
+			"UID": nUserId, "AMT": nAmount,
 			"MDK": token, "EXP": exp, "SEC": sec,
 		},
 		"url": "/f/SendEmojiF.jsp",
@@ -195,13 +196,17 @@ function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strC
 			var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
 			$("#ResEmojiAdd_" + nContentId).before($objResEmoji);
 			if (vg) vg.vgrefresh();
+			if(nAmount>0){
+				DispMsg(`${nAmount}円のご支援ありがとうございました！`);
+			}
 		}
 	});
 }
 
-function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
+function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 	let elNagesen = $(elThis).parent().parent().children('.ResEmojiNagesen');
-	const nNagesenAmount = elNagesen.children('.NagesenAmount').val();
+	let elNagesenAmount = elNagesen.children('.NagesenAmount')
+	const nNagesenAmount = elNagesenAmount.val();
 
 	if(elNagesen.css('display')!=='none' && nNagesenAmount > 0){
 		console.log("有料リアクション");
@@ -219,12 +224,17 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 				// クレカ入力ダイアログを表示して、MDKToken取得
 				console.log("クレカ入力ダイアログを表示");
 				Swal.fire({
-					title: 'Multiple inputs',
-					html:
-						'card no<input id="card_number" class="swal2-input" value="4111111111111111"/>' +
-						'exp<input id="cc_exp" class="swal2-input" value="02/22"/>' +
-						'csc<input id="cc_csc" class="swal2-input" value="012"/>',
+					title: 'カード情報を入力してください',
+					html: `
+カード番号<input id="card_number" class="swal2-input" value="4111111111111111"/>
+有効期限(MM/YY)<input id="cc_exp" class="swal2-input" value="02/22"/>
+セキュリティーコード<input id="cc_csc" class="swal2-input" value="012"/>
+<input type="checkbox"/><div>利用規約に同意します</div>
+<input type="checkbox"/><div>選択した金額でリアクションすると自動決済することに同意します</div>
+`,
 					focusConfirm: false,
+					showCloseButton: true,
+					showCancelButton: true,
 					preConfirm: () => {
 						return [
 							$("#card_number").val(),
@@ -233,6 +243,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 						]
 					}
 				}).then(function (formValues) {
+					if(formValues.dismiss){return false;}
 					const cardNum = formValues.value[0];
 					const cardExp = formValues.value[1];
 					const cardSec  = formValues.value[2];
@@ -258,6 +269,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 						if (xhr.status == 200) {
 							console.log(response.token);
 							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token, cardExp, cardSec);
+							elNagesenAmount.val("0");
 						} else {
 							alert(response.message);
 						}
@@ -267,6 +279,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 			} else if (result == 1) {
 				console.log("与信済み");
 				SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, null, null, null);
+				elNagesenAmount.val("0");
 			} else {
 				console.log("その他エラー");
 			}

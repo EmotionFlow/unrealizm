@@ -24,7 +24,7 @@ public class CardPayment {
     private final String jpo2 = "";
 
     private static String createOrderid(int userId, int contentId){
-        return String.format("dummy-%d-%d-%d", userId, contentId, System.currentTimeMillis());
+        return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
     public String getAgencyOrderId(){
