@@ -213,24 +213,51 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 		// 与信済みであるかを検索
 		$.ajax({
 			"type": "get",
-			"url": "/f/CheckMDKTokenF.jsp",
+			"url": "/f/CheckCreditCardF.jsp",
 			"dataType": "json",
 		}).then(function (data) {
-			console.log(data);
-			const result = data.result;
-			if (typeof (result) === "undefined" || result == null || result == -1) {
+			const result = Number(data.result);
+			if (typeof (result) === "undefined" || result == null || result === -1) {
 				return false;
-			} else if (result == 0) {
+			} else if (result === 0) {
 				// クレカ入力ダイアログを表示して、MDKToken取得
 				console.log("クレカ入力ダイアログを表示");
 				Swal.fire({
-					title: 'カード情報を入力してください',
 					html: `
-カード番号<input id="card_number" class="swal2-input" value="4111111111111111"/>
-有効期限(MM/YY)<input id="cc_exp" class="swal2-input" value="02/22"/>
-セキュリティーコード<input id="cc_csc" class="swal2-input" value="012"/>
-<input type="checkbox"/><div>利用規約に同意します</div>
-<input type="checkbox"/><div>選択した金額でリアクションすると自動決済することに同意します</div>
+<style>
+	.CardInfoDlgTitle{padding: 10px 0 0 0;}
+	.CardInfoDlgInfo{font-size: 12px; text-align: left;}
+	.CardInfoDlgInputItem{margin: 4px;}
+	.CardInfoDlgInputLabel{font-size: 16px;}
+	.CardInfoDlgInfoCheckList{text-align: left; font-size: 16px;}
+	.swal2-popup .CardInfoDlgInputItem .swal2-input{margin-top: 4px; font-size: 1.1em; height: 1.825em;}
+</style>
+<h2 class="CardInfoDlgTitle">
+	${strEmoji}と一緒に${nNagesenAmount}円分の応援を送ろう！
+</h2>
+<div class="CardInfoDlgInfo">
+	<p>カード情報を入力してOKボタンをクリックすると、指定した金額を、リアクションと一緒に応援として送ることができます。</p>
+	<p>応援でいただいたお金は一度運営にてプールさせていただき、クリエイター様の活躍に応じて配分させていただきます。</p>
+</div>
+<div class="CardInfoDlgInputItem">
+	<div class="CardInfoDlgInputLabel">クレジットカード番号</div>
+	<img src="//img/credit_card_logos.png" />
+	<input id="card_number" class="swal2-input" style="margin-top: 4px;" maxlength="16" value="4111111111111111"/>
+</div>
+<div class="CardInfoDlgInputItem">
+	<div class="CardInfoDlgInputLabel">有効期限(MM/YY)</div>
+	<input id="cc_exp" class="swal2-input" style="margin-top: 4px;" maxlength="5" value="02/22"/>
+</div>
+<div class="CardInfoDlgInputItem">
+	<div class="CardInfoDlgInputLabel">セキュリティーコード<div/>
+	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4"  value="012"/>
+</div>
+<div class="CardInfoDlgInfoCheckList">
+<label><input type="checkbox"/>利用規約に同意します</label>
+</div>
+<div class="CardInfoDlgInfoCheckList">
+<label><input type="checkbox"/>今後、選択した金額でリアクションするとで自動決済することに同意します</label>
+</div>
 `,
 					focusConfirm: false,
 					showCloseButton: true,
@@ -256,7 +283,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 					};
 					const apiUrl = "https://api.veritrans.co.jp/4gtoken";
 
-					var xhr = new XMLHttpRequest();
+					let xhr = new XMLHttpRequest();
 					xhr.open('POST', apiUrl, true);
 					xhr.setRequestHeader('Accept', 'application/json');
 					xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
@@ -265,9 +292,8 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 							alert("トークンサーバーとの接続に失敗しました");
 							return;
 						}
-						var response = JSON.parse(xhr.response);
+						const response = JSON.parse(xhr.response);
 						if (xhr.status == 200) {
-							console.log(response.token);
 							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token, cardExp, cardSec);
 							elNagesenAmount.val("0");
 						} else {
@@ -284,7 +310,8 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 				console.log("その他エラー");
 			}
 		}, function (err) {
-			console.log("CheckMDKTokenF error" + err);
+			console.log("CheckCreditCardF error" + err);
+			DispMsg("ポイピクのサーバでエラーが発生しました。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
 		});
 	} else {
 		SendEmojiAjax(nContentId, strEmoji, nUserId, null, null);

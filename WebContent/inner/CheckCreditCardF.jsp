@@ -7,7 +7,7 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(!cCheckLogin.m_bLogin) return;
-CheckMDKTokenC cResults = new CheckMDKTokenC();
+CheckCreditCardC cResults = new CheckCreditCardC();
 int nResult = cResults.getResults(cCheckLogin);
 //JSON元データを格納する連想配列
 Map<String, Object> root = null;

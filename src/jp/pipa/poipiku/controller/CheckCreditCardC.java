@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class CheckMDKTokenC {
+public class CheckCreditCardC {
 	public int getResults(CheckLogin cCheckLogin) {
 		int  nResult = -1;
 		if(!cCheckLogin.m_bLogin){return nResult;}
