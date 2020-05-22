@@ -237,11 +237,11 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 </h2>
 <div class="CardInfoDlgInfo">
 	<p>カード情報を入力してOKボタンをクリックすると、指定した金額を、リアクションと一緒に応援として送ることができます。</p>
-	<p>応援でいただいたお金は一度運営にてプールさせていただき、クリエイター様の活躍に応じて配分させていただきます。</p>
+	<p>応援でいただいたお金は、一度運営にてまとめさせていただき、クリエイター様の活躍に応じて分配させていただきます。</p>
 </div>
 <div class="CardInfoDlgInputItem">
 	<div class="CardInfoDlgInputLabel">クレジットカード番号</div>
-	<img src="//img/credit_card_logos.png" />
+	<img src="/img/credit_card_logos.png" width="170px"/>
 	<input id="card_number" class="swal2-input" style="margin-top: 4px;" maxlength="16" value="4111111111111111"/>
 </div>
 <div class="CardInfoDlgInputItem">
@@ -263,22 +263,46 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 					showCloseButton: true,
 					showCancelButton: true,
 					preConfirm: () => {
-						return [
-							$("#card_number").val(),
-							$("#cc_exp").val(),
-							$("#cc_csc").val(),
-						]
-					}
+						const vals = {
+							cardNum: $("#card_number").val(),
+							cardExp: $("#cc_exp").val(),
+							cardSec: $("#cc_csc").val(),
+						}
+						if (vals.cardNum === '') {
+							return Swal.showValidationMessage('カード番号を入力してください');
+						}
+						const result = $("#card_number").validateCreditCard(
+							{ accept: [
+								'visa', 'mastercard', 'jcb', 'amex', 'diners_club_international'
+								] });
+						if(!result.valid){
+							return Swal.showValidationMessage('カード番号に誤りがあるか、取り扱えないカードブランドです。');
+						}
+						if (vals.cardExp === '') {
+							return Swal.showValidationMessage('有効期限を入力してください');
+						}
+						//TODO 期限切れ直前カードは受け付けない
+						if (vals.cardSec === ''){
+							return Swal.showValidationMessage('セキュリティーコードを入力してください');
+						}
+						if (/^\d+$/.exec(vals.cardSec) == null){
+							return Swal.showValidationMessage('セキュリティーコードは半角数字を入力してください');
+						}
+						if (vals.cardSec.length < 3){
+							return Swal.showValidationMessage('セキュリティーコードはの桁数がたりません');
+						}
+
+						return vals;
+					},
 				}).then(function (formValues) {
+					// キャンセルボタンクック
 					if(formValues.dismiss){return false;}
-					const cardNum = formValues.value[0];
-					const cardExp = formValues.value[1];
-					const cardSec  = formValues.value[2];
+
 					const postData = {
 						"token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
-						"card_number": cardNum,
-						"card_expire": cardExp,
-						"security_code": cardSec,
+						"card_number": formValues.cardNum,
+						"card_expire": formValues.cardExp,
+						"security_code": formValues.cardSec,
 						"lang": "ja",
 					};
 					const apiUrl = "https://api.veritrans.co.jp/4gtoken";
