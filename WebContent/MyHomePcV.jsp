@@ -24,7 +24,7 @@ if(!cCheckLogin.m_bLogin) {
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 
-int nRnd = (int)(Math.random()*2);
+int nRnd = (int)(Math.random()*3);
 %>
 <!DOCTYPE html>
 <html>
@@ -133,7 +133,7 @@ int nRnd = (int)(Math.random()*2);
 				</a>
 				 -->
 				<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc<%=nRnd%>.png" />
+					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc1_<%=nRnd%>.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
@@ -182,7 +182,7 @@ int nRnd = (int)(Math.random()*2);
 							</a>
 							 -->
 							<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-								<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc<%=nRnd%>.png" />
+								<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc1_<%=nRnd%>.png" />
 							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />
