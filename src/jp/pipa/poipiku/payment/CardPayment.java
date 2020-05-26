@@ -12,6 +12,21 @@ public class CardPayment {
     private int userId = -1;
     private int contentId = -1;
 
+    private final String STATUS_SUCCESS = "success";
+    private final String STAUTS_FAILURE = "failure";
+    private final String RESULTCODE_SUCCESS = "A001000000000000";
+
+    public enum ErrorKind {
+        None,
+        CardAuth,       // カード認証や、センターとの通信に関するエラー。
+        MDKConnection,  // 接続エラー。＊＊決済されているかもしれない＊＊。
+        Common,         // 共通エラー。
+        Exception,      // Javaコード内で例外発生
+        Unknown         // 不明。通常ありえない。
+    }
+
+    public ErrorKind errorKind = ErrorKind.None;
+
     // 与信方法　与信売上(与信と同時に売上処理も行います)固定
     private final String withCapture = "1";
     // 取引ID
@@ -23,10 +38,13 @@ public class CardPayment {
     // 支払回数 一括払いなので設定不要
     private final String jpo2 = "";
 
+    private String errMsg = "";
+
     private static String createOrderid(int userId, int contentId){
         return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
+    public String getErrMsg(){ return errMsg; }
     public String getAgencyOrderId(){
         return orderId;
     }
@@ -88,10 +106,34 @@ public class CardPayment {
             Log.d("PAYMENT vResultCode", resDto.getVResultCode());
             Log.d("PAYMENT reqCardNumber", resDto.getReqCardNumber());
             Log.d("PAYMENT resAuthCode", resDto.getResAuthCode());
-            ret = true;
+
+            if(resDto.getMstatus().equals(STATUS_SUCCESS) && resDto.getVResultCode().equals(RESULTCODE_SUCCESS)){
+                ret = true;
+            } else {
+                ret = false;
+                errMsg = resDto.getMerrMsg();
+                char headChar = resDto.getVResultCode().charAt(0);
+                switch(headChar){
+                    case 'A':
+                        errorKind = ErrorKind.CardAuth;
+                        break;
+                    case 'M':
+                        // TODO 本来はslackなどで運営に即通知したい
+                        errorKind = ErrorKind.MDKConnection;
+                        break;
+                    case 'N':
+                    case 'O':
+                        errorKind = ErrorKind.Common;
+                        break;
+                    default:
+                        errorKind = ErrorKind.Unknown;
+                }
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             Log.d("PAYMENT mErrMsg", "Exception Occured : " + ex.getMessage());
+            errMsg = ex.getMessage();
+            errorKind = ErrorKind.Exception;
             ret = false;
         }
         return ret;

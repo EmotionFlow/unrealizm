@@ -191,7 +191,7 @@ function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strC
 		},
 		"url": "/f/SendEmojiF.jsp",
 		"dataType": "json",
-	}).then( function(data) {
+	}).then( data => {
 		if (data.result_num > 0) {
 			var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
 			$("#ResEmojiAdd_" + nContentId).before($objResEmoji);
@@ -199,9 +199,28 @@ function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strC
 			if(nAmount>0){
 				DispMsg(`${nAmount}円のご支援ありがとうございました！`);
 			}
+		} else {
+			switch(data.error_code){
+				case -10:
+					DispMsg("カード認証でエラーが発生しました。もう一度試すか、別のカードをご利用ください。");
+					break;
+				case -20:
+					alert("決済中に深刻なエラーが発生し、決済されているか不明な状態です。大変恐れ入りますが、問い合わせページからご連絡をお願いいたします。");
+					break;
+				case -99:
+					DispMsg("サーバエラーが発生しました。");
+					break;
+			}
 		}
-	});
+		},
+		error => {
+			DispMsg("ポイピクサーバにてエラーが発生しました。");
+		}
+	);
 }
+
+const CardInfoDlgHtml = `
+`;
 
 function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 	let elNagesen = $(elThis).parent().parent().children('.ResEmojiNagesen');
@@ -209,7 +228,6 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 	const nNagesenAmount = elNagesenAmount.val();
 
 	if(elNagesen.css('display')!=='none' && nNagesenAmount > 0){
-		console.log("有料リアクション");
 		// 与信済みであるかを検索
 		$.ajax({
 			"type": "get",
@@ -221,7 +239,6 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 				return false;
 			} else if (result === 0) {
 				// クレカ入力ダイアログを表示して、MDKToken取得
-				console.log("クレカ入力ダイアログを表示");
 				Swal.fire({
 					html: `
 <style>
@@ -319,30 +336,34 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 					// キャンセルボタンクック
 					if(formValues.dismiss){return false;}
 
+
 					const postData = {
 						"token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
-						"card_number": formValues.cardNum,
-						"card_expire": formValues.cardExp,
-						"security_code": formValues.cardSec,
+						"card_number": formValues.value.cardNum,
+						"card_expire": formValues.value.cardExp,
+						"security_code": formValues.value.cardSec,
 						"lang": "ja",
 					};
+					console.log(postData);
 					const apiUrl = "https://api.veritrans.co.jp/4gtoken";
 
+					// $.ajaxがクロスドメインでうまく動かなかったので、XMLHttpRequestを使っている。
 					let xhr = new XMLHttpRequest();
 					xhr.open('POST', apiUrl, true);
 					xhr.setRequestHeader('Accept', 'application/json');
 					xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 					xhr.addEventListener('loadend', function () {
 						if (xhr.status === 0) {
-							alert("トークンサーバーとの接続に失敗しました");
+							DispMsg("決済代行サービスのサーバに接続できませんでした。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
 							return;
 						}
 						const response = JSON.parse(xhr.response);
 						if (xhr.status == 200) {
-							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token, cardExp, cardSec);
+							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token, formValues.value.cardExp, formValues.value.cardSec);
 							elNagesenAmount.val("0");
 						} else {
-							alert(response.message);
+							//console.log(response);
+							DispMsg(`カード情報の登録に失敗しました。(${response.message})`);
 						}
 					});
 					xhr.send(JSON.stringify(postData));
@@ -352,7 +373,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 				SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, null, null, null);
 				elNagesenAmount.val("0");
 			} else {
-				console.log("その他エラー");
+				DispMsg("ポイピクのサーバで不明なエラーが発生しました。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
 			}
 		}, function (err) {
 			console.log("CheckCreditCardF error" + err);

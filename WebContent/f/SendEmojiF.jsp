@@ -3,7 +3,12 @@
 <%@include file="/inner/Common.jsp"%>
 <%!
 class SendEmojiC {
-	public int EMOJI_MAX = 10;
+	public final int EMOJI_MAX = 10;
+
+	public final int ERR_NONE = 0;
+	public final int ERR_RETRY = -10;
+	public final int ERR_INQUIRY = -20;
+	public final int ERR_UNKNOWN = -99;
 
 	public int m_nContentId = -1;
 	public String m_strEmoji = "";
@@ -13,6 +18,7 @@ class SendEmojiC {
 	public String m_strIpAddress = "";
 	public String m_strCardExpire = "";
 	public String m_strCardSecurityCode = "";
+	public int m_nErrCode = ERR_UNKNOWN;
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -91,6 +97,7 @@ class SendEmojiC {
 				return false;
 			}
 
+			// 課金
 			if(m_nAmount>0){
 				// 注文生成
 				Integer orderId = null;
@@ -99,7 +106,7 @@ class SendEmojiC {
 						" VALUES (?, ?, ?)";
 				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				cState.setInt(1, m_nUserId);
-				cState.setInt(2, 0);
+				cState.setInt(2, COrder.Status.get("Init"));
 				cState.setInt(3, m_nAmount);
 				cState.executeUpdate();
 				cResSet = cState.getGeneratedKeys();
@@ -138,8 +145,10 @@ class SendEmojiC {
 						cState.setString(4, cardPayment.getAgencyOrderId());
 						cState.executeUpdate();
 						cState.close(); cState=null;
+						m_nErrCode = ERR_NONE;
 					}else{
-						Log.d("決済処理に失敗");
+						Log.d("決済処理に失敗(uid)", m_nUserId);
+						setErrCode(cardPayment);
 					}
 				}else{
 					strSql = "SELECT expire, security_code, authorized_order_id FROM mdk_creditcards WHERE user_id=?";
@@ -156,6 +165,7 @@ class SendEmojiC {
 						authOrderId = cResSet.getString("authorized_order_id");
 					}else{
 						Log.d("与信済みの決済情報が見つからない(uid)", m_nUserId);
+						m_nErrCode = ERR_RETRY;
 						return false;
 					}
 					cResSet.close();cResSet=null;
@@ -169,22 +179,22 @@ class SendEmojiC {
 						cState.setInt(2, m_nUserId);
 						cState.executeUpdate();
 						cState.close();cState=null;
+						m_nErrCode = ERR_NONE;
 					}else{
-						Log.d("決済処理に失敗");
+						Log.d("決済処理に失敗(uid)", m_nUserId);
+						setErrCode(cardPayment);
 					}
 				}
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, authorizeResult?20:-10);
+				cState.setInt(1, authorizeResult?COrder.Status.get("Paid"):COrder.Status.get("PaymentError"));
 				cState.setString(2, authorizeResult?cardPayment.getAgencyOrderId():null);
 				cState.setInt(3, orderId);
 				cState.executeUpdate();
 				cState.close();cState=null;
 
-				if(!authorizeResult){
-					return false;
-				}
+				if(!authorizeResult){return false;}
 			}
 
 
@@ -294,6 +304,18 @@ class SendEmojiC {
 		}
 		return bRtn;
 	}
+
+	private void setErrCode(CardPayment cardPayment) {
+		if(cardPayment.errorKind == CardPayment.ErrorKind.CardAuth
+		|| cardPayment.errorKind == CardPayment.ErrorKind.Common){
+			m_nErrCode = ERR_RETRY;
+		}else if(cardPayment.errorKind == CardPayment.ErrorKind.MDKConnection){
+			// 決済されてるかもしれないし、されていないかもしれない。
+			m_nErrCode = ERR_INQUIRY;
+		}else{
+			m_nErrCode = ERR_UNKNOWN;
+		}
+	}
 }
 %>
 <%
@@ -304,5 +326,6 @@ cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin, _TEX);
 %>{
 "result_num" : <%=(bRtn)?1:0%>,
-"result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>"
+"result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>",
+"error_code" : <%=cResults.m_nErrCode%>
 }
