@@ -253,10 +253,10 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4"  value="012"/>
 </div>
 <div class="CardInfoDlgInfoCheckList">
-<label><input type="checkbox"/>利用規約に同意します</label>
+<label><input id="cc_agree1" type="checkbox"/>利用規約に同意します</label>
 </div>
 <div class="CardInfoDlgInfoCheckList">
-<label><input type="checkbox"/>今後、選択した金額でリアクションするとで自動決済することに同意します</label>
+<label><input id="cc_agree2" type="checkbox"/>今後、選択した金額でリアクションするとで自動決済することに同意します</label>
 </div>
 `,
 					focusConfirm: false,
@@ -268,6 +268,8 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 							cardExp: $("#cc_exp").val(),
 							cardSec: $("#cc_csc").val(),
 						}
+
+						// カード番号
 						if (vals.cardNum === '') {
 							return Swal.showValidationMessage('カード番号を入力してください');
 						}
@@ -281,7 +283,21 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 						if (vals.cardExp === '') {
 							return Swal.showValidationMessage('有効期限を入力してください');
 						}
-						//TODO 期限切れ直前カードは受け付けない
+
+						// 有効期限 use dayjs
+						const MM = Number(vals.cardExp.split('/')[0]);
+						const YY = Number(vals.cardExp.split('/')[1]);
+						const expDay = dayjs(`20${YY}-${MM}-01`);
+						if(isNaN(MM)||isNaN(YY)||!expDay){
+							return Swal.showValidationMessage('有効期限は半角で、MM/YYの形式で入力してください。');
+						}
+						const now = dayjs();
+						const limit = now.add(60, 'day');
+						if(limit>expDay){
+							return Swal.showValidationMessage('有効期限が切れているか迫っているため、このカードは登録できません。');
+						}
+
+						// セキュリティーコード
 						if (vals.cardSec === ''){
 							return Swal.showValidationMessage('セキュリティーコードを入力してください');
 						}
@@ -289,7 +305,12 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 							return Swal.showValidationMessage('セキュリティーコードは半角数字を入力してください');
 						}
 						if (vals.cardSec.length < 3){
-							return Swal.showValidationMessage('セキュリティーコードはの桁数がたりません');
+							return Swal.showValidationMessage('セキュリティーコードの桁数がたりません');
+						}
+
+						// 同意チェックボックス
+						if(!$("#cc_agree1").prop('checked')||!$("#cc_agree2").prop('checked')){
+							return Swal.showValidationMessage('上記２点に同意のチェックをいただくと、登録と決済ができます。');
 						}
 
 						return vals;

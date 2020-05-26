@@ -20,6 +20,7 @@
 <link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon.png" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/jquery.creditCardValidator.js"></script>
+<script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
 <script type="text/javascript" src="/js/common-40.js"></script>
 <script type="text/javascript" src="/js/commonPc-03.js"></script>
 <%if(Util.isSmartPhone(request)) {%>
