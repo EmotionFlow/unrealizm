@@ -97,9 +97,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</div>
 		</div>
 		<div class="ppmc_sub">
-			<a href="./odai.pdf">
-				<img src="./ppmc_sp_img/btn_odai.png">
-			</a>
+			<img src="./ppmc_sp_img/btn_end.png">
 		</div>
 
 		<div class="ppmc_sub">
@@ -154,9 +152,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_method.png">
 			<div class="ppmc_sub">
-				<a href="./odai.pdf">
-					<img src="./ppmc_sp_img/btn_odai.png">
-				</a>
+				<img src="./ppmc_sp_img/btn_end.png">
 			</div>
 			<div class="ppmc_sub_text">
 				①お題をDL<br>

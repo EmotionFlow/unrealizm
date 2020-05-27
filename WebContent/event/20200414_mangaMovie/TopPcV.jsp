@@ -66,9 +66,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 		</div>
 		<div class="ppmc_sub">
-			<a href="./odai.pdf">
-				<img class="ppmc_sub_img" src="./ppmc_sp_img/btn_odai.png">
-			</a>
+			<img class="ppmc_sub_img" src="./ppmc_sp_img/btn_end.png">
 		</div>
 
 		<div class="ppmc_sub">
@@ -123,9 +121,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_method.png">
 			<div class="ppmc_sub">
-				<a href="./odai.pdf">
-					<img src="./ppmc_sp_img/btn_odai.png">
-				</a>
+				<img src="./ppmc_sp_img/btn_end.png">
 			</div>
 			<div class="ppmc_sub_text">
 				①お題をDL<br>
