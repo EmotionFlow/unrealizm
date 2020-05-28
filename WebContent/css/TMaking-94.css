@@ -1380,12 +1380,31 @@
 .IllustItem .IllustItemResBtnList .ResEmojiNagesen {
 	display: block;
 	float: left;
-	width: 100%;
 	box-sizing: border-box;
 	text-align: left;
 	padding: 0;
 	font-size: 16px;
 	margin: 7px;
+}
+.IllustItem .IllustItemResBtnList .ResEmojiNagesenNowPayment {
+	display: block;
+	float: left;
+	box-sizing: border-box;
+	text-align: left;
+	padding: 0;
+	font-size: 16px;
+	margin: 7px;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiNagesenNowPayment .NagesenLoading {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background: no-repeat url(/img/loading.gif);
+	background-size: cover;
+	position: relative;
+	top: 4px;
+	margin: 0 2px 0 4px;
 }
 
 .IllustItem .IllustItemResBtnList .ResEmojiNagesen .NagesenAmount{

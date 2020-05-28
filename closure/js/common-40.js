@@ -172,7 +172,7 @@ function HideMsgStatic() {
 	}, 1000);
 }
 
-function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strCardExp, strCardSec) {
+function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strCardExp, strCardSec, elNagesen) {
 	let amount = -1;
 	let token = "";
 	let exp = "";
@@ -181,6 +181,11 @@ function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strC
 	if(strMdkToken!=null) {token=strMdkToken;}
 	if(strCardExp!=null) {exp=strCardExp;}
 	if(strCardSec!=null) {sec=strCardSec;}
+
+	let elNagesenNowPayment = null;
+	if(elNagesen!=null){
+		elNagesenNowPayment = elNagesen.parent().children('div.ResEmojiNagesenNowPayment');
+	}
 
 	$.ajax({
 		"type": "post",
@@ -196,38 +201,58 @@ function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strC
 			var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
 			$("#ResEmojiAdd_" + nContentId).before($objResEmoji);
 			if (vg) vg.vgrefresh();
-			if(nAmount>0){
+			if(nAmount>0) {
 				DispMsg(`${nAmount}円のご支援ありがとうございました！`);
+				if (elNagesen != null) {
+					elNagesenNowPayment.hide();
+					elNagesen.show();
+				}
 			}
 		} else {
-			switch(data.error_code){
-				case -10:
-					DispMsg("カード認証でエラーが発生しました。もう一度試すか、別のカードをご利用ください。");
-					break;
-				case -20:
-					alert("決済中に深刻なエラーが発生し、決済されているか不明な状態です。大変恐れ入りますが、問い合わせページからご連絡をお願いいたします。");
-					break;
-				case -99:
-					DispMsg("サーバエラーが発生しました。");
-					break;
-			}
-		}
-		},
+				switch (data.error_code) {
+					case -10:
+						DispMsg("カード認証でエラーが発生しました。もう一度試すか、別のカードをご利用ください。");
+						break;
+					case -20:
+						alert("決済中に深刻なエラーが発生し、決済されているか不明な状態です。大変恐れ入りますが、問い合わせページからご連絡をお願いいたします。");
+						break;
+					case -99:
+						DispMsg("サーバエラーが発生しました。");
+						break;
+				}
+				if (elNagesen != null) {
+					elNagesenNowPayment.hide();
+					elNagesen.show();
+				}
+		}},
 		error => {
 			DispMsg("ポイピクサーバにてエラーが発生しました。");
+			if (elNagesen != null) {
+				elNagesenNowPayment.hide();
+				elNagesen.show();
+			}
 		}
 	);
 }
 
-const CardInfoDlgHtml = `
-`;
-
-function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
+function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 	let elNagesen = $(elThis).parent().parent().children('.ResEmojiNagesen');
-	let elNagesenAmount = elNagesen.children('.NagesenAmount')
+	let elNagesenAmount = elNagesen.children('.NagesenAmount');
 	const nNagesenAmount = elNagesenAmount.val();
 
+	let elNagesenNowPayment = elNagesen.parent().children('div.ResEmojiNagesenNowPayment');
+	if(elNagesenNowPayment.css('display') !== 'none'){
+		console.log("決済処理中");
+		return;
+	}
+
 	if(elNagesen.css('display')!=='none' && nNagesenAmount > 0){
+		if(elNagesen!=null){
+			elNagesen.hide();
+			elNagesenNowPayment.show();
+			elNagesen.children('.NagesenAmount').val("0");
+		}
+
 		// 与信済みであるかを検索
 		$.ajax({
 			"type": "get",
@@ -359,8 +384,8 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 						}
 						const response = JSON.parse(xhr.response);
 						if (xhr.status == 200) {
-							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token, formValues.value.cardExp, formValues.value.cardSec);
-							elNagesenAmount.val("0");
+							SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token,
+								formValues.value.cardExp, formValues.value.cardSec, elNagesen);
 						} else {
 							//console.log(response);
 							DispMsg(`カード情報の登録に失敗しました。(${response.message})`);
@@ -370,8 +395,8 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 				});
 			} else if (result == 1) {
 				console.log("与信済み");
-				SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, null, null, null);
-				elNagesenAmount.val("0");
+				SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount,
+					null, null, null, elNagesen);
 			} else {
 				DispMsg("ポイピクのサーバで不明なエラーが発生しました。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
 			}
@@ -380,7 +405,7 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis, resource) {
 			DispMsg("ポイピクのサーバでエラーが発生しました。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
 		});
 	} else {
-		SendEmojiAjax(nContentId, strEmoji, nUserId, null, null);
+		SendEmojiAjax(nContentId, strEmoji, nUserId, null, null, null);
 	}
 
 	return false;

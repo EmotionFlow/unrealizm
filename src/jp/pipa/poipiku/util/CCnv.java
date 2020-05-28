@@ -301,9 +301,13 @@ public class CCnv {
 					.append("<option value=\"1000\">1,000</option>")
 					.append("<option value=\"10000\">10,000</option>")
 					.append("</select>" +
-							"<span class=\"NagesenMsg\">円 クリエイターを応援する</span>" +
+							"<span class=\"NagesenMsg\">円でクリエイターを応援する</span>" +
 							"<span class=\"NagesenInfo\"><a href=\"#\" class=\"IllustItemCommandEdit fas fa-info-circle\"></a></span>")
 					.append("</div>");	// ResEmojiNagesen
+			strRtn.append("<div class=\"ResEmojiNagesenNowPayment\" style=\"display:none\">")
+					.append("<span class=\"NagesenLoading\"></span><span>支払処理中</span>")
+					.append("</div>");	// ResEmojiNagesenNowPayment
+
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
 			for(String emoji : vResult) {
