@@ -359,8 +359,13 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 					},
 				}).then(function (formValues) {
 					// キャンセルボタンクック
-					if(formValues.dismiss){return false;}
-
+					if(formValues.dismiss){
+						if (elNagesen != null) {
+							elNagesenNowPayment.hide();
+							elNagesen.show();
+						}
+						return false;
+					}
 
 					const postData = {
 						"token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
@@ -389,6 +394,10 @@ function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
 						} else {
 							//console.log(response);
 							DispMsg(`カード情報の登録に失敗しました。(${response.message})`);
+							if (elNagesen != null) {
+								elNagesenNowPayment.hide();
+								elNagesen.show();
+							}
 						}
 					});
 					xhr.send(JSON.stringify(postData));
