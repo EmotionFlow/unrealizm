@@ -54,6 +54,7 @@ MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
+MENU.put("PAYMENT", "支払い設定");
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
@@ -203,6 +204,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 							"REACTION",
 							"TWITTER",
 							"MAIL",
+							"PAYMENT",
 							"ACCOUNT",
 							"INFO"
 					}; %>
@@ -271,6 +273,14 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMailV.jsp"%>
+				</div>
+			</div>
+
+			<%strPageId = "PAYMENT";%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingPaymentV.jsp"%>
 				</div>
 			</div>
 

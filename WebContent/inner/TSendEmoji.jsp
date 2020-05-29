@@ -30,7 +30,7 @@
                     $("#ResEmojiAdd_" + nContentId).before($objResEmoji);
                     if (vg) vg.vgrefresh();
                     if(nAmount>0) {
-                        DispMsg(`${nAmount}円ポチ袋 ありがとうございました！`);
+                        DispMsg(nAmount + "円のポチ袋 ありがとうございました！");
                         if (elNagesen != null) {
                             elNagesenNowPayment.hide();
                             elNagesen.show();
