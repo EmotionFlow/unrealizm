@@ -301,7 +301,7 @@ public class CCnv {
 					.append("<option value=\"1000\">1,000</option>")
 					.append("<option value=\"10000\">10,000</option>")
 					.append("</select>" +
-							"<span class=\"NagesenMsg\">円でクリエイターを応援する</span>" +
+							"<span class=\"NagesenMsg\">円のポチ袋をつける</span>" +
 							"<span class=\"NagesenInfo\"><a href=\"#\" class=\"IllustItemCommandEdit fas fa-info-circle\"></a></span>")
 					.append("</div>");	// ResEmojiNagesen
 			strRtn.append("<div class=\"ResEmojiNagesenNowPayment\" style=\"display:none\">")

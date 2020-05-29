@@ -27,6 +27,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
 		<script>
 			var g_nPage = 1;
