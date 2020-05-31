@@ -12,7 +12,7 @@ class GetEmojiListC {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
-			m_nCategoryId	= Common.ToIntN(request.getParameter("CAT"), 0, Common.EMOJI_CAT_ALL);
+			m_nCategoryId	= Common.ToIntN(request.getParameter("CAT"), 0, Common.EMOJI_CAT_NAGESEN);
 		} catch(Exception e) {
 			;
 		}

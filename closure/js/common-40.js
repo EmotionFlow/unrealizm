@@ -227,12 +227,6 @@ function DeleteContentBase(nUserId, nContentId, bDeleteTweet) {
 function switchEmojiKeyboard(obj, nContentId, nSelected) {
 	var $ResEmojiBtnList = $(obj).parent().parent().children('.ResEmojiBtnList');
 	$ResEmojiBtnList.hide();
-	$EmojiNagesen = $(obj).parent().parent().children('.ResEmojiNagesen');
-	if(nSelected===3){
-		$EmojiNagesen.show();
-	}else{
-		$EmojiNagesen.hide();
-	}
 	var $ResEmojiBtnListTarg = $ResEmojiBtnList.eq(nSelected);
 	if(!$ResEmojiBtnListTarg.loading) {
 		$ResEmojiBtnListTarg.loading = true;

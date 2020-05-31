@@ -290,20 +290,11 @@ public class CCnv {
 		// Normal
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, "ポチ袋"));
 		strRtn.append("</div>");	// ResBtnSetList
 
 		if(nLoginUserId>0) {
-			// 投げ銭金額入力
-			strRtn.append("<div class=\"ResEmojiNagesen\" style=\"display:none\">")
-					.append("<select class=\"NagesenAmount\">")
-					.append("<option value=\"0\">0</option>")
-					.append("<option value=\"100\">100</option>")
-					.append("<option value=\"1000\">1,000</option>")
-					.append("<option value=\"10000\">10,000</option>")
-					.append("</select>" +
-							"<span class=\"NagesenMsg\">円のポチ袋をつける</span>" +
-							"<span class=\"NagesenInfo\"><a href=\"#\" class=\"IllustItemCommandEdit fas fa-info-circle\"></a></span>")
-					.append("</div>");	// ResEmojiNagesen
+			// 投げ銭支払い処理中
 			strRtn.append("<div class=\"ResEmojiNagesenNowPayment\" style=\"display:none\">")
 					.append("<span class=\"NagesenLoading\"></span><span>支払処理中</span>")
 					.append("</div>");	// ResEmojiNagesenNowPayment
@@ -330,6 +321,8 @@ public class CCnv {
 		strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
 		// 全ての絵文字
 		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
+		// ポチ袋
+		strRtn.append("<div class=\"ResEmojiBtnList Nagesen\" style=\"display: none;\"></div>");
 		strRtn.append("</div>");	// IllustItemResList
 	}
 

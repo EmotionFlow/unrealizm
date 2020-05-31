@@ -1331,8 +1331,8 @@
 }
 
 .IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem {
-	margin: 0 7px;
-	min-width: 60px;
+	margin: 0 5px;
+	min-width: 55px;
 	text-align: center;
 	padding: 1px 0;
 	font-size: 11px;
@@ -1431,7 +1431,8 @@
 }
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList.Food,
-.IllustItem .IllustItemResBtnList .ResEmojiBtnList.All {
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.All,
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.Nagesen{
 	max-height: 400px;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;
