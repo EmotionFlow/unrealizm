@@ -235,7 +235,7 @@
                                         formValues.value.cardExp, formValues.value.cardSec, elNagesenNowPayment);
                                 } else {
                                     //console.log(response);
-                                    DispMsg(`カード情報の登録に失敗しました。(${response.message})`);
+                                    DispMsg("カード情報の登録に失敗しました。(" + response.message + ")");
                                     if (elNagesen != null) {
                                         elNagesenNowPayment.hide();
                                     }
