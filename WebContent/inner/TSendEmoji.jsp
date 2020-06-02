@@ -59,7 +59,7 @@
         return `
 <div class="CardInfoDlgInfo">
 ` + strEmoji + `に
-<select id="nagesen_amount">
+<select id="cheer_amount">
 <option value="100">100</option>
 <option value="1000">1,000</option>
 <option value="10000">10,000</option>
@@ -123,7 +123,7 @@
                 confirmButtonText: 'ポチ袋をつける',
                 preConfirm: () => {
                     return {
-                        amount: $("#nagesen_amount").val(),
+                        amount: $("#cheer_amount").val(),
                     };
                 },
             }).then(formValues => {

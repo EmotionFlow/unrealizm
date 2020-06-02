@@ -160,7 +160,7 @@ public class Common {
 	public static final int EMOJI_CAT_POPULAR = 1;
 	public static final int EMOJI_CAT_FOOD = 2;
 	public static final int EMOJI_CAT_ALL = 3;
-	public static final int EMOJI_CAT_NAGESEN = 4;
+	public static final int EMOJI_CAT_CHEER = 4;
 	// For Event
 	public static final boolean EMOJI_EVENT = false;
 	public static final String EMOJI_EVENT_CHAR = "💝";		// X'mas
