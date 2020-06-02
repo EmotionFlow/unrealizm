@@ -1377,7 +1377,7 @@
 	color: #fff;
 }
 
-.IllustItem .IllustItemResBtnList .ResEmojiNagesen {
+.IllustItem .IllustItemResBtnList .ResEmojiCheer {
 	display: block;
 	float: left;
 	box-sizing: border-box;
@@ -1386,7 +1386,7 @@
 	font-size: 16px;
 	margin: 7px;
 }
-.IllustItem .IllustItemResBtnList .ResEmojiNagesenNowPayment {
+.IllustItem .IllustItemResBtnList .ResEmojiCheerNowPayment {
 	display: block;
 	float: left;
 	box-sizing: border-box;
@@ -1396,7 +1396,7 @@
 	margin: 7px;
 }
 
-.IllustItem .IllustItemResBtnList .ResEmojiNagesenNowPayment .NagesenLoading {
+.IllustItem .IllustItemResBtnList .ResEmojiCheerNowPayment .CheerLoading {
 	width: 20px;
 	height: 20px;
 	display: inline-block;
@@ -1407,15 +1407,15 @@
 	margin: 0 2px 0 4px;
 }
 
-.IllustItem .IllustItemResBtnList .ResEmojiNagesen .NagesenAmount{
+.IllustItem .IllustItemResBtnList .ResEmojiCheer .CheerAmount{
 	display: inline-block;
 }
-.IllustItem .IllustItemResBtnList .ResEmojiNagesen .NagesenMsg{
+.IllustItem .IllustItemResBtnList .ResEmojiCheer .CheerMsg{
 	display: inline-block;
 	line-height: 30px;
 	padding-left: 2px;
 }
-.IllustItem .IllustItemResBtnList .ResEmojiNagesen .NagesenInfo{
+.IllustItem .IllustItemResBtnList .ResEmojiCheer .CheerInfo{
 	display: inline-block;
 	line-height: 30px;
 	padding-left: 10px;
@@ -1432,7 +1432,7 @@
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList.Food,
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList.All,
-.IllustItem .IllustItemResBtnList .ResEmojiBtnList.Nagesen{
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.Cheer{
 	max-height: 400px;
 	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;

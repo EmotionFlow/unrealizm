@@ -295,9 +295,9 @@ public class CCnv {
 
 		if(nLoginUserId>0) {
 			// 投げ銭支払い処理中
-			strRtn.append("<div class=\"ResEmojiNagesenNowPayment\" style=\"display:none\">")
-					.append("<span class=\"NagesenLoading\"></span><span>支払処理中</span>")
-					.append("</div>");	// ResEmojiNagesenNowPayment
+			strRtn.append("<div class=\"ResEmojiCheerNowPayment\" style=\"display:none\">")
+					.append("<span class=\"CheerLoading\"></span><span>支払処理中</span>")
+					.append("</div>");	// ResEmojiCheerNowPayment
 
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
@@ -322,7 +322,7 @@ public class CCnv {
 		// 全ての絵文字
 		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
 		// ポチ袋
-		strRtn.append("<div class=\"ResEmojiBtnList Nagesen\" style=\"display: none;\"></div>");
+		strRtn.append("<div class=\"ResEmojiBtnList Cheer\" style=\"display: none;\"></div>");
 		strRtn.append("</div>");	// IllustItemResList
 	}
 

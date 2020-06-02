@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
-    function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strCardExp, strCardSec, elNagesenNowPayment) {
+    function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strCardExp, strCardSec, elCheerNowPayment) {
         let amount = -1;
         let token = "";
         let exp = "";
@@ -26,8 +26,8 @@
                     if (vg) vg.vgrefresh();
                     if(nAmount>0) {
                         DispMsg(nAmount + "円ポチ袋 ありがとうございました！");
-                        if (elNagesenNowPayment != null) {
-                            elNagesenNowPayment.hide();
+                        if (elCheerNowPayment != null) {
+                            elCheerNowPayment.hide();
                         }
                     }
                 } else {
@@ -42,14 +42,14 @@
                             DispMsg("サーバエラーが発生しました。");
                             break;
                     }
-                    if (elNagesenNowPayment != null) {
-                        elNagesenNowPayment.hide();
+                    if (elCheerNowPayment != null) {
+                        elCheerNowPayment.hide();
                     }
                 }},
             error => {
                 DispMsg("ポイピクサーバにてエラーが発生しました。");
-                if (elNagesenNowPayment != null) {
-                    elNagesenNowPayment.hide();
+                if (elCheerNowPayment != null) {
+                    elCheerNowPayment.hide();
                 }
             }
         );
@@ -68,7 +68,7 @@
 `;
     }
 
-    function getRegistCreditCardDlgHtml(strEmoji, nNagesenAmount){
+    function getRegistCreditCardDlgHtml(strEmoji, nCheerAmount){
         return `
 <style>
 	.CardInfoDlgTitle{padding: 10px 0 0 0;}
@@ -79,10 +79,10 @@
 	.swal2-popup .CardInfoDlgInputItem .swal2-input{margin-top: 4px; font-size: 1.1em; height: 1.825em;}
 </style>
 <h2 class="CardInfoDlgTitle">
-` + strEmoji + "と一緒に" + nNagesenAmount + "円分のポチ袋を送ろう！" + `
+` + strEmoji + "と一緒に" + nCheerAmount + "円分のポチ袋を送ろう！" + `
 </h2>
 <div class="CardInfoDlgInfo">
-	<p>カード情報を入力してOKボタンをクリックすると、指定した金額を、リアクションと一緒に送ることができます。
+	<p>カード情報を入力してOKボタンをクリックすると、指定した金額をリアクションと一緒に送ることができます。
         いただいたポチ袋は運営にてまとめさせていただいたのち、クリエイターの方に還元されます。</p>
 </div>
 <div class="CardInfoDlgInputItem">
@@ -106,13 +106,13 @@
 
 
     function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
-        let elNagesenNowPayment = $(elThis).parent().parent().children('div.ResEmojiNagesenNowPayment');
-        if(elNagesenNowPayment.css('display') !== 'none'){
+        let elCheerNowPayment = $(elThis).parent().parent().children('div.ResEmojiCheerNowPayment');
+        if(elCheerNowPayment.css('display') !== 'none'){
             console.log("決済処理中");
             return;
         }
 
-        if(!$(elThis).parent().hasClass('Nagesen')) {
+        if(!$(elThis).parent().hasClass('Cheer')) {
             SendEmojiAjax(nContentId, strEmoji, nUserId, null, null, null);
         } else {
             Swal.fire({
@@ -130,8 +130,8 @@
                 // キャンセル
                 if(formValues.dismiss){return false;}
 
-                const nNagesenAmount = Number(formValues.value.amount);
-                elNagesenNowPayment.show();
+                const nCheerAmount = Number(formValues.value.amount);
+                elCheerNowPayment.show();
                 // 与信済みであるかを検索
                 $.ajax({
                     "type": "get",
@@ -144,7 +144,7 @@
                     } else if (result === 0) {
                         // クレカ入力ダイアログを表示して、MDKToken取得
                         Swal.fire({
-                            html: getRegistCreditCardDlgHtml(strEmoji, nNagesenAmount),
+                            html: getRegistCreditCardDlgHtml(strEmoji, nCheerAmount),
                             focusConfirm: false,
                             showCloseButton: true,
                             showCancelButton: true,
@@ -204,7 +204,7 @@
                         }).then( formValues => {
                             // キャンセルボタンクック
                             if(formValues.dismiss){
-                                elNagesenNowPayment.hide();
+                                elCheerNowPayment.hide();
                                 return false;
                             }
 
@@ -226,18 +226,18 @@
                             xhr.addEventListener('loadend', function () {
                                 if (xhr.status === 0) {
                                     DispMsg("決済代行サービスのサーバに接続できませんでした。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
-                                    elNagesenNowPayment.hide();
+                                    elCheerNowPayment.hide();
                                     return false;
                                 }
                                 const response = JSON.parse(xhr.response);
                                 if (xhr.status == 200) {
-                                    SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount, response.token,
-                                        formValues.value.cardExp, formValues.value.cardSec, elNagesenNowPayment);
+                                    SendEmojiAjax(nContentId, strEmoji, nUserId, nCheerAmount, response.token,
+                                        formValues.value.cardExp, formValues.value.cardSec, elCheerNowPayment);
                                 } else {
                                     //console.log(response);
                                     DispMsg("カード情報の登録に失敗しました。(" + response.message + ")");
-                                    if (elNagesen != null) {
-                                        elNagesenNowPayment.hide();
+                                    if (elCheer != null) {
+                                        elCheerNowPayment.hide();
                                     }
                                 }
                             });
@@ -245,8 +245,8 @@
                         });
                     } else if (result == 1) {
                         console.log("与信済み");
-                        SendEmojiAjax(nContentId, strEmoji, nUserId, nNagesenAmount,
-                            null, null, null, elNagesenNowPayment);
+                        SendEmojiAjax(nContentId, strEmoji, nUserId, nCheerAmount,
+                            null, null, null, elCheerNowPayment);
                     } else {
                         DispMsg("ポイピクのサーバで不明なエラーが発生しました。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
                     }
