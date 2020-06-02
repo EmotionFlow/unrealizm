@@ -290,13 +290,15 @@ public class CCnv {
 		// Normal
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, "ポチ袋"));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
 		strRtn.append("</div>");	// ResBtnSetList
 
 		if(nLoginUserId>0) {
 			// 投げ銭支払い処理中
 			strRtn.append("<div class=\"ResEmojiCheerNowPayment\" style=\"display:none\">")
-					.append("<span class=\"CheerLoading\"></span><span>支払処理中</span>")
+					.append("<span class=\"CheerLoading\"></span><span>")
+					.append(_TEX.T("Cheer.PaymentProcessing"))
+					.append("</span>")
 					.append("</div>");	// ResEmojiCheerNowPayment
 
 			// よく使う絵文字

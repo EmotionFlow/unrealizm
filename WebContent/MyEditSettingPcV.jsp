@@ -54,7 +54,7 @@ MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
-MENU.put("PAYMENT", "支払い設定");
+MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 

@@ -25,7 +25,7 @@
                     $("#ResEmojiAdd_" + nContentId).before($objResEmoji);
                     if (vg) vg.vgrefresh();
                     if(nAmount>0) {
-                        DispMsg(nAmount + "円ポチ袋 ありがとうございました！");
+                        DispMsg(<%=_TEX.T("CheerDlg.Thanks")%>);
                         if (elCheerNowPayment != null) {
                             elCheerNowPayment.hide();
                         }
@@ -33,13 +33,13 @@
                 } else {
                     switch (data.error_code) {
                         case -10:
-                            DispMsg("カード認証でエラーが発生しました。もう一度試すか、別のカードをご利用ください。");
+                            DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
                             break;
                         case -20:
-                            alert("決済中に深刻なエラーが発生し、決済されているか不明な状態です。大変恐れ入りますが、問い合わせページからご連絡をお願いいたします。");
+                            alert("<%=_TEX.T("CheerDlg.Err.AuthCritical")%>");
                             break;
                         case -99:
-                            DispMsg("サーバエラーが発生しました。");
+                            DispMsg("<%=_TEX.T("CheerDlg.Err.AuthOther")%>");
                             break;
                     }
                     if (elCheerNowPayment != null) {
@@ -47,7 +47,7 @@
                     }
                 }},
             error => {
-                DispMsg("ポイピクサーバにてエラーが発生しました。");
+                DispMsg("<%=_TEX.T("CheerDlg.Err.PoipikuSrv")%>");
                 if (elCheerNowPayment != null) {
                     elCheerNowPayment.hide();
                 }
@@ -55,17 +55,18 @@
         );
     }
 
-    function getAmountDlgHtml(strEmoji){
+    function getCheerAmountOptionHtml(){
         return `
-<div class="CardInfoDlgInfo">
-` + strEmoji + `に
 <select id="cheer_amount">
 <option value="100">100</option>
 <option value="1000">1,000</option>
 <option value="10000">10,000</option>
 </select>
-円の</div>
-`;
+        `;
+    }
+
+    function getAmountDlgHtml(strEmoji){
+        return <%=_TEX.T("CheerDlg.Text")%>;
     }
 
     function getRegistCreditCardDlgHtml(strEmoji, nCheerAmount){
@@ -79,27 +80,26 @@
 	.swal2-popup .CardInfoDlgInputItem .swal2-input{margin-top: 4px; font-size: 1.1em; height: 1.825em;}
 </style>
 <h2 class="CardInfoDlgTitle">
-` + strEmoji + "と一緒に" + nCheerAmount + "円分のポチ袋を送ろう！" + `
+` + <%=_TEX.T("CardInfoDlg.Title")%> + `
 </h2>
 <div class="CardInfoDlgInfo">
-	<p>カード情報を入力してOKボタンをクリックすると、指定した金額をリアクションと一緒に送ることができます。
-        いただいたポチ袋は運営にてまとめさせていただいたのち、クリエイターの方に還元されます。</p>
+	<p><%=_TEX.T("CardInfoDlg.Description")%></p>
 </div>
 <div class="CardInfoDlgInputItem">
-	<div class="CardInfoDlgInputLabel">クレジットカード番号</div>
+	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardNumber")%></div>
 	<img src="/img/credit_card_logos.png" width="170px"/>
 	<input id="card_number" class="swal2-input" style="margin-top: 4px;" maxlength="16" value="4111111111111111"/>
 </div>
 <div class="CardInfoDlgInputItem">
-	<div class="CardInfoDlgInputLabel">有効期限(MM/YY)</div>
+	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardExpire")%></div>
 	<input id="cc_exp" class="swal2-input" style="margin-top: 4px;" maxlength="5" value="02/22"/>
 </div>
 <div class="CardInfoDlgInputItem">
-	<div class="CardInfoDlgInputLabel">セキュリティーコード<div/>
+	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardSecCode")%><div/>
 	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4"  value="012"/>
 </div>
 <div class="CardInfoDlgInfoCheckList">
-<label><input id="cc_agree1" type="checkbox"/>今後、このカードを使ってポチ袋を自動決済することに同意します。</label>
+<label><input id="cc_agree1" type="checkbox"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
 </div>
 `;
     }
@@ -120,7 +120,7 @@
                 focusConfirm: false,
                 showCloseButton: true,
                 showCancelButton: false,
-                confirmButtonText: 'ポチ袋をつける',
+                confirmButtonText: "<%=_TEX.T("CheerDlg.Send")%>",
                 preConfirm: () => {
                     return {
                         amount: $("#cheer_amount").val(),
@@ -157,46 +157,46 @@
 
                                 // カード番号
                                 if (vals.cardNum === '') {
-                                    return Swal.showValidationMessage('カード番号を入力してください');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Empty")%>');
                                 }
                                 const validateCreditCardResult = $("#card_number").validateCreditCard(
                                     { accept: [
                                             'visa', 'mastercard', 'jcb', 'amex', 'diners_club_international'
                                         ] });
                                 if(!validateCreditCardResult.valid){
-                                    return Swal.showValidationMessage('カード番号に誤りがあるか、取り扱えないカードブランドです。');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Invalid")%>');
                                 }
                                 if (vals.cardExp === '') {
-                                    return Swal.showValidationMessage('有効期限を入力してください');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.Empty")%>');
                                 }
 
                                 // 有効期限 use dayjs
                                 const MM = Number(vals.cardExp.split('/')[0]);
                                 const YY = Number(vals.cardExp.split('/')[1]);
-                                const expDay = dayjs(`20${YY}-${MM}-01`);
+                                const expDay = dayjs("20" + YY + "-" + MM + "-01");
                                 if(isNaN(MM)||isNaN(YY)||!expDay){
-                                    return Swal.showValidationMessage('有効期限は半角で、MM/YYの形式で入力してください。');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.FormatErr")%>');
                                 }
                                 const now = dayjs();
                                 const limit = now.add(60, 'day');
                                 if(limit>expDay){
-                                    return Swal.showValidationMessage('有効期限が切れているか迫っているため、このカードは登録できません。');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.Invalid")%>');
                                 }
 
                                 // セキュリティーコード
                                 if (vals.cardSec === ''){
-                                    return Swal.showValidationMessage('セキュリティーコードを入力してください');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.Empty")%>');
                                 }
                                 if (/^\d+$/.exec(vals.cardSec) == null){
-                                    return Swal.showValidationMessage('セキュリティーコードは半角数字を入力してください');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.CharKindErr")%>');
                                 }
                                 if (vals.cardSec.length < 3){
-                                    return Swal.showValidationMessage('セキュリティーコードの桁数がたりません');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.LengthErr")%>');
                                 }
 
                                 // 同意チェックボックス
                                 if(!$("#cc_agree1").prop('checked')){
-                                    return Swal.showValidationMessage('上記に同意いただくと、ポチ袋を送ることができます。');
+                                    return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.Agree")%>');
                                 }
 
                                 return vals;
@@ -215,7 +215,6 @@
                                 "security_code": formValues.value.cardSec,
                                 "lang": "ja",
                             };
-                            console.log(postData);
                             const apiUrl = "https://api.veritrans.co.jp/4gtoken";
 
                             // $.ajaxがクロスドメインでうまく動かなかったので、XMLHttpRequestを使っている。
@@ -225,7 +224,7 @@
                             xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
                             xhr.addEventListener('loadend', function () {
                                 if (xhr.status === 0) {
-                                    DispMsg("決済代行サービスのサーバに接続できませんでした。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
+                                    DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenConnection")%>");
                                     elCheerNowPayment.hide();
                                     return false;
                                 }
@@ -235,7 +234,7 @@
                                         formValues.value.cardExp, formValues.value.cardSec, elCheerNowPayment);
                                 } else {
                                     //console.log(response);
-                                    DispMsg("カード情報の登録に失敗しました。(" + response.message + ")");
+                                    DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenErr")%>" + "(" + response.message + ")");
                                     if (elCheer != null) {
                                         elCheerNowPayment.hide();
                                     }
@@ -244,15 +243,15 @@
                             xhr.send(JSON.stringify(postData));
                         });
                     } else if (result == 1) {
-                        console.log("与信済み");
+                        console.log("登録済み");
                         SendEmojiAjax(nContentId, strEmoji, nUserId, nCheerAmount,
                             null, null, null, elCheerNowPayment);
                     } else {
-                        DispMsg("ポイピクのサーバで不明なエラーが発生しました。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
+                        DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
                     }
                 }, function (err) {
                     console.log("CheckCreditCardF error" + err);
-                    DispMsg("ポイピクのサーバでエラーが発生しました。恐れ入りますが、問い合わせページからご報告いただければ幸いです。");
+                    DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
                 });
             });
         }
