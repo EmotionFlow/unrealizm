@@ -28,7 +28,9 @@
 	</div>
 	<%}else{%>
 	<div class="SideBarMid">
-	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+	<!-- admax -->
+	<script src="https://adm.shinobi.jp/s/c01e5c7086d04ef17e73d6bf369c7168"></script>
+	<!-- admax -->
 	</div>
 	<%}%>
 <%}%>

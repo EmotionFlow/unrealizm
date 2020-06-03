@@ -145,6 +145,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	padding:10px 25px 10px 25px;
 }
 .ppmc_sub {display: block; position: relative;}
+.syou {
+	text-align:center;
+	border:1px solid red;
+	font-size:24px;
+	margin:10px 50px 10px 50px;
+	padding:10px 25px 10px 25px;
+}
 .LinkButton {display: block; position: absolute; width: 100%;}
 .LinkButton.Link2 {height: 321px; top:66px;}
 </style>
@@ -162,6 +169,44 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<img src="./ppmc_pc_img/head_20200512.png">
 		</div>
 		<div class="ppmc_sub">
+			<img src="./ppmc_pc_img/sub_syou_result.png">
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_pc_img/syou1.png">
+			<div class="syou">
+				suka さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_pc_img/syou2.png">
+			<div class="syou">
+				きたきたに さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_pc_img/syou3.png">
+			<div class="syou">
+				そーや さん
+				/ ばるたぁ さん
+				/ ダrエダ？！？！ さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_pc_img/syou4.png">
+			<div class="syou">
+				npitt さん
+				/ あおい さん
+				/ あおはる さん
+				/ あざらし さん
+				/ キスギ さん
+				/ くきわかめ さん
+				/ こじろー さん
+				/ ようか さん
+				/ わっちょ さん
+				/ 矢代迅 さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
 			<img src="./ppmc_pc_img/sub_about.png">
 			<div class="ppmc_sub_text">
 				Youtubeで配信されるマンガ動画の漫画制作コンテストです。<br><br>
@@ -170,18 +215,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				ポイピクではクリエイターの方々のキャリアラダーとなれる様、様々な機能やイベントを予定しております。<br>
 				今回のコンテストでは受賞者だけでなく、優秀な作品をご応募いただいた方にはYoutubeの漫画動画チャンネルを運営する株式会社プリズムリンクからマンガ動画の原稿制作を依頼させていただく可能性がございます。<br><br>
 				皆様のご応募を心よりお待ちしております。<br>
-			</div>
-		</div>
-		<div class="ppmc_sub">
-				<img src="./ppmc_pc_img/btn_end.png">
-		</div>
-
-		<div class="ppmc_sub">
-			<div>
-				<iframe width="600" height="337" src="https://www.youtube.com/embed/4UUC2fLh-NQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-			</div>
-			<div>
-				<img src="./ppmc_pc_img/img_sample2.png">
 			</div>
 		</div>
 

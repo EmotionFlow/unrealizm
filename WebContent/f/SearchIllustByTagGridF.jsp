@@ -6,7 +6,8 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 SearchIllustByTagGridC cResults = new SearchIllustByTagGridC();
 cResults.getParam(request);
-if(cResults.m_nMode==CCnv.MODE_SP) {
+if(cResults.m_nMode==CCnv.MODE_SP || cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+{
 	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 }
 boolean bRtn = cResults.getResults(cCheckLogin, true);

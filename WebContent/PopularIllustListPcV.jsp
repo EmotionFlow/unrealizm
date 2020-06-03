@@ -11,6 +11,7 @@ if(!bSmartPhone) {
 
 PopularIllustListC cResults = new PopularIllustListC();
 cResults.getParam(request);
+if (cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>

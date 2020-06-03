@@ -127,6 +127,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					<img class="EventBanner" src="/img/maintenance.png" />
 				</a>
 				-->
+				<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
+					<img class="EventBanner" src="/event/20200414_mangaMovie/ppmc_award.png" />
+				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 				</a>
@@ -170,6 +173,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 								<img class="EventBanner" src="/img/maintenance.png" />
 							</a>
 							-->
+							<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
+								<img class="EventBanner" src="/event/20200414_mangaMovie/ppmc_award.png" />
+							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 							</a>

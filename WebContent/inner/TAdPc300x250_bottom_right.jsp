@@ -33,6 +33,11 @@
 		(adsbygoogle = window.adsbygoogle || []).push({});
 		</script>
 	<%}else{%>
+		<!-- admax -->
+		<<!--
+		<script src="https://adm.shinobi.jp/s/1720304a841f245eac5b2dcb229f796e"></script>
+		-->
+		<!-- admax -->
 		<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
 	<%}%>
 </div>
