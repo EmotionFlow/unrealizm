@@ -6,6 +6,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 SearchIllustByTagGridC cResults = new SearchIllustByTagGridC();
 cResults.getParam(request);
+if (cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");

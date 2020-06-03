@@ -14,8 +14,6 @@ cResults.getParam(request);
 //cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-
-int nRnd = (int)(Math.random()*3);
 %>
 <!DOCTYPE html>
 <html>
@@ -99,15 +97,12 @@ int nRnd = (int)(Math.random()*3);
 			<%}%>
 			<section class="EventItemList">
 				<!--
-				<a class="EventItem" href="/RecruitS.jsp?BD=<%=nRnd%>">
-					<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
-				</a>
 				<a class="EventItem" href="https://poipiku.com/2/1783042.html">
 					<img class="EventBanner" src="/img/maintenance.png" />
 				</a>
-				 -->
-				<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc1_<%=nRnd%>.png" />
+				-->
+				<a class="EventItem" href="/event/20200414_mangaMovie/TopV.jsp">
+					<img class="EventBanner" src="/event/20200414_mangaMovie/ppmc_award.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />

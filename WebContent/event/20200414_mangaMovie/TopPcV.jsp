@@ -39,6 +39,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	padding:10px 25px 10px 25px;
 }
 .ppmc_sub {display: block; position: relative;}
+.syou {
+	text-align:center;
+	border:1px solid red;
+	font-size:16px;
+	margin:10px 50px 10px 50px;
+	padding:10px 25px 10px 25px;
+}
 .LinkButton {display: block; position: absolute; width: 100%;}
 .LinkButton.Link2 {height: 193px; top:40px;}
 </style>
@@ -55,6 +62,44 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<img src="./ppmc_sp_img/head_20200512.png">
 		</div>
 		<div class="ppmc_sub">
+			<img src="./ppmc_sp_img/sub_syou_result.png">
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_sp_img/syou1.png">
+			<div class="syou">
+				suka さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_sp_img/syou2.png">
+			<div class="syou">
+				きたきたに さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_sp_img/syou3.png">
+			<div class="syou">
+				そーや さん
+				/ ばるたぁ さん
+				/ ダrエダ？！？！ さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
+			<img src="./ppmc_sp_img/syou4.png">
+			<div class="syou">
+				npitt さん
+				/ あおい さん
+				/ あおはる さん
+				/ あざらし さん
+				/ キスギ さん
+				/ くきわかめ さん
+				/ こじろー さん
+				/ ようか さん
+				/ わっちょ さん
+				/ 矢代迅 さん
+			</div>
+		</div>
+		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_about.png">
 			<div class="ppmc_sub_text">
 				Youtubeで配信されるマンガ動画の漫画制作コンテストです。<br><br>
@@ -66,9 +111,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 		</div>
 		<div class="ppmc_sub">
-			<a href="./odai.pdf">
-				<img class="ppmc_sub_img" src="./ppmc_sp_img/btn_odai.png">
-			</a>
+			<img class="ppmc_sub_img" src="./ppmc_sp_img/btn_end.png">
 		</div>
 
 		<div class="ppmc_sub">
@@ -80,13 +123,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 		</div>
 
-		<div class="ppmc_sub">
-			<img src="./ppmc_sp_img/sub_syou.png">
-		</div>
-		<div class="ppmc_sub">
-			<img src="./ppmc_sp_img/img_syou_20200512.png">
-			<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-displays/wacom-one" target="_blank"></a>
-		</div>
 		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_term.png">
 			<div class="ppmc_sub_text">
@@ -123,9 +159,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<div class="ppmc_sub">
 			<img src="./ppmc_sp_img/sub_method.png">
 			<div class="ppmc_sub">
-				<a href="./odai.pdf">
-					<img src="./ppmc_sp_img/btn_odai.png">
-				</a>
+				<img src="./ppmc_sp_img/btn_end.png">
 			</div>
 			<div class="ppmc_sub_text">
 				①お題をDL<br>

@@ -23,8 +23,6 @@ if(!cCheckLogin.m_bLogin) {
 
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-
-int nRnd = (int)(Math.random()*3);
 %>
 <!DOCTYPE html>
 <html>
@@ -125,15 +123,12 @@ int nRnd = (int)(Math.random()*3);
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
 				<!--
-				<a class="EventItem" href="/RecruitPcS.jsp?b=<%=nRnd%>">
-					<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
-				</a>
 				<a class="EventItem" href="https://poipiku.com/2/1783042.html">
 					<img class="EventBanner" src="/img/maintenance.png" />
 				</a>
-				 -->
+				-->
 				<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc1_<%=nRnd%>.png" />
+					<img class="EventBanner" src="/event/20200414_mangaMovie/ppmc_award.png" />
 				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
@@ -174,15 +169,12 @@ int nRnd = (int)(Math.random()*3);
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
 							<!--
-							<a class="EventItem" href="/RecruitPcS.jsp?BD=<%=nRnd%>">
-								<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
-							</a>
 							<a class="EventItem" href="https://poipiku.com/2/1783042.html">
 								<img class="EventBanner" src="/img/maintenance.png" />
 							</a>
-							 -->
+							-->
 							<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-								<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc1_<%=nRnd%>.png" />
+								<img class="EventBanner" src="/event/20200414_mangaMovie/ppmc_award.png" />
 							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />

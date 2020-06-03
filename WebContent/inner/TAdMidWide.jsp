@@ -29,7 +29,10 @@
 			(adsbygoogle = window.adsbygoogle || []).push({});
 			</script>
 		<%}else{%>
-		<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+		<!-- admax -->
+		<script src="https://adm.shinobi.jp/s/78215ffd0e6eea00cde55cfaed03e0ef"></script>
+		<!-- admax -->
+		<%//@ include file="/inner/TAdBaseAdponR18.jsp"%>
 		<%}%>
 	<%}%>
 </div>

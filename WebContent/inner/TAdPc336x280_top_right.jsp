@@ -13,6 +13,9 @@
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
 <%}else{%>
-	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+	<!-- admax -->
+	<script src="https://adm.shinobi.jp/s/81e36b17ee513c41a38f820de680398e"></script>
+	<!-- admax -->
+	<%//@ include file="/inner/TAdBaseAdponR18.jsp"%>
 <%}%>
 </div>
