@@ -3,7 +3,7 @@
 {
 	CheckLogin cCheckLogin = new CheckLogin(request, response);
 	if(cCheckLogin.m_bLogin) {
-		//response.sendRedirect("https://poipiku.com/MyHomePcV.jsp");
+		response.sendRedirect("https://poipiku.com/MyHomePcV.jsp");
 	}
 }
 %>
