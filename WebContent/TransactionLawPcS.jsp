@@ -43,7 +43,7 @@
 				<div class="SettingListItem">
 					<div class="SettingListTitle">商品代金以外の料金の説明</div>
 					<div class="SettingBody">
-						システム利用料：販売金額の30%<br />
+						なし<br />
 					</div>
 				</div>
 
