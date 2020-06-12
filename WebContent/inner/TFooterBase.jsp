@@ -53,6 +53,7 @@
 			<dd><a class="FooterHref" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a></dd>
 			<dd><a class="FooterHref" href="/GuideLinePcV.jsp"><%=_TEX.T("Footer.GuideLine")%></a></dd>
 			<dd><a class="FooterHref" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a></dd>
+			<dd><a class="FooterHref" href="/TransactionLawPcS.jsp"><%=_TEX.T("Footer.TransactionLaw")%></a></dd>
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Info")%></dt>
