@@ -5,7 +5,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-if (cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 cResults.SELECT_MAX_SAMPLE_GALLERY = 15;
 cResults.SELECT_SAMPLE_GALLERY = (Util.isSmartPhone(request))?4:8;
 boolean bRtn = cResults.getResults(cCheckLogin);

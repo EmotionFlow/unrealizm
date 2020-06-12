@@ -17,7 +17,6 @@ if(strKeywordHan.matches("^[0-9]+$")) {
 	response.sendRedirect("https://poipiku.com/" + strKeywordHan + "/");
 	return;
 }
-if (cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 g_strSearchWord = cResults.m_strKeyword;

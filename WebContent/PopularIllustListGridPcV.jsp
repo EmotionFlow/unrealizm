@@ -6,7 +6,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 PopularIllustListGridC cResults = new PopularIllustListGridC();
 cResults.getParam(request);
-if (cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
 %>

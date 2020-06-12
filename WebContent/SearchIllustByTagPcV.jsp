@@ -11,7 +11,6 @@ if(!bSmartPhone) {
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
-if (cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");

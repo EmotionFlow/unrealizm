@@ -11,7 +11,6 @@ if(!bSmartPhone) {
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
-if (cCheckLogin.m_nUserId==315) cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
