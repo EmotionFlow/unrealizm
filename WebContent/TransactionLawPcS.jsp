@@ -92,7 +92,7 @@
 				<div class="SettingListItem">
 					<div class="SettingListTitle">屋号またはサービス名</div>
 					<div class="SettingBody">
-						株式会社pipa.jp<br />
+						ポイピク<br />
 					</div>
 				</div>
 
