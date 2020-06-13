@@ -62,6 +62,8 @@ if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.Recent.NeedLogin")));
 } else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_ALL) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
+} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_CHEER) {
+	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.NeedLogin")));
 } else {
 	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
 	if(Common.EMOJI_EVENT) {
