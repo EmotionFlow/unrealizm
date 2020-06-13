@@ -14,7 +14,7 @@ IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 

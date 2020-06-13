@@ -16,7 +16,7 @@ if(cResults.m_nUserId==-1) {
 }
 cResults.SELECT_MAX_GALLERY = 30;
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 

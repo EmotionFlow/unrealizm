@@ -13,7 +13,7 @@ if(cResults.m_nUserId==-1) {
 cResults.m_bDispUnPublished = true;
 
 if(!cResults.getResults(cCheckLogin, true)) {
-	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 

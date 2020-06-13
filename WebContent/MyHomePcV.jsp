@@ -14,7 +14,7 @@ cResults.getParam(request);
 
 if(!cCheckLogin.m_bLogin) {
 	if(cResults.n_nUserId>0) {
-		response.sendRedirect("https://poipiku.com/"+cResults.n_nUserId+"/");
+		response.sendRedirect("/"+cResults.n_nUserId+"/");
 	} else {
 		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	}

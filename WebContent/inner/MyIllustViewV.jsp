@@ -15,7 +15,7 @@
 
 	boolean bRet = cResults.getResults(cCheckLogin);
 	if(!bRet || Util.isBot(request.getHeader("user-agent")) || (bRet&&cResults.m_cUser.m_nUserId!=cCheckLogin.m_nUserId)) {
-		response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+		response.sendRedirect("/NotFoundPcV.jsp");
 		return;
 	}
 

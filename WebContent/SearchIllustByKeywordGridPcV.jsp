@@ -9,7 +9,7 @@ cResults.getParam(request);
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = "/";
-	response.sendRedirect("https://poipiku.com/" + strKeywordHan + "/");
+	response.sendRedirect("/" + strKeywordHan + "/");
 	return;
 }
 boolean bRtn = cResults.getResults(cCheckLogin);
