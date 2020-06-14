@@ -109,7 +109,7 @@ public class NewArrivalGridC {
 			}
 			sb.append(" WHERE open_id=0");
 			if(cCheckLogin.m_bLogin){
-				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?");
+				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
 			}
 			if(!strCondStart.isEmpty()){
 				sb.append(strCondStart);
@@ -120,6 +120,7 @@ public class NewArrivalGridC {
 			if(!strCondMute.isEmpty()){
 				sb.append(strCondMute);
 			}
+			sb.append(" AND safe_filter<=?");
 			sb.append(" ORDER BY content_id DESC LIMIT ?");
 			strSql = new String(sb);
 
@@ -129,7 +130,6 @@ public class NewArrivalGridC {
 				cState.setInt(idx++, cCheckLogin.m_nUserId); // follows_0000.user_id=?
 				cState.setInt(idx++, cCheckLogin.m_nUserId); // user_id=?
 				cState.setInt(idx++, cCheckLogin.m_nUserId); // block_user_id=?
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
 			}
 			if(!strCondStart.isEmpty()){
 				cState.setInt(idx++, m_nStartId); // content_id<?
@@ -140,6 +140,7 @@ public class NewArrivalGridC {
 			if(!strCondMute.isEmpty()){
 				cState.setString(idx++, strMuteKeyword);
 			}
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
 			cState.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
