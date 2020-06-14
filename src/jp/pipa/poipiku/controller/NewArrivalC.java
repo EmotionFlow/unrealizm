@@ -96,7 +96,7 @@ public class NewArrivalC {
 			StringBuilder sb = new StringBuilder();
 			sb.append("SELECT * FROM contents_0000 WHERE open_id=0");
 			if(cCheckLogin.m_bLogin){
-				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ");
+				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
 			}
 			if(!strCondCat.isEmpty()){
 				sb.append(strCondCat);
@@ -104,6 +104,7 @@ public class NewArrivalC {
 			if(!strCondMute.isEmpty()){
 				sb.append(strCondMute);
 			}
+			sb.append(" AND safe_filter<=?");
 			sb.append(" ORDER BY content_id DESC OFFSET ? LIMIT ?");
 			strSql = new String(sb);
 
@@ -112,7 +113,6 @@ public class NewArrivalC {
 			if(cCheckLogin.m_bLogin){
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			}
 			if(!strCondCat.isEmpty()){
 				cState.setInt(idx++, m_nCategoryId);
@@ -120,6 +120,7 @@ public class NewArrivalC {
 			if(!strCondMute.isEmpty()){
 				cState.setString(idx++, strMuteKeyword);
 			}
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();

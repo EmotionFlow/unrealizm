@@ -75,20 +75,20 @@ public class PopularIllustListGridC {
 				.append(" INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id")
 				.append(" WHERE open_id<>2");
 				if(cCheckLogin.m_bLogin){
-					sb.append(" AND safe_filter<=?")
-					.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
+					sb.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
 					.append(" AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
 				}
+				sb.append(" AND safe_filter<=?");
 
 				strSql = new String(sb);
 				sb.setLength(0);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				if(cCheckLogin.m_bLogin){
-					cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 					cState.setInt(idx++, cCheckLogin.m_nUserId);
 					cState.setInt(idx++, cCheckLogin.m_nUserId);
 				}
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 				/*
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
@@ -119,10 +119,10 @@ public class PopularIllustListGridC {
 			}
 			sb.append(" WHERE open_id<>2");
 			if(cCheckLogin.m_bLogin){
-				sb.append(" AND safe_filter<=?")
-				.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
+				sb.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
 				.append(" AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
 			}
+			sb.append(" AND safe_filter<=?");
 			sb.append(" ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?");
 
 			strSql = new String(sb);
@@ -131,10 +131,10 @@ public class PopularIllustListGridC {
 			idx = 1;
 			if(cCheckLogin.m_bLogin){
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 			}
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
