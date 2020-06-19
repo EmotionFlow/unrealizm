@@ -1,21 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- for EPSILON -->
+<script src= 'https://beta.epsilon.jp/js/token.js'></script>
+
 <script>
-    function SendEmojiAjax(nContentId, strEmoji, nUserId, nAmount, strMdkToken, strCardExp, strCardSec, elCheerNowPayment) {
+    const AGENT = {
+        "VERITRANS": 1,
+        "EPSILON": 2,
+    };
+
+    function SendEmojiAjax(emojiInfo, nAmount, nPaymentAgentId, strCreditCardToken, strCardExp, strCardSec, elCheerNowPayment) {
         let amount = -1;
+        let agentId = 0;
         let token = "";
         let exp = "";
         let sec = "";
         if(nAmount!=null) {amount=nAmount}
-        if(strMdkToken!=null) {token=strMdkToken;}
+        if(nPaymentAgentId!=null) {agentId=nPaymentAgentId;}
+        if(strCreditCardToken!=null) {token=strCreditCardToken;}
         if(strCardExp!=null) {exp=strCardExp;}
         if(strCardSec!=null) {sec=strCardSec;}
 
         $.ajax({
             "type": "post",
             "data": {
-                "IID": nContentId, "EMJ": strEmoji,
-                "UID": nUserId, "AMT": nAmount,
-                "MDK": token, "EXP": exp, "SEC": sec,
+                "IID": emojiInfo.contentId, "EMJ": emojiInfo.emoji,
+                "UID": emojiInfo.userId, "AMT": amount, "AID": agentId,
+                "TKN": token, "EXP": exp, "SEC": sec,
             },
             "url": "/f/SendEmojiF.jsp",
             "dataType": "json",
@@ -105,7 +115,69 @@
     }
 
 
+    function paymentByVeritrans(emojiInfo, nCheerAmount, formValues, elCheerNowPayment) {
+        const postData = {
+            "token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
+            "card_number": formValues.value.cardNum,
+            "card_expire": formValues.value.cardExp,
+            "security_code": formValues.value.cardSec,
+            "lang": "ja",
+        };
+        const apiUrl = "https://api.veritrans.co.jp/4gtoken";
+
+        // $.ajaxがクロスドメインでうまく動かなかったので、XMLHttpRequestを使っている。
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', apiUrl, true);
+        xhr.setRequestHeader('Accept', 'application/json');
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        xhr.addEventListener('loadend', function () {
+            if (xhr.status === 0) {
+                DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenConnection")%>");
+                elCheerNowPayment.hide();
+                return false;
+            }
+            const response = JSON.parse(xhr.response);
+            if (xhr.status === 200) {
+                SendEmojiAjax(emojiInfo, nCheerAmount, AGENT.VERITRANS, response.token,
+                    formValues.value.cardExp, formValues.value.cardSec, elCheerNowPayment);
+            } else {
+                //console.log(response);
+                DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenErr")%>" + "(" + response.message + ")");
+                if (elCheerNowPayment != null) {
+                    elCheerNowPayment.hide();
+                }
+            }
+        });
+        xhr.send(JSON.stringify(postData));
+    }
+
+    function paymentByEpsilon(emojiInfo, nCheerAmount, formValues, elCheerNowPayment) {
+        const contructCode = "68968190"
+        var cardObj = {
+            "cardno": formValues.value.cardNum,
+            "expire": '20' + formValues.value.cardExp.split('/')[1] +  formValues.value.cardExp.split('/')[0],
+            "securitycode": formValues.value.cardSec,
+            "holdername": "SAMPLE TARO",
+        };
+        EpsilonToken.init(contructCode);
+        EpsilonToken.getToken( cardObj , response => {
+            if( response.resultCode !== '000' ){
+                window.alert("購入処理中にエラーが発生しました");
+                console.log(response.resultCode);
+                elCheerNowPayment.hide();
+            }else{
+                SendEmojiAjax(emojiInfo, nCheerAmount, AGENT.EPSILON, response.tokenObject.token,
+                    formValues.value.cardExp, formValues.value.cardSec, elCheerNowPayment);
+            }
+        } );
+    }
+
     function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
+        const emojiInfo = {
+            "contentId": nContentId,
+            "emoji": strEmoji,
+            "userId": nUserId,
+        };
         let elCheerNowPayment = $(elThis).parent().parent().children('div.ResEmojiCheerNowPayment');
         if(elCheerNowPayment.css('display') !== 'none'){
             console.log("決済処理中");
@@ -113,7 +185,7 @@
         }
 
         if(!$(elThis).parent().hasClass('Cheer')) {
-            SendEmojiAjax(nContentId, strEmoji, nUserId, null, null, null);
+            SendEmojiAjax(emojiInfo, null, null, null, null);
         } else {
             Swal.fire({
                 html: getAmountDlgHtml(strEmoji),
@@ -142,7 +214,7 @@
                     if (typeof (result) === "undefined" || result == null || result === -1) {
                         return false;
                     } else if (result === 0) {
-                        // クレカ入力ダイアログを表示して、MDKToken取得
+                        // クレカ入力ダイアログを表示して、Token取得
                         Swal.fire({
                             html: getRegistCreditCardDlgHtml(strEmoji, nCheerAmount),
                             focusConfirm: false,
@@ -208,44 +280,14 @@
                                 return false;
                             }
 
-                            const postData = {
-                                "token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
-                                "card_number": formValues.value.cardNum,
-                                "card_expire": formValues.value.cardExp,
-                                "security_code": formValues.value.cardSec,
-                                "lang": "ja",
-                            };
-                            const apiUrl = "https://api.veritrans.co.jp/4gtoken";
+                            // paymentByVeritrans(formValues);
+                            paymentByEpsilon(emojiInfo, nCheerAmount, formValues, elCheerNowPayment);
 
-                            // $.ajaxがクロスドメインでうまく動かなかったので、XMLHttpRequestを使っている。
-                            let xhr = new XMLHttpRequest();
-                            xhr.open('POST', apiUrl, true);
-                            xhr.setRequestHeader('Accept', 'application/json');
-                            xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-                            xhr.addEventListener('loadend', function () {
-                                if (xhr.status === 0) {
-                                    DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenConnection")%>");
-                                    elCheerNowPayment.hide();
-                                    return false;
-                                }
-                                const response = JSON.parse(xhr.response);
-                                if (xhr.status == 200) {
-                                    SendEmojiAjax(nContentId, strEmoji, nUserId, nCheerAmount, response.token,
-                                        formValues.value.cardExp, formValues.value.cardSec, elCheerNowPayment);
-                                } else {
-                                    //console.log(response);
-                                    DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenErr")%>" + "(" + response.message + ")");
-                                    if (elCheer != null) {
-                                        elCheerNowPayment.hide();
-                                    }
-                                }
-                            });
-                            xhr.send(JSON.stringify(postData));
                         });
                     } else if (result == 1) {
                         console.log("登録済み");
-                        SendEmojiAjax(nContentId, strEmoji, nUserId, nCheerAmount,
-                            null, null, null, elCheerNowPayment);
+                        SendEmojiAjax(emojiInfo, nCheerAmount,
+                            null, null, null, null, elCheerNowPayment);
                     } else {
                         DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
                     }

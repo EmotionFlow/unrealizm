@@ -14,7 +14,8 @@ class SendEmojiC {
 	public String m_strEmoji = "";
 	public int m_nUserId = -1;
 	public int m_nAmount = -1;
-	public String m_strMDKToken = "";
+	public int m_nAgentId = -1;
+	public String m_strToken = "";
 	public String m_strIpAddress = "";
 	public String m_strCardExpire = "";
 	public String m_strCardSecurityCode = "";
@@ -26,9 +27,10 @@ class SendEmojiC {
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
 			m_strEmoji		= Common.ToString(request.getParameter("EMJ")).trim();
 			m_nUserId		= Common.ToInt(request.getParameter("UID"));
+			m_nAgentId		= Common.ToInt(request.getParameter("AID"));
 			m_strIpAddress	= request.getRemoteAddr();
 			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
-			m_strMDKToken	= Common.ToString(request.getParameter("MDK"));
+			m_strToken = Common.ToString(request.getParameter("TKN"));
 			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
 			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
 		} catch(Exception e) {
@@ -102,12 +104,13 @@ class SendEmojiC {
 				// 注文生成
 				Integer orderId = null;
 				strSql = "INSERT INTO orders(" +
-						" customer_id, seller_id, payment_total)" +
+						" customer_id, seller_id, status, payment_total)" +
 						" VALUES (?, ?, ?)";
 				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				cState.setInt(1, m_nUserId);
-				cState.setInt(2, COrder.Status.get("Init"));
-				cState.setInt(3, m_nAmount);
+				cState.setInt(2, 2); // 売り手はポイピク公式
+				cState.setInt(3, COrder.Status.get("Init"));
+				cState.setInt(4, m_nAmount);
 				cState.executeUpdate();
 				cResSet = cState.getGeneratedKeys();
 				if(cResSet.next()){
@@ -132,17 +135,18 @@ class SendEmojiC {
 
 				CardPayment cardPayment = new CardPayment(m_nUserId, m_nContentId, m_nAmount);
 				boolean authorizeResult = false;
-				if(!m_strMDKToken.isEmpty()){
-					authorizeResult = cardPayment.authorize(m_strMDKToken);
+				if(!m_strToken.isEmpty()){
+					authorizeResult = cardPayment.authorize(m_strToken);
 					if(authorizeResult){
 						strSql = "INSERT INTO" +
-								" mdk_creditcards(user_id, expire, security_code, authorized_order_id)" +
-								" VALUES (?, ?, ?, ?)";
+								" creditcard_tokens(user_id, expire, security_code, authorized_order_id, agent_id)" +
+								" VALUES (?, ?, ?, ?, ?)";
 						cState = cConn.prepareStatement(strSql);
 						cState.setInt(1, m_nUserId);
 						cState.setString(2, m_strCardExpire);
 						cState.setString(3, m_strCardSecurityCode);
 						cState.setString(4, cardPayment.getAgencyOrderId());
+						cState.setInt(5, m_nAgentId);
 						cState.executeUpdate();
 						cState.close(); cState=null;
 						m_nErrCode = ERR_NONE;
