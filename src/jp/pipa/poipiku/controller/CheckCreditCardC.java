@@ -38,7 +38,7 @@ public class CheckCreditCardC {
 	private CardToken selectToken(int nUserId, int nAgentId) throws SQLException {
 		CardToken t = new CardToken();
 
-		String strSql = "SELECT expire, updated_at FROM creditcard_tokens WHERE user_id=? AND agent_id=?";
+		String strSql = "SELECT card_expire, updated_at FROM creditcard_tokens WHERE user_id=? AND agent_id=?";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, nUserId);
 		cState.setInt(2, nAgentId);

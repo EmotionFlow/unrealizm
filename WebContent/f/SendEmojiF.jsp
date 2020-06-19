@@ -16,6 +16,7 @@ class SendEmojiC {
 	public int m_nAmount = -1;
 	public int m_nAgentId = -1;
 	public String m_strToken = "";
+	public Timestamp m_tsTokenExpire = null;
 	public String m_strIpAddress = "";
 	public String m_strCardExpire = "";
 	public String m_strCardSecurityCode = "";
@@ -31,6 +32,7 @@ class SendEmojiC {
 			m_strIpAddress	= request.getRemoteAddr();
 			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
 			m_strToken = Common.ToString(request.getParameter("TKN"));
+			m_tsTokenExpire = Common.ToSqlTimestamp(request.getParameter("TEX"));
 			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
 			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
 		} catch(Exception e) {
@@ -313,7 +315,7 @@ class SendEmojiC {
 		if(cardPayment.errorKind == CardPayment.ErrorKind.CardAuth
 		|| cardPayment.errorKind == CardPayment.ErrorKind.Common){
 			m_nErrCode = ERR_RETRY;
-		}else if(cardPayment.errorKind == CardPayment.ErrorKind.MDKConnection){
+		}else if(cardPayment.errorKind == CardPayment.ErrorKind.NeedInquiry){
 			// 決済されてるかもしれないし、されていないかもしれない。
 			m_nErrCode = ERR_INQUIRY;
 		}else{

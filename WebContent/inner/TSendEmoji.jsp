@@ -8,24 +8,16 @@
         "EPSILON": 2,
     };
 
-    function SendEmojiAjax(emojiInfo, nAmount, nPaymentAgentId, strCreditCardToken, strCardExp, strCardSec, elCheerNowPayment) {
+    function SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment) {
         let amount = -1;
-        let agentId = 0;
-        let token = "";
-        let exp = "";
-        let sec = "";
-        if(nAmount!=null) {amount=nAmount}
-        if(nPaymentAgentId!=null) {agentId=nPaymentAgentId;}
-        if(strCreditCardToken!=null) {token=strCreditCardToken;}
-        if(strCardExp!=null) {exp=strCardExp;}
-        if(strCardSec!=null) {sec=strCardSec;}
 
         $.ajax({
             "type": "post",
             "data": {
                 "IID": emojiInfo.contentId, "EMJ": emojiInfo.emoji,
-                "UID": emojiInfo.userId, "AMT": amount, "AID": agentId,
-                "TKN": token, "EXP": exp, "SEC": sec,
+                "UID": emojiInfo.userId, "AMT": amount, "AID": agentInfo.agentId,
+                "TKN": agentInfo.token, "TEX": agentInfo.tokenExpire, "EXP": cardInfo.expire,
+                "SEC": cardInfo.securityCode,
             },
             "url": "/f/SendEmojiF.jsp",
             "dataType": "json",
@@ -114,13 +106,20 @@
 `;
     }
 
+    function createAgentInfo(agent, token, tokenExpire){
+        return {
+            "agentId": agent,
+            "token": token,
+            "tokenExpire": tokenExpire,
+        };
+    }
 
-    function paymentByVeritrans(emojiInfo, nCheerAmount, formValues, elCheerNowPayment) {
+    function paymentByVeritrans(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
         const postData = {
             "token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
-            "card_number": formValues.value.cardNum,
-            "card_expire": formValues.value.cardExp,
-            "security_code": formValues.value.cardSec,
+            "card_number": cardInfo.number,
+            "card_expire": cardInfo.expire,
+            "security_code": cardInfo.securityCode,
             "lang": "ja",
         };
         const apiUrl = "https://api.veritrans.co.jp/4gtoken";
@@ -137,9 +136,9 @@
                 return false;
             }
             const response = JSON.parse(xhr.response);
+            const agentInfo = createAgentInfo(AGENT.VERITRANS, response.token, null);
             if (xhr.status === 200) {
-                SendEmojiAjax(emojiInfo, nCheerAmount, AGENT.VERITRANS, response.token,
-                    formValues.value.cardExp, formValues.value.cardSec, elCheerNowPayment);
+                SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment);
             } else {
                 //console.log(response);
                 DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenErr")%>" + "(" + response.message + ")");
@@ -151,12 +150,12 @@
         xhr.send(JSON.stringify(postData));
     }
 
-    function paymentByEpsilon(emojiInfo, nCheerAmount, formValues, elCheerNowPayment) {
+    function paymentByEpsilon(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
         const contructCode = "68968190"
         var cardObj = {
-            "cardno": formValues.value.cardNum,
-            "expire": '20' + formValues.value.cardExp.split('/')[1] +  formValues.value.cardExp.split('/')[0],
-            "securitycode": formValues.value.cardSec,
+            "cardno": cardInfo.number,
+            "expire": '20' + cardInfo.expire.split('/')[1] +  cardInfo.expire.split('/')[0],
+            "securitycode": cardInfo.securityCode,
             "holdername": "SAMPLE TARO",
         };
         EpsilonToken.init(contructCode);
@@ -166,8 +165,8 @@
                 console.log(response.resultCode);
                 elCheerNowPayment.hide();
             }else{
-                SendEmojiAjax(emojiInfo, nCheerAmount, AGENT.EPSILON, response.tokenObject.token,
-                    formValues.value.cardExp, formValues.value.cardSec, elCheerNowPayment);
+                const agentInfo = createAgentInfo(AGENT.EPSILON, response.token, response.toBeExpiredAt);
+                SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment);
             }
         } );
     }
@@ -178,6 +177,14 @@
             "emoji": strEmoji,
             "userId": nUserId,
         };
+
+        let cardInfo = {
+            "number": null,
+            "expire": null,
+            "securityCode": null,
+            "holderName": null,
+        };
+
         let elCheerNowPayment = $(elThis).parent().parent().children('div.ResEmojiCheerNowPayment');
         if(elCheerNowPayment.css('display') !== 'none'){
             console.log("決済処理中");
@@ -280,8 +287,12 @@
                                 return false;
                             }
 
+                            cardInfo.number = formValues.value.cardNum;
+                            cardInfo.expire = formValues.value.cardExp;
+                            cardInfo.securityCode = formValues.value.cardSec;
+
                             // paymentByVeritrans(formValues);
-                            paymentByEpsilon(emojiInfo, nCheerAmount, formValues, elCheerNowPayment);
+                            paymentByEpsilon(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
 
                         });
                     } else if (result == 1) {
