@@ -14,7 +14,7 @@ if(cResults.m_nUserId==-1) {
 cResults.m_bDispUnPublished = true;
 
 if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
-	response.sendRedirect("https://poipiku.com/NotFoundV.jsp");
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 
