@@ -14,7 +14,7 @@ cResults.getParam(request);
 
 if(!cCheckLogin.m_bLogin) {
 	if(cResults.n_nUserId>0) {
-		response.sendRedirect("https://poipiku.com/"+cResults.n_nUserId+"/");
+		response.sendRedirect("/"+cResults.n_nUserId+"/");
 	} else {
 		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	}
@@ -23,6 +23,8 @@ if(!cCheckLogin.m_bLogin) {
 
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+
+int nRnd = (int)(Math.random()*2);
 %>
 <!DOCTYPE html>
 <html>
@@ -197,6 +199,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 							<a class="BtnBase" href="javascript:void(0)" onclick="$('#MyUrl').select(); document.execCommand('Copy');"><i class="far fa-copy"></i> <%=_TEX.T("Twitter.Share.Copy.Btn")%></a>
 							<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
 						</div>
+					</div>
+
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>
