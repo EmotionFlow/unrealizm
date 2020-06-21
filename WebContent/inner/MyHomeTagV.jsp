@@ -5,9 +5,9 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 if(!cCheckLogin.m_bLogin) {
 	if(isApp){
-		response.sendRedirect("https://poipiku.com/StartPoipikuAppV.jsp");
+		response.sendRedirect("/StartPoipikuAppV.jsp");
 	} else {
-		response.sendRedirect("https://poipiku.com/StartPoipikuV.jsp");
+		response.sendRedirect("/StartPoipikuV.jsp");
 	}
 	return;
 }
@@ -90,7 +90,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 						<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 					<%}%>
 					<%if((nCnt+1)%5==0) {%>
-					<%@ include file="/inner/TAdMid.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

@@ -46,7 +46,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
 					<%if(bSmartPhone && (nCnt+1)%18==0) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

@@ -8,14 +8,14 @@ IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
 	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
-		response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+		response.sendRedirect("/NotFoundPcV.jsp");
 	}else{
 		response.sendRedirect(Common.GetPoipikuUrl(String.format("/%d/%d.html", cResults.m_nUserId, cResults.m_nNewContentId)));
 	}
 	return;
 }
 if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request.getHeader("user-agent"))) {
-	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
@@ -351,6 +351,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 								</span>
 							</div>
 						</div>
+					</div>
+
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>

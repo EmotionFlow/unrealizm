@@ -59,8 +59,8 @@ public class Common {
 	public static final int FOVO_KEYWORD_TYPE_SEARCH	= 1;
 
 	// Ad ID
-	public static final int AD_ID_ALL	= 0;	// ALL
-	public static final int AD_ID_R18	= 1;	// R18
+	public static final int AD_ID_ALL	= 1;	// ALL
+	public static final int AD_ID_R18	= 2;	// R18
 
 	// Publish ID
 	public static final int PUBLISH_ID_ALL			= 0;	// ALL

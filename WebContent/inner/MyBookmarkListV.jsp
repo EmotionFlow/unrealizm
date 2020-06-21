@@ -5,9 +5,9 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 if(!cCheckLogin.m_bLogin) {
 	if(isApp){
-		response.sendRedirect("https://poipiku.com/StartPoipikuAppV.jsp");
+		response.sendRedirect("/StartPoipikuAppV.jsp");
 	} else {
-		response.sendRedirect("https://poipiku.com/StartPoipikuV.jsp");
+		response.sendRedirect("/StartPoipikuV.jsp");
 	}
 	return;
 }
@@ -74,7 +74,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, nSpMode)%>
 					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

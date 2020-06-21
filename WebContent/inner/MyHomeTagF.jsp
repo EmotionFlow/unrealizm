@@ -19,8 +19,7 @@ for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);
 	sbHtml.append(CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult, cResults.m_nViewMode, nSpMode));
 	if(nCnt==5 && bSmartPhone) {
-		//sbHtml.append(Util.poipiku_320x250_sp_mid());
-		sbHtml.append(Util.jikoku_hyou(request));
+		sbHtml.append(Util.poipiku_336x280_sp_mid());
 	}
 }
 %>{
