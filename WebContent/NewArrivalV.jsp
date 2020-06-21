@@ -90,7 +90,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
 					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>

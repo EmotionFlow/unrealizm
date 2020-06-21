@@ -5,7 +5,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!cCheckLogin.m_bLogin) {
-	response.sendRedirect("https://poipiku.com/StartPoipikuV.jsp");
+	response.sendRedirect("/StartPoipikuV.jsp");
 	return;
 }
 
@@ -96,14 +96,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			</div>
 			<%}%>
 			<section class="EventItemList">
-				<!--
-				<a class="EventItem" href="https://poipiku.com/2/1783042.html">
-					<img class="EventBanner" src="/img/maintenance.png" />
-				</a>
-				-->
-				<a class="EventItem" href="/event/20200414_mangaMovie/TopV.jsp">
-					<img class="EventBanner" src="/event/20200414_mangaMovie/ppmc_award.png" />
-				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 				</a>
@@ -126,7 +118,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 					<%if((nCnt+1)%5==0) {%>
-					<%@ include file="/inner/TAdMid.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>

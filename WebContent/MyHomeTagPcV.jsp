@@ -143,7 +143,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 					<%if(nCnt==8 && bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>
@@ -171,6 +171,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 							<a class="BtnBase" href="javascript:void(0)" onclick="$('#MyUrl').select(); document.execCommand('Copy');"><i class="far fa-copy"></i> <%=_TEX.T("Twitter.Share.Copy.Btn")%></a>
 							<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
 						</div>
+					</div>
+
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>

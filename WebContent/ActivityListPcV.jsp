@@ -101,7 +101,7 @@ cResults.GetResults(cParam);
 					</a>
 					<%}%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMidWide.jsp"%>
+					<%@ include file="/inner/TAd728x90_mid.jsp"%>
 					<%}%>
 					<%}%>
 				</div>

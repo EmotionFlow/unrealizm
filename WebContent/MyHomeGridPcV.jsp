@@ -9,7 +9,7 @@ cResults.getParam(request);
 
 if(!cCheckLogin.m_bLogin) {
 	if(cResults.n_nUserId>0) {
-		response.sendRedirect("https://poipiku.com/"+cResults.n_nUserId+"/");
+		response.sendRedirect("/"+cResults.n_nUserId+"/");
 	} else {
 		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	}
@@ -144,11 +144,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%if(nCnt==1 && !bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc336x280_top_right.jsp"%>
-					<%}%>
-					<%if(nCnt==8 && bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
+					<%if(nCnt==1) {%>
+					<%@ include file="/inner/TAdPc336x280_right_top.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

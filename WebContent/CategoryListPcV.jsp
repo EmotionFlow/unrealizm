@@ -78,7 +78,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				</div>
 			</section>
 			<%if((nCnt+1)%5==0) {%>
-			<%@ include file="/inner/TAdMidWide.jsp"%>
+			<%@ include file="/inner/TAd728x90_mid.jsp"%>
 			<%}%>
 			<%}%>
 		</article>

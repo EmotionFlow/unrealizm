@@ -15,6 +15,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
 	<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, cResults.m_nMode, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 	<%if(!cResults.m_bAdFilter && (nCnt+1)%10==0) {%>
-	<%@ include file="/inner/TAdMid.jsp"%>
+	<%@ include file="/inner/TAd468x60_mid.jsp"%>
 	<%}%>
 <%}%>

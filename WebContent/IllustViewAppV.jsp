@@ -243,6 +243,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<section id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+				<%@ include file="/inner/TAd468x60_mid.jsp"%>
 			</section>
 
 			<aside class="UserInfo">

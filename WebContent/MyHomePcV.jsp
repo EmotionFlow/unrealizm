@@ -157,7 +157,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 					<%if(nCnt==8 && bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>
@@ -168,14 +168,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 
 					<div class="PcSideBarItem">
 						<section class="EventItemList">
-							<!--
-							<a class="EventItem" href="https://poipiku.com/2/1783042.html">
-								<img class="EventBanner" src="/img/maintenance.png" />
-							</a>
-							-->
-							<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-								<img class="EventBanner" src="/event/20200414_mangaMovie/ppmc_award.png" />
-							</a>
 							<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 								<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 							</a>

@@ -14,7 +14,7 @@ cResults.getParam(request);
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = "/";
-	response.sendRedirect("https://poipiku.com/" + strKeywordHan + "/");
+	response.sendRedirect("/" + strKeywordHan + "/");
 	return;
 }
 cResults.SELECT_MAX_GALLERY = 36;
@@ -87,14 +87,11 @@ String strFileUrl = cResults.m_strRepFileName;
 
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%if(!bSmartPhone) {%>
-				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
-				<%}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
 					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>

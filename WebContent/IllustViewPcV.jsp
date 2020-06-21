@@ -315,9 +315,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<section id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-				<%if(bSmartPhone) {%>
-				<%//@ include file="/inner/TAdMid.jsp"%>
-				<%} %>
+				<%@ include file="/inner/TAd468x60_mid.jsp"%>
 			</section>
 
 

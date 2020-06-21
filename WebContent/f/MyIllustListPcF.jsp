@@ -13,7 +13,7 @@ if(cResults.m_nUserId==-1) {
 cResults.m_bDispUnPublished = true;
 
 if(!cResults.getResults(cCheckLogin, true)) {
-	response.sendRedirect("https://poipiku.com/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
@@ -23,6 +23,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
 	<%=CCnv.toMyThumbHtmlPc(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 	<%if(nCnt==17) {%>
-	<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+	<%@ include file="/inner/TAd336x280_mid.jsp"%>
 	<%}%>
 <%}%>
