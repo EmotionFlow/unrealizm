@@ -4,12 +4,12 @@
 <div class="PcSideBarAd">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<!-- /4789880/poipiku/poipiku_300x250_top_right -->
-	<div id='div-gpt-ad-1592781155408-0' style='width: 300px; height: 250px;'>
+	<div id='div-gpt-ad-1592859813796-0' style='width: 300px; height: 250px;'>
 		<script>
 		googletag.cmd.push(function() {
-			googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right', [300, 250], 'div-gpt-ad-1592781155408-0').addService(googletag.pubads());
+			googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right', [300, 250], 'div-gpt-ad-1592859813796-0').addService(googletag.pubads());
 			googletag.enableServices();
-			googletag.display('div-gpt-ad-1592781155408-0');
+			googletag.display('div-gpt-ad-1592859813796-0');
 		});
 		</script>
 	</div>

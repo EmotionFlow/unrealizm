@@ -3,15 +3,16 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <div class="PcSideBarAd">
 <%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-	<script type="text/javascript">
-	google_ad_client = "ca-pub-2810565410663306";
-	/* adx_poipiku_336x280_top_right */
-	google_ad_slot = "poipiku_336x280_top_right";
-	google_ad_width = 336;
-	google_ad_height = 280;
+<!-- /4789880/poipiku/poipiku_336x280_top_right -->
+<div id='div-gpt-ad-1592860319519-0'>
+	<script>
+	googletag.cmd.push(function() {
+		googletag.defineSlot('/4789880/poipiku/poipiku_336x280_top_right', [[300, 250], [336, 280]], 'div-gpt-ad-1592860319519-0').addService(googletag.pubads());
+		googletag.enableServices();
+		googletag.display('div-gpt-ad-1592860319519-0');
+	});
 	</script>
-	<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-	</script>
+</div>
 <%}else{%>
 	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
 <%}%>
