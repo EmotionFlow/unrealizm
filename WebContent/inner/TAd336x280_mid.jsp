@@ -1,11 +1,11 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
-<%int nRand = (int)(Math.random()*10000);%>
 <%if(Util.isSmartPhone(request)) {%>
 <div class="SideBarMid">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<!-- /4789880/poipiku/poipikumobile_336x280_mid -->
+	<%int nRand = (int)(Math.random()*10000);%>
 	<div id='div-gpt-ad-1592939682472-<%=nRand%>'>
 		<script>
 		googletag.cmd.push(function() {
@@ -24,6 +24,7 @@
 <div class="PcSideBarAd">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<!-- /4789880/poipiku/poipiku_336x280_mid -->
+	<%int nRand = (int)(Math.random()*10000);%>
 	<div id='div-gpt-ad-1592940074228-<%=nRand%>'>
 		<script>
 		googletag.cmd.push(function() {
