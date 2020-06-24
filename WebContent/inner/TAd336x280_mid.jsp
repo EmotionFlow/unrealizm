@@ -9,7 +9,6 @@
 	<div id='div-gpt-ad-1592939682472-<%=nRand%>'>
 		<script>
 		googletag.cmd.push(function() {
-			googletag.cmd.push(function() {
 			googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592939682472-<%=nRand%>').addService(googletag.pubads());
 			googletag.enableServices();
 			googletag.display('div-gpt-ad-1592939682472-<%=nRand%>');
