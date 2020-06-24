@@ -234,6 +234,7 @@ public class Util {
 		sbRtn.append("});");
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
+		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
 
@@ -256,7 +257,7 @@ public class Util {
 
 	public static String poipiku_336x280_pc_mid() {
 		StringBuilder sbRtn = new StringBuilder();
-		sbRtn.append("<div class=\"SideBarMid\">");
+		sbRtn.append("<div class=\"PcSideBarAd\">");
 		sbRtn.append("<!-- /4789880/poipiku/poipiku_336x280_mid -->");
 		int nRand = (int)(Math.random()*10000);
 		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
@@ -267,6 +268,7 @@ public class Util {
 		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
 		sbRtn.append("});");
 		sbRtn.append("</script>");
+		sbRtn.append("</div>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
