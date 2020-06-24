@@ -223,34 +223,69 @@ public class Util {
 	public static String poipiku_336x280_sp_mid() {
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"SideBarMid\">");
-		sbRtn.append("<script type=\"text/javascript\">");
-		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
-		sbRtn.append("/* adx_poipikumobile_336x280_mid */");
-		sbRtn.append("google_ad_slot = \"adx_poipikumobile_336x280_mid\";");
-		sbRtn.append("google_ad_width = 336;");
-		sbRtn.append("google_ad_height = 280;");
-		sbRtn.append("</script>");
-		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
+		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
+		int nRand = (int)(Math.random()*10000);
+		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
+		sbRtn.append("<script>");
+		sbRtn.append("googletag.cmd.push(function() {");
+		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
+		sbRtn.append("googletag.enableServices();");
+		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
+		sbRtn.append("});");
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
 
+
+//	public static String adx_poipiku_336x280_sp_mid() {
+//		StringBuilder sbRtn = new StringBuilder();
+//		sbRtn.append("<div class=\"SideBarMid\">");
+//		sbRtn.append("<script type=\"text/javascript\">");
+//		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
+//		sbRtn.append("/* adx_poipikumobile_336x280_mid */");
+//		sbRtn.append("google_ad_slot = \"adx_poipikumobile_336x280_mid\";");
+//		sbRtn.append("google_ad_width = 336;");
+//		sbRtn.append("google_ad_height = 280;");
+//		sbRtn.append("</script>");
+//		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
+//		sbRtn.append("</script>");
+//		sbRtn.append("</div>");
+//		return sbRtn.toString();
+//	}
+
 	public static String poipiku_336x280_pc_mid() {
 		StringBuilder sbRtn = new StringBuilder();
-		sbRtn.append("<div class=\"PcSideBarAd\">");
-		sbRtn.append("<script type=\"text/javascript\">");
-		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
-		sbRtn.append("/* adx_poipiku_336x280_mid */");
-		sbRtn.append("google_ad_slot = \"adx_poipiku_336x280_mid\";");
-		sbRtn.append("google_ad_width = 336;");
-		sbRtn.append("google_ad_height = 280;");
-		sbRtn.append("</script>");
-		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
+		sbRtn.append("<div class=\"SideBarMid\">");
+		sbRtn.append("<!-- /4789880/poipiku/poipiku_336x280_mid -->");
+		int nRand = (int)(Math.random()*10000);
+		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
+		sbRtn.append("<script>");
+		sbRtn.append("googletag.cmd.push(function() {");
+		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
+		sbRtn.append("googletag.enableServices();");
+		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
+		sbRtn.append("});");
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
+
+//	public static String adx_poipiku_336x280_pc_mid() {
+//		StringBuilder sbRtn = new StringBuilder();
+//		sbRtn.append("<div class=\"PcSideBarAd\">");
+//		sbRtn.append("<script type=\"text/javascript\">");
+//		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
+//		sbRtn.append("/* adx_poipiku_336x280_mid */");
+//		sbRtn.append("google_ad_slot = \"adx_poipiku_336x280_mid\";");
+//		sbRtn.append("google_ad_width = 336;");
+//		sbRtn.append("google_ad_height = 280;");
+//		sbRtn.append("</script>");
+//		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
+//		sbRtn.append("</script>");
+//		sbRtn.append("</div>");
+//		return sbRtn.toString();
+//	}
 
 	public static boolean isBot(String strUuserAgent) {
 		if(strUuserAgent==null) return false;
