@@ -62,14 +62,11 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</nav>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%if(!bSmartPhone) {%>
-				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
-				<%}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>

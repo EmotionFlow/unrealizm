@@ -80,7 +80,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				</a>
 			</section>
 			<%if((nCnt+1)%10==0) {%>
-			<%@ include file="/inner/TAdMidWide.jsp"%>
+			<%@ include file="/inner/TAd728x90_mid.jsp"%>
 			<%}%>
 			<%}%>
 		</article>
@@ -91,7 +91,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 				<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
 				<%if((nCnt+1)%15==0) {%>
-				<%@ include file="/inner/TAdMidWide.jsp"%>
+				<%@ include file="/inner/TAd728x90_mid.jsp"%>
 				<%}%>
 			<%}%>
 			</section>

@@ -195,6 +195,9 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
+					<%if(nCnt==17) {%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
+					<%}%>
 				<%}%>
 			</section>
 

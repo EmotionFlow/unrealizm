@@ -143,35 +143,39 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-					<%if(nCnt==8 && bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
+					<%if(nCnt==4 && bSmartPhone) {%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>
 
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
+				<div class="PcSideBarItem">
+					<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+				</div>
+
+				<div class="PcSideBarItem">
+					<div class="PcSideBarItemTitle"><%=_TEX.T("Twitter.Share.MyUrl")%></div>
+					<%
+					String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+							URLEncoder.encode(String.format("%s%s %s #%s",
+									cCheckLogin.m_strNickName,
+									_TEX.T("Twitter.UserAddition"),
+									String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
+									_TEX.T("Common.Title")), "UTF-8"),
+							URLEncoder.encode("https://poipiku.com/"+cCheckLogin.m_nUserId+"/", "UTF-8"));
+					%>
+					<div style="text-align: center;">
+						<input id="MyUrl" class="MyUrl" type="text" value="https://poipiku.com/<%=cCheckLogin.m_nUserId%>/" onclick="this.select(); document.execCommand('copy');" style="box-sizing: border-box; width: 100%; padding: 5px; margin: 0 0 10px 0;" />
+						<a class="BtnBase" href="javascript:void(0)" onclick="$('#MyUrl').select(); document.execCommand('Copy');"><i class="far fa-copy"></i> <%=_TEX.T("Twitter.Share.Copy.Btn")%></a>
+						<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
+					</div>
+				</div>
+
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
-					</div>
-
-					<div class="PcSideBarItem">
-						<div class="PcSideBarItemTitle"><%=_TEX.T("Twitter.Share.MyUrl")%></div>
-						<%
-						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-								URLEncoder.encode(String.format("%s%s %s #%s",
-										cCheckLogin.m_strNickName,
-										_TEX.T("Twitter.UserAddition"),
-										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
-										_TEX.T("Common.Title")), "UTF-8"),
-								URLEncoder.encode("https://poipiku.com/"+cCheckLogin.m_nUserId+"/", "UTF-8"));
-						%>
-						<div style="text-align: center;">
-							<input id="MyUrl" class="MyUrl" type="text" value="https://poipiku.com/<%=cCheckLogin.m_nUserId%>/" onclick="this.select(); document.execCommand('copy');" style="box-sizing: border-box; width: 100%; padding: 5px; margin: 0 0 10px 0;" />
-							<a class="BtnBase" href="javascript:void(0)" onclick="$('#MyUrl').select(); document.execCommand('Copy');"><i class="far fa-copy"></i> <%=_TEX.T("Twitter.Share.Copy.Btn")%></a>
-							<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
-						</div>
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>

@@ -61,7 +61,7 @@ g_strSearchWord = cResults.m_strKeyword;
 					CTag cTag = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMidWide.jsp"%>
+					<%@ include file="/inner/TAd728x90_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>

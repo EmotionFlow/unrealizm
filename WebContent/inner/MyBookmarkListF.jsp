@@ -14,6 +14,6 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
 	<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, nSpMode)%>
 	<%if(nCnt==17) {%>
-	<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+	<%@ include file="/inner/TAd336x280_mid.jsp"%>
 	<%}%>
 <%}%>

@@ -244,12 +244,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<section id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-				<div style="float: left; width: 344px; margin: 0 8px; box-sizing: border-box;">
-					<a class="EventItem" href="/event/20200414_mangaMovie/TopV.jsp">
-						<%int nRnd = (int)(Math.random()*2);%>
-						<img style="width: 100%;" src="/event/20200414_mangaMovie/banner_ppmc<%=nRnd%>.png" />
-					</a>
-				</div>
+				<%@ include file="/inner/TAd336x280_mid.jsp"%>
 			</section>
 
 			<aside class="UserInfo">

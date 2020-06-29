@@ -57,9 +57,9 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 					<%=_TEX.T("TopV.ContentsTitle.More")%>&nbsp;<i class="fas fa-angle-right"></i>
 				</a>
 			</section>
-			<%//if((nCnt+1)%10==0) {%>
-			<%//@ include file="/inner/TAdMidWide.jsp"%>
-			<%//}%>
+			<%if((nCnt+1)%10==0) {%>
+			<%@ include file="/inner/TAd728x90_mid.jsp"%>
+			<%}%>
 			<%}%>
 		</article>
 
@@ -69,7 +69,7 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 				<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%>
 				<%if((nCnt+1)%15==0) {%>
-				<%@ include file="/inner/TAdMidWide.jsp"%>
+				<%@ include file="/inner/TAd728x90_mid.jsp"%>
 				<%}%>
 			<%}%>
 			</section>

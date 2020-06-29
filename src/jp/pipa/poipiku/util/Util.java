@@ -220,83 +220,74 @@ public class Util {
 		return strSrc.substring(0, nNum);
 	}
 
-	public static String poipiku_320x250_sp_mid() {
-		//return adpon_all();
+	public static String poipiku_336x280_sp_mid() {
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"SideBarMid\">");
-		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-		sbRtn.append("<!-- poipiku_320x250_sp_mid -->");
-		sbRtn.append("<ins class=\"adsbygoogle\"");
-		sbRtn.append("style=\"display:inline-block;width:300px;height:250px\"");
-		sbRtn.append("data-ad-client=\"ca-pub-9388519601000159\"");
-		sbRtn.append("data-ad-slot=\"8188361534\"></ins>");
+		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
+		int nRand = (int)(Math.random()*10000);
+		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
 		sbRtn.append("<script>");
-		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
-		sbRtn.append("</script>");
-		sbRtn.append("</div>");
-		return sbRtn.toString();
-	}
-
-	public static String poipiku_300x250_bottom_right() {
-		//return adpon_all();
-		StringBuilder sbRtn = new StringBuilder();
-		sbRtn.append("<div class=\"PcSideBarAd\">");
-		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-		sbRtn.append("<!-- poipiku_300x250_bottom_right -->");
-		sbRtn.append("<ins class=\"adsbygoogle\"");
-		sbRtn.append("style=\"display:inline-block;width:300px;height:250px\"");
-		sbRtn.append("data-ad-client=\"ca-pub-9388519601000159\"");
-		sbRtn.append("data-ad-slot=\"6315134980\"></ins>");
-		sbRtn.append("<script>");
-		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
-		sbRtn.append("</script>");
-		sbRtn.append("</div>");
-		return sbRtn.toString();
-	}
-
-	public static String poipiku_336x280_bottom_right() {
-		//return adpon_all();
-		StringBuilder sbRtn = new StringBuilder();
-		sbRtn.append("<div class=\"PcSideBarAd\">");
-		sbRtn.append("<script async src=\"//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
-		sbRtn.append("<!-- poipiku_336x280_bottom_right -->");
-		sbRtn.append("<ins class=\"adsbygoogle\"");
-		sbRtn.append("style=\"display:inline-block;width:336px;height:280px\"");
-		sbRtn.append("data-ad-client=\"ca-pub-9388519601000159\"");
-		sbRtn.append("data-ad-slot=\"5086719699\"></ins>");
-		sbRtn.append("<script>");
-		sbRtn.append("(adsbygoogle = window.adsbygoogle || []).push({});");
-		sbRtn.append("</script>");
-		sbRtn.append("</div>");
-		return sbRtn.toString();
-	}
-
-	public static String adpon_all () {
-		int nRand=(int)(Math.random()*10000);
-		StringBuilder sbRtn = new StringBuilder();
-		sbRtn.append("<div id=\""+nRand+"\" class=\"PcSideBarAd\">");
-		sbRtn.append("<script async>");
-		sbRtn.append("getScriptOutput(\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\", function(html) {");
-		sbRtn.append("$(\"#"+nRand+"\").append(html)");
+		sbRtn.append("googletag.cmd.push(function() {");
+		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
+		sbRtn.append("googletag.enableServices();");
+		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
 		sbRtn.append("});");
 		sbRtn.append("</script>");
 		sbRtn.append("</div>");
-		return sbRtn.toString();
-	}
-
-	public static String jikoku_hyou (HttpServletRequest request) {
-		String strUuserAgent = toString(request.getHeader("user-agent"));
-		String strLink = (strUuserAgent.indexOf("Android")>=0)?
-				"https://play.google.com/store/apps/details?id=jp.pipa.timetable&hl=ja":
-				"https://apps.apple.com/jp/app/%E6%99%82%E5%88%BB%E8%A1%A8zero/id1474329285?mt=8";
-		StringBuilder sbRtn = new StringBuilder();
-		sbRtn.append("<div class=\"SideBarMid\">");
-		sbRtn.append(String.format("<a style=\"display:block;text-align:center;\" href=\"%s\">", strLink));
-		sbRtn.append("<img src=\"/event/20191016/banner03.png\" />");
-		sbRtn.append("</a>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
+
+
+//	public static String adx_poipiku_336x280_sp_mid() {
+//		StringBuilder sbRtn = new StringBuilder();
+//		sbRtn.append("<div class=\"SideBarMid\">");
+//		sbRtn.append("<script type=\"text/javascript\">");
+//		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
+//		sbRtn.append("/* adx_poipikumobile_336x280_mid */");
+//		sbRtn.append("google_ad_slot = \"adx_poipikumobile_336x280_mid\";");
+//		sbRtn.append("google_ad_width = 336;");
+//		sbRtn.append("google_ad_height = 280;");
+//		sbRtn.append("</script>");
+//		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
+//		sbRtn.append("</script>");
+//		sbRtn.append("</div>");
+//		return sbRtn.toString();
+//	}
+
+	public static String poipiku_336x280_pc_mid() {
+		StringBuilder sbRtn = new StringBuilder();
+		sbRtn.append("<div class=\"PcSideBarAd\">");
+		sbRtn.append("<!-- /4789880/poipiku/poipiku_336x280_mid -->");
+		int nRand = (int)(Math.random()*10000);
+		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
+		sbRtn.append("<script>");
+		sbRtn.append("googletag.cmd.push(function() {");
+		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
+		sbRtn.append("googletag.enableServices();");
+		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
+		sbRtn.append("});");
+		sbRtn.append("</script>");
+		sbRtn.append("</div>");
+		sbRtn.append("</div>");
+		return sbRtn.toString();
+	}
+
+//	public static String adx_poipiku_336x280_pc_mid() {
+//		StringBuilder sbRtn = new StringBuilder();
+//		sbRtn.append("<div class=\"PcSideBarAd\">");
+//		sbRtn.append("<script type=\"text/javascript\">");
+//		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
+//		sbRtn.append("/* adx_poipiku_336x280_mid */");
+//		sbRtn.append("google_ad_slot = \"adx_poipiku_336x280_mid\";");
+//		sbRtn.append("google_ad_width = 336;");
+//		sbRtn.append("google_ad_height = 280;");
+//		sbRtn.append("</script>");
+//		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
+//		sbRtn.append("</script>");
+//		sbRtn.append("</div>");
+//		return sbRtn.toString();
+//	}
 
 	public static boolean isBot(String strUuserAgent) {
 		if(strUuserAgent==null) return false;

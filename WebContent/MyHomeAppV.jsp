@@ -14,8 +14,6 @@ cResults.getParam(request);
 //cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
-
-int nRnd = (int)(Math.random()*2);
 %>
 <!DOCTYPE html>
 <html>
@@ -100,16 +98,10 @@ int nRnd = (int)(Math.random()*2);
 			<%}%>
 			<section class="EventItemList">
 				<!--
-				<a class="EventItem" href="/RecruitS.jsp?BD=<%=nRnd%>">
-					<img class="EventBanner" src="//img-cdn.poipiku.com/img/recruit0<%=nRnd%>.png" />
-				</a>
 				<a class="EventItem" href="https://poipiku.com/2/1783042.html">
 					<img class="EventBanner" src="/img/maintenance.png" />
 				</a>
 				-->
-				<a class="EventItem" href="/event/20200414_mangaMovie/TopV.jsp">
-					<img class="EventBanner" src="/event/20200414_mangaMovie/banner_ppmc<%=nRnd%>.png" />
-				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 				</a>
@@ -132,7 +124,7 @@ int nRnd = (int)(Math.random()*2);
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 					<%if((nCnt+1)%5==0) {%>
-					<%@ include file="/inner/TAdMid.jsp"%>
+					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>

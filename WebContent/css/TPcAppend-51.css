@@ -13,7 +13,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc {width: 930px; position: relative; display: flex; flex-flow: row wrap;}
 .Wrapper.ViewPc .IllustItemList {width: 600px; float: none; flex: 0 0 600px; margin: 0;}
 .SideBarTop {height: 60px;}
-.SideBarMid {height: 60px;}
+.SideBarMid {height: 60px; margin: 0 0 30px 0; display: flex; justify-content: center;}
 .SideBarMid.Wide {height: 90px; margin: 5px 0;}
 .Wrapper.ItemList .SideBarMid.Wide {margin: 0;}
 .SideBarBottom {height: 60px;}

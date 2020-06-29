@@ -228,9 +228,13 @@
 
 	<%if(!bSmartPhone&&!isApp) {%>
 	<aside class="PcSideBar" style="margin-top: 30px;">
+		<div class="PcSideBarItem">
+			<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+		</div>
+
 		<div class="FixFrame">
 			<div class="PcSideBarItem">
-				<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+				<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 			</div>
 		</div>
 	</aside>

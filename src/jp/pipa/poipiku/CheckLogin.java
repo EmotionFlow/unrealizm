@@ -90,6 +90,7 @@ public class CheckLogin {
 					m_strFileName	= Common.ToString(cResSet.getString("file_name"));
 					if(m_strFileName.length()<=0) m_strFileName = "/img/default_user.jpg";
 					m_bLogin = true;
+					if(m_nUserId==315) m_nSafeFilter = Common.SAFE_FILTER_ALL;
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;

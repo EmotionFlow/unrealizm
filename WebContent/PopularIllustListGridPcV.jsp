@@ -152,17 +152,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 				<li><a class="TabMenuItem Selected" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
 			</ul>
 		</nav>
-
 		<article class="Wrapper GridList">
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%if(nCnt==1 && !bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc336x280_top_right.jsp"%>
-					<%}%>
-					<%if(nCnt==8 && bSmartPhone) {%>
-					<%@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
+					<%if(nCnt==1) {%>
+					<%@ include file="/inner/TAdPc336x280_right_top.jsp"%>
 					<%}%>
 				<%}%>
 			</section>

@@ -17,7 +17,7 @@ for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 		%><%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_SP, _TEX, nSpMode)%><%
 	}
 	if((nCnt+1)%9==0) {
-		%><%@ include file="/inner/TAdMid.jsp"%><%
+		%><%@ include file="/inner/TAd336x280_mid.jsp"%><%
 	}
 }
 %>

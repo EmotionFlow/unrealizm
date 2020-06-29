@@ -43,8 +43,8 @@ public class Common {
 	public static final int NOTIFICATION_TOKEN_TYPE_ANDROID = 2;
 
 	public static final int NO_NEED_UPDATE[] = {
-			116, 117, 118, 119, 120, 121, 122, 123, 124,	// 1系 iPhone
-			221, 222, 223, 224, 225, 226, 227	// 2系 Android
+			118, 119, 120, 121, 122, 123, 124,	// 1系 iPhone
+			223, 224, 225, 226, 227, 228, 229	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
 	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン
@@ -59,8 +59,8 @@ public class Common {
 	public static final int FOVO_KEYWORD_TYPE_SEARCH	= 1;
 
 	// Ad ID
-	public static final int AD_ID_ALL	= 0;	// ALL
-	public static final int AD_ID_R18	= 1;	// R18
+	public static final int AD_ID_ALL	= 1;	// ALL
+	public static final int AD_ID_R18	= 2;	// R18
 
 	// Publish ID
 	public static final int PUBLISH_ID_ALL			= 0;	// ALL

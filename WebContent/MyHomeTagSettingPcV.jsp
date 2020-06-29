@@ -63,7 +63,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 					<%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_PC, _TEX)%>
 					<%}%>
 					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAdMidWide.jsp"%>
+					<%@ include file="/inner/TAd728x90_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</div>

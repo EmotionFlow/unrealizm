@@ -316,33 +316,17 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 		<article class="Wrapper ViewPc">
 			<section id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-				<%if(bSmartPhone) {%>
-				<div style="float: left; width: 344px; margin: 0 8px; box-sizing: border-box;">
-					<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-						<%int nRnd = (int)(Math.random()*2);%>
-						<img style="width: 100%;" src="/event/20200414_mangaMovie/banner_ppmc<%=nRnd%>.png" />
-					</a>
-				</div>
-				<%} %>
+				<%@ include file="/inner/TAd468x60_mid.jsp"%>
 			</section>
 
 
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
+				<div class="PcSideBarItem">
+					<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+				</div>
+
 				<div class="FixFrame">
-					<div class="PcSideBarItem">
-						<div class="PcSideBarAd" style="height: 94px;">
-							<a class="EventItem" href="/event/20200414_mangaMovie/TopPcV.jsp">
-								<%int nRnd = (int)(Math.random()*2);%>
-								<img style="width: 100%;" src="/event/20200414_mangaMovie/banner_ppmc<%=nRnd%>.png" />
-							</a>
-						</div>
-					</div>
-
-					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
-					</div>
-
 					<div class="PcSideBarItem">
 						<div class="UserInfo" style="border: none;">
 							<div class="UserInfoBgImg"></div>
@@ -366,6 +350,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 								</span>
 							</div>
 						</div>
+					</div>
+
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>

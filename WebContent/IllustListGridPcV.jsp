@@ -276,15 +276,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.E
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%//if(!bSmartPhone) {%>
-				<%//@ include file="/inner/TAdPc336x280_top_right.jsp"%>
-				<%//}%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%//if(nCnt==17) {%>
-					<%//@ include file="/inner/TAdPc336x280_bottom_right.jsp"%>
-					<%//}%>
+					<%if(nCnt==1) {%>
+					<%@ include file="/inner/TAdPc336x280_right_top.jsp"%>
+					<%}%>
 				<%}%>
 			</section>
 		</article>
