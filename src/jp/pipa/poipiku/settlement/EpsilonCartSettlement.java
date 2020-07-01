@@ -1,8 +1,7 @@
-package jp.pipa.poipiku.payment;
+package jp.pipa.poipiku.settlement;
 
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
-import jp.pipa.poipiku.payment.epsilon.*;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -10,14 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class EpsilonCardPayment extends CardPayment{
+public class EpsilonCartSettlement extends CartSettlement {
 
     protected String createOrderId(int userId, int contentId){
         return String.format("poipiku-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
-    public EpsilonCardPayment(int _userId, int _contentId, int _amount,
-                              String _agentToken, String _cardExpire, String _cardSecurityCode){
+    public EpsilonCartSettlement(int _userId, int _contentId, int _amount,
+                                 String _agentToken, String _cardExpire, String _cardSecurityCode){
         super(_userId, _contentId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
         agent_id = Agent.EPSILON;
     }

@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.payment.epsilon;
+package jp.pipa.poipiku.settlement.epsilon;
 
 import java.io.InputStream;
 import java.net.URI;
@@ -6,7 +6,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.SSLContext;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.http.Header;
@@ -17,13 +16,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.ssl.SSLContexts;
-import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;

@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.payment;
+package jp.pipa.poipiku.settlement;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ import jp.veritrans.tercerog.mdk.dto.CardAuthorizeResponseDto;
 import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeRequestDto;
 import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeResponseDto;
 
-public class VeritransCardPayment extends CardPayment{
+public class VeritransCartSettlement extends CartSettlement {
     private final String STATUS_SUCCESS = "success";
     private final String STAUTS_FAILURE = "failure";
     private final String RESULTCODE_SUCCESS = "A001000000000000";
@@ -33,8 +33,8 @@ public class VeritransCardPayment extends CardPayment{
         return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
-    public VeritransCardPayment(int _userId, int _contentId, int _amount,
-                                String _agentToken, String _cardExpire, String _cardSecurityCode){
+    public VeritransCartSettlement(int _userId, int _contentId, int _amount,
+                                   String _agentToken, String _cardExpire, String _cardSecurityCode){
         super(_userId, _contentId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
         agent_id = Agent.VERITRANS;
     }

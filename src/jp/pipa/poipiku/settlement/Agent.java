@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.payment;
+package jp.pipa.poipiku.settlement;
 
 public class Agent {
     static public final int VERITRANS= 1;

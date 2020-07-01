@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.payment.epsilon;
+package jp.pipa.poipiku.settlement.epsilon;
 
 public class SettlementSendInfo {
     private String contractCode;
