@@ -2,6 +2,7 @@ package jp.pipa.poipiku.settlement;
 
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.settlement.epsilon.*;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -15,13 +16,13 @@ public class EpsilonCardSettlement extends CardSettlement {
         return String.format("poipiku-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
-    private String createAgentUserId(int userId){
-        return String.format("poipiku_com_%d", userId);
+    private String getAgentUserId(int userId){
+        return String.format("poipiku-com-%d", userId);
     }
 
-    public EpsilonCardSettlement(int _userId, int _contentId, int _amount,
+    public EpsilonCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                                  String _agentToken, String _cardExpire, String _cardSecurityCode){
-        super(_userId, _contentId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
+        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
         agent_id = Agent.EPSILON;
     }
 
@@ -30,67 +31,43 @@ public class EpsilonCardSettlement extends CardSettlement {
             return false;
         }
 
+        //TODO 初回か登録済かを判定
+        boolean isFirst = true;
+
         SettlementSendInfo ssi = new SettlementSendInfo();
-        ssi.setUserId(userId);
-        ssi.setUserName(userName);
-        ssi.setUserNameKana(userNameKana);
-        ssi.setUserMailAdd(userMailAdd);
-        ssi.setItemCode(config.getItem_code());
-        // 商品の指定がある場合のみ入れておく
-        if( !item.isEmpty() ){
-            ssi.setItemName((String)resource.getGoods().get(item).get("name"));
-            ssi.setItemPrice((Integer)resource.getGoods().get(item).get("price"));
-        }
-        ssi.setStCode((String)resource.getSelect_st_code().get(st));
-        ssi.setMissionCode(Integer.parseInt(missionCode));
-        ssi.setProcessCode(Integer.parseInt(processCode));
-        ssi.setUserTel(userTel);
-        ssi.setConveniCode(Integer.parseInt(conveniCode));
-        // オーダーNoを設定→ここでは「年月日時分秒ミリ」
-        ssi.setOrderNumber( new SimpleDateFormat("yyyyMMddHHmmssSSS").format(Calendar.getInstance().getTime())	);
-        ssi.setMemo1(config.getMemo1());
-        ssi.setMemo2(config.getMemo2());
-        if ( consigneePostal != null && !consigneePostal.isEmpty()){
-            ssi.setConsigneePostal(consigneePostal);
-            ssi.setConsigneeName(consigneeName);
-            ssi.setConsigneeAddress(String.format("%s%s", resource.getPref_list().get(consigneePref),
-                    consigneeAddress ) );
-            ssi.setConsigneeTel(consigneeTel);
-            ssi.setOrdererPostal(ordererPostal);
-            ssi.setOrdererName(ordererName);
-            ssi.setOrdererAddress(String.format("%s%s", resource.getPref_list().get(ordererPref),
-                    ordererAddress ) );
-            ssi.setOrdererTel(ordererTel);
-        }
-        EpsilonSettlement epsilonSettlement = new EpsilonSettlement(ssi,config);
+        ssi.setUserId(getAgentUserId(userId));
+        ssi.setUserName("DUMMY");
+        ssi.setUserNameKana("DUMMY");
+        ssi.setUserMailAdd("dummy@example.com");
+        ssi.setItemCode(Integer.toString(poipikuOrderId));
+
+        ssi.setStCode("11000-0000-00000");
+        ssi.setMissionCode(1);               // 課金区分（一回課金固定）
+        ssi.setProcessCode(isFirst ? 1 : 2); // 初回/登録済み課金
+        ssi.setUserTel("00000000000");
+        ssi.setConveniCode(0);              // コンビニ指定なし
+
+        ssi.setOrderNumber(createOrderId(userId, contentId));
+        ssi.setMemo1("");
+        ssi.setMemo2("");
+
+        EpsilonSettlement epsilonSettlement = new EpsilonSettlement(ssi);
         SettlementResultInfo settlementResultInfo = epsilonSettlement.execSettlement();
         if( settlementResultInfo != null ){
-            if( "0".equals(settlementResultInfo.getResult())){
-                request.setAttribute("err_msg",settlementResultInfo.getErrCode()+" "+ settlementResultInfo.getErrDetail());
-            }else if( settlementResultInfo.getRedirect() != null){
-                // EPSILONにリダイレクト
-                response.sendRedirect(settlementResultInfo.getRedirect());
-                return;
-            }else if( settlementResultInfo.getTransCode() != null ){
-                String redirect = String.format("/sample_java/settlement_comp?trans_code=%s",settlementResultInfo.getTransCode());
-                response.sendRedirect(redirect);
-                return;
+            /* settlementResultInfo.getResult()
+            0：決済NG
+            1：決済OK
+            5：3DS処理　（カード会社に接続必要）
+            9：システムエラー（パラメータ不足、不正等）
+             */
+            if( "1".equals(settlementResultInfo.getResult())){
+                // TODO TABLE creditcard_tokensにレコードがなかったら追加、あるなら更新。
+                return true;
             }else{
-                ServletContext context = this.getServletContext();
-                request.setAttribute("result", settlementResultInfo.getResult());
-                RequestDispatcher dispatcher
-                        = context.getRequestDispatcher("/jsp/userResult.jsp");
-                dispatcher.forward(request, response);
-                return;
+                return false;
             }
         }else{
-            request.setAttribute("err_msg", "データの送信に失敗しました");
+            return false;
         }
-
-
-
-        return false;
-
     }
-
 }

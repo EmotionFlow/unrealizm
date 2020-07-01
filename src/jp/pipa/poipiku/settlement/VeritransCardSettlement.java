@@ -33,9 +33,9 @@ public class VeritransCardSettlement extends CardSettlement {
         return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
-    public VeritransCardSettlement(int _userId, int _contentId, int _amount,
+    public VeritransCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                                    String _agentToken, String _cardExpire, String _cardSecurityCode){
-        super(_userId, _contentId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
+        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
         agent_id = Agent.VERITRANS;
     }
 

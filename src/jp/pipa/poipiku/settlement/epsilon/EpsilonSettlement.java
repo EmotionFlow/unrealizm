@@ -27,8 +27,11 @@ import org.w3c.dom.NodeList;
 
 // EPSILON決済API呼び出しクラス
 public class EpsilonSettlement {
+    private static final String CONTRACT_CODE = "68968190";
+    private static final String ORDER_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+//    private static final String ORDER_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+  
     private SettlementSendInfo settlmentSendInfo;
-    private Config config;
     public SettlementSendInfo getSettlmentSendInfo() {
         return settlmentSendInfo;
     }
@@ -36,25 +39,15 @@ public class EpsilonSettlement {
     public void setSettlmentSendInfo(SettlementSendInfo settlmentSendInfo) {
         this.settlmentSendInfo = settlmentSendInfo;
     }
-    public Config getConfig() {
-        return this.config;
-    }
-    public void setConfig(Config config) {
-        this.config = config;
-    }
     public EpsilonSettlement(){
         this.setSettlmentSendInfo(new SettlementSendInfo());
     }
-    public EpsilonSettlement( SettlementSendInfo settlementSendInfo,Config config){
-        this.setConfig(config);
+    public EpsilonSettlement( SettlementSendInfo settlementSendInfo){
         this.setSettlmentSendInfo(settlementSendInfo);
     }
 
     // 決済情報送信処理
     public SettlementResultInfo execSettlement(){
-        if( getConfig() == null){
-            return null;
-        }
         // 決済情報送信
         // 送信用の設定を作成
         RequestConfig rc = RequestConfig.custom().setConnectTimeout(2000)
@@ -77,7 +70,7 @@ public class EpsilonSettlement {
 
         try {
             post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-            post.setURI(new URI(this.getConfig().getOrder_url()));
+            post.setURI(new URI(ORDER_URL));
             res = client.execute(post);
         }catch(Exception e){
             e.printStackTrace();
@@ -148,7 +141,7 @@ public class EpsilonSettlement {
         switch (processCode){
             case 1: case 2: // 初回/登録済み課金
                 param.add( new BasicNameValuePair("version", si.getVersion().toString()));
-                param.add( new BasicNameValuePair("contract_code", this.getConfig().getContract_code() ));
+                param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
                 param.add( new BasicNameValuePair("user_id", si.getUserId()));
                 param.add( new BasicNameValuePair("user_name", si.getUserName()));
                 param.add( new BasicNameValuePair("user_mail_add", si.getUserMailAdd()));
@@ -163,6 +156,8 @@ public class EpsilonSettlement {
                 param.add( new BasicNameValuePair("memo2", si.getMemo2()));
                 param.add( new BasicNameValuePair("xml", si.getXml().toString()));
                 param.add( new BasicNameValuePair("character_code", si.getCharacterCode()));
+
+                /*
                 // コンビニ指定があるときのみ指定する
                 if( si.getConveniCode() != 0) {
                     param.add( new BasicNameValuePair("conveni_code", si.getConveniCode().toString()));
@@ -180,10 +175,12 @@ public class EpsilonSettlement {
                     param.add( new BasicNameValuePair("orderer_address",si.getOrdererAddress()));
                     param.add( new BasicNameValuePair("orderer_tel",si.getOrdererTel()));
                 }
+                 */
                 break;
             case 3: case 4: // ユーザ登録のみ、又は登録変更
+                /*
                 param.add( new BasicNameValuePair("version", si.getVersion().toString()));
-                param.add( new BasicNameValuePair("contract_code", this.getConfig().getContract_code() ));
+                param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
                 param.add( new BasicNameValuePair("user_id", si.getUserId()));
                 param.add( new BasicNameValuePair("user_name", si.getUserName()));
                 param.add( new BasicNameValuePair("user_mail_add", si.getUserMailAdd()));
@@ -193,10 +190,11 @@ public class EpsilonSettlement {
                 param.add( new BasicNameValuePair("memo1", si.getMemo1()));
                 param.add( new BasicNameValuePair("memo2", si.getMemo2()));
                 param.add( new BasicNameValuePair("xml", si.getXml().toString()));
+                 */
                 break;
             case 7: case 9: // ユーザ退会又は退会取消
                 param.add( new BasicNameValuePair("version", si.getVersion().toString()));
-                param.add( new BasicNameValuePair("contract_code", this.getConfig().getContract_code() ));
+                param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
                 param.add( new BasicNameValuePair("user_id", si.getUserId()));
                 param.add( new BasicNameValuePair("process_code", si.getProcessCode().toString()));
                 param.add( new BasicNameValuePair("memo1", si.getMemo1()));

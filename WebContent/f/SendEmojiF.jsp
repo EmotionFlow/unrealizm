@@ -1,6 +1,7 @@
 <%@ page import="jp.pipa.poipiku.settlement.CardSettlement"%>
 <%@ page import="jp.pipa.poipiku.settlement.Agent" %>
 <%@ page import="jp.pipa.poipiku.settlement.VeritransCardSettlement" %>
+<%@ page import="jp.pipa.poipiku.settlement.EpsilonCardSettlement" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -138,7 +139,11 @@ class SendEmojiC {
 				CardSettlement cardSettlement = null;
 				if(m_nAgentId== Agent.VERITRANS){
 					cardSettlement = new VeritransCardSettlement(
-							m_nUserId, m_nContentId, m_nAmount,
+							m_nUserId, m_nContentId, orderId, m_nAmount,
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
+				}else if(m_nAgentId==Agent.EPSILON){
+					cardSettlement = new EpsilonCardSettlement(
+							m_nUserId, m_nContentId, orderId, m_nAmount,
 							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
 				}
 

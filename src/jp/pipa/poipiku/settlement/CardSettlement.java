@@ -19,8 +19,12 @@ public abstract class CardSettlement {
 
     public ErrorKind errorKind = ErrorKind.None;
 
+    // poipiku側管理の取引ID
+    protected int poipikuOrderId = -1;
+
     // 取引ID
     protected String orderId = "";
+
     // 金額
     public int amount = 0;
 
@@ -33,11 +37,11 @@ public abstract class CardSettlement {
         return orderId;
     }
 
-    protected CardSettlement(int _userId, int _contentId, int _amount,
+    protected CardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                              String _agentToken, String _cardExpire, String _cardSecurityCode){
         userId = _userId;
         contentId = _contentId;
-        orderId = createOrderId(userId, contentId);
+        poipikuOrderId = _poipikuOrderId;
         amount = Math.max(_amount, 0);
         agentToken = _agentToken;
         cardExpire = _cardExpire;
