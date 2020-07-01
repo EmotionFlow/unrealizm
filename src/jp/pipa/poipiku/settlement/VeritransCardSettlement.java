@@ -17,7 +17,7 @@ import jp.veritrans.tercerog.mdk.dto.CardAuthorizeResponseDto;
 import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeRequestDto;
 import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeResponseDto;
 
-public class VeritransCartSettlement extends CartSettlement {
+public class VeritransCardSettlement extends CardSettlement {
     private final String STATUS_SUCCESS = "success";
     private final String STAUTS_FAILURE = "failure";
     private final String RESULTCODE_SUCCESS = "A001000000000000";
@@ -33,7 +33,7 @@ public class VeritransCartSettlement extends CartSettlement {
         return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
-    public VeritransCartSettlement(int _userId, int _contentId, int _amount,
+    public VeritransCardSettlement(int _userId, int _contentId, int _amount,
                                    String _agentToken, String _cardExpire, String _cardSecurityCode){
         super(_userId, _contentId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
         agent_id = Agent.VERITRANS;

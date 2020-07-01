@@ -1,6 +1,6 @@
 package jp.pipa.poipiku.settlement;
 
-public abstract class CartSettlement {
+public abstract class CardSettlement {
     protected int agent_id = -1;
     protected int userId = -1;
     protected int contentId = -1;
@@ -33,7 +33,7 @@ public abstract class CartSettlement {
         return orderId;
     }
 
-    protected CartSettlement(int _userId, int _contentId, int _amount,
+    protected CardSettlement(int _userId, int _contentId, int _amount,
                              String _agentToken, String _cardExpire, String _cardSecurityCode){
         userId = _userId;
         contentId = _contentId;

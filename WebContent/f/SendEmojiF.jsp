@@ -1,6 +1,6 @@
-<%@ page import="jp.pipa.poipiku.settlement.CartSettlement"%>
+<%@ page import="jp.pipa.poipiku.settlement.CardSettlement"%>
 <%@ page import="jp.pipa.poipiku.settlement.Agent" %>
-<%@ page import="jp.pipa.poipiku.settlement.VeritransCartSettlement" %>
+<%@ page import="jp.pipa.poipiku.settlement.VeritransCardSettlement" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -135,16 +135,16 @@ class SendEmojiC {
 				cState.executeUpdate();
 				cState.close(); cState=null;
 
-				CartSettlement cartSettlement = null;
+				CardSettlement cardSettlement = null;
 				if(m_nAgentId== Agent.VERITRANS){
-					cartSettlement = new VeritransCartSettlement(
+					cardSettlement = new VeritransCardSettlement(
 							m_nUserId, m_nContentId, m_nAmount,
 							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
 				}
 
 				boolean authorizeResult = false;
 				if(!m_strAgentToken.isEmpty()){
-					authorizeResult = cartSettlement.authorize();
+					authorizeResult = cardSettlement.authorize();
 					if(authorizeResult){
 						strSql = "INSERT INTO" +
 								" creditcard_tokens(user_id, expire, security_code, authorized_order_id, agent_id)" +
@@ -153,14 +153,14 @@ class SendEmojiC {
 						cState.setInt(1, m_nUserId);
 						cState.setString(2, m_strCardExpire);
 						cState.setString(3, m_strCardSecurityCode);
-						cState.setString(4, cartSettlement.getAgencyOrderId());
+						cState.setString(4, cardSettlement.getAgencyOrderId());
 						cState.setInt(5, m_nAgentId);
 						cState.executeUpdate();
 						cState.close(); cState=null;
 						m_nErrCode = ERR_NONE;
 					}else{
 						Log.d("決済処理に失敗(uid)", m_nUserId);
-						setErrCode(cartSettlement);
+						setErrCode(cardSettlement);
 					}
 				}else{
 					strSql = "SELECT expire, security_code, authorized_order_id FROM mdk_creditcards WHERE user_id=?";
@@ -183,25 +183,25 @@ class SendEmojiC {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 
-					authorizeResult = cartSettlement.reAuthorize(authOrderId, expire, securityCode);
+					authorizeResult = cardSettlement.reAuthorize(authOrderId, expire, securityCode);
 					if(authorizeResult){
 						strSql = "UPDATE mdk_creditcards SET authorized_order_id=? WHERE user_id=?";
 						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, cartSettlement.getAgencyOrderId());
+						cState.setString(1, cardSettlement.getAgencyOrderId());
 						cState.setInt(2, m_nUserId);
 						cState.executeUpdate();
 						cState.close();cState=null;
 						m_nErrCode = ERR_NONE;
 					}else{
 						Log.d("決済処理に失敗(uid)", m_nUserId);
-						setErrCode(cartSettlement);
+						setErrCode(cardSettlement);
 					}
 				}
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, authorizeResult?COrder.Status.get("Paid"):COrder.Status.get("PaymentError"));
-				cState.setString(2, authorizeResult? cartSettlement.getAgencyOrderId():null);
+				cState.setString(2, authorizeResult? cardSettlement.getAgencyOrderId():null);
 				cState.setInt(3, orderId);
 				cState.executeUpdate();
 				cState.close();cState=null;
@@ -317,11 +317,11 @@ class SendEmojiC {
 		return bRtn;
 	}
 
-	private void setErrCode(CartSettlement cartSettlement) {
-		if(cartSettlement.errorKind == CartSettlement.ErrorKind.CardAuth
-		|| cartSettlement.errorKind == CartSettlement.ErrorKind.Common){
+	private void setErrCode(CardSettlement cardSettlement) {
+		if(cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth
+		|| cardSettlement.errorKind == CardSettlement.ErrorKind.Common){
 			m_nErrCode = ERR_RETRY;
-		}else if(cartSettlement.errorKind == CartSettlement.ErrorKind.NeedInquiry){
+		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry){
 			// 決済されてるかもしれないし、されていないかもしれない。
 			m_nErrCode = ERR_INQUIRY;
 		}else{
