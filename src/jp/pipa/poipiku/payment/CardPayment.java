@@ -1,15 +1,12 @@
 package jp.pipa.poipiku.payment;
 
-import jp.pipa.poipiku.util.Log;
-
 public abstract class CardPayment {
-    protected int agency_id = -1;
+    protected int agent_id = -1;
     protected int userId = -1;
     protected int contentId = -1;
-    protected String agencyToken = null;
+    protected String agentToken = null;
     protected String cardExpire = null;
     protected String cardSecurityCode = null;
-
 
     public enum ErrorKind {
         None,
@@ -37,12 +34,12 @@ public abstract class CardPayment {
     }
 
     protected CardPayment(int _userId, int _contentId, int _amount,
-                          String _agencyToken, String _cardExpire, String _cardSecurityCode){
+                          String _agentToken, String _cardExpire, String _cardSecurityCode){
         userId = _userId;
         contentId = _contentId;
         orderId = createOrderId(userId, contentId);
         amount = Math.max(_amount, 0);
-        agencyToken = _agencyToken;
+        agentToken = _agentToken;
         cardExpire = _cardExpire;
         cardSecurityCode = _cardSecurityCode;
     }
@@ -60,5 +57,5 @@ public abstract class CardPayment {
         return true;
     }
 
-    protected abstract boolean authorize();
+    public abstract boolean authorize();
 }

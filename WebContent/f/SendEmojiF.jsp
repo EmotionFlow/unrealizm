@@ -1,4 +1,6 @@
 <%@ page import="jp.pipa.poipiku.payment.CardPayment"%>
+<%@ page import="jp.pipa.poipiku.payment.Agent" %>
+<%@ page import="jp.pipa.poipiku.payment.VeritransCardPayment" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -15,8 +17,7 @@ class SendEmojiC {
 	public int m_nUserId = -1;
 	public int m_nAmount = -1;
 	public int m_nAgentId = -1;
-	public String m_strToken = "";
-	public Timestamp m_tsTokenExpire = null;
+	public String m_strAgentToken = "";
 	public String m_strIpAddress = "";
 	public String m_strCardExpire = "";
 	public String m_strCardSecurityCode = "";
@@ -31,8 +32,7 @@ class SendEmojiC {
 			m_nAgentId		= Common.ToInt(request.getParameter("AID"));
 			m_strIpAddress	= request.getRemoteAddr();
 			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
-			m_strToken = Common.ToString(request.getParameter("TKN"));
-			m_tsTokenExpire = Common.ToSqlTimestamp(request.getParameter("TEX"));
+			m_strAgentToken = Common.ToString(request.getParameter("TKN"));
 			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
 			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
 		} catch(Exception e) {
@@ -135,10 +135,16 @@ class SendEmojiC {
 				cState.executeUpdate();
 				cState.close(); cState=null;
 
-				CardPayment cardPayment = new CardPayment(m_nUserId, m_nContentId, m_nAmount);
+				CardPayment cardPayment = null;
+				if(m_nAgentId== Agent.VERITRANS){
+					cardPayment = new VeritransCardPayment(
+							m_nUserId, m_nContentId, m_nAmount,
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
+				}
+
 				boolean authorizeResult = false;
-				if(!m_strToken.isEmpty()){
-					authorizeResult = cardPayment.authorize(m_strToken);
+				if(!m_strAgentToken.isEmpty()){
+					authorizeResult = cardPayment.authorize();
 					if(authorizeResult){
 						strSql = "INSERT INTO" +
 								" creditcard_tokens(user_id, expire, security_code, authorized_order_id, agent_id)" +

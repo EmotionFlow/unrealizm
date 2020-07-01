@@ -1,42 +1,25 @@
 package jp.pipa.poipiku.payment;
 
+import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.payment.epsilon.*;
+
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
-import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.util.Log;
-
-import jp.veritrans.tercerog.mdk.ITransaction;
-import jp.veritrans.tercerog.mdk.TransactionFactory;
-import jp.veritrans.tercerog.mdk.dto.CardAuthorizeRequestDto;
-import jp.veritrans.tercerog.mdk.dto.CardAuthorizeResponseDto;
-import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeRequestDto;
-import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeResponseDto;
-
-public class VeritransCardPayment extends CardPayment{
-    private final String STATUS_SUCCESS = "success";
-    private final String STAUTS_FAILURE = "failure";
-    private final String RESULTCODE_SUCCESS = "A001000000000000";
-
-    // 与信方法　与信売上(与信と同時に売上処理も行います)固定
-    private final String withCapture = "1";
-    // 支払方法 一括払い固定
-    private final String jpo1 = "10";
-    // 支払回数 一括払いなので設定不要
-    private final String jpo2 = "";
+public class EpsilonCardPayment extends CardPayment{
 
     protected String createOrderId(int userId, int contentId){
-        return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
+        return String.format("poipiku-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
-    public VeritransCardPayment(int _userId, int _contentId, int _amount,
-                                String _agentToken, String _cardExpire, String _cardSecurityCode){
+    public EpsilonCardPayment(int _userId, int _contentId, int _amount,
+                              String _agentToken, String _cardExpire, String _cardSecurityCode){
         super(_userId, _contentId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
-        agent_id = Agent.VERITRANS;
+        agent_id = Agent.EPSILON;
     }
 
     public boolean authorize(){

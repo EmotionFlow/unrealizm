@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- for EPSILON -->
-<script src= 'https://beta.epsilon.jp/js/token.js'></script>
-
+<script src='https://beta.epsilon.jp/js/token.js'></script>
 <script>
     const AGENT = {
         "VERITRANS": 1,
@@ -16,7 +15,7 @@
             "data": {
                 "IID": emojiInfo.contentId, "EMJ": emojiInfo.emoji,
                 "UID": emojiInfo.userId, "AMT": amount, "AID": agentInfo.agentId,
-                "TKN": agentInfo.token, "TEX": agentInfo.tokenExpire, "EXP": cardInfo.expire,
+                "TKN": agentInfo.token, "EXP": cardInfo.expire,
                 "SEC": cardInfo.securityCode,
             },
             "url": "/f/SendEmojiF.jsp",
@@ -150,25 +149,27 @@
         xhr.send(JSON.stringify(postData));
     }
 
+    function execTradeEpsilon(response) {
+        if( response.resultCode !== '000' ){
+            window.alert("購入処理中にエラーが発生しました");
+            console.log(response.resultCode);
+            elCheerNowPayment.hide();
+        }else{
+            const agentInfo = createAgentInfo(AGENT.EPSILON, response.tokenObject.token, response.tokenObject.toBeExpiredAt);
+            SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment);
+        }
+    }
     function paymentByEpsilon(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
         const contructCode = "68968190"
-        var cardObj = {
-            "cardno": cardInfo.number,
-            "expire": '20' + cardInfo.expire.split('/')[1] +  cardInfo.expire.split('/')[0],
-            "securitycode": cardInfo.securityCode,
-            "holdername": "SAMPLE TARO",
-        };
+        // var cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "TARO NAMAA"};
+        var cardObj = {};
+        cardObj.cardno = cardInfo.number;
+        cardObj.expire = '20' + cardInfo.expire.split('/')[1] +  cardInfo.expire.split('/')[0];
+        cardObj.securitycode = cardInfo.securityCode;
+        cardObj.holdername = "SAMPLE TARO";
+
         EpsilonToken.init(contructCode);
-        EpsilonToken.getToken( cardObj , response => {
-            if( response.resultCode !== '000' ){
-                window.alert("購入処理中にエラーが発生しました");
-                console.log(response.resultCode);
-                elCheerNowPayment.hide();
-            }else{
-                const agentInfo = createAgentInfo(AGENT.EPSILON, response.token, response.toBeExpiredAt);
-                SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment);
-            }
-        } );
+        EpsilonToken.getToken(cardObj , execTradeEpsilon);
     }
 
     function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
@@ -287,9 +288,9 @@
                                 return false;
                             }
 
-                            cardInfo.number = formValues.value.cardNum;
-                            cardInfo.expire = formValues.value.cardExp;
-                            cardInfo.securityCode = formValues.value.cardSec;
+                            cardInfo.number = String(formValues.value.cardNum);
+                            cardInfo.expire = String(formValues.value.cardExp);
+                            cardInfo.securityCode = String(formValues.value.cardSec);
 
                             // paymentByVeritrans(formValues);
                             paymentByEpsilon(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
