@@ -50,4 +50,11 @@ public class SettlementResultInfo {
     public void setTransCode(String transCode) {
         this.transCode = transCode;
     }
+
+    public String toString(){
+        return String.format(
+                "result: %s, errCode: %s, errDetail: %s, memo1: %s, memo2: %s, reidrect: %s, transcode: %s",
+                result, errCode, errDetail, memo1, memo2, redirect, transCode
+        );
+    }
 }

@@ -136,7 +136,7 @@ public class MyEditSettingC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "SELECT 1 FROM mdk_creditcards WHERE user_id=?";
+			strSql = "SELECT 1 FROM creditcard_tokens WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();

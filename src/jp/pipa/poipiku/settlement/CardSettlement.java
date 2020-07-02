@@ -1,5 +1,7 @@
 package jp.pipa.poipiku.settlement;
 
+import jp.pipa.poipiku.util.Log;
+
 public abstract class CardSettlement {
     protected int agent_id = -1;
     protected int userId = -1;
@@ -7,6 +9,7 @@ public abstract class CardSettlement {
     protected String agentToken = null;
     protected String cardExpire = null;
     protected String cardSecurityCode = null;
+    protected String userAgent = null;
 
     public enum ErrorKind {
         None,
@@ -38,7 +41,8 @@ public abstract class CardSettlement {
     }
 
     protected CardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
-                             String _agentToken, String _cardExpire, String _cardSecurityCode){
+                             String _agentToken, String _cardExpire,
+                             String _cardSecurityCode, String _userAgent){
         userId = _userId;
         contentId = _contentId;
         poipikuOrderId = _poipikuOrderId;
@@ -46,16 +50,20 @@ public abstract class CardSettlement {
         agentToken = _agentToken;
         cardExpire = _cardExpire;
         cardSecurityCode = _cardSecurityCode;
+        userAgent = _userAgent;
     }
 
     protected boolean authorizeCheckBase(){
         if(amount <= 0){
+            Log.d("amount <= 0");
             return false;
         }
-        if(orderId.isEmpty()){
+        if(poipikuOrderId<0){
+            Log.d("poipikuOrderId.isEmpty()");
             return false;
         }
         if(userId<0 || contentId<0){
+            Log.d("userId<0 || contentId<0");
             return false;
         }
         return true;

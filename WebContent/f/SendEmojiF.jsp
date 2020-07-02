@@ -23,6 +23,7 @@ class SendEmojiC {
 	public String m_strCardExpire = "";
 	public String m_strCardSecurityCode = "";
 	public int m_nErrCode = ERR_UNKNOWN;
+	public String m_strUserAgent = "";
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -36,6 +37,7 @@ class SendEmojiC {
 			m_strAgentToken = Common.ToString(request.getParameter("TKN"));
 			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
 			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
+			m_strUserAgent  = request.getHeader("user-agent");
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
@@ -61,6 +63,7 @@ class SendEmojiC {
 			cConn = dsPostgres.getConnection();
 
 			// 投稿存在確認(不正アクセス対策)
+			Log.d("投稿存在確認");
 			CUser cTargUser = null;
 			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -79,6 +82,7 @@ class SendEmojiC {
 
 
 			// max 5 emoji
+			Log.d("max 5 emoji");
 			int nEmojiNum = 0;
 			if(checkLogin.m_bLogin) {
 				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
@@ -99,16 +103,18 @@ class SendEmojiC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(nEmojiNum>=EMOJI_MAX) {
-				return false;
+				//TODO 外す。 return false;
 			}
 
 			// 課金
+			Log.d(String.format("amount: %d", m_nAmount));
 			if(m_nAmount>0){
+				Log.d("課金");
 				// 注文生成
 				Integer orderId = null;
 				strSql = "INSERT INTO orders(" +
 						" customer_id, seller_id, status, payment_total)" +
-						" VALUES (?, ?, ?)";
+						" VALUES (?, ?, ?, ?)";
 				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				cState.setInt(1, m_nUserId);
 				cState.setInt(2, 2); // 売り手はポイピク公式
@@ -137,71 +143,18 @@ class SendEmojiC {
 				cState.close(); cState=null;
 
 				CardSettlement cardSettlement = null;
-				if(m_nAgentId== Agent.VERITRANS){
+				if(m_nAgentId == Agent.VERITRANS){
 					cardSettlement = new VeritransCardSettlement(
 							m_nUserId, m_nContentId, orderId, m_nAmount,
 							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
 				}else if(m_nAgentId==Agent.EPSILON){
 					cardSettlement = new EpsilonCardSettlement(
 							m_nUserId, m_nContentId, orderId, m_nAmount,
-							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode,
+							m_strUserAgent);
 				}
 
-				boolean authorizeResult = false;
-				if(!m_strAgentToken.isEmpty()){
-					authorizeResult = cardSettlement.authorize();
-					if(authorizeResult){
-						strSql = "INSERT INTO" +
-								" creditcard_tokens(user_id, expire, security_code, authorized_order_id, agent_id)" +
-								" VALUES (?, ?, ?, ?, ?)";
-						cState = cConn.prepareStatement(strSql);
-						cState.setInt(1, m_nUserId);
-						cState.setString(2, m_strCardExpire);
-						cState.setString(3, m_strCardSecurityCode);
-						cState.setString(4, cardSettlement.getAgencyOrderId());
-						cState.setInt(5, m_nAgentId);
-						cState.executeUpdate();
-						cState.close(); cState=null;
-						m_nErrCode = ERR_NONE;
-					}else{
-						Log.d("決済処理に失敗(uid)", m_nUserId);
-						setErrCode(cardSettlement);
-					}
-				}else{
-					strSql = "SELECT expire, security_code, authorized_order_id FROM mdk_creditcards WHERE user_id=?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, m_nUserId);
-					cResSet = cState.executeQuery();
-
-					String expire = "";
-					String securityCode = "";
-					String authOrderId = "";
-					if(cResSet.next()){
-						expire = cResSet.getString("expire");
-						securityCode = cResSet.getString("security_code");
-						authOrderId = cResSet.getString("authorized_order_id");
-					}else{
-						Log.d("与信済みの決済情報が見つからない(uid)", m_nUserId);
-						m_nErrCode = ERR_RETRY;
-						return false;
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-
-					authorizeResult = cardSettlement.reAuthorize(authOrderId, expire, securityCode);
-					if(authorizeResult){
-						strSql = "UPDATE mdk_creditcards SET authorized_order_id=? WHERE user_id=?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, cardSettlement.getAgencyOrderId());
-						cState.setInt(2, m_nUserId);
-						cState.executeUpdate();
-						cState.close();cState=null;
-						m_nErrCode = ERR_NONE;
-					}else{
-						Log.d("決済処理に失敗(uid)", m_nUserId);
-						setErrCode(cardSettlement);
-					}
-				}
+				boolean authorizeResult = cardSettlement.authorize();
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);

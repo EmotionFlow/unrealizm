@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import jp.pipa.poipiku.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -65,6 +66,10 @@ public class EpsilonSettlement {
                 .build();
 
         List<NameValuePair> param = this.makeSendParam();
+        Log.d("key => value");
+        for(NameValuePair p : param){
+            Log.d(String.format("%s => %s", p.getName(), p.getValue()));
+        }
         HttpPost post = new HttpPost();
         HttpResponse res = null;
 
@@ -80,7 +85,7 @@ public class EpsilonSettlement {
         if( res.getStatusLine().getStatusCode() == HttpStatus.SC_OK ){
             // BODYを取得してXMLパーサー呼び出し
             try{
-                String xml = EntityUtils.toString(res.getEntity());
+                String xml = EntityUtils.toString(res.getEntity(), java.nio.charset.Charset.forName("UTF-8"));
                 //x-sjis-cp932だとエンコーダの未対応でエラーとなる
                 xml = xml.replace("x-sjis-cp932", "Shift_JIS");
                 //System.out.println(xml);
@@ -137,25 +142,33 @@ public class EpsilonSettlement {
     public List<NameValuePair> makeSendParam() {
         SettlementSendInfo si = this.getSettlmentSendInfo();
         List<NameValuePair> param = new ArrayList<NameValuePair>();
-        Integer processCode = si.getProcessCode();
-        switch (processCode){
+        switch (si.processCode){
             case 1: case 2: // 初回/登録済み課金
-                param.add( new BasicNameValuePair("version", si.getVersion().toString()));
+                param.add( new BasicNameValuePair("version", si.version.toString()));
                 param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
-                param.add( new BasicNameValuePair("user_id", si.getUserId()));
-                param.add( new BasicNameValuePair("user_name", si.getUserName()));
-                param.add( new BasicNameValuePair("user_mail_add", si.getUserMailAdd()));
-                param.add( new BasicNameValuePair("item_code", si.getItemCode()));
-                param.add( new BasicNameValuePair("item_name", si.getItemName()));
-                param.add( new BasicNameValuePair("order_number", si.getOrderNumber()));
-                param.add( new BasicNameValuePair("st_code",  si.getStCode()));
-                param.add( new BasicNameValuePair("mission_code",si.getMissionCode().toString()));
-                param.add( new BasicNameValuePair("item_price", si.getItemPrice().toString()));
-                param.add( new BasicNameValuePair("process_code", si.getProcessCode().toString()));
-                param.add( new BasicNameValuePair("memo1", si.getMemo1()));
-                param.add( new BasicNameValuePair("memo2", si.getMemo2()));
-                param.add( new BasicNameValuePair("xml", si.getXml().toString()));
-                param.add( new BasicNameValuePair("character_code", si.getCharacterCode()));
+                param.add( new BasicNameValuePair("user_id", si.userId));
+                param.add( new BasicNameValuePair("user_name", si.userName));
+                param.add( new BasicNameValuePair("user_mail_add", si.userMailAdd));
+                param.add( new BasicNameValuePair("item_code", si.itemCode));
+                param.add( new BasicNameValuePair("item_name", si.itemName));
+                param.add( new BasicNameValuePair("order_number", si.orderNumber));
+                param.add( new BasicNameValuePair("st_code",  si.stCode));
+                param.add( new BasicNameValuePair("card_st_code",  si.cardStCode));
+                param.add( new BasicNameValuePair("mission_code",si.missionCode.toString()));
+                param.add( new BasicNameValuePair("item_price", si.itemPrice.toString()));
+                param.add( new BasicNameValuePair("process_code", si.processCode.toString()));
+                param.add( new BasicNameValuePair("memo1", si.memo1));
+                param.add( new BasicNameValuePair("memo2", si.memo2));
+                param.add( new BasicNameValuePair("xml", si.xml.toString()));
+                param.add( new BasicNameValuePair("character_code", si.characterCode));
+                param.add( new BasicNameValuePair("user_agent", si.userAgent));
+
+                if(si.securityCheck!=null){
+                    param.add( new BasicNameValuePair("security_check", si.securityCheck.toString()));
+                }
+                if(!si.token.isEmpty()){
+                    param.add( new BasicNameValuePair("token", si.token));
+                }
 
                 /*
                 // コンビニ指定があるときのみ指定する
@@ -193,13 +206,13 @@ public class EpsilonSettlement {
                  */
                 break;
             case 7: case 9: // ユーザ退会又は退会取消
-                param.add( new BasicNameValuePair("version", si.getVersion().toString()));
+                param.add( new BasicNameValuePair("version", si.version.toString()));
                 param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
-                param.add( new BasicNameValuePair("user_id", si.getUserId()));
-                param.add( new BasicNameValuePair("process_code", si.getProcessCode().toString()));
-                param.add( new BasicNameValuePair("memo1", si.getMemo1()));
-                param.add( new BasicNameValuePair("memo2", si.getMemo2()));
-                param.add( new BasicNameValuePair("xml", si.getXml().toString()));
+                param.add( new BasicNameValuePair("user_id", si.userId));
+                param.add( new BasicNameValuePair("process_code", si.processCode.toString()));
+                param.add( new BasicNameValuePair("memo1", si.memo1));
+                param.add( new BasicNameValuePair("memo2", si.memo2));
+                param.add( new BasicNameValuePair("xml", si.xml.toString()));
                 break;
         }
         return param;

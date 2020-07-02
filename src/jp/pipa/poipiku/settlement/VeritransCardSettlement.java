@@ -35,7 +35,7 @@ public class VeritransCardSettlement extends CardSettlement {
 
     public VeritransCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                                    String _agentToken, String _cardExpire, String _cardSecurityCode){
-        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode);
+        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode, null);
         agent_id = Agent.VERITRANS;
     }
 
@@ -123,6 +123,9 @@ public class VeritransCardSettlement extends CardSettlement {
             String strSql = "";
 
             try{
+                dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+                cConn = dsPostgres.getConnection();
+
                 strSql = "INSERT INTO" +
                         " creditcard_tokens(user_id, expire, security_code, authorized_order_id, agent_id)" +
                         " VALUES (?, ?, ?, ?, ?)";

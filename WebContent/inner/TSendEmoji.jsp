@@ -9,6 +9,7 @@
 
     function SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment) {
         let amount = -1;
+        if(nCheerAmount && nCheerAmount>0){amount = nCheerAmount;}
 
         $.ajax({
             "type": "post",
@@ -23,7 +24,7 @@
         }).then( data => {
                 if (data.result_num > 0) {
                     var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
-                    $("#ResEmojiAdd_" + nContentId).before($objResEmoji);
+                    $("#ResEmojiAdd_" + emojiInfo.contentId).before($objResEmoji);
                     if (vg) vg.vgrefresh();
                     if(nAmount>0) {
                         DispMsg(<%=_TEX.T("CheerDlg.Thanks")%>);
@@ -100,7 +101,7 @@
 	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4"  value="012"/>
 </div>
 <div class="CardInfoDlgInfoCheckList">
-<label><input id="cc_agree1" type="checkbox"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
+<label><input id="cc_agree1" type="checkbox" checked="checked"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
 </div>
 `;
     }
@@ -149,28 +150,46 @@
         xhr.send(JSON.stringify(postData));
     }
 
-    function execTradeEpsilon(response) {
+    let g_epsilonInfo = {
+        "emojiInfo": null,
+        "cheerAmount": null,
+        "cardInfo": null,
+        "elCheerNowPayment": null,
+    };
+
+    function epsilonTrade(response){
         if( response.resultCode !== '000' ){
             window.alert("購入処理中にエラーが発生しました");
             console.log(response.resultCode);
-            elCheerNowPayment.hide();
+            g_epsilonInfo.elCheerNowPayment.hide();
         }else{
-            const agentInfo = createAgentInfo(AGENT.EPSILON, response.tokenObject.token, response.tokenObject.toBeExpiredAt);
-            SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment);
+            const agentInfo = createAgentInfo(
+                AGENT.EPSILON, response.tokenObject.token,
+                response.tokenObject.toBeExpiredAt);
+            SendEmojiAjax(g_epsilonInfo.emojiInfo, g_epsilonInfo.nCheerAmount,
+                agentInfo, g_epsilonInfo.cardInfo, g_epsilonInfo.elCheerNowPayment);
         }
     }
-    function paymentByEpsilon(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
-        const contructCode = "68968190"
+
+    function epsilonPayment(_emojiInfo, _nCheerAmount, _cardInfo, _elCheerNowPayment){
+        g_epsilonInfo.emojiInfo = _emojiInfo;
+        g_epsilonInfo.nCheerAmount = _nCheerAmount;
+        g_epsilonInfo.cardInfo = _cardInfo;
+        g_epsilonInfo.elCheerNowPayment = _elCheerNowPayment;
+
+        const contructCode = "68968190";
         // var cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "TARO NAMAA"};
-        var cardObj = {};
-        cardObj.cardno = cardInfo.number;
-        cardObj.expire = '20' + cardInfo.expire.split('/')[1] +  cardInfo.expire.split('/')[0];
-        cardObj.securitycode = cardInfo.securityCode;
-        cardObj.holdername = "SAMPLE TARO";
+        let cardObj = {
+            "cardno": _cardInfo.number,
+            "expire": '20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0],
+            "securitycode": _cardInfo.securityCode,
+            "holdername": "SAMPLE TARO",
+        };
 
         EpsilonToken.init(contructCode);
-        EpsilonToken.getToken(cardObj , execTradeEpsilon);
+        EpsilonToken.getToken(cardObj , epsilonTrade);
     }
+
 
     function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
         const emojiInfo = {
@@ -293,8 +312,7 @@
                             cardInfo.securityCode = String(formValues.value.cardSec);
 
                             // paymentByVeritrans(formValues);
-                            paymentByEpsilon(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
-
+                            epsilonPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
                         });
                     } else if (result == 1) {
                         console.log("登録済み");
