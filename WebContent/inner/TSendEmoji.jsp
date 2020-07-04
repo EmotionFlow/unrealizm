@@ -14,10 +14,14 @@
         $.ajax({
             "type": "post",
             "data": {
-                "IID": emojiInfo.contentId, "EMJ": emojiInfo.emoji,
-                "UID": emojiInfo.userId, "AMT": amount, "AID": agentInfo.agentId,
-                "TKN": agentInfo.token, "EXP": cardInfo.expire,
-                "SEC": cardInfo.securityCode,
+                "IID": emojiInfo.contentId,
+                "EMJ": emojiInfo.emoji,
+                "UID": emojiInfo.userId,
+                "AMT": amount,
+                "AID": agentInfo==null ? '' :  agentInfo.agentId,
+                "TKN": agentInfo==null ? '' : agentInfo.token,
+                "EXP": cardInfo == null ? '' : cardInfo.expire,
+                "SEC": cardInfo == null ? '' : cardInfo.securityCode,
             },
             "url": "/f/SendEmojiF.jsp",
             "dataType": "json",
@@ -26,7 +30,7 @@
                     var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
                     $("#ResEmojiAdd_" + emojiInfo.contentId).before($objResEmoji);
                     if (vg) vg.vgrefresh();
-                    if(nAmount>0) {
+                    if(nCheerAmount>0) {
                         DispMsg(<%=_TEX.T("CheerDlg.Thanks")%>);
                         if (elCheerNowPayment != null) {
                             elCheerNowPayment.hide();
@@ -172,22 +176,27 @@
     }
 
     function epsilonPayment(_emojiInfo, _nCheerAmount, _cardInfo, _elCheerNowPayment){
-        g_epsilonInfo.emojiInfo = _emojiInfo;
-        g_epsilonInfo.nCheerAmount = _nCheerAmount;
-        g_epsilonInfo.cardInfo = _cardInfo;
-        g_epsilonInfo.elCheerNowPayment = _elCheerNowPayment;
+        if(_cardInfo == null){ // カード登録済
+            SendEmojiAjax(_emojiInfo, _nCheerAmount, createAgentInfo(AGENT.EPSILON, null, null),
+            null, _elCheerNowPayment);
+        } else { // 初回
+            g_epsilonInfo.emojiInfo = _emojiInfo;
+            g_epsilonInfo.nCheerAmount = _nCheerAmount;
+            g_epsilonInfo.cardInfo = _cardInfo;
+            g_epsilonInfo.elCheerNowPayment = _elCheerNowPayment;
 
-        const contructCode = "68968190";
-        // var cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "TARO NAMAA"};
-        let cardObj = {
-            "cardno": _cardInfo.number,
-            "expire": '20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0],
-            "securitycode": _cardInfo.securityCode,
-            "holdername": "SAMPLE TARO",
-        };
+            const contructCode = "68968190";
+            // var cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "TARO NAMAA"};
+            let cardObj = {
+                "cardno": _cardInfo.number,
+                "expire": '20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0],
+                "securitycode": _cardInfo.securityCode,
+                "holdername": "SAMPLE TARO",
+            };
 
-        EpsilonToken.init(contructCode);
-        EpsilonToken.getToken(cardObj , epsilonTrade);
+            EpsilonToken.init(contructCode);
+            EpsilonToken.getToken(cardObj , epsilonTrade);
+        }
     }
 
 
@@ -240,6 +249,9 @@
                     const result = Number(data.result);
                     if (typeof (result) === "undefined" || result == null || result === -1) {
                         return false;
+                    } else if (result == 1) {
+                        console.log("登録済み");
+                        epsilonPayment(emojiInfo, nCheerAmount, null, elCheerNowPayment);
                     } else if (result === 0) {
                         // クレカ入力ダイアログを表示して、Token取得
                         Swal.fire({
@@ -314,10 +326,7 @@
                             // paymentByVeritrans(formValues);
                             epsilonPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
                         });
-                    } else if (result == 1) {
-                        console.log("登録済み");
-                        SendEmojiAjax(emojiInfo, nCheerAmount,
-                            null, null, null, null, elCheerNowPayment);
+
                     } else {
                         DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
                     }

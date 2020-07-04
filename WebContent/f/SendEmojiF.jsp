@@ -103,7 +103,7 @@ class SendEmojiC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(nEmojiNum>=EMOJI_MAX) {
-				//TODO 外す。 return false;
+				return false;
 			}
 
 			// 課金

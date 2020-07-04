@@ -35,8 +35,9 @@ public class EpsilonCardSettlement extends CardSettlement {
         if(userAgent==null || userAgent.isEmpty()){
             Log.d("userAgent==null || userAgent.isEmpty()");
             return false;
+        } else {
+            return super.authorizeCheckBase();
         }
-        return super.authorizeCheckBase();
     }
 
     public boolean authorize() {
@@ -64,8 +65,6 @@ public class EpsilonCardSettlement extends CardSettlement {
             cState.setInt(2, Agent.EPSILON);
             cResSet = cState.executeQuery();
             isFirstSettlement = !cResSet.next();
-
-            Log.d("isFirstSettlement: " + isFirstSettlement);
 
             cResSet.close();cResSet = null;
             cState.close();cState = null;
@@ -111,14 +110,15 @@ public class EpsilonCardSettlement extends CardSettlement {
                 if ("1".equals(settlementResultInfo.getResult())) {
                     if (isFirstSettlement) {
                         strSql = "INSERT INTO creditcard_tokens" +
-                                " (user_id, agent_id, card_expire, security_code, agent_order_id)" +
-                                " VALUES (?, ?, ?, ?, ?)";
+                                " (user_id, agent_id, card_expire, security_code, agent_user_id, agent_order_id)" +
+                                " VALUES (?, ?, ?, ?, ?, ?)";
                         cState = cConn.prepareStatement(strSql);
                         int idx = 1;
                         cState.setInt(idx++, userId);
                         cState.setInt(idx++, Agent.EPSILON);
                         cState.setString(idx++, cardExpire);
                         cState.setString(idx++, cardSecurityCode);
+                        cState.setString(idx++, ssi.userId);
                         cState.setString(idx++, ssi.orderNumber);
                     } else {
                         strSql = "UPDATE creditcard_tokens" +

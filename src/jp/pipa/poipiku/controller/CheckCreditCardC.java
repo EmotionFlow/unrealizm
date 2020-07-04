@@ -16,7 +16,7 @@ class CardToken {
 	public void setExpire(String MMYY){
 		int mm = Integer.parseInt(MMYY.split("/")[0]);
 		int yy = Integer.parseInt(MMYY.split("/")[1]);
-		LocalDateTime dtCardExpire = LocalDateTime.of(2000+yy, mm, 1, 0, 0, 0);
+		dtCardExpire = LocalDateTime.of(2000+yy, mm, 1, 0, 0, 0);
 	}
 	public boolean passingFromLastUpdated(int nDay){
 		return updatedAt.getTime() + nDay * 24 * 3600 * 1000 < System.currentTimeMillis();
@@ -50,7 +50,7 @@ public class CheckCreditCardC {
 		if(cResSet.next()){
 			t.isExist = true;
 			updatedAt = cResSet.getTimestamp("updated_at");
-			strCardExpire = cResSet.getString("expire");
+			strCardExpire = cResSet.getString("card_expire");
 			t.updatedAt = updatedAt;
 			t.setExpire(strCardExpire);
 		}
