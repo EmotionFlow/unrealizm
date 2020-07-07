@@ -14,6 +14,9 @@ public class InitializationListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		ServletContext context=event.getServletContext();
 		context.setAttribute("access_unique", accessUnique);
+
+		Emoji emoji = Emoji.getInstance();
+		emoji.init();
 	}
 
 	public void contextDestroyed(ServletContextEvent event) {

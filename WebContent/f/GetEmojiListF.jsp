@@ -12,15 +12,15 @@ class GetEmojiListC {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
-			m_nCategoryId	= Common.ToIntN(request.getParameter("CAT"), 0, Common.EMOJI_CAT_CHEER);
+			m_nCategoryId	= Common.ToIntN(request.getParameter("CAT"), 0, Emoji.EMOJI_CAT_CHEER);
 		} catch(Exception e) {
 			;
 		}
 	}
 
 	public String[] getResults(CheckLogin cCheckLogin) {
-		String EMOJI_LIST[] = Common.EMOJI_LIST[m_nCategoryId];
-		if(m_nCategoryId!=Common.EMOJI_CAT_POPULAR && (m_nCategoryId!=Common.EMOJI_CAT_RECENT || !cCheckLogin.m_bLogin)) return EMOJI_LIST;
+		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
+		if(m_nCategoryId!=Emoji.EMOJI_CAT_POPULAR && (m_nCategoryId!=Emoji.EMOJI_CAT_RECENT || !cCheckLogin.m_bLogin)) return EMOJI_LIST;
 
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -35,10 +35,10 @@ class GetEmojiListC {
 
 			// Follow
 			ArrayList<String> vEmoji = new ArrayList<String>();
-			if(m_nCategoryId==Common.EMOJI_CAT_RECENT) {
-				vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+			if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
+				vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 			} else {
-				vEmoji = Util.getDefaultEmoji(-1, Common.EMOJI_KEYBORD_MAX);
+				vEmoji = Util.getDefaultEmoji(-1, Emoji.EMOJI_KEYBORD_MAX);
 			}
 			EMOJI_LIST = vEmoji.toArray(new String[vEmoji.size()]);
 		} catch(Exception e) {
@@ -58,16 +58,16 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 StringBuilder sbResult = new StringBuilder();
 GetEmojiListC cResults = new GetEmojiListC();
 cResults.getParam(request);
-if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_RECENT) {
+if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.Recent.NeedLogin")));
-} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_ALL) {
+} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_ALL) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
-} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Common.EMOJI_CAT_CHEER) {
+} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.NeedLogin")));
 } else {
 	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
-	if(Common.EMOJI_EVENT) {
-		EMOJI_LIST = Common.EMOJI_EVENT_LIST;
+	if(Emoji.EMOJI_EVENT) {
+		EMOJI_LIST = Emoji.EMOJI_EVENT_LIST;
 	}
 	for(String emoji : EMOJI_LIST) {
 		sbResult.append(
