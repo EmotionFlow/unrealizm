@@ -69,7 +69,7 @@ default:
 	break;
 }
 strTitle = Common.SubStrNum(strTitle, 10);
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>

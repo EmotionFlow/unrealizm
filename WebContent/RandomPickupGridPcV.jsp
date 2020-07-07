@@ -7,7 +7,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 RandomPickupGridC cResults = new RandomPickupGridC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>

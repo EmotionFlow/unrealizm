@@ -15,7 +15,7 @@ cResults.m_strKeyword = "ギャップにもえろ";
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(cCheckLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>

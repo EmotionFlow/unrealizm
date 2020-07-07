@@ -16,11 +16,11 @@ rm -rf $DEST_PATH
 mkdir $DEST_PATH
 
 echo /
-javac -sourcepath $SOURCE_PATH -d $DEST_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT/*.java
+javac -Xlint:unchecked -sourcepath $SOURCE_PATH -d $DEST_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT/*.java
 
 for dir in "${JAVA_FILE_DIRS[@]}"; do
     echo $dir
-    javac -sourcepath $SOURCE_PATH -d $DEST_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT$dir/*.java
+    javac -Xlint:unchecked -sourcepath $SOURCE_PATH -d $DEST_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT$dir/*.java
 done
 
 echo build ok

@@ -1,6 +1,13 @@
 package jp.pipa.poipiku;
 
-import java.lang.reflect.Array;
+import jp.pipa.poipiku.util.Log;
+
+import javax.naming.InitialContext;
+import javax.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,25 +19,59 @@ public class Emoji {
         return INSTANCE;
     }
 
-    public List<List<String>> LIST;
     public String[][] EMOJI_LIST;
     public void init(){
-        LIST = new ArrayList<>();
-        LIST.add(new ArrayList<>()); // 人気
-        LIST.add(new ArrayList<>()); // よく使う
-        LIST.add(Arrays.asList(EMOJI_OYATSU_ALL)); // おやつ
-        LIST.add(Arrays.asList(EMOJI_ALL)); // その他
-        LIST.add(new ArrayList<>()); // ポチ袋
+        List<List<String>> list;
+        list = new ArrayList<>();
+        list.add(new ArrayList<>()); // 0.人気
+        list.add(new ArrayList<>()); // 1.よく使う
+        list.add(new ArrayList<>(Arrays.asList(EMOJI_OYATSU_ALL))); // 2.おやつ
+        list.add(new ArrayList<>(Arrays.asList(EMOJI_ALL))); // 3.その他
+        list.add(new ArrayList<>()); // 4.ポチ袋
 
         // ポチ袋（前日TOP10）
+        String strSql = "SELECT description, count(description) cnt" +
+                " FROM comments_0000" +
+                " WHERE upload_date BETWEEN current_timestamp - interval '24 hours' AND current_timestamp" +
+                " GROUP BY description" +
+                " ORDER BY cnt DESC" +
+                " LIMIT 16";
+        DataSource dsPostgres = null;
+        Connection cConn = null;
+        PreparedStatement cState = null;
+        ResultSet cResSet = null;
 
+        try {
+            Class.forName("org.postgresql.Driver");
+            dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+            cConn = dsPostgres.getConnection();
+
+            cState = cConn.prepareStatement(strSql);
+            cResSet = cState.executeQuery();
+
+            while(cResSet.next()){
+                list.get(4).add(cResSet.getString(1));
+            }
+
+            cResSet.close();cResSet=null;
+            cState.close();cState=null;
+            cConn.close();cConn=null;
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+            try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+            try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+        }
 
         // その他とおやつからポチ袋絵文字を除外する
-
+        list.get(2).removeAll(list.get(4));
+        list.get(3).removeAll(list.get(4));
 
         EMOJI_LIST = new String[5][];
-        for (int i=0; i<LIST.size(); i++) {
-            EMOJI_LIST[i] = (String[]) LIST.get(i).toArray(new String[0]);
+        for (int i=0; i<list.size(); i++) {
+            EMOJI_LIST[i] = (String[]) list.get(i).toArray(new String[0]);
         }
     }
 

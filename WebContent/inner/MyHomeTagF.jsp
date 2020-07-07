@@ -12,7 +12,7 @@ if(cResults.m_nMode==CCnv.MODE_SP) {
 }
 
 boolean bRtn = cResults.getResults(cCheckLogin, true);
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 StringBuilder sbHtml = new StringBuilder();
 int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
