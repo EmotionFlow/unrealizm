@@ -1,17 +1,14 @@
 package jp.pipa.poipiku.settlement;
 
-import com.drew.metadata.Age;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.settlement.epsilon.*;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class EpsilonCardSettlement extends CardSettlement {
 
@@ -19,8 +16,12 @@ public class EpsilonCardSettlement extends CardSettlement {
         return String.format("poipiku%d", System.currentTimeMillis());
     }
 
-    private String getAgentUserId(int userId) {
-        return String.format("poipiku-%d", userId);
+//    private String getAgentUserId(int userId) {
+//        return String.format("poipiku-%d", userId);
+//    }
+
+    private String createAgentUserId(int userId) {
+        return String.format("poipiku-%d-%d", userId, System.currentTimeMillis());
     }
 
     public EpsilonCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
@@ -59,18 +60,25 @@ public class EpsilonCardSettlement extends CardSettlement {
 
             // 初回か登録済かを判定
             boolean isFirstSettlement = true;
-            strSql = "SELECT 1 FROM creditcard_tokens WHERE user_id=? AND agent_id=?";
+            strSql = "SELECT agent_user_id FROM creditcard_tokens WHERE user_id=? AND agent_id=? AND del_flg=false";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, userId);
             cState.setInt(2, Agent.EPSILON);
             cResSet = cState.executeQuery();
-            isFirstSettlement = !cResSet.next();
+            String strAgentUserId;
+            if(cResSet.next()){
+                strAgentUserId = cResSet.getString(1);
+                isFirstSettlement = false;
+            } else {
+                strAgentUserId =  createAgentUserId(userId);
+                isFirstSettlement = true;
+            }
 
             cResSet.close();cResSet = null;
             cState.close();cState = null;
 
             SettlementSendInfo ssi = new SettlementSendInfo();
-            ssi.userId = getAgentUserId(userId);
+            ssi.userId = strAgentUserId;
             ssi.userName = "DUMMY";
             ssi.userNameKana = "DUMMY";
             ssi.userMailAdd = "dummy@example.com";
@@ -103,11 +111,12 @@ public class EpsilonCardSettlement extends CardSettlement {
                 /* settlementResultInfo.getResult()
                 0：決済NG
                 1：決済OK
-                5：3DS処理　（カード会社に接続必要）
+                5：3DS処理　（カード会社に接続必要）<- 3DS認証は使っていないため、この値は返却されないはず。
                 9：システムエラー（パラメータ不足、不正等）
                  */
-                Log.d("settlementResultInfo: " + settlementResultInfo.toString());
-                if ("1".equals(settlementResultInfo.getResult())) {
+                String settlementResultCode = settlementResultInfo.getResult();
+                Log.d("settlementResultInfo: " + settlementResultCode);
+                if ("1".equals(settlementResultCode)) {
                     if (isFirstSettlement) {
                         strSql = "INSERT INTO creditcard_tokens" +
                                 " (user_id, agent_id, card_expire, security_code, agent_user_id, agent_order_id)" +
@@ -133,15 +142,36 @@ public class EpsilonCardSettlement extends CardSettlement {
                     cState.executeUpdate();
                     cState.close();cState = null;
                     cConn.close();cConn = null;
+                    errorKind = ErrorKind.None;
                     return true;
                 } else {
+                    if("0".equals(settlementResultCode)) {
+                        Log.d(String.format("決済NG userId=%d, contentId=%d", userId, contentId));
+                        Log.d("Code: " + settlementResultInfo.getErrCode());
+                        Log.d("Detail: " + settlementResultInfo.getErrDetail());
+                        errorKind = ErrorKind.CardAuth;
+                    } else if("9".equals(settlementResultCode)) {
+                        Log.d(String.format("イプシロンからシステムエラー返却された userId=%d, contentId=%d", userId, contentId));
+                        Log.d("Code: " + settlementResultInfo.getErrCode());
+                        Log.d("Detail: " + settlementResultInfo.getErrDetail());
+                        errorKind = ErrorKind.NeedInquiry;
+                    } else {
+                        Log.d(String.format("settlementResultCodeが想定外の値 userId=%d, contentId=%d", userId, contentId));
+                        Log.d("Code: " + settlementResultInfo.getErrCode());
+                        Log.d("Detail: " + settlementResultInfo.getErrDetail());
+                        errorKind = ErrorKind.Unknown;
+                    }
                     return false;
                 }
+
             } else {
+                Log.d(String.format("settlementResultInfo == null, userId=%d, contentId=%d", userId, contentId));
+                errorKind = ErrorKind.Unknown;
                 return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
+            errorKind = ErrorKind.Exception;
             return false;
         } finally {
             if(cResSet!=null){try{cResSet.close();cResSet=null;}catch(Exception ex){;}}

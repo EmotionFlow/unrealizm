@@ -44,6 +44,9 @@
                         case -20:
                             alert("<%=_TEX.T("CheerDlg.Err.AuthCritical")%>");
                             break;
+                        case -30:
+                            DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
+                            break;
                         case -99:
                             DispMsg("<%=_TEX.T("CheerDlg.Err.AuthOther")%>");
                             break;
@@ -93,7 +96,10 @@
 </div>
 <div class="CardInfoDlgInputItem">
 	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardNumber")%></div>
-	<img src="/img/credit_card_logos.png" width="170px"/>
+	<span>
+	<span style="font-size: 11px;position: relative;top: -9px;">Only</span>
+	<img src="/img/credit_card_logo_visa.png" width="40px" style="padding-top: 4px;"/>
+	</span>
 	<input id="card_number" class="swal2-input" style="margin-top: 4px;" maxlength="16" value="4111111111111111"/>
 </div>
 <div class="CardInfoDlgInputItem">
@@ -272,7 +278,7 @@
                                 }
                                 const validateCreditCardResult = $("#card_number").validateCreditCard(
                                     { accept: [
-                                            'visa', 'mastercard', 'jcb', 'amex', 'diners_club_international'
+                                            'visa', //'mastercard', 'jcb', 'amex', 'diners_club_international'
                                         ] });
                                 if(!validateCreditCardResult.valid){
                                     return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Invalid")%>');

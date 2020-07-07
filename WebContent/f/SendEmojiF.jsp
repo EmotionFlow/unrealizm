@@ -11,6 +11,7 @@ class SendEmojiC {
 	public final int ERR_NONE = 0;
 	public final int ERR_RETRY = -10;
 	public final int ERR_INQUIRY = -20;
+	public final int ERR_CARDAUTH = -30;
 	public final int ERR_UNKNOWN = -99;
 
 	public int m_nContentId = -1;
@@ -158,13 +159,16 @@ class SendEmojiC {
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, authorizeResult?COrder.Status.get("Paid"):COrder.Status.get("PaymentError"));
+				cState.setInt(1, authorizeResult?COrder.Status.get("SettlementOK"):COrder.Status.get("SettlementError"));
 				cState.setString(2, authorizeResult? cardSettlement.getAgencyOrderId():null);
 				cState.setInt(3, orderId);
 				cState.executeUpdate();
 				cState.close();cState=null;
 
-				if(!authorizeResult){return false;}
+				if(!authorizeResult){
+					setErrCode(cardSettlement);
+					return false;
+				}
 			}
 
 
@@ -276,8 +280,9 @@ class SendEmojiC {
 	}
 
 	private void setErrCode(CardSettlement cardSettlement) {
-		if(cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth
-		|| cardSettlement.errorKind == CardSettlement.ErrorKind.Common){
+		if(cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth){
+			m_nErrCode = ERR_CARDAUTH;
+		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.Common){
 			m_nErrCode = ERR_RETRY;
 		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry){
 			// 決済されてるかもしれないし、されていないかもしれない。

@@ -9,8 +9,8 @@ public class COrder {
     static {
         Map<String, Integer> map = new LinkedHashMap<>();
         map.put("Init", 0);
-        map.put("Paid", 20);
-        map.put("PaymentError", -10);
+        map.put("SettlementOK", 20);
+        map.put("SettlementError", -10);
         Status = Collections.unmodifiableMap(map);
     }
 }
