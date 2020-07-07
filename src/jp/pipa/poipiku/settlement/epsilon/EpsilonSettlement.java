@@ -32,19 +32,19 @@ public class EpsilonSettlement {
     private static final String ORDER_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
 //    private static final String ORDER_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
   
-    private SettlementSendInfo settlmentSendInfo;
-    public SettlementSendInfo getSettlmentSendInfo() {
-        return settlmentSendInfo;
+    private SettlementSendInfo settlementSendInfo;
+    public SettlementSendInfo getSettlementSendInfo() {
+        return settlementSendInfo;
     }
 
-    public void setSettlmentSendInfo(SettlementSendInfo settlmentSendInfo) {
-        this.settlmentSendInfo = settlmentSendInfo;
+    public void setSettlementSendInfo(SettlementSendInfo settlementSendInfo) {
+        this.settlementSendInfo = settlementSendInfo;
     }
     public EpsilonSettlement(){
-        this.setSettlmentSendInfo(new SettlementSendInfo());
+        this.setSettlementSendInfo(new SettlementSendInfo());
     }
     public EpsilonSettlement( SettlementSendInfo settlementSendInfo){
-        this.setSettlmentSendInfo(settlementSendInfo);
+        this.setSettlementSendInfo(settlementSendInfo);
     }
 
     // 決済情報送信処理
@@ -66,10 +66,10 @@ public class EpsilonSettlement {
                 .build();
 
         List<NameValuePair> param = this.makeSendParam();
-        Log.d("key => value");
-        for(NameValuePair p : param){
-            Log.d(String.format("%s => %s", p.getName(), p.getValue()));
-        }
+//        Log.d("key => value");
+//        for(NameValuePair p : param){
+//            Log.d(String.format("%s => %s", p.getName(), p.getValue()));
+//        }
         HttpPost post = new HttpPost();
         HttpResponse res = null;
 
@@ -123,24 +123,31 @@ public class EpsilonSettlement {
                         }
                     }
                 }
-            }catch ( Exception e){
+            }catch(Exception e){
+                Log.d("caught exception");
+                for(NameValuePair p : param){
+                    Log.d(String.format("%s => %s", p.getName(), p.getValue()));
+                }
                 e.printStackTrace();
                 return null;
             }
         }else{
-            // 応答が200以外の場合は不明
+            Log.d("res.getStatusLine().getStatusCode() != 200 -> " + res.getStatusLine().getStatusCode());
+            for(NameValuePair p : param){
+                Log.d(String.format("%s => %s", p.getName(), p.getValue()));
+            }
             return null;
         }
         return settleResultInfo;
     }
     // 決済情報送信処理
     public SettlementResultInfo execSettlement(SettlementSendInfo settlementSendInfo){
-        this.setSettlmentSendInfo(settlementSendInfo);
+        this.setSettlementSendInfo(settlementSendInfo);
         return this.execSettlement();
     }
 
     public List<NameValuePair> makeSendParam() {
-        SettlementSendInfo si = this.getSettlmentSendInfo();
+        SettlementSendInfo si = this.getSettlementSendInfo();
         List<NameValuePair> param = new ArrayList<NameValuePair>();
         switch (si.processCode){
             case 1: case 2: // 初回/登録済み課金
@@ -206,6 +213,7 @@ public class EpsilonSettlement {
                  */
                 break;
             case 7: case 9: // ユーザ退会又は退会取消
+                /*
                 param.add( new BasicNameValuePair("version", si.version.toString()));
                 param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
                 param.add( new BasicNameValuePair("user_id", si.userId));
@@ -213,6 +221,7 @@ public class EpsilonSettlement {
                 param.add( new BasicNameValuePair("memo1", si.memo1));
                 param.add( new BasicNameValuePair("memo2", si.memo2));
                 param.add( new BasicNameValuePair("xml", si.xml.toString()));
+                 */
                 break;
         }
         return param;
