@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- for EPSILON -->
+<!--
+<script src='https://secure.epsilon.jp/js/token.js'></script>
+-->
 <script src='https://beta.epsilon.jp/js/token.js'></script>
 <script>
     const AGENT = {

@@ -12,16 +12,14 @@ import java.sql.ResultSet;
 
 public class EpsilonCardSettlement extends CardSettlement {
 
+    // 半角英数字 32byte 注文単位でユニークに設定してください。
     protected String createOrderId(int userId, int contentId) {
-        return String.format("poipiku%d", System.currentTimeMillis());
+        return String.format("poi%dT%d", userId, System.currentTimeMillis());
     }
 
-//    private String getAgentUserId(int userId) {
-//        return String.format("poipiku-%d", userId);
-//    }
-
+    // 半角英数字.-+/@ 64byte以下
     private String createAgentUserId(int userId) {
-        return String.format("poipiku-%d-%d", userId, System.currentTimeMillis());
+        return String.format("poi-%d-%d", userId, System.currentTimeMillis());
     }
 
     public EpsilonCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
@@ -87,7 +85,7 @@ public class EpsilonCardSettlement extends CardSettlement {
             ssi.itemPrice = amount;
 
             ssi.stCode = "11000-0000-00000";
-            ssi.cardStCode = "10";            // 一括払い
+            ssi.cardStCode = "10";             // 一括払い
             ssi.missionCode = 1;               // 課金区分（一回課金固定）
             ssi.processCode = isFirstSettlement ? 1 : 2; // 初回/登録済み課金
             ssi.userTel = "00000000000";
