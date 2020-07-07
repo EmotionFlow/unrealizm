@@ -3,7 +3,7 @@ package jp.pipa.poipiku.settlement;
 import jp.pipa.poipiku.util.Log;
 
 public abstract class CardSettlement {
-    protected Agent agent;
+    protected Agent agent = new Agent();
     protected int userId = -1;
     protected int contentId = -1;
     protected String agentToken = null;
