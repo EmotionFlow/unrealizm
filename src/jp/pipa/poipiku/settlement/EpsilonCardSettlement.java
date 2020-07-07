@@ -60,7 +60,7 @@ public class EpsilonCardSettlement extends CardSettlement {
 
             // 初回か登録済かを判定
             boolean isFirstSettlement = true;
-            strSql = "SELECT agent_user_id FROM creditcard_tokens WHERE user_id=? AND agent_id=? AND del_flg=false";
+            strSql = "SELECT agent_user_id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, userId);
             cState.setInt(2, Agent.EPSILON);
@@ -118,7 +118,7 @@ public class EpsilonCardSettlement extends CardSettlement {
                 Log.d("settlementResultInfo: " + settlementResultCode);
                 if ("1".equals(settlementResultCode)) {
                     if (isFirstSettlement) {
-                        strSql = "INSERT INTO creditcard_tokens" +
+                        strSql = "INSERT INTO creditcards" +
                                 " (user_id, agent_id, card_expire, security_code, agent_user_id, agent_order_id)" +
                                 " VALUES (?, ?, ?, ?, ?, ?)";
                         cState = cConn.prepareStatement(strSql);
@@ -130,7 +130,7 @@ public class EpsilonCardSettlement extends CardSettlement {
                         cState.setString(idx++, ssi.userId);
                         cState.setString(idx++, ssi.orderNumber);
                     } else {
-                        strSql = "UPDATE creditcard_tokens" +
+                        strSql = "UPDATE creditcards" +
                                 " SET updated_at=now(), agent_order_id=?" +
                                 " WHERE user_id=? AND agent_id=?";
                         cState = cConn.prepareStatement(strSql);

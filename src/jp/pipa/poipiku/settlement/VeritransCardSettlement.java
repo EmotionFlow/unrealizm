@@ -127,7 +127,7 @@ public class VeritransCardSettlement extends CardSettlement {
                 cConn = dsPostgres.getConnection();
 
                 strSql = "INSERT INTO" +
-                        " creditcard_tokens(user_id, expire, security_code, authorized_order_id, agent_id)" +
+                        " creditcards(user_id, expire, security_code, authorized_order_id, agent_id)" +
                         " VALUES (?, ?, ?, ?, ?)";
                 cState = cConn.prepareStatement(strSql);
                 cState.setInt(1, userId);
@@ -164,7 +164,7 @@ public class VeritransCardSettlement extends CardSettlement {
             dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
             cConn = dsPostgres.getConnection();
 
-            strSql = "SELECT expire, security_code, authorized_order_id FROM creditcard_tokens WHERE user_id=?";
+            strSql = "SELECT expire, security_code, authorized_order_id FROM creditcards WHERE user_id=?";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, userId);
             cResSet = cState.executeQuery();
