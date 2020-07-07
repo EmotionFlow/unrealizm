@@ -1,6 +1,15 @@
-package jp.pipa.poipiku.payment;
+package jp.pipa.poipiku.settlement;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
+
 import jp.veritrans.tercerog.mdk.ITransaction;
 import jp.veritrans.tercerog.mdk.TransactionFactory;
 import jp.veritrans.tercerog.mdk.dto.CardAuthorizeRequestDto;
@@ -8,72 +17,42 @@ import jp.veritrans.tercerog.mdk.dto.CardAuthorizeResponseDto;
 import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeRequestDto;
 import jp.veritrans.tercerog.mdk.dto.CardReAuthorizeResponseDto;
 
-public class CardPayment {
-    private int userId = -1;
-    private int contentId = -1;
-
+public class VeritransCardSettlement extends CardSettlement {
     private final String STATUS_SUCCESS = "success";
     private final String STAUTS_FAILURE = "failure";
     private final String RESULTCODE_SUCCESS = "A001000000000000";
 
-    public enum ErrorKind {
-        None,
-        CardAuth,       // カード認証や、センターとの通信に関するエラー。
-        MDKConnection,  // 接続エラー。＊＊決済されているかもしれない＊＊。
-        Common,         // 共通エラー。
-        Exception,      // Javaコード内で例外発生
-        Unknown         // 不明。通常ありえない。
-    }
-
-    public ErrorKind errorKind = ErrorKind.None;
-
     // 与信方法　与信売上(与信と同時に売上処理も行います)固定
     private final String withCapture = "1";
-    // 取引ID
-    private String orderId = "";
-    // 金額
-    public int amount = 0;
     // 支払方法 一括払い固定
     private final String jpo1 = "10";
     // 支払回数 一括払いなので設定不要
     private final String jpo2 = "";
 
-    private String errMsg = "";
-
-    private static String createOrderid(int userId, int contentId){
+    protected String createOrderId(int userId, int contentId){
         return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
-    public String getErrMsg(){ return errMsg; }
-    public String getAgencyOrderId(){
-        return orderId;
+    public VeritransCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
+                                   String _agentToken, String _cardExpire, String _cardSecurityCode){
+        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode, null);
+        agent.id = Agent.VERITRANS;
     }
 
-    public CardPayment(int _userId, int _contentId, int _amount){
-        userId = _userId;
-        contentId = _contentId;
-        orderId = createOrderid(userId, contentId);
-        amount = Math.max(_amount, 0);
-    }
-
-    private boolean authorizeCheckBase(){
-        if(amount <= 0){
-            return false;
-        }
-        if(orderId.isEmpty()){
-            return false;
-        }
-        if(userId<0 || contentId<0){
-            return false;
-        }
-        return true;
-    }
-
-    public boolean authorize(String token){
+    public boolean authorize(){
         if(!authorizeCheckBase()){
             return false;
         }
-        if(token.isEmpty()){
+
+        if(agentToken ==null){
+            return newAuthorize();
+        } else {
+            return reAuthorize();
+        }
+    }
+
+    private boolean newAuthorize(){
+        if(agentToken.isEmpty()){
             return false;
         }
 
@@ -82,10 +61,10 @@ public class CardPayment {
         // 要求DTOを生成し、値を設定します。
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++
         CardAuthorizeRequestDto reqDto = new CardAuthorizeRequestDto();
-
+        orderId = createOrderId(userId, contentId);
         reqDto.setOrderId(orderId);
         reqDto.setAmount(Integer.toString(amount, 10));
-        reqDto.setToken(token);
+        reqDto.setToken(agentToken);
 
         // ペイメントオプション(支払方法・回数)の設定　一括払い固定
         reqDto.setJpo("10");
@@ -119,7 +98,7 @@ public class CardPayment {
                         break;
                     case 'M':
                         // TODO 本来はslackなどで運営に即通知したい
-                        errorKind = ErrorKind.MDKConnection;
+                        errorKind = ErrorKind.NeedInquiry;
                         break;
                     case 'N':
                     case 'O':
@@ -136,20 +115,87 @@ public class CardPayment {
             errorKind = ErrorKind.Exception;
             ret = false;
         }
+
+        if(ret){
+            DataSource dsPostgres = null;
+            Connection cConn = null;
+            PreparedStatement cState = null;
+            String strSql = "";
+
+            try{
+                dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+                cConn = dsPostgres.getConnection();
+
+                strSql = "INSERT INTO" +
+                        " creditcards(user_id, card_expire, security_code, last_agent_order_id, agent_id)" +
+                        " VALUES (?, ?, ?, ?, ?)";
+                cState = cConn.prepareStatement(strSql);
+                cState.setInt(1, userId);
+                cState.setString(2, cardExpire);
+                cState.setString(3, cardSecurityCode);
+                cState.setString(4, orderId);
+                cState.setInt(5, agent.id);
+                cState.executeUpdate();
+                cState.close(); cState=null;
+            } catch(Exception e) {
+                e.printStackTrace();
+            } finally {
+                try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+                try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+            }
+
+        }
+
         return ret;
     }
 
-    public boolean reAuthorize(String authorizedOrderId, String cardExpire, String cardSecurityCode){
-        if(!authorizeCheckBase()){
+    private boolean reAuthorize(){
+        DataSource dsPostgres = null;
+        Connection cConn = null;
+        PreparedStatement cState = null;
+        ResultSet cResSet = null;
+        String strSql = "";
+
+        String expire = "";
+        String securityCode = "";
+        String authOrderId = "";
+
+        try {
+            dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+            cConn = dsPostgres.getConnection();
+
+            strSql = "SELECT card_expire, security_code, last_agent_order_id FROM creditcards WHERE user_id=? AND agent_id=?";
+            cState = cConn.prepareStatement(strSql);
+            cState.setInt(1, userId);
+            cState.setInt(2, agent.id);
+            cResSet = cState.executeQuery();
+
+            if(cResSet.next()){
+                expire = cResSet.getString("expire");
+                securityCode = cResSet.getString("security_code");
+                authOrderId = cResSet.getString("authorized_order_id");
+            }else{
+                Log.d("与信済みの決済情報が見つからない(uid)", userId);
+                errorKind = ErrorKind.Common;
+                return false;
+            }
+            cResSet.close();cResSet=null;
+            cState.close();cState=null;
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+            try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+            try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+        }
+
+        if(authOrderId==null || authOrderId.isEmpty()){
             return false;
         }
-        if(authorizedOrderId==null || authorizedOrderId.isEmpty()){
+        if(expire==null || expire.isEmpty()){
             return false;
         }
-        if(cardExpire==null || cardExpire.isEmpty()){
-            return false;
-        }
-        if(cardSecurityCode==null || cardSecurityCode.isEmpty()){
+        if(securityCode==null || securityCode.isEmpty()){
             return false;
         }
 
@@ -159,7 +205,7 @@ public class CardPayment {
         // 取引IDの設定
         reqDto.setOrderId(orderId);
         // 元取引ID(再与信対象)の設定
-        reqDto.setOriginalOrderId(authorizedOrderId);
+        reqDto.setOriginalOrderId(authOrderId);
         // 与信方法の設定
         reqDto.setWithCapture("true");
         // 金額の設定
@@ -167,7 +213,7 @@ public class CardPayment {
         // ペイメントオプション(支払方法・回数)の設定
         reqDto.setJpo("10");
         // セキュリティコード設定
-        reqDto.setSecurityCode(cardSecurityCode);
+        reqDto.setSecurityCode(securityCode);
 
         ITransaction tran = null;
         CardReAuthorizeResponseDto resDto = null;

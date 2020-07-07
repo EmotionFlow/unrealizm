@@ -22,7 +22,7 @@ public class DeleteCreditCardC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "DELETE FROM mdk_creditcards WHERE user_id=?";
+			strSql = "UPDATE creditcards SET del_flg=true WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.executeUpdate();

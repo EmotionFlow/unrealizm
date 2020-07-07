@@ -1,4 +1,7 @@
-<%@ page import="jp.pipa.poipiku.payment.CardPayment"%>
+<%@ page import="jp.pipa.poipiku.settlement.CardSettlement"%>
+<%@ page import="jp.pipa.poipiku.settlement.Agent" %>
+<%@ page import="jp.pipa.poipiku.settlement.VeritransCardSettlement" %>
+<%@ page import="jp.pipa.poipiku.settlement.EpsilonCardSettlement" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -8,17 +11,20 @@ class SendEmojiC {
 	public final int ERR_NONE = 0;
 	public final int ERR_RETRY = -10;
 	public final int ERR_INQUIRY = -20;
+	public final int ERR_CARD_AUTH = -30;
 	public final int ERR_UNKNOWN = -99;
 
 	public int m_nContentId = -1;
 	public String m_strEmoji = "";
 	public int m_nUserId = -1;
 	public int m_nAmount = -1;
-	public String m_strMDKToken = "";
+	public int m_nAgentId = -1;
+	public String m_strAgentToken = "";
 	public String m_strIpAddress = "";
 	public String m_strCardExpire = "";
 	public String m_strCardSecurityCode = "";
 	public int m_nErrCode = ERR_UNKNOWN;
+	public String m_strUserAgent = "";
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -26,11 +32,13 @@ class SendEmojiC {
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
 			m_strEmoji		= Common.ToString(request.getParameter("EMJ")).trim();
 			m_nUserId		= Common.ToInt(request.getParameter("UID"));
+			m_nAgentId		= Common.ToInt(request.getParameter("AID"));
 			m_strIpAddress	= request.getRemoteAddr();
 			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
-			m_strMDKToken	= Common.ToString(request.getParameter("MDK"));
+			m_strAgentToken = Common.ToString(request.getParameter("TKN"));
 			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
 			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
+			m_strUserAgent  = request.getHeader("user-agent");
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
@@ -94,20 +102,26 @@ class SendEmojiC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(nEmojiNum>=EMOJI_MAX) {
+				Log.d("max 5 emoji");
 				return false;
 			}
 
 			// 課金
 			if(m_nAmount>0){
+				// ログインしていないと、課金できない。
+				if(!checkLogin.m_bLogin){
+					return false;
+				}
 				// 注文生成
 				Integer orderId = null;
 				strSql = "INSERT INTO orders(" +
-						" customer_id, seller_id, payment_total)" +
-						" VALUES (?, ?, ?)";
+						" customer_id, seller_id, status, payment_total)" +
+						" VALUES (?, ?, ?, ?)";
 				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				cState.setInt(1, m_nUserId);
-				cState.setInt(2, COrder.Status.get("Init"));
-				cState.setInt(3, m_nAmount);
+				cState.setInt(2, 2); // 売り手はポイピク公式
+				cState.setInt(3, COrder.STATUS_INIT);
+				cState.setInt(4, m_nAmount);
 				cState.executeUpdate();
 				cResSet = cState.getGeneratedKeys();
 				if(cResSet.next()){
@@ -124,77 +138,38 @@ class SendEmojiC {
 				cState.setInt(1, orderId);
 				cState.setInt(2, m_nContentId);
 				cState.setString(3, m_strEmoji);
-				cState.setInt(4, 0);
+				cState.setInt(4, m_nAmount);
 				cState.setInt(5, m_nAmount);
 				cState.setInt(6, 1);
 				cState.executeUpdate();
 				cState.close(); cState=null;
 
-				CardPayment cardPayment = new CardPayment(m_nUserId, m_nContentId, m_nAmount);
-				boolean authorizeResult = false;
-				if(!m_strMDKToken.isEmpty()){
-					authorizeResult = cardPayment.authorize(m_strMDKToken);
-					if(authorizeResult){
-						strSql = "INSERT INTO" +
-								" mdk_creditcards(user_id, expire, security_code, authorized_order_id)" +
-								" VALUES (?, ?, ?, ?)";
-						cState = cConn.prepareStatement(strSql);
-						cState.setInt(1, m_nUserId);
-						cState.setString(2, m_strCardExpire);
-						cState.setString(3, m_strCardSecurityCode);
-						cState.setString(4, cardPayment.getAgencyOrderId());
-						cState.executeUpdate();
-						cState.close(); cState=null;
-						m_nErrCode = ERR_NONE;
-					}else{
-						Log.d("決済処理に失敗(uid)", m_nUserId);
-						setErrCode(cardPayment);
-					}
-				}else{
-					strSql = "SELECT expire, security_code, authorized_order_id FROM mdk_creditcards WHERE user_id=?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, m_nUserId);
-					cResSet = cState.executeQuery();
-
-					String expire = "";
-					String securityCode = "";
-					String authOrderId = "";
-					if(cResSet.next()){
-						expire = cResSet.getString("expire");
-						securityCode = cResSet.getString("security_code");
-						authOrderId = cResSet.getString("authorized_order_id");
-					}else{
-						Log.d("与信済みの決済情報が見つからない(uid)", m_nUserId);
-						m_nErrCode = ERR_RETRY;
-						return false;
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-
-					authorizeResult = cardPayment.reAuthorize(authOrderId, expire, securityCode);
-					if(authorizeResult){
-						strSql = "UPDATE mdk_creditcards SET authorized_order_id=? WHERE user_id=?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, cardPayment.getAgencyOrderId());
-						cState.setInt(2, m_nUserId);
-						cState.executeUpdate();
-						cState.close();cState=null;
-						m_nErrCode = ERR_NONE;
-					}else{
-						Log.d("決済処理に失敗(uid)", m_nUserId);
-						setErrCode(cardPayment);
-					}
+				CardSettlement cardSettlement = null;
+				if(m_nAgentId == Agent.VERITRANS){
+					cardSettlement = new VeritransCardSettlement(
+							m_nUserId, m_nContentId, orderId, m_nAmount,
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
+				}else if(m_nAgentId==Agent.EPSILON){
+					cardSettlement = new EpsilonCardSettlement(
+							m_nUserId, m_nContentId, orderId, m_nAmount,
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode,
+							m_strUserAgent);
 				}
+
+				boolean authorizeResult = cardSettlement.authorize();
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, authorizeResult?COrder.Status.get("Paid"):COrder.Status.get("PaymentError"));
-				cState.setString(2, authorizeResult?cardPayment.getAgencyOrderId():null);
+				cState.setInt(1, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
+				cState.setString(2, authorizeResult? cardSettlement.getAgentOrderId():null);
 				cState.setInt(3, orderId);
 				cState.executeUpdate();
 				cState.close();cState=null;
 
-				if(!authorizeResult){return false;}
+				if(!authorizeResult){
+					setErrCode(cardSettlement);
+					return false;
+				}
 			}
 
 
@@ -305,13 +280,13 @@ class SendEmojiC {
 		return bRtn;
 	}
 
-	private void setErrCode(CardPayment cardPayment) {
-		if(cardPayment.errorKind == CardPayment.ErrorKind.CardAuth
-		|| cardPayment.errorKind == CardPayment.ErrorKind.Common){
+	private void setErrCode(CardSettlement cardSettlement) {
+		if(cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth){
+			m_nErrCode = ERR_CARD_AUTH;
+		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.Common){
 			m_nErrCode = ERR_RETRY;
-		}else if(cardPayment.errorKind == CardPayment.ErrorKind.MDKConnection){
-			// 決済されてるかもしれないし、されていないかもしれない。
-			m_nErrCode = ERR_INQUIRY;
+		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry){
+			m_nErrCode = ERR_INQUIRY; // 決済されてるかもしれないし、されていないかもしれない。
 		}else{
 			m_nErrCode = ERR_UNKNOWN;
 		}
