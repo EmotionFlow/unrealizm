@@ -28,7 +28,7 @@ public class EpsilonCardSettlement extends CardSettlement {
                                  String _agentToken, String _cardExpire, String _cardSecurityCode,
                                  String _userAgent) {
         super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode, _userAgent);
-        agent_id = Agent.EPSILON;
+        agent.id = Agent.EPSILON;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class EpsilonCardSettlement extends CardSettlement {
             strSql = "SELECT agent_user_id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, userId);
-            cState.setInt(2, Agent.EPSILON);
+            cState.setInt(2, agent.id);
             cResSet = cState.executeQuery();
             String strAgentUserId;
             if(cResSet.next()){
@@ -119,7 +119,7 @@ public class EpsilonCardSettlement extends CardSettlement {
                 if ("1".equals(settlementResultCode)) {
                     if (isFirstSettlement) {
                         strSql = "INSERT INTO creditcards" +
-                                " (user_id, agent_id, card_expire, security_code, agent_user_id, agent_order_id)" +
+                                " (user_id, agent_id, card_expire, security_code, agent_user_id, last_agent_order_id)" +
                                 " VALUES (?, ?, ?, ?, ?, ?)";
                         cState = cConn.prepareStatement(strSql);
                         int idx = 1;
@@ -131,13 +131,13 @@ public class EpsilonCardSettlement extends CardSettlement {
                         cState.setString(idx++, ssi.orderNumber);
                     } else {
                         strSql = "UPDATE creditcards" +
-                                " SET updated_at=now(), agent_order_id=?" +
+                                " SET updated_at=now(), last_agent_order_id=?" +
                                 " WHERE user_id=? AND agent_id=?";
                         cState = cConn.prepareStatement(strSql);
                         int idx = 1;
                         cState.setString(idx++, ssi.orderNumber);
                         cState.setInt(idx++, userId);
-                        cState.setInt(idx++, Agent.EPSILON);
+                        cState.setInt(idx++, agent.id);
                     }
                     cState.executeUpdate();
                     cState.close();cState = null;

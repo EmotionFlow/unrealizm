@@ -60,7 +60,7 @@ public class CheckCreditCardC {
 		return t;
 	}
 
-	private void deleteToken(int nUserId, int nAgentId) throws SQLException{
+	private void deleteCard(int nUserId, int nAgentId) throws SQLException{
 		String strSql = "UPDATE creditcards SET del_flg=true WHERE user_id=? AND agent_id=?";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, nUserId);
@@ -79,14 +79,14 @@ public class CheckCreditCardC {
 		} else {
 			if(nAgentId == AGENT_VERITRANS) {
 				if (cardToken.isExpired(1) || cardToken.passingFromLastUpdated(300)) {
-					deleteToken(nUserId, AGENT_VERITRANS);
+					deleteCard(nUserId, AGENT_VERITRANS);
 					nResult = 0;
 				} else {
 					nResult = 1;
 				}
 			}else if(nAgentId==AGENT_EPSILON){
 				if (cardToken.isExpired(1)) {
-					deleteToken(nUserId, AGENT_VERITRANS);
+					deleteCard(nUserId, AGENT_VERITRANS);
 					nResult = 0;
 				} else {
 					nResult = 1;

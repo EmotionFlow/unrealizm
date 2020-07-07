@@ -18,14 +18,15 @@
                 "EMJ": emojiInfo.emoji,
                 "UID": emojiInfo.userId,
                 "AMT": amount,
-                "AID": agentInfo==null ? '' :  agentInfo.agentId,
-                "TKN": agentInfo==null ? '' : agentInfo.token,
+                "AID": agentInfo == null ? '' :  agentInfo.agentId,
+                "TKN": agentInfo == null ? '' : agentInfo.token,
                 "EXP": cardInfo == null ? '' : cardInfo.expire,
                 "SEC": cardInfo == null ? '' : cardInfo.securityCode,
             },
             "url": "/f/SendEmojiF.jsp",
             "dataType": "json",
         }).then( data => {
+                cardInfo = null;
                 if (data.result_num > 0) {
                     var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
                     $("#ResEmojiAdd_" + emojiInfo.contentId).before($objResEmoji);
@@ -56,6 +57,7 @@
                     }
                 }},
             error => {
+                cardInfo = null;
                 DispMsg("<%=_TEX.T("CheerDlg.Err.PoipikuSrv")%>");
                 if (elCheerNowPayment != null) {
                     elCheerNowPayment.hide();
@@ -124,7 +126,8 @@
         };
     }
 
-    function paymentByVeritrans(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
+    /**
+    function veritransPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
         const postData = {
             "token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
             "card_number": cardInfo.number,
@@ -159,7 +162,9 @@
         });
         xhr.send(JSON.stringify(postData));
     }
+     */
 
+    // epsilonPayment - epsilonTrade間で受け渡しする変数。
     let g_epsilonInfo = {
         "emojiInfo": null,
         "cheerAmount": null,
@@ -168,6 +173,11 @@
     };
 
     function epsilonTrade(response){
+        // もう使うことはないので、カード番号を初期化する。
+        if(g_epsilonInfo.cardInfo.number){
+            g_epsilonInfo.cardInfo.number = null;
+        }
+
         if( response.resultCode !== '000' ){
             window.alert("購入処理中にエラーが発生しました");
             console.log(response.resultCode);
@@ -194,13 +204,16 @@
             const contructCode = "68968190";
             // var cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "TARO NAMAA"};
             let cardObj = {
-                "cardno": _cardInfo.number,
-                "expire": '20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0],
-                "securitycode": _cardInfo.securityCode,
-                "holdername": "SAMPLE TARO",
+                "cardno": String(_cardInfo.number),
+                "expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
+                "securitycode": String(_cardInfo.securityCode),
+                "holdername": "DUMMY",
             };
 
             EpsilonToken.init(contructCode);
+
+            // epsilonTradeを無名関数で定義するとコールバックしてくれない。
+            // global領域に関数を定義し、関数名を引数指定しないとダメ。
             EpsilonToken.getToken(cardObj , epsilonTrade);
         }
     }
@@ -246,7 +259,7 @@
 
                 const nCheerAmount = Number(formValues.value.amount);
                 elCheerNowPayment.show();
-                // 与信済みであるかを検索
+                // 代理店にカード情報を登録済であるかを検索
                 $.ajax({
                     "type": "get",
                     "url": "/f/CheckCreditCardF.jsp",
@@ -256,16 +269,17 @@
                     if (typeof (result) === "undefined" || result == null || result === -1) {
                         return false;
                     } else if (result == 1) {
-                        console.log("登録済み");
                         epsilonPayment(emojiInfo, nCheerAmount, null, elCheerNowPayment);
                     } else if (result === 0) {
-                        // クレカ入力ダイアログを表示して、Token取得
+                        // クレジットカード情報入力ダイアログを表示、
+                        // 入力内容を代理店に送信し、Tokenを取得する。
                         Swal.fire({
                             html: getRegistCreditCardDlgHtml(strEmoji, nCheerAmount),
                             focusConfirm: false,
                             showCloseButton: true,
                             showCancelButton: true,
                             preConfirm: () => {
+                                // 入力内容の検証
                                 const vals = {
                                     cardNum: $("#card_number").val(),
                                     cardExp: $("#cc_exp").val(),
@@ -319,9 +333,12 @@
                                 return vals;
                             },
                         }).then( formValues => {
-                            // キャンセルボタンクック
+                            // キャンセルボタンがクリックされた
                             if(formValues.dismiss){
                                 elCheerNowPayment.hide();
+                                formValues.value.cardNum = '';
+                                formValues.value.cardExp = '';
+                                formValues.value.cardSec = '';
                                 return false;
                             }
 
@@ -329,7 +346,11 @@
                             cardInfo.expire = String(formValues.value.cardExp);
                             cardInfo.securityCode = String(formValues.value.cardSec);
 
-                            // paymentByVeritrans(formValues);
+                            // 念のため不要になった変数を初期化
+                            formValues.value.cardNum = '';
+                            formValues.value.cardExp = '';
+                            formValues.value.cardSec = '';
+
                             epsilonPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
                         });
 

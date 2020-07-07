@@ -3,7 +3,7 @@ package jp.pipa.poipiku.settlement;
 import jp.pipa.poipiku.util.Log;
 
 public abstract class CardSettlement {
-    protected int agent_id = -1;
+    protected Agent agent;
     protected int userId = -1;
     protected int contentId = -1;
     protected String agentToken = null;
@@ -30,13 +30,14 @@ public abstract class CardSettlement {
 
     // 金額
     public int amount = 0;
+    private final int AMOUNT_MAX = 10000;
 
     protected String errMsg = "";
 
     protected abstract String createOrderId(int userId, int contentId);
 
     public String getErrMsg(){ return errMsg; }
-    public String getAgencyOrderId(){
+    public String getAgentOrderId(){
         return orderId;
     }
 
@@ -56,6 +57,10 @@ public abstract class CardSettlement {
     protected boolean authorizeCheckBase(){
         if(amount <= 0){
             Log.d("amount <= 0");
+            return false;
+        }
+        if(amount > AMOUNT_MAX){
+            Log.d("amount <= AMOUNT_MAX");
             return false;
         }
         if(poipikuOrderId<0){

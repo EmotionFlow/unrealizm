@@ -11,7 +11,7 @@ class SendEmojiC {
 	public final int ERR_NONE = 0;
 	public final int ERR_RETRY = -10;
 	public final int ERR_INQUIRY = -20;
-	public final int ERR_CARDAUTH = -30;
+	public final int ERR_CARD_AUTH = -30;
 	public final int ERR_UNKNOWN = -99;
 
 	public int m_nContentId = -1;
@@ -64,7 +64,6 @@ class SendEmojiC {
 			cConn = dsPostgres.getConnection();
 
 			// 投稿存在確認(不正アクセス対策)
-			Log.d("投稿存在確認");
 			CUser cTargUser = null;
 			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -83,7 +82,6 @@ class SendEmojiC {
 
 
 			// max 5 emoji
-			Log.d("max 5 emoji");
 			int nEmojiNum = 0;
 			if(checkLogin.m_bLogin) {
 				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
@@ -104,13 +102,16 @@ class SendEmojiC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(nEmojiNum>=EMOJI_MAX) {
+				Log.d("max 5 emoji");
 				return false;
 			}
 
 			// 課金
-			Log.d(String.format("amount: %d", m_nAmount));
 			if(m_nAmount>0){
-				Log.d("課金");
+				// ログインしていないと、課金できない。
+				if(!checkLogin.m_bLogin){
+					return false;
+				}
 				// 注文生成
 				Integer orderId = null;
 				strSql = "INSERT INTO orders(" +
@@ -119,7 +120,7 @@ class SendEmojiC {
 				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				cState.setInt(1, m_nUserId);
 				cState.setInt(2, 2); // 売り手はポイピク公式
-				cState.setInt(3, COrder.Status.get("Init"));
+				cState.setInt(3, COrder.STATUS_INIT);
 				cState.setInt(4, m_nAmount);
 				cState.executeUpdate();
 				cResSet = cState.getGeneratedKeys();
@@ -137,7 +138,7 @@ class SendEmojiC {
 				cState.setInt(1, orderId);
 				cState.setInt(2, m_nContentId);
 				cState.setString(3, m_strEmoji);
-				cState.setInt(4, 0);
+				cState.setInt(4, m_nAmount);
 				cState.setInt(5, m_nAmount);
 				cState.setInt(6, 1);
 				cState.executeUpdate();
@@ -159,8 +160,8 @@ class SendEmojiC {
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, authorizeResult?COrder.Status.get("SettlementOK"):COrder.Status.get("SettlementError"));
-				cState.setString(2, authorizeResult? cardSettlement.getAgencyOrderId():null);
+				cState.setInt(1, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
+				cState.setString(2, authorizeResult? cardSettlement.getAgentOrderId():null);
 				cState.setInt(3, orderId);
 				cState.executeUpdate();
 				cState.close();cState=null;
@@ -281,12 +282,11 @@ class SendEmojiC {
 
 	private void setErrCode(CardSettlement cardSettlement) {
 		if(cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth){
-			m_nErrCode = ERR_CARDAUTH;
+			m_nErrCode = ERR_CARD_AUTH;
 		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.Common){
 			m_nErrCode = ERR_RETRY;
 		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry){
-			// 決済されてるかもしれないし、されていないかもしれない。
-			m_nErrCode = ERR_INQUIRY;
+			m_nErrCode = ERR_INQUIRY; // 決済されてるかもしれないし、されていないかもしれない。
 		}else{
 			m_nErrCode = ERR_UNKNOWN;
 		}

@@ -36,7 +36,7 @@ public class VeritransCardSettlement extends CardSettlement {
     public VeritransCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                                    String _agentToken, String _cardExpire, String _cardSecurityCode){
         super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode, null);
-        agent_id = Agent.VERITRANS;
+        agent.id = Agent.VERITRANS;
     }
 
     public boolean authorize(){
@@ -127,14 +127,14 @@ public class VeritransCardSettlement extends CardSettlement {
                 cConn = dsPostgres.getConnection();
 
                 strSql = "INSERT INTO" +
-                        " creditcards(user_id, expire, security_code, authorized_order_id, agent_id)" +
+                        " creditcards(user_id, card_expire, security_code, last_agent_order_id, agent_id)" +
                         " VALUES (?, ?, ?, ?, ?)";
                 cState = cConn.prepareStatement(strSql);
                 cState.setInt(1, userId);
                 cState.setString(2, cardExpire);
                 cState.setString(3, cardSecurityCode);
                 cState.setString(4, orderId);
-                cState.setInt(5, agent_id);
+                cState.setInt(5, agent.id);
                 cState.executeUpdate();
                 cState.close(); cState=null;
             } catch(Exception e) {
@@ -164,9 +164,10 @@ public class VeritransCardSettlement extends CardSettlement {
             dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
             cConn = dsPostgres.getConnection();
 
-            strSql = "SELECT expire, security_code, authorized_order_id FROM creditcards WHERE user_id=?";
+            strSql = "SELECT card_expire, security_code, last_agent_order_id FROM creditcards WHERE user_id=? AND agent_id=?";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, userId);
+            cState.setInt(2, agent.id);
             cResSet = cState.executeQuery();
 
             if(cResSet.next()){
