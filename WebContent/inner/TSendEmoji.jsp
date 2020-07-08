@@ -71,7 +71,7 @@
 
     function getCheerAmountOptionHtml(){
         return `
-<select id="cheer_amount">
+<select id="cheer_amount" style="vertical-align: bottom;">
 <option value="100">100</option>
 <option value="1000">1,000</option>
 <option value="10000">10,000</option>
@@ -79,7 +79,7 @@
         `;
     }
 
-    function getAmountDlgHtml(strEmoji){
+    function getAmountDlgHtml(emojiImgTag){
         return <%=_TEX.T("CheerDlg.Text")%>;
     }
 
@@ -246,7 +246,7 @@
             SendEmojiAjax(emojiInfo, null, null, null, null);
         } else {
             Swal.fire({
-                html: getAmountDlgHtml(strEmoji),
+                html: getAmountDlgHtml($(elThis).children('img.Twemoji').prop('outerHTML')),
                 focusConfirm: false,
                 showCloseButton: true,
                 showCancelButton: false,
