@@ -60,7 +60,7 @@ GetEmojiListC cResults = new GetEmojiListC();
 cResults.getParam(request);
 if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.Recent.NeedLogin")));
-} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_ALL) {
+} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_OTHER) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
 } else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.NeedLogin")));

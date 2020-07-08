@@ -1,7 +1,5 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.util.Log;
-
 import javax.naming.InitialContext;
 import javax.sql.*;
 
@@ -13,6 +11,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Emoji {
+    public static final int EMOJI_KEYBORD_MAX = 64;
+    public static final int EMOJI_CAT_RECENT = 0;
+    public static final int EMOJI_CAT_POPULAR = 1;
+    public static final int EMOJI_CAT_FOOD = 2;
+    public static final int EMOJI_CAT_OTHER = 3;
+    public static final int EMOJI_CAT_CHEER = 4;
+
     private static final Emoji INSTANCE = new Emoji();
     private Emoji() {}
     public static Emoji getInstance() {
@@ -20,6 +25,8 @@ public class Emoji {
     }
 
     public String[][] EMOJI_LIST;
+    public List<String> EMOJI_CHEER_ARRAY;
+
     public void init(){
         List<List<String>> list;
         list = new ArrayList<>();
@@ -29,7 +36,7 @@ public class Emoji {
         list.add(new ArrayList<>(Arrays.asList(EMOJI_ALL))); // 3.その他
         list.add(new ArrayList<>()); // 4.ポチ袋
 
-        // ポチ袋（前日TOP10）
+        // ポチ袋（前日TOP16）
         String strSql = "SELECT description, count(description) cnt" +
                 " FROM comments_0000" +
                 " WHERE upload_date BETWEEN current_timestamp - interval '24 hours' AND current_timestamp" +
@@ -50,7 +57,7 @@ public class Emoji {
             cResSet = cState.executeQuery();
 
             while(cResSet.next()){
-                list.get(4).add(cResSet.getString(1));
+                list.get(EMOJI_CAT_CHEER).add(cResSet.getString(1));
             }
 
             cResSet.close();cResSet=null;
@@ -66,21 +73,16 @@ public class Emoji {
         }
 
         // その他とおやつからポチ袋絵文字を除外する
-        list.get(2).removeAll(list.get(4));
-        list.get(3).removeAll(list.get(4));
+        list.get(EMOJI_CAT_FOOD).removeAll(list.get(EMOJI_CAT_CHEER));
+        list.get(EMOJI_CAT_OTHER).removeAll(list.get(EMOJI_CAT_CHEER));
 
+        EMOJI_CHEER_ARRAY = list.get(EMOJI_CAT_CHEER);
         EMOJI_LIST = new String[5][];
         for (int i=0; i<list.size(); i++) {
             EMOJI_LIST[i] = (String[]) list.get(i).toArray(new String[0]);
         }
     }
 
-    public static final int EMOJI_KEYBORD_MAX = 64;
-    public static final int EMOJI_CAT_RECENT = 0;
-    public static final int EMOJI_CAT_POPULAR = 1;
-    public static final int EMOJI_CAT_FOOD = 2;
-    public static final int EMOJI_CAT_ALL = 3;
-    public static final int EMOJI_CAT_CHEER = 4;
     // For Event
     public static final boolean EMOJI_EVENT = false;
     public static final String EMOJI_EVENT_CHAR = "💝";		// X'mas

@@ -46,7 +46,7 @@ class SendEmojiC {
 	}
 
 	public boolean getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
-		if(!Arrays.asList(Emoji.getInstance().EMOJI_LIST[Emoji.EMOJI_CAT_ALL]).contains(m_strEmoji)) {
+		if(!Arrays.asList(Emoji.getInstance().EMOJI_LIST[Emoji.EMOJI_CAT_OTHER]).contains(m_strEmoji)) {
 			Log.d("Invalid Emoji : "+ m_strEmoji);
 			return false;
 		}

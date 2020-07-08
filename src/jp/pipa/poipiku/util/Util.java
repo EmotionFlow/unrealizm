@@ -100,6 +100,9 @@ public class Util {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 				}
+
+				vResult.removeAll(Emoji.getInstance().EMOJI_CHEER_ARRAY);
+
 			} catch(Exception e) {
 				Log.d(strSql);
 				e.printStackTrace();
