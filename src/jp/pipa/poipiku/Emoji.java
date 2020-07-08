@@ -3,6 +3,7 @@ package jp.pipa.poipiku;
 import javax.naming.InitialContext;
 import javax.sql.*;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,14 +27,17 @@ public class Emoji {
 
     public String[][] EMOJI_LIST;
     public List<String> EMOJI_CHEER_ARRAY;
+    public List<String> EMOJI_ALL_ARRAY;
 
     public void init(){
+        EMOJI_ALL_ARRAY = Arrays.asList(EMOJI_ALL);
+
         List<List<String>> list;
         list = new ArrayList<>();
         list.add(new ArrayList<>()); // 0.人気
         list.add(new ArrayList<>()); // 1.よく使う
         list.add(new ArrayList<>(Arrays.asList(EMOJI_OYATSU_ALL))); // 2.おやつ
-        list.add(new ArrayList<>(Arrays.asList(EMOJI_ALL))); // 3.その他
+        list.add(new ArrayList<>(EMOJI_ALL_ARRAY)); // 3.その他
         list.add(new ArrayList<>()); // 4.ポチ袋
 
         // ポチ袋（前日TOP16）
