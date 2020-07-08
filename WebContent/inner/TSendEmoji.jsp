@@ -83,7 +83,7 @@
         return <%=_TEX.T("CheerDlg.Text")%>;
     }
 
-    function getRegistCreditCardDlgHtml(strEmoji, nCheerAmount){
+    function getRegistCreditCardDlgHtml(emojiImgTag, nCheerAmount){
         return `
 <style>
 	.CardInfoDlgTitle{padding: 10px 0 0 0;}
@@ -242,11 +242,13 @@
             return;
         }
 
+        const emojiImgTag = $(elThis).children('img.Twemoji').prop('outerHTML');
+
         if(!$(elThis).parent().hasClass('Cheer')) {
             SendEmojiAjax(emojiInfo, null, null, null, null);
         } else {
             Swal.fire({
-                html: getAmountDlgHtml($(elThis).children('img.Twemoji').prop('outerHTML')),
+                html: getAmountDlgHtml(emojiImgTag),
                 focusConfirm: false,
                 showCloseButton: true,
                 showCancelButton: false,
@@ -277,7 +279,7 @@
                         // クレジットカード情報入力ダイアログを表示、
                         // 入力内容を代理店に送信し、Tokenを取得する。
                         Swal.fire({
-                            html: getRegistCreditCardDlgHtml(strEmoji, nCheerAmount),
+                            html: getRegistCreditCardDlgHtml(emojiImgTag.replace(">", ' style="height: 32px">'), nCheerAmount),
                             focusConfirm: false,
                             showCloseButton: true,
                             showCancelButton: true,
