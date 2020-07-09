@@ -19,6 +19,7 @@ public class CheckLogin {
 	public int m_nSafeFilter = Common.SAFE_FILTER_R18;
 	public int m_nLangId = 0;
 	private String m_strFileName = "";
+	public String m_strEmail = "";
 
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -78,7 +79,7 @@ public class CheckLogin {
 			{
 				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 				cConn = dsPostgres.getConnection();
-				strSql = "SELECT * FROM users_0000 WHERE hash_password=?";
+				strSql = "SELECT user_id, nickname, lang_id, last_login_date, file_name, email FROM users_0000 WHERE hash_password=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, m_strHashPass);
 				cResSet = cState.executeQuery();
@@ -89,6 +90,7 @@ public class CheckLogin {
 					tsLastLogin		= cResSet.getTimestamp("last_login_date");
 					m_strFileName	= Common.ToString(cResSet.getString("file_name"));
 					if(m_strFileName.length()<=0) m_strFileName = "/img/default_user.jpg";
+					m_strEmail		= Common.ToString(cResSet.getString("email"));
 					m_bLogin = true;
 					if(m_nUserId==315) m_nSafeFilter = Common.SAFE_FILTER_ALL;
 				}
@@ -145,6 +147,35 @@ public class CheckLogin {
 		return strResult;
 	}
 
+	public boolean isEmailValid() {
+		boolean bRtn = false;
+		DataSource dsPostgres = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+		try {
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
+			strSql = "SELECT 1 FROM users_0000 WHERE user_id=? AND email IS NOT NULL AND email<>''";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nUserId);
+			cResSet = cState.executeQuery();
+			bRtn = (cResSet.next());
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+			bRtn = false;
+		} finally {
+			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+		}
+		return bRtn;
+	}
+
 
 	public static boolean isOnline(int nUserId) {
 		boolean bRtn = false;
@@ -156,7 +187,7 @@ public class CheckLogin {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-			strSql = "SELECT * FROM users_0000 WHERE user_id=? AND last_login_date>current_timestamp-interval '1 minute'";
+			strSql = "SELECT 1 FROM users_0000 WHERE user_id=? AND last_login_date>current_timestamp-interval '1 minute'";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
 			cResSet = cState.executeQuery();

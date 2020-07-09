@@ -95,6 +95,7 @@ int nRnd = (int)(Math.random()*2);
 			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
 			.EventItemList .EventItem.Updated {position: relative;}
 			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
+			.EmailPlease {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PoipikuDesc.Event {margin: 30px 0 0 0;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
@@ -122,6 +123,12 @@ int nRnd = (int)(Math.random()*2);
 		</nav>
 
 		<article class="Wrapper ViewPc">
+			<%if(cCheckLogin.isEmailValid()){%>
+			<section class="EmailPlease">
+				<a href="/MyEditSettingPcV.jsp?MENUID=MAIL">Twitterアカウントでログインできなくなった時のために、メールアドレスの登録をお願いいたします。</a>
+			</section>
+			<%}%>
+
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">

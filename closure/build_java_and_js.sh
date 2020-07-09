@@ -8,7 +8,7 @@ CLASSES_TOMCAT="/usr/local/tomcat/lib/*"
 JAVA_FILE_ROOT="../src/jp/pipa/poipiku"
 JAVA_FILE_DIRS=("/controller" "/servlet" "/util")
 
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_241.jdk/Contents/Home"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home"
 
 java -version
 
