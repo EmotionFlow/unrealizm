@@ -84,6 +84,31 @@ int nRnd = (int)(Math.random()*2);
 					addContents();
 				}
 			});
+			<%if(cCheckLogin.m_bEmailValid){%>
+			Swal.fire({
+				html:
+						'<style>' +
+						' .EmailPleaseTitle {margin: 17px auto; font-size: 22px;}' +
+						' .EmailPleaseMsg {text-align: left; font-size: 15px;}' +
+						' .EmailPleaseSubmit {margin: 30px auto; padding: 10px 30px; -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; outline: none !important;}' +
+						' .EmailPleaseLater {width: 100%; text-align: left; font-size: 14px; margin: 15px 0 15px 0; padding: 0; font-weight: 400; color: #aaaaaa; background: none; border: none;}' +
+						' .swal2-popup .swal2-actions {margin: 0;}' +
+						'</style>' +
+						'<div class="EmailPleaseTitle">メールアドレス登録</div>' +
+						'<div class="EmailPleaseMsg">Twitterとの連携がうまくいかなくなると、ポイピクにログインできなくなることがあります。' +
+						'そんな時のために、メールアドレスとパスワードによるログインできるよう、ぜひ登録をお願いします！</div>' +
+						'<div><a class="BtnBase ResBtnSetItem Selected EmailPleaseSubmit" href="/MyEditSettingPcV.jsp?MENUID=MAIL">' +
+						'✉️メールアドレスを登録する' +
+						'</a></div>',
+				focusConfirm: false,
+				showConfirmButton: false,
+				showCancelButton: true,
+				cancelButtonText: "後で行う",
+				buttonsStyling: false,
+				cancelButtonClass: "EmailPleaseLater",
+			})
+			<%}%>
+
 		});
 		</script>
 
@@ -123,12 +148,6 @@ int nRnd = (int)(Math.random()*2);
 		</nav>
 
 		<article class="Wrapper ViewPc">
-			<%if(cCheckLogin.isEmailValid()){%>
-			<section class="EmailPlease">
-				<a href="/MyEditSettingPcV.jsp?MENUID=MAIL">Twitterアカウントでログインできなくなった時のために、メールアドレスの登録をお願いいたします。</a>
-			</section>
-			<%}%>
-
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
