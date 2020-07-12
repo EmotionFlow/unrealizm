@@ -132,7 +132,7 @@
     /**
     function veritransPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
         const postData = {
-            "token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
+            "token_api_key": "",
             "card_number": cardInfo.number,
             "card_expire": cardInfo.expire,
             "security_code": cardInfo.securityCode,
@@ -253,6 +253,8 @@
                 showCloseButton: true,
                 showCancelButton: false,
                 confirmButtonText: "<%=_TEX.T("CheerDlg.Send")%>",
+                footer: '<a href="PochiS.jsp" style="font-size: 12px; text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
+                    'ポチ袋とは、ファンからクリエーターへの応援の気持ちを1口100円からポチッと送れるサービスです。</a>',
                 preConfirm: () => {
                     return {
                         amount: $("#cheer_amount").val(),
@@ -261,6 +263,17 @@
             }).then(formValues => {
                 // キャンセル
                 if(formValues.dismiss){return false;}
+
+                if($(elThis).parent().hasClass('App')) {
+                    Swal.fire({
+                        type: "info",
+                        text: "ポチ袋による応援は現在、ブラウザからのみご利用いただけます。アプリからの利用は開発中です。",
+                        focusConfirm: true,
+                        showCloseButton: true,
+                        showCancelButton: false,
+                    });
+                    return false;
+                }
 
                 const nCheerAmount = Number(formValues.value.amount);
                 elCheerNowPayment.show();
