@@ -41,9 +41,10 @@ public class Emoji {
         list.add(new ArrayList<>()); // 4.ポチ袋
 
         // ポチ袋（前日TOP16）
+        //TODO リリース時に期間を戻す。
         String strSql = "SELECT description, count(description) cnt" +
                 " FROM comments_0000" +
-                " WHERE upload_date BETWEEN current_timestamp - interval '24 hours' AND current_timestamp" +
+                " WHERE upload_date BETWEEN current_timestamp - interval '24 hours' - interval '1 years' AND current_timestamp - interval '1 years'" +
                 " GROUP BY description" +
                 " ORDER BY cnt DESC" +
                 " LIMIT 16";
