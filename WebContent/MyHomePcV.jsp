@@ -84,25 +84,25 @@ int nRnd = (int)(Math.random()*2);
 					addContents();
 				}
 			});
-			<%if(!cCheckLogin.m_bEmailValid && System.currentTimeMillis() % 20 == 0){%>
+			<%if(!cCheckLogin.m_bEmailValid && System.currentTimeMillis() % 100 == 0){%>
 			Swal.fire({
 				html:
 					'<style>' +
-					' .EmailPleaseMsg {text-align: left; font-size: 19px;}' +
-					' .EmailPleaseSubmit {margin: 30px auto; padding: 10px 30px; -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; outline: none !important;}' +
-					' .EmailPleaseLater {width: 100%; text-align: left; font-size: 14px; font-weight: 500; margin: 10px 0 5px 0; padding: 0; font-weight: 400; color: #aaaaaa; background: none; border: none;}' +
+					' .RequestEmailMsg {text-align: left; font-size: 19px;}' +
+					' .RequestEmailSubmit {margin: 30px auto; padding: 10px 30px; -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important; outline: none !important;}' +
+					' .RequestEmailLater {width: 100%; text-align: left; font-size: 14px; font-weight: 500; margin: 10px 0 5px 0; padding: 0; font-weight: 400; color: #aaaaaa; background: none; border: none;}' +
 					' .swal2-popup .swal2-actions {margin: 0;}' +
 					'</style>' +
-					'<div class="EmailPleaseMsg">Twitterでログインできなくなった時のために、メールアドレスを登録しよう！</div>' +
-					'<div><a class="BtnBase ResBtnSetItem Selected EmailPleaseSubmit" href="/MyEditSettingPcV.jsp?MENUID=MAIL">' +
-					'✉️ 登録する' +
+					'<div class="RequestEmailMsg">' + "<%=_TEX.T("RequestEmail.Msg")%>" + '</div>' +
+					'<div><a class="BtnBase ResBtnSetItem Selected RequestEmailSubmit" href="/MyEditSettingPcV.jsp?MENUID=MAIL">' +
+					'✉️ <%=_TEX.T("RequestEmail.GoSettingPage")%>' +
 					'</a></div>',
 				focusConfirm: false,
 				showConfirmButton: false,
 				showCancelButton: true,
-				cancelButtonText: "後で行う",
+				cancelButtonText: "<%=_TEX.T("RequestEmail.Later")%>",
 				buttonsStyling: false,
-				cancelButtonClass: "EmailPleaseLater",
+				cancelButtonClass: "RequestEmailLater",
 			})
 			<%}%>
 
@@ -117,7 +117,7 @@ int nRnd = (int)(Math.random()*2);
 			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
 			.EventItemList .EventItem.Updated {position: relative;}
 			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
-			.EmailPlease {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
+			.RequestEmail {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PoipikuDesc.Event {margin: 30px 0 0 0;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
