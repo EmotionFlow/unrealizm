@@ -221,6 +221,12 @@
         }
     }
 
+    function getAmountDlgFooter(isApp) {
+        let strLandingPageUrl = isApp ? "/PochiS.jsp" : "/PochiPcS.jsp";
+        return '<a href="' + strLandingPageUrl +
+        '" style="font-size: 12px; text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
+        'ポチ袋とは、ファンからクリエーターへの応援の気持ちを1口100円からポチッと送れるサービスです。</a>'
+    }
 
     function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
         const emojiInfo = {
@@ -253,8 +259,7 @@
                 showCloseButton: true,
                 showCancelButton: false,
                 confirmButtonText: "<%=_TEX.T("CheerDlg.Send")%>",
-                footer: '<a href="PochiS.jsp" style="font-size: 12px; text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
-                    'ポチ袋とは、ファンからクリエーターへの応援の気持ちを1口100円からポチッと送れるサービスです。</a>',
+                footer: getAmountDlgFooter($(elThis).parent().hasClass('App')),
                 preConfirm: () => {
                     return {
                         amount: $("#cheer_amount").val(),
