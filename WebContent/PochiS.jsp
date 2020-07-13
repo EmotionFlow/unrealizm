@@ -12,29 +12,6 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			body {
 				background: #fff;
 			}
-			.AnalogicoInfo {display: none;}
-			.EntryButtonArea{
-				position: relative;
-				height: 26px;
-				width: 100%;
-				float:left;
-				margin: 20px 0px;
-			}
-			.Button {
-				display: block;
-				border: 1px solid #5bd;
-				padding:5px;
-				width: 200px;
-				height: 26px;
-				top: 0;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				position: absolute;
-				margin: auto;
-				text-align: center;
-				background-color: #fff;
-			}
 			.SettingList .SettingListItem {
 				display: block;
 				float: left;
@@ -49,34 +26,31 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				width: 100%;
 				box-sizing: border-box;
 				margin: 5px 0;
-				font-size: 28px;
-				text-align: center;
+			    font-size: 16px;
 			}
 			.SettingList .SettingListItem .SettingListTitle.Head {
-				margin-top:40px; 
-				margin-bottom:10px; 
-				font-size: 24px;
-				text-align: left;
+				margin-top:20px;
+				margin-bottom:10px;
+				text-align: center;
+			    font-size: 16px;
 			}
 			.SettingList .SettingListItem .SettingBody {
-				font-size: 18px;
 				text-align: left;
 			}
 			.SettingList .SettingListItem .SettingBody.Left {
 				text-align: left;
 			}
 			img.PochiBukuro {
-				margin-left: 200px;
+				margin-left: 80px;
 			}
 			img.PochiImg {
-				width: 600px;
+				width: 360px;
 			}
 		</style>
 	</head>
 	<body>
 		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
-
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
