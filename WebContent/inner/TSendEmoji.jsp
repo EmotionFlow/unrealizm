@@ -225,7 +225,8 @@
         let strLandingPageUrl = isApp ? "/PochiS.jsp" : "/PochiPcS.jsp";
         return '<a href="' + strLandingPageUrl +
         '" style="font-size: 12px; text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
-        'ポチ袋とは、ファンからクリエーターへの応援の気持ちを1口100円からポチッと送れるサービスです。</a>'
+        '<%=_TEX.T("CheerDlg.Whatis")%>' +
+        '</a>'
     }
 
     function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
@@ -272,7 +273,7 @@
                 if($(elThis).parent().hasClass('App')) {
                     Swal.fire({
                         type: "info",
-                        text: "ポチ袋による応援は現在、ブラウザからのみご利用いただけます。アプリからの利用は開発中です。",
+                        text: "<%=_TEX.T("Cheer.BrowserOnly")%>",
                         focusConfirm: true,
                         showCloseButton: true,
                         showCancelButton: false,
