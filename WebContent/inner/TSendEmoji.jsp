@@ -92,6 +92,7 @@
 	.CardInfoDlgInputLabel{font-size: 16px;}
 	.CardInfoDlgInfoCheckList{text-align: left; font-size: 16px;}
 	.swal2-popup .CardInfoDlgInputItem .swal2-input{margin-top: 4px; font-size: 1.1em; height: 1.825em;}
+	.swal2-popup .CardInfoDlgInputItem .swal2-input::placeholder{font-style: italic;}
 </style>
 <h2 class="CardInfoDlgTitle">
 ` + <%=_TEX.T("CardInfoDlg.Title")%> + `
@@ -105,18 +106,18 @@
 	<span style="font-size: 11px;position: relative;top: -9px;">Only</span>
 	<img src="/img/credit_card_logo_visa.png" width="40px" style="padding-top: 4px;"/>
 	</span>
-	<input id="card_number" class="swal2-input" style="margin-top: 4px;" maxlength="16" value="4111111111111111"/>
+	<input id="card_number" class="swal2-input" autocomplete="off"　style="margin-top: 4px;" maxlength="16" placeholder="4111111111111111"/>
 </div>
 <div class="CardInfoDlgInputItem">
 	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardExpire")%></div>
-	<input id="cc_exp" class="swal2-input" style="margin-top: 4px;" maxlength="5" value="02/22"/>
+	<input id="cc_exp" class="swal2-input" style="margin-top: 4px;" maxlength="5" placeholder="01/23"/>
 </div>
 <div class="CardInfoDlgInputItem">
 	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardSecCode")%><div/>
-	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4"  value="012"/>
+	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4" placeholder="012"/>
 </div>
 <div class="CardInfoDlgInfoCheckList">
-<label><input id="cc_agree1" type="checkbox" checked="checked"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
+<label><input id="cc_agree1" type="checkbox"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
 </div>
 `;
     }
@@ -132,7 +133,7 @@
     /**
     function veritransPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
         const postData = {
-            "token_api_key": "cd76ca65-7f54-4dec-8ba3-11c12e36a548",
+            "token_api_key": "",
             "card_number": cardInfo.number,
             "card_expire": cardInfo.expire,
             "security_code": cardInfo.securityCode,
@@ -221,6 +222,13 @@
         }
     }
 
+    function getAmountDlgFooter(isApp) {
+        let strLandingPageUrl = isApp ? "/PochiS.jsp" : "/PochiPcS.jsp";
+        return '<a href="' + strLandingPageUrl +
+        '" style="font-size: 12px; text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
+        '<%=_TEX.T("CheerDlg.Whatis")%>' +
+        '</a>'
+    }
 
     function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
         const emojiInfo = {
@@ -253,6 +261,7 @@
                 showCloseButton: true,
                 showCancelButton: false,
                 confirmButtonText: "<%=_TEX.T("CheerDlg.Send")%>",
+                footer: getAmountDlgFooter($(elThis).parent().hasClass('App')),
                 preConfirm: () => {
                     return {
                         amount: $("#cheer_amount").val(),
@@ -261,6 +270,17 @@
             }).then(formValues => {
                 // キャンセル
                 if(formValues.dismiss){return false;}
+
+                if($(elThis).parent().hasClass('App')) {
+                    Swal.fire({
+                        type: "info",
+                        text: "<%=_TEX.T("Cheer.BrowserOnly")%>",
+                        focusConfirm: true,
+                        showCloseButton: true,
+                        showCancelButton: false,
+                    });
+                    return false;
+                }
 
                 const nCheerAmount = Number(formValues.value.amount);
                 elCheerNowPayment.show();

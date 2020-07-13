@@ -200,7 +200,7 @@ if(!cResults.getResults(cCheckLogin)) {
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
 					<%if(cResults.m_bOwner) {%>
-					<a class="UserInfoStateItem" href="/FollowListV.jsp">
+					<a class="UserInfoStateItem" href="/FollowListAppV.jsp">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
 					</a>
