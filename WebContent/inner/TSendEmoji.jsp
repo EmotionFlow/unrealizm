@@ -92,6 +92,7 @@
 	.CardInfoDlgInputLabel{font-size: 16px;}
 	.CardInfoDlgInfoCheckList{text-align: left; font-size: 16px;}
 	.swal2-popup .CardInfoDlgInputItem .swal2-input{margin-top: 4px; font-size: 1.1em; height: 1.825em;}
+	.swal2-popup .CardInfoDlgInputItem .swal2-input::placeholder{font-style: italic;}
 </style>
 <h2 class="CardInfoDlgTitle">
 ` + <%=_TEX.T("CardInfoDlg.Title")%> + `
@@ -105,18 +106,18 @@
 	<span style="font-size: 11px;position: relative;top: -9px;">Only</span>
 	<img src="/img/credit_card_logo_visa.png" width="40px" style="padding-top: 4px;"/>
 	</span>
-	<input id="card_number" class="swal2-input" style="margin-top: 4px;" maxlength="16" value="4111111111111111"/>
+	<input id="card_number" class="swal2-input" autocomplete="off"　style="margin-top: 4px;" maxlength="16" placeholder="4111111111111111"/>
 </div>
 <div class="CardInfoDlgInputItem">
 	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardExpire")%></div>
-	<input id="cc_exp" class="swal2-input" style="margin-top: 4px;" maxlength="5" value="02/22"/>
+	<input id="cc_exp" class="swal2-input" style="margin-top: 4px;" maxlength="5" placeholder="01/23"/>
 </div>
 <div class="CardInfoDlgInputItem">
 	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardSecCode")%><div/>
-	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4"  value="012"/>
+	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4" placeholder="012"/>
 </div>
 <div class="CardInfoDlgInfoCheckList">
-<label><input id="cc_agree1" type="checkbox" checked="checked"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
+<label><input id="cc_agree1" type="checkbox"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
 </div>
 `;
     }
