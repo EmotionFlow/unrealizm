@@ -1,7 +1,6 @@
 package jp.pipa.poipiku.settlement.epsilon;
 
 public class SettlementSendInfo {
-    public String contractCode;
     public String userId;
     public String userName;
     public String userMailAdd;

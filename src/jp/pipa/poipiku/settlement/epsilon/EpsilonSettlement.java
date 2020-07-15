@@ -29,8 +29,10 @@ import org.w3c.dom.NodeList;
 // EPSILON決済API呼び出しクラス
 public class EpsilonSettlement {
     private static final String CONTRACT_CODE = "68968190";
-    private static final String ORDER_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+    private static final String TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
 //    private static final String ORDER_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+
+    private static final String LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
   
     private SettlementSendInfo settlementSendInfo;
     public SettlementSendInfo getSettlementSendInfo() {
@@ -66,16 +68,25 @@ public class EpsilonSettlement {
                 .build();
 
         List<NameValuePair> param = this.makeSendParam();
-//        Log.d("key => value");
-//        for(NameValuePair p : param){
-//            Log.d(String.format("%s => %s", p.getName(), p.getValue()));
-//        }
+        Log.d("key => value");
+        for(NameValuePair p : param){
+            Log.d(String.format("%s => %s", p.getName(), p.getValue()));
+        }
         HttpPost post = new HttpPost();
         HttpResponse res = null;
 
         try {
             post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-            post.setURI(new URI(ORDER_URL));
+            String url ="";
+            switch (settlementSendInfo.processCode) {
+                case 1: case 2: // 初回/登録済み課金
+                    url = TOKEN_SETTLEMENT_URL;
+                    break;
+                case 7: case 9: // ユーザ退会又は退会取消
+                    url = LINK_SETTLEMENT_URL;
+                    break;
+            }
+            post.setURI(new URI(url));
             res = client.execute(post);
         }catch(Exception e){
             e.printStackTrace();
@@ -140,6 +151,7 @@ public class EpsilonSettlement {
         }
         return settleResultInfo;
     }
+
     // 決済情報送信処理
     public SettlementResultInfo execSettlement(SettlementSendInfo settlementSendInfo){
         this.setSettlementSendInfo(settlementSendInfo);
@@ -213,7 +225,7 @@ public class EpsilonSettlement {
                  */
                 break;
             case 7: case 9: // ユーザ退会又は退会取消
-                /*
+                Log.d("ユーザ退会又は退会取消");
                 param.add( new BasicNameValuePair("version", si.version.toString()));
                 param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
                 param.add( new BasicNameValuePair("user_id", si.userId));
@@ -221,7 +233,6 @@ public class EpsilonSettlement {
                 param.add( new BasicNameValuePair("memo1", si.memo1));
                 param.add( new BasicNameValuePair("memo2", si.memo2));
                 param.add( new BasicNameValuePair("xml", si.xml.toString()));
-                 */
                 break;
         }
         return param;
