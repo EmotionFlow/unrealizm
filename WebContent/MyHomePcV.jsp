@@ -22,7 +22,7 @@ if(!cCheckLogin.m_bLogin) {
 }
 
 boolean bRtn = cResults.getResults(cCheckLogin);
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 
 int nRnd = (int)(Math.random()*2);
 %>
@@ -31,6 +31,7 @@ int nRnd = (int)(Math.random()*2);
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript">
