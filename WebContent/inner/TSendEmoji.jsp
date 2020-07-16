@@ -223,7 +223,7 @@
     }
 
     function getAmountDlgFooter(isApp) {
-        let strLandingPageUrl = isApp ? "/PochiS.jsp" : "/PochiPcS.jsp";
+        let strLandingPageUrl = isApp ? "/PochiAppS.jsp" : "/PochiPcS.jsp";
         return '<a href="' + strLandingPageUrl +
         '" style="font-size: 12px; text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
         '<%=_TEX.T("CheerDlg.Whatis")%>' +
