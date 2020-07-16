@@ -139,21 +139,21 @@ public class UserAuthUtil {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		Log.d("1:"+strEmail);
+		//Log.d("1:"+strEmail);
 		if(strEmail.isEmpty()) return ERROR_EMAIL_EMPTY;
-		Log.d("2:"+strPassword);
+		//Log.d("2:"+strPassword);
 		if(strPassword.isEmpty()) return ERROR_PASSWORD_EMPTY;
-		Log.d("3:"+strNickName);
+		//Log.d("3:"+strNickName);
 		if(strNickName.isEmpty()) return ERROR_NICKNAME_EMPTY;
-		Log.d("4:"+strEmail);
+		//Log.d("4:"+strEmail);
 		if(strEmail.length()<LENGTH_EMAIL_MIN || strEmail.length()>LENGTH_EMAIL_MAX) return ERROR_EMAIL_LENGTH;
-		Log.d("5:"+strPassword);
+		//Log.d("5:"+strPassword);
 		if(strPassword.length()<LENGTH_PASSWORD_MIN || strPassword.length()>LENGTH_PASSWORD_MAX) return ERROR_PASSWORD_LENGTH;
-		Log.d("6:"+strNickName);
+		//Log.d("6:"+strNickName);
 		if(strNickName.length()<LENGTH_NICKNAME_MIN || strNickName.length()>LENGTH_NICKNAME_MAX) return ERROR_NICKNAME_LENGTH;
-		Log.d("7:"+strEmail);
+		//Log.d("7:"+strEmail);
 		if(!strEmail.matches(".+@.+\\..+")) return ERROR_EMAIL_INVALID;
-		Log.d("8:done");
+		//Log.d("8:done");
 		int nUserId = 0;
 		String strHashPass = "";
 		DataSource dsPostgres = null;

@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class DeleteCreditCardC {
     public DeleteCreditCardC(){}
@@ -21,6 +22,7 @@ public class DeleteCreditCardC {
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
+		ArrayList<Integer> cardIds = new ArrayList<>();
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -33,6 +35,7 @@ public class DeleteCreditCardC {
 			cResSet = cState.executeQuery();
 
 			while(cResSet.next()){
+				cardIds.add(cResSet.getInt("id"));
 				// EPSILONだったら、退会処理
 				if (cResSet.getInt("agent_id") == Agent.EPSILON) {
 					User epsilonUser = new User(cResSet.getString("agent_user_id"));
@@ -44,10 +47,13 @@ public class DeleteCreditCardC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "UPDATE creditcards SET del_flg=true WHERE user_id=?";
+			strSql = "UPDATE creditcards SET del_flg=true, last_agent_order_id='', card_expire='', security_code='', updated_at=now() WHERE id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.executeUpdate();
+			for (Integer id : cardIds) {
+				cState.setInt(1, id);
+				cState.executeUpdate();
+			}
+			cState.close();cState=null;
 
 			bRtn = true;
 		} catch(Exception e) {
