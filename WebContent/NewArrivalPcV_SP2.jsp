@@ -222,6 +222,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<style>
 		.IllustThumb {margin: 6px !important;}
 		</style>

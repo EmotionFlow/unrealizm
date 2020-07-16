@@ -1,0 +1,1946 @@
+@charset "utf-8";
+
+.AutoLink {color: #5bd; text-decoration: underline;}
+.AutoLinkMyTag {color: #f09090; text-decoration: underline;}
+
+.Waiting {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 32px;
+	text-align: center;
+	background-image: url('/img/loading.gif');
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
+	margin: 20px 0;
+}
+
+.Wrapper {
+	clear: both;
+	display: block;
+	width: 360px;
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+.Wrapper.ViewPc .RightPane {display: none;}
+
+.Wrapper.ThumbList {
+	width: 360px;
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+.Wrapper.GridList {
+	width: 360px;
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+.Wrapper.ItemList {
+	width: 360px;
+	margin: 0 auto;
+	padding: 0;
+	box-sizing: border-box;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+.IllustDetail {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+.UpdateInfo {float: left; width: 100%; text-align: center; background-color: #5bd; padding: 5px 0; font-size: 0;}
+
+.UpdateInfo .UpdateInfoMsg {color: #fff;font-size: 12px; font-weight: bold;}
+
+.SideBarTop {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	margin: 3px 0 0 0;
+	overflow: hidden;
+}
+
+.SideBarMid {
+	display: block;
+	float: left;
+	margin: 3px 0 0 0;
+	overflow: hidden;
+	width: 100%;
+	text-align: center;
+}
+
+.SideBarBottom {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	margin: 3px 0 0 0;
+	overflow: hidden;
+}
+
+.SearchResultTitle {
+	text-decoration: none;
+	color: #5bd;
+	margin: 10px 0 7px 0;
+	font-size: 18px;
+	height: 30px;
+	line-height: 30px;
+	display: block;
+	float: left;
+	width: 100%;
+	height: 32px;
+	overflow: hidden;
+	font-weight: bold;
+	position: relative;
+}
+
+.SearchResultTitle .Keyword {
+	display: inline;
+	padding: 0;
+	margin: 0;
+	font-weight: bold;
+}
+
+.SearchResultTitle .TitleCmdFollow {
+	float: right;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+	font-size: 12px;
+	margin: 0 0 0 15px;
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-weight: normal;
+}
+
+
+/********** sub menu **********/
+.CategoryMenu {
+	display: block;
+	float: none;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 18px 10px 12px 10px;
+	font-size: 0;
+	white-space: nowrap;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	overflow-scrolling: touch;
+	text-align: center;
+	position: relative;
+	z-index: 0;
+}
+
+.CategoryMenu .CategoryBtn {
+	display: inline-block;
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	box-sizing: border-box;
+	border-radius: 0;
+	font-size: 13px;
+	height: 22px;
+	line-height: 20px;
+	padding: 0 10px;
+	margin: 0;
+	border: solid 1px #5bd;
+	border-left: none;
+	background-color: #fff;
+	color: #5bd;
+	min-width: 60px;
+}
+.CategoryMenu .CategoryBtn:first-child {border-left: solid 1px #5bd; border-radius: 20px 0 0 20px;}
+.CategoryMenu .CategoryBtn:last-child {border-radius: 0 20px 20px 0;}
+.CategoryMenu .CategoryBtn.Selected {background-color: #5bd;color: #fff;}
+
+.IllustThumbList {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding-bottom: 70px;
+}
+
+/********** ILLUST LIST **********/
+.IllustThumb {
+	display: block;
+	float: left;
+	width: 112px;
+	height: 112px;
+	margin: 6px 0 0 6px;
+	box-sizing: border-box;
+	overflow: hidden;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+	background: #fff;
+	display: flex;
+	flex-flow: column;
+	border-radius: 4px;
+	border: solid 1px #eee;
+}
+
+/*.IllustThumb.Hidden {opacity: 0.5;}*/
+
+/*
+.IllustThumb:nth-child(19n+3), .IllustThumb:nth-child(19n+6), .IllustThumb:nth-child(19n+9), .IllustThumb:nth-child(19n+12), .IllustThumb:nth-child(19n+15), .IllustThumb:nth-child(19n+18), .IllustThumb:nth-child(19n+21) {margin-right: 0;}
+*/
+
+.IllustThumb .Category {
+	display: block;
+	float: left;
+	background: #5bd;
+	font-size: 10px;
+	color: #fff;
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	box-sizing: border-box;
+	border-radius: 22px;
+	min-width: 50px;
+	max-width: 100%;
+	height: 20px;
+	line-height: 20px;
+	padding: 0 5px;
+	z-index: 2;
+}
+
+.IllustThumb .IllustThumbImg {
+	display: block;
+	width: 100%;
+	height: 110px;
+	background-position: 50% 50%;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.IllustThumb .IllustInfo {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 3px 3px 0px 3px;
+	position: absolute;
+	top: 0;
+}
+.IllustThumb .IllustInfo .IllustInfoDesc {
+	display: none;
+	width: 100%;
+	float: left;
+	font-size: 10px;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+}
+.IllustThumb .IllustInfoCenter {
+	display: block;
+	box-sizing: border-box;
+	padding: 0px;
+	position: absolute;
+}
+.IllustThumb .IllustInfoBottom, .IllustItemThumb .IllustInfoBottom{
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		position: absolute;
+}
+.IllustThumb .IllustInfoBottom{
+		bottom: 3px;
+		left: 4px;
+}
+.IllustItemThumb .IllustInfoBottom{
+		bottom: 4px;
+		left: 8px;
+}
+.IllustItemThumb .Num {
+		margin: 0 3px;
+		background-repeat: no-repeat;
+		min-width: 40px;
+		display: block;
+		float: left;
+		color: white;
+		font-size: 15px;
+		background: #5bd;
+		box-sizing: border-box;
+		border-radius: 11px;
+		height: 25px;
+		line-height: 25px;
+		text-align: center;
+		z-index: 2;
+}
+.IllustThumb .Num {
+	background-repeat: no-repeat;
+	min-width: 32px;
+	display: block;
+	float: left;
+	color: white;
+	font-size: 13px;
+	background: #5bd;
+	box-sizing: border-box;
+	border-radius: 11px;
+	height: 20px;
+	padding: 0 7px;
+	margin: 0 2px;
+	line-height: 20px;
+	text-align: center;
+	z-index: 2;
+}
+.IllustThumb .Publish {
+	background-repeat: no-repeat;
+	min-width: 35px;
+	display: block;
+	float: left;
+	background-color: #5bd;
+	box-sizing: border-box;
+	border-radius: 11px;
+	height: 20px;
+	padding: 0 7px;
+	z-index: 2;
+}
+.IllustItemThumb .Publish {
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	min-width: 40px;
+	display: block;
+	float: left;
+	background-color: #5bd;
+	box-sizing: border-box;
+	border-radius: 11px;
+	height: 25px;
+	padding: 0 7px;
+	z-index: 2;
+}
+.PublishIco01{ background-position: center; background-size: contain; background-image: url(/img/ico_warning.png);}
+.PublishIco02{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.PublishIco03{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.PublishIco04{ background-position: center; background-size: contain; background-image: url(/img/ico_pass.png);}
+.PublishIco05{ background-position: center; background-size: contain; background-image: url(/img/ico_signin.png);}
+.PublishIco06{ background-position: center; background-size: contain; background-image: url(/img/ico_favorite.png);}
+.PublishIco07{ background-position: center; background-size: contain; background-image: url(/img/ico_follower.png);}
+.PublishIco08{ background-position: center; background-size: contain; background-image: url(/img/ico_follow.png);}
+.PublishIco09{ background-position: center; background-size: contain; background-image: url(/img/ico_ff.png);}
+.PublishIco10{ background-position: center; background-size: contain; background-image: url(/img/ico_list.png);}
+.PublishIco99{ background-position: center; background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
+
+.IllustThumb .PublishLimitedPublished{
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+		background-size: contain;
+		background-image: url(/img/ico_clock.png);
+		background-color: #5bd;
+		background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+.IllustThumb .PublishLimitedNotPublished{
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+		background-size: contain;
+		background-image: url(/img/ico_clock.png);
+		background-color: #a0a0a0;
+		background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+.IllustThumb .Private {
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+		background-size: contain;
+		background-image: url(/img/ico_visible.png);
+		background-color: #a0a0a0;
+		background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+
+/********** USER LIST **********/
+.UserThumb {
+	display: flex;
+	width: 100%;
+	flex-flow: row nowrap;
+	box-sizing: border-box;
+	overflow: hidden;
+	padding: 10px;
+	border-bottom: solid 1px #eee;
+	background-color: #fff;
+}
+
+.UserThumb .UserThumbImg {
+	display: block;
+	flex: 0 0 30px;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	border: solid 1px #ccc;
+	border-radius: 30px;
+	margin: 0 5px 0 0;
+	box-sizing: border-box;
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+.UserThumb .UserThumbName {
+	display: block;
+	flex: 1 1;
+	height: 30px;
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 30px;
+}
+
+.UserThumb .UserThumbName .UserThumbNameAdditional {
+	font-weight: normal;
+}
+
+/********** TAG LIST **********/
+.TagItem {
+	display: block;
+	width: 100%;
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	border-bottom: solid 1px #eee;
+	background-color: #fff;
+}
+
+.TagItem .TagName {
+	display: block;
+	height: 50px;
+	line-height: 30px;
+	padding: 10px;
+	box-sizing: border-box;
+	color: #5bd;
+}
+
+/********** UPLOAD **********/
+.PasteZone {display: block;float: left;width: 100%; font-size: 0;min-height: 113px;background: #fff;border-radius: 4px;}
+
+.UploadFile {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px 10px 50px 10px;
+	max-width: 600px;
+	margin: 0 auto;
+}
+.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 0 0;}
+
+.UploadFile .InputFile {
+	display: inline-block;
+	position: relative;
+	padding: 0;
+	box-shadow: none;
+	background-color: #f3f3f3;
+	border-radius: 4px;
+	margin: 6px;
+	height: 101px;
+	width: 101px;
+}
+
+.UploadFile .InputFile .imgView {
+	border: none;
+	border-radius: 2px 2px 0 0;
+	bottom: 0;
+	margin: auto;
+	display: block;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.InputFile .DeletePaste {
+	display: block;
+	position: absolute;
+	right: -8px;
+	top: -8px;
+	box-sizing: border-box;
+	white-space: nowrap;
+	text-align: center;
+	width: 26px;
+	height: 26px;
+	line-height: 20px;
+	font-size: 12px;
+	padding: 0;
+	border: solid 3px #fafafa;
+	border-radius: 30px;
+	background-color: #525252;
+	color: #F7F7F7;
+	font-weight: bold;
+	cursor: pointer;
+	z-index: 1;
+}
+
+.UploadFile .InputFile.Done {
+	background-color: #EDEDF5;
+	box-shadow: 0 0 1px 0 #5bd;
+	border: 0;
+}
+
+
+.UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
+.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;-webkit-user-select: text;user-select: text;}
+
+.UploadFile .CategorDesc {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 10px 0 0 0;
+	font-size: 0;
+}
+
+.UploadFile .Description {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 10px 0 0 0;
+	position: relative;
+}
+
+.UploadFile .Description .EditDescription {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 100px;
+	box-sizing: border-box;
+}
+
+.UploadFile .Description .DescriptionCharNum {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: right;
+	font-size: 10px;
+	height: 10px;
+	line-height: 10px;
+}
+
+.UploadFile .TagList .EditTagList {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.UploadFile .TagList {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 2px 0 0 0;
+	position: relative;
+}
+
+.UploadFile .TagList .TagListCharNum {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: right;
+	font-size: 10px;
+	height: 10px;
+	line-height: 10px;
+}
+
+.UploadFile .UoloadCmdOption {
+	display: flex;
+	float: left;
+	flex-flow: column;
+	width: 100%;
+	margin: 3px 0 10px 0;
+	align-items: flex-end;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem {
+	flex: 0 0 100%;
+	width: 100%;
+	display: flex;
+	flex-flow: row;
+	margin: 5px 0;
+	align-items: center;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionLabel {
+	display: block;
+	margin: 0;
+	font-size: 14px;
+	height: 15px;
+	line-height: 15px;
+	text-align: left;
+	white-space: nowrap;
+	flex: 0 0 40%;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionLabel.disabled {
+	color: #ccc;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish {
+	margin: 0 0 0 auto;
+	text-align: right;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPublish,
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPassword {
+	width: 180px;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditTimeLimited{
+	width: 180px;
+}
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditTimeLimitedPc{
+	width: 150px;
+	text-align: right;
+}
+.UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditTimeLimitedPcTo{
+	line-height: 2em;
+}
+
+.UploadFile .UoloadCmdOption .OptionItem .onoffswitch {
+	margin: 0 0 0 auto;
+}
+
+.UploadFile .UoloadCmd {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.UploadFile .UoloadCmd .UoloadCmdBtn {
+	display: inline-block;
+}
+
+/********** Illust List **********/
+.IllustItemList {
+	display: block;
+	float: left;
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.IllustItem {
+	display: block;
+	float: left;
+	width: 344px;
+	padding: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	background: #fff;
+	margin: 15px 8px;
+	border-radius: 6px;
+	border: solid 1px #eee;
+}
+
+.IllustItem .IllustItemUser {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+	padding: 8px 8px 8px 8px;
+	border-bottom: solid 1px #eee;
+	align-items: center;
+}
+
+.IllustItem .IllustItemUser .IllustItemUserThumb {
+	display: block;
+	flex: 0 0 30px;
+	height: 30px;
+	overflow: hidden;
+	border: solid 1px #ccc;
+	border-radius: 60px;
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+.IllustItem .IllustItemUser .IllustItemUserName {
+	display: block;
+	flex: 1 1 204px;
+	padding: 0;
+	margin: 0 0 0 10px;
+	text-align: left;
+	font-weight: bold;
+	font-size: 14px;
+	height: 32px;
+	line-height: 32px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.IllustItem .IllustItemUser .UserInfoCmdFollow {
+	display: block;
+	flex: 0 0 90px;
+	cursor: pointer;
+	font-size: 12px;
+	padding: 0;
+	height: 24px;
+	line-height: 24px;
+}
+
+.IllustItem .IllustItemCommand {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	position: relative;
+	padding: 8px 8px 4px 8px;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCategory {display: block; float: left;}
+
+.IllustItem .IllustItemCommand .IllustItemCommandSub {
+	font-size: 18px;
+	float: right;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandTweet,
+	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandInfo,
+	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete,
+	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandEdit
+	{
+	display: inline-block;
+	color: #aaa;
+	margin:  4px 10px;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCategoryEdit {display: none; float: left; margin: 0px 0 8px 0px;}
+
+
+.IllustItemTProhibit{
+	display: block;
+	text-align: center;
+	font-size: 10px;
+	padding: 10px;
+}
+
+.IllustItem .IllustItemTProhibit {
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: right;
+	height: 16px;
+	line-height: 10px;
+	padding: 3px;
+	font-size: 9px;
+	color: #fff;
+	margin-top: -16px;
+	text-shadow: 0 0 10px #000;
+}
+
+.IllustItem .IllustItemTProhibit .TapToFull {
+	display: block;
+	float: left;
+}
+
+.IllustItem .IllustItemExpand {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	margin-top: -45px;
+}
+
+.IllustItem.Password .IllustItemExpand {
+	margin-top: -85px;
+}
+
+.IllustItem .IllustItemExpand .IllustItemExpandPassFrame {
+	display: none;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0 0 10px 0;
+}
+
+.IllustItem.Password .IllustItemExpand .IllustItemExpandPassFrame {
+	display: block;
+}
+
+.IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPass {
+	width: 220px;
+	height: 30px;
+}
+
+.IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPass::placeholder {
+	color: #bbb;
+	font-style: italic;
+	font-size: 12px;
+}
+
+.IllustItem .IllustItemExpand .IllustItemExpandBtn {
+	display: inline-block;
+	margin: 0;
+	font-size: 12px;
+	line-height: 20px;
+	height: 20px;
+	margin: 0;
+	padding: 0 12px;
+	border-radius: 20px;
+}
+
+.IllustItem .IllustItemCmd {
+	display: block;
+	float: right;
+	padding: 0 0 0 5px;
+	box-sizing: border-box;
+	text-align: right;
+	margin: 0;
+}
+
+.IllustItem .IllustItemCmd .IllustItemBookmarkBtn {
+	display: inline-block;
+	margin: 0 0 0 0;
+	font-size: 12px;
+	border-radius: 30px;
+	padding: 3px 8px;
+}
+
+.IllustItem .Category {
+	display: block;
+	float: left;
+	background: #5bd;
+	font-size: 13px;
+	color: #fff;
+	text-align: center;
+	box-sizing: border-box;
+	overflow: hidden;
+	white-space: nowrap;
+	border-radius: 22px;
+	height: 24px;
+	line-height: 24px;
+	margin: 0px 0 5px 0;
+	padding: 0 10px;
+	min-width: 70px;
+}
+
+.Category.C0 {
+	background-color: #ecec01;
+	color: #555;
+}
+.CategoryBtn.C0 {
+	border-color: #ecec01;
+	color: #ecec01;
+}
+
+.Category.C1 {
+	background-color: #eb7f10;
+}
+.CategoryBtn.C1 {
+	border-color: #eb7f10;
+	color: #eb7f10;
+}
+
+.Category.C2 {
+	background-color: #ea541a;
+}
+.CategoryBtn.C2 {
+	border-color: #ea541a;
+	color: #ea541a;
+}
+
+.Category.C3 {
+	background-color: #d20000;
+}
+.CategoryBtn.C3 {
+	border-color: #d20000;
+	color: #d20000;
+}
+
+.Category.C4 {
+	background-color: #bfda80;
+	color: #555;
+}
+.CategoryBtn.C4 {
+	border-color: #bfda80;
+	color: #bfda80;
+}
+
+.Category.C5 {
+	background-color: #34cca4;
+}
+.CategoryBtn.C5 {
+	border-color: #34cca4;
+	color: #34cca4;
+}
+
+.Category.C6 {
+	background-color: #55bbdd;
+}
+.CategoryBtn.C6 {
+	border-color: #55bbdd;
+	color: #55bbdd;
+}
+
+.Category.C7 {
+	background-color: #017ff0;
+}
+.CategoryBtn.C7 {
+	border-color: #017ff0;
+	color: #017ff0;
+}
+
+.Category.C8 {
+	background-color: #333333;
+}
+.CategoryBtn.C8 {
+	border-color: #333333;
+	color: #333333;
+}
+
+.Category.C9 {
+	background-color: #003399;
+}
+.CategoryBtn.C9 {
+	border-color: #003399;
+	color: #003399;
+}
+
+.Category.C10, .CategoryBtn.Selected.C10 {
+	background-color: #eebb00;
+	color: #555;
+}
+.CategoryBtn.C10 {
+	border-color: #eebb00;
+	color: #eebb00;
+}
+
+.Category.C11{
+	background-color: #336699;
+}
+.CategoryBtn.C11 {
+	border-color: #336699;
+	color: #336699;
+}
+
+.Category.C12 {
+	background-color: #ea541a;
+}
+.CategoryBtn.C12 {
+	border-color: #ea541a;
+	color: #ea541a;
+}
+
+.Category.C13 {
+	background-color: #ff9900;
+	color: #000;
+}
+.CategoryBtn.C13 {
+	border-color: #ff9900;
+	color: #ff9900;
+}
+
+.Category.C13 {
+	background-color: #ff9900;
+	color: #000;
+}
+.CategoryBtn.C13 {
+	border-color: #ff9900;
+	color: #ff9900;
+}
+
+.IllustThumb .Category.C13 {
+	font-size: 10px;
+	height: auto;
+	line-height: 10px;
+	white-space: normal;
+	padding: 5px 5px;
+}
+
+.Category.C14 {
+	background-color: #55bbdd;
+}
+.CategoryBtn.C14 {
+	border-color: #55bbdd;
+	color: #55bbdd;
+}
+
+.Category.C15 {
+	background-color: #8eb8ea;
+}
+.CategoryBtn.C15 {
+	border-color: #8eb8ea;
+	color: #8eb8ea;
+}
+
+.Category.C16 {
+	background-color: #dd4400;
+}
+.CategoryBtn.C16 {
+	border-color: #dd4400;
+	color: #dd4400;
+}
+
+.Category.C17 {
+	background-color: #eee;
+	color: #000;
+
+}
+.CategoryBtn.C17 {
+	border-color: #eee;
+	color: #000;
+}
+
+.Category.C18 {
+	background-color: #999999;
+}
+.CategoryBtn.C18 {
+	background-color: #999999;
+	color: #999999;
+}
+
+.Category.C19 {
+	background-color: #dd0000;
+	color: #fff;
+}
+.CategoryBtn.C19 {
+	background-color: #dd0000;
+	color: #fff;
+}
+
+.Category.C22 {
+	background-color: #3377ff;
+	color: #fff;
+}
+.CategoryBtn.C22 {
+	background-color: #3377ff;
+	color: #fff;
+}
+
+.Category.C23 {
+	background-color: #000;
+	color: #ffff00;
+}
+.CategoryBtn.C23 {
+	background-color: #000;
+	color: #ffff00;
+}
+
+
+.Category.C24 {
+	background-color: #dd0000;
+	color: #fff;
+}
+.CategoryBtn.C24 {
+	background-color: #dd0000;
+	color: #fff;
+}
+
+
+
+.IllustItem .IllustItemDesc {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 8px;
+	text-align: left;
+	margin: 2px 0 5px 0;
+	font-size: 14px;
+}
+
+.IllustItem .IllustItemTag {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 8px;
+	text-align: left;
+	margin: 0 0 5px 0;
+	font-size: 14px;
+}
+
+.IllustItem .IllustItemDesc .IllustItemDescCmd {
+	display: inline-block;
+}
+
+.IllustItem .IllustItemDescEdit {
+	display: none;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 8px;
+	text-align: left;
+	margin: 0 0 10px 0;
+}
+
+.IllustItem .IllustItemDescEdit .IllustItemDescEditTxt {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 100px;
+	box-sizing: border-box;
+	margin: 0 0 8px 0;
+}
+
+.IllustItem .IllustItemDescEdit .IllustItemTagEditTxt {
+	display: block;
+	float: left;
+	width: 100%;
+	margin: 0 0 8px 0;
+}
+
+.IllustItem .IllustItemDescEdit .IllustItemDescEditCmdList {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: center;
+	margin: 0 0 0 0;
+}
+
+.IllustItem .IllustItemDescEdit .IllustItemDescEditCmdList .IllustItemDescEditCmd {
+	min-width: 80px;
+}
+
+.IllustItem .IllustItemThumb {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	min-height: 140px;
+	text-align: center;
+	font-size: 0;
+}
+
+.IllustItem .IllustItemThumb .IllustInfoPublic {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+}
+.IllustItem .IllustItemThumb .IllustInfoPrivate {
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0,0,0,.5);
+		position: absolute;
+		top: 0;
+		left: 0;
+}
+
+.IllustInfoPrivate .Private {
+	display: block;
+	margin: 5px 8px;
+	border-radius: 11px;
+		background-size: contain;
+		background-image: url(/img/ico_visible.png);
+		background-color: #a0a0a0;
+		background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+
+.IllustInfoPublic .PublishLimitedPublished{
+	display: block;
+	margin: 5px 8px;
+	border-radius: 11px;
+		background-size: contain;
+		background-image: url(/img/ico_clock.png);
+		background-color: #5bd;
+		background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+
+.IllustInfoPrivate .PublishLimitedNotPublished{
+	display: block;
+	margin: 5px 8px;
+	border-radius: 11px;
+		background-size: contain;
+		background-image: url(/img/ico_clock.png);
+		background-color: #a0a0a0;
+		background-repeat: no-repeat;
+	background-position: 50% 50%;
+	opacity: 0.75;
+}
+
+.IllustItem.Password .IllustItemThumb {
+	min-height: 180px;
+}
+
+
+.IllustItem .IllustItemThubExpand {
+	display: block;
+	float: left;
+	width: 100%;
+}
+
+.IllustItem .IllustItemThubExpand .ThubExpandMsg {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 20px 10px 60px 10px;
+	text-align: center;
+}
+
+.IllustItem .IllustItemThubExpand .IllustItemThumb {
+	margin: 5px 0 0 0;
+}
+
+.IllustItem .IllustItemThumb .IllustItemThumbImg {
+	display: inline-block;
+	max-width: 100%;
+}
+
+.IllustItem .IllustItemResList {
+	display: block;
+	float: left;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	padding: 6px 3px 6px 3px;
+	border-bottom: solid 1px #eee;
+	text-align: left;
+	font-size: 0;
+}
+
+.IllustItem .IllustItemResList .IllustItemResListTitle {
+	display: block;
+	float: left;
+	font-size: 12px;
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+}
+
+.IllustItem .IllustItemResList .ResEmoji {
+	display: block;
+	float: left;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	margin: 0;
+	font-family: EmojiFontFamily,'Apple Color Emoji',sans-serif;
+	font-size: 18px;
+}
+
+.IllustItem .IllustItemResList .ResEmojiAdd {
+	display: block;
+	float: left;
+	width: 28px;
+	height: 30px;
+	line-height: 26px;
+	text-align: center;
+	margin: 0;
+	position: relative;
+	font-size: 22px;
+	color: #ddd;
+}
+
+.IllustItem .IllustItemResList .ResEmojiAdd:after, .ResEmojiAdd:before {
+	bottom: -7px;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.IllustItem .IllustItemResList .ResEmojiAdd:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #fff;
+	border-width: 10px;
+	margin-left: -10px;
+}
+
+.IllustItem .IllustItemResList .ResEmojiAdd:before {
+	border-color: rgba(221, 221, 221, 0);
+	border-bottom-color: #ddd;
+	border-width: 11px;
+	margin-left: -11px;
+}
+
+.IllustItem .IllustItemResBtnList {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: left;
+	font-size: 0;
+}
+
+
+.IllustItem .IllustItemResBtnList .IllustItemResListTitle {
+	display: block;
+	float: left;
+	width: 100%;
+	font-size: 10px;
+	padding: 2px 6px;
+	box-sizing: border-box;
+}
+
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: left;
+	padding: 0;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem {
+	margin: 0 5px;
+	min-width: 55px;
+	text-align: center;
+	padding: 1px 0;
+	font-size: 11px;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Selected {
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Food {
+	border-color: orange;
+	background-color: #fff;
+	color: orange;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Food.Selected {
+	border-color: orange;
+	background-color: orange;
+	color: #fff;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Pocky {
+	border-color: #dd2e43;
+	background-color: #fff;
+	color: #dd2e43;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Pocky.Selected {
+	border-color: #dd2e43;
+	background-color: #dd2e43;
+	color: #fff;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Xmas {
+	border-color: #dd2e43;
+	background-color: #fff;
+	color: #ff0000;
+}
+
+.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Xmas.Selected {
+	border-color: #ff0000;
+	background-color: #ff0000;
+	color: #fff;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiCheer {
+	display: block;
+	float: left;
+	box-sizing: border-box;
+	text-align: left;
+	padding: 0;
+	font-size: 16px;
+	margin: 7px;
+}
+.IllustItem .IllustItemResBtnList .ResEmojiCheerNowPayment {
+	display: block;
+	float: left;
+	box-sizing: border-box;
+	text-align: left;
+	padding: 0;
+	font-size: 16px;
+	margin: 7px;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiCheerNowPayment .CheerLoading {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background: no-repeat url(/img/loading.gif);
+	background-size: cover;
+	position: relative;
+	top: 4px;
+	margin: 0 2px 0 4px;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiCheer .CheerAmount{
+	display: inline-block;
+}
+.IllustItem .IllustItemResBtnList .ResEmojiCheer .CheerMsg{
+	display: inline-block;
+	line-height: 30px;
+	padding-left: 2px;
+}
+.IllustItem .IllustItemResBtnList .ResEmojiCheer .CheerInfo{
+	display: inline-block;
+	line-height: 30px;
+	padding-left: 10px;
+}
+
+
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList {
+	display: block;
+	float: left;
+	width: 100%;
+	max-height: 117px;
+	overflow: hidden;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.Food,
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.All,
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList.Cheer{
+	max-height: 400px;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList .NeedLogin {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: center;
+	font-size: 13px;
+	padding: 10px 0;
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn {
+	display: inline-block;
+	overflow: hidden;
+	text-align: center;
+	font-size: 20px;
+	background: #fff;
+	width: 35px;
+	height: 35px;
+	line-height: 35px;
+	margin: 4px 2px 0 5px;
+	border-radius: 100px;
+	user-select: none;
+	font-family: EmojiFontFamily,'Apple Color Emoji',sans-serif;
+	cursor: pointer;
+	/*
+	box-shadow: 2px 4px 6px #bbb;
+	*/
+}
+
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn:hover {
+	background-color: #cef;
+}
+
+.IllustItem .IllustItemResList .ResEmoji .Twemoji,
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn .Twemoji,
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb .Twemoji {
+	width: 18px;
+	height: auto;
+}
+
+/*
+.IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn:active {
+	box-shadow: 1px 2px 3px #bbb;
+	transform: translate3d(1px, 2px, 0);
+
+}
+*/
+
+
+.IllustItem .IllustItemResList .IllustItemResListTitle .TitleShowAll {
+	display: inline-block;
+	margin: 0;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+
+/********** IllustItem Hiden **********/
+
+/*.IllustItem.Hidden {opacity: 0.7 !important;}*/
+
+.IllustItem.Hidden .IllustItemResList {display: none;}
+.IllustItem.Hidden .IllustItemResBtnList {display: none;}
+
+/********** COMMENT **********/
+.IllustItemList .ItemComment {
+	display: block;
+	width: 100%;
+	float: left;
+	box-sizing: border-box;
+	margin: 0 auto;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	font-size: 14px;
+	padding: 10px;
+	border-bottom: solid 1px #eee;
+	background-color: #fff;
+}
+
+.IllustItemList .ItemComment.Home .ItemCommentItem {
+	padding: 1px 10px;
+	border: none;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentName {
+	display: block;
+	flex: 0 0;
+	font-weight: bold;
+	font-size: 13px;
+	margin: 0 5px 0 0;
+	white-space: nowrap;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDesc {
+	display: block;
+	flex: 1 1;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDesc .CommentName {
+	display: inline;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDescTxt {
+	display: block;
+	flex: 1 1;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDesc .CommentCmd {
+	cursor: pointer;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDescBtn {
+	display: block;
+	flex: 0 0;
+	box-sizing: border-box;
+	text-align: right;
+	margin: 2px 0 2px 10px;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDescBtn .BtnBase {
+	font-size: 20px;
+	padding: 0px 10px;
+}
+
+.IllustItemList .ItemComment .CommentTo {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	display: none;
+	padding: 10px 10px 0 10px;
+	font-size: 14px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb {
+	display: block;
+	flex: 0 0 30px;
+	height: 30px;
+	border: solid 1px #ccc;
+	border-radius: 30px;
+	overflow: hidden;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart {
+	border: none;
+	line-height: 27px;
+	border-radius: 0;
+	overflow: visible;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb img {
+	width: 30px;
+	height: 30px;
+	border-radius: 30px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart .typcn {
+	display: block;
+	width: 30px;
+	height: 30px;
+	font-size: 32px;
+	color: #ee9999;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentThumb.Heart .Emoji {
+	display: block;
+	width: 30px;
+	height: 30px;
+	font-size: 24px;
+	line-height: 30px;
+	text-align: center;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail {
+	display: block;
+	flex: 1 1;
+	margin: 0 0 0 5px;
+	box-sizing: border-box;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDate
+	{
+	display: block;
+	float: right;
+	font-size: 9px;
+	font-weight: normal;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDesc
+	{
+	display: block;
+	flex: 1 1;
+	margin: 0;
+	word-break: break-all;
+	min-height: 16px;
+	line-height: 16px;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDesc .CommentName
+	{
+	display: inline;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail .CommentDesc .CommentCmd
+	{
+	cursor: pointer;
+}
+
+.IllustItemList .ItemComment .ItemCommentItem .CommentDetail.Heart .CommentName
+	{
+	font-weight: normal;
+	line-height: 30px;
+}
+
+/*********** IllustView UserInfo **********/
+.UserInfo {
+	display: block;
+	float: left;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	background: #5bd;
+	background-size: cover;
+	background-repeat: no-repeat;
+	border-bottom: solid 1px #eee;
+	background-position: 50% 50%;
+}
+
+.UserInfo .UserInfoBg {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 100px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.UserInfo .UserInfoUser {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+	background: rgba(255, 2555, 255, 0.80);
+}
+
+.UserInfoUser .UserInfoUserName .SettingBody .RegistMessage {
+	display: block;
+	flex: 1 1;
+	font-size: 13px;
+}
+
+.UserInfo .UserInfoUser .UserInfoUserThumb {
+	display: block;
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
+	border: solid 2px #ccc;
+	border-radius: 80px;
+	margin: -42px auto 0 auto;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-color: #fff;
+}
+
+.UserInfo .UserInfoUser .UserInfoUserName {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 15px 0 0 0;
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.UserInfo .UserInfoUser .UserInfoProgile {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 5px 20px;
+	margin: 0;
+	text-align: center;
+	font-size: 13px;
+}
+
+.UserInfo .UserInfoCmd {
+	display: block;
+	position: relative;
+	float: left;
+	width: 100%;
+	text-align: center;
+	padding: 5px 0 15px 0;
+}
+
+.UserInfo .UserInfoCmd .UserInfoCmdFollow {
+	display: inline-block;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.UserInfo .UserInfoCmd .IllustItemCommandSub {
+	display: block;
+	position: absolute;
+	right: 5px;
+	bottom: 15px;
+	font-size: 22px;
+}
+
+.UserInfo .UserInfoCmd .IllustItemCommandSub .IllustItemCommandTweet {
+	color: #aaa;
+}
+
+.UserInfo .UserInfoCmd .UserInfoCmdBlock {
+	display: inline-block;
+	height: 22px;
+	line-height: 22px;
+	vertical-align: bottom;
+	font-size: 24px;
+}
+
+.UserInfo .UserInfoState {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 32px;
+	overflow: hidden;
+	text-align: center;
+	padding: 3px 0;
+	background: rgba(255, 2555, 255, 0.9);
+	border-top: solid 1px #eee;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem {
+	display: inline-block;
+	min-width: 50px;
+	margin: 0 15px;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem .UserInfoStateItemTitle {
+	display: block;
+	width: 100%;
+	font-size: 9px;
+	height: 14px;
+	line-height: 14px;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem .UserInfoStateItemNum {
+	display: block;
+	width: 100%;
+	height: 18px;
+	line-height: 18px;
+	font-size: 14px;
+}
+
+/**********IllustView InfoForm **********/
+.InfoForm {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 30px 0 0 0;
+	font-size: 11px;
+	text-align: right;
+}
+
+/********** MyEditSettingV.jsp **********/
+.SettingList {
+	display: block;
+	float: left;
+	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.SettingList .SettingListItem {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0 0 40px 0;
+	padding: 0 10px;
+}
+
+.SettingList .SettingListItem .SettingListTitle {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 10px 0;
+	font-size: 18px;
+}
+
+.SettingList .SettingListItem .SettingBody {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.SettingList .SettingListItem .SettingBody .SettingBodyTxt {
+	box-sizing: border-box;
+	width: 100%;
+	overflow: hidden;
+	padding: 5px;
+}
+
+.SettingList .SettingListItem .SettingBody #ReportDesc {
+	height: 200px;
+}
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+	float: left;
+	box-sizing: border-box;
+	text-align: left;
+	margin: 10px 0 0 0;
+}
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .RegistMessage {
+	display: block;
+	flex: 1 1;
+	font-size: 14px;
+}
+
+
+.SettingList .SettingListItem .SettingBody .SettingBodyCmd .SettingBodyCmdRegist {
+	display: block;
+	flex: 0 0;
+	align-self: flex-start;
+	margin-left: 10px;
+}
+
+.SettingList .SettingListItem .SettingBody .FileSelectFrame {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 120px;
+	position: relative;
+	overflow: hidden;
+	line-height: 115px;
+	text-align: center;
+	cursor: pointer;
+	background: #eee;
+	color: #ccc;
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
+	box-sizing: border-box;
+	cursor: pointer;
+}
+
+.SettingList .SettingListItem .SettingBody .FileSelectFrame .typcn {
+	font-size: 60px;
+}
+
+.SettingList .SettingListItem .SettingBody .FileSelectFrame .SelectFile
+	{
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 99;
+	width: 100%;
+	height: 100%;
+	font-size: 315px;
+	opacity: 0;
+	filter: alpha(opacity = 0);
+	-ms-filter: "alpha(opacity=0)";
+	cursor: pointer;
+}
+
+/********** SEARCH ALL **********/
+.SearchKeyword {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 6px 10px;
+	box-sizing: border-box;
+	background: #ccc;
+}
+
+.SearchKeyword .SearchKeywordInput {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 2px 2px 2px 20px;
+	box-sizing: border-box;
+	background: #fff url('/img/search.png') 1% 50% no-repeat;
+	font-size: 16px;
+	font-family: sans-serif;
+	border-radius: 5px;
+}

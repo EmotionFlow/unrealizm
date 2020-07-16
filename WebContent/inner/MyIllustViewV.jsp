@@ -95,7 +95,7 @@
 	String strDesc = CTweet.generateIllustMsgBase(cResults.m_cContent, _TEX);
 	strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName);
 	String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
-	ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Common.EMOJI_KEYBORD_MAX);
+	ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -108,6 +108,7 @@
 	<%=!isApp?" -->":""%>
 
 	<%@ include file="/inner/TSweetAlert.jsp"%>
+	<%@ include file="/inner/TSendEmoji.jsp"%>
 	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:site" content="@pipajp" />

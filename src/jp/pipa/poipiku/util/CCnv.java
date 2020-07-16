@@ -243,7 +243,10 @@ public class CCnv {
 		}
 	}
 
-	private static void appendIllustItemResList(StringBuilder strRtn, CContent cContent, int nLoginUserId, ArrayList<String> vResult, ResourceBundleControl _TEX){
+	private static void appendIllustItemResList(
+			StringBuilder strRtn, CContent cContent, int nLoginUserId,
+			ArrayList<String> vResult, int nSpMode,
+			ResourceBundleControl _TEX){
 		strRtn.append(String.format("<div id=\"IllustItemResList_%d\" class=\"IllustItemResList\">", cContent.m_nContentId, cContent.m_nContentId));
 		// もらった絵文字展開リンク
 		if(cContent.m_vComment.size()>=GridUtil.SELECT_MAX_EMOJI) {
@@ -290,13 +293,21 @@ public class CCnv {
 		// Normal
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
 		strRtn.append("</div>");	// ResBtnSetList
 
 		if(nLoginUserId>0) {
+			// 投げ銭支払い処理中
+			strRtn.append("<div class=\"ResEmojiCheerNowPayment\" style=\"display:none\">")
+					.append("<span class=\"CheerLoading\"></span><span>")
+					.append(_TEX.T("Cheer.PaymentProcessing"))
+					.append("</span>")
+					.append("</div>");	// ResEmojiCheerNowPayment
+
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
 			for(String emoji : vResult) {
-				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
 			// 人気の絵文字
@@ -307,14 +318,21 @@ public class CCnv {
 			// 人気の絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
 			for(String emoji : vResult) {
-				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
+				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
 		}
 		// 食べ物の絵文字
 		strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
-		// 全ての絵文字
+		// その他の絵文字
 		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
+		// ポチ袋
+		if (nSpMode == SP_MODE_APP){
+			// アプリであることを示すclassを付与して、JS側で区別できるようにする。
+			strRtn.append("<div class=\"ResEmojiBtnList Cheer App\" style=\"display: none;\"></div>");
+		} else {
+			strRtn.append("<div class=\"ResEmojiBtnList Cheer Browser\" style=\"display: none;\"></div>");
+		}
 		strRtn.append("</div>");	// IllustItemResList
 	}
 
@@ -366,7 +384,7 @@ public class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, _TEX);
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, SP_MODE_WVIEW, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -482,7 +500,7 @@ public class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, _TEX);
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -563,7 +581,7 @@ public class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, _TEX);
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem

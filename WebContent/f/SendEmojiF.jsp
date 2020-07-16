@@ -1,14 +1,30 @@
-<%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
+<%@ page import="jp.pipa.poipiku.settlement.CardSettlement"%>
+<%@ page import="jp.pipa.poipiku.settlement.Agent" %>
+<%@ page import="jp.pipa.poipiku.settlement.VeritransCardSettlement" %>
+<%@ page import="jp.pipa.poipiku.settlement.EpsilonCardSettlement" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
 class SendEmojiC {
-	public int EMOJI_MAX = 10;
+	public final int EMOJI_MAX = 10;
+
+	public final int ERR_NONE = 0;
+	public final int ERR_RETRY = -10;
+	public final int ERR_INQUIRY = -20;
+	public final int ERR_CARD_AUTH = -30;
+	public final int ERR_UNKNOWN = -99;
 
 	public int m_nContentId = -1;
 	public String m_strEmoji = "";
 	public int m_nUserId = -1;
+	public int m_nAmount = -1;
+	public int m_nAgentId = -1;
+	public String m_strAgentToken = "";
 	public String m_strIpAddress = "";
+	public String m_strCardExpire = "";
+	public String m_strCardSecurityCode = "";
+	public int m_nErrCode = ERR_UNKNOWN;
+	public String m_strUserAgent = "";
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -16,7 +32,13 @@ class SendEmojiC {
 			m_nContentId	= Common.ToInt(request.getParameter("IID"));
 			m_strEmoji		= Common.ToString(request.getParameter("EMJ")).trim();
 			m_nUserId		= Common.ToInt(request.getParameter("UID"));
+			m_nAgentId		= Common.ToInt(request.getParameter("AID"));
 			m_strIpAddress	= request.getRemoteAddr();
+			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
+			m_strAgentToken = Common.ToString(request.getParameter("TKN"));
+			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
+			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
+			m_strUserAgent  = request.getHeader("user-agent");
 		} catch(Exception e) {
 			m_nContentId = -1;
 			m_nUserId = -1;
@@ -24,7 +46,7 @@ class SendEmojiC {
 	}
 
 	public boolean getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
-		if(!Arrays.asList(Common.EMOJI_LIST[Common.EMOJI_CAT_ALL]).contains(m_strEmoji)) {
+		if(!Arrays.asList(Emoji.EMOJI_ALL).contains(m_strEmoji)) {
 			Log.d("Invalid Emoji : "+ m_strEmoji);
 			return false;
 		}
@@ -80,8 +102,76 @@ class SendEmojiC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(nEmojiNum>=EMOJI_MAX) {
+				Log.d("max 5 emoji");
 				return false;
 			}
+
+			// 課金
+			if(m_nAmount>0){
+				// ログインしていないと、課金できない。
+				if(!checkLogin.m_bLogin){
+					return false;
+				}
+				// 注文生成
+				Integer orderId = null;
+				strSql = "INSERT INTO orders(" +
+						" customer_id, seller_id, status, payment_total)" +
+						" VALUES (?, ?, ?, ?)";
+				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
+				cState.setInt(1, m_nUserId);
+				cState.setInt(2, 2); // 売り手はポイピク公式
+				cState.setInt(3, COrder.STATUS_INIT);
+				cState.setInt(4, m_nAmount);
+				cState.executeUpdate();
+				cResSet = cState.getGeneratedKeys();
+				if(cResSet.next()){
+					orderId = cResSet.getInt(1);
+					Log.d("orders.id", orderId.toString());
+				}
+				cResSet.close(); cResSet=null;
+				cState.close(); cState=null;
+
+				strSql = "INSERT INTO order_details(" +
+						" order_id, content_id, product_name, list_price, amount_paid, quantity)" +
+						" VALUES (?, ?, ?, ?, ?, ?)";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, orderId);
+				cState.setInt(2, m_nContentId);
+				cState.setString(3, m_strEmoji);
+				cState.setInt(4, m_nAmount);
+				cState.setInt(5, m_nAmount);
+				cState.setInt(6, 1);
+				cState.executeUpdate();
+				cState.close(); cState=null;
+
+				CardSettlement cardSettlement = null;
+				if(m_nAgentId == Agent.VERITRANS){
+					cardSettlement = new VeritransCardSettlement(
+							m_nUserId, m_nContentId, orderId, m_nAmount,
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
+				}else if(m_nAgentId==Agent.EPSILON){
+					cardSettlement = new EpsilonCardSettlement(
+							m_nUserId, m_nContentId, orderId, m_nAmount,
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode,
+							m_strUserAgent);
+				}
+
+				boolean authorizeResult = cardSettlement.authorize();
+
+				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
+				cState.setString(2, authorizeResult? cardSettlement.getAgentOrderId():null);
+				cState.setInt(3, orderId);
+				cState.executeUpdate();
+				cState.close();cState=null;
+
+				if(!authorizeResult){
+					setErrCode(cardSettlement);
+					return false;
+				}
+			}
+
 
 			// add new comment
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id, ip_address) VALUES(?, ?, ?, ?)";
@@ -189,6 +279,18 @@ class SendEmojiC {
 		}
 		return bRtn;
 	}
+
+	private void setErrCode(CardSettlement cardSettlement) {
+		if(cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth){
+			m_nErrCode = ERR_CARD_AUTH;
+		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.Common){
+			m_nErrCode = ERR_RETRY;
+		}else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry){
+			m_nErrCode = ERR_INQUIRY; // 決済されてるかもしれないし、されていないかもしれない。
+		}else{
+			m_nErrCode = ERR_UNKNOWN;
+		}
+	}
 }
 %>
 <%
@@ -199,5 +301,6 @@ cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin, _TEX);
 %>{
 "result_num" : <%=(bRtn)?1:0%>,
-"result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>"
+"result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>",
+"error_code" : <%=cResults.m_nErrCode%>
 }

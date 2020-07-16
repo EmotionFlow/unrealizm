@@ -50,8 +50,8 @@ public class Util {
 	public static ArrayList<String> getDefaultEmoji(int nUserId, int nLimitNum) {
 		ArrayList<String> vResult = new ArrayList<String>();
 
-		if(Common.EMOJI_EVENT) {	// イベント用
-			for(String emoji : Common.EMOJI_EVENT_LIST) {
+		if(Emoji.EMOJI_EVENT) {	// イベント用
+			for(String emoji : Emoji.EMOJI_EVENT_LIST) {
 				vResult.add(emoji);
 			}
 		} else {	// 通常時
@@ -100,6 +100,9 @@ public class Util {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 				}
+
+				vResult.removeAll(Emoji.getInstance().EMOJI_CHEER_ARRAY);
+
 			} catch(Exception e) {
 				Log.d(strSql);
 				e.printStackTrace();
