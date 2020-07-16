@@ -87,7 +87,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 ファンからクリエーターへの応援の気持ちを1口100円からポチッと送れるサービスです。<br /><br />
 
 クリーエーターの方には「ポチ袋」の売上金が還元されます。<br />
-還元率は様々な指標に基づいて計算し、概ね70%〜80%です。
+還元率は直近の投稿枚数、絵文字送信数、Twitterからの閲覧数等に基づいて計算し、概ね70%〜80%です。
 					</div>
 
 					<div class="SettingListTitle Head">「ポチ袋」の送り方</div>
@@ -104,8 +104,8 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 					<div class="SettingListTitle Head">「ポチ袋」の受け取り方</div>
 					<div class="SettingBody Left">
-売上金は月ごとに集計し、2ヶ月後に指定口座へ振り込みます。<br />
-※現在準備中です。
+ポチ袋の売上金は月末に集計し、翌々月末に指定口座へ振り込みます。<br />
+受け取りには日本の銀行の普通口座が必要です。
 					</div>
 				</div>
 			</div>
