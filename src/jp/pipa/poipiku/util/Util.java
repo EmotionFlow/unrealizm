@@ -19,6 +19,8 @@ import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
 
+import static jp.pipa.poipiku.Emoji.EMOJI_CHEER_NUM;
+
 public class Util {
 	public static String getHashPass(String strPassword) {
 		String strRtn = "";
@@ -76,11 +78,12 @@ public class Util {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 					if(vResult.size()>0 && vResult.size()<nLimitNum){
-						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?) ORDER BY rank DESC LIMIT ?";
+						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?) ORDER BY rank DESC LIMIT ? OFFSET ?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setInt(1, nUserId);
 						cState.setInt(2, nLimitNum);
-						cState.setInt(3, nLimitNum-vResult.size());
+						cState.setInt(3, nLimitNum-vResult.size()+EMOJI_CHEER_NUM);
+						cState.setInt(4, EMOJI_CHEER_NUM);
 						cResSet = cState.executeQuery();
 						while (cResSet.next()) {
 							vResult.add(Common.ToString(cResSet.getString(1)).trim());
@@ -90,9 +93,10 @@ public class Util {
 					}
 				}
 				if(vResult.size()<nLimitNum){
-					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
+					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ? OFFSET ?";
 					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, nLimitNum-vResult.size());
+					cState.setInt(1, nLimitNum-vResult.size()+EMOJI_CHEER_NUM);
+					cState.setInt(2, EMOJI_CHEER_NUM);
 					cResSet = cState.executeQuery();
 					while (cResSet.next()) {
 						vResult.add(Common.ToString(cResSet.getString(1)).trim());

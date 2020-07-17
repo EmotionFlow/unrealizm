@@ -19,6 +19,8 @@ public class Emoji {
     public static final int EMOJI_CAT_OTHER = 3;
     public static final int EMOJI_CAT_CHEER = 4;
 
+    public static final int EMOJI_CHEER_NUM = 16;
+
     private static final Emoji INSTANCE = new Emoji();
     private Emoji() {}
     public static Emoji getInstance() {
@@ -41,13 +43,12 @@ public class Emoji {
         list.add(new ArrayList<>()); // 4.ポチ袋
 
         // ポチ袋（前日TOP16）
-        //TODO リリース時に期間を戻す。
         String strSql = "SELECT description, count(description) cnt" +
                 " FROM comments_0000" +
-                " WHERE upload_date BETWEEN current_timestamp - interval '24 hours' - interval '1 years' AND current_timestamp - interval '1 years'" +
+                " WHERE upload_date > CURRENT_DATE -3" +
                 " GROUP BY description" +
                 " ORDER BY cnt DESC" +
-                " LIMIT 16";
+                " LIMIT ?";
         DataSource dsPostgres = null;
         Connection cConn = null;
         PreparedStatement cState = null;
@@ -59,6 +60,7 @@ public class Emoji {
             cConn = dsPostgres.getConnection();
 
             cState = cConn.prepareStatement(strSql);
+            cState.setInt(1, EMOJI_CHEER_NUM);
             cResSet = cState.executeQuery();
 
             while(cResSet.next()){
