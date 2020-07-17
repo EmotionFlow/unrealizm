@@ -29,11 +29,15 @@ import org.w3c.dom.NodeList;
 // EPSILON決済API呼び出しクラス
 public class EpsilonSettlement {
     private static final String CONTRACT_CODE = "68968190";
-    private static final String TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
-//    private static final String ORDER_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
 
-    private static final String LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
-  
+    // dev
+//    private static final String TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+//    private static final String LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+
+    // production
+    private static final String TOKEN_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+    private static final String LINK_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+
     private SettlementSendInfo settlementSendInfo;
     public SettlementSendInfo getSettlementSendInfo() {
         return settlementSendInfo;
