@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- for EPSILON -->
-<!--
 <script src='https://secure.epsilon.jp/js/token.js'></script>
--->
-<script src='https://beta.epsilon.jp/js/token.js'></script>
+<!-- <script src='https://beta.epsilon.jp/js/token.js'></script> -->
 <script>
     const AGENT = {
         "VERITRANS": 1,
@@ -211,7 +209,7 @@
                 "cardno": String(_cardInfo.number),
                 "expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
                 "securitycode": String(_cardInfo.securityCode),
-                "holdername": "DUMMY",
+                // "holdername": "DUMMY",
             };
 
             EpsilonToken.init(contructCode);
