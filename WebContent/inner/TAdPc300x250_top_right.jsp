@@ -14,6 +14,16 @@
 		</script>
 	</div>
 	<%}else{%>
-		<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+	<!-- /4789880/poipiku/poipiku_300x250_top_right_r18 -->
+	<div id='div-gpt-ad-1594921136132-0' style='width: 300px; height: 250px;'>
+		<script>
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right_r18', [300, 250], 'div-gpt-ad-1594921136132-0').addService(googletag.pubads());
+			googletag.pubads().enableSingleRequest();
+			googletag.enableServices();
+			googletag.display('div-gpt-ad-1594921136132-0');
+		});
+		</script>
+	</div>
 	<%}%>
 </div>

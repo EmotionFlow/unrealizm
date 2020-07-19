@@ -16,7 +16,17 @@
 		</script>
 	</div>
 	<%}else{%>
-	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+	<!-- /4789880/poipiku/poipikumobile_336x280_mid_R18 -->
+	<%int nRand = (int)(Math.random()*10000);%>
+	<div id='div-gpt-ad-1594920446129-<%=nRand%>'>
+		<script>
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid_R18', [[300, 250], [336, 280]], 'div-gpt-ad-1594920446129-<%=nRand%>').addService(googletag.pubads());
+			googletag.enableServices();
+			googletag.display('div-gpt-ad-1594920446129-<%=nRand%>');
+		});
+		</script>
+	</div>
 	<%}%>
 </div>
 <%} else {%>
@@ -34,7 +44,17 @@
 		</script>
 	</div>
 	<%}else{%>
-	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
+	<!-- /4789880/poipiku/poipiku_336x280_mid_r18 -->
+	<%int nRand = (int)(Math.random()*10000);%>
+	<div id='div-gpt-ad-1594920278323-<%=nRand%>'>
+		<script>
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid_r18', [[336, 280], [300, 250]], 'div-gpt-ad-1594920278323-<%=nRand%>').addService(googletag.pubads());
+			googletag.enableServices();
+			googletag.display('div-gpt-ad-1594920278323-<%=nRand%>');
+		});
+		</script>
+	</div>
 	<%}%>
 </div>
 <%}%>
