@@ -11,6 +11,7 @@
             data => {
                 if(data){
                     DispMsg("<%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Success")%>");
+                    location.reload();
                 }else{
                     DispMsg("<%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Err")%>");
                 }
