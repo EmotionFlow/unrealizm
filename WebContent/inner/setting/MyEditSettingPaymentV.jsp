@@ -11,7 +11,7 @@
             data => {
                 if(data){
                     DispMsg("<%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Success")%>");
-                    location.reload();
+                    setTimeout("location.reload()", 2000);
                 }else{
                     DispMsg("<%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Err")%>");
                 }
