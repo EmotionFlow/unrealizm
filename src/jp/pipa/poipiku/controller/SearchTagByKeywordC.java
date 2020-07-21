@@ -59,7 +59,7 @@ public class SearchTagByKeywordC {
 				cState.close();cState=null;
 			}
 
-			strSql = "select tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt order by count(*) desc offset ? limit ?";
+			strSql = "select max(tag_id) max_id, tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt order by count(*) desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, m_strKeyword);
 			cState.setInt(2, m_nPage*SELECT_MAX_GALLERY);
