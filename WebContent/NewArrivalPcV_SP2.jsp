@@ -189,8 +189,8 @@ public class NewArrivalC {
 			strSql = "SELECT description FROM (SELECT * FROM vw_rank_emoji_daily WHERE description NOT IN('🎃', '💯', '🍓', '💒', '🐙', '❄', '🐗', '🎍') ORDER BY rank DESC LIMIT 20) as T2 ORDER BY random() LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			for(CContentComlex contentComlex : m_vContentList) {
-				if(Common.EMOJI_EVENT) {
-					contentComlex.m_strEmoji = Common.EMOJI_EVENT_CHAR;
+				if(Emoji.EMOJI_EVENT) {
+					contentComlex.m_strEmoji = Emoji.EMOJI_EVENT_CHAR;
 				} else {
 					cResSet = cState.executeQuery();
 					if (cResSet.next()) {
