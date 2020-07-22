@@ -45,7 +45,7 @@ public class Emoji {
         // ポチ袋（前日TOP16）
         String strSql = "SELECT description, count(description) cnt" +
                 " FROM comments_0000" +
-                " WHERE upload_date > CURRENT_DATE -3" +
+                " WHERE upload_date > CURRENT_DATE -1" +
                 " GROUP BY description" +
                 " ORDER BY cnt DESC" +
                 " LIMIT ?";
