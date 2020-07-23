@@ -22,7 +22,7 @@ class GetEmojiListC {
 
 	public String[] getResults(CheckLogin cCheckLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
-		if(m_nCategoryId!=Emoji.EMOJI_CAT_POPULAR && (m_nCategoryId!=Emoji.EMOJI_CAT_RECENT || !cCheckLogin.m_bLogin)) return EMOJI_LIST;
+		if(m_nCategoryId!=Emoji.EMOJI_CAT_POPULAR && m_nCategoryId!=Emoji.EMOJI_CAT_CHEER && (m_nCategoryId!=Emoji.EMOJI_CAT_RECENT || !cCheckLogin.m_bLogin)) return EMOJI_LIST;
 
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -78,21 +78,22 @@ if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
 } else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.NeedLogin")));
-} else if(cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER && cResults.m_bCheerNG) {
-	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.Ng")));
 } else {
 	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
-	if(Emoji.EMOJI_EVENT) {
+	if(cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER && cResults.m_bCheerNG) {
+		sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.Ng")));
+	} else if(Emoji.EMOJI_EVENT) {
 		EMOJI_LIST = Emoji.EMOJI_EVENT_LIST;
-	}
-	for(String emoji : EMOJI_LIST) {
-		sbResult.append(
-				String.format("<span class=\"ResEmojiBtn\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</span>",
-						cResults.m_nContentId,
-						emoji,
-						cCheckLogin.m_nUserId,
-						CEmoji.parse(emoji))
-				);
+	} else {
+		for(String emoji : EMOJI_LIST) {
+			sbResult.append(
+					String.format("<span class=\"ResEmojiBtn\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</span>",
+							cResults.m_nContentId,
+							emoji,
+							cCheckLogin.m_nUserId,
+							CEmoji.parse(emoji))
+					);
+		}
 	}
 }
 %>
