@@ -69,7 +69,7 @@ public class UpdateC extends UpC {
 			ArrayList<String> lColumns = new ArrayList<String>();
 				lColumns.addAll(Arrays.asList(
 					"category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?",
-					"password=?", "list_id=?", "safe_filter=?", "tweet_when_published=?",
+					"password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?"
 					));
 
@@ -109,6 +109,7 @@ public class UpdateC extends UpC {
 				cState.setString(idx++, cParam.m_strPassword);
 				cState.setString(idx++, cParam.m_strListId);
 				cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
+				cState.setBoolean(idx++, cParam.m_bCheerNg);
 				cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
 				cState.setBoolean(idx++, cParam.m_bNotRecently);
 				cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);

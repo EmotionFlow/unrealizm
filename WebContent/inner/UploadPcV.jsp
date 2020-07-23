@@ -28,7 +28,7 @@ try {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-20.js" type="text/javascript"></script>
+		<script src="/js/upload-21.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -268,6 +268,16 @@ try {
 								<span class="EditTimeLimitedPcTo">〜</span>
 								<input id="EditTimeLimitedEnd" class="EditTimeLimitedPc" type="text" maxlength="15" />
 							<%}%>
+						</div>
+					</div>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" />
+							<label class="onoffswitch-label" for="OptionCheerNg">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
 						</div>
 					</div>
 					<div class="OptionItem">

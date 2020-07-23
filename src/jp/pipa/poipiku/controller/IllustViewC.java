@@ -51,13 +51,14 @@ public class IllustViewC {
 	public boolean m_bBlocked = false;
 	public int m_nContentsNumTotal = 0;
 	public Integer m_nNewContentId = null;
+	public boolean m_bCheerNg = false;
 	public boolean getResults(CheckLogin cCheckLogin) {
-		String strSql = "";
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
+		String strSql = "";
 
 		try {
 			Class.forName("org.postgresql.Driver");

@@ -1,7 +1,7 @@
 java -jar ./closure-compiler-v20181125.jar --js ./js/common-40.js --js_output_file ../WebContent/js/common-40.js
 #java -jar ./closure-compiler-v20181125.jar --js ./js/commonPc-03.js --js_output_file ../WebContent/js/commonPc-03.js
-java -jar ./closure-compiler-v20181125.jar --js ./js/upload-20.js --js_output_file ../WebContent/js/upload-20.js
-java -jar ./closure-compiler-v20181125.jar --js ./js/update-02.js --js_output_file ../WebContent/js/update-02.js
+java -jar ./closure-compiler-v20181125.jar --js ./js/upload-21.js --js_output_file ../WebContent/js/upload-21.js
+java -jar ./closure-compiler-v20181125.jar --js ./js/update-03.js --js_output_file ../WebContent/js/update-03.js
 
 #for file in $( ls ./js | grep .js$ ); do
 #echo "${file}"

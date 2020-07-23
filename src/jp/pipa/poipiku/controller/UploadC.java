@@ -13,7 +13,7 @@ import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
 public class UploadC extends UpC {
-    protected int m_nContentId = -99;
+	protected int m_nContentId = -99;
 	public int GetResults(UploadCParam cParam) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -29,7 +29,7 @@ public class UploadC extends UpC {
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<String>();
-			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "tweet_when_published", "limited_time_publish"));
+			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
 
 			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
@@ -58,6 +58,7 @@ public class UploadC extends UpC {
 			cState.setString(idx++, cParam.m_strListId);
 			cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
 			cState.setInt(idx++, cParam.m_nEditorId);
+			cState.setBoolean(idx++, cParam.m_bCheerNg);
 			cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
 			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
@@ -77,7 +78,7 @@ public class UploadC extends UpC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-            AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn, cState);
+			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn, cState);
 
 		} catch(Exception e) {
 			Log.d(strSql);
@@ -88,5 +89,5 @@ public class UploadC extends UpC {
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 		return m_nContentId;
-    }
+	}
 }

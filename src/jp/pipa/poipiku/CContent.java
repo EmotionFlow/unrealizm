@@ -35,6 +35,7 @@ public class CContent {
 	public int m_nTweetWhenPublished = 0;
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
+	public boolean m_bCheerNg = false;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
@@ -64,6 +65,7 @@ public class CContent {
 		m_strPassword		= Common.ToString(resultSet.getString("password"));
 		m_strTweetId		= Common.ToString(resultSet.getString("tweet_id"));
 		m_nTweetWhenPublished=resultSet.getInt("tweet_when_published");
+		m_bCheerNg			= resultSet.getBoolean("cheer_ng");
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {

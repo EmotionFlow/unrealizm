@@ -18,6 +18,8 @@ class GetEmojiListC {
 		}
 	}
 
+	public boolean m_bCheerNG = false;
+
 	public String[] getResults(CheckLogin cCheckLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
 		if(m_nCategoryId!=Emoji.EMOJI_CAT_POPULAR && (m_nCategoryId!=Emoji.EMOJI_CAT_RECENT || !cCheckLogin.m_bLogin)) return EMOJI_LIST;
@@ -32,6 +34,18 @@ class GetEmojiListC {
 			Class.forName("org.postgresql.Driver");
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
+
+			if(cCheckLogin.m_bLogin && m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
+				strSql = "SELECT cheer_ng FROM contents_0000 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nContentId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					m_bCheerNG = cResSet.getBoolean("cheer_ng");
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
 
 			// Follow
 			ArrayList<String> vEmoji = new ArrayList<String>();
@@ -64,6 +78,8 @@ if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
 } else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.NeedLogin")));
+} else if(cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER && cResults.m_bCheerNG) {
+	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.Ng")));
 } else {
 	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
 	if(Emoji.EMOJI_EVENT) {

@@ -47,8 +47,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-20.js" type="text/javascript"></script>
-		<script src="/js/update-02.js" type="text/javascript"></script>
+		<script src="/js/upload-21.js" type="text/javascript"></script>
+		<script src="/js/update-03.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -67,7 +67,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%if(nEditorId==1){%>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui.js"></script>
-	    <script type="text/javascript">
+			<script type="text/javascript">
 		$(function(){
 			$(".qq-upload-list-selector.qq-upload-list").sortable({
 				placeholder: 'placeholder',
@@ -191,7 +191,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%if(nEditorId==0){%>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui.js"></script>
-	    <script type="text/javascript">
+			<script type="text/javascript">
 		$(function(){
 			$(".qq-upload-list-selector.qq-upload-list").sortable({
 				placeholder: 'placeholder',
@@ -378,6 +378,16 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							initEndDatetime("<%=strEndDateTime%>");
 						</script>
 						<%}%>
+					</div>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" <%if(cResults.m_cContent.m_bCheerNg){%>checked<%}%> />
+							<label class="onoffswitch-label" for="OptionCheerNg">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
 					</div>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
