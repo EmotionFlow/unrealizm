@@ -15,7 +15,6 @@ if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 DataSource dsPostgres = null;
 Connection cConn = null;
 PreparedStatement cState = null;
-ResultSet cResSet = null;
 String strSql = "";
 int nRtn = 0;
 
@@ -27,7 +26,6 @@ try {
 	cState = cConn.prepareStatement(strSql);
 	cState.setInt(1, cCheckLogin.m_nUserId);
 	cState.setInt(2, Common.TWITTER_PROVIDER_ID);
-	cResSet = cState.executeQuery();
 	cState.executeUpdate(strSql);
 	cState.close();cState=null;
 
