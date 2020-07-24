@@ -20,13 +20,21 @@ class GetEmojiListC {
 
 	public boolean m_bCheerNG = false;
 
+	/*
+	              RECENT POPULAR OYATSU OTHER CHEER
+    notLogin     []       vEmoji  static static []
+    Login        vEmoji   vEmoji  static static static
+	 */
 	public String[] getResults(CheckLogin cCheckLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
-		if(m_nCategoryId!=Emoji.EMOJI_CAT_POPULAR
-				&& m_nCategoryId!=Emoji.EMOJI_CAT_CHEER
-				&& (m_nCategoryId!=Emoji.EMOJI_CAT_RECENT || !cCheckLogin.m_bLogin)) return EMOJI_LIST;
 
-		if(m_nCategoryId!=Emoji.EMOJI_CAT_CHEER && !cCheckLogin.m_bLogin) return EMOJI_LIST;
+		if(!(m_nCategoryId==Emoji.EMOJI_CAT_RECENT || m_nCategoryId==Emoji.EMOJI_CAT_POPULAR || m_nCategoryId==Emoji.EMOJI_CAT_CHEER)){
+			return EMOJI_LIST;
+		}
+
+		if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT && !cCheckLogin.m_bLogin){
+			return EMOJI_LIST;
+		}
 
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -40,15 +48,19 @@ class GetEmojiListC {
 			cConn = dsPostgres.getConnection();
 
 			if(m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
-				strSql = "SELECT cheer_ng FROM contents_0000 WHERE content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nContentId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					m_bCheerNG = cResSet.getBoolean("cheer_ng");
+				if(cCheckLogin.m_bLogin){
+					strSql = "SELECT cheer_ng FROM contents_0000 WHERE content_id=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, m_nContentId);
+					cResSet = cState.executeQuery();
+					if(cResSet.next()) {
+						m_bCheerNG = cResSet.getBoolean("cheer_ng");
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				} else {
+					m_bCheerNG = true;
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
 			} else {
 				// Follow
 				ArrayList<String> vEmoji;
