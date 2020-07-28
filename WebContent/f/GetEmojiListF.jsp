@@ -20,9 +20,21 @@ class GetEmojiListC {
 
 	public boolean m_bCheerNG = false;
 
+	/*
+	              RECENT POPULAR OYATSU OTHER CHEER
+    notLogin     []       vEmoji  static static []
+    Login        vEmoji   vEmoji  static static static
+	 */
 	public String[] getResults(CheckLogin cCheckLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
-		if(m_nCategoryId!=Emoji.EMOJI_CAT_POPULAR && m_nCategoryId!=Emoji.EMOJI_CAT_CHEER && (m_nCategoryId!=Emoji.EMOJI_CAT_RECENT || !cCheckLogin.m_bLogin)) return EMOJI_LIST;
+
+		if(!(m_nCategoryId==Emoji.EMOJI_CAT_RECENT || m_nCategoryId==Emoji.EMOJI_CAT_POPULAR || m_nCategoryId==Emoji.EMOJI_CAT_CHEER)){
+			return EMOJI_LIST;
+		}
+
+		if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT && !cCheckLogin.m_bLogin){
+			return EMOJI_LIST;
+		}
 
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -35,26 +47,30 @@ class GetEmojiListC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			if(cCheckLogin.m_bLogin && m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
-				strSql = "SELECT cheer_ng FROM contents_0000 WHERE content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nContentId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					m_bCheerNG = cResSet.getBoolean("cheer_ng");
+			if(m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
+				if(cCheckLogin.m_bLogin){
+					strSql = "SELECT cheer_ng FROM contents_0000 WHERE content_id=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, m_nContentId);
+					cResSet = cState.executeQuery();
+					if(cResSet.next()) {
+						m_bCheerNG = cResSet.getBoolean("cheer_ng");
+					}
+					cResSet.close();cResSet=null;
+					cState.close();cState=null;
+				} else {
+					m_bCheerNG = true;
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-			}
-
-			// Follow
-			ArrayList<String> vEmoji = new ArrayList<String>();
-			if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
-				vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 			} else {
-				vEmoji = Util.getDefaultEmoji(-1, Emoji.EMOJI_KEYBORD_MAX);
+				// Follow
+				ArrayList<String> vEmoji;
+				if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
+					vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+				} else {
+					vEmoji = Util.getDefaultEmoji(-1, Emoji.EMOJI_KEYBORD_MAX);
+				}
+				EMOJI_LIST = vEmoji.toArray(new String[vEmoji.size()]);
 			}
-			EMOJI_LIST = vEmoji.toArray(new String[vEmoji.size()]);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
