@@ -235,6 +235,7 @@
             "userId": nUserId,
         };
 
+        <%if(cCheckLogin.m_bLogin){%>
         let cardInfo = {
             "number": null,
             "expire": null,
@@ -247,12 +248,14 @@
             console.log("決済処理中");
             return;
         }
+        <%}%>
 
         const emojiImgTag = $(elThis).children('img.Twemoji').prop('outerHTML');
 
         if(!$(elThis).parent().hasClass('Cheer')) {
             SendEmojiAjax(emojiInfo, null, null, null, null);
         } else {
+            <%if(cCheckLogin.m_bLogin){%>
             Swal.fire({
                 html: getAmountDlgHtml(emojiImgTag),
                 focusConfirm: false,
@@ -385,6 +388,7 @@
                     DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
                 });
             });
+            <%} //if(cCheckLogin.m_bLogin)%>
         }
         return false;
     }
