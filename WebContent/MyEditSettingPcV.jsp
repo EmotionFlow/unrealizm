@@ -56,7 +56,6 @@ MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
-MENU.put("RECEIVABLE_ACCOUNT", "受取口座");
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
@@ -208,7 +207,6 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 							"MAIL",
 							"PAYMENT",
 							"CHEER",
-							"RECEIVABLE_ACCOUNT",
 							"ACCOUNT",
 							"INFO"
 					}; %>
@@ -293,14 +291,6 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingCheerV.jsp"%>
-				</div>
-			</div>
-
-			<%strPageId = "RECEIVABLE_ACCOUNT";%>
-			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
-				<div class="SettingBody">
-					<%@include file="/inner/setting/MyEditSettingReceivableAccountV.jsp"%>
 				</div>
 			</div>
 
