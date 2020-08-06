@@ -34,6 +34,7 @@ public class MyEditSettingC {
 	public String m_strNewEmail = "";
 	public int m_nPublishedContentsTotal = 0;
 	public boolean m_bCardInfoExist = false;
+	public int m_nCheerPoint = 0;
 
 	public boolean GetResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -144,6 +145,18 @@ public class MyEditSettingC {
 				m_bCardInfoExist = true;
 			}else{
 				m_bCardInfoExist = false;
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			strSql = "SELECT sum(remaining_points) FROM cheer_points WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, checkLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				m_nCheerPoint = cResSet.getInt(1);
+			}else{
+				m_nCheerPoint = 0;
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

@@ -113,7 +113,7 @@
         <div class="SettingListTitle">現在のポチ袋ポイント</div>
         <div class="SettingBody">
             <p>
-                12,000ポイント（うち、2,000ポイントが今月末に失効します）
+                <%=String.format("%,d",cResults.m_nCheerPoint)%>ポイント
             </p>
             <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ReceiveCheerPoint()">
                 ポイントを指定口座に振り込む
