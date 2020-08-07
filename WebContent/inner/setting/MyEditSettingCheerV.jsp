@@ -17,7 +17,7 @@
 ` + '受取口座の指定' + `
 </h2>
 <div class="BankInfoInfo">
-	<p>日本国内の口座のみ指定いただけます</p>
+	<p>日本国内の銀行口座のみ指定いただけます</p>
 </div>
 <div class="BankInfoInputItem">
 	<div class="BankInfoInputLabel">金融機関コード</div>
@@ -56,7 +56,6 @@
         }
     }
 
-
     function ReceiveCheerPoint() {
         Swal.fire({
             html: getReceiveCheerPointDlgHtml(),
@@ -78,6 +77,7 @@
             },
             preConfirm: () => {
                 const formData = {
+                    'ID'  : <%=cCheckLogin.m_nUserId%>,
                     'FCD' : $("#FCD").val(),
                     'FNM' : $("#FNM").val(),
                     'FSUBCD' : $("#FSUBCD").val(),
@@ -101,26 +101,52 @@
                 return formData;
             },
         }).then( formData => {
-            // call api
+            if(formData.dismiss){
+                return false;
+            }
+
+            $.ajax({
+                "type": "post",
+                "data": formData.value,
+                "dataType": "json",
+                "url": "/f/RequestExchangeCheerPointF.jsp",
+            }).then(
+                data => {
+                    if(data.result===0){
+                        DispMsg("受け付けました");
+                    } else {
+                        DispMsg("エラーが発生しました");
+                    }
+                },
+                error => {
+                    DispMsg("エラーが発生しました");
+                }
+            )
         });
     }
 
 </script>
 
-
 <div class="SettingList">
     <div class="SettingListItem">
         <div class="SettingListTitle">現在のポチ袋ポイント</div>
         <div class="SettingBody">
-            <p>
+            <p style="text-align: center; font-size: 17px; margin-bottom: 8px;">
                 <%=String.format("%,d",cResults.m_nCheerPoint)%>ポイント
             </p>
+            <%if(cResults.m_bExchangeCheerPointRequested){%>
+                指定口座への振り込みを受付中です。
+            <%}else{%>
+            <%if(cResults.m_nCheerPoint>=400){%>
+            <div style="text-align: center">
             <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ReceiveCheerPoint()">
                 ポイントを指定口座に振り込む
             </a>
-            <p>
-                ポチ袋ポイントは、毎月X日に更新されます。
-            </p>
+            </div>
+            <%}else{%>
+                400ポイント以上たまると、指定口座に振り込むことができます。
+            <%}%>
+            <%}%>
         </div>
     </div>
 </div>

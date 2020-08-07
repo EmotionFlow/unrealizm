@@ -24,7 +24,16 @@ public class RequestExchangeCheerPointCParam {
 			m_strAccountCode 		= Common.TrimAll(cRequest.getParameter("ACCD"));
 			m_strAccountName 		= Common.TrimAll(cRequest.getParameter("ACNM"));
 		} catch(Exception e) {
+			e.printStackTrace();
 			m_nUserId = -1;
 		}
 	}
+
+	public String toString(){
+		return String.format("%d, %s, %s, %s, %d, %s, %s",
+				m_nUserId, m_strFinancialCode, m_strFinancialName,
+				m_strFinancialSubCode, m_nAccountType, m_strAccountCode,
+				m_strAccountName);
+	}
+
 }

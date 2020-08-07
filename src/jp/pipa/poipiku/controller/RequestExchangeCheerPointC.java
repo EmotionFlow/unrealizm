@@ -1,8 +1,6 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.settlement.Agent;
-import jp.pipa.poipiku.settlement.epsilon.User;
 import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
@@ -10,7 +8,6 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class RequestExchangeCheerPointC {
     public RequestExchangeCheerPointC(){}
@@ -22,7 +19,6 @@ public class RequestExchangeCheerPointC {
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
-		ArrayList<Integer> cardIds = new ArrayList<>();
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -33,7 +29,8 @@ public class RequestExchangeCheerPointC {
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
-			while(cResSet.next()){
+			if(cResSet.next()){
+				Log.d("すでに支払い待ちのレコードがあった");
 				return false;
 			}
 			cResSet.close();cResSet=null;
@@ -48,7 +45,8 @@ public class RequestExchangeCheerPointC {
 			while(cResSet.next()){
 				nTotalCheerPoint = cResSet.getInt(1);
 			}
-			if(nTotalCheerPoint>=0){
+			if(nTotalCheerPoint<=300){
+				Log.d("交換できるポイントがない");
 				return false;
 			}
 			cResSet.close();cResSet=null;
@@ -72,6 +70,8 @@ public class RequestExchangeCheerPointC {
 			cState.setInt(idx++, 0);
 			cState.executeUpdate();
 			cState.close();cState=null;
+
+			//TODO cheer_pointsの更新タイミングを考える。
 
 			bRtn = true;
 		} catch(Exception e) {
