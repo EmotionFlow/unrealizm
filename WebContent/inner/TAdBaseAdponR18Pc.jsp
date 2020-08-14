@@ -4,5 +4,6 @@
 <%{%>
 <%int nRand = (int)(Math.random()*10000);%>
 <div id="<%=nRand%>">
-<script src="//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91"></script></div>
+<script src="//ad.adpon.jp/fr.js?fid=d51a184f-369b-4f86-ad1b-f56a41adec5f"></script>
+</div>
 <%}%>

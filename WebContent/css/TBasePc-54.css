@@ -86,4 +86,4 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .AnalogicoInfo.Float .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 8px 0 0 0; min-width: 150px; padding: 1px 3px; max-width: 160px; overflow: hidden; white-space: nowrap;}
 
 /********** Ad **********/
-.FooterAd {text-align: center;background: #5bd; padding: 30px 0 0 0;}
+.FooterAd {display:flex; flex-flow: row nowrap; justify-content: space-around; background: #5bd; padding: 30px 0 0 0;}
