@@ -64,6 +64,7 @@ body {padding: 51px 0 0 0 !important;}
 .FooterMenu .MenuSep {display: block; float: left; width: 1px; height: 20px; margin: 10px 9px 20px 0; background-color: #ccc;}
 .FooterMenu .FooterMenuBtn {}
 .Footer .FooterLink dl {flex : 0 0 16.66%;}
+.FooterAd .PcSideBarAd {display: block; width: 300px; height: 250px; flex: 0 0 300px;}
 
 .TabMenu {max-width: 990px; overflow-x: auto;}
 .TabMenu .TabMenuItem {flex: 0 1 120px; font-size: 13px;}
