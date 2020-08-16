@@ -24,12 +24,12 @@ String strReturnUrl = "";
 if(Common.ToBoolean(request.getParameter("INQUIRY"))) {
 	strReturnUrl = request.getParameter("RET");
 	if(strReturnUrl==null || strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
-		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyIllustListV.jsp","UTF-8");;
+		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId,"UTF-8");;
 	} else {
 		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode(strReturnUrl,"UTF-8");
 	}
 } else {
-	strNextUrl = "/MyIllustListV.jsp";
+	strNextUrl = "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
 }
 
 %>
@@ -103,8 +103,6 @@ if(Common.ToBoolean(request.getParameter("INQUIRY"))) {
 		.AnalogicoInfo {display: none;}
 		.RegistItem {display: block; float: left; width: 100%;}
 		.LoginItem {display: none; float: left; width: 100%;}
-		.FooterMenu {display: none;}
-		.FooterMenuWrapper {display: none;}
 		</style>
 	</head>
 

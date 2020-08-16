@@ -22,13 +22,13 @@ if(nResult>0) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
-		<meta http-equiv="refresh" content="3;URL=/MyIllustListV.jsp" />
+		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>" />
 		<style>
 		.AnalogicoInfo {display: none;}
 		</style>
 		<script>
 		$(function(){
-			location.href = "/MyIllustListV.jsp";
+			location.href = "/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>";
 		});
 		</script>
 	</head>

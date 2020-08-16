@@ -31,48 +31,7 @@
 			<%}%>
 		</div>
 		<%if(!Util.isSmartPhone(request)) {%>
-		<nav class="GlobalLinkWrapper">
-			<ul class="GlobalLink">
-				<li><a id="MenuHotIllust" class="LinkItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
-				<li><a id="MenuHotTag" class="LinkItem" href="/PopularTagListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Tag")%></a></li>
-				<li><a id="MenuRandom" class="LinkItem" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a></li>
-				<li><a id="MenuRecent" class="LinkItem" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a></li>
-			</ul>
-		</nav>
-		<%}%>
-		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
-			<div class="HeaderSearch">
-				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Common.ToStringHtml(g_strSearchWord)%>" />
-				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
-					<i class="fas fa-search"></i>
-				</div>
-			</div>
-		</form>
-
-		<script>
-			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
-			$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
-		</script>
-
-		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
-			<%if(!cCheckLogin.m_bLogin) {%>
-			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitter.jsp">
-				<input id="login_from_twitter_tmenupc_callback_01" type="hidden" name="CBPATH" value=""/>
-				<script>{
-					let s = document.URL.split("/");
-					for(let i=0; i<3; i++){s.shift();}
-					$('#login_from_twitter_tmenupc_callback_01').val("/" + s.join("/"));
-				}</script>
-				<a class="BtnBase Rev HeaderLoginBtnPc LoginButton" href="javascript:login_from_twitter_tmenupc_01.submit()">
-					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
-				</a>
-			</form>
-			<%} else {%>
-			<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
-				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
-			</a>
 			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
@@ -87,6 +46,25 @@
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			</a>
+			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListV.jsp?ID="+<%=cCheckLogin.m_nUserId%>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
+			</a>
+		</nav>
+		<nav class="FooterMenu" style="float: right;">
+			<%if(!cCheckLogin.m_bLogin) {%>
+			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitter.jsp">
+				<input id="login_from_twitter_tmenupc_callback_01" type="hidden" name="CBPATH" value=""/>
+				<script>{
+					let s = document.URL.split("/");
+					for(let i=0; i<3; i++){s.shift();}
+					$('#login_from_twitter_tmenupc_callback_01').val("/" + s.join("/"));
+				}</script>
+				<a class="BtnBase Rev HeaderLoginBtnPc LoginButton" href="javascript:login_from_twitter_tmenupc_01.submit()">
+					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
+				</a>
+			</form>
+			<%} else {%>
 			<a id="MenuSettings" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
@@ -94,29 +72,43 @@
 			<%}%>
 		</nav>
 		<%}%>
+		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
+			<div class="HeaderSearch">
+				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Common.ToStringHtml(g_strSearchWord)%>" />
+				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
+					<i class="fas fa-search"></i>
+				</div>
+			</div>
+		</form>
+
+		<script>
+			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
+			$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+		</script>
+
 	</div>
 </header>
 
-<%if(Util.isSmartPhone(request) && cCheckLogin.m_bLogin) {%>
+<%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
-		<a id="MenuMe" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyIllustListV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
-			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
-		</a>
-		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
+		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>
-		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
+		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 		</a>
-		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
+		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon">
 				<div id="InfoNumAct" class="InfoNum">0</div>
 			</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
+		</a>
+		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>
 	</nav>
 </div>

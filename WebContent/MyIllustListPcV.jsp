@@ -14,7 +14,7 @@ if(cResults.m_nUserId==-1) {
 cResults.m_bDispUnPublished = true;
 
 if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
-	response.sendRedirect("/NotFoundV.jsp");
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 

@@ -16,7 +16,7 @@ if(cResults.m_nUserId==-1) {
 		if(isApp){
 			response.sendRedirect("/StartPoipikuAppV.jsp");
 		} else {
-			response.sendRedirect("/StartPoipikuV.jsp");
+			getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 		}
 		return;
 	}

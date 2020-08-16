@@ -28,9 +28,9 @@ try{
 
 	if(callbackUri.isEmpty() || callbackUri.equals("/")){
 		if(Util.isSmartPhone(request)){
-			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyIllustListV.jsp";
+			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
 		}else{
-			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyIllustListPcV.jsp";
+			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
 		}
 	}else{
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;

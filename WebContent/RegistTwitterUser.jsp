@@ -27,7 +27,7 @@ if(nResult>0) {
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
-		<meta http-equiv="refresh" content="3;URL=/MyIllustListV.jsp" />
+		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>" />
 		<script>
 		$(function(){
 			sendObjectMessage("restart");
