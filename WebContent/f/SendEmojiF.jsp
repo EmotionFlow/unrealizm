@@ -65,7 +65,8 @@ class SendEmojiC {
 
 			// 投稿存在確認(不正アクセス対策)
 			CUser cTargUser = null;
-			strSql = "SELECT users_0000.* FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND content_id=?";
+			Integer nContentUserId = null;
+			strSql = "SELECT u.user_id, u.lang_id, u.ng_reaction, c.user_id content_user_id FROM contents_0000 AS c INNER JOIN users_0000 AS u ON c.user_id=u.user_id WHERE open_id<>2 AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nContentId);
 			cResSet = cState.executeQuery();
@@ -74,6 +75,7 @@ class SendEmojiC {
 				cTargUser.m_nUserId = cResSet.getInt("user_id");
 				cTargUser.m_nLangId = cResSet.getInt("lang_id");
 				cTargUser.m_nReaction = cResSet.getInt("ng_reaction");
+				nContentUserId = cResSet.getInt("content_user_id");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -118,10 +120,11 @@ class SendEmojiC {
 						" customer_id, seller_id, status, payment_total)" +
 						" VALUES (?, ?, ?, ?)";
 				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
-				cState.setInt(1, m_nUserId);
-				cState.setInt(2, 2); // 売り手はポイピク公式
-				cState.setInt(3, COrder.STATUS_INIT);
-				cState.setInt(4, m_nAmount);
+				int idx=1;
+				cState.setInt(idx++, m_nUserId);
+				cState.setInt(idx++, 2); // 売り手はポイピク公式
+				cState.setInt(idx++, COrder.STATUS_INIT);
+				cState.setInt(idx++, m_nAmount);
 				cState.executeUpdate();
 				cResSet = cState.getGeneratedKeys();
 				if(cResSet.next()){
@@ -132,15 +135,17 @@ class SendEmojiC {
 				cState.close(); cState=null;
 
 				strSql = "INSERT INTO order_details(" +
-						" order_id, content_id, product_name, list_price, amount_paid, quantity)" +
-						" VALUES (?, ?, ?, ?, ?, ?)";
+						" order_id, content_id, content_user_id, product_name, list_price, amount_paid, quantity)" +
+						" VALUES (?, ?, ?, ?, ?, ?, ?)";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, orderId);
-				cState.setInt(2, m_nContentId);
-				cState.setString(3, m_strEmoji);
-				cState.setInt(4, m_nAmount);
-				cState.setInt(5, m_nAmount);
-				cState.setInt(6, 1);
+				idx=1;
+				cState.setInt(idx++, orderId);
+				cState.setInt(idx++, m_nContentId);
+				cState.setInt(idx++, nContentUserId);
+				cState.setString(idx++, m_strEmoji);
+				cState.setInt(idx++, m_nAmount);
+				cState.setInt(idx++, m_nAmount);
+				cState.setInt(idx++, 1);
 				cState.executeUpdate();
 				cState.close(); cState=null;
 
@@ -160,9 +165,10 @@ class SendEmojiC {
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
-				cState.setString(2, authorizeResult? cardSettlement.getAgentOrderId():null);
-				cState.setInt(3, orderId);
+				idx=1;
+				cState.setInt(idx++, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
+				cState.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
+				cState.setInt(idx++, orderId);
 				cState.executeUpdate();
 				cState.close();cState=null;
 
@@ -183,17 +189,17 @@ class SendEmojiC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			/*
-			// 使ってないので一時的にコメントアウト
-			// update contents_0000 set contents_0000.comment_num=T1.comment_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
-			// update making comment num
-			strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
-			cState.setInt(2, m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
-			*/
+	/*
+	// 使ってないので一時的にコメントアウト
+	// update contents_0000 set contents_0000.comment_num=T1.comment_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
+	// update making comment num
+	strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, m_nContentId);
+	cState.setInt(2, m_nContentId);
+	cState.executeUpdate();
+	cState.close();cState=null;
+	*/
 
 			// update making comment num
 			// update contents_0000 set contents_0000.people_num=T1.people_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
@@ -207,10 +213,10 @@ class SendEmojiC {
 			bRtn = true; // 以下実行されなくてもOKを返す
 
 			// 通知
-			/*
-			// オンラインの場合は何もしない
-			if(CheckLogin.isOnline(cTargUser.m_nUserId)) return bRtn;
-			*/
+	/*
+	// オンラインの場合は何もしない
+	if(CheckLogin.isOnline(cTargUser.m_nUserId)) return bRtn;
+	*/
 
 			// 通知先デバイストークンの取得
 			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<CNotificationToken>();
