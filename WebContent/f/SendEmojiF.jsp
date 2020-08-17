@@ -136,7 +136,7 @@ class SendEmojiC {
 
 				strSql = "INSERT INTO order_details(" +
 						" order_id, content_id, content_user_id, product_name, list_price, amount_paid, quantity)" +
-						" VALUES (?, ?, ?, ?, ?, ?)";
+						" VALUES (?, ?, ?, ?, ?, ?, ?)";
 				cState = cConn.prepareStatement(strSql);
 				idx=1;
 				cState.setInt(idx++, orderId);
