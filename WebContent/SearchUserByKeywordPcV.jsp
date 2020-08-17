@@ -23,7 +23,7 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuNew').addClass('Selected');
 		});
 		</script>
 

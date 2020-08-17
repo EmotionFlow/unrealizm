@@ -3,7 +3,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 50px; border-bottom: solid 1px #ddd; text-align: center; padding: 0; background: #fff; z-index: 999; overflow: hidden;}
 #HeaderSlider {display: block; position: absolute; z-index: 1; width: 0; height: 2px; background-color: #5bd; top: 0; left: 0;}
 .HeaderWrapper {display:block; width: 100%;}
-.Header .HeaderTitle {display: block; margin: 0; padding: 0;}
+.Header .HeaderTitle {display: block; margin: 0; padding: 0; width: 52px; height: 34px;}
 .Header .HeaderTitleWrapper {display: block; max-width: 600px; margin: 0 auto; position: relative; padding: 10px 0 8px 0;}
 .Header .HeaderLink {display: block; padding: 0 10px;}
 .Header .HeaderLink .HeaderImg {display: block; height: 32px; padding: 0px 0 2px 0;}
@@ -19,30 +19,29 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Header .HeaderSearch .HeaderSearchBtn:hover {background-color: #fff; color: #5bd;}
 .FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ddd; background-color: #fff; z-index: 999; }
 .FooterMenu {width: 100%; display: flex; align-items: center; justify-content: center;  height: 50px; overflow: hidden; align-items: center;}
-.FooterMenu .FooterMenuItem {display: block; float: left; width: 90px; height: 50px; text-align: center; font-size: 0;}
-.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-05.png') no-repeat; background-size: 1600%; position: relative;}
+.FooterMenu .FooterMenuItem {display: block; float: left; width: 72px; height: 50px; text-align: center; font-size: 0;}
+.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-06.png') no-repeat; background-size: 600%; position: relative;}
 .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; min-width: 9px; padding: 0 3px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
 .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
 .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
 .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #5bd;}
 #DispMsg {top: 51px;padding: 40px 10px;}
-#MenuMe .FooterMenuItemIcon {background-position: 0 0;}
-#MenuHome .FooterMenuItemIcon {background-position: -56px 1px;}
-/*#MenuMe .FooterMenuItemIcon {background-position: -364px 0;}*/
-#MenuSearch .FooterMenuItemIcon {background-position: -56px 0;}
-#MenuUpload .FooterMenuItemIcon {background-position: -28px 0;}
-#MenuAct .FooterMenuItemIcon {background-position: -392px 0;}
-#MenuSettings .FooterMenuItemIcon {background-position: -421px 0;}
-#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: 0 -28px;}
-/*#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -364px -28px;}*/
-#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: -56px -27px;}
-#MenuSearch.Selected .FooterMenuItemIcon, #MenuSearch:hover .FooterMenuItemIcon {background-position: -56px -28px;}
-#MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -28px -28px;}
-#MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -392px -28px;}
-#MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background-position: -421px -28px;}
+#MenuHome .FooterMenuItemIcon {background-position: 0 0;}
+#MenuSearch .FooterMenuItemIcon {background-position: -28px 0;}
+#MenuNew .FooterMenuItemIcon {background-position: -28px 0;}
+#MenuUpload .FooterMenuItemIcon {background-position: -56px 0;}
+#MenuAct .FooterMenuItemIcon {background-position: -84px 0;}
+#MenuMe .FooterMenuItemIcon {background-position: -112px 0;}
+#MenuSettings .FooterMenuItemIcon {background-position: -140px 0;}
+#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: 0 -28px;}
+#MenuNew.Selected .FooterMenuItemIcon, #MenuNew:hover .FooterMenuItemIcon {background-position: -28px -28px;}
+#MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -56px -28px;}
+#MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -84px -28px;}
+#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -112px -28px;}
+#MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background-position: -140px -28px;}
 
 #MenuSettings {top: 5px; right: 9px; display: block;}
-#MenuSettings .MenuSettingsIcon{ background: url(/img/menu_pc-05.png); background-size: 1500%; background-repeat: no-repeat; background-position: -395px -28px; top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
+#MenuSettings .MenuSettingsIcon{ background: url(/img/menu_pc-06.png); background-size: 1500%; background-repeat: no-repeat; background-position: -395px -28px; top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
 #MenuSettings .MenuSettingsName{ display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #5bd;}
 
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}
@@ -62,8 +61,8 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 
 .TabMenuWrapper {display: block; width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 999; width: 100%;top: 51px;}
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; margin: 0 auto; background: #fff; overflow-x: scroll; padding: 0; list-style: none;}
-.TabMenu li {display: block; flex: 1 1; }
-.TabMenu .TabMenuItem {display: block; height: 24px; line-height: 29px; border-bottom: solid 2px #fff; text-align: center; color: #5bd; margin: 0 0 5px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
+.TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
+.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #5bd; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
 .TabMenu .TabMenuItem.Selected {border-color: #5bd;}
 
 /********** AnalogicoInfo *********/

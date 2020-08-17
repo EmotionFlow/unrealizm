@@ -124,7 +124,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 		<script type="text/javascript">
 			$(function(){
-				$('#MenuSearch').addClass('Selected');
+				$('#MenuNew').addClass('Selected');
 			});
 		</script>
 

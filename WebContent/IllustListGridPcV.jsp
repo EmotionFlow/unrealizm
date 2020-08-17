@@ -40,7 +40,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%if(cResults.m_bOwner) {%>
 			$('#MenuMe').addClass('Selected');
 			<%} else {%>
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuNew').addClass('Selected');
 			<%}%>
 			updateCategoryMenuPos(0);
 		});

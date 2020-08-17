@@ -32,15 +32,19 @@
 		</div>
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
-			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp">
+			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 			</a>
-			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp">
+			<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
+			</a>
+			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 			</a>
-			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp">
+			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon">
 					<div id="InfoNumAct" class="InfoNum">0</div>
 				</span>
@@ -95,6 +99,10 @@
 		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
+		</a>
+		<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
 		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>

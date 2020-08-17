@@ -44,7 +44,7 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 			<%if(cResults.m_bOwner) {%>
 			$('#MenuMe').addClass('Selected');
 			<%} else {%>
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuNew').addClass('Selected');
 			<%}%>
 		});
 

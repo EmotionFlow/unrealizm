@@ -38,7 +38,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuNew').addClass('Selected');
 			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
 			$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
 		});

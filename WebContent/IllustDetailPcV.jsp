@@ -22,7 +22,7 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuSearch').addClass('Selected');
+			$('#MenuNew').addClass('Selected');
 		});
 		</script>
 
