@@ -4,29 +4,33 @@
 <%if(Util.isSmartPhone(request)) {%>
 <div class="SideBarMid">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-	<script type="text/javascript">
-	google_ad_client = "ca-pub-2810565410663306";
-	/* adx_poipikumobile_336x280_mid */
-	google_ad_slot = "adx_poipikumobile_336x280_mid";
-	google_ad_width = 336;
-	google_ad_height = 280;
-	</script>
-	<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-	</script>
+	<!-- /4789880/poipiku/poipikumobile_336x280_mid -->
+	<%int nRand = (int)(Math.random()*10000);%>
+	<div id='div-gpt-ad-1592939682472-<%=nRand%>'>
+		<script>
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592939682472-<%=nRand%>').addService(googletag.pubads());
+			googletag.enableServices();
+			googletag.display('div-gpt-ad-1592939682472-<%=nRand%>');
+		});
+		</script>
+	</div>
 	<%}else{%>
 	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
 	<%}%>
 </div>
 <%} else {%>
 <div class="SideBarMid">
-	<script type="text/javascript">
-	google_ad_client = "ca-pub-2810565410663306";
-	/* adx_poipiku_468x60_mid */
-	google_ad_slot = "adx_poipiku_468x60_mid";
-	google_ad_width = 468;
-	google_ad_height = 60;
-	</script>
-	<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-	</script>
+	<!-- /4789880/poipiku/poipiku_468x60_mid -->
+	<%int nRand = (int)(Math.random()*10000);%>
+	<div id='div-gpt-ad-1593015647932-<%=nRand%>' style='width: 468px; height: 60px;'>
+		<script>
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/4789880/poipiku/poipiku_468x60_mid', [468, 60], 'div-gpt-ad-1593015647932-<%=nRand%>').addService(googletag.pubads());
+			googletag.enableServices();
+			googletag.display('div-gpt-ad-1593015647932-<%=nRand%>');
+		});
+		</script>
+	</div>
 </div>
 <%}%>
