@@ -103,11 +103,13 @@
 }
 
 .FooterAd .SideBarMid {
-	display: block;
+	display: flex;
 	width: 336px;
 	height: 280px;
 	flex: 0 0 336px;
 	text-align: center;
+	justify-content: center;
+	align-items: center;
 }
 
 .SideBarBottom {
@@ -201,7 +203,7 @@
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	padding-bottom: 70px;
+	padding-bottom: 0px;
 }
 
 /********** ILLUST LIST **********/

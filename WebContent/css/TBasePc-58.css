@@ -41,7 +41,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 #MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background-position: -140px -28px;}
 
 #MenuSettings {top: 5px; right: 9px; display: block;}
-#MenuSettings .MenuSettingsIcon{ background: url(/img/menu_pc-06.png); background-size: 1500%; background-repeat: no-repeat; background-position: -395px -28px; top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
+#MenuSettings .MenuSettingsIcon{ background: url(/img/menu_pc-06.png); background-size: 600%; background-repeat: no-repeat; background-position: -140px -28px; top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
 #MenuSettings .MenuSettingsName{ display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #5bd;}
 
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}

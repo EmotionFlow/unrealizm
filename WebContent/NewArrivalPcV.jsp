@@ -62,7 +62,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
-					<%if(nCnt==14 && nCnt==29){%>
+					<%if(nCnt==14 || nCnt==29){%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
 				<%}%>
