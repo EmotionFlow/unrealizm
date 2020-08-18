@@ -155,6 +155,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					<%@ include file="/inner/TAdPc336x280_right_top.jsp"%>
 					<%}%>
 				<%}%>
+				<%@ include file="/inner/TAd336x280_mid.jsp"%>
 			</section>
 		</article>
 

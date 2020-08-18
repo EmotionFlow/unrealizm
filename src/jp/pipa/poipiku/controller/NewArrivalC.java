@@ -25,7 +25,7 @@ public class NewArrivalC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 36;
+	public int SELECT_MAX_GALLERY = 15;
 	//public int SELECT_MAX_DATE = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;

@@ -213,7 +213,7 @@ int nRnd = (int)(Math.random()*2);
 
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+						<%@ include file="/inner/TAdPc300x600_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>

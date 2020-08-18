@@ -14,7 +14,7 @@ public class NewArrivalC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 36;
+	public int SELECT_MAX_GALLERY = 15;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
@@ -113,7 +113,5 @@ boolean bRtn = cResults.getResults(cCheckLogin, true);
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
 	<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
-	<%if(nCnt==17) {%>
-	<%@ include file="/inner/TAd336x280_mid.jsp"%>
-	<%}%>
 <%}%>
+<%@ include file="/inner/TAd336x280_mid.jsp"%>

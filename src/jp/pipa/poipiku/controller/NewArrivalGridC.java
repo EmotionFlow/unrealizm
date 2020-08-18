@@ -27,8 +27,7 @@ public class NewArrivalGridC {
 	}
 
 
-	final public int SELECT_MAX_GALLERY = 17;
-	// public int SELECT_MAX_DATE = 30;
+	final public int SELECT_MAX_GALLERY = 10;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
