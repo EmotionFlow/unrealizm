@@ -13,21 +13,19 @@ import jp.pipa.poipiku.util.*;
 public class NewArrivalGridC {
 
 	public int m_nCategoryId = 0;
-	public int m_nMode = 0;
-	public int m_nStartId = -1;
+	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nCategoryId = Common.ToInt(cRequest.getParameter("CD"));
-			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
-			m_nStartId = Common.ToInt(cRequest.getParameter("SD"));
+			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
 			;
 		}
 	}
 
 
-	final public int SELECT_MAX_GALLERY = 10;
+	public int SELECT_MAX_GALLERY = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
@@ -48,7 +46,6 @@ public class NewArrivalGridC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			String strCondStart = (m_nStartId>0)?" AND content_id<?":"";
 			String strCondCat = (m_nCategoryId>=0)?" AND category_id=?":"";
 
 			String strMuteKeyword = "";
@@ -71,28 +68,6 @@ public class NewArrivalGridC {
 			// NEW ARRIVAL
 			if(!bContentOnly) {
 				m_nContentsNum = 9999;
-				/*
-				if(m_nCategoryId>=0) {
-					strSql = String.format("SELECT count(*) FROM contents_0000 WHERE open_i==0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s", strCondCat, strCond);
-					cState = cConn.prepareStatement(strSql);
-					idx = 1;
-					cState.setInt(idx++, cCheckLogin.m_nUserId);
-					cState.setInt(idx++, cCheckLogin.m_nUserId);
-					cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-					cState.setInt(idx++, m_nCategoryId);
-					if(!strMuteKeyword.isEmpty()) {
-						cState.setString(idx++, strMuteKeyword);
-					}
-					cResSet = cState.executeQuery();
-					if (cResSet.next()) {
-						m_nContentsNum = cResSet.getInt(1);
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-				} else {
-					m_nContentsNum = 9999;
-				}
-				*/
 			}
 
 			StringBuilder sb = new StringBuilder();
@@ -110,9 +85,6 @@ public class NewArrivalGridC {
 			if(cCheckLogin.m_bLogin){
 				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
 			}
-			if(!strCondStart.isEmpty()){
-				sb.append(strCondStart);
-			}
 			if(!strCondCat.isEmpty()){
 				sb.append(strCondCat);
 			}
@@ -120,7 +92,7 @@ public class NewArrivalGridC {
 				sb.append(strCondMute);
 			}
 			sb.append(" AND safe_filter<=?");
-			sb.append(" ORDER BY content_id DESC LIMIT ?");
+			sb.append(" ORDER BY content_id DESC NULLS LAST OFFSET ? LIMIT ?");
 			strSql = new String(sb);
 
 			cState = cConn.prepareStatement(strSql);
@@ -130,9 +102,6 @@ public class NewArrivalGridC {
 				cState.setInt(idx++, cCheckLogin.m_nUserId); // user_id=?
 				cState.setInt(idx++, cCheckLogin.m_nUserId); // block_user_id=?
 			}
-			if(!strCondStart.isEmpty()){
-				cState.setInt(idx++, m_nStartId); // content_id<?
-			}
 			if(!strCondCat.isEmpty()){
 				cState.setInt(idx++, m_nCategoryId); // AND category_id=?
 			}
@@ -140,6 +109,7 @@ public class NewArrivalGridC {
 				cState.setString(idx++, strMuteKeyword);
 			}
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
+			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
@@ -149,13 +119,13 @@ public class NewArrivalGridC {
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
-				m_nEndId = cContent.m_nContentId;
+				m_nEndId = cContent.m_nContentId-1;
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			bResult = true;	// 以下エラーが有ってもOK.表示は行う
+			bResult = true;
 
 			// Each Comment
 			GridUtil.getEachComment(cConn, m_vContentList);

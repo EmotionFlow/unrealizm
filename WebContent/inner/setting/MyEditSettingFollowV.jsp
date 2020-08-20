@@ -1,3 +1,4 @@
+<%@page import="jp.pipa.poipiku.controller.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 FollowListC cFollowListResults = new FollowListC();
@@ -50,6 +51,6 @@ cFollowListResults.getResults(cCheckLogin);
 	</div>
 
 	<nav id="FollowListPageBar" class="PageBar">
-		<%=CPageBar.CreatePageBar(null, null, cFollowListResults.m_nPage, cFollowListResults.m_nContentsNum, cFollowListResults.SELECT_MAX_GALLERY)%>
+		<%=CPageBar.CreatePageBarSp(null, null, cFollowListResults.m_nPage, cFollowListResults.m_nContentsNum, cFollowListResults.SELECT_MAX_GALLERY)%>
 	</nav>
 </div>

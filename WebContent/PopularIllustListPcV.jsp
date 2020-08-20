@@ -58,7 +58,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBar("/PopularIllustListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/PopularIllustListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 

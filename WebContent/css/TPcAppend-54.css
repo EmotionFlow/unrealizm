@@ -74,6 +74,9 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: none; width: 300px; height: 250px; background-color: #eee;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: absolute; bottom: 0;}
 
+
+.PageBar .PageBarItemFrame {display: inline-block; width: 9.0%; text-align: center; font-size: 0;}
+
 /********** AnalogicoInfo Float *********/
 .AnalogicoInfo.Float {bottom: 0; padding: 5px 0; position: static; border: none;}
 .AnalogicoInfo.Float .AnalogicoInfoTitle {font-size: 12px;}

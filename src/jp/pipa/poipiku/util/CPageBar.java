@@ -1,10 +1,15 @@
 package jp.pipa.poipiku.util;
 
 public class CPageBar {
-	static final int PAGE_BAR_NUM = 2;
+	static final int PAGE_BAR_NUM_SP = 2;
+	static final int PAGE_BAR_NUM_PC = 4;
 
-	public static String CreatePageBar(String strPageName, String strOption, int nPageNum, int nContentsNum, int SELECT_MAX) {
-		return CreatePageBar(strPageName, strOption, nPageNum, nContentsNum, SELECT_MAX, PAGE_BAR_NUM);
+	public static String CreatePageBarSp(String strPageName, String strOption, int nPageNum, int nContentsNum, int SELECT_MAX) {
+		return CreatePageBar(strPageName, strOption, nPageNum, nContentsNum, SELECT_MAX, PAGE_BAR_NUM_SP);
+	}
+
+	public static String CreatePageBarPc(String strPageName, String strOption, int nPageNum, int nContentsNum, int SELECT_MAX) {
+		return CreatePageBar(strPageName, strOption, nPageNum, nContentsNum, SELECT_MAX, PAGE_BAR_NUM_PC);
 	}
 
 	public static String CreatePageBar(String strPageName, String strOption, int nPageNum, int nContentsNum, int SELECT_MAX, int nPageBarNum) {

@@ -26,7 +26,6 @@ public class NewArrivalC {
 
 
 	public int SELECT_MAX_GALLERY = 15;
-	//public int SELECT_MAX_DATE = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
@@ -69,28 +68,6 @@ public class NewArrivalC {
 			// NEW ARRIVAL
 			if(!bContentOnly) {
 				m_nContentsNum = 9999;
-				/*
-				if(m_nCategoryId>=0) {
-					strSql = String.format("SELECT count(*) FROM contents_0000 WHERE open_id==0 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? %s %s", strCondCat, strCond);
-					cState = cConn.prepareStatement(strSql);
-					idx = 1;
-					cState.setInt(idx++, cCheckLogin.m_nUserId);
-					cState.setInt(idx++, cCheckLogin.m_nUserId);
-					cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-					cState.setInt(idx++, m_nCategoryId);
-					if(!strMuteKeyword.isEmpty()) {
-						cState.setString(idx++, strMuteKeyword);
-					}
-					cResSet = cState.executeQuery();
-					if (cResSet.next()) {
-						m_nContentsNum = cResSet.getInt(1);
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-				} else {
-					m_nContentsNum = 9999;
-				}
-				*/
 			}
 
 			StringBuilder sb = new StringBuilder();

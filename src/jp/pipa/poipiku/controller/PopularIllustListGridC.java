@@ -11,29 +11,27 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public class PopularIllustListGridC {
-	public int m_nAccessUserId = -1;
+
 	public int m_nPage = 0;
-	public int m_nMode = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
-			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
 		} catch(Exception e) {
 			;
 		}
 	}
 
-	public int SELECT_MAX_GALLERY = 17;
+
+	public int SELECT_MAX_GALLERY = 30;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
-
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
 	}
 
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
-		boolean bRtn = false;
+		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -44,7 +42,6 @@ public class PopularIllustListGridC {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-
 
 			/*
 			String strMuteKeyword = "";
@@ -124,7 +121,6 @@ public class PopularIllustListGridC {
 			}
 			sb.append(" AND safe_filter<=?");
 			sb.append(" ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?");
-
 			strSql = new String(sb);
 
 			cState = cConn.prepareStatement(strSql);
@@ -155,7 +151,7 @@ public class PopularIllustListGridC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
+			bResult = true;
 
 			// Each Comment
 			GridUtil.getEachComment(cConn, m_vContentList);
@@ -171,6 +167,6 @@ public class PopularIllustListGridC {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-		return bRtn;
+		return bResult;
 	}
 }
