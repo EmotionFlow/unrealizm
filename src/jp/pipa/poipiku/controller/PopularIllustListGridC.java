@@ -23,7 +23,7 @@ public class PopularIllustListGridC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 30;
+	public int SELECT_MAX_GALLERY = 24;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 	public boolean getResults(CheckLogin cCheckLogin) {

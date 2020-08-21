@@ -15,7 +15,6 @@ public class IllustListGridC {
 	public String m_strKeyword = "";
 	public int m_nPage = 0;
 	public String m_strAccessIp = "";
-	public int m_nMode = 0;
 	public boolean m_bDispUnPublished = false;
 
 	public void getParam(HttpServletRequest cRequest) {
@@ -26,7 +25,6 @@ public class IllustListGridC {
 			m_strKeyword	= Common.TrimAll(Common.CrLfInjection(cRequest.getParameter("KWD")));
 			m_nPage			= Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
 			m_strAccessIp	= cRequest.getRemoteAddr();
-			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
@@ -35,7 +33,7 @@ public class IllustListGridC {
 	public CUser m_cUser = new CUser();
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public ArrayList<CTag> m_vCategoryList = new ArrayList<CTag>();
-	public int SELECT_MAX_GALLERY = 17;
+	public int SELECT_MAX_GALLERY = 24;
 	public boolean m_bOwner = false;
 	public boolean m_bFollow = false;
 	public boolean m_bBlocking = false;

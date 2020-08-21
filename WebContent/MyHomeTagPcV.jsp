@@ -4,17 +4,12 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-if(!bSmartPhone) {
-	//getServletContext().getRequestDispatcher("/MyHomeTagGridPcV.jsp").forward(request,response);
-	//return;
-}
-
 if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 
-MyHomeTagC cResults = new MyHomeTagC();
+MyHomeTagPcC cResults = new MyHomeTagPcC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
@@ -23,6 +18,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
@@ -36,38 +32,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 
 		<script>
-		var g_nEndId = <%=cResults.m_nEndId%>;
-		var g_bAdding = false;
-		function addContents() {
-			if(g_bAdding) return;
-			g_bAdding = true;
-			var $objMessage = $("<div/>").addClass("Waiting");
-			$("#IllustItemList").append($objMessage);
-			$.ajax({
-				"type": "post",
-				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_PC%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
-				"dataType": "json",
-				"url": "/f/MyHomeTagF.jsp",
-				"success": function(data) {
-					if(data.end_id>0) {
-						g_nEndId = data.end_id;
-						$("#IllustItemList").append(data.html);
-						$(".Waiting").remove();
-						if(vg)vg.vgrefresh();
-						g_bAdding = false;
-						console.log(location.pathname+'/'+g_nEndId+'.html');
-						gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nEndId+'.html'});
-					} else {
-						$(window).unbind("scroll.addContents");
-					}
-					$(".Waiting").remove();
-				},
-				"error": function(req, stat, ex){
-					DispMsg('Connection error');
-				}
-			});
-		}
-
 		function UpdateFollow(nUserId, nFollowUserId) {
 			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 			$.ajaxSingle({
@@ -95,12 +59,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		$(function(){
 			$('body, .Wrapper').each(function(index, element){
 				$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
-			});
-			$(window).bind("scroll.addContents", function() {
-				$(window).height();
-				if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 600) {
-					addContents();
-				}
 			});
 		});
 		</script>
@@ -139,9 +97,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-					<%if(nCnt==4 && bSmartPhone) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+					<%if(nCnt==4 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==9 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
 			</section>
 
@@ -171,13 +128,20 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+						<%@ include file="/inner/TAdPc300x600_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>
 			<%}%>
-		</article>
 
-		<%@ include file="/inner/TFooterBase.jsp"%>
+			<nav class="PageBar">
+				<%if(bSmartPhone) {%>
+				<%=CPageBar.CreatePageBarSp("/MyHomeSpV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%}else{%>
+				<%=CPageBar.CreatePageBarPc("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%}%>
+			</nav>
+		</article>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

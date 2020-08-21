@@ -16,13 +16,14 @@ if(!bSmartPhone) {
 
 MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 36;
+cResults.SELECT_MAX_GALLERY = 45;
 boolean bRtn = cResults.getResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyBookmarkList.Title")%></title>
 
@@ -59,9 +60,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, _TEX)%>
-					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
 			</div>
 
@@ -70,6 +70,6 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</nav>
 		</article>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

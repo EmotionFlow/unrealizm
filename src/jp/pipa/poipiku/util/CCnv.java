@@ -21,14 +21,14 @@ public class CCnv {
 	public static final int SP_MODE_WVIEW = 0;
 	public static final int SP_MODE_APP = 1;
 
-	private static String getIllustListContext(int nMode, int nSpMode, CContent cContent){
+	private static String getIllustListContext(int nMode, int nSpMode, int nUserId){
 		String s = "";
 		if(nSpMode==SP_MODE_APP){
-			s = String.format("/IllustListAppV.jsp?ID=%d", cContent.m_nUserId);
+			s = String.format("/IllustListAppV.jsp?ID=%d", nUserId);
 		}else if(nMode==MODE_SP){
-			s = String.format("/IllustListPcV.jsp?ID=%d", cContent.m_nUserId);
+			s = String.format("/%d/", nUserId);
 		}else{
-			s = String.format("/%d/", cContent.m_nUserId);
+			s = String.format("/%d/", nUserId);
 		}
 		return s;
 	}
@@ -56,9 +56,6 @@ public class CCnv {
 			s = "/NewArrivalPcV.jsp";
 		}
 		return s;
-	}
-	private static String getLinkTarget(int nMode){
-		return (nMode==MODE_SP)?"":"target=\"_blank\"";
 	}
 	private static String getIllustViewContext(int nMode, int nSpMode,  CContent cContent){
 		String s = "";
@@ -103,10 +100,10 @@ public class CCnv {
 		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>", cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("</h2>");
 	}
-	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nSpMode, String REPORT_FORM, String LINK_TARGET, ResourceBundleControl _TEX){
+	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
 		String strTwitterUrl = CTweet.generateIllustMsgUrl(cContent, _TEX);
-		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" %s></a>", strTwitterUrl, LINK_TARGET));
+		strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\"></a>", strTwitterUrl));
 		if(cContent.m_nUserId==nLoginUserId) {
 			if (nSpMode == SP_MODE_APP) {
 				strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"myurlscheme://reEdit?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
@@ -157,7 +154,7 @@ public class CCnv {
 
 	private static void appendMyIllustListItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
 		String strFileUrl = Common.GetUrl(cContent.m_strFileName);
-		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\" target=\"_blank\">", ILLUST_VIEW));
+		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
 		strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
 
 		if(cContent.m_nOpenId==2){
@@ -211,7 +208,7 @@ public class CCnv {
 				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
 				strRtn.append("</span>");
 			} else {
-				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\" target=\"_blank\">", ILLUST_VIEW));
+				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
 				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
 				strRtn.append("</a>");
 			}
@@ -233,11 +230,11 @@ public class CCnv {
 		String strFileUrl;
 		strFileUrl = Common.GetUrl(cContent.m_strFileName);
 		if(nViewMode==VIEW_DETAIL) {
-			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
+			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
 			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
 			strRtn.append("</a>");
 		} else {
-			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\" target=\"_blank\">", ILLUST_VIEW));
+			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
 			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
 			strRtn.append("</a>");
 		}
@@ -339,11 +336,10 @@ public class CCnv {
 	public static String toMyThumbHtmlPc(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, SP_MODE_WVIEW, cContent);
+		String ILLUST_LIST = getIllustListContext(nMode, SP_MODE_WVIEW, cContent.m_nUserId);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode, SP_MODE_WVIEW);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, SP_MODE_WVIEW);
-		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getMyIllustViewContext(nMode, SP_MODE_WVIEW, cContent);
 
 		String strThumbClass = getThumbClass(cContent);
@@ -370,7 +366,7 @@ public class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
 
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, MODE_PC, REPORT_FORM, LINK_TARGET, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, MODE_PC, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -403,11 +399,10 @@ public class CCnv {
 	public static String Content2Html(CContent cContent, int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent);
+		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
-		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
 		String strThumbClass = getThumbClass(cContent);
@@ -448,7 +443,7 @@ public class CCnv {
 		}
 
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, LINK_TARGET, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -511,11 +506,10 @@ public class CCnv {
 	public static String MyContent2Html(CContent cContent, int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent);
+		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
-		String LINK_TARGET = getLinkTarget(nMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
 		String strThumbClass = getThumbClass(cContent);
@@ -529,7 +523,7 @@ public class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
 
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, LINK_TARGET, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -727,17 +721,9 @@ public class CCnv {
 	}
 
 	private static String _toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){
-		String ILLUST_LIST = "";
-		if(nSpMode==SP_MODE_APP){
-			ILLUST_LIST = "/IllustListAppV.jsp";
-		}else if(nMode==MODE_SP){
-			ILLUST_LIST = "/IllustListPcV.jsp";
-		}else{
-			ILLUST_LIST = "/IllustListGridPcV.jsp";
-		}
+		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cUser.m_nUserId);
 		StringBuilder strRtn = new StringBuilder();
-
-		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s?ID=%d\">", ILLUST_LIST, cUser.m_nUserId));
+		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s\">", ILLUST_LIST));
 		strRtn.append(String.format("<span class=\"UserThumbImg\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cUser.m_strFileName)));
 		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", Common.ToStringHtml(cUser.m_strNickName)));
 		strRtn.append("</a>");

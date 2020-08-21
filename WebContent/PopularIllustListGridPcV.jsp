@@ -60,24 +60,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 		<style>
 			body {padding-top: 83px !important;}
+			.Wrapper.GridList #IllustThumbList {opacity: 1; height: 0; overflow: hidden;}
+			.Wrapper.GridList #IllustThumbList {display: flex; width: 100%; height: auto; flex-flow: row nowrap;}
+			.IllustThumbList .IllustThumbPane {flex: 0 0 33.3%}
 			.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete {display: none;}
 		</style>
-
-		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
-		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>
-		<script>
-		$(function() {
-			vg = $("#IllustThumbList").vgrid({
-				easing: "easeOutQuint",
-				useLoadImageEvent: true,
-				useFontSizeListener: true,
-				time: 1,
-				delay: 1,
-				wait: 1,
-				fadeIn: {time: 1, delay: 1}
-			});
-		});
-		</script>
 	</head>
 
 	<body>
@@ -94,21 +81,35 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 		<article class="Wrapper GridList">
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%if(nCnt==1) {%><%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%><%}%>
-					<%if(nCnt==9){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-					<%if(nCnt==29){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
-				<%}%>
+				<div class="IllustThumbPane">
+					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==6){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				</div>
+				<div class="IllustThumbPane">
+					<%for(int nCnt=1; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==16){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				</div>
+				<div class="IllustThumbPane">
+					<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
+					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				</div>
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarPc("/PopularIllustListGridPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarPc("/PopularIllustListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 
-		<%@ include file="/inner/TFooterGrid.jsp"%>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
+<%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
@@ -18,6 +18,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyBookmarkList.Title")%></title>
 
@@ -26,39 +29,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			$('#MenuHome').addClass('Selected');
 		});
 		</script>
-		<script>
-			var g_nPage = 1;
-			var g_bAdding = false;
-			function addContents() {
-				if(g_bAdding) return;
-				g_bAdding = true;
-				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
-				$.ajax({
-					"type": "post",
-					"data": {"PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
-					"dataType": "json",
-					"url": "/f/MyBookmarkListGridF.jsp",
-					"success": function(data) {
-						if(data.end_id>0) {
-							g_nPage++;
-							$("#IllustThumbList").append(data.html);
-							$(".Waiting").remove();
-							if(vg)vg.vgrefresh();
-							g_bAdding = false;
-							console.log(location.pathname+'/'+g_nPage+'.html');
-							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
-						} else {
-							$(window).unbind("scroll.addContents");
-						}
-						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
 
+		<script type="text/javascript">
 			function UpdateFollow(nUserId, nFollowUserId) {
 				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 				$.ajaxSingle({
@@ -87,57 +59,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 				});
-				$(window).bind("scroll.addContents", function() {
-					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
-						addContents();
-					}
-				});
 			});
 		</script>
 		<style>
 			body {padding-top: 83px !important;}
 			.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete {display: none;}
+			.Wrapper.GridList #IllustThumbList {opacity: 1; height: 0; overflow: hidden;}
+			.Wrapper.GridList #IllustThumbList {display: flex; width: 100%; height: auto; flex-flow: row nowrap;}
+			.IllustThumbList .IllustThumbPane {flex: 0 0 33.3%}
+			.IllustItem {float: none; height: auto; width: 344px; height: auto;}
 		</style>
-
-		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
-		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>
-		<script>
-		//setup
-		$(function() {
-			vg = $("#IllustThumbList").vgrid({
-				easing: "easeOutQuint",
-				useLoadImageEvent: true,
-				useFontSizeListener: true,
-				time: 1,
-				delay: 1,
-				wait: 1,
-				fadeIn: {
-					time: 1,
-					delay: 1
-				},
-				onStart: function(){
-					$("#message1")
-						.css("visibility", "visible")
-						.fadeOut("slow",function(){
-							$(this).show().css("visibility", "hidden");
-						});
-				},
-				onFinish: function(){
-					$("#message2")
-						.css("visibility", "visible")
-						.fadeOut("slow",function(){
-							$(this).show().css("visibility", "hidden");
-						});
-				}
-			});
-
-			//$(window).load(function(e){
-				$("#IllustThumbList").css('opacity', 1);
-				//vg.vgrefresh();
-			//});
-		});
-		</script>
 	</head>
 
 	<body>
@@ -156,17 +87,36 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<%=_TEX.T("MyBookmarkList.LetsMessage")%>
 			</div>
 
-			<div id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%if(nCnt==1) {%>
-					<%@ include file="/inner/TAdPc336x280_right_top.jsp"%>
+			<section id="IllustThumbList" class="IllustThumbList">
+				<div class="IllustThumbPane">
+					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==6){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 					<%}%>
-				<%}%>
-			</div>
+				</div>
+				<div class="IllustThumbPane">
+					<%for(int nCnt=1; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==16){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				</div>
+				<div class="IllustThumbPane">
+					<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
+					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				</div>
+			</section>
+
+			<nav class="PageBar">
+				<%=CPageBar.CreatePageBarPc("/MyBookmarkListPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+			</nav>
 		</article>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

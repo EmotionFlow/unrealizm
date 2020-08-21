@@ -18,16 +18,17 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 	return;
 }
 
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
-
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
@@ -43,108 +44,16 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%if(!bSmartPhone) {%>
 			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
 			<%}%>
-			/*
-			$(window).bind("scroll.slideHeader", function() {
-				$('.UserInfo.Float').css('background-position-y', $(this).scrollTop()/5 + 'px');
-			});
-			*/
 		});
 		</script>
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
-
-		<script>
-		var g_nPage = 1;
-		var g_strKeyword = '<%=cResults.m_strKeyword%>';
-		var g_bAdding = false;
-		function addContents() {
-			if(g_bAdding) return;
-			g_bAdding = true;
-			var $objMessage = $("<div/>").addClass("Waiting");
-			$("#IllustThumbList").append($objMessage);
-			$.ajax({
-				"type": "post",
-				"data": {"ID": <%=cResults.m_nUserId%>, "KWD": g_strKeyword, "PG" : g_nPage, "MD" : <%=CCnv.MODE_PC%>},
-				"url": "/f/MyIllustListPcF.jsp",
-				"success": function(data) {
-					if($.trim(data).length>0) {
-						g_nPage++;
-						$("#IllustThumbList").append(data);
-						$(".Waiting").remove();
-						if(vg)vg.vgrefresh();
-						g_bAdding = false;
-						if(g_nPage>0) {
-							console.log(location.pathname+'/'+g_nPage+'.html');
-							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
-						}
-					} else {
-						$(window).unbind("scroll.addContents");
-					}
-					$(".Waiting").remove();
-				},
-				"error": function(req, stat, ex){
-					DispMsg('Connection error');
-				}
-			});
-		}
-
-		$(function(){
-			$(window).bind("scroll.addContents", function() {
-				$(window).height();
-				if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 600) {
-					addContents();
-				}
-			});
-		});
-		</script>
 
 		<style>
 			.IllustThumb .IllustInfo {bottom: 0; background: #fff;}
 			.CategoryMenu {float: none;}
 			#IllustThumbList {opacity: 0; float: none;}
 			.IllustItem .IllustItemUser {display: none;}
-		</style>
-		<script type="text/javascript" src="/js/jquery.easing.1.3.js"></script>
-		<script type="text/javascript" src="/js/jquery.vgrid.min.js"></script>
-		<script>
-		//setup
-		$(function() {
-			vg = $("#IllustThumbList").vgrid({
-				easing: "easeOutQuint",
-				useLoadImageEvent: true,
-				useFontSizeListener: true,
-				time: 1,
-				delay: 1,
-				wait: 1,
-				fadeIn: {
-					time: 1,
-					delay: 1
-				},
-				onStart: function(){
-					$("#message1")
-						.css("visibility", "visible")
-						.fadeOut("slow",function(){
-							$(this).show().css("visibility", "hidden");
-						});
-				},
-				onFinish: function(){
-					$("#message2")
-						.css("visibility", "visible")
-						.fadeOut("slow",function(){
-							$(this).show().css("visibility", "hidden");
-						});
-				}
-			});
-			//$(window).load(function(e){
-				$("#IllustThumbList").css('opacity', 1);
-				//vg.vgrefresh();
-			//});
-		});
-		</script>
-		<style>
-			.IllustItem .IllustItemThumb { position: relative; }
-			.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
-			.TweetMyBox {padding-top: 5px; text-align: center;}
 		</style>
 	</head>
 
@@ -168,18 +77,35 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%if(cResults.m_vContentList.size()>0){%>
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+				<div class="IllustThumbPane">
+					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%=CCnv.toMyThumbHtmlPc(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+						<%if(nCnt==6){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
 					<%}%>
-				<%}else{%>
-					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
-				<%}%>
+				</div>
+				<div class="IllustThumbPane">
+					<%for(int nCnt=1; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==16){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				</div>
+				<div class="IllustThumbPane">
+					<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
+					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+					<%}%>
+				</div>
 			</section>
+
+			<nav class="PageBar">
+				<%=CPageBar.CreatePageBarPc("/MyIllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+			</nav>
 		</article>
 
-		<%@ include file="/inner/TFooterBase.jsp"%>
-		<%//@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

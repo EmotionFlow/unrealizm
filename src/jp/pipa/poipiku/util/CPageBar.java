@@ -62,8 +62,12 @@ public class CPageBar {
 		return strPageMenu.toString();
 	}
 
-	public static String CreatePageBarHtml(String strPageName, int nPageNum, int nContentsNum, int SELECT_MAX) {
-		return CreatePageBarHtml(strPageName, nPageNum, nContentsNum, SELECT_MAX, PAGE_BAR_NUM);
+	public static String CreatePageBarHtmlSp(String strPageName, int nPageNum, int nContentsNum, int SELECT_MAX) {
+		return CreatePageBarHtml(strPageName, nPageNum, nContentsNum, SELECT_MAX, PAGE_BAR_NUM_SP);
+	}
+
+	public static String CreatePageBarHtmlPc(String strPageName, int nPageNum, int nContentsNum, int SELECT_MAX) {
+		return CreatePageBarHtml(strPageName, nPageNum, nContentsNum, SELECT_MAX, PAGE_BAR_NUM_PC);
 	}
 
 	public static String CreatePageBarHtml(String strPageName, int nPageNum, int nContentsNum, int SELECT_MAX, int nPageBarNum) {

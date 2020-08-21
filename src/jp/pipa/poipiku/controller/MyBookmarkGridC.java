@@ -13,19 +13,17 @@ import jp.pipa.poipiku.util.*;
 public class MyBookmarkGridC {
 
 	public int m_nPage = 0;
-	public int m_nMode = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
-			m_nMode = Common.ToInt(cRequest.getParameter("MD"));
 		} catch(Exception e) {
 			;
 		}
 	}
 
 
-	public int SELECT_MAX_GALLERY = 17;
+	public int SELECT_MAX_GALLERY = 24;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 

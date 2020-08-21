@@ -4,12 +4,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-if(!bSmartPhone) {
-	//getServletContext().getRequestDispatcher("/MyHomeGridPcV.jsp").forward(request,response);
-	//return;
-}
-
-MyHomeC cResults = new MyHomeC();
+MyHomePcC cResults = new MyHomePcC();
 cResults.getParam(request);
 
 if(!cCheckLogin.m_bLogin) {
@@ -23,13 +18,12 @@ if(!cCheckLogin.m_bLogin) {
 
 boolean bRtn = cResults.getResults(cCheckLogin);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
-
-int nRnd = (int)(Math.random()*2);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
@@ -43,47 +37,9 @@ int nRnd = (int)(Math.random()*2);
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 
 		<script>
-		var g_nEndId = <%=cResults.m_nEndId%>;
-		var g_bAdding = false;
-		function addContents() {
-			if(g_bAdding) return;
-			g_bAdding = true;
-			var $objMessage = $("<div/>").addClass("Waiting");
-			$("#IllustItemList").append($objMessage);
-			$.ajax({
-				"type": "post",
-				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_PC%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
-				"dataType": "json",
-				"url": "/f/MyHomeF.jsp",
-				"success": function(data) {
-					if(data.end_id>0) {
-						g_nEndId = data.end_id;
-						$("#IllustItemList").append(data.html);
-						$(".Waiting").remove();
-						if(vg)vg.vgrefresh();
-						g_bAdding = false;
-						console.log(location.pathname+'/'+g_nEndId+'.html');
-						gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nEndId+'.html'});
-					} else {
-						$(window).unbind("scroll.addContents");
-					}
-					$(".Waiting").remove();
-				},
-				"error": function(req, stat, ex){
-					DispMsg('Connection error');
-				}
-			});
-		}
-
 		$(function(){
 			$('body, .Wrapper').each(function(index, element){
 				$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
-			});
-			$(window).bind("scroll.addContents", function() {
-				$(window).height();
-				if($("#IllustItemList").height() - $(window).height() - $(window).scrollTop() < 600) {
-					addContents();
-				}
 			});
 			<%if(!cCheckLogin.m_bEmailValid && System.currentTimeMillis() % 100 == 0){%>
 			Swal.fire({
@@ -106,7 +62,6 @@ int nRnd = (int)(Math.random()*2);
 				cancelButtonClass: "RequestEmailLater",
 			})
 			<%}%>
-
 		});
 		</script>
 
@@ -170,9 +125,8 @@ int nRnd = (int)(Math.random()*2);
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-					<%if(nCnt==4 && bSmartPhone) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+					<%if(nCnt==4 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==9 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
 			</section>
 
@@ -218,8 +172,15 @@ int nRnd = (int)(Math.random()*2);
 				</div>
 			</aside>
 			<%}%>
-		</article>
 
-		<%@ include file="/inner/TFooterBase.jsp"%>
+			<nav class="PageBar">
+				<%if(bSmartPhone) {%>
+				<%=CPageBar.CreatePageBarSp("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%}else{%>
+				<%=CPageBar.CreatePageBarPc("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%}%>
+			</nav>
+		</article>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

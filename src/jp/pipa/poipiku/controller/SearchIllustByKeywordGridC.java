@@ -27,7 +27,7 @@ public class SearchIllustByKeywordGridC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 17;
+	public int SELECT_MAX_GALLERY = 24;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 	public boolean m_bFollowing = false;
