@@ -99,6 +99,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<article class="Wrapper ViewPc">
 			<%if(bSmartPhone) {%>
 			<section class="EventItemList">
+				<a class="EventItem" href="/event/20200821_mangaMovie2/TopPcV.jsp">
+					<%if(Math.random()>0.5) {%>
+					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_1.png" />
+					<%} else {%>
+					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_2.png" />
+					<%}%>
+				</a>
 				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 				</a>
@@ -134,6 +141,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<aside class="PcSideBar" style="margin-top: 30px;">
 				<div class="PcSideBarItem">
 					<section class="EventItemList">
+						<a class="EventItem" href="/event/20200821_mangaMovie2/TopPcV.jsp">
+							<%if(Math.random()>0.5) {%>
+							<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_1.png" />
+							<%} else {%>
+							<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_2.png" />
+							<%}%>
+						</a>
 						<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 							<img class="EventBanner" src="/event/20190901/banner_spring.png" />
 						</a>
