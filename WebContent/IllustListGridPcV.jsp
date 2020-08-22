@@ -200,6 +200,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
+				<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
 				<div class="IllustThumbPane">
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
@@ -215,7 +216,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					<%}%>
 				</div>
 				<div class="IllustThumbPane">
-					<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
 					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>

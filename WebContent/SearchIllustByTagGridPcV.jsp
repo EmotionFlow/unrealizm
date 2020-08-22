@@ -78,10 +78,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<style>
 			body {padding-top: 83px !important;}
 			.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete {display: none;}
-			.Wrapper.GridList #IllustThumbList {opacity: 1; height: 0; overflow: hidden;}
-			.Wrapper.GridList #IllustThumbList {display: flex; width: 100%; height: auto; flex-flow: row nowrap;}
-			.IllustThumbList .IllustThumbPane {flex: 0 0 33.3%}
-			.IllustItem {float: none; height: auto; width: 344px; height: auto;}
+			.IllustThumbList .IllustThumbPane {width: 374px; float: left;}
 		</style>
 	</head>
 
@@ -109,6 +106,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			</header>
 
 			<section id="IllustThumbList" class="IllustThumbList">
+				<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
 				<div class="IllustThumbPane">
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
@@ -124,7 +122,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					<%}%>
 				</div>
 				<div class="IllustThumbPane">
-					<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
 					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
