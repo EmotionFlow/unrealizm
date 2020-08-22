@@ -23,9 +23,6 @@
 <script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
 <script type="text/javascript" src="/js/common-40.js"></script>
 <script type="text/javascript" src="/js/commonPc-03.js"></script>
-<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-<script>window.googletag = window.googletag || {cmd: []};</script>
-<script data-ad-client="ca-pub-0260822034407772" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
