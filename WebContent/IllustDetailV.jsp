@@ -3,6 +3,10 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
+if(!cCheckLogin.m_bLogin) {
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+}
+
 IllustDetailC cResults = new IllustDetailC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
@@ -39,9 +43,9 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 		<tr>
 		<td>
 		<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
-		<span class="IllustItemLink" style="display: block;">
+		<div class="IllustItemLink" style="display: block;">
 			<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
-		</span>
+		</div>
 		<div class="IllustItemTProhibit">
 			<%if(cResults.m_cContent.m_cUser.m_nUserId==cCheckLogin.m_nUserId) {%>
 			<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>

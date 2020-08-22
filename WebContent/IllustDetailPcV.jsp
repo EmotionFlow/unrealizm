@@ -3,6 +3,10 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
+if(!cCheckLogin.m_bLogin) {
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+}
+
 IllustDetailC cResults = new IllustDetailC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
@@ -26,25 +30,13 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 		});
 		</script>
 
-		<%if(Util.isSmartPhone(request)) {%>
 		<script type="text/javascript">
 		$(function(){
 			$('body, .IllustDetail').each(function(index, element){
 				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 			});
-			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsgSp")%>');
 		});
 		</script>
-		<%} else {%>
-		<script type="text/javascript">
-		$(function(){
-			$('body, .IllustDetail').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
-			});
-			DispMsg('<%=_TEX.T("IllustDetailPc.InitMsg")%>');
-		});
-		</script>
-		<%}%>
 		<style>
 		body {height: 100%;background: #333333;}
 		.AnalogicoInfo {display: none;}
@@ -63,9 +55,9 @@ if(Util.isBot(request.getHeader("user-agent"))) {
 			<tr>
 			<td>
 			<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
-			<a class="IllustItemLink" style="display: block;" href="javascript:(window.open('','_self').opener=window).close();">
+			<div class="IllustItemLink">
 				<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
-			</a>
+			</div>
 			<div class="IllustItemTProhibit">
 				<%if(cResults.m_cContent.m_cUser.m_nUserId==cCheckLogin.m_nUserId) {
 					String file_name = null;
