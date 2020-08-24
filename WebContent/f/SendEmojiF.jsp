@@ -178,7 +178,6 @@ class SendEmojiC {
 				}
 			}
 
-
 			// add new comment
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id, ip_address) VALUES(?, ?, ?, ?)";
 			cState = cConn.prepareStatement(strSql);
@@ -189,17 +188,17 @@ class SendEmojiC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-	/*
-	// 使ってないので一時的にコメントアウト
-	// update contents_0000 set contents_0000.comment_num=T1.comment_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
-	// update making comment num
-	strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
-	cState = cConn.prepareStatement(strSql);
-	cState.setInt(1, m_nContentId);
-	cState.setInt(2, m_nContentId);
-	cState.executeUpdate();
-	cState.close();cState=null;
-	*/
+			/*
+			// 使ってないので一時的にコメントアウト
+			// update contents_0000 set contents_0000.comment_num=T1.comment_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
+			// update making comment num
+			strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nContentId);
+			cState.setInt(2, m_nContentId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+			*/
 
 			// update making comment num
 			// update contents_0000 set contents_0000.people_num=T1.people_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
@@ -213,10 +212,10 @@ class SendEmojiC {
 			bRtn = true; // 以下実行されなくてもOKを返す
 
 			// 通知
-	/*
-	// オンラインの場合は何もしない
-	if(CheckLogin.isOnline(cTargUser.m_nUserId)) return bRtn;
-	*/
+			/*
+			// オンラインの場合は何もしない
+			if(CheckLogin.isOnline(cTargUser.m_nUserId)) return bRtn;
+			*/
 
 			// 通知先デバイストークンの取得
 			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<CNotificationToken>();

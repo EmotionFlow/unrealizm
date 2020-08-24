@@ -34,6 +34,8 @@ public class MyEditSettingC {
 	public String m_strNewEmail = "";
 	public int m_nPublishedContentsTotal = 0;
 	public boolean m_bCardInfoExist = false;
+	public boolean m_bExchangeCheerPointRequested = false;
+	public int m_nCheerPoint = 0;
 
 	public boolean GetResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -148,6 +150,27 @@ public class MyEditSettingC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
+			strSql = "SELECT 1 FROM cheer_point_exchange_requests WHERE user_id=? AND status=0";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, checkLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			m_bExchangeCheerPointRequested = cResSet.next();
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			strSql = "SELECT sum(remaining_points) FROM cheer_points WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, checkLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				m_nCheerPoint = cResSet.getInt(1);
+			} else {
+				m_nCheerPoint = 0;
+			}
+			cResSet.close();
+			cResSet = null;
+			cState.close();
+			cState = null;
 
 			bRtn = true;
 		} catch(Exception e) {
