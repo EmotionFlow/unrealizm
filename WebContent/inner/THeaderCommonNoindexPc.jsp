@@ -26,6 +26,6 @@
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-56.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-57.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>

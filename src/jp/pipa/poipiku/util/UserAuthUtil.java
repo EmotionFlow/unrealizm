@@ -239,7 +239,6 @@ public class UserAuthUtil {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-
 			// email
 			final String SMTP_HOST = "localhost";
 			final String FROM_NAME = "POIPIKU";

@@ -27,10 +27,8 @@ public class CheckLogin {
 	}
 
 
-	private void SetCookie(HttpServletResponse cResponse)
-	{
-		try
-		{
+	private void SetCookie(HttpServletResponse cResponse) {
+		try {
 			Cookie cLK = new Cookie("POIPIKU_LK" , m_strHashPass);
 
 			cLK.setMaxAge(Integer.MAX_VALUE);
@@ -42,22 +40,22 @@ public class CheckLogin {
 		}
 	}
 
-	private void GetCookie(HttpServletRequest cRequest)
-	{
-		try
-		{
+	private void GetCookie(HttpServletRequest cRequest) {
+		try {
 			Cookie cCookies[] = cRequest.getCookies();
-			if(cCookies == null)
-			{
+			if(cCookies == null) {
 				//cookieインスタンスが作成できない
 				return;
 			}
 
-			for(int i = 0; i < cCookies.length; i++)
-			{
+			for(int i = 0; i < cCookies.length; i++) {
 				if(cCookies[i].getName().equals("POIPIKU_LK")) {
 					m_strHashPass = Common.EscapeInjection(URLDecoder.decode(cCookies[i].getValue(), "UTF-8"));
 				}
+			}
+			if(m_strHashPass.isEmpty()) {
+				cRequest.setCharacterEncoding("UTF-8");
+				m_strHashPass = Common.ToString(cRequest.getParameter("POIPIKU_LK"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

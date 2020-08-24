@@ -88,8 +88,6 @@ body {padding: 51px 0 0 0 !important;}
 
 /********** GRID ***********/
 .Wrapper.GridList {width: 1122px;}
-.Wrapper.GridList #IllustThumbList {float: none;}
-.Wrapper.GridList .PageBar {float: none;}
 .Wrapper.GridList .PcSideBarAd {width: 344px; height: 294px; float: none; display: inline-block; margin: 15px; background-color: #5bd; display: flex; align-items: center; justify-content: center;}
 
 
