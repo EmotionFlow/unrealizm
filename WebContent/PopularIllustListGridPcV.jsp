@@ -60,7 +60,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 		<style>
 			body {padding-top: 83px !important;}
-			.Wrapper.GridList #IllustThumbList {opacity: 1; height: 0; overflow: hidden;}
 			.IllustThumbList .IllustThumbPane {width: 374px; float: left;}
 		</style>
 	</head>

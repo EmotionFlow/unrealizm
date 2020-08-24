@@ -123,16 +123,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 			<%}%>
-			.Wrapper.GridList #IllustThumbList {opacity: 1; height: 0; overflow: hidden;}
-			.Wrapper.GridList #IllustThumbList {display: flex; width: 100%; height: auto; flex-flow: row nowrap;}
-			.IllustThumbList .IllustThumbPane {flex: 0 0 33.3%}
-			.IllustItem {float: none; height: auto; width: 344px; height: auto;}
+			.IllustThumbList .IllustThumbPane {width: 374px; float: left;}
 		</style>
 
 		<style>
 			.IllustThumb .IllustInfo {bottom: 0; background: #fff;}
 			.CategoryMenu {float: none;}
-			#IllustThumbList {opacity: 0; float: none;}
 			.IllustItem .IllustItemUser {display: none;}
 		</style>
 	</head>
