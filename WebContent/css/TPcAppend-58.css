@@ -23,7 +23,7 @@ body {padding: 51px 0 0 0 !important;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
 .IllustThumbList {margin: 0 0;}
-.IllustThumb {margin: 8px !important; width: 202px; height: 202px;}
+.IllustThumb {margin: 12px !important; width: 200px; height: 200px;}
 .IllustThumb .Category {font-size: 13px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
 .IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
 .IllustThumb.Hidden .Category:before {font-size: 14px;}
@@ -71,7 +71,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px; /*position: sticky; top: 81px;*/}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem {display: block; width: 100%; margin: 0 0 30px 0;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarItemTitle {display: block; float: left; width: 100%; margin: 0 0 10px 0; font-size: 18px;}
-.Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: none; width: 300px; height: 250px; background-color: #eee;}
+.Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: none; width: 300px; min-height: 250px; background-color: #eee;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: absolute; bottom: 0;}
 
 

@@ -54,12 +54,12 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<%if(!bSmartPhone) {%>
 			<div class="PcSideBar" style="margin-top: 16px;">
 				<div class="PcSideBarItem">
-					<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
 
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x250_bottom_right.jsp"%>
+						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
 					</div>
 				</div>
 			</div>

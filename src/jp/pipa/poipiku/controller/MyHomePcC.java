@@ -81,9 +81,9 @@ public class MyHomePcC {
 				cState.close();cState=null;
 
 				// PC版右ペイン用
-				idx = 1;
 				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
+				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
@@ -139,5 +139,4 @@ public class MyHomePcC {
 		}
 		return bRtn;
 	}
-
 }

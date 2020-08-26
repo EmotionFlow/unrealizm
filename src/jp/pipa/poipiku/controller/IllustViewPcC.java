@@ -1,6 +1,8 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,7 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class IllustViewC {
+public class IllustViewPcC {
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
 
@@ -42,6 +44,8 @@ public class IllustViewC {
 	}
 
 
+	public int SELECT_MAX_GALLERY = 15;
+	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<CContent>();
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
@@ -234,6 +238,43 @@ public class IllustViewC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 			}
+
+			// Related Contents
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT * FROM contents_0000 INNER JOIN ");
+			sb.append("(SELECT tags_0000.content_id as related_content_id, count(tags_0000.content_id) as tag_num FROM tags_0000 INNER JOIN tags_0000 AS tags2 ON tags_0000.tag_txt=tags2.tag_txt ");
+			sb.append("WHERE tags2.content_id=? GROUP BY tags_0000.content_id ORDER BY tag_num DESC LIMIT ?) as T1 ");
+			sb.append("ON content_id=related_content_id ");
+			sb.append("WHERE open_id=0 AND content_id<>? ");
+			if(cCheckLogin.m_bLogin){
+				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
+			}
+			sb.append(" AND safe_filter<=?");
+			sb.append(" ORDER BY content_id DESC LIMIT ?");
+			strSql = new String(sb);
+			cState = cConn.prepareStatement(strSql);
+			idx = 1;
+			idx = 1;
+			cState.setInt(idx++, m_cContent.m_nContentId);
+			cState.setInt(idx++, SELECT_MAX_GALLERY*3);
+			cState.setInt(idx++, m_cContent.m_nContentId);
+			if(cCheckLogin.m_bLogin){
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nUserId);
+			}
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			cState.setInt(idx++, SELECT_MAX_GALLERY);
+			cResSet = cState.executeQuery();
+			while (cResSet.next()) {
+				CContent cContent = new CContent(cResSet);
+				m_vRelatedContentList.add(cContent);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			// 順番のシャッフル
+			Collections.shuffle(m_vRelatedContentList);
+
+			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

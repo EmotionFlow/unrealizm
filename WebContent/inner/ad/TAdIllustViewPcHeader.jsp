@@ -6,12 +6,8 @@
 	googletag.cmd.push(function() {
 	<%if(Util.isSmartPhone(request)) {%>
 		<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[300, 250], [336, 280]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid_2', [[300, 250], [336, 280]], 'div-gpt-ad-1597961771258-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipikumobile_300x250_footer_left', [[336, 280], [300, 250]], 'div-gpt-ad-1598037992742-0').addService(googletag.pubads());
 		<%}else{%>
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid_R18', [[300, 250], [336, 280]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid_R18', [[300, 250], [336, 280]], 'div-gpt-ad-1597961771258-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_footer_R18', [[300, 250], [336, 280]], 'div-gpt-ad-1598037992742-0').addService(googletag.pubads());
 		<%}%>
 	<%}else{%>

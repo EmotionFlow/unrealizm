@@ -158,7 +158,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				</div>
 
 				<div class="PcSideBarItem">
-					<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
 
 				<div class="PcSideBarItem">
@@ -181,7 +181,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
-						<%@ include file="/inner/TAdPc300x600_bottom_right.jsp"%>
+						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
 					</div>
 				</div>
 			</aside>

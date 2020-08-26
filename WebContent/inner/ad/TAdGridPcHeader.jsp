@@ -2,9 +2,7 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 
-<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>
-	window.googletag = window.googletag || {cmd: []};
 	googletag.cmd.push(function() {
 <%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 		googletag.defineSlot('/4789880/poipiku/poipiku_336x280_top_right', [[300, 250], [336, 280]], 'div-gpt-ad-1597961111008-0').addService(googletag.pubads());
