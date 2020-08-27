@@ -342,7 +342,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 								<a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
 							</h2>
 							<span id="UserInfoCmdFollow"
-								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":""%>"
+								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?" Selected":""%>"
 								onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")%></span>
 						</div>
 					</div>
