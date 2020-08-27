@@ -68,7 +68,6 @@ g_strSearchWord = cResults.m_strKeyword;
 					<%} else {%>
 						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_1.jsp"%><%}%>
 						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_2.jsp"%><%}%>
-						<%@ include file="/inner/TAd728x90_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>
