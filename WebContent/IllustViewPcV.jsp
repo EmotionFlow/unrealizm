@@ -5,6 +5,9 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewPcC cResults = new IllustViewPcC();
+if(!bSmartPhone) {
+	cResults.SELECT_MAX_GALLERY = 5;
+}
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
 	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
@@ -200,13 +203,17 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		</script>
 		<style>
 		.IllustItemList.Related {margin-bottom: 6px;}
-		.IllustItemList.Related .AutoLink {background-color: #5bd; color: #fff; font-size: 15px; padding: 3px 8px; margin: 0 2px; border-radius: 6px;}
-		.IllustItemList.Related .AutoLink:hover {background-color: #fff; color: #5bd;}
+		.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
+		.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
+		.IllustItemList.Related .SearchResultTitle .IllustItem {margin-bottom: 0;}
+		.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #fff; color: #5bd; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
+		.IllustItemList.Related .AutoLink:hover {background-color: #5bd; color: #fff;}
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 
 		<%if(!Util.isSmartPhone(request)) {%>
+		.IllustItemList.Related .SearchResultTitle {height: auto; margin: 15px 0 10px 0}
 		.IllustItemList.Related .AutoLink {padding: 5px 10px; margin: 0 10px; border-radius: 10px;}
 		.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
 		.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
@@ -327,6 +334,29 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
+				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
+					<div class="IllustItem ">
+						<div class="IllustItemUser">
+							<a class="IllustItemUserThumb" href="/<%=cResults.m_cUser.m_nUserId%>/" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
+							<h2 class="IllustItemUserName">
+								<a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
+							</h2>
+							<span id="UserInfoCmdFollow"
+								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":""%>"
+								onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")%></span>
+						</div>
+					</div>
+				</header>
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+				<%}%>
+			</section>
+		</article>
+
+		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
+		<article class="Wrapper GridList">
+			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
 					<h2 class="Keyword">
 						<%=Common.AutoLink(Common.ToStringHtml(cResults.m_cContent.m_strTagList.replace("##", "#")), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.SP_MODE_WVIEW)%>
@@ -337,8 +367,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 				<%}%>
 			</section>
-
 		</article>
+		<%}%>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>

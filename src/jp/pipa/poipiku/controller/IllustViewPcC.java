@@ -44,7 +44,9 @@ public class IllustViewPcC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 15;
+	public int SELECT_MAX_GALLERY = 6;
+	public int SELECT_MAX_RELATED_GALLERY = 30;
+	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<CContent>();
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public CUser m_cUser = new CUser();
@@ -239,6 +241,21 @@ public class IllustViewPcC {
 				cState.close();cState=null;
 			}
 
+			// Owner Contents
+			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND open_id<>2 AND safe_filter<=? ORDER BY content_id DESC LIMIT ?";
+			cState = cConn.prepareStatement(strSql);
+			idx = 1;
+			cState.setInt(idx++, m_nUserId);
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			cState.setInt(idx++, SELECT_MAX_GALLERY);
+			cResSet = cState.executeQuery();
+			while (cResSet.next()) {
+				CContent cContent = new CContent(cResSet);
+				m_vContentList.add(cContent);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
 			// Related Contents
 			StringBuilder sb = new StringBuilder();
 			sb.append("SELECT * FROM contents_0000 INNER JOIN ");
@@ -256,14 +273,14 @@ public class IllustViewPcC {
 			idx = 1;
 			idx = 1;
 			cState.setInt(idx++, m_cContent.m_nContentId);
-			cState.setInt(idx++, SELECT_MAX_GALLERY*3);
+			cState.setInt(idx++, SELECT_MAX_RELATED_GALLERY*3);
 			cState.setInt(idx++, m_cContent.m_nContentId);
 			if(cCheckLogin.m_bLogin){
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 			}
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
+			cState.setInt(idx++, SELECT_MAX_RELATED_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
