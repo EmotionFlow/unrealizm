@@ -196,6 +196,7 @@
 		<%}%>
 
 		<%if(!bSmartPhone) {%>
+		.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 		.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
 		.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
 		.IllustItem.Password .IllustItemThumb {min-height: 240px;}
@@ -218,13 +219,6 @@
 <%}%>
 
 <article class="Wrapper ViewPc">
-	<section id="IllustItemList" class="IllustItemList">
-		<%if(isApp){%>
-		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
-		<%}else{%>
-		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
-		<%}%>
-	</section>
 
 	<%if(!bSmartPhone&&!isApp) {%>
 	<aside class="PcSideBar" style="margin-top: 30px;">
@@ -239,6 +233,14 @@
 		</div>
 	</aside>
 	<%}%>
+
+	<section id="IllustItemList" class="IllustItemList">
+		<%if(isApp){%>
+		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+		<%}else{%>
+		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
+		<%}%>
+	</section>
 </article>
 
 <%if(!isApp){%>

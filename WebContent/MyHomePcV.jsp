@@ -76,6 +76,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			.RequestEmail {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PoipikuDesc.Event {margin: 30px 0 0 0;}
+			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
 			.EventItemList {display: block; float: none; width: 100%; margin: 0 0 0 0;}
@@ -97,45 +98,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		</nav>
 
 		<article class="Wrapper ViewPc">
-			<%if(bSmartPhone) {%>
-			<section class="EventItemList">
-				<a class="EventItem" href="/event/20200821_mangaMovie2/TopPcV.jsp">
-					<%if(Math.random()>0.5) {%>
-					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_1.png" />
-					<%} else {%>
-					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_2.png" />
-					<%}%>
-				</a>
-				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
-				</a>
-				<a class="EventItem" href="/event/20191001/TopPcV.jsp">
-					<img class="EventBanner" src="/event/20191001/banner_karapare.png" />
-				</a>
-			</section>
-			<%}%>
-
-			<section id="IllustItemList" class="IllustItemList">
-
-				<%if(cResults.m_vContentList.size()<=0) {%>
-				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
-					<%=_TEX.T("MyHome.FirstMsg")%>
-					<br />
-					<a class="BtnBase" href="/NewArrivalPcV.jsp"><%=_TEX.T("MyHome.FirstMsg.FindPeople")%></a>
-					<br />
-					<br />
-					<a class="BtnBase" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a>
-
-				</div>
-				<%}%>
-
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-					<%if(nCnt==4 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==9 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
-				<%}%>
-			</section>
 
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
@@ -186,6 +148,46 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				</div>
 			</aside>
 			<%}%>
+
+			<%if(bSmartPhone) {%>
+			<section class="EventItemList">
+				<a class="EventItem" href="/event/20200821_mangaMovie2/TopPcV.jsp">
+					<%if(Math.random()>0.5) {%>
+					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_1.png" />
+					<%} else {%>
+					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_2.png" />
+					<%}%>
+				</a>
+				<a class="EventItem" href="/event/20190901/TopPcV.jsp">
+					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
+				</a>
+				<a class="EventItem" href="/event/20191001/TopPcV.jsp">
+					<img class="EventBanner" src="/event/20191001/banner_karapare.png" />
+				</a>
+			</section>
+			<%}%>
+
+			<section id="IllustItemList" class="IllustItemList">
+
+				<%if(cResults.m_vContentList.size()<=0) {%>
+				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
+					<%=_TEX.T("MyHome.FirstMsg")%>
+					<br />
+					<a class="BtnBase" href="/NewArrivalPcV.jsp"><%=_TEX.T("MyHome.FirstMsg.FindPeople")%></a>
+					<br />
+					<br />
+					<a class="BtnBase" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a>
+
+				</div>
+				<%}%>
+
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+					<%if(nCnt==4 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==9 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+				<%}%>
+			</section>
 
 			<nav class="PageBar">
 				<%if(bSmartPhone) {%>

@@ -202,24 +202,25 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			});
 		</script>
 		<style>
-		.IllustItemList.Related {margin-bottom: 6px;}
-		.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
-		.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
-		.IllustItemList.Related .SearchResultTitle .IllustItem {margin-bottom: 0;}
-		.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #fff; color: #5bd; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
-		.IllustItemList.Related .AutoLink:hover {background-color: #5bd; color: #fff;}
-		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
-		<%}%>
+			.IllustItemList.Related {margin-bottom: 6px;}
+			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
+			.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
+			.IllustItemList.Related .SearchResultTitle .IllustItem {margin-bottom: 0;}
+			.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #fff; color: #5bd; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
+			.IllustItemList.Related .AutoLink:hover {background-color: #5bd; color: #fff;}
+			<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
+			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+			<%}%>
 
-		<%if(!Util.isSmartPhone(request)) {%>
-		.IllustItemList.Related .SearchResultTitle {height: auto; margin: 15px 0 10px 0}
-		.IllustItemList.Related .AutoLink {padding: 5px 10px; margin: 0 10px; border-radius: 10px;}
-		.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
-		.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
-		.IllustItem.Password .IllustItemThumb {min-height: 240px;}
-		.Wrapper.ViewPc .IllustItemList.Related {width: 100%; flex: 0 0 100%;}
-		<%}%>
+			<%if(!Util.isSmartPhone(request)) {%>
+			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 15px 0 10px 0}
+			.IllustItemList.Related .AutoLink {padding: 5px 10px; margin: 0 10px; border-radius: 10px;}
+			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
+			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
+			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
+			.IllustItem.Password .IllustItemThumb {min-height: 240px;}
+			.Wrapper.ViewPc .IllustItemList.Related {width: 100%; flex: 0 0 100%;}
+			<%}%>
 		</style>
 	</head>
 
@@ -278,9 +279,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<%}%>
 
 		<article class="Wrapper ViewPc">
-			<section id="IllustItemList" class="IllustItemList">
-				<%= CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-			</section>
 
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
@@ -320,6 +318,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				</div>
 			</aside>
 			<%}%>
+
+			<section id="IllustItemList" class="IllustItemList">
+				<%= CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+			</section>
 
 <!--
 			<nav class="PageBar">

@@ -66,6 +66,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<style>
 			body {padding-top: 83px !important;}
 			<%if(!Util.isSmartPhone(request)) {%>
+			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
 			<%}%>
@@ -87,20 +88,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
 				<a style="color: #5bd;" href="/MyHomeTagSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
 			</div>
-			<section id="IllustItemList" class="IllustItemList">
-				<%if(cResults.m_vContentList.size()<=0) {%>
-				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
-					タグや検索キーワードを「お気に入り」登録するとここに最新情報が表示されるようになります。
-				</div>
-				<%}%>
-
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-					<%if(nCnt==4 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==9 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
-				<%}%>
-			</section>
 
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
@@ -133,6 +120,21 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				</div>
 			</aside>
 			<%}%>
+
+			<section id="IllustItemList" class="IllustItemList">
+				<%if(cResults.m_vContentList.size()<=0) {%>
+				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
+					タグや検索キーワードを「お気に入り」登録するとここに最新情報が表示されるようになります。
+				</div>
+				<%}%>
+
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+					<%if(nCnt==4 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==9 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+				<%}%>
+			</section>
 
 			<nav class="PageBar">
 				<%if(bSmartPhone) {%>
