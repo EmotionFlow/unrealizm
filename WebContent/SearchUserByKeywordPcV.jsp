@@ -5,6 +5,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 45;
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = "/";
@@ -18,6 +19,7 @@ g_strSearchWord = cResults.m_strKeyword;
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/ad/TAdSearchUserPcHeader.jsp"%>
 		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchUserByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchUserByKeyword.Title")%></title>
 
@@ -60,8 +62,13 @@ g_strSearchWord = cResults.m_strKeyword;
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
-					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAd728x90_mid.jsp"%>
+					<%if(Util.isSmartPhone(request)) {%>
+						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+					<%} else {%>
+						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_1.jsp"%><%}%>
+						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_2.jsp"%><%}%>
+						<%@ include file="/inner/TAd728x90_mid.jsp"%>
 					<%}%>
 				<%}%>
 			</section>
@@ -71,6 +78,6 @@ g_strSearchWord = cResults.m_strKeyword;
 			</nav>
 		</article>
 
-		<%@ include file="/inner/TFooter.jsp"%>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>
