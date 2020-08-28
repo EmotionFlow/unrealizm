@@ -151,7 +151,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #fff; color: #5bd; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
 			.FooterAd {display: block; float: left; width: 100%; margin: 0 auto; box-sizing: border-box;}
 			.FooterAd .SideBarMid {isplay: block; float: left; width: 100%; height: auto;}
-					 <%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
+					<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 			<%}%>
 		</style>
