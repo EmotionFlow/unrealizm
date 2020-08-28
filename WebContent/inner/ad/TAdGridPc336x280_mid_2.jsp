@@ -2,7 +2,7 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <div class="PcSideBarAd">
-	<!-- /4789880/poipiku/poipiku_336x280_mid -->
+	<!-- /4789880/poipiku/poipiku_336x280_mid_2 -->
 	<!-- /4789880/poipiku/poipiku_336x280_mid_r18 -->
 	<div id='div-gpt-ad-1597961771258-0'>
 		<script>
