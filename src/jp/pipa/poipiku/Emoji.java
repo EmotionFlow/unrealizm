@@ -46,8 +46,8 @@ public class Emoji {
         // 正確にはtomcatの日次再起動時刻(4:00あたり)に合わせるべきだが、ひとまずこれで様子見。
         String strSql = "SELECT description, count(description) cnt" +
                 " FROM comments_0000" +
-                " WHERE upload_date >= CURRENT_DATE -1 AND upload_date < CURRENT_DATE" +
-                " GROUP BY description" +
+                " WHERE upload_date >= CURRENT_DATE -1"//#" AND upload_date < CURRENT_DATE" +
+                +" GROUP BY description" +
                 " ORDER BY cnt DESC" +
                 " LIMIT ?";
         DataSource dsPostgres = null;
@@ -79,10 +79,6 @@ public class Emoji {
             try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
             try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
         }
-
-        // その他とおやつからポチ袋絵文字を除外する
-        list.get(EMOJI_CAT_FOOD).removeAll(list.get(EMOJI_CAT_CHEER));
-        list.get(EMOJI_CAT_OTHER).removeAll(list.get(EMOJI_CAT_CHEER));
 
         EMOJI_CHEER_ARRAY = list.get(EMOJI_CAT_CHEER);
         EMOJI_LIST = new String[5][];
@@ -199,7 +195,7 @@ public class Emoji {
                 "🍸", "🍹", "🍺", "🍻", "🍄", "🍇", "🍌", "🍎", "🍏", "🍑", "🍒", "🍓",
             },
             */
-            // おやつ(おやつ全てからポチ袋を除いたもの)
+            // おやつ
             {},
             /*
             // 植物
@@ -213,7 +209,7 @@ public class Emoji {
                 "💜", "💝", "💞", "💟", "💌", "💤", "💨", "💫", "⭐",
             },
             */
-            // その他(全てからポチ袋を除いたもの)
+            // その他
             {},
             // ポチ袋
             {}

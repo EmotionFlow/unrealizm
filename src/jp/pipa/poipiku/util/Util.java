@@ -78,12 +78,11 @@ public class Util {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 					if(vResult.size()>0 && vResult.size()<nLimitNum){
-						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?) ORDER BY rank DESC LIMIT ? OFFSET ?";
+						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?) ORDER BY rank DESC LIMIT ?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setInt(1, nUserId);
 						cState.setInt(2, nLimitNum);
-						cState.setInt(3, nLimitNum-vResult.size()+EMOJI_CHEER_NUM);
-						cState.setInt(4, EMOJI_CHEER_NUM);
+						cState.setInt(3, nLimitNum-vResult.size());
 						cResSet = cState.executeQuery();
 						while (cResSet.next()) {
 							vResult.add(Common.ToString(cResSet.getString(1)).trim());
@@ -103,9 +102,8 @@ public class Util {
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
+					vResult.removeAll(Emoji.getInstance().EMOJI_CHEER_ARRAY);
 				}
-
-				vResult.removeAll(Emoji.getInstance().EMOJI_CHEER_ARRAY);
 
 			} catch(Exception e) {
 				Log.d(strSql);
