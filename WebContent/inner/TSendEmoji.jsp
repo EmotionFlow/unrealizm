@@ -71,7 +71,23 @@
         return `
 <select id="cheer_amount" style="vertical-align: bottom;">
 <option value="100">100</option>
+<option value="200">200</option>
+<option value="300">300</option>
+<option value="400">400</option>
+<option value="500">500</option>
+<option value="600">600</option>
+<option value="700">700</option>
+<option value="800">800</option>
+<option value="900">900</option>
 <option value="1000">1,000</option>
+<option value="2000">2,000</option>
+<option value="3000">3,000</option>
+<option value="4000">4,000</option>
+<option value="5000">5,000</option>
+<option value="6000">6,000</option>
+<option value="7000">7,000</option>
+<option value="8000">8,000</option>
+<option value="9000">9,000</option>
 <option value="10000">10,000</option>
 </select>
         `;
