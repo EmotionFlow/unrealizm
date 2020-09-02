@@ -46,8 +46,8 @@ public class Emoji {
         // 正確にはtomcatの日次再起動時刻(4:00あたり)に合わせるべきだが、ひとまずこれで様子見。
         String strSql = "SELECT description, count(description) cnt" +
                 " FROM comments_0000" +
-                " WHERE upload_date >= CURRENT_DATE -1"//#" AND upload_date < CURRENT_DATE" +
-                +" GROUP BY description" +
+                " WHERE upload_date >= CURRENT_DATE -1 AND upload_date < CURRENT_DATE" +
+                " GROUP BY description" +
                 " ORDER BY cnt DESC" +
                 " LIMIT ?";
         DataSource dsPostgres = null;
