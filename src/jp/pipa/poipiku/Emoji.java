@@ -28,7 +28,6 @@ public class Emoji {
     }
 
     public String[][] EMOJI_LIST;
-    public List<String> EMOJI_CHEER_ARRAY;
     public List<String> EMOJI_ALL_ARRAY;
 
     public void init(){
@@ -40,47 +39,8 @@ public class Emoji {
         list.add(new ArrayList<>()); // 1.よく使う
         list.add(new ArrayList<>(Arrays.asList(EMOJI_OYATSU_ALL))); // 2.おやつ
         list.add(new ArrayList<>(EMOJI_ALL_ARRAY)); // 3.その他
-        list.add(new ArrayList<>()); // 4.ポチ袋
+        list.add(new ArrayList<>(EMOJI_ALL_ARRAY)); // 4.ポチ袋
 
-        // ポチ袋（前日TOP16）
-        // 正確にはtomcatの日次再起動時刻(4:00あたり)に合わせるべきだが、ひとまずこれで様子見。
-        String strSql = "SELECT description, count(description) cnt" +
-                " FROM comments_0000" +
-                " WHERE upload_date >= CURRENT_DATE -1 AND upload_date < CURRENT_DATE" +
-                " GROUP BY description" +
-                " ORDER BY cnt DESC" +
-                " LIMIT ?";
-        DataSource dsPostgres = null;
-        Connection cConn = null;
-        PreparedStatement cState = null;
-        ResultSet cResSet = null;
-
-        try {
-            Class.forName("org.postgresql.Driver");
-            dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-            cConn = dsPostgres.getConnection();
-
-            cState = cConn.prepareStatement(strSql);
-            cState.setInt(1, EMOJI_CHEER_NUM);
-            cResSet = cState.executeQuery();
-
-            while(cResSet.next()){
-                list.get(EMOJI_CAT_CHEER).add(cResSet.getString(1));
-            }
-
-            cResSet.close();cResSet=null;
-            cState.close();cState=null;
-            cConn.close();cConn=null;
-
-        } catch(Exception e) {
-            e.printStackTrace();
-        } finally {
-            try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-            try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-            try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-        }
-
-        EMOJI_CHEER_ARRAY = list.get(EMOJI_CAT_CHEER);
         EMOJI_LIST = new String[5][];
         for (int i=0; i<list.size(); i++) {
             EMOJI_LIST[i] = (String[]) list.get(i).toArray(new String[0]);

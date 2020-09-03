@@ -92,17 +92,15 @@ public class Util {
 					}
 				}
 				if(vResult.size()<nLimitNum){
-					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ? OFFSET ?";
+					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
 					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, nLimitNum-vResult.size()+EMOJI_CHEER_NUM);
-					cState.setInt(2, EMOJI_CHEER_NUM);
+					cState.setInt(1, nLimitNum-vResult.size());
 					cResSet = cState.executeQuery();
 					while (cResSet.next()) {
 						vResult.add(Common.ToString(cResSet.getString(1)).trim());
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
-					vResult.removeAll(Emoji.getInstance().EMOJI_CHEER_ARRAY);
 				}
 
 			} catch(Exception e) {
