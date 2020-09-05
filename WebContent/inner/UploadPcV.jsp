@@ -177,10 +177,10 @@ try {
 				<%if(nEditorId==0){%>
 					<span id="file-drop-area"></span>
 					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, 200files, total 50MByte)</span>
-					<a id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" href="javascript:void(0)">
+					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev">
 						<i class="far fa-images"></i>
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
-					</a>
+					</div>
 				<%}else if(nEditorId==1){%>
 					<div id="PasteZone" class="PasteZone"></div>
 					<span id="TotalSize" class="TotalSize">(multi ver. 0.2beta. 10pastes)</span>

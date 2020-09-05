@@ -129,7 +129,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		});
 		</script>
 		<style>
-			.SettingBody.Roulette {background: top center url('/event/20190901/odai_spring.png') no-repeat; background-size: 600px; height: 3058px;}
+			.SettingBody.Roulette {background: top center url('/event/20190901/odai_odai.png') no-repeat; background-size: 600px; height: 3058px;}
 			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 560px; left: 20px; top: 2138px; z-index: 1;}
 			.SlotFrame .SlotItem {display: flex; flex-flow: column; align-items: center;}
 			.SlotItem .RouletteFrame {}
@@ -175,7 +175,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
-					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_spring.png" />
+					<img id="MainImage" style="width: 100%;" usemap="#MapLinks" src="/event/20190901/odai_odai.png" />
 				</div>
 				<div class="SlotFrame">
 					<div class="SlotItem">

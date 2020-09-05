@@ -37,10 +37,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper ItemList ViewPc">
-			<div id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_FOLLOW){%>Selected<%}%>" href="/FollowListPcV.jsp"><%=_TEX.T("IllustListV.Follow")%></a>
-				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_BLOCK){%>Selected<%}%>" href="/FollowListPcV.jsp?MD=1"><%=_TEX.T("IllustListV.Block")%></a>
-			</div>
 			<div id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>

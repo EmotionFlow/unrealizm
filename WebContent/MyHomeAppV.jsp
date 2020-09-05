@@ -102,8 +102,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					<img class="EventBanner" src="/img/maintenance.png" />
 				</a>
 				-->
+				<a class="EventItem" href="/event/20200821_mangaMovie2/TopV.jsp">
+					<%if(Math.random()>0.5) {%>
+					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_3.png" />
+					<%} else {%>
+					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_4.png" />
+					<%}%>
+				</a>
 				<a class="EventItem" href="/event/20190901/TopV.jsp">
-					<img class="EventBanner" src="/event/20190901/banner_spring.png" />
+					<img class="EventBanner" src="/event/20190901/banner_odai.png" />
 				</a>
 				<a class="EventItem" href="/event/20191001/TopV.jsp">
 					<img class="EventBanner" src="/event/20191001/banner_karapare.png" />
