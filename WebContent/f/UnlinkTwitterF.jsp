@@ -21,12 +21,11 @@ int nRtn = 0;
 try {
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 	cConn = dsPostgres.getConnection();
-
 	strSql = "DELETE FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
 	cState = cConn.prepareStatement(strSql);
 	cState.setInt(1, cCheckLogin.m_nUserId);
 	cState.setInt(2, Common.TWITTER_PROVIDER_ID);
-	cState.executeUpdate(strSql);
+	cState.execute();
 	cState.close();cState=null;
 
 	nRtn = 1;
