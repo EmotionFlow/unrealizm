@@ -5,8 +5,11 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 45;
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
 %>
 <!DOCTYPE html>
 <html>
@@ -14,7 +17,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
-		<title>#<%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(strTitle)%></title>
 
 		<script>
 			var g_nPage = 1;
@@ -75,9 +78,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), _TEX, nSpMode)%>
-					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+					<%if(nCnt==14) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
+					<%if(nCnt==29) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
 				<%}%>
 			</section>
 		</article>

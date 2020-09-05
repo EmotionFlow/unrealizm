@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
+<%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
@@ -8,12 +8,14 @@ cResults.getParam(request);
 cResults.m_strKeyword = "お題ルーレット";
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(cCheckLogin);
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=_TEX.T("THeader.Title")%> - お題ルーレット</title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(cResults.m_strKeyword)%></title>
 
 		<script>
 			var g_nPage = 1;
@@ -111,9 +113,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			}
 		</script>
 	</head>
+	
 	<body>
-		<div id="DispMsg"></div>
-
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingBody">
@@ -124,7 +125,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
 								<%for(int i=1; i<=40; i++) {%>
-								<img src="/event/20190901/r1_spring/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r1_odai01/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -134,7 +135,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
 								<%for(int i=1; i<=40; i++) {%>
-								<img src="/event/20190901/r2_spring/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r1_odai02/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -161,9 +162,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</header>
 
 			<section id="IllustThumbList" class="IllustThumbList">
+				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), _TEX, nSpMode)%>
 					<%if(nCnt==17) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>

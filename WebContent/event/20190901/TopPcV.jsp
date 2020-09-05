@@ -12,16 +12,29 @@ if(!bSmartPhone) {
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
 cResults.m_strKeyword = "お題ルーレット";
-cResults.SELECT_MAX_GALLERY = 36;
+cResults.SELECT_MAX_GALLERY = 45;
 boolean bRtn = cResults.getResults(cCheckLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
+String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title><%=_TEX.T("THeader.Title")%> - お題ルーレット</title>
+		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:site" content="@pipajp" />
+		<meta property="og:url" content="<%=strUrl%>" />
+		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
+		<link rel="canonical" href="<%=strUrl%>" />
+		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
+		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(strTitle)%></title>
+
 		<style>
 			.Wrapper {position: relative;}
 			.SettingListItem a {color: #fff; text-decoration: underline; font-weight: bold;}
@@ -79,8 +92,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			}
 		</script>
 	</head>
+	
 	<body>
-		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
@@ -93,7 +106,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 						<div class="RouletteFrame">
 							<div id="r1" class="Roulette">
 								<%for(int i=1; i<=40; i++) {%>
-								<img src="/event/20190901/r1_spring/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r1_odai01/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -103,7 +116,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 						<div class="RouletteFrame">
 							<div id="r2" class="Roulette">
 								<%for(int i=1; i<=40; i++) {%>
-								<img src="/event/20190901/r2_spring/<%=String.format("%02d", i)%>.png" />
+								<img src="/event/20190901/r1_odai02/<%=String.format("%02d", i)%>.png" />
 								<%}%>
 							</div>
 						</div>
@@ -133,9 +146,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_PC, strEncodedKeyword, _TEX)%>
-					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
 			</section>
 
@@ -144,6 +156,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			</nav>
 		</article>
 
-		<%@ include file="/inner/TFooterBase.jsp"%>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

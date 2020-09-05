@@ -15,6 +15,7 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 45;
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = isApp ? "/IllustListAppV.jsp?ID=" : "/IllustListPcV.jsp?ID=";
@@ -89,9 +90,8 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), _TEX, nSpMode)%>
-					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+					<%if(nCnt==14) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
+					<%if(nCnt==29) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
 				<%}%>
 			</section>
 		</article>

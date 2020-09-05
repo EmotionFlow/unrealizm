@@ -33,7 +33,7 @@ String strFileUrl = cResults.m_strRepFileName;
 		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
-		<title><%=Util.toDescString(strTitle)%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(strTitle)%></title>
 
 		<script type="text/javascript">
 		$(function(){
