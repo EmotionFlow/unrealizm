@@ -13,7 +13,7 @@ if(cResults.m_nMode==CCnv.MODE_SP) {
 }
 
 boolean bRtn = cResults.getResults(cCheckLogin);
-if(!bRtn || Util.isBot(request.getHeader("user-agent"))) {
+if(!bRtn) {
 	return;
 }
 
