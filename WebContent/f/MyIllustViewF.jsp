@@ -2,12 +2,11 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+if (Util.isBot(request)) return;
 IllustViewListC cResults = new IllustViewListC();
 
 cResults.getParam(request);
-if(!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId!=cResults.m_nUserId){
-	return;
-}
+if (!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId!=cResults.m_nUserId) return;
 
 if(cResults.m_nMode==CCnv.MODE_SP) {
 	cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;

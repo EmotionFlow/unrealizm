@@ -2,6 +2,10 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+if(Util.isBot(request)) {
+	response.sendRedirect("/NotFoundV.jsp");
+	return;
+}
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewPcC cResults = new IllustViewPcC();
@@ -12,10 +16,6 @@ if(!cResults.getResults(cCheckLogin)) {
 	}else{
 		response.sendRedirect(Common.GetPoipikuUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId)));
 	}
-	return;
-}
-if(Util.isBot(request.getHeader("user-agent"))) {
-	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 

@@ -2,19 +2,16 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+if (Util.isBot(request)) return;
 IllustViewListC cResults = new IllustViewListC();
 
 cResults.getParam(request);
-if(!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId!=cResults.m_nUserId){
-	return;
-}
+if (!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId!=cResults.m_nUserId) return;
 
 cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 boolean bRtn = cResults.getResults(cCheckLogin);
-if(!bRtn || Util.isBot(request.getHeader("user-agent"))) {
-	return;
-}
+if(!bRtn) return;
 
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>

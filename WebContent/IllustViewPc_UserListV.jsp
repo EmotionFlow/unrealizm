@@ -5,21 +5,24 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewPcC cResults = new IllustViewPcC();
+cResults.SELECT_MAX_GALLERY = 0;
+cResults.SELECT_MAX_GALLERY = 0;
+
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
 	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
-		response.sendRedirect("/NotFoundV.jsp");
+		response.sendRedirect("/NotFoundPcV1.jsp");
 	}else{
-		response.sendRedirect(Common.GetPoipikuUrl(String.format("/IllustViewV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(String.format("/IllustViewPc_UserListV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId));
 	}
 	return;
 }
-if(Util.isBot(request)) {
-	response.sendRedirect("/NotFoundV.jsp");
+if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request)) {
+	response.sendRedirect("/NotFoundPcV2.jsp");
 	return;
 }
 
-//R18によるアドの切り替え
+// R18によるアドの切り替え
 switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_R18:
 case Common.PUBLISH_ID_R18G:
@@ -27,6 +30,27 @@ case Common.PUBLISH_ID_R18G:
 	break;
 default:
 	g_nSafeFilter = Common.AD_ID_ALL;
+	break;
+}
+
+String strFileUrl = "";
+switch(cResults.m_cContent.m_nPublishId) {
+case Common.PUBLISH_ID_R15:
+case Common.PUBLISH_ID_R18:
+case Common.PUBLISH_ID_R18G:
+case Common.PUBLISH_ID_PASS:
+case Common.PUBLISH_ID_LOGIN:
+case Common.PUBLISH_ID_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOW:
+case Common.PUBLISH_ID_T_EACH:
+case Common.PUBLISH_ID_T_LIST:
+	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
+	break;
+case Common.PUBLISH_ID_ALL:
+case Common.PUBLISH_ID_HIDDEN:
+default:
+	strFileUrl = cResults.m_cContent.m_strFileName;
 	break;
 }
 
@@ -61,24 +85,52 @@ case Common.PUBLISH_ID_R15:
 case Common.PUBLISH_ID_R18:
 case Common.PUBLISH_ID_R18G:
 default:
-	strTitle = cResults.m_cContent.m_cUser.m_strNickName;
+	strTitle = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"] ";
 	String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
 	if(strs.length>0 && strs[0].length()>0) {
-		strTitle = strs[0];
+		strTitle += strs[0];
+	} else {
+		strTitle += cResults.m_cContent.m_cUser.m_strNickName;
 	}
 	break;
 }
-strTitle = Common.SubStrNum(strTitle, 10);
+strTitle = Util.subStrNum(strTitle, 25) + " | " + _TEX.T("THeader.Title");
+String strDesc = CTweet.generateIllustMsgBase(cResults.m_cContent, _TEX);
+strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName);
+String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
-		<title><%=strTitle%></title>
+		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@pipajp" />
+		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
+		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_360.jpg" />
+		<link rel="canonical" href="<%=strUrl%>" />
+		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
+		<title><%=Util.toDescString(strTitle)%></title>
+		<script type="application/ld+json">
+		{
+			"@context":"http://schema.org",
+			"@type":"ItemList",
+			"itemListElement":[
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg"}
+			]
+		}
+		</script>
+
+		<script type="text/javascript">
+			$(function(){
+				$('#MenuNew').addClass('Selected');
+			});
+		</script>
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 
@@ -138,9 +190,15 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			}
 
 			$(function(){
+				<%if(!cResults.m_bOwner){%>
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 				});
+				<%}%>
+				$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
+				<%if(!Util.isSmartPhone(request)) {%>
+				$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
+				<%}%>
 			});
 		</script>
 		<style>
@@ -149,23 +207,36 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
 			.IllustItemList.Related .SearchResultTitle .IllustItem {margin-bottom: 0;}
 			.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #fff; color: #5bd; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
-			.FooterAd {display: block; float: left; width: 100%; margin: 0 auto; box-sizing: border-box;}
-			.FooterAd .SideBarMid {isplay: block; float: left; width: 100%; height: auto;}
-					<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
+			.IllustItemList.Related .AutoLink:hover {background-color: #5bd; color: #fff;}
+			<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+			<%}%>
+
+			<%if(!Util.isSmartPhone(request)) {%>
+			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 15px 0 10px 0}
+			.IllustItemList.Related .AutoLink {padding: 5px 10px; margin: 0 10px; border-radius: 10px;}
+			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
+			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
+			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
+			.IllustItem.Password .IllustItemThumb {min-height: 240px;}
+			.Wrapper.ViewPc .IllustItemList.Related {width: 100%; flex: 0 0 100%;}
 			<%}%>
 		</style>
 	</head>
 
 	<body>
+		<%@ include file="/inner/TMenuPc.jsp"%>
+
 		<%{%>
-		<article class="Wrapper">
-			<div class="UserInfo">
+		<article class="Wrapper" style="width: 100%;">
+			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
-					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
+					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
+					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+					<%}%>
 					<span class="UserInfoCmd">
 						<%
 						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
@@ -176,9 +247,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 										_TEX.T("Common.Title")), "UTF-8"),
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<%if(cResults.m_bOwner) {%>
-						&nbsp;
-						<%} else if(cResults.m_bBlocking){%>
+						<%if(!cCheckLogin.m_bLogin) {%>
+						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
+						<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
+						<%} else if(cResults.m_bOwner) {
+							// 何も表示しない
+						} else if(cResults.m_bBlocking){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
 						<%} else if(cResults.m_bBlocked){%>
@@ -189,15 +263,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 						<%}%>
-						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
-							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>"></a>
+							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
 						</span>
-						<%}%>
 					</span>
 				</section>
 				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 					</a>
@@ -207,19 +279,70 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<%}%>
 
 		<article class="Wrapper ViewPc">
+
+			<%if(!bSmartPhone) {%>
+			<aside class="PcSideBar" style="margin-top: 30px;">
+				<div class="PcSideBarItem">
+					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
+				</div>
+
+				<div class="FixFrame">
+					<div class="PcSideBarItem">
+						<div class="UserInfo" style="border: none;">
+							<div class="UserInfoBgImg"></div>
+							<div class="UserInfoBg"></div>
+							<div class="UserInfoUser">
+								<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
+								<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
+								<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+								<span class="UserInfoCmd">
+									<%if(!cCheckLogin.m_bLogin) {%>
+									<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
+									<%} else if(cResults.m_bOwner) {%>
+									<%} else if(cResults.m_bBlocking){%>
+									<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
+									<%} else if(cResults.m_bBlocked){%>
+									<%} else if(cResults.m_bFollow){%>
+									<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
+									<%} else {%>
+									<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
+									<%}%>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="PcSideBarItem">
+						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
+					</div>
+				</div>
+			</aside>
+			<%}%>
+
 			<section id="IllustItemList" class="IllustItemList">
-				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+				<%= CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 			</section>
+
+<!--
+			<nav class="PageBar">
+				<%//if(bSmartPhone) {%>
+				<%//=CPageBar.CreatePageBarSp("/IllustViewPcV.jsp", String.format("&ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%//}else{%>
+				<%//=CPageBar.CreatePageBarPc("/IllustViewPcV.jsp", String.format("&ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%//}%>
+			</nav>
+-->
 		</article>
 
+		<%cResults.m_vContentList=ABTestUtil.getUserContentList(cResults.m_nUserId, ABTestUtil.MAX_USER_LIST_CONTENTS); %>
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
 					<div class="IllustItem ">
 						<div class="IllustItemUser">
-							<a class="IllustItemUserThumb" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
+							<a class="IllustItemUserThumb" href="/<%=cResults.m_cUser.m_nUserId%>/" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
 							<h2 class="IllustItemUserName">
-								<a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
+								<a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
 							</h2>
 							<span id="UserInfoCmdFollow"
 								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?" Selected":""%>"
@@ -229,29 +352,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
+					<%=ABTestUtil.toThumbHtml_UserList(cContent, _TEX)%>
 				<%}%>
 			</section>
 		</article>
 
-		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
-		<article class="Wrapper GridList">
-			<section id="IllustItemList" class="IllustItemList Related">
-				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
-					<h2 class="Keyword">
-						<%=Common.AutoLink(Common.ToStringHtml(cResults.m_cContent.m_strTagList.replace("##", "#")), cResults.m_cContent.m_nUserId, CCnv.MODE_SP, CCnv.SP_MODE_APP)%>
-					</h2>
-				</header>
-				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
-				<%}%>
-			</section>
-		</article>
-		<%}%>
-
-		<aside class="Wrapper GridList">
-			<%@ include file="/inner/ad/TAdSingleAdSpFooter.jsp"%>
-		</aside>
+		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

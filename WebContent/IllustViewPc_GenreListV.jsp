@@ -5,29 +5,15 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewPcC cResults = new IllustViewPcC();
-if(!bSmartPhone) {
-	cResults.SELECT_MAX_GALLERY = 5;
-}
+cResults.SELECT_MAX_GALLERY = 0;
+cResults.SELECT_MAX_GALLERY = 0;
+
 cResults.getParam(request);
-
-
-// ABテスト
-if(ABTestUtil.isIllustViewTest_UserList_GenreList(request, cResults.m_nUserId, cResults.m_nContentId)) {
-	if(Math.random()>0.5) {
-		response.sendRedirect(String.format("/IllustViewPc_UserListV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId));
-	} else {
-		response.sendRedirect(String.format("/IllustViewPc_GenreListV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId));
-	}
-	return;
-}
-// ABテスト
-
-
 if(!cResults.getResults(cCheckLogin)) {
 	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
 		response.sendRedirect("/NotFoundPcV.jsp");
 	}else{
-		response.sendRedirect(Common.GetPoipikuUrl(String.format("/%d/%d.html", cResults.m_nUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(String.format("/IllustViewPc_UserListV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId));
 	}
 	return;
 }
@@ -348,43 +334,22 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 -->
 		</article>
 
-		<article class="Wrapper GridList">
-			<section id="IllustItemList" class="IllustItemList Related">
-				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
-					<div class="IllustItem ">
-						<div class="IllustItemUser">
-							<a class="IllustItemUserThumb" href="/<%=cResults.m_cUser.m_nUserId%>/" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
-							<h2 class="IllustItemUserName">
-								<a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
-							</h2>
-							<span id="UserInfoCmdFollow"
-								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?" Selected":""%>"
-								onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")%></span>
-						</div>
-					</div>
-				</header>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
-				<%}%>
-			</section>
-		</article>
-
-		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
+		<%
+		cResults.m_vRelatedContentList=ABTestUtil.getGenreContentList(cResults.m_nContentId, ABTestUtil.MAX_GENRE_LIST_CONTENTS);
+		String tag = ABTestUtil.getTitleTag(cResults.m_nContentId);%>
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
 					<h2 class="Keyword">
-						<%=Common.AutoLink(Common.ToStringHtml(cResults.m_cContent.m_strTagList.replace("##", "#")), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
+						<%=Common.AutoLink(Common.ToStringHtml(" #"+tag+ " "), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
 					</h2>
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%=ABTestUtil.toThumbHtml_GenreList(cContent, tag, _TEX)%>
 				<%}%>
 			</section>
 		</article>
-		<%}%>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>

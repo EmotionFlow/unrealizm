@@ -242,52 +242,56 @@ public class IllustViewPcC {
 			}
 
 			// Owner Contents
-			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND open_id<>2 AND safe_filter<=? ORDER BY content_id DESC LIMIT ?";
-			cState = cConn.prepareStatement(strSql);
-			idx = 1;
-			cState.setInt(idx++, m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
-				m_vContentList.add(cContent);
+			if(SELECT_MAX_GALLERY>0) {
+				strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND open_id<>2 AND safe_filter<=? ORDER BY content_id DESC LIMIT ?";
+				cState = cConn.prepareStatement(strSql);
+				idx = 1;
+				cState.setInt(idx++, m_nUserId);
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				cState.setInt(idx++, SELECT_MAX_GALLERY);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					CContent cContent = new CContent(cResSet);
+					m_vContentList.add(cContent);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			// Related Contents
-			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT * FROM contents_0000 INNER JOIN ");
-			sb.append("(SELECT tags_0000.content_id as related_content_id, count(tags_0000.content_id) as tag_num FROM tags_0000 INNER JOIN tags_0000 AS tags2 ON tags_0000.tag_txt=tags2.tag_txt ");
-			sb.append("WHERE tags2.content_id=? GROUP BY tags_0000.content_id ORDER BY tag_num DESC LIMIT ?) as T1 ");
-			sb.append("ON content_id=related_content_id ");
-			sb.append("WHERE open_id=0 AND content_id<>? ");
-			if(cCheckLogin.m_bLogin){
-				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
+			if(SELECT_MAX_RELATED_GALLERY>0) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("SELECT * FROM contents_0000 INNER JOIN ");
+				sb.append("(SELECT tags_0000.content_id as related_content_id, count(tags_0000.content_id) as tag_num FROM tags_0000 INNER JOIN tags_0000 AS tags2 ON tags_0000.tag_txt=tags2.tag_txt ");
+				sb.append("WHERE tags2.content_id=? GROUP BY tags_0000.content_id ORDER BY tag_num DESC LIMIT ?) as T1 ");
+				sb.append("ON content_id=related_content_id ");
+				sb.append("WHERE open_id=0 AND content_id<>? ");
+				if(cCheckLogin.m_bLogin){
+					sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
+				}
+				sb.append(" AND safe_filter<=?");
+				sb.append(" ORDER BY content_id DESC LIMIT ?");
+				strSql = new String(sb);
+				cState = cConn.prepareStatement(strSql);
+				idx = 1;
+				idx = 1;
+				cState.setInt(idx++, m_cContent.m_nContentId);
+				cState.setInt(idx++, SELECT_MAX_RELATED_GALLERY*3);
+				cState.setInt(idx++, m_cContent.m_nContentId);
+				if(cCheckLogin.m_bLogin){
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+				}
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				cState.setInt(idx++, SELECT_MAX_RELATED_GALLERY);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					CContent cContent = new CContent(cResSet);
+					m_vRelatedContentList.add(cContent);
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
 			}
-			sb.append(" AND safe_filter<=?");
-			sb.append(" ORDER BY content_id DESC LIMIT ?");
-			strSql = new String(sb);
-			cState = cConn.prepareStatement(strSql);
-			idx = 1;
-			idx = 1;
-			cState.setInt(idx++, m_cContent.m_nContentId);
-			cState.setInt(idx++, SELECT_MAX_RELATED_GALLERY*3);
-			cState.setInt(idx++, m_cContent.m_nContentId);
-			if(cCheckLogin.m_bLogin){
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-			}
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			cState.setInt(idx++, SELECT_MAX_RELATED_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
-				m_vRelatedContentList.add(cContent);
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 			// 順番のシャッフル
 			Collections.shuffle(m_vRelatedContentList);
 

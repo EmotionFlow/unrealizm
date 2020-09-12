@@ -154,7 +154,7 @@ public class Util {
 		String strUuserAgent = toString(request.getHeader("user-agent"));
 		String strReferer = toString(request.getHeader("Referer"));
 
-		if(strReferer.indexOf("galleria.emotionflow.com")<0) {
+		if(strReferer.indexOf("poipiku.com")<0) {
 			if(	(strUuserAgent.indexOf("iPhone")>=0 && strUuserAgent.indexOf("iPad")<0) ||
 					strUuserAgent.indexOf("iPod")>=0 ||
 					(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf("Mobile")>=0)) {
@@ -292,8 +292,9 @@ public class Util {
 //		return sbRtn.toString();
 //	}
 
-	public static boolean isBot(String strUuserAgent) {
-		if(strUuserAgent==null) return false;
+	public static boolean isBot(HttpServletRequest request) {
+		String agent =  Util.toString(request.getHeader("user-agent")).trim();
+		if(agent.isEmpty()) return true;
 		final List<String> vBot = Arrays.asList(
 				"ia_archiver",
 				"archive.org_bot",
@@ -323,7 +324,7 @@ public class Util {
 				"YandexBot",
 				"Yeti",
 				"YodaoBot");
-		return vBot.contains(strUuserAgent);
+		return vBot.contains(agent);
 	}
 
 	public static String toSingle(String strSrc) {

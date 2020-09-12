@@ -2,6 +2,10 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+if(Util.isBot(request)) {
+	response.sendRedirect("/NotFoundV.jsp");
+	return;
+}
 
 if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
@@ -10,10 +14,6 @@ if(!cCheckLogin.m_bLogin) {
 IllustDetailC cResults = new IllustDetailC();
 cResults.getParam(request);
 if(!cResults.getResults(cCheckLogin)) {
-	response.sendRedirect("/NotFoundV.jsp");
-	return;
-}
-if(Util.isBot(request.getHeader("user-agent"))) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
