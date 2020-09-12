@@ -33,7 +33,6 @@ public class ABTestUtil {
 		if (!Util.isSmartPhone(request)) return false;
 
 		String strReferer = Util.toString(request.getHeader("Referer"));
-		Log.d(strReferer);
 		if((strReferer.indexOf("poipiku.com")>=0) || (strReferer.indexOf("poipiku-dev.com")>=0)) return false;
 
 		DataSource dataSource = null;
