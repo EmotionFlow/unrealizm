@@ -54,7 +54,6 @@ public class ABTestUtil {
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				contentsExits = (resultSet.getInt(1)>=MAX_USER_LIST_CONTENTS);
-				Log.d("user contents num : "+resultSet.getInt(1));
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -68,7 +67,6 @@ public class ABTestUtil {
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				tag = Util.toString(resultSet.getString(1)).trim();
-				Log.d("tag : "+tag);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -81,7 +79,6 @@ public class ABTestUtil {
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				contentsExits = (resultSet.getInt(1)>=MAX_GENRE_LIST_CONTENTS);
-				Log.d("genre contents num : "+resultSet.getInt(1));
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
