@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    String strCheerPointTotal = String.format("%,d",cResults.m_nCheerPoint);
+    String strPaymentYenTotal = String.format("%,d",cResults.m_nCheerPoint-300);
+%>
 <script>
     const LOCAL_STORAGE_KEY_RECV_ACC_INFO = 'RECV_ACC_INFO';
 
-    function getReceiveCheerPointDlgHtml(){
+    function getReceiveCheerPointDlgHtml(amount){
         return `
 <style>
 	.BankInfoTitle{padding: 10px 0 0 0;}
@@ -17,7 +21,8 @@
 ` + '受取口座の指定' + `
 </h2>
 <div class="BankInfoInfo">
-	<p>日本国内の銀行口座のみ指定いただけます</p>
+<p>`+ <%=strCheerPointTotal%> + 'ポイントから手数料300ポイントを除いた' + <%=strPaymentYenTotal%> + '円を指定口座に振り込むことができます。' +`</p>
+	<p>なお、指定できるのは日本国内の金融機関口座のみです</p>
 </div>
 <div class="BankInfoInputItem">
 	<div class="BankInfoInputLabel">金融機関コード</div>
@@ -62,7 +67,7 @@
             focusConfirm: false,
             showCloseButton: true,
             showCancelButton: false,
-            confirmButtonText: 'この口座に振り込む',
+            confirmButtonText: '<%=strPaymentYenTotal%>円をこの口座に振り込む',
             onBeforeOpen: () => {
                 let storageData = localStorage.getItem(LOCAL_STORAGE_KEY_RECV_ACC_INFO);
                 if (storageData) {
@@ -132,7 +137,7 @@
         <div class="SettingListTitle">現在のポチ袋ポイント</div>
         <div class="SettingBody">
             <p style="text-align: center; font-size: 17px; margin-bottom: 8px;">
-                <%=String.format("%,d",cResults.m_nCheerPoint)%>ポイント
+                <%=strCheerPointTotal%>ポイント
             </p>
             <%if(cResults.m_bExchangeCheerPointRequested){%>
                 指定口座への振り込みを受付中です。
@@ -144,7 +149,7 @@
             </a>
             </div>
             <%}else{%>
-                400ポイント以上たまると、指定口座に振り込むことができます。
+                400ポイント以上たまると、振込手数料300ポイント分を引いた金額について、指定口座に振り込むことができます。
             <%}%>
             <%}%>
         </div>
