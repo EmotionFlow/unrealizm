@@ -21,8 +21,8 @@
 ` + '受取口座の指定' + `
 </h2>
 <div class="BankInfoInfo">
-<p>`+ <%=strCheerPointTotal%> + 'ポイントから手数料300ポイントを除いた' + <%=strPaymentYenTotal%> + '円を指定口座に振り込むことができます。' +`</p>
-	<p>なお、指定できるのは日本国内の金融機関口座のみです</p>
+<p>`+ <%=strCheerPointTotal%> + 'ポイントから手数料300ポイントを除いた' + <%=strPaymentYenTotal%> + '円を指定口座に振り込むことができます。'
++`なお、指定できるのは日本国内の金融機関口座のみです。</p>
 </div>
 <div class="BankInfoInputItem">
 	<div class="BankInfoInputLabel">金融機関コード</div>
@@ -67,7 +67,7 @@
             focusConfirm: false,
             showCloseButton: true,
             showCancelButton: false,
-            confirmButtonText: '<%=strPaymentYenTotal%>円をこの口座に振り込む',
+            confirmButtonText: '<%=strPaymentYenTotal%>円を振込申請する',
             onBeforeOpen: () => {
                 let storageData = localStorage.getItem(LOCAL_STORAGE_KEY_RECV_ACC_INFO);
                 if (storageData) {
@@ -118,7 +118,7 @@
             }).then(
                 data => {
                     if(data.result===0){
-                        DispMsg("受け付けました");
+                        DispMsg("振込申請を受け付けました");
                     } else {
                         DispMsg("エラーが発生しました");
                     }
