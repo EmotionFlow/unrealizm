@@ -3,6 +3,7 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+Log.d(request.getHeader("user-agent"));
 
 if(!bSmartPhone) {
 	getServletContext().getRequestDispatcher("/NewArrivalGridPcV.jsp").forward(request,response);
