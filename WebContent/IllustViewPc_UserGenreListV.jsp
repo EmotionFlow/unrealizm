@@ -5,30 +5,20 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 IllustViewPcC cResults = new IllustViewPcC();
-if(!bSmartPhone) {
-	cResults.SELECT_MAX_GALLERY = 5;
-}
+cResults.SELECT_MAX_GALLERY = 0;
+cResults.SELECT_MAX_GALLERY = 0;
+
 cResults.getParam(request);
-
-
-// ABテスト
-if(ABTestUtil.isIllustViewTest_UserList_GenreList(request, cResults.m_nUserId, cResults.m_nContentId)) {
-	response.sendRedirect(String.format("/IllustViewPc_UserGenreListV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId));
-	return;
-}
-// ABテスト
-
-
 if(!cResults.getResults(cCheckLogin)) {
 	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
-		response.sendRedirect("/NotFoundPcV.jsp");
+		response.sendRedirect("/NotFoundPcV1.jsp");
 	}else{
-		response.sendRedirect(Common.GetPoipikuUrl(String.format("/%d/%d.html", cResults.m_nUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(String.format("/IllustViewPc_UserListV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId));
 	}
 	return;
 }
 if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundPcV2.jsp");
 	return;
 }
 
@@ -344,6 +334,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 -->
 		</article>
 
+		<%cResults.m_vContentList=ABTestUtil.getUserContentList(cResults.m_nUserId, ABTestUtil.MAX_USER_LIST_CONTENTS); %>
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
@@ -361,26 +352,27 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%=ABTestUtil.toThumbHtml_UserList(cContent, _TEX)%>
 				<%}%>
 			</section>
 		</article>
 
-		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
+		<%
+		cResults.m_vRelatedContentList=ABTestUtil.getGenreContentList(cResults.m_nContentId, ABTestUtil.MAX_GENRE_LIST_CONTENTS);
+		String tag = ABTestUtil.getTitleTag(cResults.m_nContentId);%>
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
 					<h2 class="Keyword">
-						<%=Common.AutoLink(Common.ToStringHtml(cResults.m_cContent.m_strTagList.replace("##", "#")), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
+						<%=Common.AutoLink(Common.ToStringHtml(" #"+tag+ " "), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
 					</h2>
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%=ABTestUtil.toThumbHtml_GenreList(cContent, tag, _TEX)%>
 				<%}%>
 			</section>
 		</article>
-		<%}%>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
