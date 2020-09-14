@@ -154,13 +154,13 @@ public class Util {
 		String strUuserAgent = toString(request.getHeader("user-agent"));
 		String strReferer = toString(request.getHeader("Referer"));
 
-		if(strReferer.indexOf("poipiku.com")<0) {
+		//if(strReferer.indexOf("poipiku.com")<0) {
 			if(	(strUuserAgent.indexOf("iPhone")>=0 && strUuserAgent.indexOf("iPad")<0) ||
 					strUuserAgent.indexOf("iPod")>=0 ||
 					(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf("Mobile")>=0)) {
 				return true;
 			}
-		}
+		//}
 		return false;
 	}
 
