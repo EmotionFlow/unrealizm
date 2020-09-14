@@ -334,6 +334,23 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 -->
 		</article>
 
+		<%cResults.m_vRelatedContentList=ABTestUtil.getGenreContentList(cResults.m_nContentId, ABTestUtil.MAX_GENRE_LIST_CONTENTS);
+		String tag = ABTestUtil.getTitleTag(cResults.m_nContentId);%>
+		<article class="Wrapper GridList">
+			<section id="IllustItemList" class="IllustItemList Related">
+				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
+					<h2 class="Keyword">
+						<%=Common.AutoLink(Common.ToStringHtml(" #"+tag+ " "), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
+					</h2>
+				</header>
+				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
+					<%=ABTestUtil.toThumbHtml_GenreList(cContent, tag, _TEX)%>
+				<%}%>
+			</section>
+		</article>
+
+
 		<%cResults.m_vContentList=ABTestUtil.getUserContentList(cResults.m_nUserId, ABTestUtil.MAX_USER_LIST_CONTENTS); %>
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
@@ -353,23 +370,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=ABTestUtil.toThumbHtml_UserList(cContent, _TEX)%>
-				<%}%>
-			</section>
-		</article>
-
-		<%
-		cResults.m_vRelatedContentList=ABTestUtil.getGenreContentList(cResults.m_nContentId, ABTestUtil.MAX_GENRE_LIST_CONTENTS);
-		String tag = ABTestUtil.getTitleTag(cResults.m_nContentId);%>
-		<article class="Wrapper GridList">
-			<section id="IllustItemList" class="IllustItemList Related">
-				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
-					<h2 class="Keyword">
-						<%=Common.AutoLink(Common.ToStringHtml(" #"+tag+ " "), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
-					</h2>
-				</header>
-				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
-					<%=ABTestUtil.toThumbHtml_GenreList(cContent, tag, _TEX)%>
 				<%}%>
 			</section>
 		</article>
