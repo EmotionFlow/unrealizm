@@ -16,6 +16,7 @@ nRtn = cParam.GetParam(request);
 //Log.d("UploadCParam.m_nCategoryId:"+cParam.m_nCategoryId);
 //Log.d("UploadCParam.m_strDescription:"+cParam.m_strDescription);
 
+
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadC cResults = new UploadC();
 	nRtn = cResults.GetResults(cParam);
