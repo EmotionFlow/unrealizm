@@ -48,7 +48,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-24.js" type="text/javascript"></script>
-		<script src="/js/update-03.js" type="text/javascript"></script>
+		<script src="/js/update-04.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -382,7 +382,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" <%if(!cResults.m_cContent.m_bCheerNg){%>checked<%}%> />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" <%if(cResults.m_cContent.m_bCheerNg){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionCheerNg">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
