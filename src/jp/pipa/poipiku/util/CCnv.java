@@ -290,7 +290,7 @@ public class CCnv {
 		// Normal
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
-		if(!cContent.m_bCheerNg) {
+		if(!cContent.m_bCheerNg && (nSpMode != SP_MODE_APP)) {
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
 		}
 		strRtn.append("</div>");	// ResBtnSetList
@@ -329,7 +329,7 @@ public class CCnv {
 			// ポチ袋
 			if (nSpMode == SP_MODE_APP){
 				// アプリであることを示すclassを付与して、JS側で区別できるようにする。
-				strRtn.append("<div class=\"ResEmojiBtnList Cheer App\" style=\"display: none;\"></div>");
+				//strRtn.append("<div class=\"ResEmojiBtnList Cheer App\" style=\"display: none;\"></div>");
 			} else {
 				strRtn.append("<div class=\"ResEmojiBtnList Cheer Browser\" style=\"display: none;\"></div>");
 			}
