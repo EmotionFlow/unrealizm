@@ -10,15 +10,6 @@ if(!bSmartPhone) {
 }
 cResults.getParam(request);
 
-
-// ABテスト
-if(ABTestUtil.isIllustViewTest_UserList_GenreList(request, cResults.m_nUserId, cResults.m_nContentId)) {
-	response.sendRedirect(String.format("/IllustViewPc_UserGenreListV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId));
-	return;
-}
-// ABテスト
-
-
 if(!cResults.getResults(cCheckLogin)) {
 	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
 		response.sendRedirect("/NotFoundPcV.jsp");
@@ -212,6 +203,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			});
 		</script>
 		<style>
+			.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
+			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
+			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
+			.EventItemList .EventItem.Updated {position: relative;}
+			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 			.IllustItemList.Related {margin-bottom: 6px;}
 			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
 			.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
@@ -223,6 +219,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%}%>
 
 			<%if(!Util.isSmartPhone(request)) {%>
+			.EventItemList {display: block; float: none; width: 100%; margin: 0 0 0 0;}
+			.EventItemList .EventItem {display: block; margin: 0 0 20px 0;}
+			.EventItemList .EventItem .EventBanner {width: 300px; display: block;}
 			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 15px 0 10px 0}
 			.IllustItemList.Related .AutoLink {padding: 5px 10px; margin: 0 10px; border-radius: 10px;}
 			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
@@ -292,6 +291,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
+				<%@ include file="/inner/TAdPcEvent_top_rightV.jsp"%>
+
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>

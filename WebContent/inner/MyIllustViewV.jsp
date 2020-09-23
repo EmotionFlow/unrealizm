@@ -195,11 +195,19 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		});
 	</script>
 	<style>
+		.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
+		.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
+		.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
+		.EventItemList .EventItem.Updated {position: relative;}
+		.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 
 		<%if(!bSmartPhone) {%>
+		.EventItemList {display: block; float: none; width: 100%; margin: 0 0 0 0;}
+		.EventItemList .EventItem {display: block; margin: 0 0 20px 0;}
+		.EventItemList .EventItem .EventBanner {width: 300px; display: block;}
 		.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 		.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
 		.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
@@ -226,6 +234,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 	<%if(!bSmartPhone&&!isApp) {%>
 	<aside class="PcSideBar" style="margin-top: 30px;">
+		<%@ include file="/inner/TAdPcEvent_top_rightV.jsp"%>
+
 		<div class="PcSideBarItem">
 			<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 		</div>
