@@ -271,7 +271,8 @@ try {
 						</div>
 					</div>
 					<div class="OptionItem">
-						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
+						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%>
+						</div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" />
 							<label class="onoffswitch-label" for="OptionCheerNg">

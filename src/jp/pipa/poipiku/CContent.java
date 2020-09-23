@@ -35,7 +35,7 @@ public class CContent {
 	public int m_nTweetWhenPublished = 0;
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
-	public boolean m_bCheerNg = false;
+	public boolean m_bCheerNg = true;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 

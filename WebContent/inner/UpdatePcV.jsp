@@ -382,7 +382,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" <%if(cResults.m_cContent.m_bCheerNg){%>checked<%}%> />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" <%if(!cResults.m_cContent.m_bCheerNg){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionCheerNg">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>

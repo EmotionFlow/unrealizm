@@ -57,7 +57,7 @@ public class IllustViewPcC {
 	public boolean m_bBlocked = false;
 	public int m_nContentsNumTotal = 0;
 	public Integer m_nNewContentId = null;
-	public boolean m_bCheerNg = false;
+	public boolean m_bCheerNg = true;
 	public boolean getResults(CheckLogin cCheckLogin) {
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
