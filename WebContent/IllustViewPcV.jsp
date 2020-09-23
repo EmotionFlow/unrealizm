@@ -372,6 +372,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
 					<h2 class="Keyword">
+						<%String keyword = ABTestUtil.getTitleTag(cResults.m_cContent.m_nContentId);%>
+						<a class="AutoLink" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 						<%=Common.AutoLink(Common.ToStringHtml(cResults.m_cContent.m_strTagList.replace("##", "#")), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
 					</h2>
 				</header>
