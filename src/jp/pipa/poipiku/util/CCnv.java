@@ -290,7 +290,9 @@ public class CCnv {
 		// Normal
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
+		if(!cContent.m_bCheerNg) {
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
+		}
 		strRtn.append("</div>");	// ResBtnSetList
 
 		if(nLoginUserId>0) {
@@ -323,12 +325,14 @@ public class CCnv {
 		strRtn.append("<div class=\"ResEmojiBtnList Food\" style=\"display: none;\"></div>");
 		// その他の絵文字
 		strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
-		// ポチ袋
-		if (nSpMode == SP_MODE_APP){
-			// アプリであることを示すclassを付与して、JS側で区別できるようにする。
-			strRtn.append("<div class=\"ResEmojiBtnList Cheer App\" style=\"display: none;\"></div>");
-		} else {
-			strRtn.append("<div class=\"ResEmojiBtnList Cheer Browser\" style=\"display: none;\"></div>");
+		if(!cContent.m_bCheerNg) {
+			// ポチ袋
+			if (nSpMode == SP_MODE_APP){
+				// アプリであることを示すclassを付与して、JS側で区別できるようにする。
+				strRtn.append("<div class=\"ResEmojiBtnList Cheer App\" style=\"display: none;\"></div>");
+			} else {
+				strRtn.append("<div class=\"ResEmojiBtnList Cheer Browser\" style=\"display: none;\"></div>");
+			}
 		}
 		strRtn.append("</div>");	// IllustItemResList
 	}
