@@ -893,8 +893,8 @@ function UploadFile(user_id) {
 	strTagList = strTagList.substr(0 , 100);
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
-	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?1:0;
-	var nRecent = ($('#OptionRecent').prop('checked'))?0:1;
+	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
+	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
@@ -1068,12 +1068,12 @@ function UploadPaste(user_id) {
 	strTagList = strTagList.substr(0 , 100);
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
-	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?1:0;
-	var nRecent = ($('#OptionRecent').prop('checked'))?0:1;
+	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
+	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var nLimitedTime = getLimitedTimeFlg('EditPublish','OptionLimitedTimePublish');
+	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
