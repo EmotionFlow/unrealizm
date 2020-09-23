@@ -36,6 +36,8 @@ public class MyEditSettingC {
 	public boolean m_bCardInfoExist = false;
 	public boolean m_bExchangeCheerPointRequested = false;
 	public int m_nCheerPoint = 0;
+	public int m_nExchangePoint = 0;
+	public int m_nExchangeFee = 0;
 
 	public boolean GetResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -167,11 +169,21 @@ public class MyEditSettingC {
 			} else {
 				m_nCheerPoint = 0;
 			}
-			cResSet.close();
-			cResSet = null;
-			cState.close();
-			cState = null;
+			cResSet.close();cResSet = null;
+			cState.close();cState = null;
 
+			if(m_bExchangeCheerPointRequested) {
+				strSql = "SELECT exchange_point, payment_fee FROM cheer_point_exchange_requests WHERE user_id=? AND status=0";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, checkLogin.m_nUserId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					m_nExchangePoint = cResSet.getInt(1);
+					m_nExchangeFee = cResSet.getInt(2);
+				}
+				cResSet.close();cResSet = null;
+				cState.close();cState = null;
+			}
 			bRtn = true;
 		} catch(Exception e) {
 			Log.d(strSql);
