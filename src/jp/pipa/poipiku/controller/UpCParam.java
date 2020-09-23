@@ -43,7 +43,7 @@ public class UpCParam {
 		m_nEditorId			= Common.ToIntN(request.getParameter("ED"), 0, Common.PUBLISH_ID_MAX);
 		m_bTweetTxt			= Common.ToBoolean(request.getParameter("TWT"));
 		m_bTweetImg			= Common.ToBoolean(request.getParameter("TWI"));
-		m_bCheerNg			= Common.ToInt(request.getParameter("CNG"))==1;
+		m_bCheerNg			= Common.ToInt(request.getParameter("CNG"))!=0;
 
 		// format tag list
 		if(!m_strTagList.isEmpty()) {
