@@ -235,11 +235,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 	<%if(!bSmartPhone && !isApp) {%>
 	<aside class="PcSideBar" style="margin-top: 30px;">
 		<div class="PcSideBarItem">
-			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+			<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
 		</div>
 
 		<div class="PcSideBarItem">
-			<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
+			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 		</div>
 
 		<div class="FixFrame">
