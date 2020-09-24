@@ -232,9 +232,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 <article class="Wrapper ViewPc">
 
-	<%if(!bSmartPhone&&!isApp) {%>
+	<%if(!bSmartPhone && !isApp) {%>
 	<aside class="PcSideBar" style="margin-top: 30px;">
-		<%@ include file="/inner/TAdPcEvent_top_rightV.jsp"%>
+		<div class="PcSideBarItem">
+			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+		</div>
 
 		<div class="PcSideBarItem">
 			<%@ include file="/inner/TAdPc300x250_top_right.jsp"%>
@@ -255,6 +257,12 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<%=CCnv.MyContent2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 		<%}%>
 	</section>
+
+	<%if(isApp) {%>
+	<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
+	<%}else if(bSmartPhone){%>
+	<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+	<%}%>
 </article>
 
 <%if(!isApp){%>

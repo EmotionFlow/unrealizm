@@ -42,7 +42,7 @@ String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 			.AnalogicoInfo {display: none;}
 			.SettingList .SettingListItem .SettingListTitle {text-align: center; font-size: 20x; font-weight: bold; margin: 20px 0 0 0;}
 			.SettingList .SettingListItem {margin: 0 0 20px 0;}
-			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 336px; left: 12px; top: 1283px; z-index: 1;}
+			.SlotFrame {display: flex; flex-flow: row nowrap; justify-content:space-between; position: absolute; width: 336px; left: 12px; top: 1169px; z-index: 1;}
 			.SlotFrame .SlotItem {display: flex; flex-flow: column; align-items: center;}
 			.SlotItem .RouletteFrame {}
 			.SlotItem .RouletteFrame .Roulette {display: none; width: 163px; background-color: #fff; border-radius: 10px; overflow: hidden;}
@@ -92,7 +92,7 @@ String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 			}
 		</script>
 	</head>
-	
+
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 

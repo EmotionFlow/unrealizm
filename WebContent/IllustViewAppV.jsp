@@ -144,6 +144,11 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			});
 		</script>
 		<style>
+			.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
+			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
+			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
+			.EventItemList .EventItem.Updated {position: relative;}
+			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 			.IllustItemList.Related {margin-bottom: 6px;}
 			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
 			.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
@@ -210,7 +215,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<section id="IllustItemList" class="IllustItemList">
 				<%=CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 			</section>
+
+			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
 		</article>
+
 
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">

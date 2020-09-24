@@ -96,26 +96,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<%}%>
 			</div>
 			<%}%>
-			<section class="EventItemList">
-				<!--
-				<a class="EventItem" href="https://poipiku.com/2/1783042.html">
-					<img class="EventBanner" src="/img/maintenance.png" />
-				</a>
-				-->
-				<a class="EventItem" href="/event/20200821_mangaMovie2/TopV.jsp">
-					<%if(Math.random()>0.5) {%>
-					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_3.png" />
-					<%} else {%>
-					<img class="EventBanner" src="/event/20200821_mangaMovie2/poipiku_2_bn_4.png" />
-					<%}%>
-				</a>
-				<a class="EventItem" href="/event/20190901/TopV.jsp">
-					<img class="EventBanner" src="/event/20190901/banner_odai.png" />
-				</a>
-				<a class="EventItem" href="/event/20191001/TopV.jsp">
-					<img class="EventBanner" src="/event/20191001/banner_karapare.png" />
-				</a>
-			</section>
+
+			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
+
 			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 				<%=_TEX.T("MyHome.FirstMsg")%>

@@ -291,7 +291,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 
 			<%if(!bSmartPhone) {%>
 			<aside class="PcSideBar" style="margin-top: 30px;">
-				<%@ include file="/inner/TAdPcEvent_top_rightV.jsp"%>
+				<div class="PcSideBarItem">
+					<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+				</div>
 
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
@@ -334,6 +336,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<%= CCnv.Content2Html(cResults.m_cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 			</section>
 
+			<%if(bSmartPhone) {%>
+			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+			<%}%>
 <!--
 			<nav class="PageBar">
 				<%//if(bSmartPhone) {%>
@@ -374,7 +379,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					<h2 class="Keyword">
 						<%String keyword = ABTestUtil.getTitleTag(cResults.m_cContent.m_nContentId);%>
 						<a class="AutoLink" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
-						<%=Common.AutoLink(Common.ToStringHtml(cResults.m_cContent.m_strTagList.replace("##", "#")), cResults.m_cContent.m_nUserId, CCnv.MODE_PC, CCnv.MODE_PC)%>
 					</h2>
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
