@@ -22,7 +22,7 @@
 ` + '受取口座の指定' + `
 </h2>
 <div class="BankInfoInfo">
-<p>`+ <%=strCheerPointTotal%> + 'ポイントから手数料300ポイントを除いた' + <%=strPaymentYenTotal%> + '円を指定口座に振り込むことができます。'
+<p>`+ '<%=strCheerPointTotal%>' + 'ポイントから手数料300ポイントを除いた' + '<%=strPaymentYenTotal%>' + '円を指定口座に振り込むことができます。'
             +`なお、指定できるのは日本国内の銀行口座のみです。</p>
 </div>
 <div class="BankInfoInputItem">
