@@ -172,7 +172,12 @@
                 <%=strCheerPointTotal%>ポイント
             </p>
             <%if(cResults.m_bExchangeCheerPointRequested){%>
+            <p>
                 <%=cResults.m_nExchangePoint%>ポイント（<%=cResults.m_nExchangeFee%>円分）について、指定口座への振り込み申請を受付中です。
+            </p>
+            <p>申請内容について運営よりメールにてお問い合わせすることがありますので、
+                <a href="/MyEditSettingPcV.jsp?MENUID=MAIL" style="text-decoration: underline;">メールログイン設定画面にて、メールアドレスの登録・確認</a>をお願いいたします。
+            </p>
             <%}else{%>
             <%if(cResults.m_nCheerPoint>=400){%>
             <div style="text-align: center">
@@ -183,7 +188,7 @@
                 <div id="CheerPointExRequested" style="display: none; text-align: left">
                     <p>振込申請を受け付けました。申請は月末に取りまとめたのち、翌月末までに指定口座へお振込みいたします。</p>
                     <p>なお、申請内容について運営よりメールにてお問い合わせすることがありますので、
-                        <a href="/MyEditSettingPcV.jsp?MENUID=MAIL">メールログイン設定画面にて、メールアドレスの登録・確認</a>をお願いいたします。
+                        <a href="/MyEditSettingPcV.jsp?MENUID=MAIL" style="text-decoration: underline;">メールログイン設定画面にて、メールアドレスの登録・確認</a>をお願いいたします。
                     </p>
                 </div>
             </div>
