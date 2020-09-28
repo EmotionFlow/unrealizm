@@ -106,6 +106,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				</div>
 
 				<div class="PcSideBarItem">
+					<h2 style="font-size: 18px; color: #fff;"><%=_TEX.T("Footer.Information.Title")%></h2>
+					<div style="width: 300px; height: 400px; background-color: #eee;">
+						<a class="twitter-timeline" data-width="300" data-height="400" data-theme="light" href="https://twitter.com/pipajp?ref_src=twsrc%5Etfw">Tweets by pipajp</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+					</div>
+				</div>
+
+				<div class="PcSideBarItem">
 					<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 				</div>
 
