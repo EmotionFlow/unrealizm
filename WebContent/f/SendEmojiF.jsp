@@ -116,13 +116,13 @@ class SendEmojiC {
 				}
 				// 注文生成
 				Integer orderId = null;
+				// 売り手はポイピク公式固定、cheer_statusは0:分配対象(分配前)固定。
 				strSql = "INSERT INTO orders(" +
-						" customer_id, seller_id, status, payment_total)" +
-						" VALUES (?, ?, ?, ?)";
+						" customer_id, seller_id, status, payment_total, cheer_point_status)" +
+						" VALUES (?, 2, ?, ?, 0)";
 				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				int idx=1;
 				cState.setInt(idx++, m_nUserId);
-				cState.setInt(idx++, 2); // 売り手はポイピク公式
 				cState.setInt(idx++, COrder.STATUS_INIT);
 				cState.setInt(idx++, m_nAmount);
 				cState.executeUpdate();
@@ -136,7 +136,7 @@ class SendEmojiC {
 
 				strSql = "INSERT INTO order_details(" +
 						" order_id, content_id, content_user_id, product_name, list_price, amount_paid, quantity)" +
-						" VALUES (?, ?, ?, ?, ?, ?, ?)";
+						" VALUES (?, ?, ?, ?, ?, ?, 1)";
 				cState = cConn.prepareStatement(strSql);
 				idx=1;
 				cState.setInt(idx++, orderId);
@@ -145,7 +145,6 @@ class SendEmojiC {
 				cState.setString(idx++, m_strEmoji);
 				cState.setInt(idx++, m_nAmount);
 				cState.setInt(idx++, m_nAmount);
-				cState.setInt(idx++, 1);
 				cState.executeUpdate();
 				cState.close(); cState=null;
 
