@@ -134,9 +134,10 @@ class SendEmojiC {
 				cResSet.close(); cResSet=null;
 				cState.close(); cState=null;
 
+				// 商品種別は1:ポチ袋固定、数量は1固定。
 				strSql = "INSERT INTO order_details(" +
-						" order_id, content_id, content_user_id, product_name, list_price, amount_paid, quantity)" +
-						" VALUES (?, ?, ?, ?, ?, ?, 1)";
+						" order_id, content_id, content_user_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
+						" VALUES (?, ?, ?, 1, ?, ?, ?, 1)";
 				cState = cConn.prepareStatement(strSql);
 				idx=1;
 				cState.setInt(idx++, orderId);
