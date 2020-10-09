@@ -38,6 +38,7 @@ public class MyEditSettingC {
 	public int m_nCheerPoint = 0;
 	public int m_nExchangePoint = 0;
 	public int m_nExchangeFee = 0;
+	public Passport m_cPassport = null;
 
 	public boolean GetResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -184,6 +185,9 @@ public class MyEditSettingC {
 				cResSet.close();cResSet = null;
 				cState.close();cState = null;
 			}
+
+			m_cPassport = new Passport(checkLogin);
+
 			bRtn = true;
 		} catch(Exception e) {
 			Log.d(strSql);

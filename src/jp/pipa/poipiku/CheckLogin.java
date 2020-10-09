@@ -20,7 +20,7 @@ public class CheckLogin {
 	public int m_nLangId = 0;
 	private String m_strFileName = "";
 	public boolean m_bEmailValid = false;
-	public int m_nPremiumMemberId = -1;
+	public int m_nPassportId = -1;
 
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -78,7 +78,7 @@ public class CheckLogin {
 			{
 				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 				cConn = dsPostgres.getConnection();
-				strSql = "SELECT user_id, nickname, lang_id, last_login_date, file_name, email FROM users_0000 WHERE hash_password=?";
+				strSql = "SELECT user_id, nickname, lang_id, last_login_date, file_name, email, passport_id FROM users_0000 WHERE hash_password=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, m_strHashPass);
 				cResSet = cState.executeQuery();
@@ -91,6 +91,7 @@ public class CheckLogin {
 					if(m_strFileName.length()<=0) m_strFileName = "/img/default_user.jpg";
 					m_bEmailValid	= Common.ToString(cResSet.getString("email")).contains("@");
 					m_bLogin = true;
+					m_nPassportId	= cResSet.getInt("passport_id");
 					if(m_nUserId==315) m_nSafeFilter = Common.SAFE_FILTER_ALL;
 				}
 				cResSet.close();cResSet=null;

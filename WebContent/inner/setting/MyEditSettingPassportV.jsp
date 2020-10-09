@@ -7,14 +7,16 @@
 
 <div class="SettingList">
     <div class="SettingListItem">
-        <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPremiumMemberV.Title")%></div>
+        <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
+        <%if(cResults.m_cPassport.m_status == Passport.Status.NotMember) {%>
         <div class="SettingBody">
-            <%=_TEX.T("MyEditSettingPremiumMemberV.Text")%>
+            <%=_TEX.T("MyEditSettingPassportV.Text")%>
             <div class="SettingBodyCmd">
-                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="DeleteCreditCardInfo()">
-                    プレミアム会員をはじめる
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="">
+                    ポイパスを購入する
                 </a>
             </div>
         </div>
+        <%}%>
     </div>
 </div>

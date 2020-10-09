@@ -43,7 +43,8 @@ public class Passport {
                 m_tsSubscription = cResSet.getTimestamp("subscription_datetime");
                 m_tsRelease = cResSet.getTimestamp("release_datetime");
 
-                // 1レコードだけだったら初回申込。2レコードあったら、「初回申込ではない」とする。
+                // 1レコードだけだったら初回申込、
+                // 2レコードあったら、「初回申込ではない」とする。
                 m_bFirstTime = !cResSet.next();
             } else {
                 m_bFirstTime = null;
@@ -59,7 +60,7 @@ public class Passport {
         }
 
         m_nUserId = checkLogin.m_nUserId;
-        m_nPassportId = checkLogin.m_nPremiumMemberId;
+        m_nPassportId = checkLogin.m_nPassportId;
         setStatus();
     }
 
@@ -72,15 +73,17 @@ public class Passport {
         // パスポートなし
         if (m_nPassportId == 0) {
             m_status = Status.NotMember;
-            return;
+        } else {
+            if (m_tsRelease != null) {
+                // 課金解除申込中
+                m_status = Status.UnBilling;
+            } else if(m_bFirstTime) {
+                // 初月無料期間中
+                m_status = Status.FreePeriod;
+            } else {
+                // 課金中
+                m_status = Status.Billing;
+            }
         }
-
-        // 初月無料期間中
-
-        // 課金中
-
-        // 課金解除申込中
-
     }
-
 }
