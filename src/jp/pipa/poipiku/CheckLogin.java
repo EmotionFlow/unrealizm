@@ -20,6 +20,7 @@ public class CheckLogin {
 	public int m_nLangId = 0;
 	private String m_strFileName = "";
 	public boolean m_bEmailValid = false;
+	public int m_nPremiumMemberId = -1;
 
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {

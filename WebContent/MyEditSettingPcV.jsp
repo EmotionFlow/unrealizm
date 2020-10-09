@@ -54,6 +54,7 @@ MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
+MENU.put("PREMIUMMEMBER", _TEX.T("EditSettingV.PremiumMember"));
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
@@ -205,6 +206,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 							"REACTION",
 							"TWITTER",
 							"MAIL",
+							"PREMIUMMEMBER",
 							"PAYMENT",
 							"CHEER",
 							"ACCOUNT",
@@ -275,6 +277,14 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMailV.jsp"%>
+				</div>
+			</div>
+
+			<%strPageId = "PREMIUMMEMBER";%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingPremiumMemberV.jsp"%>
 				</div>
 			</div>
 
