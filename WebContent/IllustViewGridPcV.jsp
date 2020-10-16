@@ -51,6 +51,7 @@ case Common.PUBLISH_ID_ALL:
 case Common.PUBLISH_ID_HIDDEN:
 default:
 	strFileUrl = cResults.m_cContent.m_strFileName;
+	if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512.png";
 	break;
 }
 
@@ -112,7 +113,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_360.jpg" />
+		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>

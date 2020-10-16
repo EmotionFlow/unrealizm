@@ -118,7 +118,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 	<meta name="twitter:site" content="@pipajp" />
 	<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
 	<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
-	<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_360.jpg" />
+	<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
 	<link rel="canonical" href="<%=strUrl%>" />
 	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 	<title><%=Util.toDescString(strTitle)%></title>
@@ -127,7 +127,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetPoipikuUrl(strFileUrl)%>"}
 			]
 		}
 		</script>

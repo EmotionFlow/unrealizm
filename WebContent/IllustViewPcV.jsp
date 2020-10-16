@@ -57,6 +57,7 @@ case Common.PUBLISH_ID_ALL:
 case Common.PUBLISH_ID_HIDDEN:
 default:
 	strFileUrl = cResults.m_cContent.m_strFileName;
+	if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512.png";
 	break;
 }
 
@@ -127,7 +128,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetPoipikuUrl(strFileUrl)%>_640.jpg"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetPoipikuUrl(strFileUrl)%>"}
 			]
 		}
 		</script>

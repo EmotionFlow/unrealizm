@@ -31,6 +31,7 @@ String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
 String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
+if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 %>
 <!DOCTYPE html>
