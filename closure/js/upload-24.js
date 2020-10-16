@@ -723,7 +723,7 @@ function updatePublish(nUserId) {
 }
 
 function tweetSucceeded(data){
-	var toContext = "/MyIllustListV.jsp";
+	var toContext = "/MyIllustListPcV.jsp";
 	if(data!=null){
 		if(data>0){ // 異常無し
 			completeMsg();
@@ -824,7 +824,7 @@ function initUploadFile() {
 					// complete
 					completeMsg();
 					setTimeout(function(){
-						location.href="/MyIllustListV.jsp";
+						location.href="/MyIllustListPcV.jsp";
 					}, 1000);
 				}
 			},
@@ -1180,7 +1180,7 @@ function UploadPaste(user_id) {
 				});
 			} else {
 				setTimeout(function(){
-					location.href="/MyIllustListV.jsp";
+					location.href="/MyIllustListPcV.jsp";
 				}, 1000);
 			}
 		}

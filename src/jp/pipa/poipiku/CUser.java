@@ -14,6 +14,9 @@ public class CUser {
 	public static final int REACTION_SHOW = 0;
 	public static final int REACTION_HIDE = 1;
 
+	public static final int PREMIUM_OFF = 0;
+	public static final int PREMIUM_ON = 1;
+
 	public int m_nUserId = 0;
 	public String m_strNickName = "";
 	public String m_strProfile = "";
@@ -32,6 +35,7 @@ public class CUser {
 	public boolean m_bDispFollower = false;
 	public boolean m_bDispR18 = false;
 	public int m_nReaction = REACTION_SHOW;
+	public int m_nPremiumId = PREMIUM_OFF;	// まだDBにフィールドなし。
 
 	// tblOAuth
 	public int m_nAutoTweetTime=-99;
@@ -47,6 +51,7 @@ public class CUser {
 		m_nUserId		= resultSet.getInt("user_id");
 		m_strNickName	= Common.ToString(resultSet.getString("nickname"));
 		m_strFileName	= Common.ToString(resultSet.getString("file_name"));
+		m_nPremiumId	= resultSet.getInt("premiun_id");
 		if(m_strFileName.isEmpty()) m_strFileName="/img/default_user.jpg";
 	}
 }

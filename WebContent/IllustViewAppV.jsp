@@ -247,7 +247,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
 					<h2 class="Keyword">
-						<%String keyword = ABTestUtil.getTitleTag(cResults.m_cContent.m_nContentId);%>
+						<%
+							String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);
+						%>
 						<a class="AutoLink" class="AutoLink" href="/SearchIllustByTag.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 					</h2>
 				</header>
@@ -255,6 +257,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 				<%}%>
+				<%@ include file="/inner/TAd336x280_mid.jsp"%>
 			</section>
 		</article>
 		<%}%>

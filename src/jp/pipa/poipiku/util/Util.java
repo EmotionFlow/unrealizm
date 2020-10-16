@@ -198,7 +198,7 @@ public class Util {
 		if(strSrc == null) {
 			return "";
 		}
-		strSrc = deleteCrLf(strSrc);
+		//strSrc = deleteCrLf(strSrc);
 		strSrc = strSrc.replace("&", "&amp;");
 		strSrc = strSrc.replace("<", "&lt;");
 		strSrc = strSrc.replaceAll(">", "&gt;");

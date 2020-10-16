@@ -16,10 +16,10 @@ cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 boolean bRtn = cResults.getResults(cCheckLogin, true);
 %>
-<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CContent cContent = cResults.m_vContentList.get(nCnt);%>
-	<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin, CCnv.SP_MODE_APP)%>
-	<%if(nCnt==17) {%>
-	<%@ include file="/inner/TAd336x280_mid.jsp"%>
+<%if(cResults.m_vContentList.size()>0) {%>
+	<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+		CContent cContent = cResults.m_vContentList.get(nCnt);%>
+		<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin, CCnv.SP_MODE_APP)%>
 	<%}%>
+	<%@ include file="/inner/TAd336x280_mid.jsp"%>
 <%}%>

@@ -18,7 +18,7 @@ public class CContent {
 	public int m_nUserId = 0;
 	public int m_nOpenId = 0;
 	public boolean m_bNotRecently = false;
-	public int m_nEditorId = 0;
+	public int m_nEditorId = Common.EDITOR_UPLOAD;
 	public String m_strFileName = "";
 	public int m_nFileNum = 0;
 	public int m_nBookmarkNum = 0;
@@ -36,6 +36,7 @@ public class CContent {
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
 	public boolean m_bCheerNg = true;
+	public String m_strTextBody = "";
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
@@ -66,6 +67,7 @@ public class CContent {
 		m_strTweetId		= Common.ToString(resultSet.getString("tweet_id"));
 		m_nTweetWhenPublished=resultSet.getInt("tweet_when_published");
 		m_bCheerNg			= resultSet.getBoolean("cheer_ng");
+		m_strTextBody		= resultSet.getString("text_body");
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {

@@ -47,8 +47,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-24.js" type="text/javascript"></script>
-		<script src="/js/update-04.js" type="text/javascript"></script>
+		<script src="/js/upload-26.js" type="text/javascript"></script>
+		<script src="/js/update-05.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -58,13 +58,13 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		</script>
 		<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
 
-		<%if(nEditorId==0){%>
+		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
 		<%}%>
 
 		<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 
-		<%if(nEditorId==1){%>
+		<%if(nEditorId==Common.EDITOR_PASTE){%>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui.js"></script>
 			<script type="text/javascript">
@@ -149,22 +149,43 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
 				}
 			}
-			<%if(nEditorId==0){%>
+
+			function DispDescCharNum() {
+				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditDescription").val().length;
+				$("#DescriptionCharNum").html(nCharNum);
+			}
+
+			<%if(nEditorId==Common.EDITOR_TEXT){%>
+			function DispTextCharNum() {
+				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditTextBody").val().length;
+				$("#TextBodyCharNum").html(nCharNum);
+			}
+			<%}%>
+
+			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			$(function() {
 				initUpdateFile(<%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 			});
-			<%}else if(nEditorId==1){%>
+			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			$(function() {
 				$('#PasteZone').sortable();
 				initUpdatePaste(<%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 			});
+			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
+			$(function() {
+				DispTextCharNum();
+			});
 			<%}%>
+			$(function() {
+				DispDescCharNum();
+			});
+
 		</script>
 
 		<style>
 			body {padding-top: 83px !important;}
 
-		<%if(nEditorId==0){%>
+			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; max-height: none;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
@@ -181,14 +202,15 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
 			<%}%>
 			#FineUploaderPane { display:visible; }
-		<%}else if(nEditorId==1){%>
+			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PasteZone {min-height: 193px;}
 			.UploadFile .InputFile {margin: 8px; height: 177px; width: 177px;}
 			<%}%>
-		<%}%>
+			<%}%>
 		</style>
-		<%if(nEditorId==0){%>
+
+		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui.js"></script>
 			<script type="text/javascript">
@@ -201,7 +223,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					});
 				}
 			})
-		.disableSelection();
+			.disableSelection();
 		});
 		</script>
 		<!-- 画像並び替え用 -->
@@ -213,9 +235,17 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-			<%if(nEditorId==0){%>
+			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<li><a class="TabMenuItem Selected" href="/UpdateFilePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-			<%}else if(nEditorId==1){%>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span>></li>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span>></li>
+			<%}else if(nEditorId==Common.EDITOR_TEXT){%>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.File")%></span></li>
+				<li><a class="TabMenuItem Selected" href="/UploadTextPcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span></li>
+			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.File")%></span></li>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>
 				<li><a class="TabMenuItem Selected" href="/UpdatePastePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			<%}%>
 			</ul>
@@ -223,7 +253,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 		<article class="Wrapper">
 			<div class="UploadFile">
-				<%if(nEditorId==0){%>
+				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<div id="jQueryUploaderPane" class="TimeLineIllustCmd">
 				</div>
 				<!-- 元々の方式 -->
@@ -235,7 +265,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
 					</a>
 				</div>
-				<%}else if(nEditorId==1){%>
+				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 				<div class="TimeLineIllustCmd">
 					<div id="PasteZone" class="PasteZone"></div>
 					<span id="TotalSize" class="TotalSize">(multi ver. 0.2beta. 10pastes)</span>
@@ -253,10 +283,19 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<%}%>
 					</select>
 				</div>
+
 				<div class="Description">
-					<textarea id="EditDescription" class="EditDescription" maxlength="200" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=cResults.m_cContent.m_strDescription%></textarea>
-					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
+					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strDescription)%></textarea>
+					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
 				</div>
+
+				<%if(nEditorId==Common.EDITOR_TEXT){%>
+				<div class="TextBody">
+					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strTextBody)%></textarea>
+					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
+				</div>
+				<%}%>
+
 				<div class="TagList">
 					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Common.ToStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
@@ -380,16 +419,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<%}%>
 					</div>
 					<div class="OptionItem">
-						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
-						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" <%if(!cResults.m_cContent.m_bCheerNg){%>checked<%}%> />
-							<label class="onoffswitch-label" for="OptionCheerNg">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div>
-					</div>
-					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" <%if(cResults.m_cContent.m_bNotRecently){%>checked<%}%> />
@@ -431,12 +460,25 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							</label>
 						</div>
 					</div>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" <%if(!cResults.m_cContent.m_bCheerNg){%>checked<%}%> />
+							<label class="onoffswitch-label" for="OptionCheerNg">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+				</div>
 
 				<div class="UoloadCmd">
-				<%if(nEditorId==0){%>
+				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFile(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
-				<%}else if(nEditorId==1){%>
+				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateText(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>

@@ -17,7 +17,7 @@ class UploadReferenceCParam {
 			m_nUserId			= Common.ToInt(request.getParameter("UID"));
 			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
 			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), Common.SAFE_FILTER_ALL, Common.SAFE_FILTER_R18G);
-			m_strDescription	= Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("DES"))), 200);
+			m_strDescription	= Common.TrimAll(Common.ToString(request.getParameter("DES")));
 			m_strTagList		= Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("TAG"))), 100);
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
@@ -54,7 +54,7 @@ class UploadReferenceCParam {
 
 class UploadReferenceC {
 	int m_nContentId = -99;
-	public int GetResults(UploadReferenceCParam cParam, ResourceBundleControl _TEX) {
+	public int GetResults(UploadReferenceCParam cParam, ResourceBundleControl _TEX, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -72,7 +72,7 @@ class UploadReferenceC {
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nCategoryId);
 			cState.setInt(3, cParam.m_nSafeFilter);
-			cState.setString(4, Common.SubStrNum(cParam.m_strDescription, 200));
+			cState.setString(4, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPremiumId]));
 			cState.setString(5, cParam.m_strTagList);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
@@ -189,7 +189,7 @@ nRtn = cParam.GetParam(request);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadReferenceC cResults = new UploadReferenceC();
-	nRtn = cResults.GetResults(cParam, _TEX);
+	nRtn = cResults.GetResults(cParam, _TEX, cCheckLogin);
 	Log.d("UploadReferenceF - OK:"+nRtn);
 }
 %>

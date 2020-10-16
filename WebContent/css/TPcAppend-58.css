@@ -23,13 +23,18 @@ body {padding: 51px 0 0 0 !important;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
 .IllustThumbList {margin: 0 0;}
-.IllustThumb {margin: 12px !important; width: 200px; height: 200px;}
-.IllustThumb .Category {font-size: 13px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
+.IllustThumb {margin: 12px !important; width: 166px; height: 280px;}
+.IllustThumb .IllustUser {padding: 4px 2px;}
+.IllustThumb .IllustUser .IllustUserThumb {flex: 0 0 29px; height: 29px; border-radius: 29px;}
+.IllustThumb .IllustUser .IllustUserName {flex: 1 1 119px; margin: 0 0 0 4px; font-size: 14px;}
+.IllustThumb .IllustInfo {padding: 3px 3px 1px 3px;}
+.IllustThumb .Category {font-size: 12px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
 .IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
 .IllustThumb.Hidden .Category:before {font-size: 14px;}
-.IllustThumb .IllustThumbImg {box-sizing: border-box; width: 200px; height: 200px;}
-.IllustThumb .IllustInfo {padding: 5px;}
-.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 12px; height: 36px; line-height: 36px;}
+.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 14px; height: 40px; line-height: 20px;}
+
+.IllustThumb .IllustThumbImg {box-sizing: border-box; height: 173px;}
+.IllustThumb .IllustThumbText {box-sizing: border-box; height: 173px; padding: 1px 3px;}
 .IllustItem {margin: 15px;}
 .Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
 .Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
@@ -66,7 +71,6 @@ body {padding: 51px 0 0 0 !important;}
 .TabMenu .TabMenuItem {flex: 0 1 120px; font-size: 13px;}
 
 .Wrapper.ThumbList .PcSideBarAd {display: block; float: right; width: 300px !important; height: 250px !important; margin: 16px 8px 0px 8px !important; background-color: #eee !important;}
-
 .Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: none; margin: 0 0 0 30px; position: relative;; float: none; flex: 0 0 300px; min-height: 1000px;}
 .Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px; /*position: sticky; top: 81px;*/}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem {display: block; width: 100%; margin: 0 0 30px 0;}
@@ -87,7 +91,7 @@ body {padding: 51px 0 0 0 !important;}
 
 
 /********** GRID ***********/
-.Wrapper.GridList {width: 1122px;}
-.Wrapper.GridList .PcSideBarAd {width: 344px; height: 294px; float: none; display: inline-block; margin: 15px; background-color: #5bd; display: flex; align-items: center; justify-content: center;}
+.Wrapper.GridList {width: 1140px;}
+.Wrapper.GridList .PcSideBarAd {width: 336px; height: 280px; float: right; display: inline-block; margin: 12px; background-color: #5bd; display: flex; align-items: center; justify-content: center;}
 
 

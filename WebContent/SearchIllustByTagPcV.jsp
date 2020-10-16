@@ -40,14 +40,13 @@ String strFileUrl = cResults.m_strRepFileName;
 			$('#MenuNew').addClass('Selected');
 		});
 		</script>
-
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper ThumbList">
-			<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
+			<header class="SearchResultTitle">
 				<h2 class="Keyword">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></h2>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>

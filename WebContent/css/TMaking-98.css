@@ -136,12 +136,19 @@
 	overflow: hidden;
 	font-weight: bold;
 	position: relative;
+	box-sizing: border-box;
+	padding: 0 5px;
 }
 
 .SearchResultTitle .Keyword {
-	display: inline;
-	padding: 0;
+	display: block;
+	float: left;
+	background-color: #fff;
+	color: #5bd;
+	font-size: 15px;
+	padding: 0 18px;
 	margin: 0;
+	border-radius: 6px;
 	font-weight: bold;
 }
 
@@ -211,7 +218,7 @@
 	display: block;
 	float: left;
 	width: 112px;
-	height: 112px;
+	height: 188px;
 	margin: 6px 0 0 6px;
 	box-sizing: border-box;
 	overflow: hidden;
@@ -223,13 +230,43 @@
 	flex-flow: column;
 	border-radius: 4px;
 	border: solid 1px #eee;
+
+
 }
 
-/*.IllustThumb.Hidden {opacity: 0.5;}*/
+.IllustThumb .IllustUser {
+	display: flex;
+	flex-flow: row nowrap;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+	padding: 2px 2px 2px 2px;
+	border-bottom: solid 1px #eee;
+	align-items: center;
+}
 
-/*
-.IllustThumb:nth-child(19n+3), .IllustThumb:nth-child(19n+6), .IllustThumb:nth-child(19n+9), .IllustThumb:nth-child(19n+12), .IllustThumb:nth-child(19n+15), .IllustThumb:nth-child(19n+18), .IllustThumb:nth-child(19n+21) {margin-right: 0;}
-*/
+.IllustThumb .IllustUser .IllustUserThumb {
+	display: block;
+	flex: 0 0 20px;
+	height: 20px;
+	overflow: hidden;
+	border-radius: 20px;
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+.IllustThumb .IllustUser .IllustUserName {
+	display: block;
+	flex: 1 1 80px;
+	padding: 0;
+	margin: 0 0 0 3px;
+	text-align: left;
+	font-weight: bold;
+	font-size: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+}
 
 .IllustThumb .Category {
 	display: block;
@@ -244,8 +281,8 @@
 	border-radius: 22px;
 	min-width: 50px;
 	max-width: 100%;
-	height: 20px;
-	line-height: 20px;
+	height: 18px;
+	line-height: 18px;
 	padding: 0 5px;
 	z-index: 2;
 }
@@ -257,24 +294,48 @@
 	background-position: 50% 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
+	position: relative;
+}
+
+.IllustThumb .IllustThumbText {
+	display: block;
+	width: 100%;
+	height: 108px;
+	background-position: 50% 50%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	position: relative;
+	font-size: 13px;
+	line-height: 18px;
+	padding: 1px 0 0 0;
+	border-top: solid 1px #eee;
+	color: #333;
+}
+
+.IllustThumb .IllustThumbText:first-letter {
+	font-size: 35px;
+	line-height: 36px;
+	float: left;
+	margin: 0 2px 0 0;
 }
 
 .IllustThumb .IllustInfo {
 	display: block;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 3px 3px 0px 3px;
-	position: absolute;
+	padding: 2px 2px 0px 2px;
 	top: 0;
 }
 .IllustThumb .IllustInfo .IllustInfoDesc {
-	display: none;
+	display: block;
 	width: 100%;
-	float: left;
-	font-size: 10px;
-	height: 20px;
-	line-height: 20px;
+	font-size: 11px;
+	height: 30px;
+	line-height: 15px;
 	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 .IllustThumb .IllustInfoCenter {
 	display: block;
@@ -283,35 +344,36 @@
 	position: absolute;
 }
 .IllustThumb .IllustInfoBottom, .IllustItemThumb .IllustInfoBottom{
-		display: block;
-		width: 100%;
-		box-sizing: border-box;
-		position: absolute;
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	position: absolute;
 }
 .IllustThumb .IllustInfoBottom{
-		bottom: 3px;
-		left: 4px;
+	bottom: 3px;
+	left: 4px;
 }
 .IllustItemThumb .IllustInfoBottom{
-		bottom: 4px;
-		left: 8px;
+	bottom: 4px;
+	left: 8px;
 }
 .IllustItemThumb .Num {
-		margin: 0 3px;
-		background-repeat: no-repeat;
-		min-width: 40px;
-		display: block;
-		float: left;
-		color: white;
-		font-size: 15px;
-		background: #5bd;
-		box-sizing: border-box;
-		border-radius: 11px;
-		height: 25px;
-		line-height: 25px;
-		text-align: center;
-		z-index: 2;
+	margin: 0 3px;
+	background-repeat: no-repeat;
+	min-width: 40px;
+	display: block;
+	float: left;
+	color: white;
+	font-size: 15px;
+	background: #5bd;
+	box-sizing: border-box;
+	border-radius: 11px;
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+	z-index: 2;
 }
+
 .IllustThumb .Num {
 	background-repeat: no-repeat;
 	min-width: 32px;
@@ -569,6 +631,33 @@
 	line-height: 10px;
 }
 
+.UploadFile .TextBody {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 5px 0 0 0;
+	position: relative;
+}
+
+.UploadFile .TextBody .EditTextBody {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 300px;
+	box-sizing: border-box;
+}
+
+.UploadFile .TextBody .TextBodyCharNum {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: right;
+	font-size: 10px;
+	height: 10px;
+	line-height: 10px;
+}
+
 .UploadFile .TagList .EditTagList {
 	display: block;
 	float: left;
@@ -581,7 +670,7 @@
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	margin: 2px 0 0 0;
+	margin: 5px 0 0 0;
 	position: relative;
 }
 
@@ -1238,6 +1327,40 @@
 .IllustItem .IllustItemThumb .IllustItemThumbImg {
 	display: inline-block;
 	max-width: 100%;
+}
+
+.IllustItem.Text .IllustItemText {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	min-height: 140px;
+	max-height: 280px;
+	text-align: left;
+	padding: 0 8px;
+	margin: 15px 0 0 0;
+	color: #333;
+}
+
+.IllustItem.Text .IllustItemText:hover {
+	color: #333;
+}
+
+.IllustItem.Text .IllustItemText .IllustItemThumbText {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	color: #333;
+}
+
+.IllustItem.Text .IllustItemExpand {
+	margin-top: 0;
+}
+
+.IllustItem.Text .IllustItemTProhibit {
+	margin-top: 0;
 }
 
 .IllustItem .IllustItemResList {

@@ -28,7 +28,7 @@ try {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-24.js" type="text/javascript"></script>
+		<script src="/js/upload-26.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -38,7 +38,7 @@ try {
 		});
 		</script>
 
-		<%if(nEditorId==0){%>
+		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
 			<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
 			<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
@@ -107,23 +107,43 @@ try {
 				}
 			}
 
-			<%if(nEditorId==0){%>
+			function DispDescCharNum() {
+				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditDescription").val().length;
+				$("#DescriptionCharNum").html(nCharNum);
+			}
+
+			<%if(nEditorId==Common.EDITOR_TEXT){%>
+			function DispTextCharNum() {
+				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditTextBody").val().length;
+				$("#TextBodyCharNum").html(nCharNum);
+			}
+			<%}%>
+
+			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			function completeAddFile() {
 				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
 			$(function(){
 				initUploadFile();
 			});
-			<%}else if(nEditorId==1){%>
+			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			$(function() {
 				initUploadPaste();
 			});
+			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
+			$(function() {
+				DispTextCharNum();
+			});
 			<%}%>
+			$(function() {
+				DispDescCharNum();
+			});
+
 		</script>
 
 		<style>
 			body {padding-top: 83px !important;}
-			<%if(nEditorId==0){%>
+			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; max-height: none;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
@@ -139,7 +159,7 @@ try {
 				.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
 				.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
 				<%}%>
-			<%}else if(nEditorId==1){%>
+			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 				<%if(!Util.isSmartPhone(request)) {%>
 				.PasteZone {min-height: 193px;}
 				.UploadFile .InputFile {margin: 8px; height: 177px; width: 177px;}
@@ -161,11 +181,17 @@ try {
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-			<%if(nEditorId==0){%>
+			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<li><a class="TabMenuItem Selected" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
+				<li><a class="TabMenuItem" href="/UploadTextPcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
 				<li><a class="TabMenuItem" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
-			<%}else if(nEditorId==1){%>
+			<%}else if(nEditorId==Common.EDITOR_TEXT){%>
 				<li><a class="TabMenuItem" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/UploadTextPcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
+				<li><a class="TabMenuItem" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
+			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
+				<li><a class="TabMenuItem" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
+				<li><a class="TabMenuItem" href="/UploadTextPcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
 				<li><a class="TabMenuItem Selected" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			<%}%>
 			</ul>
@@ -173,23 +199,25 @@ try {
 
 		<article class="Wrapper">
 			<div class="UploadFile">
+				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<div class="TimeLineIllustCmd">
-				<%if(nEditorId==0){%>
 					<span id="file-drop-area"></span>
 					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, 200files, total 50MByte)</span>
 					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev">
 						<i class="far fa-images"></i>
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
 					</div>
-				<%}else if(nEditorId==1){%>
+				</div>
+				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
+				<div class="TimeLineIllustCmd">
 					<div id="PasteZone" class="PasteZone"></div>
 					<span id="TotalSize" class="TotalSize">(multi ver. 0.2beta. 10pastes)</span>
 					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" contenteditable>
 						<i class="fas fa-paste"></i>
 						<%=(Util.isSmartPhone(request))?_TEX.T("UploadFilePc.PasteImg.SP"):_TEX.T("UploadFilePc.PasteImg")%>
 					</div>
-				<%}%>
 				</div>
+				<%}%>
 				<div class="CategorDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
@@ -198,9 +226,17 @@ try {
 					</select>
 				</div>
 				<div class="Description">
-					<textarea id="EditDescription" class="EditDescription" maxlength="200" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
-					<div id="DescriptionCharNum" class="DescriptionCharNum">200</div>
+					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
+					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
 				</div>
+
+				<%if(nEditorId==Common.EDITOR_TEXT){%>
+				<div class="TextBody">
+					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
+					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
+				</div>
+				<%}%>
+
 				<div class="TagList">
 					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Common.ToStringHtml(strTag)%>"<%}%> />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
@@ -271,17 +307,6 @@ try {
 						</div>
 					</div>
 					<div class="OptionItem">
-						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%>
-						</div>
-						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" />
-							<label class="onoffswitch-label" for="OptionCheerNg">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div>
-					</div>
-					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
@@ -301,6 +326,7 @@ try {
 							</label>
 						</div>
 					</div>
+					<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
 					<div id="ImageSwitch" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
 						<div class="onoffswitch OnOff">
@@ -311,12 +337,26 @@ try {
 							</label>
 						</div>
 					</div>
+					<%}%>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%>
+						</div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" />
+							<label class="onoffswitch-label" for="OptionCheerNg">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
 				</div>
 				<div class="UoloadCmd">
-				<%if(nEditorId==0){%>
+				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
-				<%}else if(nEditorId==1){%>
+				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadText(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>

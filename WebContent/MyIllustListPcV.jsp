@@ -3,102 +3,121 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
-boolean isApp = false;
 
-IllustListGridC cResults = new IllustListGridC();
-cResults.getParam(request);
-if(cResults.m_nUserId==-1) {
-	cResults.m_nUserId = cCheckLogin.m_nUserId;
+if(!bSmartPhone) {
+	request.getRequestDispatcher("/MyIllustListGridPcV.jsp").forward(request,response);
+	return;
 }
 
-cResults.m_bDispUnPublished = true;
+IllustListC cResults = new IllustListC();
+cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 45;
 
-if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
+// ログインせずにUIDを指定した場合、間違ってマイボックスのURLを聞いてアクセスしている可能性がある
+if(!cCheckLogin.m_bLogin && cResults.m_nUserId>=1) {
+	response.sendRedirect("/IllustListPcV.jsp?ID="+cResults.m_nUserId);
+	return;
+}
+
+// それ以外の場合でログインしていない場合はログインページへ
+if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+// ログインしていながら自分以外のIDを叩いた場合は自分のページへ矯正遷移
+cResults.m_nUserId = cCheckLogin.m_nUserId;
+
+cResults.m_bDispUnPublished = true;
+if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
+	response.sendRedirect("/NotFoundV.jsp");
+	return;
+}
+String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
 String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
-		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
+		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
-		<%@ include file="/inner/TSendEmoji.jsp"%>
-		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<title><%=Util.toDescString(strTitle)%></title>
-
+		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuMe').addClass('Selected');
-			updateCategoryMenuPos(0);
-			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
-			<%if(!bSmartPhone) {%>
-			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
-			<%}%>
+			updateCategoryMenuPos(100);
 		});
 		</script>
 
-		<%@ include file="/inner/TDeleteContent.jsp"%>
-
 		<style>
-			.IllustThumb .IllustInfo {bottom: 0; background: #fff;}
-			.CategoryMenu {float: none;}
-			.IllustThumbList .IllustThumbPane {width: 374px; float: left;}
-			.IllustItem .IllustItemUser {display: none;}
+		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
+		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+		<%}%>
+		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
+		.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
+		.TweetMyBox {padding-top: 5px; text-align: center;}
 		</style>
 	</head>
 
 	<body>
-		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TMenuPc.jsp" %>
+		<script>$(function () {
+			$("#MenuSearch").hide();
+			$("#MenuSettings").show();
+		})</script>
 
-		<article class="Wrapper GridList">
-			<div class="TweetMyBox">
-				<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
-					<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
-				</a>
+		<article class="Wrapper" style="width: 100%;">
+			<div class="UserInfo Float">
+				<div class="UserInfoBg"></div>
+				<section class="UserInfoUser">
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
+					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+					<span class="UserInfoCmd">
+						<div class="TweetMyBox">
+							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
+								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
+							</a>
+						</div>
+					</span>
+				</section>
+				<section class="UserInfoState">
+					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
+						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
+					</a>
+				</section>
 			</div>
+		</article>
 
+
+		<article class="Wrapper">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>"><%=_TEX.T("Category.All")%></a>
+				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp"><%=_TEX.T("Category.All")%></span>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=strEncodedKeyword%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
 				<%}%>
 			</nav>
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
+				<%if(cResults.m_vContentList.size()>0){%>
+					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==6){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+						<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin)%>
+						<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+						<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 					<%}%>
-				</div>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=1; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==16){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
+				<%}else{%>
+					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
+				<%}%>
 			</section>
 
 			<nav class="PageBar">

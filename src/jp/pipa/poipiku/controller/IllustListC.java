@@ -33,7 +33,7 @@ public class IllustListC {
 	public CUser m_cUser = new CUser();
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public ArrayList<CTag> m_vCategoryList = new ArrayList<CTag>();
-	public int SELECT_MAX_GALLERY = 36;
+	public int SELECT_MAX_GALLERY = 15;
 	public boolean m_bOwner = false;
 	public boolean m_bFollow = false;
 	public boolean m_bBlocking = false;
@@ -211,7 +211,14 @@ public class IllustListC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond, strOpenCnd);
+			strSql = String.format(
+					"SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
+					+ "FROM contents_0000 "
+					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
+					+ "WHERE contents_0000.user_id=? AND safe_filter<=? %s %s "
+					+ "ORDER BY content_id DESC OFFSET ? LIMIT ?",
+					strCond,
+					strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, m_nUserId);
@@ -224,6 +231,9 @@ public class IllustListC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
+				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;

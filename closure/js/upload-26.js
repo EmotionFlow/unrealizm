@@ -439,11 +439,6 @@ $.ajaxSetup({
 	})();
 }).call(this);
 
-function DispDescCharNum() {
-	var nCharNum = 200 - $("#EditDescription").val().length;
-	$("#DescriptionCharNum").html(nCharNum);
-}
-
 function DispTagListCharNum() {
 	var nCharNum = 100 - $("#EditTagList").val().length;
 	$("#EditTagListCharNum").html(nCharNum);
@@ -530,6 +525,7 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 }
 function updateTweetButton() {
 	var bTweet = $('#OptionTweet').prop('checked');
+	if (!$('#ImageSwitc').length) return;
 	if(!bTweet) {
 		$('#ImageSwitch .OptionLabel').addClass('disabled');
 		$('#ImageSwitch .onoffswitch').addClass('disabled');
@@ -723,7 +719,7 @@ function updatePublish(nUserId) {
 }
 
 function tweetSucceeded(data){
-	var toContext = "/MyIllustListV.jsp";
+	var toContext = "/MyIllustListPcV.jsp";
 	if(data!=null){
 		if(data>0){ // 異常無し
 			completeMsg();
@@ -824,7 +820,7 @@ function initUploadFile() {
 					// complete
 					completeMsg();
 					setTimeout(function(){
-						location.href="/MyIllustListV.jsp";
+						location.href="/MyIllustListPcV.jsp";
 					}, 1000);
 				}
 			},
@@ -888,13 +884,12 @@ function UploadFile(user_id) {
 	if(multiFileUploader.getSubmittedNum()<=0) return;
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
-	strDescription = strDescription.substr(0 , 200);
 	var strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
-	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?1:0;
-	var nRecent = ($('#OptionRecent').prop('checked'))?0:1;
+	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
+	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
@@ -906,7 +901,7 @@ function UploadFile(user_id) {
 			twitterListNotFoundMsg();
 			return;
 		}
-				nTwListId = $('#EditTwitterList').val();
+	nTwListId = $('#EditTwitterList').val();
 	}
 	if(nLimitedTime==1){
 		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
@@ -942,6 +937,7 @@ function UploadFile(user_id) {
 			"PED":strPublishEnd,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
+			"ED":0,
 			"CNG":nCheerNg,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
@@ -1063,17 +1059,16 @@ function UploadPaste(user_id) {
 
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
-	strDescription = strDescription.substr(0 , 200);
 	var strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
-	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?1:0;
-	var nRecent = ($('#OptionRecent').prop('checked'))?0:1;
+	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
+	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var nLimitedTime = getLimitedTimeFlg('EditPublish','OptionLimitedTimePublish');
+	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
@@ -1180,10 +1175,105 @@ function UploadPaste(user_id) {
 				});
 			} else {
 				setTimeout(function(){
-					location.href="/MyIllustListV.jsp";
+					location.href="/MyIllustListPcV.jsp";
 				}, 1000);
 			}
 		}
 	});
 	return false;
 }
+
+function UploadText(user_id) {
+	var nCategory = $('#EditCategory').val();
+	var strDescription = $.trim($("#EditDescription").val());
+	var strTextBody = $.trim($("#EditTextBody").val());
+	var strTagList = $.trim($("#EditTagList").val());
+	strTagList = strTagList.substr(0 , 100);
+	var nPublishId = $('#EditPublish').val();
+	var strPassword = $('#EditPassword').val();
+	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
+	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
+	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+	//var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var nTweetImage = 0;
+	var nTwListId = null;
+	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
+	var strPublishStart = null;
+	var strPublishEnd = null;
+	if(nPublishId==10){
+		if($("#TwitterListNotFound").is(':visible')){
+			twitterListNotFoundMsg();
+			return;
+		}
+	nTwListId = $('#EditTwitterList').val();
+	}
+	if(nLimitedTime==1){
+		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
+		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
+		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+			return;
+		}
+	}
+
+	setTweetSetting($('#OptionTweet').prop('checked'));
+	setTweetImageSetting($('#OptionImage').prop('checked'));
+	setLastCategorySetting(nCategory);
+	if(nPublishId == 99) {
+		nTweet = 0;
+	}
+	startMsg();
+
+	var nTweetNow = nTweet;
+	if(nLimitedTime==1) nTweetNow = 0;
+
+	$.ajaxSingle({
+		"type": "post",
+		"data": {
+			"UID":user_id,
+			"CAT":nCategory,
+			"DES":strDescription,
+			"BDY":strTextBody,
+			"TAG":strTagList,
+			"PID":nPublishId,
+			"PPW":strPassword,
+			"PLD":nTwListId,
+			"LTP":nLimitedTime,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
+			"TWT":getTweetSetting(),
+			"TWI":getTweetImageSetting(),
+			"ED":3,
+			"CNG":nCheerNg,
+			"REC":nRecent,
+		},
+		"url": "/f/UploadTextRefTwitterF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			console.log("UploadTextRefTwitterF");
+			if(data && data.content_id) {
+				if(data.content_id>0) {
+					if(nTweetNow==1) {
+						$.ajax({
+							"type": "post",
+							"data": {
+								UID: user_id,
+								IID: data.content_id,
+								IMG: nTweetImage,
+							},
+							"url": "/f/UploadFileTweetF.jsp",
+							"dataType": "json",
+							"success": function(data) {
+								tweetSucceeded(data);
+							}
+						});
+					} else {
+						setTimeout(function(){
+							location.href="/MyIllustListPcV.jsp";
+						}, 1000);
+					}
+				}
+			}
+		}
+	});
+}
+

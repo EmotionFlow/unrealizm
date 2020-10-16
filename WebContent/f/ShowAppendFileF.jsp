@@ -202,22 +202,38 @@ if(nRtn<ShowAppendFileC.OK) {
 	case Common.PUBLISH_ID_T_FOLLOW:
 	case Common.PUBLISH_ID_T_EACH:
 	case Common.PUBLISH_ID_T_LIST:
-		// R18の時は1枚目にWarningを出すのでずらす
-		nRtn++;
-		strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\" target=\"_blank\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
-		strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
-		strHtml.append("</a>");
+		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
+			// 2枚目の場所に本文を表示する
+			nRtn=2;
+			strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Common.ToStringHtml(cResults.m_cContent.m_strTextBody)));
+			strHtml.append("</a>");
+		} else {
+			// 2枚目の場所に1枚目を表示する
+			nRtn++;
+			strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+			strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
+			strHtml.append("</a>");
+		}
 		break;
 	case Common.PUBLISH_ID_ALL:
 	case Common.PUBLISH_ID_HIDDEN:
 	default:
+		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {nRtn=1;}
 		break;
 	}
-	// append img
+	// 以降の画像・文章を表示
 	for(CContentAppend cContentAppend : cResults.m_cContent.m_vContentAppend) {
-		strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\" target=\"_blank\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
-		strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
-		strHtml.append("</a>");
+		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
+			// 2枚目の場所に本文に表示する
+			strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
+			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Common.ToStringHtml(cResults.m_cContent.m_strTextBody)));
+			strHtml.append("</a>");
+		} else {
+			strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
+			strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
+			strHtml.append("</a>");
+		}
 	}
 }
 %>{

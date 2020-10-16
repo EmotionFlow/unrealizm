@@ -14,7 +14,7 @@ import jp.pipa.poipiku.*;
 
 public class UploadC extends UpC {
 	protected int m_nContentId = -99;
-	public int GetResults(UploadCParam cParam) {
+	public int GetResults(UploadCParam cParam, CheckLogin cCheckLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -51,7 +51,7 @@ public class UploadC extends UpC {
 			idx = 1;
 			cState.setInt(idx++, cParam.m_nUserId);
 			cState.setInt(idx++, cParam.m_nCategoryId);
-			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, 200));
+			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][cCheckLogin.m_nPremiumId]));
 			cState.setString(idx++, cParam.m_strTagList);
 			cState.setInt(idx++, cParam.m_nPublishId);
 			cState.setString(idx++, cParam.m_strPassword);

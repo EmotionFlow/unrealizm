@@ -439,11 +439,6 @@ $.ajaxSetup({
 	})();
 }).call(this);
 
-function DispDescCharNum() {
-	var nCharNum = 200 - $("#EditDescription").val().length;
-	$("#DescriptionCharNum").html(nCharNum);
-}
-
 function DispTagListCharNum() {
 	var nCharNum = 100 - $("#EditTagList").val().length;
 	$("#EditTagListCharNum").html(nCharNum);
@@ -674,11 +669,11 @@ function updatePublish(nUserId) {
 	var val = parseInt($('#EditPublish').val(), 10);
 	updateAreaLimitedTimePublish(val);
 
-    var nSlideSpeed = 300;
+		var nSlideSpeed = 300;
 	var nChangeDelay = 150;
 	var elements = [$('#ItemTwitterList'), $('#ItemPassword')];
 
-    if (val==4 || val==10 || val==11){
+		if (val==4 || val==10 || val==11){
 		var elToHide = null;
 		var elToVisible = null;
 		switch (val) {
@@ -712,7 +707,7 @@ function updatePublish(nUserId) {
 		if(val == 10){
 			updateMyTwitterListF(nUserId);
 		}
-    } else {
+		} else {
 		for (var i=0; i<elements.length; i++){
 			var el = elements[i];
 			if(el.is(':visible')){
@@ -723,7 +718,7 @@ function updatePublish(nUserId) {
 }
 
 function tweetSucceeded(data){
-	var toContext = "/MyIllustListV.jsp";
+	var toContext = "/MyIllustListPcV.jsp";
 	if(data!=null){
 		if(data>0){ // 異常無し
 			completeMsg();
@@ -824,7 +819,7 @@ function initUploadFile() {
 					// complete
 					completeMsg();
 					setTimeout(function(){
-						location.href="/MyIllustListV.jsp";
+						location.href="/MyIllustListPcV.jsp";
 					}, 1000);
 				}
 			},
@@ -893,9 +888,10 @@ function UploadFile(user_id) {
 	strTagList = strTagList.substr(0 , 100);
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
+	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-    var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
+	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
 	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	var strPublishStart = null;
@@ -905,7 +901,7 @@ function UploadFile(user_id) {
 			twitterListNotFoundMsg();
 			return;
 		}
-        nTwListId = $('#EditTwitterList').val();
+				nTwListId = $('#EditTwitterList').val();
 	}
 	if(nLimitedTime==1){
 		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
@@ -941,6 +937,7 @@ function UploadFile(user_id) {
 			"PED":strPublishEnd,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
+			"CNG":nCheerNg,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -1066,11 +1063,12 @@ function UploadPaste(user_id) {
 	strTagList = strTagList.substr(0 , 100);
 	var nPublishId = $('#EditPublish').val();
 	var strPassword = $('#EditPassword').val();
+	var nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
 	var nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	var nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	var nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
 	var nTwListId = null;
-	var nLimitedTime = getLimitedTimeFlg('EditPublish','OptionLimitedTimePublish');
+	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	var strPublishStart = null;
 	var strPublishEnd = null;
 	if(nPublishId==10){
@@ -1078,7 +1076,7 @@ function UploadPaste(user_id) {
 			twitterListNotFoundMsg();
 			return;
 		}
-        nTwListId = $('#EditTwitterList').val();
+				nTwListId = $('#EditTwitterList').val();
 	}
 	if(nLimitedTime==1){
 		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
@@ -1115,6 +1113,7 @@ function UploadPaste(user_id) {
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
 			"ED":1,
+			"CNG":nCheerNg,
 		},
 		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -1176,7 +1175,7 @@ function UploadPaste(user_id) {
 				});
 			} else {
 				setTimeout(function(){
-					location.href="/MyIllustListV.jsp";
+					location.href="/MyIllustListPcV.jsp";
 				}, 1000);
 			}
 		}

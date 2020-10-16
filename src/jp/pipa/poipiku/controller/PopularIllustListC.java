@@ -76,14 +76,21 @@ public class PopularIllustListC {
 
 			// POPULAR
 			if(!bContentOnly) {
-				strSql = "SELECT count(*)" + strSqlFromWhere;
+				strSql = "SELECT count(*) FROM contents_0000 "
+						+ "INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id "
+						+ "WHERE open_id<>2 AND safe_filter<=? ";
+				if(cCheckLogin.m_bLogin){
+					strSql += "AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
+							+ "AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) "
+							+ "AND safe_filter<=? ";
+				}
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 				if(cCheckLogin.m_bLogin){
 					cState.setInt(idx++, cCheckLogin.m_nUserId);
 					cState.setInt(idx++, cCheckLogin.m_nUserId);
 				}
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 				/*
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
@@ -98,14 +105,23 @@ public class PopularIllustListC {
 			}
 
 			//strSql = "SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
-			strSql = "SELECT contents_0000.*" + strSqlFromWhere + " ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
+					+ "FROM contents_0000 "
+					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
+					+ "INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id "
+					+ "WHERE open_id<>2 AND safe_filter<=? ";
+			if(cCheckLogin.m_bLogin){
+				strSql += "AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
+						+ "AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			}
+			strSql += "ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			if(cCheckLogin.m_bLogin){
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 			}
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
@@ -116,6 +132,9 @@ public class PopularIllustListC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
+				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;

@@ -50,7 +50,7 @@
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			</a>
-			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListV.jsp?ID="+<%=cCheckLogin.m_nUserId%>">
+			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID="+<%=cCheckLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
@@ -114,7 +114,7 @@
 			</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 		</a>
-		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>

@@ -105,7 +105,7 @@ public class SearchIllustByTagC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT * FROM contents_0000 WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setString(idx++, m_strKeyword);
@@ -126,6 +126,9 @@ public class SearchIllustByTagC {
 				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
 					m_strRepFileName = cContent.m_strFileName;
 				}
+				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

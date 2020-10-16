@@ -77,7 +77,7 @@ String strFileUrl = cResults.m_strRepFileName;
 		</nav>
 
 		<article class="Wrapper ThumbList">
-			<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
+			<header class="SearchResultTitle">
 				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Common.ToStringHtml(cResults.m_strKeyword)%></h2>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>

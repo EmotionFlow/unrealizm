@@ -4,10 +4,10 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-NewArrivalGridC cResults = new NewArrivalGridC();
+NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 48;
 boolean bRtn = cResults.getResults(cCheckLogin);
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -23,47 +23,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		$(function(){
 			$('#MenuNew').addClass('Selected');
 			$('#MenuRecent').addClass('Selected');
+		});
+
+		$(function(){
 			updateCategoryMenuPos(0);
 		});
 		</script>
-
-		<%@ include file="/inner/TDeleteContent.jsp"%>
-
-		<script type="text/javascript">
-			function UpdateFollow(nUserId, nFollowUserId) {
-				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": nUserId, "IID": nFollowUserId },
-					"url": "/f/UpdateFollowF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result==1) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
-						} else if(data.result==2) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
-						} else {
-							DispMsg('フォローできませんでした');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			$(function(){
-				$('body, .Wrapper').each(function(index, element){
-					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
-				});
-			});
-		</script>
 		<style>
 			body {padding-top: 83px !important;}
-			.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete {display: none;}
-			.IllustThumbList .IllustThumbPane {width: 374px; float: left;}
 		</style>
 	</head>
 
@@ -88,32 +55,17 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			</nav>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==6){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=1; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==16){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
+					<%if(nCnt==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+				<%}%>
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarPc("/NewArrivalPcV.jsp", String.format("&CD=%d", cResults.m_nCategoryId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/NewArrivalPcV.jsp", String.format("&CD=%d", cResults.m_nCategoryId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 

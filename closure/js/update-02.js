@@ -85,12 +85,12 @@ function initUpdateFile(userid, contentid) {
 						// complete
 						completeMsg();
 						setTimeout(function(){
-							location.href="/MyIllustListV.jsp";
+							location.href="/MyIllustListPcV.jsp";
 						}, 1000);
 					}
 
 					//並べ替え情報の送信
-					UpdateFileOrder(this.user_id, this.content_id, "/MyIllustListV.jsp");
+					UpdateFileOrder(this.user_id, this.content_id, "/MyIllustListPcV.jsp");
 				} else {
 					$("li.qq-upload-success").removeClass("qq-upload-success");
 					$("button.qq-upload-cancel").removeClass("qq-hide");
@@ -254,7 +254,7 @@ function UpdateFile(user_id, content_id) {
 						UpdateFileOrder(user_id, data.content_id, null);
 						Tweet(user_id, data.content_id, nTweetImage, nDeleteTweet);
 					}else{
-						UpdateFileOrder(user_id, data.content_id, "/MyIllustListV.jsp");
+						UpdateFileOrder(user_id, data.content_id, "/MyIllustListPcV.jsp");
 					}
 				}
 			} else {

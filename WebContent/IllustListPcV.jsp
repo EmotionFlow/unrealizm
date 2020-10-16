@@ -11,10 +11,10 @@ if(!bSmartPhone) {
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 45;
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
-cResults.SELECT_MAX_GALLERY = 30;
 if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;

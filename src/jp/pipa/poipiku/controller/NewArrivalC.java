@@ -71,9 +71,9 @@ public class NewArrivalC {
 			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT * FROM contents_0000 WHERE open_id=0");
+			sb.append("SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id=0 ");
 			if(cCheckLogin.m_bLogin){
-				sb.append(" AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
+				sb.append("AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
 			}
 			if(!strCondCat.isEmpty()){
 				sb.append(strCondCat);
@@ -103,6 +103,9 @@ public class NewArrivalC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
+				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);
 			}

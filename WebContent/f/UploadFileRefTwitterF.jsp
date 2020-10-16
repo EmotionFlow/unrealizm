@@ -18,7 +18,7 @@ nRtn = cParam.GetParam(request);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadC cResults = new UploadC();
-	nRtn = cResults.GetResults(cParam);
+	nRtn = cResults.GetResults(cParam, cCheckLogin);
 	Log.d("UploadC - OK:"+nRtn);
 }
 %>

@@ -4,8 +4,9 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-IllustListGridC cResults = new IllustListGridC();
+IllustListC cResults = new IllustListC();
 cResults.getParam(request);
+cResults.SELECT_MAX_GALLERY = 48;
 if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = cCheckLogin.m_nUserId;
 }
@@ -13,12 +14,11 @@ if(!cResults.getResults(cCheckLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
+
 String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 String strTitle = Common.ToStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
-ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
 <html>
@@ -26,7 +26,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
-		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -43,93 +42,87 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%} else {%>
 			$('#MenuNew').addClass('Selected');
 			<%}%>
-			updateCategoryMenuPos(0);
 		});
 
 		$(function(){
+			updateCategoryMenuPos(0);
+
 			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
 			<%if(!bSmartPhone) {%>
 			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
 			<%}%>
+			/*
+			$(window).bind("scroll.slideHeader", function() {
+				$('.UserInfo.Float').css('background-position-y', $(this).scrollTop()/5 + 'px');
+			});
+			*/
 		});
 		</script>
 
-		<%@ include file="/inner/TDeleteContent.jsp"%>
-
-		<script type="text/javascript">
-			function UpdateFollow(nUserId, nFollowUserId) {
-				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": nUserId, "IID": nFollowUserId },
-					"url": "/f/UpdateFollowF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result==1) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
-						} else if(data.result==2) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
-						} else {
-							DispMsg('フォローできませんでした');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
+		<script>
+		function UpdateFollow(nUserId, nFollowUserId) {
+			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
+			$.ajaxSingle({
+				"type": "post",
+				"data": { "UID": nUserId, "IID": nFollowUserId },
+				"url": "/f/UpdateFollowF.jsp",
+				"dataType": "json",
+				"success": function(data) {
+					if(data.result==1) {
+						$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
+						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
+					} else if(data.result==2) {
+						$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
+						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
+					} else {
+						DispMsg('フォローできませんでした');
 					}
-				});
-			}
-
-			function UpdateBlock() {
-				var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
-					"url": "/f/UpdateBlockF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result==1) {
-							$('.UserInfoCmdBlock').addClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').hide();
-							location.reload(true);
-						} else if(data.result==2) {
-							$('.UserInfoCmdBlock').removeClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').show();
-							location.reload(true);
-						} else {
-							DispMsg('ブロックできませんでした');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			$(function(){
-				<%if(!cResults.m_bOwner) {%>
-				$('body, .Wrapper').each(function(index, element){
-					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
-				});
-				<%}%>
+				},
+				"error": function(req, stat, ex){
+					DispMsg('Connection error');
+				}
 			});
+		}
+
+		function UpdateBlock() {
+			var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
+			$.ajaxSingle({
+				"type": "post",
+				"data": { "UID": <%=cCheckLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
+				"url": "/f/UpdateBlockF.jsp",
+				"dataType": "json",
+				"success": function(data) {
+					if(data.result==1) {
+						$('.UserInfoCmdBlock').addClass('Selected');
+						$('.UserInfoCmdFollow').removeClass('Selected');
+						$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+						$('.UserInfoCmdFollow').hide();
+						location.reload(true);
+					} else if(data.result==2) {
+						$('.UserInfoCmdBlock').removeClass('Selected');
+						$('.UserInfoCmdFollow').removeClass('Selected');
+						$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
+						$('.UserInfoCmdFollow').show();
+						location.reload(true);
+					} else {
+						DispMsg('ブロックできませんでした');
+					}
+				},
+				"error": function(req, stat, ex){
+					DispMsg('Connection error');
+				}
+			});
+		}
 		</script>
 		<style>
-			<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
-			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
-			<%}%>
-			.IllustThumbList .IllustThumbPane {width: 374px; float: left;}
-		</style>
-
-		<style>
-			.IllustThumb .IllustInfo {bottom: 0; background: #fff;}
-			.CategoryMenu {float: none;}
-			.IllustItem .IllustItemUser {display: none;}
+		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
+		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
+		<%}%>
+		<%if(!bSmartPhone) {%>
+		@media screen and (min-width:1090px){
+		.Wrapper.ThumbList {width: 1090px;}
+		}
+		<%}%>
 		</style>
 	</head>
 
@@ -156,7 +149,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 						<%if(!cCheckLogin.m_bLogin) {%>
 						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
 						<a id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" href="/"></a>
-						<%} else if(cResults.m_bOwner) {
+						<%} else if(cResults.m_bOwner){
 							// 何も表示しない
 						} else if(cResults.m_bBlocking){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
@@ -196,32 +189,17 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%@ include file="/inner/ad/TAdGridPc336x280_right_top.jsp"%>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==6){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=1; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==16){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
-				<div class="IllustThumbPane">
-					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
-					<%}%>
-				</div>
+				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
+					<%if(nCnt==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+				<%}%>
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarPc("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 

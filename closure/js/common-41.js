@@ -172,27 +172,44 @@ function HideMsgStatic() {
 	}, 1000);
 }
 
-function SendEmoji(nContentId, strEmoji , nUserId) {
-	$.ajax({
-		"type": "post",
-		"data": {"IID": nContentId, "EMJ": strEmoji, "UID": nUserId},
-		"url": "/f/SendEmojiF.jsp",
-		"dataType": "json",
-		"success": function(data) {
-			if(data.result_num>0) {
-				var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
-				$("#ResEmojiAdd_"+nContentId).before($objResEmoji);
-				if(vg)vg.vgrefresh();
+function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
+	strCheckDeleteMsg, strCheckDeleteYesMsg, strCheckDeleteNoMsg,
+	strDeleteTweetMsg, strDeleteTweetYesMsg, strDeleteTweetNoMsg) {
+	Swal.fire({
+		title: '',
+		text: strCheckDeleteMsg,
+		type: 'question',
+		showCancelButton: true,
+		confirmButtonText: strCheckDeleteYesMsg,
+		cancelButtonText: strCheckDeleteNoMsg,
+	}).then((result) => {
+		if (result.value) {
+			if(bPreviousTweetExist){
+				Swal.fire({
+					title: '',
+					text: strDeleteTweetMsg,
+					type: 'question',
+					showCancelButton: true,
+					confirmButtonText: strDeleteTweetYesMsg,
+					cancelButtonText: strDeleteTweetNoMsg,
+				}).then((result) => {
+					if(result.value){
+						DeleteContentBase(nUserId, nContentId, true);
+					}else{
+						DeleteContentBase(nUserId, nContentId, false);
+					}
+				});
+			}else{
+				DeleteContentBase(nUserId, nContentId, false);
 			}
 		}
 	});
-	return false;
 }
 
-function DeleteContentBase(nUserId, nContentId) {
+function DeleteContentBase(nUserId, nContentId, bDeleteTweet) {
 	$.ajaxSingle({
 		"type": "post",
-		"data": { "UID":nUserId, "CID":nContentId },
+		"data": { "UID":nUserId, "CID":nContentId, "DELTW":bDeleteTweet?1:0 },
 		"url": "/f/DeleteContentF.jsp",
 		"dataType": "json",
 		"success": function(data) {
@@ -366,28 +383,117 @@ function ShowAllReaction(content_id, elm) {
 	return false;
 }
 
-function ShowAppendFile(user_id, content_id, mode, elm) {
-	var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val()
-	$.ajax({
-		"type": "post",
-		"data": {"UID":user_id, "IID":content_id, "PAS":password, "MD":mode},
-		"url": "/f/ShowAppendFileF.jsp",
-		"dataType": "json",
-		"success": function(data) {
-			console.log(data);
-			if(data.result_num>0) {
-				$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
-				$(elm).parent().hide();
-				$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
-				$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
-			} else {
-				DispMsg(data.html);
-			}
-		}
-	});
+function generateShowAppendFile(){
+	var tw_friendships = {}; // target user id -> friendship id (see CTweet)
+	return function(user_id, content_id, mode, elm) {
+		console.log(user_id, content_id, mode);
+		console.log("twitter friendships: " + tw_friendships);
+		var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
+		var tw_f = tw_friendships[user_id];
+		if(!tw_f){
+			tw_f = -1;
+		};
 
+		$.ajax({
+			"type": "post",
+			"data": {"UID":user_id, "IID":content_id, "PAS":password, "MD":mode, "TWF":tw_f},
+			"url": "/f/ShowAppendFileF.jsp",
+			"dataType": "json",
+			"success": function(data) {
+				if(data.result_num>0) {
+					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
+					$(elm).parent().hide();
+					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
+					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
+					//for text
+					$('#IllustItemText_' + content_id).css('max-height','none');
+				} else {
+					DispMsg(data.html);
+				}
+				if(data.tw_friendship >= 0){
+					tw_friendships[user_id] = data.tw_friendship;
+				}
+						},
+						"error": function(err){
+								console.log(err);
+						}
+		});
+
+	}
 }
 
+var ShowAppendFile = generateShowAppendFile();
 
+function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsSmartPhone,) {
+	let strHtml =
+		'<h2 class="TweetMyBoxTitle" style="padding: 10px 0 0 0;">' +
+		hMessages.TweetTitle +
+		'</h2>' +
+		'<h3 class="TweetMyBoxSubTitle">' +
+		hMessages.TweetStep1 +
+		'</h3>' +
+		'<div class="TweetMyBoxInfo">' +
+		'<a class="BtnBase Selected TweetMyBoxBtn" href="' + strTweetURL + '" target="_blank">' +
+		'<i class="fab fa-twitter"></i> ' +
+		hMessages.TweetTweet +
+		'</a>' +
+		'<i class="fa fa-info-circle"></i> ' +
+		hMessages.TweetInfo1 +
+		'</div>' +
+		'<h3 class="TweetMyBoxSubTitle">' +
+		hMessages.TweetStep2 +
+		'</h3>' +
+		'<div class="TweetMyBoxInfoStep2">' +
+		hMessages.TweetInfo2 +
+		'</div>' +
+		'<div class="TweetMyBoxPinLink">' +
+		'<a href="/how_to/TwPinPcV.jsp" target="_blank">' +
+		hMessages.TweetHowToPin +
+		'</a>' +
+		'</div>' +
+		'<hr class="TweetMyBoxHr"/>' +
+		'<h2 class="TweetMyBoxTitle">' +
+		hMessages.ShareURLTitle +
+		'</h2>' +
+		'<div>' +
+		'<input id="MyBoxUrlTxt" type="text" readonly value="' + strMyBoxURL + '">' +
+		'<a id="CopyMyBoxUrlBtn" class="BtnBase Selected" href="javascript:void(0);">' +
+		hMessages.ShareURLCopy +
+		'</a>' +
+		'</div>' +
+		'<h2 class="TweetMyBoxTitle">' +
+		hMessages.ShareQRTitle +
+		'</h2>' +
+		'<div class="MyBoxQRCode">' +
+		'<div class="QRCode"><span id="QRCodeImg"></span>';
+		if(!bIsSmartPhone){
+			strHtml +=
+				'<span class="DownloadMyBoxQR"><a id="DownloadMyBoxQRBtn" class="BtnBase Selected" href="javascript:void(0);">' +
+				hMessages.ShareQRDownload +
+				'</a></span>';
+		}
+		strHtml += '</div>' +
+		'</div>';
 
-
+	Swal.fire({
+		html: strHtml,
+		showCloseButton: true,
+		showCancelButton: false,
+		showConfirmButton: false,
+		onOpen: () => {
+			$("#QRCodeImg").qrcode({width: 64, height: 64, text: $("#MyBoxUrlTxt").val()});
+			$("#CopyMyBoxUrlBtn").click(() => {
+				$("#MyBoxUrlTxt").select();
+				document.execCommand("Copy");
+				alert(hMessages.ShareURLCopied);
+			});
+			$("#DownloadMyBoxQRBtn").click(() => {
+				let canvas = $('#QRCodeImg canvas')[0];
+				let link = document.createElement("a");
+				link.href = canvas.toDataURL("image/png");
+				link.download = "poipiku_qrcode.png";
+				link.click();
+			});
+		}
+	});
+}

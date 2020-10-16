@@ -22,14 +22,14 @@ public class UpCParam {
 	public Timestamp m_tsPublishEnd = null;
 	public boolean m_bTweetTxt = false;
 	public boolean m_bTweetImg = false;
-	public int m_nEditorId = 0;
+	public int m_nEditorId = Common.EDITOR_UPLOAD;
 	public boolean m_bCheerNg = true;
 
 	protected void GetParams(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("UTF-8");
 		m_nUserId			= Common.ToInt(request.getParameter("UID"));
 		m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
-		m_strDescription	= Common.SubStrNum(Common.TrimAll(request.getParameter("DES")), 200);
+		m_strDescription	= Common.TrimAll(request.getParameter("DES"));
 		m_strTagList		= Common.SubStrNum(Common.TrimAll(request.getParameter("TAG")), 100);
 		m_nPublishId		= Common.ToIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
 		m_strPassword		= Common.SubStrNum(Common.TrimAll(request.getParameter("PPW")), 16);
@@ -40,7 +40,7 @@ public class UpCParam {
 		m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 		if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 		m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
-		m_nEditorId			= Common.ToIntN(request.getParameter("ED"), 0, Common.PUBLISH_ID_MAX);
+		m_nEditorId			= Common.ToIntN(request.getParameter("ED"), 0, Common.EDITOR_ID_MAX);
 		m_bTweetTxt			= Common.ToBoolean(request.getParameter("TWT"));
 		m_bTweetImg			= Common.ToBoolean(request.getParameter("TWI"));
 		m_bCheerNg			= Common.ToInt(request.getParameter("CNG"))!=0;

@@ -67,7 +67,7 @@ class UploadFileCParam {
 
 
 class UploadFileC {
-	public int GetResults(UploadFileCParam cParam, ResourceBundleControl _TEX) {
+	public int GetResults(UploadFileCParam cParam, ResourceBundleControl _TEX, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -94,7 +94,7 @@ class UploadFileC {
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nCategoryId);
-			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, 200));
+			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPremiumId]));
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nContentId = cResSet.getInt("content_id");
@@ -218,7 +218,7 @@ nRtn = cParam.GetParam(request);
 
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadFileC cResults = new UploadFileC();
-	nRtn = cResults.GetResults(cParam, _TEX);
+	nRtn = cResults.GetResults(cParam, _TEX, cCheckLogin);
 	System.out.println("UploadFileAndroidF.jsp:DONE");
 }
 %><%=nRtn%>

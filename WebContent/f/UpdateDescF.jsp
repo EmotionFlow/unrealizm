@@ -11,7 +11,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 int m_nUserId = Common.ToInt(request.getParameter("UID"));
 int m_nContentId = Common.ToInt(request.getParameter("IID"));
 int m_nCategoryId = Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
-String m_strDescription = Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("DES"))), 200);
+String m_strDescription = Common.TrimAll(Common.ToString(request.getParameter("DES")));
 String m_strTagList = Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("TAG"))), 100);
 int m_nMode = Common.ToInt(request.getParameter("MOD"));
 m_strDescription = m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
@@ -49,11 +49,25 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 		dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 		cConn = dsPostgres.getConnection();
 
+		// get Editor ID
+		int editor_id = Common.EDITOR_UPLOAD;
+		strSql = "SELECT editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+		cState = cConn.prepareStatement(strSql);
+		cState.setInt(1, m_nUserId);
+		cState.setInt(2, m_nContentId);
+		cResSet = cState.executeQuery();
+		if(cResSet.next()) {
+			editor_id = cResSet.getInt("editor_id");
+		}
+		cResSet.close();cResSet=null;
+		cState.close();cState=null;
+
+
 		// Update Description
 		strSql = "UPDATE contents_0000 SET category_id=?, description=?, tag_list=? WHERE user_id=? AND content_id=? RETURNING content_id";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, m_nCategoryId);
-		cState.setString(2, m_strDescription);
+		cState.setString(2, Common.SubStrNum(m_strDescription, Common.EDITOR_DESC_MAX[editor_id][cCheckLogin.m_nPremiumId]));
 		cState.setString(3, m_strTagList);
 		cState.setInt(4, m_nUserId);
 		cState.setInt(5, m_nContentId);

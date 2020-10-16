@@ -150,10 +150,27 @@ public class Common {
 		}}
 	);
 
-	public static final int EDITOR_CAMERAROLE = 0;
+	public static final int EDITOR_UPLOAD = 0;
 	public static final int EDITOR_PASTE = 1;
 	public static final int EDITOR_BASIC_PAINT = 2;
-	public static final int EDITOR_DOT_TOOL = 3;
+	public static final int EDITOR_TEXT = 3;
+	public static final int EDITOR_ID_MAX = EDITOR_TEXT;
+
+	public static final int[][] EDITOR_DESC_MAX = {
+			// normal, premium
+			{200, 500},
+			{200, 500},
+			{200, 500},
+			{200, 500}
+	};
+
+	public static final int[][] EDITOR_TEXT_MAX = {
+			// normal, premium
+			{0, 0},
+			{0, 0},
+			{0, 0},
+			{10000, 100000}
+	};
 
 	public static String ToString(String strSrc) {
 		if(strSrc == null) {

@@ -11,7 +11,7 @@ import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
 public class UpdateC extends UpC {
-	public int GetResults(UpdateCParam cParam) {
+	public int GetResults(UpdateCParam cParam, CheckLogin cCheckLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -25,12 +25,13 @@ public class UpdateC extends UpC {
 		Timestamp tsEndDatePresent = new Timestamp(0);
 		boolean bLimitedTimePublishPresent = false;
 		Integer nNewContentId = null;
+		int nEditorId = Common.EDITOR_UPLOAD;
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date FROM contents_0000 WHERE user_id=? AND content_id=?";
+			strSql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
@@ -42,6 +43,7 @@ public class UpdateC extends UpC {
 				bLimitedTimePublishPresent = cResSet.getBoolean("limited_time_publish");
 				tsUploadDatePresent = cResSet.getTimestamp("upload_date");
 				tsEndDatePresent = cResSet.getTimestamp("end_date");
+				nEditorId = Math.max(cResSet.getInt("editor_id"), Common.EDITOR_UPLOAD);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -103,7 +105,7 @@ public class UpdateC extends UpC {
 				// set values
 				cState.setInt(idx++, cParam.m_nCategoryId);
 				cState.setInt(idx++, nOpenId);
-				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, 200));
+				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]));
 				cState.setString(idx++, cParam.m_strTagList);
 				cState.setInt(idx++, cParam.m_nPublishId);
 				cState.setString(idx++, cParam.m_strPassword);
