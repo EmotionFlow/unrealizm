@@ -161,6 +161,7 @@
 				background-color: #fff;
 				margin: 0 auto 0 auto;
 				background-position: 50% 50%;
+				background-size: cover;
 		}
 
 		.UserInfo .UserInfoUser .UserInfoUserThumbEdit .UserInfoUserImgUpload{
