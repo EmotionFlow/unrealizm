@@ -35,6 +35,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		<style>
 			body {height: 100%;background: #333333; padding: 0 !important;}
 			.IllustItemImage {max-width: 100%; height: auto;}
+			.IllustItemText {color: #eee; text-align: left; font-size: 1.2em; width: 80%; margin: auto; line-height: 1.8; font-family: yumincho,游明朝,游明朝体,yu mincho,ヒラギノ明朝 pron,hiragino mincho pron,hiraminpron-w3,hiraminpron-w6,ヒラギノ明朝 pro,hiragino mincho pro,hiraminpro-w3,hiraminpro-w6,hg明朝e,hgp明朝e,hgs明朝e,hgminchoe,hgpminchoe,hgsminchoe,hg明朝b,hgp明朝b,hgs明朝b,hgminchob,hgpminchob,hgsminchob,平成明朝,平成明朝 std,平成明朝 pro,heisei mincho,heisei mincho std,heisei mincho pro,ipa明朝,ipamincho,Georgia,georgia ref,times new roman,SerifJP,serif;  }
 		</style>
 	</head>
 
@@ -52,6 +53,12 @@ if(!cResults.getResults(cCheckLogin)) {
 			<%} else {%>
 			<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
 			<%}%>
+		</div>
+		<%} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+		<div class="IllustItemLink">
+			<div class="IllustItemText">
+				<%=Common.ToStringHtml(cResults.m_cContent.m_strTextBody)%>
+			</div>
 		</div>
 		<%} else {%>
 		Not Found.
