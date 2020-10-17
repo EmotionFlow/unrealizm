@@ -100,7 +100,7 @@ public class CCnv {
 		return strThumbClass;
 	}
 	private static String getContentsFileNumHtml(CContent cContent){
-		return (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-clone\"></i>%d", cContent.m_nFileNum):"";
+		return (cContent.m_nFileNum>1)?String.format("<i class=\"fas fa-images\"></i> %d", cContent.m_nFileNum):"";
 	}
 	private static void appendIllustItemCategory(StringBuilder strRtn, CContent cContent, String SEARCH_CATEGORY, ResourceBundleControl _TEX){
 		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
@@ -737,7 +737,7 @@ public class CCnv {
 		}
 
 
-		// 非公開マーク
+		// 公開非公開マーク
 		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId && (cContent.m_nPublishId==99 || cContent.m_bLimitedTimePublish)){
 			strRtn.append("<span class=\"IllustInfoCenter\">");
 			if(cContent.m_nPublishId==99){
@@ -750,15 +750,19 @@ public class CCnv {
 			strRtn.append("</span>"); // IllustInfoCenter
 		}
 
-		// 枚数
+		// 公開種別マーク
 		strRtn.append("<span class=\"IllustInfoBottom\">");
 		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId){
 			if(cContent.m_nPublishId>=1 && cContent.m_nPublishId<=10) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 		}
+
+		// 枚数マーク
 		if(cContent.m_nFileNum>1){
 			strRtn.append("<span class=\"Num\">").append(strFileNum).append("</span>");
+		} else if(cContent.m_nEditorId==Common.EDITOR_TEXT) {
+			strRtn.append(String.format("<span class=\"Num\">%d %s</span>", cContent.m_strTextBody.length(), _TEX.T("Common.Unit.Text")));
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
 
