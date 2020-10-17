@@ -81,8 +81,7 @@ public class PopularIllustListC {
 						+ "WHERE open_id<>2 AND safe_filter<=? ";
 				if(cCheckLogin.m_bLogin){
 					strSql += "AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-							+ "AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) "
-							+ "AND safe_filter<=? ";
+							+ "AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 				}
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;

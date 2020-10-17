@@ -63,7 +63,9 @@ String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_st
 	<body>
 		<article class="Wrapper">
 			<header class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
-				<h2 class="Keyword">#<%=Common.ToStringHtml(cResults.m_strKeyword)%></h2>
+				<a class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>">
+					#<%=Common.ToStringHtml(cResults.m_strKeyword)%>
+				</a>
 				<%if(!cCheckLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.m_bFollowing) {%>
