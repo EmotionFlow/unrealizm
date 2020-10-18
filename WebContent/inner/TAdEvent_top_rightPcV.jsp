@@ -2,10 +2,11 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <section class="EventItemList">
+	<a class="EventItem" href="/event/20191026/TopPcV.jsp">
+		<img class="EventBanner" src="/event/20191026/banner_halloween_2020.png" />
+	</a>
+
 	<a class="EventItem" href="/event/20190901/TopPcV.jsp">
 		<img class="EventBanner" src="/event/20190901/banner_odai.png" />
-	</a>
-	<a class="EventItem" href="/event/20191001/TopPcV.jsp">
-		<img class="EventBanner" src="/event/20191001/banner_karapare.png" />
 	</a>
 </section>

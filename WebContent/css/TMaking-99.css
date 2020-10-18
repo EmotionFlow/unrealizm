@@ -1181,7 +1181,7 @@
 	padding: 0 8px;
 	text-align: left;
 	margin: 2px 0 5px 0;
-	font-size: 14px;
+	font-size: 16px;
 }
 
 .IllustItem .IllustItemTag {
@@ -1340,7 +1340,6 @@
 	text-align: left;
 	padding: 0 8px;
 	margin: 15px 0 0 0;
-	color: #333;
 }
 
 .IllustItem.Text .IllustItemText:hover {
@@ -1352,7 +1351,7 @@
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	color: #333;
+	font-size: 16px;
 }
 
 .IllustItem.Text .IllustItemExpand {

@@ -48,9 +48,9 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
 			<section class="CategoryListItem">
 				<header class="SearchResultTitle">
-					<h2 class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
+					<a class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
 						#<%=strKeyWord%>
-					</h2>
+					</a>
 				</header>
 				<div class="IllustThumbList">
 					<%for(CContent cContent : m_vContentList) {%>

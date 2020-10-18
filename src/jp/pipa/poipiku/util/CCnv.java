@@ -100,7 +100,7 @@ public class CCnv {
 		return strThumbClass;
 	}
 	private static String getContentsFileNumHtml(CContent cContent){
-		return (cContent.m_nFileNum>1)?String.format("<i class=\"fas fa-images\"></i> %d", cContent.m_nFileNum):"";
+		return (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-images\"></i> %d", cContent.m_nFileNum):"";
 	}
 	private static void appendIllustItemCategory(StringBuilder strRtn, CContent cContent, String SEARCH_CATEGORY, ResourceBundleControl _TEX){
 		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));

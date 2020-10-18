@@ -58,6 +58,10 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</section>
 		</article>
 
+		<div style="display: block; text-align: center; margin: 15px 0; width: 100%; float: left;">
+			<a class="BtnBase" href="/RandomPickupPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Random")%></a>
+		</div>
+
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>
