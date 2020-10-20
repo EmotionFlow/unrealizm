@@ -12,8 +12,9 @@
 request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-Log.d("RetistTwitterUserApp enter");
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
+
+Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_result:%d, url:%s", cCheckLogin.m_nUserId, nResult, "myurlscheme://restart"));
 %>
 <!DOCTYPE html>
 <html>
