@@ -158,7 +158,7 @@ class SendEmojiC {
 					cardSettlement = new EpsilonCardSettlement(
 							m_nUserId, m_nContentId, orderId, m_nAmount,
 							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode,
-							m_strUserAgent);
+							m_strUserAgent, CardSettlement.BillingCategory.OneTime);
 				}
 
 				boolean authorizeResult = cardSettlement.authorize();

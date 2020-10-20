@@ -11,6 +11,13 @@ public abstract class CardSettlement {
     protected String cardSecurityCode = null;
     protected String userAgent = null;
 
+    public enum BillingCategory {
+        Undef,      // 未定義
+        OneTime,    // 一回限り
+        Monthly     // 毎月課金
+    }
+    public BillingCategory billingCategory = BillingCategory.Undef;
+
     public enum ErrorKind {
         None,
         CardAuth,       // カード認証や、センターとの通信に関するエラー。
@@ -25,7 +32,7 @@ public abstract class CardSettlement {
     // poipiku側管理の取引ID
     protected int poipikuOrderId = -1;
 
-    // 取引ID
+    // 代理店側管理の取引ID
     protected String orderId = "";
 
     // 金額
@@ -43,7 +50,7 @@ public abstract class CardSettlement {
 
     protected CardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                              String _agentToken, String _cardExpire,
-                             String _cardSecurityCode, String _userAgent){
+                             String _cardSecurityCode, String _userAgent, BillingCategory _billingCategory){
         userId = _userId;
         contentId = _contentId;
         poipikuOrderId = _poipikuOrderId;
@@ -52,6 +59,7 @@ public abstract class CardSettlement {
         cardExpire = _cardExpire;
         cardSecurityCode = _cardSecurityCode;
         userAgent = _userAgent;
+        billingCategory = _billingCategory;
     }
 
     protected boolean authorizeCheckBase(){

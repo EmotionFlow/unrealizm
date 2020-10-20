@@ -24,8 +24,9 @@ public class EpsilonCardSettlement extends CardSettlement {
 
     public EpsilonCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                                  String _agentToken, String _cardExpire, String _cardSecurityCode,
-                                 String _userAgent) {
-        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode, _userAgent);
+                                 String _userAgent, BillingCategory _billingCategory) {
+        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken,
+                _cardExpire, _cardSecurityCode, _userAgent, _billingCategory);
         agent.id = Agent.EPSILON;
     }
 
@@ -86,7 +87,21 @@ public class EpsilonCardSettlement extends CardSettlement {
 
             ssi.stCode = "11000-0000-00000";
             ssi.cardStCode = "10";             // 一括払い
-            ssi.missionCode = 1;               // 課金区分（一回課金固定）
+
+            // 課金区分
+            switch (billingCategory) {
+                // 一度払い
+                case OneTime:
+                    ssi.missionCode = 1;
+                    break;
+                // 毎月課金
+                case Monthly:
+                    ssi.missionCode = 23;
+                    break;
+                default:
+                    ssi.missionCode = -1;
+            }
+
             ssi.processCode = isFirstSettlement ? 1 : 2; // 初回/登録済み課金
             ssi.userTel = "00000000000";
 
