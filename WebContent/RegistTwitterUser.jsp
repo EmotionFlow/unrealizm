@@ -12,17 +12,17 @@
 request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-Log.d("USERAUTH RetistTwitterUser enter : " + cCheckLogin.m_nUserId);
+//Log.d("USERAUTH RetistTwitterUser enter : " + cCheckLogin.m_nUserId);
 
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
 
-Log.d("USERAUTH RetistTwitterUser nResult", nResult);
+//Log.d("USERAUTH RetistTwitterUser nResult", nResult);
 java.lang.Object callbackUrl = session.getAttribute("callback_uri");
 String nextUrl = "/MyHomeAppV.jsp";
 if(callbackUrl!=null) {
 	nextUrl = callbackUrl.toString();
 }
-Log.d("USERAUTH Callback uri", nextUrl);
+//Log.d("USERAUTH Callback uri", nextUrl);
 if(nResult>0) {
 	response.sendRedirect(nextUrl);
 	return;

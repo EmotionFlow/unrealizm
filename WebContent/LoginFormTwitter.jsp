@@ -35,7 +35,7 @@ try{
 	}else{
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
 	}
-	Log.d("USERAUTH callbackuri:" + callbackUri);
+	//Log.d("USERAUTH callbackuri:" + callbackUri);
 	session.setAttribute("callback_uri", callbackUri);
 
 	String strTwCallBackUri = "";
@@ -44,7 +44,7 @@ try{
 	}else{
 		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp";
 	}
-	Log.d("USERAUTH twCallBackUri:" + strTwCallBackUri);
+	//Log.d("USERAUTH twCallBackUri:" + strTwCallBackUri);
 	authUrl = provider.retrieveRequestToken(consumer, strTwCallBackUri);
 
 }catch(Exception e){
