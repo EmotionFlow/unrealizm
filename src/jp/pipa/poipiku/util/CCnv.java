@@ -731,8 +731,8 @@ public class CCnv {
 			if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
 				strRtn.append(String.format("\">%s", Common.ToStringHtml(cContent.m_strTextBody)));
 			} else {
-				strRtn.append("style=\"background: rgba(0,0,0,.7);")
-				.append(String.format("background-blend-mode: darken;background-size: cover;background-position: 50% 50%;\">%s", Common.ToStringHtml(cContent.m_strTextBody)));
+				strRtn.append("style=\"background: rgba(0,0,0,.5);")
+				.append(String.format("\">%s", Common.ToStringHtml(cContent.m_strTextBody)));
 			}
 		}
 
