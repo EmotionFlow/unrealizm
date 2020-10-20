@@ -34,8 +34,10 @@ public class VeritransCardSettlement extends CardSettlement {
     }
 
     public VeritransCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
-                                   String _agentToken, String _cardExpire, String _cardSecurityCode){
-        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken, _cardExpire, _cardSecurityCode, null);
+                                   String _agentToken, String _cardExpire, String _cardSecurityCode,
+                                   BillingCategory _billingCategory){
+        super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken,
+                _cardExpire, _cardSecurityCode, null, _billingCategory);
         agent.id = Agent.VERITRANS;
     }
 

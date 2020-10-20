@@ -153,7 +153,8 @@ class SendEmojiC {
 				if(m_nAgentId == Agent.VERITRANS){
 					cardSettlement = new VeritransCardSettlement(
 							m_nUserId, m_nContentId, orderId, m_nAmount,
-							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
+							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode,
+							CardSettlement.BillingCategory.OneTime);
 				}else if(m_nAgentId==Agent.EPSILON){
 					cardSettlement = new EpsilonCardSettlement(
 							m_nUserId, m_nContentId, orderId, m_nAmount,
