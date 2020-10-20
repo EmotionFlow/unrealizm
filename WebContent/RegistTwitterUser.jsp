@@ -12,14 +12,20 @@
 request.setCharacterEncoding("UTF-8");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-Log.d("USERAUTH RetistTwitterUser enter");
+Log.d("USERAUTH RetistTwitterUser enter : " + cCheckLogin.m_nUserId);
 
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
 
 Log.d("USERAUTH RetistTwitterUser nResult", nResult);
-Log.d("USERAUTH Callback uri", session.getAttribute("callback_uri").toString());
+java.lang.Object callbackUrl = session.getAttribute("callback_uri");
+String nextUrl = "/MyHomeAppV.jsp";
+if(callbackUrl!=null) {
+	nextUrl = callbackUrl.toString();
+}
+Log.d("USERAUTH Callback uri", nextUrl);
 if(nResult>0) {
-	response.sendRedirect(session.getAttribute("callback_uri").toString());
+	response.sendRedirect(nextUrl);
+	return;
 }
 %>
 <!DOCTYPE html>
@@ -27,7 +33,7 @@ if(nResult>0) {
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
-		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>" />
+		<meta http-equiv="refresh" content="3;URL=/MyHomeAppV.jsp?ID=<%=cCheckLogin.m_nUserId%>" />
 		<script>
 		$(function(){
 			sendObjectMessage("restart");

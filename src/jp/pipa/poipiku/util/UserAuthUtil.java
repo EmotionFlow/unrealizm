@@ -627,7 +627,7 @@ public class UserAuthUtil {
 			*/
 
 			// 再登録も可能な認証
-			Log.d("USERAUTH twitter userid : ", user_id);
+			//Log.d("USERAUTH twitter userid : ", user_id);
 			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? ORDER BY fldUserId DESC LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, user_id);
@@ -637,10 +637,10 @@ public class UserAuthUtil {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			Log.d("USERAUTH poipiku user_id: ", nUserId);
+			//Log.d("USERAUTH poipiku user_id: ", nUserId);
 
 			if (nUserId>0){	// Login
-				Log.d("USERAUTH Login : " + nUserId);
+				//Log.d("USERAUTH Login : " + nUserId);
 				String strPassword = "";
 				String strEmail = "";
 				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
@@ -724,7 +724,7 @@ public class UserAuthUtil {
 
 				nRtn = nUserId;
 			} else {		// Regist
-				Log.d("USERAUTH Regist start");
+				//Log.d("USERAUTH Regist start");
 				String strPassword = RandomStringUtils.randomAlphanumeric(16);
 				strHashPass = Util.getHashPass(strPassword);
 				String strEmail = RandomStringUtils.randomAlphanumeric(16);
@@ -829,7 +829,7 @@ public class UserAuthUtil {
 					response.addCookie(cLK);
 
 					nRtn = nUserId;
-					Log.d("USERAUTH Regist : " + nUserId);
+					//Log.d("USERAUTH Regist : " + nUserId);
 				}
 			}
 		} catch(Exception e) {
