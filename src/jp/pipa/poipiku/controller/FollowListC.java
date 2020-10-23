@@ -19,8 +19,8 @@ public class FollowListC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nMode = Math.max(Common.ToInt(cRequest.getParameter("MD")), MODE_FOLLOW);
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_nMode = Math.max(Util.toInt(cRequest.getParameter("MD")), MODE_FOLLOW);
+			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 		}
 		catch(Exception e) {
 			;
@@ -78,8 +78,8 @@ public class FollowListC {
 			while (cResSet.next()) {
 				CUser cContent = new CUser();
 				cContent.m_nUserId		= cResSet.getInt("follow_user_id");
-				cContent.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_strFileName	= Common.ToString(cResSet.getString("file_name"));
+				cContent.m_strNickName	= Util.toString(cResSet.getString("nickname"));
+				cContent.m_strFileName	= Util.toString(cResSet.getString("file_name"));
 				if(cContent.m_strFileName.length()<=0) cContent.m_strFileName="/img/default_user.jpg";
 
 				m_vContentList.add(cContent);

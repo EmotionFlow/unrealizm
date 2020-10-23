@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import jp.pipa.poipiku.util.Util;
+
 public class CContent {
 	public static final int BOOKMARK_NONE = 0;
 	public static final int BOOKMARK_BOOKMARKING = 1;
@@ -44,27 +46,27 @@ public class CContent {
 	public CContent(ResultSet resultSet) throws SQLException {
 		m_nContentId		= resultSet.getInt("content_id");
 		m_nCategoryId		= resultSet.getInt("category_id");
-		m_strDescription	= Common.ToString(resultSet.getString("description"));
+		m_strDescription	= Util.toString(resultSet.getString("description"));
 		m_bLimitedTimePublish=resultSet.getBoolean("limited_time_publish");
 		m_timeUploadDate	= resultSet.getTimestamp("upload_date");
 		m_timeEndDate		= resultSet.getTimestamp("end_date");
 		m_nUserId			= resultSet.getInt("user_id");
 		m_nOpenId			= resultSet.getInt("open_id");
 		m_bNotRecently		= resultSet.getBoolean("not_recently");
-		m_strFileName		= Common.ToString(resultSet.getString("file_name"));
+		m_strFileName		= Util.toString(resultSet.getString("file_name"));
 		m_nFileNum			= resultSet.getInt("file_num");
 		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
 		//m_nCommentNum		= resultSet.getInt("comment_num");
 		m_nSafeFilter		= resultSet.getInt("safe_filter");
 		m_nFileWidth		= resultSet.getInt("file_width");
 		m_nFileHeight		= resultSet.getInt("file_height");
-		m_strTagList		= Common.ToString(resultSet.getString("tag_list"));
+		m_strTagList		= Util.toString(resultSet.getString("tag_list"));
 		m_nPublishId		= resultSet.getInt("publish_id");
-		m_strListId			= Common.ToString(resultSet.getString("list_id"));
+		m_strListId			= Util.toString(resultSet.getString("list_id"));
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 		m_nEditorId			= resultSet.getInt("editor_id");
-		m_strPassword		= Common.ToString(resultSet.getString("password"));
-		m_strTweetId		= Common.ToString(resultSet.getString("tweet_id"));
+		m_strPassword		= Util.toString(resultSet.getString("password"));
+		m_strTweetId		= Util.toString(resultSet.getString("tweet_id"));
 		m_nTweetWhenPublished=resultSet.getInt("tweet_when_published");
 		m_bCheerNg			= resultSet.getBoolean("cheer_ng");
 		m_strTextBody		= resultSet.getString("text_body");

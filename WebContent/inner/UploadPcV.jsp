@@ -238,7 +238,7 @@ try {
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Common.ToStringHtml(strTag)%>"<%}%> />
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">

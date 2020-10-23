@@ -1,3 +1,6 @@
+<%@page import="jp.pipa.poipiku.*"%>
+<%@page import="jp.pipa.poipiku.controller.*"%>
+<%@page import="jp.pipa.poipiku.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
 		function CheckInput() {
@@ -226,7 +229,7 @@
 						</div>
 						<h2 class="UserInfoUserName">
 								<div class="SettingBody">
-										<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
+										<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
 										<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 										<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 								</div>
@@ -290,7 +293,7 @@
 		<div class="SettingListItem">
 				<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
 				<div class="SettingBody">
-						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
+						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
 						<div class="SettingBodyCmd">
 								<div id="ProfileTextMessage" class="RegistMessage" >1000</div>
 								<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>

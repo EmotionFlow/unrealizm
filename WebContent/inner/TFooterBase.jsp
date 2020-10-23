@@ -62,7 +62,7 @@
 			StringBuilder sbFooterHref = new StringBuilder();
 			sbFooterHref.append(request.getRequestURL().toString().replaceFirst(Common.GetPoipikuUrl(""), ""));
 			if(request.getQueryString()!=null) {
-				sbFooterHref.append("?").append(Common.ToString(request.getQueryString()));
+				sbFooterHref.append("?").append(Util.toString(request.getQueryString()));
 			}
 			String retUrl = "";
 			try{ retUrl = URLEncoder.encode(sbFooterHref.toString(), "UTF-8"); } catch (UnsupportedEncodingException e){ ; }

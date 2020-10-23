@@ -16,7 +16,7 @@ public class SearchIllustByKeywordC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
 		}
 		catch(Exception e) {
@@ -71,7 +71,7 @@ public class SearchIllustByKeywordC {
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
-					strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+					strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
@@ -125,8 +125,8 @@ public class SearchIllustByKeywordC {
 				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
 					m_strRepFileName = cContent.m_strFileName;
 				}
-				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 			}
 			cResSet.close();cResSet=null;

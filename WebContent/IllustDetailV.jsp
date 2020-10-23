@@ -57,7 +57,7 @@ if(!cResults.getResults(cCheckLogin)) {
 		<%} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
 		<div class="IllustItemLink">
 			<div class="IllustItemText">
-				<%=Common.ToStringHtml(cResults.m_cContent.m_strTextBody)%>
+				<%=Util.toStringHtml(cResults.m_cContent.m_strTextBody)%>
 			</div>
 		</div>
 		<%} else {%>

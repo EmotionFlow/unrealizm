@@ -49,12 +49,12 @@ class BannerListC {
 }
 %>
 <%
-request.setCharacterEncoding("UTF-8");
-int nBodyWidth = Common.ToInt(request.getParameter("BWDT"));
+	request.setCharacterEncoding("UTF-8");
+int nBodyWidth = Util.toInt(request.getParameter("BWDT"));
 if(nBodyWidth<0) nBodyWidth=320;
-int nImgWidth = Common.ToInt(request.getParameter("IWDT"));
+int nImgWidth = Util.toInt(request.getParameter("IWDT"));
 if(nImgWidth<0) nImgWidth=80;
-int nImgNum = Common.ToInt(request.getParameter("INUM"));
+int nImgNum = Util.toInt(request.getParameter("INUM"));
 if(nImgNum<0) nImgNum=4;
 
 CheckLogin cCheckLogin = new CheckLogin(request, response);

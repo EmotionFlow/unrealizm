@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-int nResult = 0;
+	int nResult = 0;
 request.setCharacterEncoding("UTF-8");
 
 //login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-int m_nUserId = Common.ToInt(request.getParameter("ID"));
-String strNickName = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("NN")))));
+int m_nUserId = Util.toInt(request.getParameter("ID"));
+String strNickName = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("NN")))));
 
 if (!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 	nResult = -1;

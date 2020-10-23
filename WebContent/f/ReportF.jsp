@@ -4,14 +4,14 @@
 <%@ page import="javax.mail.internet.*"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-//login check
+	//login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 //パラメータの取得
 request.setCharacterEncoding("UTF-8");
-int nUserId		= Common.ToInt(request.getParameter("ID"));
-int nContentId	= Common.ToInt(request.getParameter("TD"));
-String strReportDesc = Common.TrimAll(Common.EscapeInjection(Common.ToString(request.getParameter("DES"))));
+int nUserId		= Util.toInt(request.getParameter("ID"));
+int nContentId	= Util.toInt(request.getParameter("TD"));
+String strReportDesc = Common.TrimAll(Common.EscapeInjection(Util.toString(request.getParameter("DES"))));
 
 try {
 	String SMTP_HOST	= "localhost";

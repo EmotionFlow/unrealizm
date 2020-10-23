@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UpdateFollowCParam {
+<%!class UpdateFollowCParam {
 	public int m_nBlockUserId = -1;
 	public int m_nUserId = -1;
 	public boolean m_bBlock = false;
@@ -9,9 +8,9 @@ class UpdateFollowCParam {
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId		= Common.ToInt(cRequest.getParameter("UID"));
-			m_nBlockUserId	= Common.ToInt(cRequest.getParameter("IID"));
-			m_bBlock		= (Common.ToInt(cRequest.getParameter("CHK"))==1);
+			m_nUserId		= Util.toInt(cRequest.getParameter("UID"));
+			m_nBlockUserId	= Util.toInt(cRequest.getParameter("IID"));
+			m_bBlock		= (Util.toInt(cRequest.getParameter("CHK"))==1);
 		} catch(Exception e) {
 			m_nBlockUserId = -1;
 			m_nUserId = -1;
@@ -74,8 +73,7 @@ class UpdateFollowC {
 		}
 		return nRtn;
 	}
-}
-%>
+}%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 

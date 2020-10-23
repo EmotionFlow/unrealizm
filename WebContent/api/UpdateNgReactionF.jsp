@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UpdateDispFollowerLink {
+<%!class UpdateDispFollowerLink {
 	// params
 	public int m_nUserId = -1;
 	public int m_nMode = CUser.REACTION_SHOW;
@@ -9,8 +8,8 @@ class UpdateDispFollowerLink {
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId = Common.ToInt(request.getParameter("UID"));
-			m_nMode = Common.ToInt(request.getParameter("MID"));
+			m_nUserId = Util.toInt(request.getParameter("UID"));
+			m_nMode = Util.toInt(request.getParameter("MID"));
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
@@ -40,8 +39,7 @@ class UpdateDispFollowerLink {
 		}
 		return m_nMode;
 	}
-}
-%><%
+}%><%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 UpdateDispFollowerLink cResults = new UpdateDispFollowerLink();

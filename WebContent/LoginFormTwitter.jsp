@@ -23,7 +23,7 @@ try{
 	provider.setOAuth10a(true);
 	session.setAttribute("consumer", consumer);
 	session.setAttribute("provider", provider);
-	String callbackUri = Common.ToString(request.getParameter("CBPATH"));
+	String callbackUri = Util.toString(request.getParameter("CBPATH"));
 	boolean isApp = callbackUri.equals("app");
 
 	if(callbackUri.isEmpty() || callbackUri.equals("/")){

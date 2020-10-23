@@ -1,8 +1,7 @@
 <%@page import="com.sun.org.apache.regexp.internal.recompile"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class RegistNotificationTokenC {
+<%!class RegistNotificationTokenC {
 	public int m_nUserId = -1;
 	public String m_strDeviceTokenString = "";
 	public int m_nTokenType = 0;
@@ -10,9 +9,9 @@ class RegistNotificationTokenC {
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId				= Common.ToInt(cRequest.getParameter("UID"));
-			m_strDeviceTokenString	= Common.ToString(cRequest.getParameter("TKN"));
-			m_nTokenType			= Common.ToInt(cRequest.getParameter("TYP"));	// 1: iOS, 2: Android
+			m_nUserId				= Util.toInt(cRequest.getParameter("UID"));
+			m_strDeviceTokenString	= Util.toString(cRequest.getParameter("TKN"));
+			m_nTokenType			= Util.toInt(cRequest.getParameter("TYP"));	// 1: iOS, 2: Android
 			if(m_strDeviceTokenString.length()>1024) m_strDeviceTokenString=m_strDeviceTokenString.substring(0, 1024);
 		} catch(Exception e) {
 			m_nTokenType = -1;
@@ -60,8 +59,7 @@ class RegistNotificationTokenC {
 		}
 		return nRtn;
 	}
-}
-%>
+}%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 

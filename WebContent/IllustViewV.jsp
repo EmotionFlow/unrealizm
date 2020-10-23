@@ -143,12 +143,25 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				});
 			});
 		</script>
+
+		<link href="/js/slick/slick-theme.css" rel="stylesheet" type="text/css">
+		<link href="/js/slick/slick.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="/js/slick/slick.min.js"></script>
+		<script>
+		$(function(){
+			$('.EventItemList').slick({
+				autoplay:true,
+				autoplaySpeed:3000,
+				dots:true,
+				infinite: true,
+				slidesToShow: 1,
+				variableWidth: true,
+				centerMode: true,
+				centerPadding: '10px',
+			});
+		});
+		</script>
 		<style>
-			.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
-			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
-			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
-			.EventItemList .EventItem.Updated {position: relative;}
-			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 			.IllustItemList.Related {margin-bottom: 6px;}
 			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
 			.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
@@ -170,7 +183,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
 					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProgile"><%=Common.AutoLink(Common.ToStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
+					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_SP)%></h3>
 					<span class="UserInfoCmd">
 						<%
 						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
@@ -226,7 +239,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 						<div class="IllustItemUser">
 							<a class="IllustItemUserThumb" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
 							<h2 class="IllustItemUserName">
-								<a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=Common.ToStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
+								<a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=Util.toStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
 							</h2>
 							<span id="UserInfoCmdFollow"
 								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?" Selected":""%>"

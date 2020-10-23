@@ -12,7 +12,7 @@
 <%@page import="jp.pipa.poipiku.util.CTweet"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-int nResult = 0;
+	int nResult = 0;
 CTweet cTweet = new CTweet();
 
 PROCESS: {
@@ -24,7 +24,7 @@ PROCESS: {
 	}
 
 	//パラメータの取得
-	int m_nUserId = Common.ToInt(request.getParameter("ID"));
+	int m_nUserId = Util.toInt(request.getParameter("ID"));
 
 	Log.d(String.format("userid: %d", m_nUserId));
 
@@ -44,11 +44,11 @@ PROCESS: {
 	int r = cTweet.GetMyOpenLists();
 	if (r != CTweet.OK) {
 		if (r == CTweet.ERR_RATE_LIMIT_EXCEEDED){
-			nResult = -102;
+	nResult = -102;
 		} else if (r == CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){
-			nResult = -103;
+	nResult = -103;
 		} else {
-			nResult = r;
+	nResult = r;
 		}
 		break PROCESS;
 	}
@@ -68,10 +68,10 @@ try {
         //twitter list情報(配列)
 		List<Map<String, Object>> twitterListList = new ArrayList<Map<String, Object>>();
 		for(UserList u : cTweet.m_listOpenList) {
-			Map<String, Object> twitterList = new HashMap<String, Object>();
-			twitterList.put("id", Long.toString(u.getId()));
-			twitterList.put("name", u.getName());
-			twitterListList.add(twitterList);
+	Map<String, Object> twitterList = new HashMap<String, Object>();
+	twitterList.put("id", Long.toString(u.getId()));
+	twitterList.put("name", u.getName());
+	twitterListList.add(twitterList);
 		}
 		root.put("twitter_open_list", twitterListList);
 	}

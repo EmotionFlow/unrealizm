@@ -188,26 +188,37 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 					addContents();
 				}
 			});
-			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Common.ToStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
+			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
 			<%if(!bSmartPhone) {%>
 			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
 			<%}%>
 		});
 	</script>
+
+	<%if(bSmartPhone || isApp) {%>
+	<link href="/js/slick/slick-theme.css" rel="stylesheet" type="text/css">
+	<link href="/js/slick/slick.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="/js/slick/slick.min.js"></script>
+	<script>
+	$(function(){
+		$('.EventItemList').slick({
+			autoplay:true,
+			autoplaySpeed:3000,
+			dots:true,
+			infinite: true,
+			slidesToShow: 1,
+			variableWidth: true,
+			centerMode: true,
+			centerPadding: '10px',
+		});
+	});
+	</script>
+	<%}%>
 	<style>
-		.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
-		.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
-		.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
-		.EventItemList .EventItem.Updated {position: relative;}
-		.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
-
 		<%if(!bSmartPhone) {%>
-		.EventItemList {display: block; float: none; width: 100%; margin: 0 0 0 0;}
-		.EventItemList .EventItem {display: block; margin: 0 0 20px 0;}
-		.EventItemList .EventItem .EventBanner {width: 300px; display: block;}
 		.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 		.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
 		.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}

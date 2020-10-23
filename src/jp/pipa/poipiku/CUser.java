@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import jp.pipa.poipiku.CContent;
+import jp.pipa.poipiku.util.Util;
 
 public class CUser {
 	public static final int FOLLOW_NONE = 0;
@@ -49,8 +50,8 @@ public class CUser {
 	public CUser() {}
 	public CUser(ResultSet resultSet) throws SQLException {
 		m_nUserId		= resultSet.getInt("user_id");
-		m_strNickName	= Common.ToString(resultSet.getString("nickname"));
-		m_strFileName	= Common.ToString(resultSet.getString("file_name"));
+		m_strNickName	= Util.toString(resultSet.getString("nickname"));
+		m_strFileName	= Util.toString(resultSet.getString("file_name"));
 		m_nPremiumId	= resultSet.getInt("premiun_id");
 		if(m_strFileName.isEmpty()) m_strFileName="/img/default_user.jpg";
 	}

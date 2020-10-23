@@ -16,9 +16,9 @@ public class IllustDetailC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
-			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
-			m_nAppendId		= Common.ToInt(cRequest.getParameter("AD"));
+			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
+			m_nContentId	= Util.toInt(cRequest.getParameter("TD"));
+			m_nAppendId		= Util.toInt(cRequest.getParameter("AD"));
 		} catch(Exception e) {
 			m_nContentId = -1;
 		}

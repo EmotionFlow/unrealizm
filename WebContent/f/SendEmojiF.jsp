@@ -4,10 +4,7 @@
 <%@ page import="jp.pipa.poipiku.settlement.EpsilonCardSettlement" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class SendEmojiC {
-	public final int EMOJI_MAX = 10;
-
+<%!class SendEmojiC {
 	public final int ERR_NONE = 0;
 	public final int ERR_RETRY = -10;
 	public final int ERR_INQUIRY = -20;
@@ -29,15 +26,15 @@ class SendEmojiC {
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nContentId	= Common.ToInt(request.getParameter("IID"));
-			m_strEmoji		= Common.ToString(request.getParameter("EMJ")).trim();
-			m_nUserId		= Common.ToInt(request.getParameter("UID"));
-			m_nAgentId		= Common.ToInt(request.getParameter("AID"));
+			m_nContentId	= Util.toInt(request.getParameter("IID"));
+			m_strEmoji		= Util.toString(request.getParameter("EMJ")).trim();
+			m_nUserId		= Util.toInt(request.getParameter("UID"));
+			m_nAgentId		= Util.toInt(request.getParameter("AID"));
 			m_strIpAddress	= request.getRemoteAddr();
-			m_nAmount		= Common.ToIntN(request.getParameter("AMT"), -1, 10000);
-			m_strAgentToken = Common.ToString(request.getParameter("TKN"));
-			m_strCardExpire	= Common.ToString(request.getParameter("EXP"));
-			m_strCardSecurityCode	= Common.ToString(request.getParameter("SEC"));
+			m_nAmount		= Util.toIntN(request.getParameter("AMT"), -1, 10000);
+			m_strAgentToken = Util.toString(request.getParameter("TKN"));
+			m_strCardExpire	= Util.toString(request.getParameter("EXP"));
+			m_strCardSecurityCode	= Util.toString(request.getParameter("SEC"));
 			m_strUserAgent  = request.getHeader("user-agent");
 		} catch(Exception e) {
 			m_nContentId = -1;
@@ -103,8 +100,7 @@ class SendEmojiC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(nEmojiNum>=EMOJI_MAX) {
-				Log.d("max 5 emoji");
+			if(nEmojiNum>=Common.EMOJI_MAX[checkLogin.m_nPremiumId]) {
 				return false;
 			}
 
@@ -296,8 +292,7 @@ class SendEmojiC {
 			m_nErrCode = ERR_UNKNOWN;
 		}
 	}
-}
-%>
+}%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 

@@ -2,8 +2,7 @@
 <%@page import="jp.pipa.poipiku.util.CTweet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class ShowAppendFileC {
+<%!class ShowAppendFileC {
 	public static final int OK = 0;
 	public static final int ERR_NOT_FOUND = -1;
 	public static final int ERR_PASS = -2;
@@ -18,8 +17,6 @@ class ShowAppendFileC {
 	public static final int ERR_HIDDEN = -9;
 	public static final int ERR_UNKNOWN = -99;
 
-	public int EMOJI_MAX = 10;
-
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
 	public String m_strPassword = "";
@@ -28,11 +25,11 @@ class ShowAppendFileC {
 
 	public void getParam(HttpServletRequest request) {
 		try {
-			m_nUserId	= Common.ToInt(request.getParameter("UID"));
-			m_nContentId	= Common.ToInt(request.getParameter("IID"));
+			m_nUserId	= Util.toInt(request.getParameter("UID"));
+			m_nContentId	= Util.toInt(request.getParameter("IID"));
 			m_strPassword = request.getParameter("PAS");
-			m_nMode = Common.ToInt(request.getParameter("MD"));
-			m_nTwFriendship = Common.ToInt(request.getParameter("TWF"));
+			m_nMode = Util.toInt(request.getParameter("MD"));
+			m_nTwFriendship = Util.toInt(request.getParameter("TWF"));
 			request.setCharacterEncoding("UTF-8");
 		} catch(Exception e) {
 			m_nContentId = -1;
@@ -144,8 +141,7 @@ class ShowAppendFileC {
 		}
 		return nRtn;
 	}
-}
-%>
+}%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 int nRtn = 0;
@@ -206,7 +202,7 @@ if(nRtn<ShowAppendFileC.OK) {
 			// 2枚目の場所に本文を表示する
 			nRtn=2;
 			strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
-			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Common.ToStringHtml(cResults.m_cContent.m_strTextBody)));
+			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Util.toStringHtml(cResults.m_cContent.m_strTextBody)));
 			strHtml.append("</a>");
 		} else {
 			// 2枚目の場所に1枚目を表示する
@@ -227,7 +223,7 @@ if(nRtn<ShowAppendFileC.OK) {
 		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
 			// 2枚目の場所に本文に表示する
 			strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
-			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Common.ToStringHtml(cResults.m_cContent.m_strTextBody)));
+			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Util.toStringHtml(cResults.m_cContent.m_strTextBody)));
 			strHtml.append("</a>");
 		} else {
 			strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));

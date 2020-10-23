@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,23 +28,23 @@ public class UpCParam {
 
 	protected void GetParams(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("UTF-8");
-		m_nUserId			= Common.ToInt(request.getParameter("UID"));
-		m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
+		m_nUserId			= Util.toInt(request.getParameter("UID"));
+		m_nCategoryId		= Util.toIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
 		m_strDescription	= Common.TrimAll(request.getParameter("DES"));
 		m_strTagList		= Common.SubStrNum(Common.TrimAll(request.getParameter("TAG")), 100);
-		m_nPublishId		= Common.ToIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
+		m_nPublishId		= Util.toIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
 		m_strPassword		= Common.SubStrNum(Common.TrimAll(request.getParameter("PPW")), 16);
 		m_strListId			= Common.TrimAll(request.getParameter("PLD"));
-		m_bLimitedTimePublish=Common.ToBoolean(request.getParameter("LTP"));
-		m_tsPublishStart	= Common.ToSqlTimestamp(request.getParameter("PST"));
-		m_tsPublishEnd		= Common.ToSqlTimestamp(request.getParameter("PED"));
+		m_bLimitedTimePublish=Util.toBoolean(request.getParameter("LTP"));
+		m_tsPublishStart	= Util.toSqlTimestamp(request.getParameter("PST"));
+		m_tsPublishEnd		= Util.toSqlTimestamp(request.getParameter("PED"));
 		m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 		if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 		m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
-		m_nEditorId			= Common.ToIntN(request.getParameter("ED"), 0, Common.EDITOR_ID_MAX);
-		m_bTweetTxt			= Common.ToBoolean(request.getParameter("TWT"));
-		m_bTweetImg			= Common.ToBoolean(request.getParameter("TWI"));
-		m_bCheerNg			= Common.ToInt(request.getParameter("CNG"))!=0;
+		m_nEditorId			= Util.toIntN(request.getParameter("ED"), 0, Common.EDITOR_ID_MAX);
+		m_bTweetTxt			= Util.toBoolean(request.getParameter("TWT"));
+		m_bTweetImg			= Util.toBoolean(request.getParameter("TWI"));
+		m_bCheerNg			= Util.toInt(request.getParameter("CNG"))!=0;
 
 		// format tag list
 		if(!m_strTagList.isEmpty()) {

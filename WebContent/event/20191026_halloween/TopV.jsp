@@ -2,30 +2,26 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
+cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - 使い回しハロウィン</title>
 
 		<style>
-			.Wrapper {width: 990px;}
 			.SettingBody {display: block; width: 100%; position: relative;}
 			.MainImage {display: block; width: 100%;}
 		</style>
 	</head>
 	<body>
 		<div id="DispMsg"></div>
-		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="/event/20191026/tukaimawashi_halloween_2020.png" />
+				<img class="MainImage" src="/event/20191026_halloween/tukaimawashi_halloween_sumaho_2020.png" />
 			</div>
 		</article>
-
-		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

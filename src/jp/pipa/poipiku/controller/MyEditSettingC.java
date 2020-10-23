@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.Util;
 
 public class MyEditSettingC {
 	public String m_strMessage = "";
@@ -19,10 +20,10 @@ public class MyEditSettingC {
 	public void GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_strMessage = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("MSG")))));
-			m_strSelectedMenuId = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("MENUID")))));
-			m_nListPage = Common.ToIntN(request.getParameter("PG"), 0, 100);
-			m_strErr=Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("ERR")))));
+			m_strMessage = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("MSG")))));
+			m_strSelectedMenuId = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("MENUID")))));
+			m_nListPage = Util.toIntN(request.getParameter("PG"), 0, 100);
+			m_strErr=Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("ERR")))));
 		}
 		catch(Exception e) {
 			;
@@ -58,14 +59,14 @@ public class MyEditSettingC {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_cUser.m_nUserId			= cResSet.getInt("user_id");
-				m_cUser.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-				m_cUser.m_strProfile		= Common.ToString(cResSet.getString("profile"));
-				m_cUser.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
-				m_cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("header_file_name"));
-				m_cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
+				m_cUser.m_strNickName		= Util.toString(cResSet.getString("nickname"));
+				m_cUser.m_strProfile		= Util.toString(cResSet.getString("profile"));
+				m_cUser.m_strFileName		= Util.toString(cResSet.getString("file_name"));
+				m_cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("header_file_name"));
+				m_cUser.m_strBgFileName		= Util.toString(cResSet.getString("bg_file_name"));
 				m_cUser.m_nMailComment		= cResSet.getInt("mail_comment");
-				m_cUser.m_strEmail			= Common.ToStringHtml(cResSet.getString("email"));
-				m_cUser.m_strMuteKeyword	= Common.ToString(cResSet.getString("mute_keyword_list")).trim();
+				m_cUser.m_strEmail			= Util.toStringHtml(cResSet.getString("email"));
+				m_cUser.m_strMuteKeyword	= Util.toString(cResSet.getString("mute_keyword_list")).trim();
 				if(m_cUser.m_strProfile.isEmpty())  m_cUser.m_strProfile = "(no profile)";
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
 				if(m_cUser.m_strHeaderFileName.isEmpty()) m_cUser.m_strHeaderFileName="/img/default_transparency.gif";
@@ -102,9 +103,9 @@ public class MyEditSettingC {
 				m_cUser.m_bTweet = true;
 				m_cUser.m_nAutoTweetWeekDay = cResSet.getInt("auto_tweet_weekday");
 				m_cUser.m_nAutoTweetTime = cResSet.getInt("auto_tweet_time");
-				m_cUser.m_strAutoTweetDesc = Common.ToString(cResSet.getString("auto_tweet_desc"));
+				m_cUser.m_strAutoTweetDesc = Util.toString(cResSet.getString("auto_tweet_desc"));
 				m_cUser.m_nAutoTweetThumbNum = cResSet.getInt("auto_tweet_thumb_num");
-				m_cUser.m_strTwitterScreenName = Common.ToString(cResSet.getString("twitter_screen_name"));
+				m_cUser.m_strTwitterScreenName = Util.toString(cResSet.getString("twitter_screen_name"));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

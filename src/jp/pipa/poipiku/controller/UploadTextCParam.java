@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Util;
 
 public class UploadTextCParam extends UpCParam{
 	public String m_strTextBody = "";
@@ -12,7 +13,7 @@ public class UploadTextCParam extends UpCParam{
 		try {
 			super.GetParams(request);
 			m_strTextBody	= Common.TrimAll(request.getParameter("BDY"));
-			m_bNotRecently	= Common.ToBoolean(request.getParameter("REC"));
+			m_bNotRecently	= Util.toBoolean(request.getParameter("REC"));
 		} catch(Exception e) {
 			return super.ErrorOccured(e);
 		}

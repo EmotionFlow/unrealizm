@@ -55,9 +55,9 @@ public class CTweet {
 	private void LoggingTwitterException(TwitterException te){
 		String strCallFrom = "";
 		StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
-        if (steArray.length <= 3) {
-            strCallFrom =  "???";
-        } else {
+		if (steArray.length <= 3) {
+			strCallFrom =  "???";
+		} else {
 			StackTraceElement ste = steArray[2];
 			strCallFrom = ste.getMethodName();
 		}
@@ -351,9 +351,9 @@ public class CTweet {
 				.setOAuthAccessTokenSecret(m_strSecretToken);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
-            User u = twitter.showUserListMembership(Long.parseLong(cContent.m_strListId), m_lnTwitterUserId);
+			/*User u = */twitter.showUserListMembership(Long.parseLong(cContent.m_strListId), m_lnTwitterUserId);
 			nResult = 1;
-        }catch(TwitterException te){
+		}catch(TwitterException te){
 			LoggingTwitterException(te);
 			nResult = GetErrorCode(te);
 		}catch(Exception e) {

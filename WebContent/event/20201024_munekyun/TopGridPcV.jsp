@@ -3,21 +3,29 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
-
-if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/event/20191026/TopGridPcV.jsp").forward(request,response);
-	return;
-}
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title><%=_TEX.T("THeader.Title")%> - 使い回しハロウィン</title>
+		<title>自分的祭りマンガ2020 | <%=_TEX.T("THeader.Title")%></title>
 
 		<style>
 			.SettingBody {display: block; width: 100%; position: relative;}
 			.MainImage {display: block; width: 100%;}
+			.LinkButton {display: block; position: absolute; width: 100%;}
+			.LinkButton.Link1 {height: 208px; top:1200px;}
+.LinkButton.Link2 {
+		height: 83px;
+		top: 1096px;
+}
+.LinkButton.Link3 {
+		width: 76px;
+		height: 25px;
+		top: 2006px;
+		left: 200px;
+		border-bottom: solid 3px #000;
+}
 		</style>
 	</head>
 	<body>
@@ -26,7 +34,11 @@ if(!bSmartPhone) {
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="/event/20191026/tukaimawashi_halloween_sumaho_2020.png" />
+				<img class="MainImage" src="./poipiku_3_pre.png" />
+				<!--
+				<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
+				<a class="LinkButton Link3" href="https://twitter.com/pipajp" target="_blank"></a>
+				-->
 			</div>
 		</article>
 

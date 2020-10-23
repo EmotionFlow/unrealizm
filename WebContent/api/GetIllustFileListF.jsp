@@ -11,8 +11,7 @@
 <%@page import="org.codehaus.jackson.map.JsonMappingException"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class GetIllustFileListCParam {
+<%!class GetIllustFileListCParam {
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
 
@@ -20,8 +19,8 @@ class GetIllustFileListCParam {
 		int nRtn = -1;
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId		= Common.ToInt(request.getParameter("ID"));
-			m_nContentId	= Common.ToInt(request.getParameter("TD"));
+			m_nUserId		= Util.toInt(request.getParameter("ID"));
+			m_nContentId	= Util.toInt(request.getParameter("TD"));
 			nRtn = 0;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -98,8 +97,7 @@ class GetIllustFileListC {
 		}
 		return nRtn;
 	}
-}
-%><%
+}%><%
 Log.d("GetIllustFileListC");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
@@ -132,10 +130,10 @@ if (nRtn > 0) {
 		content.put("open_id", cResults.m_cContent.m_nOpenId);
 		content.put("publish_id", cResults.m_cContent.m_nPublishId);
 		content.put("not_recently", cResults.m_cContent.m_bNotRecently);
-		content.put("start_date", Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate));
-		content.put("end_date", Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate));
+		content.put("start_date", Util.toYMDHMString(cResults.m_cContent.m_timeUploadDate));
+		content.put("end_date", Util.toYMDHMString(cResults.m_cContent.m_timeEndDate));
 		content.put("tweet_when_published", cResults.m_cContent.m_nTweetWhenPublished);
-		content.put("twitter_list_id", Common.ToString(cResults.m_cContent.m_strListId));
+		content.put("twitter_list_id", Util.toString(cResults.m_cContent.m_strListId));
 		content.put("tweeted", cResults.m_cContent.m_strTweetId!=null && !cResults.m_cContent.m_strTweetId.isEmpty());
 		content.put("files", cResults.m_vContent);
 

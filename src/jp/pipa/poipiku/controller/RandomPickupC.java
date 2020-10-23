@@ -52,7 +52,7 @@ public class RandomPickupC {
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
-					strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+					strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
@@ -110,8 +110,8 @@ public class RandomPickupC {
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
 				m_vContentList.add(cContent);
-				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 			}
 			cResSet.close();cResSet=null;

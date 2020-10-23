@@ -4,17 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.time.ZonedDateTime;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -130,7 +122,9 @@ public class Common {
 //			21, // 公式
 //			24,	// 使いまわしバレンタイン
 	};
+
 	// 上記のうち、常時表示される、企画ものではないもの。
+	/*
 	public static final List<Integer> CATEGORY_ID_REGULER = Collections.unmodifiableList(
 		new ArrayList<Integer>() {{
 			add(22);	// リハビリ
@@ -150,6 +144,7 @@ public class Common {
 			add(14);	// お知らせ
 		}}
 	);
+	*/
 
 	public static final int EDITOR_UPLOAD = 0;
 	public static final int EDITOR_PASTE = 1;
@@ -173,42 +168,10 @@ public class Common {
 			{10000, 100000}
 	};
 
-	public static String ToString(String strSrc) {
-		if(strSrc == null) {
-			return "";
-		}
-		return strSrc;
-	}
-
-	public static String ToStringHtmlTextarea(String strSrc) {
-		if(strSrc == null) {
-			return "";
-		}
-
-		strSrc = strSrc.replace("&", "&amp;");
-		strSrc = strSrc.replace("<", "&lt;");
-		strSrc = strSrc.replaceAll(">", "&gt;");
-		strSrc = strSrc.replaceAll("'", "&apos;");
-		strSrc = strSrc.replaceAll("\"", "&quot;");
-
-		return strSrc;
-	}
-
-	public static String ToStringHtml(String strSrc) {
-		if(strSrc == null) {
-			return "";
-		}
-		strSrc = strSrc.replace("\r\n", "\n");
-		strSrc = strSrc.replace("\r", "\n");
-		strSrc = strSrc.replace("&", "&amp;");
-		strSrc = strSrc.replace("<", "&lt;");
-		strSrc = strSrc.replaceAll(">", "&gt;");
-		strSrc = strSrc.replaceAll("\n", "<br />");
-		strSrc = strSrc.replaceAll("'", "&apos;");
-		strSrc = strSrc.replaceAll("\"", "&quot;");
-
-		return strSrc;
-	}
+	public static final int[] EMOJI_MAX = {
+			// normal, premium
+			10, 100
+	};
 
 	public static String CrLfInjection(String strSrc) {
 		if(strSrc == null) {
@@ -218,82 +181,6 @@ public class Common {
 		strSrc = strSrc.replace("\n", "");
 
 		return strSrc;
-	}
-
-	public static int ToInt(String strSrc) {
-		int nRet = -1;
-		if(strSrc == null) {
-			return -1;
-		}
-		try {
-			nRet = Integer.parseInt(strSrc);
-		} catch (Exception e) {
-			nRet = -1;
-		}
-		return nRet;
-	}
-
-	public static int ToIntN(String strSrc, int nMin, int nMax) {
-		int nRet = nMin;
-		if(strSrc == null) {
-			return nRet;
-		}
-		try {
-			nRet = Integer.parseInt(strSrc);
-		} catch (Exception e) {
-			nRet = nMin;
-		}
-		nRet = Math.min(Math.max(nRet, nMin), nMax);
-
-		return nRet;
-	}
-
-	public static long ToLong(String strSrc) {
-		long lnRet = -1;
-		if(strSrc == null) {
-			return -1;
-		}
-		try {
-			lnRet = Long.parseLong(strSrc);
-		} catch (Exception e) {
-			lnRet = -1;
-		}
-		return lnRet;
-	}
-
-	public static boolean ToBoolean(String strSrc){
-		try{
-			int n = Integer.parseInt(strSrc, 10);
-			return ToBoolean(n);
-		} catch (NumberFormatException ne){
-			boolean b = false;
-			b = Boolean.parseBoolean(strSrc);
-			return b;
-		}
-	}
-
-	public static boolean ToBoolean(int strSrc){
-		boolean b = false;
-		if(strSrc >= 1) b = true;
-		return b;
-	}
-
-	public static Timestamp ToSqlTimestamp(String strDateTime){
-		// ISO format 2011-10-05T14:48:00.000Z を想定
-		if(strDateTime!=null && !strDateTime.isEmpty()){
-			ZonedDateTime zdt = ZonedDateTime.parse(strDateTime);
-			return Timestamp.from(zdt.toInstant());
-		} else {
-			return null;
-		}
-	}
-
-	public static String ToYMDHMString(Timestamp ts){
-		if(ts==null){return "";}
-		LocalDateTime ldt = ts.toLocalDateTime();
-		ZonedDateTime zdtSystemDefault = ldt.atZone(ZoneId.systemDefault());
-		ZonedDateTime zdtGmt = zdtSystemDefault.withZoneSameInstant(ZoneId.of("GMT"));
-		return zdtGmt.format(DateTimeFormatter.ISO_INSTANT);
 	}
 
 	public static String EscapeInjection(String strSrc) {

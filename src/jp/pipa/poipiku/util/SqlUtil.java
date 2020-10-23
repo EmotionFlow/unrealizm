@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import jp.pipa.poipiku.*;
-
 public class SqlUtil {
 	public static String getBlockUserSql(Connection connection, int nUserId) throws SQLException {
 		String strRet = "";
@@ -43,10 +41,10 @@ public class SqlUtil {
 		ResultSet resultSet = statement.executeQuery();
 		StringBuilder sbKeyWord = new StringBuilder();
 		if(resultSet.next()) {
-			sbKeyWord.append(Common.ToString(resultSet.getString(1)).trim());
+			sbKeyWord.append(Util.toString(resultSet.getString(1)).trim());
 			while (resultSet.next()) {
 				sbKeyWord.append(" OR ");
-				sbKeyWord.append(Common.ToString(resultSet.getString(1)).trim());
+				sbKeyWord.append(Util.toString(resultSet.getString(1)).trim());
 			}
 		}
 		resultSet.close();resultSet=null;
@@ -61,7 +59,7 @@ public class SqlUtil {
 		statement.setInt(1, nUserId);
 		ResultSet resultSet = statement.executeQuery();
 		if(resultSet.next()) {
-			strRet = Common.ToString(resultSet.getString(1)).trim();
+			strRet = Util.toString(resultSet.getString(1)).trim();
 		}
 		resultSet.close();resultSet=null;
 		statement.close();statement=null;

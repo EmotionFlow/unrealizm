@@ -21,9 +21,9 @@ public class IllustListC {
 		try {
 
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
+			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
 			m_strKeyword	= Common.TrimAll(Common.CrLfInjection(cRequest.getParameter("KWD")));
-			m_nPage			= Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_nPage			= Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 			m_strAccessIp	= cRequest.getRemoteAddr();
 		} catch(Exception e) {
 			m_nUserId = -1;
@@ -73,11 +73,11 @@ public class IllustListC {
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
 					m_cUser.m_nUserId			= cResSet.getInt("user_id");
-					m_cUser.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-					m_cUser.m_strProfile		= Common.ToString(cResSet.getString("profile"));
-					m_cUser.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
-					m_cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("header_file_name"));
-					m_cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
+					m_cUser.m_strNickName		= Util.toString(cResSet.getString("nickname"));
+					m_cUser.m_strProfile		= Util.toString(cResSet.getString("profile"));
+					m_cUser.m_strFileName		= Util.toString(cResSet.getString("file_name"));
+					m_cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("header_file_name"));
+					m_cUser.m_strBgFileName		= Util.toString(cResSet.getString("bg_file_name"));
 					m_cUser.m_nMailComment		= cResSet.getInt("mail_comment");
 					//if(m_cUser.m_strProfile.isEmpty())  m_cUser.m_strProfile = "";
 					if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
@@ -97,7 +97,7 @@ public class IllustListC {
 					cState.setInt(1, m_nUserId);
 					cResSet = cState.executeQuery();
 					if(cResSet.next()) {
-						m_cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("file_name"));
+						m_cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("file_name"));
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
@@ -231,8 +231,8 @@ public class IllustListC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				m_vContentList.add(cContent);
 			}

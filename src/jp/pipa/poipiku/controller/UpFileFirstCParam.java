@@ -18,21 +18,22 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 public class UpFileFirstCParam {
-    protected ServletContext m_cServletContext = null;
+	protected ServletContext m_cServletContext = null;
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
 	public boolean m_bNotRecently = false;
 	public String m_strEncodeImg = "";
 	public boolean m_bPasteUpload = false;
-    FileItem item_file = null;
+	FileItem item_file = null;
 
-    UpFileFirstCParam(ServletContext context){
+	UpFileFirstCParam(ServletContext context){
 		m_cServletContext = context;
 	}
 
@@ -57,11 +58,11 @@ public class UpFileFirstCParam {
 					if (item.isFormField()) {
 						String strName = item.getFieldName();
 						if(strName.equals("UID")) {
-							m_nUserId = Common.ToInt(item.getString());
+							m_nUserId = Util.toInt(item.getString());
 						} else if(strName.equals("IID")) {
-							m_nContentId = Common.ToInt(item.getString());
+							m_nContentId = Util.toInt(item.getString());
 						} else if(strName.equals("REC")) {
-							m_bNotRecently = Common.ToBoolean(item.getString());
+							m_bNotRecently = Util.toBoolean(item.getString());
 						}
 						item.delete();
 					} else {
@@ -71,9 +72,9 @@ public class UpFileFirstCParam {
 				}
 			} else {
 				m_bPasteUpload = true;
-				m_nUserId		= Common.ToInt(request.getParameter("UID"));
-				m_nContentId	= Common.ToInt(request.getParameter("IID"));
-				m_strEncodeImg	= Common.ToString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+				m_nUserId		= Util.toInt(request.getParameter("UID"));
+				m_nContentId	= Util.toInt(request.getParameter("IID"));
+				m_strEncodeImg	= Util.toString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
 				nRtn = 0;
 			}
 		} catch(FileUploadException e) {
@@ -84,10 +85,10 @@ public class UpFileFirstCParam {
 		return nRtn;
 	}
 
-    protected int ErrorOccured(Exception e, int errCode) {
-        e.printStackTrace();
-        m_nUserId = -1;
-        return -99;
-    }
+	protected int ErrorOccured(Exception e, int errCode) {
+		e.printStackTrace();
+		m_nUserId = -1;
+		return -99;
+	}
 
 };

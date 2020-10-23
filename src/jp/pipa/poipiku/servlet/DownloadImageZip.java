@@ -98,7 +98,7 @@ public class DownloadImageZip extends HttpServlet {
 			boolean bRtn = false;
 			try {
 				request.setCharacterEncoding("UTF-8");
-				m_nContentId	= Common.ToInt(request.getParameter("TD"));
+				m_nContentId	= Util.toInt(request.getParameter("TD"));
 				bRtn = true;
 			}
 			catch(Exception e) {
@@ -127,7 +127,7 @@ public class DownloadImageZip extends HttpServlet {
 				cState.setInt(2, m_nContentId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
-					String file_name = Common.ToString(cResSet.getString("file_name"));
+					String file_name = Util.toString(cResSet.getString("file_name"));
 					if(!file_name.isEmpty()) {
 						m_vContentList.add(file_name);
 					}
@@ -144,7 +144,7 @@ public class DownloadImageZip extends HttpServlet {
 				cState.setInt(1, m_nContentId);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
-					String file_name = Common.ToString(cResSet.getString("file_name"));
+					String file_name = Util.toString(cResSet.getString("file_name"));
 					if(!file_name.isEmpty()) {
 						m_vContentList.add(file_name);
 					}

@@ -91,9 +91,9 @@ public class DownloadImageFile extends HttpServlet {
 			boolean bRtn = false;
 			try {
 				request.setCharacterEncoding("UTF-8");
-				m_nContentId	= Common.ToInt(request.getParameter("TD"));
+				m_nContentId	= Util.toInt(request.getParameter("TD"));
 				bRtn = true;
-				m_nAppendId		= Common.ToInt(request.getParameter("AD"));
+				m_nAppendId		= Util.toInt(request.getParameter("AD"));
 			}
 			catch(Exception e) {
 				;
@@ -121,7 +121,7 @@ public class DownloadImageFile extends HttpServlet {
 				cState.setInt(2, m_nContentId);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
-					String file_name = Common.ToString(cResSet.getString("file_name"));
+					String file_name = Util.toString(cResSet.getString("file_name"));
 					if(!file_name.isEmpty()) {
 						m_strFileName = file_name;
 					}
@@ -139,7 +139,7 @@ public class DownloadImageFile extends HttpServlet {
 					cState.setInt(2, m_nAppendId);
 					cResSet = cState.executeQuery();
 					if(cResSet.next()) {
-						String file_name = Common.ToString(cResSet.getString("file_name"));
+						String file_name = Util.toString(cResSet.getString("file_name"));
 						if(!file_name.isEmpty()) {
 							m_strFileName = file_name;
 						}

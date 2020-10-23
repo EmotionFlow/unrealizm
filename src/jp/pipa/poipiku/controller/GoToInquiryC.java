@@ -4,6 +4,7 @@ import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.Util;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,7 @@ public class GoToInquiryC {
 	public void GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_strReturnUrl = Common.TrimAll(Common.ToStringHtml(Common.EscapeInjection(Common.ToString(request.getParameter("RET")))));
+			m_strReturnUrl = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("RET")))));
 		}
 		catch(Exception e) {
 			;
@@ -44,8 +45,8 @@ public class GoToInquiryC {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_cUser.m_nUserId			= cResSet.getInt("user_id");
-				m_cUser.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-				m_cUser.m_strEmail			= Common.ToStringHtml(cResSet.getString("email"));
+				m_cUser.m_strNickName		= Util.toString(cResSet.getString("nickname"));
+				m_cUser.m_strEmail			= Util.toStringHtml(cResSet.getString("email"));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -57,7 +58,7 @@ public class GoToInquiryC {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_cUser.m_bTweet = true;
-				m_cUser.m_strTwitterScreenName = Common.ToString(cResSet.getString("twitter_screen_name"));
+				m_cUser.m_strTwitterScreenName = Util.toString(cResSet.getString("twitter_screen_name"));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
 
 // login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
@@ -21,7 +21,7 @@ if(strRequestUri != null) {
 
 String strNextUrl = "";
 String strReturnUrl = "";
-if(Common.ToBoolean(request.getParameter("INQUIRY"))) {
+if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 	strReturnUrl = request.getParameter("RET");
 	if(strReturnUrl==null || strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
 		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId,"UTF-8");;
@@ -33,7 +33,6 @@ if(Common.ToBoolean(request.getParameter("INQUIRY"))) {
 } else {
 	strNextUrl = "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
 }
-
 %>
 <!DOCTYPE html>
 <html>

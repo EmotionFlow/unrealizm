@@ -149,7 +149,7 @@ public class CCnv {
 			String.format("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</h1>",
 				cContent.m_nContentId,
 				(cContent.m_strDescription.isEmpty())?"style=\"display: none;\"":"",
-				Common.AutoLink(Common.ToStringHtml(cContent.m_strDescription), cContent.m_nUserId, nMode)
+				Common.AutoLink(Util.toStringHtml(cContent.m_strDescription), cContent.m_nUserId, nMode)
 			)
 		);
 	}
@@ -158,7 +158,7 @@ public class CCnv {
 			String.format("<h2 id=\"IllustItemTag_%d\" class=\"IllustItemTag\" %s>%s</h2>",
 				cContent.m_nContentId,
 				(cContent.m_strTagList.isEmpty())?"style=\"display: none;\"":"",
-				Common.AutoLink(Common.ToStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode, nSpMode)
+				Common.AutoLink(Util.toStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode, nSpMode)
 			)
 		);
 	}
@@ -256,7 +256,7 @@ public class CCnv {
 
 
 	private static void _appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
-		String strTextBody = Common.ToStringHtml(cContent.m_strTextBody);
+		String strTextBody = Util.toStringHtml(cContent.m_strTextBody);
 		if(nViewMode==VIEW_DETAIL) {
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s?ID=%d&TD=%d\">", cContent.m_nContentId, ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
 			strRtn.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", strTextBody));
@@ -381,7 +381,7 @@ public class CCnv {
 		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbClass, cContent.m_nContentId));
 		strRtn.append("<div class=\"IllustItemUser\">");
 		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, Common.GetUrl(cContent.m_cUser.m_strFileName)));
-		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Common.ToStringHtml(cContent.m_cUser.m_strNickName)));
+		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Util.toStringHtml(cContent.m_cUser.m_strNickName)));
 		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
 			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollow(%d, %d)\">%s</span>",
 					cContent.m_nUserId,
@@ -444,7 +444,7 @@ public class CCnv {
 		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbClass, cContent.m_nContentId));
 		strRtn.append("<div class=\"IllustItemUser\">");
 		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, Common.GetUrl(cContent.m_cUser.m_strFileName)));
-		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Common.ToStringHtml(cContent.m_cUser.m_strNickName)));
+		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Util.toStringHtml(cContent.m_cUser.m_strNickName)));
 		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
 			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollow(%d, %d)\">%s</span>",
 					cContent.m_nUserId,
@@ -488,7 +488,7 @@ public class CCnv {
 		if(cContent.m_nUserId==nLoginUserId) {
 			// キャプション
 			strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
-			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Common.ToStringHtmlTextarea(cContent.m_strDescription)));
+			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Util.toStringHtmlTextarea(cContent.m_strDescription)));
 			strRtn.append(String.format("<input class=\"IllustItemTagEditTxt\" type=\"text\" maxlength=\"100\" value=\"%s\" />", Util.toDescString(cContent.m_strTagList)));
 			strRtn.append("<div class=\"IllustItemDescEditCmdList\">");
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemDescEditCmd\" onclick=\"UpdateDesc(%d, %d, %d)\">OK</a>", cContent.m_nUserId, cContent.m_nContentId, nMode));
@@ -547,7 +547,7 @@ public class CCnv {
 	public static String MyContent2Html(CContent cContent, int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
+		//String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
@@ -577,7 +577,7 @@ public class CCnv {
 		if(cContent.m_nUserId==nLoginUserId) {
 			// キャプション
 			strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
-			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Common.ToStringHtmlTextarea(cContent.m_strDescription)));
+			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Util.toStringHtmlTextarea(cContent.m_strDescription)));
 			strRtn.append(String.format("<input class=\"IllustItemTagEditTxt\" type=\"text\" maxlength=\"100\" value=\"%s\" />", Util.toDescString(cContent.m_strTagList)));
 			strRtn.append("<div class=\"IllustItemDescEditCmdList\">");
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemDescEditCmd\" onclick=\"UpdateDesc(%d, %d, %d)\">OK</a>", cContent.m_nUserId, cContent.m_nContentId, nMode));
@@ -671,7 +671,7 @@ public class CCnv {
 		// 画像
 		strRtn.append(String.format("<span class=\"IllustUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cContent.m_cUser.m_strFileName)));
 		// 名前
-		strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Common.ToStringHtml(cContent.m_cUser.m_strNickName)));
+		strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Util.toStringHtml(cContent.m_cUser.m_strNickName)));
 		strRtn.append("</a>");	// IllustItemUser
 
 		// イラスト情報
@@ -686,7 +686,7 @@ public class CCnv {
 			)
 		);
 		// キャプション
-		strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Common.ToStringHtml(cContent.m_strDescription)));
+		strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Util.toStringHtml(cContent.m_strDescription)));
 		// サムネイル
 		String strFileUrl = "";
 		boolean bHidden = false;	// テキストモード用カバー画像表示フラグ
@@ -729,10 +729,10 @@ public class CCnv {
 			// テキスト
 			strRtn.append(String.format("<a class=\"IllustThumbText\" href=\"%s\" ", ILLUST_VIEW));
 			if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
-				strRtn.append(String.format("\">%s", Common.ToStringHtml(cContent.m_strTextBody)));
+				strRtn.append(String.format("\">%s", Util.toStringHtml(cContent.m_strTextBody)));
 			} else {
 				strRtn.append("style=\"background: rgba(0,0,0,.5);")
-				.append(String.format("\">%s", Common.ToStringHtml(cContent.m_strTextBody)));
+				.append(String.format("\">%s", Util.toStringHtml(cContent.m_strTextBody)));
 			}
 		}
 
@@ -779,7 +779,7 @@ public class CCnv {
 		StringBuilder strRtn = new StringBuilder();
 		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s\">", ILLUST_LIST));
 		strRtn.append(String.format("<span class=\"UserThumbImg\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cUser.m_strFileName)));
-		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", Common.ToStringHtml(cUser.m_strNickName)));
+		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", Util.toStringHtml(cUser.m_strNickName)));
 		strRtn.append("</a>");
 
 		return strRtn.toString();
@@ -816,7 +816,7 @@ public class CCnv {
 				sb.toString(),
 				URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"),
 				cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG ? "#" : "",
-				Common.ToStringHtml(cTag.m_strTagTxt)
+				Util.toStringHtml(cTag.m_strTagTxt)
 		);
 	}
 
@@ -828,7 +828,7 @@ public class CCnv {
 		return _toHtml(cTag, nMode, _TEX, nSpMode);
 	}
 
-
+	/*
 	private static String _toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
 		String SEARCH_ILLUST_KEYWORD = "";
 		if(nSpMode==SP_MODE_APP){
@@ -840,9 +840,10 @@ public class CCnv {
 		}
 		return String.format(
 			"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\"><i class=\"fas fa-search\"></i> %s</a></h2>",
-			SEARCH_ILLUST_KEYWORD, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Common.ToStringHtml(cTag.m_strTagTxt)
+			SEARCH_ILLUST_KEYWORD, URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"), Util.toStringHtml(cTag.m_strTagTxt)
 		);
 	}
+	*/
 
 	public static String toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX) throws UnsupportedEncodingException {
 		return _toHtml(cTag, nMode, _TEX, SP_MODE_WVIEW);

@@ -26,7 +26,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=Common.ToStringHtml(cResults.m_strKeyword)%></title>
+		<title><%=Util.toStringHtml(cResults.m_strKeyword)%></title>
 		<script>
 			var g_nPage = 1;
 			var g_bAdding = false;

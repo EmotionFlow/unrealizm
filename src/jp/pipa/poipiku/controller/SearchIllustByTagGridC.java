@@ -16,8 +16,8 @@ public class SearchIllustByTagGridC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_strKeyword	= Common.TrimAll(Common.ToString(cRequest.getParameter("KWD")));
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_strKeyword	= Common.TrimAll(Util.toString(cRequest.getParameter("KWD")));
+			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
 			m_strKeyword = "";
 			m_nPage = 0;
@@ -71,7 +71,7 @@ public class SearchIllustByTagGridC {
 				cState.setInt(1, cCheckLogin.m_nUserId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
-					strMuteKeyword = Common.ToString(cResSet.getString(1)).trim();
+					strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
@@ -122,8 +122,8 @@ public class SearchIllustByTagGridC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;

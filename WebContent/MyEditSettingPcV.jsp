@@ -74,7 +74,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
 			$(function(){
 				<%if(cResults.m_strMessage.length()>0) {%>
-					DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
+					DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");
 				<%}%>
 
 				$(".SettingChangePageLink").click((ev)=>{
@@ -230,7 +230,9 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				</div>
 			</div>
 
-			<%strPageId = "FOLLOW";%>
+			<%
+				strPageId = "FOLLOW";
+			%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -238,7 +240,9 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				</div>
 			</div>
 
-			<%strPageId = "BLOCK";%>
+			<%
+				strPageId = "BLOCK";
+			%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -246,7 +250,9 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				</div>
 			</div>
 
-			<%strPageId = "MUTEKEYWORD";%>
+			<%
+				strPageId = "MUTEKEYWORD";
+			%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -254,7 +260,9 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				</div>
 			</div>
 
-			<%strPageId = "REACTION";%>
+			<%
+				strPageId = "REACTION";
+			%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -262,7 +270,9 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 				</div>
 			</div>
 
-			<%strPageId = "TWITTER";%>
+			<%
+				strPageId = "TWITTER";
+			%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">

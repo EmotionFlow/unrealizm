@@ -51,8 +51,8 @@ public class RelatedContents {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
-				content.m_cUser.m_strNickName	= Common.ToString(resultSet.getString("nickname"));
-				content.m_cUser.m_strFileName	= Common.ToString(resultSet.getString("user_file_name"));
+				content.m_cUser.m_strNickName	= Util.toString(resultSet.getString("nickname"));
+				content.m_cUser.m_strFileName	= Util.toString(resultSet.getString("user_file_name"));
 				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
 				contents.add(content);
 			}
@@ -176,8 +176,8 @@ public class RelatedContents {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
-				content.m_cUser.m_strNickName	= Common.ToString(resultSet.getString("nickname"));
-				content.m_cUser.m_strFileName	= Common.ToString(resultSet.getString("user_file_name"));
+				content.m_cUser.m_strNickName	= Util.toString(resultSet.getString("nickname"));
+				content.m_cUser.m_strFileName	= Util.toString(resultSet.getString("user_file_name"));
 				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
 				contents.add(content);
 			}

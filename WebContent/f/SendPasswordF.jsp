@@ -14,8 +14,8 @@ class SendPasswordC {
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_strEmail = Common.EscapeInjection(Common.ToString(request.getParameter("EM"))).toLowerCase();
-			m_strTwScreenName = Common.EscapeInjection(Common.ToString(request.getParameter("TW"))).toLowerCase();
+			m_strEmail = Common.EscapeInjection(Util.toString(request.getParameter("EM"))).toLowerCase();
+			m_strTwScreenName = Common.EscapeInjection(Util.toString(request.getParameter("TW"))).toLowerCase();
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
@@ -48,7 +48,7 @@ class SendPasswordC {
 					CUser user = new CUser();
 					user.m_nUserId = cResSet.getInt("user_id");
 					user.m_strEmail = cResSet.getString("email");
-					user.m_strPassword = Common.ToString(cResSet.getString("password"));
+					user.m_strPassword = Util.toString(cResSet.getString("password"));
 					foundUsers.add(user);
 				}
 				cResSet.close();
@@ -64,7 +64,7 @@ class SendPasswordC {
 					user.m_strEmail = cResSet.getString("email");
 					if (user.m_strEmail.contains("@")) {
 						user.m_nUserId = cResSet.getInt("user_id");
-						user.m_strPassword = Common.ToString(cResSet.getString("password"));
+						user.m_strPassword = Util.toString(cResSet.getString("password"));
 
 						// メアドで検索済みだったら、メール送信リストに追加しない。
 						boolean bFound = false;

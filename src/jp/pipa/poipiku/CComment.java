@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Util;
 
 public class CComment {
 	public static final int TYPE_COMMENT = 0;
@@ -27,7 +27,7 @@ public class CComment {
 	public CComment(ResultSet resultSet) throws SQLException {
 		m_nCommentId		= resultSet.getInt("comment_id");
 		m_nContentId		= resultSet.getInt("content_id");
-		m_strDescription	= Common.ToString(resultSet.getString("description"));
+		m_strDescription	= Util.toString(resultSet.getString("description"));
 		m_nUserId			= resultSet.getInt("user_id");
 		m_timeUploadDate	= resultSet.getTimestamp("upload_date");
 		//m_nToUserId			= resultSet.getInt("to_user_id");

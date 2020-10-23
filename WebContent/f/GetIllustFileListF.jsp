@@ -11,8 +11,7 @@
 <%@page import="org.codehaus.jackson.map.JsonMappingException"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class GetIllustFileListCParam {
+<%!class GetIllustFileListCParam {
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
 
@@ -20,8 +19,8 @@ class GetIllustFileListCParam {
 		int nRtn = -1;
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId		= Common.ToInt(request.getParameter("ID"));
-			m_nContentId	= Common.ToInt(request.getParameter("TD"));
+			m_nUserId		= Util.toInt(request.getParameter("ID"));
+			m_nContentId	= Util.toInt(request.getParameter("TD"));
 			nRtn = 0;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -77,8 +76,7 @@ class GetIllustFileListC {
 		}
 		return nRtn;
 	}
-}
-%><%
+}%><%
 Log.d("GetIllustFileListC");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 

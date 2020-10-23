@@ -55,8 +55,8 @@ public class ActivityListC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CComment cComment = new CComment(cResSet);
-				cComment.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
-				cComment.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
+				cComment.m_strFileName		= Util.toString(cResSet.getString("file_name"));
+				cComment.m_strNickName		= Util.toString(cResSet.getString("nickname"));
 				cComment.m_nCommentType		= CComment.TYPE_COMMENT;
 				if(cComment.m_strFileName.length()<=0) cComment.m_strFileName="/img/default_user.jpg";
 				m_vComment.add(cComment);
@@ -75,8 +75,8 @@ public class ActivityListC {
 					while (cResSet.next()) {
 						CComment cContent = new CComment();
 						cContent.m_nUserId			= cResSet.getInt("user_id");
-						cContent.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-						cContent.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
+						cContent.m_strNickName		= Util.toString(cResSet.getString("nickname"));
+						cContent.m_strFileName		= Util.toString(cResSet.getString("file_name"));
 						cContent.m_timeUploadDate	= cResSet.getTimestamp("upload_date");
 						cContent.m_nCommentType		= CComment.TYPE_FOLLOW;
 						if(cContent.m_strFileName.isEmpty()) cContent.m_strFileName="/img/default_user.jpg";
@@ -90,8 +90,8 @@ public class ActivityListC {
 					while (cResSet.next()) {
 						CComment cContent = new CComment();
 						cContent.m_nUserId			= cResSet.getInt("follow_user_id");
-						cContent.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-						cContent.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
+						cContent.m_strNickName		= Util.toString(cResSet.getString("nickname"));
+						cContent.m_strFileName		= Util.toString(cResSet.getString("file_name"));
 						cContent.m_timeUploadDate	= cResSet.getTimestamp("upload_date");
 						cContent.m_nCommentType		= CComment.TYPE_FOLLOW;
 						if(cContent.m_strFileName.isEmpty()) cContent.m_strFileName="/img/default_user.jpg";
@@ -117,8 +117,8 @@ public class ActivityListC {
 				CComment cContent = new CComment();
 				cContent.m_nContentId		= cResSet.getInt("content_id");
 				cContent.m_nUserId			= cResSet.getInt("user_id");
-				cContent.m_strNickName		= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_strFileName		= Common.ToString(cResSet.getString("file_name"));
+				cContent.m_strNickName		= Util.toString(cResSet.getString("nickname"));
+				cContent.m_strFileName		= Util.toString(cResSet.getString("file_name"));
 				cContent.m_timeUploadDate	= cResSet.getTimestamp("upload_date");
 				cContent.m_nCommentType		= CComment.TYPE_HEART;
 				if(cContent.m_strFileName.isEmpty()) cContent.m_strFileName="/img/default_user.jpg";

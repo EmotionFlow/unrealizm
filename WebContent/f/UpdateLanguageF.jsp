@@ -1,15 +1,16 @@
+<%@page import="jp.pipa.poipiku.util.Util"%>
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*"%>
 <%@page import="javax.naming.*"%>
 <%@page import="javax.sql.*"%>
 <%
-request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
 
 //login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-int m_nLangId = Common.ToIntN(request.getParameter("LD"), 0, 1);
+int m_nLangId = Util.toIntN(request.getParameter("LD"), 0, 1);
 
 if(!cCheckLogin.m_bLogin) {
 	return;

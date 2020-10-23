@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-request.setCharacterEncoding("UTF-8");
-int nUserId = Common.ToInt(request.getParameter("ID"));
-int nContentId	= Common.ToInt(request.getParameter("TD"));
+	request.setCharacterEncoding("UTF-8");
+int nUserId = Util.toInt(request.getParameter("ID"));
+int nContentId	= Util.toInt(request.getParameter("TD"));
 
 // login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);

@@ -297,7 +297,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Common.ToStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> />
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">
@@ -407,8 +407,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							<%}%>
 						</div>
 						<%if(cResults.m_cContent.m_bLimitedTimePublish){
-							String strStartDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeUploadDate);
-							String strEndDateTime = Common.ToYMDHMString(cResults.m_cContent.m_timeEndDate);
+							String strStartDateTime = Util.toYMDHMString(cResults.m_cContent.m_timeUploadDate);
+							String strEndDateTime = Util.toYMDHMString(cResults.m_cContent.m_timeEndDate);
 							%>
 						<input id="EditTimeLimitedStartPresent" value="<%=strStartDateTime%>" type="hidden" />
 						<input id="EditTimeLimitedEndPresent" value="<%=strEndDateTime%>" type="hidden" />

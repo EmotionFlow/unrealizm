@@ -1,18 +1,15 @@
 <%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class GetEmojiListC {
-	public int EMOJI_MAX = 5;
-
+<%!class GetEmojiListC {
 	public int m_nContentId = -1;
 	public int m_nCategoryId = -1;
 
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nContentId	= Common.ToInt(request.getParameter("IID"));
-			m_nCategoryId	= Common.ToIntN(request.getParameter("CAT"), 0, Emoji.EMOJI_CAT_CHEER);
+			m_nContentId	= Util.toInt(request.getParameter("IID"));
+			m_nCategoryId	= Util.toIntN(request.getParameter("CAT"), 0, Emoji.EMOJI_CAT_CHEER);
 		} catch(Exception e) {
 			;
 		}
@@ -21,9 +18,9 @@ class GetEmojiListC {
 	public boolean m_bCheerNG = false;
 
 	/*
-	              RECENT POPULAR OYATSU OTHER CHEER
-    notLogin     []       vEmoji  static static []
-    Login        vEmoji   vEmoji  static static static
+								RECENT POPULAR OYATSU OTHER CHEER
+		notLogin     []       vEmoji  static static []
+		Login        vEmoji   vEmoji  static static static
 	 */
 	public String[] getResults(CheckLogin cCheckLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
@@ -81,8 +78,7 @@ class GetEmojiListC {
 		}
 		return EMOJI_LIST;
 	}
-}
-%>
+}%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 StringBuilder sbResult = new StringBuilder();

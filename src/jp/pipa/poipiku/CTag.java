@@ -3,7 +3,7 @@ package jp.pipa.poipiku;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Util;
 
 public class CTag {
 	public int m_nTagId = -1;
@@ -12,6 +12,6 @@ public class CTag {
 
 	public CTag() {}
 	public CTag(ResultSet resultSet) throws SQLException {
-		m_strTagTxt = Common.ToString(resultSet.getString("tag_txt"));
+		m_strTagTxt = Util.toString(resultSet.getString("tag_txt"));
 	}
 }

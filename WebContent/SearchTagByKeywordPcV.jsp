@@ -20,7 +20,7 @@ g_strSearchWord = cResults.m_strKeyword;
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdSearchUserPcHeader.jsp"%>
-		<meta name="description" content="<%=Common.ToStringHtml(String.format(_TEX.T("SearchTagByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
+		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchTagByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchTagByKeyword.Title")%></title>
 
 		<script type="text/javascript">

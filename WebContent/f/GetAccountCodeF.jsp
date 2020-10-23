@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class GetAccountCodeCParam {
+<%!class GetAccountCodeCParam {
 	public int m_nUserId = -1;
 	public String m_strPassWord = "";
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId	= Common.ToInt(cRequest.getParameter("ID"));
+			m_nUserId	= Util.toInt(cRequest.getParameter("ID"));
 		}
 		catch(Exception e) {
 			m_nUserId = -1;
@@ -67,8 +66,7 @@ class GetAccountCodeC {
 
 		return bResult;
 	}
-}
-%><%
+}%><%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 GetAccountCodeCParam cParam = new GetAccountCodeCParam();

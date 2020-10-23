@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UpdateFollowTagC {
+<%!class UpdateFollowTagC {
 	public static final int FAVO_MAX = 10;
 	public static final int OK_INSERT = 1;
 	public static final int OK_DELETE = 0;
@@ -15,9 +14,9 @@ class UpdateFollowTagC {
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId	= Common.ToInt(request.getParameter("UID"));
+			m_nUserId	= Util.toInt(request.getParameter("UID"));
 			m_strTagTxt	= Common.TrimAll(request.getParameter("TXT"));
-			m_nTypeId	= Common.ToIntN(request.getParameter("TYP"), Common.FOVO_KEYWORD_TYPE_TAG, Common.FOVO_KEYWORD_TYPE_SEARCH);
+			m_nTypeId	= Util.toIntN(request.getParameter("TYP"), Common.FOVO_KEYWORD_TYPE_TAG, Common.FOVO_KEYWORD_TYPE_SEARCH);
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
@@ -91,8 +90,7 @@ class UpdateFollowTagC {
 		}
 		return nRtn;
 	}
-}
-%>
+}%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 

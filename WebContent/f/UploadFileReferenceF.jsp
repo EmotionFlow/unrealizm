@@ -3,8 +3,7 @@
 <%@ page import="org.apache.commons.fileupload.disk.*"%>
 <%@ page import="org.apache.commons.fileupload.servlet.*"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UploadReferenceCParam {
+<%!class UploadReferenceCParam {
 	public int m_nUserId = -1;
 	public int m_nCategoryId = 0;
 	public int m_nSafeFilter = 0;
@@ -14,11 +13,11 @@ class UploadReferenceCParam {
 	public int GetParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId			= Common.ToInt(request.getParameter("UID"));
-			m_nCategoryId		= Common.ToIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
-			m_nSafeFilter		= Common.ToIntN(request.getParameter("SAF"), Common.SAFE_FILTER_ALL, Common.SAFE_FILTER_R18G);
-			m_strDescription	= Common.TrimAll(Common.ToString(request.getParameter("DES")));
-			m_strTagList		= Common.SubStrNum(Common.TrimAll(Common.ToString(request.getParameter("TAG"))), 100);
+			m_nUserId			= Util.toInt(request.getParameter("UID"));
+			m_nCategoryId		= Util.toIntN(request.getParameter("CAT"), 0, Common.CATEGORY_ID_MAX);
+			m_nSafeFilter		= Util.toIntN(request.getParameter("SAF"), Common.SAFE_FILTER_ALL, Common.SAFE_FILTER_R18G);
+			m_strDescription	= Common.TrimAll(Util.toString(request.getParameter("DES")));
+			m_strTagList		= Common.SubStrNum(Common.TrimAll(Util.toString(request.getParameter("TAG"))), 100);
 			m_strDescription	= m_strDescription.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 			if(m_strDescription.startsWith("#")) m_strDescription=" "+m_strDescription;
 			m_strTagList		= m_strTagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");
@@ -173,8 +172,7 @@ class UploadReferenceC {
 		}
 		return m_nContentId;
 	}
-}
-%><%
+}%><%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 Log.d("UploadReferenceF - UserId:"+cCheckLogin.m_nUserId);
 

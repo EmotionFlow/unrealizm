@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
 
 //login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-int m_nUserId = Common.ToInt(request.getParameter("ID"));
-int m_nAutoTweetWeekDay = Common.ToIntN(request.getParameter("AW"), -1, 6);
-int m_nAutoTweetTime = Common.ToIntN(request.getParameter("AT"), -1, 23);
-String m_strAutoTweetTxt = Common.TrimAll(Common.ToString(request.getParameter("AD")));
-int m_nAutoTweetThumbNum = Common.ToIntN(request.getParameter("ATN"), 0, 9);
+int m_nUserId = Util.toInt(request.getParameter("ID"));
+int m_nAutoTweetWeekDay = Util.toIntN(request.getParameter("AW"), -1, 6);
+int m_nAutoTweetTime = Util.toIntN(request.getParameter("AT"), -1, 23);
+String m_strAutoTweetTxt = Common.TrimAll(Util.toString(request.getParameter("AD")));
+int m_nAutoTweetThumbNum = Util.toIntN(request.getParameter("ATN"), 0, 9);
 if(m_strAutoTweetTxt.length()>100) {m_strAutoTweetTxt=m_strAutoTweetTxt.substring(0, 100);}
 
 int nRtn = 0;

@@ -1,14 +1,17 @@
 package jp.pipa.poipiku.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,8 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
-
-import static jp.pipa.poipiku.Emoji.EMOJI_CHEER_NUM;
 
 public class Util {
 	public static String getHashPass(String strPassword) {
@@ -73,7 +74,7 @@ public class Util {
 					cState.setInt(2, nLimitNum);
 					cResSet = cState.executeQuery();
 					while (cResSet.next()) {
-						vResult.add(Common.ToString(cResSet.getString(1)).trim());
+						vResult.add(Util.toString(cResSet.getString(1)).trim());
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
@@ -85,7 +86,7 @@ public class Util {
 						cState.setInt(3, nLimitNum-vResult.size());
 						cResSet = cState.executeQuery();
 						while (cResSet.next()) {
-							vResult.add(Common.ToString(cResSet.getString(1)).trim());
+							vResult.add(Util.toString(cResSet.getString(1)).trim());
 						}
 						cResSet.close();cResSet=null;
 						cState.close();cState=null;
@@ -97,7 +98,7 @@ public class Util {
 					cState.setInt(1, nLimitNum-vResult.size());
 					cResSet = cState.executeQuery();
 					while (cResSet.next()) {
-						vResult.add(Common.ToString(cResSet.getString(1)).trim());
+						vResult.add(Util.toString(cResSet.getString(1)).trim());
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
@@ -117,18 +118,43 @@ public class Util {
 
 
 	public static String toString(String strSrc) {
-		if(strSrc == null) {
-			return "";
-		}
+		if(strSrc == null) return "";
+
+		return strSrc;
+	}
+
+	public static String toStringHtml(String strSrc) {
+		if(strSrc == null) return "";
+
+		strSrc = strSrc.replace("\r\n", "\n");
+		strSrc = strSrc.replace("\r", "\n");
+		strSrc = strSrc.replace("&", "&amp;");
+		strSrc = strSrc.replace("<", "&lt;");
+		strSrc = strSrc.replaceAll(">", "&gt;");
+		strSrc = strSrc.replaceAll("\n", "<br />");
+		strSrc = strSrc.replaceAll("'", "&apos;");
+		strSrc = strSrc.replaceAll("\"", "&quot;");
+
+		return strSrc;
+	}
+
+	public static String toStringHtmlTextarea(String strSrc) {
+		if(strSrc == null) return "";
+
+		strSrc = strSrc.replace("&", "&amp;");
+		strSrc = strSrc.replace("<", "&lt;");
+		strSrc = strSrc.replaceAll(">", "&gt;");
+		strSrc = strSrc.replaceAll("'", "&apos;");
+		strSrc = strSrc.replaceAll("\"", "&quot;");
+
 		return strSrc;
 	}
 
 
 	public static int toInt(String strSrc) {
+		if(strSrc == null) return -1;
+
 		int nRet = -1;
-		if(strSrc == null) {
-			return -1;
-		}
 		try {
 			nRet = Integer.parseInt(strSrc);
 		} catch (Exception e) {
@@ -137,11 +163,24 @@ public class Util {
 		return nRet;
 	}
 
-	public static long toLong(String strSrc) {
-		long nRet = -1;
-		if(strSrc == null) {
-			return -1;
+	public static int toIntN(String strSrc, int nMin, int nMax) {
+		if(strSrc == null) return nMin;
+
+		int nRet = nMin;
+		try {
+			nRet = Integer.parseInt(strSrc);
+		} catch (Exception e) {
+			nRet = nMin;
 		}
+		nRet = Math.min(Math.max(nRet, nMin), nMax);
+
+		return nRet;
+	}
+
+	public static long toLong(String strSrc) {
+		if(strSrc == null) return -1;
+
+		long nRet = -1;
 		try {
 			nRet = Long.parseLong(strSrc);
 		} catch (Exception e) {
@@ -150,9 +189,46 @@ public class Util {
 		return nRet;
 	}
 
+	public static boolean toBoolean(String strSrc){
+		if(strSrc == null) return false;
+
+		try{
+			int n = Integer.parseInt(strSrc, 10);
+			return toBoolean(n);
+		} catch (NumberFormatException ne){
+			boolean b = false;
+			b = Boolean.parseBoolean(strSrc);
+			return b;
+		}
+	}
+
+	public static boolean toBoolean(int strSrc){
+		boolean b = false;
+		if(strSrc >= 1) b = true;
+		return b;
+	}
+
+	public static Timestamp toSqlTimestamp(String strSrc){
+		if(strSrc == null) return null;
+		if(strSrc.isEmpty()) return null;
+
+		// ISO format 2011-10-05T14:48:00.000Z を想定
+		ZonedDateTime zdt = ZonedDateTime.parse(strSrc);
+		return Timestamp.from(zdt.toInstant());
+	}
+
+	public static String toYMDHMString(Timestamp ts){
+		if(ts==null) return "";
+
+		LocalDateTime ldt = ts.toLocalDateTime();
+		ZonedDateTime zdtSystemDefault = ldt.atZone(ZoneId.systemDefault());
+		ZonedDateTime zdtGmt = zdtSystemDefault.withZoneSameInstant(ZoneId.of("GMT"));
+		return zdtGmt.format(DateTimeFormatter.ISO_INSTANT);
+	}
+
 	public static boolean isSmartPhone(HttpServletRequest request) {
 		String strUuserAgent = toString(request.getHeader("user-agent"));
-		String strReferer = toString(request.getHeader("Referer"));
+		//String strReferer = toString(request.getHeader("Referer"));
 
 		//if(strReferer.indexOf("poipiku.com")<0) {
 			if(	(strUuserAgent.indexOf("iPhone")>=0 && strUuserAgent.indexOf("iPad")<0) ||

@@ -77,7 +77,7 @@ public class DownloadRouletteFile02 extends HttpServlet {
 			try {
 				request.setCharacterEncoding("UTF-8");
 				for(int n=0; n < m_nRoullete.length; n++) {
-					m_nRoullete[n] = Common.ToInt(request.getParameter(String.format("R%d", n+1)));
+					m_nRoullete[n] = Util.toInt(request.getParameter(String.format("R%d", n+1)));
 					if(m_nRoullete[n] < 1) return false;
 				}
 				bRtn = true;

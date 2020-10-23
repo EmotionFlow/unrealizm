@@ -21,8 +21,8 @@
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
 		try {
-			m_nUserId		= Common.ToInt(request.getParameter("UID"));
-			m_nContentId	= Common.ToInt(request.getParameter("IID"));
+			m_nUserId		= Util.toInt(request.getParameter("UID"));
+			m_nContentId	= Util.toInt(request.getParameter("IID"));
 			String strJson	= Common.TrimAll(request.getParameter("AID"));
 
 			//並び換え、削除後のappend_idリスト

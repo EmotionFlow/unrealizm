@@ -62,15 +62,15 @@ public class UserAuthUtil {
 	public static int checkLogin(HttpServletRequest request, HttpServletResponse response) {
 		int nRtn = ERROR_UNKOWN;
 		//login check
-		CheckLogin cCheckLogin = new CheckLogin(request, response);
+		//CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 		//パラメータの取得
 		String strEmail	= "";
 		String strPassword	= "";
 		try {
 			request.setCharacterEncoding("UTF-8");
-			strEmail	= Common.EscapeInjection(Common.ToString(request.getParameter("EM")).trim());
-			strPassword	= Common.EscapeInjection(Common.ToString(request.getParameter("PW")).trim());
+			strEmail	= Common.EscapeInjection(Util.toString(request.getParameter("EM")).trim());
+			strPassword	= Common.EscapeInjection(Util.toString(request.getParameter("PW")).trim());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -97,7 +97,7 @@ public class UserAuthUtil {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				nUserId = cResSet.getInt("user_id");
-				strHashPass = Common.ToString(cResSet.getString("hash_password"));
+				strHashPass = Util.toString(cResSet.getString("hash_password"));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -133,9 +133,9 @@ public class UserAuthUtil {
 		String strNickName = "";
 		try {
 			request.setCharacterEncoding("UTF-8");
-			strEmail		= Common.EscapeInjection(Common.ToString(request.getParameter("EM")).trim());
-			strPassword		= Common.EscapeInjection(Common.ToString(request.getParameter("PW")).trim());
-			strNickName		= Common.EscapeInjection(Common.ToString(request.getParameter("NN")).trim());
+			strEmail		= Common.EscapeInjection(Util.toString(request.getParameter("EM")).trim());
+			strPassword		= Common.EscapeInjection(Util.toString(request.getParameter("PW")).trim());
+			strNickName		= Common.EscapeInjection(Util.toString(request.getParameter("NN")).trim());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -289,7 +289,7 @@ public class UserAuthUtil {
 		String strHashKey = "";
 		try {
 			request.setCharacterEncoding("UTF-8");
-			strHashKey = Common.EscapeInjection(Common.ToString(request.getParameter("HK")).trim());
+			strHashKey = Common.EscapeInjection(Util.toString(request.getParameter("HK")).trim());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -311,7 +311,7 @@ public class UserAuthUtil {
 			cState.setString(1, strHashKey);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
-				strEmail = Common.ToString(cResSet.getString("email"));
+				strEmail = Util.toString(cResSet.getString("email"));
 				nUserId = cResSet.getInt("user_id");
 			}
 			cResSet.close();cResSet=null;
@@ -356,10 +356,10 @@ public class UserAuthUtil {
 		String strNewPassword2 = "";
 		try {
 			request.setCharacterEncoding("UTF-8");
-			nUserId = Common.ToInt(request.getParameter("ID"));
-			strPassword	= Common.ToString(request.getParameter("PW")).trim();
-			strNewPassword1 = Common.ToString(request.getParameter("PW1")).trim();
-			strNewPassword2 = Common.ToString(request.getParameter("PW2")).trim();
+			nUserId = Util.toInt(request.getParameter("ID"));
+			strPassword	= Util.toString(request.getParameter("PW")).trim();
+			strNewPassword1 = Util.toString(request.getParameter("PW1")).trim();
+			strNewPassword2 = Util.toString(request.getParameter("PW2")).trim();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -446,8 +446,8 @@ public class UserAuthUtil {
 		String strEmail = "";
 		try {
 			request.setCharacterEncoding("UTF-8");
-			nUserId = Common.ToInt(request.getParameter("ID"));
-			strEmail	= Common.ToString(request.getParameter("EM")).trim();
+			nUserId = Util.toInt(request.getParameter("ID"));
+			strEmail	= Util.toString(request.getParameter("EM")).trim();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -649,9 +649,9 @@ public class UserAuthUtil {
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
 					nUserId		= cResSet.getInt("user_id");
-					strHashPass = Common.ToString(cResSet.getString("hash_password"));
-					strPassword = Common.ToString(cResSet.getString("password"));
-					strEmail = Common.ToString((cResSet.getString("email")));
+					strHashPass = Util.toString(cResSet.getString("hash_password"));
+					strPassword = Util.toString(cResSet.getString("password"));
+					strEmail = Util.toString((cResSet.getString("email")));
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;

@@ -17,8 +17,8 @@ public class MyHomeTagPcC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			n_nVersion = Common.ToInt(cRequest.getParameter("VER"));
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			n_nVersion = Util.toInt(cRequest.getParameter("VER"));
+			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
 			;
 		}
@@ -147,8 +147,8 @@ public class MyHomeTagPcC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Common.ToString(cResSet.getString("user_file_name"));
+				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;

@@ -6,8 +6,7 @@
 <%@page import="org.apache.commons.fileupload.disk.*"%>
 <%@page import="org.apache.commons.fileupload.servlet.*"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UploadFileAppendCParam {
+<%!class UploadFileAppendCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
@@ -31,9 +30,9 @@ class UploadFileAppendCParam {
 				if (item.isFormField()) {
 					String strName = item.getFieldName();
 					if(strName.equals("UID")) {
-						m_nUserId = Common.ToInt(item.getString());
+						m_nUserId = Util.toInt(item.getString());
 					} else if(strName.equals("IID")) {
-						m_nContentId = Common.ToInt(item.getString());
+						m_nContentId = Util.toInt(item.getString());
 					}
 					item.delete();
 				} else {
@@ -163,8 +162,7 @@ class UploadFileAppendC {
 		}
 		return nRtn;
 	}
-}
-%><%
+}%><%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;

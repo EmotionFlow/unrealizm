@@ -20,11 +20,11 @@ public class IllustViewListC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId		= Common.ToInt(cRequest.getParameter("ID"));
-			m_nContentId	= Common.ToInt(cRequest.getParameter("TD"));
-			m_nPage 		= Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
-			m_nMode 		= Common.ToInt(cRequest.getParameter("MD"));
-			m_bAdFilter		= (Common.ToInt(cRequest.getParameter("ADF"))>=2);
+			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
+			m_nContentId	= Util.toInt(cRequest.getParameter("TD"));
+			m_nPage 		= Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
+			m_nMode 		= Util.toInt(cRequest.getParameter("MD"));
+			m_bAdFilter		= (Util.toInt(cRequest.getParameter("ADF"))>=2);
 		} catch(Exception e) {
 			m_nContentId = -1;
 		}
@@ -73,11 +73,11 @@ public class IllustViewListC {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				cUser.m_nUserId				= cResSet.getInt("user_id");
-				cUser.m_strNickName			= Common.ToString(cResSet.getString("nickname"));
-				cUser.m_strProfile			= Common.ToString(cResSet.getString("profile"));
-				cUser.m_strFileName			= Common.ToString(cResSet.getString("file_name"));
-				cUser.m_strHeaderFileName	= Common.ToString(cResSet.getString("header_file_name"));
-				cUser.m_strBgFileName		= Common.ToString(cResSet.getString("bg_file_name"));
+				cUser.m_strNickName			= Util.toString(cResSet.getString("nickname"));
+				cUser.m_strProfile			= Util.toString(cResSet.getString("profile"));
+				cUser.m_strFileName			= Util.toString(cResSet.getString("file_name"));
+				cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("header_file_name"));
+				cUser.m_strBgFileName		= Util.toString(cResSet.getString("bg_file_name"));
 				cUser.m_nReaction			= cResSet.getInt("ng_reaction");
 				if(cUser.m_strFileName.isEmpty()) cUser.m_strFileName="/img/default_user.jpg";
 			}

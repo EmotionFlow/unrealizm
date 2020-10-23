@@ -376,7 +376,7 @@ if(cResults.m_bUpdate) {
 				DispAutoTweetCharNum();
 
 				<%if(cResults.m_strMessage.length()>0) {%>
-				DispMsg("<%=Common.ToStringHtml(cResults.m_strMessage)%>");
+				DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");
 				<%}%>
 			});
 		</script>
@@ -390,7 +390,7 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
 					<div class="SettingBody">
-						<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Common.ToStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
+						<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
 						<div class="SettingBodyCmd">
 							<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -466,7 +466,7 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
 					<div class="SettingBody">
-						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
+						<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
 						<div class="SettingBodyCmd">
 							<div id="ProfileTextMessage" class="RegistMessage" >1000</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -478,7 +478,7 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.MuteKeyowrd")%></div>
 					<div class="SettingBody">
 						<%=_TEX.T("EditSettingV.MuteKeyowrd.Message")%>
-						<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100" placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>
+						<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100" placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>
 						<div class="SettingBodyCmd">
 							<div id="MuteKeywordTextNum" class="RegistMessage" >100</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateMuteKeyword()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -519,17 +519,23 @@ if(cResults.m_bUpdate) {
 							<div class="RegistMessage" >[<%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%>]</div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="location.href='/TokenFormTwitter.jsp'"><%=_TEX.T("EditSettingV.Twitter.Button")%></a>
 						</div>
-						<%if(cResults.m_cUser.m_bTweet){%>
+						<%
+							if(cResults.m_cUser.m_bTweet){
+						%>
 						<!--
 						<div class="SettingBodyCmd">
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="DeregistTwitter()"><%=_TEX.T("EditSettingV.Twitter.Button.Deregist")%></a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="DeregistTwitter()"_TEX.T("EditSettingV.Twitter.Button.Deregist")st")%></a>
 						</div>
 						-->
-						<%}%>
+						<%
+							}
+						%>
 					</div>
 				</div>
 
-				<%if(cResults.m_cUser.m_bTweet){%>
+				<%
+					if(cResults.m_cUser.m_bTweet){
+				%>
 				<div id="SectionAutoTweet" class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 					<div class="SettingBody">
@@ -556,28 +562,38 @@ if(cResults.m_bUpdate) {
 						<div class="SettingBodyCmd">
 							<select id="AutoTweetWeekDay" class="AutoTweetPullDown" <%if(cResults.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
 								<option value="-1"><%=_TEX.T("EditSettingV.Twitter.Auto.WeekDay.DayEvery")%></option>
-								<%for(int nTime=0; nTime<7; nTime++) {%>
+								<%
+									for(int nTime=0; nTime<7; nTime++) {
+								%>
 								<option value="<%=nTime%>" <%if(cResults.m_cUser.m_nAutoTweetWeekDay==nTime){%>selected="selected"<%}%>><%=_TEX.T(String.format("EditSettingV.Twitter.Auto.WeekDay.Day%d", nTime))%></option>
-								<%}%>
+								<%
+									}
+								%>
 							</select>
 						</div>
 						<div class="SettingBodyCmd">
 							<select id="AutoTweetTime" class="AutoTweetPullDown" <%if(cResults.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
-								<%for(int nTime=0; nTime<24; nTime++) {%>
+								<%
+									for(int nTime=0; nTime<24; nTime++) {
+								%>
 								<option value="<%=nTime%>" <%if(cResults.m_cUser.m_nAutoTweetTime==nTime){%>selected="selected"<%}%>><%=nTime%><%=_TEX.T("EditSettingV.Twitter.Auto.Unit")%></option>
-								<%}%>
+								<%
+									}
+								%>
 							</select>
 						</div>
 						<div class="SettingBodyCmd">
-							<%if(cResults.m_cUser.m_strAutoTweetDesc.isEmpty()) {
-								cResults.m_cUser.m_strAutoTweetDesc = String.format("%s%s%s https://poipiku.com/%d/ #%s",
-										_TEX.T("EditSettingV.Twitter.Auto.AutoTxt"),
-										cResults.m_cUser.m_strNickName,
-										_TEX.T("Twitter.UserAddition"),
-										cResults.m_cUser.m_nUserId,
-										_TEX.T("Common.Title"));
-							}%>
-							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()" maxlength="100"><%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
+							<%
+								if(cResults.m_cUser.m_strAutoTweetDesc.isEmpty()) {
+													cResults.m_cUser.m_strAutoTweetDesc = String.format("%s%s%s https://poipiku.com/%d/ #%s",
+															_TEX.T("EditSettingV.Twitter.Auto.AutoTxt"),
+															cResults.m_cUser.m_strNickName,
+															_TEX.T("Twitter.UserAddition"),
+															cResults.m_cUser.m_nUserId,
+															_TEX.T("Common.Title"));
+												}
+							%>
+							<textarea id="AutoTweetTxt" class="SettingBodyTxt" rows="6" onkeyup="DispAutoTweetCharNum()" maxlength="100"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strAutoTweetDesc)%></textarea>
 						</div>
 						<div class="SettingBodyCmd">
 							<div id="AutoTweetTxtNum" class="RegistMessage" >100</div>
@@ -598,7 +614,9 @@ if(cResults.m_bUpdate) {
 						</div>
 					</div>
 				</div>
-				<%}%>
+				<%
+					}
+				%>
 
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Language")%></div>
@@ -608,11 +626,13 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<%if(cResults.m_cUser.m_strEmail.contains("@")) {%>
+				<%
+					if(cResults.m_cUser.m_strEmail.contains("@")) {
+				%>
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Email.Address")%></div>
 					<div class="SettingBody">
-						<input id="EM" class="SettingBodyTxt" type="text" value="<%=Common.ToStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
+						<input id="EM" class="SettingBodyTxt" type="text" value="<%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strEmail)%>" />
 						<div class="SettingBodyCmd">
 							<div id="MailAdressMessage" class="RegistMessage" style="color: red;"><%=strEmailState%></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateEmailAddress()"><%=_TEX.T("EditSettingV.Button.Update")%></a>

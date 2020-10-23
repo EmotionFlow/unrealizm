@@ -15,7 +15,7 @@ public class MyHomeTagSettingC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 		}
 		catch(Exception e) {
 			;

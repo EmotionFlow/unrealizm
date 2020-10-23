@@ -16,7 +16,7 @@ public class SearchUserByKeywordC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Common.ToInt(cRequest.getParameter("PG")), 0);
+			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
 		}
 		catch(Exception e) {

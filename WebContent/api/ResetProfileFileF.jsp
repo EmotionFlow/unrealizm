@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-request.setCharacterEncoding("UTF-8");
+	request.setCharacterEncoding("UTF-8");
 
 //login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-int m_nUserId = Common.ToInt(request.getParameter("ID"));
-int m_nModeId = Common.ToInt(request.getParameter("MD"));
+int m_nUserId = Util.toInt(request.getParameter("ID"));
+int m_nModeId = Util.toInt(request.getParameter("MD"));
 
 if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 	return;
@@ -33,19 +33,19 @@ try {
 	if(cResSet.next()) {
 		switch(m_nModeId) {
 		case 1:
-			strDeleteFile = Common.ToString(cResSet.getString("file_name"));
-			strSql = "UPDATE users_0000 SET file_name='' WHERE user_id=?";
-			break;
+	strDeleteFile = Util.toString(cResSet.getString("file_name"));
+	strSql = "UPDATE users_0000 SET file_name='' WHERE user_id=?";
+	break;
 		case 2:
-			strSql = "UPDATE users_0000 SET header_file_name='' WHERE user_id=?";
-			strDeleteFile = Common.ToString(cResSet.getString("header_file_name"));
-			break;
+	strSql = "UPDATE users_0000 SET header_file_name='' WHERE user_id=?";
+	strDeleteFile = Util.toString(cResSet.getString("header_file_name"));
+	break;
 		case 3:
-			strSql = "UPDATE users_0000 SET bg_file_name='' WHERE user_id=?";
-			strDeleteFile = Common.ToString(cResSet.getString("bg_file_name"));
-			break;
+	strSql = "UPDATE users_0000 SET bg_file_name='' WHERE user_id=?";
+	strDeleteFile = Util.toString(cResSet.getString("bg_file_name"));
+	break;
 		default:
-			break;
+	break;
 		}
 	}
 	cResSet.close();cResSet=null;

@@ -36,9 +36,9 @@
 				if (item.isFormField()) {
 					String strName = item.getFieldName();
 					if(strName.equals("UID")) {
-						m_nUserId = Common.ToInt(item.getString());
+						m_nUserId = Util.toInt(item.getString());
 					} else if(strName.equals("IID")) {
-						m_nContentId = Common.ToInt(item.getString());
+						m_nContentId = Util.toInt(item.getString());
 					}
 					item.delete();
 				} else {
@@ -92,7 +92,7 @@ class UpdateFileFirstC {
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
-				strOldFileName = Common.ToString(cResSet.getString("file_name"));
+				strOldFileName = Util.toString(cResSet.getString("file_name"));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

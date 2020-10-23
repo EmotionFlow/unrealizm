@@ -74,13 +74,24 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			});
 		});
 		</script>
-		<style>
-			.EventItemList {display: block; float: left; width: 100%; margin: 10px 0 0 0;}
-			.EventItemList .EventItem {display: block; margin: 0 20px 10px 20px;}
-			.EventItemList .EventItem .EventBanner {width: 320px; display: block;}
-			.EventItemList .EventItem.Updated {position: relative;}
-			.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
-		</style>
+
+		<link href="/js/slick/slick-theme.css" rel="stylesheet" type="text/css">
+		<link href="/js/slick/slick.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="/js/slick/slick.min.js"></script>
+		<script>
+		$(function(){
+			$('.EventItemList').slick({
+				autoplay:true,
+				autoplaySpeed:3000,
+				dots:true,
+				infinite: true,
+				slidesToShow: 1,
+				variableWidth: true,
+				centerMode: true,
+				centerPadding: '10px',
+			});
+		});
+		</script>
 	</head>
 
 	<body>

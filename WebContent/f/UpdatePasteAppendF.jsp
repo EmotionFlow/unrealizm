@@ -5,8 +5,7 @@
 <%@page import="javax.imageio.ImageIO"%>
 <%@page import="org.apache.commons.codec.binary.Base64"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UploadFileAppendCParam {
+<%!class UploadFileAppendCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
@@ -15,9 +14,9 @@ class UploadFileAppendCParam {
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
 		try {
-			m_nUserId		= Common.ToInt(request.getParameter("UID"));
-			m_nContentId		= Common.ToInt(request.getParameter("IID"));
-			m_strEncodeImg	= Common.ToString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+			m_nUserId		= Util.toInt(request.getParameter("UID"));
+			m_nContentId		= Util.toInt(request.getParameter("IID"));
+			m_strEncodeImg	= Util.toString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
 			nRtn = 0;
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -137,8 +136,7 @@ class UploadFileAppendC {
 		}
 		return nRtn;
 	}
-}
-%><%
+}%><%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;

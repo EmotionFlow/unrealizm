@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UpdateBookmarkCParam {
+<%!class UpdateBookmarkCParam {
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
 
@@ -9,8 +8,8 @@ class UpdateBookmarkCParam {
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId = Common.ToInt(cRequest.getParameter("UID"));
-			m_nContentId = Common.ToInt(cRequest.getParameter("IID"));
+			m_nUserId = Util.toInt(cRequest.getParameter("UID"));
+			m_nContentId = Util.toInt(cRequest.getParameter("IID"));
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
@@ -80,8 +79,7 @@ class UpdateBookmarkC {
 		}
 		return nRtn;
 	}
-}
-%>
+}%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 

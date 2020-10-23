@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Util;
 
 public class CContentAppend {
 	public int m_nAppendId = 0;
@@ -16,7 +16,7 @@ public class CContentAppend {
 	public CContentAppend(ResultSet resultSet) throws SQLException {
 		m_nAppendId			= resultSet.getInt("append_id");
 		m_nContentId		= resultSet.getInt("content_id");
-		m_strFileName		= Common.ToString(resultSet.getString("file_name"));
+		m_strFileName		= Util.toString(resultSet.getString("file_name"));
 		m_timeUploadDate	= resultSet.getTimestamp("upload_date");
 	}
 }

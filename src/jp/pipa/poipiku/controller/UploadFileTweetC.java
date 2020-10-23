@@ -42,7 +42,7 @@ public class UploadFileTweetC {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Common.ToString(cResSet.getString("nickname"));
+				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
 				String strFileName = cContent.m_strFileName;
 				if(!strFileName.isEmpty()) {
 					switch(cContent.m_nPublishId) {
@@ -78,7 +78,7 @@ public class UploadFileTweetC {
 				cState.setInt(1, cParam.m_nContentId);
 				cResSet = cState.executeQuery();
 				while(cResSet.next()) {
-					String strFileName = Common.ToString(cResSet.getString("file_name"));
+					String strFileName = Util.toString(cResSet.getString("file_name"));
 					if(!strFileName.isEmpty()) {
 						vFileList.add(m_cServletContext.getRealPath(strFileName));
 					}

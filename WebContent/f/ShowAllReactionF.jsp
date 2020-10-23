@@ -1,15 +1,12 @@
 <%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class SendEmojiC {
-	public int EMOJI_MAX = 10;
-
+<%!class SendEmojiC {
 	public int m_nContentId = -1;
 
 	public void getParam(HttpServletRequest request) {
 		try {
-			m_nContentId	= Common.ToInt(request.getParameter("IID"));
+			m_nContentId	= Util.toInt(request.getParameter("IID"));
 			request.setCharacterEncoding("UTF-8");
 		} catch(Exception e) {
 			m_nContentId = -1;
@@ -47,8 +44,7 @@ class SendEmojiC {
 		}
 		return bRtn;
 	}
-}
-%>
+}%>
 <%
 int nRtn = 0;
 String strHtml = _TEX.T("Common.NeedLogin");

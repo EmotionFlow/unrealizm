@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!
-class UpdateMuteKeyword {
+<%!class UpdateMuteKeyword {
 	// params
 	public int m_nUserId = -1;
 	public String m_strDescription = "";
@@ -9,8 +8,8 @@ class UpdateMuteKeyword {
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId			= Common.ToInt(request.getParameter("UID"));
-			m_strDescription	= Common.TrimAll(Common.ToString(request.getParameter("DES")));
+			m_nUserId			= Util.toInt(request.getParameter("UID"));
+			m_strDescription	= Common.TrimAll(Util.toString(request.getParameter("DES")));
 
 			m_strDescription = m_strDescription.replace("　", " ").replace("\r\n", " ").replace("\r", " ").replace("\n", " ");
 			if(m_strDescription.length()>100) {m_strDescription=m_strDescription.substring(0, 100);}
@@ -49,8 +48,7 @@ class UpdateMuteKeyword {
 		}
 		return bRtn;
 	}
-}
-%><%
+}%><%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 UpdateMuteKeyword cResults = new UpdateMuteKeyword();

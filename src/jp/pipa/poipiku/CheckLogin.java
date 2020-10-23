@@ -56,7 +56,7 @@ public class CheckLogin {
 			}
 			if(m_strHashPass.isEmpty()) {
 				cRequest.setCharacterEncoding("UTF-8");
-				m_strHashPass = Common.ToString(cRequest.getParameter("POIPIKU_LK"));
+				m_strHashPass = Util.toString(cRequest.getParameter("POIPIKU_LK"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -87,9 +87,9 @@ public class CheckLogin {
 					m_strNickName	= cResSet.getString("nickname");
 					m_nLangId		= Math.min(Math.max(cResSet.getInt("lang_id"), 0), 1);
 					tsLastLogin		= cResSet.getTimestamp("last_login_date");
-					m_strFileName	= Common.ToString(cResSet.getString("file_name"));
+					m_strFileName	= Util.toString(cResSet.getString("file_name"));
 					if(m_strFileName.length()<=0) m_strFileName = "/img/default_user.jpg";
-					m_bEmailValid	= Common.ToString(cResSet.getString("email")).contains("@");
+					m_bEmailValid	= Util.toString(cResSet.getString("email")).contains("@");
 					m_nPremiumId	= cResSet.getInt("premiun_id");
 					m_bLogin = true;
 					if(m_nUserId==315) m_nSafeFilter = Common.SAFE_FILTER_ALL;

@@ -8,11 +8,11 @@ public class CContentComlex extends CContent {
 	public CContentComlex(ResultSet resultSet) throws SQLException {
 		m_nContentId		= resultSet.getInt("content_id");
 		m_nCategoryId		= resultSet.getInt("category_id");
-		m_strDescription	= Common.ToString(resultSet.getString("description"));
+		m_strDescription	= Util.toString(resultSet.getString("description"));
 		m_timeUploadDate	= resultSet.getTimestamp("upload_date");
 		m_nUserId			= resultSet.getInt("user_id");
 		//m_nOpenId			= resultSet.getInt("open_id");
-		m_strFileName		= Common.ToString(resultSet.getString("file_name"));
+		m_strFileName		= Util.toString(resultSet.getString("file_name"));
 		m_nFileNum			= resultSet.getInt("file_num");
 		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
 		//m_nCommentNum		= resultSet.getInt("comment_num");
