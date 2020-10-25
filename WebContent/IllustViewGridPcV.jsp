@@ -201,14 +201,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
 				<%}%>
 
-				if(!bHidden) {
-					var frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
-					var text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
-					console.log(frame_height, text_height)
-					if(frame_height>=text_height) {
-						$('.IllustItemExpandBtn').hide();
-					}
+				<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+				var frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
+				var text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+				if(frame_height>=text_height) {
+					$('.IllustItemExpandBtn').hide();
 				}
+				<%}%>
 			});
 		</script>
 		<style>

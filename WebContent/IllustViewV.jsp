@@ -30,6 +30,27 @@ default:
 	break;
 }
 
+boolean bHidden = false;	// テキスト用カバー画像表示フラグ
+switch(cResults.m_cContent.m_nPublishId) {
+case Common.PUBLISH_ID_R15:
+case Common.PUBLISH_ID_R18:
+case Common.PUBLISH_ID_R18G:
+case Common.PUBLISH_ID_PASS:
+case Common.PUBLISH_ID_LOGIN:
+case Common.PUBLISH_ID_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOW:
+case Common.PUBLISH_ID_T_EACH:
+case Common.PUBLISH_ID_T_LIST:
+	bHidden = true;
+	break;
+case Common.PUBLISH_ID_ALL:
+case Common.PUBLISH_ID_HIDDEN:
+default:
+	break;
+}
+
+
 String strTitle = "";
 switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_PASS:
@@ -141,6 +162,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 				});
+
+				<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+				var frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
+				var text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+				if(frame_height>=text_height) {
+					$('.IllustItemExpandBtn').hide();
+				}
+				<%}%>
 			});
 		</script>
 
