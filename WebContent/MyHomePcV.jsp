@@ -126,8 +126,8 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-					<%if(nCnt==4 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==9 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+					<%if(nCnt==4) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==9) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
 			</section>
 
