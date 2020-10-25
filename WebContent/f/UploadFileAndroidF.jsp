@@ -77,131 +77,131 @@ class UploadFileC {
 		int m_nContentId = -99;
 
 		try {
-	// regist to DB
-	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-	cConn = dsPostgres.getConnection();
+			// regist to DB
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
 
-	// check ext
-	if(cParam.item_file==null) return m_nContentId;
-	String ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
-	if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
-		Log.d("main item type error");
-		return m_nContentId;
-	}
+			// check ext
+			if(cParam.item_file==null) return m_nContentId;
+			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
+			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
+				Log.d("main item type error");
+				return m_nContentId;
+			}
 
-	// insert file_name
-	strSql ="INSERT INTO contents_0000(user_id, category_id, description) VALUES(?, ?, ?) RETURNING content_id";
-	cState = cConn.prepareStatement(strSql);
-	cState.setInt(1, cParam.m_nUserId);
-	cState.setInt(2, cParam.m_nCategoryId);
-	cState.setString(3, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPremiumId]));
-	cResSet = cState.executeQuery();
-	if(cResSet.next()) {
-		m_nContentId = cResSet.getInt("content_id");
-	}
-	cResSet.close();cResSet=null;
-	cState.close();cState=null;
-	if(m_nContentId<=0) return m_nContentId;
+			// insert file_name
+			strSql ="INSERT INTO contents_0000(user_id, category_id, description) VALUES(?, ?, ?) RETURNING content_id";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nUserId);
+			cState.setInt(2, cParam.m_nCategoryId);
+			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPremiumId]));
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				m_nContentId = cResSet.getInt("content_id");
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			if(m_nContentId<=0) return m_nContentId;
 
-	// save file
-	File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
-	if(!cDir.exists()) {
-		cDir.mkdirs();
-	}
-	String strFileName = String.format("%s/%09d.%s", Common.getUploadUserPath(cParam.m_nUserId), m_nContentId, ext);
-	String strRealFileName = getServletContext().getRealPath(strFileName);
-	cParam.item_file.write(new File(strRealFileName));
-	ImageUtil.createThumbIllust(strRealFileName);
+			// save file
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			if(!cDir.exists()) {
+				cDir.mkdirs();
+			}
+			String strFileName = String.format("%s/%09d.%s", Common.getUploadUserPath(cParam.m_nUserId), m_nContentId, ext);
+			String strRealFileName = getServletContext().getRealPath(strFileName);
+			cParam.item_file.write(new File(strRealFileName));
+			ImageUtil.createThumbIllust(strRealFileName);
 
-	// ファイルサイズ系情報
-	int nWidth = 0;
-	int nHeight = 0;
-	long nFileSize = 0;
-	long nComplexSize = 0;
-	try {
-		int size[] = ImageUtil.getImageSize(strRealFileName);
-		nWidth = size[0];
-		nHeight = size[1];
-		nFileSize = (new File(strRealFileName)).length();
-		nComplexSize = ImageUtil.getConplex(strRealFileName);
-	} catch(Exception e) {
-		nWidth = 0;
-		nHeight = 0;
-		nFileSize = 0;
-		nComplexSize=0;
-		Log.d("error getImageSize");
-	}
-	//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
+			// ファイルサイズ系情報
+			int nWidth = 0;
+			int nHeight = 0;
+			long nFileSize = 0;
+			long nComplexSize = 0;
+			try {
+				int size[] = ImageUtil.getImageSize(strRealFileName);
+				nWidth = size[0];
+				nHeight = size[1];
+				nFileSize = (new File(strRealFileName)).length();
+				nComplexSize = ImageUtil.getConplex(strRealFileName);
+			} catch(Exception e) {
+				nWidth = 0;
+				nHeight = 0;
+				nFileSize = 0;
+				nComplexSize=0;
+				Log.d("error getImageSize");
+			}
+			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
-	// update making file_name
-	CContent cContent = null;
-	strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE content_id=? RETURNING *";
-	cState = cConn.prepareStatement(strSql);
-	cState.setString(1, strFileName);
-	cState.setInt(2, cParam.m_nOpenId);
-	cState.setInt(3, nWidth);
-	cState.setInt(4, nHeight);
-	cState.setLong(5, nFileSize);
-	cState.setLong(6, nComplexSize);
-	cState.setInt(7, m_nContentId);
-	cResSet = cState.executeQuery();
-	if(cResSet.next()) {
-		cContent = new CContent(cResSet);
-	}
-	cResSet.close();cResSet=null;
-	cState.close();cState=null;
+			// update making file_name
+			CContent cContent = null;
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE content_id=? RETURNING *";
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, strFileName);
+			cState.setInt(2, cParam.m_nOpenId);
+			cState.setInt(3, nWidth);
+			cState.setInt(4, nHeight);
+			cState.setLong(5, nFileSize);
+			cState.setLong(6, nComplexSize);
+			cState.setInt(7, m_nContentId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				cContent = new CContent(cResSet);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
 
-	// Add my tags
-	// Pattern ptn = Pattern.compile("#(.*?)[\\s\\r\\n]+", Pattern.MULTILINE);
-	Pattern ptn = Pattern.compile(Common.TAG_PATTERN, Pattern.MULTILINE);
-	Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
-	strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
-	cState = cConn.prepareStatement(strSql);
-	for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-		try {
-	cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-	cState.setInt(2, m_nContentId);
-	cState.executeUpdate();
+			// Add my tags
+			// Pattern ptn = Pattern.compile("#(.*?)[\\s\\r\\n]+", Pattern.MULTILINE);
+			Pattern ptn = Pattern.compile(Common.TAG_PATTERN, Pattern.MULTILINE);
+			Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
+			strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
+			cState = cConn.prepareStatement(strSql);
+			for (int nNum=0; matcher.find() && nNum<20; nNum++) {
+				try {
+					cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
+					cState.setInt(2, m_nContentId);
+					cState.executeUpdate();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+			cState.close();cState=null;
+
+			CTweet cTweet = new CTweet();
+			if (cParam.m_bTweet && cTweet.GetResults(cParam.m_nUserId)) {
+				// 本文作成
+				String strTwitterMsg = CTweet.generateIllustMsgFull(cContent, _TEX);
+				Log.d(strFileName, strTwitterMsg);
+
+				// ツイート
+				if(cParam.m_nOptImage==0) {	// text only
+					int nRsultTweet = cTweet.Tweet(strTwitterMsg);
+					if(nRsultTweet!=CTweet.OK) Log.d("tweet失敗");
+				} else { // with image
+					int nRsultTweet = cTweet.Tweet(strTwitterMsg, strRealFileName);
+					if(nRsultTweet!=CTweet.OK) Log.d("tweet失敗");
+				}
+
+				if(cTweet.getLastTweetId()>0) {
+					strSql ="UPDATE contents_0000 SET tweet_id=? WHERE contents_0000.user_id=? AND content_id=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setString(1, Long.toString(cTweet.getLastTweetId()));
+					cState.setInt(2, cParam.m_nUserId);
+					cState.setInt(3, m_nContentId);
+					cState.executeUpdate();
+					cState.close();cState=null;
+				}
+			}
 		} catch(Exception e) {
-	e.printStackTrace();
-		}
-	}
-	cState.close();cState=null;
-
-	CTweet cTweet = new CTweet();
-	if (cParam.m_bTweet && cTweet.GetResults(cParam.m_nUserId)) {
-		// 本文作成
-		String strTwitterMsg = CTweet.generateIllustMsgFull(cContent, _TEX);
-		Log.d(strFileName, strTwitterMsg);
-
-		// ツイート
-		if(cParam.m_nOptImage==0) {	// text only
-	int nRsultTweet = cTweet.Tweet(strTwitterMsg);
-	if(nRsultTweet!=CTweet.OK) Log.d("tweet失敗");
-		} else { // with image
-	int nRsultTweet = cTweet.Tweet(strTwitterMsg, strRealFileName);
-	if(nRsultTweet!=CTweet.OK) Log.d("tweet失敗");
-		}
-
-		if(cTweet.getLastTweetId()>0) {
-	strSql ="UPDATE contents_0000 SET tweet_id=? WHERE contents_0000.user_id=? AND content_id=?";
-	cState = cConn.prepareStatement(strSql);
-	cState.setString(1, Long.toString(cTweet.getLastTweetId()));
-	cState.setInt(2, cParam.m_nUserId);
-	cState.setInt(3, m_nContentId);
-	cState.executeUpdate();
-	cState.close();cState=null;
-		}
-	}
-		} catch(Exception e) {
-	System.out.println(strSql);
-	e.printStackTrace();
-	return m_nContentId;
+			System.out.println(strSql);
+			e.printStackTrace();
+			return m_nContentId;
 		} finally {
-	try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-	try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-	cParam.item_file.delete();
+			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			cParam.item_file.delete();
 		}
 		return m_nContentId;
 	}

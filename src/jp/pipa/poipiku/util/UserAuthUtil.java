@@ -835,8 +835,7 @@ public class UserAuthUtil {
 		} catch(Exception e) {
 			Log.d(strSql);
 			Log.d("USERAUTH EXCEPTION");
-			Log.d(e.getMessage());
-			//e.printStackTrace();
+			e.printStackTrace();
 			nRtn = ERROR_DB;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
