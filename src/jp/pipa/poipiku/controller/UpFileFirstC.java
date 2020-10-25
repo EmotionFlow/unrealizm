@@ -119,7 +119,6 @@ public class UpFileFirstC extends UpC{
 				ImageIO.write(cImage, "png", new File(strRealFileName));
 			}
 			ImageUtil.createThumbIllust(strRealFileName);
-			Log.d(strFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;

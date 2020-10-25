@@ -139,7 +139,6 @@ if (nRtn > 0) {
 		mapper = new ObjectMapper();
 		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(content);
 		out.print(json);
-		Log.d(json);
 	} catch(JsonGenerationException e) {
 		e.printStackTrace();
 	} finally {
