@@ -2078,7 +2078,7 @@
 }
 
 /********** EVENT LIST **********/
-.EventItemList {display: block; float: left; width: 360px; height: 94px; list-style: none; padding: 0; margin: 10px 0 15px 0; }
+.EventItemList {display: block; float: left; width: 360px; height: 94px; list-style: none; padding: 0; margin: 10px 0 15px 0; opacity: 0;}
 .EventItemList .EventItem {display: block; margin: 0 5px;}
 .EventItemList .EventItem a {display: block;}
 .EventItemList .EventItem .EventBanner {display: block; width: 300px;}

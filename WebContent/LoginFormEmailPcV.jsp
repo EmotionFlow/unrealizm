@@ -115,7 +115,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div class="SettingListItem">
-					<div  style="text-align: center;">
+					<div style="text-align: center;">
 						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
 							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strNextUrl%>"/>
 							<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
@@ -125,9 +125,9 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 					</div>
 
 					<div style="display: flex; line-height: 15px; margin: 30px 0;">
-						<div style="flex: 1 0; height: 1px; background-color: #999; margin: 7px 0;"></div>
-						<div style="flex: 0 0; background-color: #b8d6e0; padding: 0px 10px;">or</div>
-						<div style="flex: 1 0; height: 1px; background-color: #999; margin: 7px 0;"></div>
+						<div style="flex: 1 0; height: 1px; background-color: #6d6965; margin: 7px 0;"></div>
+						<div style="flex: 0 0; padding: 0px 12px;">or</div>
+						<div style="flex: 1 0; height: 1px; background-color: #6d6965; margin: 7px 0;"></div>
 					</div>
 
 					<form id="RegistForm" onsubmit="return RegistUser()">

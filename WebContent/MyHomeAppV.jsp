@@ -90,6 +90,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				centerMode: true,
 				centerPadding: '10px',
 			});
+			$('.EventItemList').css({'opacity': '1'});
 		});
 		</script>
 	</head>

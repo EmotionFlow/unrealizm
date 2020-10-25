@@ -95,6 +95,6 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.GridList .PcSideBarAd {width: 336px; height: 280px; float: right; display: inline-block; margin: 12px; background-color: #5bd; display: flex; align-items: center; justify-content: center;}
 
 /********** EVENT LIST **********/
-.EventItemList {float: none; margin: 0; width: 100%; height: auto;}
+.EventItemList {float: none; margin: 0; width: 100%; height: auto; opacity: 1;}
 .EventItemList .EventItem {margin: 0 0 20px 0;}
 

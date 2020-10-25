@@ -15,6 +15,12 @@
 	</li>
 
 	<li class="EventItem">
+		<a href="/UploadTextPcV.jsp">
+			<img class="EventBanner" src="/img/banner_2020_10_25_text-post.png" />
+		</a>
+	</li>
+
+	<li class="EventItem">
 		<a href="/event/20190901/TopPcV.jsp">
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
 		</a>

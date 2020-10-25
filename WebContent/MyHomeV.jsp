@@ -91,6 +91,7 @@ int nRnd = (int)(Math.random()*2);
 				centerMode: true,
 				centerPadding: '10px',
 			});
+			$('.EventItemList').css({'opacity': '1'});
 		});
 		</script>
 	</head>
