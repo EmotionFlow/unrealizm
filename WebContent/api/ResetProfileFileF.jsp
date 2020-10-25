@@ -51,8 +51,7 @@ try {
 	cResSet.close();cResSet=null;
 	cState.close();cState=null;
 
-	if(strSql.length()>0 && strDeleteFile.length()>0) {
-		Log.d(strDeleteFile);
+	if(!strSql.isEmpty() && !strDeleteFile.isEmpty()) {
 		ImageUtil.deleteFiles(getServletContext().getRealPath(strDeleteFile));
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, m_nUserId);

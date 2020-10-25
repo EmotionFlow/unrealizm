@@ -402,7 +402,6 @@ public class ImageUtil {
 
 
 	public static void createAnimatedGif(String strOrgFileName, String strSrcFileName, String strDstFileName, int nDelay, boolean bLoop) throws IOException {
-		Log.d("createAnimatedGif start");
 		ArrayList<BufferedImage> imgTarg = new ArrayList<BufferedImage>();
 		if(strOrgFileName!=null && !strOrgFileName.isEmpty()) {
 			// 追記元ファイルの読み込み
@@ -792,7 +791,7 @@ class GifSequenceWriter {
 		child.setAttribute("authenticationCode", "2.0");
 
 		int loop = loopContinuously ? 0 : 1;
-		Log.d("loopContinuously:"+loopContinuously);
+		//Log.d("loopContinuously:"+loopContinuously);
 
 		child.setUserObject(new byte[] { 0x1, (byte) (loop & 0xFF), (byte) ((loop >> 8) & 0xFF) });
 		appEntensionsNode.appendChild(child);

@@ -28,9 +28,9 @@
 			//並び換え、削除後のappend_idリスト
 			ObjectMapper mapper = new ObjectMapper();
 			m_vNewIdList = mapper.readValue(strJson, int[].class);
-			Log.d("m_nUserId:" + m_nUserId);
-			Log.d("m_nContentId:" + m_nContentId);
-			Log.d(strJson);
+			//Log.d("m_nUserId:" + m_nUserId);
+			//Log.d("m_nContentId:" + m_nContentId);
+			//Log.d(strJson);
 
 			if(m_vNewIdList.length > 0) {
 				nRtn = 0;
@@ -90,7 +90,7 @@ class UpdateFileOrderC {
 				cOld.files_size = cResSet.getLong("file_size");
 				cOld.file_complex = cResSet.getLong("file_complex");
 				vOldFileList.add(cOld);
-				Log.d("Old (" + cOld.append_id + "):" + cOld.name);
+				//Log.d("Old (" + cOld.append_id + "):" + cOld.name);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -110,7 +110,7 @@ class UpdateFileOrderC {
 						cNew.files_size = cOld.files_size;
 						cNew.file_complex = cOld.file_complex;
 						vNewFileList.add(cNew);
-						Log.d("New (" + cNew.append_id + "):" + cNew.name);
+						//Log.d("New (" + cNew.append_id + "):" + cNew.name);
 						break;
 					}
 				}
@@ -145,7 +145,6 @@ class UpdateFileOrderC {
 					int append_id = cDiff.get(i).append_id;
 					strDelList[i] = Integer.toString(append_id);
 					String strPath = getServletContext().getRealPath(cDiff.get(i).name);
-					Log.d("Delete file:" + strPath);
 
 					ImageUtil.deleteFile(strPath);
 					ImageUtil.deleteFile(strPath + "_360.jpg");
@@ -162,7 +161,6 @@ class UpdateFileOrderC {
 					//先頭画像の削除有無
 					if (append_id == 0) bHead = true;
 				}
-				Log.d("Delete appendId:" + String.join(",", strDelList));
 
 				//不要レコード削除
 				if (strDelList.length > 0) {
@@ -195,7 +193,7 @@ class UpdateFileOrderC {
 				if((i+p) < vOldFileList.size()) {
 					cTmp.append_id = vOldFileList.get(i+p).append_id;
 					vNewFileList.set(i, cTmp);
-					Log.d("New appendId:" + cTmp.append_id);
+					//Log.d("New appendId:" + cTmp.append_id);
 				}
 			}
 
@@ -247,7 +245,6 @@ class UpdateFileOrderC {
 		return nRtn;
 	}
 }%><%
-Log.d("UpdateFileOrderC");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;

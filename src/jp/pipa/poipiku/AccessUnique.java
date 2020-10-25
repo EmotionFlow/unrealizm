@@ -19,7 +19,7 @@ public class AccessUnique {
 
 			m_mapAccess.put(key, timeNow);
 		} catch (Exception e) {
-			Log.d(e.getMessage());
+			e.printStackTrace();
 		}
 		return true;
 	}

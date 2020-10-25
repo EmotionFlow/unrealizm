@@ -12,7 +12,6 @@ IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 
 if(!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId!=cResults.m_nUserId){
-	Log.d(String.format("https://poipiku.com/%d/%d.html", cResults.m_nUserId, cResults.m_nContentId));
 	response.sendRedirect(String.format("https://poipiku.com/%d/%d.html", cResults.m_nUserId, cResults.m_nContentId));
 	return;
 }

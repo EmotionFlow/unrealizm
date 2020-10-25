@@ -75,7 +75,7 @@ public class UpFileFirstC extends UpC{
 			} else {
 				ext = ImageUtil.getExt(ImageIO.createImageInputStream(new ByteArrayInputStream(imageBinary)));
 			}
-			Log.d("ext: " + ext);
+			//Log.d("ext: " + ext);
 			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
 				String strFileName = String.format("/error_file/%d_%d.error", cParam.m_nUserId, cParam.m_nContentId);

@@ -56,8 +56,6 @@
 
 class UploadFileAppendC {
 	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
-		Log.d("UpdateFileAppendF.jsp");
-
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;

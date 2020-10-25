@@ -107,7 +107,6 @@ public class DownloadRouletteFile extends HttpServlet {
 				}
 				graphics.dispose();
 			} catch(Exception e) {
-				Log.d(e.getMessage());
 				e.printStackTrace();
 			} finally {
 			}

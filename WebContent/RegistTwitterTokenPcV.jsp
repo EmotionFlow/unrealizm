@@ -33,11 +33,10 @@ String screen_name="";
 
 DataSource dsPostgres = null;
 Connection cConn = null;
-Statement cState = null;
-PreparedStatement cPreState = null;
-
+PreparedStatement cState = null;
 ResultSet cResSet = null;
 String strSql = "";
+
 boolean bIsExist = false;
 
 // table update or insert
@@ -58,58 +57,61 @@ try
 	Class.forName("org.postgresql.Driver");
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 	cConn = dsPostgres.getConnection();
-	cState = cConn.createStatement();
 
 	// 他のポイピクアカウントがこのTwitterアカウントと紐づいてるかを検索
 	strSql = "SELECT flduserid FROM tbloauth WHERE flduserid<>? AND twitter_user_id=?";
-	cPreState = cConn.prepareStatement(strSql);
-	cPreState.setInt(1, cCheckLogin.m_nUserId);
-	cPreState.setString(2, twitter_user_id);
-	cResSet = cPreState.executeQuery();
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, cCheckLogin.m_nUserId);
+	cState.setString(2, twitter_user_id);
+	cResSet = cState.executeQuery();
 	if(cResSet.next()){
 		result = Result.LINKED_OTHER_POIPIKU_ID;
-	} else {
+	}
+	cResSet.close();cResSet=null;
+	cState.close();cState=null;
+	if(result!=Result.LINKED_OTHER_POIPIKU_ID) {
 		// select
-		strSql = String.format(
-				"SELECT flduserid FROM tbloauth WHERE flduserid=%d AND fldproviderid=%d",
-				cCheckLogin.m_nUserId,
-				Common.TWITTER_PROVIDER_ID
-		);
-		cResSet = cState.executeQuery(strSql);
+		strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=%d AND fldproviderid=%d";
+		cState = cConn.prepareStatement(strSql);
+		cState.setInt(1, cCheckLogin.m_nUserId);
+		cState.setInt(2, Common.TWITTER_PROVIDER_ID);
+		cResSet = cState.executeQuery();
 		if(cResSet.next()){
 			bIsExist = true;
 		}
-		cResSet.close();
+		cResSet.close();cResSet=null;
+		cState.close();cState=null;
 
 		if (bIsExist){
 			Log.d("TwitterToken Update : " + cCheckLogin.m_nUserId);
 			// update
 			strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=?";
-			cPreState = cConn.prepareStatement(strSql);
-			cPreState.setString(1, consumer.getToken());
-			cPreState.setString(2, consumer.getTokenSecret());
-			cPreState.setString(3, twitter_user_id);
-			cPreState.setString(4, screen_name);
-			cPreState.setInt(5, cCheckLogin.m_nUserId);
-			cPreState.setInt(6, Common.TWITTER_PROVIDER_ID);
-			cPreState.executeUpdate();
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, consumer.getToken());
+			cState.setString(2, consumer.getTokenSecret());
+			cState.setString(3, twitter_user_id);
+			cState.setString(4, screen_name);
+			cState.setInt(5, cCheckLogin.m_nUserId);
+			cState.setInt(6, Common.TWITTER_PROVIDER_ID);
+			cState.executeUpdate();
+			cState.close();cState=null;
 		} else {
 			Log.d("TwitterToken Insert : " + cCheckLogin.m_nUserId);
 			// insert
 			strSql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_weekday, auto_tweet_time, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?, ?, ?) ";
-			cPreState = cConn.prepareStatement(strSql);
-			cPreState.setInt(1, cCheckLogin.m_nUserId);
-			cPreState.setInt(2, Common.TWITTER_PROVIDER_ID);
-			cPreState.setString(3, consumer.getToken());
-			cPreState.setString(4, consumer.getTokenSecret());
-			cPreState.setString(5, twitter_user_id);
-			cPreState.setString(6, screen_name);
-			cPreState.setInt(7, -1);
-			cPreState.setInt(8, -1);
-			cPreState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", cCheckLogin.m_nUserId));
-			cPreState.executeUpdate();
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cCheckLogin.m_nUserId);
+			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
+			cState.setString(3, consumer.getToken());
+			cState.setString(4, consumer.getTokenSecret());
+			cState.setString(5, twitter_user_id);
+			cState.setString(6, screen_name);
+			cState.setInt(7, -1);
+			cState.setInt(8, -1);
+			cState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", cCheckLogin.m_nUserId));
+			cState.executeUpdate();
+			cState.close();cState=null;
 		}
-		cPreState.close();cPreState=null;
 		result = Result.OK;
 	}
 
@@ -120,7 +122,6 @@ try
 } finally {
 	try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 	try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-	try{if(cPreState!=null){cPreState.close();cPreState=null;}}catch(Exception e){;}
 	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
 

@@ -62,7 +62,6 @@ class UpdateProfileFileC {
 	output.write(imageBinary);
 	output.flush();
 	output.close();
-	Log.d(strFileName);
 
 	// regist to DB
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);

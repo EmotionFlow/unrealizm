@@ -56,8 +56,6 @@
 
 class UploadFileAppendC {
 	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
-		Log.d("UpdateFileAppendF.jsp");
-
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -135,7 +133,6 @@ class UploadFileAppendC {
 			cState.setInt(6, nAppendId);
 			cState.executeUpdate();
 			cState.close();cState=null;
-			Log.d(nAppendId + ": " + strFileName);
 
 			nRtn = nAppendId;
 		} catch(Exception e) {

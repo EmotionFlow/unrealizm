@@ -109,7 +109,6 @@ class UploadFileAppendC {
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
-			Log.d(strFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;

@@ -63,7 +63,6 @@ class UpdateProfileFileC {
 	output.flush();
 	output.close();
 	ImageUtil.createThumbProfile(strRealFileName);
-	Log.d(strFileName);
 
 	// regist to DB
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);

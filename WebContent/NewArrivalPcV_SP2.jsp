@@ -145,7 +145,7 @@ public class NewArrivalC {
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
-				Log.d("user_id:"+user_id);
+				//Log.d("user_id:"+user_id);
 			}
 			if(CONTENT>0) {
 				int content_id = 0;
@@ -171,8 +171,6 @@ public class NewArrivalC {
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
 				}
-				Log.d("content_id:"+content_id);
-				Log.d("append_id:"+append_id);
 			}
 
 			strSql = "SELECT * FROM (SELECT contents_0000.* FROM contents_0000 inner join users_0000 on contents_0000.user_id=users_0000.user_id WHERE ng_reaction=0 AND open_id=0 AND publish_id<4 AND file_complex>70000 ORDER BY content_id DESC LIMIT 300) as T1 ORDER BY random() LIMIT ?";

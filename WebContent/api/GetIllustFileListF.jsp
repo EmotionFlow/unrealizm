@@ -98,7 +98,6 @@ class GetIllustFileListC {
 		return nRtn;
 	}
 }%><%
-Log.d("GetIllustFileListC");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;

@@ -5,7 +5,6 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
-Log.d("UploadReferenceF - UserId:"+cCheckLogin.m_nUserId);
 
 int nRtn = 0;
 UploadCParam cParam = new UploadCParam();
@@ -20,7 +19,6 @@ cParam.m_bCheerNg=true;
 if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
 	UploadC cResults = new UploadC();
 	nRtn = cResults.GetResults(cParam, cCheckLogin);
-	Log.d("UploadC - OK:"+nRtn);
 }
 %>
 {

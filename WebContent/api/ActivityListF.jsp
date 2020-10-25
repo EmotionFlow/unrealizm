@@ -25,7 +25,7 @@ long m_lDatetime = Util.toLong(request.getParameter("DT"));
 Timestamp m_tsDatetime = null;
 if(m_lDatetime >= 0){
 		m_tsDatetime = new Timestamp(m_lDatetime);
-		Log.d("DT: " + m_tsDatetime.toString());
+		//Log.d("DT: " + m_tsDatetime.toString());
 }
 
 //認証

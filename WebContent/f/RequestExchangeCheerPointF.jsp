@@ -16,7 +16,6 @@ if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 
 RequestExchangeCheerPointCParam cParam = new RequestExchangeCheerPointCParam();
 cParam.GetParam(request);
-Log.d(cParam.toString());
 RequestExchangeCheerPointC c = new RequestExchangeCheerPointC();
 boolean bResult = c.GetResults(cParam);
 %>{"result":<%=bResult?0:1%>}

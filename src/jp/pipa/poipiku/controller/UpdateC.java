@@ -150,7 +150,7 @@ public class UpdateC extends UpC {
 						throw new Exception("new content id is null.");
 					}
 				}catch(Exception e){
-					Log.d(e.getMessage());
+					Log.d(strSql);
 					e.printStackTrace();
 					return -300;
 				}finally{
@@ -174,7 +174,7 @@ public class UpdateC extends UpC {
 						cConn.commit();
 					}catch(Exception e){
 						bUpdateFaild = true;
-						Log.d(e.getMessage());
+						Log.d(strSql);
 						e.printStackTrace();
 						cConn.rollback();
 					}finally{
@@ -189,7 +189,7 @@ public class UpdateC extends UpC {
 							cState.setInt(1, cParam.m_nContentId);
 							cState.executeUpdate();
 						}catch(Exception e){
-							Log.d(e.getMessage());
+							Log.d(strSql);
 							e.printStackTrace();
 							cConn.rollback();
 						}finally{

@@ -109,7 +109,6 @@ class UpdateFileFirstC {
 			ImageUtil.createThumbIllust(strRealFileName);
 
 			//旧ファイル削除
-			Log.d("Delete old files:" + strOldFileName);
 			File cDelete = new File(getServletContext().getRealPath(strOldFileName));
 			File cDeleteS = new File(getServletContext().getRealPath(strOldFileName + "_360.jpg"));
 			File cDeleteM = new File(getServletContext().getRealPath(strOldFileName + "_640.jpg"));
@@ -136,7 +135,7 @@ class UpdateFileFirstC {
 				nComplexSize=0;
 				Log.d("error getImageSize");
 			}
-			Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
+			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
 			// update making file_name
 			strSql ="UPDATE contents_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
@@ -150,7 +149,7 @@ class UpdateFileFirstC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			Log.d(cParam.m_nContentId + ": " + strFileName);
+			//Log.d(cParam.m_nContentId + ": " + strFileName);
 			nRtn = cParam.m_nContentId;
 		} catch(Exception e) {
 			Log.d(strSql);
@@ -164,7 +163,6 @@ class UpdateFileFirstC {
 		return nRtn;
 	}
 }%><%
-Log.d("UpdateFileFirstC");
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
