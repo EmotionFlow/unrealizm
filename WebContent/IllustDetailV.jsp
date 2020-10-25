@@ -9,6 +9,7 @@ if(Util.isBot(request)) {
 
 if(!cCheckLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	return;
 }
 
 IllustDetailC cResults = new IllustDetailC();
