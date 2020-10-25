@@ -71,7 +71,7 @@ try
 	cState.close();cState=null;
 	if(result!=Result.LINKED_OTHER_POIPIKU_ID) {
 		// select
-		strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=%d AND fldproviderid=%d";
+		strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, cCheckLogin.m_nUserId);
 		cState.setInt(2, Common.TWITTER_PROVIDER_ID);
