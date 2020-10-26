@@ -1,3 +1,5 @@
+<%@page import="jp.pipa.poipiku.util.Util"%>
+<%@page import="jp.pipa.poipiku.Common"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 		StringBuilder sb = new StringBuilder();

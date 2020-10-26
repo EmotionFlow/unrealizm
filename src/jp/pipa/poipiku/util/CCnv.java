@@ -110,7 +110,7 @@ public class CCnv {
 	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
 		if(cContent.m_nUserId==nLoginUserId) {
-			String strTwitterUrl = CTweet.generateIllustMsgUrl(cContent, _TEX);
+			String strTwitterUrl = CTweet.generateAfterTweerMsg(cContent, _TEX);
 			strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\"></a>", strTwitterUrl));
 			if(nSpMode == SP_MODE_APP) {
 				if(cContent.m_nEditorId != Common.EDITOR_TEXT) {

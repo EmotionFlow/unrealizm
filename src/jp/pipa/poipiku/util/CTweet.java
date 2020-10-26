@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -392,76 +390,98 @@ public class CTweet {
 		return m_statusLastTweet.getId();
 	}
 
-	static private int getRnd(){
-		Random rnd = new Random();
-		return rnd.nextInt(1000) + 10000;
+
+	static public String generateState(CContent cContent, ResourceBundleControl _TEX) {
+		String strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
+		switch(cContent.m_nPublishId) {
+		case Common.PUBLISH_ID_PASS:
+			strState += _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
+			break;
+		case Common.PUBLISH_ID_LOGIN:
+			strState += _TEX.T("UploadFilePc.Option.Publish.Login");
+			break;
+		case Common.PUBLISH_ID_FOLLOWER:
+			strState += _TEX.T("UploadFilePc.Option.Publish.Follower");
+			break;
+		case Common.PUBLISH_ID_T_FOLLOWER:
+			strState += _TEX.T("UploadFilePc.Option.Publish.T_Follower");
+			break;
+		case Common.PUBLISH_ID_T_FOLLOW:
+			strState += _TEX.T("UploadFilePc.Option.Publish.T_Follow");
+			break;
+		case Common.PUBLISH_ID_T_EACH:
+			strState += _TEX.T("UploadFilePc.Option.Publish.T_Each");
+			break;
+		case Common.PUBLISH_ID_T_LIST:
+			strState += _TEX.T("UploadFilePc.Option.Publish.T_List");
+			break;
+		case Common.PUBLISH_ID_HIDDEN:
+			strState += _TEX.T("UploadFilePc.Option.Publish.Hidden");
+			break;
+		case Common.PUBLISH_ID_ALL:
+		case Common.PUBLISH_ID_R15:
+		case Common.PUBLISH_ID_R18:
+		case Common.PUBLISH_ID_R18G:
+		default:
+			break;
+		}
+		return strState;
 	}
 
-	static public String generateIllustMsgFull(CContent cContent, ResourceBundleControl _TEX) {
-		String strNickName = "";
-		if(!cContent.m_cUser.m_strNickName.isEmpty()) {
-			strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+	static public String generateFileNum(CContent cContent, ResourceBundleControl _TEX) {
+		String strFileNum = "";
+		if(cContent.m_nEditorId==Common.EDITOR_TEXT ) {
+			strFileNum = "(" + String.format(_TEX.T("Common.Unit.Text"), cContent.m_strTextBody.length()) + ")";
+		} else {
+			strFileNum = "(" + String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum) + ")";
+		}
+		return strFileNum;
+	}
+
+	static public String generateMetaTwitterTitle(CContent cContent, ResourceBundleControl _TEX) {
+		return generateState(cContent, _TEX) +  generateFileNum(cContent, _TEX) + " - " + String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+	}
+
+	static public String generateMetaTwitterDesc(CContent cContent, ResourceBundleControl _TEX) {
+		return "";
+	}
+
+	static public String generateWithTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
+		String strFooter = String.format("\nhttps://poipiku.com/%d/%d.html",
+				cContent.m_nUserId,
+				cContent.m_nContentId);
+
+		int nMessageLength = CTweet.MAX_LENGTH - strFooter.length();
+		String strDesc = cContent.m_strDescription;
+		if (nMessageLength < strDesc.length()) {
+			strDesc = strDesc.substring(0, nMessageLength-CTweet.ELLIPSE.length()) + CTweet.ELLIPSE;
 		}
 
-		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html?%d",
-				strNickName,
-				cContent.m_nUserId,
-				cContent.m_nContentId,
-				getRnd());
-		return generateIllustMsg(cContent, _TEX) + strFooter;
+		return strDesc + strFooter;
 	}
 
-	static public String generateIllustMsgUrl(CContent cContent, ResourceBundleControl _TEX) {
+	static public String generateAfterTweerMsg(CContent cContent, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
-			String strNickName = "";
-			if(!cContent.m_cUser.m_strNickName.isEmpty()) {
-				strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+			String strUrl = String.format("https://poipiku.com/%d/%d.html",
+					cContent.m_nUserId,
+					cContent.m_nContentId);
+
+			String strFooter = "\n" + strUrl;
+
+			int nMessageLength = CTweet.MAX_LENGTH - strFooter.length();
+
+			String strDesc = cContent.m_strDescription;
+			if (nMessageLength < strDesc.length()) {
+				strDesc = strDesc.substring(0, nMessageLength-CTweet.ELLIPSE.length()) + CTweet.ELLIPSE;
 			}
+
 			strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-					URLEncoder.encode(generateIllustMsg(cContent, _TEX)+strNickName+"\n", "UTF-8"),
-					URLEncoder.encode("https://poipiku.com/"+cContent.m_nUserId+"/"+cContent.m_nContentId+".html?"+getRnd(), "UTF-8"));
+					URLEncoder.encode(strDesc, "UTF-8"),
+					URLEncoder.encode(strUrl, "UTF-8"));
 		} catch (Exception e) {
 			;
 		}
 		return strTwitterUrl;
-	}
-
-	static public String generateIllustMsg(CContent cContent, ResourceBundleControl _TEX) {
-		return String.format("[%s] ", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))) + generateIllustMsgBase(cContent, _TEX);
-	}
-
-	static public String generateIllustMsgBase(CContent cContent, ResourceBundleControl _TEX) {
-		String strHeader = String.format("[%s] ", _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId)));
-		String strNickName = "";
-		if(!cContent.m_cUser.m_strNickName.isEmpty()) {
-			strNickName = String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
-		}
-		String strFooter = String.format("%s\nhttps://poipiku.com/%d/%d.html?%d",
-				strNickName,
-				cContent.m_nUserId,
-				cContent.m_nContentId,
-				getRnd());
-		List<String> arrAppendex = new ArrayList<String>();
-		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
-			//arrAppendex.add(String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight));
-		}
-		if(cContent.m_nFileNum>1) {
-			arrAppendex.add(String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum));
-		}
-		String strAppendex = "";
-		if(arrAppendex.size()>0) {
-			strAppendex = "(" + String.join(" ", arrAppendex) + ")";
-		}
-		int nMessageLength = CTweet.MAX_LENGTH - strHeader.length() - strAppendex.length() - strFooter.length();
-		StringBuffer bufMsg = new StringBuffer();
-		if (nMessageLength < cContent.m_strDescription.length()) {
-			bufMsg.append(cContent.m_strDescription.substring(0, nMessageLength-CTweet.ELLIPSE.length()));
-			bufMsg.append(CTweet.ELLIPSE);
-		} else {
-			bufMsg.append(cContent.m_strDescription);
-		}
-		bufMsg.append(strAppendex);
-		return bufMsg.toString();
 	}
 }

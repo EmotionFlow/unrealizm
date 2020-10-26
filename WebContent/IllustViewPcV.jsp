@@ -61,49 +61,8 @@ default:
 	break;
 }
 
-String strTitle = "";
-switch(cResults.m_cContent.m_nPublishId) {
-case Common.PUBLISH_ID_PASS:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
-	break;
-case Common.PUBLISH_ID_LOGIN:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Login");
-	break;
-case Common.PUBLISH_ID_FOLLOWER:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Follower");
-	break;
-case Common.PUBLISH_ID_T_FOLLOWER:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follower");
-	break;
-case Common.PUBLISH_ID_T_FOLLOW:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follow");
-	break;
-case Common.PUBLISH_ID_T_EACH:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Each");
-	break;
-case Common.PUBLISH_ID_T_LIST:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_List");
-	break;
-case Common.PUBLISH_ID_HIDDEN:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Hidden");
-	break;
-case Common.PUBLISH_ID_ALL:
-case Common.PUBLISH_ID_R15:
-case Common.PUBLISH_ID_R18:
-case Common.PUBLISH_ID_R18G:
-default:
-	strTitle = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"] ";
-	String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
-	if(strs.length>0 && strs[0].length()>0) {
-		strTitle += strs[0];
-	} else {
-		strTitle += cResults.m_cContent.m_cUser.m_strNickName;
-	}
-	break;
-}
-strTitle = Util.subStrNum(strTitle, 25) + " | " + _TEX.T("THeader.Title");
-String strDesc = CTweet.generateIllustMsgBase(cResults.m_cContent, _TEX);
-strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName);
+String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);
+String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 10) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
 String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
@@ -115,10 +74,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
-		<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
-		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
+		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
 		<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>_360.jpg" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />

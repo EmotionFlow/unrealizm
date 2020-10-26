@@ -92,7 +92,7 @@ public class UploadFileTweetC {
 			if (!cTweet.GetResults(cParam.m_nUserId)) return nRtn;
 
 			// 本文作成
-			String strTwitterMsg = CTweet.generateIllustMsgFull(cContent, _TEX);
+			String strTwitterMsg = CTweet.generateWithTweetMsg(cContent, _TEX);
 
 			// 前のツイート削除
 			Integer nResultDeleteTweet=null;
