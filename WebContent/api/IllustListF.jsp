@@ -78,7 +78,7 @@ try {
 			img.put("category", strCategory);
 			img.put("category_id", cContent.m_nCategoryId);
 			img.put("publish_id", cContent.m_nPublishId);
-			img.put("content_twitter_link", CTweet.generateIllustMsgUrl(cContent, _TEX));
+			img.put("content_twitter_link", CTweet.generateAfterTweerMsg(cContent, _TEX));
 			img.put("file_num", cContent.m_nFileNum);
 			imglist.add(img);
 		}

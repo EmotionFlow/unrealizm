@@ -34,6 +34,7 @@ switch(cResults.m_cContent.m_nPublishId) {
 }
 
 String strFileUrl = "";
+boolean bHidden = false;	// テキスト用カバー画像表示フラグ
 switch(cResults.m_cContent.m_nPublishId) {
 	case Common.PUBLISH_ID_R15:
 	case Common.PUBLISH_ID_R18:
@@ -46,56 +47,17 @@ switch(cResults.m_cContent.m_nPublishId) {
 	case Common.PUBLISH_ID_T_EACH:
 	case Common.PUBLISH_ID_T_LIST:
 		strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
+		bHidden = true;
 		break;
 	case Common.PUBLISH_ID_ALL:
 	case Common.PUBLISH_ID_HIDDEN:
 	default:
 		strFileUrl = cResults.m_cContent.m_strFileName;
+		if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512.png";
 		break;
 }
-
-String strTitle = "";
-switch(cResults.m_cContent.m_nPublishId) {
-	case Common.PUBLISH_ID_PASS:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
-		break;
-	case Common.PUBLISH_ID_LOGIN:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.Login");
-		break;
-	case Common.PUBLISH_ID_FOLLOWER:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.Follower");
-		break;
-	case Common.PUBLISH_ID_T_FOLLOWER:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follower");
-		break;
-	case Common.PUBLISH_ID_T_FOLLOW:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follow");
-		break;
-	case Common.PUBLISH_ID_T_EACH:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Each");
-		break;
-	case Common.PUBLISH_ID_T_LIST:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.T_List");
-		break;
-	case Common.PUBLISH_ID_HIDDEN:
-		strTitle = _TEX.T("UploadFilePc.Option.Publish.Hidden");
-		break;
-	case Common.PUBLISH_ID_ALL:
-	case Common.PUBLISH_ID_R15:
-	case Common.PUBLISH_ID_R18:
-	case Common.PUBLISH_ID_R18G:
-	default:
-		strTitle = "["+_TEX.T(String.format("Category.C%d", cResults.m_cContent.m_nCategoryId))+"] ";
-		String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
-		if(strs.length>0 && strs[0].length()>0) {
-			strTitle += strs[0];
-		} else {
-			strTitle += cResults.m_cContent.m_cUser.m_strNickName;
-		}
-		break;
-}
-strTitle = Util.subStrNum(strTitle, 25) + " | " + _TEX.T("THeader.Title");
-String strDesc = CTweet.generateIllustMsgBase(cResults.m_cContent, _TEX);
+String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);
+String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 10) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
 strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName);
 String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
@@ -113,10 +75,10 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<%@ include file="/inner/TSendEmoji.jsp"%>
 	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@pipajp" />
-	<meta name="twitter:title" content="<%=Util.toDescString(strTitle)%>" />
-	<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+	<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
+	<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
 	<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
 	<link rel="canonical" href="<%=strUrl%>" />
 	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
@@ -137,6 +99,18 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			$('#MenuMe').addClass('Selected');
 		});
 		<%}%>
+	</script>
+
+	<script type="text/javascript">
+		$(function(){
+			<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+			var frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
+			var text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+			if(frame_height>=text_height) {
+				$('.IllustItemExpandBtn').hide();
+			}
+			<%}%>
+		});
 	</script>
 
 	<%@ include file="/inner/TDeleteContent.jsp"%>

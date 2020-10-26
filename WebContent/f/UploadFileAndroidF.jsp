@@ -171,7 +171,7 @@ class UploadFileC {
 			CTweet cTweet = new CTweet();
 			if (cParam.m_bTweet && cTweet.GetResults(cParam.m_nUserId)) {
 				// 本文作成
-				String strTwitterMsg = CTweet.generateIllustMsgFull(cContent, _TEX);
+				String strTwitterMsg = CTweet.generateWithTweetMsg(cContent, _TEX);
 				Log.d(strFileName, strTwitterMsg);
 
 				// ツイート
