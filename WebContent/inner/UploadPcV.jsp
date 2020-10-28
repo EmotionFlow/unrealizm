@@ -254,7 +254,7 @@ try {
 								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
 								<%if(cTweet.m_bIsTweetEnable){%>
 								<option value="<%=Common.PUBLISH_ID_T_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follower")%></option>
-								<option value="<%=Common.PUBLISH_ID_T_FOLLOW%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follow")%></option>
+								<option value="<%=Common.PUBLISH_ID_T_FOLLOWEE%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Followee")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_EACH%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Each")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}%>

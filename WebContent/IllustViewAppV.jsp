@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+	CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
@@ -44,8 +44,8 @@ case Common.PUBLISH_ID_FOLLOWER:
 case Common.PUBLISH_ID_T_FOLLOWER:
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follower");
 	break;
-case Common.PUBLISH_ID_T_FOLLOW:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follow");
+case Common.PUBLISH_ID_T_FOLLOWEE:
+	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Followee");
 	break;
 case Common.PUBLISH_ID_T_EACH:
 	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Each");

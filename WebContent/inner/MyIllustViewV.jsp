@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+	CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
@@ -43,7 +43,7 @@ switch(cResults.m_cContent.m_nPublishId) {
 	case Common.PUBLISH_ID_LOGIN:
 	case Common.PUBLISH_ID_FOLLOWER:
 	case Common.PUBLISH_ID_T_FOLLOWER:
-	case Common.PUBLISH_ID_T_FOLLOW:
+	case Common.PUBLISH_ID_T_FOLLOWEE:
 	case Common.PUBLISH_ID_T_EACH:
 	case Common.PUBLISH_ID_T_LIST:
 		strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];

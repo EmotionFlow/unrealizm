@@ -63,7 +63,7 @@ public class Common {
 	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン
 	public static final int PUBLISH_ID_FOLLOWER		= 6;	// ふぁぼ限定
 	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー
-	public static final int PUBLISH_ID_T_FOLLOW		= 8;	// ツイッターフォロー
+	public static final int PUBLISH_ID_T_FOLLOWEE	= 8;	// ツイッターフォロー
 	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー
 	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト
 	public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// 期間限定

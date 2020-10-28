@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
 import twitter4j.Friendship;
+import twitter4j.IDs;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.User;
@@ -31,13 +32,14 @@ public class CTweet {
 	public boolean m_bIsTweetEnable = false;
 	public String m_strUserAccessToken = "";
 	public String m_strSecretToken = "";
+	public int m_nUserId = -1;
 	public long m_lnTwitterUserId = -1;
 	public ResponseList<UserList> m_listOpenList = null;
 	public static final int MAX_LENGTH = 140;
 	public static final String ELLIPSE = "...";
 	public static final int FRIENDSHIP_UNDEF = -1;		// 未定義
 	public static final int FRIENDSHIP_NONE = 0;		// 無関係
-	public static final int FRIENDSHIP_FRIEND = 1;		// フォローしている
+	public static final int FRIENDSHIP_FOLLOWEE = 1;		// フォローしている
 	public static final int FRIENDSHIP_FOLLOWER = 2;	// フォローされている
 	public static final int FRIENDSHIP_EACH = 3;		// 相互フォロー
 
@@ -85,6 +87,7 @@ public class CTweet {
 		ResultSet cResSet = null;
 		String strSql = "";
 
+		m_nUserId = nUserId;
 		String strUserId = "";
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -288,39 +291,68 @@ public class CTweet {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
+
 			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nTargetUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 			cResSet = cState.executeQuery();
+			Long lnTargetUserId = -1L;
 			if(cResSet.next()){
-				ConfigurationBuilder cb = new ConfigurationBuilder();
-				cb.setDebugEnabled(true)
-					.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
-					.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
-					.setOAuthAccessToken(m_strUserAccessToken)
-					.setOAuthAccessTokenSecret(m_strSecretToken);
-				TwitterFactory tf = new TwitterFactory(cb.build());
-				Twitter twitter = tf.getInstance();
-
-				// 関係をlookup
-				long tgtIds[] = {Long.parseLong(cResSet.getString("twitter_user_id"))};
-				ResponseList<Friendship> lookupResults = twitter.lookupFriendships(tgtIds);
-				if(lookupResults.size() > 0){
-					Friendship f = lookupResults.get(0);
-					if(f.isFollowing() && f.isFollowedBy()){
-						nResult = FRIENDSHIP_EACH;
-					} else if(f.isFollowing() && !f.isFollowedBy()){
-						nResult = FRIENDSHIP_FRIEND;
-					} else if(!f.isFollowing() && f.isFollowedBy()){
-						nResult = FRIENDSHIP_FOLLOWER;
-					} else {
-						nResult = FRIENDSHIP_NONE;
-					}
-				}
+				lnTargetUserId = Long.parseLong(cResSet.getString("twitter_user_id"));
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+
+			if(lnTargetUserId==-1L) return ERR_OTHER;
+
+			// DBに5分以内のフォローがあるか
+			boolean bFollowing = checkDBFollowInfo(m_nUserId, nTargetUserId);
+			// DBに5分以内の被フォローがあるか
+			boolean bFollower = checkDBFollowInfo(nTargetUserId, m_nUserId);
+
+			// 判定
+			if(bFollowing && bFollower) return FRIENDSHIP_EACH;
+			if(bFollowing) return FRIENDSHIP_FOLLOWEE;
+			if(bFollower) return FRIENDSHIP_FOLLOWER;
+
+			// 5分以内の情報DB内に無いだけの可能性があるのでDBをTwitterAPIを使って更新
+			updateDBFollowInfoFromTwitter(m_nUserId);
+			updateDBFollowInfoFromTwitter(nTargetUserId);
+
+			// もう一度チェック
+			// DBに5分以内のフォローがあるか
+			bFollowing = checkDBFollowInfo(m_nUserId, nTargetUserId);
+			// DBに5分以内の被フォローがあるか
+			bFollower = checkDBFollowInfo(nTargetUserId, m_nUserId);
+
+			// 判定
+			if(bFollowing && bFollower) return FRIENDSHIP_EACH;
+			if(bFollowing) return FRIENDSHIP_FOLLOWEE;
+			if(bFollower) return FRIENDSHIP_FOLLOWER;
+
+			// DBには最大30000フォローワーまでしか取得していないので、念の為ID間のFriend関係を確認
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+			ResponseList<Friendship> lookupResults = twitter.lookupFriendships(lnTargetUserId);
+			if(lookupResults.size() > 0){
+				Friendship f = lookupResults.get(0);
+				if(f.isFollowing() && f.isFollowedBy()){
+					nResult = FRIENDSHIP_EACH;
+				} else if(f.isFollowing() && !f.isFollowedBy()){
+					nResult = FRIENDSHIP_FOLLOWEE;
+				} else if(!f.isFollowing() && f.isFollowedBy()){
+					nResult = FRIENDSHIP_FOLLOWER;
+				} else {
+					nResult = FRIENDSHIP_NONE;
+				}
+			}
 		} catch (TwitterException te) {
 			LoggingTwitterException(te);
 			nResult = GetErrorCode(te);
@@ -333,6 +365,102 @@ public class CTweet {
 			try {if(cConn!=null)cConn.close();}catch(Exception e){}
 		}
 		return nResult;
+	}
+
+	// twitter_followsに5分以内のフォローがあるか
+	private boolean checkDBFollowInfo(int userId, int targetUserId) {
+		boolean bFollow = false;
+		DataSource dsPostgres = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+
+		try {
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
+
+			strSql = "select * FROM twitter_follows WHERE user_id=? AND follow_user_id=? last_update_date<CURRENT_TIMESTAMP-interval'5 minutes'";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, targetUserId);
+			cState.setInt(2, userId);
+			cResSet = cState.executeQuery();
+			bFollow = cResSet.next();
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
+			try {if(cState!=null)cState.close();}catch(Exception e){}
+			try {if(cConn!=null)cConn.close();}catch(Exception e){}
+		}
+		return bFollow;
+	}
+
+	public void updateDBFollowInfoFromTwitter(int userId) {
+		// userIdがフォローしているIDをTwitterから取得
+		ArrayList<Long> id_list = new ArrayList<>(); // エラーが起きてもそれまで取れたものがあれば続行
+		try {
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+			long cursor = -1;
+			do {
+				IDs ids = twitter.getFollowersIDs(cursor);
+				for (long id : ids.getIDs()) {
+					id_list.add(id);
+				}
+				cursor = ids.getNextCursor();
+			} while(cursor>=0 && cursor<30000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(id_list.isEmpty()) return;
+
+		// 取れたものを追加
+		DataSource dsPostgres = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+		try {
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
+			// 古いものを削除
+			strSql = "DELETE FROM twitter_follows WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, userId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+			// 新しく追加
+			strSql = "INSERT INTO twitter_follows(user_id, twitter_user_id, twitter_follows_user_id) VALUES (?, ?, ?)";
+			cState = cConn.prepareStatement(strSql);
+			for(long id: id_list) {
+				cState.setInt(1, userId);
+				cState.setLong(2, m_lnTwitterUserId);
+				cState.setLong(3, id);
+				cState.executeUpdate();
+				cState.close();cState=null;
+			}
+			// ポイピク上のuser_id紐付け
+			strSql = "UPDATE twitter_follows SET follow_user_id=fldUserId FROM tbloauth "
+					+ "WHERE twitter_follows.twitter_user_id=cast(tbloauth.twitter_user_id as bigint) AND user_id=?";
+			cState.setInt(1, userId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
+			try {if(cState!=null)cState.close();}catch(Exception e){}
+			try {if(cConn!=null)cConn.close();}catch(Exception e){}
+		}
 	}
 
 	public int LookupListMember(CContent cContent){
@@ -406,8 +534,8 @@ public class CTweet {
 		case Common.PUBLISH_ID_T_FOLLOWER:
 			strState += _TEX.T("UploadFilePc.Option.Publish.T_Follower");
 			break;
-		case Common.PUBLISH_ID_T_FOLLOW:
-			strState += _TEX.T("UploadFilePc.Option.Publish.T_Follow");
+		case Common.PUBLISH_ID_T_FOLLOWEE:
+			strState += _TEX.T("UploadFilePc.Option.Publish.T_Followee");
 			break;
 		case Common.PUBLISH_ID_T_EACH:
 			strState += _TEX.T("UploadFilePc.Option.Publish.T_Each");

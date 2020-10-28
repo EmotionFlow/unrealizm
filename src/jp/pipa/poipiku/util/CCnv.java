@@ -88,7 +88,7 @@ public class CCnv {
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN) strThumbClass += " Login";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) strThumbClass += " Follower";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER) strThumbClass += " TFollower";
-		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW) strThumbClass += " TFollow";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE) strThumbClass += " TFollow";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) strThumbClass += " TEach";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST) strThumbClass += " TList";
 
@@ -208,7 +208,7 @@ public class CCnv {
 		case Common.PUBLISH_ID_LOGIN:
 		case Common.PUBLISH_ID_FOLLOWER:
 		case Common.PUBLISH_ID_T_FOLLOWER:
-		case Common.PUBLISH_ID_T_FOLLOW:
+		case Common.PUBLISH_ID_T_FOLLOWEE:
 		case Common.PUBLISH_ID_T_EACH:
 		case Common.PUBLISH_ID_T_LIST:
 			// R18の時は1枚目にWarningを出すのでずらす
@@ -701,7 +701,7 @@ public class CCnv {
 				case Common.PUBLISH_ID_LOGIN:
 				case Common.PUBLISH_ID_FOLLOWER:
 				case Common.PUBLISH_ID_T_FOLLOWER:
-				case Common.PUBLISH_ID_T_FOLLOW:
+				case Common.PUBLISH_ID_T_FOLLOWEE:
 				case Common.PUBLISH_ID_T_EACH:
 				case Common.PUBLISH_ID_T_LIST:
 					strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];

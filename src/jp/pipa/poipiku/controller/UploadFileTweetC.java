@@ -53,7 +53,7 @@ public class UploadFileTweetC {
 					case Common.PUBLISH_ID_LOGIN:
 					case Common.PUBLISH_ID_FOLLOWER:
 					case Common.PUBLISH_ID_T_FOLLOWER:
-					case Common.PUBLISH_ID_T_FOLLOW:
+					case Common.PUBLISH_ID_T_FOLLOWEE:
 					case Common.PUBLISH_ID_T_EACH:
 					case Common.PUBLISH_ID_T_LIST:
 						strFileName = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];

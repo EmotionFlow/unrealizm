@@ -82,7 +82,7 @@
 			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN && m_cContent.m_nUserId!=checkLogin.m_nUserId) return ERR_HIDDEN;
 
 			// twitter friendship
-			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)){
+			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
@@ -99,8 +99,8 @@
 							return ERR_UNKNOWN;
 						}
 					}
-					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && !(m_nTwFriendship==CTweet.FRIENDSHIP_FRIEND || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
-					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOW && !(m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOW;}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && !(m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWEE || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
+					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE && !(m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOW;}
 					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH && !(m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_EACH;}
 				}
 			}
@@ -143,7 +143,7 @@
 	}
 }%>
 <%
-CheckLogin checkLogin = new CheckLogin(request, response);
+	CheckLogin checkLogin = new CheckLogin(request, response);
 int nRtn = 0;
 StringBuilder strHtml = new StringBuilder();
 ShowAppendFileC cResults = new ShowAppendFileC();
@@ -195,21 +195,21 @@ if(nRtn<ShowAppendFileC.OK) {
 	case Common.PUBLISH_ID_LOGIN:
 	case Common.PUBLISH_ID_FOLLOWER:
 	case Common.PUBLISH_ID_T_FOLLOWER:
-	case Common.PUBLISH_ID_T_FOLLOW:
+	case Common.PUBLISH_ID_T_FOLLOWEE:
 	case Common.PUBLISH_ID_T_EACH:
 	case Common.PUBLISH_ID_T_LIST:
 		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
-			// 2枚目の場所に本文を表示する
-			nRtn=2;
-			strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
-			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Util.toStringHtml(cResults.m_cContent.m_strTextBody)));
-			strHtml.append("</a>");
+	// 2枚目の場所に本文を表示する
+	nRtn=2;
+	strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+	strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Util.toStringHtml(cResults.m_cContent.m_strTextBody)));
+	strHtml.append("</a>");
 		} else {
-			// 2枚目の場所に1枚目を表示する
-			nRtn++;
-			strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
-			strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
-			strHtml.append("</a>");
+	// 2枚目の場所に1枚目を表示する
+	nRtn++;
+	strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+	strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
+	strHtml.append("</a>");
 		}
 		break;
 	case Common.PUBLISH_ID_ALL:
@@ -221,14 +221,14 @@ if(nRtn<ShowAppendFileC.OK) {
 	// 以降の画像・文章を表示
 	for(CContentAppend cContentAppend : cResults.m_cContent.m_vContentAppend) {
 		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
-			// 2枚目の場所に本文に表示する
-			strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
-			strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Util.toStringHtml(cResults.m_cContent.m_strTextBody)));
-			strHtml.append("</a>");
+	// 2枚目の場所に本文に表示する
+	strHtml.append(String.format("<a class=\"IllustItemText\" style=\"max-height:none;\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
+	strHtml.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", Util.toStringHtml(cResults.m_cContent.m_strTextBody)));
+	strHtml.append("</a>");
 		} else {
-			strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
-			strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
-			strHtml.append("</a>");
+	strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
+	strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
+	strHtml.append("</a>");
 		}
 	}
 }
