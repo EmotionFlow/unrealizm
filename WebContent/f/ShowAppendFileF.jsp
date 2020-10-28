@@ -9,6 +9,7 @@ StringBuilder strHtml = new StringBuilder();
 ShowAppendFileC cResults = new ShowAppendFileC();
 cResults.getParam(request);
 nRtn = cResults.getResults(checkLogin);
+
 if(nRtn<ShowAppendFileC.OK) {
 	switch(nRtn) {
 	case ShowAppendFileC.ERR_PASS:
