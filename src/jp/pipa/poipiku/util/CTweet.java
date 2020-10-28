@@ -453,8 +453,11 @@ public class CTweet {
 			// ポイピク上のuser_id紐付け
 			strSql = "UPDATE twitter_follows SET follow_user_id=fldUserId FROM tbloauth "
 					+ "WHERE twitter_follows.twitter_user_id=cast(tbloauth.twitter_user_id as bigint) AND user_id=?";
-			cState.setInt(1, userId);
-			cState.executeUpdate();
+			cState = cConn.prepareStatement(strSql);
+			for(long id: id_list) {
+				cState.setInt(1, userId);
+				cState.executeUpdate();
+			}
 			cState.close();cState=null;
 		} catch (Exception e) {
 			e.printStackTrace();
