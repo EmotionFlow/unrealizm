@@ -354,6 +354,7 @@ public class CTweet {
 				}
 			}
 		} catch (TwitterException te) {
+			Log.d("Limit error");
 			LoggingTwitterException(te);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
@@ -419,7 +420,8 @@ public class CTweet {
 				cursor = ids.getNextCursor();
 			} while(cursor>=0 && cursor<30000);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.d("Limit error");
+			//e.printStackTrace();
 		}
 		if(id_list.isEmpty()) return;
 
