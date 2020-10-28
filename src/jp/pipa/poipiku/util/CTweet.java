@@ -355,7 +355,7 @@ public class CTweet {
 			}
 		} catch (TwitterException te) {
 			Log.d("Limit error");
-			LoggingTwitterException(te);
+			//LoggingTwitterException(te);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
