@@ -317,8 +317,8 @@ public class CTweet {
 			if(bFollower) return FRIENDSHIP_FOLLOWER;
 
 			// 5分以内の情報DB内に無いだけの可能性があるのでDBをTwitterAPIを使って更新
-			updateDBFollowInfoFromTwitter(m_nUserId);
-			updateDBFollowInfoFromTwitter(nTargetUserId);
+			updateDBFollowInfoFromTwitter(m_nUserId, m_lnTwitterUserId);
+			updateDBFollowInfoFromTwitter(nTargetUserId, lnTargetUserId);
 
 			// もう一度チェック
 			// DBに5分以内のフォローがあるか
@@ -399,7 +399,7 @@ public class CTweet {
 		return bFollow;
 	}
 
-	public void updateDBFollowInfoFromTwitter(int userId) {
+	public void updateDBFollowInfoFromTwitter(int userId, long twitter_userId) {
 		// userIdがフォローしているIDをTwitterから取得
 		ArrayList<Long> id_list = new ArrayList<>(); // エラーが起きてもそれまで取れたものがあれば続行
 		try {
@@ -413,14 +413,14 @@ public class CTweet {
 			Twitter twitter = tf.getInstance();
 			long cursor = -1;
 			do {
-				IDs ids = twitter.getFollowersIDs(userId, cursor);
+				IDs ids = twitter.getFollowersIDs(twitter_userId, cursor);
 				for (long id : ids.getIDs()) {
 					id_list.add(id);
 				}
 				cursor = ids.getNextCursor();
 			} while(cursor>=0 && cursor<10000);
 		} catch (Exception e) {
-			Log.d("Limit error : " + userId + "," + id_list.size());
+			Log.d("Limit error : " + twitter_userId + "," + id_list.size());
 			e.printStackTrace();
 		}
 		if(id_list.isEmpty()) return;
@@ -437,7 +437,7 @@ public class CTweet {
 			// 古いものを削除
 			strSql = "DELETE FROM twitter_follows WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, userId);
+			cState.setLong(1, userId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 			// 新しく追加
