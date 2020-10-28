@@ -413,12 +413,12 @@ public class CTweet {
 			Twitter twitter = tf.getInstance();
 			long cursor = -1;
 			do {
-				IDs ids = twitter.getFollowersIDs(twitter_userId, cursor);
+				IDs ids = twitter.getFriendsIDs(twitter_userId, cursor);
 				for (long id : ids.getIDs()) {
 					id_list.add(id);
 				}
 				cursor = ids.getNextCursor();
-			} while(cursor>=0 && cursor<10000);
+			} while(cursor>=0 && cursor<5000);
 		} catch (Exception e) {
 			Log.d("Limit error : " + twitter_userId + "," + id_list.size());
 			//e.printStackTrace();
