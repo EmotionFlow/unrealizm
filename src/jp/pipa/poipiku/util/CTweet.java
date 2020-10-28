@@ -421,7 +421,7 @@ public class CTweet {
 			} while(cursor>=0 && cursor<10000);
 		} catch (Exception e) {
 			Log.d("Limit error : " + twitter_userId + "," + id_list.size());
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		if(id_list.isEmpty()) return;
 
