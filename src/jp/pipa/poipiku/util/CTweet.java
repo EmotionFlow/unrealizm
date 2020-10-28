@@ -413,7 +413,7 @@ public class CTweet {
 			Twitter twitter = tf.getInstance();
 			long cursor = -1;
 			do {
-				IDs ids = twitter.getFollowersIDs(cursor);
+				IDs ids = twitter.getFollowersIDs(userId, cursor);
 				for (long id : ids.getIDs()) {
 					id_list.add(id);
 				}
