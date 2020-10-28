@@ -420,7 +420,7 @@ public class CTweet {
 				cursor = ids.getNextCursor();
 			} while(cursor>=0 && cursor<30000);
 		} catch (Exception e) {
-			Log.d("Limit error");
+			Log.d("Limit error : " + id_list.size());
 			//e.printStackTrace();
 		}
 		if(id_list.isEmpty()) return;
