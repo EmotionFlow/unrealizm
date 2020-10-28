@@ -441,7 +441,7 @@ public class CTweet {
 			cState.executeUpdate();
 			cState.close();cState=null;
 			// 新しく追加
-			strSql = "INSERT INTO twitter_follows(user_id, twitter_user_id, twitter_follows_user_id) VALUES (?, ?, ?)";
+			strSql = "INSERT INTO twitter_follows(user_id, twitter_user_id, twitter_follow_user_id) VALUES (?, ?, ?)";
 			cState = cConn.prepareStatement(strSql);
 			for(long id: id_list) {
 				cState.setInt(1, userId);
