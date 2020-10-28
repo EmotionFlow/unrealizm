@@ -381,7 +381,7 @@ public class CTweet {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "select * FROM twitter_follows WHERE user_id=? AND follow_user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'5 minutes' LIMIT 1";
+			strSql = "select * FROM twitter_follows WHERE user_id=? AND follow_user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'15 minutes' LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, userId);
 			cState.setInt(2, targetUserId);
