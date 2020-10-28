@@ -381,7 +381,7 @@ public class CTweet {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			strSql = "select * FROM twitter_follows WHERE user_id=? AND follow_user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'5 minutes'";
+			strSql = "select * FROM twitter_follows WHERE user_id=? AND follow_user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'5 minutes' LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, userId);
 			cState.setInt(2, targetUserId);
@@ -454,10 +454,8 @@ public class CTweet {
 			strSql = "UPDATE twitter_follows SET follow_user_id=fldUserId FROM tbloauth "
 					+ "WHERE twitter_follows.twitter_user_id=cast(tbloauth.twitter_user_id as bigint) AND user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			for(long id: id_list) {
-				cState.setInt(1, userId);
-				cState.executeUpdate();
-			}
+			cState.setInt(1, userId);
+			cState.executeUpdate();
 			cState.close();cState=null;
 		} catch (Exception e) {
 			e.printStackTrace();
