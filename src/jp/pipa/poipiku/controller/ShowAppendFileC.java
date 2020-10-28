@@ -49,7 +49,7 @@ public class ShowAppendFileC {
 		}
 	}
 
-	CContent m_cContent = null;
+	public CContent m_cContent = null;
 	public int getResults(CheckLogin checkLogin) {
 		int nRtn = OK;
 		DataSource dsPostgres = null;
