@@ -19,7 +19,6 @@ public class IllustListC {
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
-
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
 			m_strKeyword	= Common.TrimAll(Common.CrLfInjection(cRequest.getParameter("KWD")));
