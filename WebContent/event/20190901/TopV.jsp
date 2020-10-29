@@ -69,7 +69,7 @@ String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_st
 			.SlotItem .RouletteFrame .Roulette {display: none; width: 163px; background-color: #fff; border-radius: 10px; overflow: hidden;}
 			.SlotItem .RouletteFrame .Roulette img {display: block; width: 163px; height: 165px;}
 			.SlotItem .StopBtn {display: block; width: 60px; height: 60px; margin: 16px 0 0 0; cursor: pointer;}
-			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 340px; left: 10px; top: 1566px; z-index: 1;}
+			.SlotCmdFrame {display: flex; flex-flow: column; align-items: center;  position: absolute; width: 340px; left: 10px; top: 1454px; z-index: 1;}
 			.SlotCmdFrame .SlotCmdBtnDownload {display: block; width: 340px; height: 66px; cursor: pointer;}
 			.SlotCmdFrame .SlotCmdBtnStart {display: block; width: 170px; height: 66px; margin-top: 15px; cursor: pointer;}
 			<%if(!Util.isSmartPhone(request)){%>
