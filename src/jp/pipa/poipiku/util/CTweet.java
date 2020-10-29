@@ -602,9 +602,9 @@ public class CTweet {
 	static public String generateFileNum(CContent cContent, ResourceBundleControl _TEX) {
 		String strFileNum = "";
 		if(cContent.m_nEditorId==Common.EDITOR_TEXT ) {
-			strFileNum = "(" + String.format(_TEX.T("Common.Unit.Text"), cContent.m_strTextBody.length()) + ")";
+			strFileNum = String.format("(%d"+_TEX.T("Common.Unit.Text")+")", cContent.m_strTextBody.length());
 		} else {
-			strFileNum = "(" + String.format(_TEX.T("UploadFileTweet.FileNum"), cContent.m_nFileNum) + ")";
+			strFileNum = String.format("("+_TEX.T("UploadFileTweet.FileNum")+")", cContent.m_nFileNum);
 		}
 		return strFileNum;
 	}
