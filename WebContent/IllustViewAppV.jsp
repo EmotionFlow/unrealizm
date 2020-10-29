@@ -264,7 +264,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 						<%
 							String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);
 						%>
-						<a class="AutoLink" class="AutoLink" href="/SearchIllustByTag.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
+						<a class="AutoLink" class="AutoLink" href="/SearchIllustByTagAppV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 					</h2>
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {

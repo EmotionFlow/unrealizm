@@ -610,7 +610,7 @@ public class CTweet {
 	}
 
 	static public String generateMetaTwitterTitle(CContent cContent, ResourceBundleControl _TEX) {
-		return generateState(cContent, _TEX) +  generateFileNum(cContent, _TEX) + " - " + String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+		return generateState(cContent, _TEX) +  generateFileNum(cContent, _TEX) + String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
 	}
 
 	static public String generateMetaTwitterDesc(CContent cContent, ResourceBundleControl _TEX) {
