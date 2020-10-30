@@ -6,13 +6,13 @@
 // login check
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-String strRequestUri = (String)request.getAttribute("javax.servlet.forward.request_uri");
-String strRequestQuery = (String)request.getAttribute("javax.servlet.forward.query_string");
+String strRequestUri = Util.toString((String)request.getAttribute("javax.servlet.forward.request_uri"));
+String strRequestQuery = Util.toString((String)request.getAttribute("javax.servlet.forward.query_string"));
 
 String strMessage = "";
 session.removeAttribute("LoginUri");
-if(strRequestUri != null) {
-	if(strRequestQuery != null) {
+if(!strRequestUri.isEmpty()) {
+	if(!strRequestQuery.isEmpty()) {
 		strRequestUri += "?" + strRequestQuery;
 	}
 	session.setAttribute("LoginUri", strRequestUri);
@@ -22,13 +22,13 @@ if(strRequestUri != null) {
 String strNextUrl = "";
 String strReturnUrl = "";
 if(Util.toBoolean(request.getParameter("INQUIRY"))) {
-	strReturnUrl = request.getParameter("RET");
-	if(strReturnUrl==null || strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
+	strReturnUrl = Util.toString(request.getParameter("RET"));
+	if(strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
 		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId,"UTF-8");;
 	} else {
 		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode(strReturnUrl,"UTF-8");
 	}
-} else if(strRequestUri!=null && strRequestUri.isEmpty()) {
+} else if(strRequestUri.isEmpty()) {
 	strNextUrl = strRequestUri;
 } else {
 	strNextUrl = "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
