@@ -28,7 +28,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 	} else {
 		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode(strReturnUrl,"UTF-8");
 	}
-} else if(!strRequestUri.isEmpty()) {
+} else if(strRequestUri!=null && strRequestUri.isEmpty()) {
 	strNextUrl = strRequestUri;
 } else {
 	strNextUrl = "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
