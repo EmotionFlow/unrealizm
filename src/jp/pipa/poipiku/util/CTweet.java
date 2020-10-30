@@ -365,6 +365,7 @@ public class CTweet {
 			LoggingTwitterException(te);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
+			Log.d(strSql);
 			e.printStackTrace();
 			nResult = ERR_OTHER;
 		} finally {
@@ -510,8 +511,32 @@ public class CTweet {
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
 		if (cContent.m_strListId.isEmpty()) return ERR_OTHER;
 
-		int nResult;
-		try{
+		int nResult = ERR_OTHER;
+
+		boolean bFind = false;
+		DataSource dsPostgres = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+		try {
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			cConn = dsPostgres.getConnection();
+
+			// DBのリストキャッシュを確認
+			strSql = "SELECT * FROM twitter_lists WHERE list_id=? AND user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'15 minutes' LIMIT 1";
+			cState = cConn.prepareStatement(strSql);
+			cState.setLong(1, Long.parseLong(cContent.m_strListId));
+			cState.setInt(2, m_nUserId);
+			cResSet = cState.executeQuery();
+			bFind = cResSet.next();
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			Log.d("LIST CASH HIT!");
+			if(bFind) return OK;
+
+			long lnListId = Long.parseLong(cContent.m_strListId);
+			// DBに存在しなければTwitterに問い合わせ
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
 				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
@@ -520,14 +545,29 @@ public class CTweet {
 				.setOAuthAccessTokenSecret(m_strSecretToken);
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
-			/*User u = */twitter.showUserListMembership(Long.parseLong(cContent.m_strListId), m_lnTwitterUserId);
-			nResult = 1;
+			/*User u = */twitter.showUserListMembership(lnListId, m_lnTwitterUserId);
+			nResult = OK;
+
+			// キャッシュへ登録
+			strSql = "INSERT INTO twitter_lists(list_id, twitter_user_id, user_id) "
+					+ "VALUES (?, ?, ?) ON CONFLICT (list_id, user_id) DO UPDATE SET last_update_date=CURRENT_TIMESTAMP;";
+			cState = cConn.prepareStatement(strSql);
+			cState.setLong(1, lnListId);
+			cState.setLong(2, m_lnTwitterUserId);
+			cState.setInt(3, m_nUserId);
+			cState.executeUpdate();
+			cState.close();cState=null;
 		}catch(TwitterException te){
 			LoggingTwitterException(te);
 			nResult = GetErrorCode(te);
 		}catch(Exception e) {
+			Log.d(strSql);
 			e.printStackTrace();
 			nResult = ERR_OTHER;
+		} finally {
+			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
+			try {if(cState!=null)cState.close();}catch(Exception e){}
+			try {if(cConn!=null)cConn.close();}catch(Exception e){}
 		}
 		return nResult;
 	}
