@@ -189,7 +189,7 @@ public class ImageUtil {
 	}
 
 	private static long saveJpeg(BufferedImage image, String strDstFileName) throws FileNotFoundException, IOException {
-		deleteFile(strDstFileName);
+		Util.deleteFile(strDstFileName);
 		File file = new File(strDstFileName);
 		FileImageOutputStream output = new FileImageOutputStream(file);
 		ImageWriter writeImage = ImageIO.getImageWritersByFormatName("jpeg").next();
@@ -203,7 +203,7 @@ public class ImageUtil {
 	}
 
 	private static long savePng(BufferedImage image, String strDstFileName) throws IOException {
-		deleteFile(strDstFileName);
+		Util.deleteFile(strDstFileName);
 		File file = new File(strDstFileName);
 		ImageIO.write(image, "png", file);
 		return file.length();
@@ -615,7 +615,7 @@ public class ImageUtil {
 		String strDstFileName = strSrcFileName + "_complex.jpg";
 		ImageIO.write(resizeImageNormalize(ImageUtil.read(strSrcFileName), 1000), "jpg", new File(strDstFileName));
 		long nFileSize = (new File(strDstFileName)).length();
-		deleteFile(strDstFileName);
+		Util.deleteFile(strDstFileName);
 		return nFileSize;
 	}
 
@@ -682,24 +682,17 @@ public class ImageUtil {
 		rgb[2] = b;
 	}
 
-	public static void deleteFile(String strFileName) {
-		if(strFileName==null || strFileName.isEmpty()) return;
-		File oDelFile = new File(strFileName);
-		if(!oDelFile.isFile()) return;
-		if(oDelFile.exists()) oDelFile.delete();
-	}
-
 	public static void deleteFiles(String strFileName) {
 		if(strFileName==null || strFileName.isEmpty()) return;
-		deleteFile(strFileName);
+		Util.deleteFile(strFileName);
 		deleteFilesClean(strFileName);
 	}
 
 	static void deleteFilesClean(String strFileName) {
 		if(strFileName==null || strFileName.isEmpty()) return;
-		deleteFile(strFileName+"_640.jpg");
-		deleteFile(strFileName+"_360.jpg");
-		deleteFile(strFileName+"_120.jpg");
+		Util.deleteFile(strFileName+"_640.jpg");
+		Util.deleteFile(strFileName+"_360.jpg");
+		Util.deleteFile(strFileName+"_120.jpg");
 	}
 }
 

@@ -446,4 +446,12 @@ public class Util {
 	}
 	*/
 
+
+	public static void deleteFile(String strFileName) {
+		if(strFileName==null || strFileName.isEmpty()) return;
+		File oDelFile = new File(strFileName);
+		if(!oDelFile.isFile()) return;
+		if(oDelFile.exists()) oDelFile.delete();
+	}
+
 }

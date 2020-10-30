@@ -235,7 +235,7 @@ public class CTweet {
 				}
 				UploadedMedia media = twitter.uploadMedia(new File(strDstFileName));
 				vMediaList[index] = media.getMediaId();
-				ImageUtil.deleteFile(strDstFileName);
+				Util.deleteFile(strDstFileName);
 			}
 
 			StatusUpdate update = new StatusUpdate(strTweet);
