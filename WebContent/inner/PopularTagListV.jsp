@@ -28,7 +28,7 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		<title>HOT tag</title>
 		<style>
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0;}
-			.CategoryListItem .CategoryMore {display: block; float: left; width: 100%; text-align: right; font-size: 13px; font-weight: normal; color: #5bd; padding: 0 7px; box-sizing: border-box;}
+			.CategoryListItem .CategoryMore {display: block; float: left; width: 100%; text-align: right; font-size: 13px; font-weight: normal; padding: 0 7px; box-sizing: border-box;}
 			.SearchResultTitle {margin: 10px 0 0 0;}
 		</style>
 	</head>

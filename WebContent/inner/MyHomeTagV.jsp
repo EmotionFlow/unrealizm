@@ -76,7 +76,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
-					<a style="color: #5bd;" href="/MyHomeTagSetting<%=isApp?"App":""%>V.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
+					<a href="/MyHomeTagSetting<%=isApp?"App":""%>V.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
 				</div>
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">

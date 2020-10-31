@@ -51,7 +51,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			}
 			.Button {
 				display: block;
-				border: 1px solid #5bd;
+				border: 1px solid #3498db;
 				padding:5px;
 				width: 200px;
 				height: 26px;
@@ -82,8 +82,8 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				text-align: center;
 			}
 			.SettingList .SettingListItem .SettingListTitle.Head {
-				margin-top:40px; 
-				margin-bottom:10px; 
+				margin-top:40px;
+				margin-bottom:10px;
 				font-size: 24px;
 				text-align: left;
 			}

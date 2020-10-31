@@ -1,7 +1,7 @@
 @charset "utf-8";
 
-.AutoLink {color: #5bd; text-decoration: underline;}
-.AutoLinkMyTag {color: #f09090; text-decoration: underline;}
+.AutoLink {color: #3498db !important; text-decoration: underline;}
+.AutoLinkMyTag {color: #f09090 !important; text-decoration: underline;}
 
 .Waiting {
 	display: block;
@@ -79,7 +79,7 @@
 	-webkit-touch-callout: none;
 }
 
-.UpdateInfo {float: left; width: 100%; text-align: center; background-color: #5bd; padding: 5px 0; font-size: 0;}
+.UpdateInfo {float: left; width: 100%; text-align: center; background-color: #3498db; padding: 5px 0; font-size: 0;}
 
 .UpdateInfo .UpdateInfoMsg {color: #fff;font-size: 12px; font-weight: bold;}
 
@@ -124,7 +124,7 @@
 
 .SearchResultTitle {
 	text-decoration: none;
-	color: #5bd;
+	color: #3498db;
 	margin: 10px 0 7px 0;
 	font-size: 18px;
 	height: 30px;
@@ -144,7 +144,7 @@
 	display: block;
 	float: left;
 	background-color: #fff;
-	color: #5bd;
+	color: #3498db;
 	font-size: 15px;
 	padding: 0 18px;
 	margin: 0;
@@ -195,15 +195,15 @@
 	line-height: 20px;
 	padding: 0 10px;
 	margin: 0;
-	border: solid 1px #5bd;
+	border: solid 1px #fff;
 	border-left: none;
-	background-color: #fff;
-	color: #5bd;
+	background-color: #3498db;
+	color: #fff;
 	min-width: 60px;
 }
-.CategoryMenu .CategoryBtn:first-child {border-left: solid 1px #5bd; border-radius: 20px 0 0 20px;}
+.CategoryMenu .CategoryBtn:first-child {border-left: solid 1px #fff; border-radius: 20px 0 0 20px;}
 .CategoryMenu .CategoryBtn:last-child {border-radius: 0 20px 20px 0;}
-.CategoryMenu .CategoryBtn.Selected {background-color: #5bd;color: #fff;}
+.CategoryMenu .CategoryBtn.Selected {background-color: #fff; color: #3498db;}
 
 .IllustThumbList {
 	display: block;
@@ -226,13 +226,13 @@
 	align-items: center;
 	justify-content: center;
 	background: #fff;
+	color: #6d6965;
 	display: flex;
 	flex-flow: column;
 	border-radius: 4px;
 	border: solid 1px #eee;
-
-
 }
+
 
 .IllustThumb .IllustUser {
 	display: flex;
@@ -244,6 +244,7 @@
 	padding: 2px 2px 2px 2px;
 	border-bottom: solid 1px #eee;
 	align-items: center;
+	color: #6d6965;
 }
 
 .IllustThumb .IllustUser .IllustUserThumb {
@@ -271,7 +272,7 @@
 .IllustThumb .Category {
 	display: block;
 	float: left;
-	background: #5bd;
+	background: #3498db;
 	font-size: 10px;
 	color: #fff;
 	text-align: center;
@@ -333,6 +334,7 @@
 	height: 30px;
 	line-height: 15px;
 	overflow: hidden;
+	color: #6d6965;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	-webkit-box-orient: vertical;
@@ -365,7 +367,7 @@
 	float: left;
 	color: white;
 	font-size: 15px;
-	background: #5bd;
+	background: #3498db;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 25px;
@@ -381,7 +383,7 @@
 	float: left;
 	color: white;
 	font-size: 13px;
-	background: #5bd;
+	background: #3498db;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 20px;
@@ -396,7 +398,7 @@
 	min-width: 35px;
 	display: block;
 	float: left;
-	background-color: #5bd;
+	background-color: #3498db;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 20px;
@@ -409,7 +411,7 @@
 	min-width: 40px;
 	display: block;
 	float: left;
-	background-color: #5bd;
+	background-color: #3498db;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 25px;
@@ -434,7 +436,7 @@
 	border-radius: 20px;
 		background-size: contain;
 		background-image: url(/img/ico_clock.png);
-		background-color: #5bd;
+		background-color: #3498db;
 		background-repeat: no-repeat;
 	background-position: 50% 50%;
 	opacity: 0.75;
@@ -518,7 +520,7 @@
 	line-height: 30px;
 	padding: 10px;
 	box-sizing: border-box;
-	color: #5bd;
+	color: #3498db;
 }
 
 /********** UPLOAD **********/
@@ -587,7 +589,7 @@
 
 .UploadFile .InputFile.Done {
 	background-color: #EDEDF5;
-	box-shadow: 0 0 1px 0 #5bd;
+	box-shadow: 0 0 1px 0 #3498db;
 	border: 0;
 }
 
@@ -769,6 +771,7 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	background: #fff;
+	color: #6d6965;
 	margin: 15px 8px;
 	border-radius: 6px;
 	border: solid 1px #eee;
@@ -810,6 +813,11 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+
+.IllustItem .IllustItemUser .IllustItemUserName a {
+	color: #6d6965;
+}
+
 
 .IllustItem .IllustItemUser .UserInfoCmdFollow {
 	display: block;
@@ -944,7 +952,7 @@
 .IllustItem .Category {
 	display: block;
 	float: left;
-	background: #5bd;
+	background: #3498db;
 	font-size: 13px;
 	color: #fff;
 	text-align: center;
@@ -1182,6 +1190,7 @@
 	text-align: left;
 	margin: 2px 0 5px 0;
 	font-size: 16px;
+	color: #6d6965;
 }
 
 .IllustItem .IllustItemTag {
@@ -1282,7 +1291,7 @@
 	border-radius: 11px;
 		background-size: contain;
 		background-image: url(/img/ico_clock.png);
-		background-color: #5bd;
+		background-color: #3498db;
 		background-repeat: no-repeat;
 	background-position: 50% 50%;
 	opacity: 0.75;
@@ -1801,7 +1810,7 @@
 	margin: 0;
 	box-sizing: border-box;
 	overflow: hidden;
-	background: #5bd;
+	background: #3498db;
 	background-size: cover;
 	background-repeat: no-repeat;
 	border-bottom: solid 1px #eee;
@@ -1854,6 +1863,11 @@
 	text-align: center;
 	font-weight: bold;
 	font-size: 18px;
+	color: #6d6965;
+}
+
+.UserInfo .UserInfoUser .UserInfoUserName a {
+	color: #6d6965;
 }
 
 .UserInfo .UserInfoUser .UserInfoProgile {

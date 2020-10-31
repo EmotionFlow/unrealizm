@@ -125,9 +125,9 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 					</div>
 
 					<div style="display: flex; line-height: 15px; margin: 30px 0;">
-						<div style="flex: 1 0; height: 1px; background-color: #6d6965; margin: 7px 0;"></div>
+						<div style="flex: 1 0; height: 1px; background-color: #fff; margin: 7px 0;"></div>
 						<div style="flex: 0 0; padding: 0px 12px;">or</div>
-						<div style="flex: 1 0; height: 1px; background-color: #6d6965; margin: 7px 0;"></div>
+						<div style="flex: 1 0; height: 1px; background-color: #fff; margin: 7px 0;"></div>
 					</div>
 
 					<form id="RegistForm" onsubmit="return RegistUser()">
@@ -155,7 +155,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
-									<a style="color: #5bd;" href="javascript:void(0);" onclick="$('#RegistForm').slideUp();$('#LoginForm').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
+									<a href="javascript:void(0);" onclick="$('#RegistForm').slideUp();$('#LoginForm').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
 								</div>
 							</div>
 						</div>
@@ -181,11 +181,11 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
-									<a style="color: #5bd;" href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
+									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
 									<div class="RegistMessage"></div>
-									<a style="color: #5bd;" href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
+									<a href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
 								</div>
 							</div>
 						</div>

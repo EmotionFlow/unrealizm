@@ -50,7 +50,7 @@ if(strRequestUri != null) {
 		})
 	</script>
 
-	<body style="color: #fff; background: #5bd;">
+	<body>
 
 		<article class="Wrapper">
 			<section id="InfoMsg" style="float: left; width: 100%; padding: 60px 0 0 0; text-align: center;">

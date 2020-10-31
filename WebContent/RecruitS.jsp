@@ -18,7 +18,7 @@
 			}
 			.EntryButton{
 				display: block;
-					border: 1px solid #5bd;
+					border: 1px solid #3498db;
 					padding:5px;
 					width: 200px;
 					height: 26px;

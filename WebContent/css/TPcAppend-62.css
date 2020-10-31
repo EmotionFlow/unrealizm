@@ -1,10 +1,10 @@
 @charset "utf-8";
 
 /* Base */
-.BtnBase:hover {background: #5bd;color: #fff;}
-a:hover {color: #5bd;}
+.BtnBase:hover {background: #fff;color: #3498db;}
+a:hover {color: #fff;}
 .BtnBase.Disabled:hover, input[type="submit"].Disabled:hover, input[type="button"].Disabled:hover, button.Disabled:hover {border-color: #ebe;color: #ebe;cursor: default;}
-.BtnBase.Rev:hover {border-color: #5bd; background-color: #fff;color: #5bd;}
+.BtnBase.Rev:hover {border-color: #3498db; background-color: #fff;color: #3498db;}
 
 body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; min-height: 60px; position: relative;}
@@ -92,7 +92,7 @@ body {padding: 51px 0 0 0 !important;}
 
 /********** GRID ***********/
 .Wrapper.GridList {width: 1140px;}
-.Wrapper.GridList .PcSideBarAd {width: 336px; height: 280px; float: right; display: inline-block; margin: 12px; background-color: #5bd; display: flex; align-items: center; justify-content: center;}
+.Wrapper.GridList .PcSideBarAd {width: 336px; height: 280px; float: right; display: inline-block; margin: 12px; background-color: #fff; display: flex; align-items: center; justify-content: center;}
 
 /********** EVENT LIST **********/
 .EventItemList {float: none; margin: 0; width: 100%; height: auto; opacity: 1;}

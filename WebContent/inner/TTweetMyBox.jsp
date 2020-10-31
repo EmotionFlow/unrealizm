@@ -51,7 +51,7 @@
 		font-size: 14px;
 		font-weight: 400;
 		text-decoration: underline;
-		color: #5bd;
+		color: #3498db;
 	}
 	.TweetMyBoxHr {
 		border: 1px solid #dddddd;

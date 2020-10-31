@@ -17,7 +17,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 			.SettingList .SettingListItem {margin: 0 0 20px 0;}
 			.cs_table {display: flex; width: 100%; box-sizing: border-box; padding: 0; border-collapse: collapse; border: none; flex-flow: column; margin: 10px 0;}
 			.cs_table .cs_tr {display: flex; width: 100%; margin: 5px 0; padding: 5px; box-sizing: border-box; border-radius: 10px; background: #fff; color: #feadb4; flex-flow: row; overflow: hidden; align-items: center;}
-			.cs_table .cs_tr:hover {background-color: #5bd; color: #fff;}
+			.cs_table .cs_tr:hover {background-color: #3498db; color: #fff;}
 			.cs_table .cs_tr .ch_imag_frame {display:block; flex: 0 0 110px;}
 			.cs_table .cs_tr .ch_imag_frame a {display: block;}
 			.cs_table .cs_tr .ch_img {display: block; width: 100px; text-decoration: none;}

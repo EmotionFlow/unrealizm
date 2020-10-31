@@ -144,7 +144,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			margin-left: 8px;
 		}
 		.SettinMenuTitle .SettingChangePageLink {
-			color: #5bd;
+			color: #3498db;
 		}
 
 		.SettingMenuItemArrow{
@@ -156,7 +156,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 		}
 
 		.SettingMenuReturnArrow{
-			color: #5bd;
+			color: #3498db;
 		}
 
 		<%if(!bSmartPhone){%>

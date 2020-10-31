@@ -33,9 +33,9 @@ String strFileUrl = "/img/poipiku_icon_512x512.png";
 			.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 			.AnalogicoInfo {display: none;}
 
-			.PoipikuInfo {display: flex; flex-flow: row wrap; flex: 0 0 100%; margin: 0 auto; justify-content: space-around; background-color: #fff; color: #5bd;padding: 15px 0;box-sizing: border-box;}
+			.PoipikuInfo {display: flex; flex-flow: row wrap; flex: 0 0 100%; margin: 0 auto; justify-content: space-around; background-color: #fff; color: #3498db; padding: 15px 0;box-sizing: border-box;}
 			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
-			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #5bd; color: #fff; margin: 15px 0;}
+			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #3498db; color: #fff; margin: 15px 0;}
 			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
 			.PoipikuInfo .PoipikuDesc .DescTitle {font-size: 17px; margin: 0 0 15px 0; font-weight: bold;}
 			.PoipikuInfo .PoipikuDesc .DescTitle .DescSubTitle {font-size: 15px; font-weight: normal;}
@@ -167,7 +167,7 @@ String strFileUrl = "/img/poipiku_icon_512x512.png";
 					<div class="DescTitle">
 						イラストSNS12年の運営実績
 						<div class="DescSubTitle">
-							2007年から手書きブログを開始し、イラストSNS運営実績は12年。
+							2007年から手書きブログを開始し、イラストSNS運営実績は13年。
 							安心してご利用ください。
 						</div>
 					</div>
@@ -176,7 +176,7 @@ String strFileUrl = "/img/poipiku_icon_512x512.png";
 		</article>
 
 		<article class="Wrapper">
-			<section class="AnalogicoInfo" style="display: block;">
+			<section class="AnalogicoInfo" style="display: block; padding: 100px 0;">
 				<div class="AnalogicoDesc Title">
 						さあ、はじめよう！
 				</div>

@@ -167,7 +167,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
 			.IllustItemList.Related .SearchResultTitle .Keyword {display: block;}
 			.IllustItemList.Related .SearchResultTitle .IllustItem {margin-bottom: 0;}
-			.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #fff; color: #5bd; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
+			.IllustItemList.Related .AutoLink {display: block; float: left; background-color: #fff; color: #3498db; font-size: 15px; line-height: 34px; padding: 0 18px; margin: 4px 2px 0 2px; border-radius: 6px;}
 			.FooterAd {display: block; float: left; width: 100%; margin: 0 auto; box-sizing: border-box;}
 			.FooterAd .SideBarMid {isplay: block; float: left; width: 100%; height: auto;}
 			<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>

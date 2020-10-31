@@ -41,7 +41,7 @@ public class Emoji {
 	}
 
 	// For Event
-	public static final boolean EMOJI_EVENT = true;
+	public static final boolean EMOJI_EVENT = false;
 	//public static final String EMOJI_EVENT_CHAR = "💝";		// X'mas
 	public static final String EMOJI_EVENT_CHAR = "🎃";	//Halloween
 	public static final String[] EMOJI_EVENT_LIST = {
