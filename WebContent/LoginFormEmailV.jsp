@@ -91,6 +91,9 @@ if(strRequestUri != null) {
 		.AnalogicoInfo {display: none;}
 		#RegistForm {display: block; float: left; width: 100%;}
 		#LoginForm {display: none; float: left; width: 100%;}
+		.SettingList .SettingListItem {color: #fff;}
+		.SettingList .BtnBase {border: 1px solid #fff; background: #3498db; color: #fff;}
+		.SettingList .BtnBase.Selected, ,SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
 		</style>
 	</head>
 
