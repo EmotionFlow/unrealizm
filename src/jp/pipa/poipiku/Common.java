@@ -93,7 +93,6 @@ public class Common {
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 24;
 	public static final int[] CATEGORY_ID = {
-			13,	// 使い回しハロウィン
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
