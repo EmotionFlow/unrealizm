@@ -474,6 +474,7 @@
 	padding: 10px;
 	border-bottom: solid 1px #eee;
 	background-color: #fff;
+	color: #6d6965;
 }
 
 .UserThumb .UserThumbImg {
@@ -775,6 +776,19 @@
 	margin: 15px 8px;
 	border-radius: 6px;
 	border: solid 1px #eee;
+}
+
+.IllustItem .BtnBase {
+	border: 1px solid #3498db;
+	background: #fff;
+	color: #3498db;
+}
+
+.IllustItem .BtnBase.Selected,
+.IllustItem .BtnBase:hover {
+	border: 1px solid #fff;
+	background: #3498db;
+	color: #fff;
 }
 
 .IllustItem .IllustItemUser {
@@ -1661,6 +1675,7 @@
 	padding: 10px;
 	border-bottom: solid 1px #eee;
 	background-color: #fff;
+	color: #6d6965;
 }
 
 .IllustItemList .ItemComment.Home .ItemCommentItem {
@@ -1815,7 +1830,26 @@
 	background-repeat: no-repeat;
 	border-bottom: solid 1px #eee;
 	background-position: 50% 50%;
+	color: #6d6965;
 }
+
+.UserInfo a {
+	color: #6d6965;
+}
+
+.UserInfo .BtnBase {
+	border: 1px solid #3498db;
+	background: #fff;
+	color: #3498db;
+}
+
+.UserInfo .BtnBase.Selected,
+.UserInfo .BtnBase:hover {
+	border: 1px solid #fff;
+	background: #3498db;
+	color: #fff;
+}
+
 
 .UserInfo .UserInfoBg {
 	display: block;
@@ -1863,11 +1897,6 @@
 	text-align: center;
 	font-weight: bold;
 	font-size: 18px;
-	color: #6d6965;
-}
-
-.UserInfo .UserInfoUser .UserInfoUserName a {
-	color: #6d6965;
 }
 
 .UserInfo .UserInfoUser .UserInfoProgile {
@@ -1980,6 +2009,7 @@
 	box-sizing: border-box;
 	margin: 0 0 40px 0;
 	padding: 0 10px;
+	color: #6d6965;
 }
 
 .SettingList .SettingListItem .SettingListTitle {

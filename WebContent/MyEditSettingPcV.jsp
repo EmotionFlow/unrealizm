@@ -107,19 +107,19 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 		<style>
 		<%if(bSmartPhone){%>
 		.Wrapper.ItemList .IllustItemList {margin-top: 6px;}
-		.SettingList {background-color: #fff;}
 		<%} else {%>
 		.Wrapper.ItemList .IllustItemList {margin-top: 16px;}
 		<%}%>
 
-		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #ccc;}
+		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #fff;}
 
 		.SettingMenuHeader{
 			height: 27px;
 			font-size: 18px;
 			font-weight: 400;
 			padding: 7px;
-			background-color: white;
+			background-color: #fff;
+			color: #6d6965;
 			border-bottom: 1px solid #555;
 		}
 
@@ -127,13 +127,14 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			font-size: 14px;
 		}
 
-		.SettingMenuItemLink{
-			background-color: #FFFFFF;
+		.SettingMenuItemLink {
+			background-color: #fff;
 			min-height: calc(41.625px);
 			width: 100%;
 			display: block;
 			line-height: 40px;
 			border-bottom: 1px solid #ccc;
+			color: #6d6965;
 		}
 
 		.SettingMenuItem{
@@ -167,7 +168,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			width: 249px;
 			display: inline-block;
 			float: left;
-			border-left: 1px solid #ccc;
+			border-left: 1px solid #fff;
 		}
 		#SettingContent{
 			display: inline-block;
@@ -177,6 +178,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 			border: 1px solid #ccc;
 			border-top: 0;
 		}
+		.SettingMenuItemLink:hover,
 		.SettingMenuItemLink.Selected{
 			color: #000;
 			background-color: #f3f3f3;
