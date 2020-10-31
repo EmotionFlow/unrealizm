@@ -18,9 +18,9 @@
 	public boolean m_bCheerNG = false;
 
 	/*
-								RECENT POPULAR OYATSU OTHER CHEER
-		notLogin     []       vEmoji  static static []
-		Login        vEmoji   vEmoji  static static static
+					RECENT  POPULAR  OYATSU  OTHER  CHEER
+		notLogin    []      vEmoji   static  static []
+		Login       vEmoji  vEmoji   static  static static
 	 */
 	public String[] getResults(CheckLogin cCheckLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
@@ -92,10 +92,11 @@ if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.NeedLogin")));
 } else {
 	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
+	if(Emoji.EMOJI_EVENT) {
+		EMOJI_LIST = Emoji.EMOJI_EVENT_LIST;
+	}
 	if(cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER && cResults.m_bCheerNG) {
 		sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.Ng")));
-	} else if(Emoji.EMOJI_EVENT) {
-		EMOJI_LIST = Emoji.EMOJI_EVENT_LIST;
 	} else {
 		for(String emoji : EMOJI_LIST) {
 			sbResult.append(
