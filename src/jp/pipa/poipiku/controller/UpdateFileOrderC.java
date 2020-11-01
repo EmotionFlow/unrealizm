@@ -87,7 +87,7 @@ public class UpdateFileOrderC {
 			while (cResSet.next()) {
 				CEditedContent cOld = new CEditedContent();
 				cOld.append_id = cResSet.getInt("append_id");
-				cOld.name = Util.toSingle(cResSet.getString("file_name"));
+				cOld.name = Util.toString(cResSet.getString("file_name"));
 				cOld.file_width = cResSet.getInt("file_width");
 				cOld.file_height = cResSet.getInt("file_height");
 				cOld.files_size = cResSet.getLong("file_size");
