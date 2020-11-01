@@ -111,7 +111,7 @@ public class CCnv {
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
 		if(cContent.m_nUserId==nLoginUserId) {
 			String strTwitterUrl = CTweet.generateAfterTweerMsg(cContent, _TEX);
-			strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\"></a>", strTwitterUrl));
+			strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" target=\"_blank\"></a>", strTwitterUrl));
 			if(nSpMode == SP_MODE_APP) {
 				if(cContent.m_nEditorId != Common.EDITOR_TEXT) {
 					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"myurlscheme://reEdit?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
