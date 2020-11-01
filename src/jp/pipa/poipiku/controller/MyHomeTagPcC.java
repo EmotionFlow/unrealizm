@@ -66,7 +66,7 @@ public class MyHomeTagPcC {
 			if (!bSearchTag && strSearchKeyword.isEmpty()) return true;
 
 			// ミュートキーワード
-			String strMuteKeyword = SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
+			String strMuteKeyword = "";//SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
 
 			// ブロックユーザクエリ
 			String strCondBlock = SqlUtil.getBlockUserSql(cConn, cCheckLogin.m_nUserId);

@@ -50,6 +50,7 @@ public class NewArrivalGridC {
 
 			String strMuteKeyword = "";
 			String strCondMute = "";
+			/*
 			if(cCheckLogin.m_bLogin) {
 				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
@@ -64,6 +65,7 @@ public class NewArrivalGridC {
 					strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
 				}
 			}
+			*/
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
