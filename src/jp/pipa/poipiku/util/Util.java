@@ -68,7 +68,7 @@ public class Util {
 				cConn = dsPostgres.getConnection();
 
 				if(nUserId>0) {
-					strSql = "SELECT description, count(description) FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?";
+					strSql = "SELECT description, count(description) FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-3 GROUP BY description ORDER BY count(description) DESC LIMIT ?";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, nUserId);
 					cState.setInt(2, nLimitNum);
