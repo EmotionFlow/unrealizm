@@ -75,10 +75,6 @@ public abstract class CardSettlement {
             Log.d("poipikuOrderId.isEmpty()");
             return false;
         }
-        if(userId<0 || contentId<0){
-            Log.d("userId<0 || contentId<0");
-            return false;
-        }
         return true;
     }
 

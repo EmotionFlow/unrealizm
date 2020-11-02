@@ -24,6 +24,7 @@ public class BuyPassportCParam {
 	public void GetParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
+			m_nPassportId   = Common.ToInt(cRequest.getParameter("PID"));
 			m_nUserId		= Common.ToInt(cRequest.getParameter("UID"));
 			m_nAgentId		= Common.ToInt(cRequest.getParameter("AID"));
 			m_strIpAddress	= cRequest.getRemoteAddr();
@@ -31,6 +32,7 @@ public class BuyPassportCParam {
 			m_strCardExpire	= Common.ToString(cRequest.getParameter("EXP"));
 			m_strCardSecurityCode	= Common.ToString(cRequest.getParameter("SEC"));
 			m_strUserAgent  = cRequest.getHeader("user-agent");
+			m_nErrCode = ERR_NONE;
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}

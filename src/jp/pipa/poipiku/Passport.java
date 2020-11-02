@@ -75,9 +75,18 @@ public class Passport {
 
     public boolean buy(int nPassportId, String strAgentToken, String strCardExpire,
                        String strCardSecurityCode, String strUserAgent) {
-        if(m_status==Status.Undef) return false;
-        if(m_nPassportId==nPassportId) return false;
-        if(nPassportId<=0) return false;
+        if(m_status==Status.Undef){
+            Log.d("m_status==Status.Undef");
+            return false;
+        }
+        if(m_nPassportId==nPassportId){
+            Log.d("m_nPassportId==nPassportId");
+            return false;
+        }
+        if(nPassportId<=0){
+            Log.d("nPassportId<=0");
+            return false;
+        }
 
         DataSource dsPostgres = null;
         Connection cConn = null;
@@ -113,11 +122,11 @@ public class Passport {
             cResSet.close();
             cState.close();
 
-            strSql = "SELECT 1 FROM passport_logs WHERE user_id=? AND release_datetime=NULL LIMIT 1";
+            strSql = "SELECT 1 FROM passport_logs WHERE user_id=? AND release_datetime IS NULL LIMIT 1";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, m_nUserId);
             cResSet = cState.executeQuery();
-            if(!cResSet.next()){
+            if(cResSet.next()){
                 Log.d("二重に契約しようとした:" + m_nUserId);
                 return false;
             }
@@ -148,7 +157,7 @@ public class Passport {
             // 商品種別は2:ポイパス固定、数量は1固定。
             strSql = "INSERT INTO order_details(" +
                     " order_id, content_id, content_user_id, product_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
-                    " VALUES (?, NULL, NULL, ?, ?, ?, ?, 1)";
+                    " VALUES (?, NULL, NULL, ?, ?, ?, ?, ?, 1)";
             cState = cConn.prepareStatement(strSql);
             idx=1;
             cState.setInt(idx++, orderId);          // order_id
@@ -160,13 +169,16 @@ public class Passport {
             cState.executeUpdate();
             cState.close(); cState=null;
 
-            //TODO 支払いトランザクション発行
             CardSettlement cardSettlement = null;
             cardSettlement = new EpsilonCardSettlement(
                     m_nUserId, -1, orderId, nListPrice,
                     strAgentToken, strCardExpire, strCardSecurityCode,
                     strUserAgent, CardSettlement.BillingCategory.Monthly);
-            boolean authorizeResult = true; //cardSettlement.authorize();
+            boolean authorizeResult = cardSettlement.authorize();
+            if (!authorizeResult) {
+                Log.d("cardSettlement.authorize() failed.");
+                return false;
+            }
 
 
             //// begin transaction

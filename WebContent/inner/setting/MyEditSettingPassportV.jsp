@@ -20,7 +20,7 @@
             "dataType": "json",
         }).then( data => {
                 cardInfo = null;
-                if (data.result_num > 0) {
+                if (data.result === 1) {
                     if(nPassportAmount>0) {
                         DispMsg("<%=_TEX.T("PassportDlg.Thanks")%>");
                         if (elPassportNowPayment != null) {
@@ -164,7 +164,7 @@
                     // cardInfo.expire = String(formValues.value.cardExp);
                     // cardInfo.securityCode = String(formValues.value.cardSec);
                     // TODO 元に戻す
-                    cardInfo.number = '411111111111111';
+                    cardInfo.number = '4111111111111111';
                     cardInfo.expire = '01/24';
                     cardInfo.securityCode = '012';
 
