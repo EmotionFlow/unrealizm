@@ -139,9 +139,7 @@ public class ActivityListC {
 				}
 			});
 
-
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
-
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
