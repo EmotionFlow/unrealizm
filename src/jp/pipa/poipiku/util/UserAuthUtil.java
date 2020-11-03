@@ -666,7 +666,7 @@ public class UserAuthUtil {
 					cState.setString(1, accessToken);
 					cState.setString(2, tokenSecret);
 					cState.setString(3, screen_name);
-					cState.setInt(3, nUserId);
+					cState.setInt(4, nUserId);
 					cState.executeUpdate();
 					cState.close();cState=null;
 
