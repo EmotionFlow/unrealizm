@@ -34,7 +34,10 @@ public class CacheUsers0000 {
 		user = m_mapAccess.get(hashPassword);
 		Long timeNow = System.currentTimeMillis();
 
-		if(user!=null && user.m_lnLastLogin>=timeNow-UPDATE_INTERVAL) {Log.d("From Cache"); return user;}
+		if(user!=null && user.m_lnLastLogin>=timeNow-UPDATE_INTERVAL) {
+			//Log.d("From Cache");
+			return user;
+		}
 
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -55,7 +58,7 @@ public class CacheUsers0000 {
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 				m_mapAccess.putIfAbsent(hashPassword, user);
-				Log.d("From DB");
+				//Log.d("From DB");
 			}
 			if(user!=null && user.m_lnLastLogin<timeNow-UPDATE_INTERVAL) {
 				strSql = "UPDATE users_0000 SET last_login_date=current_timestamp-interval '1 minute' WHERE user_id=?";
