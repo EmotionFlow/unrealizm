@@ -533,9 +533,7 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<%
-					if(cResults.m_cUser.m_bTweet){
-				%>
+				<%if(cResults.m_cUser.m_bTweet && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
 				<div id="SectionAutoTweet" class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 					<div class="SettingBody">
@@ -561,7 +559,6 @@ if(cResults.m_bUpdate) {
 						</div>
 						<div class="SettingBodyCmd">
 							<select id="AutoTweetWeekDay" class="AutoTweetPullDown" <%if(cResults.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
-								<option value="-1"><%=_TEX.T("EditSettingV.Twitter.Auto.WeekDay.DayEvery")%></option>
 								<%
 									for(int nTime=0; nTime<7; nTime++) {
 								%>
@@ -614,9 +611,7 @@ if(cResults.m_bUpdate) {
 						</div>
 					</div>
 				</div>
-				<%
-					}
-				%>
+				<%}%>
 
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Language")%></div>

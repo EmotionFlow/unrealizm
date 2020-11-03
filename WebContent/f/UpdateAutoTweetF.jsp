@@ -7,7 +7,7 @@
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
 int m_nUserId = Util.toInt(request.getParameter("ID"));
-int m_nAutoTweetWeekDay = Util.toIntN(request.getParameter("AW"), -1, 6);
+int m_nAutoTweetWeekDay = Util.toIntN(request.getParameter("AW"), 0, 6);
 int m_nAutoTweetTime = Util.toIntN(request.getParameter("AT"), -1, 23);
 String m_strAutoTweetTxt = Common.TrimAll(Util.toString(request.getParameter("AD")));
 int m_nAutoTweetThumbNum = Util.toIntN(request.getParameter("ATN"), 0, 9);

@@ -119,6 +119,7 @@
 				</div>
 		</div>
 
+		<%if(cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
 		<div id="SectionAutoTweet" class="SettingListItem">
 				<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 				<div class="SettingBody">
@@ -144,7 +145,6 @@
 						</div>
 						<div class="SettingBodyCmd">
 								<select id="AutoTweetWeekDay" class="AutoTweetPullDown" <%if(cResults.m_cUser.m_nAutoTweetTime<0){%>disabled="disabled"<%}%>>
-										<option value="-1"><%=_TEX.T("EditSettingV.Twitter.Auto.WeekDay.DayEvery")%></option>
 										<%for(int nTime=0; nTime<7; nTime++) {%>
 										<option value="<%=nTime%>" <%if(cResults.m_cUser.m_nAutoTweetWeekDay==nTime){%>selected="selected"<%}%>><%=_TEX.T(String.format("EditSettingV.Twitter.Auto.WeekDay.Day%d", nTime))%></option>
 										<%}%>
@@ -187,5 +187,6 @@
 						</div>
 				</div>
 		</div>
+		<%}%>
 		<%}%>
 </div>

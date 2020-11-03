@@ -82,7 +82,7 @@ try
 	} else {
 		Log.d("TwitterToken Insert : " + cCheckLogin.m_nUserId);
 		// insert
-		strSql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_weekday, auto_tweet_time, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?, ?, ?) ";
+		strSql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?) ";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, cCheckLogin.m_nUserId);
 		cState.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -90,9 +90,7 @@ try
 		cState.setString(4, consumer.getTokenSecret());
 		cState.setString(5, user_id);
 		cState.setString(6, screen_name);
-		cState.setInt(7, -1);
-		cState.setInt(8, -1);
-		cState.setString(9, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", cCheckLogin.m_nUserId));
+		cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", cCheckLogin.m_nUserId));
 		cState.executeUpdate();
 		cState.close();cState=null;
 	}
