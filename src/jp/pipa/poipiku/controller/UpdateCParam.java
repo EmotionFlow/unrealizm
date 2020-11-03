@@ -2,7 +2,6 @@ package jp.pipa.poipiku.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Util;
 
 public class UpdateCParam extends UpCParam{

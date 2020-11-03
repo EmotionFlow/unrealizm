@@ -2,7 +2,6 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.Comparator;
 import java.util.Collections;
 
@@ -13,7 +12,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public class ActivityListC {
-	public Vector<CComment> m_vComment = new Vector<CComment>();
+	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
 
 	public boolean GetResults(ActivityListCParam cParam) {
 		String strSql = "";
@@ -29,6 +28,7 @@ public class ActivityListC {
 			cConn = dsPostgres.getConnection();
 
 			// フォロー通知を表示するか
+			/*
 			boolean bDispFollower = false;
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -40,6 +40,7 @@ public class ActivityListC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			*/
 
 			// Comment
 			if(cParam.m_nMode<=0) {

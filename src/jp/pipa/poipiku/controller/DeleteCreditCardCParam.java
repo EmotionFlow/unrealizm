@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.controller;
 
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;

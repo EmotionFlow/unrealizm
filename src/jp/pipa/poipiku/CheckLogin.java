@@ -15,136 +15,86 @@ public class CheckLogin {
 	public boolean m_bLogin = false;
 	public int m_nUserId = -1;
 	public String m_strNickName = "no name";
-	private String m_strHashPass = "";
+	public String m_strHashPass = "";
 	public int m_nSafeFilter = Common.SAFE_FILTER_R18;
 	public int m_nLangId = 0;
-	private String m_strFileName = "";
+	public String m_strFileName = "";
 	public boolean m_bEmailValid = false;
 	public int m_nPremiumId = CUser.PREMIUM_OFF;
 
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {
-		GetResults2(request, response);
+		getResults(request, response);
 	}
 
-
-	private void SetCookie(HttpServletResponse cResponse) {
+	private void setCookie(HttpServletResponse response) {
 		try {
 			Cookie cLK = new Cookie("POIPIKU_LK" , m_strHashPass);
-
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
-
-			cResponse.addCookie(cLK);
+			response.addCookie(cLK);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void GetCookie(HttpServletRequest cRequest) {
+	private void getCookie(HttpServletRequest request) {
 		try {
-			Cookie cCookies[] = cRequest.getCookies();
-			if(cCookies == null) {
+			Cookie cookies[] = request.getCookies();
+			if(cookies == null) {
 				//cookieインスタンスが作成できない
 				return;
 			}
-
-			for(int i = 0; i < cCookies.length; i++) {
-				if(cCookies[i].getName().equals("POIPIKU_LK")) {
-					m_strHashPass = Common.EscapeInjection(URLDecoder.decode(cCookies[i].getValue(), "UTF-8"));
+			for(int i = 0; i < cookies.length; i++) {
+				if(cookies[i].getName().equals("POIPIKU_LK")) {
+					m_strHashPass = Common.EscapeInjection(URLDecoder.decode(cookies[i].getValue(), "UTF-8"));
+					break;
 				}
 			}
 			if(m_strHashPass.isEmpty()) {
-				cRequest.setCharacterEncoding("UTF-8");
-				m_strHashPass = Util.toString(cRequest.getParameter("POIPIKU_LK"));
+				request.setCharacterEncoding("UTF-8");
+				m_strHashPass = Util.toString(request.getParameter("POIPIKU_LK"));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-
 	private boolean isUserValid() {
-		String strSql		= "";
-		Timestamp tsLastLogin = null;
+		if(m_strHashPass.isEmpty()) return false;
 
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-
-		try{
-			if(!m_strHashPass.isEmpty())
-			{
-				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				cConn = dsPostgres.getConnection();
-				strSql = "SELECT user_id, nickname, lang_id, last_login_date, file_name, email, premiun_id FROM users_0000 WHERE hash_password=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, m_strHashPass);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					m_nUserId		= cResSet.getInt("user_id");
-					m_strNickName	= cResSet.getString("nickname");
-					m_nLangId		= Math.min(Math.max(cResSet.getInt("lang_id"), 0), 1);
-					tsLastLogin		= cResSet.getTimestamp("last_login_date");
-					m_strFileName	= Util.toString(cResSet.getString("file_name"));
-					if(m_strFileName.length()<=0) m_strFileName = "/img/default_user.jpg";
-					m_bEmailValid	= Util.toString(cResSet.getString("email")).contains("@");
-					m_nPremiumId	= cResSet.getInt("premiun_id");
-					m_bLogin = true;
-					if(m_nUserId==315) m_nSafeFilter = Common.SAFE_FILTER_ALL;
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-
-				if(m_bLogin) {
-					if(tsLastLogin.getTime()<System.currentTimeMillis()-300000) { //1*24*60*60*1000
-						strSql = "UPDATE users_0000 SET last_login_date=current_timestamp-interval '1 minute' WHERE user_id=?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setInt(1, m_nUserId);
-						cState.executeUpdate();
-						cState.close();cState=null;
-					}
-				}
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-			Log.d(strSql);
+		CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(m_strHashPass);
+		if(user==null) {
 			m_bLogin = false;
-		} finally {
-			try{if(cResSet!=null)cResSet.close();cResSet=null;}catch(Exception e){;}
-			try{if(cState!=null)cState.close();cState=null;}catch(Exception e){;}
-			try{if(cConn!=null)cConn.close();cConn=null;}catch(Exception e){;}
+		} else {
+			m_nUserId		= user.m_nUserId;
+			m_strNickName	= user.m_strNickName;
+			m_nLangId		= user.m_nLangId;
+			m_strFileName	= user.m_strFileName;
+			m_bEmailValid	= user.m_bEmailValid;
+			m_nPremiumId	= user.m_nPremiumId;
+			m_bLogin = true;
 		}
 		return m_bLogin;
 	}
 
-	public String GetResults2(HttpServletRequest request, HttpServletResponse response) {
-		String strResult = "OK";
+	private boolean getResults(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			// useridとハッシュパスワードが保存されているcookie情報を取得
-			GetCookie(request);
-
-			if(m_strHashPass.length() <= 0) {
-				return strResult;
-			}
-
-			if(isUserValid() == false) {
-				m_bLogin      = false;
-				m_nUserId     = -1;
-				m_strNickName = "guest";
-				m_strHashPass = "";
-
+			// ハッシュパスワードが保存されているcookie情報を取得
+			getCookie(request);
+			if(!isUserValid()) {
+				m_bLogin		= false;
+				m_nUserId		= -1;
+				m_strNickName	= "guest";
+				m_strHashPass	= "";
 				// ログインに失敗したらguestでCookieを上書き
-				SetCookie(response);
+				setCookie(response);
 			}
-
 		} catch(Exception e) {
-			strResult = e.toString();
 			e.printStackTrace();
 		}
 		//Log.d(m_nUserId + ":" + m_strNickName + ":" + m_strHashPass);
-		return strResult;
+		return m_bLogin;
 	}
 
 	public static boolean isOnline(int nUserId) {
@@ -157,7 +107,7 @@ public class CheckLogin {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-			strSql = "SELECT 1 FROM users_0000 WHERE user_id=? AND last_login_date>current_timestamp-interval '1 minute'";
+			strSql = "SELECT 1 FROM users_0000 WHERE user_id=? AND last_login_date>=current_timestamp-interval '1 minute'";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
 			cResSet = cState.executeQuery();

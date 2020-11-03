@@ -63,6 +63,7 @@ public class PopularIllustListC {
 			}
 			*/
 
+			/*
 			StringBuilder sb = new StringBuilder();
 			sb.append(" FROM contents_0000")
 			.append(" INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id")
@@ -72,7 +73,8 @@ public class PopularIllustListC {
 				.append(" AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
 			}
 			sb.append(" AND safe_filter<=?");
-			final String strSqlFromWhere = new String(sb);
+			//final String strSqlFromWhere = new String(sb);
+			 */
 
 			// POPULAR
 			if(!bContentOnly) {

@@ -7,13 +7,13 @@ public class AccessUnique {
 
 	private AccessUnique() {}
 	public static AccessUnique getInstance() {
-		return ConfigInstanceHolder.INSTANCE;
+		return InstanceHolder.INSTANCE;
 	}
 
 	public void init(){
 	}
 
-	public static class ConfigInstanceHolder {
+	public static class InstanceHolder {
 		private static final AccessUnique INSTANCE = new AccessUnique();
 	}
 
@@ -26,7 +26,7 @@ public class AccessUnique {
 			if((value != null) && (value >= timeNow-24*60*60*1000) && (idAddress != -880123161) && (idAddress != -613038627)) {
 				return false;
 			}
-			m_mapAccess.put(key, timeNow);
+			m_mapAccess.putIfAbsent(key, timeNow);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

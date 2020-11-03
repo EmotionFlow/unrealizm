@@ -8,11 +8,11 @@
 	request.setCharacterEncoding("UTF-8");
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int m_nLangId = Util.toIntN(request.getParameter("LD"), 0, 1);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	return;
 }
 
@@ -30,9 +30,10 @@ try {
 	strSql = "UPDATE users_0000 SET lang_id=? WHERE user_id=?";
 	cState = cConn.prepareStatement(strSql);
 	cState.setInt(1, m_nLangId);
-	cState.setInt(2, cCheckLogin.m_nUserId);
+	cState.setInt(2, checkLogin.m_nUserId);
 	cState.executeUpdate();
 	cState.close();cState=null;
+	CacheUsers0000.getInstance().clearUser(checkLogin.m_strHashPass);
 } catch(Exception e) {
 	e.printStackTrace();
 } finally {

@@ -330,6 +330,7 @@ public class UserAuthUtil {
 			cState.setInt(1, nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
+			CacheUsers0000.getInstance().clearUser(strHashKey);
 			nRtn = nUserId;
 		} catch(Exception e) {
 			Log.d(strSql);
@@ -344,10 +345,11 @@ public class UserAuthUtil {
 	}
 
 	public static int updatePassword(HttpServletRequest request, HttpServletResponse response) {
-		int nRtn = ERROR_UNKOWN;
 		//login check
-		CheckLogin cCheckLogin = new CheckLogin(request, response);
-		if(!cCheckLogin.m_bLogin) return ERROR_NOT_LOGIN;
+		CheckLogin checkLogin = new CheckLogin(request, response);
+		if(!checkLogin.m_bLogin) return ERROR_NOT_LOGIN;
+
+		int nRtn = ERROR_UNKOWN;
 
 		//パラメータの取得
 		int nUserId = 0;
@@ -363,7 +365,7 @@ public class UserAuthUtil {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		if(cCheckLogin.m_nUserId != nUserId) return ERROR_NOT_LOGIN;
+		if(checkLogin.m_nUserId != nUserId) return ERROR_NOT_LOGIN;
 		if(strPassword.isEmpty()) return ERROR_PASSWORD_EMPTY;
 		if(strNewPassword1.length()<LENGTH_PASSWORD_MIN || strNewPassword1.length()>LENGTH_PASSWORD_MAX) return ERROR_PASSWORD_LENGTH;
 		if(strNewPassword2.length()<LENGTH_PASSWORD_MIN || strNewPassword2.length()>LENGTH_PASSWORD_MAX) return ERROR_PASSWORD_LENGTH;
@@ -412,9 +414,10 @@ public class UserAuthUtil {
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strNewPassword1);
 			cState.setString(2, strHashPass);
-			cState.setInt(3, cCheckLogin.m_nUserId);
+			cState.setInt(3, checkLogin.m_nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
+			CacheUsers0000.getInstance().clearUser(checkLogin.m_strHashPass);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

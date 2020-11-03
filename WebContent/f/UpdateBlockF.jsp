@@ -47,7 +47,7 @@ class UpdateFollowC {
 				cState.executeUpdate();
 				cState.close();cState=null;
 
-				strSql ="INSERT INTO blocks_0000(user_id, block_user_id) VALUES(?, ?)";
+				strSql ="INSERT INTO blocks_0000(user_id, block_user_id) VALUES(?, ?) ON CONFLICT DO NOTHING;";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);
 				cState.setInt(2, cParam.m_nBlockUserId);
