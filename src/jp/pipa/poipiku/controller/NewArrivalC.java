@@ -50,8 +50,8 @@ public class NewArrivalC {
 
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			/*
-			if(cCheckLogin.m_bLogin) {
+
+			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
 				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cCheckLogin.m_nUserId);
@@ -65,7 +65,6 @@ public class NewArrivalC {
 					strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
 				}
 			}
-			*/
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {

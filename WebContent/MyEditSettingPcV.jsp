@@ -50,7 +50,9 @@ HashMap<String, String> MENU = new HashMap<>();
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
-MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
+if (cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON){
+	MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
+}
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
@@ -59,6 +61,33 @@ MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
+String[][] menuOrder = {
+		{ // CUser.PREMIUM_OFF
+		"PROFILE",
+		"FOLLOW",
+		"BLOCK",
+		"REACTION",
+		"TWITTER",
+		"MAIL",
+		"PAYMENT",
+		"CHEER",
+		"ACCOUNT",
+		"INFO"
+		},
+		{ // CUser.PREMIUM_ON
+		"PROFILE",
+		"FOLLOW",
+		"BLOCK",
+		"MUTEKEYWORD",
+		"REACTION",
+		"TWITTER",
+		"MAIL",
+		"PAYMENT",
+		"CHEER",
+		"ACCOUNT",
+		"INFO"
+		}
+};
 %>
 <!DOCTYPE html>
 <html>
@@ -199,20 +228,7 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 					</h2>
 				</div>
 				<div class="SettingMenu">
-					<%String[] menuOrder = {
-							"PROFILE",
-							"FOLLOW",
-							"BLOCK",
-							"MUTEKEYWORD",
-							"REACTION",
-							"TWITTER",
-							"MAIL",
-							"PAYMENT",
-							"CHEER",
-							"ACCOUNT",
-							"INFO"
-					}; %>
-					<%for(String m : menuOrder){%>
+					<%for(String m : menuOrder[cCheckLogin.m_nPremiumId]){%>
 						<%=getSettingMenuItem(m, MENU.get(m))%>
 					<%}%>
 				</div>
