@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class PopularIllustListC {
@@ -40,14 +41,15 @@ public class PopularIllustListC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-
-			/*
 			String strMuteKeyword = "";
-			String strCond = "";
-			if(cCheckLogin.m_bLogin) {
+			String strCondMute = "";
+
+			// MUTE KEYWORD
+			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
 				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cCheckLogin.m_nUserId);
@@ -58,33 +60,28 @@ public class PopularIllustListC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 				if(!strMuteKeyword.isEmpty()) {
-					strCond = "AND description &@~ ?";
+					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
-			*/
 
-			/*
 			StringBuilder sb = new StringBuilder();
-			sb.append(" FROM contents_0000")
-			.append(" INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id")
-			.append(" WHERE open_id<>2");
+			sb.append("FROM contents_0000 ")
+			.append("INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id ")
+			.append("WHERE open_id<>2 ");
 			if(cCheckLogin.m_bLogin){
-				sb.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
-				.append(" AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
+				sb.append("AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ")
+				.append("AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
 			}
-			sb.append(" AND safe_filter<=?");
-			//final String strSqlFromWhere = new String(sb);
-			 */
+			if(!strCondMute.isEmpty()){
+				sb.append(strCondMute);
+			}
+			sb.append("AND safe_filter<=? ");
+			final String strSqlFromWhere = new String(sb);
 
 			// POPULAR
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM contents_0000 "
-						+ "INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id "
-						+ "WHERE open_id<>2 AND safe_filter<=? ";
-				if(cCheckLogin.m_bLogin){
-					strSql += "AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-							+ "AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
-				}
+				/*
+				strSql = "SELECT count(*) " + strSqlFromWhere.toString();
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
@@ -92,29 +89,20 @@ public class PopularIllustListC {
 					cState.setInt(idx++, cCheckLogin.m_nUserId);
 					cState.setInt(idx++, cCheckLogin.m_nUserId);
 				}
-				/*
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
 				}
-				*/
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
+				*/
+				m_nContentsNum = 10 * SELECT_MAX_GALLERY;
 			}
 
-			//strSql = "SELECT * FROM vw_rank_contents_total WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
-					+ "FROM contents_0000 "
-					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
-					+ "INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id "
-					+ "WHERE open_id<>2 AND safe_filter<=? ";
-			if(cCheckLogin.m_bLogin){
-				strSql += "AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-						+ "AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
-			}
+			strSql = "SELECT * " + strSqlFromWhere.toString();
 			strSql += "ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
@@ -123,19 +111,17 @@ public class PopularIllustListC {
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 			}
-			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
-			*/
 			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;

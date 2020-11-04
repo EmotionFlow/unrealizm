@@ -54,6 +54,7 @@ public class NewArrivalC {
 			String strMuteKeyword = "";
 			String strCondMute = "";
 
+			// MUTE KEYWORD
 			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
 				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
@@ -65,7 +66,7 @@ public class NewArrivalC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
+					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
 
@@ -85,8 +86,8 @@ public class NewArrivalC {
 			if(!strCondMute.isEmpty()){
 				sb.append(strCondMute);
 			}
-			sb.append(" AND safe_filter<=?");
-			sb.append(" ORDER BY content_id DESC OFFSET ? LIMIT ?");
+			sb.append("AND safe_filter<=? ");
+			sb.append("ORDER BY content_id DESC OFFSET ? LIMIT ?");
 			strSql = new String(sb);
 
 			cState = cConn.prepareStatement(strSql);

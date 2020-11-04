@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class PopularTagListC {
@@ -41,6 +42,7 @@ public class PopularTagListC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
@@ -69,12 +71,11 @@ public class PopularTagListC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-
-			/*
-			// MUTE KEYWORD
 			String strMuteKeyword = "";
-			String strCond = "";
-			if(cCheckLogin.m_bLogin) {
+			String strCondMute = "";
+
+			// MUTE KEYWORD
+			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
 				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cCheckLogin.m_nUserId);
@@ -85,35 +86,44 @@ public class PopularTagListC {
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 				if(!strMuteKeyword.isEmpty()) {
-					strCond = "AND description &@~ ?";
+					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
-			*/
 
 			// WEEKLY SAMPLE
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC LIMIT ?";
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT * FROM contents_0000 WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) ");
+			if(cCheckLogin.m_bLogin){
+				sb.append("AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
+			}
+			if(!strCondMute.isEmpty()){
+				sb.append(strCondMute);
+			}
+			sb.append("AND safe_filter<=? ");
+			sb.append("ORDER BY content_id DESC LIMIT ?");
+			strSql = new String(sb);
 			cState = cConn.prepareStatement(strSql);
 			for(int nCnt=0; nCnt<m_vContentListWeekly.size() && nCnt<SELECT_MAX_SAMPLE_GALLERY; nCnt++) {
 				CTag cTag = m_vContentListWeekly.get(nCnt);
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 				idx = 1;
 				cState.setString(idx++, cTag.m_strTagTxt);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-				/*
-				if(!strMuteKeyword.isEmpty()) {
+				if(cCheckLogin.m_bLogin){
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+					cState.setInt(idx++, cCheckLogin.m_nUserId);
+				}
+				if(!strCondMute.isEmpty()){
 					cState.setString(idx++, strMuteKeyword);
 				}
-				*/
+				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 				cState.setInt(idx++, SELECT_SAMPLE_GALLERY);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
 					CContent cContent = new CContent(cResSet);
+					CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+					cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
+					cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
 					m_vContentList.add(cContent);
-					cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-					cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
-					if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				}
 				cResSet.close();cResSet=null;
 				m_vContentSamplpeListWeekly.add(m_vContentList);
