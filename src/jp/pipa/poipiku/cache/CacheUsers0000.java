@@ -15,7 +15,8 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class CacheUsers0000 {
-	private static final ConcurrentHashMap<String, User> m_mapAccess = new ConcurrentHashMap<String, User>();
+	private static final ConcurrentHashMap<String, User> m_mapHashPass = new ConcurrentHashMap<String, User>();
+	private static final ConcurrentHashMap<Integer,  User> m_mapUserId = new ConcurrentHashMap<Integer, User>();
 
 	public static class InstanceHolder {
 		private static final CacheUsers0000 INSTANCE = new CacheUsers0000();
@@ -35,12 +36,11 @@ public class CacheUsers0000 {
 
 		final int UPDATE_INTERVAL = 60*60*1000; //	1時間
 
-		//Log.d("m_mapAccess ise : "+m_mapAccess.size());
-		User user = m_mapAccess.get(hashPassword);
+		User user = m_mapHashPass.get(hashPassword);
 		Long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.m_lnLastLogin>=timeNow-UPDATE_INTERVAL) {
-			//Log.d("From Cache");
+			//Log.d("From Hash Cache");
 			return user;
 		}
 
@@ -62,7 +62,7 @@ public class CacheUsers0000 {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				//Log.d("From DB");
+				//Log.d("From Hash DB");
 			}
 			if(user!=null) {
 				if(user.m_lnLastLogin<timeNow-UPDATE_INTERVAL) {
@@ -73,7 +73,64 @@ public class CacheUsers0000 {
 					statement.close();statement=null;
 					user.m_lnLastLogin = timeNow;
 				}
-				m_mapAccess.putIfAbsent(hashPassword, user);
+				m_mapHashPass.putIfAbsent(hashPassword, user);
+				m_mapUserId.putIfAbsent(user.m_nUserId, user);
+			}
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+		} finally {
+			try{if(resultSet!=null)resultSet.close();resultSet=null;}catch(Exception e){;}
+			try{if(statement!=null)statement.close();statement=null;}catch(Exception e){;}
+			try{if(connection!=null)connection.close();connection=null;}catch(Exception e){;}
+		}
+		return user;
+	}
+
+	public User getUser(int userId) {
+		if(userId<=0) return null;
+
+		final int UPDATE_INTERVAL = 60*60*1000; //	1時間
+
+		User user = m_mapUserId.get(userId);
+		Long timeNow = System.currentTimeMillis();
+
+		if(user!=null && user.m_lnLastLogin>=timeNow-UPDATE_INTERVAL) {
+			//Log.d("From ID Cache");
+			return user;
+		}
+
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String strSql = "";
+		try{
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+			if(user==null) {
+				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, userId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					user = new User(resultSet);
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
+				//Log.d("From ID DB");
+			}
+			if(user!=null) {
+				if(user.m_lnLastLogin<timeNow-UPDATE_INTERVAL) {
+					strSql = "UPDATE users_0000 SET last_login_date=current_timestamp-interval '1 minute' WHERE user_id=?";
+					statement = connection.prepareStatement(strSql);
+					statement.setInt(1, user.m_nUserId);
+					statement.executeUpdate();
+					statement.close();statement=null;
+					user.m_lnLastLogin = timeNow;
+				}
+				m_mapUserId.putIfAbsent(userId, user);
+				m_mapHashPass.putIfAbsent(user.m_strHashPass, user);
 			}
 		} catch(Exception e) {
 			Log.d(strSql);
@@ -87,8 +144,17 @@ public class CacheUsers0000 {
 	}
 
 	public void clearUser(String hashPassword) {
-		Log.d("Clear Cache");
-		m_mapAccess.remove(hashPassword);
+		//Log.d("Clear Cache By Hash");
+		User user = m_mapHashPass.remove(hashPassword);
+		if(user==null) return;
+		m_mapUserId.remove(user.m_nUserId);
+	}
+
+	public void clearUser(int userId) {
+		//Log.d("Clear Cache By UserId");
+		User user = m_mapUserId.remove(userId);
+		if(user==null) return;
+		m_mapHashPass.remove(user.m_strHashPass);
 	}
 
 	public class User {
@@ -105,6 +171,7 @@ public class CacheUsers0000 {
 		public User() {}
 		public User(ResultSet resultSet) throws SQLException {
 			m_nUserId		= resultSet.getInt("user_id");
+			m_strHashPass	= resultSet.getString("hash_password");
 			m_strNickName	= resultSet.getString("nickname");
 			m_nLangId		= Math.min(Math.max(resultSet.getInt("lang_id"), 0), 1);
 			m_lnLastLogin	= resultSet.getTimestamp("last_login_date").getTime();
