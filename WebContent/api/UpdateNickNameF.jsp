@@ -10,9 +10,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 int m_nUserId = Util.toInt(request.getParameter("ID"));
 String strNickName = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("NN")))));
 
-if (!checkLogin.m_bLogin || (checkLogin.m_nUserId != m_nUserId)) {
-	nResult = -1;
-}
+if (!checkLogin.m_bLogin || (checkLogin.m_nUserId != m_nUserId)) {nResult = -1;}
 
 if (strNickName.length() < UserAuthUtil.LENGTH_NICKNAME_MIN ||
 		strNickName.length()>UserAuthUtil.LENGTH_NICKNAME_MAX) {

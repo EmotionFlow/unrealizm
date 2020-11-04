@@ -1,9 +1,5 @@
-<%@page import="jp.pipa.poipiku.util.Util"%>
-<%@page import="jp.pipa.poipiku.*"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*"%>
-<%@page import="javax.naming.*"%>
-<%@page import="javax.sql.*"%>
+<%@include file="/inner/Common.jsp"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 
@@ -12,9 +8,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 int m_nLangId = Util.toIntN(request.getParameter("LD"), 0, 1);
 
-if(!checkLogin.m_bLogin) {
-	return;
-}
+if(!checkLogin.m_bLogin) return;
 
 DataSource dsPostgres = null;
 Connection cConn = null;

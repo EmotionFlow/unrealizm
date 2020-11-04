@@ -10,9 +10,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 int m_nUserId = Util.toInt(request.getParameter("ID"));
 int m_nModeId = Util.toInt(request.getParameter("MD"));
 
-if(!checkLogin.m_bLogin || (checkLogin.m_nUserId != m_nUserId)) {
-	return;
-}
+if(!checkLogin.m_bLogin || (checkLogin.m_nUserId != m_nUserId)) return;
+
 
 DataSource dsPostgres = null;
 Connection cConn = null;
