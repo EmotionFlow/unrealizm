@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class NewArrivalC {
@@ -29,6 +30,7 @@ public class NewArrivalC {
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
+
 	public boolean getResults(CheckLogin cCheckLogin) {
 		return getResults(cCheckLogin, false);
 	}
@@ -43,6 +45,7 @@ public class NewArrivalC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
@@ -72,9 +75,9 @@ public class NewArrivalC {
 			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id=0 ");
+			sb.append("SELECT * FROM contents_0000 WHERE open_id=0 ");
 			if(cCheckLogin.m_bLogin){
-				sb.append("AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
+				sb.append("AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
 			}
 			if(!strCondCat.isEmpty()){
 				sb.append(strCondCat);
@@ -104,9 +107,9 @@ public class NewArrivalC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);
 			}
