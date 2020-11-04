@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.http.HttpParameters;

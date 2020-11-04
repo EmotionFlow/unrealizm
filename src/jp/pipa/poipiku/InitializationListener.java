@@ -3,6 +3,8 @@ package jp.pipa.poipiku;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import jp.pipa.poipiku.cache.CacheUsers0000;
+
 
 public class InitializationListener implements ServletContextListener {
 	//AccessUnique accessUnique = new AccessUnique();

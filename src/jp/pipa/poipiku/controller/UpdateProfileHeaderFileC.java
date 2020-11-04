@@ -17,9 +17,9 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
-import jp.pipa.poipiku.CacheUsers0000;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.ImageUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;

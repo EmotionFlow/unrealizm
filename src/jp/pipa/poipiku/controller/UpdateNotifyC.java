@@ -8,8 +8,6 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-
-import jp.pipa.poipiku.CacheUsers0000;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
@@ -46,7 +44,6 @@ public class UpdateNotifyC {
 			cState.setInt(1, m_nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
-			CacheUsers0000.getInstance().clearUser(checkLogin.m_strHashPass);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

@@ -1,4 +1,4 @@
-package jp.pipa.poipiku;
+package jp.pipa.poipiku.cache;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import jp.pipa.poipiku.CUser;
+import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class CacheUsers0000 {
-	private ConcurrentHashMap<String, User> m_mapAccess = new ConcurrentHashMap<String, User>();
+	private static final ConcurrentHashMap<String, User> m_mapAccess = new ConcurrentHashMap<String, User>();
 
 	public static class InstanceHolder {
 		private static final CacheUsers0000 INSTANCE = new CacheUsers0000();
@@ -29,9 +31,12 @@ public class CacheUsers0000 {
 	}
 
 	public User getUser(String hashPassword) {
+		if(hashPassword==null) return null;
+
 		final int UPDATE_INTERVAL = 60*60*1000; //	1時間
-		User user = null;
-		user = m_mapAccess.get(hashPassword);
+
+		//Log.d("m_mapAccess ise : "+m_mapAccess.size());
+		User user = m_mapAccess.get(hashPassword);
 		Long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.m_lnLastLogin>=timeNow-UPDATE_INTERVAL) {
@@ -82,6 +87,7 @@ public class CacheUsers0000 {
 	}
 
 	public void clearUser(String hashPassword) {
+		Log.d("Clear Cache");
 		m_mapAccess.remove(hashPassword);
 	}
 

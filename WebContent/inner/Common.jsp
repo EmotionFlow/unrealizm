@@ -11,8 +11,9 @@
 <%@page import="javax.naming.*"%>
 <%@page import="javax.sql.*"%>
 <%@page import="jp.pipa.poipiku.*"%>
-<%@page import="jp.pipa.poipiku.util.*"%>
+<%@page import="jp.pipa.poipiku.cache.*"%>
 <%@page import="jp.pipa.poipiku.controller.*"%>
+<%@page import="jp.pipa.poipiku.util.*"%>
 <%
 ResourceBundleControl _TEX = new ResourceBundleControl(request);
 int g_nSafeFilter = Common.AD_ID_ALL;
