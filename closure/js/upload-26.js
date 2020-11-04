@@ -1183,6 +1183,19 @@ function UploadPaste(user_id) {
 	return false;
 }
 
+function initUploadText() {
+	$('#OptionTweet').prop('checked', getTweetSetting());
+	$('#OptionImage').prop('checked', getTweetImageSetting());
+	var cCategory = getLastCategorySetting();
+	$('#EditCategory option').each(function(){
+		console.log($(this).val());
+		if($(this).val()==cCategory) {
+			$('#EditCategory').val(cCategory);
+		}
+	});
+	updateTweetButton();
+}
+
 function UploadText(user_id) {
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());

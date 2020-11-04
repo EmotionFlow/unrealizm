@@ -57,16 +57,18 @@ public class CacheUsers0000 {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				m_mapAccess.putIfAbsent(hashPassword, user);
 				//Log.d("From DB");
 			}
-			if(user!=null && user.m_lnLastLogin<timeNow-UPDATE_INTERVAL) {
-				strSql = "UPDATE users_0000 SET last_login_date=current_timestamp-interval '1 minute' WHERE user_id=?";
-				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, user.m_nUserId);
-				statement.executeUpdate();
-				statement.close();statement=null;
-				user.m_lnLastLogin = timeNow;
+			if(user!=null) {
+				if(user.m_lnLastLogin<timeNow-UPDATE_INTERVAL) {
+					strSql = "UPDATE users_0000 SET last_login_date=current_timestamp-interval '1 minute' WHERE user_id=?";
+					statement = connection.prepareStatement(strSql);
+					statement.setInt(1, user.m_nUserId);
+					statement.executeUpdate();
+					statement.close();statement=null;
+					user.m_lnLastLogin = timeNow;
+				}
+				m_mapAccess.putIfAbsent(hashPassword, user);
 			}
 		} catch(Exception e) {
 			Log.d(strSql);
