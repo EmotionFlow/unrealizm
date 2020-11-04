@@ -51,20 +51,11 @@ public class NewArrivalC {
 
 			String strCondCat = (m_nCategoryId>=0)?" AND category_id=?":"";
 
+			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-
-			// MUTE KEYWORD
 			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				strMuteKeyword = SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}

@@ -167,6 +167,7 @@ public class CacheUsers0000 {
 		public boolean m_bEmailValid = false;
 		public int m_nPremiumId = CUser.PREMIUM_OFF;
 		public long m_lnLastLogin = -1;
+		public int m_nReaction = CUser.REACTION_SHOW;
 
 		public User() {}
 		public User(ResultSet resultSet) throws SQLException {
@@ -179,6 +180,7 @@ public class CacheUsers0000 {
 			if(m_strFileName.isEmpty()) m_strFileName = "/img/default_user.jpg";
 			m_bEmailValid	= Util.toString(resultSet.getString("email")).contains("@");
 			m_nPremiumId	= resultSet.getInt("premiun_id");
+			m_nReaction		= resultSet.getInt("ng_reaction");
 			if(m_nUserId==315) m_nSafeFilter = Common.SAFE_FILTER_ALL;
 		}
 	}

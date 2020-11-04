@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class MyHomeC {
@@ -38,10 +39,6 @@ public class MyHomeC {
 	public int m_nEndId = -1;
 
 	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
-	}
-
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -51,86 +48,55 @@ public class MyHomeC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			/*
+			// MUTE KEYWORD
 			String strMuteKeyword = "";
-			String strCond = "";
-			if(cCheckLogin.m_bLogin) {
-				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+			String strCondMute = "";
+			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				strMuteKeyword = SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCond = "AND description &@~ ?";
+					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
-			*/
-			String strCondStart = (m_nStartId>0)?"AND content_id<?":"";
+			String strCondStart = (m_nStartId>0)?"AND content_id<? ":"";
 
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT * FROM contents_0000 ")
+			.append("WHERE open_id<>2 ")
+			.append("AND user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) ");
+			if(!strCondMute.isEmpty()) {
+				sb.append(strCondMute);
+			}
+			if(!strCondStart.isEmpty()) {
+				sb.append(strCondStart);
+			}
+			sb.append("AND safe_filter<=? ");
+			sb.append("ORDER BY content_id DESC LIMIT ?");
+			strSql = new String(sb);
 
 			// NEW ARRIVAL
-			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=?";
-				cState = cConn.prepareStatement(strSql);
-				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-				/*
-				if(!strMuteKeyword.isEmpty()) {
-					cState.setString(idx++, strMuteKeyword);
-				}
-				*/
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-
-
-				// Owner contents total number
-				idx = 1;
-				strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNumTotal = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-			}
-
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE open_id<>2 AND contents_0000.user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strCondStart);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
 			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			if(m_nStartId>0) {
-				cState.setInt(idx++, m_nStartId);
-			}
-			/*
-			if(!strMuteKeyword.isEmpty()) {
+			if(!strCondMute.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
-			*/
+			if(!strCondStart.isEmpty()) {
+				cState.setInt(idx++, m_nStartId);
+			}
+			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
+				cContent.m_cUser.m_nReaction	= user.m_nReaction;
 				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);

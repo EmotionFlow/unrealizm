@@ -44,23 +44,13 @@ public class RandomPickupC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-
+			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-
-			// MUTE KEYWORD
 			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				strMuteKeyword = SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = " AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?)";
+					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
 
@@ -104,7 +94,7 @@ public class RandomPickupC {
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 				cState.setInt(idx++, cCheckLogin.m_nUserId);
 			}
-			if(!strMuteKeyword.isEmpty()) {
+			if(!strCondMute.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
 			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
