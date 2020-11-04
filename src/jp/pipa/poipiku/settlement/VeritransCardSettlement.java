@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.drew.metadata.Age;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 
@@ -33,6 +34,11 @@ public class VeritransCardSettlement extends CardSettlement {
         return String.format("nasubi-%d-%d-%d", userId, contentId, System.currentTimeMillis());
     }
 
+    public VeritransCardSettlement(int _userId){
+        super(_userId);
+        agent.id = Agent.VERITRANS;
+    }
+
     public VeritransCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                                    String _agentToken, String _cardExpire, String _cardSecurityCode,
                                    BillingCategory _billingCategory){
@@ -51,6 +57,10 @@ public class VeritransCardSettlement extends CardSettlement {
         } else {
             return reAuthorize();
         }
+    }
+
+    public boolean cancelSubscription(int poipikuOrderId){
+        return true;
     }
 
     private boolean newAuthorize(){

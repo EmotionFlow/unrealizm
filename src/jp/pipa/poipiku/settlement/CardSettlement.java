@@ -48,6 +48,10 @@ public abstract class CardSettlement {
         return orderId;
     }
 
+    protected CardSettlement(int _userId){
+        userId = _userId;
+    }
+
     protected CardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                              String _agentToken, String _cardExpire,
                              String _cardSecurityCode, String _userAgent, BillingCategory _billingCategory){
@@ -79,4 +83,5 @@ public abstract class CardSettlement {
     }
 
     public abstract boolean authorize();
+    public abstract boolean cancelSubscription(int poipikuOrderId);
 }

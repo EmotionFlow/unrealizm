@@ -20,6 +20,7 @@ public class Passport {
 
     public int m_nUserId = -1;
     public int m_nPassportId = -1;
+    public int m_nOrderId = -1;
     public Timestamp m_tsSubscription = null;
     public Timestamp m_tsRelease = null;
 
@@ -49,8 +50,9 @@ public class Passport {
             cResSet = cState.executeQuery();
 
             if(cResSet.next()){
+                m_nOrderId = cResSet.getInt("order_id");
                 m_tsSubscription = cResSet.getTimestamp("subscription_datetime");
-                m_tsRelease = cResSet.getTimestamp("release_datetime");
+                m_tsRelease = cResSet.getTimestamp("cancel_datetime");
 
                 // 1レコードだけだったら初回申込、
                 // 2レコードあったら、「初回申込ではない」とする。
@@ -122,7 +124,7 @@ public class Passport {
             cResSet.close();
             cState.close();
 
-            strSql = "SELECT 1 FROM passport_logs WHERE user_id=? AND release_datetime IS NULL LIMIT 1";
+            strSql = "SELECT 1 FROM passport_logs WHERE user_id=? AND cancel_datetime IS NULL LIMIT 1";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, m_nUserId);
             cResSet = cState.executeQuery();
@@ -169,8 +171,7 @@ public class Passport {
             cState.executeUpdate();
             cState.close(); cState=null;
 
-            CardSettlement cardSettlement = null;
-            cardSettlement = new EpsilonCardSettlement(
+            CardSettlement cardSettlement = new EpsilonCardSettlement(
                     m_nUserId, -1, orderId, nListPrice,
                     strAgentToken, strCardExpire, strCardSecurityCode,
                     strUserAgent, CardSettlement.BillingCategory.Monthly);
@@ -180,7 +181,6 @@ public class Passport {
                 return false;
             }
 
-
             //// begin transaction
             cConn.setAutoCommit(false);
 
@@ -188,7 +188,7 @@ public class Passport {
             int nOrderId = -1;
 
             // insert into passport_logs
-            strSql = "INSERT INTO passport_logs(user_id, subscription_datetime, release_datetime, order_id) VALUES (?, current_timestamp, null, ?)";
+            strSql = "INSERT INTO passport_logs(user_id, subscription_datetime, cancel_datetime, order_id) VALUES (?, current_timestamp, null, ?)";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, m_nUserId);
             cState.setInt (2, nOrderId);
@@ -201,9 +201,6 @@ public class Passport {
             cState.setInt(2, m_nUserId);
             cState.executeUpdate();
 
-            cConn.commit();
-            cConn.setAutoCommit(true);
-
             // update orders
             strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
             cState = cConn.prepareStatement(strSql);
@@ -212,8 +209,11 @@ public class Passport {
             cState.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
             cState.setInt(idx++, orderId);
             cState.executeUpdate();
-            cState.close();cState=null;
 
+            cConn.commit();
+            cConn.setAutoCommit(true);
+
+            cState.close();cState=null;
 
             //// end transaction
 
@@ -232,11 +232,50 @@ public class Passport {
     }
 
     public boolean cancel() {
+        if(m_tsRelease != null){
+            Log.d("解約済み");
+            return false;
+        }
+
+        DataSource dsPostgres = null;
+        Connection cConn = null;
+        PreparedStatement cState = null;
+        String strSql = "";
+
+        try {
+            // 定期課金キャンセル
+            CardSettlement cardSettlement = new EpsilonCardSettlement(
+                    m_nUserId);
+            boolean authorizeResult = cardSettlement.cancelSubscription(m_nOrderId);
+            if (!authorizeResult) {
+                Log.d("cardSettlement.authorize() failed.");
+                return false;
+            }
+
+            // update passport_logs
+            Class.forName("org.postgresql.Driver");
+            dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+            cConn = dsPostgres.getConnection();
+            strSql = "UPDATE passport_logs SET cancel_datetime=current_timestamp WHERE user_id=? AND order_id=?";
+            cState = cConn.prepareStatement(strSql);
+            cState.setInt(1, m_nUserId);
+            cState.setInt(2, m_nOrderId);
+            cState.executeUpdate();
+            cState.close();cState=null;
+            cConn.close();cConn=null;
+
+            /* users_0000は月末までそのまま。月初にスクリプトで更新 */
+
+        } catch(Exception e) {
+            Log.d(strSql);
+            e.printStackTrace();
+        } finally {
+            try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+            try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+        }
 
         return true;
     }
-
-
 
     private void setStatus(){
         if (m_nUserId<0) {

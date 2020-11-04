@@ -181,6 +181,53 @@
             }
         });
     }
+
+    function CancelPassport() {
+        Swal.fire({
+            title: 'ポイパス購入解除',
+            text: '来月から課金されなくなります。特典は今月いっぱい有効です。',
+            focusConfirm: false,
+            showCloseButton: true,
+            showCancelButton: true,
+            type: 'info',
+        }).then(evt => {
+            // キャンセルボタンがクリックされた
+            if (evt.dismiss) {
+                return false;
+            }
+            $.ajax({
+                "type": "post",
+                "data": {
+                    "PID": <%=cCheckLogin.m_nPassportId%>,
+                    "UID": <%=cCheckLogin.m_nUserId%>,
+                },
+                "url": "/f/CancelPassportF.jsp",
+                "dataType": "json",
+            }).then( data => {
+                    if (data.result === 1) {
+                        DispMsg("定期購入を解除しました。これまでポイパスを購入いただき、ありがとうございました！");
+                    } else {
+                        switch (data.error_code) {
+                            case -10:
+                                DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+                                break;
+                            case -20:
+                                alert("<%=_TEX.T("PassportDlg.Err.AuthCritical")%>");
+                                break;
+                            case -30:
+                                DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+                                break;
+                            case -99:
+                                DispMsg("<%=_TEX.T("PassportDlg.Err.AuthOther")%>");
+                                break;
+                        }
+                    }},
+                error => {
+                    DispMsg("<%=_TEX.T("PassportDlg.Err.PoipikuSrv")%>");
+                 }
+            );
+        });
+    }
 </script>
 
 <div class="SettingList">
@@ -191,13 +238,17 @@
             <%=_TEX.T("MyEditSettingPassportV.Text")%>
             <div class="SettingBodyCmd">
                 <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="BuyPassport()">
-                    ポイパスを購入する
+                    ポイパスを定期購入する
                 </a>
             </div>
             <div id="PassportNowPayment" style="display:none">
                 <span class="CheerLoading"></span><span>支払処理中</span>
             </div>
         </div>
+        <%}else{%>
+        <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
+            ポイパス定期購入を停止する
+        </a>
         <%}%>
     </div>
 </div>

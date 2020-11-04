@@ -22,6 +22,11 @@ public class EpsilonCardSettlement extends CardSettlement {
         return String.format("poi-%d-%d", userId, System.currentTimeMillis());
     }
 
+    public EpsilonCardSettlement(int _userId){
+        super(_userId);
+        agent.id = Agent.EPSILON;
+    }
+
     public EpsilonCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                                  String _agentToken, String _cardExpire, String _cardSecurityCode,
                                  String _userAgent, BillingCategory _billingCategory) {
@@ -40,6 +45,74 @@ public class EpsilonCardSettlement extends CardSettlement {
         }
     }
 
+    public boolean cancelSubscription(int poipikuOrderId) {
+        Log.d("cancelSubscription() enter");
+        DataSource dsPostgres = null;
+        Connection cConn = null;
+        PreparedStatement cState = null;
+        ResultSet cResSet = null;
+        String strSql = "";
+        boolean result = false;
+
+        try {
+            dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
+            cConn = dsPostgres.getConnection();
+
+            // 初回か登録済かを判定、EPSILON側user_id取得。
+            strSql = "SELECT agent_user_id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
+            cState = cConn.prepareStatement(strSql);
+            cState.setInt(1, userId);
+            cState.setInt(2, agent.id);
+            cResSet = cState.executeQuery();
+            String strAgentUserId;
+            if(cResSet.next()){
+                strAgentUserId = cResSet.getString(1);
+            } else {
+                Log.d("EPSILON user_idが取得できない：" + userId);
+            }
+            cResSet.close();cResSet = null;
+            cState.close();cState = null;
+
+            SettlementCancelSendInfo cancelSendInfo = new SettlementCancelSendInfo();
+            cancelSendInfo.userId = Integer.toString(userId);
+            cancelSendInfo.itemCode = Integer.toString(poipikuOrderId);
+
+            EpsilonSettlementCancel epsilonSettlementCancel = new EpsilonSettlementCancel(cancelSendInfo);
+            SettlementCancelResultInfo resultInfo = epsilonSettlementCancel.execCancel();
+
+
+            if (resultInfo != null) {
+                /* resultInfo.result
+                    1:解除OK 9:解除NG
+                 */
+                if ("1".equals(resultInfo.result)) {
+                    Log.d("解除OK");
+                    result = true;
+                } else if ("9".equals(resultInfo.result)) {
+                    Log.d("解除NG");
+                    Log.d(resultInfo.errCode);
+                    Log.d(resultInfo.errDetail);
+                    result = false;
+                } else {
+                    Log.d("EPSILONから想定外のresult: " + resultInfo.result);
+                    result = false;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorKind = ErrorKind.Exception;
+            result = false;
+        } finally {
+            if(cResSet!=null){try{cResSet.close();cResSet=null;}catch(Exception ex){;}}
+            if(cState!=null){try{cState.close();cState=null;}catch(Exception ex){;}}
+            if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ex){;}}
+        }
+
+        return result;
+    }
+
+
     public boolean authorize() {
         Log.d("authorize() enter");
         if (!authorizeCheckBase()) {
@@ -57,7 +130,7 @@ public class EpsilonCardSettlement extends CardSettlement {
             dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
             cConn = dsPostgres.getConnection();
 
-            // 初回か登録済かを判定
+            // 初回か登録済かを判定、EPSILON側user_id取得。
             boolean isFirstSettlement = true;
             strSql = "SELECT agent_user_id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
             cState = cConn.prepareStatement(strSql);
@@ -72,7 +145,6 @@ public class EpsilonCardSettlement extends CardSettlement {
                 strAgentUserId =  createAgentUserId(userId);
                 isFirstSettlement = true;
             }
-
             cResSet.close();cResSet = null;
             cState.close();cState = null;
 
@@ -82,7 +154,6 @@ public class EpsilonCardSettlement extends CardSettlement {
             ssi.userNameKana = "DUMMY";
             ssi.userMailAdd = "dummy@example.com";
             ssi.itemCode = Integer.toString(poipikuOrderId);
-            ssi.itemName = "emoji" + contentId;
             ssi.itemPrice = amount;
 
             ssi.stCode = "11000-0000-00000";
@@ -93,10 +164,12 @@ public class EpsilonCardSettlement extends CardSettlement {
                 // 一度払い
                 case OneTime:
                     ssi.missionCode = 1;
+                    ssi.itemName = "emoji" + contentId;
                     break;
                 // 毎月課金
                 case Monthly:
                     ssi.missionCode = 23;
+                    ssi.itemName = "poipass";
                     break;
                 default:
                     ssi.missionCode = -1;
