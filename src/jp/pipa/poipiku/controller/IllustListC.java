@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class IllustListC {
@@ -60,6 +61,7 @@ public class IllustListC {
 		}
 
 		try {
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			Class.forName("org.postgresql.Driver");
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
@@ -230,9 +232,9 @@ public class IllustListC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
 				m_vContentList.add(cContent);
 			}
 			cResSet.close();cResSet=null;

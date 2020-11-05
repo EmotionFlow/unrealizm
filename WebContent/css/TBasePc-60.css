@@ -20,7 +20,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ddd; background-color: #fff; z-index: 999; }
 .FooterMenu {width: 100%; display: flex; align-items: center; justify-content: center;  height: 50px; overflow: hidden; align-items: center;}
 .FooterMenu .FooterMenuItem {display: block; float: left; width: 72px; height: 50px; text-align: center; font-size: 0;}
-.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-06.png') no-repeat; background-size: 600%; position: relative;}
+.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-07.png') no-repeat; background-size: 600%; position: relative;}
 .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #f00; color: #fff; font-size: 9px; height: 15px; min-width: 9px; padding: 0 3px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
 .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
 .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #3498db;}
@@ -41,7 +41,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 #MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background-position: -140px -28px;}
 
 #MenuSettings {top: 5px; right: 9px; display: block;}
-#MenuSettings .MenuSettingsIcon{ background: url(/img/menu_pc-06.png); background-size: 600%; background-repeat: no-repeat; background-position: -140px -28px; top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
+#MenuSettings .MenuSettingsIcon{ background: url(/img/menu_pc-07.png); background-size: 600%; background-repeat: no-repeat; background-position: -140px -28px; top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
 #MenuSettings .MenuSettingsName{ display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #3498db;}
 
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}
@@ -73,7 +73,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .AnalogicoInfo .AnalogicoInfoRegist {display: block; text-align: center; font-size: 14px; float: none; width: 100%; margin: 6px 0;}
 .AnalogicoInfo .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 10px 0 0 0; width: 161px;}
 .AnalogicoInfo .AnalogicoInfoRegist .RegistByMainLink {text-decoration: underline; display: block; margin: 6px 0 10px 0; font-size: 12px; color: #fff;}
-.Footer .AnalogicoInfo {background: none; padding: 0 0 15px 0;}
+.Footer .AnalogicoInfo {background: #fff; color:#3498db; padding: 0 0 15px 0;}
 
 
 /********** AnalogicoInfo Float *********/

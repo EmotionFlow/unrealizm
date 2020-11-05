@@ -78,7 +78,8 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				float: left;
 			}
 			.SettingBodyCmdSendBtn{
-				width: 200px;
+				padding-left: 50px;
+				padding-right: 50px;
 			}
 			input{
 				color: #6d6965;
@@ -88,6 +89,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 				font-style: italic;
 				font-weight: normal;
 			}
+			.SettingList .SettingListItem {color: #fff;}
 		</style>
 	</head>
 
@@ -121,7 +123,7 @@ CheckLogin cCheckLogin = new CheckLogin(request, response);
 						</div>
 					</div>
 					<div class="SettingBodyCmd">
-						<a class="BtnBase SettingBodyCmdSendBtn" href="javascript:void(0)" onclick="SendPassword()"><%=_TEX.T("LoginFormV.Button.EmailForget")%></a>
+						<a class="BtnBase Rev SettingBodyCmdSendBtn" href="javascript:void(0)" onclick="SendPassword()"><%=_TEX.T("LoginFormV.Button.EmailForget")%></a>
 					</div>
 				</div>
 			</div>

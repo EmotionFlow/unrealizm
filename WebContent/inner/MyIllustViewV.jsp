@@ -53,7 +53,7 @@ switch(cResults.m_cContent.m_nPublishId) {
 	case Common.PUBLISH_ID_HIDDEN:
 	default:
 		strFileUrl = cResults.m_cContent.m_strFileName;
-		if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512.png";
+		if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 		break;
 }
 String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);

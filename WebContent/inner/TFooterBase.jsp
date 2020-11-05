@@ -2,7 +2,7 @@
 <div style="clear: both;"></div>
 <footer class="Footer">
 	<%if(!cCheckLogin.m_bLogin) {%>
-	<article class="AnalogicoInfo" style="background: none;">
+	<article class="AnalogicoInfo">
 		<h1 class="AnalogicoInfoTitle">
 			<%=_TEX.T("Poipiku.Info.Message")%>
 		</h1>

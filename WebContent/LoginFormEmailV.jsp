@@ -124,7 +124,7 @@ if(strRequestUri != null) {
 								<input id="RegistNickname" class="SettingBodyTxt" type="text" />
 								<div class="SettingBodyCmd" style="margin-top: 20px;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-									<input class="BtnBase SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
+									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
@@ -150,7 +150,7 @@ if(strRequestUri != null) {
 							<div class="LoginItem">
 								<div class="SettingBodyCmd" style="margin-top: 20px;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-									<input class="BtnBase SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
+									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>

@@ -7,7 +7,7 @@
 		<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
 			<h1 class="HeaderTitle">
 				<a id="HeaderLink" class="HeaderLink" href="/">
-					<img  class="HeaderImg" src="//img-cdn.poipiku.com/img/pc_top_title-02.png" alt="<%=_TEX.T("THeader.Title")%>" />
+					<img  class="HeaderImg" src="//img-cdn.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>" />
 				</a>
 			</h1>
 			<%if(Util.isSmartPhone(request) && !cCheckLogin.m_bLogin) {%>

@@ -168,7 +168,7 @@
 		}
 
 		.UserInfo .UserInfoUser .UserInfoUserThumbEdit .UserInfoUserImgUpload{
-				background: url(/img/menu_pc-06.png) no-repeat;
+				background: url(/img/menu_pc-07.png) no-repeat;
 				background-position: -60px 0px;
 				background-size: 600%;
 				background-color: #fff;
@@ -193,7 +193,7 @@
 				position: absolute;
 		}
 		.UserInfo .UserInfoBg .UserInfoHeaderUpload {
-				background: url(/img/menu_pc-06.png) no-repeat;
+				background: url(/img/menu_pc-07.png) no-repeat;
 				background-position: -60px 0px;
 				background-size: 600%;
 				background-color: #fff;

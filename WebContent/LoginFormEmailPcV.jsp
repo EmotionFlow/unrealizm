@@ -107,8 +107,6 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 		#RegistForm {display: block; float: left; width: 100%;}
 		#LoginForm {display: none; float: left; width: 100%;}
 		.SettingList .SettingListItem {color: #fff;}
-		.SettingList .BtnBase {border: 1px solid #fff; background: #3498db; color: #fff;}
-		.SettingList .BtnBase.Selected, ,SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
 		</style>
 	</head>
 
@@ -154,7 +152,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 								<input id="RegistNickname" class="SettingBodyTxt" type="text" />
 								<div class="SettingBodyCmd" style="margin-top: 20px;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-									<input class="BtnBase SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
+									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
@@ -180,7 +178,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 							<div class="LoginItem">
 								<div class="SettingBodyCmd" style="margin-top: 20px;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
-									<input class="BtnBase SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
+									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
