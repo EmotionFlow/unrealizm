@@ -1,10 +1,8 @@
 package jp.pipa.poipiku;
 
-import java.net.URLDecoder;
 import java.sql.*;
 
 import javax.naming.InitialContext;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
@@ -29,35 +27,18 @@ public class CheckLogin {
 	}
 
 	private void setCookie(HttpServletResponse response) {
-		try {
-			Cookie cLK = new Cookie("POIPIKU_LK" , m_strHashPass);
-			cLK.setMaxAge(Integer.MAX_VALUE);
-			cLK.setPath("/");
-			response.addCookie(cLK);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		Util.setCookie(response, "POIPIKU_LK" , m_strHashPass, Integer.MAX_VALUE);
 	}
 
 	private void getCookie(HttpServletRequest request) {
-		try {
-			Cookie cookies[] = request.getCookies();
-			if(cookies == null) {
-				//cookieインスタンスが作成できない
-				return;
-			}
-			for(int i = 0; i < cookies.length; i++) {
-				if(cookies[i].getName().equals("POIPIKU_LK")) {
-					m_strHashPass = Common.EscapeInjection(URLDecoder.decode(cookies[i].getValue(), "UTF-8"));
-					break;
-				}
-			}
-			if(m_strHashPass.isEmpty()) {
+		m_strHashPass = Util.getCookie(request, "POIPIKU_LK");
+		if(m_strHashPass==null || m_strHashPass.isEmpty()) {
+			try {
 				request.setCharacterEncoding("UTF-8");
 				m_strHashPass = Util.toString(request.getParameter("POIPIKU_LK"));
+			} catch (Exception e) {
+				m_strHashPass = "";
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
 		}
 	}
 

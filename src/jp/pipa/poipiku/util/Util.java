@@ -2,6 +2,7 @@ package jp.pipa.poipiku.util;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.sql.Connection;
@@ -17,7 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.naming.InitialContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
@@ -454,4 +457,35 @@ public class Util {
 		if(oDelFile.exists()) oDelFile.delete();
 	}
 
+	public static void setCookie(HttpServletResponse response, String name, String value, int expiry) {
+		try {
+			Cookie cLK = new Cookie(name , value);
+			cLK.setMaxAge(expiry);
+			cLK.setPath("/");
+			response.addCookie(cLK);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String getCookie(HttpServletRequest request, String name) {
+		String value = null;
+		try {
+			Cookie cookies[] = request.getCookies();
+			if(cookies == null) return null;
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals(name)) {
+					value = Common.EscapeInjection(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+					break;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
+
+	public static void deleteCookie(HttpServletResponse response, String name) {
+		setCookie(response, name, "", -1);
+	}
 }
