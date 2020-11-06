@@ -172,6 +172,11 @@ public class Common {
 			10, 100
 	};
 
+	// Cookie Key
+	public static String POIPIKU_LK = "POIPIKU_LK";
+	public static String POIPIKU_INFO = "POIPIKU_INFO";
+
+
 	public static String CrLfInjection(String strSrc) {
 		if(strSrc == null) {
 			return "";

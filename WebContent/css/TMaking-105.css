@@ -2154,3 +2154,20 @@
 .EventItemList .EventItem .EventBanner {display: block; width: 300px;}
 .EventItemList .EventItem.Updated {position: relative;}
 .EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
+
+/********** SYSTEM INFO **********/
+.SystemInfo {display: flex; width: 100%; flex-flow: row nowrap; align-items: center; justify-content: center; background: #fdf2c2; box-sizing: border-box; padding: 2px;}
+.SystemInfo a {color: #6d6965;}
+.SystemInfo:hover a {color: #333;}
+.SystemInfo .SystemInfoTitle {display: block; flex: 0 0 30px; height: 36px; line-height: 36px;text-align: center; font-size: 15px;}
+.SystemInfo .SystemInfoDate {display: block; flex: 0 0 48px; height: 36px; line-height: 18px;text-align: center;font-size: 12px; }
+.SystemInfo .SystemInfoDesc {display: block; flex: 1 1; height: 36px; line-height: 18px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: underline;font-size: 12px;max-height: 36px; line-height: 18px;;}
+.SystemInfo .SystemInfoClose {display: block; flex: 0 0 30px; height: 36px; line-height: 36px; text-align: center;font-size: 12px;}
+
+
+
+
+
+
+
+

@@ -12,7 +12,7 @@ if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
 	return;
 }
 
-Cookie cLK = new Cookie("POIPIKU_LK", "");
+Cookie cLK = new Cookie(Common.POIPIKU_LK, "");
 cLK.setMaxAge(0);
 cLK.setPath("/");
 response.addCookie(cLK);

@@ -113,7 +113,7 @@ public class UserAuthUtil {
 		}
 
 		if(!strHashPass.isEmpty()) {
-			Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
+			Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);
@@ -271,7 +271,7 @@ public class UserAuthUtil {
 		}
 
 		if(!strHashPass.isEmpty() && nUserId>0) {
-			Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
+			Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);
@@ -430,7 +430,7 @@ public class UserAuthUtil {
 		}
 
 		if(!strHashPass.isEmpty()) {
-			Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
+			Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);
@@ -722,7 +722,7 @@ public class UserAuthUtil {
 					Log.d("USERAUTH Login error : no user : " + nUserId);
 				}
 
-				Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
+				Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
 				cLK.setMaxAge(Integer.MAX_VALUE);
 				cLK.setPath("/");
 				response.addCookie(cLK);
@@ -826,7 +826,7 @@ public class UserAuthUtil {
 						}
 					}
 
-					Cookie cLK = new Cookie("POIPIKU_LK", strHashPass);
+					Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
 					cLK.setMaxAge(Integer.MAX_VALUE);
 					cLK.setPath("/");
 					response.addCookie(cLK);

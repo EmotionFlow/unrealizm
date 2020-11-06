@@ -98,3 +98,23 @@ body {padding: 51px 0 0 0 !important;}
 .EventItemList {float: none; margin: 0; width: 100%; height: auto; opacity: 1;}
 .EventItemList .EventItem {margin: 0 0 20px 0;}
 
+/********** SYSTEM INFO **********/
+.SystemInfo .SystemInfoTitle {flex: 0 0 30px; height: 18px; line-height: 18px;}
+.SystemInfo .SystemInfoDate {flex: 0 0 90px; height: 18px; line-height: 18px;}
+.SystemInfo .SystemInfoDesc {flex: 0 0 770px; height: 18px; line-height: 18px;}
+.SystemInfo .SystemInfoClose {flex: 0 0 30px; height: 18px; line-height: 18px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

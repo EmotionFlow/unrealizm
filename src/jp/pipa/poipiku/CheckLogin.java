@@ -27,15 +27,15 @@ public class CheckLogin {
 	}
 
 	private void setCookie(HttpServletResponse response) {
-		Util.setCookie(response, "POIPIKU_LK" , m_strHashPass, Integer.MAX_VALUE);
+		Util.setCookie(response, Common.POIPIKU_LK , m_strHashPass, Integer.MAX_VALUE);
 	}
 
 	private void getCookie(HttpServletRequest request) {
-		m_strHashPass = Util.getCookie(request, "POIPIKU_LK");
+		m_strHashPass = Util.getCookie(request, Common.POIPIKU_LK);
 		if(m_strHashPass==null || m_strHashPass.isEmpty()) {
 			try {
 				request.setCharacterEncoding("UTF-8");
-				m_strHashPass = Util.toString(request.getParameter("POIPIKU_LK"));
+				m_strHashPass = Util.toString(request.getParameter(Common.POIPIKU_LK));
 			} catch (Exception e) {
 				m_strHashPass = "";
 			}

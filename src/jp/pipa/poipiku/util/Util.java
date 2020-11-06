@@ -296,6 +296,15 @@ public class Util {
 		return strSrc;
 	}
 
+	public static String replaceCrLf2Space(String strSrc) {
+		if(strSrc == null) {
+			return "";
+		}
+		strSrc = strSrc.replace("\r", " ");
+		strSrc = strSrc.replace("\n", " ");
+		return strSrc;
+	}
+
 	public static String subStrNum(String strSrc, int nNum) {
 		if(strSrc==null) return "";
 		if(strSrc.length()<=nNum) return strSrc;
