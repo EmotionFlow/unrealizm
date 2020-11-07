@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class SearchIllustByKeywordC {
@@ -37,109 +38,105 @@ public class SearchIllustByKeywordC {
 
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 1;
 
 		if(m_strKeyword.isEmpty()) return bResult;
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			// Check Following
 			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
-			cState = cConn.prepareStatement(strSql);
+			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setString(idx++, m_strKeyword);
-			cState.setInt(idx++, Common.FOVO_KEYWORD_TYPE_SEARCH);
-			cResSet = cState.executeQuery();
-			m_bFollowing = (cResSet.next());
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setString(idx++, m_strKeyword);
+			statement.setInt(idx++, Common.FOVO_KEYWORD_TYPE_SEARCH);
+			resultSet = statement.executeQuery();
+			m_bFollowing = (resultSet.next());
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 
-			/*
+			// MUTE KEYWORD
 			String strMuteKeyword = "";
-			String strCond = "";
-			if(cCheckLogin.m_bLogin) {
-				strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+			String strCondMute = "";
+			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, cCheckLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCond = "AND description &@~ ?";
+					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
-			*/
 
+			String strSqlFromWhere = "FROM contents_0000 "
+					+ "WHERE open_id<>2 "
+					+ "AND description &@~ ? "
+					+ "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
+					+ "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) "
+					+ "AND safe_filter<=? "
+					+ strCondMute;
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM contents_0000 WHERE open_id<>2 AND description &@~ ? AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=?";
-				cState = cConn.prepareStatement(strSql);
+				strSql = "SELECT count(*) " + strSqlFromWhere;
+				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				cState.setString(idx++, m_strKeyword);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-				/*
-				if(!strMuteKeyword.isEmpty()) {
-					cState.setString(idx++, strMuteKeyword);
+				statement.setString(idx++, m_strKeyword);
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				if(!strCondMute.isEmpty()) {
+					statement.setString(idx++, strMuteKeyword);
 				}
-				*/
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					m_nContentsNum = resultSet.getInt(1);
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
 
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id<>2 AND description &@~ ? AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
-			cState = cConn.prepareStatement(strSql);
+			strSql = "SELECT * " + strSqlFromWhere
+					+ "ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			cState.setString(idx++, m_strKeyword);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			/*
-			if(!strMuteKeyword.isEmpty()) {
-				cState.setString(idx++, strMuteKeyword);
+			statement.setString(idx++, m_strKeyword);
+			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(!strCondMute.isEmpty()) {
+				statement.setString(idx++, strMuteKeyword);
 			}
-			*/
-			cState.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
-				m_vContentList.add(cContent);
+			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
+			statement.setInt(idx++, SELECT_MAX_GALLERY);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				CContent cContent = new CContent(resultSet);
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
 				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
 					m_strRepFileName = cContent.m_strFileName;
 				}
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
+				m_vContentList.add(cContent);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			bResult = true;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bResult;
 	}
