@@ -57,6 +57,8 @@
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Info")%></dt>
+
+			<dd><a class="FooterHref" href="/2/" target="_blank"><%=_TEX.T("Footer.Information.Title")%></a></dd>
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.Information")%></a></dd>
 			<%
 			StringBuilder sbFooterHref = new StringBuilder();
