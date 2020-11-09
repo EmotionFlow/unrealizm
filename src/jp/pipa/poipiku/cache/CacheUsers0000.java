@@ -37,15 +37,18 @@ public class CacheUsers0000 {
 		try{
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
-			strSql = "SELECT * FROM users_0000 ORDER BY user_id DESC limit 100000";
+			strSql = "SELECT * FROM users_0000 ORDER BY user_id DESC OFFSET ? LIMIT 10000";
 			statement = connection.prepareStatement(strSql);
-			resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				User user = new User(resultSet);
-				mapHashPass.putIfAbsent(user.hashPass, user);
-				mapUserId.putIfAbsent(user.userId, user);
+			for(int offset=0; offset<10; offset++) {
+				statement.setInt(1, offset);
+				resultSet = statement.executeQuery();
+				while(resultSet.next()) {
+					User user = new User(resultSet);
+					mapHashPass.putIfAbsent(user.hashPass, user);
+					mapUserId.putIfAbsent(user.userId, user);
+				}
+				resultSet.close();resultSet=null;
 			}
-			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 			//Log.d("Load all user data");
 		} catch(Exception e) {

@@ -45,8 +45,7 @@ ResultSet cResSet = null;
 
 try{
 		Class.forName("org.postgresql.Driver");
-		DataSource dsPostgres = null;
-		dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+		DataSource dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 		cConn = dsPostgres.getConnection();
 
 		// フォロー通知を表示するか
