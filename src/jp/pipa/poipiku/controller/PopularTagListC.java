@@ -112,8 +112,8 @@ public class PopularTagListC {
 				while (cResSet.next()) {
 					CContent cContent = new CContent(cResSet);
 					CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-					cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
-					cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
+					cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+					cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 					m_vContentList.add(cContent);
 				}
 				cResSet.close();cResSet=null;

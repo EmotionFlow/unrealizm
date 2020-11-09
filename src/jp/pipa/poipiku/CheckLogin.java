@@ -49,12 +49,12 @@ public class CheckLogin {
 		if(user==null) {
 			m_bLogin = false;
 		} else {
-			m_nUserId		= user.m_nUserId;
-			m_strNickName	= user.m_strNickName;
-			m_nLangId		= user.m_nLangId;
-			m_strFileName	= user.m_strFileName;
-			m_bEmailValid	= user.m_bEmailValid;
-			m_nPremiumId	= user.m_nPremiumId;
+			m_nUserId		= user.userId;
+			m_strNickName	= user.nickName;
+			m_nLangId		= user.langId;
+			m_strFileName	= user.fileName;
+			m_bEmailValid	= user.emailValid;
+			m_nPremiumId	= user.premiumId;
 			m_bLogin = true;
 		}
 		return m_bLogin;

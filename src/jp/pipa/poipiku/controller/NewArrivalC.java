@@ -100,8 +100,8 @@ public class NewArrivalC {
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(content.m_nUserId);
-				content.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
-				content.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				m_nEndId = content.m_nContentId;
 				m_vContentList.add(content);
 			}

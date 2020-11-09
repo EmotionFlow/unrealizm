@@ -87,8 +87,8 @@ public class FollowListC {
 				CUser cContent = new CUser();
 				cContent.m_nUserId		= resultSet.getInt("follow_user_id");
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_strNickName	= Util.toString(user.m_strNickName);
-				cContent.m_strFileName	= Util.toString(user.m_strFileName);
+				cContent.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_strFileName	= Util.toString(user.fileName);
 				m_vContentList.add(cContent);
 			}
 			resultSet.close();resultSet=null;

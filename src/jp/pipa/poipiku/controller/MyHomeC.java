@@ -121,9 +121,9 @@ public class MyHomeC {
 			while (resultSet.next()) {
 				CContent cContent = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
-				cContent.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
-				cContent.m_cUser.m_nReaction	= user.m_nReaction;
+				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_cUser.m_nReaction	= user.reaction;
 				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);

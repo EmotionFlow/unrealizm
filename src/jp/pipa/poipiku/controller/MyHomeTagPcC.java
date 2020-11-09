@@ -171,9 +171,9 @@ public class MyHomeTagPcC {
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(content.m_nUserId);
-				content.m_cUser.m_strNickName	= Util.toString(user.m_strNickName);
-				content.m_cUser.m_strFileName	= Util.toString(user.m_strFileName);
-				content.m_cUser.m_nReaction		= user.m_nReaction;
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				content.m_cUser.m_nReaction		= user.reaction;
 				content.m_cUser.m_nFollowing	= (content.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_nEndId = content.m_nContentId;
 				m_vContentList.add(content);
