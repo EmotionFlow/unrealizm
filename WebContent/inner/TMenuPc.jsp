@@ -138,7 +138,7 @@
 	var g_timerUpdateNotify = null;
 	$(function(){
 		UpdateNotify();
-		g_timerUpdateNotify = setInterval(UpdateNotify, 1000*60);
+		g_timerUpdateNotify = setInterval(UpdateNotify, 1000*60*2);
 	});
 </script>
 <%}%>
