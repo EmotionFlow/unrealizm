@@ -26,13 +26,18 @@ try {
 	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 	cConn = dsPostgres.getConnection();
 
-	// 絵文字は残す
+	// もらった絵文字だけ消す
 	// delete comment
-	//strSql ="DELETE FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
-	//cState = cConn.prepareStatement(strSql);
-	//cState.setInt(1, m_nUserId);
-	//cState.executeUpdate();
-	//cState.close();cState=null;
+	strSql ="DELETE FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, m_nUserId);
+	cState.executeUpdate();
+	cState.close();cState=null;
+	strSql ="DELETE FROM comments_desc_cache WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, m_nUserId);
+	cState.executeUpdate();
+	cState.close();cState=null;
 
 	// delete tags
 	strSql = "DELETE FROM tags_0000 WHERE tags_0000.content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
@@ -134,6 +139,10 @@ try {
 	// delete files
 	File fileDel = new File(getServletContext().getRealPath(Common.getUploadUserPath(m_nUserId)));
 	Common.rmDir(fileDel);
+
+	// キャッシュからもユーザを消す
+	CacheUsers0000 users0000 = CacheUsers0000.getInstance();
+	users0000.clearUser(m_nUserId);
 
 	m_nRtn = 1;
 

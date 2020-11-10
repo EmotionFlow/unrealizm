@@ -10,14 +10,14 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public class DeleteContentC {
-    CContent cContent = null;
-    private ServletContext m_cServletContext = null;
+	CContent cContent = null;
+	private ServletContext m_cServletContext = null;
 
-    public DeleteContentC(ServletContext context){
-        m_cServletContext = context;
-    }
+	public DeleteContentC(ServletContext context){
+		m_cServletContext = context;
+	}
 
-    public boolean GetResults(DeleteContentCParam cParam) {
+	public boolean GetResults(DeleteContentCParam cParam) {
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -56,8 +56,15 @@ public class DeleteContentC {
 				return false;
 			}
 
-			// delete step comment
+			// delete comment
 			strSql ="DELETE FROM comments_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+
+			// delete comment cash
+			strSql ="DELETE FROM comments_desc_cache WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);
 			cState.executeUpdate();
