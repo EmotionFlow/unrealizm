@@ -121,11 +121,9 @@ public class NewArrivalGridC {
 			bResult = true;
 
 			// Each Comment
-			GridUtil.getEachComment(cConn, m_vContentList);
+			m_vContentList = GridUtil.getEachComment(cConn, m_vContentList);
 			// Bookmark
-			if(cCheckLogin.m_bLogin) {
-				GridUtil.getEachBookmark(cConn, m_vContentList, cCheckLogin);
-			}
+			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, cCheckLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

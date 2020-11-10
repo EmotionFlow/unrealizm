@@ -153,12 +153,10 @@ public class MyHomePcC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			GridUtil.getEachComment(connection, m_vContentList);
+			m_vContentList = GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
-			if(cCheckLogin.m_bLogin) {
-				GridUtil.getEachBookmark(connection, m_vContentList, cCheckLogin);
-			}
+			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, cCheckLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

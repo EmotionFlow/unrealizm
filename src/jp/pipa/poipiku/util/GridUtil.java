@@ -11,7 +11,7 @@ import jp.pipa.poipiku.*;
 public class GridUtil {
 	public static int SELECT_MAX_EMOJI = 59;
 
-	public static void getEachComment(Connection connection, ArrayList<CContent> contents) throws SQLException {
+	public static ArrayList<CContent> getEachComment(Connection connection, ArrayList<CContent> contents) throws SQLException {
 		// Each Comment
 		String sql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
@@ -27,9 +27,12 @@ public class GridUtil {
 			resultSet.close();resultSet=null;
 		}
 		statement.close();statement=null;
+
+		return contents;
 	}
 
-	public static void getEachBookmark(Connection connection, ArrayList<CContent> contents, CheckLogin checkLogin) throws SQLException {
+	public static ArrayList<CContent> getEachBookmark(Connection connection, ArrayList<CContent> contents, CheckLogin checkLogin) throws SQLException {
+		if(!checkLogin.m_bLogin) return contents;
 		// Each Bookmark
 		String sql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
@@ -43,6 +46,8 @@ public class GridUtil {
 			resultSet.close();resultSet=null;
 		}
 		statement.close();statement=null;
+
+		return contents;
 	}
 
 }
