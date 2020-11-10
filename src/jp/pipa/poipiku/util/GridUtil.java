@@ -12,19 +12,22 @@ public class GridUtil {
 	public static int SELECT_MAX_EMOJI = 59;
 
 	public static ArrayList<CContent> getEachComment(Connection connection, ArrayList<CContent> contents) throws SQLException {
-		// Each Comment
-		String sql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
+		String sql = "SELECT description FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		for(CContent content : contents) {
 			if(content.m_cUser.m_nReaction!=CUser.REACTION_SHOW) continue;
 			statement.setInt(1, content.m_nContentId);
 			statement.setInt(2, SELECT_MAX_EMOJI);
 			ResultSet resultSet = statement.executeQuery();
+			StringBuffer sbDescription = new StringBuffer();
 			while (resultSet.next()) {
-				CComment comment = new CComment(resultSet);
-				content.m_vComment.add(0, comment);
+				//CComment comment = new CComment();
+				//comment.m_strDescription = Util.toString(resultSet.getString("description"));
+				//content.m_vComment.add(0, comment);
+				sbDescription.insert(0, Util.toString(resultSet.getString("description")));
 			}
 			resultSet.close();resultSet=null;
+			content.m_strCommentsListsCache = sbDescription.toString();
 		}
 		statement.close();statement=null;
 
@@ -48,6 +51,34 @@ public class GridUtil {
 		statement.close();statement=null;
 
 		return contents;
+	}
+
+	public static String updateCommentsLists(Connection connection, int contentId) throws SQLException {
+		// comments_0000から絵文字取得
+		StringBuffer sbDescription = new StringBuffer();
+		String sql = "SELECT description FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, contentId);
+		statement.setInt(2, SELECT_MAX_EMOJI);
+		ResultSet resultSet = statement.executeQuery();
+		while (resultSet.next()) {
+			sbDescription.insert(0, Util.toString(resultSet.getString(1)));
+		}
+		resultSet.close();resultSet=null;
+		statement.close();statement=null;
+
+		// 参照用に結合してcomments_desc_cache格納
+		sql = "INSERT INTO comments_desc_cache(content_id, description) VALUES (?, ?) "
+				+ "ON CONFLICT (content_id) DO "
+				+ "UPDATE SET description=?";
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1, contentId);
+		statement.setString(2, sbDescription.toString());
+		statement.setString(3, sbDescription.toString());
+		statement.executeUpdate();
+		statement.close();statement=null;
+
+		return sbDescription.toString();
 	}
 
 }

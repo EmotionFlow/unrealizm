@@ -36,6 +36,7 @@ public class CContent {
 	public String m_strTweetId = "";
 	public int m_nTweetWhenPublished = 0;
 	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
+	public String m_strCommentsListsCache = "";
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
 	public boolean m_bCheerNg = true;
 	public String m_strTextBody = "";

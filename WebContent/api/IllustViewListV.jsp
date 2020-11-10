@@ -63,9 +63,14 @@ try {
 				}
 			}
 			List<String> strEmojiList = new ArrayList<String>();
+			for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
+				strEmojiList.add((String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i)))));
+			}
+			/*
 			for (CComment emoji: cContent.m_vComment) {
 				strEmojiList.add(emoji.m_strDescription);
 			}
+			*/
 
 			Map<String, Object> img = new HashMap<String, Object>();
 			img.put("content_id", cContent.m_nContentId);

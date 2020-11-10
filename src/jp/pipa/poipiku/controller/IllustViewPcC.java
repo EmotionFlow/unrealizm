@@ -59,17 +59,17 @@ public class IllustViewPcC {
 	public boolean m_bCheerNg = true;
 	public boolean getResults(CheckLogin cCheckLogin) {
 		boolean bRtn = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 1;
 
 		try {
 			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			// owner
 			if(m_nUserId == cCheckLogin.m_nUserId) {
@@ -79,21 +79,21 @@ public class IllustViewPcC {
 			// content main
 			String strOpenCnd = (!m_bOwner)?" AND open_id<>2":"";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
-			cState = cConn.prepareStatement(strSql);
+			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, m_nUserId);
-			cState.setInt(idx++, m_nContentId);
-			cResSet = cState.executeQuery();
+			statement.setInt(idx++, m_nUserId);
+			statement.setInt(idx++, m_nContentId);
+			resultSet = statement.executeQuery();
 			boolean bContentExist = false;
-			if(cResSet.next()) {
-				m_cContent = new CContent(cResSet);
+			if(resultSet.next()) {
+				m_cContent = new CContent(resultSet);
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 				bContentExist = true;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			if(!bContentExist){
-				m_nNewContentId = searchContentIdHistory(cConn, cState, cResSet, m_nContentId);
+				m_nNewContentId = searchContentIdHistory(connection, statement, resultSet, m_nContentId);
 				return false;
 			}
 
@@ -101,79 +101,79 @@ public class IllustViewPcC {
 
 			// author profile
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
+			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_cUser.m_nUserId			= cResSet.getInt("user_id");
-				m_cUser.m_strNickName		= Util.toString(cResSet.getString("nickname"));
-				m_cUser.m_strProfile		= Util.toString(cResSet.getString("profile"));
-				m_cUser.m_strFileName		= Util.toString(cResSet.getString("file_name"));
-				m_cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("header_file_name"));
-				m_cUser.m_strBgFileName		= Util.toString(cResSet.getString("bg_file_name"));
-				m_cUser.m_nReaction			= cResSet.getInt("ng_reaction");
+			statement.setInt(idx++, m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_cUser.m_nUserId			= resultSet.getInt("user_id");
+				m_cUser.m_strNickName		= Util.toString(resultSet.getString("nickname"));
+				m_cUser.m_strProfile		= Util.toString(resultSet.getString("profile"));
+				m_cUser.m_strFileName		= Util.toString(resultSet.getString("file_name"));
+				m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("header_file_name"));
+				m_cUser.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
+				m_cUser.m_nReaction			= resultSet.getInt("ng_reaction");
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
 				m_cContent.m_cUser.m_strNickName	= m_cUser.m_strNickName;
 				m_cContent.m_cUser.m_strFileName	= m_cUser.m_strFileName;
 				m_cContent.m_cUser.m_nReaction		= m_cUser.m_nReaction;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			if(m_cUser.m_strHeaderFileName.isEmpty()) {
 				strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
-				cState = cConn.prepareStatement(strSql);
+				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, m_nUserId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					m_cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("file_name"));
+				statement.setInt(idx++, m_nUserId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("file_name"));
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
 
 
 			if(!m_bOwner) {
 				// blocking
 				strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
-				cState = cConn.prepareStatement(strSql);
+				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, m_nUserId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, m_nUserId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
 					m_bBlocking = true;
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 
 				// blocked
 				strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
-				cState = cConn.prepareStatement(strSql);
+				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
+				statement.setInt(idx++, m_nUserId);
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
 					m_bBlocked = true;
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
 
 			// User contents total number
 			strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? %s", strOpenCnd);
-			cState = cConn.prepareStatement(strSql);
+			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nContentsNumTotal = cResSet.getInt(1);
+			statement.setInt(idx++, m_nUserId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				m_nContentsNumTotal = resultSet.getInt(1);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			if(m_bBlocking || m_bBlocked) {
 				return false;
@@ -183,18 +183,18 @@ public class IllustViewPcC {
 			int m_nFollow = CUser.FOLLOW_HIDE;
 			if(m_nUserId != cCheckLogin.m_nUserId) {
 				strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
-				cState = cConn.prepareStatement(strSql);
+				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, m_nUserId);
-				cResSet = cState.executeQuery();
-				m_bFollow = cResSet.next();
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, m_nUserId);
+				resultSet = statement.executeQuery();
+				m_bFollow = resultSet.next();
 				m_nFollow = (m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				if(m_bFollow) {
 					cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			} else {	// owner
 				cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 			}
@@ -202,42 +202,45 @@ public class IllustViewPcC {
 
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_cContent.m_nContentId);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				m_cContent.m_vContentAppend.add(new CContentAppend(cResSet));
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_cContent.m_nContentId);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				m_cContent.m_vContentAppend.add(new CContentAppend(resultSet));
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
-			// Each Emoji
+			// Emoji
 			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-				strSql = "SELECT * FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_cContent.m_nContentId);
-				cState.setInt(2, SELECT_MAX_EMOJI);
-				cResSet = cState.executeQuery();
-				while (cResSet.next()) {
-					CComment cComment = new CComment(cResSet);
-					m_cContent.m_vComment.add(0, cComment);
+				strSql = "SELECT description FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_cContent.m_nContentId);
+				statement.setInt(2, SELECT_MAX_EMOJI);
+				resultSet = statement.executeQuery();
+				StringBuffer sbDescription = new StringBuffer();
+				while (resultSet.next()) {
+					//CComment cComment = new CComment(resultSet);
+					//m_cContent.m_vComment.add(0, cComment);
+					sbDescription.insert(0, Util.toString(resultSet.getString("description")));
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
+				m_cContent.m_strCommentsListsCache = sbDescription.toString();
 			}
 
 			// Bookmark
 			if(cCheckLogin.m_bLogin) {
 				strSql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
-				cState.setInt(2, m_cContent.m_nContentId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, cCheckLogin.m_nUserId);
+				statement.setInt(2, m_cContent.m_nContentId);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
 					m_cContent.m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
 
 			// Owner Contents
@@ -256,9 +259,9 @@ public class IllustViewPcC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bRtn;
 	}

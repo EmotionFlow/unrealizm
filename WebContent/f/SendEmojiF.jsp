@@ -50,32 +50,32 @@
 		if(checkLogin.m_bLogin && (m_nUserId != checkLogin.m_nUserId)) return false;	// ログインしてるのにIDが異なる
 
 		boolean bRtn = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			// 投稿存在確認(不正アクセス対策)
 			CUser cTargUser = null;
 			Integer nContentUserId = null;
 			strSql = "SELECT u.user_id, u.lang_id, u.ng_reaction, c.user_id content_user_id FROM contents_0000 AS c INNER JOIN users_0000 AS u ON c.user_id=u.user_id WHERE open_id<>2 AND content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nContentId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
 				cTargUser = new CUser();
-				cTargUser.m_nUserId = cResSet.getInt("user_id");
-				cTargUser.m_nLangId = cResSet.getInt("lang_id");
-				cTargUser.m_nReaction = cResSet.getInt("ng_reaction");
-				nContentUserId = cResSet.getInt("content_user_id");
+				cTargUser.m_nUserId = resultSet.getInt("user_id");
+				cTargUser.m_nLangId = resultSet.getInt("lang_id");
+				cTargUser.m_nReaction = resultSet.getInt("ng_reaction");
+				nContentUserId = resultSet.getInt("content_user_id");
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			if(cTargUser==null) return false;
 			if(cTargUser.m_nReaction!=CUser.REACTION_SHOW) return false;
 
@@ -84,22 +84,22 @@
 			int nEmojiNum = 0;
 			if(checkLogin.m_bLogin) {
 				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nContentId);
-				cState.setInt(2, m_nUserId);
-				cResSet = cState.executeQuery();
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_nContentId);
+				statement.setInt(2, m_nUserId);
+				resultSet = statement.executeQuery();
 			} else {
 				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND ip_address=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nContentId);
-				cState.setString(2, m_strIpAddress);
-				cResSet = cState.executeQuery();
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_nContentId);
+				statement.setString(2, m_strIpAddress);
+				resultSet = statement.executeQuery();
 			}
-			if(cResSet.next()) {
-				nEmojiNum = cResSet.getInt(1);
+			if(resultSet.next()) {
+				nEmojiNum = resultSet.getInt(1);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			if(nEmojiNum>=Common.EMOJI_MAX[checkLogin.m_nPremiumId]) {
 				return false;
 			}
@@ -115,35 +115,35 @@
 				strSql = "INSERT INTO orders(" +
 						" customer_id, seller_id, status, payment_total)" +
 						" VALUES (?, ?, ?, ?)";
-				cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
+				statement = connection.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				int idx=1;
-				cState.setInt(idx++, m_nUserId);
-				cState.setInt(idx++, 2); // 売り手はポイピク公式
-				cState.setInt(idx++, COrder.STATUS_INIT);
-				cState.setInt(idx++, m_nAmount);
-				cState.executeUpdate();
-				cResSet = cState.getGeneratedKeys();
-				if(cResSet.next()){
-					orderId = cResSet.getInt(1);
+				statement.setInt(idx++, m_nUserId);
+				statement.setInt(idx++, 2); // 売り手はポイピク公式
+				statement.setInt(idx++, COrder.STATUS_INIT);
+				statement.setInt(idx++, m_nAmount);
+				statement.executeUpdate();
+				resultSet = statement.getGeneratedKeys();
+				if(resultSet.next()){
+					orderId = resultSet.getInt(1);
 					Log.d("orders.id", orderId.toString());
 				}
-				cResSet.close(); cResSet=null;
-				cState.close(); cState=null;
+				resultSet.close(); resultSet=null;
+				statement.close(); statement=null;
 
 				strSql = "INSERT INTO order_details(" +
 						" order_id, content_id, content_user_id, product_name, list_price, amount_paid, quantity)" +
 						" VALUES (?, ?, ?, ?, ?, ?, ?)";
-				cState = cConn.prepareStatement(strSql);
+				statement = connection.prepareStatement(strSql);
 				idx=1;
-				cState.setInt(idx++, orderId);
-				cState.setInt(idx++, m_nContentId);
-				cState.setInt(idx++, nContentUserId);
-				cState.setString(idx++, m_strEmoji);
-				cState.setInt(idx++, m_nAmount);
-				cState.setInt(idx++, m_nAmount);
-				cState.setInt(idx++, 1);
-				cState.executeUpdate();
-				cState.close(); cState=null;
+				statement.setInt(idx++, orderId);
+				statement.setInt(idx++, m_nContentId);
+				statement.setInt(idx++, nContentUserId);
+				statement.setString(idx++, m_strEmoji);
+				statement.setInt(idx++, m_nAmount);
+				statement.setInt(idx++, m_nAmount);
+				statement.setInt(idx++, 1);
+				statement.executeUpdate();
+				statement.close(); statement=null;
 
 				CardSettlement cardSettlement = null;
 				if(m_nAgentId == Agent.VERITRANS){
@@ -160,13 +160,13 @@
 				boolean authorizeResult = cardSettlement.authorize();
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
-				cState = cConn.prepareStatement(strSql);
+				statement = connection.prepareStatement(strSql);
 				idx=1;
-				cState.setInt(idx++, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
-				cState.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
-				cState.setInt(idx++, orderId);
-				cState.executeUpdate();
-				cState.close();cState=null;
+				statement.setInt(idx++, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
+				statement.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
+				statement.setInt(idx++, orderId);
+				statement.executeUpdate();
+				statement.close();statement=null;
 
 				if(!authorizeResult){
 					setErrCode(cardSettlement);
@@ -176,34 +176,37 @@
 
 			// add new comment
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id, ip_address) VALUES(?, ?, ?, ?)";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
-			cState.setString(2, m_strEmoji);
-			cState.setInt(3, m_nUserId);
-			cState.setString(4, m_strIpAddress);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nContentId);
+			statement.setString(2, m_strEmoji);
+			statement.setInt(3, m_nUserId);
+			statement.setString(4, m_strIpAddress);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
+			// update comment_list
+			GridUtil.updateCommentsLists(connection, m_nContentId);
 
 			/*
 			// 使ってないので一時的にコメントアウト
 			// update contents_0000 set contents_0000.comment_num=T1.comment_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
 			// update making comment num
 			strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
-			cState.setInt(2, m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nContentId);
+			statement.setInt(2, m_nContentId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 			*/
 
 			// update making comment num
 			// update contents_0000 set contents_0000.people_num=T1.people_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
 			strSql ="UPDATE contents_0000 SET people_num=(SELECT COUNT(DISTINCT user_id) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
-			cState.setInt(2, m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nContentId);
+			statement.setInt(2, m_nContentId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 
 			bRtn = true; // 以下実行されなくてもOKを返す
 
@@ -216,29 +219,29 @@
 			// 通知先デバイストークンの取得
 			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<CNotificationToken>();
 			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cTargUser.m_nUserId);
-			cResSet = cState.executeQuery();
-			while(cResSet.next()) {
-				cNotificationTokens.add(new CNotificationToken(cResSet));
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, cTargUser.m_nUserId);
+			resultSet = statement.executeQuery();
+			while(resultSet.next()) {
+				cNotificationTokens.add(new CNotificationToken(resultSet));
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			if(cNotificationTokens.isEmpty()) return bRtn;
 
 			// バッジに表示する数を取得
 			int nBadgeNum = 0;
 			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE open_id<>2 AND user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cTargUser.m_nUserId);
-			cState.setInt(2, cTargUser.m_nUserId);
-			cState.setInt(3, cTargUser.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				nBadgeNum = cResSet.getInt(1);
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, cTargUser.m_nUserId);
+			statement.setInt(2, cTargUser.m_nUserId);
+			statement.setInt(3, cTargUser.m_nUserId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				nBadgeNum = resultSet.getInt(1);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			// 送信文字列
 			String strTitle = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Title"):_TEX.TEn("Notification.Reaction.Title");
@@ -248,35 +251,35 @@
 			// 通知DB登録
 			// 連射しないように同じタイプの未送信の通知を削除
 			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=? AND token_type=?";
-			cState = cConn.prepareStatement(strSql);
+			statement = connection.prepareStatement(strSql);
 			for(CNotificationToken cNotificationToken : cNotificationTokens) {
-				cState.setString(1, cNotificationToken.m_strNotificationToken);
-				cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-				cState.setInt(3, cNotificationToken.m_nTokenType);
-				cState.executeUpdate();
+				statement.setString(1, cNotificationToken.m_strNotificationToken);
+				statement.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
+				statement.setInt(3, cNotificationToken.m_nTokenType);
+				statement.executeUpdate();
 			}
-			cState.close();cState=null;
+			statement.close();statement=null;
 			// 送信
 			strSql = "INSERT INTO notification_buffers_0000(notification_token, notification_type, badge_num, title, sub_title, body, token_type) VALUES(?, ?, ?, ?, ?, ?, ?)";
-			cState = cConn.prepareStatement(strSql);
+			statement = connection.prepareStatement(strSql);
 			for(CNotificationToken cNotificationToken : cNotificationTokens) {
-				cState.setString(1, cNotificationToken.m_strNotificationToken);
-				cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-				cState.setInt(3, nBadgeNum);
-				cState.setString(4, strTitle);
-				cState.setString(5, strSubTitle);
-				cState.setString(6, strBody);
-				cState.setInt(7, cNotificationToken.m_nTokenType);
-				cState.executeUpdate();
+				statement.setString(1, cNotificationToken.m_strNotificationToken);
+				statement.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
+				statement.setInt(3, nBadgeNum);
+				statement.setString(4, strTitle);
+				statement.setString(5, strSubTitle);
+				statement.setString(6, strBody);
+				statement.setInt(7, cNotificationToken.m_nTokenType);
+				statement.executeUpdate();
 				//Log.d(cNotificationToken.m_strNotificationToken, ""+cNotificationToken.m_nTokenType, ""+nBadgeNum, strTitle, strSubTitle, strBody);
 			}
-			cState.close();cState=null;
+			statement.close();statement=null;
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bRtn;
 	}

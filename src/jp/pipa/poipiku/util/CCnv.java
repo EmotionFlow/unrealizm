@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import jp.pipa.poipiku.CComment;
 import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.CTag;
 import jp.pipa.poipiku.CUser;
@@ -274,7 +273,7 @@ public class CCnv {
 			ResourceBundleControl _TEX){
 		strRtn.append(String.format("<div id=\"IllustItemResList_%d\" class=\"IllustItemResList\">", cContent.m_nContentId, cContent.m_nContentId));
 		// もらった絵文字展開リンク
-		if(cContent.m_vComment.size()>=GridUtil.SELECT_MAX_EMOJI) {
+		if(cContent.m_strCommentsListsCache.length()>=GridUtil.SELECT_MAX_EMOJI) {
 			// 全て表示リンク
 			strRtn.append("<div class=\"IllustItemResListTitle\">");
 			//if(cContent.m_vComment.size()<=0) {
@@ -286,9 +285,16 @@ public class CCnv {
 			strRtn.append("</div>");	// IllustItemResListTitle
 		}
 		// もらった絵文字
+		for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
+			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))));
+		}
+		/*
 		for(CComment comment : cContent.m_vComment) {
 			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
 		}
+		*/
+
+
 		// 絵文字追加マーク
 		strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
 		strRtn.append("</div>");	// IllustItemResList
