@@ -51,6 +51,18 @@ public class NewArrivalC {
 
 			String strCondCat = (m_nCategoryId>=0)?" AND category_id=?":"";
 
+			// BLOCK USER
+			String strCondBlockUser = "";
+			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+			}
+
+			// BLOCKED USER
+			String strCondBlocedkUser = "";
+			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			}
+
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
@@ -66,25 +78,21 @@ public class NewArrivalC {
 				m_nContentsNum = 9999;
 			}
 
-			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT * FROM contents_0000 WHERE open_id=0 ");
-			if(cCheckLogin.m_bLogin){
-				sb.append("AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
-			}
-			if(!strCondCat.isEmpty()){
-				sb.append(strCondCat);
-			}
-			if(!strCondMute.isEmpty()){
-				sb.append(strCondMute);
-			}
-			sb.append("AND safe_filter<=? ");
-			sb.append("ORDER BY content_id DESC OFFSET ? LIMIT ?");
-			strSql = new String(sb);
-
+			strSql = "SELECT * FROM contents_0000 "
+					+ "WHERE open_id=0 "
+					+ "AND safe_filter<=? "
+					+ strCondBlockUser
+					+ strCondBlocedkUser
+					+ strCondCat
+					+ strCondMute
+					+ "ORDER BY content_id DESC OFFSET ? LIMIT ? ";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			if(cCheckLogin.m_bLogin){
+			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(!strCondBlockUser.isEmpty()) {
 				statement.setInt(idx++, cCheckLogin.m_nUserId);
+			}
+			if(!strCondBlocedkUser.isEmpty()) {
 				statement.setInt(idx++, cCheckLogin.m_nUserId);
 			}
 			if(!strCondCat.isEmpty()){
@@ -93,7 +101,6 @@ public class NewArrivalC {
 			if(!strCondMute.isEmpty()){
 				statement.setString(idx++, strMuteKeyword);
 			}
-			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
 			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
 			resultSet = statement.executeQuery();

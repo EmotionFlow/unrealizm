@@ -34,17 +34,17 @@ public class PopularTagListC {
 
 	public boolean getResults(CheckLogin cCheckLogin) {
 		boolean bResult = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 1;
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			// TAG LIST
 			/*
@@ -61,62 +61,74 @@ public class PopularTagListC {
 			//strSql = "select tag_txt FROM vw_rank_tag_weekly WHERE tag_txt NOT IN('カラパレコスメ', 'お題ルーレット') order by rank desc offset ? limit ?";
 			//strSql = "select tag_txt FROM vw_rank_tag_weekly order by rank desc offset ? limit ?";
 			strSql = "select tag_txt FROM vw_rank_tag_daily order by rank desc offset ? limit ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nPage*SELECT_MAX_GALLERY);
-			cState.setInt(2, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				m_vContentListWeekly.add(new CTag(cResSet));
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nPage*SELECT_MAX_GALLERY);
+			statement.setInt(2, SELECT_MAX_GALLERY);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				m_vContentListWeekly.add(new CTag(resultSet));
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			// BLOCK USER
+			String strCondBlockUser = "";
+			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+			}
+
+			// BLOCKED USER
+			String strCondBlocedkUser = "";
+			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			}
 
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
 			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
+				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, cCheckLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
 
 			// WEEKLY SAMPLE
-			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT * FROM contents_0000 WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) ");
-			if(cCheckLogin.m_bLogin){
-				sb.append("AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
-			}
-			if(!strCondMute.isEmpty()){
-				sb.append(strCondMute);
-			}
-			sb.append("AND safe_filter<=? ");
-			sb.append("ORDER BY content_id DESC LIMIT ?");
-			strSql = new String(sb);
-			cState = cConn.prepareStatement(strSql);
+			strSql = "SELECT * FROM contents_0000 "
+					+ "WHERE open_id<>2 "
+					+ "AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) "
+					+ "AND safe_filter<=? "
+					+ strCondBlockUser
+					+ strCondBlocedkUser
+					+ strCondMute
+					+ "ORDER BY content_id DESC LIMIT ? ";
+
+			statement = connection.prepareStatement(strSql);
 			for(int nCnt=0; nCnt<m_vContentListWeekly.size() && nCnt<SELECT_MAX_SAMPLE_GALLERY; nCnt++) {
 				CTag cTag = m_vContentListWeekly.get(nCnt);
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 				idx = 1;
-				cState.setString(idx++, cTag.m_strTagTxt);
-				if(cCheckLogin.m_bLogin){
-					cState.setInt(idx++, cCheckLogin.m_nUserId);
-					cState.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setString(idx++, cTag.m_strTagTxt);
+				statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				if(!strCondBlockUser.isEmpty()) {
+					statement.setInt(idx++, cCheckLogin.m_nUserId);
+				}
+				if(!strCondBlocedkUser.isEmpty()) {
+					statement.setInt(idx++, cCheckLogin.m_nUserId);
 				}
 				if(!strCondMute.isEmpty()){
-					cState.setString(idx++, strMuteKeyword);
+					statement.setString(idx++, strMuteKeyword);
 				}
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-				cState.setInt(idx++, SELECT_SAMPLE_GALLERY);
-				cResSet = cState.executeQuery();
-				while (cResSet.next()) {
-					CContent cContent = new CContent(cResSet);
+				statement.setInt(idx++, SELECT_SAMPLE_GALLERY);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					CContent cContent = new CContent(resultSet);
 					CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 					cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 					cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 					m_vContentList.add(cContent);
 				}
-				cResSet.close();cResSet=null;
+				resultSet.close();resultSet=null;
 				m_vContentSamplpeListWeekly.add(m_vContentList);
 			}
 			// DAILY SAMPLE
@@ -148,9 +160,9 @@ public class PopularTagListC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bResult;
 	}

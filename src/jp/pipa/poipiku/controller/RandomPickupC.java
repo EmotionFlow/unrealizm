@@ -32,23 +32,35 @@ public class RandomPickupC {
 
 	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 1;
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+
+			// BLOCK USER
+			String strCondBlockUser = "";
+			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+			}
+
+			// BLOCKED USER
+			String strCondBlocedkUser = "";
+			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			}
 
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
 			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(cConn, cCheckLogin.m_nUserId);
+				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, cCheckLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
@@ -76,48 +88,46 @@ public class RandomPickupC {
 				m_nContentsNum = SELECT_MAX_GALLERY;
 			}
 
-			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT * FROM contents_0000 WHERE open_id=0");
-			if(cCheckLogin.m_bLogin){
-				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
-			}
-			if(!strCondMute.isEmpty()){
-				sb.append(strCondMute);
-			}
-			sb.append(" AND content_id<(SELECT (max(content_id) * random())::int FROM contents_0000)");
-			sb.append(" AND safe_filter<=? ORDER BY content_id DESC LIMIT ?");
-
-			strSql = new String(sb);
-			cState = cConn.prepareStatement(strSql);
+			strSql = "SELECT * FROM contents_0000 "
+					+ "WHERE open_id=0"
+					+ "AND safe_filter<=? "
+					+ "AND content_id<(SELECT (max(content_id) * random())::int FROM contents_0000) "
+					+ strCondBlockUser
+					+ strCondBlocedkUser
+					+ strCondMute
+					+ "ORDER BY content_id DESC LIMIT ? ";
+			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			if(cCheckLogin.m_bLogin){
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(!strCondBlockUser.isEmpty()) {
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+			}
+			if(!strCondBlocedkUser.isEmpty()) {
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
 			}
 			if(!strCondMute.isEmpty()) {
-				cState.setString(idx++, strMuteKeyword);
+				statement.setString(idx++, strMuteKeyword);
 			}
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
+			statement.setInt(idx++, SELECT_MAX_GALLERY);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				CContent cContent = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				m_vContentList.add(cContent);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			bResult = true;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bResult;
 	}

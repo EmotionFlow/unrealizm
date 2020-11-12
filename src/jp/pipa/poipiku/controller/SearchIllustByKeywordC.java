@@ -63,6 +63,17 @@ public class SearchIllustByKeywordC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			// BLOCK USER
+			String strCondBlockUser = "";
+			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+			}
+
+			// BLOCKED USER
+			String strCondBlocedkUser = "";
+			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			}
 
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
@@ -77,9 +88,9 @@ public class SearchIllustByKeywordC {
 			String strSqlFromWhere = "FROM contents_0000 "
 					+ "WHERE open_id<>2 "
 					+ "AND description &@~ ? "
-					+ "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-					+ "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) "
 					+ "AND safe_filter<=? "
+					+ strCondBlockUser
+					+ strCondBlocedkUser
 					+ strCondMute;
 
 			// NEW ARRIVAL
@@ -88,9 +99,13 @@ public class SearchIllustByKeywordC {
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setString(idx++, m_strKeyword);
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
 				statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				if(!strCondBlockUser.isEmpty()) {
+					statement.setInt(idx++, cCheckLogin.m_nUserId);
+				}
+				if(!strCondBlocedkUser.isEmpty()) {
+					statement.setInt(idx++, cCheckLogin.m_nUserId);
+				}
 				if(!strCondMute.isEmpty()) {
 					statement.setString(idx++, strMuteKeyword);
 				}
@@ -107,9 +122,13 @@ public class SearchIllustByKeywordC {
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setString(idx++, m_strKeyword);
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
 			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			if(!strCondBlockUser.isEmpty()) {
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+			}
+			if(!strCondBlocedkUser.isEmpty()) {
+				statement.setInt(idx++, cCheckLogin.m_nUserId);
+			}
 			if(!strCondMute.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);
 			}

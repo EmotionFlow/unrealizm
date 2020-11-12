@@ -87,29 +87,17 @@ public class MyHomeTagC {
 			// サーチタグ&サーチキーワード共に無い場合はそのまま終了
 			if (!bSearchTag && strSearchKeyword.isEmpty()) return true;
 
-			// ブロックユーザクエリ
-			String strCondBlock = "";
-			strSql = "SELECT block_user_id FROM blocks_0000 WHERE user_id=? LIMIT 1";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cCheckLogin.m_nUserId);
-			resultSet = statement.executeQuery();
-			if(resultSet.next()) {
-				strCondBlock = "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+			// BLOCK USER
+			String strCondBlockUser = "";
+			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlockUser = "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
-			// 非ブロックユーザクエリ
-			String strCondBlocked = "";
-			strSql = "SELECT user_id FROM blocks_0000 WHERE block_user_id=? LIMIT 1";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cCheckLogin.m_nUserId);
-			resultSet = statement.executeQuery();
-			if(resultSet.next()) {
-				strCondBlocked = "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			// BLOCKED USER
+			String strCondBlocedkUser = "";
+			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+				strCondBlocedkUser = "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 			// 無限スクロール用のスタートポジションクエリ
 			String strCondStart = (m_nStartId>0)?" AND contents_0000.content_id<?":"";
@@ -143,8 +131,8 @@ public class MyHomeTagC {
 					+ "FROM contents_0000 "
 					+ "LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? "
 					+ "WHERE open_id<>2 "
-					+ strCondBlock
-					+ strCondBlocked
+					+ strCondBlockUser
+					+ strCondBlocedkUser
 					+ "AND safe_filter<=? "
 					+ "AND (content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt IN(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0) AND tag_type=1) "
 					+ strCondSearch
@@ -155,8 +143,8 @@ public class MyHomeTagC {
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, cCheckLogin.m_nUserId); // follows_0000.user_id=?
-			if(!strCondBlock.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.user_id=?
-			if(!strCondBlocked.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.block_user_id=?
+			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.user_id=?
+			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.block_user_id=?
 			statement.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
 			statement.setInt(idx++, cCheckLogin.m_nUserId); // follow_tags_0000.user_id=?
 			if(!strCondSearch.isEmpty()) statement.setString(idx++, strSearchKeyword);
