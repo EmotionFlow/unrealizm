@@ -12,25 +12,18 @@ public class GridUtil {
 	public static int SELECT_MAX_EMOJI = 59;
 
 	public static ArrayList<CContent> getEachComment(Connection connection, ArrayList<CContent> contents) throws SQLException {
-		String sql = "SELECT description FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
+		String sql = "SELECT description FROM comments_desc_cache WHERE content_id=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		for(CContent content : contents) {
 			if(content.m_cUser.m_nReaction!=CUser.REACTION_SHOW) continue;
 			statement.setInt(1, content.m_nContentId);
-			statement.setInt(2, SELECT_MAX_EMOJI);
 			ResultSet resultSet = statement.executeQuery();
-			StringBuffer sbDescription = new StringBuffer();
-			while (resultSet.next()) {
-				//CComment comment = new CComment();
-				//comment.m_strDescription = Util.toString(resultSet.getString("description"));
-				//content.m_vComment.add(0, comment);
-				sbDescription.insert(0, Util.toString(resultSet.getString("description")));
+			if (resultSet.next()) {
+				content.m_strCommentsListsCache = Util.toString(resultSet.getString("description"));
 			}
 			resultSet.close();resultSet=null;
-			content.m_strCommentsListsCache = sbDescription.toString();
 		}
 		statement.close();statement=null;
-
 		return contents;
 	}
 
@@ -79,6 +72,20 @@ public class GridUtil {
 		statement.close();statement=null;
 
 		return sbDescription.toString();
+	}
+
+	public static String getComment(Connection connection, CContent content) throws SQLException {
+		String strSql = "SELECT description FROM comments_desc_cache WHERE content_id=?";
+		PreparedStatement statement = connection.prepareStatement(strSql);
+		statement.setInt(1, content.m_nContentId);
+		ResultSet resultSet = statement.executeQuery();
+		if (resultSet.next()) {
+			content.m_strCommentsListsCache = Util.toString(resultSet.getString("description"));
+		}
+		resultSet.close();resultSet=null;
+		statement.close();statement=null;
+
+		return content.m_strCommentsListsCache;
 	}
 
 }

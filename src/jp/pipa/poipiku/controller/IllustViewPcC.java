@@ -213,20 +213,7 @@ public class IllustViewPcC {
 
 			// Emoji
 			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-				strSql = "SELECT description FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
-				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, m_cContent.m_nContentId);
-				statement.setInt(2, SELECT_MAX_EMOJI);
-				resultSet = statement.executeQuery();
-				StringBuffer sbDescription = new StringBuffer();
-				while (resultSet.next()) {
-					//CComment cComment = new CComment(resultSet);
-					//m_cContent.m_vComment.add(0, cComment);
-					sbDescription.insert(0, Util.toString(resultSet.getString("description")));
-				}
-				resultSet.close();resultSet=null;
-				statement.close();statement=null;
-				m_cContent.m_strCommentsListsCache = sbDescription.toString();
+				m_cContent.m_strCommentsListsCache = GridUtil.getComment(connection, m_cContent);
 			}
 
 			// Bookmark
