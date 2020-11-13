@@ -4,12 +4,11 @@
 <%
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-DeleteContentCParam cParam = new DeleteContentCParam();
-cParam.GetParam(request);
+DeleteContentC cResults = new DeleteContentC();
+cResults.GetParam(request);
 
 boolean bRtn = false;
-if( cCheckLogin.m_bLogin && cParam.m_nUserId == cCheckLogin.m_nUserId ) {
-	DeleteContentC cResults = new DeleteContentC(request.getServletContext());
-	bRtn = cResults.GetResults(cParam);
+if( cCheckLogin.m_bLogin && cResults.m_nUserId == cCheckLogin.m_nUserId ) {
+	bRtn = cResults.GetResults(request.getServletContext());
 }
 %><%=bRtn%>

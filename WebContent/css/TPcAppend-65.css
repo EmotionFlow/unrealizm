@@ -9,7 +9,7 @@ a:hover {color: #fff;}
 body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; min-height: 60px; position: relative;}
 .Wrapper.ThumbList {width: 990px;}
-.Wrapper.ItemList {width: 728px;}
+.Wrapper.ItemList {width: 730px;}
 .Wrapper.ViewPc {width: 930px; position: relative; display: flex; flex-flow: row wrap;}
 .Wrapper.ViewPc .IllustItemList {width: 600px; float: none; flex: 0 0 600px; margin: 0;}
 .SideBarTop {height: 60px;}

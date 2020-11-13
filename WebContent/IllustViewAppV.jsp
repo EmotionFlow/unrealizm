@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-	CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin cCheckLogin = new CheckLogin(request, response);
 if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
@@ -30,45 +30,27 @@ default:
 	break;
 }
 
-String strTitle = "";
+boolean bHidden = false;	// テキスト用カバー画像表示フラグ
 switch(cResults.m_cContent.m_nPublishId) {
-case Common.PUBLISH_ID_PASS:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
-	break;
-case Common.PUBLISH_ID_LOGIN:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Login");
-	break;
-case Common.PUBLISH_ID_FOLLOWER:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Follower");
-	break;
-case Common.PUBLISH_ID_T_FOLLOWER:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Follower");
-	break;
-case Common.PUBLISH_ID_T_FOLLOWEE:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Followee");
-	break;
-case Common.PUBLISH_ID_T_EACH:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_Each");
-	break;
-case Common.PUBLISH_ID_T_LIST:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.T_List");
-	break;
-case Common.PUBLISH_ID_HIDDEN:
-	strTitle = _TEX.T("UploadFilePc.Option.Publish.Hidden");
-	break;
-case Common.PUBLISH_ID_ALL:
 case Common.PUBLISH_ID_R15:
 case Common.PUBLISH_ID_R18:
 case Common.PUBLISH_ID_R18G:
+case Common.PUBLISH_ID_PASS:
+case Common.PUBLISH_ID_LOGIN:
+case Common.PUBLISH_ID_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOWER:
+case Common.PUBLISH_ID_T_FOLLOWEE:
+case Common.PUBLISH_ID_T_EACH:
+case Common.PUBLISH_ID_T_LIST:
+	bHidden = true;
+	break;
+case Common.PUBLISH_ID_ALL:
+case Common.PUBLISH_ID_HIDDEN:
 default:
-	strTitle = cResults.m_cContent.m_cUser.m_strNickName;
-	String[] strs = cResults.m_cContent.m_strDescription.split("¥n");
-	if(strs.length>0 && strs[0].length()>0) {
-		strTitle = strs[0];
-	}
 	break;
 }
-strTitle = Common.SubStrNum(strTitle, 10);
+
+String strTitle = CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX);
 ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 %>
 <!DOCTYPE html>
@@ -78,7 +60,7 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
-		<title><%=strTitle%></title>
+		<title><%=Util.toDescString(strTitle)%></title>
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 
@@ -141,6 +123,14 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 				});
+
+				<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+				var frame_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> ).height();
+				var text_height = $('#IllustItemText_'+ <%=cResults.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+				if(frame_height>=text_height) {
+					$('.IllustItemExpandBtn').hide();
+				}
+				<%}%>
 			});
 		</script>
 
@@ -233,7 +223,6 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
 		</article>
 
-
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
@@ -264,14 +253,13 @@ ArrayList<String> vResult = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EM
 						<%
 							String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);
 						%>
-						<a class="AutoLink" class="AutoLink" href="/SearchIllustByTagAppV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
+						<a class="AutoLink" href="/SearchIllustByTagAppV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 					</h2>
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 				<%}%>
-				<%@ include file="/inner/TAd336x280_mid.jsp"%>
 			</section>
 		</article>
 		<%}%>

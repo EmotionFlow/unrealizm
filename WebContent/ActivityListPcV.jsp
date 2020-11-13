@@ -11,14 +11,12 @@ if(!cCheckLogin.m_bLogin) {
 	return;
 }
 
-//パラメータの取得
-ActivityListCParam cParam = new ActivityListCParam();
-cParam.GetParam(request);
-cParam.m_nUserId = cCheckLogin.m_nUserId;
-
-//検索結果の取得
 ActivityListC cResults = new ActivityListC();
-cResults.GetResults(cParam);
+//パラメータの取得
+cResults.GetParam(request);
+cResults.m_nUserId = cCheckLogin.m_nUserId;
+//検索結果の取得
+cResults.GetResults(cCheckLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -31,24 +29,6 @@ cResults.GetResults(cParam);
 			$('#MenuAct').addClass('Selected');
 		});
 		</script>
-
-		<script>
-		$(function(){
-			$.ajaxSingle({
-				"type": "post",
-				"data": {},
-				"url": "/f/UpdateNotifyF.jsp",
-				"dataType": "json",
-				"success": function(data) {
-					// clear notify
-					UpdateNotify();
-				},
-				"error": function(req, stat, ex){
-					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-				}
-			});
-		});
-		</script>
 	</head>
 
 	<body>
@@ -56,49 +36,39 @@ cResults.GetResults(cParam);
 
 		<article class="Wrapper ItemList">
 
-			<%if(cResults.m_vComment.size()<=0) {%>
+			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div style="display:block; width: 100%; padding: 250px 0; text-align: center;">
-				<%=(cParam.m_nMode<=0)?_TEX.T("ActivityList.Message.Default.Recive"):_TEX.T("ActivityList.Message.Default.Send")%>
+				<%=_TEX.T("ActivityList.Message.Default.Recive")%>
 			</div>
 			<%}else{%>
 			<div class="IllustItemList" style="min-height: 600px;">
-				<div class="ItemComment">
-					<%for(int nCnt=0; nCnt<cResults.m_vComment.size(); nCnt++) {
-						CComment cComment = cResults.m_vComment.get(nCnt);%>
-					<%if(cComment.m_nCommentType==CComment.TYPE_COMMENT) {%>
-					<a class="ItemCommentItem" href="/IllustViewPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>&TD=<%=cComment.m_nContentId%>">
-						<span class="CommentThumb Heart">
-							<span class="Emoji"><%=CEmoji.parse(cComment.m_strDescription)%></span>
+				<div class="ActivityList">
+					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+						ActivityListC.ActivityInfo activityInfo = cResults.m_vContentList.get(nCnt);%>
+					<%if(activityInfo.info_type == Common.NOTIFICATION_TYPE_REACTION) {	// 絵文字が来たお知らせ%>
+					<a class="ActivityListItem <%if(activityInfo.had_read){%>HadRead<%}%>" href="/UpdateActiviryListV.jsp?TY=<%=activityInfo.info_type%>&ID=<%=activityInfo.user_id%>&TD=<%=activityInfo.content_id%>&APP=0">
+						<span class="ActivityListThumb">
+							<%if(activityInfo.content_type==Common.CONTENT_TYPE_IMAGE) {%>
+							<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.info_thumb)%>_360.jpg')"></span>
+							<%} else if(activityInfo.content_type==Common.CONTENT_TYPE_TEXT) {%>
+							<span class="ActivityListThumbTxt"><%=Util.toStringHtml(activityInfo.info_thumb)%></span>
+							<%}%>
 						</span>
-						<span class="CommentDetail Heart">
-							<span class="CommentName">
-								<%//=Util.toStringHtml(cComment.m_strNickName)%>
-								<%=_TEX.T("ActivityList.Message.Comment")%>
+						<span class="ActivityListBody">
+							<span class="ActivityListTitle">
+								<span class="Date"><%=(new SimpleDateFormat("YYYY MM/dd HH:mm")).format(activityInfo.info_date)%></span>
+								<span class="Title"><%=_TEX.T("ActivityList.Message.Comment")%></span>
+							</span>
+							<span class="ActivityListDesc">
+								<%for (int i = 0; i < activityInfo.info_desc.length(); i = activityInfo.info_desc.offsetByCodePoints(i, 1)) {%>
+								<%=CEmoji.parse(String.valueOf(Character.toChars(activityInfo.info_desc.codePointAt(i))))%>
+								<%}%>
 							</span>
 						</span>
+						<span class="ActivityListBadge"><%=activityInfo.badge_num%></span>
 					</a>
-					<%} else if(cComment.m_nCommentType==CComment.TYPE_FOLLOW) {%>
-					<a class="UserThumb" href="/IllustListPcV.jsp?ID=<%=cComment.m_nUserId%>">
-						<span class="UserThumbImg" style="background-image: url('<%=Common.GetUrl(cComment.m_strFileName)%>_120.jpg')"></span>
-						<span class="UserThumbName">
-							<%//=Util.toStringHtml(cComment.m_strNickName)%>
-							<span class="UserThumbNameAdditional">
-								<%=String.format((cParam.m_nMode<=0)?_TEX.T("ActivityList.Message.Followed"):_TEX.T("ActivityList.Message.Following"),
-										Util.toStringHtml(cComment.m_strNickName))%>
-							</span>
-						</span>
-					</a>
-					<%} else if(cComment.m_nCommentType==CComment.TYPE_HEART) {%>
-					<a class="ItemCommentItem" href="/IllustViewPcV.jsp?TD=<%=cComment.m_nContentId%>">
-						<span class="CommentThumb Heart">
-							<span class="typcn typcn-heart-full-outline"></span>
-						</span>
-						<span class="CommentDetail Heart">
-							<span class="CommentName">
-								<%=Util.toStringHtml(cComment.m_strNickName)%>
-							</span>
-						</span>
-					</a>
+					<%} else if(activityInfo.info_type == Common.NOTIFICATION_TYPE_REACTION) {%>
+					<%} else {%>
 					<%}%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd728x90_mid.jsp"%>

@@ -58,10 +58,10 @@ public class CheckNotifyC {
 			*/
 
 			// Check Comment
-			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE open_id<>2 AND user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
-			cState.setInt(2, m_nUserId);
+			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
 			cState.setInt(3, m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
@@ -101,14 +101,14 @@ public class CheckNotifyC {
 			*/
 
 			// Notify Comment
-			strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE open_id<>2 AND user_id=?) AND comments_0000.user_id!=? AND upload_date>CURRENT_DATE-7 AND upload_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
-			cState.setInt(2, m_nUserId);
+			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
 			cState.setInt(3, m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nNotifyComment = cResSet.getInt(1);
+				m_nCheckComment = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -151,12 +151,16 @@ public class CheckNotifyC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
+			/*
 			// Update Last Login Time
-			strSql = "UPDATE users_0000 SET last_login_date=current_timestamp WHERE user_id=?";
+			strSql = "UPDATE users_0000 SET last_login_date=CURRENT_TIMESTAMP WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
+			CacheUsers0000 user = CacheUsers0000.getInstance();
+			user.clearUser(m_nUserId);
+			*/
 
 		} catch(Exception e) {
 			Log.d(strSql);

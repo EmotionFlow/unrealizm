@@ -1,3 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% boolean isApp = true; %>
-<%@include file="/inner/ActivityListV.jsp"%>
+<%
+getServletContext().getRequestDispatcher("/ActivityListAppV.jsp").forward(request,response);
+return;
+%>

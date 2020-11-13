@@ -28,9 +28,14 @@ public class Common {
 	public static final String HUSH_TAG_PATTERN = "[^#]#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 	public static final String MY_TAG_PATTERN = "##([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 
+	// お知らせ一覧種別
 	public static final int NOTIFICATION_TYPE_REACTION = 1;
 	public static final int NOTIFICATION_TYPE_FOLLOW = 2;
-
+	// お知らせ一覧サムネ種別
+	public static final int CONTENT_TYPE_IMAGE = 1;
+	public static final int CONTENT_TYPE_TEXT = 2;
+	public static final int CONTENT_TYPE_MOVIE = 3;	// 未使用変更OK
+	// お知らせ一覧スマホ通知種別
 	public static final int NOTIFICATION_TOKEN_TYPE_IOS = 1;
 	public static final int NOTIFICATION_TOKEN_TYPE_ANDROID = 2;
 

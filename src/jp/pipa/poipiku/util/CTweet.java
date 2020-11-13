@@ -327,7 +327,9 @@ public class CTweet {
 			if(lookupResults.size() > 0){
 				//strSql = "INSERT INTO twitter_friends(user_id, twitter_user_id, twitter_follow_user_id) VALUES (?, ?, ?, ?) ON CONFLICT DO NOTHING;";
 				strSql = "INSERT INTO twitter_friends(user_id, twitter_user_id, follow_user_id, twitter_follow_user_id) "
-						+ "VALUES (?, ?, ?, ?) ON CONFLICT (user_id, twitter_follow_user_id) DO UPDATE SET last_update_date=CURRENT_TIMESTAMP;";
+						+ "VALUES (?, ?, ?, ?) "
+						+ "ON CONFLICT (user_id, twitter_follow_user_id) "
+						+ "DO UPDATE SET last_update_date=CURRENT_TIMESTAMP; ";
 				cState = cConn.prepareStatement(strSql);
 				Friendship f = lookupResults.get(0);
 				if(f.isFollowing() && f.isFollowedBy()){

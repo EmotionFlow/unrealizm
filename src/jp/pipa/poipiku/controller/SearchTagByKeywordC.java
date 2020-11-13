@@ -46,9 +46,12 @@ public class SearchTagByKeywordC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
+			String strSqlFromWhere = "SELECT tag_txt "
+					+ "FROM tags_0000 "
+					+ "WHERE tag_txt &@~ ? GROUP BY tag_txt ";
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM (SELECT tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt) as T1";
+				strSql = "SELECT COUNT(tag_txt) FROM (" + strSqlFromWhere + ") as T";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, m_strKeyword);
 				cResSet = cState.executeQuery();
@@ -59,7 +62,8 @@ public class SearchTagByKeywordC {
 				cState.close();cState=null;
 			}
 
-			strSql = "select max(tag_id) max_id, tag_txt FROM tags_0000 WHERE tag_txt &@~ ? group by tag_txt order by count(*) desc offset ? limit ?";
+			strSql = strSqlFromWhere
+					+ "ORDER BY COUNT(tag_txt) DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, m_strKeyword);
 			cState.setInt(2, m_nPage*SELECT_MAX_GALLERY);
