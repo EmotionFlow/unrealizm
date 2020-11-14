@@ -1768,6 +1768,11 @@
 	padding: 0 3px
 }
 
+.IllustItemList .ActivityList .ActivityListItem.HadRead .ActivityListBadge {
+	background: #ccc;
+}
+
+
 
 /*********** IllustView UserInfo **********/
 .UserInfo {

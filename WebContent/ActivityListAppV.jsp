@@ -40,7 +40,7 @@ cResults.GetResults(cCheckLogin);
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						ActivityListC.ActivityInfo activityInfo = cResults.m_vContentList.get(nCnt);%>
 					<%if(activityInfo.info_type == Common.NOTIFICATION_TYPE_REACTION) {	// 絵文字が来たお知らせ%>
-					<a class="ActivityListItem" href="/UpdateActiviryListV.jsp?TY=<%=activityInfo.info_type%>&ID=<%=activityInfo.user_id%>&TD=<%=activityInfo.content_id%>&APP=1">
+					<a class="ActivityListItem" href="/UpdateActivityListV.jsp?TY=<%=activityInfo.info_type%>&ID=<%=activityInfo.user_id%>&TD=<%=activityInfo.content_id%>&APP=1">
 						<span class="ActivityListThumb">
 							<%if(activityInfo.content_type==Common.CONTENT_TYPE_IMAGE) {%>
 							<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.info_thumb)%>_360.jpg')"></span>
