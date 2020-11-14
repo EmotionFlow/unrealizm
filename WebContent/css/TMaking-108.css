@@ -1706,6 +1706,7 @@
 	box-sizing: border-box;
 	border: solid 1px #eee;
 	font-size: 10px;
+	overflow: hidden;
 }
 
 .IllustItemList .ActivityList .ActivityListItem .ActivityListBody {
