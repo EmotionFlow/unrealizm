@@ -48,7 +48,7 @@ public class UpdateActivityListC {
 
 			// Get info_list
 			sql = "UPDATE info_lists "
-					+ "SET had_read=true "
+					+ "SET had_read=true, badge_num=0 "
 					+ "WHERE user_id=? "
 					+ "AND content_id=? "
 					+ "AND info_type=? ";
