@@ -1770,6 +1770,7 @@
 }
 
 .IllustItemList .ActivityList .ActivityListItem.HadRead .ActivityListBadge {
+	display: none;
 	background: #aaa;
 }
 
