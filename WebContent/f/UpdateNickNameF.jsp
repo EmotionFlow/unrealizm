@@ -18,7 +18,6 @@ if(strNickName.length()<UserAuthUtil.LENGTH_NICKNAME_MIN || strNickName.length()
 DataSource dsPostgres = null;
 Connection cConn = null;
 PreparedStatement cState = null;
-ResultSet cResSet = null;
 String strSql = "";
 
 try {
@@ -37,7 +36,6 @@ try {
 	e.printStackTrace();
 } finally {
 	try{if(cState != null) cState.close();cState=null;} catch(Exception e) {;}
-	try{if(cConn != null) cConn.close();cConn=null;} catch(Exception e) {;}
 	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
 %>{"result":1}

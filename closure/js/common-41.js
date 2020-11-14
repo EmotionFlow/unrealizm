@@ -50,6 +50,15 @@ function setCookieWeek(key, val, tmp) {
 	document.cookie = tmp;
 }
 
+function setCookieOneDay(key, val, tmp) {
+	dateExp = new Date();
+	dateExp.setTime(dateExp.getTime()+(1000*60*60*24));
+	tmp = key + "=" + encodeURIComponent(val) + "; ";
+	tmp += "path=/; ";
+	tmp += "expires="+dateExp.toGMTString();
+	document.cookie = tmp;
+}
+
 function getCookie(key) {
 	var cookieName = key + '=';
 	var allcookies = document.cookie;

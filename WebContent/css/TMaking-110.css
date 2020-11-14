@@ -1974,6 +1974,13 @@
 	color: #fff;
 }
 
+.SettingList .BtnBase.Disabled,
+.SettingList .BtnBase.Disabled:hover {
+	border: 1px solid #a1cce8;
+	background: #fff;
+	color: #a1cce8;
+}
+
 .SettingList .SettingListItem {
 	display: block;
 	float: left;

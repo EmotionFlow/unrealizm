@@ -228,7 +228,7 @@
 								</div>
 						</div>
 						<h2 class="UserInfoUserName">
-								<div class="SettingBody">
+								<div class="SettingBody" style="background: none;">
 										<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" onkeyup="CheckInput()" />
 										<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 										<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>

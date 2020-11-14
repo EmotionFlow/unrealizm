@@ -140,7 +140,7 @@ String[][] menuOrder = {
 		.Wrapper.ItemList .IllustItemList {margin-top: 16px;}
 		<%}%>
 
-		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #fff;}
+		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #6d6965;}
 
 		.SettingMenuHeader{
 			height: 27px;
@@ -151,6 +151,11 @@ String[][] menuOrder = {
 			color: #6d6965;
 			border-bottom: 1px solid #555;
 		}
+
+		.SettingBody {display: block; float: left; background: #fff; color: #6d6965;width: 100%;}
+
+		.SettingListItem {color: #6d6965;}
+		.SettingListItem a {color: #6d6965;}
 
 		.SettingBody .SettingBodyCmdRegist {
 			font-size: 14px;
@@ -206,6 +211,12 @@ String[][] menuOrder = {
 			min-height: 425px;
 			border: 1px solid #ccc;
 			border-top: 0;
+		}
+		.SettingListItem {
+			color: #6d6965;
+		}
+		.SettingListItem a {
+			color: #6d6965;
 		}
 		.SettingMenuItemLink:hover,
 		.SettingMenuItemLink.Selected{

@@ -4,62 +4,78 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
 		function UnlinkTwitter() {
-				<%if(cResults.m_cUser.m_strEmail!=null && cResults.m_cUser.m_strEmail.contains("@")){%>
-				$.ajaxSingle({
-						"type": "post",
-						"data": { "ID":<%=cCheckLogin.m_nUserId%>},
-						"url": "/f/UnlinkTwitterF.jsp",
-						"dataType": "json",
-						"success": function(data) {
-								location.reload();
-						},
-						"error": function(req, stat, ex){
-								DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
-						}
-				});
-				<%}else{%>
-				Swal.fire({
-						type: "info",
-						text: "<%=_TEX.T("EditSettingV.Twitter.Deregist.NeedEmail")%>",
-				});
-				<%}%>
-				return false;
+			<%if(cResults.m_cUser.m_strEmail!=null && cResults.m_cUser.m_strEmail.contains("@")){%>
+			$.ajaxSingle({
+					"type": "post",
+					"data": { "ID":<%=cCheckLogin.m_nUserId%>},
+					"url": "/f/UnlinkTwitterF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+							location.reload();
+					},
+					"error": function(req, stat, ex){
+							DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+					}
+			});
+			<%}else{%>
+			Swal.fire({
+					type: "info",
+					text: "<%=_TEX.T("EditSettingV.Twitter.Deregist.NeedEmail")%>",
+			});
+			<%}%>
+			return false;
+		}
+
+		function UpdateTwitterCash() {
+			$.ajaxSingle({
+				"type": "post",
+				"data": { "ID":<%=cCheckLogin.m_nUserId%>},
+				"url": "/f/UpdateTwitterCashF.jsp",
+				"dataType": "json",
+				"success": function(data) {
+					setCookieOneDay('UPTW', 'UpdateTwitterCash')
+					location.reload();
+				},
+				"error": function(req, stat, ex){
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+				}
+		});
 		}
 
 		function UpdateAutoTweet() {
-				var bAutoTweet = $('#AutoTweet').prop('checked');
-				var nAutoTweetWeekDay = parseInt($('#AutoTweetWeekDay').val(), 10);
-				var nAutoTweetTime = parseInt($('#AutoTweetTime').val(), 10);
-				var strAutoTweetTxt = $.trim($("#AutoTweetTxt").val());
-				var nAutoTweetThumbNum = ($('#AutoTweetThumb').prop('checked'))?9:0;
-				if(!bAutoTweet) {
-						nAutoTweetWeekDay = -1;
-						nAutoTweetTime = -1;
-				}
-				$.ajaxSingle({
-						"type": "post",
-						"data": {
-								"ID": <%=cCheckLogin.m_nUserId%>,
-								"AW": nAutoTweetWeekDay,
-								"AT": nAutoTweetTime,
-								"AD": strAutoTweetTxt,
-								"ATN": nAutoTweetThumbNum},
-						"url": "/f/UpdateAutoTweetF.jsp",
-						"dataType": "json",
-						"success": function(data) {
-								DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
-								sendObjectMessage("reloadParent");
-						},
-						"error": function(req, stat, ex){
-								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-						}
-				});
-				return false;
+			var bAutoTweet = $('#AutoTweet').prop('checked');
+			var nAutoTweetWeekDay = parseInt($('#AutoTweetWeekDay').val(), 10);
+			var nAutoTweetTime = parseInt($('#AutoTweetTime').val(), 10);
+			var strAutoTweetTxt = $.trim($("#AutoTweetTxt").val());
+			var nAutoTweetThumbNum = ($('#AutoTweetThumb').prop('checked'))?9:0;
+			if(!bAutoTweet) {
+					nAutoTweetWeekDay = -1;
+					nAutoTweetTime = -1;
+			}
+			$.ajaxSingle({
+					"type": "post",
+					"data": {
+							"ID": <%=cCheckLogin.m_nUserId%>,
+							"AW": nAutoTweetWeekDay,
+							"AT": nAutoTweetTime,
+							"AD": strAutoTweetTxt,
+							"ATN": nAutoTweetThumbNum},
+					"url": "/f/UpdateAutoTweetF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+							DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
+							sendObjectMessage("reloadParent");
+					},
+					"error": function(req, stat, ex){
+							DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+					}
+			});
+			return false;
 		}
 
 		function DispAutoTweetCharNum() {
-				var nCharNum = 100 - $("#AutoTweetTxt").val().length;
-				$("#AutoTweetTxtNum").html(nCharNum);
+			var nCharNum = 100 - $("#AutoTweetTxt").val().length;
+			$("#AutoTweetTxtNum").html(nCharNum);
 		}
 
 		$(function () {
@@ -87,10 +103,10 @@
 </style>
 
 <div class="SettingList">
-		<div class="RegistStatus" ><%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%></div>
+		<div class="RegistStatus"><%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%></div>
 		<div class="SettingListItem" style="border: none;">
 				<a id="TwitterSetting" name="TwitterSetting"></a>
-				<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter")%></div>
+				<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Regist")%></div>
 				<div class="SettingBody">
 						<%if(!cResults.m_cUser.m_bTweet){%>
 						<%=_TEX.T("EditSettingV.Twitter.Info1")%>
@@ -118,8 +134,26 @@
 						</div>
 				</div>
 		</div>
+		<%}%>
 
-		<%if(cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
+		<%if(cResults.m_cUser.m_bTweet){%>
+		<div class="SettingListItem" style="border: none;">
+				<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Cache")%></div>
+				<div class="SettingBody">
+						<p><%=_TEX.T("EditSettingV.Twitter.Cache.info1")%></p>
+						<div class="SettingBodyCmd">
+								<div class="RegistMessage" ></div>
+								<%if(Util.getCookie(request, "UPTW")==null) {%>
+								<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateTwitterCash()"><%=_TEX.T("EditSettingV.Twitter.Button.Update")%></a>
+								<%} else {%>
+								<a class="BtnBase SettingBodyCmdRegist Disabled" href="javascript:void(0)" ><%=_TEX.T("EditSettingV.Twitter.Button.Update")%></a>
+								<%}%>
+						</div>
+				</div>
+		</div>
+		<%}%>
+
+		<%if(cResults.m_cUser.m_bTweet && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
 		<div id="SectionAutoTweet" class="SettingListItem">
 				<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 				<div class="SettingBody">
@@ -187,6 +221,5 @@
 						</div>
 				</div>
 		</div>
-		<%}%>
 		<%}%>
 </div>

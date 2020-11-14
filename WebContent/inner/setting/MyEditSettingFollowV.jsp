@@ -5,7 +5,7 @@ FollowListC cFollowListResults = new FollowListC();
 cFollowListResults.getParam(request);
 cFollowListResults.m_nMode = 0;
 cFollowListResults.m_nPage = cResults.m_nListPage;
-cFollowListResults.SELECT_MAX_GALLERY = 8;
+cFollowListResults.SELECT_MAX_GALLERY = 30;
 cFollowListResults.getResults(cCheckLogin);
 %>
 <script type="application/javascript">
@@ -44,7 +44,7 @@ cFollowListResults.getResults(cCheckLogin);
 		<%for(int nCnt = 0; nCnt< cFollowListResults.m_vContentList.size(); nCnt++) {
 			CUser cUser = cFollowListResults.m_vContentList.get(nCnt);%>
 		<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
-		<%if(bSmartPhone && (nCnt+1)%18==0) {%>
+		<%if(bSmartPhone && (nCnt+1)%15==0) {%>
 		<%@ include file="/inner/TAd336x280_mid.jsp"%>
 		<%}%>
 		<%}%>

@@ -29,11 +29,12 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class SendEmojiC {
-	public final int ERR_NONE = 0;
-	public final int ERR_RETRY = -10;
-	public final int ERR_INQUIRY = -20;
-	public final int ERR_CARD_AUTH = -30;
-	public final int ERR_UNKNOWN = -99;
+	public static final int ERR_NONE = 0;
+	public static final int ERR_RETRY = -10;
+	public static final int ERR_INQUIRY = -20;
+	public static final int ERR_CARD_AUTH = -30;
+	public static final int ERR_MAX_EMOJI = -40;
+	public static final int ERR_UNKNOWN = -99;
 
 	public int m_nContentId = -1;
 	public String m_strEmoji = "";
@@ -130,6 +131,7 @@ public class SendEmojiC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 			if(nEmojiNum>=Common.EMOJI_MAX[checkLogin.m_nPremiumId]) {
+				m_nErrCode = ERR_MAX_EMOJI;
 				return false;
 			}
 
