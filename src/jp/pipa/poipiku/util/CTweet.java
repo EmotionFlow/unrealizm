@@ -710,19 +710,19 @@ public class CTweet {
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
 
-			strSql = "DELETE twitter_follows WHERE user_id=?";
+			strSql = "DELETE FROM twitter_follows WHERE user_id=?";
 			cState = connection.prepareStatement(strSql);
 			cState.setInt(1, userId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			strSql = "DELETE twitter_friends WHERE user_id=?";
+			strSql = "DELETE FROM twitter_friends WHERE user_id=?";
 			cState = connection.prepareStatement(strSql);
 			cState.setInt(1, userId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			strSql = "DELETE twitter_lists WHERE user_id=?";
+			strSql = "DELETE FROM twitter_lists WHERE user_id=?";
 			cState = connection.prepareStatement(strSql);
 			cState.setInt(1, userId);
 			cState.executeUpdate();

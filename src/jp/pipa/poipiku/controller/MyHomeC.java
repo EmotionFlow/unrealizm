@@ -93,7 +93,7 @@ public class MyHomeC {
 			StringBuilder sb = new StringBuilder();
 			sb.append("SELECT * FROM contents_0000 ")
 			.append("WHERE open_id<>2 ")
-			.append("AND user_id IN ((SELECT follow_user_id FROM follows_0000 WHERE user_id=?) UNION ALL (SELECT ?)) ");
+			.append("AND (user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) OR user_id=?) ");
 			if(!strCondMute.isEmpty()) {
 				sb.append(strCondMute);
 			}
