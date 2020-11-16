@@ -10,9 +10,9 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
+int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
 CheckLogin cCheckLogin = new CheckLogin(request, response);
 
-int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
 
 Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_result:%d, url:%s", cCheckLogin.m_nUserId, nResult, "myurlscheme://restart"));
 %>
