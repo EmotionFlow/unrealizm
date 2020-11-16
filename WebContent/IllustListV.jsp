@@ -7,7 +7,7 @@ IllustListC cResults = new IllustListC();
 cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	if(!cCheckLogin.m_bLogin) {
-		response.sendRedirect("/StartPoipikuV.jsp");
+		getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
 		return;
 	}
 	cResults.m_nUserId = cCheckLogin.m_nUserId;

@@ -19,7 +19,7 @@ boolean bResult = false;
 
 //login check
 if(!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId < 1){
-	response.sendRedirect("/StartPoipikuV.jsp");
+	getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
 	return;
 }
 

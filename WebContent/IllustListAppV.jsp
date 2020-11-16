@@ -8,7 +8,7 @@ cResults.getParam(request);
 
 if(cResults.m_nUserId==-1) {
 	if(!cCheckLogin.m_bLogin) {
-		response.sendRedirect("/StartPoipikuAppV.jsp");
+		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 		return;
 	} else {
 		cResults.m_nUserId = cCheckLogin.m_nUserId;
