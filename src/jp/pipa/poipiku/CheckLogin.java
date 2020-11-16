@@ -31,9 +31,15 @@ public class CheckLogin {
 	}
 
 	private void getCookie(HttpServletRequest request) {
-		m_strHashPass = Util.toString(request.getParameter(Common.POIPIKU_LK_POST));
-		if(!m_strHashPass.isEmpty()) return;
-		m_strHashPass = Util.toString(Util.getCookie(request, Common.POIPIKU_LK));
+		try {
+			request.setCharacterEncoding("UTF-8");
+			m_strHashPass = Util.toString(request.getParameter(Common.POIPIKU_LK_POST));
+		} catch (Exception e) {
+			;
+		}
+		if(m_strHashPass.isEmpty()) {
+			m_strHashPass = Util.toString(Util.getCookie(request, Common.POIPIKU_LK));
+		}
 	}
 
 	private boolean isUserValid() {
