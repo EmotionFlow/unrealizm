@@ -15,7 +15,7 @@ int userId = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX
 CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(userId);
 
 
-Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_result:%d, url:%s", cCheckLogin.m_nUserId, nResult, "myurlscheme://restart"));
+Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_result:%d, url:%s", cCheckLogin.m_nUserId, userId, "myurlscheme://restart"));
 %>
 <!DOCTYPE html>
 <html>
