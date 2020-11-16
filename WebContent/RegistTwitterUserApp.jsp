@@ -24,8 +24,8 @@ Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_resul
 		<meta http-equiv="refresh" content="3;URL=myurlscheme://restart" />
 		<script>
 		$(function(){
-			sendObjectMessage("auth_data{'<%=Common.POIPIKU_LK_POST%>':'<%=cCheckLogin.m_strHashPass%>', '<%=Common.LANG_ID_POST%>':'<%=(cCheckLogin.m_nLangId==0)?"en":"ja"%>'}");
-			sendObjectMessage("restart");
+			sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=cCheckLogin.m_strHashPass%>&<%=Common.LANG_ID_POST%>=<%=(cCheckLogin.m_nLangId==0)?"en":"ja"%>");
+			//sendObjectMessage("restart");
 		});
 		</script>
 	</head>
