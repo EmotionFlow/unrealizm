@@ -20,7 +20,7 @@ public class ResourceBundleControl {
 	public ResourceBundleControl(HttpServletRequest request) {
 		String strLang="";
 
-		strLang = Util.toString(request.getParameter(Common.LANG_ID));
+		strLang = Util.toString(request.getParameter(Common.LANG_ID_POST));
 		if(strLang.isEmpty()) {
 			strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
 		}
