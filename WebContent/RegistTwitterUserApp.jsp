@@ -35,7 +35,7 @@ Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_resul
 		<article class="Wrapper" style="text-align: center;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
 			<a href="myurlscheme://restart">
-			<%if(nResult>0) {%>
+			<%if(userId>0) {%>
 			<%=_TEX.T("RegistUserV.UpdateComplete")%>
 			<%} else {%>
 			<%=_TEX.T("RegistUserV.UpdateError")%>
