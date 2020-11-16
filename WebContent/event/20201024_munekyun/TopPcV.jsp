@@ -39,7 +39,7 @@ if(!bSmartPhone) {
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="./poipiku_3_pre.png" />
+				<img class="MainImage" src="./poipiku_kyun_sp.png" />
 				<!--
 				<a class="LinkButton Link2" href="https://www.wacom.com/ja-jp/products/pen-tablets/wacom-intuos" target="_blank"></a>
 				<a class="LinkButton Link3" href="https://twitter.com/pipajp" target="_blank"></a>
