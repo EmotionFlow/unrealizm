@@ -10,8 +10,9 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
-int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
 CheckLogin cCheckLogin = new CheckLogin(request, response);
+int userId = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
+CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(userId);
 
 
 Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_result:%d, url:%s", cCheckLogin.m_nUserId, nResult, "myurlscheme://restart"));
@@ -24,7 +25,7 @@ Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_resul
 		<meta http-equiv="refresh" content="3;URL=myurlscheme://restart" />
 		<script>
 		$(function(){
-			sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=cCheckLogin.m_strHashPass%>&<%=Common.LANG_ID_POST%>=<%=(cCheckLogin.m_nLangId==0)?"en":"ja"%>");
+			sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.LANG_ID_POST%>=<%=(user.langId==0)?"en":"ja"%>");
 			//sendObjectMessage("restart");
 		});
 		</script>
