@@ -179,6 +179,9 @@ public class Common {
 
 	// Cookie Key
 	public static String POIPIKU_LK = "POIPIKU_LK";
+	public static String POIPIKU_LK_POST = "POIPIKU_LK";
+	public static String LANG_ID = "LANG";
+	public static String LANG_ID_POST = "hl";
 	public static String POIPIKU_INFO = "POIPIKU_INFO";
 
 

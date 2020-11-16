@@ -6,8 +6,9 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+
+import jp.pipa.poipiku.util.Util;
 
 
 public class ResourceBundleControl {
@@ -17,26 +18,11 @@ public class ResourceBundleControl {
 	public int ID = 1;
 
 	public ResourceBundleControl(HttpServletRequest request) {
-		String strLang="ja";
+		String strLang="";
 
-		// &hl=ja
-		try {
-			request.setCharacterEncoding("UTF-8");
-			if(request.getParameter("hl") != null) {
-				strLang = request.getParameter("hl");
-			} else {
-				Cookie[] cookies = request.getCookies();
-				if (cookies!=null){
-					for(int i=0; i<cookies.length; i++){
-						if(cookies[i].getName().equals("LANG")){
-							strLang = cookies[i].getValue();
-							break;
-						}
-					}
-				}
-			}
-		} catch(Exception e) {
-			;
+		strLang = Util.toString(request.getParameter(Common.POIPIKU_LK_POST));
+		if(strLang.isEmpty()) {
+			strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
 		}
 
 		objRbJa = CResourceBundleUtil.getJa();

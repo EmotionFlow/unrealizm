@@ -736,15 +736,11 @@ public class UserAuthUtil {
 
 				// Lang Id
 				int nLangId=1;
-				Cookie[] cookies = request.getCookies();
-				if (cookies != null){
-					for(int i=0; i<cookies.length; i++){
-						if(cookies[i].getName().equals("LANG")){
-							String strLang = cookies[i].getValue();
-							nLangId = (strLang.equals("en"))?0:1;
-						}
-					}
+				String strLang = Util.toString(request.getParameter(Common.LANG_ID));
+				if(strLang.isEmpty()) {
+					strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
 				}
+				nLangId = (strLang.equals("en"))?0:1;
 
 				// User名被りチェック
 				String strUserName = screen_name;

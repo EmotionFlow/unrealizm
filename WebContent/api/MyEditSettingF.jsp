@@ -69,9 +69,11 @@ try {
 		user.put("terms_of_service_url", "/RuleS.jsp");
 		user.put("guidelines_url", "/GuideLineV.jsp");
 		user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");
+		user.put("info_account_url", "/IllustListAppV.jsp?ID=2");
 		user.put("official_twitter_url", "https://twitter.com/pipajp");
 		user.put("inquiry_url", "https://cs.pipa.jp/InquiryAppV.jsp");
 		user.put("how_to_use", "/how_to/TopV.jsp");
+		user.put("premiun_id", cCheckLogin.m_nPremiumId);
 	}
 
 	//JSONに変換して出力
