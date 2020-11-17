@@ -206,12 +206,13 @@ public class SendEmojiC {
 			}
 
 			// add new comment
-			strSql = "INSERT INTO comments_0000(content_id, description, user_id, ip_address) VALUES(?, ?, ?, ?)";
+			strSql = "INSERT INTO comments_0000(content_id, description, user_id, to_user_id, ip_address) VALUES(?, ?, ?, ?, ?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
 			statement.setString(2, m_strEmoji);
 			statement.setInt(3, m_nUserId);
-			statement.setString(4, m_strIpAddress);
+			statement.setInt(4, cTargUser.m_nUserId);
+			statement.setString(5, m_strIpAddress);
 			statement.executeUpdate();
 			statement.close();statement=null;
 
