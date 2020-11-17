@@ -1183,7 +1183,6 @@
 	color: #ffff00;
 }
 
-
 .Category.C24 {
 	background-color: #dd0000;
 	color: #fff;
@@ -1193,6 +1192,14 @@
 	color: #fff;
 }
 
+.Category.C25 {
+	background-color: #FF99CC;
+	color: #fff;
+}
+.CategoryBtn.C25 {
+	background-color: #FF99CC;
+	color: #fff;
+}
 
 
 .IllustItem .IllustItemDesc {

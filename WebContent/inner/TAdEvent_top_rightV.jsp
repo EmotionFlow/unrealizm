@@ -12,7 +12,7 @@
 
 	<li class="EventItem">
 		<a href="/event/20201024_munekyun/TopV.jsp">
-			<img class="EventBanner" src="/event/20201024_munekyun/poipiku_3_bn.png" />
+			<img class="EventBanner" src="/event/20201024_munekyun/poipiku_kyun_bn.png" />
 		</a>
 	</li>
 

@@ -96,8 +96,9 @@ public class Common {
 	public static final int SAFE_FILTER_R18G = 6;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 24;
+	public static final int CATEGORY_ID_MAX = 25;
 	public static final int[] CATEGORY_ID = {
+			25,	// 胸キュン
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
