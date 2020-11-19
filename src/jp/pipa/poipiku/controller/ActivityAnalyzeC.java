@@ -18,7 +18,7 @@ public class ActivityAnalyzeC {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			userId = Util.toInt(request.getParameter("ID"));
-			mode = Util.toIntN(request.getParameter("MD"), 0, 3);
+			mode = Util.toIntN(request.getParameter("MD"), 0, 2);
 		} catch(Exception e) {
 			userId = -1;
 		}
@@ -28,6 +28,8 @@ public class ActivityAnalyzeC {
 	public static final int OK = 0;
 
 	public ArrayList<ActivityInfo> activityInfos = new ArrayList<>();
+	public ArrayList<ActivityInfo> activityLists = new ArrayList<>();
+	public int emojiNumTotal = 0;
 	public int getResults(CheckLogin checkLogin) {
 		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!=userId) return ERROR;
 
@@ -44,29 +46,39 @@ public class ActivityAnalyzeC {
 			connection = dataSource.getConnection();
 
 			// create mode query
-			String condTerm = "AND upload_date>CURRENT_TIMESTAMP-interval'1 days' ";
+			String condTerm = "AND upload_date>CURRENT_TIMESTAMP-interval'7 days' ";
 			int selectMax = 10;
 			switch(mode) {
-			case 3:	// total
+			case 2:	// total
 				if(checkLogin.m_nPremiumId>0) {
 					condTerm = "";
 					selectMax = 100;
 				}
 				break;
-			case 2:	// 30days
+			case 1:	// 30days
 				if(checkLogin.m_nPremiumId>0) {
 					condTerm = "AND upload_date>CURRENT_TIMESTAMP-interval'30 days' ";
 					selectMax = 100;
 				}
 				break;
-			case 1:	// 7days
-				condTerm = "AND upload_date>CURRENT_TIMESTAMP-interval'7 days' ";
-				selectMax = 10;
-				break;
+			case 0:	// 7day
 			default:
-			case 0:	// 1day
 				break;
 			}
+
+			// Get emoji_num_total
+			strSql = "SELECT COUNT(description) "
+					+ "FROM comments_0000 "
+					+ "WHERE to_user_id=? "
+					+ condTerm;
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				emojiNumTotal = resultSet.getInt(1);
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			// Get info_list
 			strSql = "SELECT description, COUNT(description) as emoji_num "
@@ -79,9 +91,10 @@ public class ActivityAnalyzeC {
 			statement.setInt(1, userId);
 			statement.setInt(2, selectMax);
 			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
+			for (int i=0; resultSet.next(); i++) {
 				ActivityInfo activityInfo = new ActivityInfo(resultSet);
-				activityInfos.add(activityInfo);
+				if(i<10) activityInfos.add(activityInfo);
+				activityLists.add(activityInfo);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

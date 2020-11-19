@@ -506,3 +506,59 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsSmartPhone,) {
 		}
 	});
 }
+
+function initGraph(ctx) {
+	return new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels : ["https://img-cdn.poipiku.com/img/pc_top_title-03.png"],
+			datasets: [{
+				data: [100],
+				backgroundColor: ["#3498db"]
+			}]
+		},
+		options: {
+			legend: {
+				position: 'top',
+				display: false,
+			},
+			animation: {
+				animateScale: true,
+				animateRotate: true
+			},
+			tooltips: {
+				enabled: false,
+			},
+			events: [],
+		},
+		plugins: [{
+			afterDatasetsDraw: function(chart) {
+				var ctx = chart.ctx;
+				chart.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					if (!meta.hidden) {
+						meta.data.forEach(function(element, j) {
+							const imgSrc = chart.data.labels[j];
+							if(!imgSrc) return;
+							var dataString = dataset.data[j].toString()+'%';
+							const fontSize = 14;
+							ctx.fillStyle = "#ffffff";
+							ctx.font = Chart.helpers.fontString(fontSize, "normal", "Verdana");
+							ctx.textAlign = 'center';
+							ctx.textBaseline = 'middle';
+							var position = element.tooltipPosition();
+							const image = new Image();
+							image.src = chart.data.labels[j];
+							image.onload = () => {
+								const width = 24;
+								const height = 24;
+								ctx.drawImage(image, position.x-width/2, position.y - height, width, height);
+							}
+							ctx.fillText(dataString, position.x, position.y+10);
+						});
+					}
+				});
+			}
+		}]
+	});
+}

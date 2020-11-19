@@ -1,7 +1,28 @@
+<%@page import="org.codehaus.jackson.annotate.JsonProperty"%>
 <%@page import="org.codehaus.jackson.JsonGenerationException"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
+<%!
+class Data {
+	@JsonProperty("datasets")
+	ArrayList<Dataset> datasets = new ArrayList<>();
+	@JsonProperty("labels")
+	ArrayList<String> labels = new ArrayList<>();
+}
+class Dataset {
+	@JsonProperty("data")
+	ArrayList<Integer> data = new ArrayList<>();
+	@JsonProperty("backgroundColor")
+	ArrayList<String> backgroundColor = new ArrayList<>();
+}
+class DataList {
+	@JsonProperty("description")
+	String description = "";
+	@JsonProperty("emoji_num")
+	int emoji_num = 0;
+}
+%>
 <%
 // login check
 CheckLogin checkLogin = new CheckLogin(request, response);
@@ -20,24 +41,50 @@ ObjectMapper mapper = null;
 try {
 	//ユーザの情報
 	root = new HashMap<String, Object>();
-		root.put("result", result);
+	root.put("result", result);
 
+	// JSONデータ作成
 	if (result == ActivityAnalyzeC.OK) {
+		// root
 		root.put("user_id", checkLogin.m_nUserId);
-		root.put("content_num", activityAnalyzeC.activityInfos.size());
 
-		//リアクション情報(配列)
-		List<Map<String, Object>> reactionList = new ArrayList<Map<String, Object>>();
+		// dataの内容作成
+		Data data = new Data();
+		// data.labels
 		for(ActivityAnalyzeC.ActivityInfo activityInfo : activityAnalyzeC.activityInfos) {
-			Map<String, Object> reaction = new HashMap<String, Object>();
-			reaction.put("descriotion", activityInfo.description);
-			reaction.put("emoji_num", activityInfo.emoji_num);
-			reactionList.add(reaction);
+			data.labels.add(CEmoji.parseToUrl(activityInfo.description));
 		}
-		root.put("reaction_list", reactionList);
+		// data.datasets
+		Dataset dataset = new Dataset();
+		data.datasets.add(dataset);
+		// data.datasets.data
+		for(ActivityAnalyzeC.ActivityInfo activityInfo : activityAnalyzeC.activityInfos) {
+			dataset.data.add((int)(Math.ceil(activityInfo.emoji_num*100.0/activityAnalyzeC.emojiNumTotal)));
+		}
+		// data.datasets.backgroundColor
+		for(int color=0x3498dbff, i=0; i<activityAnalyzeC.activityInfos.size(); color-=20, i++) {
+			dataset.backgroundColor.add(String.format("#%x", color));
+		}
+		root.put("data", data);
+
+		// 一覧のhtml作成
+		double otherRate = 100.0;
+		ArrayList<DataList> dataLists = new ArrayList<>();
+		for(ActivityAnalyzeC.ActivityInfo activityInfo : activityAnalyzeC.activityLists) {
+			DataList dataList = new DataList();
+			dataList.description = CEmoji.parse(activityInfo.description);
+			dataList.emoji_num = (int)(Math.ceil(activityInfo.emoji_num*100.0/activityAnalyzeC.emojiNumTotal));
+			dataLists.add(dataList);
+			otherRate -= activityInfo.emoji_num*100.0/activityAnalyzeC.emojiNumTotal;
+		}
+		DataList dataList = new DataList();
+		dataList.description = _TEX.T("ActivityAnalyze.List.Others");
+		dataList.emoji_num = (int)Math.ceil(otherRate);
+		dataLists.add(dataList);
+		root.put("list", dataLists);
 	}
 
-	//JSONに変換して出力
+	// JSONに変換して出力
 	mapper = new ObjectMapper();
 	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));
 } catch(JsonGenerationException e)  {

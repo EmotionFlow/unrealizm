@@ -3,74 +3,102 @@
 <% boolean isApp = true; %>
 <%
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-
-if(!cCheckLogin.m_bLogin) {
-	if(isApp){
-		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
-	} else {
-		getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
-	}
-	return;
-}
-
-ActivityListC cResults = new ActivityListC();
-//パラメータの取得
-cResults.GetParam(request);
-cResults.m_nUserId = cCheckLogin.m_nUserId;
-//検索結果の取得
-cResults.GetResults(cCheckLogin);
-
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) return;
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("ActivityList.Title")%></title>
+		<script>
+			var g_nCategory = 0;
+
+			function addContents() {
+				g_chartAnalyze.stop();	//g_bAdding代わり
+				var $objMessage = $("<div/>").addClass("Waiting");
+				$("#AnalyzeGraph").append($objMessage);
+				$.ajax({
+					"type": "post",
+					"data": {"ID" : <%=checkLogin.m_nUserId%>, "MD" : g_nCategory},
+					"url": "/api/ActivityAnalyzeF.jsp",
+					"dataType": "json",
+					"success": function(json) {
+						if(json.result>=0) {
+							// graph
+							g_chartAnalyze.data = json.data;
+							g_chartAnalyze.clear();
+							g_chartAnalyze.update();
+							// list
+							$('#AnalyzeList').empty();
+							json.list.forEach(function(element, i) {
+								var $item = $('<div />').addClass('AnalyzeItem');
+								$item.append($('<div />').addClass('AnalyzeItemDesc').html(element.description));
+								$item.append($('<div />').addClass('AnalyzeItemRate').html(element.emoji_num+'%'));
+								$('#AnalyzeList').append($item);
+							});
+						}
+						$(".Waiting").remove();
+					},
+					"error": function(req, stat, ex){
+						DispMsg('Connection error');
+					}
+				});
+			}
+
+			function changeCategory(elm, param) {
+				g_nPage = 0;
+				g_nCategory = param;
+				$("#IllustThumbList").empty();
+				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
+				$(elm).addClass('Selected');
+				updateCategoryMenuPos(300);
+				addContents();
+			}
+
+			$(function(){
+				$('body, .Wrapper').each(function(index, element){
+					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+				});
+			});
+		</script>
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+		<script>
+			var g_chartAnalyze;
+			$(function(){
+				g_chartAnalyze = initGraph(document.getElementById('AnalyzeChart').getContext('2d'));
+				updateCategoryMenuPos(0);
+				addContents();
+			});
+		</script>
+		<style>
+		.IllustItemList {background: #fff;}
+		#AnalyzeList {display: flex; flex-flow: column; align-items: center;}
+		.AnalyzeItem {flex: 0 0 80%; width: 80%; display: flex; flex-flow: row nowrap; background: #3498db; margin: 5px 0; box-sizing: border-box; padding: 5px 10px;}
+		.AnalyzeItem .AnalyzeItemDesc {flex: 1 1;}
+		.AnalyzeItem .AnalyzeItemDesc .Twemoji {display: block; width: 24px; height: 24px; line-height: 24px;}
+		.AnalyzeItem .AnalyzeItemRate {flex: 0 0 100px;text-align: right; line-height: 24px;}
+		</style>
 	</head>
 	<body>
-		<article class="Wrapper ItemList">
-			<%if(cResults.m_vContentList.size()<=0) {%>
-			<div style="display:block; width: 100%; padding: 250px 0; text-align: center;">
-				<%=_TEX.T("ActivityList.Message.Default.Recive")%>
-			</div>
-			<%}else{%>
-			<div class="IllustItemList" style="min-height: 600px;">
-				<div class="ActivityList">
-					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-						ActivityListC.ActivityInfo activityInfo = cResults.m_vContentList.get(nCnt);%>
-					<%if(activityInfo.info_type == Common.NOTIFICATION_TYPE_REACTION) {	// 絵文字が来たお知らせ%>
-					<a class="ActivityListItem" href="/UpdateActivityListV.jsp?TY=<%=activityInfo.info_type%>&ID=<%=activityInfo.user_id%>&TD=<%=activityInfo.content_id%>&APP=1">
-						<span class="ActivityListThumb">
-							<%if(activityInfo.content_type==Common.CONTENT_TYPE_IMAGE) {%>
-							<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.info_thumb)%>_360.jpg')"></span>
-							<%} else if(activityInfo.content_type==Common.CONTENT_TYPE_TEXT) {%>
-							<span class="ActivityListThumbTxt"><%=Util.toStringHtml(activityInfo.info_thumb)%></span>
-							<%}%>
-						</span>
-						<span class="ActivityListBody">
-							<span class="ActivityListTitle">
-								<span class="Date"><%=(new SimpleDateFormat("YYYY MM/dd HH:mm")).format(activityInfo.info_date)%></span>
-								<span class="Title"><%=_TEX.T("ActivityList.Message.Comment")%></span>
-							</span>
-							<span class="ActivityListDesc">
-								<%for (int i = 0; i < activityInfo.info_desc.length(); i = activityInfo.info_desc.offsetByCodePoints(i, 1)) {%>
-								<%=CEmoji.parse(String.valueOf(Character.toChars(activityInfo.info_desc.codePointAt(i))))%>
-								<%}%>
-							</span>
-						</span>
-						<span class="ActivityListBadge"><%=activityInfo.badge_num%></span>
-					</a>
-					<%} else if(activityInfo.info_type == Common.NOTIFICATION_TYPE_REACTION) {%>
-					<%} else {%>
-					<%}%>
-					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
-					<%}%>
-				</div>
-			</div>
-			<%}%>
+		<article class="Wrapper">
+			<nav id="CategoryMenu" class="CategoryMenu">
+				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>
+				<%if(checkLogin.m_nPremiumId>0) {%>
+				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 1)"><%=_TEX.T("ActivityList.Category.30days")%></a>
+				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 2)"><%=_TEX.T("ActivityList.Category.Total")%></a>
+				<%} else {%>
+				<span class="BtnBase CategoryBtn Disabled"><%=_TEX.T("ActivityList.Category.30days")%></span>
+				<span class="BtnBase CategoryBtn Disabled"><%=_TEX.T("ActivityList.Category.Total")%></span>
+				<%}%>
+			</nav>
+			<section id="AnalyzeGraph" class="IllustItemList" style="padding: 10px;">
+				<canvas id="AnalyzeChart" width="340" height="340"></canvas>
+			</section>
+			<section id="AnalyzeList" class="IllustItemList">
+			</section>
 		</article>
 	</body>
 </html>
