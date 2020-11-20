@@ -99,9 +99,7 @@ if(!checkLogin.m_bLogin) return;
 			</section>
 			<section id="AnalyzeList" class="IllustItemList">
 			</section>
-			<section class="IllustItemList">
-				<%@ include file="/inner/TAd336x280_mid.jsp"%>
-			</section>
+			<%@ include file="/inner/TAd336x280_mid.jsp"%>
 		</article>
 	</body>
 </html>
