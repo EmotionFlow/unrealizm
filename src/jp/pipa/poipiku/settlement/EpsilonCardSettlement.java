@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class EpsilonCardSettlement extends CardSettlement {
+    public int m_nCreditcardIdToPay = -1;
 
     // 半角英数字 32byte 注文単位でユニークに設定してください。
     protected String createOrderId(int userId, int contentId) {
@@ -59,6 +60,7 @@ public class EpsilonCardSettlement extends CardSettlement {
             cConn = dsPostgres.getConnection();
 
             // 初回か登録済かを判定、EPSILON側user_id取得。
+            // TODO ordersとcreditcardsをjoinして、取得するようにする。
             strSql = "SELECT agent_user_id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, userId);
@@ -206,7 +208,7 @@ public class EpsilonCardSettlement extends CardSettlement {
                     if (isFirstSettlement) {
                         strSql = "INSERT INTO creditcards" +
                                 " (user_id, agent_id, card_expire, security_code, agent_user_id, last_agent_order_id)" +
-                                " VALUES (?, ?, ?, ?, ?, ?)";
+                                " VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
                         cState = cConn.prepareStatement(strSql);
                         int idx = 1;
                         cState.setInt(idx++, userId);
@@ -215,17 +217,30 @@ public class EpsilonCardSettlement extends CardSettlement {
                         cState.setString(idx++, cardSecurityCode);
                         cState.setString(idx++, ssi.userId);
                         cState.setString(idx++, ssi.orderNumber);
+                        cResSet = cState.executeQuery();
+                        if(cResSet.next()) {
+                            m_nCreditcardIdToPay = cResSet.getInt("content_id");
+                        }
+                        cResSet.close();cResSet=null;
                     } else {
+                        strSql = "SELECT id FROM creditcards WHERE user_id=? AND agent_id=?";
+                        cState = cConn.prepareStatement(strSql);
+                        cState.setInt(1, userId);
+                        cState.setInt(2, agent.id);
+                        cResSet = cState.executeQuery();
+                        if(cResSet.next()) {
+                            m_nCreditcardIdToPay = cResSet.getInt("id");
+                        }
+                        cResSet.close();cResSet=null;
+
                         strSql = "UPDATE creditcards" +
                                 " SET updated_at=now(), last_agent_order_id=?" +
-                                " WHERE user_id=? AND agent_id=?";
+                                " WHERE id=?";
                         cState = cConn.prepareStatement(strSql);
-                        int idx = 1;
-                        cState.setString(idx++, ssi.orderNumber);
-                        cState.setInt(idx++, userId);
-                        cState.setInt(idx++, agent.id);
+                        cState.setString(1, ssi.orderNumber);
+                        cState.setInt(2, m_nCreditcardIdToPay);
+                        cState.executeUpdate();
                     }
-                    cState.executeUpdate();
                     cState.close();cState = null;
                     cConn.close();cConn = null;
                     errorKind = ErrorKind.None;
@@ -264,5 +279,6 @@ public class EpsilonCardSettlement extends CardSettlement {
             if(cState!=null){try{cState.close();cState=null;}catch(Exception ex){;}}
             if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ex){;}}
         }
+        return true;
     }
 }

@@ -137,7 +137,7 @@
                 return false;
             } else if (result === 1) {
                 console.log("epsilonPayment");
-                // epsilonPayment(passportInfo, nPassportAmount, cardInfo, elPassportNowPayment);
+                epsilonPayment(passportInfo, nPassportAmount, cardInfo, elPassportNowPayment);
             } else if (result === 0) {
                 const title = "ポイパス定期購入";
                 const description = "定期購入するためのカード情報を入力してください。入力されたカード情報から、毎月300円(税込)が課金されます。";

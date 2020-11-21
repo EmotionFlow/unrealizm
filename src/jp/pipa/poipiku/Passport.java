@@ -180,6 +180,7 @@ public class Passport {
                 Log.d("cardSettlement.authorize() failed.");
                 return false;
             }
+            final int nCretidcardId = cardSettlement.m_nCreditcardIdToPay;
 
             //// begin transaction
             cConn.setAutoCommit(false);
@@ -202,9 +203,10 @@ public class Passport {
             cState.executeUpdate();
 
             // update orders
-            strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
+            strSql = "UPDATE orders SET creditcard_id=?, status=?, agency_order_id=?, updated_at=now() WHERE id=?";
             cState = cConn.prepareStatement(strSql);
             idx=1;
+            cState.setInt(idx++, nCretidcardId);
             cState.setInt(idx++, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
             cState.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
             cState.setInt(idx++, orderId);
