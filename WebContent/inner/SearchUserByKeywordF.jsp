@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

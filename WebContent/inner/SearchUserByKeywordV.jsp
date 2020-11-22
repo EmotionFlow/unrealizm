@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(SP_REVIEW && !cCheckLogin.m_bLogin) {
+if(SP_REVIEW && !checkLogin.m_bLogin) {
 	if(isApp){
 		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 	} else {
@@ -20,7 +20,7 @@ if(strKeywordHan.matches("^[0-9]+$")) {
 	response.sendRedirect(Common.GetPoipikuUrl(strUrl + strKeywordHan));
 	return;
 }
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>

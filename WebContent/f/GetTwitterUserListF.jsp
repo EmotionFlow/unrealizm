@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) return;
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) return;
 CTweet cTweet = new CTweet();
-cTweet.GetResults(cCheckLogin.m_nUserId);
+cTweet.GetResults(checkLogin.m_nUserId);
 cTweet.GetMyOpenLists();
 %>
 {
 "result": <%=(cTweet.m_bIsTweetEnable)?1:0%>,
-"user_id": <%=cCheckLogin.m_nUserId%>,
+"user_id": <%=checkLogin.m_nUserId%>,
 "twitter_user_id": <%=cTweet.m_lnTwitterUserId%>,
 "list_id" : [
 <%

@@ -4,7 +4,7 @@
 	request.setCharacterEncoding("UTF-8");
 
 // login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 String strRequestUri = Util.toString((String)request.getAttribute("javax.servlet.forward.request_uri"));
 String strRequestQuery = Util.toString((String)request.getAttribute("javax.servlet.forward.query_string"));
@@ -24,14 +24,14 @@ String strReturnUrl = "";
 if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 	strReturnUrl = Util.toString(request.getParameter("RET"));
 	if(strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
-		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId,"UTF-8");;
+		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyHomePcV.jsp?ID="+checkLogin.m_nUserId,"UTF-8");;
 	} else {
 		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode(strReturnUrl,"UTF-8");
 	}
 } else if(strRequestUri.isEmpty()) {
 	strNextUrl = strRequestUri;
 } else {
-	strNextUrl = "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
+	strNextUrl = "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
 }
 %>
 <!DOCTYPE html>

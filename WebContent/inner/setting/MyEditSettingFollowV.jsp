@@ -6,7 +6,7 @@ cFollowListResults.getParam(request);
 cFollowListResults.m_nMode = 0;
 cFollowListResults.m_nPage = cResults.m_nListPage;
 cFollowListResults.SELECT_MAX_GALLERY = 30;
-cFollowListResults.getResults(cCheckLogin);
+cFollowListResults.getResults(checkLogin);
 %>
 <script type="application/javascript">
 	$(function(){

@@ -43,7 +43,7 @@ public class CheckCreditCardC {
 		cState.setInt(1, nUserId);
 		cState.setInt(2, nAgentId);
 
-		Log.d("cCheckLogin.m_nUserId", Integer.toString(nUserId));
+		Log.d("checkLogin.m_nUserId", Integer.toString(nUserId));
 		cResSet = cState.executeQuery();
 		Timestamp updatedAt = null;
 		String strCardExpire = null;
@@ -96,15 +96,15 @@ public class CheckCreditCardC {
 		return nResult;
 	}
 
-	public int getResults(CheckLogin cCheckLogin) {
+	public int getResults(CheckLogin checkLogin) {
 		int  nResult = -1;
-		if(!cCheckLogin.m_bLogin){return nResult;}
+		if(!checkLogin.m_bLogin){return nResult;}
 
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			nResult = verify(cCheckLogin.m_nUserId, AGENT_EPSILON);
+			nResult = verify(checkLogin.m_nUserId, AGENT_EPSILON);
 
 		} catch(Exception e) {
 			e.printStackTrace();

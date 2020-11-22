@@ -6,7 +6,7 @@ cBlockListResults.getParam(request);
 cBlockListResults.m_nMode = 1;
 cBlockListResults.m_nPage = cResults.m_nListPage;
 cBlockListResults.SELECT_MAX_GALLERY = 30;
-cBlockListResults.getResults(cCheckLogin);
+cBlockListResults.getResults(checkLogin);
 %>
 <script type="application/javascript">
 	$(function(){

@@ -1,20 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 
 IllustDetailC cResults = new IllustDetailC();
 cResults.getParam(request);
-if(!cResults.getResults(cCheckLogin)) {
+if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
@@ -49,7 +49,7 @@ if(!cResults.getResults(cCheckLogin)) {
 			<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 		</div>
 		<div class="IllustItemTProhibit">
-			<%if(cResults.m_cContent.m_cUser.m_nUserId==cCheckLogin.m_nUserId) {%>
+			<%if(cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId) {%>
 			<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 			<%} else {%>
 			<%=_TEX.T("IllustView.ProhibitMsg.Long")%>

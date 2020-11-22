@@ -3,9 +3,9 @@
 <% boolean isApp = true; %>
 <%
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	if(isApp){
 		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 	} else {
@@ -17,9 +17,9 @@ if(!cCheckLogin.m_bLogin) {
 ActivityListC cResults = new ActivityListC();
 //パラメータの取得
 cResults.GetParam(request);
-cResults.m_nUserId = cCheckLogin.m_nUserId;
+cResults.m_nUserId = checkLogin.m_nUserId;
 //検索結果の取得
-cResults.GetResults(cCheckLogin);
+cResults.GetResults(checkLogin);
 
 %>
 <!DOCTYPE html>

@@ -42,7 +42,7 @@ public class MyHomePcC {
 	public int m_nEndId = -1;
 	public CContent m_cSystemInfo = null;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -77,8 +77,8 @@ public class MyHomePcC {
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, cCheckLogin.m_nUserId);
+			if(checkLogin.m_bLogin && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
@@ -98,12 +98,12 @@ public class MyHomePcC {
 			strSql = "SELECT count(*) " + strSqlFromWhere;
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			if(!strCondMute.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);
 			}
-			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				m_nContentsNum = resultSet.getInt(1);
@@ -115,7 +115,7 @@ public class MyHomePcC {
 			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				m_nContentsNumTotal = resultSet.getInt(1);
@@ -128,12 +128,12 @@ public class MyHomePcC {
 			strSql += "ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			if(!strMuteKeyword.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);
 			}
-			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
 			resultSet = statement.executeQuery();
@@ -156,7 +156,7 @@ public class MyHomePcC {
 			m_vContentList = GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, cCheckLogin);
+			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

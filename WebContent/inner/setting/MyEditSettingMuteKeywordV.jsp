@@ -12,7 +12,7 @@
 				var strMuteKeywordTxt = $.trim($("#MuteKeywordText").val());
 				$.ajaxSingle({
 						"type": "post",
-						"data": { "UID": <%=cCheckLogin.m_nUserId%>, "DES": strMuteKeywordTxt },
+						"data": { "UID": <%=checkLogin.m_nUserId%>, "DES": strMuteKeywordTxt },
 						"url": "/f/UpdateMuteKeywordF.jsp",
 						"dataType": "json",
 						"success": function(data) {

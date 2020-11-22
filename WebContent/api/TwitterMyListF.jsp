@@ -17,8 +17,8 @@ CTweet cTweet = new CTweet();
 
 PROCESS: {
 	//login check
-	CheckLogin cCheckLogin = new CheckLogin(request, response);
-	if(!cCheckLogin.m_bLogin) {
+	CheckLogin checkLogin = new CheckLogin(request, response);
+	if(!checkLogin.m_bLogin) {
 		nResult = -1;
 		break PROCESS;
 	}
@@ -27,7 +27,7 @@ PROCESS: {
 	int m_nUserId = Util.toInt(request.getParameter("ID"));
 
 	//認証
-	if (cCheckLogin.m_nUserId!=m_nUserId) {
+	if (checkLogin.m_nUserId!=m_nUserId) {
 		nResult = -2;
 		break PROCESS;
 	}

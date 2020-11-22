@@ -4,7 +4,7 @@
 				var bMode = $('#NgReaction').prop('checked');
 				$.ajaxSingle({
 						"type": "post",
-						"data": { "UID": <%=cCheckLogin.m_nUserId%>, "MID": (bMode)?<%=CUser.REACTION_HIDE%>:<%=CUser.REACTION_SHOW%> },
+						"data": { "UID": <%=checkLogin.m_nUserId%>, "MID": (bMode)?<%=CUser.REACTION_HIDE%>:<%=CUser.REACTION_SHOW%> },
 						"url": "/f/UpdateNgReactionF.jsp",
 						"dataType": "json",
 						"success": function(data) {

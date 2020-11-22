@@ -631,12 +631,12 @@ public class CCnv {
 	}
 
 
-	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin cCheckLogin) {
-		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, cCheckLogin);
+	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin checkLogin) {
+		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, checkLogin);
 	}
 
-	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin cCheckLogin, int nSpMode) {
-		return _toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode, cCheckLogin);
+	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin checkLogin, int nSpMode) {
+		return _toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode, checkLogin);
 	}
 
 	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
@@ -661,7 +661,7 @@ public class CCnv {
 
 	private static String _toThumbHtml(
 		CContent cContent, int nType, int nMode, String strKeyword,
-		ResourceBundleControl _TEX, int nSpMode, CheckLogin cCheckLogin) {
+		ResourceBundleControl _TEX, int nSpMode, CheckLogin checkLogin) {
 
 		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
@@ -696,7 +696,7 @@ public class CCnv {
 		// サムネイル
 		String strFileUrl = "";
 		boolean bHidden = false;	// テキストモード用カバー画像表示フラグ
-		if(cCheckLogin != null && cContent.m_nUserId == cCheckLogin.m_nUserId){
+		if(checkLogin != null && cContent.m_nUserId == checkLogin.m_nUserId){
 			strFileUrl = Common.GetUrl(cContent.m_strFileName);
 		} else {
 			switch(cContent.m_nPublishId) {
@@ -744,7 +744,7 @@ public class CCnv {
 
 
 		// 公開非公開マーク
-		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId && (cContent.m_nPublishId==99 || cContent.m_bLimitedTimePublish)){
+		if(checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId && (cContent.m_nPublishId==99 || cContent.m_bLimitedTimePublish)){
 			strRtn.append("<span class=\"IllustInfoCenter\">");
 			if(cContent.m_nPublishId==99){
 				strRtn.append("<span class=\"Publish Private\"></span>");
@@ -758,7 +758,7 @@ public class CCnv {
 
 		// 公開種別マーク
 		strRtn.append("<span class=\"IllustInfoBottom\">");
-		if(cCheckLogin!=null && cCheckLogin.m_nUserId==cContent.m_nUserId){
+		if(checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId){
 			if(cContent.m_nPublishId>=1 && cContent.m_nPublishId<=10) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}

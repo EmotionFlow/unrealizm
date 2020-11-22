@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(SP_REVIEW && !cCheckLogin.m_bLogin) {
+if(SP_REVIEW && !checkLogin.m_bLogin) {
 	if(isApp){
 		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 	} else {
@@ -14,8 +14,8 @@ if(SP_REVIEW && !cCheckLogin.m_bLogin) {
 
 PopularIllustListC cResults = new PopularIllustListC();
 cResults.getParam(request);
-cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-boolean bRtn = cResults.getResults(cCheckLogin);
+checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>

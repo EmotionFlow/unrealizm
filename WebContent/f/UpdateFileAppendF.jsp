@@ -147,14 +147,14 @@ class UploadFileAppendC {
 		return nRtn;
 	}
 }%><%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
 UploadFileAppendCParam cParam = new UploadFileAppendCParam();
-cParam.m_nUserId = cCheckLogin.m_nUserId;
+cParam.m_nUserId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
-if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
+if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadFileAppendC cResults = new UploadFileAppendC();
 	nRtn = cResults.GetResults(cParam, _TEX);
 }

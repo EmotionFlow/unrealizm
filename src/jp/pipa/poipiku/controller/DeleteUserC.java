@@ -28,12 +28,12 @@ public class DeleteUserC {
 	}
 
 	private ServletContext m_cServletContext = null;
-	public int GetResults(CheckLogin cCheckLogin, ServletContext context) {
-		Log.d(String.format("DeleteUserV Start:%d", cCheckLogin.m_nUserId));
+	public int GetResults(CheckLogin checkLogin, ServletContext context) {
+		Log.d(String.format("DeleteUserV Start:%d", checkLogin.m_nUserId));
 		m_cServletContext = context;
 
 		int nRtn = 0;
-		if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
+		if(!checkLogin.m_bLogin || (checkLogin.m_nUserId != m_nUserId)) {
 			return 0;
 		}
 

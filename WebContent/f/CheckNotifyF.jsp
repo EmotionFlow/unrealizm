@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 CheckNotifyC cResults = new CheckNotifyC();
 cResults.GetParam(request);
-cResults.m_nUserId = cCheckLogin.m_nUserId;
-boolean bRtn = cResults.GetResults(cCheckLogin);
+cResults.m_nUserId = checkLogin.m_nUserId;
+boolean bRtn = cResults.GetResults(checkLogin);
 %>{
 "check_comment":<%=cResults.m_nCheckComment%>,
 "check_follow":<%=cResults.m_nCheckFollow%>,

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
@@ -12,7 +12,7 @@ if(!bSmartPhone) {
 RandomPickupC cResults = new RandomPickupC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 45;
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>

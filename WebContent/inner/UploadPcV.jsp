@@ -3,15 +3,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 
 CTweet cTweet = new CTweet();
-boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+boolean bTwRet = cTweet.GetResults(checkLogin.m_nUserId);
 
 String strTag = "";
 try {
@@ -108,13 +108,13 @@ try {
 			}
 
 			function DispDescCharNum() {
-				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditDescription").val().length;
+				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%> - $("#EditDescription").val().length;
 				$("#DescriptionCharNum").html(nCharNum);
 			}
 
 			<%if(nEditorId==Common.EDITOR_TEXT){%>
 			function DispTextCharNum() {
-				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditTextBody").val().length;
+				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%> - $("#EditTextBody").val().length;
 				$("#TextBodyCharNum").html(nCharNum);
 			}
 			<%}%>
@@ -227,14 +227,14 @@ try {
 					</select>
 				</div>
 				<div class="Description">
-					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
-					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
+					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
+					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%></div>
 				</div>
 
 				<%if(nEditorId==Common.EDITOR_TEXT){%>
 				<div class="TextBody">
-					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
-					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
+					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
+					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%></div>
 				</div>
 				<%}%>
 
@@ -246,7 +246,7 @@ try {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
-							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=cCheckLogin.m_nUserId%>)">
+							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=checkLogin.m_nUserId%>)">
 								<option value="<%=Common.PUBLISH_ID_ALL%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.All")%></option>
 								<option value="<%=Common.PUBLISH_ID_R15%>"><%=_TEX.T("UploadFilePc.Option.Publish.R15")%></option>
 								<option value="<%=Common.PUBLISH_ID_R18%>"><%=_TEX.T("UploadFilePc.Option.Publish.R18")%></option>
@@ -353,11 +353,11 @@ try {
 				</div>
 				<div class="UoloadCmd">
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadText(<%=cCheckLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadText(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>

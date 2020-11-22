@@ -7,7 +7,7 @@
 		<%if(cResults.m_cUser.m_strEmail!=null && cResults.m_cUser.m_strEmail.contains("@")){%>
 		$.ajaxSingle({
 				"type": "post",
-				"data": { "ID":<%=cCheckLogin.m_nUserId%>},
+				"data": { "ID":<%=checkLogin.m_nUserId%>},
 				"url": "/f/UnlinkTwitterF.jsp",
 				"dataType": "json",
 				"success": function(data) {
@@ -29,7 +29,7 @@
 	function UpdateTwitterCash() {
 		$.ajaxSingle({
 			"type": "post",
-			"data": { "ID":<%=cCheckLogin.m_nUserId%>},
+			"data": { "ID":<%=checkLogin.m_nUserId%>},
 			"url": "/f/UpdateTwitterCashF.jsp",
 			"dataType": "json",
 			"success": function(data) {
@@ -55,7 +55,7 @@
 		$.ajaxSingle({
 				"type": "post",
 				"data": {
-						"ID": <%=cCheckLogin.m_nUserId%>,
+						"ID": <%=checkLogin.m_nUserId%>,
 						"AW": nAutoTweetWeekDay,
 						"AT": nAutoTweetTime,
 						"AD": strAutoTweetTxt,
@@ -153,7 +153,7 @@
 	</div>
 	<%}%>
 
-	<%if(cResults.m_cUser.m_bTweet && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
+	<%if(cResults.m_cUser.m_bTweet && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
 	<div id="SectionAutoTweet" class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 		<div class="SettingBody">

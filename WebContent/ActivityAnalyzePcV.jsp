@@ -3,13 +3,16 @@
 <%
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
-if(!checkLogin.m_bLogin) return;
+if(!checkLogin.m_bLogin) {
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	return;
+}
 %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=_TEX.T("ActivityList.Title")%></title>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<title>_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
 		<script>
 			var g_nCategory = 0;
 
@@ -64,6 +67,7 @@ if(!checkLogin.m_bLogin) return;
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
 		<script>
+			var g_chartAnalyze;
 			$(function(){
 				g_chartAnalyze = initGraph(document.getElementById('AnalyzeChart').getContext('2d'));
 				updateCategoryMenuPos(0);
@@ -80,6 +84,7 @@ if(!checkLogin.m_bLogin) return;
 		</style>
 	</head>
 	<body>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 		<article class="Wrapper">
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>
@@ -96,7 +101,8 @@ if(!checkLogin.m_bLogin) return;
 			</section>
 			<section id="AnalyzeList" class="IllustItemList">
 			</section>
-			<%@ include file="/inner/TAd336x280_mid.jsp"%>
 		</article>
+
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

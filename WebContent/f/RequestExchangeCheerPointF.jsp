@@ -4,12 +4,12 @@
 	request.setCharacterEncoding("UTF-8");
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int m_nUserId = Util.toInt(request.getParameter("ID"));
 
-if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId != m_nUserId)) {
-	Log.d(String.format("%b, %d, %d", cCheckLogin.m_bLogin, cCheckLogin.m_nUserId, m_nUserId));
+if(!checkLogin.m_bLogin || (checkLogin.m_nUserId != m_nUserId)) {
+	Log.d(String.format("%b, %d, %d", checkLogin.m_bLogin, checkLogin.m_nUserId, m_nUserId));
 	Log.d("login error");
 	return;
 }

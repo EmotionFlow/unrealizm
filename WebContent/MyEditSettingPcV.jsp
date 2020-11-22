@@ -31,9 +31,9 @@
 
 <%
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
@@ -44,13 +44,13 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 //検索結果の取得
 MyEditSettingC cResults = new MyEditSettingC();
 cResults.GetParam(request);
-cResults.GetResults(cCheckLogin);
+cResults.GetResults(checkLogin);
 
 HashMap<String, String> MENU = new HashMap<>();
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
-if (cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON){
+if (checkLogin.m_nPremiumId>=CUser.PREMIUM_ON){
 	MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 }
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
@@ -239,7 +239,7 @@ String[][] menuOrder = {
 					</h2>
 				</div>
 				<div class="SettingMenu">
-					<%for(String m : menuOrder[cCheckLogin.m_nPremiumId]){%>
+					<%for(String m : menuOrder[checkLogin.m_nPremiumId]){%>
 						<%=getSettingMenuItem(m, MENU.get(m))%>
 					<%}%>
 				</div>

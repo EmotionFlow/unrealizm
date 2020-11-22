@@ -163,18 +163,18 @@ class UpdateFileFirstC {
 		return nRtn;
 	}
 }%><%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
 UpdateFileFirstCParam cParam = new UpdateFileFirstCParam();
-cParam.m_nUserId = cCheckLogin.m_nUserId;
+cParam.m_nUserId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 //JSON元データを格納する連想配列
 Map<String, Object> files = null;
 ObjectMapper mapper = null;
 
-if (cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
+if (checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	UpdateFileFirstC cResults = new UpdateFileFirstC();
 	nRtn = cResults.GetResults(cParam, _TEX);
 }

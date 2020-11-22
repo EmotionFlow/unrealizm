@@ -33,11 +33,11 @@ public class FollowListC {
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -60,7 +60,7 @@ public class FollowListC {
 							+ "WHERE user_id=?";
 				}
 				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, cCheckLogin.m_nUserId);
+				statement.setInt(1, checkLogin.m_nUserId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					m_nContentsNum = resultSet.getInt(1);
@@ -79,7 +79,7 @@ public class FollowListC {
 						+ "ORDER BY upload_date DESC OFFSET ? LIMIT ?";
 			}
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cCheckLogin.m_nUserId);
+			statement.setInt(1, checkLogin.m_nUserId);
 			statement.setInt(2, m_nPage * SELECT_MAX_GALLERY);
 			statement.setInt(3, SELECT_MAX_GALLERY);
 			resultSet = statement.executeQuery();

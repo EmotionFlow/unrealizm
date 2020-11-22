@@ -92,13 +92,13 @@ class UpdateFollowC {
 	}
 }%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 UpdateFollowCParam cParam = new UpdateFollowCParam();
 cParam.GetParam(request);
 
 int nRtn = -1;
-if( cCheckLogin.m_bLogin && cParam.m_nUserId == cCheckLogin.m_nUserId ) {
+if( checkLogin.m_bLogin && cParam.m_nUserId == checkLogin.m_nUserId ) {
 	UpdateFollowC cResults = new UpdateFollowC();
 	nRtn = cResults.GetResults(cParam, _TEX);
 }

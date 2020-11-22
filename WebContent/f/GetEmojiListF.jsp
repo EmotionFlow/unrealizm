@@ -22,14 +22,14 @@
 		notLogin    []      vEmoji   static  static []
 		Login       vEmoji  vEmoji   static  static static
 	 */
-	public String[] getResults(CheckLogin cCheckLogin) {
+	public String[] getResults(CheckLogin checkLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
 
 		if(!(m_nCategoryId==Emoji.EMOJI_CAT_RECENT || m_nCategoryId==Emoji.EMOJI_CAT_POPULAR || m_nCategoryId==Emoji.EMOJI_CAT_CHEER)){
 			return EMOJI_LIST;
 		}
 
-		if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT && !cCheckLogin.m_bLogin){
+		if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT && !checkLogin.m_bLogin){
 			return EMOJI_LIST;
 		}
 
@@ -45,7 +45,7 @@
 			cConn = dsPostgres.getConnection();
 
 			if(m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
-				if(cCheckLogin.m_bLogin){
+				if(checkLogin.m_bLogin){
 					strSql = "SELECT cheer_ng FROM contents_0000 WHERE content_id=?";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, m_nContentId);
@@ -62,7 +62,7 @@
 				// Follow
 				ArrayList<String> vEmoji;
 				if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
-					vEmoji = Util.getDefaultEmoji(cCheckLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+					vEmoji = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
 				} else {
 					vEmoji = Util.getDefaultEmoji(-1, Emoji.EMOJI_KEYBORD_MAX);
 				}
@@ -80,18 +80,18 @@
 	}
 }%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 StringBuilder sbResult = new StringBuilder();
 GetEmojiListC cResults = new GetEmojiListC();
 cResults.getParam(request);
-if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
+if(!checkLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.Recent.NeedLogin")));
-} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_OTHER) {
+} else if(!checkLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_OTHER) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.All.NeedLogin")));
-} else if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
+} else if(!checkLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_CHEER) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("Cheer.NeedLogin")));
 } else {
-	String EMOJI_LIST[] = cResults.getResults(cCheckLogin);
+	String EMOJI_LIST[] = cResults.getResults(checkLogin);
 	if(Emoji.EMOJI_EVENT) {
 		EMOJI_LIST = Emoji.EMOJI_EVENT_LIST;
 	}
@@ -103,7 +103,7 @@ if(!cCheckLogin.m_bLogin && cResults.m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
 					String.format("<span class=\"ResEmojiBtn\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</span>",
 							cResults.m_nContentId,
 							emoji,
-							cCheckLogin.m_nUserId,
+							checkLogin.m_nUserId,
 							CEmoji.parse(emoji))
 					);
 		}

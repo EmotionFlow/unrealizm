@@ -99,7 +99,7 @@
 						},
 						preConfirm: () => {
 								const formData = {
-										'ID'  : <%=cCheckLogin.m_nUserId%>,
+										'ID'  : <%=checkLogin.m_nUserId%>,
 										'FCD' : $("#FCD").val(),
 										'FNM' : $("#FNM").val(),
 										'FSUBCD' : $("#FSUBCD").val(),

@@ -2,7 +2,7 @@
 <% //boolean isApp = true; %>
 <%@ include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
@@ -13,17 +13,17 @@ if(!bSmartPhone) {
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
-	if(!cCheckLogin.m_bLogin) {
+	if(!checkLogin.m_bLogin) {
 		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 		return;
 	}
-	cResults.m_nUserId = cCheckLogin.m_nUserId;
+	cResults.m_nUserId = checkLogin.m_nUserId;
 }
 
-cCheckLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 cResults.m_bDispUnPublished = true;
-if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
+if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
@@ -149,7 +149,7 @@ if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
 				<%if(cResults.m_vContentList.size()>0){%>
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin, CCnv.SP_MODE_APP)%>
+					<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, checkLogin, CCnv.SP_MODE_APP)%>
 					<%}%>
 				<%}else{%>
 					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>

@@ -13,8 +13,8 @@
 int nResult = 0;
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) {
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) {
 	nResult = -1;
 }
 
@@ -26,7 +26,7 @@ IllustViewListC cListResults = new IllustViewListC();
 cListResults.getParam(request);
 
 //検索結果の取得
-if (cCheckLogin.m_nUserId!=cViewResults.m_nUserId || !cViewResults.getResults(cCheckLogin)  || !cListResults.getResults(cCheckLogin)) {
+if (checkLogin.m_nUserId!=cViewResults.m_nUserId || !cViewResults.getResults(checkLogin)  || !cListResults.getResults(checkLogin)) {
 	nResult = -2;
 }
 

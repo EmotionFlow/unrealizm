@@ -5,10 +5,10 @@
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) return;
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) return;
 CheckCreditCardC cResults = new CheckCreditCardC();
-int nResult = cResults.getResults(cCheckLogin);
+int nResult = cResults.getResults(checkLogin);
 //JSON元データを格納する連想配列
 Map<String, Object> root = null;
 ObjectMapper mapper = null;

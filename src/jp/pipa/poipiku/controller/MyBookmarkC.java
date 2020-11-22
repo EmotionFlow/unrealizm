@@ -29,11 +29,11 @@ public class MyBookmarkC {
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -58,7 +58,7 @@ public class MyBookmarkC {
 				strSql = "SELECT count(*) " + strSqlFromWhere;
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					m_nContentsNum = resultSet.getInt(1);
@@ -71,7 +71,7 @@ public class MyBookmarkC {
 					+ "ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
 			resultSet = statement.executeQuery();

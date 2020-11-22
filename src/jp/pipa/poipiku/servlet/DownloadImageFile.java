@@ -42,13 +42,13 @@ public class DownloadImageFile extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CheckLogin cCheckLogin = new CheckLogin(request, response);
-		if(!cCheckLogin.m_bLogin) return;
+		CheckLogin checkLogin = new CheckLogin(request, response);
+		if(!checkLogin.m_bLogin) return;
 
 		CDownloadImageFile cResults = new CDownloadImageFile();
 
 		if(!cResults.getParam(request)) return;
-		if(!cResults.getResults(cCheckLogin)) return;
+		if(!cResults.getResults(checkLogin)) return;
 
 		String file_name_full = getServletContext().getRealPath(cResults.m_strFileName);
 		File file = new File(file_name_full);
@@ -102,7 +102,7 @@ public class DownloadImageFile extends HttpServlet {
 		}
 
 		public String m_strFileName = "";
-		public boolean getResults(CheckLogin cCheckLogin) {
+		public boolean getResults(CheckLogin checkLogin) {
 			boolean bResult = false;
 			DataSource dsPostgres = null;
 			Connection cConn = null;
@@ -117,7 +117,7 @@ public class DownloadImageFile extends HttpServlet {
 				// content main
 				strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
+				cState.setInt(1, checkLogin.m_nUserId);
 				cState.setInt(2, m_nContentId);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {

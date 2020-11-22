@@ -31,8 +31,8 @@ public class UpdateActivityListC {
 		}
 	}
 
-	public String getResults(CheckLogin cCheckLogin) {
-		if(!cCheckLogin.m_bLogin || (cCheckLogin.m_nUserId!=user_id)) return null;
+	public String getResults(CheckLogin checkLogin) {
+		if(!checkLogin.m_bLogin || (checkLogin.m_nUserId!=user_id)) return null;
 
 		String returnUrl = null;
 

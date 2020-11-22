@@ -29,11 +29,11 @@ public class SearchUserByTagC {
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -53,9 +53,9 @@ public class SearchUserByTagC {
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
 				cState.setString(idx++, m_strKeyword);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				cState.setInt(idx++, checkLogin.m_nUserId);
+				cState.setInt(idx++, checkLogin.m_nUserId);
+				cState.setInt(idx++, checkLogin.m_nSafeFilter);
 				/*
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
@@ -73,9 +73,9 @@ public class SearchUserByTagC {
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setString(idx++, m_strKeyword);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			cState.setInt(idx++, checkLogin.m_nUserId);
+			cState.setInt(idx++, checkLogin.m_nUserId);
+			cState.setInt(idx++, checkLogin.m_nSafeFilter);
 			/*
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);

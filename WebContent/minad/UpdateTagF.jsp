@@ -96,9 +96,9 @@ class UpdateTagC {
 	}
 }
 %><%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(cCheckLogin.m_nUserId != 1) {
+if(checkLogin.m_nUserId != 1) {
 	return;
 }
 

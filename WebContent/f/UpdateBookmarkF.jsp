@@ -81,13 +81,13 @@ class UpdateBookmarkC {
 	}
 }%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 UpdateBookmarkCParam cParam = new UpdateBookmarkCParam();
 cParam.GetParam(request);
 
 int nRtn = -1;
-if( cCheckLogin.m_bLogin && cParam.m_nUserId == cCheckLogin.m_nUserId ) {
+if( checkLogin.m_bLogin && cParam.m_nUserId == checkLogin.m_nUserId ) {
 	UpdateBookmarkC cResults = new UpdateBookmarkC();
 	nRtn = cResults.GetResults(cParam);
 }

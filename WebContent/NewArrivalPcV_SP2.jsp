@@ -26,7 +26,7 @@ public class NewArrivalC {
 
 	public ArrayList<CContentComlex> m_vContentList = new ArrayList<CContentComlex>();
 
-	public boolean getResults(CheckLogin cCheckLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -211,10 +211,10 @@ public class NewArrivalC {
 	}
 }%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 NewArrivalC cResults = new NewArrivalC();
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>

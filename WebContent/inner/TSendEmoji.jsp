@@ -257,7 +257,7 @@
 						"userId": nUserId,
 				};
 
-				<%if(cCheckLogin.m_bLogin){%>
+				<%if(checkLogin.m_bLogin){%>
 				let cardInfo = {
 						"number": null,
 						"expire": null,
@@ -277,7 +277,7 @@
 				if(!$(elThis).parent().hasClass('Cheer')) {
 						SendEmojiAjax(emojiInfo, null, null, null, null);
 				} else {
-						<%if(cCheckLogin.m_bLogin){%>
+						<%if(checkLogin.m_bLogin){%>
 						Swal.fire({
 								html: getAmountDlgHtml(emojiImgTag),
 								focusConfirm: false,
@@ -410,7 +410,7 @@
 										DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
 								});
 						});
-						<%} //if(cCheckLogin.m_bLogin)%>
+						<%} //if(checkLogin.m_bLogin)%>
 				}
 				return false;
 		}

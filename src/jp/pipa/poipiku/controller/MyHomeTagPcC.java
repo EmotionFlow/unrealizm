@@ -33,7 +33,7 @@ public class MyHomeTagPcC {
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -51,7 +51,7 @@ public class MyHomeTagPcC {
 			boolean bSearchTag = false;
 			strSql = "SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0 LIMIT 1";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cCheckLogin.m_nUserId);
+			statement.setInt(1, checkLogin.m_nUserId);
 			resultSet = statement.executeQuery();
 			bSearchTag = resultSet.next();
 			resultSet.close();resultSet=null;
@@ -60,7 +60,7 @@ public class MyHomeTagPcC {
 			// サーチキーワード
 			strSql = "SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=1 LIMIT 100";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cCheckLogin.m_nUserId);
+			statement.setInt(1, checkLogin.m_nUserId);
 			resultSet = statement.executeQuery();
 			StringBuilder sbKeyWord = new StringBuilder();
 			if(resultSet.next()) {
@@ -80,21 +80,21 @@ public class MyHomeTagPcC {
 
 			// BLOCK USER
 			String strCondBlockUser = "";
-			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
 				strCondBlockUser = "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
 			}
 
 			// BLOCKED USER
 			String strCondBlocedkUser = "";
-			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
 				strCondBlocedkUser = "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, cCheckLogin.m_nUserId);
+			if(checkLogin.m_bLogin && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
@@ -104,7 +104,7 @@ public class MyHomeTagPcC {
 			idx = 1;
 			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				m_nContentsNumTotal = resultSet.getInt(1);
@@ -128,11 +128,11 @@ public class MyHomeTagPcC {
 			strSql = "SELECT count(contents_0000.*) " + strSqlFromWhere;
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nUserId); // follows_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.block_user_id=?
-			statement.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
-			statement.setInt(idx++, cCheckLogin.m_nUserId); // follow_tags_0000.user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId); // follows_0000.user_id=?
+			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
+			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
+			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
+			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
 			if(!strCondSearch.isEmpty()) statement.setString(idx++, strSearchKeyword);
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			resultSet = statement.executeQuery();
@@ -146,11 +146,11 @@ public class MyHomeTagPcC {
 					+ " ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nUserId); // follows_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, cCheckLogin.m_nUserId); // blocks_0000.block_user_id=?
-			statement.setInt(idx++, cCheckLogin.m_nSafeFilter); // safe_filter<=?
-			statement.setInt(idx++, cCheckLogin.m_nUserId); // follow_tags_0000.user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId); // follows_0000.user_id=?
+			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
+			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
+			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
+			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
 			if(!strCondSearch.isEmpty()) statement.setString(idx++, strSearchKeyword);
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
@@ -162,7 +162,7 @@ public class MyHomeTagPcC {
 				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				content.m_cUser.m_nReaction		= user.reaction;
-				content.m_cUser.m_nFollowing	= (content.m_nUserId == cCheckLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				content.m_cUser.m_nFollowing	= (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_nEndId = content.m_nContentId;
 				m_vContentList.add(content);
 			}
@@ -175,7 +175,7 @@ public class MyHomeTagPcC {
 			m_vContentList = GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, cCheckLogin);
+			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

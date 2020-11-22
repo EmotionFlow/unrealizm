@@ -5,11 +5,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 SendEmojiC cResults = new SendEmojiC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin, _TEX);
+boolean bRtn = cResults.getResults(checkLogin, _TEX);
 %>{
 "result_num" : <%=(bRtn)?1:0%>,
 "result" : "<%=CEnc.E(CEmoji.parse(cResults.m_strEmoji))%>",

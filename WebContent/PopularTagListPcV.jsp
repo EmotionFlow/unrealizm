@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
@@ -14,7 +14,7 @@ cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 50;
 cResults.SELECT_MAX_SAMPLE_GALLERY = 50;
 cResults.SELECT_SAMPLE_GALLERY = 3;
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -61,7 +61,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 				</header>
 				<div class="IllustThumbList">
 					<%for(CContent cContent : m_vContentList) {%>
-					<%=CCnv.toThumbHtml(cContent, cCheckLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
 					<%}%>
 				</div>
 				<a class="CategoryMore" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">

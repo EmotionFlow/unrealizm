@@ -506,7 +506,7 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsSmartPhone,) {
 		}
 	});
 }
-
+var g_chartAnalyze;
 function initGraph(ctx) {
 	return new Chart(ctx, {
 		type: 'doughnut',
@@ -532,7 +532,7 @@ function initGraph(ctx) {
 			events: [],
 		},
 		plugins: [{
-			afterDatasetsDraw: function(chart) {
+			afterRender: function(chart) {
 				var ctx = chart.ctx;
 				chart.data.datasets.forEach(function(dataset, i) {
 					var meta = chart.getDatasetMeta(i);
@@ -558,7 +558,16 @@ function initGraph(ctx) {
 						});
 					}
 				});
+				console.log("afterRender");
 			}
 		}]
 	});
+}
+
+function setGraphData(data) {
+	g_chartAnalyze.data = data
+}
+function updateGraph() {
+	g_chartAnalyze.clear();
+	g_chartAnalyze.update();
 }

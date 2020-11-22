@@ -7,7 +7,7 @@
 <%
 request.setCharacterEncoding("UTF-8");
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 //Twitter
 String authUrl="";

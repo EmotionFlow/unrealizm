@@ -57,7 +57,7 @@ public class IllustViewPcC {
 	public int m_nContentsNumTotal = 0;
 	public Integer m_nNewContentId = null;
 	public boolean m_bCheerNg = true;
-	public boolean getResults(CheckLogin cCheckLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -72,7 +72,7 @@ public class IllustViewPcC {
 			connection = dataSource.getConnection();
 
 			// owner
-			if(m_nUserId == cCheckLogin.m_nUserId) {
+			if(m_nUserId == checkLogin.m_nUserId) {
 				m_bOwner = true;
 			}
 
@@ -140,7 +140,7 @@ public class IllustViewPcC {
 				strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, m_nUserId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
@@ -154,7 +154,7 @@ public class IllustViewPcC {
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setInt(idx++, m_nUserId);
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
 					m_bBlocked = true;
@@ -181,22 +181,22 @@ public class IllustViewPcC {
 
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
-			if(m_nUserId != cCheckLogin.m_nUserId) {
+			if(m_nUserId != checkLogin.m_nUserId) {
 				strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, m_nUserId);
 				resultSet = statement.executeQuery();
 				m_bFollow = resultSet.next();
 				m_nFollow = (m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				if(m_bFollow) {
-					cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			} else {	// owner
-				cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+				checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 			}
 			m_cContent.m_cUser.m_nFollowing = m_nFollow;
 
@@ -217,10 +217,10 @@ public class IllustViewPcC {
 			}
 
 			// Bookmark
-			if(cCheckLogin.m_bLogin) {
+			if(checkLogin.m_bLogin) {
 				strSql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, cCheckLogin.m_nUserId);
+				statement.setInt(1, checkLogin.m_nUserId);
 				statement.setInt(2, m_cContent.m_nContentId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
@@ -232,12 +232,12 @@ public class IllustViewPcC {
 
 			// Owner Contents
 			if(SELECT_MAX_GALLERY>0) {
-				m_vContentList = RelatedContents.getUserContentList(m_nUserId, SELECT_MAX_GALLERY, cCheckLogin);
+				m_vContentList = RelatedContents.getUserContentList(m_nUserId, SELECT_MAX_GALLERY, checkLogin);
 			}
 
 			// Related Contents
 			if(SELECT_MAX_RELATED_GALLERY>0) {
-				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, cCheckLogin);
+				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin);
 			}
 
 

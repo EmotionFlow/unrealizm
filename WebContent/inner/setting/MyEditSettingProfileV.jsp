@@ -26,7 +26,7 @@
 				}
 				$.ajaxSingle({
 						"type": "post",
-						"data": { "ID":<%=cCheckLogin.m_nUserId%>, "NN":strUserName},
+						"data": { "ID":<%=checkLogin.m_nUserId%>, "NN":strUserName},
 						"url": "/f/UpdateNickNameF.jsp",
 						"dataType": "json",
 						"success": function(data) {
@@ -50,7 +50,7 @@
 								strEncodeImg = strEncodeImg.substring(mime_pos+1);
 								$.ajaxSingle({
 										"type": "post",
-										"data": {"UID":<%=cCheckLogin.m_nUserId%>, "DATA":strEncodeImg},
+										"data": {"UID":<%=checkLogin.m_nUserId%>, "DATA":strEncodeImg},
 										"url": url,
 										"dataType": "json",
 										"success": function(res) {
@@ -99,7 +99,7 @@
 		function ResetProfileFile(nMode){
 				$.ajaxSingle({
 						"type": "post",
-						"data": { "ID":<%=cCheckLogin.m_nUserId%>, "MD":nMode},
+						"data": { "ID":<%=checkLogin.m_nUserId%>, "MD":nMode},
 						"url": "/f/ResetProfileFileF.jsp",
 						"dataType": "json",
 						"success": function(data) {
@@ -122,7 +122,7 @@
 				var strProfileTxt = $.trim($("#EditBio").val());
 				$.ajaxSingle({
 						"type": "post",
-						"data": { "ID":<%=cCheckLogin.m_nUserId%>, "DES":strProfileTxt},
+						"data": { "ID":<%=checkLogin.m_nUserId%>, "DES":strProfileTxt},
 						"url": "/f/UpdateProfileTxtF.jsp",
 						"dataType": "json",
 						"success": function(data) {

@@ -8,9 +8,9 @@
 String strDebug = "";
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
 	return;
 }
@@ -19,7 +19,7 @@ if(!cCheckLogin.m_bLogin) {
 //検索結果の取得
 MyEditSettingC cResults = new MyEditSettingC();
 cResults.GetParam(request);
-cResults.GetResults(cCheckLogin);
+cResults.GetResults(checkLogin);
 
 String strEmailState = "";
 if(cResults.m_bUpdate) {
@@ -58,7 +58,7 @@ if(cResults.m_bUpdate) {
 				}
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "ID":<%=cCheckLogin.m_nUserId%>, "NN":strUserName},
+					"data": { "ID":<%=checkLogin.m_nUserId%>, "NN":strUserName},
 					"url": "/f/UpdateNickNameF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -83,7 +83,7 @@ if(cResults.m_bUpdate) {
 						strEncodeImg = strEncodeImg.substring(mime_pos+1);
 						$.ajaxSingle({
 							"type": "post",
-							"data": {"UID":<%=cCheckLogin.m_nUserId%>, "DATA":strEncodeImg},
+							"data": {"UID":<%=checkLogin.m_nUserId%>, "DATA":strEncodeImg},
 							"url": url,
 							"dataType": "json",
 							"success": function(res) {
@@ -132,7 +132,7 @@ if(cResults.m_bUpdate) {
 			function ResetProfileFile(nMode){
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "ID":<%=cCheckLogin.m_nUserId%>, "MD":nMode},
+					"data": { "ID":<%=checkLogin.m_nUserId%>, "MD":nMode},
 					"url": "/f/ResetProfileFileF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -155,7 +155,7 @@ if(cResults.m_bUpdate) {
 				var strProfileTxt = $.trim($("#EditBio").val());
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "ID":<%=cCheckLogin.m_nUserId%>, "DES":strProfileTxt},
+					"data": { "ID":<%=checkLogin.m_nUserId%>, "DES":strProfileTxt},
 					"url": "/f/UpdateProfileTxtF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -178,7 +178,7 @@ if(cResults.m_bUpdate) {
 				var strMuteKeywordTxt = $.trim($("#MuteKeywordText").val());
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "DES": strMuteKeywordTxt },
+					"data": { "UID": <%=checkLogin.m_nUserId%>, "DES": strMuteKeywordTxt },
 					"url": "/f/UpdateMuteKeywordF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -196,7 +196,7 @@ if(cResults.m_bUpdate) {
 				var bMode = $('#NgReaction').prop('checked');
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "UID": <%=cCheckLogin.m_nUserId%>, "MID": (bMode)?<%=CUser.REACTION_HIDE%>:<%=CUser.REACTION_SHOW%> },
+					"data": { "UID": <%=checkLogin.m_nUserId%>, "MID": (bMode)?<%=CUser.REACTION_HIDE%>:<%=CUser.REACTION_SHOW%> },
 					"url": "/f/UpdateNgReactionF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -212,7 +212,7 @@ if(cResults.m_bUpdate) {
 			function DeregistTwitter() {
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "ID":<%=cCheckLogin.m_nUserId%>},
+					"data": { "ID":<%=checkLogin.m_nUserId%>},
 					"url": "/f/UnlinkTwitterF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -239,7 +239,7 @@ if(cResults.m_bUpdate) {
 				$.ajaxSingle({
 					"type": "post",
 					"data": {
-						"ID": <%=cCheckLogin.m_nUserId%>,
+						"ID": <%=checkLogin.m_nUserId%>,
 						"AW": nAutoTweetWeekDay,
 						"AT": nAutoTweetTime,
 						"AD": strAutoTweetTxt,
@@ -270,7 +270,7 @@ if(cResults.m_bUpdate) {
 				}
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"ID": <%=cCheckLogin.m_nUserId%>, "EM": strEmail},
+					"data": {"ID": <%=checkLogin.m_nUserId%>, "EM": strEmail},
 					"url": "/f/UpdateEmailAddressF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -301,7 +301,7 @@ if(cResults.m_bUpdate) {
 				}
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"ID": <%=cCheckLogin.m_nUserId%>, "PW": PW, "PW1": PW1, "PW2": PW2},
+					"data": {"ID": <%=checkLogin.m_nUserId%>, "PW": PW, "PW1": PW1, "PW2": PW2},
 					"url": "/f/UpdatePasswordF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -321,7 +321,7 @@ if(cResults.m_bUpdate) {
 			function Logout() {
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"ID":<%=cCheckLogin.m_nUserId%>},
+					"data": {"ID":<%=checkLogin.m_nUserId%>},
 					"url": "/f/LogioutF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -342,7 +342,7 @@ if(cResults.m_bUpdate) {
 				if(window.confirm('<%=_TEX.T("EditSettingV.DeleteAccount.CheckDeregist")%>')){
 					$.ajaxSingle({
 						"type": "post",
-						"data": {"ID":<%=cCheckLogin.m_nUserId%>},
+						"data": {"ID":<%=checkLogin.m_nUserId%>},
 						"url": "/f/DeleteUserF.jsp",
 						"dataType": "json",
 						"success": function(data) {
@@ -474,7 +474,7 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<%if(cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
+				<%if(checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.MuteKeyowrd")%></div>
 					<div class="SettingBody">
@@ -535,7 +535,7 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<%if(cResults.m_cUser.m_bTweet && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
+				<%if(cResults.m_cUser.m_bTweet && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
 				<div id="SectionAutoTweet" class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 					<div class="SettingBody">

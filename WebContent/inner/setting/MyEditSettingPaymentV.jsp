@@ -4,7 +4,7 @@
 		function DeleteCreditCardInfo(){
 				$.ajax({
 						"type": "post",
-						"data": {"ID": <%=cCheckLogin.m_nUserId%>},
+						"data": {"ID": <%=checkLogin.m_nUserId%>},
 						"url": "/f/DeleteCreditCardInfoF.jsp",
 						"dataType": "json",
 				}).then(

@@ -32,11 +32,11 @@ public class SearchIllustByTagC {
 	public boolean m_bFollowing = false;
 	public String m_strRepFileName = "";
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -56,7 +56,7 @@ public class SearchIllustByTagC {
 			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setString(idx++, m_strKeyword);
 			statement.setInt(idx++, Common.FOVO_KEYWORD_TYPE_TAG);
 			resultSet = statement.executeQuery();
@@ -66,21 +66,21 @@ public class SearchIllustByTagC {
 
 			// BLOCK USER
 			String strCondBlockUser = "";
-			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
 				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
 			}
 
 			// BLOCKED USER
 			String strCondBlocedkUser = "";
-			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
 				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, cCheckLogin.m_nUserId);
+			if(checkLogin.m_bLogin && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
@@ -100,12 +100,12 @@ public class SearchIllustByTagC {
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setString(idx++, m_strKeyword);
-				statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+				statement.setInt(idx++, checkLogin.m_nSafeFilter);
 				if(!strCondBlockUser.isEmpty()) {
-					statement.setInt(idx++, cCheckLogin.m_nUserId);
+					statement.setInt(idx++, checkLogin.m_nUserId);
 				}
 				if(!strCondBlocedkUser.isEmpty()) {
-					statement.setInt(idx++, cCheckLogin.m_nUserId);
+					statement.setInt(idx++, checkLogin.m_nUserId);
 				}
 				if(!strCondMute.isEmpty()) {
 					statement.setString(idx++, strMuteKeyword);
@@ -123,12 +123,12 @@ public class SearchIllustByTagC {
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setString(idx++, m_strKeyword);
-			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!strCondBlockUser.isEmpty()) {
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
 			if(!strCondBlocedkUser.isEmpty()) {
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
 			if(!strCondMute.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);

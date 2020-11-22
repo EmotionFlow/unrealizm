@@ -29,11 +29,11 @@ public class SearchTagByKeywordC {
 	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;

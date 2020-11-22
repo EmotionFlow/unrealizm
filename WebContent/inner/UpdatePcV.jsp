@@ -3,9 +3,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
@@ -13,13 +13,13 @@ if(!cCheckLogin.m_bLogin) {
 IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 
-if(!cResults.getResults(cCheckLogin)) {
+if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
 
 CTweet cTweet = new CTweet();
-boolean bTwRet = cTweet.GetResults(cCheckLogin.m_nUserId);
+boolean bTwRet = cTweet.GetResults(checkLogin.m_nUserId);
 int nTwLstRet = 0;
 if(bTwRet && cTweet.m_bIsTweetEnable && cResults.m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST){
 	nTwLstRet = cTweet.GetMyOpenLists();
@@ -151,13 +151,13 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			}
 
 			function DispDescCharNum() {
-				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditDescription").val().length;
+				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%> - $("#EditDescription").val().length;
 				$("#DescriptionCharNum").html(nCharNum);
 			}
 
 			<%if(nEditorId==Common.EDITOR_TEXT){%>
 			function DispTextCharNum() {
-				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%> - $("#EditTextBody").val().length;
+				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%> - $("#EditTextBody").val().length;
 				$("#TextBodyCharNum").html(nCharNum);
 			}
 			<%}%>
@@ -285,14 +285,14 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 
 				<div class="Description">
-					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strDescription)%></textarea>
-					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
+					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strDescription)%></textarea>
+					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%></div>
 				</div>
 
 				<%if(nEditorId==Common.EDITOR_TEXT){%>
 				<div class="TextBody">
-					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strTextBody)%></textarea>
-					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][cCheckLogin.m_nPremiumId]%></div>
+					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strTextBody)%></textarea>
+					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%></div>
 				</div>
 				<%}%>
 
@@ -305,7 +305,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
-							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=cCheckLogin.m_nUserId%>)">
+							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=checkLogin.m_nUserId%>)">
 								<%for(int nPublishId : PUBLISH_ID) {
 									if(7<=nPublishId && nPublishId<=10 && !cTweet.m_bIsTweetEnable){
 										continue;
@@ -474,11 +474,11 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 				<div class="UoloadCmd">
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFile(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFile(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateText(<%=cCheckLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateText(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>

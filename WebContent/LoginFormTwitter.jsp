@@ -7,7 +7,7 @@
 <%
 request.setCharacterEncoding("UTF-8");
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 //Twitter
 String authUrl="";
@@ -28,9 +28,9 @@ try{
 
 	if(callbackUri.isEmpty() || callbackUri.equals("/")){
 		if(Util.isSmartPhone(request)){
-			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
+			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
 		}else{
-			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+cCheckLogin.m_nUserId;
+			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
 		}
 	}else{
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;

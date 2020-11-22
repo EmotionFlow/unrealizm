@@ -4,7 +4,7 @@
 	request.setCharacterEncoding("UTF-8");
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int m_nUserId = Util.toInt(request.getParameter("ID"));
 int m_nAutoTweetWeekDay = Util.toIntN(request.getParameter("AW"), 0, 6);
@@ -14,7 +14,7 @@ int m_nAutoTweetThumbNum = Util.toIntN(request.getParameter("ATN"), 0, 9);
 if(m_strAutoTweetTxt.length()>100) {m_strAutoTweetTxt=m_strAutoTweetTxt.substring(0, 100);}
 
 int nRtn = 0;
-if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
+if(checkLogin.m_bLogin && (checkLogin.m_nUserId == m_nUserId)) {
 
 	DataSource dsPostgres = null;
 	Connection cConn = null;

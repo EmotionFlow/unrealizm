@@ -63,7 +63,7 @@ enum EmailStatus {
 				}
 				$.ajaxSingle({
 						"type": "post",
-						"data": {"ID": <%=cCheckLogin.m_nUserId%>, "EM": strEmail},
+						"data": {"ID": <%=checkLogin.m_nUserId%>, "EM": strEmail},
 						"url": "/f/UpdateEmailAddressF.jsp",
 						"dataType": "json",
 						"success": function(data) {
@@ -94,7 +94,7 @@ enum EmailStatus {
 				}
 				$.ajaxSingle({
 						"type": "post",
-						"data": {"ID": <%=cCheckLogin.m_nUserId%>, "PW": PW, "PW1": PW1, "PW2": PW2},
+						"data": {"ID": <%=checkLogin.m_nUserId%>, "PW": PW, "PW1": PW1, "PW2": PW2},
 						"url": "/f/UpdatePasswordF.jsp",
 						"dataType": "json",
 						"success": function(data) {

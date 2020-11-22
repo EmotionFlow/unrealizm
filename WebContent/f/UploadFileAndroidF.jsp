@@ -207,17 +207,17 @@ class UploadFileC {
 	}
 }
 %><%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-System.out.println("UploadFileAndroidF.jsp:UID:"+cCheckLogin.m_nUserId);
+CheckLogin checkLogin = new CheckLogin(request, response);
+System.out.println("UploadFileAndroidF.jsp:UID:"+checkLogin.m_nUserId);
 
 int nRtn = 0;
 UploadFileCParam cParam = new UploadFileCParam();
-cParam.m_nUserId = cCheckLogin.m_nUserId;
+cParam.m_nUserId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
-if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
+if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadFileC cResults = new UploadFileC();
-	nRtn = cResults.GetResults(cParam, _TEX, cCheckLogin);
+	nRtn = cResults.GetResults(cParam, _TEX, checkLogin);
 	System.out.println("UploadFileAndroidF.jsp:DONE");
 }
 %><%=nRtn%>

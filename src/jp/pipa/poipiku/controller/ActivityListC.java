@@ -22,7 +22,7 @@ public class ActivityListC {
 	}
 
 	public ArrayList<ActivityInfo> m_vContentList = new ArrayList<>();
-	public boolean GetResults(CheckLogin cCheckLogin) {
+	public boolean GetResults(CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
 		DataSource dataSource = null;

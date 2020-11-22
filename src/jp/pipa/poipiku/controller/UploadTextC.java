@@ -14,7 +14,7 @@ import jp.pipa.poipiku.*;
 
 public class UploadTextC extends UpC {
 	protected int m_nContentId = -99;
-	public int GetResults(UploadTextCParam cParam, CheckLogin cCheckLogin) {
+	public int GetResults(UploadTextCParam cParam, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -63,8 +63,8 @@ public class UploadTextC extends UpC {
 			idx = 1;
 			cState.setInt(idx++, cParam.m_nUserId);
 			cState.setInt(idx++, cParam.m_nCategoryId);
-			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][cCheckLogin.m_nPremiumId]));
-			cState.setString(idx++, Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][cCheckLogin.m_nPremiumId]));
+			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPremiumId]));
+			cState.setString(idx++, Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][checkLogin.m_nPremiumId]));
 			cState.setString(idx++, cParam.m_strTagList);
 			cState.setInt(idx++, cParam.m_nPublishId);
 			cState.setString(idx++, cParam.m_strPassword);

@@ -57,7 +57,7 @@ if(nImgWidth<0) nImgWidth=80;
 int nImgNum = Util.toInt(request.getParameter("INUM"));
 if(nImgNum<0) nImgNum=4;
 
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 BannerListC cResults = new BannerListC();
 cResults.SELECT_MAX_GALLERY = nImgNum;

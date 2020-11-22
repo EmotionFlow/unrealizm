@@ -6,7 +6,7 @@ int nUserId = Util.toInt(request.getParameter("ID"));
 int nContentId	= Util.toInt(request.getParameter("TD"));
 
 // login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 %>
 <!DOCTYPE html>
 <html>

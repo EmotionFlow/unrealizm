@@ -27,11 +27,11 @@ public class MyHomeTagSettingC {
 	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -49,7 +49,7 @@ public class MyHomeTagSettingC {
 				strSql = "SELECT count(*) FROM follow_tags_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, checkLogin.m_nUserId);
 				cResSet = cState.executeQuery();
 				if (cResSet.next()) {
 					m_nContentsNum = cResSet.getInt(1);
@@ -62,7 +62,7 @@ public class MyHomeTagSettingC {
 			strSql = "select * FROM follow_tags_0000 WHERE user_id=? order by upload_date desc offset ? limit ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
+			cState.setInt(idx++, checkLogin.m_nUserId);
 			cState.setInt(idx++, m_nPage*SELECT_MAX_GALLERY);
 			cState.setInt(idx++, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();

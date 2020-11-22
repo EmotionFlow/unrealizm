@@ -7,13 +7,13 @@
 <%@page import="org.apache.commons.codec.binary.Base64"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 UpdateProfileBgFileC cResults = new UpdateProfileBgFileC();
 int nRtn = cResults.GetParam(request);
 
-if(cCheckLogin.m_bLogin && cResults.m_nUserId==cCheckLogin.m_nUserId && nRtn==0) {
-	nRtn = cResults.GetResults(cCheckLogin, getServletContext());
+if(checkLogin.m_bLogin && cResults.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
+	nRtn = cResults.GetResults(checkLogin, getServletContext());
 }
 %>{
 "result" : <%=nRtn%>

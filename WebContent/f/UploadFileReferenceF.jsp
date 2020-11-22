@@ -173,20 +173,20 @@ class UploadReferenceC {
 		return m_nContentId;
 	}
 }%><%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
 UploadReferenceCParam cParam = new UploadReferenceCParam();
-cParam.m_nUserId = cCheckLogin.m_nUserId;
+cParam.m_nUserId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 //Log.d("UploadReferenceCParam:"+nRtn);
 //Log.d("UploadReferenceCParam.m_nUserId:"+cParam.m_nUserId);
 //Log.d("UploadReferenceCParam.m_nCategoryId:"+cParam.m_nCategoryId);
 //Log.d("UploadReferenceCParam.m_strDescription:"+cParam.m_strDescription);
 
-if( cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0 ) {
+if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadReferenceC cResults = new UploadReferenceC();
-	nRtn = cResults.GetResults(cParam, _TEX, cCheckLogin);
+	nRtn = cResults.GetResults(cParam, _TEX, checkLogin);
 }
 %>
 {

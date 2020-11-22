@@ -4,7 +4,7 @@
 request.setCharacterEncoding("UTF-8");
 
 // login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 String strRequestUri = (String)request.getAttribute("javax.servlet.forward.request_uri");
 String strRequestQuery = (String)request.getAttribute("javax.servlet.forward.query_string");

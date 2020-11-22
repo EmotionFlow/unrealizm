@@ -7,7 +7,7 @@
 	</div>
 </header>
 
-<%if(cCheckLogin.m_bLogin) {%>
+<%if(checkLogin.m_bLogin) {%>
 <script>
 	function UpdateNotify() {
 		$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){

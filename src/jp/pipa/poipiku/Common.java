@@ -40,7 +40,7 @@ public class Common {
 	public static final int NOTIFICATION_TOKEN_TYPE_ANDROID = 2;
 
 	public static final int NO_NEED_UPDATE[] = {
-			118, 119, 120, 121, 122, 123, 124,	// 1系 iPhone
+			122, 123, 124, 125, 126, 127, 178,	// 1系 iPhone
 			223, 224, 225, 226, 227, 228, 229	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動

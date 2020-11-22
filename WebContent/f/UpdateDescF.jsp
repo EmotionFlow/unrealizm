@@ -6,7 +6,7 @@
 int nRtn = 0;
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int m_nUserId = Util.toInt(request.getParameter("UID"));
 int m_nContentId = Util.toInt(request.getParameter("IID"));
@@ -38,7 +38,7 @@ if(!m_strTagList.isEmpty()) {
 	}
 }
 
-if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
+if(checkLogin.m_bLogin && (checkLogin.m_nUserId == m_nUserId)) {
 	DataSource dsPostgres = null;
 	Connection cConn = null;
 	PreparedStatement cState = null;
@@ -67,7 +67,7 @@ if(cCheckLogin.m_bLogin && (cCheckLogin.m_nUserId == m_nUserId)) {
 		strSql = "UPDATE contents_0000 SET category_id=?, description=?, tag_list=? WHERE user_id=? AND content_id=? RETURNING content_id";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, m_nCategoryId);
-		cState.setString(2, Common.SubStrNum(m_strDescription, Common.EDITOR_DESC_MAX[editor_id][cCheckLogin.m_nPremiumId]));
+		cState.setString(2, Common.SubStrNum(m_strDescription, Common.EDITOR_DESC_MAX[editor_id][checkLogin.m_nPremiumId]));
 		cState.setString(3, m_strTagList);
 		cState.setInt(4, m_nUserId);
 		cState.setInt(5, m_nContentId);

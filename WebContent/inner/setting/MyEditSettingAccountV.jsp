@@ -3,7 +3,7 @@
 		function Logout() {
 				$.ajaxSingle({
 						"type": "post",
-						"data": {"ID":<%=cCheckLogin.m_nUserId%>},
+						"data": {"ID":<%=checkLogin.m_nUserId%>},
 						"url": "/f/LogioutF.jsp",
 						"dataType": "json",
 						"success": function(data) {
@@ -23,7 +23,7 @@
 				if(window.confirm('<%=_TEX.T("EditSettingV.DeleteAccount.CheckDeregist")%>')){
 						$.ajaxSingle({
 								"type": "post",
-								"data": {"ID":<%=cCheckLogin.m_nUserId%>},
+								"data": {"ID":<%=checkLogin.m_nUserId%>},
 								"url": "/f/DeleteUserF.jsp",
 								"dataType": "json",
 								"success": function(data) {

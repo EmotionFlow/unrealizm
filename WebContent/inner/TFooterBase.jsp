@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div style="clear: both;"></div>
 <footer class="Footer">
-	<%if(!cCheckLogin.m_bLogin) {%>
+	<%if(!checkLogin.m_bLogin) {%>
 	<article class="AnalogicoInfo">
 		<h1 class="AnalogicoInfoTitle">
 			<%=_TEX.T("Poipiku.Info.Message")%>
@@ -71,7 +71,7 @@
 			String retUrl = "";
 			try{ retUrl = URLEncoder.encode(sbFooterHref.toString(), "UTF-8"); } catch (UnsupportedEncodingException e){ ; }
 			%>
-			<%if(cCheckLogin.m_bLogin){%>
+			<%if(checkLogin.m_bLogin){%>
 			<dd><a class="FooterHref" href="/GoToInquiryPcV.jsp?RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
 			<%}else{%>
 			<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry.NeedSignIn")%></a></dd>

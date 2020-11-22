@@ -16,12 +16,12 @@ enum Result {
 %>
 <%
 request.setCharacterEncoding("UTF-8");
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 Result result = Result.UNDEF;
 
 //login check
-if(!cCheckLogin.m_bLogin || cCheckLogin.m_nUserId < 1){
+if(!checkLogin.m_bLogin || checkLogin.m_nUserId < 1){
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
@@ -61,7 +61,7 @@ try
 	// 他のポイピクアカウントがこのTwitterアカウントと紐づいてるかを検索
 	strSql = "SELECT flduserid FROM tbloauth WHERE flduserid<>? AND twitter_user_id=?";
 	cState = cConn.prepareStatement(strSql);
-	cState.setInt(1, cCheckLogin.m_nUserId);
+	cState.setInt(1, checkLogin.m_nUserId);
 	cState.setString(2, twitter_user_id);
 	cResSet = cState.executeQuery();
 	if(cResSet.next()){
@@ -73,7 +73,7 @@ try
 		// select
 		strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
 		cState = cConn.prepareStatement(strSql);
-		cState.setInt(1, cCheckLogin.m_nUserId);
+		cState.setInt(1, checkLogin.m_nUserId);
 		cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 		cResSet = cState.executeQuery();
 		if(cResSet.next()){
@@ -83,7 +83,7 @@ try
 		cState.close();cState=null;
 
 		if (bIsExist){
-			Log.d("TwitterToken Update : " + cCheckLogin.m_nUserId);
+			Log.d("TwitterToken Update : " + checkLogin.m_nUserId);
 			// update
 			strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=?";
 			cState = cConn.prepareStatement(strSql);
@@ -91,22 +91,22 @@ try
 			cState.setString(2, consumer.getTokenSecret());
 			cState.setString(3, twitter_user_id);
 			cState.setString(4, screen_name);
-			cState.setInt(5, cCheckLogin.m_nUserId);
+			cState.setInt(5, checkLogin.m_nUserId);
 			cState.setInt(6, Common.TWITTER_PROVIDER_ID);
 			cState.executeUpdate();
 			cState.close();cState=null;
 		} else {
-			Log.d("TwitterToken Insert : " + cCheckLogin.m_nUserId);
+			Log.d("TwitterToken Insert : " + checkLogin.m_nUserId);
 			// insert
 			strSql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?) ";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
+			cState.setInt(1, checkLogin.m_nUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 			cState.setString(3, consumer.getToken());
 			cState.setString(4, consumer.getTokenSecret());
 			cState.setString(5, twitter_user_id);
 			cState.setString(6, screen_name);
-			cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", cCheckLogin.m_nUserId));
+			cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
 			cState.executeUpdate();
 			cState.close();cState=null;
 		}

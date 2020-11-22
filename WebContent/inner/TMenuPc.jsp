@@ -10,7 +10,7 @@
 					<img  class="HeaderImg" src="//img-cdn.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>" />
 				</a>
 			</h1>
-			<%if(Util.isSmartPhone(request) && !cCheckLogin.m_bLogin) {%>
+			<%if(Util.isSmartPhone(request) && !checkLogin.m_bLogin) {%>
 				<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitter.jsp">
 					<input id="login_from_twitter_tmenupc_callback_00" type="hidden" name="CBPATH" value=""/>
 					<script>{
@@ -24,7 +24,7 @@
 				</form>
 			<%}else{%>
 			<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
-			<a id="MenuSettings" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>"  href="<%="/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId%>" >
+			<a id="MenuSettings" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>"  href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
 				<span class="MenuSettingsIcon"></span>
 				<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
@@ -32,31 +32,31 @@
 		</div>
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
-			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 			</a>
-			<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+			<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
-			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 			</a>
-			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon">
 					<div id="InfoNumAct" class="InfoNum">0</div>
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			</a>
-			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID="+<%=cCheckLogin.m_nUserId%>">
+			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID="+<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
 		</nav>
 		<nav class="FooterMenu" style="float: right;">
-			<%if(!cCheckLogin.m_bLogin) {%>
+			<%if(!checkLogin.m_bLogin) {%>
 			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitter.jsp">
 				<input id="login_from_twitter_tmenupc_callback_01" type="hidden" name="CBPATH" value=""/>
 				<script>{
@@ -69,7 +69,7 @@
 				</a>
 			</form>
 			<%} else {%>
-			<a id="MenuSettings" class="FooterMenuItem" href="<%=(cCheckLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+cCheckLogin.m_nUserId : "/" %>">
+			<a id="MenuSettings" class="FooterMenuItem" href="<%=(checkLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId : "/" %>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
@@ -96,32 +96,32 @@
 <%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
-		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>
-		<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+		<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
-		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 		</a>
-		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon">
 				<div id="InfoNumAct" class="InfoNum">0</div>
 			</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 		</a>
-		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=cCheckLogin.m_nUserId%>">
+		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>
 	</nav>
 </div>
 <%}%>
-<%if(cCheckLogin.m_bLogin) {%>
+<%if(checkLogin.m_bLogin) {%>
 <script>
 	function UpdateNotify() {
 		$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
@@ -143,7 +143,7 @@
 </script>
 <%}%>
 
-<%if(!cCheckLogin.m_bLogin) {%>
+<%if(!checkLogin.m_bLogin) {%>
 <script>
 	$(function () {
 		var bLoginButtonClicked = false;

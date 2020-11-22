@@ -2,16 +2,16 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 	return;
 }
 
 FollowListC cResults = new FollowListC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>

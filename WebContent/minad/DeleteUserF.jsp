@@ -6,15 +6,15 @@
 int m_nRtn = 0;
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int m_nUserId = Util.toInt(request.getParameter("ID"));
 
-if(cCheckLogin.m_nUserId!=1) {
+if(checkLogin.m_nUserId!=1) {
 	return;
 }
 
-Log.d(String.format("minad DeleteUserV Start:%d", cCheckLogin.m_nUserId));
+Log.d(String.format("minad DeleteUserV Start:%d", checkLogin.m_nUserId));
 
 DataSource dsPostgres = null;
 Connection cConn = null;

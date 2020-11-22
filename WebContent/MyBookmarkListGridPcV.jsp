@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
@@ -11,7 +11,7 @@ if(!cCheckLogin.m_bLogin) {
 MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 48;
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -61,7 +61,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</div>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+cCheckLogin.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 

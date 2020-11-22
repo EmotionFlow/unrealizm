@@ -48,11 +48,11 @@
 <%
 int nRtn = 0;
 String strHtml = _TEX.T("Common.NeedLogin");
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(cCheckLogin.m_bLogin) {
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(checkLogin.m_bLogin) {
 	SendEmojiC cResults = new SendEmojiC();
 	cResults.getParam(request);
-	cResults.getResults(cCheckLogin, _TEX);
+	cResults.getResults(checkLogin, _TEX);
 	cResults.m_vComment.size();
 	StringBuilder strRtn = new StringBuilder();
 	for(CComment comment : cResults.m_vComment) {

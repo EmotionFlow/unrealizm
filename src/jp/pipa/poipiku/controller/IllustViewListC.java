@@ -34,7 +34,7 @@ public class IllustViewListC {
 	public int SELECT_MAX_GALLERY = 10;
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	public boolean getResults(CheckLogin cCheckLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -48,21 +48,21 @@ public class IllustViewListC {
 
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
-			if(m_nUserId != cCheckLogin.m_nUserId) {
+			if(m_nUserId != checkLogin.m_nUserId) {
 				strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cCheckLogin.m_nUserId);
+				cState.setInt(1, checkLogin.m_nUserId);
 				cState.setInt(2, m_nUserId);
 				cResSet = cState.executeQuery();
 				boolean bFollow = cResSet.next();
 				m_nFollow = (bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				if(bFollow) {
-					cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
 			} else {	// owner
-				cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+				checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 			}
 
 			// author profile
@@ -87,12 +87,12 @@ public class IllustViewListC {
 
 
 			// NEW ARRIVAL
-			String strOpenCnd = (m_nUserId!=cCheckLogin.m_nUserId)?" AND open_id<>2":"";
+			String strOpenCnd = (m_nUserId!=checkLogin.m_nUserId)?" AND open_id<>2":"";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id<? AND safe_filter<=? %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, m_nContentId);
-			cState.setInt(3, cCheckLogin.m_nSafeFilter);
+			cState.setInt(3, checkLogin.m_nSafeFilter);
 			cState.setInt(4, SELECT_MAX_GALLERY*m_nPage);
 			cState.setInt(5, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
@@ -115,7 +115,7 @@ public class IllustViewListC {
 			}
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, cCheckLogin);
+			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

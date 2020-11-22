@@ -63,7 +63,7 @@ public class UserAuthUtil {
 	public static int checkLogin(HttpServletRequest request, HttpServletResponse response) {
 		int nRtn = ERROR_UNKOWN;
 		//login check
-		//CheckLogin cCheckLogin = new CheckLogin(request, response);
+		//CheckLogin checkLogin = new CheckLogin(request, response);
 
 		//パラメータの取得
 		String strEmail	= "";
@@ -126,7 +126,7 @@ public class UserAuthUtil {
 	public static int registUser(HttpServletRequest request, HttpServletResponse response, ResourceBundleControl _TEX) {
 		int nRtn = ERROR_UNKOWN;
 		//login check
-		CheckLogin cCheckLogin = new CheckLogin(request, response);
+		CheckLogin checkLogin = new CheckLogin(request, response);
 
 		//パラメータの取得
 		String strEmail	= "";
@@ -200,7 +200,7 @@ public class UserAuthUtil {
 			cState.setString(1, strNickName);
 			cState.setString(2, strPassword);
 			cState.setString(3, strHashPass);
-			cState.setInt(4, cCheckLogin.m_nLangId);
+			cState.setInt(4, checkLogin.m_nLangId);
 			cState.setString(5, strEmail);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
@@ -442,8 +442,8 @@ public class UserAuthUtil {
 	public static int updateEmail(HttpServletRequest request, HttpServletResponse response, ResourceBundleControl _TEX) {
 		int nRtn = ERROR_UNKOWN;
 		//login check
-		CheckLogin cCheckLogin = new CheckLogin(request, response);
-		if(!cCheckLogin.m_bLogin) return ERROR_NOT_LOGIN;
+		CheckLogin checkLogin = new CheckLogin(request, response);
+		if(!checkLogin.m_bLogin) return ERROR_NOT_LOGIN;
 
 		//パラメータの取得
 		int nUserId = 0;
@@ -455,7 +455,7 @@ public class UserAuthUtil {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		if(cCheckLogin.m_nUserId != nUserId) return ERROR_NOT_LOGIN;
+		if(checkLogin.m_nUserId != nUserId) return ERROR_NOT_LOGIN;
 		if(!strEmail.matches("^([a-zA-Z0-9])+([a-zA-Z0-9\\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\\._-]+)+$")) return ERROR_EMAIL_INVALID;
 
 		DataSource dsPostgres = null;
@@ -471,7 +471,7 @@ public class UserAuthUtil {
 			strSql = "SELECT * FROM users_0000 WHERE email=? AND user_id<>?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strEmail);
-			cState.setInt(2, cCheckLogin.m_nUserId);
+			cState.setInt(2, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			bFound = cResSet.next();
 			cResSet.close();cResSet=null;
@@ -483,7 +483,7 @@ public class UserAuthUtil {
 			String strPassword = null;
 			strSql = "SELECT email, password FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
+			cState.setInt(1, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			cResSet.next();
 			strNowEmail = cResSet.getString("email");
@@ -534,12 +534,12 @@ public class UserAuthUtil {
 			if(!bRegistNew){
 				strEmailText = String.format(
 						_TEX.T("UpdateEmailAddressV.Mail.MessageFormat"),
-						cCheckLogin.m_strNickName,
+						checkLogin.m_strNickName,
 						strHashKey);
 			}else{
 				strEmailText = String.format(
 						_TEX.T("UpdateEmailAddressV.Mail.MessageFormatNewRegist"),
-						cCheckLogin.m_strNickName,
+						checkLogin.m_strNickName,
 						strHashKey,
 						strPassword);
 			}

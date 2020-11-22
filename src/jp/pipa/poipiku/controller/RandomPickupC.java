@@ -26,11 +26,11 @@ public class RandomPickupC {
 	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dataSource = null;
 		Connection connection = null;
@@ -46,21 +46,21 @@ public class RandomPickupC {
 
 			// BLOCK USER
 			String strCondBlockUser = "";
-			if(SqlUtil.hasBlockUser(connection, cCheckLogin.m_nUserId)) {
+			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
 				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
 			}
 
 			// BLOCKED USER
 			String strCondBlocedkUser = "";
-			if(SqlUtil.hasBlockedUser(connection, cCheckLogin.m_nUserId)) {
+			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
 				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			if(cCheckLogin.m_bLogin && cCheckLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, cCheckLogin.m_nUserId);
+			if(checkLogin.m_bLogin && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
@@ -73,8 +73,8 @@ public class RandomPickupC {
 				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) %s", strCond);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, checkLogin.m_nUserId);
+				cState.setInt(idx++, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
 				}
@@ -98,12 +98,12 @@ public class RandomPickupC {
 					+ "ORDER BY content_id DESC LIMIT ? ";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!strCondBlockUser.isEmpty()) {
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
 			if(!strCondBlocedkUser.isEmpty()) {
-				statement.setInt(idx++, cCheckLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
 			if(!strCondMute.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);

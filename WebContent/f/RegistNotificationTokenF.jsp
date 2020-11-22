@@ -18,7 +18,7 @@
 		}
 	}
 
-	public int GetResults(CheckLogin cCheckLogin) {
+	public int GetResults(CheckLogin checkLogin) {
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -49,7 +49,7 @@
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			nRtn = cCheckLogin.m_nUserId;
+			nRtn = checkLogin.m_nUserId;
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -61,13 +61,13 @@
 	}
 }%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 RegistNotificationTokenC cResults = new RegistNotificationTokenC();
 cResults.GetParam(request);
 
 int nRtn = -1;
-if( cCheckLogin.m_bLogin && cResults.m_nUserId == cCheckLogin.m_nUserId ) {
-	nRtn = cResults.GetResults(cCheckLogin);
+if( checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId ) {
+	nRtn = cResults.GetResults(checkLogin);
 }
 %>{"result":<%=nRtn%>}

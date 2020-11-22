@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-    CheckLogin cCheckLogin = new CheckLogin(request, response);
+    CheckLogin checkLogin = new CheckLogin(request, response);
     GoToInquiryC cResults = new GoToInquiryC();
-    if(cCheckLogin.m_bLogin){
+    if(checkLogin.m_bLogin){
         cResults.GetParam(request);
-        cResults.GetResults(cCheckLogin);
+        cResults.GetResults(checkLogin);
     }
 %>
 
@@ -17,7 +17,7 @@
     <script>
         $(function () {
             setTimeout(function () {
-                <%if(cCheckLogin.m_bLogin){%>
+                <%if(checkLogin.m_bLogin){%>
                 go_inquiry.submit();
                 <%}else{%>
                 location.href = "<%=Common.GetPoipikuUrl("/")%>";
@@ -30,7 +30,7 @@
 <body>
 <%@ include file="/inner/TMenuPc.jsp"%>
 <article class="Wrapper" style="min-height: 400px; text-align: center;">
-    <%if(cCheckLogin.m_bLogin){%>
+    <%if(checkLogin.m_bLogin){%>
     <div class="SettingList" style="margin: 50px 0;">
         <%=_TEX.T("GoToInquiry.Info")%>
     </div>
@@ -39,7 +39,7 @@
         <input type="hidden" name="EMAIL" value="<%=cResults.m_cUser.m_strEmail%>"/>
         <input type="hidden" name="NNAME" value="<%=cResults.m_cUser.m_strNickName%>"/>
         <input type="hidden" name="TWNAME" value="<%=cResults.m_cUser.m_strTwitterScreenName%>"/>
-        <input type="hidden" name="UID" value="<%=cCheckLogin.m_nUserId%>"/>
+        <input type="hidden" name="UID" value="<%=checkLogin.m_nUserId%>"/>
         <input type="hidden" name="RET" value="<%=cResults.m_strReturnUrl%>" />
         <a class="BtnBase" href="javascript:go_inquiry.submit()" style="font-size: 14px; padding: 10px 20px;" ><%=_TEX.T("Inquiry.Title")%></a>
     </form>

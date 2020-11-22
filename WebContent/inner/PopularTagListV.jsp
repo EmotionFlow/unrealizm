@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
-if(SP_REVIEW && !cCheckLogin.m_bLogin) {
+if(SP_REVIEW && !checkLogin.m_bLogin) {
 	if(isApp){
 		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 	} else {
@@ -17,7 +17,7 @@ cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 50;
 cResults.SELECT_MAX_SAMPLE_GALLERY = 50;
 cResults.SELECT_SAMPLE_GALLERY = 3;
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 
 int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 %>

@@ -10,7 +10,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nResult = UserAuthUtil.registUserFromTwitter(request, response, session, _TEX);
 String nextUrl = "/MyHomePcV.jsp";
@@ -19,7 +19,7 @@ if(callbackUrl!=null) {
 	nextUrl = callbackUrl.toString();
 }
 
-Log.d(String.format("USERAUTH RetistTwitterUser WEB : user_id:%d, twitter_result:%d, url:%s", cCheckLogin.m_nUserId, nResult, nextUrl));
+Log.d(String.format("USERAUTH RetistTwitterUser WEB : user_id:%d, twitter_result:%d, url:%s", checkLogin.m_nUserId, nResult, nextUrl));
 
 if(nResult>0) {
 	response.sendRedirect(nextUrl);
@@ -31,13 +31,13 @@ if(nResult>0) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
-		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>" />
+		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>" />
 		<style>
 		.AnalogicoInfo {display: none;}
 		</style>
 		<script>
 		$(function(){
-			location.href = "/MyHomePcV.jsp?ID=<%=cCheckLogin.m_nUserId%>";
+			location.href = "/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>";
 		});
 		</script>
 	</head>

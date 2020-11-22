@@ -7,21 +7,21 @@
 <%
 int nResult = 0;
 
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) {
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) {
 	nResult = -1;
 }
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
 
-if (cCheckLogin.m_nUserId!=cResults.m_nUserId) {
+if (checkLogin.m_nUserId!=cResults.m_nUserId) {
 	nResult = -2;
 }
 
 cResults.m_bDispUnPublished = true;
 
-if (!cResults.getResults(cCheckLogin, false)) {
+if (!cResults.getResults(checkLogin, false)) {
 	nResult = -2;
 }
 

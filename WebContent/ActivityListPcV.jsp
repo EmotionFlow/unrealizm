@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-String strDebug = "";
-
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-
-if(!cCheckLogin.m_bLogin) {
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
@@ -14,9 +11,9 @@ if(!cCheckLogin.m_bLogin) {
 ActivityListC cResults = new ActivityListC();
 //パラメータの取得
 cResults.GetParam(request);
-cResults.m_nUserId = cCheckLogin.m_nUserId;
+cResults.m_nUserId = checkLogin.m_nUserId;
 //検索結果の取得
-cResults.GetResults(cCheckLogin);
+cResults.GetResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -30,7 +27,6 @@ cResults.GetResults(cCheckLogin);
 		});
 		</script>
 	</head>
-
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 

@@ -18,11 +18,11 @@
 	int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
 
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -40,7 +40,7 @@
 			String strCond = "";
 			strSql = "SELECT mute_keyword_list FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cCheckLogin.m_nUserId);
+			cState.setInt(1, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
 				strMuteKeyword = Util.toString(cResSet.getString(1)).trim();
@@ -57,8 +57,8 @@
 				strSql = String.format("SELECT count(*) FROM contents_0000 WHERE open_id<>2 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s", strCond);
 				cState = cConn.prepareStatement(strSql);
 				idx = 1;
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
-				cState.setInt(idx++, cCheckLogin.m_nUserId);
+				cState.setInt(idx++, checkLogin.m_nUserId);
+				cState.setInt(idx++, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					cState.setString(idx++, strMuteKeyword);
 				}
@@ -73,8 +73,8 @@
 			strSql = String.format("SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id<>2 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nUserId);
+			cState.setInt(idx++, checkLogin.m_nUserId);
+			cState.setInt(idx++, checkLogin.m_nUserId);
 			if(!strMuteKeyword.isEmpty()) {
 				cState.setString(idx++, strMuteKeyword);
 			}
@@ -105,11 +105,11 @@
 	}
 }%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin, true);
+boolean bRtn = cResults.getResults(checkLogin, true);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>

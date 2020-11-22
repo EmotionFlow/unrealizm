@@ -117,11 +117,11 @@ class SendPasswordC {
 }
 %>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 SendPasswordC cResults = new SendPasswordC();
 cResults.getParam(request);
-int nUserId = cResults.getResults(cCheckLogin, _TEX);
+int nUserId = cResults.getResults(checkLogin, _TEX);
 %>{
 "result" : <%=nUserId%>
 }

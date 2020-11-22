@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 SearchTagByKeywordC cResults = new SearchTagByKeywordC();
 cResults.getParam(request);
@@ -12,7 +12,7 @@ if(strKeywordHan.matches("^[0-9]+$")) {
 	response.sendRedirect("/" + strKeywordHan + "/");
 	return;
 }
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
 %>
 <!DOCTYPE html>

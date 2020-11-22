@@ -26,7 +26,7 @@ public class IllustDetailC {
 
 
 	public CContent m_cContent = new CContent();
-	public boolean getResults(CheckLogin cCheckLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
@@ -41,7 +41,7 @@ public class IllustDetailC {
 
 
 			// content main
-			String strOpenCnd = (m_nUserId!=cCheckLogin.m_nUserId)?" AND open_id<>2":"";
+			String strOpenCnd = (m_nUserId!=checkLogin.m_nUserId)?" AND open_id<>2":"";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);

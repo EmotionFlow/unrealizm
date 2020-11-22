@@ -98,15 +98,15 @@ class GetIllustFileListC {
 		return nRtn;
 	}
 }%><%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
 GetIllustFileListCParam cParam = new GetIllustFileListCParam();
-cParam.m_nUserId = cCheckLogin.m_nUserId;
+cParam.m_nUserId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
 
 GetIllustFileListC cResults = new GetIllustFileListC();
-if (cCheckLogin.m_bLogin && cParam.m_nUserId==cCheckLogin.m_nUserId && nRtn==0) {
+if (checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 

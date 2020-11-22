@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) return;
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) return;
 
 MyHomeTagSettingC cResults = new MyHomeTagSettingC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

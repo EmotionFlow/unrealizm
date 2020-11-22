@@ -13,8 +13,8 @@
 int nResult = 0;
 
 //login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
-if(!cCheckLogin.m_bLogin) {
+CheckLogin checkLogin = new CheckLogin(request, response);
+if(!checkLogin.m_bLogin) {
 	nResult = -1;
 }
 
@@ -23,7 +23,7 @@ MyEditSettingC cResults = new MyEditSettingC();
 cResults.GetParam(request);
 
 //検索結果の取得
-if (!cResults.GetResults(cCheckLogin)) {
+if (!cResults.GetResults(checkLogin)) {
 	nResult = -2;
 }
 
@@ -36,7 +36,7 @@ try {
 	//ユーザの情報
 	user = new HashMap<String, Object>();
 	user.put("result", nResult);
-	user.put("user_id", cCheckLogin.m_nUserId);
+	user.put("user_id", checkLogin.m_nUserId);
 
 	if (nResult == 0) {
 		//Twitterの情報
@@ -73,7 +73,7 @@ try {
 		user.put("official_twitter_url", "https://twitter.com/pipajp");
 		user.put("inquiry_url", "https://cs.pipa.jp/InquiryAppV.jsp");
 		user.put("how_to_use", "/how_to/TopV.jsp");
-		user.put("premiun_id", cCheckLogin.m_nPremiumId);
+		user.put("premiun_id", checkLogin.m_nPremiumId);
 	}
 
 	//JSONに変換して出力

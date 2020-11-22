@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 SearchUserByTagC cResults = new SearchUserByTagC();
 cResults.getParam(request);
 cResults.m_strKeyword = "過去1お気に入りのラクガキ";
 cResults.SELECT_MAX_GALLERY = 10000;
-boolean bRtn = cResults.getResults(cCheckLogin);
+boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>
@@ -64,7 +64,7 @@ boolean bRtn = cResults.getResults(cCheckLogin);
 			</section>
 			<div class="CmdList">
 				<a class="CmdPost" href="/UploadFilePcV.jsp?TAG=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"></a>
-				<a class="CmdMyPos" href="javascript:void(0);" onclick="$('html, body').animate({scrollTop: $('#user_id_<%=cCheckLogin.m_nUserId%>').offset().top-50}, 500, 'swing');"></a>
+				<a class="CmdMyPos" href="javascript:void(0);" onclick="$('html, body').animate({scrollTop: $('#user_id_<%=checkLogin.m_nUserId%>').offset().top-50}, 500, 'swing');"></a>
 				<a class="CmdBottom" href="javascript:void(0);" onclick="$('html, body').animate({scrollTop: $('#CmdTop').offset().top-500}, 500, 'swing');"></a>
 			</div>
 		</article>

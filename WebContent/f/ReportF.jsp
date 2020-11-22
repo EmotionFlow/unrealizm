@@ -5,7 +5,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 	//login check
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 
 //パラメータの取得
 request.setCharacterEncoding("UTF-8");
@@ -30,13 +30,13 @@ try {
 	objMime.setFrom(new InternetAddress(FROM_ADDR, FROM_NAME, "iso-2022-jp"));
 	objMime.setRecipients(Message.RecipientType.TO, TO_ADDR);
 	objMime.setSubject(EMAIL_TITLE, "iso-2022-jp");
-	objMime.setText(String.format(EMAIL_TXT, cCheckLogin.m_nUserId, nUserId, nContentId, strReportDesc), "iso-2022-jp");
+	objMime.setText(String.format(EMAIL_TXT, checkLogin.m_nUserId, nUserId, nContentId, strReportDesc), "iso-2022-jp");
 	objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
 	objMime.setHeader("Content-Transfer-Encoding", "7bit");
 	objMime.setSentDate(new java.util.Date());
 	Transport.send(objMime);
 
-	Log.d(String.format(EMAIL_TXT, cCheckLogin.m_nUserId, nUserId, nContentId, strReportDesc));
+	Log.d(String.format(EMAIL_TXT, checkLogin.m_nUserId, nUserId, nContentId, strReportDesc));
 }catch(Exception e) {
 	e.printStackTrace();
 }

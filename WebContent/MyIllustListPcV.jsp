@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
-CheckLogin cCheckLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
@@ -14,22 +14,22 @@ cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 45;
 
 // ログインせずにUIDを指定した場合、間違ってマイボックスのURLを聞いてアクセスしている可能性がある
-if(!cCheckLogin.m_bLogin && cResults.m_nUserId>=1) {
+if(!checkLogin.m_bLogin && cResults.m_nUserId>=1) {
 	response.sendRedirect("/IllustListPcV.jsp?ID="+cResults.m_nUserId);
 	return;
 }
 
 // それ以外の場合でログインしていない場合はログインページへ
-if(!cCheckLogin.m_bLogin) {
+if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 
 // ログインしていながら自分以外のIDを叩いた場合は自分のページへ矯正遷移
-cResults.m_nUserId = cCheckLogin.m_nUserId;
+cResults.m_nUserId = checkLogin.m_nUserId;
 
 cResults.m_bDispUnPublished = true;
-if(!cResults.getResults(cCheckLogin) || !cResults.m_bOwner) {
+if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
@@ -112,7 +112,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 				<%if(cResults.m_vContentList.size()>0){%>
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, cCheckLogin)%>
+						<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, checkLogin)%>
 						<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 						<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 					<%}%>

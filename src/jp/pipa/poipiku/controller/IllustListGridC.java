@@ -41,10 +41,10 @@ public class IllustListGridC {
 	public int m_nContentsNum = 0;
 	public int m_nContentsNumTotal = 0;
 
-	public boolean getResults(CheckLogin cCheckLogin) {
-		return getResults(cCheckLogin, false);
+	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, false);
 	}
-	public boolean getResults(CheckLogin cCheckLogin, boolean bContentOnly) {
+	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		String strSql = "";
 		boolean bRtn = false;
 		DataSource dsPostgres = null;
@@ -57,7 +57,7 @@ public class IllustListGridC {
 			return false;
 		}
 
-		if(cCheckLogin.m_nUserId == m_nUserId) {
+		if(checkLogin.m_nUserId == m_nUserId) {
 			m_bOwner = true;
 		}
 
@@ -126,17 +126,17 @@ public class IllustListGridC {
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
-					cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 				} else {
 					// follow
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
 					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, cCheckLogin.m_nUserId);
+					cState.setInt(1, checkLogin.m_nUserId);
 					cState.setInt(2, m_nUserId);
 					cResSet = cState.executeQuery();
 					if(cResSet.next()) {
 						m_bFollow = true;
-						cCheckLogin.m_nSafeFilter = Math.max(cCheckLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+						checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 					}
 					cResSet.close();cResSet=null;
 					cState.close();cState=null;
@@ -144,7 +144,7 @@ public class IllustListGridC {
 					// blocking
 					strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, cCheckLogin.m_nUserId);
+					cState.setInt(1, checkLogin.m_nUserId);
 					cState.setInt(2, m_nUserId);
 					cResSet = cState.executeQuery();
 					if(cResSet.next()) {
@@ -157,7 +157,7 @@ public class IllustListGridC {
 					strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, m_nUserId);
-					cState.setInt(2, cCheckLogin.m_nUserId);
+					cState.setInt(2, checkLogin.m_nUserId);
 					cResSet = cState.executeQuery();
 					if(cResSet.next()) {
 						m_bBlocked = true;
@@ -202,7 +202,7 @@ public class IllustListGridC {
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			cState.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!m_strKeyword.isEmpty()) {
 				cState.setString(idx++, m_strKeyword);
 			}
@@ -217,7 +217,7 @@ public class IllustListGridC {
 			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond, strOpenCnd);
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(idx++, m_nUserId);
-			cState.setInt(idx++, cCheckLogin.m_nSafeFilter);
+			cState.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!m_strKeyword.isEmpty()) {
 				cState.setString(idx++, m_strKeyword);
 			}
@@ -242,7 +242,7 @@ public class IllustListGridC {
 			m_vContentList = GridUtil.getEachComment(cConn, m_vContentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, cCheckLogin);
+			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
