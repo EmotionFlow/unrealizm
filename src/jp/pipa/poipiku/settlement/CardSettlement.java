@@ -10,6 +10,7 @@ public abstract class CardSettlement {
     protected String cardExpire = null;
     protected String cardSecurityCode = null;
     protected String userAgent = null;
+    public int m_nCreditcardIdToPay = -1;
 
     public enum BillingCategory {
         Undef,      // 未定義

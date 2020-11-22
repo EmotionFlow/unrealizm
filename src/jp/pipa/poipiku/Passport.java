@@ -180,19 +180,16 @@ public class Passport {
                 Log.d("cardSettlement.authorize() failed.");
                 return false;
             }
-            final int nCretidcardId = cardSettlement.m_nCreditcardIdToPay;
+            final int nCreditCardId = cardSettlement.m_nCreditcardIdToPay;
 
             //// begin transaction
             cConn.setAutoCommit(false);
-
-            // insert into orders, order_details
-            int nOrderId = -1;
 
             // insert into passport_logs
             strSql = "INSERT INTO passport_logs(user_id, subscription_datetime, cancel_datetime, order_id) VALUES (?, current_timestamp, null, ?)";
             cState = cConn.prepareStatement(strSql);
             cState.setInt(1, m_nUserId);
-            cState.setInt (2, nOrderId);
+            cState.setInt (2, orderId);
             cState.executeUpdate();
 
             // update users_0000
@@ -206,7 +203,7 @@ public class Passport {
             strSql = "UPDATE orders SET creditcard_id=?, status=?, agency_order_id=?, updated_at=now() WHERE id=?";
             cState = cConn.prepareStatement(strSql);
             idx=1;
-            cState.setInt(idx++, nCretidcardId);
+            cState.setInt(idx++, nCreditCardId);
             cState.setInt(idx++, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
             cState.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
             cState.setInt(idx++, orderId);
@@ -246,8 +243,7 @@ public class Passport {
 
         try {
             // 定期課金キャンセル
-            CardSettlement cardSettlement = new EpsilonCardSettlement(
-                    m_nUserId);
+            CardSettlement cardSettlement = new EpsilonCardSettlement(m_nUserId);
             boolean authorizeResult = cardSettlement.cancelSubscription(m_nOrderId);
             if (!authorizeResult) {
                 Log.d("cardSettlement.authorize() failed.");

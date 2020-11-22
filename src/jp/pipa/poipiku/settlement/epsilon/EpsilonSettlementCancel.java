@@ -31,7 +31,7 @@ public class EpsilonSettlementCancel {
 
     // TODO 本番適用時に入れ替え
     // dev
-    private static final String CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+    private static final String CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
 
     // production
 //    private static final String CANCEL_URL = "https://secure.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
@@ -73,8 +73,7 @@ public class EpsilonSettlementCancel {
 
         try {
             post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-            String url ="";
-            post.setURI(new URI(url));
+            post.setURI(new URI(CANCEL_URL));
             res = client.execute(post);
         }catch(Exception e){
             e.printStackTrace();
@@ -122,6 +121,7 @@ public class EpsilonSettlementCancel {
                         }
                     }
                 }
+                Log.d(resultInfo.toString());
             }catch(Exception e){
                 Log.d("caught exception");
                 for(NameValuePair p : param){
