@@ -10,10 +10,10 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 int nRtn = 0;
-UpdateProfileFileC cResults = new UpdateProfileFileC();
+UpdateProfileHeaderFileC cResults = new UpdateProfileHeaderFileC();
 nRtn = cResults.GetParam(request);
 
-if( checkLogin.m_bLogin && cResults.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
+if(checkLogin.m_bLogin && cResults.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
 	nRtn = cResults.GetResults(checkLogin, getServletContext());
 }
 %>{

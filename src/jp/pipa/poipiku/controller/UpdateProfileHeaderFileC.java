@@ -33,7 +33,7 @@ public class UpdateProfileHeaderFileC {
 			request.setCharacterEncoding("UTF-8");
 			m_nUserId = Util.toInt(request.getParameter("UID"));
 			m_strEncodeImg = Common.TrimAll(Common.CrLfInjection(Common.EscapeInjection(request.getParameter("DATA"))));
-		} catch(Exception e) {
+		} catch (Exception e) {
 			m_nUserId = -1;
 			return -99;
 		}
@@ -72,8 +72,8 @@ public class UpdateProfileHeaderFileC {
 					(new SimpleDateFormat("YYYYMMddHHmmss")).format(new java.util.Date()),
 					ext);
 			String strRealFileName = context.getRealPath(strFileName);
-			//ImageIO.write(cImage, "png", new File(strRealFileName));
-			FileOutputStream output=new FileOutputStream(strRealFileName);
+			// ImageIO.write(cImage, "png", new File(strRealFileName));
+			FileOutputStream output = new FileOutputStream(strRealFileName);
 			output.write(imageBinary);
 			output.flush();
 			output.close();

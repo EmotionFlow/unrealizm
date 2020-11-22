@@ -50,28 +50,27 @@ public class UpdateProfileFileC {
 
 		try {
 			byte[] imageBinary = Base64.decodeBase64(m_strEncodeImg.getBytes());
-			if (imageBinary == null)
-				return nRtn;
-			if (imageBinary.length > 1024 * 1024 * 5)
-				return nRtn;
+			if(imageBinary == null) return nRtn;
+			if(imageBinary.length>1024*1024*5) return nRtn;
 			BufferedImage cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
-			if (cImage == null)
-				return nRtn;
+			if(cImage == null) return nRtn;
 
 			// check ext
 			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(new ByteArrayInputStream(imageBinary)));
-			if ((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
+			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
 				return nRtn;
 			}
 
 			// save file
 			File cDir = new File(context.getRealPath(Common.getUploadUserPath(m_nUserId)));
-			if (!cDir.exists()) {
+			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strFileName = String.format("%s/profile_%s.%s", Common.getUploadUserPath(m_nUserId),
-					(new SimpleDateFormat("YYYYMMddHHmmss")).format(new java.util.Date()), ext);
+			String strFileName = String.format("%s/profile_%s.%s",
+					Common.getUploadUserPath(m_nUserId),
+					(new SimpleDateFormat("YYYYMMddHHmmss")).format(new java.util.Date()),
+					ext);
 			String strRealFileName = context.getRealPath(strFileName);
 			// ImageIO.write(cImage, "png", new File(strRealFileName));
 			FileOutputStream output = new FileOutputStream(strRealFileName);
@@ -81,7 +80,7 @@ public class UpdateProfileFileC {
 			ImageUtil.createThumbProfile(strRealFileName);
 
 			// regist to DB
-			dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
+			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
 			// update making last_update
@@ -90,11 +89,10 @@ public class UpdateProfileFileC {
 			cState.setString(1, strFileName);
 			cState.setInt(2, m_nUserId);
 			cState.executeUpdate();
-			cState.close();
-			cState = null;
+			cState.close();cState=null;
 			CacheUsers0000.getInstance().clearUser(checkLogin.m_strHashPass);
 			nRtn = 0;
-		} catch (Exception e) {
+		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
@@ -104,5 +102,4 @@ public class UpdateProfileFileC {
 		}
 		return nRtn;
 	}
-
 }
