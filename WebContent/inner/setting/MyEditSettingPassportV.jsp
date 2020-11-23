@@ -233,7 +233,8 @@
 <div class="SettingList">
     <div class="SettingListItem">
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
-        <%if(cResults.m_cPassport.m_status == Passport.Status.NotMember) {%>
+        <%Passport.Status passportStatus = cResults.m_cPassport.m_status; %>
+        <%if(passportStatus == Passport.Status.NotMember) {%>
         <div class="SettingBody">
             <%=_TEX.T("MyEditSettingPassportV.Text")%>
             <div class="SettingBodyCmd">
@@ -245,10 +246,13 @@
                 <span class="CheerLoading"></span><span>支払処理中</span>
             </div>
         </div>
-        <%}else{%>
+        <%}else if(passportStatus == Passport.Status.Billing || passportStatus == Passport.Status.FreePeriod){%>
         <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
             ポイパス定期購入を停止する
         </a>
+        <%}else if(passportStatus == Passport.Status.Cancelling){%>
+            ポイパス定期購入のキャンセルを承りました。今までお使いいただきありがとうございました。
+            なお、ポイパスの特典は今月末まで利用できます。
         <%}%>
     </div>
 </div>
