@@ -37,6 +37,7 @@ try {
 	user = new HashMap<String, Object>();
 	user.put("result", nResult);
 	user.put("user_id", checkLogin.m_nUserId);
+	user.put("premium_id", checkLogin.m_nUserId);
 
 	if (nResult == 0) {
 		//Twitterの情報
