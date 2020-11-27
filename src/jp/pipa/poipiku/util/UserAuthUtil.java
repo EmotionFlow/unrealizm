@@ -37,6 +37,7 @@ public class UserAuthUtil {
 
 	public static final int ERROR_UNKOWN = -99;
 	public static final int ERROR_DB = -98;
+	public static final int ERROR_TWITTER = -97;
 
 	public static final int ERROR_EMAIL_EMPTY = -1;
 	public static final int ERROR_PASSWORD_EMPTY = -2;
@@ -837,12 +838,16 @@ public class UserAuthUtil {
 			}
 		} catch(OAuthMessageSignerException e) {
 			Log.d("TWITTTER OAuthMessageSignerException");
+			nRtn = ERROR_TWITTER;
 		} catch(OAuthNotAuthorizedException e) {
 			Log.d("TWITTTER OAuthNotAuthorizedException");
+			nRtn = ERROR_TWITTER;
 		} catch(OAuthExpectationFailedException e) {
 			Log.d("TWITTTER OAuthExpectationFailedException");
+			nRtn = ERROR_TWITTER;
 		} catch(OAuthCommunicationException e) {
 			Log.d("TWITTTER OAuthCommunicationException");
+			nRtn = ERROR_TWITTER;
 		} catch(Exception e) {
 			Log.d(strSql);
 			Log.d("USERAUTH EXCEPTION");
