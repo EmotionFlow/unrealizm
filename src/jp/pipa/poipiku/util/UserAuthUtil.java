@@ -24,6 +24,10 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+import oauth.signpost.exception.OAuthNotAuthorizedException;
 import oauth.signpost.http.HttpParameters;
 
 public class UserAuthUtil {
@@ -831,6 +835,14 @@ public class UserAuthUtil {
 					//Log.d("USERAUTH Regist : " + nUserId);
 				}
 			}
+		} catch(OAuthMessageSignerException e) {
+			Log.d("TWITTTER OAuthMessageSignerException");
+		} catch(OAuthNotAuthorizedException e) {
+			Log.d("TWITTTER OAuthNotAuthorizedException");
+		} catch(OAuthExpectationFailedException e) {
+			Log.d("TWITTTER OAuthExpectationFailedException");
+		} catch(OAuthCommunicationException e) {
+			Log.d("TWITTTER OAuthCommunicationException");
 		} catch(Exception e) {
 			Log.d(strSql);
 			Log.d("USERAUTH EXCEPTION");
