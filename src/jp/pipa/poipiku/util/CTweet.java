@@ -310,9 +310,9 @@ public class CTweet {
 			boolean bFollower = checkDBFriendInfo(nTargetUserId, m_nUserId);
 
 			// 判定
-			if(bFollowing && bFollower) {Log.d("FRIEND CASH HIT!"); return FRIENDSHIP_EACH;};
-			if(bFollowing) {Log.d("FRIEND CASH HIT!"); return FRIENDSHIP_FOLLOWEE;};
-			if(bFollower) {Log.d("FRIEND CASH HIT!"); return FRIENDSHIP_FOLLOWER;};
+			if(bFollowing && bFollower) {return FRIENDSHIP_EACH;};
+			if(bFollowing) {return FRIENDSHIP_FOLLOWEE;};
+			if(bFollower) {return FRIENDSHIP_FOLLOWER;};
 
 			// DBに無い場合、ID間のFriend関係を確認
 			ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -536,7 +536,6 @@ public class CTweet {
 			bFind = cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			Log.d("LIST CASH HIT!");
 			if(bFind) return OK;
 
 			long lnListId = Long.parseLong(cContent.m_strListId);
