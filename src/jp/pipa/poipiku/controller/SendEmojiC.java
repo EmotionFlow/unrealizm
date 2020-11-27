@@ -242,12 +242,6 @@ public class SendEmojiC {
 
 			bRtn = true; // 以下実行されなくてもOKを返す
 
-			// 通知
-			/*
-			// オンラインの場合は何もしない
-			if(CheckLogin.isOnline(cTargUser.m_nUserId)) return bRtn;
-			*/
-
 			// お知らせ一覧更新
 			// サムネイルタイプの判定
 			int contentType = Common.CONTENT_TYPE_IMAGE;

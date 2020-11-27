@@ -63,7 +63,7 @@ public class CacheUsers0000 {
 	}
 
 	public User getUser(String hashPassword) {
-		if(hashPassword==null) return null;
+		if(hashPassword==null || hashPassword.isEmpty()) return null;
 
 		final int UPDATE_INTERVAL = 60*60*1000; //	1時間
 

@@ -1,11 +1,7 @@
 package jp.pipa.poipiku;
 
-import java.sql.*;
-
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
@@ -42,12 +38,14 @@ public class CheckLogin {
 		}
 	}
 
-	private boolean isUserValid() {
-		if(m_strHashPass.isEmpty()) return false;
-
+	private boolean validateUser(HttpServletResponse response) {
 		CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(m_strHashPass);
 		if(user==null) {
+			m_nUserId		= -1;
+			m_strNickName	= "guest";
+			m_strHashPass	= "";
 			m_bLogin = false;
+			setCookie(response);
 		} else {
 			m_nUserId		= user.userId;
 			m_strNickName	= user.nickName;
@@ -64,47 +62,12 @@ public class CheckLogin {
 		try {
 			// ハッシュパスワードが保存されているcookie情報を取得
 			getCookie(request);
-			if(!isUserValid()) {
-				m_bLogin		= false;
-				m_nUserId		= -1;
-				m_strNickName	= "guest";
-				m_strHashPass	= "";
-				// ログインに失敗したらguestでCookieを上書き
-				setCookie(response);
-			}
+			// ユーザ認証・情報取得
+			validateUser(response);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		//Log.d(m_nUserId + ":" + m_strNickName + ":" + m_strHashPass);
 		return m_bLogin;
-	}
-
-	public static boolean isOnline(int nUserId) {
-		boolean bRtn = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
-		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
-			strSql = "SELECT 1 FROM users_0000 WHERE user_id=? AND last_login_date>=current_timestamp-interval '1 minute'";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, nUserId);
-			cResSet = cState.executeQuery();
-			bRtn = (cResSet.next());
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-		} catch(Exception e) {
-			Log.d(strSql);
-			e.printStackTrace();
-			bRtn = false;
-		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-		}
-		return bRtn;
 	}
 }

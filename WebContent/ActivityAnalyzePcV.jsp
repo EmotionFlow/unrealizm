@@ -88,7 +88,7 @@ if(!checkLogin.m_bLogin) {
 		<article class="Wrapper">
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>
-				<%if(checkLogin.m_nPremiumId>0) {%>
+				<%if(checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 1)"><%=_TEX.T("ActivityList.Category.30days")%></a>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 2)"><%=_TEX.T("ActivityList.Category.Total")%></a>
 				<%} else {%>
