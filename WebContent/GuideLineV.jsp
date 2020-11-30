@@ -11,13 +11,14 @@
 			border-collapse: collapse;
 		}
 		table td, table th {
-			border: solid 1px #999;
+			border: solid 1px #fff;
 			vertical-align: middle;
 			text-align: left;
 		}
 		table th {
 			text-align: center;
 		}
+		.SettingList .SettingListItem {color: #fff;}
 		</style>
 	</head>
 

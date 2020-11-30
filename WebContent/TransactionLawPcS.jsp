@@ -4,6 +4,9 @@
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>特定商取引法に基づく表記</title>
+		<style>
+			.SettingList .SettingListItem {color: #fff;}
+		</style>
 	</head>
 	<body>
 		<div id="DispMsg"></div>

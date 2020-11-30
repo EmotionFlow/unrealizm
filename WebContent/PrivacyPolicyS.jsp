@@ -4,6 +4,9 @@
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>プライバシーポリシー</title>
+		<style>
+			.SettingList .SettingListItem {color: #fff;}
+		</style>
 	</head>
 	<body>
 		<div id="DispMsg"></div>

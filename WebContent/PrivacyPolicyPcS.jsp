@@ -10,6 +10,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		<title><%=_TEX.T("THeader.Title")%> - プライバシーポリシー</title>
 		<style>
 			.AnalogicoInfo {display: none;}
+			.SettingList .SettingListItem {color: #fff;}
 		</style>
 	</head>
 	<body>
