@@ -50,7 +50,7 @@ HashMap<String, String> MENU = new HashMap<>();
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
-if (checkLogin.m_nPremiumId>=CUser.PREMIUM_ON){
+if (checkLogin.m_nPremiumId>=Common.PREMIUM_ON){
 	MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 }
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
@@ -62,7 +62,7 @@ MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
 String[][] menuOrder = {
-		{ // CUser.PREMIUM_OFF
+		{ // Common.PREMIUM_OFF
 		"PROFILE",
 		"FOLLOW",
 		"BLOCK",
@@ -74,7 +74,7 @@ String[][] menuOrder = {
 		"ACCOUNT",
 		"INFO"
 		},
-		{ // CUser.PREMIUM_ON
+		{ // Common.PREMIUM_ON
 		"PROFILE",
 		"FOLLOW",
 		"BLOCK",

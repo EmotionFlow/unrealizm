@@ -157,9 +157,9 @@ public class Common {
 	public static final int EDITOR_TEXT = 3;
 	public static final int EDITOR_ID_MAX = EDITOR_TEXT;
 
-	// CUserに記載
-	//public static final int PREMIUM_OFF = 0;
-	//public static final int PREMIUM_ON = 1;
+	// プレミアムID
+	public static final int PREMIUM_OFF = 0;
+	public static final int PREMIUM_ON = 1;
 
 	public static final int[][] EDITOR_DESC_MAX = {
 			// normal, premium

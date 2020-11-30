@@ -196,7 +196,7 @@ public class CacheUsers0000 {
 		public int langId = 0;
 		public String fileName = "";
 		public boolean emailValid = false;
-		public int premiumId = CUser.PREMIUM_OFF;
+		public int premiumId = Common.PREMIUM_OFF;
 		public long lastLogin = -1;
 		public int reaction = CUser.REACTION_SHOW;
 

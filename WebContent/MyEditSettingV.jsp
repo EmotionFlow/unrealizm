@@ -474,7 +474,7 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<%if(checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
+				<%if(checkLogin.m_nPremiumId>=Common.PREMIUM_ON) {%>
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.MuteKeyowrd")%></div>
 					<div class="SettingBody">
@@ -535,7 +535,7 @@ if(cResults.m_bUpdate) {
 					</div>
 				</div>
 
-				<%if(cResults.m_cUser.m_bTweet && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {%>
+				<%if(cResults.m_cUser.m_bTweet && checkLogin.m_nPremiumId>=Common.PREMIUM_ON) {%>
 				<div id="SectionAutoTweet" class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 					<div class="SettingBody">

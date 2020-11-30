@@ -60,7 +60,7 @@ public class PopularIllustListC {
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			if(checkLogin.m_bLogin && checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+			if(checkLogin.m_bLogin && checkLogin.m_nPremiumId>=Common.PREMIUM_ON) {
 				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					strCondMute = "AND rank_contents_total.content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";

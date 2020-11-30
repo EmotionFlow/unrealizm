@@ -50,13 +50,13 @@ public class ActivityAnalyzeC {
 			int selectMax = 10;
 			switch(mode) {
 			case 2:	// total
-				if(checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				if(checkLogin.m_nPremiumId>=Common.PREMIUM_ON) {
 					condTerm = "";
 					selectMax = 100;
 				}
 				break;
 			case 1:	// 30days
-				if(checkLogin.m_nPremiumId>=CUser.PREMIUM_ON) {
+				if(checkLogin.m_nPremiumId>=Common.PREMIUM_ON) {
 					condTerm = "AND upload_date>CURRENT_TIMESTAMP-interval'30 days' ";
 					selectMax = 100;
 				}
