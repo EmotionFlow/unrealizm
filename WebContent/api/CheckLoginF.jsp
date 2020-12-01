@@ -13,6 +13,7 @@ try {
 	user.put("user_id", checkLogin.m_nUserId);
 	user.put(Common.POIPIKU_LK, checkLogin.m_strHashPass);
 	user.put("premium_id", checkLogin.m_nPremiumId);
+	user.put("lang_id", checkLogin.m_nPremiumId);
 	user.put("DESC_MAX_UPLOAD", Common.EDITOR_DESC_MAX[0][checkLogin.m_nPremiumId]);
 	user.put("DESC_MAX_PASETE", Common.EDITOR_DESC_MAX[0][checkLogin.m_nPremiumId]);
 	user.put("DESC_MAX_BASIC_PAINT", Common.EDITOR_DESC_MAX[0][checkLogin.m_nPremiumId]);
