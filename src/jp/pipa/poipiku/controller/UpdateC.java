@@ -115,7 +115,6 @@ public class UpdateC extends UpC {
 				cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
 				cState.setBoolean(idx++, cParam.m_bNotRecently);
 				cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
-
 				if(cParam.m_bLimitedTimePublish){
 					if(cParam.m_tsPublishStart != null ){
 						cState.setTimestamp(idx++, cParam.m_tsPublishStart);
@@ -124,11 +123,9 @@ public class UpdateC extends UpC {
 						cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
 					}
 				}
-
 				// set where params
 				cState.setInt(idx++, cParam.m_nUserId);
 				cState.setInt(idx++, cParam.m_nContentId);
-
 				cState.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
