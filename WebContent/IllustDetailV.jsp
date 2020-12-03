@@ -22,7 +22,28 @@ if(!cResults.getResults(checkLogin)) {
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+		<meta charset="utf-8">
+		<meta http-equiv="Pragma" content="no-cache"/>
+		<meta http-equiv="Cache-Control" content="no-cache"/>
+		<meta http-equiv="Expires" content="0"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="robots" content="noindex" />
+		<meta name=“pinterest” content=“nopin” />
+		<link rel="icon" href="/favicon_2.ico" />
+		<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
+		<link href="/css/TBase-34.css" type="text/css" rel="stylesheet" />
+		<link href="/css/TMaking-112.css" type="text/css" rel="stylesheet" />
+		<link href="/css/TBasePc-61.css" type="text/css" rel="stylesheet" />
+		<link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
+		<link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
+		<link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114_2.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72_2.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon_2.png" />
+		<script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/js/common-43.js"></script>
+		<script type="text/javascript" src="/js/commonPc-03.js"></script>
+		<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+		<%@ include file="/inner/TGoogleAnalytics.jsp"%>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
 		<title><%=_TEX.T("THeader.Title")%></title>
 

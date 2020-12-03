@@ -78,6 +78,7 @@ class GetIllustFileListC {
 				m_cContent.m_strDescription = cResSet.getString("description");
 				m_cContent.m_nTweetWhenPublished = cResSet.getInt("tweet_when_published");
 				m_cContent.m_strListId = cResSet.getString("list_id");
+				m_cContent.m_bLimitedTimePublish = cResSet.getBoolean("limited_time_publish");
 				m_cContent.m_timeUploadDate = cResSet.getTimestamp("upload_date");
 				m_cContent.m_timeEndDate = cResSet.getTimestamp("end_date");
 				m_cContent.m_bNotRecently = cResSet.getBoolean("not_recently");
@@ -129,6 +130,7 @@ if (nRtn > 0) {
 		content.put("open_id", cResults.m_cContent.m_nOpenId);
 		content.put("publish_id", cResults.m_cContent.m_nPublishId);
 		content.put("not_recently", cResults.m_cContent.m_bNotRecently);
+		content.put("limited_time_publish", cResults.m_cContent.m_bLimitedTimePublish);
 		content.put("start_date", Util.toYMDHMString(cResults.m_cContent.m_timeUploadDate));
 		content.put("end_date", Util.toYMDHMString(cResults.m_cContent.m_timeEndDate));
 		content.put("tweet_when_published", cResults.m_cContent.m_nTweetWhenPublished);
