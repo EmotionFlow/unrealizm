@@ -111,17 +111,17 @@ if (checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0) {
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 
-if (nRtn > 0) {
-	//オブジェクト配列をJSONに変換
-	ObjectMapper mapper = null;
-	try {
-		HashMap<String, Object> content = new HashMap<String, Object>();
-		CTweet cTweet = new CTweet();
+//オブジェクト配列をJSONに変換
+ObjectMapper mapper = null;
+try {
+	HashMap<String, Object> content = new HashMap<String, Object>();
+	content.put("result", (nRtn > 0)?1:0);
 
+	if (nRtn > 0) {
+		CTweet cTweet = new CTweet();
 		if (cTweet.GetResults(cParam.m_nUserId)) {
 			content.put("tweet_flag", cTweet.m_bIsTweetEnable);
 		}
-
 		content.put("user_id", cParam.m_nUserId);
 		content.put("content_id", cParam.m_nContentId);
 		content.put("category", cResults.m_cContent.m_nCategoryId);
@@ -137,14 +137,14 @@ if (nRtn > 0) {
 		content.put("twitter_list_id", Util.toString(cResults.m_cContent.m_strListId));
 		content.put("tweeted", cResults.m_cContent.m_strTweetId!=null && !cResults.m_cContent.m_strTweetId.isEmpty());
 		content.put("files", cResults.m_vContent);
-
-		mapper = new ObjectMapper();
-		String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(content);
-		out.print(json);
-	} catch(JsonGenerationException e) {
-		e.printStackTrace();
-	} finally {
-		mapper = null;
 	}
+	mapper = new ObjectMapper();
+	String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(content);
+	out.print(json);
+} catch(JsonGenerationException e) {
+	e.printStackTrace();
+} finally {
+	mapper = null;
 }
+
 %>
