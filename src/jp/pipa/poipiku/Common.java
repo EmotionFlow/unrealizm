@@ -40,8 +40,8 @@ public class Common {
 	public static final int NOTIFICATION_TOKEN_TYPE_ANDROID = 2;
 
 	public static final int NO_NEED_UPDATE[] = {
-			122, 123, 124, 125, 126, 127, 178,	// 1系 iPhone
-			226, 227, 228, 229, 230, 231, 232	// 2系 Android
+			123, 124, 125, 126, 127, 178, 179,	// 1系 iPhone
+			227, 228, 229, 230, 231, 232, 233	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
 	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン
