@@ -76,6 +76,7 @@ class GetIllustFileListC {
 				m_cContent.m_nPublishId = cResSet.getInt("publish_id");
 				m_cContent.m_strTagList = cResSet.getString("tag_list");
 				m_cContent.m_strDescription = cResSet.getString("description");
+				m_cContent.m_strPassword = cResSet.getString("password");
 				m_cContent.m_nTweetWhenPublished = cResSet.getInt("tweet_when_published");
 				m_cContent.m_strListId = cResSet.getString("list_id");
 				m_cContent.m_bLimitedTimePublish = cResSet.getBoolean("limited_time_publish");
@@ -125,8 +126,9 @@ try {
 		content.put("user_id", cParam.m_nUserId);
 		content.put("content_id", cParam.m_nContentId);
 		content.put("category", cResults.m_cContent.m_nCategoryId);
-		content.put("description", cResults.m_cContent.m_strDescription);
-		content.put("tag_list", cResults.m_cContent.m_strTagList);
+		content.put("description", Util.toString(cResults.m_cContent.m_strDescription));
+		content.put("password", Util.toString(cResults.m_cContent.m_strPassword));
+		content.put("tag_list", Util.toString(cResults.m_cContent.m_strTagList));
 		content.put("open_id", cResults.m_cContent.m_nOpenId);
 		content.put("publish_id", cResults.m_cContent.m_nPublishId);
 		content.put("not_recently", cResults.m_cContent.m_bNotRecently);
