@@ -66,7 +66,7 @@
 
     function epsilonPayment(_passportInfo, _nPassportAmount, _cardInfo, _elPassportNowPayment){
         if(_cardInfo == null){ // カード登録済
-            SendEmojiAjax(_passportInfo, _nPassportAmount, createAgentInfo(AGENT.EPSILON, null, null),
+            BuyPassportAjax(_passportInfo, _nPassportAmount, createAgentInfo(AGENT.EPSILON, null, null),
                 null, _elPassportNowPayment);
         } else { // 初回
             g_epsilonInfo.passportInfo = _passportInfo;
@@ -137,7 +137,9 @@
                 return false;
             } else if (result === 1) {
                 console.log("epsilonPayment");
-                epsilonPayment(passportInfo, nPassportAmount, cardInfo, elPassportNowPayment);
+                if (confirm("登録済みのカード情報で決済します。よろしいですか？")) {
+                    epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
+                }
             } else if (result === 0) {
                 const title = "ポイパス定期購入";
                 const description = "定期購入するためのカード情報を入力してください。入力されたカード情報から、毎月300円(税込)が課金されます。";
@@ -205,7 +207,7 @@
                 "dataType": "json",
             }).then( data => {
                     if (data.result === 1) {
-                        DispMsg("定期購入を解除しました。これまでポイパスを購入いただき、ありがとうございました！");
+                        DispMsg("定期購入を解除しました。これまでポイパスをご購入いただき、ありがとうございました！");
                     } else {
                         switch (data.error_code) {
                             case -10:
@@ -233,7 +235,7 @@
 <div class="SettingList">
     <div class="SettingListItem">
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
-        <%Passport.Status passportStatus = cResults.m_cPassport.m_status; %>
+        <%{Passport.Status passportStatus = cResults.m_cPassport.m_status; %>
         <%if(passportStatus == Passport.Status.NotMember) {%>
         <div class="SettingBody">
             <%=_TEX.T("MyEditSettingPassportV.Text")%>
@@ -246,7 +248,7 @@
                 <span class="CheerLoading"></span><span>支払処理中</span>
             </div>
         </div>
-        <%}else if(passportStatus == Passport.Status.Billing || passportStatus == Passport.Status.FreePeriod){%>
+        <%}else if(passportStatus == Passport.Status.Billing){%>
         <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
             ポイパス定期購入を停止する
         </a>
@@ -254,5 +256,6 @@
             ポイパス定期購入のキャンセルを承りました。今までお使いいただきありがとうございました。
             なお、ポイパスの特典は今月末まで利用できます。
         <%}%>
+        <%}//Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
     </div>
 </div>

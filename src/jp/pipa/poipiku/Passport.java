@@ -28,9 +28,9 @@ public class Passport {
     public enum Status {
         Undef,      // 非ログインユーザーなど
         NotMember,  // パスポートなし
-        FreePeriod, // 購入中、無償期間中、会員有効
         Billing,    // 購入中、支払期間中、会員有効
         Cancelling  // 解禁解除申し込み中、会員有効、次月月初にはNotMemberになる。
+        //FreePeriod, // 購入中、無償期間中、会員有効
     }
     public Status m_status = Status.Undef;
 
@@ -291,16 +291,17 @@ public class Passport {
             if (m_tsRelease != null) {
                 m_status = Status.Cancelling;
             } else {
-                LocalDateTime d = LocalDateTime.now();
-                final int nowYear = d.getYear();
-                final int nowMonth = d.getMonthValue();
-                final int sbscYear = m_tsSubscription.toLocalDateTime().getYear();
-                final int sbscMonth = m_tsSubscription.toLocalDateTime().getDayOfMonth();
-                if (!m_bCancellationHistory && nowYear == sbscYear && nowMonth == sbscMonth) {
-                    m_status = Status.FreePeriod;
-                } else {
-                    m_status = Status.Billing;
-                }
+                m_status = Status.Billing;
+//                LocalDateTime d = LocalDateTime.now();
+//                final int nowYear = d.getYear();
+//                final int nowMonth = d.getMonthValue();
+//                final int sbscYear = m_tsSubscription.toLocalDateTime().getYear();
+//                final int sbscMonth = m_tsSubscription.toLocalDateTime().getDayOfMonth();
+//                if (!m_bCancellationHistory && nowYear == sbscYear && nowMonth == sbscMonth) {
+//                    m_status = Status.FreePeriod;
+//                } else {
+//                    m_status = Status.Billing;
+//                }
             }
         }
     }

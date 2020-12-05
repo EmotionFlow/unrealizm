@@ -246,7 +246,7 @@
                 <span class="CheerLoading"></span><span>支払処理中</span>
             </div>
         </div>
-        <%}else if(passportStatus == Passport.Status.Billing || passportStatus == Passport.Status.FreePeriod){%>
+        <%}else if(passportStatus == Passport.Status.Billing){%>
         <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
             ポイパス定期購入を停止する
         </a>

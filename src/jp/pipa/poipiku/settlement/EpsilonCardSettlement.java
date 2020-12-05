@@ -166,9 +166,9 @@ public class EpsilonCardSettlement extends CardSettlement {
                     ssi.missionCode = 1;
                     ssi.itemName = "emoji" + contentId;
                     break;
-                // 毎月課金
+                // 定期課金（毎月）
                 case Monthly:
-                    ssi.missionCode = 23;
+                    ssi.missionCode = 21;
                     ssi.itemName = "poipass";
                     break;
                 default:
