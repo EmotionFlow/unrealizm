@@ -37,7 +37,7 @@ try {
 	user = new HashMap<String, Object>();
 	user.put("result", nResult);
 	user.put("user_id", checkLogin.m_nUserId);
-	user.put("premium_id", checkLogin.m_nPremiumId);
+	user.put("passport_id", checkLogin.m_nPassportId);
 
 	if (nResult == 0) {
 		//Twitterの情報
@@ -74,7 +74,7 @@ try {
 		user.put("official_twitter_url", "https://twitter.com/pipajp");
 		user.put("inquiry_url", "https://cs.pipa.jp/InquiryAppV.jsp");
 		user.put("how_to_use", "/how_to/TopV.jsp");
-		user.put("premiun_id", checkLogin.m_nPremiumId);
+		user.put("premiun_id", checkLogin.m_nPassportId);
 	}
 
 	//JSONに変換して出力

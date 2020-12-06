@@ -157,12 +157,12 @@ public class Common {
 	public static final int EDITOR_TEXT = 3;
 	public static final int EDITOR_ID_MAX = EDITOR_TEXT;
 
-	// プレミアムID
-	public static final int PREMIUM_OFF = 0;
-	public static final int PREMIUM_ON = 1;
+	// ポイパス
+	public static final int PASSPORT_OFF = 0;
+	public static final int PASSPORT_ON = 1;
 
 	public static final int[][] EDITOR_DESC_MAX = {
-			// normal, premium
+			// normal, PASSPORT
 			{200, 500},
 			{200, 500},
 			{200, 500},
@@ -170,7 +170,7 @@ public class Common {
 	};
 
 	public static final int[][] EDITOR_TEXT_MAX = {
-			// normal, premium
+			// normal, PASSPORT
 			{0, 0},
 			{0, 0},
 			{0, 0},
@@ -178,7 +178,7 @@ public class Common {
 	};
 
 	public static final int[] EMOJI_MAX = {
-			// normal, premium
+			// normal, PASSPORT
 			10, 100
 	};
 

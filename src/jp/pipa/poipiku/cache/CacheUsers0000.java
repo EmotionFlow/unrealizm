@@ -196,7 +196,7 @@ public class CacheUsers0000 {
 		public int langId = 0;
 		public String fileName = "";
 		public boolean emailValid = false;
-		public int premiumId = Common.PREMIUM_OFF;
+		public int passportId = Common.PASSPORT_OFF;
 		public long lastLogin = -1;
 		public int reaction = CUser.REACTION_SHOW;
 
@@ -210,7 +210,7 @@ public class CacheUsers0000 {
 			fileName	= Util.toString(resultSet.getString("file_name"));
 			if(fileName.isEmpty()) fileName = "/img/default_user.jpg";
 			emailValid	= Util.toString(resultSet.getString("email")).contains("@");
-			premiumId	= resultSet.getInt("premiun_id");
+			passportId	= resultSet.getInt("passport_id");
 			reaction		= resultSet.getInt("ng_reaction");
 			if(userId==315) safeFilter = Common.SAFE_FILTER_ALL;
 		}

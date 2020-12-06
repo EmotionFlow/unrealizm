@@ -105,8 +105,8 @@ public class UpdateTextC extends UpC {
 				// set values
 				cState.setInt(idx++, cParam.m_nCategoryId);
 				cState.setInt(idx++, nOpenId);
-				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]));
-				cState.setString(idx++, Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]));
+				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
+				cState.setString(idx++, Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]));
 				cState.setString(idx++, cParam.m_strTagList);
 				cState.setInt(idx++, cParam.m_nPublishId);
 				cState.setString(idx++, cParam.m_strPassword);

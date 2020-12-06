@@ -50,7 +50,7 @@ HashMap<String, String> MENU = new HashMap<>();
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
-if (checkLogin.m_nPremiumId>=Common.PREMIUM_ON){
+if (checkLogin.m_nPassportId >=Common.PASSPORT_ON){
 	MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 }
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
@@ -63,7 +63,7 @@ MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 
 String[][] menuOrder = {
-		{ // Common.PREMIUM_OFF
+		{ // Common.PASSPORT_OFF
 		"PROFILE",
 		"FOLLOW",
 		"BLOCK",
@@ -76,7 +76,7 @@ String[][] menuOrder = {
 		"ACCOUNT",
 		"INFO"
 		},
-		{ // Common.PREMIUM_ON
+		{ // Common.PASSPORT_ON
 		"PROFILE",
 		"FOLLOW",
 		"BLOCK",
@@ -242,7 +242,7 @@ String[][] menuOrder = {
 					</h2>
 				</div>
 				<div class="SettingMenu">
-					<%for(String m : menuOrder[checkLogin.m_nPremiumId]){%>
+					<%for(String m : menuOrder[checkLogin.m_nPassportId]){%>
 						<%=getSettingMenuItem(m, MENU.get(m))%>
 					<%}%>
 				</div>

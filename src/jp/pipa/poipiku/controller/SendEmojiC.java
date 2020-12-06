@@ -20,10 +20,8 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.Emoji;
 import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.cache.CacheUsers0000;
-import jp.pipa.poipiku.settlement.Agent;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.EpsilonCardSettlement;
-import jp.pipa.poipiku.settlement.VeritransCardSettlement;
 import jp.pipa.poipiku.util.GridUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -130,7 +128,7 @@ public class SendEmojiC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			if(nEmojiNum>=Common.EMOJI_MAX[checkLogin.m_nPremiumId]) {
+			if(nEmojiNum>=Common.EMOJI_MAX[checkLogin.m_nPassportId]) {
 				m_nErrCode = ERR_MAX_EMOJI;
 				return false;
 			}

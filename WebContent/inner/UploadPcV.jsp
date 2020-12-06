@@ -108,13 +108,13 @@ try {
 			}
 
 			function DispDescCharNum() {
-				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%> - $("#EditDescription").val().length;
+				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditDescription").val().length;
 				$("#DescriptionCharNum").html(nCharNum);
 			}
 
 			<%if(nEditorId==Common.EDITOR_TEXT){%>
 			function DispTextCharNum() {
-				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%> - $("#EditTextBody").val().length;
+				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditTextBody").val().length;
 				$("#TextBodyCharNum").html(nCharNum);
 			}
 			<%}%>
@@ -227,14 +227,14 @@ try {
 					</select>
 				</div>
 				<div class="Description">
-					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
-					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPremiumId]%></div>
+					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
+					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 
 				<%if(nEditorId==Common.EDITOR_TEXT){%>
 				<div class="TextBody">
-					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
-					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPremiumId]%></div>
+					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
+					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 				<%}%>
 

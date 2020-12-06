@@ -15,8 +15,7 @@ public class CheckLogin {
 	public int m_nLangId = 0;
 	public String m_strFileName = "";
 	public boolean m_bEmailValid = false;
-	public int m_nPremiumId = Common.PREMIUM_OFF;
-	public int m_nPassportId = -1;
+	public int m_nPassportId = Common.PASSPORT_OFF;
 
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -53,7 +52,7 @@ public class CheckLogin {
 			m_nLangId		= user.langId;
 			m_strFileName	= user.fileName;
 			m_bEmailValid	= user.emailValid;
-			m_nPremiumId	= user.premiumId;
+			m_nPassportId = user.passportId;
 			m_bLogin = true;
 		}
 		return m_bLogin;

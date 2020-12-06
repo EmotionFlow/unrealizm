@@ -94,7 +94,7 @@ class UploadFileC {
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nCategoryId);
-			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPremiumId]));
+			cState.setString(3, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPassportId]));
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_nContentId = cResSet.getInt("content_id");

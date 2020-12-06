@@ -71,7 +71,7 @@ class UploadReferenceC {
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nCategoryId);
 			cState.setInt(3, cParam.m_nSafeFilter);
-			cState.setString(4, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPremiumId]));
+			cState.setString(4, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[Common.EDITOR_UPLOAD][checkLogin.m_nPassportId]));
 			cState.setString(5, cParam.m_strTagList);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {

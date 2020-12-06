@@ -51,7 +51,7 @@ public class UploadC extends UpC {
 			idx = 1;
 			cState.setInt(idx++, cParam.m_nUserId);
 			cState.setInt(idx++, cParam.m_nCategoryId);
-			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPremiumId]));
+			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
 			cState.setString(idx++, cParam.m_strTagList);
 			cState.setInt(idx++, cParam.m_nPublishId);
 			cState.setString(idx++, cParam.m_strPassword);
