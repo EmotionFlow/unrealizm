@@ -56,6 +56,7 @@ if (checkLogin.m_nPremiumId>=Common.PREMIUM_ON){
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
+MENU.put("POIPASS", _TEX.T("EditSettingV.Passport"));
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
@@ -70,6 +71,7 @@ String[][] menuOrder = {
 		"TWITTER",
 		"MAIL",
 		"PAYMENT",
+		"POIPASS",
 		"CHEER",
 		"ACCOUNT",
 		"INFO"
@@ -83,6 +85,7 @@ String[][] menuOrder = {
 		"TWITTER",
 		"MAIL",
 		"PAYMENT",
+		"POIPASS",
 		"CHEER",
 		"ACCOUNT",
 		"INFO"
@@ -259,9 +262,7 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
-			<%
-				strPageId = "FOLLOW";
-			%>
+			<%strPageId = "FOLLOW";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -269,9 +270,7 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
-			<%
-				strPageId = "BLOCK";
-			%>
+			<%strPageId = "BLOCK";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -314,6 +313,14 @@ String[][] menuOrder = {
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMailV.jsp"%>
+				</div>
+			</div>
+
+			<%strPageId = "POIPASS";%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingPassportV.jsp"%>
 				</div>
 			</div>
 

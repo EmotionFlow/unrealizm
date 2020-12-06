@@ -30,13 +30,14 @@ import org.w3c.dom.NodeList;
 public class EpsilonSettlement {
     private static final String CONTRACT_CODE = "68968190";
 
+    // TODO 本番適用時に入れ替え
     // dev
-//    private static final String TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
-//    private static final String LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+    private static final String TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+    private static final String LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
 
     // production
-    private static final String TOKEN_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
-    private static final String LINK_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+//    private static final String TOKEN_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+//    private static final String LINK_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi";
 
     private SettlementSendInfo settlementSendInfo;
     public SettlementSendInfo getSettlementSendInfo() {
@@ -57,8 +58,8 @@ public class EpsilonSettlement {
     public SettlementResultInfo execSettlement(){
         // 決済情報送信
         // 送信用の設定を作成
-        RequestConfig rc = RequestConfig.custom().setConnectTimeout(2000)
-                .setSocketTimeout(2000)
+        RequestConfig rc = RequestConfig.custom().setConnectTimeout(60000)
+                .setSocketTimeout(60000)
                 .setMaxRedirects(0)
                 .build();
         // Header定義

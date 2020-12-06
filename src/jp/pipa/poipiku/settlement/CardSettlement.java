@@ -10,6 +10,14 @@ public abstract class CardSettlement {
     protected String cardExpire = null;
     protected String cardSecurityCode = null;
     protected String userAgent = null;
+    public int m_nCreditcardIdToPay = -1;
+
+    public enum BillingCategory {
+        Undef,      // 未定義
+        OneTime,    // 一回限り
+        Monthly     // 毎月課金
+    }
+    public BillingCategory billingCategory = BillingCategory.Undef;
 
     public enum ErrorKind {
         None,
@@ -25,7 +33,7 @@ public abstract class CardSettlement {
     // poipiku側管理の取引ID
     protected int poipikuOrderId = -1;
 
-    // 取引ID
+    // 代理店側管理の取引ID
     protected String orderId = "";
 
     // 金額
@@ -41,9 +49,13 @@ public abstract class CardSettlement {
         return orderId;
     }
 
+    protected CardSettlement(int _userId){
+        userId = _userId;
+    }
+
     protected CardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
                              String _agentToken, String _cardExpire,
-                             String _cardSecurityCode, String _userAgent){
+                             String _cardSecurityCode, String _userAgent, BillingCategory _billingCategory){
         userId = _userId;
         contentId = _contentId;
         poipikuOrderId = _poipikuOrderId;
@@ -52,6 +64,7 @@ public abstract class CardSettlement {
         cardExpire = _cardExpire;
         cardSecurityCode = _cardSecurityCode;
         userAgent = _userAgent;
+        billingCategory = _billingCategory;
     }
 
     protected boolean authorizeCheckBase(){
@@ -67,12 +80,9 @@ public abstract class CardSettlement {
             Log.d("poipikuOrderId.isEmpty()");
             return false;
         }
-        if(userId<0 || contentId<0){
-            Log.d("userId<0 || contentId<0");
-            return false;
-        }
         return true;
     }
 
     public abstract boolean authorize();
+    public abstract boolean cancelSubscription(int poipikuOrderId);
 }

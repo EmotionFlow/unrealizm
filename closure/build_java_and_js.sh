@@ -4,11 +4,11 @@ SOURCE_PATH="../src"
 DEST_PATH="../build"
 DEPLOY_PATH="../WebContent/WEB-INF/classes"
 CLASSES_WEB_INF="../WebContent/WEB-INF/lib/*"
-CLASSES_TOMCAT="/usr/local/tomcat/lib/*"
+CLASSES_TOMCAT="/opt/java/tomcat/apache-tomcat-7.0.107/lib/*"
 JAVA_FILE_ROOT="../src/jp/pipa/poipiku"
 JAVA_FILE_DIRS=("/controller" "/servlet" "/util" "/settlement/epsilon" "/settlement")
 
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu8.50.0.1013-ca-jdk8.0.275-macos_aarch64"
 
 java -version
 

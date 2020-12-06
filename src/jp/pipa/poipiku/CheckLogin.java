@@ -16,6 +16,7 @@ public class CheckLogin {
 	public String m_strFileName = "";
 	public boolean m_bEmailValid = false;
 	public int m_nPremiumId = Common.PREMIUM_OFF;
+	public int m_nPassportId = -1;
 
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {

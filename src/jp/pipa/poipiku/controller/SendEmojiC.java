@@ -162,13 +162,14 @@ public class SendEmojiC {
 				statement.close(); statement=null;
 
 				strSql = "INSERT INTO order_details(" +
-						" order_id, content_id, content_user_id, product_name, list_price, amount_paid, quantity)" +
-						" VALUES (?, ?, ?, ?, ?, ?, ?)";
+						" order_id, content_id, content_user_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
+						" VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 				statement = connection.prepareStatement(strSql);
 				idx=1;
 				statement.setInt(idx++, orderId);
 				statement.setInt(idx++, m_nContentId);
 				statement.setInt(idx++, nContentUserId);
+				statement.setInt(idx++, 1);
 				statement.setString(idx++, m_strEmoji);
 				statement.setInt(idx++, m_nAmount);
 				statement.setInt(idx++, m_nAmount);
@@ -176,18 +177,16 @@ public class SendEmojiC {
 				statement.executeUpdate();
 				statement.close(); statement=null;
 
-				CardSettlement cardSettlement = null;
-				if(m_nAgentId == Agent.VERITRANS){
-					cardSettlement = new VeritransCardSettlement(
-							m_nUserId, m_nContentId, orderId, m_nAmount,
-							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode);
-				}else if(m_nAgentId==Agent.EPSILON){
-					cardSettlement = new EpsilonCardSettlement(
-							m_nUserId, m_nContentId, orderId, m_nAmount,
-							m_strAgentToken, m_strCardExpire, m_strCardSecurityCode,
-							m_strUserAgent);
-				}
-
+				CardSettlement cardSettlement = new EpsilonCardSettlement(
+						m_nUserId,
+						m_nContentId,
+						orderId,
+						m_nAmount,
+						m_strAgentToken,
+						m_strCardExpire,
+						m_strCardSecurityCode,
+						m_strUserAgent,
+						CardSettlement.BillingCategory.OneTime);
 				boolean authorizeResult = cardSettlement.authorize();
 
 				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
