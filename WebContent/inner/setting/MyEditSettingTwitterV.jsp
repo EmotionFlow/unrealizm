@@ -74,7 +74,7 @@
 	}
 
 	function DispAutoTweetCharNum() {
-		var nCharNum = 100 - $("#AutoTweetTxt").val().length;
+		const nCharNum = 100 - $("#AutoTweetTxt").val.length;
 		$("#AutoTweetTxtNum").html(nCharNum);
 	}
 
