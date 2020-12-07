@@ -19,39 +19,42 @@
             "url": "/f/BuyPassportF.jsp",
             "dataType": "json",
         }).then( data => {
-                cardInfo = null;
-                if (data.result === 1) {
-                    if(nPassportAmount>0) {
-                        DispMsg("<%=_TEX.T("PassportDlg.Thanks")%>");
-                        if (elPassportNowPayment != null) {
-                            elPassportNowPayment.hide();
-                        }
-                    }
-                } else {
-                    switch (data.error_code) {
-                        case -10:
-                            DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
-                            break;
-                        case -20:
-                            alert("<%=_TEX.T("PassportDlg.Err.AuthCritical")%>");
-                            break;
-                        case -30:
-                            DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
-                            break;
-                        case -99:
-                            DispMsg("<%=_TEX.T("PassportDlg.Err.AuthOther")%>");
-                            break;
-                    }
+            cardInfo = null;
+            if (data.result === 1) {
+                if(nPassportAmount>0) {
+                    DispMsg("<%=_TEX.T("PassportDlg.Thanks")%>");
                     if (elPassportNowPayment != null) {
                         elPassportNowPayment.hide();
                     }
-                }},
+                }
+            } else {
+                switch (data.error_code) {
+                    case -10:
+                        DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+                        break;
+                    case -20:
+                        alert("<%=_TEX.T("PassportDlg.Err.AuthCritical")%>");
+                        break;
+                    case -30:
+                        DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+                        break;
+                    case -99:
+                        DispMsg("<%=_TEX.T("PassportDlg.Err.AuthOther")%>");
+                        break;
+                }
+                if (elPassportNowPayment != null) {
+                    elPassportNowPayment.hide();
+                }
+            }
+            setTimeout(()=>location.reload(), 5000);
+            },
             error => {
                 cardInfo = null;
                 DispMsg("<%=_TEX.T("PassportDlg.Err.PoipikuSrv")%>");
                 if (elPassportNowPayment != null) {
                     elPassportNowPayment.hide();
                 }
+                setTimeout(()=>location.reload(), 5000);
             }
         );
     }
@@ -111,6 +114,7 @@
     }
 
     function BuyPassport() {
+        $("#BuyPassportButton").hide();
         const passportInfo = {
             "passportId": 1,
             "userId": <%=checkLogin.m_nUserId%>,
@@ -126,6 +130,7 @@
             console.log("決済処理中");
             return;
         }
+        elPassportNowPayment.show();
         $.ajax({
             "type": "get",
             "url": "/f/CheckCreditCardF.jsp",
@@ -143,8 +148,8 @@
             } else if (result === 0) {
                 const title = "ポイパス定期購入";
                 const description = "定期購入するためのカード情報を入力してください。入力されたカード情報から、毎月300円(税込)が課金されます。";
-                // クレジットカード情報入力ダイアログを表示、
-                // 入力内容を代理店に送信し、Tokenを取得する。
+                <%// クレジットカード情報入力ダイアログを表示、%>
+                <%// 入力内容を代理店に送信し、Tokenを取得する。%>
                 Swal.fire({
                     html: getRegistCreditCardDlgHtml(title, description),
                     focusConfirm: false,
@@ -156,9 +161,7 @@
                     // キャンセルボタンがクリックされた
                     if (formValues.dismiss) {
                         elPassportNowPayment.hide();
-                        formValues.value.cardNum = '';
-                        formValues.value.cardExp = '';
-                        formValues.value.cardSec = '';
+                        $("#BuyPassportButton").show();
                         return false;
                     }
 
@@ -170,7 +173,7 @@
                     cardInfo.expire = '01/24';
                     cardInfo.securityCode = '012';
 
-                    // 念のため不要になった変数を初期化
+                    <%// 念のため不要になった変数を初期化%>
                     formValues.value.cardNum = '';
                     formValues.value.cardExp = '';
                     formValues.value.cardSec = '';
@@ -232,30 +235,46 @@
     }
 </script>
 
+<style>
+    .PoiPassLoading {
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        background: no-repeat url(/img/loading.gif);
+        background-size: cover;
+        position: relative;
+        top: 4px;
+        margin: 0 2px 0 4px;
+    }
+</style>
+
 <div class="SettingList">
     <div class="SettingListItem">
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
         <%{Passport.Status passportStatus = cResults.m_cPassport.m_status; %>
-        <%if(passportStatus == Passport.Status.NotMember) {%>
-        <div class="SettingBody">
-            <%=_TEX.T("MyEditSettingPassportV.Text")%>
-            <div class="SettingBodyCmd">
-                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="BuyPassport()">
-                    ポイパスを定期購入する
-                </a>
+            <%if(passportStatus == Passport.Status.NotMember) {%>
+            <div class="SettingBody">
+                <%=_TEX.T("MyEditSettingPassportV.Text")%>
+                <div class="SettingBodyCmd">
+                    <a id="BuyPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="BuyPassport(this)">
+                        ポイパスを定期購入する
+                    </a>
+                </div>
+                <div id="PassportNowPayment" style="display:none">
+                    <span class="PoiPassLoading"></span><span>購入処理中</span>
+                </div>
             </div>
-            <div id="PassportNowPayment" style="display:none">
-                <span class="CheerLoading"></span><span>支払処理中</span>
+            <%}else if(passportStatus == Passport.Status.Billing){%>
+            <a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
+                ポイパス定期購入を停止する
+            </a>
+            <div id="PassportNowCancelling" style="display:none">
+                <span class="PoiPassLoading"></span><span>停止処理中</span>
             </div>
-        </div>
-        <%}else if(passportStatus == Passport.Status.Billing){%>
-        <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
-            ポイパス定期購入を停止する
-        </a>
-        <%}else if(passportStatus == Passport.Status.Cancelling){%>
-            ポイパス定期購入のキャンセルを承りました。今までお使いいただきありがとうございました。
-            なお、ポイパスの特典は今月末まで利用できます。
-        <%}%>
+            <%}else if(passportStatus == Passport.Status.Cancelling){%>
+                ポイパス定期購入のキャンセルを承りました。今までお使いいただきありがとうございました。
+                なお、ポイパスの特典は今月末まで利用できます。
+            <%}%>
         <%}//Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
     </div>
 </div>
