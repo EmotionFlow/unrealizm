@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.EpsilonCardSettlement;
 import jp.pipa.poipiku.util.Log;
@@ -226,6 +227,7 @@ public class Passport {
 
             //// end transaction
 
+            CacheUsers0000.getInstance().clearUser(m_nUserId);
 
         } catch(Exception e) {
             Log.d(strSql);

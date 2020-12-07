@@ -200,6 +200,8 @@
             if (evt.dismiss) {
                 return false;
             }
+            $("#CancelPassportButton").hide();
+            $("#PassportNowCancelling").show();
             $.ajax({
                 "type": "post",
                 "data": {
@@ -209,6 +211,7 @@
                 "url": "/f/CancelPassportF.jsp",
                 "dataType": "json",
             }).then( data => {
+                    $("#PassportNowCancelling").hide();
                     if (data.result === 1) {
                         DispMsg("定期購入を解除しました。これまでポイパスをご購入いただき、ありがとうございました！");
                     } else {
@@ -226,10 +229,13 @@
                                 DispMsg("<%=_TEX.T("PassportDlg.Err.AuthOther")%>");
                                 break;
                         }
-                    }},
+                    }
+                    setTimeout(()=>location.reload(), 5000);
+                },
                 error => {
                     DispMsg("<%=_TEX.T("PassportDlg.Err.PoipikuSrv")%>");
-                 }
+                    setTimeout(()=>location.reload(), 5000);
+                }
             );
         });
     }
