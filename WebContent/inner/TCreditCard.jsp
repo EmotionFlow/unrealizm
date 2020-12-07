@@ -4,17 +4,17 @@
 <!-- TODO 元に戻す -->
 <script src='https://beta.epsilon.jp/js/token.js'></script>
 <script>
-    const AGENT = {
-        "VERITRANS": 1,
-        "EPSILON": 2,
-    };
+	const AGENT = {
+		"VERITRANS": 1,
+		"EPSILON": 2,
+	};
 
-    function getAmountDlgHtml(emojiImgTag){
-        return <%=_TEX.T("CheerDlg.Text")%>;
-    }
+	function getAmountDlgHtml(emojiImgTag){
+		return <%=_TEX.T("CheerDlg.Text")%>;
+	}
 
-    function getRegistCreditCardDlgHtml(strTitle, strDescription){
-        return `
+	function getRegistCreditCardDlgHtml(strTitle, strDescription){
+		return `
 <style>
 	.CardInfoDlgTitle{padding: 10px 0 0 0;}
 	.CardInfoDlgInfo{font-size: 12px; text-align: left;}
@@ -50,68 +50,68 @@
 <label><input id="cc_agree1" type="checkbox"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
 </div>
 `;
-    }
+	}
 
-    function createAgentInfo(agent, token, tokenExpire){
-        return {
-            "agentId": agent,
-            "token": token,
-            "tokenExpire": tokenExpire,
-        };
-    }
+	function createAgentInfo(agent, token, tokenExpire){
+		return {
+			"agentId": agent,
+			"token": token,
+			"tokenExpire": tokenExpire,
+		};
+	}
 
-    function verifyCardDlgInput(){
-        // 入力内容の検証
-        const vals = {
-            cardNum: $("#card_number").val(),
-            cardExp: $("#cc_exp").val(),
-            cardSec: $("#cc_csc").val(),
-        }
+	function verifyCardDlgInput(){
+		// 入力内容の検証
+		const vals = {
+			cardNum: $("#card_number").val(),
+			cardExp: $("#cc_exp").val(),
+			cardSec: $("#cc_csc").val(),
+		}
 
-        // カード番号
-        if (vals.cardNum === '') {
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Empty")%>');
-        }
-        const validateCreditCardResult = $("#card_number").validateCreditCard(
-            { accept: [
-                    'visa', //'mastercard', 'jcb', 'amex', 'diners_club_international'
-                ] });
-        if(!validateCreditCardResult.valid){
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Invalid")%>');
-        }
-        if (vals.cardExp === '') {
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.Empty")%>');
-        }
+		// カード番号
+		if (vals.cardNum === '') {
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Empty")%>');
+		}
+		const validateCreditCardResult = $("#card_number").validateCreditCard(
+			{ accept: [
+					'visa', //'mastercard', 'jcb', 'amex', 'diners_club_international'
+				] });
+		if(!validateCreditCardResult.valid){
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Invalid")%>');
+		}
+		if (vals.cardExp === '') {
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.Empty")%>');
+		}
 
-        // 有効期限 use dayjs
-        const MM = Number(vals.cardExp.split('/')[0]);
-        const YY = Number(vals.cardExp.split('/')[1]);
-        const expDay = dayjs("20" + YY + "-" + MM + "-01");
-        if(isNaN(MM)||isNaN(YY)||!expDay){
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.FormatErr")%>');
-        }
-        const now = dayjs();
-        const limit = now.add(60, 'day');
-        if(limit>expDay){
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.Invalid")%>');
-        }
+		// 有効期限 use dayjs
+		const MM = Number(vals.cardExp.split('/')[0]);
+		const YY = Number(vals.cardExp.split('/')[1]);
+		const expDay = dayjs("20" + YY + "-" + MM + "-01");
+		if(isNaN(MM)||isNaN(YY)||!expDay){
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.FormatErr")%>');
+		}
+		const now = dayjs();
+		const limit = now.add(60, 'day');
+		if(limit>expDay){
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardExp.Invalid")%>');
+		}
 
-        // セキュリティーコード
-        if (vals.cardSec === ''){
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.Empty")%>');
-        }
-        if (/^\d+$/.exec(vals.cardSec) == null){
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.CharKindErr")%>');
-        }
-        if (vals.cardSec.length < 3){
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.LengthErr")%>');
-        }
+		// セキュリティーコード
+		if (vals.cardSec === ''){
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.Empty")%>');
+		}
+		if (/^\d+$/.exec(vals.cardSec) == null){
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.CharKindErr")%>');
+		}
+		if (vals.cardSec.length < 3){
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.LengthErr")%>');
+		}
 
-        // 同意チェックボックス
-        if(!$("#cc_agree1").prop('checked')){
-            return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.Agree")%>');
-        }
+		// 同意チェックボックス
+		if(!$("#cc_agree1").prop('checked')){
+			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.Agree")%>');
+		}
 
-        return vals;
-    }
+		return vals;
+	}
 </script>
