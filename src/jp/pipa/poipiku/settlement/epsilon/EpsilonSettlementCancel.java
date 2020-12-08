@@ -31,10 +31,10 @@ public class EpsilonSettlementCancel {
 
 	// TODO 本番適用時に入れ替え
 	// dev
-	private static final String CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
+//	private static final String CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
 
 	// production
-//	private static final String CANCEL_URL = "https://secure.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
+	private static final String CANCEL_URL = "https://secure.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
 
 	public SettlementCancelSendInfo sendInfo;
 

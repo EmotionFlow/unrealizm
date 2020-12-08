@@ -155,8 +155,7 @@
 					focusConfirm: false,
 					showCloseButton: true,
 					showCancelButton: true,
-					// TODO comment in
-					//preConfirm: verifyCardDlgInput,
+					preConfirm: verifyCardDlgInput,
 				}).then(formValues => {
 					// キャンセルボタンがクリックされた
 					if (formValues.dismiss) {
@@ -165,13 +164,9 @@
 						return false;
 					}
 
-					// cardInfo.number = String(formValues.value.cardNum);
-					// cardInfo.expire = String(formValues.value.cardExp);
-					// cardInfo.securityCode = String(formValues.value.cardSec);
-					// TODO 元に戻す
-					cardInfo.number = '4111111111111111';
-					cardInfo.expire = '01/24';
-					cardInfo.securityCode = '012';
+					cardInfo.number = String(formValues.value.cardNum);
+					cardInfo.expire = String(formValues.value.cardExp);
+					cardInfo.securityCode = String(formValues.value.cardSec);
 
 					<%// 念のため不要になった変数を初期化%>
 					formValues.value.cardNum = '';
