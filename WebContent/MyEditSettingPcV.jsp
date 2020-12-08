@@ -56,7 +56,10 @@ if (checkLogin.m_nPassportId >=Common.PASSPORT_ON){
 MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
-MENU.put("POIPASS", _TEX.T("EditSettingV.Passport"));
+// TODO リリース時にif文外す
+if (checkLogin.m_nUserId==1 || checkLogin.m_nUserId==2 || checkLogin.m_nUserId==21808) {
+	MENU.put("POIPASS", _TEX.T("EditSettingV.Passport"));
+}
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
@@ -132,7 +135,6 @@ String[][] menuOrder = {
 					$(".SettingMenu>a[data-to="+menuId+"]").addClass("Selected");
 					$("#"+menuId).show();
 				<%}%>
-
 			});
 		</script>
 
@@ -243,7 +245,9 @@ String[][] menuOrder = {
 				</div>
 				<div class="SettingMenu">
 					<%for(String m : menuOrder[checkLogin.m_nPassportId]){%>
-						<%=getSettingMenuItem(m, MENU.get(m))%>
+						<%if(MENU.get(m)!=null){%>
+							<%=getSettingMenuItem(m, MENU.get(m))%>
+						<%}%>
 					<%}%>
 				</div>
 			</div>
@@ -278,9 +282,7 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
-			<%
-				strPageId = "MUTEKEYWORD";
-			%>
+			<%strPageId = "MUTEKEYWORD";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -288,9 +290,7 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
-			<%
-				strPageId = "REACTION";
-			%>
+			<%strPageId = "REACTION";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -298,9 +298,7 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
-			<%
-				strPageId = "TWITTER";
-			%>
+			<%strPageId = "TWITTER";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
@@ -316,6 +314,9 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
+			<%// TODO リリース時にif文外す
+			if (checkLogin.m_nUserId==1 || checkLogin.m_nUserId==2 || checkLogin.m_nUserId==21808) {
+			%>
 			<%strPageId = "POIPASS";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
@@ -323,6 +324,7 @@ String[][] menuOrder = {
 					<%@include file="/inner/setting/MyEditSettingPassportV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "PAYMENT";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
