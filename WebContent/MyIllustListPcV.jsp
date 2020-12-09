@@ -45,7 +45,6 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 

@@ -25,8 +25,6 @@ if(!cResults.getResults(checkLogin)) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
-		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nPage = 1; // start 1

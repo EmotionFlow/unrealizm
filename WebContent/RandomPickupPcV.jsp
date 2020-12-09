@@ -19,8 +19,6 @@ boolean bRtn = cResults.getResults(checkLogin);
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
-		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("RandomPickup.Title")%></title>
 

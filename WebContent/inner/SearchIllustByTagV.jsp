@@ -15,8 +15,6 @@ String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_st
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
-		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(strTitle)%></title>
 
 		<script>
