@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
-
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
 <script>
 	googletag.cmd.push(function() {
 		<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
@@ -13,3 +13,4 @@
 		googletag.enableServices();
 	});
 </script>
+<%}%>

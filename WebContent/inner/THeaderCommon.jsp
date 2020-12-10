@@ -21,7 +21,9 @@
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>window.googletag = window.googletag || {cmd: []};</script>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
 <script data-ad-client="ca-pub-0260822034407772" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<%}%>
 <style>
 body {user-select:none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-touch-callout: none;}
 </style>

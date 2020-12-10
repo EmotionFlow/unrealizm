@@ -311,7 +311,8 @@ public class Util {
 		return strSrc.substring(0, nNum);
 	}
 
-	public static String poipiku_336x280_sp_mid() {
+	public static String poipiku_336x280_sp_mid(CheckLogin checkLogin) {
+		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"SideBarMid\">");
 		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
@@ -329,24 +330,8 @@ public class Util {
 		return sbRtn.toString();
 	}
 
-
-//	public static String adx_poipiku_336x280_sp_mid() {
-//		StringBuilder sbRtn = new StringBuilder();
-//		sbRtn.append("<div class=\"SideBarMid\">");
-//		sbRtn.append("<script type=\"text/javascript\">");
-//		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
-//		sbRtn.append("/* adx_poipikumobile_336x280_mid */");
-//		sbRtn.append("google_ad_slot = \"adx_poipikumobile_336x280_mid\";");
-//		sbRtn.append("google_ad_width = 336;");
-//		sbRtn.append("google_ad_height = 280;");
-//		sbRtn.append("</script>");
-//		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
-//		sbRtn.append("</script>");
-//		sbRtn.append("</div>");
-//		return sbRtn.toString();
-//	}
-
-	public static String poipiku_336x280_pc_mid() {
+	public static String poipiku_336x280_pc_mid(CheckLogin checkLogin) {
+		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
 		sbRtn.append("<!-- /4789880/poipiku/poipiku_336x280_mid -->");
@@ -363,22 +348,6 @@ public class Util {
 		sbRtn.append("</div>");
 		return sbRtn.toString();
 	}
-
-//	public static String adx_poipiku_336x280_pc_mid() {
-//		StringBuilder sbRtn = new StringBuilder();
-//		sbRtn.append("<div class=\"PcSideBarAd\">");
-//		sbRtn.append("<script type=\"text/javascript\">");
-//		sbRtn.append("google_ad_client = \"ca-pub-2810565410663306\";");
-//		sbRtn.append("/* adx_poipiku_336x280_mid */");
-//		sbRtn.append("google_ad_slot = \"adx_poipiku_336x280_mid\";");
-//		sbRtn.append("google_ad_width = 336;");
-//		sbRtn.append("google_ad_height = 280;");
-//		sbRtn.append("</script>");
-//		sbRtn.append("<script type=\"text/javascript\" src=\"//pagead2.googlesyndication.com/pagead/show_ads.js\">");
-//		sbRtn.append("</script>");
-//		sbRtn.append("</div>");
-//		return sbRtn.toString();
-//	}
 
 	public static boolean isBot(HttpServletRequest request) {
 		String agent =  Util.toString(request.getHeader("user-agent")).trim();

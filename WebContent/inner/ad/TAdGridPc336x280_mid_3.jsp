@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
 <div class="PcSideBarAd">
 	<!-- /4789880/poipiku/poipiku_336x280_mid_3 -->
 	<!-- /4789880/poipiku/poipiku_336x280_mid_r18 -->
@@ -10,3 +11,4 @@
 		</script>
 	</div>
 </div>
+<%}%>

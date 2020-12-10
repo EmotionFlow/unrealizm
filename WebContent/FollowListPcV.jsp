@@ -49,15 +49,19 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 			<%if(!bSmartPhone) {%>
 			<div class="PcSideBar" style="margin-top: 16px;">
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
+				<%}%>
 
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
 					</div>
 				</div>
+				<%}%>
 			</div>
 			<%}%>
 
