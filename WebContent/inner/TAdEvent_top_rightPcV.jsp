@@ -10,10 +10,11 @@
 	</li>
 	-->
 
-	<li class="EventItem">
-		<a href="/event/20201024_munekyun/TopPcV.jsp">
-			<img class="EventBanner" src="/event/20201024_munekyun/poipiku_kyun_bn.png" />
-		</a>
+	<li class="EventItem Pre">
+		<div class="EventBanner NoBg" style="padding: 30px 0 0 0; text-align: center;">
+			<h3 style="font-weight: bold; font-size: 17px;">「#2020年自分が選ぶ今年の4枚」</h3>
+			<div>12月中旬より開始予定。豪華賞品用意中！</div>
+		</div>
 	</li>
 
 	<li class="EventItem">
@@ -25,6 +26,12 @@
 	<li class="EventItem">
 		<a href="/event/20190901/TopPcV.jsp">
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
+		</a>
+	</li>
+
+	<li class="EventItem End">
+		<a href="/event/20201024_munekyun/TopPcV.jsp">
+			<img class="EventBanner" src="/event/20201024_munekyun/poipiku_kyun_bn.png" />
 		</a>
 	</li>
 </ul>

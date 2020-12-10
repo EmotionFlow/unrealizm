@@ -98,7 +98,6 @@ public class Common {
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 25;
 	public static final int[] CATEGORY_ID = {
-			25,	// 胸キュン
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
@@ -126,30 +125,8 @@ public class Common {
 //			20, // 使いまわし年賀状
 //			21, // 公式
 //			24,	// 使いまわしバレンタイン
+//			25,	// 胸キュン
 	};
-
-	// 上記のうち、常時表示される、企画ものではないもの。
-	/*
-	public static final List<Integer> CATEGORY_ID_REGULER = Collections.unmodifiableList(
-		new ArrayList<Integer>() {{
-			add(22);	// リハビリ
-			add(23);	// ネタバレ
-			add(17);	// メモ
-			add(16);	// 描けねえ
-			add(1);		// 飽きた
-			add(18);	// ほぼ白紙
-			add(15);	// 描きかけ
-			add(9);		// 供養
-//			add(11);	// 放置中
-			add(4);		// らくがき
-			add(10);	// 作業進捗
-			add(5);		// 自主練
-			add(6);		// できた
-			add(7);		// 過去絵を晒す
-			add(14);	// お知らせ
-		}}
-	);
-	*/
 
 	public static final int EDITOR_UPLOAD = 0;
 	public static final int EDITOR_PASTE = 1;
