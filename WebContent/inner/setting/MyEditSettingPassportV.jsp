@@ -254,17 +254,36 @@
 
 <div class="SettingList">
 	<div class="SettingListItem">
-		<div class="SettingListTitle"><i class="fas fa-passport" style="color:rgb(52, 152, 219);"></i> <%=_TEX.T("MyEditSettingPassportV.Title")%></div>
-		<%{Passport.Status passportStatus = cResults.m_cPassport.m_status; %>
-			<%if(passportStatus == Passport.Status.NotMember) {%>
+		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
+		<%{Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
 			<div class="SettingBody">
+				<%if(passportStatus == Passport.Status.Cancelling){%>
+				ポイパス定期購入の解除を承りました。今までお使いいただきありがとうございました。
+				なお、ポイパスでプラスされている機能は今月末まで利用できます。
+				<%}%>
+
+				<%if(passportStatus == Passport.Status.NotMember) {%>
 				<%//_TEX.T("MyEditSettingPassportV.Text")%>
-				ポイピクパスポート（ポイパス）を毎月300円で定期購入すると、よりポイピクを楽しくお使いいただけます！
+				ポイピクパスポート（ポイパス）を毎月300円で定期購入すると、ポイピクをより楽しくお使いいただけます！
+				<%}else if(passportStatus == Passport.Status.Billing){%>
+				ポイパスを定期購入いただきありがとうございます。
+				<%}%>
+
+				<%if(passportStatus == Passport.Status.NotMember) {%>
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
 						ポイパスを定期購入する
 					</a>
+				</div>
+				<%}%>
+
+				<div class="SettingBodyCmd" style="font-size: 1.2em">
+					<%if(passportStatus == Passport.Status.NotMember) {%>
+					ポイパスでプラスされる機能
+					<%}else{%>
+					ポイパスでプラスされている機能
+					<%}%>
 				</div>
 				<div class="SettingBodyCmd">
 					<style>
@@ -295,6 +314,7 @@
                         }
                         .BenifitTable .BenefitDetail {
                             font-size: 0.85em;
+							color: #62605c;
                         }
 					</style>
 					<table class="BenifitTable">
@@ -306,34 +326,52 @@
 						<tr>
 							<td class="ListCell">広告表示</td>
 							<td class="NormalCell">あり</td>
-							<td class="BenefitCell">一切なし</td>
+							<td class="BenefitCell">一切なし！</td>
 						</tr>
 						<tr>
 							<td class="ListCell">ミュートキーワード</td>
 							<td class="NormalCell">なし</td>
 							<td class="BenefitCell">あり<br>
-								<span class="BenefitDetail">避けたいコンテンツをキーワード指定して非表示にできます。</span></td>
+								<span class="BenefitDetail">
+									避けたいコンテンツをキーワード指定して検索結果などから省くことができます。
+								</span>
+							</td>
 						</tr>
 						<tr>
-							<td class="ListCell">定期ツイート</td>
+							<td class="ListCell">定期ツイート<br>(前ツイート自動削除つき)</td>
 							<td class="NormalCell">なし</td>
 							<td class="BenefitCell">あり<br>
-								<span class="BenefitDetail">最近の自分のコンテンツを１画像にまとめて、自動ツイートできます。
-									ツイートは曜日、時間を指定できます。（毎日でもOK！）</span></td>
+								<span class="BenefitDetail">
+									最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br>
+									一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br>
+									(Androidアプリ版は準備中)
+								</span></td>
+						</tr>
+						<tr>
+							<td class="ListCell">送れる絵文字の数</td>
+							<td class="NormalCell">1作品あたり10個/日</td>
+							<td class="BenefitCell">1作品あたり100個/日<br>
+						</tr>
+						<tr>
+							<td class="ListCell">もらった絵文字解析</td>
+							<td class="NormalCell">過去一週間分</td>
+							<td class="BenefitCell">過去30日分、全期間も対応<br>
 						</tr>
 						<tr>
 							<td class="ListCell">投稿時のキャプション文字数</td>
-							<td class="NormalCell">500字<br></td>
-							<td class="BenefitCell">1,000字</td>
+							<td class="NormalCell">200文字<br></td>
+							<td class="BenefitCell">500文字</td>
 						</tr>
 						<tr>
 							<td class="ListCell">文章投稿時の文字数</td>
-							<td class="NormalCell">10,000字<br></td>
-							<td class="BenefitCell">50,000字</td>
+							<td class="NormalCell">1万文字<br></td>
+							<td class="BenefitCell">10万文字</td>
 						</tr>
 						</tbody>
 					</table>
 				</div>
+
+				<%if(passportStatus == Passport.Status.NotMember) {%>
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
@@ -343,18 +381,18 @@
 				<div id="PassportNowPayment" style="display:none">
 					<span class="PoiPassLoading"></span><span>購入処理中</span>
 				</div>
+				<%}%>
+				<%if(passportStatus == Passport.Status.Billing){%>
+				<div class="SettingBodyCmd">
+					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
+						ポイパス定期購入を解除する
+					</a>
+					<div id="PassportNowCancelling" style="display:none">
+						<span class="PoiPassLoading"></span><span>定期購入解除処理中</span>
+					</div>
+				</div>
+				<%}%>
 			</div>
-			<%}else if(passportStatus == Passport.Status.Billing){%>
-			<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
-				ポイパス定期購入を解除する
-			</a>
-			<div id="PassportNowCancelling" style="display:none">
-				<span class="PoiPassLoading"></span><span>解除処理中</span>
-			</div>
-			<%}else if(passportStatus == Passport.Status.Cancelling){%>
-				ポイパス定期購入の解除を承りました。今までお使いいただきありがとうございました。
-				なお、ポイパスの特典は今月末まで利用できます。
-			<%}%>
 		<%}//Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
 	</div>
 </div>

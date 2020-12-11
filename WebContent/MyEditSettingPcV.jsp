@@ -58,7 +58,7 @@ MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
 // TODO リリース時にif文外す
 if (checkLogin.m_nUserId==1 || checkLogin.m_nUserId==2 || checkLogin.m_nUserId==21808) {
-	MENU.put("POIPASS", _TEX.T("EditSettingV.Passport"));
+	MENU.put("POIPASS", "<i class=\"fas fa-passport\" style=\"color:rgb(52, 152, 219);\"></i> " + _TEX.T("EditSettingV.Passport"));
 }
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
