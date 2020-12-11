@@ -75,16 +75,26 @@ if(!checkLogin.m_bLogin) {
 			});
 		</script>
 		<style>
-		.IllustItemList {background: #fff;}
-		#AnalyzeList {display: flex; flex-flow: column; align-items: center;}
-		.AnalyzeItem {flex: 0 0 80%; width: 80%; display: flex; flex-flow: row nowrap; background: #3498db; margin: 5px 0; box-sizing: border-box; padding: 5px 10px;}
-		.AnalyzeItem .AnalyzeItemDesc {flex: 1 1;}
-		.AnalyzeItem .AnalyzeItemDesc .Twemoji {display: block; width: 24px; height: 24px; line-height: 24px;}
-		.AnalyzeItem .AnalyzeItemRate {flex: 0 0 100px;text-align: right; line-height: 24px;}
+			body {padding-top: 79px !important;}
+			.IllustItemList {background: #fff;}
+			#AnalyzeList {display: flex; flex-flow: column; align-items: center;}
+			.AnalyzeItem {flex: 0 0 80%; width: 80%; display: flex; flex-flow: row nowrap; background: #3498db; margin: 5px 0; box-sizing: border-box; padding: 5px 10px;}
+			.AnalyzeItem .AnalyzeItemDesc {flex: 1 1;}
+			.AnalyzeItem .AnalyzeItemDesc .Twemoji {display: block; width: 24px; height: 24px; line-height: 24px;}
+			.AnalyzeItem .AnalyzeItemRate {flex: 0 0 100px;text-align: right; line-height: 24px;}
 		</style>
 	</head>
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
+
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp"><%=_TEX.T("THeader.Menu.Act.Reaction")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/ActivityAnalyzePcV.jsp"><%=_TEX.T("THeader.Menu.Act.Analyze")%></a></li>
+			</ul>
+		</nav>
+
+
 		<article class="Wrapper">
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>

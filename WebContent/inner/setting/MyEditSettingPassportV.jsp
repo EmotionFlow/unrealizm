@@ -149,8 +149,8 @@
 					$(".BuyPassportButton").show();
 				}
 			} else if (result === 0) {
-				const title = "ポイパス定期購入";
-				const description = "定期購入するためのカード情報を入力してください。入力されたカード情報から、毎月300円(税込)が課金されます。";
+				const title = "ポイパス加入";
+				const description = "加入するためのカード情報を入力してください。入力されたカード情報から、毎月300円(税込)が課金されます。";
 				<%// クレジットカード情報入力ダイアログを表示、%>
 				<%// 入力内容を代理店に送信し、Tokenを取得する。%>
 				Swal.fire({
@@ -187,8 +187,8 @@
 
 	function CancelPassport() {
 		Swal.fire({
-			title: 'ポイパス購入解除',
-			text: 'ポイパスの定期購入を解除します。特典は今月いっぱい有効で、来月から失効します。よろしいですか？',
+			title: 'ポイパスの解約',
+			text: 'ポイパスを解約します。特典は今月末まで有効で、来月から失効します。よろしいですか？',
 			focusConfirm: false,
 			showCloseButton: true,
 			showCancelButton: true,
@@ -211,7 +211,7 @@
 			}).then( data => {
 					$("#PassportNowCancelling").hide();
 					if (data.result === 1) {
-						DispMsg("定期購入を解除しました。これまでポイパスをご購入いただき、ありがとうございました！");
+						DispMsg("解約しました。これまでポイパスにご加入いただき、ありがとうございました！");
 					} else {
 						switch (data.error_code) {
 							case -10:
@@ -250,6 +250,8 @@
 		top: 4px;
 		margin: 0 2px 0 4px;
 	}
+	.PoipikuPassportLogoFrame {display: block; float: left; width: 100%;}
+	.PoipikuPassportLogoFrame .PoipikuPassportLogo {display: block; height: 45px;}
 </style>
 
 <div class="SettingList">
@@ -258,22 +260,32 @@
 		<%{Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
 			<div class="SettingBody">
 				<%if(passportStatus == Passport.Status.Cancelling){%>
-				ポイパス定期購入の解除を承りました。今までお使いいただきありがとうございました。
+				ポイパスの解除を承りました。今までご利用頂き誠にありがとうございました。
 				なお、ポイパスでプラスされている機能は今月末まで利用できます。
 				<%}%>
 
 				<%if(passportStatus == Passport.Status.NotMember) {%>
 				<%//_TEX.T("MyEditSettingPassportV.Text")%>
-				ポイピクパスポート（ポイパス）を毎月300円で定期購入すると、ポイピクをより楽しくお使いいただけます！
+				<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
+				平素よりポイピクをご愛顧頂き誠にありがとうございます。
+				サーバの過負荷状態が続きサービス継続に支障が出ていたため、一部機能の提供を中止し皆様にはご迷惑をおかけいたしました。申し訳ございません。
+				検討した結果、この度「ポイピクパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。
+				また「可能であればイラストと一緒に広告を表示したくない」というポイピクチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
+				iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、パスポートの機能が有効となります。
+				高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
+				ポイピクサービス維持・発展のため、ぜひポイパスへのご加入をご検討いただけますと幸いです。
+				(2020年12月 株式会社pipa.jp代表 川合和寛)
+				</div>
+				ポイピクパスポート（ポイパス）に加入すると、ポイピクをより楽しく便利にお使いいただけます！
 				<%}else if(passportStatus == Passport.Status.Billing){%>
-				ポイパスを定期購入いただきありがとうございます。
+				ポイパスにご加入いただきありがとうございます。
 				<%}%>
 
 				<%if(passportStatus == Passport.Status.NotMember) {%>
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-						ポイパスを定期購入する
+						ポイパスに加入する
 					</a>
 				</div>
 				<%}%>
@@ -287,35 +299,42 @@
 				</div>
 				<div class="SettingBodyCmd">
 					<style>
-                        .BenifitTable {
-                            width:100%;
-                            text-align: center;
-                            border-collapse: collapse;
+						.BenifitTable {
+							width: 100%;
+							text-align: center;
+							border-collapse: collapse;
 						}
-                        .BenifitTable td {
-                            height: 100px;
-                        }
-                        .BenifitTable td, table th {
-                            border: solid 1px #ddd;
-                            padding: 5px 8px;
-                            vertical-align: middle;
-                        }
-                        .BenifitTable .ListCell {
-                            background: #eee;
-                        }
-                        .BenifitTable td {
-                            height: 100px;
-                        }
-                        .BenifitTable .NormalCell {
-                            color: #aaaaaa;
-                        }
-                        .BenifitTable .BenefitCell {
-                            color: #464441;
-                        }
-                        .BenifitTable .BenefitDetail {
-                            font-size: 0.85em;
+
+						.BenifitTable td {
+							height: 100px;
+						}
+
+						.BenifitTable td, table th {
+							border: solid 1px #ddd;
+							padding: 5px 8px;
+							vertical-align: middle;
+						}
+
+						.BenifitTable .ListCell {
+							background: #eee;
+						}
+
+						.BenifitTable td {
+							height: 100px;
+						}
+
+						.BenifitTable .NormalCell {
+							color: #aaaaaa;
+						}
+
+						.BenifitTable .BenefitCell {
+							color: #464441;
+						}
+
+						.BenifitTable .BenefitDetail {
+							font-size: 0.85em;
 							color: #62605c;
-                        }
+						}
 					</style>
 					<table class="BenifitTable">
 						<tbody><tr class="ListCell">
@@ -344,7 +363,7 @@
 								<span class="BenefitDetail">
 									最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br>
 									一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br>
-									(Androidアプリ版は準備中)
+									(Androidアプリ版からの設定は準備中)
 								</span></td>
 						</tr>
 						<tr>
@@ -365,7 +384,10 @@
 						<tr>
 							<td class="ListCell">文章投稿時の文字数</td>
 							<td class="NormalCell">1万文字<br></td>
-							<td class="BenefitCell">10万文字</td>
+							<td class="BenefitCell">10万文字<br>
+								<span class="BenefitDetail">
+									(本機能はWeb版でβテスト中の機能です。アプリからの文章投稿機能は今暫くお待ち下さい)
+								</span></td>
 						</tr>
 						</tbody>
 					</table>
@@ -375,7 +397,7 @@
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-						ポイパスを定期購入する
+						ポイパスに加入する
 					</a>
 				</div>
 				<div id="PassportNowPayment" style="display:none">
@@ -385,10 +407,10 @@
 				<%if(passportStatus == Passport.Status.Billing){%>
 				<div class="SettingBodyCmd">
 					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
-						ポイパス定期購入を解除する
+						ポイパスを解約する
 					</a>
 					<div id="PassportNowCancelling" style="display:none">
-						<span class="PoiPassLoading"></span><span>定期購入解除処理中</span>
+						<span class="PoiPassLoading"></span><span>解約処理中</span>
 					</div>
 				</div>
 				<%}%>

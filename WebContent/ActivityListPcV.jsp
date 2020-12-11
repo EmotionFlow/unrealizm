@@ -26,12 +26,21 @@ cResults.GetResults(checkLogin);
 			$('#MenuAct').addClass('Selected');
 		});
 		</script>
+		<style>
+			body {padding-top: 79px !important;}
+		</style>
 	</head>
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<article class="Wrapper ItemList">
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem Selected" href="/ActivityListPcV.jsp"><%=_TEX.T("THeader.Menu.Act.Reaction")%></a></li>
+				<li><a class="TabMenuItem" href="/ActivityAnalyzePcV.jsp"><%=_TEX.T("THeader.Menu.Act.Analyze")%></a></li>
+			</ul>
+		</nav>
 
+		<article class="Wrapper ItemList">
 			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div style="display:block; width: 100%; padding: 250px 0; text-align: center;">
 				<%=_TEX.T("ActivityList.Message.Default.Recive")%>
