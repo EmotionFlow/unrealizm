@@ -144,6 +144,9 @@
 				console.log("epsilonPayment");
 				if (confirm("登録済みのカード情報で決済します。よろしいですか？")) {
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
+				} else {
+					elPassportNowPayment.hide();
+					$("#BuyPassportButton").show();
 				}
 			} else if (result === 0) {
 				const title = "ポイパス定期購入";
