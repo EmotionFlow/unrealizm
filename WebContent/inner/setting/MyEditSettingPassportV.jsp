@@ -114,7 +114,7 @@
 	}
 
 	function BuyPassport() {
-		$("#BuyPassportButton").hide();
+		$(".BuyPassportButton").hide();
 		const passportInfo = {
 			"passportId": 1,
 			"userId": <%=checkLogin.m_nUserId%>,
@@ -146,7 +146,7 @@
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
 					elPassportNowPayment.hide();
-					$("#BuyPassportButton").show();
+					$(".BuyPassportButton").show();
 				}
 			} else if (result === 0) {
 				const title = "ポイパス定期購入";
@@ -163,7 +163,7 @@
 					// キャンセルボタンがクリックされた
 					if (formValues.dismiss) {
 						elPassportNowPayment.hide();
-						$("#BuyPassportButton").show();
+						$(".BuyPassportButton").show();
 						return false;
 					}
 
@@ -188,7 +188,7 @@
 	function CancelPassport() {
 		Swal.fire({
 			title: 'ポイパス購入解除',
-			text: '来月から課金されなくなります。特典は今月いっぱい有効です。',
+			text: 'ポイパスの定期購入を解除します。特典は今月いっぱい有効で、来月から失効します。よろしいですか？',
 			focusConfirm: false,
 			showCloseButton: true,
 			showCancelButton: true,
@@ -254,13 +254,89 @@
 
 <div class="SettingList">
 	<div class="SettingListItem">
-		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
+		<div class="SettingListTitle"><i class="fas fa-passport" style="color:rgb(52, 152, 219);"></i> <%=_TEX.T("MyEditSettingPassportV.Title")%></div>
 		<%{Passport.Status passportStatus = cResults.m_cPassport.m_status; %>
 			<%if(passportStatus == Passport.Status.NotMember) {%>
 			<div class="SettingBody">
-				<%=_TEX.T("MyEditSettingPassportV.Text")%>
+				<%//_TEX.T("MyEditSettingPassportV.Text")%>
+				ポイピクパスポート（ポイパス）を毎月300円で定期購入すると、よりポイピクを楽しくお使いいただけます！
 				<div class="SettingBodyCmd">
-					<a id="BuyPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="BuyPassport(this)">
+					<div class="RegistMessage"></div>
+					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
+						ポイパスを定期購入する
+					</a>
+				</div>
+				<div class="SettingBodyCmd">
+					<style>
+                        .BenifitTable {
+                            width:100%;
+                            text-align: center;
+                            border-collapse: collapse;
+						}
+                        .BenifitTable td {
+                            height: 100px;
+                        }
+                        .BenifitTable td, table th {
+                            border: solid 1px #ddd;
+                            padding: 5px 8px;
+                            vertical-align: middle;
+                        }
+                        .BenifitTable .ListCell {
+                            background: #eee;
+                        }
+                        .BenifitTable td {
+                            height: 100px;
+                        }
+                        .BenifitTable .NormalCell {
+                            color: #aaaaaa;
+                        }
+                        .BenifitTable .BenefitCell {
+                            color: #464441;
+                        }
+                        .BenifitTable .BenefitDetail {
+                            font-size: 0.85em;
+                        }
+					</style>
+					<table class="BenifitTable">
+						<tbody><tr class="ListCell">
+							<th style="width: 20%"></th>
+							<th class="NormalCell" style="width: 30%">ポイパスなし</th>
+							<th class="BenefitCell" style="width: 30%">ポイパスあり</th>
+						</tr>
+						<tr>
+							<td class="ListCell">広告表示</td>
+							<td class="NormalCell">あり</td>
+							<td class="BenefitCell">一切なし</td>
+						</tr>
+						<tr>
+							<td class="ListCell">ミュートキーワード</td>
+							<td class="NormalCell">なし</td>
+							<td class="BenefitCell">あり<br>
+								<span class="BenefitDetail">避けたいコンテンツをキーワード指定して非表示にできます。</span></td>
+						</tr>
+						<tr>
+							<td class="ListCell">定期ツイート</td>
+							<td class="NormalCell">なし</td>
+							<td class="BenefitCell">あり<br>
+								<span class="BenefitDetail">最近の自分のコンテンツを１画像にまとめて、自動ツイートできます。
+									ツイートは曜日、時間を指定できます。（毎日でもOK！）</span></td>
+						</tr>
+						<tr>
+							<td class="ListCell">投稿時のキャプション文字数</td>
+							<td class="NormalCell">500字<br></td>
+							<td class="BenefitCell">1,000字</td>
+						</tr>
+						<tr>
+							<td class="ListCell">文章投稿時の文字数</td>
+							<td class="NormalCell">10,000字<br></td>
+							<td class="BenefitCell">50,000字</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="SettingBodyCmd">
+					<div class="RegistMessage"></div>
+					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
 						ポイパスを定期購入する
 					</a>
 				</div>
@@ -270,13 +346,13 @@
 			</div>
 			<%}else if(passportStatus == Passport.Status.Billing){%>
 			<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
-				ポイパス定期購入を停止する
+				ポイパス定期購入を解除する
 			</a>
 			<div id="PassportNowCancelling" style="display:none">
-				<span class="PoiPassLoading"></span><span>停止処理中</span>
+				<span class="PoiPassLoading"></span><span>解除処理中</span>
 			</div>
 			<%}else if(passportStatus == Passport.Status.Cancelling){%>
-				ポイパス定期購入のキャンセルを承りました。今までお使いいただきありがとうございました。
+				ポイパス定期購入の解除を承りました。今までお使いいただきありがとうございました。
 				なお、ポイパスの特典は今月末まで利用できます。
 			<%}%>
 		<%}//Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
