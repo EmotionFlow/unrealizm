@@ -13,6 +13,8 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.cache.*"%>
 <%@page import="jp.pipa.poipiku.controller.*"%>
+<%@page import="jp.pipa.poipiku.settlement.*"%>
+<%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%
 ResourceBundleControl _TEX = new ResourceBundleControl(request);
