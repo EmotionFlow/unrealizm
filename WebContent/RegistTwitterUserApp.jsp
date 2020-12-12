@@ -25,8 +25,11 @@ Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_resul
 		<meta http-equiv="refresh" content="3;URL=myurlscheme://restart" />
 		<script>
 		$(function(){
+			<%if(user!=null) {%>
 			sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.LANG_ID_POST%>=<%=(user.langId==0)?"en":"ja"%>");
-			//sendObjectMessage("restart");
+			<%} else {%>
+			sendObjectMessage("restart");
+			<%}%>
 		});
 		</script>
 	</head>
@@ -35,7 +38,7 @@ Log.d(String.format("USERAUTH RetistTwitterUser APP2 : user_id:%d, twitter_resul
 		<article class="Wrapper" style="text-align: center;">
 			<p><%=_TEX.T("EditSettingV.Twitter")%></p>
 			<a href="myurlscheme://restart">
-			<%if(userId>0) {%>
+			<%if(user!=null) {%>
 			<%=_TEX.T("RegistUserV.UpdateComplete")%>
 			<%} else {%>
 			<%=_TEX.T("RegistUserV.UpdateError")%>
