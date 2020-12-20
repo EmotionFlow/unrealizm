@@ -261,7 +261,7 @@
 			<div class="SettingBody">
 				<%if(passportStatus == Passport.Status.Cancelling){%>
 				ポイパスの解除を承りました。今までご利用頂き誠にありがとうございました。
-				なお、ポイパスでプラスされている機能は今月末まで利用できます。
+				なお、ポイパスでプラスされている機能は今月末までお使いいただけます。
 				<%}%>
 
 				<%if(passportStatus == Passport.Status.NotMember) {%>
