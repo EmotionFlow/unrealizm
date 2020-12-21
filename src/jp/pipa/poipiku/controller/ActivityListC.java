@@ -13,7 +13,7 @@ import jp.pipa.poipiku.util.*;
 public class ActivityListC {
 	public int m_nUserId = -1;
 
-	public void GetParam(HttpServletRequest cRequest) {
+	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 		} catch(Exception e) {
@@ -22,7 +22,7 @@ public class ActivityListC {
 	}
 
 	public ArrayList<ActivityInfo> m_vContentList = new ArrayList<>();
-	public boolean GetResults(CheckLogin checkLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
 		DataSource dataSource = null;

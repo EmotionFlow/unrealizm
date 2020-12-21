@@ -1,7 +1,7 @@
 <%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!class SendEmojiC {
+<%!class ShowEmojiC {
 	public int m_nContentId = -1;
 
 	public void getParam(HttpServletRequest request) {
@@ -50,7 +50,7 @@ int nRtn = 0;
 String strHtml = _TEX.T("Common.NeedLogin");
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(checkLogin.m_bLogin) {
-	SendEmojiC cResults = new SendEmojiC();
+	ShowEmojiC cResults = new ShowEmojiC();
 	cResults.getParam(request);
 	cResults.getResults(checkLogin, _TEX);
 	cResults.m_vComment.size();

@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import jp.pipa.poipiku.util.CCnv;
 
 public class Common {
+	public static final int API_OK = 1;
+	public static final int API_NG = 0;
+
 	public static final int PAGE_BAR_NUM = 2;
 
 	public static int TWITTER_PROVIDER_ID = 1;

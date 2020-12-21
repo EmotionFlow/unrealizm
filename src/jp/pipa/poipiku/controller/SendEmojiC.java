@@ -256,6 +256,17 @@ public class SendEmojiC {
 				infoThumb = cTargContent.m_strFileName;
 				break;
 			}
+
+			// 確認済みお知らせだった場合、通知絵文字一覧をリセット
+			strSql = "DELETE FROM info_lists WHERE user_id=? AND content_id=? AND info_type=? AND had_read=true;";
+			Log.d(strSql);
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, cTargContent.m_nUserId);
+			statement.setInt(2, cTargContent.m_nContentId);
+			statement.setInt(3, Common.NOTIFICATION_TYPE_REACTION);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
 			// お知らせ一覧に追加
 			strSql = "INSERT INTO info_lists(user_id, content_id, content_type, info_type, info_thumb, info_desc) "
 					+ "VALUES(?, ?, ?, ?, ?, ?) "
@@ -265,6 +276,7 @@ public class SendEmojiC {
 					+ "info_date=CURRENT_TIMESTAMP, "
 					+ "badge_num=(info_lists.badge_num+1), "
 					+ "had_read=false;";
+			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cTargContent.m_nUserId);
 			statement.setInt(2, cTargContent.m_nContentId);
