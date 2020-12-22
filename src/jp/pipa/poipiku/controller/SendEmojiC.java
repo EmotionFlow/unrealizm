@@ -275,7 +275,6 @@ public class SendEmojiC {
 					+ "info_date=CURRENT_TIMESTAMP, "
 					+ "badge_num=(info_lists.badge_num+1), "
 					+ "had_read=false;";
-			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cTargContent.m_nUserId);
 			statement.setInt(2, cTargContent.m_nContentId);
