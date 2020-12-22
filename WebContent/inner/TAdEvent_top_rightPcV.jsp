@@ -16,8 +16,9 @@
 
 	<li class="EventItem Pre">
 		<div class="EventBanner NoBg" style="padding: 30px 0 0 0; text-align: center;">
-			<h3 style="font-weight: bold; font-size: 17px;">「#2020年自分が選ぶ今年の4枚」</h3>
-			<div>12月中旬より開始予定。豪華賞品用意中！</div>
+			<div style="line-height: 16px;">お正月だし2020年を振り返ろう！</div>
+			<h3 style="font-weight: bold; font-size: 17px;">「#2020年ベスト1」</h3>
+			<div style="line-height: 16px;">12月下旬より開始予定。豪華賞品調整中！</div>
 		</div>
 	</li>
 
