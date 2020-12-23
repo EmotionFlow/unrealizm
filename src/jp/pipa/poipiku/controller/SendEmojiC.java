@@ -259,7 +259,6 @@ public class SendEmojiC {
 
 			// 確認済みお知らせだった場合、通知絵文字一覧をリセット
 			strSql = "DELETE FROM info_lists WHERE user_id=? AND content_id=? AND info_type=? AND had_read=true;";
-			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cTargContent.m_nUserId);
 			statement.setInt(2, cTargContent.m_nContentId);
@@ -276,7 +275,6 @@ public class SendEmojiC {
 					+ "info_date=CURRENT_TIMESTAMP, "
 					+ "badge_num=(info_lists.badge_num+1), "
 					+ "had_read=false;";
-			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cTargContent.m_nUserId);
 			statement.setInt(2, cTargContent.m_nContentId);
