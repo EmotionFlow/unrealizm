@@ -101,7 +101,7 @@
 		}
 
 		if( response.resultCode !== '000' ){
-			window.alert("購入処理中にエラーが発生しました");
+			window.alert("ポイパス加入処理中にエラーが発生しました");
 			console.log(response.resultCode);
 			g_epsilonInfo.elPassportNowPayment.hide();
 		}else{
@@ -142,7 +142,7 @@
 				return false;
 			} else if (result === 1) {
 				console.log("epsilonPayment");
-				if (confirm("登録済みのカード情報で決済します。よろしいですか？")) {
+				if (confirm("登録済みのカード情報で毎月300円(税込)の課金を決済します。よろしいですか？")) {
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
 					elPassportNowPayment.hide();
@@ -187,8 +187,8 @@
 
 	function CancelPassport() {
 		Swal.fire({
-			title: 'ポイパスの解約',
-			text: 'ポイパスを解約します。特典は今月末まで有効で、来月から失効します。よろしいですか？',
+			title: 'ポイパス解約',
+			text: 'ポイパスを解約します。現在プラスされている機能は解約月の末尾まで有効となります。よろしいですか？',
 			focusConfirm: false,
 			showCloseButton: true,
 			showCancelButton: true,
@@ -252,6 +252,25 @@
 	}
 	.PoipikuPassportLogoFrame {display: block; float: left; width: 100%;}
 	.PoipikuPassportLogoFrame .PoipikuPassportLogo {display: block; height: 45px;}
+	.BenefitTable {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+    .BenefitTable td {height: 100px;}
+    .BenefitTable td, table th {
+        border: solid 1px #ddd;
+        padding: 5px 8px;
+        vertical-align: middle;
+    }
+    .BenefitTable .ListCell {background: #eee;}
+    .BenefitTable td {height: 100px;}
+    .BenefitTable .NormalCell {color: #aaaaaa;}
+    .BenefitTable .BenefitCell {color: #464441;}
+    .BenefitTable .BenefitDetail {
+        font-size: 0.85em;
+        color: #62605c;
+    }
 </style>
 
 <div class="SettingList">
@@ -260,8 +279,9 @@
 		<%{Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
 			<div class="SettingBody">
 				<%if(passportStatus == Passport.Status.Cancelling){%>
-				ポイパスの解除を承りました。今までご利用頂き誠にありがとうございました。
+				ポイパスの解除を承りました。今までご加入頂き誠にありがとうございました。
 				なお、ポイパスでプラスされている機能は今月末までお使いいただけます。
+				また、最後の課金をさせていただく関係で、今月中はカード情報の削除ができません。ご了承くださいませ。
 				<%}%>
 
 				<%if(passportStatus == Passport.Status.NotMember) {%>
@@ -298,45 +318,7 @@
 					<%}%>
 				</div>
 				<div class="SettingBodyCmd">
-					<style>
-						.BenifitTable {
-							width: 100%;
-							text-align: center;
-							border-collapse: collapse;
-						}
-
-						.BenifitTable td {
-							height: 100px;
-						}
-
-						.BenifitTable td, table th {
-							border: solid 1px #ddd;
-							padding: 5px 8px;
-							vertical-align: middle;
-						}
-
-						.BenifitTable .ListCell {
-							background: #eee;
-						}
-
-						.BenifitTable td {
-							height: 100px;
-						}
-
-						.BenifitTable .NormalCell {
-							color: #aaaaaa;
-						}
-
-						.BenifitTable .BenefitCell {
-							color: #464441;
-						}
-
-						.BenifitTable .BenefitDetail {
-							font-size: 0.85em;
-							color: #62605c;
-						}
-					</style>
-					<table class="BenifitTable">
+					<table class="BenefitTable">
 						<tbody><tr class="ListCell">
 							<th style="width: 20%"></th>
 							<th class="NormalCell" style="width: 30%">ポイパスなし</th>
