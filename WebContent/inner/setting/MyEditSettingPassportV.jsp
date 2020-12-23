@@ -188,7 +188,7 @@
 	function CancelPassport() {
 		Swal.fire({
 			title: 'ポイパス解約',
-			text: 'ポイパスを解約します。現在プラスされている機能は解約月の末尾まで有効となります。よろしいですか？',
+			text: 'ポイパスを解約してよろしいですか？現在プラスされている機能は解約月の末日まで有効となります。',
 			focusConfirm: false,
 			showCloseButton: true,
 			showCancelButton: true,
@@ -279,7 +279,7 @@
 		<%{Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
 			<div class="SettingBody">
 				<%if(passportStatus == Passport.Status.Cancelling){%>
-				ポイパスの解除を承りました。今までご加入頂き誠にありがとうございました。
+				ポイパスの解除を承りました。今までご加入いただき誠にありがとうございました。
 				なお、ポイパスでプラスされている機能は今月末までお使いいただけます。
 				また、最後の課金をさせていただく関係で、今月中はカード情報の削除ができません。ご了承くださいませ。
 				<%}%>
