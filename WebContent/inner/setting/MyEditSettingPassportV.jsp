@@ -127,10 +127,11 @@
 		};
 		let elPassportNowPayment = $('#PassportNowPayment');
 		if(elPassportNowPayment.css('display') !== 'none'){
-			console.log("決済処理中");
+			alert("決済処理中です");
 			return;
 		}
 		elPassportNowPayment.show();
+		$('#PassportNowPayment2').show();
 		$.ajax({
 			"type": "get",
 			"url": "/f/CheckCreditCardF.jsp",
@@ -298,7 +299,7 @@
 				</div>
 				ポイピクパスポート（ポイパス）に加入すると、ポイピクをより楽しく便利にお使いいただけます！
 				<%}else if(passportStatus == Passport.Status.Billing){%>
-				ポイパスにご加入いただきありがとうございます。
+				ポイパスにご加入いただきありがとうございます。現在、登録いただいたクレジットカードから毎月300円が課金されています。
 				<%}%>
 
 				<%if(passportStatus == Passport.Status.NotMember) {%>
@@ -307,6 +308,9 @@
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
 						ポイパスに加入する
 					</a>
+				</div>
+				<div id="PassportNowPayment" style="display:none">
+					<span class="PoiPassLoading"></span><span>加入処理中</span>
 				</div>
 				<%}%>
 
@@ -382,8 +386,8 @@
 						ポイパスに加入する
 					</a>
 				</div>
-				<div id="PassportNowPayment" style="display:none">
-					<span class="PoiPassLoading"></span><span>購入処理中</span>
+				<div id="PassportNowPayment2" style="display:none">
+					<span class="PoiPassLoading"></span><span>加入処理中</span>
 				</div>
 				<%}%>
 				<%if(passportStatus == Passport.Status.Billing){%>
