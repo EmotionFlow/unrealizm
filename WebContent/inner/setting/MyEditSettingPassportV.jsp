@@ -147,6 +147,7 @@
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
 					elPassportNowPayment.hide();
+					$('#PassportNowPayment2').hide();
 					$(".BuyPassportButton").show();
 				}
 			} else if (result === 0) {
@@ -161,9 +162,10 @@
 					showCancelButton: true,
 					preConfirm: verifyCardDlgInput,
 				}).then(formValues => {
-					// キャンセルボタンがクリックされた
+					<%// キャンセルボタンがクリックされた%>
 					if (formValues.dismiss) {
 						elPassportNowPayment.hide();
+						$('#PassportNowPayment2').hide();
 						$(".BuyPassportButton").show();
 						return false;
 					}
