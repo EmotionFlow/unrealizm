@@ -45,9 +45,6 @@
 	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardSecCode")%><div/>
 	<input id="cc_csc" class="swal2-input" style="margin-top: 4px;" maxlength="4" placeholder="012"/>
 </div>
-<div class="CardInfoDlgInfoCheckList">
-<label><input id="cc_agree1" type="checkbox"/><%=_TEX.T("CardInfoDlg.Agree")%></label>
-</div>
 `;
 	}
 
@@ -105,12 +102,6 @@
 		if (vals.cardSec.length < 3){
 			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardSecCode.LengthErr")%>');
 		}
-
-		// 同意チェックボックス
-		if(!$("#cc_agree1").prop('checked')){
-			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.Agree")%>');
-		}
-
 		return vals;
 	}
 </script>

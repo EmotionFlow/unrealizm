@@ -188,10 +188,11 @@
 
 	function getAmountDlgFooter(isApp) {
 		let strLandingPageUrl = isApp ? "/PochiAppS.jsp" : "/PochiPcS.jsp";
-		return '<a href="' + strLandingPageUrl +
-		'" style="font-size: 12px; text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
+		return '<div style="font-size: 12px;"><div><a href="' + strLandingPageUrl +
+		'" style="text-decoration: underline; text-decoration-color: #ccc; color: #888;">' +
 		'<%=_TEX.T("CheerDlg.Whatis")%>' +
-		'</a>'
+		'</a></div>' + '<div style="margin-top: 5px;"><%=_TEX.T("CheerDlg.PaymentNotice")%></div>'
+			+ '</div>';
 	}
 
 	function SendEmoji(nContentId, strEmoji, nUserId, elThis) {
