@@ -256,24 +256,24 @@
 	.PoipikuPassportLogoFrame {display: block; float: left; width: 100%;}
 	.PoipikuPassportLogoFrame .PoipikuPassportLogo {display: block; height: 45px;}
 	.BenefitTable {
-        width: 100%;
-        text-align: center;
-        border-collapse: collapse;
-    }
-    .BenefitTable td {height: 100px;}
-    .BenefitTable td, table th {
-        border: solid 1px #ddd;
-        padding: 5px 8px;
-        vertical-align: middle;
-    }
-    .BenefitTable .ListCell {background: #eee;}
-    .BenefitTable td {height: 100px;}
-    .BenefitTable .NormalCell {color: #aaaaaa;}
-    .BenefitTable .BenefitCell {color: #464441;}
-    .BenefitTable .BenefitDetail {
-        font-size: 0.85em;
-        color: #62605c;
-    }
+				width: 100%;
+				text-align: center;
+				border-collapse: collapse;
+		}
+		.BenefitTable td {height: 100px;}
+		.BenefitTable td, table th {
+				border: solid 1px #ddd;
+				padding: 5px 8px;
+				vertical-align: middle;
+		}
+		.BenefitTable .ListCell {background: #eee;}
+		.BenefitTable td {height: 100px;}
+		.BenefitTable .NormalCell {color: #aaaaaa;}
+		.BenefitTable .BenefitCell {color: #464441;}
+		.BenefitTable .BenefitDetail {
+				font-size: 0.85em;
+				color: #62605c;
+		}
 </style>
 
 <div class="SettingList">
@@ -296,7 +296,8 @@
 				また「可能であればイラストと一緒に広告を表示したくない」というポイピクチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
 				iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、パスポートの機能が有効となります。
 				高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
-				ポイピクサービス維持・発展のため、ぜひポイパスへのご加入をご検討いただけますと幸いです。
+				収益はポイピクサービスの維持・発展に使用させていただきます。
+				ぜひポイパスへのご加入をご検討いただけますと幸いです。
 				(2020年12月 株式会社pipa.jp代表 川合和寛)
 				</div>
 				ポイピクパスポート（ポイパス）に加入すると、ポイピクをより楽しく便利にお使いいただけます！
@@ -351,7 +352,6 @@
 								<span class="BenefitDetail">
 									最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br>
 									一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br>
-									(Androidアプリ版からの設定は準備中)
 								</span></td>
 						</tr>
 						<tr>
