@@ -301,8 +301,6 @@
 				(2020年12月 株式会社pipa.jp代表 川合和寛)
 				</div>
 				ポイピクパスポート（ポイパス）に加入すると、ポイピクをより楽しく便利にお使いいただけます！
-				<%}else if(passportStatus == Passport.Status.Billing){%>
-				ポイパスにご加入いただきありがとうございます。現在、登録いただいたクレジットカードから毎月300円が課金されています。
 				<%}%>
 
 				<%if(passportStatus == Passport.Status.NotMember) {%>
