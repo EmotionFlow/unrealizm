@@ -36,7 +36,7 @@
 
 	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && checkLogin.m_nUserId!=315) {%>
 	<li class="EventItem">
-		<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS" class="EventBanner NoBgBle" style="padding: 8px;">
+		<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS" class="EventBanner NoBgBlue" style="padding: 8px;">
 			<div><img style="height: 30px;" src="/img/poipiku_passport_logo_60.png" /></div>
 			<h3 style="font-weight: bold  text-align: center; font-size: 17px; line-height: 25px;">ポイパスはじめました</h3>
 			<div style="line-height: 20px;">ご加入ご検討いただけますと幸いです</div>
