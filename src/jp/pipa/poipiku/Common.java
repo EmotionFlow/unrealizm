@@ -101,6 +101,7 @@ public class Common {
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 26;
 	public static final int[] CATEGORY_ID = {
+			26,	// 2020年ベスト1
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
@@ -115,7 +116,6 @@ public class Common {
 			1,	// 飽きた
 			18, // ほぼ白紙
 			14,	// お知らせ
-			26,	// 2020年ベスト1
 
 //			0,	// いちほ
 //			2,	// 力尽きた
