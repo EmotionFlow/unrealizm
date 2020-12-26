@@ -34,7 +34,7 @@
 		</a>
 	</li>
 
-	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
+	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && checkLogin.m_nUserId!=315) {%>
 	<li class="EventItem">
 		<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS" class="EventBanner NoBg" style="padding: 8px; background: #b3dced; background: -moz-linear-gradient(-45deg, #b3dced 0%, #29b8e5 50%, #bce0ee 100%); background: -webkit-linear-gradient(-45deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); background: linear-gradient(135deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee',GradientType=1 );">
 			<div><img style="height: 30px;" src="/img/poipiku_passport_logo_60.png" /></div>
