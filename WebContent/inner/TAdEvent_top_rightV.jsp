@@ -28,9 +28,13 @@
 		</a>
 	</li>
 
-	<li class="EventItem End">
-		<a href="/event/20201024_munekyun/TopV.jsp">
-			<img class="EventBanner" src="/event/20201024_munekyun/poipiku_kyun_bn.png" />
+	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
+	<li class="EventItem">
+		<a href="/MyEditSettingPassportAppV.jsp" class="EventBanner NoBg" style="padding: 8px; background: #b3dced; background: -moz-linear-gradient(-45deg, #b3dced 0%, #29b8e5 50%, #bce0ee 100%); background: -webkit-linear-gradient(-45deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); background: linear-gradient(135deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee',GradientType=1 );">
+			<div><img style="height: 30px;" src="/img/poipiku_passport_logo_60.png" /></div>
+			<h3 style="font-weight: bold  text-align: center; font-size: 17px; line-height: 25px;">ポイパスはじめました</h3>
+			<div style="line-height: 20px;">アプリからのご加入は準備中です。</div>
 		</a>
 	</li>
+	<%}%>
 </ul>
