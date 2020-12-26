@@ -99,7 +99,7 @@ public class Common {
 	public static final int SAFE_FILTER_R18G = 6;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 25;
+	public static final int CATEGORY_ID_MAX = 26;
 	public static final int[] CATEGORY_ID = {
 			4,	// らくがき
 			6,	// できた
@@ -115,6 +115,7 @@ public class Common {
 			1,	// 飽きた
 			18, // ほぼ白紙
 			14,	// お知らせ
+			25,	// 2020年ベスト1
 
 //			0,	// いちほ
 //			2,	// 力尽きた
