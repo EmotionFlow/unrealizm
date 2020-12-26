@@ -14,11 +14,9 @@
 	</li>
 	-->
 
-	<li class="EventItem Start">
-		<a class="EventBanner NoBgGold" href="/event/20201226_best1/TopPcV.jsp" style="padding: 30px 0 0 0; text-align: center;">
-			<div style="line-height: 16px;">お正月だし2020年を振り返ろう！</div>
-			<h3 style="font-weight: bold; font-size: 17px;">「#2020年ベスト1」</h3>
-			<div style="line-height: 16px;">豪華賞品を用意して開催中！詳細はこちら</div>
+	<li class="EventItem">
+		<a href="/event/20201226_best1/TopPcV.jsp">
+			<img class="EventBanner" src="/event/20201226_best1/poipiku_2020best1_bn.png" />
 		</a>
 	</li>
 
