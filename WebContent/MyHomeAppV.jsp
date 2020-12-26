@@ -101,9 +101,9 @@ ArrayList<String> vResult = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMO
 
 			<%if(cResults.m_cSystemInfo!=null) {%>
 			<div class="SystemInfo" id="SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>">
-				<a class="SystemInfoTitle" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><i class="fas fa-bullhorn"></i></a>
-				<a class="SystemInfoDate" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><%=(new SimpleDateFormat("YYYY MM/dd")).format(cResults.m_cSystemInfo.m_timeUploadDate)%></a>
-				<a class="SystemInfoDesc" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><%=Util.toStringHtml(cResults.m_cSystemInfo.m_strDescription)%></a>
+				<a class="SystemInfoTitle" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.m_cSystemInfo.m_nContentId%>"><i class="fas fa-bullhorn"></i></a>
+				<a class="SystemInfoDate" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.m_cSystemInfo.m_nContentId%>"><%=(new SimpleDateFormat("YYYY MM/dd")).format(cResults.m_cSystemInfo.m_timeUploadDate)%></a>
+				<a class="SystemInfoDesc" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.m_cSystemInfo.m_nContentId%>"><%=Util.toStringHtml(cResults.m_cSystemInfo.m_strDescription)%></a>
 				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>').hide();setCookie('<%=Common.POIPIKU_INFO%>', '<%=cResults.m_cSystemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 			</div>
 			<%}%>
