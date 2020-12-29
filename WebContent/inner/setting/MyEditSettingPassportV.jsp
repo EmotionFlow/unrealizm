@@ -191,7 +191,7 @@
 	function CancelPassport() {
 		Swal.fire({
 			title: 'ポイパス解約',
-			text: 'ポイパスを解約してよろしいですか？現在プラスされている機能は解約月の末日まで有効となります。',
+			text: 'ポイパスを解約してよろしいですか？現在プラスされている機能は解約月の翌月から使えなくなります。',
 			focusConfirm: false,
 			showCloseButton: true,
 			showCancelButton: true,
@@ -385,6 +385,13 @@
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
 						ポイパスに加入する
 					</a>
+				</div>
+				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
+					<ul style="list-style-type: circle;">
+						<li>課金は一ヶ月単位です。</li>
+						<li>解約に制限はありません。いつでもできます。</li>
+						<li>ポイパス加入で追加された機能は、解約した月の末日までお使いいただけます。</li>
+					</ul>
 				</div>
 				<div id="PassportNowPayment2" style="display:none">
 					<span class="PoiPassLoading"></span><span>加入処理中</span>
