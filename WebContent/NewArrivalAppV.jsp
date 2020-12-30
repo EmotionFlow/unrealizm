@@ -12,6 +12,11 @@ NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(checkLogin);
+
+String categoryInfo = "";
+if(cResults.m_nCategoryId >= 0) {
+	categoryInfo = _TEX.T(String.format("Category.C%d.Info", cResults.m_nCategoryId)).trim();
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -87,6 +92,12 @@ boolean bRtn = cResults.getResults(checkLogin);
 				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" onclick="changeCategory(this, <%=nCategoryId%>)"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
 				<%}%>
 			</nav>
+
+			<%if(!categoryInfo.isEmpty() && cResults.m_nPage<=0) {%>
+			<header class="CategoryInfo">
+				<%=categoryInfo%>
+			</header>
+			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

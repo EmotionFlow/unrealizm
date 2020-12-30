@@ -206,6 +206,9 @@
 .CategoryMenu .CategoryBtn.Selected {background-color: #fff; color: #3498db;}
 .CategoryMenu .CategoryBtn.Disabled {color: #61ade2;}
 
+
+.CategoryInfo {display: block;padding: 5px;box-sizing: border-box;}
+
 .IllustThumbList {
 	display: block;
 	float: left;

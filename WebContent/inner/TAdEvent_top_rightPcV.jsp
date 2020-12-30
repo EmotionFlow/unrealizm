@@ -13,6 +13,12 @@
 		</a>
 	</li>
 	-->
+	<li class="EventItem">
+		<a class="EventBanner NoBgGold" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=20">
+			<div style="text-align: center; font-size: 16px; line-height: 23px;">過去の年賀状を引っ張り出してきて<br />出した気になろう！</div>
+			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 32px">「使いまわし年賀状」</div>
+		</a>
+	</li>
 
 	<li class="EventItem">
 		<a href="/event/20201226_best1/TopPcV.jsp">
