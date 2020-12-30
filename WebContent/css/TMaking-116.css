@@ -1214,6 +1214,15 @@
 	color: #ff3333;
 }
 
+.Category.C27 {
+	background-color: #000;
+	color: #aaa;
+}
+.CategoryBtn.C27 {
+	background-color: #000;
+	color: #aaa;
+}
+
 
 .IllustItem .IllustItemDesc {
 	display: block;

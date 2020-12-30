@@ -99,8 +99,9 @@ public class Common {
 	public static final int SAFE_FILTER_R18G = 6;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 26;
+	public static final int CATEGORY_ID_MAX = 27;
 	public static final int[] CATEGORY_ID = {
+			27, // 煩悩を晒せ
 			20, // 使いまわし年賀状
 			26,	// 2020年ベスト1
 			4,	// らくがき

@@ -14,6 +14,14 @@
 	</li>
 	-->
 	<li class="EventItem">
+		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalV.jsp?CD=27">
+			<div style="text-align: center; font-size: 16px; line-height: 20px;">12月31日限定カテゴリ</div>
+			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 32px">「煩悩を晒せ」</div>
+			<div style="text-align: center; font-size: 14px; line-height: 16px;">今年の煩悩の集大成いとして、「目指せたった1日で煩悩投稿108枚」！</div>
+		</a>
+	</li>
+
+	<li class="EventItem">
 		<a class="EventBanner NoBgGold" style="padding: 5px;" href="/NewArrivalV.jsp?CD=20">
 			<div style="text-align: center; font-size: 16px; line-height: 23px;">過去の年賀状を引っ張り出してきて<br />出した気になろう！</div>
 			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 32px">「使いまわし年賀状」</div>
