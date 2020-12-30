@@ -8,7 +8,7 @@ int m_nRtn = 0;
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-int m_nUserId = Util.toInt(request.getParameter("ID"));
+int m_nUserId = Util.toInt(request.getParameter("UID"));
 
 if(checkLogin.m_nUserId!=1) {
 	return;

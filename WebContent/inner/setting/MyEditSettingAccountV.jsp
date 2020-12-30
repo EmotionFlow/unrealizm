@@ -23,7 +23,7 @@
 				if(window.confirm('<%=_TEX.T("EditSettingV.DeleteAccount.CheckDeregist")%>')){
 						$.ajaxSingle({
 								"type": "post",
-								"data": {"ID":<%=checkLogin.m_nUserId%>},
+								"data": {"UID":<%=checkLogin.m_nUserId%>},
 								"url": "/f/DeleteUserF.jsp",
 								"dataType": "json",
 								"success": function(data) {
