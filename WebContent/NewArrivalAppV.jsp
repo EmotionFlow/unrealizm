@@ -93,7 +93,7 @@ if(cResults.m_nCategoryId >= 0) {
 				<%}%>
 			</nav>
 
-			<%if(!categoryInfo.isEmpty() && cResults.m_nPage<=0) {%>
+			<%if(!categoryInfo.isEmpty()) {%>
 			<header class="CategoryInfo">
 				<%=categoryInfo%>
 			</header>
