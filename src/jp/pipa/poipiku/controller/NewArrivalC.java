@@ -18,7 +18,7 @@ public class NewArrivalC {
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nCategoryId = Util.toInt(cRequest.getParameter("CD"));
+			m_nCategoryId = Math.min(Util.toInt(cRequest.getParameter("CD")), Common.CATEGORY_ID_MAX);
 			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 		} catch(Exception e) {
 			;

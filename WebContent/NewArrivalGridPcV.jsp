@@ -8,14 +8,25 @@ NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 48;
 boolean bRtn = cResults.getResults(checkLogin);
+
+String description = _TEX.T("THeader.Title.Desc");
+String categoryName = _TEX.T("Category.All");
+String categoryInfo = "";
+if(cResults.m_nCategoryId >= 0) {
+	categoryName = _TEX.T(String.format("Category.C%d", cResults.m_nCategoryId));
+	categoryInfo = _TEX.T(String.format("Category.C%d.Info", cResults.m_nCategoryId)).trim();
+	if(!categoryInfo.isEmpty()) {
+		description = categoryInfo;
+	}
+}
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
-		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%></title>
+		<meta name="description" content="<%=Util.toStringHtml(Util.deleteCrLf(description))%>" />
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%>(<%=categoryName%>)</title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -51,6 +62,12 @@ boolean bRtn = cResults.getResults(checkLogin);
 				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
 				<%}%>
 			</nav>
+
+			<%if(!categoryInfo.isEmpty() && cResults.m_nPage<=0) {%>
+			<header class="CategoryInfo">
+				<%=categoryInfo%>
+			</header>
+			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
