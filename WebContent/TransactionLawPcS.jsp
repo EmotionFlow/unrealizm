@@ -61,7 +61,7 @@
 				<div class="SettingListItem">
 					<div class="SettingListTitle">お支払い方法</div>
 					<div class="SettingBody">
-						クレジットカード(VISAのみ)<br />
+						クレジットカード(VISA/Master)<br />
 					</div>
 				</div>
 
@@ -116,7 +116,7 @@
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
-						(最終更新日 2020/7/13)
+						(最終更新日 2021/1/4)
 					</div>
 				</div>
 			</div>
