@@ -333,15 +333,17 @@ function UpdateBookmark(user_id, content_id) {
 	$.ajaxSingle({
 		"type": "post",
 		"data": { "UID": user_id, "IID": content_id},
-		"url": "/f/UpdateBookmarkF.jsp",
+		"url": "/api/UpdateBookmarkF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			if(data.result==1) {
-				$('#IllustItemBookmarkBtn_'+content_id).addClass('Selected');
-			} else if(data.result==0) {
+			if(data.result==0) {
 				$('#IllustItemBookmarkBtn_'+content_id).removeClass('Selected');
-			} else {
-				DispMsg('You need to login');
+			} else if(data.result==1) {
+				$('#IllustItemBookmarkBtn_'+content_id).addClass('Selected');
+			} else if(data.result==2) { // UpdateBookmarkC.BOOKMARK_LIMIT
+				DispMsg(data.msg);
+			} else if(data.result==-2) { // UpdateBookmarkC.USER_INVALID
+				DispMsg(data.msg);
 			}
 		},
 		"error": function(req, stat, ex){

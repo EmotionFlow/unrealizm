@@ -10,6 +10,7 @@ import jp.pipa.poipiku.util.Util;
 public class CContent {
 	public static final int BOOKMARK_NONE = 0;
 	public static final int BOOKMARK_BOOKMARKING = 1;
+	public static final int BOOKMARK_LIMIT = 2;
 
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
