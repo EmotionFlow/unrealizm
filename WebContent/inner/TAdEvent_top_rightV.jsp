@@ -24,15 +24,15 @@
 	-->
 
 	<li class="EventItem">
-		<a class="EventBanner NoBgGold" style="padding: 5px;" href="/NewArrivalV.jsp?CD=20">
-			<div style="text-align: center; font-size: 16px; line-height: 23px;">過去の年賀状を引っ張り出してきて<br />出した気になろう！</div>
-			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 32px">「使いまわし年賀状」</div>
+		<a href="/event/20201226_best1/TopV.jsp">
+			<img class="EventBanner" src="/event/20201226_best1/poipiku_2020best1_bn.png" />
 		</a>
 	</li>
 
 	<li class="EventItem">
-		<a href="/event/20201226_best1/TopV.jsp">
-			<img class="EventBanner" src="/event/20201226_best1/poipiku_2020best1_bn.png" />
+		<a class="EventBanner NoBgGold" style="padding: 5px;" href="/NewArrivalV.jsp?CD=20">
+			<div style="text-align: center; font-size: 16px; line-height: 23px;">過去の年賀状を引っ張り出してきて<br />出した気になろう！</div>
+			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 32px">「使いまわし年賀状」</div>
 		</a>
 	</li>
 
@@ -46,9 +46,11 @@
 	</li>
 	<%}%>
 
+	<!--
 	<li class="EventItem">
 		<a href="/event/20190901/TopV.jsp">
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
 		</a>
 	</li>
+	-->
 </ul>

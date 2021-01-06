@@ -199,6 +199,7 @@ public class CacheUsers0000 {
 		public int passportId = Common.PASSPORT_OFF;
 		public long lastLogin = -1;
 		public int reaction = CUser.REACTION_SHOW;
+		public int adMode = CUser.AD_MODE_HIDE;
 
 		public User() {}
 		public User(ResultSet resultSet) throws SQLException {
@@ -211,7 +212,8 @@ public class CacheUsers0000 {
 			if(fileName.isEmpty()) fileName = "/img/default_user.jpg";
 			emailValid	= Util.toString(resultSet.getString("email")).contains("@");
 			passportId	= resultSet.getInt("passport_id");
-			reaction		= resultSet.getInt("ng_reaction");
+			reaction	= resultSet.getInt("ng_reaction");
+			adMode		= resultSet.getInt("ng_ad_mode");
 			if(userId==315) safeFilter = Common.SAFE_FILTER_ALL;
 		}
 	}

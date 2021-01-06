@@ -330,50 +330,64 @@
 							<th class="BenefitCell" style="width: 30%">ポイパスあり</th>
 						</tr>
 						<tr>
+							<td class="ListCell">投稿時のキャプション文字数</td>
+							<td class="NormalCell">200文字<br /></td>
+							<td class="BenefitCell">500文字</td>
+						</tr>
+						<tr>
+							<td class="ListCell">文章投稿時の文字数</td>
+							<td class="NormalCell">1万文字<br /></td>
+							<td class="BenefitCell">10万文字<br />
+								<span class="BenefitDetail">
+									(本機能はWeb版でβテスト中の機能です。アプリからの文章投稿機能は今暫くお待ち下さい)
+								</span></td>
+						</tr>
+						<tr>
+							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />自分のページの背景設定</td>
+							<td class="NormalCell">なし</td>
+							<td class="BenefitCell">自由な画像ファイルを設定可能</td>
+						</tr>
+						<tr>
 							<td class="ListCell">広告表示</td>
 							<td class="NormalCell">あり</td>
 							<td class="BenefitCell">一切なし！</td>
 						</tr>
 						<tr>
+							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />自分のページの広告表示</td>
+							<td class="NormalCell">あり</td>
+							<td class="BenefitCell">あり/なし設定可能<br />
+								<span class="BenefitDetail">
+									(デフォルトは表示なし)
+								</span>
+							</td>
+						</tr>
+						<tr>
 							<td class="ListCell">ミュートキーワード</td>
 							<td class="NormalCell">なし</td>
-							<td class="BenefitCell">あり<br>
+							<td class="BenefitCell">あり<br />
 								<span class="BenefitDetail">
 									避けたいコンテンツをキーワード指定して検索結果などから省くことができます。
 								</span>
 							</td>
 						</tr>
 						<tr>
-							<td class="ListCell">定期ツイート<br>(前ツイート自動削除つき)</td>
+							<td class="ListCell">定期ツイート<br />(前ツイート自動削除つき)</td>
 							<td class="NormalCell">なし</td>
-							<td class="BenefitCell">あり<br>
+							<td class="BenefitCell">あり<br />
 								<span class="BenefitDetail">
-									最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br>
-									一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br>
+									最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br />
+									一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br />
 								</span></td>
 						</tr>
 						<tr>
 							<td class="ListCell">送れる絵文字の数</td>
 							<td class="NormalCell">1作品あたり10個/日</td>
-							<td class="BenefitCell">1作品あたり100個/日<br>
+							<td class="BenefitCell">1作品あたり100個/日<br />
 						</tr>
 						<tr>
 							<td class="ListCell">もらった絵文字解析</td>
 							<td class="NormalCell">過去一週間分</td>
-							<td class="BenefitCell">過去30日分、全期間も対応<br>
-						</tr>
-						<tr>
-							<td class="ListCell">投稿時のキャプション文字数</td>
-							<td class="NormalCell">200文字<br></td>
-							<td class="BenefitCell">500文字</td>
-						</tr>
-						<tr>
-							<td class="ListCell">文章投稿時の文字数</td>
-							<td class="NormalCell">1万文字<br></td>
-							<td class="BenefitCell">10万文字<br>
-								<span class="BenefitDetail">
-									(本機能はWeb版でβテスト中の機能です。アプリからの文章投稿機能は今暫くお待ち下さい)
-								</span></td>
+							<td class="BenefitCell">過去30日分、全期間も対応<br />
 						</tr>
 						</tbody>
 					</table>

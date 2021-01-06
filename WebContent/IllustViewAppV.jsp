@@ -164,6 +164,17 @@ ArrayList<String> vResult = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMO
 			.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 			<%}%>
 		</style>
+
+		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
+		<style>
+			body {
+				background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');
+				background-repeat: repeat;
+				background-position: 50% top;
+				background-attachment: fixed;
+			}
+		</style>
+		<%}%>
 	</head>
 
 	<body>

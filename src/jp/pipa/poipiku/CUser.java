@@ -15,6 +15,9 @@ public class CUser {
 	public static final int REACTION_SHOW = 0;
 	public static final int REACTION_HIDE = 1;
 
+	public static final int AD_MODE_HIDE = 0;
+	public static final int AD_MODE_SHOW = 1;
+
 	public int m_nUserId = 0;
 	public String m_strNickName = "";
 	public String m_strProfile = "";
@@ -33,7 +36,8 @@ public class CUser {
 	public boolean m_bDispFollower = false;
 	public boolean m_bDispR18 = false;
 	public int m_nReaction = REACTION_SHOW;
-	public int m_nPassportId = Common.PASSPORT_OFF;	// まだDBにフィールドなし。
+	public int m_nAdMode = AD_MODE_HIDE;
+	public int m_nPassportId = Common.PASSPORT_OFF;
 
 	// tblOAuth
 	public int m_nAutoTweetTime=-99;
@@ -49,7 +53,7 @@ public class CUser {
 		m_nUserId		= resultSet.getInt("user_id");
 		m_strNickName	= Util.toString(resultSet.getString("nickname"));
 		m_strFileName	= Util.toString(resultSet.getString("file_name"));
-		m_nPassportId	= resultSet.getInt("premiun_id");
+		m_nPassportId	= resultSet.getInt("passport_id");
 		if(m_strFileName.isEmpty()) m_strFileName="/img/default_user.jpg";
 	}
 }

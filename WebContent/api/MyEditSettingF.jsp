@@ -75,7 +75,6 @@ try {
 		user.put("official_twitter_url", "https://twitter.com/pipajp");
 		user.put("inquiry_url", "https://cs.pipa.jp/InquiryAppV.jsp");
 		user.put("how_to_use", "/how_to/TopV.jsp");
-		user.put("premiun_id", checkLogin.m_nPassportId);
 	}
 
 	//JSONに変換して出力

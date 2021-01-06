@@ -88,6 +88,8 @@ public class IllustListC {
 					//m_cUser.m_bMailFollow		= ((m_cUser.m_nMailComment>>>3 & 0x01) == 0x01);
 					//m_cUser.m_bMailMessage	= ((m_cUser.m_nMailComment>>>4 & 0x01) == 0x01);
 					//m_cUser.m_bMailTag		= ((m_cUser.m_nMailComment>>>5 & 0x01) == 0x01);
+					m_cUser.m_nPassportId		= resultSet.getInt("passport_id");
+					m_cUser.m_nAdMode			= resultSet.getInt("ng_ad_mode");
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;

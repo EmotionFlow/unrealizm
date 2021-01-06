@@ -45,8 +45,8 @@ public class Common {
 	public static final int NOTIFICATION_TOKEN_TYPE_ANDROID = 2;
 
 	public static final int NO_NEED_UPDATE[] = {
-			123, 124, 125, 126, 127, 178, 179,	// 1系 iPhone
-			227, 228, 229, 230, 231, 232, 233	// 2系 Android
+			126, 127, 128, 129, 130, 130, 131,	// 1系 iPhone
+			229, 230, 231, 232, 233, 234, 235	// 2系 Android
 	};
 	/* falseにしてもdead codeは再コンパイルされないので /inner.Common.jspに移動
 	public static final boolean SP_REVIEW = false;	// アップル審査用 true で用ログイン
@@ -225,11 +225,6 @@ public class Common {
 	public static String GetUrl(String strFileName) {
 		if(strFileName==null) return "";
 		return "//img-cdn.poipiku.com" + strFileName;
-	}
-
-	public static String GetLocalImgUrl(String strFileName) {
-		if(strFileName==null) return "";
-		return "//img.poipiku.com" + strFileName;
 	}
 
 	public static String GetPoipikuUrl(String strFileName) {

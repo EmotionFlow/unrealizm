@@ -43,31 +43,31 @@ public class MyEditSettingC {
 
 	public boolean GetResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
 			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_cUser.m_nUserId			= cResSet.getInt("user_id");
-				m_cUser.m_strNickName		= Util.toString(cResSet.getString("nickname"));
-				m_cUser.m_strProfile		= Util.toString(cResSet.getString("profile"));
-				m_cUser.m_strFileName		= Util.toString(cResSet.getString("file_name"));
-				m_cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("header_file_name"));
-				m_cUser.m_strBgFileName		= Util.toString(cResSet.getString("bg_file_name"));
-				m_cUser.m_nMailComment		= cResSet.getInt("mail_comment");
-				m_cUser.m_strEmail			= Util.toStringHtml(cResSet.getString("email"));
-				m_cUser.m_strMuteKeyword	= Util.toString(cResSet.getString("mute_keyword_list")).trim();
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_cUser.m_nUserId			= resultSet.getInt("user_id");
+				m_cUser.m_strNickName		= Util.toString(resultSet.getString("nickname"));
+				m_cUser.m_strProfile		= Util.toString(resultSet.getString("profile"));
+				m_cUser.m_strFileName		= Util.toString(resultSet.getString("file_name"));
+				m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("header_file_name"));
+				m_cUser.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
+				m_cUser.m_nMailComment		= resultSet.getInt("mail_comment");
+				m_cUser.m_strEmail			= Util.toStringHtml(resultSet.getString("email"));
+				m_cUser.m_strMuteKeyword	= Util.toString(resultSet.getString("mute_keyword_list")).trim();
 				if(m_cUser.m_strProfile.isEmpty())  m_cUser.m_strProfile = "(no profile)";
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
 				if(m_cUser.m_strHeaderFileName.isEmpty()) m_cUser.m_strHeaderFileName="/img/default_transparency.gif";
@@ -78,10 +78,11 @@ public class MyEditSettingC {
 				//m_cUser.m_bMailFollow		= ((m_cUser.m_nMailComment>>>3 & 0x01) == 0x01);
 				//m_cUser.m_bMailMessage	= ((m_cUser.m_nMailComment>>>4 & 0x01) == 0x01);
 				//m_cUser.m_bMailTag		= ((m_cUser.m_nMailComment>>>5 & 0x01) == 0x01);
-				m_cUser.m_nReaction			= cResSet.getInt("ng_reaction");
+				m_cUser.m_nReaction			= resultSet.getInt("ng_reaction");
+				m_cUser.m_nAdMode			= resultSet.getInt("ng_ad_mode");
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			StringBuilder strMuteKeyword = new StringBuilder();
 			if(!m_cUser.m_strMuteKeyword.isEmpty()) {
@@ -96,95 +97,95 @@ public class MyEditSettingC {
 			m_cUser.m_strMuteKeyword = strMuteKeyword.toString();
 
 			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setInt(2, Common.TWITTER_PROVIDER_ID);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
 				m_cUser.m_bTweet = true;
-				m_cUser.m_nAutoTweetWeekDay = cResSet.getInt("auto_tweet_weekday");
-				m_cUser.m_nAutoTweetTime = cResSet.getInt("auto_tweet_time");
-				m_cUser.m_strAutoTweetDesc = Util.toString(cResSet.getString("auto_tweet_desc"));
-				m_cUser.m_nAutoTweetThumbNum = cResSet.getInt("auto_tweet_thumb_num");
-				m_cUser.m_strTwitterScreenName = Util.toString(cResSet.getString("twitter_screen_name"));
+				m_cUser.m_nAutoTweetWeekDay = resultSet.getInt("auto_tweet_weekday");
+				m_cUser.m_nAutoTweetTime = resultSet.getInt("auto_tweet_time");
+				m_cUser.m_strAutoTweetDesc = Util.toString(resultSet.getString("auto_tweet_desc"));
+				m_cUser.m_nAutoTweetThumbNum = resultSet.getInt("auto_tweet_thumb_num");
+				m_cUser.m_strTwitterScreenName = Util.toString(resultSet.getString("twitter_screen_name"));
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			strSql = "SELECT * FROM temp_emails_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
 				m_bUpdate = true;
-				m_strNewEmail = cResSet.getString("email");
+				m_strNewEmail = resultSet.getString("email");
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			strSql = "SELECT count(*) as cnt FROM contents_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_nPublishedContentsTotal = cResSet.getInt("cnt");
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_nPublishedContentsTotal = resultSet.getInt("cnt");
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			strSql = "SELECT COUNT(user_id) as cnt FROM follows_0000 WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_cUser.m_nFollowNum = cResSet.getInt("cnt");
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_cUser.m_nFollowNum = resultSet.getInt("cnt");
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			strSql = "SELECT 1 FROM creditcards WHERE user_id=? AND del_flg=false";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
 				m_bCardInfoExist = true;
 			}else{
 				m_bCardInfoExist = false;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			strSql = "SELECT 1 FROM cheer_point_exchange_requests WHERE user_id=? AND status=0";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			m_bExchangeCheerPointRequested = cResSet.next();
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			m_bExchangeCheerPointRequested = resultSet.next();
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			strSql = "SELECT sum(remaining_points) FROM cheer_points WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nCheerPoint = cResSet.getInt(1);
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				m_nCheerPoint = resultSet.getInt(1);
 			} else {
 				m_nCheerPoint = 0;
 			}
-			cResSet.close();cResSet = null;
-			cState.close();cState = null;
+			resultSet.close();resultSet = null;
+			statement.close();statement = null;
 
 			if(m_bExchangeCheerPointRequested) {
 				strSql = "SELECT exchange_point, payment_fee FROM cheer_point_exchange_requests WHERE user_id=? AND status=0";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, checkLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nExchangePoint = cResSet.getInt(1);
-					m_nExchangeFee = cResSet.getInt(2);
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, checkLogin.m_nUserId);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					m_nExchangePoint = resultSet.getInt(1);
+					m_nExchangeFee = resultSet.getInt(2);
 				}
-				cResSet.close();cResSet = null;
-				cState.close();cState = null;
+				resultSet.close();resultSet = null;
+				statement.close();statement = null;
 			}
 
 			m_cPassport = new Passport(checkLogin);
@@ -195,9 +196,9 @@ public class MyEditSettingC {
 			e.printStackTrace();
 			bRtn = false;
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bRtn;
 	}

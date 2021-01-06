@@ -47,16 +47,15 @@ cResults.GetParam(request);
 cResults.GetResults(checkLogin);
 
 HashMap<String, String> MENU = new HashMap<>();
+MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
+MENU.put("MYPAGE", _TEX.T("EditSettingV.MyPage"));
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
-MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
 if (checkLogin.m_nPassportId >=Common.PASSPORT_ON){
 	MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 }
-MENU.put("REACTION", _TEX.T("EditSettingV.Reaction"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
-//MENU.put("POIPASS", "<i class=\"fas fa-passport\" style=\"color:rgb(52, 152, 219);\"></i> " + _TEX.T("EditSettingV.Passport"));
 MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo_60.png\" />" + _TEX.T("EditSettingV.Passport"));
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
@@ -66,9 +65,9 @@ MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
 String[][] menuOrder = {
 		{ // Common.PASSPORT_OFF
 		"PROFILE",
+		"MYPAGE",
 		"FOLLOW",
 		"BLOCK",
-		"REACTION",
 		"TWITTER",
 		"MAIL",
 		"PAYMENT",
@@ -79,10 +78,10 @@ String[][] menuOrder = {
 		},
 		{ // Common.PASSPORT_ON
 		"PROFILE",
+		"MYPAGE",
 		"FOLLOW",
 		"BLOCK",
 		"MUTEKEYWORD",
-		"REACTION",
 		"TWITTER",
 		"MAIL",
 		"PAYMENT",
@@ -236,11 +235,6 @@ String[][] menuOrder = {
 
 		<article class="Wrapper">
 			<div id="MENUROOT" class="SettingPage" style="display: none;">
-				<div class="SettingMenuHeader">
-					<h2 class="SettinMenuTitle">
-						<%=String.format(_TEX.T("EditSettingV.Title"), cResults.m_cUser.m_strNickName)%>
-					</h2>
-				</div>
 				<div class="SettingMenu">
 					<%for(String m : menuOrder[checkLogin.m_nPassportId]){%>
 						<%if(MENU.get(m)!=null){%>
@@ -261,6 +255,14 @@ String[][] menuOrder = {
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingProfileV.jsp"%>
+				</div>
+			</div>
+
+			<%strPageId = "MYPAGE";%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingMyPageV.jsp"%>
 				</div>
 			</div>
 
@@ -285,14 +287,6 @@ String[][] menuOrder = {
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMuteKeywordV.jsp"%>
-				</div>
-			</div>
-
-			<%strPageId = "REACTION";%>
-			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
-				<div class="SettingBody">
-					<%@include file="/inner/setting/MyEditSettingReactionV.jsp"%>
 				</div>
 			</div>
 

@@ -113,6 +113,8 @@ public class IllustViewPcC {
 				m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("header_file_name"));
 				m_cUser.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
 				m_cUser.m_nReaction			= resultSet.getInt("ng_reaction");
+				m_cUser.m_nPassportId	= resultSet.getInt("passport_id");
+				m_cUser.m_nAdMode		= resultSet.getInt("ng_ad_mode");
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
 				m_cContent.m_cUser.m_strNickName	= m_cUser.m_strNickName;
 				m_cContent.m_cUser.m_strFileName	= m_cUser.m_strFileName;

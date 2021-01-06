@@ -33,17 +33,17 @@ try {
 	if(cResSet.next()) {
 		switch(m_nModeId) {
 		case 1:
-	strDeleteFile = Util.toString(cResSet.getString("file_name"));
-	strSql = "UPDATE users_0000 SET file_name='' WHERE user_id=?";
-	break;
+			strSql = "UPDATE users_0000 SET file_name='' WHERE user_id=?";
+			strDeleteFile = Util.toString(cResSet.getString("file_name"));
+			break;
 		case 2:
-	strSql = "UPDATE users_0000 SET header_file_name='' WHERE user_id=?";
-	strDeleteFile = Util.toString(cResSet.getString("header_file_name"));
-	break;
+			strSql = "UPDATE users_0000 SET header_file_name='' WHERE user_id=?";
+			strDeleteFile = Util.toString(cResSet.getString("header_file_name"));
+			break;
 		case 3:
-	strSql = "UPDATE users_0000 SET bg_file_name='' WHERE user_id=?";
-	strDeleteFile = Util.toString(cResSet.getString("bg_file_name"));
-	break;
+			strSql = "UPDATE users_0000 SET bg_file_name='' WHERE user_id=?";
+			strDeleteFile = Util.toString(cResSet.getString("bg_file_name"));
+			break;
 		default:
 	break;
 		}

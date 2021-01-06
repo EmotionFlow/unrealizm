@@ -380,6 +380,9 @@ if(cResults.m_bUpdate) {
 				<%}%>
 			});
 		</script>
+		<style>
+			.SettingList {background: #fff;}
+		</style>
 	</head>
 
 	<body>
@@ -437,27 +440,6 @@ if(cResults.m_bUpdate) {
 							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
 							<%if(!cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(2)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
-							<%}%>
-						</div>
-					</div>
-				</div>
-
-				<div class="SettingListItem" style="display: none;">
-					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.BgImage")%></div>
-					<div class="SettingBody">
-						<div class="FileSelectFrame" style="border: solid 1px #eee;">
-							<div style="position: absolute; top:0; left: 0; width: 100%; height: 100%; background-size: cover; background-repeat: no-repeat; background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>?<%=Math.random()%>');"></div>
-							<input class="SelectFile" type="file" name="file_bg" id="file_bg" onchange="UpdateProfileBgFile(this)" />
-							<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
-							<span class="typcn typcn-plus-outline"></span>
-							<%} else {%>
-							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
-							<%}%>
-						</div>
-						<div class="SettingBodyCmd">
-							<div id="ProfileImageMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
-							<%if(!cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(3)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
 							<%}%>
 						</div>
 					</div>

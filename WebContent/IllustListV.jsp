@@ -151,6 +151,17 @@ if(!cResults.getResults(checkLogin)) {
 		.UserInfo {background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strHeaderFileName)%>');}
 		<%}%>
 		</style>
+
+		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
+		<style>
+			body {
+				background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');
+				background-repeat: repeat;
+				background-position: 50% top;
+				background-attachment: fixed;
+			}
+		</style>
+		<%}%>
 	</head>
 
 	<body>
@@ -172,8 +183,6 @@ if(!cResults.getResults(checkLogin)) {
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(cResults.m_bOwner) {%>
-						<a class="BtnBase UserInfoCmdFollow" href="/MyEditSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyEditSetting.Title.Setting")%></a>
-						<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
 						<%} else if(cResults.m_bBlocking){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
@@ -186,9 +195,6 @@ if(!cResults.getResults(checkLogin)) {
 						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 						<%}%>
 						<%if(!cResults.m_bOwner) {%>
-						<span class="IllustItemCommandSub">
-							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>"></a>
-						</span>
 						<%}%>
 					</span>
 				</section>

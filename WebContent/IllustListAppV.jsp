@@ -171,6 +171,17 @@ if(!cResults.getResults(checkLogin)) {
 		<%}%>
 		.NoContents {display: block; padding: 130px 0; width: 100%; text-align: center;}
 		</style>
+
+		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
+		<style>
+			body {
+				background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>');
+				background-repeat: repeat;
+				background-position: 50% top;
+				background-attachment: fixed;
+			}
+		</style>
+		<%}%>
 	</head>
 
 	<body>
