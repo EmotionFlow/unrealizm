@@ -12,8 +12,6 @@
 			<img class="EventBanner" src="/event/20191026_halloween/banner_halloween_2020.png" />
 		</a>
 	</li>
-	-->
-	<!--
 	<li class="EventItem">
 		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=27">
 			<div style="text-align: center; font-size: 16px; line-height: 20px;">12月31日限定カテゴリ</div>
@@ -21,13 +19,12 @@
 			<div style="text-align: center; font-size: 14px; line-height: 16px;">今年の煩悩の集大成いとして、「目指せたった1日で煩悩投稿108枚」！</div>
 		</a>
 	</li>
-	-->
-
 	<li class="EventItem">
 		<a href="/event/20201226_best1/TopPcV.jsp">
 			<img class="EventBanner" src="/event/20201226_best1/poipiku_2020best1_bn.png" />
 		</a>
 	</li>
+	-->
 
 	<li class="EventItem">
 		<a class="EventBanner NoBgGold" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=20">

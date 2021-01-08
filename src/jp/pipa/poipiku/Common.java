@@ -104,7 +104,6 @@ public class Common {
 	public static final int CATEGORY_ID_MAX = 27;
 	public static final int[] CATEGORY_ID = {
 			20, // 使いまわし年賀状
-			26,	// 2020年ベスト1
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
@@ -133,6 +132,7 @@ public class Common {
 //			21, // 公式
 //			24,	// 使いまわしバレンタイン
 //			25,	// 胸キュン
+//			26,	// 2020年ベスト1
 //			27, // 煩悩を晒せ
 	};
 
