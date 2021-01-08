@@ -74,7 +74,7 @@
 				<img class="PreviewImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>" />
 				<%}%>
 			</div>
-			<div id="RegistMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
+			<div id="RegistMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image.Format")%></div>
 			<div class="SettingBodyCmd">
 				<span class="BtnBase SettingBodyCmdRegist">
 					<%=_TEX.T("EditSettingV.Image.Select")%>

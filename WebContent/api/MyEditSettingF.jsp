@@ -62,8 +62,16 @@ try {
 		user.put("user_name", cResults.m_cUser.m_strNickName);
 		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
 		user.put("profile_message", cResults.m_cUser.m_strProfile);
-		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
-		user.put("profile_bg_image_url", Common.GetUrl(cResults.m_cUser.m_strBgFileName));
+		if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {
+			user.put("profile_header_image_url", "");
+		} else {
+			user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
+		}
+		if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {
+			user.put("profile_bg_image_url", "");
+		} else {
+			user.put("profile_bg_image_url", Common.GetUrl(cResults.m_cUser.m_strBgFileName));
+		}
 		user.put("ng_ad_mode", cResults.m_cUser.m_nAdMode);
 		user.put("ng_download", cResults.m_cUser.m_nDownload);
 		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
