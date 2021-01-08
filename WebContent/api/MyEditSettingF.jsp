@@ -64,9 +64,9 @@ try {
 		user.put("profile_message", cResults.m_cUser.m_strProfile);
 		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
 		user.put("profile_bg_image_url", Common.GetUrl(cResults.m_cUser.m_strBgFileName));
-		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
 		user.put("ng_ad_mode", cResults.m_cUser.m_nAdMode);
 		user.put("ng_download", cResults.m_cUser.m_nDownload);
+		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
 		user.put("mute_keyword", cResults.m_cUser.m_strMuteKeyword);
 		user.put("email_address", cResults.m_cUser.m_strEmail);
 		user.put("new_email_address", cResults.m_strNewEmail);

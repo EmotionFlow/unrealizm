@@ -52,7 +52,7 @@ public class CheckLogin {
 			m_nLangId		= user.langId;
 			m_strFileName	= user.fileName;
 			m_bEmailValid	= user.emailValid;
-			m_nPassportId = user.passportId;
+			m_nPassportId	= user.passportId;
 			m_bLogin = true;
 		}
 		return m_bLogin;
