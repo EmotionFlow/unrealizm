@@ -21,7 +21,6 @@ public class MyEditSettingC {
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_nUserId = Util.toInt(request.getParameter("ID"));
 			m_strMessage = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("MSG")))));
 			m_strSelectedMenuId = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("MENUID")))));
 			m_nListPage = Util.toIntN(request.getParameter("PG"), 0, 100);
@@ -43,7 +42,6 @@ public class MyEditSettingC {
 	public Passport m_cPassport = null;
 
 	public boolean getResults(CheckLogin checkLogin) {
-		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!=m_nUserId) return false;
 		boolean bRtn = false;
 		DataSource dataSource = null;
 		Connection connection = null;
