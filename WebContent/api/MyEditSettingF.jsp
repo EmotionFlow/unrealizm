@@ -20,10 +20,10 @@ if(!checkLogin.m_bLogin) {
 
 //パラメータの取得
 MyEditSettingC cResults = new MyEditSettingC();
-cResults.GetParam(request);
+cResults.getParam(request);
 
 //検索結果の取得
-if (!cResults.GetResults(checkLogin)) {
+if (!cResults.getResults(checkLogin)) {
 	nResult = -2;
 }
 
@@ -61,10 +61,13 @@ try {
 
 		user.put("user_name", cResults.m_cUser.m_strNickName);
 		user.put("profile_icon_image_url", Common.GetUrl(cResults.m_cUser.m_strFileName));
-		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
 		user.put("profile_message", cResults.m_cUser.m_strProfile);
-		user.put("mute_keyword", cResults.m_cUser.m_strMuteKeyword);
+		user.put("profile_header_image_url", Common.GetUrl(cResults.m_cUser.m_strHeaderFileName));
+		user.put("profile_bg_image_url", Common.GetUrl(cResults.m_cUser.m_strBgFileName));
 		user.put("ng_reaction", cResults.m_cUser.m_nReaction);
+		user.put("ng_ad_mode", cResults.m_cUser.m_nAdMode);
+		user.put("ng_download", cResults.m_cUser.m_nDownload);
+		user.put("mute_keyword", cResults.m_cUser.m_strMuteKeyword);
 		user.put("email_address", cResults.m_cUser.m_strEmail);
 		user.put("new_email_address", cResults.m_strNewEmail);
 		user.put("email_address_confirmed", !cResults.m_bUpdate);

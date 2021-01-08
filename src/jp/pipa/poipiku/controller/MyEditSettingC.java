@@ -13,19 +13,20 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class MyEditSettingC {
+	public int m_nUserId = -1;
 	public String m_strMessage = "";
 	public String m_strSelectedMenuId = "";
 	public int m_nListPage = 1;
 	public String m_strErr="";
-	public void GetParam(HttpServletRequest request) {
+	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
+			m_nUserId = Util.toInt(request.getParameter("ID"));
 			m_strMessage = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("MSG")))));
 			m_strSelectedMenuId = Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("MENUID")))));
 			m_nListPage = Util.toIntN(request.getParameter("PG"), 0, 100);
 			m_strErr=Common.TrimAll(Util.toStringHtml(Common.EscapeInjection(Util.toString(request.getParameter("ERR")))));
-		}
-		catch(Exception e) {
+		} catch(Exception e) {
 			;
 		}
 	}
@@ -41,7 +42,8 @@ public class MyEditSettingC {
 	public int m_nExchangeFee = 0;
 	public Passport m_cPassport = null;
 
-	public boolean GetResults(CheckLogin checkLogin) {
+	public boolean getResults(CheckLogin checkLogin) {
+		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!=m_nUserId) return false;
 		boolean bRtn = false;
 		DataSource dataSource = null;
 		Connection connection = null;

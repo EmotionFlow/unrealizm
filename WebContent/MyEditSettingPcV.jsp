@@ -43,8 +43,8 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 //パラメータの取得
 //検索結果の取得
 MyEditSettingC cResults = new MyEditSettingC();
-cResults.GetParam(request);
-cResults.GetResults(checkLogin);
+cResults.getParam(request);
+cResults.getResults(checkLogin);
 
 HashMap<String, String> MENU = new HashMap<>();
 MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));

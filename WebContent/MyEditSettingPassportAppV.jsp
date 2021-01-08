@@ -10,8 +10,8 @@ String strDebug = "";
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 MyEditSettingC cResults = new MyEditSettingC();
-cResults.GetParam(request);
-cResults.GetResults(checkLogin);
+cResults.getParam(request);
+cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html>
