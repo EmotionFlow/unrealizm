@@ -119,7 +119,11 @@ cResults.GetResults(checkLogin);
 								<tr>
 									<td class="ListCell">広告表示</td>
 									<td class="NormalCell">あり</td>
-									<td class="BenefitCell">一切なし！</td>
+									<td class="BenefitCell">なし<br />
+										<span class="BenefitDetail">
+											広告表示スクリプト自体が出力されなくなるので全体の表示速度も上がります
+										</span>
+									</td>
 								</tr>
 								<tr>
 									<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />自分のページの広告表示</td>
@@ -127,6 +131,15 @@ cResults.GetResults(checkLogin);
 									<td class="BenefitCell">あり/なし設定可能<br />
 										<span class="BenefitDetail">
 											(デフォルトは表示なし)
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />ダウンロードの許可</td>
+									<td class="NormalCell">不許可</td>
+									<td class="BenefitCell">許可/不許可設定可能<br />
+										<span class="BenefitDetail">
+											(デフォルトは不許可)
 										</span>
 									</td>
 								</tr>

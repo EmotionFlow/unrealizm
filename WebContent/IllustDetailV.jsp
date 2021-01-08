@@ -18,6 +18,7 @@ if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
+boolean bDownload = cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || cResults.m_nDownload==CUser.DOWNLOAD_ON;
 %>
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
@@ -47,6 +48,17 @@ if(!cResults.getResults(checkLogin)) {
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
 		<title><%=_TEX.T("THeader.Title")%></title>
 
+		<%if(bDownload) {%>
+		<style>
+			body {
+				user-select:  all;
+				-webkit-user-select: all;
+				-moz-user-select: all;
+				-ms-user-select: element;
+				-webkit-touch-callout: default;
+			}
+		</style>
+		<%} else {%>
 		<script>
 		$(function(){
 			$('body, .IllustDetail').each(function(index, element){
@@ -54,6 +66,8 @@ if(!cResults.getResults(checkLogin)) {
 			});
 		});
 		</script>
+		<%}%>
+
 		<style>
 			body {height: 100%;background: #333333; padding: 0 !important;}
 			.IllustDetail {display: flex; align-content: center; justify-content: center; flex-flow: column;}
@@ -65,15 +79,16 @@ if(!cResults.getResults(checkLogin)) {
 	<body>
 		<div class="IllustDetail">
 			<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
+			<%if(bDownload) {%>
+			<div class="IllustItemTProhibit">
+				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+			</div>
+			<%}%>
 			<div class="IllustItemLink" style="display: block;">
 				<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 			</div>
 			<div class="IllustItemTProhibit">
-				<%if(cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId) {%>
-				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
-				<%} else {%>
 				<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
-				<%}%>
 			</div>
 			<%} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
 			<div class="IllustItemLink">

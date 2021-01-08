@@ -467,6 +467,7 @@ public class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
 
 		// カテゴリー編集用
+		/*
 		if(cContent.m_nUserId==nLoginUserId) {
 			strRtn.append(String.format("<div id=\"IllustItemCategoryEdit_%d\" class=\"IllustItemCategoryEdit\">", cContent.m_nContentId));
 			strRtn.append(String.format("<select id=\"EditCategory_%d\">", cContent.m_nContentId));
@@ -479,6 +480,7 @@ public class CCnv {
 			strRtn.append("</select>");
 			strRtn.append("</div>");	// IllustItemCategoryEdit
 		}
+		*/
 
 		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);

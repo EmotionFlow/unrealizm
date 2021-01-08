@@ -1,3 +1,4 @@
+<%@page import="jp.pipa.poipiku.CUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	function updateFile(url, objTarg){
@@ -91,6 +92,23 @@
 		return false;
 	}
 
+	function UpdateNgDownload() {
+		var bMode = $('#NgDownload').prop('checked');
+		$.ajaxSingle({
+			"type": "post",
+			"data": { "UID": <%=checkLogin.m_nUserId%>, "MID": (bMode)?<%=CUser.DOWNLOAD_ON%>:<%=CUser.DOWNLOAD_OFF%> },
+			"url": "/f/UpdateNgDownloadF.jsp",
+			"dataType": "json",
+			"success": function(data) {
+				DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
+			},
+			"error": function(req, stat, ex){
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+			}
+		});
+		return false;
+	}
+
 	function UpdateNgReaction() {
 		var bMode = $('#NgReaction').prop('checked');
 		$.ajaxSingle({
@@ -137,7 +155,7 @@
 			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo_60.png" />
 			<%=_TEX.T("EditSettingV.BgImage")%>
 		</div>
-		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
+		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
 			<div class="PreviewImgFrame">
 				<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
 				<span class="PreviewMessage"><%=_TEX.T("EditSettingV.Image.NoImage")%></span>
@@ -163,7 +181,7 @@
 			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo_60.png" />
 			<%=_TEX.T("EditSettingV.MyPage.AdMode")%>
 		</div>
-		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
+		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
 			<%=_TEX.T("EditSettingV.MyPage.AdMode.Message")%>
 			<%if(checkLogin.m_nPassportId >=Common.PASSPORT_ON) {%>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
@@ -177,6 +195,30 @@
 					</div>
 				</div>
 				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNgAdMode()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+			</div>
+			<%}%>
+		</div>
+	</div>
+
+	<div class="SettingListItem">
+		<div class="SettingListTitle">
+			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo_60.png" />
+			<%=_TEX.T("EditSettingV.MyPage.Download")%>
+		</div>
+		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
+			<%=_TEX.T("EditSettingV.MyPage.Download.Message")%>
+			<%if(checkLogin.m_nPassportId >=Common.PASSPORT_ON) {%>
+			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
+				<div class="RegistMessage" >
+					<div class="onoffswitch OnOff">
+						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgDownload" value="0" <%if(cResults.m_cUser.m_nDownload!=CUser.DOWNLOAD_OFF){%>checked="checked"<%}%> />
+						<label class="onoffswitch-label" for="NgDownload">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNgDownload()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 			</div>
 			<%}%>
 		</div>

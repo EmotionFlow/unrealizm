@@ -18,6 +18,9 @@ public class CUser {
 	public static final int AD_MODE_HIDE = 0;
 	public static final int AD_MODE_SHOW = 1;
 
+	public static final int DOWNLOAD_OFF = 0;
+	public static final int DOWNLOAD_ON = 1;
+
 	public int m_nUserId = 0;
 	public String m_strNickName = "";
 	public String m_strProfile = "";
@@ -37,6 +40,7 @@ public class CUser {
 	public boolean m_bDispR18 = false;
 	public int m_nReaction = REACTION_SHOW;
 	public int m_nAdMode = AD_MODE_HIDE;
+	public int m_nDownload = DOWNLOAD_OFF;
 	public int m_nPassportId = Common.PASSPORT_OFF;
 
 	// tblOAuth

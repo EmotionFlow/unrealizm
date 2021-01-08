@@ -36,7 +36,7 @@
 		</a>
 	</li>
 
-	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && checkLogin.m_nUserId!=315) {%>
+	<%if((checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) && checkLogin.m_nUserId!=315) {%>
 	<li class="EventItem">
 		<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS" class="EventBanner NoBgBlue" style="padding: 8px;">
 			<div><img style="height: 30px;" src="/img/poipiku_passport_logo_60.png" /></div>

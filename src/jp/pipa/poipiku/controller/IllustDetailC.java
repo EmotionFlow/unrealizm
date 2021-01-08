@@ -26,55 +26,66 @@ public class IllustDetailC {
 
 
 	public CContent m_cContent = new CContent();
+	public int m_nDownload = CUser.DOWNLOAD_OFF;
 	public boolean getResults(CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 
 		try {
 			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
+			// author profile
+			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_nDownload = resultSet.getInt("ng_download");
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			// content main
 			String strOpenCnd = (m_nUserId!=checkLogin.m_nUserId)?" AND open_id<>2":"";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_cContent = new CContent(cResSet);
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nUserId);
+			statement.setInt(2, m_nContentId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_cContent = new CContent(resultSet);
 				bRtn = true;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			if(m_nAppendId>0 && bRtn) {
 				bRtn = false;
 				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, m_nContentId);
-				cState.setInt(2, m_nAppendId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					m_cContent.m_strFileName = cResSet.getString("file_name");
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_nContentId);
+				statement.setInt(2, m_nAppendId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					m_cContent.m_strFileName = resultSet.getString("file_name");
 					bRtn = true;
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bRtn;
 	}
