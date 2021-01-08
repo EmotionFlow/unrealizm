@@ -95,15 +95,4 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="SettingListItem">
-		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Bio")%></div>
-		<div class="SettingBody">
-			<textarea id="EditBio" class="SettingBodyTxt" rows="6" onkeyup="DispDescCharNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strProfile)%></textarea>
-			<div class="SettingBodyCmd">
-				<div id="ProfileTextMessage" class="RegistMessage" >1000</div>
-				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateProfileTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-			</div>
-		</div>
-	</div>
 </div>
