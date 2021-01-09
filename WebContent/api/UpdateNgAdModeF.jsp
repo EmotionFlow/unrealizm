@@ -3,10 +3,10 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateNgReactionC cResults = new UpdateNgReactionC();
+UpdateNgAdModeC cResults = new UpdateNgAdModeC();
 cResults.getParam(request);
 
-int nMode = CUser.REACTION_SHOW;
+int nMode = CUser.AD_MODE_HIDE;
 if(checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId) {
 	nMode = cResults.getResults(checkLogin);
 }

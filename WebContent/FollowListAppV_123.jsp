@@ -61,7 +61,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		</script>
 	</head>
 
-	<body>
+	<body style="background: #fff;">
 		<article class="Wrapper">
 			<div id="IllustThumbList" class="IllustItemList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
