@@ -61,8 +61,8 @@
 				<div class="SettingListItem">
 					<div class="SettingListTitle">お支払い方法</div>
 					<div class="SettingBody">
-						クレジットカード(VISA/Master)<br />
-					</div>
+						クレジットカード(VISA/MASTER/JCB/AMEX/DINERS)<br />
+					</div>s
 				</div>
 
 				<div class="SettingListItem">
