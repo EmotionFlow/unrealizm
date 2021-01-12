@@ -34,8 +34,8 @@
                 <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="DeleteCreditCardInfo()"><%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Submit")%></a>
             </div>
             <%}else{%>
-            <p>カード情報がポイパスの定期購入に使われているため、削除できません。</p>
-            <p>ポイパスの定期購入を解除したのち、解除月の翌月に再度こちらのページにアクセスしてください。</p>
+            <p>カード情報がポイパスの加入に使われているため、削除できません。</p>
+            <p>ポイパスの加入を解除したのち、解除の翌月に再度こちらのページにアクセスしてください。</p>
             <%}%>
         </div>
         <%}else{%>
