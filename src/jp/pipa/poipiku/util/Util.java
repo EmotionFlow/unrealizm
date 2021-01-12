@@ -5,23 +5,17 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
 
@@ -50,73 +44,6 @@ public class Util {
 			;
 		}
 		return strRtn;
-	}
-
-
-	public static ArrayList<String> getDefaultEmoji(int nUserId, int nLimitNum) {
-		ArrayList<String> vResult = new ArrayList<String>();
-
-		if(Emoji.EMOJI_EVENT) {	// イベント用
-			for(String emoji : Emoji.EMOJI_EVENT_LIST) {
-				vResult.add(emoji);
-			}
-		} else {	// 通常時
-			DataSource dsPostgres = null;
-			Connection cConn = null;
-			PreparedStatement cState = null;
-			ResultSet cResSet = null;
-			String strSql = "";
-			try {
-				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				cConn = dsPostgres.getConnection();
-
-				if(nUserId>0) {
-					strSql = "SELECT description, count(description) FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-3 GROUP BY description ORDER BY count(description) DESC LIMIT ?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, nUserId);
-					cState.setInt(2, nLimitNum);
-					cResSet = cState.executeQuery();
-					while (cResSet.next()) {
-						vResult.add(Util.toString(cResSet.getString(1)).trim());
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-					if(vResult.size()>0 && vResult.size()<nLimitNum){
-						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?) ORDER BY rank DESC LIMIT ?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setInt(1, nUserId);
-						cState.setInt(2, nLimitNum);
-						cState.setInt(3, nLimitNum-vResult.size());
-						cResSet = cState.executeQuery();
-						while (cResSet.next()) {
-							vResult.add(Util.toString(cResSet.getString(1)).trim());
-						}
-						cResSet.close();cResSet=null;
-						cState.close();cState=null;
-					}
-				}
-				if(vResult.size()<nLimitNum){
-					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, nLimitNum-vResult.size());
-					cResSet = cState.executeQuery();
-					while (cResSet.next()) {
-						vResult.add(Util.toString(cResSet.getString(1)).trim());
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-				}
-
-			} catch(Exception e) {
-				Log.d(strSql);
-				e.printStackTrace();
-			} finally {
-				try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-			}
-		}
-		return vResult;
 	}
 
 

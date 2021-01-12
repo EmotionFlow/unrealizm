@@ -10,7 +10,7 @@ if(cResults.m_nUserId==-1) {
 	cResults.m_nUserId = checkLogin.m_nUserId;
 }
 boolean bRtn = cResults.getResults(checkLogin, true);
-ArrayList<String> vResult = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>

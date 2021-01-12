@@ -16,6 +16,7 @@ public class CheckLogin {
 	public String m_strFileName = "";
 	public boolean m_bEmailValid = false;
 	public int m_nPassportId = Common.PASSPORT_OFF;
+	public CacheUsers0000.User cacheUser = null;
 
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -39,20 +40,20 @@ public class CheckLogin {
 	}
 
 	private boolean validateUser(HttpServletResponse response) {
-		CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(m_strHashPass);
-		if(user==null) {
+		cacheUser = CacheUsers0000.getInstance().getUser(m_strHashPass);
+		if(cacheUser==null) {
 			m_nUserId		= -1;
 			m_strNickName	= "guest";
 			m_strHashPass	= "";
 			m_bLogin = false;
 			setCookie(response);
 		} else {
-			m_nUserId		= user.userId;
-			m_strNickName	= user.nickName;
-			m_nLangId		= user.langId;
-			m_strFileName	= user.fileName;
-			m_bEmailValid	= user.emailValid;
-			m_nPassportId	= user.passportId;
+			m_nUserId		= cacheUser.userId;
+			m_strNickName	= cacheUser.nickName;
+			m_nLangId		= cacheUser.langId;
+			m_strFileName	= cacheUser.fileName;
+			m_bEmailValid	= cacheUser.emailValid;
+			m_nPassportId	= cacheUser.passportId;
 			m_bLogin = true;
 		}
 		return m_bLogin;

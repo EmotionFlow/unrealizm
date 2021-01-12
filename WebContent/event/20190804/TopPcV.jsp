@@ -15,7 +15,7 @@ cResults.m_strKeyword = "星座占い";
 cResults.SELECT_MAX_GALLERY = 36;
 boolean bRtn = cResults.getResults(checkLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-ArrayList<String> vResult = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
 <html>

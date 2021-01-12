@@ -11,7 +11,7 @@ if(!checkLogin.m_bLogin) {
 MyHomeTagPcC cResults = new MyHomeTagPcC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(checkLogin);
-ArrayList<String> vResult = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
 <html>

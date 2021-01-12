@@ -8,7 +8,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 MyBookmarkGridC cResults = new MyBookmarkGridC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(checkLogin, true);
-ArrayList<String> vResult = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 StringBuilder sbHtml = new StringBuilder();
 for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);

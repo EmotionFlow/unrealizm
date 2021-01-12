@@ -203,17 +203,17 @@ public class CacheUsers0000 {
 
 		public User() {}
 		public User(ResultSet resultSet) throws SQLException {
-			userId		= resultSet.getInt("user_id");
-			hashPass	= resultSet.getString("hash_password");
-			nickName	= resultSet.getString("nickname");
-			langId		= Math.min(Math.max(resultSet.getInt("lang_id"), 0), 1);
-			lastLogin	= resultSet.getTimestamp("last_login_date").getTime();
-			fileName	= Util.toString(resultSet.getString("file_name"));
+			userId			= resultSet.getInt("user_id");
+			hashPass		= resultSet.getString("hash_password");
+			nickName		= resultSet.getString("nickname");
+			langId			= Math.min(Math.max(resultSet.getInt("lang_id"), 0), 1);
+			lastLogin		= resultSet.getTimestamp("last_login_date").getTime();
+			fileName		= Util.toString(resultSet.getString("file_name"));
 			if(fileName.isEmpty()) fileName = "/img/default_user.jpg";
-			emailValid	= Util.toString(resultSet.getString("email")).contains("@");
-			passportId	= resultSet.getInt("passport_id");
-			reaction	= resultSet.getInt("ng_reaction");
-			adMode		= resultSet.getInt("ng_ad_mode");
+			emailValid		= Util.toString(resultSet.getString("email")).contains("@");
+			passportId		= resultSet.getInt("passport_id");
+			reaction		= resultSet.getInt("ng_reaction");
+			adMode			= resultSet.getInt("ng_ad_mode");
 			if(userId==315) safeFilter = Common.SAFE_FILTER_ALL;
 		}
 	}

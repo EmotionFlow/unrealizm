@@ -51,7 +51,7 @@ default:
 }
 
 String strTitle = CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX);
-ArrayList<String> vResult = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
 <html>

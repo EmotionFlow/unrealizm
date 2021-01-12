@@ -18,20 +18,17 @@
 	public boolean m_bCheerNG = false;
 
 	/*
-					RECENT  POPULAR  OYATSU  OTHER  CHEER
-		notLogin    []      vEmoji   static  static []
-		Login       vEmoji  vEmoji   static  static static
+					RECENT  POPULAR  FOOD    OTHER   CHEER
+		notLogin    []      static   static  static  []
+		Login       vEmoji  static   static  static  static
 	 */
 	public String[] getResults(CheckLogin checkLogin) {
 		String EMOJI_LIST[] = Emoji.getInstance().EMOJI_LIST[m_nCategoryId];
 
-		if(!(m_nCategoryId==Emoji.EMOJI_CAT_RECENT || m_nCategoryId==Emoji.EMOJI_CAT_POPULAR || m_nCategoryId==Emoji.EMOJI_CAT_CHEER)){
-			return EMOJI_LIST;
-		}
-
-		if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT && !checkLogin.m_bLogin){
-			return EMOJI_LIST;
-		}
+		if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT && !checkLogin.m_bLogin) return EMOJI_LIST;
+		if(m_nCategoryId==Emoji.EMOJI_CAT_POPULAR) return EMOJI_LIST;
+		if(m_nCategoryId==Emoji.EMOJI_CAT_FOOD) return EMOJI_LIST;
+		if(m_nCategoryId==Emoji.EMOJI_CAT_OTHER) return EMOJI_LIST;
 
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -62,9 +59,9 @@
 				// Follow
 				ArrayList<String> vEmoji;
 				if(m_nCategoryId==Emoji.EMOJI_CAT_RECENT) {
-					vEmoji = Util.getDefaultEmoji(checkLogin.m_nUserId, Emoji.EMOJI_KEYBORD_MAX);
+					vEmoji = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				} else {
-					vEmoji = Util.getDefaultEmoji(-1, Emoji.EMOJI_KEYBORD_MAX);
+					vEmoji = Emoji.getDefaultEmoji(-1);
 				}
 				EMOJI_LIST = vEmoji.toArray(new String[vEmoji.size()]);
 			}
