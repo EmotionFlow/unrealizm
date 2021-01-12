@@ -33,8 +33,10 @@
 	<div class="CardInfoDlgInputLabel"><%=_TEX.T("CardInfoDlg.CardNumber")%></div>
 	<span>
 	<img src="/img/credit_card_logo_visa.png" height="30px" style="padding-top: 4px;"/>
-	<span style="font-size: 11px;position: relative;top: -9px;">or</span>
 	<img src="/img/credit_card_logo_master.gif" height="30px" style="padding-top: 4px;"/>
+	<img src="/img/credit_card_logo_jcb.gif" height="30px" style="padding-top: 4px;"/>
+	<img src="/img/credit_card_logo_ae.gif" height="30px" style="padding-top: 4px;"/>
+	<img src="/img/credit_card_logo_diners.gif" height="30px" style="padding-top: 4px;"/>
 	</span>
 	<input id="card_number" class="swal2-input" autocomplete="off"　style="margin-top: 4px;" maxlength="16" placeholder="4111111111111111"/>
 </div>
@@ -71,7 +73,7 @@
 		}
 		const validateCreditCardResult = $("#card_number").validateCreditCard(
 			{ accept: [
-					'visa', 'mastercard'//, 'diners_club_international', 'jcb', 'amex',
+					'visa', 'mastercard', 'diners_club_international', 'jcb', 'amex',
 				] });
 		if(!validateCreditCardResult.valid){
 			return Swal.showValidationMessage('<%=_TEX.T("CardInfoDlg.Validation.CardNumber.Invalid")%>');
