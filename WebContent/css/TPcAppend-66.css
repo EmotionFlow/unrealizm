@@ -75,7 +75,7 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px; /*position: sticky; top: 81px;*/}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem {display: block; width: 100%; margin: 0 0 30px 0;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarItemTitle {display: block; float: left; width: 100%; margin: 0 0 10px 0; font-size: 18px;}
-.Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: none; width: 300px; min-height: 250px; background-color: #eee; margin: 0;}
+.Wrapper.ViewPc .PcSideBar .PcSideBarItem .PcSideBarAd {display: block; float: none; width: 300px; height: auto; min-height: 250px; background-color: #eee; margin: 0;}
 .Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: absolute; bottom: 0;}
 
 
