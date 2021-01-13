@@ -50,6 +50,15 @@ function setCookieWeek(key, val, tmp) {
 	document.cookie = tmp;
 }
 
+function setCookieOneDay(key, val, tmp) {
+	dateExp = new Date();
+	dateExp.setTime(dateExp.getTime()+(1000*60*60*24));
+	tmp = key + "=" + encodeURIComponent(val) + "; ";
+	tmp += "path=/; ";
+	tmp += "expires="+dateExp.toGMTString();
+	document.cookie = tmp;
+}
+
 function getCookie(key) {
 	var cookieName = key + '=';
 	var allcookies = document.cookie;
@@ -160,33 +169,19 @@ function DispMsg(strMessage) {
 }
 
 function DispMsgStatic(strMessage) {
+	if($('#DispMsg').length<=0) {
+		$('body').append($("<div/>").attr("id", "DispMsg"));
+	}
 	setTimeout(function(){
 		$("#DispMsg").html(strMessage);
-		$("#DispMsg").show();
+		$("#DispMsg").slideDown(200);
 	}, 0);
 }
 
 function HideMsgStatic() {
 	setTimeout(function(){
-		$("#DispMsg").hide();
+		$("#DispMsg").slideUp(200);
 	}, 1000);
-}
-
-function SendEmoji(nContentId, strEmoji , nUserId) {
-	$.ajax({
-		"type": "post",
-		"data": {"IID": nContentId, "EMJ": strEmoji, "UID": nUserId},
-		"url": "/f/SendEmojiF.jsp",
-		"dataType": "json",
-		"success": function(data) {
-			if(data.result_num>0) {
-				var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
-				$("#ResEmojiAdd_"+nContentId).before($objResEmoji);
-				if(vg)vg.vgrefresh();
-			}
-		}
-	});
-	return false;
 }
 
 function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
@@ -341,15 +336,17 @@ function UpdateBookmark(user_id, content_id) {
 	$.ajaxSingle({
 		"type": "post",
 		"data": { "UID": user_id, "IID": content_id},
-		"url": "/f/UpdateBookmarkF.jsp",
+		"url": "/api/UpdateBookmarkF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			if(data.result==1) {
-				$('#IllustItemBookmarkBtn_'+content_id).addClass('Selected');
-			} else if(data.result==0) {
+			if(data.result==0) {
 				$('#IllustItemBookmarkBtn_'+content_id).removeClass('Selected');
-			} else {
-				DispMsg('You need to login');
+			} else if(data.result==1) {
+				$('#IllustItemBookmarkBtn_'+content_id).addClass('Selected');
+			} else if(data.result==2) { // UpdateBookmarkC.BOOKMARK_LIMIT
+				DispMsg(data.msg);
+			} else if(data.result==-2) { // UpdateBookmarkC.USER_INVALID
+				DispMsg(data.msg);
 			}
 		},
 		"error": function(req, stat, ex){
@@ -401,8 +398,9 @@ function ShowAllReaction(content_id, elm) {
 }
 
 function generateShowAppendFile(){
-    var tw_friendships = {}; // target user id -> friendship id (see CTweet)
+	var tw_friendships = {}; // target user id -> friendship id (see CTweet)
 	return function(user_id, content_id, mode, elm) {
+		console.log(user_id, content_id, mode);
 		console.log("twitter friendships: " + tw_friendships);
 		var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
 		var tw_f = tw_friendships[user_id];
@@ -416,22 +414,23 @@ function generateShowAppendFile(){
 			"url": "/f/ShowAppendFileF.jsp",
 			"dataType": "json",
 			"success": function(data) {
-				console.log(data);
 				if(data.result_num>0) {
 					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
 					$(elm).parent().hide();
 					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
 					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
+					//for text
+					$('#IllustItemText_' + content_id).css('max-height','none');
 				} else {
 					DispMsg(data.html);
 				}
 				if(data.tw_friendship >= 0){
 					tw_friendships[user_id] = data.tw_friendship;
 				}
-            },
-            "error": function(err){
-                console.log(err);
-            }
+						},
+						"error": function(err){
+								console.log(err);
+						}
 		});
 
 	}
@@ -511,4 +510,69 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsSmartPhone,) {
 			});
 		}
 	});
+}
+var g_chartAnalyze;
+function initGraph(ctx) {
+	return new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels : ["https://img-cdn.poipiku.com/img/pc_top_title-03.png"],
+			datasets: [{
+				data: [100],
+				backgroundColor: ["#3498db"]
+			}]
+		},
+		options: {
+			legend: {
+				position: 'top',
+				display: false,
+			},
+			animation: {
+				animateScale: true,
+				animateRotate: true
+			},
+			tooltips: {
+				enabled: false,
+			},
+			events: [],
+		},
+		plugins: [{
+			afterRender: function(chart) {
+				var ctx = chart.ctx;
+				chart.data.datasets.forEach(function(dataset, i) {
+					var meta = chart.getDatasetMeta(i);
+					if (!meta.hidden) {
+						meta.data.forEach(function(element, j) {
+							const imgSrc = chart.data.labels[j];
+							if(!imgSrc) return;
+							var dataString = dataset.data[j].toString()+'%';
+							const fontSize = 14;
+							ctx.fillStyle = "#ffffff";
+							ctx.font = Chart.helpers.fontString(fontSize, "normal", "Verdana");
+							ctx.textAlign = 'center';
+							ctx.textBaseline = 'middle';
+							var position = element.tooltipPosition();
+							const image = new Image();
+							image.src = chart.data.labels[j];
+							image.onload = () => {
+								const width = 24;
+								const height = 24;
+								ctx.drawImage(image, position.x-width/2, position.y - height, width, height);
+							}
+							ctx.fillText(dataString, position.x, position.y+10);
+						});
+					}
+				});
+				console.log("afterRender");
+			}
+		}]
+	});
+}
+
+function setGraphData(data) {
+	g_chartAnalyze.data = data
+}
+function updateGraph() {
+	g_chartAnalyze.clear();
+	g_chartAnalyze.update();
 }

@@ -28,7 +28,7 @@ try {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-27.js" type="text/javascript"></script>
+		<script src="/js/upload-28.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -355,11 +355,11 @@ try {
 				</div>
 				<div class="UoloadCmd">
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadText(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadText(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>
