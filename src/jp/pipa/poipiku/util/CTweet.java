@@ -200,7 +200,7 @@ public class CTweet {
 		return nResult;
 	}
 
-	public int Tweet(String strTweet, ArrayList<String> vFileList) {
+	public int Tweet_new(String strTweet, ArrayList<String> vFileList) {
 		int FRAME_PADDING = 3;
 		int FRAME_SIZE_BASE = 800;
 
@@ -266,7 +266,7 @@ public class CTweet {
 		return nResult;
 	}
 
-	public int Tweet_org(String strTweet, ArrayList<String> vFileList) {
+	public int Tweet(String strTweet, ArrayList<String> vFileList) {
 		if(!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
 		if(vFileList.size()<=0) return ERR_OTHER;
 		int nResult = OK;
