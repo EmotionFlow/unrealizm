@@ -324,10 +324,17 @@
 				</div>
 				<div class="SettingBodyCmd">
 					<table class="BenefitTable">
-						<tbody><tr class="ListCell">
+						<tbody>
+						<tr class="ListCell">
 							<th style="width: 20%"></th>
 							<th class="NormalCell" style="width: 30%">ポイパスなし</th>
 							<th class="BenefitCell" style="width: 30%">ポイパスあり</th>
+						</tr>
+						<tr>
+							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />複数枚投稿時のTwitter同時投稿の画像</td>
+							<td class="NormalCell">複数枚を1枚に合成して投稿(最初の4枚)</td>
+							<td class="BenefitCell">同時投稿した全ての画像を1枚に合成して投稿<br />
+							</td>
 						</tr>
 						<tr>
 							<td class="ListCell">投稿時のキャプション文字数</td>
@@ -343,7 +350,7 @@
 								</span></td>
 						</tr>
 						<tr>
-							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />自分のページの背景設定</td>
+							<td class="ListCell">自分のページの背景設定</td>
 							<td class="NormalCell">なし</td>
 							<td class="BenefitCell">自由な画像ファイルを設定可能</td>
 						</tr>
@@ -357,7 +364,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />自分のページの広告表示</td>
+							<td class="ListCell">自分のページの広告表示</td>
 							<td class="NormalCell">あり</td>
 							<td class="BenefitCell">あり/なし設定可能<br />
 								<span class="BenefitDetail">
@@ -366,7 +373,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />ダウンロードの許可</td>
+							<td class="ListCell">ダウンロードの許可</td>
 							<td class="NormalCell">不許可</td>
 							<td class="BenefitCell">許可/不許可設定可能<br />
 								<span class="BenefitDetail">
