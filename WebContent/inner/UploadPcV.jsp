@@ -46,10 +46,12 @@ try {
 
 		<script>
 			function startMsg() {
+				$('#UoloadCmdBtn').addClass('Disabled').html('<%=_TEX.T("EditIllustVCommon.Uploading")%>');
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 			}
 
 			function errorMsg() {
+				$('#UoloadCmdBtn').removeClass('Disabled').html('<%=_TEX.T("UploadFilePc.UploadBtn")%>');
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
 			}
 

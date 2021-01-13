@@ -85,10 +85,12 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 		<script>
 			function startMsg() {
+				$('#UoloadCmdBtn').addClass('Disabled').html('<%=_TEX.T("EditIllustVCommon.Uploading")%>');
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 			}
 
 			function errorMsg() {
+				$('#UoloadCmdBtn').removeClass('Disabled').html('<%=_TEX.T("UploadFilePc.UploadBtn")%>');
 				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
 			}
 
@@ -474,11 +476,11 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 				<div class="UoloadCmd">
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFile(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFile(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					<a class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateText(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateText(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>
