@@ -10,6 +10,6 @@ nRtn = cParam.GetParam(request);
 
 if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadFileTweetC cResults = new UploadFileTweetC(getServletContext());
-	nRtn = cResults.GetResults(cParam, _TEX);
+	nRtn = cResults.GetResults(checkLogin, cParam, _TEX);
 }
 %><%=nRtn%>

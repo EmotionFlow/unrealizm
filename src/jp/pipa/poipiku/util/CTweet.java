@@ -200,7 +200,7 @@ public class CTweet {
 		return nResult;
 	}
 
-	public int Tweet_new(String strTweet, ArrayList<String> vFileList) {
+	public int Tweet(String strTweet, ArrayList<String> vFileList) {
 		int FRAME_PADDING = 3;
 		int FRAME_SIZE_BASE = 800;
 
@@ -232,12 +232,12 @@ public class CTweet {
 			int fileIdx = 0;
 			for (int y=0; y<numY; y++) {
 				for (int x=0; x<numX; x++) {
-					if(fileIdx >= vFileList.size()) break;
+					if(fileIdx > vFileList.size()) break;
 					String strSrcFileName = vFileList.get(fileIdx++);
 					String strDstFileName = strSrcFileName+"_twitter_tmp.png";
 					ImageUtil.createThumbNormalize(strSrcFileName, strDstFileName, thumn_size, false);
 					BufferedImage image = ImageUtil.read(strDstFileName);
-					g.drawImage(image, FRAME_PADDING+x*thumn_size, FRAME_PADDING+y*thumn_size, thumn_size, thumn_size, Color.white, null);
+					g.drawImage(image, x*FRAME_PADDING+x*thumn_size, y*FRAME_PADDING+y*thumn_size, thumn_size, thumn_size, Color.white, null);
 					Util.deleteFile(strDstFileName);
 				}
 			}
@@ -266,7 +266,7 @@ public class CTweet {
 		return nResult;
 	}
 
-	public int Tweet(String strTweet, ArrayList<String> vFileList) {
+	public int Tweet_org(String strTweet, ArrayList<String> vFileList) {
 		if(!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
 		if(vFileList.size()<=0) return ERR_OTHER;
 		int nResult = OK;

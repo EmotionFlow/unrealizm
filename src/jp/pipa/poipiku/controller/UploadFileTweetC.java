@@ -19,7 +19,7 @@ public class UploadFileTweetC {
 		m_cServletContext = cServletContext;
 	}
 
-	public int GetResults(UploadFileTweetCParam cParam, ResourceBundleControl _TEX) {
+	public int GetResults(CheckLogin checkLogin, UploadFileTweetCParam cParam, ResourceBundleControl _TEX) {
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -73,10 +73,11 @@ public class UploadFileTweetC {
 
 			// 2枚目以降取得
 			if(cContent.m_nPublishId==Common.PUBLISH_ID_ALL && cContent.m_nSafeFilter<Common.SAFE_FILTER_R15 && cContent.m_nFileNum>1) {
-				//strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 3";
-				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC";
+				int limit = (checkLogin.m_nPassportId>=Common.PASSPORT_ON)?400:3;
+				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT ?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nContentId);
+				cState.setInt(2, limit);
 				cResSet = cState.executeQuery();
 				while(cResSet.next()) {
 					String strFileName = Util.toString(cResSet.getString("file_name"));
