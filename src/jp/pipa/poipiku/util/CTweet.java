@@ -233,13 +233,14 @@ public class CTweet {
 			int fileIdx = 0;
 			for (int y=0; y<numY; y++) {
 				for (int x=0; x<numX; x++) {
-					if(fileIdx > vFileList.size()) break;
-					String strSrcFileName = vFileList.get(fileIdx++);
-					String strDstFileName = strSrcFileName+"_twitter_tmp.png";
+					if(fileIdx >= vFileList.size()) break;
+					String strSrcFileName = vFileList.get(fileIdx);
+					String strDstFileName = strSrcFileName+"_twitter_thumb.png";
 					ImageUtil.createThumbNormalize(strSrcFileName, strDstFileName, thumn_size, false);
 					BufferedImage image = ImageUtil.read(strDstFileName);
 					g.drawImage(image, (x+1)*FRAME_PADDING+x*thumn_size, (y+1)*FRAME_PADDING+y*thumn_size, thumn_size, thumn_size, Color.white, null);
 					Util.deleteFile(strDstFileName);
+					fileIdx++;
 				}
 			}
 
