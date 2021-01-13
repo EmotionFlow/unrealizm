@@ -282,7 +282,7 @@ public class CTweet {
 			Twitter twitter = tf.getInstance();
 
 			long[] vMediaList = new long[vFileList.size()];
-			for(int index = 0; index<vFileList.size() && index<3; index++) {
+			for(int index = 0; index<vFileList.size() && index<4; index++) {
 				String strSrcFileName = vFileList.get(index);
 				String strDstFileName = strSrcFileName+"_twitter.jpg";
 				BufferedImage cImage = ImageUtil.read(strSrcFileName);
