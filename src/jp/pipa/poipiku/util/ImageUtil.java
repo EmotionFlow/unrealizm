@@ -188,7 +188,7 @@ public class ImageUtil {
 		}
 	}
 
-	private static long saveJpeg(BufferedImage image, String strDstFileName) throws FileNotFoundException, IOException {
+	public static long saveJpeg(BufferedImage image, String strDstFileName) throws FileNotFoundException, IOException {
 		Util.deleteFile(strDstFileName);
 		File file = new File(strDstFileName);
 		FileImageOutputStream output = new FileImageOutputStream(file);
@@ -202,7 +202,7 @@ public class ImageUtil {
 		return file.length();
 	}
 
-	private static long savePng(BufferedImage image, String strDstFileName) throws IOException {
+	public static long savePng(BufferedImage image, String strDstFileName) throws IOException {
 		Util.deleteFile(strDstFileName);
 		File file = new File(strDstFileName);
 		ImageIO.write(image, "png", file);

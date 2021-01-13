@@ -73,7 +73,7 @@ public class UploadFileTweetC {
 
 			// 2枚目以降取得
 			if(cContent.m_nPublishId==Common.PUBLISH_ID_ALL && cContent.m_nSafeFilter<Common.SAFE_FILTER_R15 && cContent.m_nFileNum>1) {
-				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 3";
+				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nContentId);
 				cResSet = cState.executeQuery();
@@ -87,7 +87,7 @@ public class UploadFileTweetC {
 				cState.close();cState=null;
 			}
 
-			// Tweet
+			// Tweetインスタンス準備
 			CTweet cTweet = new CTweet();
 			if (!cTweet.GetResults(cParam.m_nUserId)) return nRtn;
 

@@ -1,5 +1,7 @@
 package jp.pipa.poipiku.util;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URLEncoder;
@@ -199,6 +201,72 @@ public class CTweet {
 	}
 
 	public int Tweet(String strTweet, ArrayList<String> vFileList) {
+		int FRAME_PADDING = 3;
+		int FRAME_SIZE_BASE = 800;
+
+		if(!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
+		if(vFileList.size()<=0) return ERR_OTHER;
+		int nResult = OK;
+		m_statusLastTweet = null;
+		try {
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+
+			// 貼り付け先フレームの作成
+			int numX = (int)Math.ceil(Math.sqrt(vFileList.size()));
+			int numY = (int)Math.floor((double)vFileList.size()/(double)numX);
+			int FRAME_SIZE = FRAME_SIZE_BASE+FRAME_PADDING*(numX+1);
+			BufferedImage frame = new BufferedImage(FRAME_SIZE, FRAME_SIZE, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g = frame.createGraphics();
+			g.setColor(Color.white);
+			g.fillRect(0, 0, FRAME_SIZE, FRAME_SIZE);
+
+			// 1枚ずつ貼り付け
+			int thumn_size = FRAME_SIZE_BASE / numX;
+			int fileIdx = 0;
+			for (int y=0; y<numY; y++) {
+				for (int x=0; x<numX; x++) {
+					if(fileIdx >= vFileList.size()) break;
+					String strSrcFileName = vFileList.get(fileIdx++);
+					String strDstFileName = strSrcFileName+"_twitter_tmp.png";
+					ImageUtil.createThumbNormalize(strSrcFileName, strDstFileName, thumn_size, false);
+					BufferedImage image = ImageUtil.read(strDstFileName);
+					g.drawImage(image, FRAME_PADDING+x*thumn_size, FRAME_PADDING+y*thumn_size, thumn_size, thumn_size, Color.white, null);
+					Util.deleteFile(strDstFileName);
+				}
+			}
+
+			// 合成画像を保存
+			String strDstFileName = vFileList.get(0)+"_twitter.png";
+			ImageUtil.savePng(frame, strDstFileName);
+			g.dispose();
+
+			// Twitterに投稿
+			UploadedMedia media = twitter.uploadMedia(new File(strDstFileName));
+			long[] vMediaList = new long[1];
+			vMediaList[0] = media.getMediaId();
+			StatusUpdate update = new StatusUpdate(strTweet);
+			update.setMediaIds(vMediaList);
+			m_statusLastTweet = twitter.updateStatus(update);
+			Util.deleteFile(strDstFileName);
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			LoggingTwitterException(te);
+			nResult = GetErrorCode(te);
+		} catch (Exception e) {
+			e.printStackTrace();
+			nResult = ERR_OTHER;
+		}
+		return nResult;
+	}
+
+	public int Tweet_org(String strTweet, ArrayList<String> vFileList) {
 		if(!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
 		if(vFileList.size()<=0) return ERR_OTHER;
 		int nResult = OK;
@@ -214,7 +282,7 @@ public class CTweet {
 			Twitter twitter = tf.getInstance();
 
 			long[] vMediaList = new long[vFileList.size()];
-			for(int index = 0; index<vFileList.size(); index++) {
+			for(int index = 0; index<vFileList.size() && index<3; index++) {
 				String strSrcFileName = vFileList.get(index);
 				String strDstFileName = strSrcFileName+"_twitter.jpg";
 				BufferedImage cImage = ImageUtil.read(strSrcFileName);
