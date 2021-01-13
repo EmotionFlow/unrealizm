@@ -220,15 +220,16 @@ public class CTweet {
 
 			// 貼り付け先フレームの作成
 			int numX = (int)Math.ceil(Math.sqrt(vFileList.size()));
-			int numY = (int)Math.floor((double)vFileList.size()/(double)numX);
-			int FRAME_SIZE = FRAME_SIZE_BASE+FRAME_PADDING*(numX+1);
-			BufferedImage frame = new BufferedImage(FRAME_SIZE, FRAME_SIZE, BufferedImage.TYPE_INT_RGB);
+			int numY = (int)Math.ceil((double)vFileList.size()/(double)numX);
+			int thumn_size = FRAME_SIZE_BASE / numX;
+			int FRAME_SIZE_X = thumn_size*numX+FRAME_PADDING*(numX+1);
+			int FRAME_SIZE_Y = thumn_size*numY+FRAME_PADDING*(numY+1);
+			BufferedImage frame = new BufferedImage(FRAME_SIZE_X, FRAME_SIZE_Y, BufferedImage.TYPE_INT_RGB);
 			Graphics2D g = frame.createGraphics();
 			g.setColor(Color.white);
-			g.fillRect(0, 0, FRAME_SIZE, FRAME_SIZE);
+			g.fillRect(0, 0, FRAME_SIZE_X, FRAME_SIZE_Y);
 
 			// 1枚ずつ貼り付け
-			int thumn_size = FRAME_SIZE_BASE / numX;
 			int fileIdx = 0;
 			for (int y=0; y<numY; y++) {
 				for (int x=0; x<numX; x++) {
@@ -237,7 +238,7 @@ public class CTweet {
 					String strDstFileName = strSrcFileName+"_twitter_tmp.png";
 					ImageUtil.createThumbNormalize(strSrcFileName, strDstFileName, thumn_size, false);
 					BufferedImage image = ImageUtil.read(strDstFileName);
-					g.drawImage(image, x*FRAME_PADDING+x*thumn_size, y*FRAME_PADDING+y*thumn_size, thumn_size, thumn_size, Color.white, null);
+					g.drawImage(image, (x+1)*FRAME_PADDING+x*thumn_size, (y+1)*FRAME_PADDING+y*thumn_size, thumn_size, thumn_size, Color.white, null);
 					Util.deleteFile(strDstFileName);
 				}
 			}
