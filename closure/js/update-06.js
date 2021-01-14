@@ -151,10 +151,10 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 			IMG: nTweetImage,
 			DELTW: nDeleteTweet,
 		},
-		"url": "/f/UploadFileTweetF.jsp",
+		"url": "/api/UploadFileTweetF.jsp",
 		"dataType": "json",
 		"success": function (data) {
-			tweetSucceeded(data);
+			tweetSucceeded(data.result);
 		}
 	});
 }
@@ -405,7 +405,7 @@ function UploadFileTweetFAjax(user_id, content_id, nTweetImage, nDeleteTweet){
 			IMG: nTweetImage,
 			DELTW: nDeleteTweet,
 		},
-		"url": "/f/UploadFileTweetF.jsp",
+		"url": "/api/UploadFileTweetF.jsp",
 		"dataType": "json",
 	});
 }

@@ -721,7 +721,7 @@ function updatePublish(nUserId) {
 function tweetSucceeded(data){
 	var toContext = "/MyIllustListPcV.jsp";
 	if(data!=null){
-		if(data>0){ // 異常無し
+		if(data>=0){ // 異常無し
 			completeMsg();
 			setTimeout(function(){
 				location.href=toContext;
@@ -777,7 +777,7 @@ function initUploadFile() {
 			onUpload: function(id, name) {
 				if(this.first_file) {
 					this.first_file = false;
-					this.setEndpoint('/f/UploadFileFirstF.jsp', id);
+					this.setEndpoint('/api/UploadFileFirstF.jsp', id);
 					console.log("UploadFileFirstF");
 				} else {
 					this.setEndpoint('/f/UploadFileAppendF.jsp', id);
@@ -800,10 +800,10 @@ function initUploadFile() {
 							IID: this.illust_id,
 							IMG: this.tweet_image
 						},
-						"url": "/f/UploadFileTweetF.jsp",
+						"url": "/api/UploadFileTweetF.jsp",
 						"dataType": "json",
 						"success": function(data) {
-							tweetSucceeded(data);
+							tweetSucceeded(data.result);
 						}
 					});
 				} else {
@@ -930,10 +930,10 @@ function UploadFile(user_id) {
 			"ED":0,
 			"CNG":nCheerNg,
 		},
-		"url": "/f/UploadFileRefTwitterF.jsp",
+		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			console.log("UploadFileReferenceF");
+			console.log("UploadFileRefTwitterF");
 			if(data && data.content_id) {
 				if(data.content_id>0) {
 					multiFileUploader.first_file = true;
@@ -1094,7 +1094,7 @@ function UploadPaste(user_id) {
 			"ED":1,
 			"CNG":nCheerNg,
 		},
-		"url": "/f/UploadFileRefTwitterF.jsp",
+		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileReferenceF", data.content_id);
@@ -1146,10 +1146,10 @@ function UploadPaste(user_id) {
 						IID: data.content_id,
 						IMG: nTweetImage,
 					},
-					"url": "/f/UploadFileTweetF.jsp",
+					"url": "/api/UploadFileTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
-						tweetSucceeded(data);
+						tweetSucceeded(data.result);
 					}
 				});
 			} else {
@@ -1239,10 +1239,10 @@ function UploadText(user_id) {
 								IID: data.content_id,
 								IMG: nTweetImage,
 							},
-							"url": "/f/UploadFileTweetF.jsp",
+							"url": "/api/UploadFileTweetF.jsp",
 							"dataType": "json",
 							"success": function(data) {
-								tweetSucceeded(data);
+								tweetSucceeded(data.result);
 							}
 						});
 					} else {

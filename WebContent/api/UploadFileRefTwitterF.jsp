@@ -14,7 +14,7 @@ nRtn = cParam.GetParam(request);
 //Log.d("UploadCParam.m_nUserId:"+cParam.m_nUserId);
 //Log.d("UploadCParam.m_nCategoryId:"+cParam.m_nCategoryId);
 //Log.d("UploadCParam.m_strDescription:"+cParam.m_strDescription);
-cParam.m_bCheerNg=true;
+//cParam.m_bCheerNg=true;	// スマホからcheerできないように -> アプリからこのパラメータを送ってないのでtrueがデフォルト
 
 if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadC cResults = new UploadC();
