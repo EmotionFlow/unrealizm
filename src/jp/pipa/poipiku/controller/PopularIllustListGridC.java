@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class PopularIllustListGridC {
@@ -40,6 +41,7 @@ public class PopularIllustListGridC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
@@ -99,28 +101,26 @@ public class PopularIllustListGridC {
 				cState.close();cState=null;
 			}
 
-			//strSql = "SELECT vw_rank_contents_total.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM (vw_rank_contents_total INNER JOIN users_0000 ON vw_rank_contents_total.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON vw_rank_contents_total.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id=0 AND vw_rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND vw_rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND safe_filter<=? ORDER BY content_id DESC OFFSET ? LIMIT ?";
-			//strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM ((contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id) INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND open_id<>2 AND safe_filter<=? ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?";
-			sb.append("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name,");
+			sb.append("SELECT contents_0000.* ");
 			if(checkLogin.m_bLogin){
-				sb.append(" follows_0000.follow_user_id");
+				sb.append(", follows_0000.follow_user_id");
 			} else {
-				sb.append(" NULL as follow_user_id");
+				sb.append(", NULL as follow_user_id");
 			}
-			sb.append(" FROM (")
-			.append(" (contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id)")
-			.append(" INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id")
-			.append(" )");
+			sb.append("FROM ( ")
+			.append("(contents_0000 INNER JOIN rank_contents_total ON contents_0000.content_id=rank_contents_total.content_id) ")
+			.append("INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id ")
+			.append(") ");
 			if(checkLogin.m_bLogin){
-				sb.append(" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=?");
+				sb.append("LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? ");
 			}
-			sb.append(" WHERE open_id<>2");
+			sb.append("WHERE open_id<>2 ");
 			if(checkLogin.m_bLogin){
-				sb.append(" AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)")
-				.append(" AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
+				sb.append("AND rank_contents_total.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ")
+				.append("AND rank_contents_total.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
 			}
-			sb.append(" AND safe_filter<=?");
-			sb.append(" ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ?");
+			sb.append("AND safe_filter<=? ");
+			sb.append("ORDER BY rank_contents_total.add_date DESC NULLS LAST OFFSET ? LIMIT ? ");
 			strSql = new String(sb);
 
 			cState = cConn.prepareStatement(strSql);
@@ -141,10 +141,11 @@ public class PopularIllustListGridC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_cUser.m_nReaction	= user.reaction;
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_vContentList.add(cContent);
 			}

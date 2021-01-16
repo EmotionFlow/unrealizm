@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class RandomPickupGridC {
@@ -44,6 +45,7 @@ public class RandomPickupGridC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
@@ -90,22 +92,22 @@ public class RandomPickupGridC {
 			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name,");
+			sb.append("SELECT contents_0000.* ");
 			if(checkLogin.m_bLogin){
-				sb.append(" follows_0000.follow_user_id");
+				sb.append(",follows_0000.follow_user_id ");
 			} else {
-				sb.append(" NULL as follow_user_id");
+				sb.append(",NULL as follow_user_id ");
 			}
-			sb.append(" FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id)");
+			sb.append("FROM (contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) ");
 			if(checkLogin.m_bLogin){
-				sb.append(" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=?");
+				sb.append("LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? ");
 			}
-			sb.append(" WHERE open_id=0");
+			sb.append("WHERE open_id=0 ");
 			if(checkLogin.m_bLogin){
-				sb.append(" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)");
+				sb.append("AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ");
 			}
-			sb.append(" AND content_id<(SELECT (max(content_id) * random())::int")
-			.append(" FROM contents_0000) AND safe_filter<=? ORDER BY content_id DESC LIMIT ?");
+			sb.append("AND content_id<(SELECT (max(content_id) * random())::int ")
+			.append("FROM contents_0000) AND safe_filter<=? ORDER BY content_id DESC LIMIT ? ");
 
 			strSql = new String(sb);
 			cState = cConn.prepareStatement(strSql);
@@ -125,10 +127,11 @@ public class RandomPickupGridC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_cUser.m_nReaction	= user.reaction;
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);

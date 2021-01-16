@@ -32,6 +32,7 @@
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
@@ -70,7 +71,7 @@
 				cState.close();cState=null;
 			}
 
-			strSql = String.format("SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id<>2 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
+			strSql = String.format("SELECT contents_0000.* FROM contents_0000 INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id WHERE open_id<>2 AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) AND user_id=155 %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond);
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, checkLogin.m_nUserId);
@@ -83,11 +84,13 @@
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_cUser.m_nReaction	= user.reaction;
+				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

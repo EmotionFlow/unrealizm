@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class NewArrivalGridC {
@@ -43,6 +44,7 @@ public class NewArrivalGridC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
@@ -64,7 +66,7 @@ public class NewArrivalGridC {
 			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name,");
+			sb.append("SELECT contents_0000.* ");
 			if(checkLogin.m_bLogin){
 				sb.append(" follows_0000.follow_user_id");
 			} else {
@@ -107,10 +109,11 @@ public class NewArrivalGridC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_cUser.m_nReaction	= user.reaction;
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_nEndId = cContent.m_nContentId-1;
 				m_vContentList.add(cContent);

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class MyBookmarkGridC {
@@ -41,9 +42,9 @@ public class MyBookmarkGridC {
 		int idx = 1;
 
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
@@ -59,7 +60,7 @@ public class MyBookmarkGridC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name, follows_0000.follow_user_id FROM ((contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id) INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id<>2 AND bookmarks_0000.user_id=? ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.*, follows_0000.follow_user_id FROM (contents_0000 INNER JOIN bookmarks_0000 ON contents_0000.content_id=bookmarks_0000.content_id) LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? WHERE open_id<>2 AND bookmarks_0000.user_id=? ORDER BY bookmarks_0000.upload_date DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, checkLogin.m_nUserId);
@@ -69,10 +70,11 @@ public class MyBookmarkGridC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(cResSet.getString("user_file_name"));
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_cUser.m_nReaction	= user.reaction;
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nReaction = cResSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (cContent.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(cResSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_vContentList.add(cContent);
 			}

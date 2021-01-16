@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class IllustListGridC {
@@ -62,6 +63,7 @@ public class IllustListGridC {
 		}
 
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			Class.forName("org.postgresql.Driver");
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
@@ -216,7 +218,7 @@ public class IllustListGridC {
 			statement.close();statement=null;
 
 			idx = 1;
-			strSql = String.format("SELECT contents_0000.*, nickname, ng_reaction, users_0000.file_name as user_file_name FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond, strOpenCnd);
+			strSql = String.format("SELECT * FROM contents_0000 WHERE contents_0000.user_id=? AND safe_filter<=? %s %s ORDER BY content_id DESC OFFSET ? LIMIT ?", strCond, strOpenCnd);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(idx++, m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
@@ -228,10 +230,11 @@ public class IllustListGridC {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent cContent = new CContent(resultSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(resultSet.getString("nickname"));
-				cContent.m_cUser.m_strFileName	= Util.toString(resultSet.getString("user_file_name"));
+				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_cUser.m_nReaction	= user.reaction;
 				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nReaction = resultSet.getInt("ng_reaction");
 				cContent.m_cUser.m_nFollowing = (m_bOwner)?CUser.FOLLOW_HIDE:(m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				m_vContentList.add(cContent);
 			}
