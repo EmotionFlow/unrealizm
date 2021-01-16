@@ -87,7 +87,6 @@ public class CTweet {
 	}
 
 	public boolean GetResults(int nUserId) {
-		boolean bResult = true;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -116,13 +115,13 @@ public class CTweet {
 			cState.close();cState=null;
 		} catch (Exception e) {
 			e.printStackTrace();
-			bResult = false;
+			m_bIsTweetEnable = false;
 		} finally {
 			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
 			try {if(cState!=null)cState.close();}catch(Exception e){}
 			try {if(cConn!=null)cConn.close();}catch(Exception e){}
 		}
-		return bResult;
+		return m_bIsTweetEnable;
 	}
 
 	public int GetMyOpenLists() {
