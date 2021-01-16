@@ -18,7 +18,7 @@ if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
-boolean bDownload = cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || cResults.m_nDownload==CUser.DOWNLOAD_ON;
+boolean bDownload = cResults.m_cContent.m_nEditorId!=Common.EDITOR_TEXT && (cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || cResults.m_nDownload==CUser.DOWNLOAD_ON);
 String file_name = "";
 if(bDownload) {
 	try {
