@@ -117,6 +117,7 @@ public class CTweet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			bResult = false;
+			m_bIsTweetEnable = false;
 		} finally {
 			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
 			try {if(cState!=null)cState.close();}catch(Exception e){}
