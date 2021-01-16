@@ -230,6 +230,45 @@ public class Emoji {
 				connection = dataSource.getConnection();
 
 				if(nUserId>0) {
+					strSql = "SELECT description, count(description) FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?";
+					statement = connection.prepareStatement(strSql);
+					statement.setInt(1, nUserId);
+					statement.setInt(2, EMOJI_KEYBORD_MAX);
+					resultSet = statement.executeQuery();
+					while (resultSet.next()) {
+						vResult.add(Util.toString(resultSet.getString(1)).trim());
+					}
+					resultSet.close();resultSet=null;
+					statement.close();statement=null;
+					if(vResult.size()>0 && vResult.size()<EMOJI_KEYBORD_MAX){
+						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?) ORDER BY rank DESC LIMIT ?";
+						statement = connection.prepareStatement(strSql);
+						statement.setInt(1, nUserId);
+						statement.setInt(2, EMOJI_KEYBORD_MAX);
+						statement.setInt(3, EMOJI_KEYBORD_MAX-vResult.size());
+						resultSet = statement.executeQuery();
+						while (resultSet.next()) {
+							vResult.add(Util.toString(resultSet.getString(1)).trim());
+						}
+						resultSet.close();resultSet=null;
+						statement.close();statement=null;
+					}
+				}
+				if(vResult.size()<EMOJI_KEYBORD_MAX){
+					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
+					statement = connection.prepareStatement(strSql);
+					statement.setInt(1, EMOJI_KEYBORD_MAX-vResult.size());
+					resultSet = statement.executeQuery();
+					while (resultSet.next()) {
+						vResult.add(Util.toString(resultSet.getString(1)).trim());
+					}
+					resultSet.close();resultSet=null;
+					statement.close();statement=null;
+				}
+
+				/*
+				// vw_user_emoji_minuteバージョン
+				if(nUserId>0) {
 					strSql = "SELECT description FROM vw_user_emoji_minute WHERE user_id=? ORDER BY description_count DESC LIMIT ?";
 					statement = connection.prepareStatement(strSql);
 					statement.setInt(1, nUserId);
@@ -265,6 +304,7 @@ public class Emoji {
 					resultSet.close();resultSet=null;
 					statement.close();statement=null;
 				}
+				*/
 			} catch(Exception e) {
 				Log.d(strSql);
 				e.printStackTrace();
