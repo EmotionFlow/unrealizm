@@ -13,6 +13,7 @@ import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.CTag;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 
 public class RelatedContents {
 	static public ArrayList<CContent> getUserContentList(int userId, int listNum, CheckLogin checkLogin){
@@ -26,6 +27,7 @@ public class RelatedContents {
 
 		if(listNum<1) return contents;
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
 
@@ -51,8 +53,9 @@ public class RelatedContents {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
-				content.m_cUser.m_strNickName	= Util.toString(resultSet.getString("nickname"));
-				content.m_cUser.m_strFileName	= Util.toString(resultSet.getString("user_file_name"));
+				CacheUsers0000.User user = users.getUser(content.m_nUserId);
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
 				contents.add(content);
 			}
@@ -147,6 +150,7 @@ public class RelatedContents {
 
 		if(listNum<1) return contents;
 		try {
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
 
@@ -155,7 +159,7 @@ public class RelatedContents {
 			if(tag.isEmpty()) return contents;
 
 			// genre contents
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
+			strSql = "SELECT contents_0000.* "
 					+ "FROM contents_0000 "
 					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
 					+ "WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND safe_filter<=? ";
@@ -176,8 +180,9 @@ public class RelatedContents {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
-				content.m_cUser.m_strNickName	= Util.toString(resultSet.getString("nickname"));
-				content.m_cUser.m_strFileName	= Util.toString(resultSet.getString("user_file_name"));
+				CacheUsers0000.User user = users.getUser(content.m_nUserId);
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
 				contents.add(content);
 			}
