@@ -91,6 +91,11 @@ if(bDownload) {
 			<div class="IllustItemLink">
 				<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 			</div>
+			<%if(bDownload) {%>
+			<div class="IllustItemTProhibit">
+				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+			</div>
+			<%}%>
 			<div class="IllustItemTProhibit">
 				<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
 			</div>
