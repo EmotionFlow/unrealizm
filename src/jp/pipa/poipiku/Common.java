@@ -174,12 +174,14 @@ public class Common {
 
 	public static final int[] UPLOAD_FILE_MAX = {
 			// normal, PASSPORT
-			200, 400
+//			200, 400
+			200, 200
 	};
 
 	public static final int[] UPLOAD_FILE_TOTAL_SIZE = {
 			// normal, PASSPORT
-			50, 100
+//			50, 100
+			50, 50
 	};
 
 	// アップロードエラーコード
