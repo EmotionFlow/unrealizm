@@ -33,7 +33,7 @@ public class UpFileFirstC extends UpC{
 	}
 
 	public int GetResults(UploadFileFirstCParam cParam) {
-		Log.d("START UpFileFirstC");
+		//Log.d("START UpFileFirstC");
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -59,7 +59,7 @@ public class UpFileFirstC extends UpC{
 
 			// check ext
 			if(!cParam.m_bPasteUpload && cParam.item_file==null){
-				Log.d("multipart upload file item is null.");
+				//Log.d("multipart upload file item is null.");
 				return nRtn;
 			}
 
@@ -112,7 +112,7 @@ public class UpFileFirstC extends UpC{
 				ImageIO.write(cImage, "png", new File(strRealFileName));
 			}
 			ImageUtil.createThumbIllust(strRealFileName);
-			Log.d("UpFileFirstC:"+strRealFileName);
+			//Log.d("UpFileFirstC:"+strRealFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -176,7 +176,7 @@ public class UpFileFirstC extends UpC{
 			cState.close();cState=null;
 
 			nRtn = cParam.m_nContentId;
-			Log.d("END UpFileFirstC");
+			//Log.d("END UpFileFirstC");
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

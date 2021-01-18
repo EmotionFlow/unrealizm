@@ -54,7 +54,7 @@
 
 class UploadFileAppendC {
 	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
-		Log.d("START UploadFileAppendC");
+		//Log.d("START UploadFileAppendC");
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -103,7 +103,7 @@ class UploadFileAppendC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			Log.d("UploadFileAppendC:"+nAppendId);
+			//Log.d("UploadFileAppendC:"+nAppendId);
 
 			// save file
 			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
@@ -115,7 +115,7 @@ class UploadFileAppendC {
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
-			Log.d("UploadFileAppendC:"+strRealFileName);
+			//Log.d("UploadFileAppendC:"+strRealFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -181,7 +181,7 @@ class UploadFileAppendC {
 			cState.close();cState=null;
 
 			nRtn = nAppendId;
-			Log.d("END UploadFileAppendC");
+			//Log.d("END UploadFileAppendC");
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
