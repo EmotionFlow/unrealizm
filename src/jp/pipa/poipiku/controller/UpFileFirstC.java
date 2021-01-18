@@ -33,6 +33,7 @@ public class UpFileFirstC extends UpC{
 	}
 
 	public int GetResults(UploadFileFirstCParam cParam) {
+		Log.d("START UpFileFirstC");
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -111,6 +112,7 @@ public class UpFileFirstC extends UpC{
 				ImageIO.write(cImage, "png", new File(strRealFileName));
 			}
 			ImageUtil.createThumbIllust(strRealFileName);
+			Log.d("UpFileFirstC:"+strRealFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -136,6 +138,7 @@ public class UpFileFirstC extends UpC{
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
 			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]) {
+				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
 				Util.deleteFile(strRealFileName);
 				strSql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
 				cState = cConn.prepareStatement(strSql);
@@ -173,6 +176,7 @@ public class UpFileFirstC extends UpC{
 			cState.close();cState=null;
 
 			nRtn = cParam.m_nContentId;
+			Log.d("END UpFileFirstC");
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

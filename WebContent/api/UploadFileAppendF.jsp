@@ -54,6 +54,7 @@
 
 class UploadFileAppendC {
 	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
+		Log.d("START UploadFileAppendC");
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -114,6 +115,7 @@ class UploadFileAppendC {
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
+			Log.d("UploadFileAppendC:"+strRealFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -179,6 +181,7 @@ class UploadFileAppendC {
 			cState.close();cState=null;
 
 			nRtn = nAppendId;
+			Log.d("END UploadFileAppendC");
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
