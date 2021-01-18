@@ -231,9 +231,9 @@ public class UpdateFileOrderC {
 			cState.close();cState=null;
 
 			//画像枚数の更新
-			strSql = "UPDATE contents_0000 SET file_num=? WHERE content_id=?;";
+			strSql = "UPDATE contents_0000 SET file_num=(SELECT COUNT(*) FROM contents_appends_0000 WHERE content_id=?)+1 WHERE content_id=?;";
 			cState = cConn.prepareStatement(strSql);
-			cState.setLong(1, vNewFileList.size());
+			cState.setLong(1, m_nContentId);
 			cState.setInt(2, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;

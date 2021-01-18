@@ -47,8 +47,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-29.js" type="text/javascript"></script>
-		<script src="/js/update-06.js" type="text/javascript"></script>
+		<script src="/js/upload-30.js" type="text/javascript"></script>
+		<script src="/js/update-07.js" type="text/javascript"></script>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -141,10 +141,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			}
 
 			function errorMsg(result) {
-				if(result == -1) {
+				if(result == Common.UPLOAD_FILE_TOTAL_ERROR) {
 					// file size error
 					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-				} else if(result == -2) {
+				} else if(result == Common.UPLOAD_FILE_TYPE_ERROR) {
 					// file type error
 					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
 				} else {
@@ -166,7 +166,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			$(function() {
-				initUpdateFile(<%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
+				initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			$(function() {
@@ -261,7 +261,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				<!-- 元々の方式 -->
 				<div id="FineUploaderPane" class="TimeLineIllustCmd">
 					<span id="file-drop-area"></span>
-					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, 200files, total 50MByte)</span>
+					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, <%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>files, total <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>MByte)</span>
 					<a id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev" href="javascript:void(0)">
 						<i class="far fa-images"></i>
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>

@@ -17,10 +17,10 @@
 			String strRelativePath = Common.GetUploadPath();
 			String strRealPath = getServletContext().getRealPath(strRelativePath);
 			DiskFileItemFactory factory = new DiskFileItemFactory();
-			factory.setSizeThreshold(40*1024*1024);	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+			factory.setSizeThreshold(200*1024*1024);	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
 			factory.setRepository(new File(strRealPath));
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			upload.setSizeMax(40*1024*1024);
+			upload.setSizeMax(200*1024*1024);
 			upload.setHeaderEncoding("UTF-8");
 
 			List items = upload.parseRequest(request);
@@ -72,17 +72,21 @@ class UploadFileAppendC {
 			String ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
 			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
-				return nRtn;
+				return Common.UPLOAD_FILE_TYPE_ERROR;
 			}
 
 			// 存在チェック
+			int fileTotalSize = 0;
 			boolean bExist = false;
 			strSql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
-			bExist = cResSet.next();
+			if(cResSet.next()) {
+				fileTotalSize += cResSet.getInt(1);
+				bExist = true;
+			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(!bExist) return nRtn;
@@ -142,7 +146,30 @@ class UploadFileAppendC {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			// update comment num
+			// ファイルサイズチェック
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
+			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
+			// 2枚目以降
+			strSql ="SELECT SUM(file_size) FROM contents_appends_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				fileTotalSize += cResSet.getInt(1);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]) {
+				Util.deleteFile(strRealFileName);
+				strSql ="DELETE FROM contents_appends_0000 WHERE append_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, nAppendId);
+				cState.executeUpdate();
+				cState.close();cState=null;
+				return Common.UPLOAD_FILE_TOTAL_ERROR;
+			}
+
+			// update file num
 			strSql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);

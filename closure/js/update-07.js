@@ -40,7 +40,7 @@ function UpdatePasteOrderAjax(user_id, content_id, append_ids){
 }
 
 //ファイル選択エリアの初期化
-function initUpdateFile(userid, contentid) {
+function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 	updateTweetButton();
 
 	multiFileUploader = new qq.FineUploader({
@@ -54,8 +54,8 @@ function initUpdateFile(userid, contentid) {
 		maxConnections: 1,
 		validation: {
 			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-			itemLimit: 200,
-			sizeLimit: 20000000,
+			itemLimit: fileNumMax,
+			sizeLimit: fileSizeMax*1024*1024,
 			stopOnFirstInvalidFile: false
 		},
 		retry: {
@@ -128,9 +128,9 @@ function initUpdateFile(userid, contentid) {
 		return total;
 	};
 	multiFileUploader.showTotalSize = function(total, submit_num) {
-		var strTotal = "(jpeg|png|gif, 200files, total 50MByte)";
+		var strTotal = "(jpeg|png|gif, "+fileNumMax+"files, total "+fileSizeMax+"MByte)";
 		if(total>0) {
-			strTotal="("+ submit_num + "/200,  " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
+			strTotal="("+ submit_num+"/"+fileNumMax + "files " + Math.ceil(total/1024.0/1024.0) + "/" + fileSizeMax + "MByte)";
 			$('#TimeLineAddImage').removeClass('Light');
 			completeAddFile();
 		}
@@ -259,7 +259,7 @@ function UpdateFile(user_id, content_id) {
 					}
 				}
 			} else {
-				errorMsg(data.result);
+				errorMsg();
 			}
 		}
 	});
