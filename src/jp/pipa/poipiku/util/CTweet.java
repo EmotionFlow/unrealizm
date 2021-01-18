@@ -234,6 +234,7 @@ public class CTweet {
 			int fileIdx = 0;
 			for (int y=0; y<numY; y++) {
 				for (int x=0; x<numX; x++) {
+					Log.d("Tweet image:"+fileIdx+"/"+vFileList.size());
 					if(fileIdx >= vFileList.size()) break;
 					String strSrcFileName = vFileList.get(fileIdx);
 					String strDstFileName = strSrcFileName+"_twitter_thumb.png";
