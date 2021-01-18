@@ -162,7 +162,7 @@ class UploadFileAppendC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]) {
+			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
 				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
 				Util.deleteFile(strRealFileName);
 				strSql ="DELETE FROM contents_appends_0000 WHERE append_id=?";

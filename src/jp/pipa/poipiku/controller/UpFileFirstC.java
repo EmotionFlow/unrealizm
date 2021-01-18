@@ -137,7 +137,7 @@ public class UpFileFirstC extends UpC{
 			// ファイルサイズチェック
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
-			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]) {
+			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
 				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
 				Util.deleteFile(strRealFileName);
 				strSql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
