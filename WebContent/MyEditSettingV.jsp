@@ -302,7 +302,7 @@ if(cResults.m_bUpdate) {
 				$.ajaxSingle({
 					"type": "post",
 					"data": {"ID": <%=checkLogin.m_nUserId%>, "PW": PW, "PW1": PW1, "PW2": PW2},
-					"url": "/f/UpdatePasswordF.jsp",
+					"url": "/api/UpdatePasswordF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						console.log(data);
