@@ -8,12 +8,7 @@
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
 <div class="SideBarMid Wide">
 <%if(Util.isSmartPhone(request)) {%>
-	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<!-- /4789880/poipiku/poipikumobile_336x280_mid -->
-
-	<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
-
-	<!--
 	<%int nRand = (int)(Math.random()*10000);%>
 	<div id='div-gpt-ad-1592939682472-<%=nRand%>'>
 		<script>
@@ -24,12 +19,7 @@
 		});
 		</script>
 	</div>
-	-->
-	<%}else{%>
-	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
-	<%}%>
 <%} else {%>
-	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<!-- /4789880/poipiku/poipiku_728x90_mid -->
 	<%int nRand = (int)(Math.random()*10000);%>
 	<div id='div-gpt-ad-1593016129927-<%=nRand%>' style='width: 728px; height: 90px;'>
@@ -41,9 +31,6 @@
 		});
 		</script>
 	</div>
-	<%}else{%>
-	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
-	<%}%>
 <%}%>
 </div>
 <%}%>

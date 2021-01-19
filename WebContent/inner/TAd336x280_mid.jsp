@@ -10,10 +10,6 @@
 <div class="SideBarMid">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<!-- /4789880/poipiku/poipikumobile_336x280_mid -->
-
-	<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
-
-	<!--
 	<%int nRand = (int)(Math.random()*10000);%>
 	<div id='div-gpt-ad-1592939682472-<%=nRand%>'>
 		<script>
@@ -24,13 +20,8 @@
 		});
 		</script>
 	</div>
-	-->
 	<%}else{%>
 	<!-- /4789880/poipiku/poipikumobile_336x280_mid_R18 -->
-
-	<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
-
-	<!--
 	<%int nRand = (int)(Math.random()*10000);%>
 	<div id='div-gpt-ad-1594920446129-<%=nRand%>'>
 		<script>
@@ -41,7 +32,6 @@
 		});
 		</script>
 	</div>
-	-->
 	<%}%>
 </div>
 <%} else {%>

@@ -11,10 +11,6 @@
 	<div class="SideBarMid">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 		<!-- /4789880/poipiku/poipikumobile_300x250_footer_left -->
-
-		<%@ include file="/inner/TAdBaseAdponAll.jsp"%>
-
-		<!--
 		<div id='div-gpt-ad-1597754220273-0' style='width: 300px; height: 250px;'>
 			<script>
 				googletag.cmd.push(function() {
@@ -24,13 +20,8 @@
 				});
 			</script>
 		</div>
-		-->
 		<%} else {%>
 		<!-- /4789880/poipiku/poipikumobile_336x280_footer_R18 -->
-
-		<%@ include file="/inner/TAdBaseAdponR18.jsp"%>
-
-		<!--
 		<div id='div-gpt-ad-1597758615399-0'>
 			<script>
 				googletag.cmd.push(function() {
@@ -40,7 +31,6 @@
 				});
 			</script>
 		</div>
-		-->
 	<%}%>
 	</div>
 <%} else {%>

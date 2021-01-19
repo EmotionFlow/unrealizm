@@ -248,9 +248,9 @@ public class Util {
 		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
 
 		// adrea
-		sbRtn.append("<script src=\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\"></script>");
+		//sbRtn.append("<script src=\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\"></script>");
 
-		/* ad manager
+		// Ad Manager
 		sbRtn.append("<script>");
 		sbRtn.append("googletag.cmd.push(function() {");
 		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
@@ -258,7 +258,7 @@ public class Util {
 		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
 		sbRtn.append("});");
 		sbRtn.append("</script>");
-		*/
+
 		sbRtn.append("</div>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
