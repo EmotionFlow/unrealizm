@@ -246,7 +246,7 @@ public class CTweet {
 				}
 			}
 
-			// 合成画像を保存
+			// 集約画像を保存
 			String strDstFileName = vFileList.get(0)+"_twitter.png";
 			ImageUtil.savePng(frame, strDstFileName);
 			g.dispose();

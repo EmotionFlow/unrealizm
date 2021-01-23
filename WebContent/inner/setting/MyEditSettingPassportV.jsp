@@ -268,8 +268,8 @@
 		}
 		.BenefitTable .ListCell {background: #eee;}
 		.BenefitTable td {height: 100px;}
-		.BenefitTable .NormalCell {color: #aaaaaa;}
-		.BenefitTable .BenefitCell {color: #464441;}
+		.BenefitTable .NormalCell {}
+		.BenefitTable .BenefitCell {font-weight: bold;}
 		.BenefitTable .BenefitDetail {
 				font-size: 0.85em;
 				color: #62605c;
@@ -332,8 +332,8 @@
 						</tr>
 						<tr>
 							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />複数枚投稿時のTwitter同時投稿の画像</td>
-							<td class="NormalCell">複数枚を1枚に合成して投稿(最初の4枚)</td>
-							<td class="BenefitCell">同時投稿した全ての画像を1枚に合成して投稿<br />
+							<td class="NormalCell">複数枚を1枚に集約して投稿(最初の4枚)</td>
+							<td class="BenefitCell">同時投稿した全ての画像を1枚に集約して投稿<br />
 							</td>
 						</tr>
 						<tr>
