@@ -35,9 +35,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			$("#IllustItemList").append($objMessage);
 			$.ajax({
 				"type": "post",
-				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.SP_MODE_APP%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
+				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_SP%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
 				"dataType": "json",
-				"url": "/f/MyHomeF.jsp",
+				"url": "/f/MyHomeAppF.jsp",
 				"success": function(data) {
 					if(data.end_id>0) {
 						g_nEndId = data.end_id;
