@@ -33,6 +33,7 @@
 		</a>
 	</li>
 
+	<!--
 	<%if((checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) && checkLogin.m_nUserId!=315) {%>
 	<li class="EventItem">
 		<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS" class="EventBanner NoBgBlue" style="padding: 8px;">
@@ -42,6 +43,7 @@
 		</a>
 	</li>
 	<%}%>
+	-->
 
 	<li class="EventItem">
 		<a href="/UploadTextPcV.jsp">

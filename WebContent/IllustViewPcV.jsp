@@ -215,6 +215,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
 		<%{%>
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">

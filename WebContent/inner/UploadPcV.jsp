@@ -145,7 +145,7 @@ try {
 		</script>
 
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; color: #6d6965; max-height: none;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
@@ -199,6 +199,8 @@ try {
 			<%}%>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper">
 			<div class="UploadFile">

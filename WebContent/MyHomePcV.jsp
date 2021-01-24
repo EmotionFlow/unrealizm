@@ -117,6 +117,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		</div>
 		<%}%>
 
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
+		<article class="Wrapper ThumbList">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 
 			<section id="IllustItemList" class="IllustItemList">

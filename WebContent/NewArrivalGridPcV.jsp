@@ -39,7 +39,7 @@ if(cResults.m_nCategoryId >= 0) {
 		});
 		</script>
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 		</style>
 	</head>
 
@@ -54,6 +54,8 @@ if(cResults.m_nCategoryId >= 0) {
 				<li><a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper GridList">
 			<nav id="CategoryMenu" class="CategoryMenu">

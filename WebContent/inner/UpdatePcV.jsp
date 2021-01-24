@@ -185,7 +185,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		</script>
 
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; max-height: none;}
@@ -252,6 +252,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			<%}%>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper">
 			<div class="UploadFile">

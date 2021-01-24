@@ -84,6 +84,8 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			$("#MenuSettings").show();
 		})</script>
 
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>

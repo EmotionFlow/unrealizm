@@ -198,6 +198,8 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>

@@ -88,7 +88,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		</script>
 
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
@@ -107,6 +107,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<li><a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a></li>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ViewPc">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>

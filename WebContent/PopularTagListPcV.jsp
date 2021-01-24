@@ -30,7 +30,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		});
 		</script>
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0;}
 			.CategoryListItem .CategoryMore {display: block; float: left; width: 100%; text-align: right; font-size: 13px; font-weight: normal; padding: 0 7px; box-sizing: border-box;}
 			.SearchResultTitle {margin: 10px 0 0 0;}
@@ -48,6 +48,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 				<li><a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ThumbList">
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
