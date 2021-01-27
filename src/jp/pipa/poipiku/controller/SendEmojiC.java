@@ -142,14 +142,15 @@ public class SendEmojiC {
 				// 注文生成
 				Integer orderId = null;
 				strSql = "INSERT INTO orders(" +
-						" customer_id, seller_id, status, payment_total)" +
-						" VALUES (?, ?, ?, ?)";
+						" customer_id, seller_id, status, payment_total, cheer_point_status)" +
+						" VALUES (?, 2, ?, ?, 0)";
 				statement = connection.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 				int idx=1;
-				statement.setInt(idx++, m_nUserId);
-				statement.setInt(idx++, 2); // 売り手はポイピク公式
-				statement.setInt(idx++, COrder.STATUS_INIT);
-				statement.setInt(idx++, m_nAmount);
+				statement.setInt(idx++, m_nUserId);             // customer_id
+				// seller_id=2 (ポイピク公式)
+				statement.setInt(idx++, COrder.STATUS_INIT);    // status
+				statement.setInt(idx++, m_nAmount);             // payment_total
+				// cheer_point_status=0 (分配対象)
 				statement.executeUpdate();
 				resultSet = statement.getGeneratedKeys();
 				if(resultSet.next()){
@@ -161,17 +162,17 @@ public class SendEmojiC {
 
 				strSql = "INSERT INTO order_details(" +
 						" order_id, content_id, content_user_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
-						" VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+						" VALUES (?, ?, ?, 1, ?, ?, ?, 1)";
 				statement = connection.prepareStatement(strSql);
 				idx=1;
-				statement.setInt(idx++, orderId);
-				statement.setInt(idx++, m_nContentId);
-				statement.setInt(idx++, nContentUserId);
-				statement.setInt(idx++, 1);
-				statement.setString(idx++, m_strEmoji);
-				statement.setInt(idx++, m_nAmount);
-				statement.setInt(idx++, m_nAmount);
-				statement.setInt(idx++, 1);
+				statement.setInt(idx++, orderId);        // order_id
+				statement.setInt(idx++, m_nContentId);   // content_id
+				// product_category_id=1
+				statement.setInt(idx++, nContentUserId); // content_user_id
+				statement.setString(idx++, m_strEmoji);  // product_name
+				statement.setInt(idx++, m_nAmount);      // list_price
+				statement.setInt(idx++, m_nAmount);      // amount_paid
+				// quantity=1
 				statement.executeUpdate();
 				statement.close(); statement=null;
 
