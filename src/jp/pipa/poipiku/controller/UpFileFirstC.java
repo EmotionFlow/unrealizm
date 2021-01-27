@@ -18,8 +18,10 @@ import org.apache.commons.codec.binary.Base64;
 
 import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.ImageUtil;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.ServletContext;
 
@@ -31,6 +33,7 @@ public class UpFileFirstC extends UpC{
 	}
 
 	public int GetResults(UploadFileFirstCParam cParam) {
+		//Log.d("START UpFileFirstC");
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -56,7 +59,7 @@ public class UpFileFirstC extends UpC{
 
 			// check ext
 			if(!cParam.m_bPasteUpload && cParam.item_file==null){
-				Log.d("multipart upload file item is null.");
+				//Log.d("multipart upload file item is null.");
 				return nRtn;
 			}
 
@@ -86,7 +89,6 @@ public class UpFileFirstC extends UpC{
 				bExist = true;
 				cContent = new CContent(cResSet);
 			}
-
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(!bExist) {
@@ -110,6 +112,7 @@ public class UpFileFirstC extends UpC{
 				ImageIO.write(cImage, "png", new File(strRealFileName));
 			}
 			ImageUtil.createThumbIllust(strRealFileName);
+			//Log.d("UpFileFirstC:"+strRealFileName);
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -130,6 +133,21 @@ public class UpFileFirstC extends UpC{
 				Log.d("error getImageSize");
 			}
 			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
+
+			// ファイルサイズチェック
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
+			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
+			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
+				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
+				Util.deleteFile(strRealFileName);
+				strSql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nUserId);
+				cState.setInt(2, cParam.m_nContentId);
+				cState.executeUpdate();
+				cState.close();cState=null;
+				return Common.UPLOAD_FILE_TOTAL_ERROR;
+			}
 
 			// open_id更新
 			int nOpenId = GetOpenId(
@@ -158,6 +176,7 @@ public class UpFileFirstC extends UpC{
 			cState.close();cState=null;
 
 			nRtn = cParam.m_nContentId;
+			//Log.d("END UpFileFirstC");
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

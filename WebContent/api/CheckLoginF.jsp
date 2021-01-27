@@ -23,6 +23,8 @@ try {
 	user.put("TEXT_MAX_PASETE", Common.EDITOR_TEXT_MAX[0][checkLogin.m_nPassportId]);
 	user.put("TEXT_MAX_BASIC_PAINT", Common.EDITOR_TEXT_MAX[0][checkLogin.m_nPassportId]);
 	user.put("TEXT_MAX_TEXT", Common.EDITOR_TEXT_MAX[0][checkLogin.m_nPassportId]);
+	user.put("UPLOAD_FILE_MAX", Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]);
+	user.put("UPLOAD_FILE_TOTAL_SIZE", Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]);
 
 	//JSONに変換して出力
 	mapper = new ObjectMapper();

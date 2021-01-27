@@ -172,6 +172,22 @@ public class Common {
 			1000, 10000
 	};
 
+	public static final int[] UPLOAD_FILE_MAX = {
+			// normal, PASSPORT
+			200, 400
+//			200, 200
+	};
+
+	public static final int[] UPLOAD_FILE_TOTAL_SIZE = {
+			// normal, PASSPORT
+			50, 100
+//			50, 50
+	};
+
+	// アップロードエラーコード
+	public static final int UPLOAD_FILE_TOTAL_ERROR = -999;
+	public static final int UPLOAD_FILE_TYPE_ERROR = -998;
+
 	// Cookie Key
 	public static String POIPIKU_LK = "POIPIKU_LK";
 	public static String POIPIKU_LK_POST = "POIPIKU_LK";

@@ -37,7 +37,7 @@ g_strSearchWord = cResults.m_strKeyword;
 		</script>
 
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 
 			<%if(Util.isSmartPhone(request)) {%>
 			#HeaderTitleWrapper {display: none;}
@@ -56,6 +56,8 @@ g_strSearchWord = cResults.m_strKeyword;
 				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ItemList">
 			<section id="IllustThumbList" class="IllustItemList">

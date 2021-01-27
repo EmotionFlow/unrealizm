@@ -48,7 +48,7 @@ String strFileUrl = cResults.m_strRepFileName;
 		</script>
 
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 
 			<%if(Util.isSmartPhone(request)) {%>
 			#HeaderTitleWrapper {display: none;}
@@ -67,6 +67,8 @@ String strFileUrl = cResults.m_strRepFileName;
 				<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper GridList">
 			<header class="SearchResultTitle">

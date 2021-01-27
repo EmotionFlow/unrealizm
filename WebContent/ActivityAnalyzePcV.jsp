@@ -13,6 +13,13 @@ if(!checkLogin.m_bLogin) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title>_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
+
+		<script type="text/javascript">
+		$(function(){
+			$('#MenuAct').addClass('Selected');
+		});
+		</script>
+
 		<script>
 			var g_nCategory = 0;
 
@@ -94,6 +101,7 @@ if(!checkLogin.m_bLogin) {
 			</ul>
 		</nav>
 
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper">
 			<nav id="CategoryMenu" class="CategoryMenu">

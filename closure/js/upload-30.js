@@ -758,7 +758,7 @@ function tweetSucceeded(data){
 	}
 }
 
-function initUploadFile() {
+function initUploadFile(fileNumMax, fileSizeMax) {
 	multiFileUploader = new qq.FineUploader({
 		element: document.getElementById("file-drop-area"),
 		autoUpload: false,
@@ -766,8 +766,8 @@ function initUploadFile() {
 		maxConnections: 1,
 		validation: {
 			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-			itemLimit: 200,
-			sizeLimit: 20000000,
+			itemLimit: fileNumMax,
+			sizeLimit: fileSizeMax*1024*1024,
 			stopOnFirstInvalidFile: false
 		},
 		retry: {
@@ -780,7 +780,7 @@ function initUploadFile() {
 					this.setEndpoint('/api/UploadFileFirstF.jsp', id);
 					console.log("UploadFileFirstF");
 				} else {
-					this.setEndpoint('/f/UploadFileAppendF.jsp', id);
+					this.setEndpoint('/api/UploadFileAppendF.jsp', id);
 					console.log("UploadFileAppendF");
 				}
 				this.setParams({
@@ -844,9 +844,9 @@ function initUploadFile() {
 		return total;
 	};
 	multiFileUploader.showTotalSize = function(total, submit_num) {
-		var strTotal = "(jpeg|png|gif, 200files, total 50MByte)";
+		var strTotal = "(jpeg|png|gif, "+fileNumMax+"files, total "+fileSizeMax+"MByte)";
 		if(total>0) {
-			strTotal="("+ submit_num + "/200,  " + Math.ceil((multiFileUploader.total_size-total)/1024) + " KByte)";
+			strTotal="("+ submit_num+"/"+fileNumMax + "files " + Math.ceil(total/1024.0/1024.0) + "/" + fileSizeMax + "MByte)";
 			$('#TimeLineAddImage').removeClass('Light');
 			completeAddFile();
 		}

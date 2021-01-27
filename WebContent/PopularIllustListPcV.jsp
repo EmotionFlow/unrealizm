@@ -29,7 +29,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		});
 		</script>
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 		</style>
 	</head>
 
@@ -44,6 +44,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 				<li><a class="TabMenuItem Selected" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
 			</ul>
 		</nav>
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ThumbList">
 			<section id="IllustThumbList" class="IllustThumbList">

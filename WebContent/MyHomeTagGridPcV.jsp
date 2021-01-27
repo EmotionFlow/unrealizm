@@ -63,7 +63,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		</script>
 
 		<style>
-			body {padding-top: 83px !important;}
+			body {padding-top: 79px !important;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
@@ -83,13 +83,15 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</ul>
 		</nav>
 
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
 		<article class="Wrapper ViewPc">
 			<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
 				<a href="/MyHomeTagSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
 			</div>
 
 			<aside class="PcSideBar" style="margin-top: 30px;">
-				 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
@@ -117,7 +119,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					</div>
 				</div>
 
-				 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>

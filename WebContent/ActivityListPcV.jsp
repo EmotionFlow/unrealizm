@@ -65,6 +65,8 @@ if(!checkLogin.m_bLogin) {
 			</ul>
 		</nav>
 
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
 		<article class="Wrapper ItemList">
 			<div class="IllustItemList" style="min-height: 600px;">
 				<div id="ActivityList" class="ActivityList">

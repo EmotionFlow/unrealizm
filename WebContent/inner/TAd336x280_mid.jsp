@@ -5,7 +5,7 @@
 <%@page import="jp.pipa.poipiku.settlement.*"%>
 <%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
- <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
 <%if(Util.isSmartPhone(request)) {%>
 <div class="SideBarMid">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>

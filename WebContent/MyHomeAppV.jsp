@@ -37,7 +37,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				"type": "post",
 				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_SP%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
 				"dataType": "json",
-				"url": "/f/MyHomeF.jsp",
+				"url": "/f/MyHomeAppF.jsp",
 				"success": function(data) {
 					if(data.end_id>0) {
 						g_nEndId = data.end_id;
