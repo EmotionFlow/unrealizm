@@ -124,25 +124,25 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 			<section class="PoipikuInfo">
 
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
 				</div>
 
 				<div class="PoipikuDesc Full">
