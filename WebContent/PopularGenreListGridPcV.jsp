@@ -23,7 +23,7 @@ boolean bRtn = results.getResults(checkLogin);
 		</script>
 		<style>
 			body {padding-top: 79px !important;}
-
+			.SearchGenre .SearchEdit {margin: 0 0 5px 0;}
 		</style>
 	</head>
 
@@ -41,6 +41,12 @@ boolean bRtn = results.getResults(checkLogin);
 		</nav>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
+		<div class="SearchGenre">
+			<div class="SearchEdit">
+				<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfoPcV.jsp?ID=<%=checkLogin.m_nUserId%>&GD=-1"><i class="fas fa-pencil-alt"></i><%=_TEX.T("SearchIllustByGenre.New")%></a>
+			</div>
+		</div>
 
 		<article class="Wrapper GridList">
 			<section id="IllustThumbList" class="IllustThumbList">

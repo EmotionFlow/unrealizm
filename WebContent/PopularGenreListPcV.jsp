@@ -48,6 +48,13 @@ boolean bRtn = results.getResults(checkLogin);
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
+		<div class="SearchGenre">
+			<div class="SearchEdit">
+				<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfoPcV.jsp?ID=<%=checkLogin.m_nUserId%>&GD=-1"><i class="fas fa-pencil-alt"></i><%=_TEX.T("SearchIllustByGenre.New")%></a>
+			</div>
+		</div>
+
+
 		<article class="Wrapper ItemList">
 			<section id="IllustThumbList" class="IllustThumbList">
 			<%for(int nCnt=0; nCnt<results.contents.size(); nCnt++) {
