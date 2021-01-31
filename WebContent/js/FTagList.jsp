@@ -189,7 +189,7 @@ console.log(nId, strTagName);
 
 function CreateTagListItemData(nId, strTagName, strTagFileName) {
 	$TagInputItem = $('<div></div>').addClass('TagInputItem');
-	var strTagFileName = "//img-cdn.poipiku.com" + strTagFileName;
+	//var strTagFileName = "//img-cdn.poipiku.com" + strTagFileName;
 	$TagInputImg = $('<img />').addClass('TagInputImg').attr('src', strTagFileName).attr('onerror', 'this.onerror=null;this.src="//img-cdn.poipiku.com/img/default_genre.png"');
 	$TagInputTxt = $('<span></span>').addClass('TagInputTxt').html(strTagName);
 	$TagInputCmd = $('<div></div>').addClass('TagInputCmd fa fa-times').attr('onclick', 'OnTagListDelete('+ nId + ')');
