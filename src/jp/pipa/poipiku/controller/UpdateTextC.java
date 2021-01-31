@@ -70,7 +70,7 @@ public class UpdateTextC extends UpC {
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<String>();
 				lColumns.addAll(Arrays.asList(
-					"genre_id", "category_id=?", "open_id=?", "description=?", "text_body=?", "tag_list=?", "publish_id=?",
+					"genre_id=?", "category_id=?", "open_id=?", "description=?", "text_body=?", "tag_list=?", "publish_id=?",
 					"password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?"
 					));
