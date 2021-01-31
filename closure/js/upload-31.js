@@ -872,6 +872,8 @@ function getLimitedTimeFlg(strPublishElementId, strLimitedTimeElementId){
 function UploadFile(user_id) {
 	if(!multiFileUploader) return;
 	if(multiFileUploader.getSubmittedNum()<=0) return;
+	if(!($('#TagInputItemData').length)) return;
+	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var strTagList = $.trim($("#EditTagList").val());
@@ -916,6 +918,7 @@ function UploadFile(user_id) {
 		"type": "post",
 		"data": {
 			"UID":user_id,
+			"GD" :genre,
 			"CAT":nCategory,
 			"DES":strDescription,
 			"TAG":strTagList,
@@ -1033,9 +1036,9 @@ function UploadPaste(user_id) {
 		var strSrc = $.trim($(this).attr('src'));
 		if(strSrc.length>0) nImageNum++;
 	});
-	console.log(nImageNum);
 	if(nImageNum<=0) return;
-
+	if(!($('#TagInputItemData').length)) return;
+	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var strTagList = $.trim($("#EditTagList").val());
@@ -1080,6 +1083,7 @@ function UploadPaste(user_id) {
 		"type": "post",
 		"data": {
 			"UID":user_id,
+			"GD" :genre,
 			"CAT":nCategory,
 			"DES":strDescription,
 			"TAG":strTagList,
@@ -1163,6 +1167,8 @@ function UploadPaste(user_id) {
 }
 
 function UploadText(user_id) {
+	if(!($('#TagInputItemData').length)) return;
+	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var strTextBody = $.trim($("#EditTextBody").val());
@@ -1209,6 +1215,7 @@ function UploadText(user_id) {
 		"type": "post",
 		"data": {
 			"UID":user_id,
+			"GD" :genre,
 			"CAT":nCategory,
 			"DES":strDescription,
 			"BDY":strTextBody,

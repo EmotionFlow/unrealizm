@@ -47,8 +47,11 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-30.js" type="text/javascript"></script>
+		<script src="/js/upload-31.js" type="text/javascript"></script>
 		<script src="/js/update-07.js" type="text/javascript"></script>
+		<script src="/js/FTagList.jsp?<%=(int)(System.currentTimeMillis()/1000/60/60)%>" type="text/javascript"></script>
+		<link href="/css/FTag-01.css" type="text/css" rel="stylesheet" />
+
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
 		<script type="text/javascript">
@@ -279,6 +282,18 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					</div>
 				</div>
 				<%}%>
+
+				<div class="EditorMetaData">
+					<div class="TagInputItemList" id="TagInputItemList">
+					</div>
+					<div class="TagInputItemList">
+						<div class="TagInputItem" id="TagInputForm">
+							<input class="TagInputTxt TagInputTxtInput" id="TagInputTxt" type="text" onkeyup="OnTagListUpdate()" onclick="OnTagListToggle()" onfocus="OnFocusTagList()" placeholder="<%=_TEX.T("UploadFilePc.Genre.Placeholder")%>" autocomplete="off" />
+						</div>
+						<div class="TagInputSuggest" id="TagInputSuggest">
+						</div>
+					</div>
+				</div>
 
 				<div class="CategorDesc">
 					<select id="EditCategory">

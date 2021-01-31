@@ -25,6 +25,7 @@ public class UpCParam {
 	public boolean m_bTweetImg = false;
 	public int m_nEditorId = Common.EDITOR_UPLOAD;
 	public boolean m_bCheerNg = true;
+	public int genre = -1;
 
 	protected void GetParams(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("UTF-8");
@@ -45,6 +46,7 @@ public class UpCParam {
 		m_bTweetTxt			= Util.toBoolean(request.getParameter("TWT"));
 		m_bTweetImg			= Util.toBoolean(request.getParameter("TWI"));
 		m_bCheerNg			= Util.toInt(request.getParameter("CNG"))!=0;
+		genre				= Util.toInt(request.getParameter("GD"));
 
 		// format tag list
 		if(!m_strTagList.isEmpty()) {

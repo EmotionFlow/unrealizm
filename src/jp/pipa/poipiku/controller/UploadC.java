@@ -29,7 +29,7 @@ public class UploadC extends UpC {
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<String>();
-			lColumns.addAll(Arrays.asList("user_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
+			lColumns.addAll(Arrays.asList("user_id", "genre_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
 
 			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
@@ -50,6 +50,7 @@ public class UploadC extends UpC {
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, cParam.m_nUserId);
+			cState.setInt(idx++, cParam.genre);
 			cState.setInt(idx++, cParam.m_nCategoryId);
 			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
 			cState.setString(idx++, cParam.m_strTagList);
