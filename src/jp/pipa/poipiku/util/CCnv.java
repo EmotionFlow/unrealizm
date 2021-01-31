@@ -662,26 +662,28 @@ public class CCnv {
 		strRtn.append("</a>");	// IllustItemUser
 
 		// カテゴリ系情報
-		strRtn.append("<span class=\"IllustInfo\">");
-		// ジャンル
-		Genre genre = Util.getGenre(cContent.m_nGenreId);
-		strRtn.append(
-			String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s_40.jpg')\"></span><span class=\"GenreName\">%s</span></a>",
-			SEARCH_GENRE,
-			cContent.m_nGenreId,
-			Common.GetUrl(genre.genreImage),
-			Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
-			)
-		);
+		strRtn.append("<span class=\"IllustInfo IllustMeta\">");
 		// カテゴリ
 		strRtn.append(
-			String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></span>",
+			String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
 			SEARCH_CATEGORY,
 			cContent.m_nCategoryId,
 			cContent.m_nCategoryId,
 			_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
 			)
 		);
+		// ジャンル
+		if(cContent.m_nGenreId>1) {
+			Genre genre = Util.getGenre(cContent.m_nGenreId);
+			strRtn.append(
+				String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s_40.jpg')\"></span><span class=\"GenreName\">%s</span></a>",
+				SEARCH_GENRE,
+				cContent.m_nGenreId,
+				Common.GetUrl(genre.genreImage),
+				Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
+				)
+			);
+		}
 		strRtn.append("</span>");	// カテゴリ系情報(IllustInfo)
 
 		// イラスト情報
