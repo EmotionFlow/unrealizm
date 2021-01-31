@@ -48,7 +48,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-32.js" type="text/javascript"></script>
-		<script src="/js/update-07.js" type="text/javascript"></script>
+		<script src="/js/update-08.js" type="text/javascript"></script>
 		<script src="/js/FTagList.jsp?<%=(int)(System.currentTimeMillis()/1000/60/60)%>" type="text/javascript"></script>
 		<link href="/css/FTag-01.css" type="text/css" rel="stylesheet" />
 
@@ -168,15 +168,41 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			<%}%>
 
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
+			function UploadFileCheck(user_id, content_id) {
+				if(!multiFileUploader) return;
+				if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Image.NeedImage")%>');
+					return;
+				}
+				if(!($('#TagInputItemData').length)) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
+					return;
+				}
+				UpdateFile(user_id, content_id);
+			}
 			$(function() {
 				initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
+			function UpdatePasteCheck(user_id, content_id) {
+				if(!($('#TagInputItemData').length)) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
+					return;
+				}
+				UpdatePaste(user_id, content_id);
+			}
 			$(function() {
 				$('#PasteZone').sortable();
 				initUpdatePaste(<%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 			});
 			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
+			function UpdateTextCheck(user_id, content_id) {
+				if(!($('#TagInputItemData').length)) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
+					return;
+				}
+				UpdateText(user_id, content_id);
+			}
 			$(function() {
 				DispTextCharNum();
 			});
@@ -497,11 +523,11 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 				<div class="UoloadCmd">
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFile(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateFileCheck(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePaste(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdatePasteCheck(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateText(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UpdateTextCheck(<%=checkLogin.m_nUserId%>, <%=cResults.m_nContentId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>

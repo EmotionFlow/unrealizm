@@ -163,6 +163,8 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 function UpdateFile(user_id, content_id) {
 	if(!multiFileUploader) return;
 	if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) return;
+	if(!($('#TagInputItemData').length)) return;
+	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
 	var strTagList = $.trim($("#EditTagList").val());
@@ -221,6 +223,7 @@ function UpdateFile(user_id, content_id) {
 		"data": {
 			"IID":content_id,
 			"UID":user_id,
+			"GD" :genre,
 			"CAT":nCategory,
 			"DES":strDescription,
 			"TAG":strTagList,
@@ -333,7 +336,7 @@ function UpdatePasteAppendFAjax(img_element, user_id, content_id){
 }
 
 function UpdateFileRefTwitterFAjax(
-	user_id, content_id, nCategory, strDescription, strTagList,
+	user_id, content_id, genre, nCategory, strDescription, strTagList,
 	nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
 	nLimitedTime, strPublishStart, strPublishEnd,
 	nTweetText, nTweetImage, nDeleteTweet){
@@ -342,6 +345,7 @@ function UpdateFileRefTwitterFAjax(
 		"data": {
 			"UID":user_id,
 			"IID":content_id,
+			"GD" :genre,
 			"CAT":nCategory,
 			"DES":strDescription,
 			"TAG":strTagList,
@@ -365,7 +369,7 @@ function UpdateFileRefTwitterFAjax(
 
 
 function UploadTextRefTwitterFAjax(
-	user_id, content_id, nCategory, strDescription, strBodyText, strTagList,
+	user_id, content_id, genre, nCategory, strDescription, strBodyText, strTagList,
 	nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
 	nLimitedTime, strPublishStart, strPublishEnd,
 	nTweetText, nTweetImage, nDeleteTweet){
@@ -374,6 +378,7 @@ function UploadTextRefTwitterFAjax(
 		"data": {
 			"UID":user_id,
 			"IID":content_id,
+			"GD" :genre,
 			"CAT":nCategory,
 			"DES":strDescription,
 			"BDY":strBodyText,
@@ -427,7 +432,8 @@ function createUpdatePaste(){
 			bEntered = false;
 			return;
 		}
-
+		if(!($('#TagInputItemData').length)) return;
+		var genre = $('#TagInputItemData').val();
 		var nCategory = $('#EditCategory').val();
 		var strDescription = $.trim($("#EditDescription").val());
 		var strTagList = $.trim($("#EditTagList").val());
@@ -484,7 +490,7 @@ function createUpdatePaste(){
 		startMsg();
 
 		var fUpdateFile = UpdateFileRefTwitterFAjax(
-			user_id, content_id, nCategory, strDescription, strTagList,
+			user_id, content_id, genre, nCategory, strDescription, strTagList,
 			nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
 			nLimitedTime, strPublishStart, strPublishEnd,
 			getTweetSetting(), getTweetImageSetting(), nDeleteTweet);
@@ -556,6 +562,8 @@ function createUpdateText(){
 		if(bEntered) return;
 		bEntered = true;
 
+		if(!($('#TagInputItemData').length)) return;
+		var genre = $('#TagInputItemData').val();
 		var nCategory = $('#EditCategory').val();
 		var strDescription = $.trim($("#EditDescription").val());
 		var strTextBody = $.trim($("#EditTextBody").val());
@@ -613,7 +621,7 @@ function createUpdateText(){
 		startMsg();
 
 		var fUpdateFile = UploadTextRefTwitterFAjax(
-			user_id, content_id, nCategory, strDescription, strTextBody, strTagList,
+			user_id, content_id, genre, nCategory, strDescription, strTextBody, strTagList,
 			nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
 			nLimitedTime, strPublishStart, strPublishEnd,
 			getTweetSetting(), getTweetImageSetting(), nDeleteTweet);

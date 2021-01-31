@@ -70,7 +70,7 @@ public class UpdateTextC extends UpC {
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<String>();
 				lColumns.addAll(Arrays.asList(
-					"category_id=?", "open_id=?", "description=?", "text_body=?", "tag_list=?", "publish_id=?",
+					"genre_id", "category_id=?", "open_id=?", "description=?", "text_body=?", "tag_list=?", "publish_id=?",
 					"password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?"
 					));
@@ -103,6 +103,7 @@ public class UpdateTextC extends UpC {
 			try {
 				idx = 1;
 				// set values
+				cState.setInt(idx++, cParam.genre);
 				cState.setInt(idx++, cParam.m_nCategoryId);
 				cState.setInt(idx++, nOpenId);
 				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
