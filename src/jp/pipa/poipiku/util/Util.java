@@ -5,6 +5,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,9 +16,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.naming.InitialContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
 
@@ -401,4 +406,44 @@ public class Util {
 	public static void deleteCookie(HttpServletResponse response, String name) {
 		setCookie(response, name, "", -1);
 	}
+
+	public static Genre getGenre(int genreId) {
+		String strSql = "";
+		Genre genre = new Genre();
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			Class.forName("org.postgresql.Driver");
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+
+			// Get info_list
+			strSql = "SELECT * FROM genres WHERE genre_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, genreId);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				genre = new Genre(resultSet);
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		return genre;
+	}
+
+	public static String getUploadGenrePath() {
+		String path = "/user_img01/genre_img";
+		return path;
+	}
+
 }

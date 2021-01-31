@@ -56,7 +56,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				</header>
 				<div class="IllustThumbList">
 					<%for(CContent cContent : m_vContentList) {%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%}%>
 				</div>
 				<a class="CategoryMore" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">

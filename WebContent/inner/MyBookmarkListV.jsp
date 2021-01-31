@@ -64,6 +64,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 	</head>
 
 	<body>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper">
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
 				<%=_TEX.T("MyBookmarkList.LetsMessage")%>
@@ -72,7 +74,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, nSpMode)%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
 					<%if(nCnt==17) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>

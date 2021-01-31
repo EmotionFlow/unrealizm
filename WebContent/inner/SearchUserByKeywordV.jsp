@@ -69,6 +69,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 	</head>
 
 	<body>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper">
 			<section id="IllustThumbList" class="IllustItemList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>

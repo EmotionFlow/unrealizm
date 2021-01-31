@@ -34,6 +34,8 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 	</head>
 
 	<body>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper">
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
@@ -46,7 +48,7 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 				</header>
 				<div class="IllustThumbList">
 					<%for(CContent cContent : m_vContentList) {%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, nSpMode)%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
 					<%}%>
 				</div>
 				<a class="CategoryMore" href="/SearchIllustByTag<%=isApp?"App":""%>V.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">

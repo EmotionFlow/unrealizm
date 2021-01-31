@@ -152,7 +152,7 @@
 
 	<div class="SettingListItem">
 		<div class="SettingListTitle">
-			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo_60.png" />
+			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo2_60.png" />
 			<%=_TEX.T("EditSettingV.BgImage")%>
 		</div>
 		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
@@ -178,7 +178,7 @@
 
 	<div class="SettingListItem">
 		<div class="SettingListTitle">
-			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo_60.png" />
+			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo2_60.png" />
 			<%=_TEX.T("EditSettingV.MyPage.AdMode")%>
 		</div>
 		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
@@ -202,7 +202,7 @@
 
 	<div class="SettingListItem">
 		<div class="SettingListTitle">
-			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo_60.png" />
+			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo2_60.png" />
 			<%=_TEX.T("EditSettingV.MyPage.Download")%>
 		</div>
 		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>

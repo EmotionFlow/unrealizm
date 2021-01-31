@@ -19,8 +19,8 @@ echo /
 javac -Xlint:unchecked -sourcepath $SOURCE_PATH -d $DEST_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT/*.java
 
 for dir in "${JAVA_FILE_DIRS[@]}"; do
-    echo $dir
-    javac -Xlint:unchecked -sourcepath $SOURCE_PATH -d $DEST_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT$dir/*.java
+		echo $dir
+		javac -Xlint:unchecked -sourcepath $SOURCE_PATH -d $DEST_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT$dir/*.java
 done
 
 echo build ok

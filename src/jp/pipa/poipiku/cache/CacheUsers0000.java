@@ -206,7 +206,7 @@ public class CacheUsers0000 {
 			userId			= resultSet.getInt("user_id");
 			hashPass		= resultSet.getString("hash_password");
 			nickName		= resultSet.getString("nickname");
-			langId			= Math.min(Math.max(resultSet.getInt("lang_id"), 0), 1);
+			langId			= Math.min(Math.max(resultSet.getInt("lang_id"), Common.LANG_ID_OTHER), Common.LANG_ID_JP);
 			lastLogin		= resultSet.getTimestamp("last_login_date").getTime();
 			fileName		= Util.toString(resultSet.getString("file_name"));
 			if(fileName.isEmpty()) fileName = "/img/default_user.jpg";

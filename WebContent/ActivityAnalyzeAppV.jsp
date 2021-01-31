@@ -80,6 +80,8 @@ if(!checkLogin.m_bLogin) return;
 		</style>
 	</head>
 	<body>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper">
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>

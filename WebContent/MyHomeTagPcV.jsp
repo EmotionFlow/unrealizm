@@ -68,25 +68,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		});
 		</script>
 
-		<link href="/js/slick/slick-theme.css" rel="stylesheet" type="text/css">
-		<link href="/js/slick/slick.css" rel="stylesheet" type="text/css">
-		<script type="text/javascript" src="/js/slick/slick.min.js"></script>
-		<script>
-		$(function(){
-			$('.EventItemList').slick({
-				autoplay:true,
-				autoplaySpeed:2000,
-				dots:true,
-				infinite: true,
-				slidesToShow: 1,
-				variableWidth: true,
-				centerMode: true,
-				centerPadding: '10px',
-			});
-			$('.EventItemList').css({'opacity': '1'});
-		});
-		</script>
-
 		<style>
 			body {padding-top: 79px !important;}
 			<%if(!Util.isSmartPhone(request)) {%>

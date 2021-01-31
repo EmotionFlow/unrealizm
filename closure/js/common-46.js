@@ -309,6 +309,29 @@ function UpdateDesc(nUserId, content_id, mode) {
 	});
 }
 
+function UpdateFollowGenre(userId, genreId) {
+	$.ajaxSingle({
+		"type": "post",
+		"data": {"UID": userId, "GD": genreId},
+		"url": "/api/UpdateFollowGenreF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			if(data.result==1) {
+				$('.TitleCmdFollow').addClass('Selected');
+				DispMsg(data.message);
+			} else if(data.result==0) {
+				$('.TitleCmdFollow').removeClass('Selected');
+				DispMsg(data.message);
+			} else {
+				DispMsg(data.message);
+			}
+		},
+		"error": function(req, stat, ex){
+			DispMsg('Connection error');
+		}
+	});
+}
+
 function UpdateFollowTag(nUserId, strTagTxt, nTypeId) {
 	$.ajaxSingle({
 		"type": "post",

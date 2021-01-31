@@ -1,6 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="jp.pipa.poipiku.util.CTweet"%>
 <%@ page import="twitter4j.UserList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
@@ -29,6 +29,8 @@ try {
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-30.js" type="text/javascript"></script>
+		<script src="/js/FTagList.jsp?<%=(int)(System.currentTimeMillis()/1000/60/60)%>" type="text/javascript"></script>
+		<link href="/css/FTag-01.css" type="text/css" rel="stylesheet" />
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -122,6 +124,18 @@ try {
 			<%}%>
 
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
+			function UploadFileCheck(user_id) {
+				if(!multiFileUploader) return;
+				if(multiFileUploader.getSubmittedNum()<=0){
+					DispMsg('<%=_TEX.T("UploadFilePc.Image.NeedImage")%>');
+					return;
+				}
+				if(!($('#TagInputItemData').length)) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
+					return;
+				}
+				UploadFile(user_id);
+			}
 			function completeAddFile() {
 				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
@@ -129,10 +143,38 @@ try {
 				initUploadFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>);
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
+			function UploadPasteCheck(user_id) {
+				var nImageNum = 0;
+				$('.imgView').each(function(){
+					var strSrc = $.trim($(this).attr('src'));
+					if(strSrc.length>0) nImageNum++;
+				});
+				if(nImageNum<=0) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Paste.NeedImage")%>');
+					return;
+				}
+				if(!($('#TagInputItemData').length)) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
+					return;
+				}
+				UploadPaste(user_id);
+			}
 			$(function() {
 				initUploadPaste();
 			});
 			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
+			function UploadTextCheck(user_id) {
+				var strTextBody = $.trim($("#EditTextBody").val());
+				if(!strTextBody) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Text.NeedBody")%>');
+					return;
+				}
+				if(!($('#TagInputItemData').length)) {
+					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
+					return;
+				}
+				UploadText(user_id);
+			}
 			$(function() {
 				DispTextCharNum();
 			});
@@ -223,6 +265,19 @@ try {
 					</div>
 				</div>
 				<%}%>
+
+				<div class="EditorMetaData">
+					<div class="TagInputItemList" id="TagInputItemList">
+					</div>
+					<div class="TagInputItemList">
+						<div class="TagInputItem" id="TagInputForm">
+							<input class="TagInputTxt TagInputTxtInput" id="TagInputTxt" type="text" onkeyup="OnTagListUpdate()" onclick="OnTagListToggle()" onfocus="OnFocusTagList()" placeholder="<%=_TEX.T("UploadFilePc.Genre.Placeholder")%>" autocomplete="off" />
+						</div>
+						<div class="TagInputSuggest" id="TagInputSuggest">
+						</div>
+					</div>
+				</div>
+
 				<div class="CategorDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
@@ -357,11 +412,11 @@ try {
 				</div>
 				<div class="UoloadCmd">
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFile(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFileCheck(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPaste(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPasteCheck(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadText(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
+					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadTextCheck(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
 				<%}%>
 				</div>
 			</div>

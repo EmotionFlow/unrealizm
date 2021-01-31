@@ -11,9 +11,11 @@ boolean bRtn = cResults.getResults(checkLogin, true);
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
 	<%if(isApp){%>
-		<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
-	<%}else{%>
-		<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX)%>
+		<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+	<%
+		}else{
+	%>
+		<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 	<%}%>
 	<%if(nCnt==17) {%>
 	<%@ include file="/inner/TAd336x280_mid.jsp"%>

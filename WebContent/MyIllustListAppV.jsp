@@ -122,6 +122,8 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 	<body>
 		<%@ include file="/inner/TMenuApp.jsp" %>
 
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
@@ -160,7 +162,7 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 				<%if(cResults.m_vContentList.size()>0){%>
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toMyThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, checkLogin, CCnv.SP_MODE_APP)%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 					<%}%>
 				<%}else{%>
 					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>

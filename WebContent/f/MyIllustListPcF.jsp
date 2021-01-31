@@ -21,7 +21,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
-	<%=CCnv.toMyThumbHtmlPc(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+	<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 	<%if(nCnt==17) {%>
 	<%@ include file="/inner/TAd336x280_mid.jsp"%>
 	<%}%>

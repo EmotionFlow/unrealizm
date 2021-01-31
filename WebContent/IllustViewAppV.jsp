@@ -134,24 +134,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			});
 		</script>
 
-		<link href="/js/slick/slick-theme.css" rel="stylesheet" type="text/css">
-		<link href="/js/slick/slick.css" rel="stylesheet" type="text/css">
-		<script type="text/javascript" src="/js/slick/slick.min.js"></script>
-		<script>
-		$(function(){
-			$('.EventItemList').slick({
-				autoplay:true,
-				autoplaySpeed:2000,
-				dots:true,
-				infinite: true,
-				slidesToShow: 1,
-				variableWidth: true,
-				centerMode: true,
-				centerPadding: '10px',
-			});
-			$('.EventItemList').css({'opacity': '1'});
-		});
-		</script>
 		<style>
 			.IllustItemList.Related {margin-bottom: 6px;}
 			.IllustItemList.Related .SearchResultTitle {height: auto; margin: 10px 0 0 0; line-height: normal;}
@@ -179,6 +161,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 	<body>
 		<%{%>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper">
 			<div class="UserInfo">
 				<div class="UserInfoBg"></div>
@@ -251,12 +235,16 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
-				<%}%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+				<%
+					}
+				%>
 			</section>
 		</article>
 
-		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
+		<%
+			if(!cResults.m_vRelatedContentList.isEmpty()) {
+		%>
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
@@ -267,9 +255,11 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 						<a class="AutoLink" href="/SearchIllustByTagAppV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 					</h2>
 				</header>
-				<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
+				<%
+					for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
+									CContent cContent = cResults.m_vRelatedContentList.get(nCnt);
+				%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%}%>
 			</section>
 		</article>

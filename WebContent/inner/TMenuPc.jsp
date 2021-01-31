@@ -14,7 +14,8 @@
 					<img  class="HeaderImg" src="//img-cdn.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>" />
 				</a>
 			</h1>
-			<%if(Util.isSmartPhone(request) && !checkLogin.m_bLogin) {%>
+			<%if(Util.isSmartPhone(request)) {
+				if(!checkLogin.m_bLogin) {%>
 				<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitter.jsp">
 					<input id="login_from_twitter_tmenupc_callback_00" type="hidden" name="CBPATH" value=""/>
 					<script>{
@@ -26,12 +27,17 @@
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 					</a>
 				</form>
-			<%}else{%>
-			<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
-			<a id="MenuSettings" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>"  href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
-				<span class="MenuSettingsIcon"></span>
-				<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
-			</a>
+				<%} else {%>
+				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+					<span class="MenuUploadIcon"></span>
+					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+				</a>
+				<a id="MenuSettings" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
+					<span class="MenuSettingsIcon"></span>
+					<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
+				</a>
+				<%}%>
 			<%}%>
 		</div>
 		<%if(!Util.isSmartPhone(request)) {%>
@@ -44,9 +50,9 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
-			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+			<a id="MenuGenre" class="FooterMenuItem" href="/PopularGenreListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Genre")%></span>
 			</a>
 			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon">
@@ -59,6 +65,14 @@
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
 		</nav>
+		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
+			<div class="HeaderSearch">
+				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
+				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
+					<i class="fas fa-search"></i>
+				</div>
+			</div>
+		</form>
 		<nav class="FooterMenu" style="float: right;">
 			<%if(!checkLogin.m_bLogin) {%>
 			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitter.jsp">
@@ -73,13 +87,17 @@
 				</a>
 			</form>
 			<%} else {%>
+			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+			</a>
 			<a id="MenuSettings" class="FooterMenuItem" href="<%=(checkLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId : "/" %>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
 			<%}%>
 		</nav>
-		<%}%>
+		<%} else {%>
 		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
 			<div class="HeaderSearch">
 				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
@@ -88,6 +106,7 @@
 				</div>
 			</div>
 		</form>
+		<%}%>
 
 		<script>
 			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
@@ -108,9 +127,9 @@
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
-		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+		<a id="MenuGenre" class="FooterMenuItem" href="/PopularGenreListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Genre")%></span>
 		</a>
 		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon">

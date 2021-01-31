@@ -302,19 +302,27 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 				<div class="RelatedItemList">
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%=CCnv.toThumbHtml(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
-					<%}%>
+						<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
+					<%
+						}
+					%>
 				</div>
 
-				<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
+				<%
+					if(!cResults.m_vRelatedContentList.isEmpty()) {
+				%>
 				<div class="RelatedItemList">
 					<header class="SearchResultTitle">
-						<%String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);%>
+						<%
+							String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);
+						%>
 						<a class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 					</header>
-					<%for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-						CContent cContent = cResults.m_vRelatedContentList.get(nCnt);%>
-						<%=CCnv.toThumbHtml(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX)%>
+					<%
+						for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
+												CContent cContent = cResults.m_vRelatedContentList.get(nCnt);
+					%>
+						<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%}%>
 				</div>
 				<%}%>

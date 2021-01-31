@@ -103,7 +103,6 @@ public class Common {
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 27;
 	public static final int[] CATEGORY_ID = {
-			20, // 使いまわし年賀状
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
@@ -184,6 +183,11 @@ public class Common {
 //			50, 50
 	};
 
+	public static final int[] GENRE_NUM = {
+			// normal, PASSPORT
+			10, 100
+	};
+
 	// アップロードエラーコード
 	public static final int UPLOAD_FILE_TOTAL_ERROR = -999;
 	public static final int UPLOAD_FILE_TYPE_ERROR = -998;
@@ -194,6 +198,11 @@ public class Common {
 	public static String LANG_ID = "LANG";
 	public static String LANG_ID_POST = "hl";
 	public static String POIPIKU_INFO = "POIPIKU_INFO";
+
+	// lang_id
+	public static int LANG_ID_OTHER = 0;
+	public static int LANG_ID_JP = 1;
+	public static int LANG_ID_EN = 0;
 
 
 	public static String CrLfInjection(String strSrc) {
@@ -329,7 +338,7 @@ public class Common {
 			ILLUST_LIST = "/SearchIllustByTagAppV.jsp?KWD=";
 			MY_ILLUST_LIST = String.format("/IllustListAppV.jsp?ID=%d&KWD=", nUserId);
 		}else if(nMode==CCnv.MODE_SP){
-			ILLUST_LIST = "/SearchIllustByTagV.jsp?KWD=";
+			ILLUST_LIST = "/SearchIllustByTagPcV.jsp?KWD=";
 			MY_ILLUST_LIST = String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
 		}else{
 			ILLUST_LIST = "/SearchIllustByTagPcV.jsp?KWD=";
@@ -351,6 +360,20 @@ public class Common {
 
 	public static String AutoLink(String strSrc, int nUserId, int nMode, int nSpMode) {
 		return _AutoLink(strSrc, nUserId, nMode, nSpMode);
+	}
+
+	public static String AutoLinkHtml(String strSrc, int nSpMode) {
+		String ILLUST_LIST = "";
+		if(nSpMode==CCnv.SP_MODE_APP){
+			ILLUST_LIST = "/SearchIllustByTagAppV.jsp?KWD=";
+		}else{
+			ILLUST_LIST = "/SearchIllustByTagPcV.jsp?KWD=";
+		}
+		return strSrc
+				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
+				//.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("$1<a class=\"AutoLink\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$3')\">$2$3</a>", ILLUST_LIST))
+				.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("$1<a class=\"AutoLink\" href=\"%s$3\">$2$3</a>", ILLUST_LIST))
+				.replaceAll("@([0-9a-zA-Z_]{3,15})","<a class='AutoLink' href='https://twitter.com/$1' target='_blank'>$0</a>");
 	}
 
 	public static String EscapeSqlLike(String strSrc, String strEscape) {

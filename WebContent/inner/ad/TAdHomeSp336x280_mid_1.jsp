@@ -3,6 +3,8 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
 <div class="SideBarMid">
+	<a class="PassAd" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">ポイパスで広告非表示! &nbsp; <i class="fas fa-times"></i></a>
+
 	<!-- /4789880/poipiku/poipikumobile_336x280_mid_2 -->
 	<!-- /4789880/poipiku/poipikumobile_336x280_mid_R18 -->
 

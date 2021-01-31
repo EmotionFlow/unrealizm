@@ -5,6 +5,24 @@
 <%@page import="jp.pipa.poipiku.settlement.*"%>
 <%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
+<link href="/js/slick/slick-theme.css" rel="stylesheet" type="text/css">
+<link href="/js/slick/slick.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/js/slick/slick.min.js"></script>
+<script>
+$(function(){
+	$('.EventItemList').slick({
+		autoplay:true,
+		autoplaySpeed:2000,
+		dots:true,
+		infinite: true,
+		slidesToShow: 1,
+		variableWidth: true,
+		centerMode: true,
+		centerPadding: '10px',
+	});
+	$('.EventItemList').css({'opacity': '1'});
+});
+</script>
 <ul class="EventItemList">
 	<!--
 	<li class="EventItem">
@@ -28,29 +46,29 @@
 	-->
 
 	<li class="EventItem">
+		<a href="/event/20190901/TopV.jsp">
+			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
+		</a>
+	</li>
+
+	<!--
+	<li class="EventItem">
 		<a class="EventBanner NoBgGold" style="padding: 5px;" href="/NewArrivalV.jsp?CD=20">
 			<div style="text-align: center; font-size: 16px; line-height: 23px;">過去の年賀状を引っ張り出してきて<br />出した気になろう！</div>
 			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 32px">「使いまわし年賀状」</div>
 		</a>
 	</li>
+	-->
 
 	<!--
 	<%if((checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) && checkLogin.m_nUserId!=315) {%>
 	<li class="EventItem">
 		<a href="/MyEditSettingPassportAppV.jsp" class="EventBanner NoBgBlue" style="padding: 8px; background: #b3dced; background: -moz-linear-gradient(-45deg, #b3dced 0%, #29b8e5 50%, #bce0ee 100%); background: -webkit-linear-gradient(-45deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); background: linear-gradient(135deg, #b3dced 0%,#29b8e5 50%,#bce0ee 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dced', endColorstr='#bce0ee',GradientType=1 );">
-			<div><img style="height: 30px;" src="/img/poipiku_passport_logo_60.png" /></div>
+			<div><img style="height: 30px;" src="/img/poipiku_passport_logo2_60.png" /></div>
 			<h3 style="font-weight: bold  text-align: center; font-size: 17px; line-height: 25px;">ポイパスはじめました</h3>
-			<div style="line-height: 20px;">アプリからのご加入は準備中です。</div>
+			<div style="line-height: 20px;">ご加入ご検討いただけますと幸いです</div>
 		</a>
 	</li>
 	<%}%>
-	-->
-
-	<!--
-	<li class="EventItem">
-		<a href="/event/20190901/TopV.jsp">
-			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
-		</a>
-	</li>
 	-->
 </ul>

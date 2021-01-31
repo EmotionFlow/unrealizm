@@ -50,6 +50,8 @@ if(!checkLogin.m_bLogin) {
 		</script>
 	</head>
 	<body>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper ItemList">
 			<div class="IllustItemList" style="min-height: 600px;">
 				<div id="ActivityList" class="ActivityList">

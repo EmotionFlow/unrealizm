@@ -72,7 +72,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+
 		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">

@@ -164,7 +164,7 @@ String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_st
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, CCnv.TYPE_USER_ILLUST, CCnv.MODE_SP, URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), _TEX, CCnv.SP_MODE_APP)%>
+					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 					<%if(nCnt==17) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>

@@ -8,6 +8,7 @@ import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.CTag;
 import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.Genre;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.ResourceBundleControl;
 
@@ -39,18 +40,31 @@ public class CCnv {
 		if(nSpMode==SP_MODE_APP){
 			s = "/IllustDetailV.jsp";
 		}else if(nMode==MODE_SP){
-			s = "/IllustDetailV.jsp";
+			s = "/IllustDetailPcV.jsp";
 		}else{
 			s = "/IllustDetailPcV.jsp";
 		}
 		return s;
 	}
+
+	private static String getSearchGenreContext(int nMode, int nSpMode){
+		String s = "";
+		if(nSpMode==SP_MODE_APP){
+			s = "/SearchIllustByGenreAppV.jsp";
+		}else if(nMode==MODE_SP){
+			s = "/SearchIllustByGenrePcV.jsp";
+		}else{
+			s = "/SearchIllustByGenrePcV.jsp";
+		}
+		return s;
+	}
+
 	private static String getSearchCategoryContext(int nMode, int nSpMode){
 		String s = "";
 		if(nSpMode==SP_MODE_APP){
 			s = "/NewArrivalAppV.jsp";
 		}else if(nMode==MODE_SP){
-			s = "/NewArrivalV.jsp";
+			s = "/NewArrivalPcV.jsp";
 		}else{
 			s = "/NewArrivalPcV.jsp";
 		}
@@ -442,6 +456,7 @@ public class CCnv {
 		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
+		String SEARCH_GENRE = getSearchGenreContext(nMode, nSpMode);
 
 		String strThumbClass = getThumbClass(cContent);
 
@@ -464,24 +479,18 @@ public class CCnv {
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
 
+		// ジャンル
+		Genre genre = Util.getGenre(cContent.m_nGenreId);
+		strRtn.append(
+			String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s')\"></span><span class=\"GenreName\">%s</span></a>",
+			SEARCH_GENRE,
+			cContent.m_nGenreId,
+			Common.GetUrl(genre.genreImage),
+			Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
+			)
+		);
+
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
-
-		// カテゴリー編集用
-		/*
-		if(cContent.m_nUserId==nLoginUserId) {
-			strRtn.append(String.format("<div id=\"IllustItemCategoryEdit_%d\" class=\"IllustItemCategoryEdit\">", cContent.m_nContentId));
-			strRtn.append(String.format("<select id=\"EditCategory_%d\">", cContent.m_nContentId));
-			for(int nCategoryId : Common.CATEGORY_ID) {
-				strRtn.append((String.format("<option value=\"%d\" %s>%s</option>",
-						nCategoryId,
-						(nCategoryId==cContent.m_nCategoryId)?"selected":"",
-						_TEX.T(String.format("Category.C%d", nCategoryId)))));
-			}
-			strRtn.append("</select>");
-			strRtn.append("</div>");	// IllustItemCategoryEdit
-		}
-		*/
-
 		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
@@ -632,40 +641,9 @@ public class CCnv {
 		return strRtn.toString();
 	}
 
-
-	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin checkLogin) {
-		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, checkLogin);
-	}
-
-	public static String toMyThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX, CheckLogin checkLogin, int nSpMode) {
-		return _toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode, checkLogin);
-	}
-
-	public static String toThumbHtml(CContent cContent, int nType, int nMode,  ResourceBundleControl _TEX) {
-		return _toThumbHtml(cContent, nType, nMode, "", _TEX, SP_MODE_WVIEW, null);
-	}
-
-	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX) {
-		return _toThumbHtml(cContent, nType, nMode, strKeyword, _TEX, SP_MODE_WVIEW, null);
-	}
-
-	public static String toThumbHtml(CContent cContent, int nType, int nMode, int nId, ResourceBundleControl _TEX) {
-		return _toThumbHtml(cContent, nType, nMode, ""+nId, _TEX, SP_MODE_WVIEW, null);
-	}
-
-	public static String toThumbHtml(CContent cContent, int nType, int nMode, ResourceBundleControl _TEX, int nSpMode) {
-		return _toThumbHtml(cContent, nType, nMode, "", _TEX, nSpMode, null);
-	}
-
-	public static String toThumbHtml(CContent cContent, int nType, int nMode, String strKeyword, ResourceBundleControl _TEX, int nSpMode) {
-		return _toThumbHtml(cContent, nType, nMode, strKeyword, _TEX, nSpMode, null);
-	}
-
-	private static String _toThumbHtml(
-		CContent cContent, int nType, int nMode, String strKeyword,
-		ResourceBundleControl _TEX, int nSpMode, CheckLogin checkLogin) {
-
+	public static String toThumbHtml(CContent cContent, CheckLogin checkLogin, int nMode, int nSpMode, ResourceBundleControl _TEX) {
 		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
+		String SEARCH_GENRE = getSearchGenreContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
@@ -682,17 +660,31 @@ public class CCnv {
 		strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Util.toStringHtml(cContent.m_cUser.m_strNickName)));
 		strRtn.append("</a>");	// IllustItemUser
 
-		// イラスト情報
-		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
+		// カテゴリ系情報
+		strRtn.append("<span class=\"IllustInfo\">");
+		// ジャンル
+		Genre genre = Util.getGenre(cContent.m_nGenreId);
+		strRtn.append(
+			String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s_40.jpg')\"></span><span class=\"GenreName\">%s</span></a>",
+			SEARCH_GENRE,
+			cContent.m_nGenreId,
+			Common.GetUrl(genre.genreImage),
+			Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
+			)
+		);
 		// カテゴリ
 		strRtn.append(
-			String.format("<span class=\"Category C%d\" onclick=\"location.href='%s?CD=%d';return false;\">%s</span>",
-			cContent.m_nCategoryId,
+			String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></span>",
 			SEARCH_CATEGORY,
+			cContent.m_nCategoryId,
 			cContent.m_nCategoryId,
 			_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
 			)
 		);
+		strRtn.append("</span>");	// カテゴリ系情報(IllustInfo)
+
+		// イラスト情報
+		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
 		// キャプション
 		strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Util.toStringHtml(cContent.m_strDescription)));
 		// サムネイル

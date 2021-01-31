@@ -41,6 +41,7 @@ public class CContent {
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
 	public boolean m_bCheerNg = true;
 	public String m_strTextBody = "";
+	public int m_nGenreId = 1;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
@@ -72,6 +73,7 @@ public class CContent {
 		m_nTweetWhenPublished=resultSet.getInt("tweet_when_published");
 		m_bCheerNg			= resultSet.getBoolean("cheer_ng");
 		m_strTextBody		= resultSet.getString("text_body");
+		m_nGenreId			= resultSet.getInt("genre_id");
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {

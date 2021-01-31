@@ -23,7 +23,7 @@ body {padding: 51px 0 0 0 !important;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
 .UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
 .IllustThumbList {margin: 0 0;}
-.IllustThumb {margin: 12px !important; width: 166px; height: 280px;}
+.IllustThumb {margin: 12px !important; width: 166px; height: 299px;}
 .IllustThumb .IllustUser {padding: 4px 2px;}
 .IllustThumb .IllustUser .IllustUserThumb {flex: 0 0 29px; height: 29px; border-radius: 29px;}
 .IllustThumb .IllustUser .IllustUserName {flex: 1 1 119px; margin: 0 0 0 4px; font-size: 14px;}
@@ -33,13 +33,32 @@ body {padding: 51px 0 0 0 !important;}
 .IllustThumb.Hidden .Category:before {font-size: 14px;}
 .IllustThumb .IllustInfo .IllustInfoDesc {font-size: 14px; height: 40px; line-height: 20px;}
 
-.IllustThumb .IllustThumbImg {box-sizing: border-box; height: 173px;}
-.IllustThumb .IllustThumbText {box-sizing: border-box; height: 173px; padding: 1px 3px;}
+.IllustThumb .IllustThumbImg {box-sizing: border-box; height: 164px;}
+.IllustThumb .IllustThumbText {box-sizing: border-box; height: 164px; padding: 1px 3px;}
 .IllustItem {margin: 15px;}
 .Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
 .Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
 .Wrapper.ViewPc .IllustItem .Category {margin: 0px 0 3px 0px;}
 .Wrapper.ViewPc .IllustItem .IllustItemCommand {}
+
+.IllustItem .IllustItemCommand .GenreInfo {
+	height: 62px;
+	margin: 0 0 6px 0;
+}
+
+.IllustItem .IllustItemCommand .GenreInfo .GenreImage {
+	flex: 0 0 60px;
+	width: 60px;
+	height: 60px;
+}
+
+.IllustItem .IllustItemCommand .GenreInfo .GenreName {
+	height: 62px;
+	line-height: 62px;
+	margin: 0 0 0 8px;
+	font-size: 20px;
+}
+
 .Wrapper.ViewPc .IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
 .Wrapper.ViewPc .IllustItem .IllustItemDesc {padding: 0 10px;}
 .Wrapper.ViewPc .IllustItem .IllustItemDescEdit {padding: 0 10px;}
@@ -92,7 +111,8 @@ body {padding: 51px 0 0 0 !important;}
 
 /********** GRID ***********/
 .Wrapper.GridList {width: 1140px;}
-.Wrapper.GridList .PcSideBarAd {width: 336px; height: 280px; float: right; display: inline-block; margin: 12px; background-color: #fff; display: flex; align-items: center; justify-content: center;}
+.Wrapper.GridList .PcSideBarAd {display: flex; flex-flow: column; position: relative; width: 336px; height: 280px; float: right; margin: 31px 12px 12px 12px; background-color: #fff; align-items: center; justify-content: center;}
+.Wrapper.GridList .PcSideBarAd .PassAd {display: block; position: absolute; top: -19px; left: 0; width: 336px; height: 19px; max-height: 19px; line-height: 19px; font-size: 13px; color: #fff; text-align: right;}
 
 /********** EVENT LIST **********/
 .EventItemList {float: none; margin: 0; width: 100%; height: auto; opacity: 1;}
@@ -106,7 +126,21 @@ body {padding: 51px 0 0 0 !important;}
 
 
 
+/********** genre **********/
+.SearchGenre {padding: 5px 15px 0px 15px; flex-flow: row wrap;}
+.SearchGenre .SearchEdit {margin: 0 0 10px 0; 	font-size: 12px;}
+.SearchGenre .SearchGenreMeta {}
+.SearchGenre .SearchGenreCmd {justify-content: flex-start;flex-flow: column; margin: 0 0 0 15px;}
+.SearchGenre .SearchGenreCmd .CmdBtn {margin: 0 0 10px 0;padding: 5px 12px;}
+.SearchGenre .SearchGenreMeta .SearchGenreTitle {}
+.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreImage {}
+.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreTitle {}
+.SearchGenre .SearchGenreMeta .SearchGenreDesc {font-size: 21px;margin: 5px 0;}
+.SearchGenreDetail {padding: 0 15px 15px 15px;}
+.SearchGenreDetail a {}
 
+/********** genre list **********/
+.GenreItem {width: 380px;padding: 22px 31px;float: left;}
 
 
 

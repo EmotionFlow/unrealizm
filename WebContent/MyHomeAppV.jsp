@@ -74,29 +74,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			});
 		});
 		</script>
-
-		<link href="/js/slick/slick-theme.css" rel="stylesheet" type="text/css">
-		<link href="/js/slick/slick.css" rel="stylesheet" type="text/css">
-		<script type="text/javascript" src="/js/slick/slick.min.js"></script>
-		<script>
-		$(function(){
-			$('.EventItemList').slick({
-				autoplay:true,
-				autoplaySpeed:2000,
-				dots:true,
-				infinite: true,
-				slidesToShow: 1,
-				variableWidth: true,
-				centerMode: true,
-				centerPadding: '10px',
-			});
-			$('.EventItemList').css({'opacity': '1'});
-		});
-		</script>
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
 		<article class="Wrapper">
 
 			<%if(cResults.m_cSystemInfo!=null) {%>
@@ -107,6 +87,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>').hide();setCookie('<%=Common.POIPIKU_INFO%>', '<%=cResults.m_cSystemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 			</div>
 			<%}%>
+
+			<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
 
 			<%if(Util.needUpdate(cResults.n_nVersion)) {%>
 			<div class="UpdateInfo">

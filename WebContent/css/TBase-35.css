@@ -265,15 +265,15 @@ form, button {
 }
 
 .BtnBase.Rev {
-	border-color: #fff;
-	background-color: #3498db;
-	color: #fff;
-}
-
-.BtnBase.Rev.Selected {
 	border-color: #3498db;
 	background-color: #fff;
 	color: #3498db;
+}
+
+.BtnBase.Rev.Selected {
+	border-color: #fff;
+	background-color: #3498db;
+	color: #fff;
 }
 
 .onoffswitch {
@@ -419,4 +419,30 @@ form, button {
 	border-radius: 34px;
 	font-size: 16px;
 	line-height: 32px;
+}
+
+.PoiPass {
+	position: relative;
+}
+
+.PoiPass:after {
+	content: '';
+	display: block;
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	background: transparent 50% 50% no-repeat url('/img/poipiku_passport_logo_short2_60.png');
+	background-size: contain;
+	top: -8px;
+	left: -8px;
+	z-index: 999;
+}
+
+.PoiPassInline {
+	position: relative;
+	height: 20px;
+	line-height: 20px;
+	padding: 0 0 0 49px;
+	background: transparent 0 0 no-repeat url('/img/poipiku_passport_logo_short2_60.png');
+	background-size: 47px 20px;
 }
