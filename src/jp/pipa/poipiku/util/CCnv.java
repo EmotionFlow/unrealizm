@@ -478,23 +478,23 @@ public class CCnv {
 
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
-
-		// ジャンル
-		Genre genre = Util.getGenre(cContent.m_nGenreId);
-		strRtn.append(
-			String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s')\"></span><span class=\"GenreName\">%s</span></a>",
-			SEARCH_GENRE,
-			cContent.m_nGenreId,
-			Common.GetUrl(genre.genreImage),
-			Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
-			)
-		);
-
+		// カテゴリー
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
 		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
-		strRtn.append("</div>");	// IllustItemCommand
-
+		// ジャンル
+		if(cContent.m_nGenreId>1) {
+			Genre genre = Util.getGenre(cContent.m_nGenreId);
+			strRtn.append(
+				String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s')\"></span><span class=\"GenreName\">%s</span></a>",
+				SEARCH_GENRE,
+				cContent.m_nGenreId,
+				Common.GetUrl(genre.genreImage),
+				Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
+				)
+			);
+			strRtn.append("</div>");	// IllustItemCommand
+		}
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
 

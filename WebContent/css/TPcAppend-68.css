@@ -41,23 +41,8 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .IllustItem .Category {margin: 0px 0 3px 0px;}
 .Wrapper.ViewPc .IllustItem .IllustItemCommand {}
 
-.IllustItem .IllustItemCommand .GenreInfo {
-	height: 62px;
-	margin: 0 0 6px 0;
-}
-
-.IllustItem .IllustItemCommand .GenreInfo .GenreImage {
-	flex: 0 0 60px;
-	width: 60px;
-	height: 60px;
-}
-
-.IllustItem .IllustItemCommand .GenreInfo .GenreName {
-	height: 62px;
-	line-height: 62px;
-	margin: 0 0 0 8px;
-	font-size: 20px;
-}
+.IllustItem .IllustItemCommand .GenreInfo {margin: 4px 4px 0 4px;}
+.IllustItem .IllustItemCommand .GenreInfo .GenreImage {flex: 0 40px;width: 40px;height: 40px;}
 
 .Wrapper.ViewPc .IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
 .Wrapper.ViewPc .IllustItem .IllustItemDesc {padding: 0 10px;}

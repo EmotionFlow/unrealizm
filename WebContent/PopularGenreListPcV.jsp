@@ -29,7 +29,7 @@ boolean bRtn = results.getResults(checkLogin);
 		</script>
 		<style>
 			body {padding-top: 79px !important;}
-
+			.GenreItem .GenreInfo .GenreData {display: none;}
 		</style>
 	</head>
 

@@ -24,6 +24,7 @@ boolean bRtn = results.getResults(checkLogin);
 		<style>
 			body {padding-top: 79px !important;}
 			.SearchGenre .SearchEdit {margin: 0 0 5px 0;}
+			.GenreItem .GenreInfo .GenreData {display: none;}
 		</style>
 	</head>
 
