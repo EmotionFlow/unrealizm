@@ -47,8 +47,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-32.js" type="text/javascript"></script>
-		<script src="/js/update-08.js" type="text/javascript"></script>
+		<script src="/js/upload-33.js" type="text/javascript"></script>
+		<script src="/js/update-09.js" type="text/javascript"></script>
 		<script src="/js/FTagList.jsp?<%=(int)(System.currentTimeMillis()/1000/60/60)%>" type="text/javascript"></script>
 		<link href="/css/FTag-01.css" type="text/css" rel="stylesheet" />
 
@@ -174,10 +174,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					DispMsg('<%=_TEX.T("UploadFilePc.Image.NeedImage")%>');
 					return;
 				}
-				if(!($('#TagInputItemData').length)) {
-					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
-					return;
-				}
 				UpdateFile(user_id, content_id);
 			}
 			$(function() {
@@ -185,10 +181,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			function UpdatePasteCheck(user_id, content_id) {
-				if(!($('#TagInputItemData').length)) {
-					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
-					return;
-				}
 				UpdatePaste(user_id, content_id);
 			}
 			$(function() {
@@ -197,10 +189,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			});
 			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
 			function UpdateTextCheck(user_id, content_id) {
-				if(!($('#TagInputItemData').length)) {
-					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
-					return;
-				}
 				UpdateText(user_id, content_id);
 			}
 			$(function() {

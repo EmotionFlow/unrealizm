@@ -28,7 +28,7 @@ try {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-32.js" type="text/javascript"></script>
+		<script src="/js/upload-33.js" type="text/javascript"></script>
 		<script src="/js/FTagList.jsp?<%=(int)(System.currentTimeMillis()/1000/60/60)%>" type="text/javascript"></script>
 		<link href="/css/FTag-01.css" type="text/css" rel="stylesheet" />
 
@@ -130,10 +130,6 @@ try {
 					DispMsg('<%=_TEX.T("UploadFilePc.Image.NeedImage")%>');
 					return;
 				}
-				if(!($('#TagInputItemData').length)) {
-					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
-					return;
-				}
 				UploadFile(user_id);
 			}
 			function completeAddFile() {
@@ -153,10 +149,6 @@ try {
 					DispMsg('<%=_TEX.T("UploadFilePc.Paste.NeedImage")%>');
 					return;
 				}
-				if(!($('#TagInputItemData').length)) {
-					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
-					return;
-				}
 				UploadPaste(user_id);
 			}
 			$(function() {
@@ -167,10 +159,6 @@ try {
 				var strTextBody = $.trim($("#EditTextBody").val());
 				if(!strTextBody) {
 					DispMsg('<%=_TEX.T("UploadFilePc.Text.NeedBody")%>');
-					return;
-				}
-				if(!($('#TagInputItemData').length)) {
-					DispMsg('<%=_TEX.T("UploadFilePc.Genre.NeedGenre")%>');
 					return;
 				}
 				UploadText(user_id);

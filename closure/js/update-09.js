@@ -163,7 +163,6 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 function UpdateFile(user_id, content_id) {
 	if(!multiFileUploader) return;
 	if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) return;
-	if(!($('#TagInputItemData').length)) return;
 	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
@@ -197,6 +196,7 @@ function UpdateFile(user_id, content_id) {
 			return;
 		}
 	}
+	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
@@ -432,7 +432,6 @@ function createUpdatePaste(){
 			bEntered = false;
 			return;
 		}
-		if(!($('#TagInputItemData').length)) return;
 		var genre = $('#TagInputItemData').val();
 		var nCategory = $('#EditCategory').val();
 		var strDescription = $.trim($("#EditDescription").val());
@@ -468,6 +467,7 @@ function createUpdatePaste(){
 				return;
 			}
 		}
+		if(!($('#TagInputItemData').length)) genre=1;
 
 		setTweetSetting($('#OptionTweet').prop('checked'));
 		setTweetImageSetting($('#OptionImage').prop('checked'));
@@ -562,7 +562,6 @@ function createUpdateText(){
 		if(bEntered) return;
 		bEntered = true;
 
-		if(!($('#TagInputItemData').length)) return;
 		var genre = $('#TagInputItemData').val();
 		var nCategory = $('#EditCategory').val();
 		var strDescription = $.trim($("#EditDescription").val());
@@ -599,6 +598,7 @@ function createUpdateText(){
 				return;
 			}
 		}
+		if(!($('#TagInputItemData').length)) genre=1;
 
 		setTweetSetting($('#OptionTweet').prop('checked'));
 		setTweetImageSetting($('#OptionImage').prop('checked'));

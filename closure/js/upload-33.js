@@ -872,7 +872,6 @@ function getLimitedTimeFlg(strPublishElementId, strLimitedTimeElementId){
 function UploadFile(user_id) {
 	if(!multiFileUploader) return;
 	if(multiFileUploader.getSubmittedNum()<=0) return;
-	if(!($('#TagInputItemData').length)) return;
 	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
@@ -902,6 +901,7 @@ function UploadFile(user_id) {
 			return;
 		}
 	}
+	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
@@ -1037,7 +1037,6 @@ function UploadPaste(user_id) {
 		if(strSrc.length>0) nImageNum++;
 	});
 	if(nImageNum<=0) return;
-	if(!($('#TagInputItemData').length)) return;
 	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
@@ -1067,6 +1066,7 @@ function UploadPaste(user_id) {
 			return;
 		}
 	}
+	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
@@ -1167,7 +1167,6 @@ function UploadPaste(user_id) {
 }
 
 function UploadText(user_id) {
-	if(!($('#TagInputItemData').length)) return;
 	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
@@ -1199,6 +1198,7 @@ function UploadText(user_id) {
 			return;
 		}
 	}
+	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
