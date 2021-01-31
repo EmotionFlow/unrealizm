@@ -28,7 +28,7 @@ try {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-31.js" type="text/javascript"></script>
+		<script src="/js/upload-32.js" type="text/javascript"></script>
 		<script src="/js/FTagList.jsp?<%=(int)(System.currentTimeMillis()/1000/60/60)%>" type="text/javascript"></script>
 		<link href="/css/FTag-01.css" type="text/css" rel="stylesheet" />
 

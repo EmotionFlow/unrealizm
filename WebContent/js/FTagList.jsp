@@ -228,6 +228,17 @@ function GetTagName(nId) {
 	return strTagName;
 }
 
+function GetTagFileName(nId) {
+	var strTagFileName = "";
+	for(var i=0; i < g_arrTagList.length; i++) {
+		if(g_arrTagList[i][0]==nId) {
+			strTagFileName = '//img-cdn.poipiku.com' + g_arrTagList[i][3];
+			break;
+		}
+	}
+	return strTagFileName;
+}
+
 
 function attach(obj,eve,func){
 	if(obj.attachEvent){

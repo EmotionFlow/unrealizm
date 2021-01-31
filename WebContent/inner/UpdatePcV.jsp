@@ -47,7 +47,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-31.js" type="text/javascript"></script>
+		<script src="/js/upload-32.js" type="text/javascript"></script>
 		<script src="/js/update-07.js" type="text/javascript"></script>
 		<script src="/js/FTagList.jsp?<%=(int)(System.currentTimeMillis()/1000/60/60)%>" type="text/javascript"></script>
 		<link href="/css/FTag-01.css" type="text/css" rel="stylesheet" />
@@ -182,6 +182,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			});
 			<%}%>
 			$(function() {
+				<%if(cResults.m_cContent.m_nGenreId>0) {%>
+				OnTagListClick(<%=cResults.m_cContent.m_nGenreId%>, GetTagName(<%=cResults.m_cContent.m_nGenreId%>), GetTagFileName(<%=cResults.m_cContent.m_nGenreId%>));
+				<%}%>
+
 				DispDescCharNum();
 			});
 
