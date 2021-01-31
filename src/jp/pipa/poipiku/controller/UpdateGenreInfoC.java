@@ -100,7 +100,6 @@ public class UpdateGenreInfoC {
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 				if(genreId<1) return ERR_UNKNOWN;
-				genre = Util.getGenre(genreId);
 			}
 
 			// update making last_update
@@ -111,6 +110,7 @@ public class UpdateGenreInfoC {
 			statement.setInt(2, genreId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			genre = Util.getGenre(genreId);
 			nRtn = OK_EDIT;
 		} catch(Exception e) {
 			Log.d(strSql);

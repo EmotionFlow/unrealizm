@@ -94,7 +94,7 @@ String strUrl = "https://poipiku.com/EditGenreInfoPcV.jsp?GD="+genre.genreId;
 								// complete
 								sendObjectMessage("reloadParent");
 								if(<%=genreId%>==-1) {
-									location.href="/EditGenreInfoPcV.jsp?ID="+<%=checkLogin.m_nUserId%>+"&GD="+res.genreId;
+									location.href="/EditGenreInfoPcV.jsp?ID="+<%=checkLogin.m_nUserId%>+"&GD="+res.genre_id;
 								} else {
 									location.reload(true);
 								}
