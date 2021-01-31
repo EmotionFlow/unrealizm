@@ -1,4 +1,3 @@
-<%@page import="com.sun.org.apache.regexp.internal.recompile"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!class RegistNotificationTokenC {

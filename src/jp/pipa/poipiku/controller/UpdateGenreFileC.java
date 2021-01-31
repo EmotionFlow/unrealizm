@@ -17,12 +17,10 @@ import javax.sql.DataSource;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
-import com.sun.org.apache.regexp.internal.recompile;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.Genre;
-import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.ImageUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
