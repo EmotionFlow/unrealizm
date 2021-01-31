@@ -493,8 +493,9 @@ public class CCnv {
 				Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
 				)
 			);
-			strRtn.append("</div>");	// IllustItemCommand
 		}
+		strRtn.append("</div>");	// IllustItemCommand
+
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
