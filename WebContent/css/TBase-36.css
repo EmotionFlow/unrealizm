@@ -446,3 +446,11 @@ form, button {
 	background: transparent 0 0 no-repeat url('/img/poipiku_passport_logo_short2_60.png');
 	background-size: 47px 20px;
 }
+
+.PoiPassInline {
+	height: 20px;
+	line-height: 20px;
+	padding: 0 0 0 50px;
+	background: transparent 0 50% no-repeat url('/img/poipiku_passport_logo_free_60.png');
+	background-size: 49px 15px;
+}

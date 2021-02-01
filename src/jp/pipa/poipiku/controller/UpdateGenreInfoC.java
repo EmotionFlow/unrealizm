@@ -53,7 +53,7 @@ public class UpdateGenreInfoC {
 
 	public int getResults(CheckLogin checkLogin, ServletContext context) {
 		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!= userId) return ERR_NOT_LOGIN;
-		if(checkLogin.m_nPassportId<=Common.PASSPORT_OFF) return ERR_NOT_PASSPORT;
+		//if(checkLogin.m_nPassportId<=Common.PASSPORT_OFF) return ERR_NOT_PASSPORT;
 		if(type<0 || type>=COLUMN.length) return ERR_UNKNOWN;
 		if(type==0 && data.isEmpty()) return ERR_NEED_GENRE_NAME;
 		if(data.length()>TEXT_MAX[type]) return ERR_TEXT_SIZE_MAX;

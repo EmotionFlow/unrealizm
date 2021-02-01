@@ -13,10 +13,13 @@ if(!checkLogin.m_bLogin || userId!=checkLogin.m_nUserId) {
 	return;
 }
 
+/*
 if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 	getServletContext().getRequestDispatcher("/MyEditSettingPcV.jsp?MENUID=POIPASS").forward(request,response);
 	return;
 }
+*/
+
 
 Genre genre = Util.getGenre(genreId);
 
