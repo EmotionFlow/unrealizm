@@ -169,6 +169,7 @@ String strUrl = "https://poipiku.com/EditGenreInfoPcV.jsp?GD="+genre.genreId;
 					<div class="SettingListTitle"><%=_TEX.T("EditGenreInfo.Name")%></div>
 					<div class="SettingBody">
 						<input id="EditName" class="SettingBodyTxt" type="text" value="<%=Util.toStringHtml(genre.genreName)%>" onkeyup="DispCharNum('EditName', 'EditNameNum', 16)" maxlength="16" />
+						<div class="RegistMessage" ><%=_TEX.T("EditGenreInfo.Name.Info")%></div>
 						<div class="SettingBodyCmd">
 							<div id="EditNameNum" class="RegistMessage"></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateGenreName('EditName')"><%=_TEX.T("EditSettingV.Button.Update")%></a>

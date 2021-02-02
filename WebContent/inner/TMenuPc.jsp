@@ -65,14 +65,6 @@
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
 		</nav>
-		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
-			<div class="HeaderSearch">
-				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
-				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
-					<i class="fas fa-search"></i>
-				</div>
-			</div>
-		</form>
 		<nav class="FooterMenu" style="float: right;">
 			<%if(!checkLogin.m_bLogin) {%>
 			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitter.jsp">
@@ -96,6 +88,14 @@
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
 			<%}%>
+			<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
+				<div class="HeaderSearch">
+					<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
+					<div id="HeaderSearchBtn" class="HeaderSearchBtn">
+						<i class="fas fa-search"></i>
+					</div>
+				</div>
+			</form>
 		</nav>
 		<%} else {%>
 		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
