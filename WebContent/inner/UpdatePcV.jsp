@@ -301,6 +301,14 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 				<%}%>
 
+				<div class="CategorDesc">
+					<select id="EditCategory">
+						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
+						<%}%>
+					</select>
+				</div>
+
 				<div class="EditorMetaData">
 					<div class="TagInputItemList" id="TagInputItemList">
 					</div>
@@ -311,14 +319,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<div class="TagInputSuggest" id="TagInputSuggest">
 						</div>
 					</div>
-				</div>
-
-				<div class="CategorDesc">
-					<select id="EditCategory">
-						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
-						<%}%>
-					</select>
 				</div>
 
 				<div class="Description">

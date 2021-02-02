@@ -254,6 +254,14 @@ try {
 				</div>
 				<%}%>
 
+				<div class="CategorDesc">
+					<select id="EditCategory">
+						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
+						<%}%>
+					</select>
+				</div>
+
 				<div class="EditorMetaData">
 					<div class="TagInputItemList" id="TagInputItemList">
 					</div>
@@ -266,13 +274,6 @@ try {
 					</div>
 				</div>
 
-				<div class="CategorDesc">
-					<select id="EditCategory">
-						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
-						<%}%>
-					</select>
-				</div>
 				<div class="Description">
 					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
 					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
