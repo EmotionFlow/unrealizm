@@ -572,7 +572,7 @@
 	overflow: hidden;
 	color: #6d6965;
 	display: -webkit-box;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 }
 .IllustThumb .IllustInfoCenter {

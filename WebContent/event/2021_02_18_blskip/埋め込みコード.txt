@@ -1,0 +1,10 @@
+リンク・Youtube埋め込みコード
+
+BLあるあるを見に行く　ボタンの遷移先URL
+https://www.youtube.com/channel/UCaOwSJ-UiNV-7IxOxNFAt4w
+
+Youtube埋め込みコード　PC
+<iframe width="560" height="315" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Youtube埋め込みコード　SP
+<iframe width="320" height="125" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
