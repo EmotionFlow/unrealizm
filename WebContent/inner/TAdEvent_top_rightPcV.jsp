@@ -28,11 +28,6 @@ $(function(){
 <ul class="EventItemList">
 	<!--
 	<li class="EventItem">
-		<a href="/event/20191026_halloween/TopPcV.jsp">
-			<img class="EventBanner" src="/event/20191026_halloween/banner_halloween_2020.png" />
-		</a>
-	</li>
-	<li class="EventItem">
 		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=27">
 			<div style="text-align: center; font-size: 16px; line-height: 20px;">12月31日限定カテゴリ</div>
 			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 32px">「煩悩を晒せ」</div>
@@ -45,6 +40,14 @@ $(function(){
 		</a>
 	</li>
 	-->
+
+	<li class="EventItem">
+		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=28">
+			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 40px">祝！200万ユーザ突破</div>
+			<div style="text-align: center; font-size: 16px; line-height: 20px;">どうか祝ってやって下さいm(_ _)m</div>
+			<div style="text-align: center; font-size: 13px; line-height: 20px;">抽選で100名様にポイパス1ヶ月分プレゼント</div>
+		</a>
+	</li>
 
 	<li class="EventItem">
 		<a href="/event/20190901/TopPcV.jsp">

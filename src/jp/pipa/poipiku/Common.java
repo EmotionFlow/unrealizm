@@ -101,8 +101,9 @@ public class Common {
 	public static final int SAFE_FILTER_R18G = 6;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 27;
+	public static final int CATEGORY_ID_MAX = 28;
 	public static final int[] CATEGORY_ID = {
+			28,	// 200万祝ってください
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
@@ -110,12 +111,12 @@ public class Common {
 			5,	// 自主練
 			9,	// 供養
 			15,	// 描きかけ
-			17, // メモ
+			17,	// メモ
 			23,	// ネタバレ
 			16,	// 描けねえ
 			22,	// リハビリ
 			1,	// 飽きた
-			18, // ほぼ白紙
+			18,	// ほぼ白紙
 			14,	// お知らせ
 
 //			0,	// いちほ
