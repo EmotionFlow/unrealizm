@@ -79,7 +79,7 @@ public class UploadC extends UpC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn, cState);
+			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn);
 
 		} catch(Exception e) {
 			Log.d(strSql);
