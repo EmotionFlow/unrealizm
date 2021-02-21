@@ -51,7 +51,7 @@
 }
 
 
-class UploadReferenceC {
+class UploadReferenceC extends UpC {
 	int m_nContentId = -99;
 	public int GetResults(UploadReferenceCParam cParam, ResourceBundleControl _TEX, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
@@ -81,87 +81,7 @@ class UploadReferenceC {
 			cState.close();cState=null;
 
 			// Add tags
-			// from description
-			if (!cParam.m_strDescription.isEmpty()) {
-				// hush tag
-				Pattern ptn = Pattern.compile(Common.HUSH_TAG_PATTERN, Pattern.MULTILINE);
-				Matcher matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
-				cState = cConn.prepareStatement(strSql);
-				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-					try {
-						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-						cState.setInt(2, m_nContentId);
-						cState.executeUpdate();
-					} catch(Exception e) {
-						Log.d("tag duplicate:"+matcher.group(1));
-					}
-				}
-				cState.close();cState=null;
-				// my tag
-				ptn = Pattern.compile(Common.MY_TAG_PATTERN, Pattern.MULTILINE);
-				matcher = ptn.matcher(cParam.m_strDescription.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3) ON CONFLICT DO NOTHING;";
-				cState = cConn.prepareStatement(strSql);
-				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-					try {
-						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-						cState.setInt(2, m_nContentId);
-						cState.executeUpdate();
-					} catch(Exception e) {
-						Log.d("tag duplicate:"+matcher.group(1));
-					}
-				}
-				cState.close();cState=null;
-			}
-			// from tag list
-			if (!cParam.m_strTagList.isEmpty()) {
-				// normal tag
-				Pattern ptn = Pattern.compile(Common.NORMAL_TAG_PATTERN, Pattern.MULTILINE);
-				Matcher matcher = ptn.matcher(" "+cParam.m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
-				cState = cConn.prepareStatement(strSql);
-				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-					try {
-						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-						cState.setInt(2, m_nContentId);
-						cState.executeUpdate();
-					} catch(Exception e) {
-						Log.d("tag duplicate:"+matcher.group(1));
-					}
-				}
-				cState.close();cState=null;
-				// hush tag
-				ptn = Pattern.compile(Common.HUSH_TAG_PATTERN, Pattern.MULTILINE);
-				matcher = ptn.matcher(" "+cParam.m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 1) ON CONFLICT DO NOTHING;";
-				cState = cConn.prepareStatement(strSql);
-				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-					try {
-						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-						cState.setInt(2, m_nContentId);
-						cState.executeUpdate();
-					} catch(Exception e) {
-						Log.d("tag duplicate:"+matcher.group(1));
-					}
-				}
-				cState.close();cState=null;
-				// my tag
-				ptn = Pattern.compile(Common.MY_TAG_PATTERN, Pattern.MULTILINE);
-				matcher = ptn.matcher(" "+cParam.m_strTagList.replaceAll("　", " ")+"\n");
-				strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type) VALUES(?, ?, 3) ON CONFLICT DO NOTHING;";
-				cState = cConn.prepareStatement(strSql);
-				for (int nNum=0; matcher.find() && nNum<20; nNum++) {
-					try {
-						cState.setString(1,Common.SubStrNum(matcher.group(1), 64));
-						cState.setInt(2, m_nContentId);
-						cState.executeUpdate();
-					} catch(Exception e) {
-						Log.d("tag duplicate:"+matcher.group(1));
-					}
-				}
-				cState.close();cState=null;
-			}
+			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
