@@ -32,7 +32,7 @@
 	height: 0;
 	border-color: transparent #3498db transparent transparent;
 	border-style: solid;
-	border-width: 12px 12px 12spx 0;
+	border-width: 12px 12px 12px 0;
 }
 
 .IllustItemDesc .AutoLink::after,
