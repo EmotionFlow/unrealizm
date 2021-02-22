@@ -3,6 +3,64 @@
 .AutoLink {color: #3498db !important; text-decoration: underline;}
 .AutoLinkMyTag {color: #f09090 !important; text-decoration: underline;}
 
+.IllustItemDesc .AutoLink,
+.IllustItemDesc .AutoLinkMyTag,
+.IllustItem .IllustItemTag .AutoLink,
+.IllustItem .IllustItemTag .AutoLinkMyTag {
+	position: relative;
+	display: inline-block;
+	height: 24px;
+	line-height: 24px;
+	padding: 0 10px;
+	background-color: #3498db;
+	border-radius: 0 3px 3px 0;
+	color: #fff !important;;
+	font-size: 13px;
+	text-decoration: none;
+	margin: 5px 0 0 10px;
+}
+
+.IllustItemDesc .AutoLink::before,
+.IllustItemDesc .AutoLinkMyTag::before,
+.IllustItem .IllustItemTag .AutoLink::before,
+.IllustItem .IllustItemTag .AutoLinkMyTag::before {
+	position: absolute;
+	top: 0;
+	left: -12px;
+	content: '';
+	width: 0;
+	height: 0;
+	border-color: transparent #3498db transparent transparent;
+	border-style: solid;
+	border-width: 12px 12px 12spx 0;
+}
+
+.IllustItemDesc .AutoLink::after,
+.IllustItemDesc .AutoLinkMyTag::after,
+.IllustItem .IllustItemTag .AutoLink::after,
+.IllustItem .IllustItemTag .AutoLinkMyTag::after {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	z-index: 2;
+	display: block;
+	content: '';
+	width: 6px;
+	height: 6px;
+	margin-top: -3px;
+	background-color: #fff;
+	border-radius: 100%;
+}
+
+.IllustItemDesc .AutoLinkMyTag,
+.IllustItem .IllustItemTag .AutoLinkMyTag {
+	background-color: #f09090;
+}
+.IllustItemDesc .AutoLinkMyTag::before,
+.IllustItem .IllustItemTag .AutoLinkMyTag::before {
+	border-color: transparent #f09090 transparent transparent;
+}
+
 .Waiting {
 	display: block;
 	float: left;

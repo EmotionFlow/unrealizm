@@ -8,7 +8,6 @@ import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.CTag;
 import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.Genre;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.ResourceBundleControl;
 
@@ -43,18 +42,6 @@ public class CCnv {
 			s = "/IllustDetailPcV.jsp";
 		}else{
 			s = "/IllustDetailPcV.jsp";
-		}
-		return s;
-	}
-
-	private static String getSearchGenreContext(int nMode, int nSpMode){
-		String s = "";
-		if(nSpMode==SP_MODE_APP){
-			s = "/SearchIllustByGenreAppV.jsp";
-		}else if(nMode==MODE_SP){
-			s = "/SearchIllustByGenrePcV.jsp";
-		}else{
-			s = "/SearchIllustByGenrePcV.jsp";
 		}
 		return s;
 	}
@@ -456,7 +443,6 @@ public class CCnv {
 		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
-		String SEARCH_GENRE = getSearchGenreContext(nMode, nSpMode);
 
 		String strThumbClass = getThumbClass(cContent);
 
@@ -482,18 +468,6 @@ public class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
 		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
-		// ジャンル
-		if(cContent.m_nGenreId>1) {
-			Genre genre = Util.getGenre(cContent.m_nGenreId);
-			strRtn.append(
-				String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s')\"></span><span class=\"GenreName\">%s</span></a>",
-				SEARCH_GENRE,
-				cContent.m_nGenreId,
-				Common.GetUrl(genre.genreImage),
-				Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
-				)
-			);
-		}
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -644,7 +618,6 @@ public class CCnv {
 
 	public static String toThumbHtml(CContent cContent, CheckLogin checkLogin, int nMode, int nSpMode, ResourceBundleControl _TEX) {
 		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
-		String SEARCH_GENRE = getSearchGenreContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
@@ -672,18 +645,6 @@ public class CCnv {
 			_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
 			)
 		);
-		// ジャンル
-		if(cContent.m_nGenreId>1) {
-			Genre genre = Util.getGenre(cContent.m_nGenreId);
-			strRtn.append(
-				String.format("<a class=\"GenreInfo\" href=\"%s?GD=%d\"><span class=\"GenreImage\" style=\"background-image: url('%s_40.jpg')\"></span><span class=\"GenreName\">%s</span></a>",
-				SEARCH_GENRE,
-				cContent.m_nGenreId,
-				Common.GetUrl(genre.genreImage),
-				Util.replaceCrLf2Space((Util.toStringHtml(genre.genreName)))
-				)
-			);
-		}
 		strRtn.append("</span>");	// カテゴリ系情報(IllustInfo)
 
 		// イラスト情報
@@ -798,12 +759,7 @@ public class CCnv {
 
 	private static String _toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
 		StringBuffer sb = new StringBuffer();
-		sb.append("/SearchIllustBy");
-		if(cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG){
-			sb.append("Tag");
-		}else{
-			sb.append("Keyword");
-		}
+		sb.append("/SearchIllustByTag");
 
 		if(nSpMode==SP_MODE_APP){
 			sb.append("AppV");
@@ -815,10 +771,9 @@ public class CCnv {
 		sb.append(".jsp");
 
 		return String.format(
-				"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\">%s%s</a></h2>",
+				"<h2 class=\"TagItem\"><a class=\"TagName\" href=\"%s?KWD=%s\">#%s</a></h2>",
 				sb.toString(),
 				URLEncoder.encode(cTag.m_strTagTxt, "UTF-8"),
-				cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG ? "#" : "",
 				Util.toStringHtml(cTag.m_strTagTxt)
 		);
 	}

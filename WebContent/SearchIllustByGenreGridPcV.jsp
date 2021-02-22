@@ -47,7 +47,7 @@ String strFileUrl = results.repFileName;
 		<style>
 			.showmore {height: 60px; position: relative;}
 			.showmore_content { position:relative;overflow: hidden;}
-			.showmore_trigger { width:100%; height:20px; padding: 40px 0 0 0; line-height:20px; cursor:pointer;text-align: center; font-size: 20px; position: absolute; bottom: 0; left: 0; z-index: 999; background: linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,1.0) 100%);}
+			.showmore_trigger { width:100%; height:20px; padding: 50px 0 0 0; line-height:20px; cursor:pointer;text-align: center; font-size: 20px; position: absolute; bottom: 0; left: 0; z-index: 999; background: linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,1.0) 100%);}
 			.showmore_trigger span { display:block;}
 		</style>
 		<%if(!results.genre.genreImageBg.isEmpty()) {%>

@@ -9,7 +9,7 @@ int userId	= Util.toInt(request.getParameter("ID"));
 int genreId	= Util.toInt(request.getParameter("GD"));
 
 if(!checkLogin.m_bLogin || userId!=checkLogin.m_nUserId) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 	return;
 }
 
@@ -32,7 +32,6 @@ String disable = (editable)?"":"Disabled";
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(strTitle)%></title>

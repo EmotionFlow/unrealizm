@@ -52,12 +52,11 @@ public class SearchIllustByTagGridC {
 			cConn = dsPostgres.getConnection();
 
 			// Check Following
-			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
+			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=?";
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
 			cState.setInt(idx++, checkLogin.m_nUserId);
 			cState.setString(idx++, m_strKeyword);
-			cState.setInt(idx++, Common.FOVO_KEYWORD_TYPE_TAG);
 			cResSet = cState.executeQuery();
 			m_bFollowing = (cResSet.next());
 			cResSet.close();cResSet=null;

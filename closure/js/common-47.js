@@ -332,11 +332,11 @@ function UpdateFollowGenre(userId, genreId) {
 	});
 }
 
-function UpdateFollowTag(nUserId, strTagTxt, nTypeId) {
+function UpdateFollowTag(nUserId, strTagTxt) {
 	$.ajaxSingle({
 		"type": "post",
-		"data": { "UID": nUserId, "TXT": strTagTxt, "TYP": nTypeId},
-		"url": "/f/UpdateFollowTagF.jsp",
+		"data": {"UID": nUserId, "TXT": strTagTxt},
+		"url": "/api/UpdateFollowTagF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			if(data.result<0) {

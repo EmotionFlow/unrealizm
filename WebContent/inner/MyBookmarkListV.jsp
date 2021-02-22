@@ -21,7 +21,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title>recent</title>
+		<title>Bookmark</title>
 		<script>
 			var g_nPage = 1;
 			var g_bAdding = false;

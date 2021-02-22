@@ -49,10 +49,10 @@ public class PopularGenreListC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			String condOrder = "update_date";
+			String condOrder = "content_num_total";
 			switch(order) {
 			case 1:
-				condOrder = "content_num_total";
+				condOrder = "update_date";
 				break;
 			case 2:
 				condOrder = "content_num_week";

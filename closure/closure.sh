@@ -3,12 +3,12 @@
 /bin/rm ../WebContent/js/upload-*.js
 /bin/rm ../WebContent/js/update-*.js
 
-/bin/cp ./js/common-46.js ../WebContent/js/
+/bin/cp ./js/common-47.js ../WebContent/js/
 #/bin/cp ./js/commonPc-03.js ../WebContent/js/
 /bin/cp ./js/upload-33.js ../WebContent/js/
 /bin/cp ./js/update-09.js ../WebContent/js/
 
-java -jar ./closure-compiler-v20201006.jar --js ./js/common-46.js --js_output_file ../WebContent/js/common-46.js
+java -jar ./closure-compiler-v20201006.jar --js ./js/common-47.js --js_output_file ../WebContent/js/common-47.js
 #java -jar ./closure-compiler-v20201006.jar --js ./js/commonPc-03.js --js_output_file ../WebContent/js/commonPc-03.js
 java -jar ./closure-compiler-v20201006.jar --js ./js/upload-33.js --js_output_file ../WebContent/js/upload-33.js
 java -jar ./closure-compiler-v20201006.jar --js ./js/update-09.js --js_output_file ../WebContent/js/update-09.js

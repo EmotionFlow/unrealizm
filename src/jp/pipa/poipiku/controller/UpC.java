@@ -114,7 +114,7 @@ public class UpC {
 				statement_tag.setInt(4, genre_id);
 				statement_tag.executeUpdate();
 			} catch(Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				Log.d("tag duplicate:"+matcher.group(1));
 			}
 		}

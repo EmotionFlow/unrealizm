@@ -51,18 +51,6 @@ public class SearchIllustByKeywordC {
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
 
-			// Check Following
-			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=? AND type_id=?";
-			statement = connection.prepareStatement(strSql);
-			idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId);
-			statement.setString(idx++, m_strKeyword);
-			statement.setInt(idx++, Common.FOVO_KEYWORD_TYPE_SEARCH);
-			resultSet = statement.executeQuery();
-			m_bFollowing = (resultSet.next());
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-
 			// BLOCK USER
 			String strCondBlockUser = "";
 			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {

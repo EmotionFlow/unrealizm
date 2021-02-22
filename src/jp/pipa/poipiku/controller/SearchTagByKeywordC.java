@@ -71,7 +71,6 @@ public class SearchTagByKeywordC {
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				CTag tag = new CTag(cResSet);
-				tag.m_nTypeId = Common.FOVO_KEYWORD_TYPE_TAG;
 				m_vContentList.add(tag);
 			}
 			cResSet.close();cResSet=null;

@@ -11,13 +11,13 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CTag cTag = cResults.m_vContentList.get(nCnt);
-	if(cTag.m_nTypeId==Common.FOVO_KEYWORD_TYPE_TAG) {
-		%><%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%><%
-	} else {
-		%><%=CCnv.toHtmlKeyword(cTag, CCnv.MODE_SP, _TEX, nSpMode)%><%
-	}
+%>
+<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%>
+<%
 	if((nCnt+1)%9==0) {
-		%><%@ include file="/inner/TAd336x280_mid.jsp"%><%
+%>
+<%@ include file="/inner/TAd336x280_mid.jsp"%>
+<%
 	}
 }
 %>

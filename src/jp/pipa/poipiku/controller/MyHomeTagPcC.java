@@ -47,37 +47,6 @@ public class MyHomeTagPcC {
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
 
-			// サーチタグの存在確認
-			boolean bSearchTag = false;
-			strSql = "SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0 LIMIT 1";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, checkLogin.m_nUserId);
-			resultSet = statement.executeQuery();
-			bSearchTag = resultSet.next();
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-
-			// サーチキーワード
-			strSql = "SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=1 LIMIT 100";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, checkLogin.m_nUserId);
-			resultSet = statement.executeQuery();
-			StringBuilder sbKeyWord = new StringBuilder();
-			if(resultSet.next()) {
-				sbKeyWord.append(Util.toString(resultSet.getString(1)).trim());
-				while (resultSet.next()) {
-					sbKeyWord.append(" OR ");
-					sbKeyWord.append(Util.toString(resultSet.getString(1)).trim());
-				}
-			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-			String strSearchKeyword = sbKeyWord.toString();
-			String strCondSearch = (!strSearchKeyword.isEmpty())?"OR contents_0000.content_id IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ":"";
-
-			// サーチタグ&サーチキーワード共に無い場合はそのまま終了
-			if (!bSearchTag && strSearchKeyword.isEmpty()) return true;
-
 			// BLOCK USER
 			String strCondBlockUser = "";
 			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
@@ -100,7 +69,7 @@ public class MyHomeTagPcC {
 				}
 			}
 
-			// PC版右ペイン用
+			// get contents
 			idx = 1;
 			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -119,8 +88,7 @@ public class MyHomeTagPcC {
 					+ strCondBlockUser
 					+ strCondBlocedkUser
 					+ "AND safe_filter<=? "
-					+ "AND (content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt IN(SELECT tag_txt FROM follow_tags_0000 WHERE user_id=? AND type_id=0) AND tag_type=1) "
-					+ strCondSearch
+					+ "AND (content_id IN (SELECT content_id FROM tags_0000 WHERE genre_id IN(SELECT genre_id FROM follow_tags_0000 WHERE user_id=?) AND tag_type=1) "
 					+ ") "
 					+ strCondMute;
 
@@ -133,7 +101,6 @@ public class MyHomeTagPcC {
 			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
 			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
 			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
-			if(!strCondSearch.isEmpty()) statement.setString(idx++, strSearchKeyword);
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -151,7 +118,6 @@ public class MyHomeTagPcC {
 			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
 			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
 			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
-			if(!strCondSearch.isEmpty()) statement.setString(idx++, strSearchKeyword);
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 			statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
