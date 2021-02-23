@@ -17,7 +17,7 @@ public class PopularGenreListC {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
-			order = Util.toIntN(request.getParameter("OD"), 0, 2);
+			order = Util.toIntN(request.getParameter("OD"), 0, 1);
 		}
 		catch(Exception e) {
 			;
@@ -26,7 +26,7 @@ public class PopularGenreListC {
 
 	public int SELECT_MAX = 50;
 	public int contentsNum = 0;
-	public ArrayList<Genre> contents = new ArrayList<>();
+	public ArrayList<GenreRank> contents = new ArrayList<>();
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bResult = false;
@@ -35,6 +35,15 @@ public class PopularGenreListC {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
+
+		String tableName = "vw_rank_genre_total";
+		switch (order) {
+		case 1:
+			tableName = "vw_rank_genre_daily";
+			break;
+		default:
+			break;
+		}
 
 		try {
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -49,25 +58,14 @@ public class PopularGenreListC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			String condOrder = "content_num_total";
-			switch(order) {
-			case 1:
-				condOrder = "update_date";
-				break;
-			case 2:
-				condOrder = "content_num_week";
-				break;
-			default:
-				break;
-			}
 
-			strSql = String.format("SELECT * FROM genres ORDER BY %s DESC OFFSET ? LIMIT ?", condOrder);
+			strSql = String.format("SELECT * FROM %s ORDER BY rank DESC OFFSET ? LIMIT ?", tableName);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nPage*SELECT_MAX);
 			statement.setInt(2, SELECT_MAX);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				contents.add(new Genre(resultSet));
+				contents.add(new GenreRank(resultSet));
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
