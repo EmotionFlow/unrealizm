@@ -34,9 +34,12 @@ $(function(){
 			<div style="text-align: center; font-size: 14px; line-height: 16px;">今年の煩悩の集大成いとして、「目指せたった1日で煩悩投稿108枚」！</div>
 		</a>
 	</li>
+	-->
+
+	<!--
 	<li class="EventItem">
-		<a href="/event/20201226_best1/TopPcV.jsp">
-			<img class="EventBanner" src="/event/20201226_best1/poipiku_2020best1_bn.png" />
+		<a href="/event/2021_02_18_blskip/TopPcV.jsp">
+			<img class="EventBanner" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" />
 		</a>
 	</li>
 	-->

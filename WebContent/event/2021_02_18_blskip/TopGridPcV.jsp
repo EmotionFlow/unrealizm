@@ -16,6 +16,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			.MainImage {display: block; width: 100%;}
 			.LinkButton {display: block; position: absolute; width: 100%;}
 			.LinkButton.Link1 {height: 208px; top:1200px;}
+
 .LinkButton.Link2 {
 		width: 340px;
 		height: 69px;
@@ -25,7 +26,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 .LinkButton.Link3 {
 		width: 340px;
 		height: 69px;
-		top: 1179px;
+		top: 1159px;
 		left: 310px;
 }
 .LinkMovie {
@@ -44,10 +45,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="./poipiku_blskip_pc.png" />
-				<a class="LinkButton Link2" href="https://www.youtube.com/channel/UCaOwSJ-UiNV-7IxOxNFAt4w" target="_blank"></a>
+				<img class="MainImage" src="./poipiku_blskip_pc_UI.png" />
+				<a class="LinkButton Link2" href="http://bit.ly/3aGTV7d" target="_blank"></a>
 				<iframe class="LinkMovie" width="560" height="315" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-				<a class="LinkButton Link3" href="https://www.youtube.com/channel/UCaOwSJ-UiNV-7IxOxNFAt4w" target="_blank"></a>
+				<a class="LinkButton Link3" href="http://bit.ly/3aFDIit" target="_blank"></a>
 			</div>
 		</article>
 
