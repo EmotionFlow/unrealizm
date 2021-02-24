@@ -13,7 +13,7 @@ if(!bSmartPhone) {
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>自分的祭りマンガ2020 | <%=_TEX.T("THeader.Title")%></title>
+		<title>腐女子は見た | <%=_TEX.T("THeader.Title")%></title>
 
 		<style>
 			.SettingBody {display: block; width: 100%; position: relative;}
