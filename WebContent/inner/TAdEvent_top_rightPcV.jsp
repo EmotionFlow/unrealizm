@@ -36,13 +36,11 @@ $(function(){
 	</li>
 	-->
 
-	<!--
 	<li class="EventItem">
 		<a href="/event/2021_02_18_blskip/TopPcV.jsp">
 			<img class="EventBanner" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" />
 		</a>
 	</li>
-	-->
 
 	<li class="EventItem">
 		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=28">
