@@ -194,10 +194,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			});
 			<%}%>
 			$(function() {
-				<%if(cResults.m_cContent.m_nGenreId>0) {%>
-				OnTagListClick(<%=cResults.m_cContent.m_nGenreId%>, GetTagName(<%=cResults.m_cContent.m_nGenreId%>), GetTagFileName(<%=cResults.m_cContent.m_nGenreId%>));
-				<%}%>
-
 				DispDescCharNum();
 			});
 
