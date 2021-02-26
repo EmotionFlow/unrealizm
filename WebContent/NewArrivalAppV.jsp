@@ -13,10 +13,9 @@ cResults.getParam(request);
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(checkLogin);
 
+
 String categoryInfo = "";
-if(cResults.m_nCategoryId >= 0) {
-	categoryInfo = _TEX.T(String.format("Category.C%d.Info", cResults.m_nCategoryId)).trim();
-}
+if(cResults.m_nCategoryId>=0) categoryInfo = _TEX.T(String.format("Category.C%d.Info", cResults.m_nCategoryId)).trim();
 %>
 <!DOCTYPE html>
 <html>
@@ -54,12 +53,20 @@ if(cResults.m_nCategoryId >= 0) {
 				});
 			}
 
+			var categoryInfos = [];
+			<%for(int i=0; i<=Common.CATEGORY_ID_MAX; i++) {%>
+			categoryInfos[<%=i%>] = '<%=_TEX.T(String.format("Category.C%d.Info", i)).trim()%>';
+			<%}%>
+			categoryInfos[29] = '<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;"><a href="/event/2021_02_18_blskip/TopV.jsp"><img style="width: 300px; margin: 0 0 10px 0;" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" /></a><iframe width="300" height="168" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><a style="margin: 10px 0 0 0;" href="http://bit.ly/3ug09mp" target="_blank"><img src="/event/2021_02_18_blskip/poipiku_blskip_button.png" /></a></span>';
+
 			function changeCategory(elm, param) {
 				g_nPage = 0;
 				g_nCategory = param;
+				$('#CategoryInfo').empty();
 				$("#IllustThumbList").empty();
 				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
 				$(elm).addClass('Selected');
+				$('#CategoryInfo').html(categoryInfos[g_nCategory])
 				updateCategoryMenuPos(300);
 				g_bAdding = false;
 				addContents();
@@ -96,7 +103,7 @@ if(cResults.m_nCategoryId >= 0) {
 			</nav>
 
 			<%if(!categoryInfo.isEmpty()) {%>
-			<header class="CategoryInfo">
+			<header id="CategoryInfo" class="CategoryInfo">
 				<%if(cResults.m_nCategoryId==29) {%>
 				<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;">
 					<a href="/event/2021_02_18_blskip/TopV.jsp">
