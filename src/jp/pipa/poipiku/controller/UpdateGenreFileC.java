@@ -138,6 +138,14 @@ public class UpdateGenreFileC {
 			statement.setInt(2, genreId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+			strSql = "REFRESH MATERIALIZED VIEW CONCURRENTLY vw_rank_genre_total;" +
+			"REFRESH MATERIALIZED VIEW CONCURRENTLY vw_rank_genre_daily;" +
+			"REFRESH MATERIALIZED VIEW CONCURRENTLY vw_rank_genre_weekly;";
+			statement = connection.prepareStatement(strSql);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
 			nRtn = OK_EDIT;
 		} catch(Exception e) {
 			Log.d(strSql);
