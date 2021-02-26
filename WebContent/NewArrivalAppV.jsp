@@ -62,11 +62,13 @@ if(cResults.m_nCategoryId>=0) categoryInfo = _TEX.T(String.format("Category.C%d.
 			function changeCategory(elm, param) {
 				g_nPage = 0;
 				g_nCategory = param;
-				$('#CategoryInfo').empty();
+				if(g_nCategory>=0) {
+					$('#CategoryInfo').empty();
+					$('#CategoryInfo').html(categoryInfos[g_nCategory])
+				}
 				$("#IllustThumbList").empty();
 				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
 				$(elm).addClass('Selected');
-				$('#CategoryInfo').html(categoryInfos[g_nCategory])
 				updateCategoryMenuPos(300);
 				g_bAdding = false;
 				addContents();
@@ -102,8 +104,8 @@ if(cResults.m_nCategoryId>=0) categoryInfo = _TEX.T(String.format("Category.C%d.
 				<%}%>
 			</nav>
 
-			<%if(!categoryInfo.isEmpty()) {%>
 			<header id="CategoryInfo" class="CategoryInfo">
+				<%if(!categoryInfo.isEmpty()) {%>
 				<%if(cResults.m_nCategoryId==29) {%>
 				<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;">
 					<a href="/event/2021_02_18_blskip/TopV.jsp">
@@ -117,8 +119,8 @@ if(cResults.m_nCategoryId>=0) categoryInfo = _TEX.T(String.format("Category.C%d.
 				<%} else {%>
 					<%=categoryInfo%>
 				<%}%>
+				<%}%>
 			</header>
-			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
