@@ -6,3 +6,5 @@ all:
 clean:
 	rm -rf build/jp && rm -rf WebContent/WEB-INF/classes/jp
 
+release:
+	pushd deploy && ./deploy.sh && popd
