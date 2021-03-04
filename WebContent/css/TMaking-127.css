@@ -2253,6 +2253,7 @@
 	line-height: 23px;
 	cursor: pointer;
 	font-size: 14px;
+	margin-right: 12px;
 }
 
 .UserInfo .UserInfoCmd .IllustItemCommandSub {
@@ -2270,9 +2271,15 @@
 .UserInfo .UserInfoCmd .UserInfoCmdBlock {
 	display: inline-block;
 	height: 22px;
-	line-height: 22px;
+	line-height: 17px;
 	vertical-align: bottom;
 	font-size: 24px;
+}
+
+#UserInfoCmdBlockLabel {
+	font-size: 14px;
+	position: relative;
+	top: -2px;
 }
 
 .UserInfo .UserInfoState {

@@ -173,7 +173,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 								  onmouseover="document.getElementById('UserInfoCmdBlockLabel').innerText='<%=_TEX.T("IllustV.Unblocking")%>'"
 								  onmouseleave="document.getElementById('UserInfoCmdBlockLabel').innerText='<%=_TEX.T("IllustV.Blocking")%>'"
 							>
-								<span id="UserInfoCmdBlockLabel" style="font-size: 14px; position: relative; top: -3px;"><%=_TEX.T("IllustV.Blocking")%></span>
+								<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Blocking")%></span>
 							</span>
 						<%} else if(cResults.m_bBlocked){%>
 							<%=_TEX.T("IllustV.Blocked")%>

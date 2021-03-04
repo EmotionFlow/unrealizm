@@ -214,7 +214,7 @@ if(!cResults.getResults(checkLogin)) {
 							</span>
 							<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected"
 								  onclick="UpdateBlock()">
-								<span id="UserInfoCmdBlockLabel" style="font-size: 14px; position: relative; top: -3px;"><%=_TEX.T("IllustV.Blocking")%></span>
+								<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Blocking")%></span>
 							</span>
 						<%} else if(cResults.m_bBlocked){%>
 							<%=_TEX.T("IllustV.Blocked")%>
