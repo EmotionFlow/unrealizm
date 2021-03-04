@@ -176,6 +176,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 								<span id="UserInfoCmdBlockLabel" style="font-size: 14px; position: relative; top: -3px;"><%=_TEX.T("IllustV.Blocking")%></span>
 							</span>
 						<%} else if(cResults.m_bBlocked){%>
+							<%=_TEX.T("IllustV.Blocked")%>
 						<%} else if(cResults.m_bFollow){%>
 							<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected"
 								  onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%>
@@ -196,8 +197,10 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 				</section>
 				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
+						<%if(!cResults.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
+						<%}%>
 					</a>
 				</section>
 			</div>
