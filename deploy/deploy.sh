@@ -17,8 +17,4 @@ case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
 
 ssh ${HOST_ALIAS} 'bash -c "cd stg && ./deploy_prod.sh -f"'
 
-read -p "デプロイしました。tomcatを再起動しますか？(y/N): " yn
-case "$yn" in [yY]*) ;; *) echo "tomcatを再起動せず終了しました。" ; exit ;; esac
-
-ssh ${HOST_ALIAS} 'sudo systemctl restart tomcat.service'
-echo "本番サーバのtomcatを再起動しました"
+echo "デプロイしました"
