@@ -18,3 +18,8 @@ clean:
 
 release:
 	pushd deploy && ./deploy.sh && popd
+
+test: build-java
+	pushd test && \
+	./build_java_test.sh \
+	popd
