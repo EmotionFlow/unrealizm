@@ -10,5 +10,9 @@ public class CheckLoginTest {
 		assertFalse(c.isStaff());
 		c.m_nUserId = 1;
 		assertTrue(c.isStaff());
+		c.m_nUserId = 2;
+		assertTrue(c.isStaff());
+		c.m_nUserId = 3;
+		assertFalse(c.isStaff());
 	}
 }
