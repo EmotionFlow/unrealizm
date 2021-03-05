@@ -2,11 +2,19 @@ package jp.pipa.poipiku;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.List;
 
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class CheckLogin {
+	static private List<Integer> m_staffIds = Arrays.asList(
+			1,
+			2,
+			21808,  // nino
+			1708444 // michi
+	);
 	public boolean m_bLogin = false;
 	public int m_nUserId = -1;
 	public String m_strNickName = "no name";
@@ -21,6 +29,10 @@ public class CheckLogin {
 	public CheckLogin() {}
 	public CheckLogin(HttpServletRequest request, HttpServletResponse response) {
 		getResults(request, response);
+	}
+
+	public boolean isStaff(){
+		return m_staffIds.contains(m_nUserId);
 	}
 
 	private void setCookie(HttpServletResponse response) {
