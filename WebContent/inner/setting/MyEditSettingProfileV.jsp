@@ -54,10 +54,32 @@
 
 <div class="SettingList">
 	<div class="SettingListItem">
+		<div class="SettingListTitle"><%=_TEX.T("Twitter.Share.MyUrl")%></div>
+		<div class="SettingBody">
+			<a href="https://poipiku.com/<%=checkLogin.m_nUserId%>/"
+			style="font-size: 14px; text-decoration: underline;">
+				https://poipiku.com/<%=checkLogin.m_nUserId%>/
+			</a>
+			<div class="SettingBodyCmd">
+				<%
+					String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+							URLEncoder.encode(String.format("%s%s #%s",
+									checkLogin.m_strNickName,
+									_TEX.T("Twitter.UserAddition"),
+									_TEX.T("Common.Title")), "UTF-8"),
+							URLEncoder.encode("https://poipiku.com/"+checkLogin.m_nUserId+"/", "UTF-8"));
+
+				%>
+				<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.NickName")%></div>
 		<div class="SettingBody">
 			<input id="RegistUserName" class="SettingBodyTxt" type="text" placeholder="<%=_TEX.T("EditSettingV.NickName.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.m_cUser.m_strNickName)%>" maxlength="16" />
-			<div id="RegistMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.NickName.Message.Empty")%></div>
+			<div id="RegistUserNameMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.NickName.Message.Empty")%></div>
 			<div class="SettingBodyCmd">
 				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNickName()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 			</div>
@@ -74,7 +96,7 @@
 				<img class="PreviewImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>" />
 				<%}%>
 			</div>
-			<div id="RegistMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image.Format")%></div>
+			<div id="RegistPreviewImgMessage" class="RegistMessage" ><%=_TEX.T("EditSettingV.Image.Format")%></div>
 			<div class="SettingBodyCmd">
 				<span class="BtnBase SettingBodyCmdRegist">
 					<%=_TEX.T("EditSettingV.Image.Select")%>
