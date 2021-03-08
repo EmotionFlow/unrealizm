@@ -294,6 +294,12 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
 					</div>
+					<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;">
+						<iframe width="300" height="168" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+						<a style="margin: 10px 0 0 0;" href="https://bit.ly/3bcrYVa" target="_blank">
+							<img src="/event/2021_02_18_blskip/poipiku_blskip_button.png" />
+						</a>
+					</span>
 					<%}%>
 				</div>
 			</aside>

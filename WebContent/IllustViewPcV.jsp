@@ -259,6 +259,14 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</section>
 
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+			<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;float: left;margin: 0 30px;">
+				<iframe width="300" height="168" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				<a style="margin: 10px 0 0 0;" href="http://bit.ly/30eSd6Q" target="_blank">
+					<img src="/event/2021_02_18_blskip/poipiku_blskip_button.png" />
+				</a>
+			</span>
+			<%}%>
 <!--
 			<nav class="PageBar">
 				<%//if(bSmartPhone) {%>
