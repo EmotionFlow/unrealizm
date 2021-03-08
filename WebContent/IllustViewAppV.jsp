@@ -11,9 +11,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 IllustViewPcC cResults = new IllustViewPcC();
 cResults.getParam(request);
 if(!cResults.getResults(checkLogin)) {
-	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
+	if (cResults.m_bBlocked || cResults.m_bBlocking) {
+		response.sendRedirect(String.format("/IllustListAppV.jsp?ID=%d", cResults.m_nUserId));
+	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
 		response.sendRedirect("/NotFoundV.jsp");
-	}else{
+	} else {
 		response.sendRedirect(Common.GetPoipikuUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId)));
 	}
 	return;

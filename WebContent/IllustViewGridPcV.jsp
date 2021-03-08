@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-	CheckLogin checkLogin = new CheckLogin(request, response);
-
+CheckLogin checkLogin = new CheckLogin(request, response);
 IllustViewPcC cResults = new IllustViewPcC();
 cResults.SELECT_MAX_GALLERY = 6;
 cResults.getParam(request);
 
 if(!cResults.getResults(checkLogin)) {
-	if(cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
+	if (cResults.m_bBlocked || cResults.m_bBlocking) {
+		response.sendRedirect(String.format("/%d/", cResults.m_nUserId));
+	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
 		response.sendRedirect("/NotFoundPcV.jsp");
-	}else{
+	} else {
 		response.sendRedirect(Common.GetPoipikuUrl(String.format("/%d/%d.html", cResults.m_nUserId, cResults.m_nNewContentId)));
 	}
 	return;
 }
+
 if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;

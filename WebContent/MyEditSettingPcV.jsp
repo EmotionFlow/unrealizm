@@ -51,9 +51,7 @@ MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
 MENU.put("MYPAGE", _TEX.T("EditSettingV.MyPage"));
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
-if (checkLogin.m_nPassportId >=Common.PASSPORT_ON){
-	MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
-}
+MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
 MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo2_60.png\" />" + _TEX.T("EditSettingV.Passport"));
@@ -61,22 +59,11 @@ MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
+MENU.put("REQUEST", "リクエスト");
+
 
 String[][] menuOrder = {
-		{ // Common.PASSPORT_OFF
-		"PROFILE",
-		"MYPAGE",
-		"FOLLOW",
-		"BLOCK",
-		"TWITTER",
-		"MAIL",
-		"PAYMENT",
-		"POIPASS",
-		"CHEER",
-		"ACCOUNT",
-		"INFO"
-		},
-		{ // Common.PASSPORT_ON
+		{
 		"PROFILE",
 		"MYPAGE",
 		"FOLLOW",
@@ -236,10 +223,13 @@ String[][] menuOrder = {
 		<article class="Wrapper">
 			<div id="MENUROOT" class="SettingPage" style="display: none;">
 				<div class="SettingMenu">
-					<%for(String m : menuOrder[checkLogin.m_nPassportId]){%>
+					<%for(String m : menuOrder[0]){%>
 						<%if(MENU.get(m)!=null){%>
 							<%=getSettingMenuItem(m, MENU.get(m))%>
 						<%}%>
+					<%}%>
+					<%if (checkLogin.isStaff()) { %>
+						<%=getSettingMenuItem("REQUEST", MENU.get("REQUEST"))%>
 					<%}%>
 				</div>
 			</div>
@@ -345,6 +335,16 @@ String[][] menuOrder = {
 					<%@include file="/inner/setting/MyEditSettingInfoV.jsp"%>
 				</div>
 			</div>
+
+			<%if (checkLogin.isStaff()) {%>
+			<%strPageId = "REQUEST";%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingRequestV.jsp"%>
+				</div>
+			</div>
+			<%}%>
 
 			<%if(!bSmartPhone){%>
 			</div>
