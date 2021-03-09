@@ -32,14 +32,14 @@
 <div class="SettingList">
 	<div class="SettingListItem">
 		<div class="SettingListTitle">
-			<img class="SettingListTitlePoipikuPass" src="/img/poipiku_passport_logo2_60.png" />
+			<%@include file="PoipassLogoLink.jsp"%>
 			<%=_TEX.T("EditSettingV.MuteKeyowrd.Keywords")%>
 		</div>
 		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
 			<%=_TEX.T("EditSettingV.MuteKeyowrd.Message")%>
+			<%if (checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
 			<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100"
 					  placeholder="<%=_TEX.T("EditSettingV.MuteKeyowrd.PlaceHolder")%>"><%=Util.toStringHtmlTextarea(cResults.m_cUser.m_strMuteKeyword)%></textarea>
-			<%if (checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
 			<div class="SettingBodyCmd">
 				<div id="MuteKeywordTextNum" class="RegistMessage">100</div>
 				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
