@@ -18,4 +18,7 @@ case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
 
 ssh ${HOST_ALIAS} 'bash -c "cd stg && ./deploy_prod.sh -f"'
 
+git tag -a release-$(date +%Y-%m-%d-%H-%M) -m "Release at $(date)"
+git push --tags
+
 echo "デプロイしました"
