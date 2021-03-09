@@ -79,7 +79,7 @@
 			<%=RequestCreator.AMOUNT_MINIMUM_MAX%>,
 			amountMinimum
 		)){
-			_updateRequestSetting("AmountMinimum(", amountMinimum);
+			_updateRequestSetting("AmountMinimum", amountMinimum);
 		}
 
 	}

@@ -176,8 +176,8 @@ public class RequestCreator {
 		return result;
 	}
 	
-	private void update(String column, Integer intValue, String strValue){
-		if (userId < 0) return;
+	private boolean update(String column, Integer intValue, String strValue){
+		if (userId < 0) return false;
 		if (!exists) tryInsert();
 
 		DataSource dsPostgres;
@@ -199,20 +199,22 @@ public class RequestCreator {
 			cState.setInt(2, userId);
 			cState.executeUpdate();
 			cState.close();
+			return true;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			return false;
 		} finally {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 	}
-	private void update(String column, Integer intValue) {
-		update(column, intValue, null);
+	private boolean update(String column, Integer intValue) {
+		return update(column, intValue, null);
 	}
 
-	private void update(String column, String strValue) {
-		update(column, null, strValue);
+	private boolean update(String column, String strValue) {
+		return update(column, null, strValue);
 	}
 
 	public void delete() {
@@ -240,41 +242,46 @@ public class RequestCreator {
 		}
 	}
 	
-	public void updateStatus(Status _status) {
-		update("status", _status.getCode());
+	public boolean updateStatus(Status _status) {
+		return update("status", _status.getCode());
 	}
-	public void updateAllowMedia(boolean illustOk, boolean novelOk) {
+	public boolean updateAllowMedia(boolean illustOk, boolean novelOk) {
 		int n = 0;
 		if (illustOk) { n += 1; }
 		if (novelOk) { n += 10; }
-		update("allow_media", n);
+		return update("allow_media", n);
 	}
-	public void updateAllowSensitive(boolean isOk) {
-		update("allow_sensitive", isOk ? 1 : 0);
+	public boolean updateAllowSensitive(boolean isOk) {
+		return update("allow_sensitive", isOk ? 1 : 0);
 	}
-	public void updateReturnPeriod(int day) {
+	public boolean updateReturnPeriod(int day) {
 		if (RETURN_PERIOD_MIN <= day && day <= RETURN_PERIOD_MAX) {
-			update("return_period", day);
+			return update("return_period", day);
 		}
+		return false;
 	}
-	public void updateDeliveryPeriod(int day) {
+	public boolean updateDeliveryPeriod(int day) {
 		if (DELIVERY_PERIOD_MIN <= day && day <= DELIVERY_PERIOD_MAX) {
-			update("delivery_period", day);
+			return update("delivery_period", day);
 		}
+		return false;
 	}
-	public void updateAmountLeftToMe(int amount) {
+	public boolean updateAmountLeftToMe(int amount) {
 		if (AMOUNT_LEFT_TO_ME_MIN <= amount && amount <= AMOUNT_LEFT_TO_ME_MAX) {
-			update("amount_to_me", amount);
+			return update("amount_to_me", amount);
 		}
+		return false;
 	}
-	public void updateAmountMinimum(int amount) {
+	public boolean updateAmountMinimum(int amount) {
 		if (AMOUNT_MINIMUM_MIN <= amount && amount <= AMOUNT_MINIMUM_MAX) {
-			update("amount_minimum", amount);
+			return update("amount_minimum", amount);
 		}
+		return false;
 	}
-	public void updateCommercialTransactionLaw(String text) {
+	public boolean updateCommercialTransactionLaw(String text) {
 		if (text.length() <= COMMERCIAL_TRANSACTION_LAW_MAX) {
-			update("commercial_transaction_law", text);
+			return update("commercial_transaction_law", text);
 		}
+		return false;
 	}
 }
