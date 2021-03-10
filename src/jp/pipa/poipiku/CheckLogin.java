@@ -11,7 +11,7 @@ import jp.pipa.poipiku.util.*;
 public class CheckLogin {
 	static private List<Integer> m_staffIds = Arrays.asList(
 			1,
-			21809,  // nino
+			21808,  // nino
 			1708444 // michi
 	);
 	public boolean m_bLogin = false;
