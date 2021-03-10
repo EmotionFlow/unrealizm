@@ -52,6 +52,8 @@ public class CUser {
 
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 
+	public boolean m_bRequestEnabled = false;
+
 	public CUser() {}
 	public CUser(ResultSet resultSet) throws SQLException {
 		m_nUserId		= resultSet.getInt("user_id");

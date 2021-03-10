@@ -199,12 +199,19 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 					</span>
 				</section>
 				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
+					<a class="UserInfoStateItem" href="/<%=cResults.m_cUser.m_nUserId%>/">
 						<%if(!cResults.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 						<%}%>
 					</a>
+					<%if (checkLogin.isStaff()){%>
+					<%if (cResults.m_cUser.m_bRequestEnabled){%>
+					<a class="UserInfoStateItem" href="SendRequestPcV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+						<i class="far fa-comment-alt"></i><span class="RequestEnabled">リクエスト受付中!</span>
+					</a>
+					<%}%>
+					<%}%>
 				</section>
 			</div>
 		</article>

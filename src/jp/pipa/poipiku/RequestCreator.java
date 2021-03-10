@@ -1,5 +1,6 @@
 package jp.pipa.poipiku;
 
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
@@ -19,7 +20,7 @@ public class RequestCreator {
 		private Status(int code) {
 			this.code = code;
 		}
-		int getCode() {
+		public int getCode() {
 			return code;
 		}
 	}
@@ -267,6 +268,7 @@ public class RequestCreator {
 				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 			}
+			CacheUsers0000.getInstance().clearUser(userId);
 		}
 		return true;
 	}
