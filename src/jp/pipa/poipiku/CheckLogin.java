@@ -10,7 +10,8 @@ import jp.pipa.poipiku.util.*;
 
 public class CheckLogin {
 	static private List<Integer> m_staffIds = Arrays.asList(
-			1,
+			1,      // pipa
+			2,      // official
 			21808,  // nino
 			1708444 // michi
 	);
