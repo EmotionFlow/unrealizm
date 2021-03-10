@@ -156,7 +156,7 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
 	-webkit-appearance: none;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="datetime-local"], textarea, select {
+input[type="text"], input[type="email"], input[type="password"], input[type="datetime-local"], input[type="number"], textarea, select {
 	font-size: 14px;
 	webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
