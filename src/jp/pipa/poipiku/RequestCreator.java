@@ -101,9 +101,8 @@ public class RequestCreator {
 				amountMinimum = cResSet.getInt("amount_minimum");
 				commercialTransactionLaw = cResSet.getString("commercial_transaction_law");
 				exists = true;
-			} else {
-				Log.d("request_creator not found");
 			}
+
 			cResSet.close();
 			cState.close();
 		} catch(Exception e) {
@@ -242,7 +241,34 @@ public class RequestCreator {
 	}
 	
 	public boolean updateStatus(Status _status) {
-		return update("status", _status.getCode());
+		if (!update("status", _status.getCode())){
+			return false;
+		} else {
+			DataSource dsPostgres;
+			Connection cConn = null;
+			PreparedStatement cState = null;
+			String strSql = "";
+			try {
+				Class.forName("org.postgresql.Driver");
+				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+				cConn = dsPostgres.getConnection();
+
+				strSql = "UPDATE users_0000 SET request_creator_status=? WHERE user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, _status.getCode());
+				cState.setInt(2, userId);
+				cState.executeUpdate();
+				cState.close();
+			} catch(Exception e) {
+				Log.d(strSql);
+				e.printStackTrace();
+				return false;
+			} finally {
+				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			}
+		}
+		return true;
 	}
 	public boolean updateAllowMedia(boolean illustOk, boolean novelOk) {
 		int n = 0;
