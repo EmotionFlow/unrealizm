@@ -92,7 +92,6 @@ public class RequestCreator {
 			cResSet = cState.executeQuery();
 
 			if(cResSet.next()){
-				Log.d("request_creators found");
 				setStatus(cResSet.getInt("status"));
 				allowSensitive = cResSet.getInt("allow_sensitive");
 				allowMedia = cResSet.getInt("allow_media");
@@ -103,7 +102,7 @@ public class RequestCreator {
 				commercialTransactionLaw = cResSet.getString("commercial_transaction_law");
 				exists = true;
 			} else {
-				Log.d("request_creators not found");
+				Log.d("request_creator not found");
 			}
 			cResSet.close();
 			cState.close();
@@ -268,7 +267,7 @@ public class RequestCreator {
 	}
 	public boolean updateAmountLeftToMe(int amount) {
 		if (AMOUNT_LEFT_TO_ME_MIN <= amount && amount <= AMOUNT_LEFT_TO_ME_MAX) {
-			return update("amount_to_me", amount);
+			return update("amount_left_to_me", amount);
 		}
 		return false;
 	}

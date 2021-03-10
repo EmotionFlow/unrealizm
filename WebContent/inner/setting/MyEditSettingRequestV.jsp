@@ -2,6 +2,7 @@
 <%
 	RequestCreator requestCreator = new RequestCreator(checkLogin);
 %>
+<% if (checkLogin.isStaff()) { %>
 <script type="text/javascript">
 	function _updateRequestSetting(attribute, variable){
 		$.ajax({
@@ -11,20 +12,22 @@
 			"dataType": "json"
 		})
 		.then(
-			(data) => {DispMsg("更新しました！");},
+			(data) => {DispMsg("変更しました！");},
 			(error) => {DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");}
 		);
-		return false;
 	}
 
 	function updateRequestEnabled(){
-		_updateRequestSetting("RequestEnabled", $("#RequestEnabled").prop("checked") ? 1 : 0);
+		const checked = $("#RequestEnabled").prop("checked") ? 1 : 0;
+		_updateRequestSetting("RequestEnabled", checked);
+		$("#RequestSettingItems").css('opacity', checked ? 1.0 : 0.5);
 	}
 	function updateRequestMedia(){
 		const allowIllust = $("#RequestMediaIllust").prop("checked") ? 1 : 0;
 		const allowNovel = $("#RequestMediaNovel").prop("checked") ? 1 : 0;
-		if (!allowIllust && !allowNovel) {
-			DispMsg("１つ以上チェックしてください");
+		if (allowIllust===0 && allowNovel===0) {
+			DispMsg("メディアは１つ以上チェックしてください");
+			return false;
 		}
 		_updateRequestSetting("RequestMedia", String(allowIllust) + "," + String(allowNovel));
 	}
@@ -41,6 +44,10 @@
 	}
 	function updateReturnPeriod(){
 		const returnPeriod = parseInt($("#ReturnPeriod").val(), 10);
+		if (returnPeriod > parseInt($("#DeliveryPeriod").val(), 10)) {
+			DispMsg("納品締切日数以下の日数を指定してください");
+			return;
+		}
 		if (_validationRange(
 				<%=RequestCreator.RETURN_PERIOD_MIN%>,
 				<%=RequestCreator.RETURN_PERIOD_MAX%>,
@@ -52,7 +59,8 @@
 	function updateDeliveryPeriod(){
 		const deliveryPeriod = parseInt($("#DeliveryPeriod").val(), 10);
 		if (deliveryPeriod < parseInt($("#ReturnPeriod").val(), 10)) {
-			DispMsg("返答締切日数より大きな日数を指定してください");
+			DispMsg("返答締切日数以上の日数を指定してください");
+			return;
 		}
 		if (_validationRange(
 			<%=RequestCreator.DELIVERY_PERIOD_MIN%>,
@@ -64,6 +72,10 @@
 	}
 	function updateAmountLeftToMe(){
 		const amountLeftToMe = parseInt($("#AmountLeftToMe").val(), 10);
+		if (amountLeftToMe < parseInt($("#AmountMinimum").val(), 10)) {
+			DispMsg("最低金額以上の金額を指定してください");
+			return;
+		}
 		if (_validationRange(
 			<%=RequestCreator.AMOUNT_LEFT_TO_ME_MIN%>,
 			<%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>,
@@ -74,6 +86,10 @@
 	}
 	function updateAmountMinimum(){
 		const amountMinimum = parseInt($("#AmountMinimum").val(), 10);
+		if (amountMinimum < parseInt($("#AmountLeftToMe").val(), 10)) {
+			DispMsg("おまかせ金額以下のの金額を指定してください");
+			return;
+		}
 		if (_validationRange(
 			<%=RequestCreator.AMOUNT_MINIMUM_MIN%>,
 			<%=RequestCreator.AMOUNT_MINIMUM_MAX%>,
@@ -118,7 +134,7 @@
 			</div>
 		</div>
 
-		<div id="RequestSettingItems">
+		<div id="RequestSettingItems" <%if(requestCreator.status!=RequestCreator.Status.Enabled){%>style="opacity: 0.5;"<%}%> >
 			<div class="SettingListItem">
 				<div class="SettingListTitle">メディア</div>
 				リクエストを受け付けるメディアを設定します。
@@ -189,7 +205,7 @@
 					</div>
 					<div class="RegistMessage">
 						おまかせでリクエストされた時の金額を設定します。
-						¥<%=RequestCreator.AMOUNT_LEFT_TO_ME_MIN%>〜<%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>の間で設定できます。
+						¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MAX)%>の間で設定できます。
 					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAmountLeftToMe()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -205,7 +221,7 @@
 					</div>
 					<div class="RegistMessage">
 						リクエスト最低金額を設定します。
-						¥<%=RequestCreator.AMOUNT_MINIMUM_MIN%>〜<%=RequestCreator.AMOUNT_MINIMUM_MAX%>の間で設定できます。
+						¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>の間で設定できます。
 					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAmountMinimum()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -216,9 +232,9 @@
 				<div class="SettingListTitle">特定商取引法に基づく表記</div>
 				特定商取引法で定められた内容を記載してください。特定商取引法に基づく表記を設定するべきかどうかはクリエイターガイドラインを確認してください。
 				<div class="SettingBody">
-					<textarea id="CommercialTransactionLaw" class="SettingBodyTxt" rows="6" onkeyup="dispLawTxtNum()" maxlength="1000"><%=Util.toStringHtmlTextarea(requestCreator.commercialTransactionLaw)%></textarea>
+					<textarea id="CommercialTransactionLaw" class="SettingBodyTxt" rows="6" maxlength="1000"><%=Util.toStringHtmlTextarea(requestCreator.commercialTransactionLaw)%></textarea>
 					<div class="SettingBodyCmd">
-						<div id="ProfileTextMessage" class="RegistMessage">1000</div>
+						<div id="ProfileTextMessage" class="RegistMessage">1000文字まで</div>
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateCommercialTransactionLawTxt()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 					</div>
 				</div>
@@ -226,3 +242,4 @@
 		</div>
 	</div>
 </div>
+<%}%>
