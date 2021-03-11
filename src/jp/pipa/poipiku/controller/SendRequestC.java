@@ -44,7 +44,6 @@ public class SendRequestC {
 		}
 
 		try {
-			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			Class.forName("org.postgresql.Driver");
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
@@ -63,9 +62,7 @@ public class SendRequestC {
 				user.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
 				user.m_nMailComment		= resultSet.getInt("mail_comment");
 				if(user.m_strFileName.isEmpty()) user.m_strFileName="/img/default_user.jpg";
-				user.m_bRequestEnabled   = (
-						resultSet.getInt("request_creator_status") == RequestCreator.Status.Enabled.getCode()
-				);
+				user.setRequestEnabled(resultSet);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
