@@ -320,7 +320,8 @@ public class Util {
 				"Yahoo!",
 				"YandexBot",
 				"Yeti",
-				"YodaoBot");
+				"YodaoBot",
+				"Pinterestbot");
 		return vBot.contains(agent);
 	}
 
