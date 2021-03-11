@@ -65,6 +65,36 @@ public class IllustDetailC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			if (checkLogin.isStaff()) {
+				if( m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWER ||
+						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWEE||
+						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_EACH ||
+						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST
+				){
+					CTweet tweet = new CTweet();
+					tweet.GetResults(checkLogin.m_nUserId);
+					if(m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST){
+						bRtn = (tweet.LookupListMember(m_cContent) == CTweet.OK);
+					}else{
+						final int friendshipResult = tweet.LookupFriendship(m_cContent.m_nUserId);
+						switch (m_cContent.m_nPublishId){
+							case Common.PUBLISH_ID_T_FOLLOWER:
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWER);
+								break;
+							case Common.PUBLISH_ID_T_FOLLOWEE:
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWEE);
+								break;
+							case Common.PUBLISH_ID_T_EACH:
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_EACH);
+								break;
+							default:
+								bRtn = false;
+						}
+					}
+					if(!bRtn) return false;
+				}
+			}
+
 			if(m_nAppendId>0 && bRtn) {
 				bRtn = false;
 				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
