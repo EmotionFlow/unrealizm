@@ -106,7 +106,7 @@
 		if (!_validateEmpty(amountMinimum)) {
 			return;
 		}
-		if (amountMinimum < parseInt($("#AmountLeftToMe").val(), 10)) {
+		if (amountMinimum > parseInt($("#AmountLeftToMe").val(), 10)) {
 			DispMsg("おまかせ金額以下のの金額を指定してください");
 			return;
 		}

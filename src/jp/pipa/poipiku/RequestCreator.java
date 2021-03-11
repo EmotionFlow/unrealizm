@@ -71,11 +71,16 @@ public class RequestCreator {
 	public String commercialTransactionLaw = "";
 
 	public RequestCreator() { }
-	public RequestCreator(CheckLogin checkLogin) {
+	public RequestCreator(int _userId) {
+		userId = _userId;
+		init();
+	}
+	public RequestCreator(CheckLogin checkLogin){
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
-
 		userId = checkLogin.m_nUserId;
-
+		init();
+	}
+	private void init(){
 		DataSource dsPostgres;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -114,6 +119,7 @@ public class RequestCreator {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
+
 	}
 
 	public boolean allowIllust(){

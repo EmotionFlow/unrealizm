@@ -11,10 +11,10 @@ if (!checkLogin.m_bLogin) {
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 // TODO write controller
-IllustListC cResults = new IllustListC();
-cResults.getParam(request);
+SendRequestC results = new SendRequestC();
+results.getParam(request);
 
-if(!cResults.getResults(checkLogin)) {
+if(!results.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
@@ -74,17 +74,23 @@ if(!cResults.getResults(checkLogin)) {
 	<div class="UserInfo Float">
 		<div class="UserInfoBg"></div>
 		<section class="UserInfoUser">
-			<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-			<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
-			<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+			<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(results.user.m_strFileName)%>')" href="/<%=results.user.m_nUserId%>/"></a>
+			<h2 class="UserInfoUserName"><a href="/<%=results.user.m_nUserId%>/"><%=results.user.m_strNickName%></a></h2>
+			<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(results.user.m_strProfile), results.user.m_nUserId, CCnv.MODE_PC)%></h3>
 		</section>
 	</div>
 
 	<div class="UploadFile"
 		 style="<%if(!bSmartPhone){%>width: 60%; max-width: 60%; margin: 0 20%;<%}%>padding-bottom: 100px;">
 		<div class="RequestTitle">
-			<%=cResults.m_cUser.m_strNickName%>さんへリクエスト
+			<%if(results.user.m_bRequestEnabled){%>
+			<%=results.user.m_strNickName%>さんへリクエスト
+			<%}else{%>
+			現在リクエストを受け付けていません
+			<%}%>
 		</div>
+
+		<%if(results.user.m_bRequestEnabled){%>
 		<div class="UoloadCmdOption">
 			<div class="OptionItem">
 				<div class="OptionLabel">メディア</div>
@@ -120,18 +126,21 @@ if(!cResults.getResults(checkLogin)) {
 				<div class="OptionLabel">リクエスト金額</div>
 				<div class="OptionPublish">
 					<input id="EditPassword" class="EditPassword" type="number" maxlength="6"
-						   placeholder=""/>
+						   value="<%=results.requestCreator.amountLeftToMe%>"
+						   placeholder="お任せ金額<%=results.requestCreator.amountLeftToMe%>円"/>
 				</div>
 			</div>
-			<div class="OptionNotify">¥3,000〜¥5,000</div>
+			<div class="OptionNotify">
+				¥<%=String.format("%,d", results.requestCreator.amountMinimum)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>
+			</div>
 
 			<div id="ItemPassword" class="OptionItem">
 				<div class="OptionLabel">承認期限</div>
-				<div class="OptionPublish">リクエスト送信から7日間</div>
+				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.returnPeriod%>日間</div>
 			</div>
 			<div id="ItemPassword" class="OptionItem">
 				<div class="OptionLabel">納品期限</div>
-				<div class="OptionPublish">リクエスト送信から60日間</div>
+				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.deliveryPeriod%>日間</div>
 			</div>
 			<div class="OptionNotify">期限を過ぎると自動でキャンセルされます</div>
 
@@ -151,7 +160,7 @@ if(!cResults.getResults(checkLogin)) {
 		<div class="UoloadCmd">
 			<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="">リクエストを送信する</a>
 		</div>
-
+		<%} // if(results.user.m_bRequestEnabled)%>
 	</div>
 </article>
 </body>
