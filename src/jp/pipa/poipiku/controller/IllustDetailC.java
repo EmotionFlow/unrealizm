@@ -79,10 +79,10 @@ public class IllustDetailC {
 						final int friendshipResult = tweet.LookupFriendship(m_cContent.m_nUserId);
 						switch (m_cContent.m_nPublishId){
 							case Common.PUBLISH_ID_T_FOLLOWER:
-								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWER);
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWEE);
 								break;
 							case Common.PUBLISH_ID_T_FOLLOWEE:
-								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWEE);
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWER);
 								break;
 							case Common.PUBLISH_ID_T_EACH:
 								bRtn = (friendshipResult == CTweet.FRIENDSHIP_EACH);
