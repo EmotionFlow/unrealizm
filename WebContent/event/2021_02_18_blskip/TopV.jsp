@@ -42,7 +42,7 @@ checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="./poipiku_blskip_sp_Ul.png" />
+				<img class="MainImage" src="./poipiku_blskip_sp_Ul-01.png" />
 				<a class="LinkButton Link2" href="http://bit.ly/2P0JumF" target="_blank"></a>
 				<iframe class="LinkMovie" width="250" height="140" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				<a class="LinkButton Link3" href="http://bit.ly/3qJWHy3" target="_blank"></a>

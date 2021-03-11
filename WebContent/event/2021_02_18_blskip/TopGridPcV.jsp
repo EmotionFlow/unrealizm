@@ -45,7 +45,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<article class="Wrapper">
 			<div class="SettingBody">
-				<img class="MainImage" src="./poipiku_blskip_pc_UI.png" />
+				<img class="MainImage" src="./poipiku_blskip_pc_UI-01.png" />
 				<a class="LinkButton Link2" href="http://bit.ly/3aGTV7d" target="_blank"></a>
 				<iframe class="LinkMovie" width="560" height="315" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				<a class="LinkButton Link3" href="http://bit.ly/3aFDIit" target="_blank"></a>
