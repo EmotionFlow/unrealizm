@@ -10,7 +10,6 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
-import sun.misc.Request;
 
 public class IllustListC {
 	public int m_nUserId = -1;
