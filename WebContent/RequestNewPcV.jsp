@@ -55,7 +55,7 @@ if(!results.getResults(checkLogin)) {
 					"CREATOR": <%=results.creatorUserId%>,
 					"MEDIA": $("#OptionMedia").val(),
 					"TEXT": $("#EditRequestText").val(),
-					"CATEGORY": $("#OptionRequestCategory").val(),
+					"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
 					"AMOUNT": $("#EditAmmount").val()
 				},
 				"url": "/f/SendRequestF.jsp",
@@ -143,7 +143,7 @@ if(!results.getResults(checkLogin)) {
 			</div>
 		</div>
 		<div class="TextBody">
-			リクエスト文
+			リクエストメッセージ
 			<textarea id="EditRequestText" class="EditTextBody"
 					  maxlength="1000" placeholder="改行含め1000字まで"
 					  onkeyup="dispRequestTextCharNum()"></textarea>
@@ -153,16 +153,26 @@ if(!results.getResults(checkLogin)) {
 		<div class="UoloadCmdOption">
 			<div class="OptionItem">
 				<div class="OptionLabel">ワンクッション・R18相当リクエスト</div>
-				<div class="onoffswitch OnOff">
-					<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRequestCategory"
-						   value="0"/>
+				<div class="onoffswitch OnOff <%=results.requestCreator.allowSensitive() ? "" : "disabled"%> ">
+					<input type="checkbox" class="onoffswitch-checkbox"
+						   name="OptionRecent"
+						   id="OptionRequestCategory"
+						   value="0"
+							<%=results.requestCreator.allowSensitive() ? "" : "onclick=\"return false;\""%>
+					/>
 					<label class="onoffswitch-label" for="OptionRequestCategory">
 						<span class="onoffswitch-inner"></span>
 						<span class="onoffswitch-switch"></span>
 					</label>
 				</div>
 			</div>
-			<div class="OptionNotify">センシティブなリクエストは必ずON</div>
+			<div class="OptionNotify">
+				<%if (results.requestCreator.allowSensitive()) {%>
+				センシティブなリクエストは必ずON
+				<%}else{%>
+				このクリエイターはセンシティブな内容を受け付けません
+				<%}%>
+			</div>
 
 			<div id="ItemPassword" class="OptionItem">
 				<div class="OptionLabel">リクエスト金額</div>
