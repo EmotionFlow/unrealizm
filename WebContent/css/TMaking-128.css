@@ -991,6 +991,12 @@
 	align-items: center;
 }
 
+.UploadFile .UoloadCmdOption .OptionNotify {
+	font-size: 12px;
+	opacity: 0.8;
+	margin-bottom: 20px;
+}
+
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {
 	display: block;
 	margin: 0;
@@ -2314,6 +2320,11 @@
 	height: 18px;
 	line-height: 18px;
 	font-size: 14px;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem .RequestEnabled {
+	text-decoration: underline;
+	font-size: 13px;
 }
 
 /**********IllustView InfoForm **********/

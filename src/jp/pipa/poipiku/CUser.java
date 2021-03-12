@@ -52,12 +52,18 @@ public class CUser {
 
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 
+	public boolean m_bRequestEnabled = false;
+
 	public CUser() {}
-	public CUser(ResultSet resultSet) throws SQLException {
+	public CUser(final ResultSet resultSet) throws SQLException {
 		m_nUserId		= resultSet.getInt("user_id");
 		m_strNickName	= Util.toString(resultSet.getString("nickname"));
 		m_strFileName	= Util.toString(resultSet.getString("file_name"));
 		m_nPassportId	= resultSet.getInt("passport_id");
 		if(m_strFileName.isEmpty()) m_strFileName="/img/default_user.jpg";
+	}
+	
+	public void setRequestEnabled(final ResultSet resultSet) throws SQLException {
+		m_bRequestEnabled = (resultSet.getInt("request_creator_status") == RequestCreator.Status.Enabled.getCode());
 	}
 }

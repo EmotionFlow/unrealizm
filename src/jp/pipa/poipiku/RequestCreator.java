@@ -1,5 +1,6 @@
 package jp.pipa.poipiku;
 
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
@@ -14,12 +15,13 @@ public class RequestCreator {
 	public enum Status {
 		Undef(0),     // 未設定or設定中
 		Disabled(1),  // 設定済みだがOFF
-		Enabled(2);	// 設定済みでON
+		Enabled(2),	// 設定済みでON
+		NotFound(-1); // 見つからなかった
 		private final int code;
 		private Status(int code) {
 			this.code = code;
 		}
-		int getCode() {
+		public int getCode() {
 			return code;
 		}
 	}
@@ -70,11 +72,16 @@ public class RequestCreator {
 	public String commercialTransactionLaw = "";
 
 	public RequestCreator() { }
-	public RequestCreator(CheckLogin checkLogin) {
+	public RequestCreator(int _userId) {
+		userId = _userId;
+		init();
+	}
+	public RequestCreator(CheckLogin checkLogin){
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
-
 		userId = checkLogin.m_nUserId;
-
+		init();
+	}
+	private void init(){
 		DataSource dsPostgres;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -101,9 +108,10 @@ public class RequestCreator {
 				amountMinimum = cResSet.getInt("amount_minimum");
 				commercialTransactionLaw = cResSet.getString("commercial_transaction_law");
 				exists = true;
-			} else {
-				Log.d("request_creator not found");
+			}else{
+				status = Status.NotFound;
 			}
+
 			cResSet.close();
 			cState.close();
 		} catch(Exception e) {
@@ -114,6 +122,7 @@ public class RequestCreator {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
+
 	}
 
 	public boolean allowIllust(){
@@ -242,7 +251,35 @@ public class RequestCreator {
 	}
 	
 	public boolean updateStatus(Status _status) {
-		return update("status", _status.getCode());
+		if (!update("status", _status.getCode())){
+			return false;
+		} else {
+			DataSource dsPostgres;
+			Connection cConn = null;
+			PreparedStatement cState = null;
+			String strSql = "";
+			try {
+				Class.forName("org.postgresql.Driver");
+				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+				cConn = dsPostgres.getConnection();
+
+				strSql = "UPDATE users_0000 SET request_creator_status=? WHERE user_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, _status.getCode());
+				cState.setInt(2, userId);
+				cState.executeUpdate();
+				cState.close();
+			} catch(Exception e) {
+				Log.d(strSql);
+				e.printStackTrace();
+				return false;
+			} finally {
+				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			}
+			CacheUsers0000.getInstance().clearUser(userId);
+		}
+		return true;
 	}
 	public boolean updateAllowMedia(boolean illustOk, boolean novelOk) {
 		int n = 0;
