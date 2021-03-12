@@ -65,10 +65,11 @@ public class IllustDetailC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			if( m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWER ||
-					m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWEE||
-					m_cContent.m_nPublishId == Common.PUBLISH_ID_T_EACH ||
-					m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST
+			if(checkLogin.m_nUserId != m_cContent.m_nUserId && (
+				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWER ||
+				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWEE||
+				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_EACH ||
+				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST )
 			){
 				CTweet tweet = new CTweet();
 				tweet.GetResults(checkLogin.m_nUserId);
