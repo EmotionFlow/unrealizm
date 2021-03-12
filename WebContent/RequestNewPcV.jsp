@@ -23,13 +23,32 @@ if(!results.getResults(checkLogin)) {
 <html>
 <head>
 	<%@ include file="/inner/THeaderCommonPc.jsp" %>
-
 	<title><%=_TEX.T("THeader.Title")%> - Request </title>
-
 	<script>
-		function startMsg() {
-			$('#UoloadCmdBtn').addClass('Disabled').html('<%=_TEX.T("EditIllustVCommon.Uploading")%>');
-			DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+		function sendRequest() {
+			$('#SendRequestBtn').addClass('Disabled').html('送信中');
+			DispMsgStatic('送信中です');
+			$.ajax({
+				"type": "post",
+				"data": {
+					"CLIENT":<%=checkLogin.m_nUserId%>,
+					"CREATOR": <%=results.creatorUserId%>,
+					"TEXT":attribute,
+					"CATEGORY":variable,
+					"AMOUNT":variable
+				},
+				"url": "/f/SendRequestF.jsp",
+				"dataType": "json"
+			})
+			.then(
+				(data) => {
+					DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額で決済されます。");
+					window.setTimeout(() => {
+						location.href = "/<%=results.creatorUserId%>"
+					}, 2300);
+				},
+				(error) => {DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");}
+			);
 		}
 
 		function completeMsg() {
@@ -97,6 +116,7 @@ if(!results.getResults(checkLogin)) {
 				<div class="OptionPublish">
 					<select id="EditMedia">
 						<option value="1">イラスト</option>
+						<option value="10">小説</option>
 					</select>
 				</div>
 			</div>
@@ -134,13 +154,13 @@ if(!results.getResults(checkLogin)) {
 				¥<%=String.format("%,d", results.requestCreator.amountMinimum)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>
 			</div>
 
-			<div id="ItemPassword" class="OptionItem">
+			<div class="OptionItem">
 				<div class="OptionLabel">承認期限</div>
-				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.returnPeriod%>日間</div>
+				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.returnPeriod%>日後</div>
 			</div>
-			<div id="ItemPassword" class="OptionItem">
+			<div class="OptionItem">
 				<div class="OptionLabel">納品期限</div>
-				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.deliveryPeriod%>日間</div>
+				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.deliveryPeriod%>日後</div>
 			</div>
 			<div class="OptionNotify">期限を過ぎると自動でキャンセルされます</div>
 
@@ -158,7 +178,7 @@ if(!results.getResults(checkLogin)) {
 		</div>
 
 		<div class="UoloadCmd">
-			<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="">リクエストを送信する</a>
+			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">リクエストを送信する</a>
 		</div>
 		<%} // if(results.user.m_bRequestEnabled)%>
 	</div>

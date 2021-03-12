@@ -207,7 +207,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 					</a>
 					<%if (checkLogin.isStaff()){%>
 					<%if (cResults.m_cUser.m_bRequestEnabled){%>
-					<a class="UserInfoStateItem" href="SendRequestPcV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
+					<a class="UserInfoStateItem" href="RequestNewPcV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">
 						<i class="far fa-comment-alt"></i><span class="RequestEnabled">リクエスト受付中!</span>
 					</a>
 					<%}%>

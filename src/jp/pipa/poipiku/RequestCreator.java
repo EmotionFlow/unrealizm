@@ -15,7 +15,8 @@ public class RequestCreator {
 	public enum Status {
 		Undef(0),     // 未設定or設定中
 		Disabled(1),  // 設定済みだがOFF
-		Enabled(2);	// 設定済みでON
+		Enabled(2),	// 設定済みでON
+		NotFound(-1); // 見つからなかった
 		private final int code;
 		private Status(int code) {
 			this.code = code;
@@ -107,6 +108,8 @@ public class RequestCreator {
 				amountMinimum = cResSet.getInt("amount_minimum");
 				commercialTransactionLaw = cResSet.getString("commercial_transaction_law");
 				exists = true;
+			}else{
+				status = Status.NotFound;
 			}
 
 			cResSet.close();
