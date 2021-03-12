@@ -10,8 +10,7 @@ if (!checkLogin.m_bLogin) {
 
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-// TODO write controller
-SendRequestC results = new SendRequestC();
+RequestNewC results = new RequestNewC();
 results.getParam(request);
 
 if(!results.getResults(checkLogin)) {
@@ -25,43 +24,65 @@ if(!results.getResults(checkLogin)) {
 	<%@ include file="/inner/THeaderCommonPc.jsp" %>
 	<title><%=_TEX.T("THeader.Title")%> - Request </title>
 	<script>
+		function _validate() {
+			if ($("#EditRequestText").val().length <= 10) {
+				DispMsg("リクエスト本文が短すぎます");
+				return false;
+			}
+			const amount = parseInt($("#EditAmmount").val(), 10);
+			if (!amount) {
+				DispMsg("金額を入力してください");
+				return false;
+			}
+			if (amount < <%=results.requestCreator.amountMinimum%> ||
+				amount > <%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>){
+				DispMsg("金額が範囲外です");
+				return false;
+			}
+			return true;
+		}
+
 		function sendRequest() {
-			$('#SendRequestBtn').addClass('Disabled').html('送信中');
+			if (!_validate()) {
+				return false;
+			}
+			$('#SendRequestBtn').addClass('Disabled').html('リクエスト送信中');
 			DispMsgStatic('送信中です');
 			$.ajax({
 				"type": "post",
 				"data": {
 					"CLIENT":<%=checkLogin.m_nUserId%>,
 					"CREATOR": <%=results.creatorUserId%>,
-					"TEXT":attribute,
-					"CATEGORY":variable,
-					"AMOUNT":variable
+					"MEDIA": $("#OptionMedia").val(),
+					"TEXT": $("#EditRequestText").val(),
+					"CATEGORY": $("#OptionRequestCategory").val(),
+					"AMOUNT": $("#EditAmmount").val()
 				},
 				"url": "/f/SendRequestF.jsp",
 				"dataType": "json"
 			})
 			.then(
 				(data) => {
-					DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額で決済されます。");
-					window.setTimeout(() => {
-						location.href = "/<%=results.creatorUserId%>"
-					}, 2300);
+					if (data.result === 0) {
+						DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額で決済されます。");
+						window.setTimeout(() => {
+							location.href = "/<%=results.creatorUserId%>"
+						}, 2300);
+					} else {
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+					}
 				},
 				(error) => {DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");}
 			);
 		}
 
-		function completeMsg() {
-			DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-		}
-
-		function errorMsg(result) {
-			DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
+		function dispRequestTextCharNum() {
+			const nCharNum = 1000 - $("#EditRequestText").val().length;
+			$("#RequestTextCharNum").html(nCharNum);
 		}
 
 		$(function () {
-			initOption();
-			DispDescCharNum();
+			dispRequestTextCharNum();
 		});
 
 	</script>
@@ -105,7 +126,7 @@ if(!results.getResults(checkLogin)) {
 			<%if(results.user.m_bRequestEnabled){%>
 			<%=results.user.m_strNickName%>さんへリクエスト
 			<%}else{%>
-			現在リクエストを受け付けていません
+			現在、リクエストを受け付けていません
 			<%}%>
 		</div>
 
@@ -114,7 +135,7 @@ if(!results.getResults(checkLogin)) {
 			<div class="OptionItem">
 				<div class="OptionLabel">メディア</div>
 				<div class="OptionPublish">
-					<select id="EditMedia">
+					<select id="OptionMedia">
 						<option value="1">イラスト</option>
 						<option value="10">小説</option>
 					</select>
@@ -123,18 +144,19 @@ if(!results.getResults(checkLogin)) {
 		</div>
 		<div class="TextBody">
 			リクエスト文
-			<textarea id="EditTextBody" class="EditTextBody" maxlength="1" placeholder=""
-					  onkeyup="DispTextCharNum()"></textarea>
-			<div id="TextBodyCharNum" class="TextBodyCharNum">1</div>
+			<textarea id="EditRequestText" class="EditTextBody"
+					  maxlength="1000" placeholder="改行含め1000字まで"
+					  onkeyup="dispRequestTextCharNum()"></textarea>
+			<div id="RequestTextCharNum" class="TextBodyCharNum">1</div>
 		</div>
 
 		<div class="UoloadCmdOption">
 			<div class="OptionItem">
 				<div class="OptionLabel">ワンクッション・R18相当リクエスト</div>
 				<div class="onoffswitch OnOff">
-					<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent"
+					<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRequestCategory"
 						   value="0"/>
-					<label class="onoffswitch-label" for="OptionRecent">
+					<label class="onoffswitch-label" for="OptionRequestCategory">
 						<span class="onoffswitch-inner"></span>
 						<span class="onoffswitch-switch"></span>
 					</label>
@@ -145,7 +167,7 @@ if(!results.getResults(checkLogin)) {
 			<div id="ItemPassword" class="OptionItem">
 				<div class="OptionLabel">リクエスト金額</div>
 				<div class="OptionPublish">
-					<input id="EditPassword" class="EditPassword" type="number" maxlength="6"
+					<input id="EditAmmount" class="EditPassword" type="number" maxlength="6"
 						   value="<%=results.requestCreator.amountLeftToMe%>"
 						   placeholder="お任せ金額<%=results.requestCreator.amountLeftToMe%>円"/>
 				</div>
