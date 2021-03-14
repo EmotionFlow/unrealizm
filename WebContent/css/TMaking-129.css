@@ -2555,13 +2555,13 @@
 .EventItemList .EventItem .EventBanner.NoBgBlue{background-image: linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%);}
 .EventItemList .EventItem .EventBanner.NoBgGold{background-image: linear-gradient( 135deg, #FFA8A8 10%, #FCFF00 100%);color: #ff3333;}
 .EventItemList .EventItem.Updated {position: relative;}
-.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; right: 0px;}
+.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; left: 0px;}
 .EventItemList .EventItem.Pre {position: relative;}
-.EventItemList .EventItem.Pre:after {display: block; content: '予告'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #3498db; color: #fff; top: 5px; right: 5px; border-radius: 20px;}
+.EventItemList .EventItem.Pre:after {display: block; content: '予告'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #3498db; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
 .EventItemList .EventItem.Start {position: relative;}
-.EventItemList .EventItem.Start:after {display: block; content: '開催中'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #ff0000; color: #fff; top: 5px; right: 5px; border-radius: 20px;}
+.EventItemList .EventItem.Start:after {display: block; content: '開催中'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #ff0000; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
 .EventItemList .EventItem.End {position: relative;}
-.EventItemList .EventItem.End:after {display: block; content: '終了'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #666; color: #ccc; top: 5px; right: 5px; border-radius: 20px;}
+.EventItemList .EventItem.End:after {display: block; content: '終了'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #333; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
 
 /********** SYSTEM INFO **********/
 .SystemInfo {display: flex; width: 100%; flex-flow: row nowrap; align-items: center; justify-content: center; background: #fdf2c2; box-sizing: border-box; padding: 2px;}

@@ -57,7 +57,6 @@ if(cResults.m_nCategoryId>=0) categoryInfo = _TEX.T(String.format("Category.C%d.
 			<%for(int i=0; i<=Common.CATEGORY_ID_MAX; i++) {%>
 			categoryInfos[<%=i%>] = '<%=_TEX.T(String.format("Category.C%d.Info", i)).trim()%>';
 			<%}%>
-			categoryInfos[29] = '<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;"><a href="/event/2021_02_18_blskip/TopV.jsp"><img style="width: 300px; margin: 0 0 10px 0;" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" /></a><iframe width="300" height="168" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><a style="margin: 10px 0 0 0;" href="http://bit.ly/3ug09mp" target="_blank"><img src="/event/2021_02_18_blskip/poipiku_blskip_button.png" /></a></span>';
 
 			function changeCategory(elm, param) {
 				g_nPage = 0;
@@ -104,23 +103,11 @@ if(cResults.m_nCategoryId>=0) categoryInfo = _TEX.T(String.format("Category.C%d.
 				<%}%>
 			</nav>
 
+			<%if(!categoryInfo.isEmpty() && cResults.m_nPage<=0) {%>
 			<header id="CategoryInfo" class="CategoryInfo">
-				<%if(!categoryInfo.isEmpty()) {%>
-				<%if(cResults.m_nCategoryId==29) {%>
-				<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;">
-					<a href="/event/2021_02_18_blskip/TopV.jsp">
-						<img style="width: 300px; margin: 0 0 10px 0;" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" />
-					</a>
-					<iframe width="300" height="168" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-					<a style="margin: 10px 0 0 0;" href="http://bit.ly/3ug09mp" target="_blank">
-						<img src="/event/2021_02_18_blskip/poipiku_blskip_button.png" />
-					</a>
-				</span>
-				<%} else {%>
-					<%=categoryInfo%>
-				<%}%>
-				<%}%>
+				<%=categoryInfo%>
 			</header>
+			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

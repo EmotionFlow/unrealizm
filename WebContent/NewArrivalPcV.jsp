@@ -72,19 +72,7 @@ if(cResults.m_nCategoryId >= 0) {
 
 			<%if(!categoryInfo.isEmpty() && cResults.m_nPage<=0) {%>
 			<header class="CategoryInfo">
-				<%if(cResults.m_nCategoryId==29) {%>
-				<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;">
-					<a href="/event/2021_02_18_blskip/TopPcV.jsp">
-						<img style="width: 300px; margin: 0 0 10px 0;" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" />
-					</a>
-					<iframe width="300" height="168" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-					<a style="margin: 10px 0 0 0;" href="http://bit.ly/2P4svjv" target="_blank">
-						<img src="/event/2021_02_18_blskip/poipiku_blskip_button.png" />
-					</a>
-				</span>
-				<%} else {%>
-					<%=categoryInfo%>
-				<%}%>
+				<%=categoryInfo%>
 			</header>
 			<%}%>
 

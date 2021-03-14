@@ -294,18 +294,18 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
 					</div>
-					<span style="display: flex; flex-flow: column; justify-content: center; align-items: center;">
-						<iframe width="300" height="168" src="https://www.youtube.com/embed/v7d6hUxqMIs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						<a style="margin: 10px 0 0 0;" href="https://bit.ly/3bcrYVa" target="_blank">
-							<img src="/event/2021_02_18_blskip/poipiku_blskip_button.png" />
-						</a>
-					</span>
 					<%}%>
 				</div>
 			</aside>
 
 			<section id="IllustItemList" class="IllustItemList">
 				<%= CCnv.Content2Html(cResults.m_cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
+
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+				<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%;">
+					<%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%>
+				</span>
+				<%}%>
 
 				<div class="RelatedItemList">
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

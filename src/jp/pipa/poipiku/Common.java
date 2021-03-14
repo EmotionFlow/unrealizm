@@ -99,8 +99,6 @@ public class Common {
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 29;
 	public static final int[] CATEGORY_ID = {
-			29,	// 腐女子は見た
-			28,	// 200万祝ってください
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
@@ -131,6 +129,8 @@ public class Common {
 //			25,	// 胸キュン
 //			26,	// 2020年ベスト1
 //			27, // 煩悩を晒せ
+//			29,	// 腐女子は見た
+//			28,	// 200万祝ってください
 	};
 
 	public static final int EDITOR_UPLOAD = 0;
