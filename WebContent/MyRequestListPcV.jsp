@@ -73,7 +73,7 @@ String[][] menuOrder = {
 
 				$(".SettingChangePageLink").click((ev)=>{
 					const el = $(ev.currentTarget);
-					location.href = "/MyEditSettingPcV.jsp?MENUID=" + el.attr("data-to");
+					location.href = "/MyRequestListPcV.jsp?MENUID=" + el.attr("data-to");
 					return true;
 				});
 
@@ -210,23 +210,27 @@ String[][] menuOrder = {
 			<div id="SettingContent">
 			<%}%>
 
-			<%String strPageId = "";%>
+			<%String category = "";%>
 
-			<%strPageId = "SENT";%>
-			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+			<%category = "SENT";%>
+			<%if(category.equals(cResults.m_strSelectedMenuId)){%>
+			<div id="<%=category%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(category), bSmartPhone)%>
 				<div class="SettingBody">
-					<%//@include file="/inner/setting/MyRequestSentV.jsp"%>
+					<%@include file="/inner/request/MyRequestListV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
-			<%strPageId = "RECEIVED";%>
-			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+			<%category = "RECEIVED";%>
+			<%if(category.equals(cResults.m_strSelectedMenuId)){%>
+			<div id="<%=category%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(category), bSmartPhone)%>
 				<div class="SettingBody">
-					<%//@include file="/inner/setting/MyRequestReceivedV.jsp"%>
+					<%@include file="/inner/request/MyRequestListV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%if(!bSmartPhone){%>
 			</div>

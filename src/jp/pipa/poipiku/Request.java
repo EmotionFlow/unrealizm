@@ -5,10 +5,7 @@ import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 
 
 public class Request {
@@ -52,9 +49,25 @@ public class Request {
 	public int orderId = -1;
 
 	public Request() { }
+	public Request(ResultSet resultSet) throws SQLException {
+		set(resultSet);
+	}
 	public Request(int _id){
 		id = _id;
 		init();
+	}
+	private void set(ResultSet resultSet) throws SQLException {
+		id = resultSet.getInt("id");
+		setStatus(resultSet.getInt("status"));
+		clientUserId = resultSet.getInt("client_user_id");
+		creatorUserId = resultSet.getInt("creator_user_id");
+		mediaId = resultSet.getInt("media_id");
+		requestText = resultSet.getString("request_text");
+		requestCategory = resultSet.getInt("request_category");
+		amount = resultSet.getInt("amount");
+		returnLimit = resultSet.getTimestamp("return_limit");
+		deliveryLimit = resultSet.getTimestamp("delivery_limit");
+		orderId = resultSet.getInt("order_id");
 	}
 	private void init(){
 		if (id < 0) {
@@ -77,16 +90,7 @@ public class Request {
 			resultSet = preparedStatement.executeQuery();
 
 			if(resultSet.next()){
-				setStatus(resultSet.getInt("status"));
-				clientUserId = resultSet.getInt("client_user_id");
-				creatorUserId = resultSet.getInt("creator_user_id");
-				mediaId = resultSet.getInt("media_id");
-				requestText = resultSet.getString("request_text");
-				requestCategory = resultSet.getInt("request_category");
-				amount = resultSet.getInt("amount");
-				returnLimit = resultSet.getTimestamp("return_limit");
-				deliveryLimit = resultSet.getTimestamp("delivery_limit");
-				orderId = resultSet.getInt("order_id");
+				set(resultSet);
 			}
 
 			resultSet.close();
