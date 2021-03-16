@@ -13,15 +13,37 @@
 		}).then((data)=>{
 				$("#RequestList").html(data);
 				$("*").scrollTop(0);
-				_getPageBar
 			}
-		)
+		);
 	}
 
 	function onClickMenuItem(selectedItem, statusCode, pageNum) {
 		$(".TabMenuItem").removeClass('Selected');
 		$(selectedItem).addClass('Selected');
 		getRequestsHtml(statusCode, pageNum);
+	}
+
+	function acceptRequest(requestId) {
+
+	}
+	function cancelRequest(requestId) {
+		$.ajax({
+			"type": "POST",
+			"url": "/f/CancelRequestF.jsp",
+			"data": "ID=" + requestId,
+			"dataType": "json",
+		}).then((data)=>{
+			if(data.result === 1){
+				DispMsg("リクエストをキャンセルしました");
+				$("#RequestPane-"+requestId).addClass("RequestPaneDeleting");
+				$("#RequestPane-"+requestId).toggle(800);
+			}else{
+				DispMsg("リクエストキャンセル時にエラーが発生しました(" + data.error_code + ")");
+			}
+		});
+	}
+	function deliveryRequest(requestId) {
+		// アップロード画面をそのまま使うか？
 	}
 
 	$(() => {
@@ -34,9 +56,18 @@
 </script>
 
 <style>
+	#RequestList{
+        background: #3498da;
+	}
 	.RequestPane{
-        border-bottom: 13px solid #3498da;
+        background: #ffffff;
         padding: 10px 10px;
+		margin: 3px 0;
+        border-radius: 13px;
+	}
+	.RequestPaneDeleting{
+        border: 3px solid #f09090;
+        padding: 7px 7px;
 	}
 	.RequestHeader{
         align-items: center;

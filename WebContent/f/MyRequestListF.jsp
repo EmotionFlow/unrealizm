@@ -12,7 +12,7 @@
 
 %>
 <%for(MyRequestListC.Result r : results.requests) {%>
-<div class="RequestPane">
+<div id="RequestPane-<%=r.request.id%>" class="RequestPane">
 	<div class="RequestHeader">
 		<span class="RequestAmount">¥<%=String.format("%,d",r.request.amount)%></span>
 		<span class="RequestLimits">
@@ -40,7 +40,7 @@
 			<a class="BtnBase RequestAgreeBtn" href="javascript:void(0)">承認</a>
 			<%}%>
 			<%if(r.request.status == Request.Status.WaitingAppoval){%>
-			<a class="BtnBase RequestCancelBtn" href="javascript:void(0)">キャンセル</a>
+			<a class="BtnBase RequestCancelBtn" onclick="cancelRequest(<%=r.request.id%>)" href="javascript:void(0)">キャンセル</a>
 			<%}%>
 			<%if(results.category.equals("RECEIVED") &&
 					r.request.status == Request.Status.InProgress
