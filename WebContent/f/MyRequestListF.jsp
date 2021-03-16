@@ -34,10 +34,19 @@
 			</a>
 		</div>
 		<div class="RequestCmd">
-			<%if(results.category.equals("RECEIVED")){%>
+			<%if(results.category.equals("RECEIVED") &&
+					r.request.status == Request.Status.WaitingAppoval
+			){%>
 			<a class="BtnBase RequestAgreeBtn" href="javascript:void(0)">承認</a>
 			<%}%>
+			<%if(r.request.status == Request.Status.WaitingAppoval){%>
 			<a class="BtnBase RequestCancelBtn" href="javascript:void(0)">キャンセル</a>
+			<%}%>
+			<%if(results.category.equals("RECEIVED") &&
+					r.request.status == Request.Status.InProgress
+			){%>
+			<a class="BtnBase RequestDeliveryBtn" href="javascript:void(0)">納品</a>
+			<%}%>
 		</div>
 	</div>
 </div>

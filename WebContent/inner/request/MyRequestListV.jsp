@@ -9,8 +9,9 @@
 			"url": "/f/MyRequestListF.jsp",
 			"data": "CAT=<%=category%>&ST=" + status + "&PG=" + pageNum,
 		}).then((data)=>{
-				$("#FollowList").html(data);
+				$("#RequestList").html(data);
 				$("*").scrollTop(0);
+				_getPageBar
 			}
 		)
 	}
@@ -116,10 +117,6 @@
 		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.Canceled.getCode()%>,0)" href="#">キャンセル</a></li>
 		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.SettlementError.getCode()%>,0)" href="#">エラー</a></li>
 	</ul>
-	<div id="FollowList" class="IllustItemList">
+	<div id="RequestList" class="IllustItemList">
 	</div>
-
-	<nav id="FollowListPageBar" class="PageBar">
-		<%//=CPageBar.CreatePageBarSp(null, null, cFollowListResults.m_nPage, cFollowListResults.m_nContentsNum, cFollowListResults.SELECT_MAX_GALLERY)%>
-	</nav>
 </div>

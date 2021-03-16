@@ -42,7 +42,7 @@ public class MyRequestListC {
 		}
 	}
 
-	public int SELECT_MAX_GALLERY = 18;
+	public int SELECT_MAX_GALLERY = 1000;
 	public ArrayList<MyRequestListC.Result> requests = new ArrayList<>();
 
 	public boolean getResults(CheckLogin checkLogin) {
@@ -63,9 +63,9 @@ public class MyRequestListC {
 			connection = dataSource.getConnection();
 			sql = "SELECT r.*, u.nickname, u.file_name FROM requests r" +
 					" INNER JOIN users_0000 u ON(" + (category.equals("SENT") ? "r.creator_user_id" : "r.client_user_id") + "=u.user_id)" +
-					" WHERE " + (category.equals("SENT") ? "client_user_id" : "creator_user_id") + "=?" +
+					" WHERE " + (category.equals("SENT") ? "r.client_user_id" : "r.creator_user_id") + "=?" +
 					" AND r.status = ?" +
-					" ORDER BY return_limit OFFSET ? LIMIT ?";
+					" ORDER BY updated_at DESC OFFSET ? LIMIT ?";
 			Log.d(sql);
 			statement = connection.prepareStatement(sql);
 			idx = 1;

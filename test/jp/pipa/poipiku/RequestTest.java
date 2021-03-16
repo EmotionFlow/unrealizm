@@ -72,7 +72,7 @@ public class RequestTest {
 		requestCreator.updateStatus(RequestCreator.Status.Enabled);
 
 		List<Request> requests = new ArrayList<>();
-		for (int i=0; i<6; i++) {
+		for (int i=0; i<60; i++) {
 			Request request = new Request();
 			request.clientUserId = 2;
 			request.creatorUserId = 21808;
