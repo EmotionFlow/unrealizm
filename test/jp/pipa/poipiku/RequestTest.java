@@ -87,7 +87,7 @@ public class RequestTest {
 		Request r;
 		r = requests.get(0);
 		assertEquals(0, r.accept());
-		assertEquals(0, r.deliver());
+		assertEquals(0, r.deliver(1));
 
 		r = requests.get(1);
 		assertEquals(0, r.cancel());

@@ -16,12 +16,16 @@
 	<div class="RequestHeader">
 		<span class="RequestAmount">¥<%=String.format("%,d",r.request.amount)%></span>
 		<span class="RequestLimits">
+			<%if(r.request.status == Request.Status.WaitingAppoval){%>
 			<span class="RequestTimeStamp">
 				<span class="RequestTimeStampLabel">返答期限</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.returnLimit)%></span>
 			</span>
+			<%}%>
+			<%if(r.request.status == Request.Status.WaitingAppoval || r.request.status == Request.Status.InProgress){%>
 			<span class="RequestTimeStamp">
 				<span class="RequestTimeStampLabel">納品期限</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.deliveryLimit)%></span>
 			</span>
+			<%}%>
 		</span>
 	</div>
 	<div class="RequestBody">
@@ -34,18 +38,14 @@
 			</a>
 		</div>
 		<div class="RequestCmd">
-			<%if(results.category.equals("RECEIVED") &&
-					r.request.status == Request.Status.WaitingAppoval
-			){%>
-			<a class="BtnBase RequestAgreeBtn" href="javascript:void(0)">承認</a>
+			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.WaitingAppoval){%>
+			<a class="BtnBase RequestAgreeBtn" onclick="acceptRequest(<%=r.request.id%>)" href="javascript:void(0)">承認</a>
 			<%}%>
 			<%if(r.request.status == Request.Status.WaitingAppoval){%>
 			<a class="BtnBase RequestCancelBtn" onclick="cancelRequest(<%=r.request.id%>)" href="javascript:void(0)">キャンセル</a>
 			<%}%>
-			<%if(results.category.equals("RECEIVED") &&
-					r.request.status == Request.Status.InProgress
-			){%>
-			<a class="BtnBase RequestDeliveryBtn" href="javascript:void(0)">納品</a>
+			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.InProgress){%>
+			<a class="BtnBase RequestDeliveryBtn" href="UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>&RID=<%=r.request.id%>">納品</a>
 			<%}%>
 		</div>
 	</div>

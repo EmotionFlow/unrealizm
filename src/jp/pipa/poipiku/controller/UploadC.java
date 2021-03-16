@@ -14,6 +14,7 @@ import jp.pipa.poipiku.*;
 
 public class UploadC extends UpC {
 	protected int m_nContentId = -99;
+	public int deliverRequestResult = 0;
 	public int GetResults(UploadCParam cParam, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -22,14 +23,27 @@ public class UploadC extends UpC {
 		String strSql = "";
 		int idx = 0;
 
+		Request poipikuRequest = null;
+		if (cParam.requestId > 0) {
+			poipikuRequest = new Request(cParam.requestId);
+			if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) {
+				deliverRequestResult = -98;
+				Log.d(String.format("クリエイターではないユーザーによる不正アクセス %d, %d, %d", poipikuRequest.id, poipikuRequest.creatorUserId, checkLogin.m_nUserId));
+				return m_nContentId;
+			}
+		}
+
 		try {
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
 			// get content id
-			ArrayList<String> lColumns = new ArrayList<String>();
-			lColumns.addAll(Arrays.asList("user_id", "genre_id", "category_id", "description", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
+			ArrayList<String> lColumns = new ArrayList<>(
+					Arrays.asList(
+							"user_id", "genre_id", "category_id", "description",
+							"tag_list", "publish_id", "password", "list_id", "safe_filter",
+							"editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
 
 			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
@@ -43,7 +57,7 @@ public class UploadC extends UpC {
 				}
 			}
 
-			ArrayList<String> lVals = new ArrayList<String>();
+			ArrayList<String> lVals = new ArrayList<>();
 			lColumns.forEach(c -> lVals.add("?"));
 			strSql = String.format("INSERT INTO contents_0000(%s) VALUES(%s) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
 
@@ -81,6 +95,12 @@ public class UploadC extends UpC {
 
 			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn);
 
+			if (poipikuRequest != null) {
+				deliverRequestResult = poipikuRequest.deliver(m_nContentId);
+				Log.d(String.format("ID %d deliver(%d) responce: %d", poipikuRequest.id, m_nContentId, deliverRequestResult));
+			} else {
+				deliverRequestResult = 0;
+			}
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

@@ -14,11 +14,21 @@ CTweet cTweet = new CTweet();
 boolean bTwRet = cTweet.GetResults(checkLogin.m_nUserId);
 
 String strTag = "";
+int requestId = -1;
 try {
 	request.setCharacterEncoding("UTF-8");
 	strTag = Common.TrimAll(request.getParameter("TAG"));
+	requestId = Util.toInt(request.getParameter("RID"));
 } catch(Exception e) {
 	;
+}
+
+Request poipikuRequest = null;
+if (requestId > 0) {
+	poipikuRequest = new Request(requestId);
+	if (poipikuRequest.creatorUserId != checkLogin.m_nUserId || poipikuRequest.status != Request.Status.InProgress) {
+		return;
+	}
 }
 
 %>
@@ -28,7 +38,7 @@ try {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-33.js" type="text/javascript"></script>
+		<script src="/js/upload-34.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -121,6 +131,14 @@ try {
 			}
 			<%}%>
 
+			function onCompleteUpload(){
+				<%if(requestId<0){%>
+				location.href = "/MyIllustListPcV.jsp";
+				<%}else{%>
+				location.href = "/https://poipiku.com/MyRequestListPcV.jsp?MENUID=RECEIVED";
+				<%}%>
+			}
+
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			function UploadFileCheck(user_id) {
 				if(!multiFileUploader) return;
@@ -128,7 +146,7 @@ try {
 					DispMsg('<%=_TEX.T("UploadFilePc.Image.NeedImage")%>');
 					return;
 				}
-				UploadFile(user_id);
+				UploadFile(user_id, <%=requestId%>);
 			}
 			function completeAddFile() {
 				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
@@ -212,26 +230,38 @@ try {
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-				<li><a class="TabMenuItem Selected" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><a class="TabMenuItem" href="/UploadTextPcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
-				<li><a class="TabMenuItem" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
-			<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-				<li><a class="TabMenuItem" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/UploadTextPcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
-				<li><a class="TabMenuItem" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
-			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-				<li><a class="TabMenuItem" href="/UploadFilePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><a class="TabMenuItem" href="/UploadTextPcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/UploadPastePcV.jsp?TAG=<%=strTag%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
-			<%}%>
+			<%
+				String cgiParams = "?TAG=" + strTag;
+				if(requestId>0){
+					cgiParams += String.format("&RID=%d", requestId);
+				}
+			%>
+				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_UPLOAD ? "Selected" : ""%>"
+					   href="/UploadFilePcV.jsp<%=cgiParams%>">
+					<%=_TEX.T("UploadFilePc.Tab.File")%>
+				</a></li>
+				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_TEXT ? "Selected" : ""%>"
+					   href="/UploadTextPcV.jsp<%=cgiParams%>">
+					<%=_TEX.T("UploadFilePc.Tab.Text")%>
+				</a></li>
+				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_PASTE ? "Selected" : ""%>"
+					   href="/UploadPastePcV.jsp<%=cgiParams%>">
+					<%=_TEX.T("UploadFilePc.Tab.Paste")%>
+				</a></li>
 			</ul>
 		</nav>
 
+		<%if(requestId<0){%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		<%}%>
 
 		<article class="Wrapper">
 			<div class="UploadFile">
+				<%if(requestId>0){%>
+				<div class="RequestText">
+					<%=Util.toStringHtml(poipikuRequest.requestText)%>
+				</div>
+				<%}%>
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<div class="TimeLineIllustCmd">
 					<span id="file-drop-area"></span>
@@ -281,6 +311,7 @@ try {
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=checkLogin.m_nUserId%>)">
+								<%if(requestId<0){%>
 								<option value="<%=Common.PUBLISH_ID_ALL%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.All")%></option>
 								<option value="<%=Common.PUBLISH_ID_R15%>"><%=_TEX.T("UploadFilePc.Option.Publish.R15")%></option>
 								<option value="<%=Common.PUBLISH_ID_R18%>"><%=_TEX.T("UploadFilePc.Option.Publish.R18")%></option>
@@ -294,9 +325,14 @@ try {
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}%>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
+								<%}else{ //if(requestId>0)%>
+								<option value="<%=Common.PUBLISH_ID_HIDDEN%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
+								<%}%>
 							</select>
 						</div>
 					</div>
+
+					<%if(requestId>0){%><div style="display: none;"><%}%>
 					<div id="ItemPassword" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
@@ -385,17 +421,31 @@ try {
 						</div>
 					</div>
 				</div>
+				<%if(requestId>0){%></div><%}%>
+
 				<div class="UoloadCmd">
-				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadFileCheck(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
-				<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadPasteCheck(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
-				<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					<a id="UoloadCmdBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="UploadTextCheck(<%=checkLogin.m_nUserId%>)"><%=_TEX.T("UploadFilePc.UploadBtn")%></a>
-				<%}%>
+					<a id="UoloadCmdBtn"
+					   class="BtnBase UoloadCmdBtn"
+					   href="javascript:void(0)"
+					<%if(nEditorId==Common.EDITOR_UPLOAD){%>
+					   onclick="UploadFileCheck(<%=checkLogin.m_nUserId%>)"
+					<%}else if(nEditorId==Common.EDITOR_PASTE){%>
+					   onclick="UploadPasteCheck(<%=checkLogin.m_nUserId%>)"
+					<%}else if(nEditorId==Common.EDITOR_TEXT){%>
+					   onclick="UploadTextCheck(<%=checkLogin.m_nUserId%>)"
+					<%}%>
+					>
+						<%if(requestId < 0){%>
+						<%=_TEX.T("UploadFilePc.UploadBtn")%>
+						<%}else{%>
+						納品する
+						<%}%>
+					</a>
 				</div>
 			</div>
 		</article>
+		<%if(requestId<0){%>
 		<%@ include file="/inner/TFooter.jsp"%>
+		<%}%>
 	</body>
 </html>

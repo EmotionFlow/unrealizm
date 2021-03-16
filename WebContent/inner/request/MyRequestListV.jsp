@@ -24,7 +24,20 @@
 	}
 
 	function acceptRequest(requestId) {
-
+		$.ajax({
+			"type": "POST",
+			"url": "/f/AcceptRequestF.jsp",
+			"data": "ID=" + requestId,
+			"dataType": "json",
+		}).then((data)=>{
+			if(data.result === 1){
+				DispMsg("リクエストを承認しました");
+				$("#RequestPane-"+requestId).addClass("RequestPaneAccepting");
+				$("#RequestPane-"+requestId).toggle(800);
+			}else{
+				DispMsg("リクエストキャンセル時にエラーが発生しました(" + data.error_code + ")");
+			}
+		});
 	}
 	function cancelRequest(requestId) {
 		$.ajax({
@@ -41,9 +54,6 @@
 				DispMsg("リクエストキャンセル時にエラーが発生しました(" + data.error_code + ")");
 			}
 		});
-	}
-	function deliveryRequest(requestId) {
-		// アップロード画面をそのまま使うか？
 	}
 
 	$(() => {
@@ -65,10 +75,14 @@
 		margin: 3px 0;
         border-radius: 13px;
 	}
-	.RequestPaneDeleting{
+    .RequestPaneDeleting{
         border: 3px solid #f09090;
         padding: 7px 7px;
-	}
+    }
+    .RequestPaneAccepting{
+        border: 3px solid #90cdf0;
+        padding: 7px 7px;
+    }
 	.RequestHeader{
         align-items: center;
         justify-content: space-between;
@@ -148,7 +162,9 @@
 		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.InProgress.getCode()%>,0)" href="#">作業中</a></li>
 		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.Done.getCode()%>,0)" href="#">完了</a></li>
 		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.Canceled.getCode()%>,0)" href="#">キャンセル</a></li>
-		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.SettlementError.getCode()%>,0)" href="#">エラー</a></li>
+		<%if(category.equals("SENT")){%>
+		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.SettlementError.getCode()%>,0)" href="#">決済エラー</a></li>
+		<%}%>
 	</ul>
 	<div id="RequestList" class="IllustItemList">
 	</div>

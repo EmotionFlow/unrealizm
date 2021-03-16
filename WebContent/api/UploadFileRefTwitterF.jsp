@@ -16,11 +16,15 @@ nRtn = cParam.GetParam(request);
 //Log.d("UploadCParam.m_strDescription:"+cParam.m_strDescription);
 //cParam.m_bCheerNg=true;	// スマホからcheerできないように -> アプリからこのパラメータを送ってないのでtrueがデフォルト
 
+UploadC cResults = null;
 if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
-	UploadC cResults = new UploadC();
+	cResults = new UploadC();
 	nRtn = cResults.GetResults(cParam, checkLogin);
+} else {
+	return;
 }
 %>
 {
-"content_id":<%=nRtn%>
+"content_id":<%=nRtn%>,
+"deliver_request_result":<%=cResults.deliverRequestResult%>
 }

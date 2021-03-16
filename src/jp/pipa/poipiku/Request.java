@@ -47,6 +47,7 @@ public class Request {
 	public Timestamp returnLimit = null;
 	public Timestamp deliveryLimit = null;
 	public int orderId = -1;
+	public int contentId = -1;
 
 	public Request() { }
 	public Request(ResultSet resultSet) throws SQLException {
@@ -68,6 +69,7 @@ public class Request {
 		returnLimit = resultSet.getTimestamp("return_limit");
 		deliveryLimit = resultSet.getTimestamp("delivery_limit");
 		orderId = resultSet.getInt("order_id");
+		contentId = resultSet.getInt("content_id");
 	}
 	private void init(){
 		if (id < 0) {
@@ -208,14 +210,42 @@ public class Request {
 		}
 	}
 
-	public int deliver() {
-		if (status != Status.InProgress) {
+	public int deliver(int _contentId) {
+		if (status != Status.InProgress || _contentId < 0) {
 			updateStatus(Status.OtherError);
+			Log.d(String.format("ステータスまたはcontentIdが異常 %d, %d", status.getCode(), _contentId));
 			return -99;
 		}
-		if (updateStatus(Status.Done)) {
+
+		boolean result;
+		DataSource dataSource;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String sql = "";
+		try {
+			Class.forName("org.postgresql.Driver");
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+			sql = "UPDATE requests SET content_id=?, updated_at=CURRENT_TIMESTAMP WHERE id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, _contentId);
+			statement.setInt(2, id);
+			statement.executeUpdate();
+			this.contentId = _contentId;
+			result = true;
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			result = false;
+		} finally {
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+
+		if (result && updateStatus(Status.Done)) {
 			return 0;
 		} else {
+			Log.d("ステータス更新失敗");
 			return -99;
 		}
 	}
