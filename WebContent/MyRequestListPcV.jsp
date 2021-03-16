@@ -29,6 +29,11 @@
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 
+if(!checkLogin.isStaff()){
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	return;
+}
+
 if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;

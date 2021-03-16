@@ -2,6 +2,8 @@
 <%@ page import="jp.pipa.poipiku.Request" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%if(checkLogin.isStaff()){%>
+
 <script type="application/javascript">
 	function getRequestsHtml(status, pageNum) {
 		$.ajax({
@@ -120,3 +122,5 @@
 	<div id="RequestList" class="IllustItemList">
 	</div>
 </div>
+
+<%}//if(checkLogin.isStaff()){%%>
