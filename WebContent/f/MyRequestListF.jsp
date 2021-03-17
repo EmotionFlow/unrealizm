@@ -29,6 +29,13 @@
 		</span>
 	</div>
 	<div class="RequestBody">
+		<%if(r.request.status == Request.Status.Done){%>
+		<a class="IllustThumbImg"
+		   href="/IllustViewPcV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>"
+		   style="background-image:url('<%=Common.GetUrl(r.contentFileName)%>_640.jpg')">
+			<span class="IllustInfoBottom"></span>
+		</a>
+		<%}%>
 		<p><%=Util.toStringHtml(r.request.requestText)%></p>
 	</div>
 	<div class="RequestFooter">

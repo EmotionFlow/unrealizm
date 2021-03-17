@@ -24,9 +24,10 @@ public class IllustDetailC {
 		}
 	}
 
-
 	public CContent m_cContent = new CContent();
 	public int m_nDownload = CUser.DOWNLOAD_OFF;
+	public boolean isDownloadable = false;
+	public boolean isRequestClient = false;
 	public boolean getResults(CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
@@ -51,8 +52,13 @@ public class IllustDetailC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			Request poipikuRequest = new Request();
+			poipikuRequest.contentId = m_nContentId;
+			poipikuRequest.selectByContentId();
+			isRequestClient = poipikuRequest.isClient(checkLogin.m_nUserId);
+
 			// content main
-			String strOpenCnd = (m_nUserId!=checkLogin.m_nUserId)?" AND open_id<>2":"";
+			String strOpenCnd = (m_nUserId!=checkLogin.m_nUserId && !isRequestClient) ? " AND open_id<>2" : "";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
@@ -108,6 +114,15 @@ public class IllustDetailC {
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}
+
+			isDownloadable = m_cContent.m_nEditorId!=Common.EDITOR_TEXT &&
+					(m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || m_nDownload==CUser.DOWNLOAD_ON);
+
+			// リクエストしたユーザは必ずダウンロードできる
+			if(poipikuRequest.isClient(checkLogin.m_nUserId)){
+				isDownloadable = true;
+			}
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

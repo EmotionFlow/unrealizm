@@ -152,6 +152,14 @@
         border-radius: 0 4px 4px 0;
         padding: 2px 3px;
     }
+    .RequestBody > .IllustThumbImg {
+        display: block;
+        height: 110px;
+        background-position: 50% 50%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin: 10px auto;
+    }
 
 
 </style>

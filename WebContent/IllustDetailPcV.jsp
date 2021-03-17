@@ -18,9 +18,10 @@ if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
-boolean bDownload = cResults.m_cContent.m_nEditorId!=Common.EDITOR_TEXT && (cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || cResults.m_nDownload==CUser.DOWNLOAD_ON);
+
+
 String file_name = "";
-if(bDownload) {
+if(cResults.isDownloadable) {
 	try {
 		file_name = (new File(cResults.m_cContent.m_strFileName)).getName();
 		file_name = Util.changeExtension(
@@ -83,7 +84,7 @@ if(bDownload) {
 			<tr>
 			<td>
 			<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
-			<%if(bDownload) {%>
+			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 			</div>
@@ -91,7 +92,7 @@ if(bDownload) {
 			<div class="IllustItemLink">
 				<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 			</div>
-			<%if(bDownload) {%>
+			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 			</div>

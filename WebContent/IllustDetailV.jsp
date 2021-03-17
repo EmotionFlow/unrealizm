@@ -18,7 +18,7 @@ if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
-boolean bDownload = cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || cResults.m_nDownload==CUser.DOWNLOAD_ON;
+
 %>
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
@@ -48,7 +48,7 @@ boolean bDownload = cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId 
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
 		<title><%=_TEX.T("THeader.Title")%></title>
 
-		<%if(bDownload) {%>
+		<%if(cResults.isDownloadable) {%>
 		<style>
 			body {
 				user-select:  all;
@@ -79,7 +79,7 @@ boolean bDownload = cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId 
 	<body>
 		<div class="IllustDetail">
 			<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
-			<%if(bDownload) {%>
+			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 			</div>
@@ -87,7 +87,7 @@ boolean bDownload = cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId 
 			<div class="IllustItemLink" style="display: block;">
 				<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
 			</div>
-			<%if(bDownload) {%>
+			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 			</div>

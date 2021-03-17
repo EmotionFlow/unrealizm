@@ -94,7 +94,7 @@ String[][] menuOrder = {
 					$("#MENUROOT").show();
 					var menuId = "<%=cResults.m_strSelectedMenuId%>";
 					if(menuId===""){
-						menuId = "PROFILE";
+						menuId = "SENT";
 					}
 					$(".SettingMenu>a[data-to="+menuId+"]").addClass("Selected");
 					$("#"+menuId).show();

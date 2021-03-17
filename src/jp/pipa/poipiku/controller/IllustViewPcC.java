@@ -51,6 +51,7 @@ public class IllustViewPcC {
 	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
 	public boolean m_bOwner = false;
+	public boolean m_bRequestClient = false;
 	public boolean m_bFollow = false;
 	public boolean m_bBlocking = false;
 	public boolean m_bBlocked = false;
@@ -74,10 +75,15 @@ public class IllustViewPcC {
 			// owner
 			if(m_nUserId == checkLogin.m_nUserId) {
 				m_bOwner = true;
+			} else {
+				Request poipikuRequest = new Request();
+				poipikuRequest.contentId = m_nContentId;
+				poipikuRequest.selectByContentId();
+				m_bRequestClient = (poipikuRequest.clientUserId == checkLogin.m_nUserId);
 			}
 
 			// content main
-			String strOpenCnd = (!m_bOwner)?" AND open_id<>2":"";
+			String strOpenCnd = (!m_bOwner && !m_bRequestClient)?" AND open_id<>2":"";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
 			statement = connection.prepareStatement(strSql);
 			idx = 1;

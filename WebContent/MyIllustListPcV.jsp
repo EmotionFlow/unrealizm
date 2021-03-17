@@ -39,6 +39,7 @@ String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringH
 String strFileUrl = cResults.m_cUser.m_strFileName;
 if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -99,6 +100,11 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
+							<%if(cResults.m_cUser.m_bRequestEnabled){%>
+							<a href="/MyRequestListPcV.jsp?MENUID=SENT" class="BtnBase">
+								リクエスト管理
+							</a>
+							<%}%>
 						</div>
 					</span>
 				</section>

@@ -93,6 +93,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
+							<%if(cResults.m_cUser.m_bRequestEnabled){%>
+							<a href="/MyRequestListPcV.jsp?MENUID=SENT" class="BtnBase">
+								リクエスト管理
+							</a>
+							<%}%>
 						</div>
 					</span>
 				</section>

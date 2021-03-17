@@ -77,7 +77,7 @@ public class Request {
 		}
 		DataSource dataSource;
 		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 
@@ -87,25 +87,69 @@ public class Request {
 			connection = dataSource.getConnection();
 
 			strSql = "SELECT * FROM requests WHERE id=? LIMIT 1";
-			preparedStatement = connection.prepareStatement(strSql);
-			preparedStatement.setInt(1, id);
-			resultSet = preparedStatement.executeQuery();
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, id);
+			resultSet = statement.executeQuery();
 
 			if(resultSet.next()){
 				set(resultSet);
 			}
 
 			resultSet.close();
-			preparedStatement.close();
+			statement.close();
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(preparedStatement!=null){preparedStatement.close();preparedStatement=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
+	}
 
+	public boolean isClient(int userId) {
+		return (clientUserId > 0 && clientUserId == userId);
+	}
+
+	public int selectByContentId() {
+		if (contentId < 0) {
+			return -99;
+		}
+
+		int result = -1;
+		DataSource dataSource;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String strSql = "";
+
+		try {
+			Class.forName("org.postgresql.Driver");
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+
+			strSql = "SELECT * FROM requests WHERE content_id=? LIMIT 1";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, contentId);
+			resultSet = statement.executeQuery();
+
+			if(resultSet.next()){
+				set(resultSet);
+			}
+
+			resultSet.close();
+			statement.close();
+			result = 0;
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+			result = -1;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		return result;
 	}
 	
 	public int insert() {
