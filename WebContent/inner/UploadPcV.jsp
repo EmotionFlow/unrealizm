@@ -228,6 +228,7 @@ if (requestId > 0) {
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
+		<%if(requestId<0){%>
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
 			<%
@@ -250,6 +251,7 @@ if (requestId > 0) {
 				</a></li>
 			</ul>
 		</nav>
+		<%}%>
 
 		<%if(requestId<0){%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
@@ -288,6 +290,13 @@ if (requestId > 0) {
 						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
 						<%}%>
 					</select>
+					<%if(requestId>0){%>
+					<script>
+						$(()=>{
+							$('.CategorDesc option[value="6"]').prop('selected', true);
+						})
+					</script>
+					<%}%>
 				</div>
 
 				<div class="Description">
@@ -323,9 +332,9 @@ if (requestId > 0) {
 								<option value="<%=Common.PUBLISH_ID_T_FOLLOWEE%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Followee")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_EACH%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Each")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
-								<%}%>
+								<%}//if(cTweet.m_bIsTweetEnable)%>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
-								<%}else{ //if(requestId>0)%>
+								<%}else{ //if(requestId<0)%>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
 								<%}%>
 							</select>

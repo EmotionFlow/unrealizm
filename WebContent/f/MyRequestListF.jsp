@@ -11,7 +11,19 @@
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
 %>
-<%for(MyRequestListC.Result r : results.requests) {%>
+<%	String uploadJsp = "";
+	for(MyRequestListC.Result r : results.requests) {
+		switch (r.request.mediaId) {
+			case 1:
+				uploadJsp = "UploadFilePcV.jsp";
+				break;
+			case 10:
+				uploadJsp = "UploadTextPcV.jsp";
+				break;
+			default:
+				uploadJsp = "UploadFilePcV.jsp";
+		}
+%>
 <div id="RequestPane-<%=r.request.id%>" class="RequestPane">
 	<div class="RequestHeader">
 		<span class="RequestAmount">¥<%=String.format("%,d",r.request.amount)%></span>
@@ -52,7 +64,7 @@
 			<a class="BtnBase RequestCancelBtn" onclick="cancelRequest(<%=r.request.id%>)" href="javascript:void(0)">キャンセル</a>
 			<%}%>
 			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.InProgress){%>
-			<a class="BtnBase RequestDeliveryBtn" href="UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>&RID=<%=r.request.id%>">納品</a>
+			<a class="BtnBase RequestDeliveryBtn" href="<%=uploadJsp%>?ID=<%=checkLogin.m_nUserId%>&RID=<%=r.request.id%>">納品</a>
 			<%}%>
 		</div>
 	</div>
