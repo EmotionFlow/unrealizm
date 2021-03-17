@@ -182,7 +182,7 @@ public class UpdateC extends UpC {
 					if(bUpdateFaild){
 						try{
 							nNewContentId=null;
-							strSql = "DELETE FROM content_id_histories WEHRE old_id=?";
+							strSql = "DELETE FROM content_id_histories WHERE old_id=?";
 							cState = cConn.prepareStatement(strSql);
 							cState.setInt(1, cParam.m_nContentId);
 							cState.executeUpdate();
