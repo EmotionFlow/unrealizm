@@ -122,17 +122,30 @@
 		const lawTxt = $("#CommercialTransactionLaw").val();
 		_updateRequestSetting("CommercialTransactionLaw", lawTxt);
 	}
-
+	function copyMyRequestPageUrl(){
+		$("#RequestPageUrl").select();
+		document.execCommand("Copy");
+		alert('コピーしました');
+	}
 </script>
 <style>
 	.RequestVarUnit {font-size: 18px;line-height: 28px;}
+	.RequestListLink {
+		width: 100%;
+		display: block;
+		text-align: right;
+		margin-top: 2px;
+		text-decoration: underline;
+	}
 </style>
 
 <div class="SettingList">
 	<div class="SettingListItem">
-		<div class="SettingListTitle">リクエストの募集を受け付ける</div>
+		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED"><i class="far fa-clipboard"></i> リクエストボード →</a>
+
+		<div class="SettingListTitle">リクエストを募集する</div>
 		<div class="SettingBody">
-			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。
+			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。<br/>
 			リクエスト報酬を受け取るには、メールアドレスの確認と日本の銀行口座が必要です。
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >
@@ -154,6 +167,20 @@
 		</div>
 
 		<div id="RequestSettingItems" <%if(requestCreator.status!=RequestCreator.Status.Enabled){%>style="opacity: 0.5;"<%}%> >
+			<div class="SettingListItem">
+				<div class="SettingListTitle">リクエストページURL</div>
+				<div class="SettingBody">
+					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
+						<div class="RegistMessage" style="margin: 0; width:100%;">
+							<input id="RequestPageUrl" style="width: 100%;" type="text" readonly value="https://poipiku.com/RequestNewPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+						</div>
+						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="copyMyRequestPageUrl()">コピー</a>
+					</div>
+					<a style="text-decoration: underline;" href="https://poipiku.com/RequestNewPcV.jsp?ID=<%=checkLogin.m_nUserId%>">プレビュー</a>
+				</div>
+
+			</div>
+
 			<div class="SettingListItem">
 				<div class="SettingListTitle">メディア</div>
 				リクエストを受け付けるメディアを設定します。

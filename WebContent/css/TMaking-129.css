@@ -2303,7 +2303,7 @@
 .UserInfo .UserInfoState .UserInfoStateItem {
 	display: inline-block;
 	min-width: 50px;
-	margin: 0 15px;
+	margin: 0 6px;
 }
 
 .UserInfo .UserInfoState .UserInfoStateItem .UserInfoStateItemTitle {
@@ -2324,7 +2324,7 @@
 
 .UserInfo .UserInfoState .UserInfoStateItem .RequestEnabled {
 	text-decoration: underline;
-	font-size: 13px;
+	font-size: 15px;
 }
 
 /**********IllustView InfoForm **********/

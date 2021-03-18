@@ -13,7 +13,8 @@ if(!checkLogin.m_bLogin) return;
 
 SendRequestC controller = new SendRequestC();
 controller.getParam(request);
-if (controller.clientUserId > 0 && controller.creatorUserId > 0) {
+if (controller.clientUserId != controller.creatorUserId &&
+	controller.clientUserId > 0 && controller.creatorUserId > 0) {
 	result = controller.getResults(checkLogin);
 }
 

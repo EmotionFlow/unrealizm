@@ -125,6 +125,7 @@ public class IllustViewPcC {
 				m_cContent.m_cUser.m_strNickName	= m_cUser.m_strNickName;
 				m_cContent.m_cUser.m_strFileName	= m_cUser.m_strFileName;
 				m_cContent.m_cUser.m_nReaction		= m_cUser.m_nReaction;
+				m_cUser.setRequestEnabled(resultSet);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

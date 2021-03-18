@@ -39,8 +39,6 @@ public class RequestNewC {
 		if(creatorUserId < 1) {
 			Log.d("creatorUserId < 1");
 			return false;
-		}else if(checkLogin.m_nUserId == creatorUserId){
-			return true;
 		}
 
 		try {

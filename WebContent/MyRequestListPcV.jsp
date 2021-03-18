@@ -48,14 +48,14 @@ cResults.getParam(request);
 cResults.getResults(checkLogin);
 
 HashMap<String, String> MENU = new HashMap<>();
-MENU.put("SENT", "送信済みリクエスト");
 MENU.put("RECEIVED", "受信したリクエスト");
+MENU.put("SENT", "送信済みリクエスト");
 
 
 String[][] menuOrder = {
 		{
-		"SENT",
 		"RECEIVED",
+		"SENT",
 		}
 };
 %>
@@ -94,7 +94,7 @@ String[][] menuOrder = {
 					$("#MENUROOT").show();
 					var menuId = "<%=cResults.m_strSelectedMenuId%>";
 					if(menuId===""){
-						menuId = "SENT";
+						menuId = "RECEIVED";
 					}
 					$(".SettingMenu>a[data-to="+menuId+"]").addClass("Selected");
 					$("#"+menuId).show();
@@ -217,6 +217,16 @@ String[][] menuOrder = {
 
 			<%String category = "";%>
 
+			<%category = "RECEIVED";%>
+			<%if(category.equals(cResults.m_strSelectedMenuId)){%>
+			<div id="<%=category%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(category), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/request/MyRequestListV.jsp"%>
+				</div>
+			</div>
+			<%}%>
+
 			<%category = "SENT";%>
 			<%if(category.equals(cResults.m_strSelectedMenuId)){%>
 			<div id="<%=category%>" class="SettingPage" style="display: none;">
@@ -227,15 +237,6 @@ String[][] menuOrder = {
 			</div>
 			<%}%>
 
-			<%category = "RECEIVED";%>
-			<%if(category.equals(cResults.m_strSelectedMenuId)){%>
-			<div id="<%=category%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(category), bSmartPhone)%>
-				<div class="SettingBody">
-					<%@include file="/inner/request/MyRequestListV.jsp"%>
-				</div>
-			</div>
-			<%}%>
 
 			<%if(!bSmartPhone){%>
 			</div>

@@ -244,10 +244,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					</span>
 				</section>
 				<section class="UserInfoState">
-					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
-						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>
-						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
-					</a>
+					<%@include file="inner/IllustBrowserVUserInfoState.jsp"%>
 				</section>
 			</div>
 		</article>

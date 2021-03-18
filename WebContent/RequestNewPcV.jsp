@@ -13,7 +13,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 RequestNewC results = new RequestNewC();
 results.getParam(request);
 
-if(!results.getResults(checkLogin)) {
+if (!results.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }
@@ -46,13 +46,19 @@ if(!results.getResults(checkLogin)) {
 			if (!_validate()) {
 				return false;
 			}
+			const clientUserId = <%=checkLogin.m_nUserId%>;
+			const creatorUserId = <%=results.creatorUserId%>;
+			if (clientUserId === creatorUserId) {
+				alert('自分宛にはリクエストできません');
+				return false;
+			}
 			$('#SendRequestBtn').addClass('Disabled').html('リクエスト送信中');
 			DispMsgStatic('送信中です');
 			$.ajax({
 				"type": "post",
 				"data": {
-					"CLIENT":<%=checkLogin.m_nUserId%>,
-					"CREATOR": <%=results.creatorUserId%>,
+					"CLIENT": clientUserId,
+					"CREATOR": creatorUserId,
 					"MEDIA": $("#OptionMedia").val(),
 					"TEXT": $("#EditRequestText").val(),
 					"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
@@ -66,7 +72,7 @@ if(!results.getResults(checkLogin)) {
 					if (data.result === 0) {
 						DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額で決済されます。");
 						window.setTimeout(() => {
-							location.href = "/<%=results.creatorUserId%>"
+							location.href = "/" + parseInt(creatorUserId, 10);
 						}, 2300);
 					} else {
 						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
@@ -124,7 +130,7 @@ if(!results.getResults(checkLogin)) {
 		 style="<%if(!bSmartPhone){%>width: 60%; max-width: 60%; margin: 0 20%;<%}%>padding-bottom: 100px;">
 		<div class="RequestTitle">
 			<%if(results.user.m_bRequestEnabled){%>
-			<%=results.user.m_strNickName%>さんへリクエスト
+			<%=results.user.m_strNickName%>さんへのリクエスト
 			<%}else{%>
 			現在、リクエストを受け付けていません
 			<%}%>
@@ -201,6 +207,7 @@ if(!results.getResults(checkLogin)) {
 		<div class="TextBody" style="margin-bottom: 10px">
 			ルール
 			<div class="RequestRule">
+				クリエイターが承認した時点で、指定した金額で決済されます。<br/>
 				金額の見積もり・打ち合わせ・リテイク・著作権譲渡はできません。<br/>
 				クリエイターとはリクエスト本文以外での連絡はできません。<br/>
 				リクエストを報酬の送金手段として使用することはできません。<br/>
@@ -212,6 +219,7 @@ if(!results.getResults(checkLogin)) {
 		<div class="UoloadCmd">
 			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">リクエストを送信する</a>
 		</div>
+
 		<%} // if(results.user.m_bRequestEnabled)%>
 	</div>
 </article>

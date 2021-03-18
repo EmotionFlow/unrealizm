@@ -101,8 +101,8 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
 							<%if(cResults.m_cUser.m_bRequestEnabled){%>
-							<a href="/MyRequestListPcV.jsp?MENUID=SENT" class="BtnBase">
-								リクエスト管理
+							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
+								<i class="far fa-clipboard"></i> リクエストボード
 							</a>
 							<%}%>
 						</div>
