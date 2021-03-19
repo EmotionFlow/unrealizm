@@ -45,6 +45,10 @@ public class SendRequestC {
 		request.requestText = requestText;
 		request.requestCategory = requestCategory;
 		request.amount = amount;
-		return request.insert();
+		int requestResult = request.insert();
+		if (requestResult == 0) {
+			RequestNotifier.notifyRequestReceived(checkLogin, request);
+		}
+		return requestResult;
 	}
 }

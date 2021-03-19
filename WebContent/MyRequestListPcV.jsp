@@ -58,6 +58,10 @@ String[][] menuOrder = {
 		"SENT",
 		}
 };
+
+int statusCode = Util.toIntN(request.getParameter("ST"), -2, 3);
+int requestId = Util.toInt(request.getParameter("RID"));
+
 %>
 <!DOCTYPE html>
 <html>

@@ -1,0 +1,11 @@
+#parse("ja/header.vm")
+
+リクエスト募集を開始しました！
+
+ポイピクのユーザーは、こちらのURLからあなた宛にリクエストを送ることができます。
+https://poipiku.com/RequestNewPcV.jsp?ID=$user_id
+（https://poipiku.com/$user_id/ からもリンクできます）
+
+リクエストを受信すると、このメールアドレス宛に通知されます。
+
+#parse("ja/footer.vm")

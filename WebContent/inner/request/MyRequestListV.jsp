@@ -5,22 +5,27 @@
 <%if(checkLogin.isStaff()){%>
 
 <script type="application/javascript">
-	function getRequestsHtml(status, pageNum) {
+	function getRequestsHtml(statusCode, pageNum, requestId) {
 		$.ajax({
 			"type": "POST",
 			"url": "/f/MyRequestListF.jsp",
-			"data": "CAT=<%=category%>&ST=" + status + "&PG=" + pageNum,
+			"data": "CAT=<%=category%>&ST=" + statusCode + "&PG=" + pageNum,
 		}).then((data)=>{
 				$("#RequestList").html(data);
-				$("*").scrollTop(0);
+				if (requestId) {
+					$("#RequestPane-"+requestId).get(0).scrollIntoView();
+				} else {
+					$("*").scrollTop(0);
+					history.replaceState('','','MyRequestListPcV.jsp?MENUID=<%=category%>&ST=' + statusCode);
+				}
 			}
 		);
 	}
 
-	function onClickMenuItem(selectedItem, statusCode, pageNum) {
+	function onClickMenuItem(selectedItem, statusCode, pageNum, requestId) {
 		$(".TabMenuItem").removeClass('Selected');
 		$(selectedItem).addClass('Selected');
-		getRequestsHtml(statusCode, pageNum);
+		getRequestsHtml(statusCode, pageNum, requestId);
 	}
 
 	function acceptRequest(requestId) {
@@ -61,7 +66,13 @@
 			const pageNum = $(ev.target).attr("data-page");
 			getRequestsHtml(status, pageNum);
 		});
-		onClickMenuItem($(".TabMenuItem")[0],<%=Request.Status.WaitingAppoval.getCode()%>,0);
+
+		onClickMenuItem(
+			$("#TabMenuItem-<%=statusCode%>"),
+			<%=statusCode%>,
+			0,
+			<%=requestId>0 ? requestId : "null"%>
+		);
 	});
 </script>
 
@@ -166,12 +177,31 @@
 
 <div class="SettingList">
 	<ul class="TabMenu">
-		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.WaitingAppoval.getCode()%>,0)" href="#">承認待ち</a></li>
-		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.InProgress.getCode()%>,0)" href="#">作業中</a></li>
-		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.Done.getCode()%>,0)" href="#">完了</a></li>
-		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.Canceled.getCode()%>,0)" href="#">キャンセル</a></li>
+		<li><a id="TabMenuItem-<%=Request.Status.WaitingAppoval.getCode()%>"
+			   class="TabMenuItem"
+			   onclick="onClickMenuItem(this,<%=Request.Status.WaitingAppoval.getCode()%>,0,null)"
+			   href="#">承認待ち</a>
+		</li>
+		<li><a id="TabMenuItem-<%=Request.Status.InProgress.getCode()%>"
+			   class="TabMenuItem"
+			   onclick="onClickMenuItem(this,<%=Request.Status.InProgress.getCode()%>,0,null)"
+			   href="#">作業中</a></li>
+		<li><a id="TabMenuItem-<%=Request.Status.Done.getCode()%>"
+			   class="TabMenuItem"
+			   onclick="onClickMenuItem(this,<%=Request.Status.Done.getCode()%>,0,null)"
+			   href="#">完了</a>
+		</li>
+		<li><a id="TabMenuItem-<%=Request.Status.Canceled.getCode()%>"
+			   class="TabMenuItem"
+			   onclick="onClickMenuItem(this,<%=Request.Status.Canceled.getCode()%>,0,null)"
+			   href="#">キャンセル</a>
+		</li>
 		<%if(category.equals("SENT")){%>
-		<li><a class="TabMenuItem" onclick="onClickMenuItem(this,<%=Request.Status.SettlementError.getCode()%>,0)" href="#">決済エラー</a></li>
+		<li><a id="TabMenuItem-<%=Request.Status.Canceled.getCode()%>"
+			   class="TabMenuItem"
+			   onclick="onClickMenuItem(this,<%=Request.Status.SettlementError.getCode()%>,0,null)"
+			   href="#">決済エラー</a>
+		</li>
 		<%}%>
 	</ul>
 	<div id="RequestList" class="IllustItemList">

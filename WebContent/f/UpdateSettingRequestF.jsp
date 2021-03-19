@@ -14,6 +14,6 @@ UpdateRequestSettingCParam param = new UpdateRequestSettingCParam();
 param.GetParam(request);
 
 UpdateRequestSettingC controller = new UpdateRequestSettingC();
-boolean result = controller.GetResults(param, checkLogin);
+boolean result = controller.GetResults(param, checkLogin, _TEX);
 
 %>{"result":<%=result?1:0%>}

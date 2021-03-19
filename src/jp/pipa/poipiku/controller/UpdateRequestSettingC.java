@@ -2,11 +2,13 @@ package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.RequestCreator;
+import jp.pipa.poipiku.RequestNotifier;
+import jp.pipa.poipiku.ResourceBundleControl;
 
 public class UpdateRequestSettingC {
     public UpdateRequestSettingC(){}
 
-    public boolean GetResults(UpdateRequestSettingCParam param, CheckLogin checkLogin) {
+    public boolean GetResults(UpdateRequestSettingCParam param, CheckLogin checkLogin, ResourceBundleControl _TEX) {
     	boolean result = false;
     	RequestCreator requestCreator = new RequestCreator(checkLogin);
     	if (requestCreator.userId < 0) {
@@ -19,6 +21,9 @@ public class UpdateRequestSettingC {
 		    	requestCreator.updateStatus(
 					    paramValue.equals("1") ? RequestCreator.Status.Enabled : RequestCreator.Status.Disabled
 			    );
+		    	if (requestCreator.status == RequestCreator.Status.Enabled) {
+				    RequestNotifier.notifyRequestEnabled(checkLogin, _TEX);
+			    }
 		    	break;
 		    case "RequestMedia":
 		    	String[] allowMedias = paramValue.split(",");

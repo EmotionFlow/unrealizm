@@ -1,0 +1,7 @@
+#parse("ja/header.vm")
+
+リクエストが納品されました。
+こちらのページより、内容をご確認ください。（要ログイン）
+$request_board_url
+
+#parse("ja/footer.vm")

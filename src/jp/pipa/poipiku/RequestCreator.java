@@ -278,6 +278,7 @@ public class RequestCreator {
 				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 			}
 			CacheUsers0000.getInstance().clearUser(userId);
+			status = _status;
 		}
 		return true;
 	}
