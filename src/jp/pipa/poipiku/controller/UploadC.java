@@ -98,6 +98,9 @@ public class UploadC extends UpC {
 			if (poipikuRequest != null) {
 				deliverRequestResult = poipikuRequest.deliver(m_nContentId);
 				Log.d(String.format("ID %d deliver(%d) responce: %d", poipikuRequest.id, m_nContentId, deliverRequestResult));
+				if (deliverRequestResult == 0) {
+					RequestNotifier.notifyRequestDelivered(poipikuRequest);
+				}
 			} else {
 				deliverRequestResult = 0;
 			}

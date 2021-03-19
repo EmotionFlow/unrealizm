@@ -47,7 +47,7 @@ public class SendRequestC {
 		request.amount = amount;
 		int requestResult = request.insert();
 		if (requestResult == 0) {
-			RequestNotifier.notifyRequestReceived(checkLogin, request);
+			RequestNotifier.notifyRequestReceived(request);
 		}
 		return requestResult;
 	}

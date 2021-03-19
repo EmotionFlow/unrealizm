@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import jp.pipa.poipiku.util.Log;
-import jp.pipa.poipiku.util.Util;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -14,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 public class RequestNotifier {
-	private static String REQUEST_BOARD_URL = "https://poipiku.com/MyRequestListPcV.jsp";
+	private static final String REQUEST_BOARD_URL = "https://poipiku.com/MyRequestListPcV.jsp";
 	private static class User {
 		public int id = -1;
 		public String nickname;
@@ -58,16 +57,14 @@ public class RequestNotifier {
 		}
 	}
 
-	public String selectEmailAddress(int userId){
-		return "test@example.com";
-	}
-
 	static private String getVmPath(final String path, final ResourceBundleControl _TEX){
+		// TODO 英語のVMテンプレート実装
 		// return _TEX.T("Lang") + "/request/" + path;
 		return "ja/request/" + path;
 	}
 
 	static private String getVmPath(final String path, final String langLabel){
+		// TODO 英語のVMテンプレート実装
 		// return langLabel + "/request/" + path;
 		return "ja/request/" + path;
 	}
@@ -90,9 +87,9 @@ public class RequestNotifier {
 		}
 	}
 
-	static public void notifyRequestReceived(final CheckLogin clientCheckLogin, Request request){
-		User client = new User(request.clientUserId);
-		User creator = new User(request.creatorUserId);
+	static public void notifyRequestReceived(Request request){
+		final User client = new User(request.clientUserId);
+		final User creator = new User(request.creatorUserId);
 		if (client.id > 0 && creator.id > 0) {
 			try {
 				StringWriter sw = new StringWriter();
@@ -110,10 +107,62 @@ public class RequestNotifier {
 				sw.flush();
 			} catch (Exception e) {
 				e.printStackTrace();
-				Log.d("notifyRequestEnabled failed.");
+				Log.d("notifyRequestReceived failed.");
 			}
 		}
 	}
 
+	static public void notifyRequestCanceled(final CheckLogin checkLogin, Request request){
+		final User client = new User(request.clientUserId);
+		final User creator = new User(request.creatorUserId);
+		final User notifyTo = checkLogin.m_nUserId==request.clientUserId ? creator : client;
+		if (client.id > 0 && creator.id > 0) {
+			try {
+				StringWriter sw = new StringWriter();
+				VelocityContext context = new VelocityContext();
+				context.put("to_name", creator.nickname);
+				context.put("request_board_url",
+						String.format("%s?MENUID=%s&ST=%d&RID=%d",
+								REQUEST_BOARD_URL, notifyTo.equals(client) ? "SENT" : "RECEIVED",
+								Request.Status.Canceled.getCode(), request.id));
+				Template template = Velocity.getTemplate(getVmPath("canceled/body.vm", notifyTo.langLabel), "UTF-8");
+				template.merge(context, sw);
 
+				//TODO send email.
+				Log.d(sw.toString());
+
+				sw.flush();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("notifyRequestCanceled failed.");
+			}
+		}
+	}
+
+	static public void notifyRequestDelivered(Request request) {
+		final User client = new User(request.clientUserId);
+		final User creator = new User(request.creatorUserId);
+		if (client.id > 0 && creator.id > 0) {
+			try {
+				StringWriter sw = new StringWriter();
+				VelocityContext context = new VelocityContext();
+				context.put("to_name", creator.nickname);
+				context.put("request_board_url",
+						String.format("%s?MENUID=%s&ST=%d&RID=%d",
+								REQUEST_BOARD_URL, "SENT",
+								Request.Status.Canceled.getCode(), request.id));
+				Template template = Velocity.getTemplate(getVmPath("delivered/body.vm", client.langLabel), "UTF-8");
+				template.merge(context, sw);
+
+				//TODO send email.
+				final String to = client.email;
+				Log.d(sw.toString());
+
+				sw.flush();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("notifyRequestDelivered failed.");
+			}
+		}
+	}
 }
