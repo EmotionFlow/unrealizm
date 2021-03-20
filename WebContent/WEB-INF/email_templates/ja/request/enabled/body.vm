@@ -4,8 +4,8 @@
 
 ポイピクのユーザーは、こちらのURLからあなた宛にリクエストを送ることができます。
 https://poipiku.com/RequestNewPcV.jsp?ID=$user_id
-（https://poipiku.com/$user_id/ からもリンクできます）
+（https://poipiku.com/$user_id/ からもアクセスできます）
 
-リクエストを受信すると、このメールアドレス宛に通知されます。
+リクエストを受信すると、メールにてに通知されます。
 
 #parse("ja/footer.vm")
