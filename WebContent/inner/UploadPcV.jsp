@@ -135,7 +135,7 @@ if (requestId > 0) {
 				<%if(requestId<0){%>
 				location.href = "/MyIllustListPcV.jsp";
 				<%}else{%>
-				location.href = "/https://poipiku.com/MyRequestListPcV.jsp?MENUID=RECEIVED";
+				location.href = "/MyRequestListPcV.jsp?MENUID=RECEIVED&ST=3";
 				<%}%>
 			}
 

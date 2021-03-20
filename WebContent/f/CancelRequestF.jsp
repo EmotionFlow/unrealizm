@@ -9,7 +9,7 @@ int errorCode = 0;
 Request r = new Request(Util.toInt(request.getParameter("ID")));
 if (r.creatorUserId == checkLogin.m_nUserId || r.clientUserId == checkLogin.m_nUserId) {
 	if (r.cancel() == 0) {
-		if (RequestNotifier.notifyRequestCanceled();)
+		RequestNotifier.notifyRequestCanceled(checkLogin, r);
 		result = true;
 	} else {
 		errorCode = -3;

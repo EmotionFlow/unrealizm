@@ -96,8 +96,9 @@ public class RequestNotifier {
 				VelocityContext context = new VelocityContext();
 				context.put("to_name", creator.nickname);
 				context.put("request_board_url",
-						String.format("%s?MENUID=RECEIVED&ST=%d&RID=%d",
-								REQUEST_BOARD_URL, Request.Status.WaitingAppoval.getCode(), request.id));
+						String.format("%s?MENUID=%s&ST=%d&RID=%d",
+								REQUEST_BOARD_URL, "RECEIVED",
+								Request.Status.WaitingAppoval.getCode(), request.id));
 				Template template = Velocity.getTemplate(getVmPath("received/body.vm", creator.langLabel), "UTF-8");
 				template.merge(context, sw);
 
@@ -120,7 +121,7 @@ public class RequestNotifier {
 			try {
 				StringWriter sw = new StringWriter();
 				VelocityContext context = new VelocityContext();
-				context.put("to_name", creator.nickname);
+				context.put("to_name", notifyTo.nickname);
 				context.put("request_board_url",
 						String.format("%s?MENUID=%s&ST=%d&RID=%d",
 								REQUEST_BOARD_URL, notifyTo.equals(client) ? "SENT" : "RECEIVED",
@@ -139,6 +140,33 @@ public class RequestNotifier {
 		}
 	}
 
+	static public void notifyRequestAccepted(Request request) {
+		final User client = new User(request.clientUserId);
+		final User creator = new User(request.creatorUserId);
+		if (client.id > 0 && creator.id > 0) {
+			try {
+				StringWriter sw = new StringWriter();
+				VelocityContext context = new VelocityContext();
+				context.put("to_name", client.nickname);
+				context.put("request_board_url",
+						String.format("%s?MENUID=%s&ST=%d&RID=%d",
+								REQUEST_BOARD_URL, "SENT",
+								Request.Status.InProgress.getCode(), request.id));
+				Template template = Velocity.getTemplate(getVmPath("accepted/body.vm", client.langLabel), "UTF-8");
+				template.merge(context, sw);
+
+				//TODO send email.
+				final String to = client.email;
+				Log.d(sw.toString());
+
+				sw.flush();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.d("notifyRequestDelivered failed.");
+			}
+		}
+	}
+
 	static public void notifyRequestDelivered(Request request) {
 		final User client = new User(request.clientUserId);
 		final User creator = new User(request.creatorUserId);
@@ -146,11 +174,11 @@ public class RequestNotifier {
 			try {
 				StringWriter sw = new StringWriter();
 				VelocityContext context = new VelocityContext();
-				context.put("to_name", creator.nickname);
+				context.put("to_name", client.nickname);
 				context.put("request_board_url",
 						String.format("%s?MENUID=%s&ST=%d&RID=%d",
 								REQUEST_BOARD_URL, "SENT",
-								Request.Status.Canceled.getCode(), request.id));
+								Request.Status.Done.getCode(), request.id));
 				Template template = Velocity.getTemplate(getVmPath("delivered/body.vm", client.langLabel), "UTF-8");
 				template.merge(context, sw);
 
