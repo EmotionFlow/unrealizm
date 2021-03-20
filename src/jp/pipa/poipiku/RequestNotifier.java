@@ -183,7 +183,7 @@ public class RequestNotifier {
 				final String mailBody = sw.toString();
 				sw.flush();
 
-				final String mailSubject = getSubject("canceled", client.langLabel);
+				final String mailSubject = getSubject("accepted", client.langLabel);
 
 				//TODO send email.
 				EmailUtil.send(client.email, mailSubject, mailBody);
