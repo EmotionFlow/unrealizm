@@ -8,7 +8,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EmailUtil {
-	public static boolean send(String toAddress, String subject, String body) {
+	public static boolean send(final String toAddress, final String subject, final String body) {
 		final String FROM_NAME = "POIPIKU";
 		final String FROM_ADDR = "info@poipiku.com";
 		final String SMTP_HOST = "localhost";
@@ -30,6 +30,9 @@ public class EmailUtil {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Log.d("メールの送信に失敗しました");
+			Log.d("to: " + toAddress);
+			Log.d("subject: " + subject);
+			Log.d("body: " + body);
 			return false;
 		}
 		return true;

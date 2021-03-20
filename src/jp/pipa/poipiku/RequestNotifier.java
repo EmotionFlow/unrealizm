@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import jp.pipa.poipiku.util.EmailUtil;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -69,18 +70,36 @@ public class RequestNotifier {
 		return "ja/request/" + path;
 	}
 
+	static private String getSubject(final String statusName, final ResourceBundleControl _TEX) {
+		StringWriter sw = new StringWriter();
+		Template template = Velocity.getTemplate(getVmPath(statusName + "/subject.vm", _TEX), "UTF-8");
+		template.merge(null, sw);
+		return sw.toString();
+	}
+
+	static private String getSubject(final String statusName, final String langLabel) {
+		StringWriter sw = new StringWriter();
+		Template template = Velocity.getTemplate(getVmPath(statusName + "/subject.vm", langLabel), "UTF-8");
+		template.merge(null, sw);
+		return sw.toString();
+	}
+
 	static public void notifyRequestEnabled(final CheckLogin checkLogin, final ResourceBundleControl _TEX){
 		try {
+			User creator = new User(checkLogin.m_nUserId);
 			StringWriter sw = new StringWriter();
 			VelocityContext context = new VelocityContext();
 			context.put("to_name", checkLogin.m_strNickName);
+			context.put("user_id", checkLogin.m_nUserId);
 			Template template = Velocity.getTemplate(getVmPath("enabled/body.vm", _TEX), "UTF-8");
 			template.merge(context, sw);
-
-			//TODO send email.
-			Log.d(sw.toString());
-
+			final String mailBody = sw.toString();
 			sw.flush();
+
+			final String mailSubject = getSubject("enabled", _TEX);
+
+			EmailUtil.send(creator.email, mailSubject, mailBody);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.d("notifyRequestEnabled failed.");
@@ -101,11 +120,14 @@ public class RequestNotifier {
 								Request.Status.WaitingAppoval.getCode(), request.id));
 				Template template = Velocity.getTemplate(getVmPath("received/body.vm", creator.langLabel), "UTF-8");
 				template.merge(context, sw);
+				final String mailBody = sw.toString();
+				sw.flush();
+
+				final String mailSubject = getSubject("received", creator.langLabel);
 
 				//TODO send email.
-				Log.d(sw.toString());
+				EmailUtil.send(creator.email, mailSubject, mailBody);
 
-				sw.flush();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("notifyRequestReceived failed.");
@@ -128,9 +150,13 @@ public class RequestNotifier {
 								Request.Status.Canceled.getCode(), request.id));
 				Template template = Velocity.getTemplate(getVmPath("canceled/body.vm", notifyTo.langLabel), "UTF-8");
 				template.merge(context, sw);
+				final String mailBody = sw.toString();
+				sw.flush();
+
+				final String mailSubject = getSubject("canceled", notifyTo.langLabel);
 
 				//TODO send email.
-				Log.d(sw.toString());
+				EmailUtil.send(notifyTo.email, mailSubject, mailBody);
 
 				sw.flush();
 			} catch (Exception e) {
@@ -154,10 +180,13 @@ public class RequestNotifier {
 								Request.Status.InProgress.getCode(), request.id));
 				Template template = Velocity.getTemplate(getVmPath("accepted/body.vm", client.langLabel), "UTF-8");
 				template.merge(context, sw);
+				final String mailBody = sw.toString();
+				sw.flush();
+
+				final String mailSubject = getSubject("canceled", client.langLabel);
 
 				//TODO send email.
-				final String to = client.email;
-				Log.d(sw.toString());
+				EmailUtil.send(client.email, mailSubject, mailBody);
 
 				sw.flush();
 			} catch (Exception e) {
@@ -181,12 +210,14 @@ public class RequestNotifier {
 								Request.Status.Done.getCode(), request.id));
 				Template template = Velocity.getTemplate(getVmPath("delivered/body.vm", client.langLabel), "UTF-8");
 				template.merge(context, sw);
+				final String mailBody = sw.toString();
+				sw.flush();
+
+				final String mailSubject = getSubject("delivered", client.langLabel);
 
 				//TODO send email.
-				final String to = client.email;
-				Log.d(sw.toString());
+				EmailUtil.send(client.email, mailSubject, mailBody);
 
-				sw.flush();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("notifyRequestDelivered failed.");
