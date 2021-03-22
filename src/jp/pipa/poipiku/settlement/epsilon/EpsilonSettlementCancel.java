@@ -1,5 +1,6 @@
 package jp.pipa.poipiku.settlement.epsilon;
 
+import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -29,19 +30,29 @@ import java.util.List;
 public class EpsilonSettlementCancel {
 	private static final String CONTRACT_CODE = "68968190";
 
-	// TODO 本番適用時に入れ替え
+	private String CANCEL_URL;
 	// dev
-//	private static final String CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
-
+	private static final String DEV_CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
 	// production
-	private static final String CANCEL_URL = "https://secure.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
+	private static final String PROD_CANCEL_URL = "https://secure.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
 
 	public SettlementCancelSendInfo sendInfo;
 
+	private void initUrl() {
+		if (Common.isDevEnv()) {
+			Log.d("開発用CGIに接続");
+			CANCEL_URL = DEV_CANCEL_URL;
+		} else {
+			CANCEL_URL = PROD_CANCEL_URL;
+		}
+	}
+
 	public EpsilonSettlementCancel(){
+		initUrl();
 		sendInfo = new SettlementCancelSendInfo();
 	}
 	public EpsilonSettlementCancel(SettlementCancelSendInfo _sendInfo){
+		initUrl();
 		sendInfo = _sendInfo;
 	}
 

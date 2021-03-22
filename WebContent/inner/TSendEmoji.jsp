@@ -93,45 +93,6 @@
 		return <%=_TEX.T("CheerDlg.Text")%>;
 	}
 
-
-	/**
-	function veritransPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment) {
-		const postData = {
-			"token_api_key": "",
-			"card_number": cardInfo.number,
-			"card_expire": cardInfo.expire,
-			"security_code": cardInfo.securityCode,
-			"lang": "ja",
-		};
-		const apiUrl = "https://api.veritrans.co.jp/4gtoken";
-
-		// $.ajaxがクロスドメインでうまく動かなかったので、XMLHttpRequestを使っている。
-		let xhr = new XMLHttpRequest();
-		xhr.open('POST', apiUrl, true);
-		xhr.setRequestHeader('Accept', 'application/json');
-		xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-		xhr.addEventListener('loadend', function () {
-			if (xhr.status === 0) {
-				DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenConnection")%>");
-				elCheerNowPayment.hide();
-				return false;
-			}
-			const response = JSON.parse(xhr.response);
-			const agentInfo = createAgentInfo(AGENT.VERITRANS, response.token, null);
-			if (xhr.status === 200) {
-				SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment);
-			} else {
-				//console.log(response);
-				DispMsg("<%=_TEX.T("CardInfoDlg.Err.MDKTokenErr")%>" + "(" + response.message + ")");
-				if (elCheerNowPayment != null) {
-					elCheerNowPayment.hide();
-				}
-			}
-		});
-		xhr.send(JSON.stringify(postData));
-	}
-	 */
-
 	// epsilonPayment - epsilonTrade間で受け渡しする変数。
 	let g_epsilonInfo = {
 		"emojiInfo": null,

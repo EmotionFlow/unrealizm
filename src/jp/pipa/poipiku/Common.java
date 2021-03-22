@@ -407,4 +407,9 @@ public class Common {
 			f.delete();
 		}
 	}
+
+	public static boolean isDevEnv(){
+		String prop = System.getProperty("APP_ENVIRONMENT");
+		return prop != null && prop.equals("development");
+	}
 }
