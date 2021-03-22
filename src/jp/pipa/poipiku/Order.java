@@ -99,7 +99,10 @@ public class Order {
         return result;
     }
 
-    public int updateSettlementStatus(final SettlementStatus newSettlementStatus, final String newAgencyOrderId) {
+    public int updateSettlementStatus(
+            final SettlementStatus newSettlementStatus,
+            final String newAgencyOrderId,
+            final Integer creditcardId) {
         DataSource dataSource;
         Connection connection = null;
         PreparedStatement statement = null;
@@ -111,14 +114,19 @@ public class Order {
             dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
             connection = dataSource.getConnection();
             sql = String.format(
-                    "UPDATE orders SET status=?, %s updated_at=now() WHERE id=?",
-                    newAgencyOrderId!=null ? "agency_order_id=?," : "");
+                    "UPDATE orders SET status=?, %s %s updated_at=now() WHERE id=?",
+                    newAgencyOrderId!=null ? "agency_order_id=?," : "",
+                    creditcardId!=null ? "creditcard_id=?," : ""
+            );
 
             statement = connection.prepareStatement(sql);
             int idx=1;
             statement.setInt(idx++, newSettlementStatus.code);
             if (newAgencyOrderId != null) {
                 statement.setString(idx++, newAgencyOrderId);
+            }
+            if (creditcardId != null) {
+                statement.setInt(idx++, creditcardId);
             }
             statement.setInt(idx++, id);
             statement.executeUpdate();

@@ -201,8 +201,9 @@ public class EpsilonSettlement {
 				param.add( new BasicNameValuePair("xml", si.xml.toString()));
 				param.add( new BasicNameValuePair("character_code", si.characterCode));
 				param.add( new BasicNameValuePair("user_agent", si.userAgent));
-				param.add( new BasicNameValuePair("kari_flag", si.kariFlag.toString()));
-
+				if(si.kariFlag != null){
+					param.add( new BasicNameValuePair("kari_flag", si.kariFlag.toString()));
+				}
 				if(si.securityCheck!=null){
 					param.add( new BasicNameValuePair("security_check", si.securityCheck.toString()));
 				}

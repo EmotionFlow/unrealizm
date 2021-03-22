@@ -51,16 +51,32 @@ public class OrderDetail {
             dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
             connection = dataSource.getConnection();
 
-            Integer orderId = null;
             sql = "INSERT INTO order_details(" +
                     " order_id, content_id, content_user_id, product_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int idx=1;
             statement.setInt(idx++, orderId);               // order_id
-            statement.setInt(idx++, contentId);             // content_id
-            statement.setInt(idx++, contentUserId);         // content_user_id
-            statement.setInt(idx++, productId);             // product_id
+
+            if (contentId == null) {
+                statement.setNull(idx++, java.sql.Types.NULL);
+            } else {
+                statement.setInt(idx++, contentId);             // content_id
+            }
+
+            if (contentUserId == null) {
+                statement.setNull(idx++, java.sql.Types.NULL);
+            } else {
+                statement.setInt(idx++, contentUserId);         // content_user_id
+            }
+
+            if (productId == null) {
+                statement.setNull(idx++, java.sql.Types.NULL);
+            } else {
+                statement.setInt(idx++, productId);             // product_id
+
+            }
+
             statement.setInt(idx++, productCategory.code);  // product_category_id
             statement.setString(idx++, productName);        // product_name
             statement.setInt(idx++, listPrice);             // list_price

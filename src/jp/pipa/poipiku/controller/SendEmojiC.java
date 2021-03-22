@@ -168,7 +168,8 @@ public class SendEmojiC {
 
 				order.updateSettlementStatus(
 						authorizeResult ? Order.SettlementStatus.SettlementOk : Order.SettlementStatus.SettlementError,
-						authorizeResult ? cardSettlement.getAgentOrderId() : null);
+						authorizeResult ? cardSettlement.getAgentOrderId() : null,
+						authorizeResult ? cardSettlement.m_nCreditcardIdToPay : null);
 
 				if(!authorizeResult){
 					setErrCode(cardSettlement);

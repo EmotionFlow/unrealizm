@@ -25,12 +25,14 @@ public class AcceptRequestC {
 		Request poipikuRequest = new Request(param.requestId);
 		if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) return false;
 
-		// TODO client決済
-		CardSettlement cardSettlement = new CardSettlementEpsilon(poipikuRequest.clientUserId);
-
-
-
 		if (poipikuRequest.accept() == 0) {
+			// TODO client決済
+			// order, order_detail. orderは仮売上
+
+			// settlement
+			CardSettlement cardSettlement = new CardSettlementEpsilon(poipikuRequest.clientUserId);
+
+
 			RequestNotifier.notifyRequestAccepted(poipikuRequest);
 			errorCode = ERR_NONE;
 			result = true;
