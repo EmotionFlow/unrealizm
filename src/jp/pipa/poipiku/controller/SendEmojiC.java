@@ -11,17 +11,10 @@ import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CNotificationToken;
-import jp.pipa.poipiku.COrder;
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.Emoji;
-import jp.pipa.poipiku.ResourceBundleControl;
+import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.settlement.CardSettlement;
-import jp.pipa.poipiku.settlement.EpsilonCardSettlement;
+import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.GridUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -140,46 +133,31 @@ public class SendEmojiC {
 					return false;
 				}
 				// 注文生成
-				Integer orderId = null;
-				strSql = "INSERT INTO orders(" +
-						" customer_id, seller_id, status, payment_total, cheer_point_status)" +
-						" VALUES (?, 2, ?, ?, 0)";
-				statement = connection.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
-				int idx=1;
-				statement.setInt(idx++, m_nUserId);             // customer_id
-				// seller_id=2 (ポイピク公式)
-				statement.setInt(idx++, COrder.STATUS_INIT);    // status
-				statement.setInt(idx++, m_nAmount);             // payment_total
-				// cheer_point_status=0 (分配対象)
-				statement.executeUpdate();
-				resultSet = statement.getGeneratedKeys();
-				if(resultSet.next()){
-					orderId = resultSet.getInt(1);
-					Log.d("orders.id", orderId.toString());
+				Order order = new Order();
+				order.customerId = m_nUserId;
+				order.sellerId = 2; // ポイピク公式
+				order.paymentTotal = m_nAmount;
+				if (order.insert() != 0 || order.id < 0) {
+					throw new Exception("insert order error");
 				}
-				resultSet.close(); resultSet=null;
-				statement.close(); statement=null;
 
-				strSql = "INSERT INTO order_details(" +
-						" order_id, content_id, content_user_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
-						" VALUES (?, ?, ?, 1, ?, ?, ?, 1)";
-				statement = connection.prepareStatement(strSql);
-				idx=1;
-				statement.setInt(idx++, orderId);        // order_id
-				statement.setInt(idx++, m_nContentId);   // content_id
-				// product_category_id=1
-				statement.setInt(idx++, nContentUserId); // content_user_id
-				statement.setString(idx++, m_strEmoji);  // product_name
-				statement.setInt(idx++, m_nAmount);      // list_price
-				statement.setInt(idx++, m_nAmount);      // amount_paid
-				// quantity=1
-				statement.executeUpdate();
-				statement.close(); statement=null;
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.orderId = order.id;
+				orderDetail.contentId = m_nContentId;
+				orderDetail.productCategory = OrderDetail.ProductCategory.Pochibukuro;
+				orderDetail.contentUserId = nContentUserId;
+				orderDetail.productName = m_strEmoji;
+				orderDetail.listPrice = m_nAmount;
+				orderDetail.amountPaid = m_nAmount;
+				orderDetail.quantity = 1;
+				if (orderDetail.insert() != 0 || orderDetail.id < 0) {
+					throw new Exception("insert order_detail error");
+				}
 
-				CardSettlement cardSettlement = new EpsilonCardSettlement(
+				CardSettlement cardSettlement = new CardSettlementEpsilon(
 						m_nUserId,
 						m_nContentId,
-						orderId,
+						order.id,
 						m_nAmount,
 						m_strAgentToken,
 						m_strCardExpire,
@@ -188,14 +166,9 @@ public class SendEmojiC {
 						CardSettlement.BillingCategory.OneTime);
 				boolean authorizeResult = cardSettlement.authorize();
 
-				strSql = "UPDATE orders SET status=?, agency_order_id=?, updated_at=now() WHERE id=?";
-				statement = connection.prepareStatement(strSql);
-				idx=1;
-				statement.setInt(idx++, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
-				statement.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
-				statement.setInt(idx++, orderId);
-				statement.executeUpdate();
-				statement.close();statement=null;
+				order.updateSettlementStatus(
+						authorizeResult ? Order.SettlementStatus.SettlementOk : Order.SettlementStatus.SettlementError,
+						authorizeResult ? cardSettlement.getAgentOrderId() : null);
 
 				if(!authorizeResult){
 					setErrCode(cardSettlement);

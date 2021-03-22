@@ -6,6 +6,7 @@ public abstract class CardSettlement {
 	protected Agent agent = new Agent();
 	protected int userId = -1;
 	protected int contentId = -1;
+	protected int requestId = -1;
 	protected String agentToken = null;
 	protected String cardExpire = null;
 	protected String cardSecurityCode = null;
@@ -15,7 +16,8 @@ public abstract class CardSettlement {
 	public enum BillingCategory {
 		Undef,	  // 未定義
 		OneTime,	// 一回限り
-		Monthly	 // 毎月課金
+		Monthly,	 // 毎月課金
+		AuthorizeOnly // 仮売上
 	}
 	public BillingCategory billingCategory = BillingCategory.Undef;
 

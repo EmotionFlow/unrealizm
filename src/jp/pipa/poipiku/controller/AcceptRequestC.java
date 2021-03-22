@@ -4,6 +4,8 @@ import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Passport;
 import jp.pipa.poipiku.Request;
 import jp.pipa.poipiku.RequestNotifier;
+import jp.pipa.poipiku.settlement.CardSettlement;
+import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 
 public class AcceptRequestC {
 	public final int ERR_NONE = 0;
@@ -24,6 +26,9 @@ public class AcceptRequestC {
 		if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) return false;
 
 		// TODO client決済
+		CardSettlement cardSettlement = new CardSettlementEpsilon(poipikuRequest.clientUserId);
+
+
 
 		if (poipikuRequest.accept() == 0) {
 			RequestNotifier.notifyRequestAccepted(poipikuRequest);

@@ -13,7 +13,7 @@ public class Request {
 	public int clientUserId = -1;
 	public int creatorUserId = -1;
 
-	public enum Status {
+	public enum Status implements DbCodeEnum<Status> {
 		Undef(0),           // 未定義
 		WaitingAppoval(1),  // 承認待ち
 		InProgress(2),	  // 作業中
@@ -21,24 +21,22 @@ public class Request {
 		Canceled(-1),       // キャンセル
 		SettlementError(-2),// 決済エラー
 		OtherError(-99);    // その他エラー
+
 		private final int code;
 		private Status(int code) {
 			this.code = code;
 		}
+
+		@Override
 		public int getCode() {
 			return code;
 		}
-	}
-	public Status status = Status.WaitingAppoval;
-	private void setStatus(int code){
-		status = Status.Undef;
-		for (Status s: Status.values()) {
-			if (s.getCode() == code){
-				status = s;
-				break;
-			}
+
+		static public Status byCode(int _code) {
+			return DbCodeEnum.getEnum(Status.class, _code);
 		}
 	}
+	public Status status = Status.WaitingAppoval;
 
 	public int mediaId = -1;
 	public String requestText = "";
@@ -59,7 +57,7 @@ public class Request {
 	}
 	private void set(ResultSet resultSet) throws SQLException {
 		id = resultSet.getInt("id");
-		setStatus(resultSet.getInt("status"));
+		status = Status.byCode(resultSet.getInt("status"));
 		clientUserId = resultSet.getInt("client_user_id");
 		creatorUserId = resultSet.getInt("creator_user_id");
 		mediaId = resultSet.getInt("media_id");

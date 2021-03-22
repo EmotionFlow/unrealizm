@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class EpsilonCardSettlement extends CardSettlement {
+public class CardSettlementEpsilon extends CardSettlement {
 	// 半角英数字 32byte 注文単位でユニークに設定してください。
 	protected String createOrderId(int userId, int contentId) {
 		return String.format("poi%dT%d", userId, System.currentTimeMillis());
@@ -21,14 +21,14 @@ public class EpsilonCardSettlement extends CardSettlement {
 		return String.format("poi-%d-%d", userId, System.currentTimeMillis());
 	}
 
-	public EpsilonCardSettlement(int _userId){
+	public CardSettlementEpsilon(int _userId){
 		super(_userId);
 		agent.id = Agent.EPSILON;
 	}
 
-	public EpsilonCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
-								 String _agentToken, String _cardExpire, String _cardSecurityCode,
-								 String _userAgent, BillingCategory _billingCategory) {
+	public CardSettlementEpsilon(int _userId, int _contentId, int _poipikuOrderId, int _amount,
+	                             String _agentToken, String _cardExpire, String _cardSecurityCode,
+	                             String _userAgent, BillingCategory _billingCategory) {
 		super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken,
 				_cardExpire, _cardSecurityCode, _userAgent, _billingCategory);
 		agent.id = Agent.EPSILON;
@@ -112,9 +112,7 @@ public class EpsilonCardSettlement extends CardSettlement {
 		return result;
 	}
 
-
 	public boolean authorize() {
-		Log.d("authorize() enter");
 		if (!authorizeCheckBase()) {
 			Log.d("authorizeCheckBase() is false");
 			return false;
@@ -164,12 +162,19 @@ public class EpsilonCardSettlement extends CardSettlement {
 				// 一度払い
 				case OneTime:
 					ssi.missionCode = 1;
+					ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
 					ssi.itemName = "emoji" + contentId;
 					break;
 				// 定期課金（毎月）
 				case Monthly:
 					ssi.missionCode = 21;
+					ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
 					ssi.itemName = "poipass";
+					break;
+				case AuthorizeOnly:
+					ssi.missionCode = 1;
+					ssi.kariFlag = 1;       // 仮売上固定
+					ssi.itemName = "rquest" + requestId;
 					break;
 				default:
 					ssi.missionCode = -1;

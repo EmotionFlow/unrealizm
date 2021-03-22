@@ -1,6 +1,6 @@
 <%@ page import="jp.pipa.poipiku.settlement.CardSettlement"%>
 <%@ page import="jp.pipa.poipiku.settlement.Agent" %>
-<%@ page import="jp.pipa.poipiku.settlement.EpsilonCardSettlement" %>
+<%@ page import="jp.pipa.poipiku.settlement.CardSettlementEpsilon" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%

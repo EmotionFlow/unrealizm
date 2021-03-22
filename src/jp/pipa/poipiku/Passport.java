@@ -1,14 +1,13 @@
 package jp.pipa.poipiku;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.settlement.CardSettlement;
-import jp.pipa.poipiku.settlement.EpsilonCardSettlement;
+import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.Log;
 
 
@@ -142,44 +141,30 @@ public class Passport {
 
 
 			// 注文生成
-			Integer orderId = null;
-			// 売り手はポイピク公式固定、cheer_statusは-1:非分配対象固定。
-			strSql = "INSERT INTO orders(" +
-					" customer_id, seller_id, status, payment_total, cheer_point_status)" +
-					" VALUES (?, 2, ?, ?, -1)";
-			cState = cConn.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
-			int idx=1;
-			cState.setInt(idx++, m_nUserId);			// customre_id
-			cState.setInt(idx++, COrder.STATUS_INIT);   // status
-			cState.setInt(idx++, nListPrice);		   // payment_total
-			cState.executeUpdate();
-			cResSet = cState.getGeneratedKeys();
-			if(cResSet.next()){
-				orderId = cResSet.getInt(1);
-				Log.d("orders.id", orderId.toString());
+			Order order = new Order();
+			order.customerId = m_nUserId;
+			order.sellerId = 2;
+			order.paymentTotal = nListPrice;
+			if (order.insert() != 0 || order.id < 0) {
+				throw new Exception("insert order error");
 			}
-			cResSet.close(); cResSet=null;
-			cState.close(); cState=null;
 
-			// 商品種別は2:ポイパス固定、数量は1固定。
-			strSql = "INSERT INTO order_details(" +
-					" order_id, content_id, content_user_id, product_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
-					" VALUES (?, NULL, NULL, ?, ?, ?, ?, ?, 1)";
-			cState = cConn.prepareStatement(strSql);
-			idx=1;
-			cState.setInt(idx++, orderId);		  // order_id
-			cState.setInt(idx++, nProductId);	   // product_id
-			cState.setInt(idx++, nProdCatId);	   // product_category_id
-			cState.setString(idx++, strProdName);   // product_name
-			cState.setInt(idx++, nListPrice);	   // list_price
-			cState.setInt(idx++, nListPrice);	   // amount_paid
-			cState.executeUpdate();
-			cState.close(); cState=null;
+			OrderDetail orderDetail = new OrderDetail();
+			orderDetail.orderId = order.id;
+			orderDetail.productId = nProductId;
+			orderDetail.productCategory = OrderDetail.ProductCategory.Passport;
+			orderDetail.productName = strProdName;
+			orderDetail.listPrice = nListPrice;
+			orderDetail.amountPaid = nListPrice;
+			orderDetail.quantity = 1;
+			if (orderDetail.insert() != 0 || orderDetail.id < 0) {
+				throw new Exception("insert order_detail error");
+			}
 
-			CardSettlement cardSettlement = new EpsilonCardSettlement(
+			CardSettlement cardSettlement = new CardSettlementEpsilon(
 					m_nUserId,
 					-1,
-					orderId,
+					order.id,
 					nListPrice,
 					strAgentToken,
 					strCardExpire,
@@ -200,7 +185,7 @@ public class Passport {
 			strSql = "INSERT INTO passport_logs(user_id, subscription_datetime, cancel_datetime, order_id) VALUES (?, current_timestamp, null, ?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
-			cState.setInt (2, orderId);
+			cState.setInt (2, order.id);
 			cState.executeUpdate();
 
 			// update users_0000
@@ -213,11 +198,11 @@ public class Passport {
 			// update orders
 			strSql = "UPDATE orders SET creditcard_id=?, status=?, agency_order_id=?, updated_at=now() WHERE id=?";
 			cState = cConn.prepareStatement(strSql);
-			idx=1;
+			int idx=1;
 			cState.setInt(idx++, nCreditCardId);
-			cState.setInt(idx++, authorizeResult?COrder.STATUS_SETTLEMENT_OK:COrder.STATUS_SETTLEMENT_NG);
-			cState.setString(idx++, authorizeResult? cardSettlement.getAgentOrderId():null);
-			cState.setInt(idx++, orderId);
+			cState.setInt(idx++,    authorizeResult ? Order.SettlementStatus.SettlementOk.getCode() : Order.SettlementStatus.SettlementError.getCode());
+			cState.setString(idx++, authorizeResult ? cardSettlement.getAgentOrderId() : null);
+			cState.setInt(idx++, order.id);
 			cState.executeUpdate();
 
 			cConn.commit();
@@ -255,7 +240,7 @@ public class Passport {
 
 		try {
 			// 定期課金キャンセル
-			CardSettlement cardSettlement = new EpsilonCardSettlement(m_nUserId);
+			CardSettlement cardSettlement = new CardSettlementEpsilon(m_nUserId);
 			boolean authorizeResult = cardSettlement.cancelSubscription(m_nOrderId);
 			if (!authorizeResult) {
 				Log.d("cardSettlement.authorize() failed.");
