@@ -61,7 +61,8 @@ String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);
 String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 10) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
 String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
-g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -251,7 +252,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 		<article class="Wrapper ViewPc GridList">
 
 			<aside class="PcSideBar" style="margin-top: 30px;">
-				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
@@ -287,7 +288,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 						</div>
 					</div>
 
-					<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+					<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
 					</div>
@@ -298,7 +299,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && cResults.m_cU
 			<section id="IllustItemList" class="IllustItemList">
 				<%= CCnv.Content2Html(cResults.m_cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 
-				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%;">
 					<%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%>
 				</span>

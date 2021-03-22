@@ -155,7 +155,7 @@
 			<%@include file="PoipassLogoLink.jsp"%>
 			<%=_TEX.T("EditSettingV.BgImage")%>
 		</div>
-		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
+		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
 			<div class="PreviewImgFrame">
 				<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
 				<span class="PreviewMessage"><%=_TEX.T("EditSettingV.Image.NoImage")%></span>
@@ -181,7 +181,7 @@
 			<%@include file="PoipassLogoLink.jsp"%>
 			<%=_TEX.T("EditSettingV.MyPage.AdMode")%>
 		</div>
-		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
+		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
 			<%=_TEX.T("EditSettingV.MyPage.AdMode.Message")%>
 			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
@@ -205,7 +205,7 @@
 			<%@include file="PoipassLogoLink.jsp"%>
 			<%=_TEX.T("EditSettingV.MyPage.Download")%>
 		</div>
-		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
+		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
 			<%=_TEX.T("EditSettingV.MyPage.Download.Message")%>
 			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">

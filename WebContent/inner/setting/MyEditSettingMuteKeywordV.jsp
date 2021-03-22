@@ -35,7 +35,7 @@
 			<%@include file="PoipassLogoLink.jsp"%>
 			<%=_TEX.T("EditSettingV.MuteKeyowrd.Keywords")%>
 		</div>
-		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>style="opacity: 0.3"<%}%>>
+		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
 			<%=_TEX.T("EditSettingV.MuteKeyowrd.Message")%>
 			<%if (checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
 			<textarea id="MuteKeywordText" class="SettingBodyTxt" rows="6" onkeyup="DispMuteCharNum()" maxlength="100"

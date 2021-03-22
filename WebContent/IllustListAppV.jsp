@@ -39,6 +39,8 @@ if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
+g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+
 %>
 <!DOCTYPE html>
 <html>

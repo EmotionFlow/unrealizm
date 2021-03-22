@@ -54,6 +54,8 @@ default:
 
 String strTitle = CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -218,7 +220,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</section>
 
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
-			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF || g_bShowAd) {%>
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%;">
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>
 			</span>
