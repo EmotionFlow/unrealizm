@@ -89,6 +89,7 @@ public class Request {
 		orderId = resultSet.getInt("order_id");
 		contentId = resultSet.getInt("content_id");
 	}
+
 	private void init(){
 		if (id < 0) {
 			return;
@@ -344,6 +345,9 @@ public class Request {
 			updateStatus(Status.OtherError);
 			return -99;
 		}
+
+		// TODO 仮売上を実売上にする。
+
 		if (updateStatus(Status.InProgress)) {
 			return 0;
 		} else {

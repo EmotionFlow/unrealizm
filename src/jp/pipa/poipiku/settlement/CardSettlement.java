@@ -72,5 +72,6 @@ public abstract class CardSettlement {
 	}
 
 	public abstract boolean authorize();
+	public abstract boolean capture(int poipikuOrderId);
 	public abstract boolean cancelSubscription(int poipikuOrderId);
 }

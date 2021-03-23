@@ -278,4 +278,73 @@ public class CardSettlementEpsilon extends CardSettlement {
 			if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ex){;}}
 		}
 	}
+
+	public boolean capture(int poipikuOrderId) {
+		Log.d("cancelSubscription() enter");
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		boolean result = false;
+
+		try {
+			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+
+			// EPSILON側order_number(注文番号)取得。
+			sql = "SELECT agency_order_id, payment_total FROM orders WHERE id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, poipikuOrderId);
+			resultSet = statement.executeQuery();
+			String agentOrderId="";
+			int amount = 0;
+			if(resultSet.next()){
+				agentOrderId = resultSet.getString(1);
+				amount = resultSet.getInt(2);
+			} else {
+				Log.d("EPSILON user_idが取得できない：" + poipikuOrderId);
+			}
+			resultSet.close();resultSet = null;
+			statement.close();statement = null;
+
+			SettlementCaptureSendInfo sendInfo = new SettlementCaptureSendInfo();
+			sendInfo.orderNumber = agentOrderId;
+			sendInfo.seles_amount = amount;
+
+			EpsilonSettlementCapture capture = new EpsilonSettlementCapture(sendInfo);
+			SettlementCaptureResultInfo resultInfo = capture.execSettlement();
+			if (resultInfo != null) {
+				/* resultInfo.getResult()
+				1：実売上OK
+				9：実売上NG
+				 */
+				String resultCode = resultInfo.getResult();
+				Log.d("resultInfo: " + resultCode);
+				if ("1".equals(resultCode)) {
+					return true;
+				} else {
+					Log.d(String.format("実売上処理でエラーが発生 requestId=%d", requestId));
+					Log.d("Code: " + resultInfo.getErrCode());
+					Log.d("Detail: " + resultInfo.getErrDetail());
+					errorKind = ErrorKind.CardAuth;
+					return false;
+				}
+			} else {
+				Log.d(String.format("resultInfoが想定外の値 requestId=%d", requestId));
+				Log.d("Code: " + resultInfo.getErrCode());
+				Log.d("Detail: " + resultInfo.getErrDetail());
+				errorKind = ErrorKind.Unknown;
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorKind = ErrorKind.Exception;
+			return false;
+		} finally {
+			if(resultSet!=null){try{resultSet.close();resultSet=null;}catch(Exception ex){;}}
+			if(statement!=null){try{statement.close();statement=null;}catch(Exception ex){;}}
+			if(connection!=null){try{connection.close();connection=null;}catch(Exception ex){;}}
+		}
+	}
 }
