@@ -45,4 +45,12 @@ public class SqlUtil {
 		statement.close();statement=null;
 		return bRet;
 	}
+
+	public static void setNullOrInt(PreparedStatement statement, int index, Integer i) throws SQLException{
+		if (i == null) {
+			statement.setNull(index, java.sql.Types.NULL);
+		} else {
+			statement.setInt(index, i);
+		}
+	}
 }

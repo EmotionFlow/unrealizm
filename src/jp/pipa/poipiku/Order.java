@@ -11,7 +11,7 @@ public class Order {
     public int id = -1;
     public enum SettlementStatus implements DbCodeEnum<SettlementStatus> {
         Init(0),                  // 支払前(初期状態)
-        BeforeCapture(10),        // 支払中
+        BeforeCapture(10),        // 支払処理中・仮売上
         SettlementOk(20),         // 支払済
         SettlementError(-10),	    // 注文不履行(決済エラー)
         ServerError(-99);	        // 注文不履行(サーバ内部エラー)
@@ -29,11 +29,10 @@ public class Order {
     public SettlementStatus settlementStatus = SettlementStatus.Init;
 
     public enum CheerPointStatus implements DbCodeEnum<CheerPointStatus> {
-        Init(0),                  // 支払前(初期状態)
-        BeforeCapture(10),        // 支払中
-        SettlementOk(20),         // 支払済
-        SettlementError(-10),	    // 注文不履行(決済エラー)
-        ServerError(-99);	        // 注文不履行(サーバ内部エラー)
+        BeforeDistribute(0),     // 分配前
+        Distributing(1),        // 分配中
+        Distributed(2),         // 分配済
+        NotApplicable(-1);	    // 対象外
 
         private final int code;
         private CheerPointStatus(int code) {
@@ -45,7 +44,7 @@ public class Order {
             return code;
         }
     }
-    public CheerPointStatus cheerPointStatus = CheerPointStatus.Init;
+    public CheerPointStatus cheerPointStatus;
 
     public int customerId = -1;
     public int sellerId = -1;

@@ -1,9 +1,6 @@
 package jp.pipa.poipiku.controller;
 
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Passport;
-import jp.pipa.poipiku.Request;
-import jp.pipa.poipiku.RequestNotifier;
+import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 
@@ -26,11 +23,11 @@ public class AcceptRequestC {
 		if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) return false;
 
 		if (poipikuRequest.accept() == 0) {
-			// TODO client決済
-			// order, order_detail. orderは仮売上
+			if (!checkLogin.m_bLogin || poipikuRequest.amount <= 0) {
+				return false;
+			}
 
-			// settlement
-			CardSettlement cardSettlement = new CardSettlementEpsilon(poipikuRequest.clientUserId);
+			// TODO 仮売上を本売上に更新
 
 
 			RequestNotifier.notifyRequestAccepted(poipikuRequest);

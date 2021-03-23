@@ -145,6 +145,7 @@ public class Passport {
 			order.customerId = m_nUserId;
 			order.sellerId = 2;
 			order.paymentTotal = nListPrice;
+			order.cheerPointStatus = Order.CheerPointStatus.NotApplicable;
 			if (order.insert() != 0 || order.id < 0) {
 				throw new Exception("insert order error");
 			}
@@ -173,7 +174,7 @@ public class Passport {
 				Log.d("cardSettlement.authorize() failed.");
 				return false;
 			}
-			final int nCreditCardId = cardSettlement.m_nCreditcardIdToPay;
+			final int nCreditCardId = cardSettlement.creditcardIdToPay;
 
 			//// begin transaction
 			cConn.setAutoCommit(false);

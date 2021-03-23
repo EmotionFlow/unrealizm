@@ -215,8 +215,8 @@ public class CardSettlementEpsilon extends CardSettlement {
 						cState.setString(idx++, ssi.orderNumber);
 						cResSet = cState.executeQuery();
 						if(cResSet.next()) {
-							m_nCreditcardIdToPay = cResSet.getInt(1);
-							Log.d("m_nCreditcardIdToPay: " + m_nCreditcardIdToPay);
+							creditcardIdToPay = cResSet.getInt(1);
+							Log.d("m_nCreditcardIdToPay: " + creditcardIdToPay);
 						}
 						cResSet.close();cResSet=null;
 					} else {
@@ -226,8 +226,8 @@ public class CardSettlementEpsilon extends CardSettlement {
 						cState.setInt(2, agent.id);
 						cResSet = cState.executeQuery();
 						if(cResSet.next()) {
-							m_nCreditcardIdToPay = cResSet.getInt("id");
-							Log.d("m_nCreditcardIdToPay: " + m_nCreditcardIdToPay);
+							creditcardIdToPay = cResSet.getInt("id");
+							Log.d("m_nCreditcardIdToPay: " + creditcardIdToPay);
 						}
 						cResSet.close();cResSet=null;
 
@@ -236,7 +236,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 								" WHERE id=?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setString(1, ssi.orderNumber);
-						cState.setInt(2, m_nCreditcardIdToPay);
+						cState.setInt(2, creditcardIdToPay);
 						cState.executeUpdate();
 					}
 					cState.close();cState = null;

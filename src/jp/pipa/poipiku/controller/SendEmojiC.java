@@ -3,7 +3,6 @@ package jp.pipa.poipiku.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -137,6 +136,7 @@ public class SendEmojiC {
 				order.customerId = m_nUserId;
 				order.sellerId = 2; // ポイピク公式
 				order.paymentTotal = m_nAmount;
+				order.cheerPointStatus = Order.CheerPointStatus.BeforeDistribute;
 				if (order.insert() != 0 || order.id < 0) {
 					throw new Exception("insert order error");
 				}
@@ -169,7 +169,7 @@ public class SendEmojiC {
 				order.updateSettlementStatus(
 						authorizeResult ? Order.SettlementStatus.SettlementOk : Order.SettlementStatus.SettlementError,
 						authorizeResult ? cardSettlement.getAgentOrderId() : null,
-						authorizeResult ? cardSettlement.m_nCreditcardIdToPay : null);
+						authorizeResult ? cardSettlement.creditcardIdToPay : null);
 
 				if(!authorizeResult){
 					setErrCode(cardSettlement);

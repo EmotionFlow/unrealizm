@@ -1,6 +1,7 @@
 package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.SqlUtil;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -30,13 +31,13 @@ public class OrderDetail {
 
     public int orderId = -1;
     public Integer contentId = null;
+    public Integer requestId = null;
     public Integer contentUserId = null;
     public Integer productId = null;
     public String productName = "";
     public int listPrice = -1;
     public int amountPaid = -1;
     public int quantity = -1;
-
 
     public int insert() {
         DataSource dataSource;
@@ -52,31 +53,15 @@ public class OrderDetail {
             connection = dataSource.getConnection();
 
             sql = "INSERT INTO order_details(" +
-                    " order_id, content_id, content_user_id, product_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " order_id, content_id, content_user_id, request_id, product_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int idx=1;
             statement.setInt(idx++, orderId);               // order_id
-
-            if (contentId == null) {
-                statement.setNull(idx++, java.sql.Types.NULL);
-            } else {
-                statement.setInt(idx++, contentId);             // content_id
-            }
-
-            if (contentUserId == null) {
-                statement.setNull(idx++, java.sql.Types.NULL);
-            } else {
-                statement.setInt(idx++, contentUserId);         // content_user_id
-            }
-
-            if (productId == null) {
-                statement.setNull(idx++, java.sql.Types.NULL);
-            } else {
-                statement.setInt(idx++, productId);             // product_id
-
-            }
-
+            SqlUtil.setNullOrInt(statement, idx++, contentId);
+            SqlUtil.setNullOrInt(statement, idx++, contentUserId);
+            SqlUtil.setNullOrInt(statement, idx++, requestId);
+            SqlUtil.setNullOrInt(statement, idx++, productId);
             statement.setInt(idx++, productCategory.code);  // product_category_id
             statement.setString(idx++, productName);        // product_name
             statement.setInt(idx++, listPrice);             // list_price
