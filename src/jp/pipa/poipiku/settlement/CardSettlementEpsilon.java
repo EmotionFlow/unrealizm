@@ -26,14 +26,6 @@ public class CardSettlementEpsilon extends CardSettlement {
 		agent.id = Agent.EPSILON;
 	}
 
-	public CardSettlementEpsilon(int _userId, int _contentId, int _poipikuOrderId, int _amount,
-	                             String _agentToken, String _cardExpire, String _cardSecurityCode,
-	                             String _userAgent, BillingCategory _billingCategory) {
-		super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken,
-				_cardExpire, _cardSecurityCode, _userAgent, _billingCategory);
-		agent.id = Agent.EPSILON;
-	}
-
 	@Override
 	protected boolean authorizeCheckBase() {
 		if(userAgent==null || userAgent.isEmpty()){

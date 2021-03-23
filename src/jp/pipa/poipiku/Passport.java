@@ -161,16 +161,13 @@ public class Passport {
 				throw new Exception("insert order_detail error");
 			}
 
-			CardSettlement cardSettlement = new CardSettlementEpsilon(
-					m_nUserId,
-					-1,
-					order.id,
-					nListPrice,
-					strAgentToken,
-					strCardExpire,
-					strCardSecurityCode,
-					strUserAgent,
-					CardSettlement.BillingCategory.Monthly);
+			CardSettlement cardSettlement = new CardSettlementEpsilon(m_nUserId);
+			cardSettlement.amount = nListPrice;
+			cardSettlement.agentToken = strAgentToken;
+			cardSettlement.cardExpire = strCardExpire;
+			cardSettlement.cardSecurityCode = strCardSecurityCode;
+			cardSettlement.userAgent = strUserAgent;
+			cardSettlement.billingCategory = CardSettlement.BillingCategory.Monthly;
 			boolean authorizeResult = cardSettlement.authorize();
 			if (!authorizeResult) {
 				Log.d("cardSettlement.authorize() failed.");

@@ -154,16 +154,16 @@ public class SendEmojiC {
 					throw new Exception("insert order_detail error");
 				}
 
-				CardSettlement cardSettlement = new CardSettlementEpsilon(
-						m_nUserId,
-						m_nContentId,
-						order.id,
-						m_nAmount,
-						m_strAgentToken,
-						m_strCardExpire,
-						m_strCardSecurityCode,
-						m_strUserAgent,
-						CardSettlement.BillingCategory.OneTime);
+				CardSettlement cardSettlement = new CardSettlementEpsilon(m_nUserId);
+				cardSettlement.contentId = m_nContentId;
+				cardSettlement.poipikuOrderId = order.id;
+				cardSettlement.amount = m_nAmount;
+				cardSettlement.agentToken = m_strAgentToken;
+				cardSettlement.cardExpire = m_strCardExpire;
+				cardSettlement.cardSecurityCode = m_strCardSecurityCode;
+				cardSettlement.userAgent = m_strUserAgent;
+				cardSettlement.billingCategory = CardSettlement.BillingCategory.OneTime;
+
 				boolean authorizeResult = cardSettlement.authorize();
 
 				order.updateSettlementStatus(
