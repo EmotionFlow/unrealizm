@@ -1,5 +1,7 @@
 package jp.pipa.poipiku.util;
 
+import jp.pipa.poipiku.Common;
+
 import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -9,6 +11,14 @@ import java.util.Properties;
 
 public class EmailUtil {
 	public static boolean send(final String toAddress, final String subject, final String body) {
+		if (Common.isDevEnv()) {
+			Log.d("開発環境のためメール送信をスキップします");
+			Log.d("to: " + toAddress);
+			Log.d("subject: " + subject);
+			Log.d("body: " + body);
+			return true;
+		}
+
 		final String FROM_NAME = "POIPIKU";
 		final String FROM_ADDR = "info@poipiku.com";
 		final String SMTP_HOST = "localhost";

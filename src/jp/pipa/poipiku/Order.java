@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class Order {
     public int id = -1;
-    public enum SettlementStatus implements DbCodeEnum<SettlementStatus> {
+    public enum SettlementStatus implements CodeEnum<SettlementStatus> {
         Init(0),                  // 支払前(初期状態)
         BeforeCapture(10),        // 支払処理中・仮売上
         SettlementOk(20),         // 支払済
@@ -28,7 +28,7 @@ public class Order {
     }
     public SettlementStatus settlementStatus = SettlementStatus.Init;
 
-    public enum CheerPointStatus implements DbCodeEnum<CheerPointStatus> {
+    public enum CheerPointStatus implements CodeEnum<CheerPointStatus> {
         BeforeDistribute(0),     // 分配前
         Distributing(1),        // 分配中
         Distributed(2),         // 分配済

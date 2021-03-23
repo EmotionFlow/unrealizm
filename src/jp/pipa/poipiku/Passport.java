@@ -12,11 +12,24 @@ import jp.pipa.poipiku.util.Log;
 
 
 public class Passport {
-	public static final int ERR_NONE = 0;
-	public static final int ERR_RETRY = -10;
-	public static final int ERR_INQUIRY = -20;
-	public static final int ERR_CARD_AUTH = -30;
-	public static final int ERR_UNKNOWN = -99;
+	public enum ErrorKind implements CodeEnum<ErrorKind> {
+		None(0),
+		DoRetry(-10),	    // リトライして欲しい。それでもダメなら問い合わせて欲しい。
+		NeedInquiry(-20),	// 決済されているか不明なエラー。運営に問い合わせて欲しい。
+		CardAuth(-30),    // カード認証周りのエラー。
+		Unknown(-99);     // 不明。通常ありえない。
+
+		private final int code;
+		private ErrorKind(int code) {
+			this.code = code;
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+	}
+	public ErrorKind errorKind = ErrorKind.Unknown;
 
 	public int m_nUserId = -1;
 	public int m_nPassportId = -1;
@@ -68,6 +81,7 @@ public class Passport {
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DoRetry;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
@@ -77,20 +91,24 @@ public class Passport {
 		m_nUserId = checkLogin.m_nUserId;
 		m_nPassportId = checkLogin.m_nPassportId;
 		setStatus();
+		errorKind = ErrorKind.None;
 	}
 
 	public boolean buy(int nPassportId, String strAgentToken, String strCardExpire,
 					   String strCardSecurityCode, String strUserAgent) {
 		if(m_status==Status.Undef){
 			Log.d("m_status==Status.Undef");
+			errorKind = ErrorKind.DoRetry;
 			return false;
 		}
 		if(m_nPassportId==nPassportId){
 			Log.d("m_nPassportId==nPassportId");
+			errorKind = ErrorKind.DoRetry;
 			return false;
 		}
 		if(nPassportId<=0){
 			Log.d("nPassportId<=0");
+			errorKind = ErrorKind.DoRetry;
 			return false;
 		}
 
@@ -123,6 +141,7 @@ public class Passport {
 				nListPrice = cResSet.getInt(4);
 			}else{
 				Log.d("不正なpassport_id");
+				errorKind = ErrorKind.DoRetry;
 				return false;
 			}
 			cResSet.close();
@@ -134,6 +153,7 @@ public class Passport {
 			cResSet = cState.executeQuery();
 			if(cResSet.next()){
 				Log.d("二重に契約しようとした:" + m_nUserId);
+				errorKind = ErrorKind.DoRetry;
 				return false;
 			}
 			cResSet.close();
@@ -172,6 +192,13 @@ public class Passport {
 			boolean authorizeResult = cardSettlement.authorize();
 			if (!authorizeResult) {
 				Log.d("cardSettlement.authorize() failed.");
+				if (cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth) {
+					errorKind = ErrorKind.CardAuth;
+				} else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry) {
+					errorKind = ErrorKind.NeedInquiry;
+				} else {
+					errorKind = ErrorKind.DoRetry;
+				}
 				return false;
 			}
 			final int nCreditCardId = cardSettlement.creditcardIdToPay;
@@ -211,23 +238,26 @@ public class Passport {
 			//// end transaction
 
 			CacheUsers0000.getInstance().clearUser(m_nUserId);
+			errorKind = ErrorKind.None;
 
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DoRetry;
+			return false;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
-
-
+		
 		return true;
 	}
 
 	public boolean cancel() {
 		if(m_tsRelease != null){
 			Log.d("解約済み");
+			errorKind = ErrorKind.DoRetry;
 			return false;
 		}
 
@@ -242,6 +272,7 @@ public class Passport {
 			boolean authorizeResult = cardSettlement.cancelSubscription(m_nOrderId);
 			if (!authorizeResult) {
 				Log.d("cardSettlement.authorize() failed.");
+				errorKind = ErrorKind.DoRetry;
 				return false;
 			}
 
@@ -259,9 +290,13 @@ public class Passport {
 
 			/* users_0000は月末までそのまま。月初にスクリプトで更新 */
 
+			errorKind = ErrorKind.None;
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DoRetry;
+			return false;
 		} finally {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
@@ -283,6 +318,8 @@ public class Passport {
 				m_status = Status.Cancelling;
 			} else {
 				m_status = Status.Billing;
+
+				// 無償期間を設けるためのcode snippet.
 //				LocalDateTime d = LocalDateTime.now();
 //				final int nowYear = d.getYear();
 //				final int nowMonth = d.getMonthValue();

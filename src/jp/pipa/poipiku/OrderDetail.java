@@ -1,6 +1,5 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.SqlUtil;
 
 import javax.naming.InitialContext;
@@ -11,7 +10,7 @@ import java.sql.*;
 public class OrderDetail {
     public int id = -1;
 
-    public enum ProductCategory implements DbCodeEnum<ProductCategory> {
+    public enum ProductCategory implements CodeEnum<ProductCategory> {
         Undef(0),
         Pochibukuro(1),
         Passport(2),

@@ -22,6 +22,8 @@ if (!results.getResults(checkLogin)) {
 <html>
 <head>
 	<%@ include file="/inner/THeaderCommonPc.jsp" %>
+	<%@ include file="/inner/TSweetAlert.jsp"%>
+	<%@ include file="/inner/TCreditCard.jsp"%>
 	<title><%=_TEX.T("THeader.Title")%> - Request </title>
 	<script>
 		function _validate() {
@@ -42,44 +44,191 @@ if (!results.getResults(checkLogin)) {
 			return true;
 		}
 
+		function SendRequestAjax(requestInfo, agentInfo, cardInfo) {
+			let postInfo = requestInfo;
+			postInfo["AID"] = agentInfo.agentId;
+			if (agentInfo.token) {
+				postInfo["TKN"] = agentInfo.token;
+			}
+			if (cardInfo) {
+				postInfo["EXP"] = cardInfo.expire;
+				postInfo["SEC"] = cardInfo.securityCode;
+			}
+
+			$.ajax({
+				"type": "post",
+				"data": requestInfo,
+				"url": "/f/SendRequestF.jsp",
+				"dataType": "json",
+			}).then( data => {
+					cardInfo = null;
+					HideMsgStatic();
+					if (data.result === 0) {
+						if(requestInfo.AMOUNT>0) {
+							DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
+							window.setTimeout(() => {
+								location.href = "/" + parseInt(requestInfo.CREATOR, 10);
+							}, 2300);
+						}
+					} else {
+						switch (data.result) {
+							case <%=Request.ErrorKind.CardAuth.getCode()%>:
+								DispMsg("クレジットカードの認証に失敗しました");
+								break;
+							case <%=Request.ErrorKind.NeedInquiry.getCode()%>:
+								alert("<%=_TEX.T("PassportDlg.Err.AuthCritical")%>");
+								break;
+							case <%=Request.ErrorKind.DoRetry.getCode()%>:
+								DispMsg("システムエラーが発生しました");
+								break;
+							case <%=Request.ErrorKind.Unknown.getCode()%>:
+								DispMsg("不明なエラーが発生しました");
+								break;
+							default:
+								DispMsg("その他エラーが発生しました");
+								break;
+						}
+					}
+					// setTimeout(()=>location.reload(), 5000);
+				},
+				error => {
+					cardInfo = null;
+					DispMsg("<%=_TEX.T("PassportDlg.Err.PoipikuSrv")%>");
+				}
+			);
+		}
+
+		// epsilonPayment - epsilonTrade間で受け渡しする変数。
+		let g_epsilonInfo = {
+			"requestInfo": null,
+			"cardInfo": null,
+		};
+
+		function epsilonPayment(_requestInfo, _cardInfo){
+			if(_cardInfo == null){ // カード登録済
+				SendRequestAjax(_requestInfo, createAgentInfo(AGENT.EPSILON, null, null), null);
+			} else { // 初回
+				g_epsilonInfo.requestInfo = _requestInfo;
+				g_epsilonInfo.cardInfo = _cardInfo;
+
+				const contructCode = "68968190";
+				//let cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "POI PASS"};
+				let cardObj = {
+					"cardno": String(_cardInfo.number),
+					"expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
+					"securitycode": String(_cardInfo.securityCode),
+					// "holdername": "DUMMY",
+				};
+
+				EpsilonToken.init(contructCode);
+
+				// epsilonTradeを無名関数で定義するとコールバックしてくれない。
+				// global領域に関数を定義し、関数名を引数指定しないとダメ。
+				EpsilonToken.getToken(cardObj , epsilonTrade);
+			}
+		}
+
+		function epsilonTrade(response){
+			// もう使うことはないので、カード番号を初期化する。
+			if(g_epsilonInfo.cardInfo.number){
+				g_epsilonInfo.cardInfo.number = null;
+			}
+
+			if( response.resultCode !== '000' ){
+				window.alert("リクエスト送信処理中にエラーが発生しました");
+				console.log(response.resultCode);
+				g_epsilonInfo.elPassportNowPayment.hide();
+			}else{
+				const agentInfo = createAgentInfo(
+					AGENT.EPSILON, response.tokenObject.token,
+					response.tokenObject.toBeExpiredAt);
+				SendRequestAjax(g_epsilonInfo.requestInfo, agentInfo, g_epsilonInfo.cardInfo);
+			}
+		}
 		function sendRequest() {
 			if (!_validate()) {
 				return false;
 			}
-			const clientUserId = <%=checkLogin.m_nUserId%>;
-			const creatorUserId = <%=results.creatorUserId%>;
-			if (clientUserId === creatorUserId) {
+			let cardInfo = {
+				"number": null,
+				"expire": null,
+				"securityCode": null,
+				"holderName": null,
+			};
+			const requestInfo = {
+				"CLIENT": <%=checkLogin.m_nUserId%>,
+				"CREATOR": <%=results.creatorUserId%>,
+				"MEDIA": $("#OptionMedia").val(),
+				"TEXT": $("#EditRequestText").val(),
+				"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
+				"AMOUNT": $("#EditAmmount").val()
+			}
+			if (requestInfo.CLIENT === requestInfo.CREATOR) {
 				alert('自分宛にはリクエストできません');
 				return false;
 			}
 			$('#SendRequestBtn').addClass('Disabled').html('リクエスト送信中');
-			DispMsgStatic('送信中です');
+			DispMsgStatic('リクエスト送信中');
+
 			$.ajax({
-				"type": "post",
-				"data": {
-					"CLIENT": clientUserId,
-					"CREATOR": creatorUserId,
-					"MEDIA": $("#OptionMedia").val(),
-					"TEXT": $("#EditRequestText").val(),
-					"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
-					"AMOUNT": $("#EditAmmount").val()
-				},
-				"url": "/f/SendRequestF.jsp",
-				"dataType": "json"
-			})
-			.then(
-				(data) => {
-					if (data.result === 0) {
-						DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額で決済されます。");
-						window.setTimeout(() => {
-							location.href = "/" + parseInt(creatorUserId, 10);
-						}, 2300);
+				"type": "get",
+				"url": "/f/CheckCreditCardF.jsp",
+				"dataType": "json",
+			}).then(function (data) {
+				const result = Number(data.result);
+
+				if (typeof (result) === "undefined" || result == null || result === -1) {
+					return false;
+				} else if (result === 1) {
+					console.log("epsilonPayment");
+					if (confirm("このリクエストが" +
+						"承認されると、登録済みのクレジットカードに" + requestInfo.AMOUNT + "円が課金されます。" +
+						"よろしいですか？")) {
+						epsilonPayment(requestInfo, null);
 					} else {
-						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+						HideMsgStatic(0);
+						$('#SendRequestBtn').removeClass('Disabled').html('リクエストを送信する');
 					}
-				},
-				(error) => {DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");}
-			);
+				} else if (result === 0) {
+					const title = "リクエスト送信";
+					const description = "クレジットカード情報を入力してください。" +
+						"リクエストが承認されると、入力されたカードに対し、" +
+						"<b>" + requestInfo.AMOUNT + "円</b>(税込)が課金されます。";
+					<%// クレジットカード情報入力ダイアログを表示、%>
+					<%// 入力内容を代理店に送信し、Tokenを取得する。%>
+					Swal.fire({
+						html: getRegistCreditCardDlgHtml(title, description),
+						focusConfirm: false,
+						showCloseButton: true,
+						showCancelButton: true,
+						preConfirm: verifyCardDlgInput,
+					}).then(formValues => {
+						<%// キャンセルボタンがクリックされた%>
+						if (formValues.dismiss) {
+							HideMsgStatic(0);
+							$('#SendRequestBtn').removeClass('Disabled').html('リクエストを送信する');
+							return false;
+						}
+
+						cardInfo.number = String(formValues.value.cardNum);
+						cardInfo.expire = String(formValues.value.cardExp);
+						cardInfo.securityCode = String(formValues.value.cardSec);
+
+						<%// 念のため不要になった変数を初期化%>
+						formValues.value.cardNum = '';
+						formValues.value.cardExp = '';
+						formValues.value.cardSec = '';
+
+						epsilonPayment(requestInfo, cardInfo);
+					});
+
+				} else {
+					DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
+					HideMsgStatic(0);
+					$('#SendRequestBtn').removeClass('Disabled').html('リクエストを送信する');
+				}
+			});
+
 		}
 
 		function dispRequestTextCharNum() {

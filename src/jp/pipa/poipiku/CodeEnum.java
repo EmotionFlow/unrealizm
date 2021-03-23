@@ -2,7 +2,7 @@ package jp.pipa.poipiku;
 
 import java.util.Arrays;
 
-public interface DbCodeEnum<E extends Enum<E>> {
+public interface CodeEnum<E extends Enum<E>> {
 	int getCode();
 
 	@SuppressWarnings("unchecked")
@@ -14,10 +14,10 @@ public interface DbCodeEnum<E extends Enum<E>> {
 		return getCode() == code;
 	}
 
-	static <E extends Enum<E>> E getEnum(Class<? extends DbCodeEnum<E>> clazz, int code) {
+	static <E extends Enum<E>> E getEnum(Class<? extends CodeEnum<E>> clazz, int code) {
 		return Arrays.stream(clazz.getEnumConstants())
 				.filter(e -> e.equalsByCode(code))
-				.map(DbCodeEnum::toEnum)
+				.map(CodeEnum::toEnum)
 				.findFirst()
 				.orElse(null);
 	}

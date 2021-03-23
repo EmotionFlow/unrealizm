@@ -178,10 +178,10 @@ function DispMsgStatic(strMessage) {
 	}, 0);
 }
 
-function HideMsgStatic() {
+function HideMsgStatic(timeout=1000) {
 	setTimeout(function(){
 		$("#DispMsg").slideUp(200);
-	}, 1000);
+	}, timeout);
 }
 
 function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,

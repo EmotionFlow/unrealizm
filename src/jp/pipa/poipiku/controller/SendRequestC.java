@@ -45,7 +45,7 @@ public class SendRequestC {
 
 	public int getResults(CheckLogin checkLogin) {
 		if (!checkLogin.m_bLogin || checkLogin.m_nUserId != clientUserId) {
-			return -1;
+			return -99;
 		}
 		Request poipikuRequest = new Request();
 		poipikuRequest.clientUserId = clientUserId;
@@ -54,63 +54,20 @@ public class SendRequestC {
 		poipikuRequest.requestText = requestText;
 		poipikuRequest.requestCategory = requestCategory;
 		poipikuRequest.amount = amount;
-		int requestResult = poipikuRequest.insert();
 
-		if (requestResult != 0) {
-			return requestResult;
-		}
-		Order order = new Order();
-		order.customerId = poipikuRequest.clientUserId;
-		order.sellerId = poipikuRequest.creatorUserId;
-		order.paymentTotal = poipikuRequest.amount;
-		order.cheerPointStatus = Order.CheerPointStatus.NotApplicable;
-		if (order.insert() != 0 || order.id < 0) {
-			return -2;
-		}
-		OrderDetail orderDetail = new OrderDetail();
-		orderDetail.orderId = order.id;
-		orderDetail.requestId = poipikuRequest.id;
-		orderDetail.productCategory = OrderDetail.ProductCategory.Request;
-		orderDetail.productName = "REQUEST";
-		orderDetail.listPrice = poipikuRequest.amount;
-		orderDetail.amountPaid = poipikuRequest.amount;
-		orderDetail.quantity = 1;
-		if (orderDetail.insert() != 0 || orderDetail.id < 0) {
-			return -3;
-		}
+		boolean sendResult = poipikuRequest.send(
+				agentToken,
+				cardExpire,
+				cardSecurityCode,
+				userAgent
+		);
 
-		CardSettlement cardSettlement = new CardSettlementEpsilon(poipikuRequest.clientUserId);
-		cardSettlement.requestId = poipikuRequest.id;
-		cardSettlement.poipikuOrderId = order.id;
-		cardSettlement.amount = poipikuRequest.amount;
-		cardSettlement.agentToken = agentToken;
-		cardSettlement.cardExpire = cardExpire;
-		cardSettlement.cardSecurityCode = cardSecurityCode;
-		cardSettlement.userAgent = userAgent;
-		cardSettlement.billingCategory = CardSettlement.BillingCategory.AuthorizeOnly;
-
-		boolean authorizeResult = cardSettlement.authorize();
-
-		Order.SettlementStatus newStatus;
-		if (authorizeResult) {
-			newStatus = Order.SettlementStatus.BeforeCapture;
+		if (sendResult) {
+			RequestNotifier.notifyRequestReceived(poipikuRequest);
 		} else {
-			newStatus = Order.SettlementStatus.SettlementError;
+			return poipikuRequest.errorKind.getCode();
 		}
 
-		int updateResult = order.updateSettlementStatus(
-							newStatus,
-							cardSettlement.orderId,
-							cardSettlement.creditcardIdToPay);
-
-		if (newStatus == Order.SettlementStatus.SettlementError){
-			return -4;
-		}
-		if (updateResult != 0) {
-			return -5;
-		}
-
-		RequestNotifier.notifyRequestReceived(poipikuRequest);
 		return 0;
 	}
 }
