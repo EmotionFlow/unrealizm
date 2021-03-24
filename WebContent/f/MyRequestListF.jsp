@@ -52,10 +52,12 @@
 	</div>
 	<div class="RequestBody">
 		<%if(r.request.status == Request.Status.Done){%>
-		<%if(r.textSummary!=null && !r.textSummary.isEmpty()){%>
+		<%if(r.textSummary!=null && !r.textSummary.isEmpty()){
+			String textMore = r.textSummary.length() > 100 ? "..." : "";
+		%>
 		<a class="IllustThumbImg"
-		   href="/IllustViewPcV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>"
-			<span class="IllustInfoBottom"><%=r.textSummary%></span>
+		   href="/IllustViewPcV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>">
+			<span style="color: #6d6965"><%=r.textSummary + textMore%></span>
 		</a>
 		<%}else{%>
 		<a class="IllustThumbImg"
