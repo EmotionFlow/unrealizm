@@ -63,7 +63,7 @@ if (!results.getResults(checkLogin)) {
 			}).then( data => {
 					cardInfo = null;
 					HideMsgStatic();
-					if (data.result === 0) {
+					if (data.result === <%=Common.API_OK%>) {
 						if(requestInfo.AMOUNT>0) {
 							DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
 							window.setTimeout(() => {
@@ -71,17 +71,17 @@ if (!results.getResults(checkLogin)) {
 							}, 2300);
 						}
 					} else {
-						switch (data.result) {
-							case <%=Request.ErrorKind.CardAuth.getCode()%>:
+						switch (data.error_code) {
+							case <%=Controller.ErrorKind.CardAuth.getCode()%>:
 								DispMsg("クレジットカードの認証に失敗しました");
 								break;
-							case <%=Request.ErrorKind.NeedInquiry.getCode()%>:
+							case <%=Controller.ErrorKind.NeedInquiry.getCode()%>:
 								alert("<%=_TEX.T("PassportDlg.Err.AuthCritical")%>");
 								break;
-							case <%=Request.ErrorKind.DoRetry.getCode()%>:
+							case <%=Controller.ErrorKind.DoRetry.getCode()%>:
 								DispMsg("システムエラーが発生しました");
 								break;
-							case <%=Request.ErrorKind.Unknown.getCode()%>:
+							case <%=Controller.ErrorKind.Unknown.getCode()%>:
 								DispMsg("不明なエラーが発生しました");
 								break;
 							default:
@@ -105,6 +105,9 @@ if (!results.getResults(checkLogin)) {
 		};
 
 		function epsilonPayment(_requestInfo, _cardInfo){
+			$('#SendRequestBtn').addClass('Disabled').html('リクエスト送信中');
+			DispMsgStatic('リクエスト送信中');
+
 			if(_cardInfo == null){ // カード登録済
 				SendRequestAjax(_requestInfo, createAgentInfo(AGENT.EPSILON, null, null), null);
 			} else { // 初回
@@ -167,8 +170,6 @@ if (!results.getResults(checkLogin)) {
 				alert('自分宛にはリクエストできません');
 				return false;
 			}
-			$('#SendRequestBtn').addClass('Disabled').html('リクエスト送信中');
-			DispMsgStatic('リクエスト送信中');
 
 			$.ajax({
 				"type": "get",
@@ -176,7 +177,6 @@ if (!results.getResults(checkLogin)) {
 				"dataType": "json",
 			}).then(function (data) {
 				const result = Number(data.result);
-
 				if (typeof (result) === "undefined" || result == null || result === -1) {
 					return false;
 				} else if (result === 1) {
@@ -185,9 +185,6 @@ if (!results.getResults(checkLogin)) {
 						"承認されると、登録済みのクレジットカードに" + requestInfo.AMOUNT + "円が課金されます。" +
 						"よろしいですか？")) {
 						epsilonPayment(requestInfo, null);
-					} else {
-						HideMsgStatic(0);
-						$('#SendRequestBtn').removeClass('Disabled').html('リクエストを送信する');
 					}
 				} else if (result === 0) {
 					const title = "リクエスト送信";
@@ -222,10 +219,6 @@ if (!results.getResults(checkLogin)) {
 						epsilonPayment(requestInfo, cardInfo);
 					});
 
-				} else {
-					DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
-					HideMsgStatic(0);
-					$('#SendRequestBtn').removeClass('Disabled').html('リクエストを送信する');
 				}
 			});
 

@@ -1,7 +1,5 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.settlement.CardSettlement;
-import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
@@ -9,55 +7,11 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 
-public class Request {
-	public enum ErrorKind implements CodeEnum<ErrorKind> {
-		None(0),
-		DoRetry(-10),	    // リトライして欲しい。それでもダメなら問い合わせて欲しい。
-		NeedInquiry(-20),	// 決済されているか不明なエラー。運営に問い合わせて欲しい。
-		CardAuth(-30),    // カード認証周りのエラー。
-		Unknown(-99);     // 不明。通常ありえない。
-
-		private final int code;
-		private ErrorKind(int code) {
-			this.code = code;
-		}
-
-		@Override
-		public int getCode() {
-			return code;
-		}
-	}
-	public ErrorKind errorKind = ErrorKind.Unknown;
-
+public class Request extends Model{
 	public int id = -1;
 	public int clientUserId = -1;
 	public int creatorUserId = -1;
-
-	public enum Status implements CodeEnum<Status> {
-		Undef(0),           // 未定義
-		WaitingAppoval(1),  // 承認待ち
-		InProgress(2),	  // 作業中
-		Done(3),            // 完了
-		Canceled(-1),       // キャンセル
-		SettlementError(-2),// 決済エラー
-		OtherError(-99);    // その他エラー
-
-		private final int code;
-		private Status(int code) {
-			this.code = code;
-		}
-
-		@Override
-		public int getCode() {
-			return code;
-		}
-
-		static public Status byCode(int _code) {
-			return CodeEnum.getEnum(Status.class, _code);
-		}
-	}
-	public Status status = Status.WaitingAppoval;
-
+	public Status status = Status.Undefined;
 	public int mediaId = -1;
 	public String requestText = "";
 	public int requestCategory = -1;
@@ -67,13 +21,36 @@ public class Request {
 	public int orderId = -1;
 	public int contentId = -1;
 
+	public enum Status implements CodeEnum<Status> {
+		Undefined(0),       // 未定義
+		WaitingAppoval(1),  // 承認待ち
+		InProgress(2),	  // 作業中
+		Done(3),            // 完了
+		Canceled(-1),       // キャンセル
+		SettlementError(-2),// 決済エラー
+		OtherError(-99);    // その他エラー
+
+		static public Status byCode(int _code) {
+			return CodeEnum.getEnum(Status.class, _code);
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+
+		private final int code;
+		private Status(int code) {
+			this.code = code;
+		}
+	}
+
 	public Request() { }
 	public Request(ResultSet resultSet) throws SQLException {
 		set(resultSet);
 	}
-	public Request(int _id){
-		id = _id;
-		init();
+	public Request(int reauestId){
+		selectByRequestId(reauestId);
 	}
 	private void set(ResultSet resultSet) throws SQLException {
 		id = resultSet.getInt("id");
@@ -90,8 +67,8 @@ public class Request {
 		contentId = resultSet.getInt("content_id");
 	}
 
-	private void init(){
-		if (id < 0) {
+	private void selectByRequestId(final int requestId){
+		if (requestId < 0) {
 			return;
 		}
 		DataSource dataSource;
@@ -107,7 +84,7 @@ public class Request {
 
 			strSql = "SELECT * FROM requests WHERE id=? LIMIT 1";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, id);
+			statement.setInt(1, requestId);
 			resultSet = statement.executeQuery();
 
 			if(resultSet.next()){
@@ -119,6 +96,7 @@ public class Request {
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
@@ -130,91 +108,12 @@ public class Request {
 		return (clientUserId > 0 && clientUserId == userId);
 	}
 
-	public boolean send(String agentToken, String cardExpire,
-	                    String cardSecurityCode, String userAgent) {
-		int insertResult = insert();
-		if (insertResult != 0) {
-			Log.d(String.format("Request.insert error: %d", insertResult));
-			errorKind = ErrorKind.DoRetry;
+	public boolean selectByContentId(final int _contentId) {
+		if (_contentId < 0) {
+			errorKind = ErrorKind.OtherError;
 			return false;
 		}
 
-		Order order = new Order();
-		order.customerId = clientUserId;
-		order.sellerId = creatorUserId;
-		order.paymentTotal = amount;
-		order.cheerPointStatus = Order.CheerPointStatus.NotApplicable;
-		if (order.insert() != 0 || order.id < 0) {
-			errorKind = ErrorKind.DoRetry;
-			return false;
-		}
-		OrderDetail orderDetail = new OrderDetail();
-		orderDetail.orderId = order.id;
-		orderDetail.requestId = id;
-		orderDetail.productCategory = OrderDetail.ProductCategory.Request;
-		orderDetail.productName = "REQUEST";
-		orderDetail.listPrice = amount;
-		orderDetail.amountPaid = amount;
-		orderDetail.quantity = 1;
-		if (orderDetail.insert() != 0 || orderDetail.id < 0) {
-			errorKind = ErrorKind.DoRetry;
-			return false;
-		}
-
-		CardSettlement cardSettlement = new CardSettlementEpsilon(clientUserId);
-		cardSettlement.requestId = id;
-		cardSettlement.poipikuOrderId = order.id;
-		cardSettlement.amount = amount;
-		cardSettlement.agentToken = agentToken;
-		cardSettlement.cardExpire = cardExpire;
-		cardSettlement.cardSecurityCode = cardSecurityCode;
-		cardSettlement.userAgent = userAgent;
-		cardSettlement.billingCategory = CardSettlement.BillingCategory.AuthorizeOnly;
-
-		boolean authorizeResult = cardSettlement.authorize();
-
-		Order.SettlementStatus newStatus;
-		if (authorizeResult) {
-			newStatus = Order.SettlementStatus.BeforeCapture;
-		} else {
-			newStatus = Order.SettlementStatus.SettlementError;
-		}
-
-		int updateResult = order.updateSettlementStatus(
-				newStatus,
-				cardSettlement.orderId,
-				cardSettlement.creditcardIdToPay);
-
-		if (newStatus == Order.SettlementStatus.SettlementError){
-			if (cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth) {
-				errorKind = ErrorKind.CardAuth;
-			} else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry) {
-				errorKind = ErrorKind.NeedInquiry;
-			} else {
-				errorKind = ErrorKind.DoRetry;
-			}
-			return false;
-		}
-		if (updateResult != 0) {
-			errorKind = ErrorKind.DoRetry;
-			return false;
-		}
-
-		if (!updateStatus(Status.WaitingAppoval)) {
-			errorKind = ErrorKind.DoRetry;
-			return false;
-		}
-
-		errorKind = ErrorKind.None;
-		return true;
-	}
-
-	public int selectByContentId() {
-		if (contentId < 0) {
-			return -99;
-		}
-
-		int result = -1;
 		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -228,29 +127,29 @@ public class Request {
 
 			strSql = "SELECT * FROM requests WHERE content_id=? LIMIT 1";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, contentId);
+			statement.setInt(1, _contentId);
 			resultSet = statement.executeQuery();
 
 			if(resultSet.next()){
 				set(resultSet);
 			}
 
-			resultSet.close();
-			statement.close();
-			result = 0;
+			errorKind = ErrorKind.None;
+			return true;
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
-			result = -1;
+			errorKind = ErrorKind.DbError;
+			return false;
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
-		return result;
 	}
 	
-	private int insert() {
+	public boolean insert() {
 		if (id > 0 ||
 			clientUserId < 0 ||
 			creatorUserId < 0 ||
@@ -259,7 +158,8 @@ public class Request {
 			requestCategory < 0 ||
 			amount < RequestCreator.AMOUNT_MINIMUM_MIN
 		) {
-			return -1;
+			errorKind = ErrorKind.OtherError;
+			return false;
 		}
 
 		DataSource dataSource;
@@ -283,7 +183,7 @@ public class Request {
 				sql = String.format(sql, requestCreator.returnPeriod, requestCreator.deliveryPeriod);
 				statement = connection.prepareStatement(sql);
 				int idx = 1;
-				statement.setInt(idx++, Status.Undef.getCode());
+				statement.setInt(idx++, Status.Undefined.getCode());
 				statement.setInt(idx++, clientUserId);
 				statement.setInt(idx++, creatorUserId);
 				statement.setInt(idx++, mediaId);
@@ -293,26 +193,30 @@ public class Request {
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					this.id = resultSet.getInt(1);
-					result = 0;
+					errorKind = ErrorKind.None;
+					return true;
 				} else {
-					result = -99;
+					errorKind = ErrorKind.OtherError;
+					return false;
 				}
 			} else {
 				Log.d("creator is disabled");
-				result = -1;
+				errorKind = ErrorKind.OtherError;
+				return false;
 			}
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
+			return false;
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
-		return result;
 	}
 
-	private boolean updateStatus(Status newStatus) {
+	public boolean updateStatus(Status newStatus) {
 		boolean result;
 		DataSource dataSource;
 		Connection connection = null;
@@ -328,10 +232,12 @@ public class Request {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 			status = newStatus;
+			errorKind = ErrorKind.None;
 			result = true;
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
 			result = false;
 		} finally {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
@@ -340,26 +246,62 @@ public class Request {
 		return result;
 	}
 
-	public int accept() {
+	public boolean send(final int _orderId) {
+		if (status != Status.Undefined) {
+			errorKind = ErrorKind.StatementError;
+			return false;
+		}
+		boolean result = false;
+		DataSource dataSource;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String sql = "";
+		try {
+			Class.forName("org.postgresql.Driver");
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+			sql = "UPDATE requests SET order_id=?, updated_at=CURRENT_TIMESTAMP WHERE id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, _orderId);
+			statement.setInt(2, id);
+			statement.executeUpdate();
+			orderId = _orderId;
+			errorKind = ErrorKind.None;
+			result = true;
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
+			result = false;
+		} finally {
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		updateStatus(Request.Status.WaitingAppoval);
+		return result;
+	}
+
+	public boolean accept() {
 		if (status != Status.WaitingAppoval) {
 			updateStatus(Status.OtherError);
-			return -99;
+			errorKind = ErrorKind.StatementError;
+			return false;
 		}
-
-		// TODO 仮売上を実売上にする。
-
 		if (updateStatus(Status.InProgress)) {
-			return 0;
+			errorKind = ErrorKind.None;
+			return true;
 		} else {
-			return -99;
+			errorKind = ErrorKind.OtherError;
+			return false;
 		}
 	}
 
-	public int deliver(int _contentId) {
+	public boolean deliver(int _contentId) {
 		if (status != Status.InProgress || _contentId < 0) {
 			updateStatus(Status.OtherError);
 			Log.d(String.format("ステータスまたはcontentIdが異常 %d, %d", status.getCode(), _contentId));
-			return -99;
+			errorKind = ErrorKind.StatementError;
+			return false;
 		}
 
 		boolean result;
@@ -377,45 +319,27 @@ public class Request {
 			statement.setInt(2, id);
 			statement.executeUpdate();
 			this.contentId = _contentId;
+			errorKind = ErrorKind.None;
 			result = true;
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
 			result = false;
 		} finally {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 
-		if (result && updateStatus(Status.Done)) {
-			return 0;
-		} else {
-			Log.d("ステータス更新失敗");
-			return -99;
-		}
+		return result && updateStatus(Status.Done);
 	}
 
-	public int cancel() {
+	public boolean cancel() {
 		if (status != Status.InProgress && status != Status.WaitingAppoval) {
 			updateStatus(Status.OtherError);
-			return -99;
+			errorKind = ErrorKind.StatementError;
+			return false;
 		}
-		if (updateStatus(Status.Canceled)) {
-			return 0;
-		} else {
-			return -99;
-		}
-	}
-
-	public int settlementError() {
-		if (status != Status.WaitingAppoval) {
-			updateStatus(Status.OtherError);
-			return -99;
-		}
-		if (updateStatus(Status.SettlementError)) {
-			return 0;
-		} else {
-			return -99;
-		}
+		return updateStatus(Status.Canceled);
 	}
 }

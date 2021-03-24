@@ -53,8 +53,7 @@ public class IllustDetailC {
 			statement.close();statement=null;
 
 			Request poipikuRequest = new Request();
-			poipikuRequest.contentId = m_nContentId;
-			poipikuRequest.selectByContentId();
+			poipikuRequest.selectByContentId(m_nContentId);
 			isRequestClient = poipikuRequest.isClient(checkLogin.m_nUserId);
 
 			// content main
@@ -64,7 +63,7 @@ public class IllustDetailC {
 			statement.setInt(1, m_nUserId);
 			statement.setInt(2, m_nContentId);
 			resultSet = statement.executeQuery();
-			if(resultSet.next()) {
+			if(resultSet.next()){
 				m_cContent = new CContent(resultSet);
 				bRtn = true;
 			}

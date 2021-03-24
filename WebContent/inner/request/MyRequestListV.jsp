@@ -35,15 +35,16 @@
 			"data": "ID=" + requestId,
 			"dataType": "json",
 		}).then((data)=>{
-			if(data.result === 1){
+			if(data.result === <%=Common.API_OK%>){
 				DispMsg("リクエストを承認しました");
 				$("#RequestPane-"+requestId).addClass("RequestPaneAccepting");
 				$("#RequestPane-"+requestId).toggle(800);
 			}else{
-				DispMsg("リクエストキャンセル時にエラーが発生しました(" + data.error_code + ")");
+				DispMsg("リクエスト承認時にエラーが発生しました(" + data.error_code + ")");
 			}
 		});
 	}
+
 	function cancelRequest(requestId) {
 		$.ajax({
 			"type": "POST",
@@ -51,7 +52,7 @@
 			"data": "ID=" + requestId,
 			"dataType": "json",
 		}).then((data)=>{
-			if(data.result === 1){
+			if(data.result === <%=Common.API_OK%>){
 				DispMsg("リクエストをキャンセルしました");
 				$("#RequestPane-"+requestId).addClass("RequestPaneDeleting");
 				$("#RequestPane-"+requestId).toggle(800);

@@ -280,7 +280,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 	}
 
 	public boolean capture(int poipikuOrderId) {
-		Log.d("cancelSubscription() enter");
+		Log.d("capture() enter");
 		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;

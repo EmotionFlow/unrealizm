@@ -45,7 +45,7 @@ public class Passport {
 		Cancelling  // 解禁解除申し込み中、会員有効、次月月初にはNotMemberになる。
 		//FreePeriod, // 購入中、無償期間中、会員有効
 	}
-	public Status m_status = Status.Undef;
+	public Status m_status = Passport.Status.Undef;
 
 	public Passport(CheckLogin checkLogin) {
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
@@ -96,7 +96,7 @@ public class Passport {
 
 	public boolean buy(int nPassportId, String strAgentToken, String strCardExpire,
 					   String strCardSecurityCode, String strUserAgent) {
-		if(m_status==Status.Undef){
+		if(m_status== Passport.Status.Undef){
 			Log.d("m_status==Status.Undef");
 			errorKind = ErrorKind.DoRetry;
 			return false;
@@ -225,7 +225,7 @@ public class Passport {
 			cState = cConn.prepareStatement(strSql);
 			int idx=1;
 			cState.setInt(idx++, nCreditCardId);
-			cState.setInt(idx++,    authorizeResult ? Order.SettlementStatus.SettlementOk.getCode() : Order.SettlementStatus.SettlementError.getCode());
+			cState.setInt(idx++,    authorizeResult ? Order.Status.SettlementOk.getCode() : Order.Status.SettlementError.getCode());
 			cState.setString(idx++, authorizeResult ? cardSettlement.getAgentOrderId() : null);
 			cState.setInt(idx++, order.id);
 			cState.executeUpdate();
@@ -307,17 +307,17 @@ public class Passport {
 
 	private void setStatus(){
 		if (m_nUserId<0) {
-			m_status = Status.Undef;
+			m_status = Passport.Status.Undef;
 			return;
 		}
 
 		if (m_nPassportId <= 0) {
-			m_status = Status.NotMember;
+			m_status = Passport.Status.NotMember;
 		} else {
 			if (m_tsRelease != null) {
-				m_status = Status.Cancelling;
+				m_status = Passport.Status.Cancelling;
 			} else {
-				m_status = Status.Billing;
+				m_status = Passport.Status.Billing;
 
 				// 無償期間を設けるためのcode snippet.
 //				LocalDateTime d = LocalDateTime.now();

@@ -166,8 +166,8 @@ public class SendEmojiC {
 
 				boolean authorizeResult = cardSettlement.authorize();
 
-				order.updateSettlementStatus(
-						authorizeResult ? Order.SettlementStatus.SettlementOk : Order.SettlementStatus.SettlementError,
+				order.update(
+						authorizeResult ? Order.Status.SettlementOk : Order.Status.SettlementError,
 						authorizeResult ? cardSettlement.getAgentOrderId() : null,
 						authorizeResult ? cardSettlement.creditcardIdToPay : null);
 

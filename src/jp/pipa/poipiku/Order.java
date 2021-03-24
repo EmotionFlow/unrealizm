@@ -7,26 +7,35 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 
-public class Order {
+public class Order extends Model{
     public int id = -1;
-    public enum SettlementStatus implements CodeEnum<SettlementStatus> {
+    public int customerId = -1;
+    public int sellerId = -1;
+    public Status status = Status.Init;
+    public CheerPointStatus cheerPointStatus;
+    public int paymentTotal = -1;
+
+    public enum Status implements CodeEnum<Status> {
         Init(0),                  // 支払前(初期状態)
         BeforeCapture(10),        // 支払処理中・仮売上
         SettlementOk(20),         // 支払済
         SettlementError(-10),	    // 注文不履行(決済エラー)
         ServerError(-99);	        // 注文不履行(サーバ内部エラー)
 
-        private final int code;
-        private SettlementStatus(int code) {
-            this.code = code;
+        static public Status byCode(int _code) {
+            return CodeEnum.getEnum(Status.class, _code);
         }
 
         @Override
         public int getCode() {
             return code;
         }
+
+        private final int code;
+        private Status(int code) {
+            this.code = code;
+        }
     }
-    public SettlementStatus settlementStatus = SettlementStatus.Init;
 
     public enum CheerPointStatus implements CodeEnum<CheerPointStatus> {
         BeforeDistribute(0),     // 分配前
@@ -34,21 +43,58 @@ public class Order {
         Distributed(2),         // 分配済
         NotApplicable(-1);	    // 対象外
 
-        private final int code;
-        private CheerPointStatus(int code) {
-            this.code = code;
+        static public CheerPointStatus byCode(int _code) {
+            return CodeEnum.getEnum(CheerPointStatus.class, _code);
         }
 
         @Override
         public int getCode() {
             return code;
         }
-    }
-    public CheerPointStatus cheerPointStatus;
 
-    public int customerId = -1;
-    public int sellerId = -1;
-    public int paymentTotal = -1;
+        private final int code;
+        private CheerPointStatus(int code) {
+            this.code = code;
+        }
+    }
+
+    public boolean selectById(final int orderId) {
+        DataSource dataSource;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String sql = "";
+
+        try{
+            Class.forName("org.postgresql.Driver");
+            dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+            connection = dataSource.getConnection();
+
+            sql = "SELECT * FROM orders WHERE id=?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderId);
+            statement.executeQuery();
+            resultSet = statement.getResultSet();
+            if (resultSet.next()) {
+                id = orderId;
+                customerId = resultSet.getInt("customer_id");
+                sellerId = resultSet.getInt("seller_id");
+                status = Status.byCode(resultSet.getInt("status"));
+                cheerPointStatus = CheerPointStatus.byCode(resultSet.getInt("cheer_point_status"));
+                paymentTotal = resultSet.getInt("payment_total");
+            }
+            resultSet.close(); resultSet=null;
+            statement.close(); statement=null;
+        } catch (SQLException | NamingException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+            try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+            try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+        }
+        return true;
+    }
 
     public int insert() {
         DataSource dataSource;
@@ -71,7 +117,7 @@ public class Order {
             int idx=1;
             statement.setInt(idx++, customerId);                // customer_id
             statement.setInt(idx++, sellerId);                  // seller_id
-            statement.setInt(idx++, SettlementStatus.Init.code);     // status
+            statement.setInt(idx++, Status.Init.code);     // status
             statement.setInt(idx++, paymentTotal);              // payment_total
             statement.setInt(idx++, cheerPointStatus.code);     // cheer_point_status
             statement.executeUpdate();
@@ -98,15 +144,23 @@ public class Order {
         return result;
     }
 
-    public int updateSettlementStatus(
-            final SettlementStatus newSettlementStatus,
+    public boolean capture() {
+        if (status != Status.BeforeCapture) {
+            errorKind = ErrorKind.StatementError;
+            return false;
+        }
+        return update(Status.SettlementOk, null, null);
+    }
+
+    public boolean update(
+            final Status newStatus,
             final String newAgencyOrderId,
             final Integer creditcardId) {
         DataSource dataSource;
         Connection connection = null;
         PreparedStatement statement = null;
         String sql = "";
-        int result = 0;
+        boolean result;
 
         try{
             Class.forName("org.postgresql.Driver");
@@ -120,7 +174,7 @@ public class Order {
 
             statement = connection.prepareStatement(sql);
             int idx=1;
-            statement.setInt(idx++, newSettlementStatus.code);
+            statement.setInt(idx++, newStatus.code);
             if (newAgencyOrderId != null) {
                 statement.setString(idx++, newAgencyOrderId);
             }
@@ -130,9 +184,12 @@ public class Order {
             statement.setInt(idx++, id);
             statement.executeUpdate();
             statement.close(); statement=null;
+            errorKind = ErrorKind.None;
+            result = true;
         } catch (SQLException | NamingException | ClassNotFoundException e) {
             e.printStackTrace();
-            result = -1;
+            errorKind = ErrorKind.DbError;
+            result = false;
         } finally {
             try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
             try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}

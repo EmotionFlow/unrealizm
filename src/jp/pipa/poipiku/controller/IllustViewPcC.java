@@ -77,8 +77,7 @@ public class IllustViewPcC {
 				m_bOwner = true;
 			} else {
 				Request poipikuRequest = new Request();
-				poipikuRequest.contentId = m_nContentId;
-				poipikuRequest.selectByContentId();
+				poipikuRequest.selectByContentId(m_nContentId);
 				m_bRequestClient = (poipikuRequest.clientUserId == checkLogin.m_nUserId);
 			}
 

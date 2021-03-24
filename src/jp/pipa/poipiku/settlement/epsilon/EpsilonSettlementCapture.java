@@ -90,8 +90,7 @@ public class EpsilonSettlementCapture {
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			String url ="";
-			post.setURI(new URI(url));
+			post.setURI(new URI(CAPTURE_URL));
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();

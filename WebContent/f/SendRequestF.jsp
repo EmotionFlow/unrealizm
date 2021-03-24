@@ -3,7 +3,7 @@
 <%
 request.setCharacterEncoding("UTF-8");
 
-int result = -1;
+boolean result = false;
 
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
@@ -18,4 +18,4 @@ if (controller.clientUserId != controller.creatorUserId &&
 	result = controller.getResults(checkLogin);
 }
 
-%>{"result":<%=result%>}
+%>{"result":<%=result?Common.API_OK:Common.API_NG%>,"error_code":<%=controller.errorKind.getCode()%>}

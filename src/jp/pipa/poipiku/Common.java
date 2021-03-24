@@ -408,8 +408,20 @@ public class Common {
 		}
 	}
 
+	enum AppEnv {
+		Development, Production
+	}
+	public static AppEnv appEnv;
 	public static boolean isDevEnv(){
+		return appEnv == AppEnv.Development;
+	}
+
+	static {
 		String prop = System.getProperty("APP_ENVIRONMENT");
-		return prop != null && prop.equals("development");
+		if (prop != null && prop.equals("development")) {
+			appEnv = AppEnv.Development;
+		} else {
+			appEnv = AppEnv.Production;
+		}
 	}
 }

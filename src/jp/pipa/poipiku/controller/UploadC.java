@@ -14,7 +14,7 @@ import jp.pipa.poipiku.*;
 
 public class UploadC extends UpC {
 	protected int m_nContentId = -99;
-	public int deliverRequestResult = 0;
+	public boolean deliverRequestResult;
 	public int GetResults(UploadCParam cParam, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -27,7 +27,7 @@ public class UploadC extends UpC {
 		if (cParam.requestId > 0) {
 			poipikuRequest = new Request(cParam.requestId);
 			if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) {
-				deliverRequestResult = -98;
+				deliverRequestResult = false;
 				Log.d(String.format("クリエイターではないユーザーによる不正アクセス %d, %d, %d", poipikuRequest.id, poipikuRequest.creatorUserId, checkLogin.m_nUserId));
 				return m_nContentId;
 			}
@@ -97,12 +97,12 @@ public class UploadC extends UpC {
 
 			if (poipikuRequest != null) {
 				deliverRequestResult = poipikuRequest.deliver(m_nContentId);
-				Log.d(String.format("ID %d deliver(%d) responce: %d", poipikuRequest.id, m_nContentId, deliverRequestResult));
-				if (deliverRequestResult == 0) {
+				Log.d(String.format("ID %d deliver(%d) responce: %b", poipikuRequest.id, m_nContentId, deliverRequestResult));
+				if (deliverRequestResult) {
 					RequestNotifier.notifyRequestDelivered(poipikuRequest);
 				}
 			} else {
-				deliverRequestResult = 0;
+				deliverRequestResult = false;
 			}
 		} catch(Exception e) {
 			Log.d(strSql);
