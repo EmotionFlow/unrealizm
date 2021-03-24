@@ -9,8 +9,18 @@
 	boolean bRtn = results.getResults(checkLogin, true);
 
 	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
 %>
+<%if (!bRtn || results.requests.size() == 0) {%>
+	<div style="background: #ffffff; padding: 10px;">
+	<%if (!bRtn) {%>
+	データ取得時にエラーが発生しました
+	<%}else if (results.pageNum==0) { %>
+	リクエストが見つかりませんでした
+	<%} else {%>
+	これ以上ありません
+	<%}%>
+	</div>
+<%}else{ // if (results.requests.size() == 0) {%>
 <%	String uploadJsp = "";
 	for(MyRequestListC.Result r : results.requests) {
 		switch (r.request.mediaId) {
@@ -42,11 +52,18 @@
 	</div>
 	<div class="RequestBody">
 		<%if(r.request.status == Request.Status.Done){%>
+		<%if(r.textSummary!=null && !r.textSummary.isEmpty()){%>
+		<a class="IllustThumbImg"
+		   href="/IllustViewPcV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>"
+			<span class="IllustInfoBottom"><%=r.textSummary%></span>
+		</a>
+		<%}else{%>
 		<a class="IllustThumbImg"
 		   href="/IllustViewPcV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>"
 		   style="background-image:url('<%=Common.GetUrl(r.contentFileName)%>_640.jpg')">
 			<span class="IllustInfoBottom"></span>
 		</a>
+		<%}%>
 		<%}%>
 		<p><%=Util.toStringHtml(r.request.requestText)%></p>
 	</div>
@@ -69,4 +86,5 @@
 		</div>
 	</div>
 </div>
-<%}%>
+<%} // for(MyRequestListC.Result r : results.requests) %>
+<%} // // if (results.requests.size() == 0)%>

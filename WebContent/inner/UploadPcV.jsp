@@ -177,7 +177,7 @@ if (requestId > 0) {
 					DispMsg('<%=_TEX.T("UploadFilePc.Text.NeedBody")%>');
 					return;
 				}
-				UploadText(user_id);
+				UploadText(user_id, <%=requestId%>);
 			}
 			$(function() {
 				DispTextCharNum();

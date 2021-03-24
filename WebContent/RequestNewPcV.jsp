@@ -68,7 +68,7 @@ if (!results.getResults(checkLogin)) {
 							DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
 							window.setTimeout(() => {
 								location.href = "/" + parseInt(requestInfo.CREATOR, 10);
-							}, 2300);
+							}, 5000);
 						}
 					} else {
 						switch (data.error_code) {
@@ -149,7 +149,7 @@ if (!results.getResults(checkLogin)) {
 			}
 		}
 		function sendRequest() {
-			if (!_validate()) {
+			if ($('#SendRequestBtn').hasClass('Disabled') || !_validate()) {
 				return false;
 			}
 			let cardInfo = {
