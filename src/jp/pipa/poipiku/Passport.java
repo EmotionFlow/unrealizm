@@ -183,6 +183,7 @@ public class Passport {
 			}
 
 			CardSettlement cardSettlement = new CardSettlementEpsilon(m_nUserId);
+			cardSettlement.poipikuOrderId = order.id;
 			cardSettlement.amount = nListPrice;
 			cardSettlement.agentToken = strAgentToken;
 			cardSettlement.cardExpire = strCardExpire;
@@ -207,7 +208,8 @@ public class Passport {
 			cConn.setAutoCommit(false);
 
 			// insert into passport_logs
-			strSql = "INSERT INTO passport_logs(user_id, subscription_datetime, cancel_datetime, order_id) VALUES (?, current_timestamp, null, ?)";
+			strSql = "INSERT INTO passport_logs(user_id, subscription_datetime, cancel_datetime, order_id)" +
+					" VALUES (?, current_timestamp, null, ?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt (2, order.id);
