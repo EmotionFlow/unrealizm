@@ -285,9 +285,7 @@
 				ポイパスの解除を承りました。今までご加入いただき誠にありがとうございました。
 				なお、ポイパスでプラスされている機能は今月末までお使いいただけます。
 				また、最後の課金をさせていただく関係で、今月中はカード情報の削除ができません。ご了承くださいませ。
-				<%}%>
-
-				<%if(passportStatus == Passport.Status.NotMember) {%>
+				<%}else if(passportStatus == Passport.Status.NotMember) {%>
 				<%//_TEX.T("MyEditSettingPassportV.Text")%>
 				<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
 				平素よりポイピクをご愛顧頂き誠にありがとうございます。
@@ -301,6 +299,8 @@
 				(2020年12月 株式会社pipa.jp代表 川合和寛)
 				</div>
 				ポイピクパスポート（ポイパス）に加入すると、ポイピクをより楽しく便利にお使いいただけます！
+				<%}else{%>
+				現在、ポイパス加入中です！
 				<%}%>
 
 				<%if(passportStatus == Passport.Status.NotMember) {%>
@@ -318,8 +318,6 @@
 				<div class="SettingBodyCmd" style="font-size: 1.2em">
 					<%if(passportStatus == Passport.Status.NotMember) {%>
 					ポイパスでプラスされる機能
-					<%}else{%>
-					ポイパスでプラスされている機能
 					<%}%>
 				</div>
 				<div class="SettingBodyCmd">
