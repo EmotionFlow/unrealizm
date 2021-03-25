@@ -117,7 +117,7 @@ public class RequestNotifier {
 				context.put("request_board_url",
 						String.format("%s?MENUID=%s&ST=%d&RID=%d",
 								REQUEST_BOARD_URL, "RECEIVED",
-								Request.Status.WaitingAppoval.getCode(), request.id));
+								Request.Status.WaitingApproval.getCode(), request.id));
 				Template template = Velocity.getTemplate(getVmPath("received/body.vm", creator.langLabel), "UTF-8");
 				template.merge(context, sw);
 				final String mailBody = sw.toString();

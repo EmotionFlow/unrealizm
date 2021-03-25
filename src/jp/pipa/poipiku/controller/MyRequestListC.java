@@ -35,11 +35,13 @@ public class MyRequestListC {
 		public String nickname;
 		public String profileFileName;
 		public String contentFileName;
+		public String textSummary;
 		Result(ResultSet resultSet) throws SQLException {
 			request = new Request(resultSet);
 			nickname = resultSet.getString("nickname");
 			profileFileName = resultSet.getString("profile_file_name");
 			contentFileName = resultSet.getString("content_file_name");
+			textSummary = resultSet.getString("text_summary");
 		}
 	}
 
@@ -62,7 +64,7 @@ public class MyRequestListC {
 		try {
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			connection = dataSource.getConnection();
-			sql = "SELECT r.*, u.nickname, u.file_name profile_file_name, c.file_name content_file_name FROM requests r" +
+			sql = "SELECT r.*, u.nickname, u.file_name profile_file_name, c.file_name content_file_name, LEFT(c.text_body, 150) text_summary FROM requests r" +
 					" INNER JOIN users_0000 u ON(" + (category.equals("SENT") ? "r.creator_user_id" : "r.client_user_id") + "=u.user_id)" +
 					" LEFT JOIN contents_0000 c ON(r.content_id=c.content_id)" +
 					" WHERE " + (category.equals("SENT") ? "r.client_user_id" : "r.creator_user_id") + "=?" +

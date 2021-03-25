@@ -143,7 +143,7 @@
 				return false;
 			} else if (result === 1) {
 				console.log("epsilonPayment");
-				if (confirm("登録済みのカード情報で毎月300円(税込)の課金を決済します。よろしいですか？")) {
+				if (confirm("登録済みのクレジットカードで毎月300円(税込)の課金を決済します。よろしいですか？")) {
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
 					elPassportNowPayment.hide();

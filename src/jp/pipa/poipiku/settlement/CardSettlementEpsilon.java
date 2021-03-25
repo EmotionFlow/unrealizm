@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class EpsilonCardSettlement extends CardSettlement {
+public class CardSettlementEpsilon extends CardSettlement {
 	// 半角英数字 32byte 注文単位でユニークに設定してください。
 	protected String createOrderId(int userId, int contentId) {
 		return String.format("poi%dT%d", userId, System.currentTimeMillis());
@@ -21,16 +21,8 @@ public class EpsilonCardSettlement extends CardSettlement {
 		return String.format("poi-%d-%d", userId, System.currentTimeMillis());
 	}
 
-	public EpsilonCardSettlement(int _userId){
+	public CardSettlementEpsilon(int _userId){
 		super(_userId);
-		agent.id = Agent.EPSILON;
-	}
-
-	public EpsilonCardSettlement(int _userId, int _contentId, int _poipikuOrderId, int _amount,
-								 String _agentToken, String _cardExpire, String _cardSecurityCode,
-								 String _userAgent, BillingCategory _billingCategory) {
-		super(_userId, _contentId, _poipikuOrderId, _amount, _agentToken,
-				_cardExpire, _cardSecurityCode, _userAgent, _billingCategory);
 		agent.id = Agent.EPSILON;
 	}
 
@@ -112,9 +104,7 @@ public class EpsilonCardSettlement extends CardSettlement {
 		return result;
 	}
 
-
 	public boolean authorize() {
-		Log.d("authorize() enter");
 		if (!authorizeCheckBase()) {
 			Log.d("authorizeCheckBase() is false");
 			return false;
@@ -164,12 +154,19 @@ public class EpsilonCardSettlement extends CardSettlement {
 				// 一度払い
 				case OneTime:
 					ssi.missionCode = 1;
+					ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
 					ssi.itemName = "emoji" + contentId;
 					break;
 				// 定期課金（毎月）
 				case Monthly:
 					ssi.missionCode = 21;
+					ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
 					ssi.itemName = "poipass";
+					break;
+				case AuthorizeOnly:
+					ssi.missionCode = 1;
+					ssi.kariFlag = 1;       // 仮売上固定
+					ssi.itemName = "rquest" + requestId;
 					break;
 				default:
 					ssi.missionCode = -1;
@@ -218,8 +215,8 @@ public class EpsilonCardSettlement extends CardSettlement {
 						cState.setString(idx++, ssi.orderNumber);
 						cResSet = cState.executeQuery();
 						if(cResSet.next()) {
-							m_nCreditcardIdToPay = cResSet.getInt(1);
-							Log.d("m_nCreditcardIdToPay: " + m_nCreditcardIdToPay);
+							creditcardIdToPay = cResSet.getInt(1);
+							Log.d("m_nCreditcardIdToPay: " + creditcardIdToPay);
 						}
 						cResSet.close();cResSet=null;
 					} else {
@@ -229,8 +226,8 @@ public class EpsilonCardSettlement extends CardSettlement {
 						cState.setInt(2, agent.id);
 						cResSet = cState.executeQuery();
 						if(cResSet.next()) {
-							m_nCreditcardIdToPay = cResSet.getInt("id");
-							Log.d("m_nCreditcardIdToPay: " + m_nCreditcardIdToPay);
+							creditcardIdToPay = cResSet.getInt("id");
+							Log.d("m_nCreditcardIdToPay: " + creditcardIdToPay);
 						}
 						cResSet.close();cResSet=null;
 
@@ -239,7 +236,7 @@ public class EpsilonCardSettlement extends CardSettlement {
 								" WHERE id=?";
 						cState = cConn.prepareStatement(strSql);
 						cState.setString(1, ssi.orderNumber);
-						cState.setInt(2, m_nCreditcardIdToPay);
+						cState.setInt(2, creditcardIdToPay);
 						cState.executeUpdate();
 					}
 					cState.close();cState = null;
@@ -279,6 +276,75 @@ public class EpsilonCardSettlement extends CardSettlement {
 			if(cResSet!=null){try{cResSet.close();cResSet=null;}catch(Exception ex){;}}
 			if(cState!=null){try{cState.close();cState=null;}catch(Exception ex){;}}
 			if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ex){;}}
+		}
+	}
+
+	public boolean capture(int poipikuOrderId) {
+		Log.d("capture() enter");
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		boolean result = false;
+
+		try {
+			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
+
+			// EPSILON側order_number(注文番号)取得。
+			sql = "SELECT agency_order_id, payment_total FROM orders WHERE id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, poipikuOrderId);
+			resultSet = statement.executeQuery();
+			String agentOrderId="";
+			int amount = 0;
+			if(resultSet.next()){
+				agentOrderId = resultSet.getString(1);
+				amount = resultSet.getInt(2);
+			} else {
+				Log.d("EPSILON user_idが取得できない：" + poipikuOrderId);
+			}
+			resultSet.close();resultSet = null;
+			statement.close();statement = null;
+
+			SettlementCaptureSendInfo sendInfo = new SettlementCaptureSendInfo();
+			sendInfo.orderNumber = agentOrderId;
+			sendInfo.seles_amount = amount;
+
+			EpsilonSettlementCapture capture = new EpsilonSettlementCapture(sendInfo);
+			SettlementCaptureResultInfo resultInfo = capture.execSettlement();
+			if (resultInfo != null) {
+				/* resultInfo.getResult()
+				1：実売上OK
+				9：実売上NG
+				 */
+				String resultCode = resultInfo.getResult();
+				Log.d("resultInfo: " + resultCode);
+				if ("1".equals(resultCode)) {
+					return true;
+				} else {
+					Log.d(String.format("実売上処理でエラーが発生 requestId=%d", requestId));
+					Log.d("Code: " + resultInfo.getErrCode());
+					Log.d("Detail: " + resultInfo.getErrDetail());
+					errorKind = ErrorKind.CardAuth;
+					return false;
+				}
+			} else {
+				Log.d(String.format("resultInfoが想定外の値 requestId=%d", requestId));
+				Log.d("Code: " + resultInfo.getErrCode());
+				Log.d("Detail: " + resultInfo.getErrDetail());
+				errorKind = ErrorKind.Unknown;
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorKind = ErrorKind.Exception;
+			return false;
+		} finally {
+			if(resultSet!=null){try{resultSet.close();resultSet=null;}catch(Exception ex){;}}
+			if(statement!=null){try{statement.close();statement=null;}catch(Exception ex){;}}
+			if(connection!=null){try{connection.close();connection=null;}catch(Exception ex){;}}
 		}
 	}
 }

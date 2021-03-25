@@ -47,5 +47,4 @@ java -jar $JUNIT5_JAR \
   -cp ${APP_JAR}:${CLASSES_TOMCAT}:${TEST_TARGET}:${TEST_CLASSES} \
   --select-package jp.pipa.poipiku \
   --include-classname='.*Test$'
-
 exit

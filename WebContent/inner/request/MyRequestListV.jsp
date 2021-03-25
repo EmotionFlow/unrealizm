@@ -5,6 +5,7 @@
 <%if(checkLogin.isStaff()){%>
 
 <script type="application/javascript">
+	let g_RequestProcessing = false;
 	function getRequestsHtml(statusCode, pageNum, requestId) {
 		$.ajax({
 			"type": "POST",
@@ -29,35 +30,44 @@
 	}
 
 	function acceptRequest(requestId) {
+		if (g_RequestProcessing) return;
+		g_RequestProcessing = true;
+		DispMsgStatic("承認処理中");
 		$.ajax({
 			"type": "POST",
 			"url": "/f/AcceptRequestF.jsp",
 			"data": "ID=" + requestId,
 			"dataType": "json",
 		}).then((data)=>{
-			if(data.result === 1){
+			HideMsgStatic(0);
+			if(data.result === <%=Common.API_OK%>){
 				DispMsg("リクエストを承認しました");
 				$("#RequestPane-"+requestId).addClass("RequestPaneAccepting");
 				$("#RequestPane-"+requestId).toggle(800);
 			}else{
-				DispMsg("リクエストキャンセル時にエラーが発生しました(" + data.error_code + ")");
+				DispMsg("リクエスト承認時にエラーが発生しました(" + data.error_code + ")");
 			}
+			g_RequestProcessing = false;
 		});
 	}
+
 	function cancelRequest(requestId) {
+		if (g_RequestProcessing) return;
+		g_RequestProcessing = true;
 		$.ajax({
 			"type": "POST",
 			"url": "/f/CancelRequestF.jsp",
 			"data": "ID=" + requestId,
 			"dataType": "json",
 		}).then((data)=>{
-			if(data.result === 1){
+			if(data.result === <%=Common.API_OK%>){
 				DispMsg("リクエストをキャンセルしました");
 				$("#RequestPane-"+requestId).addClass("RequestPaneDeleting");
 				$("#RequestPane-"+requestId).toggle(800);
 			}else{
 				DispMsg("リクエストキャンセル時にエラーが発生しました(" + data.error_code + ")");
 			}
+			g_RequestProcessing = false;
 		});
 	}
 
@@ -177,9 +187,9 @@
 
 <div class="SettingList">
 	<ul class="TabMenu">
-		<li><a id="TabMenuItem-<%=Request.Status.WaitingAppoval.getCode()%>"
+		<li><a id="TabMenuItem-<%=Request.Status.WaitingApproval.getCode()%>"
 			   class="TabMenuItem"
-			   onclick="onClickMenuItem(this,<%=Request.Status.WaitingAppoval.getCode()%>,0,null)"
+			   onclick="onClickMenuItem(this,<%=Request.Status.WaitingApproval.getCode()%>,0,null)"
 			   href="#">承認待ち</a>
 		</li>
 		<li><a id="TabMenuItem-<%=Request.Status.InProgress.getCode()%>"

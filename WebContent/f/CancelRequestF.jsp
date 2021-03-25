@@ -8,17 +8,17 @@ boolean result = false;
 int errorCode = 0;
 Request r = new Request(Util.toInt(request.getParameter("ID")));
 if (r.creatorUserId == checkLogin.m_nUserId || r.clientUserId == checkLogin.m_nUserId) {
-	if (r.cancel() == 0) {
+	result = r.cancel();
+	if (result) {
 		RequestNotifier.notifyRequestCanceled(checkLogin, r);
-		result = true;
 	} else {
-		errorCode = -3;
+		errorCode = r.errorKind.getCode();
 	}
 } else {
-	errorCode = -2;
+	errorCode = -99;
 }
 
 %>{
-"result" : <%=result?1:0%>,
+"result" : <%=result?Common.API_OK:Common.API_NG%>,
 "error_code" : <%=errorCode%>
 }

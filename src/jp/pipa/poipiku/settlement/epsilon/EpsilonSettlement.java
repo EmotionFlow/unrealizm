@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -28,15 +29,17 @@ import org.w3c.dom.NodeList;
 
 // EPSILON決済API呼び出しクラス
 public class EpsilonSettlement {
-	private static final String CONTRACT_CODE = "68968190";
+	public static final String CONTRACT_CODE = "68968190";
 
+	private String TOKEN_SETTLEMENT_URL;
+	private String LINK_SETTLEMENT_URL;
 	// dev
-//	private static final String TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
-//	private static final String LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+	private static final String DEV_TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+	private static final String DEV_LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
 
 	// production
-	private static final String TOKEN_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
-	private static final String LINK_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+	private static final String PROD_TOKEN_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+	private static final String PROD_LINK_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi";
 
 	private SettlementSendInfo settlementSendInfo;
 	public SettlementSendInfo getSettlementSendInfo() {
@@ -46,10 +49,24 @@ public class EpsilonSettlement {
 	public void setSettlementSendInfo(SettlementSendInfo settlementSendInfo) {
 		this.settlementSendInfo = settlementSendInfo;
 	}
+
+	private void initUrl() {
+		if (Common.isDevEnv()) {
+			Log.d("開発用CGIへ接続");
+			TOKEN_SETTLEMENT_URL = DEV_TOKEN_SETTLEMENT_URL;
+			LINK_SETTLEMENT_URL = DEV_LINK_SETTLEMENT_URL;
+		} else {
+			TOKEN_SETTLEMENT_URL = PROD_TOKEN_SETTLEMENT_URL;
+			LINK_SETTLEMENT_URL = PROD_LINK_SETTLEMENT_URL;
+		}
+	}
+
 	public EpsilonSettlement(){
+		initUrl();
 		this.setSettlementSendInfo(new SettlementSendInfo());
 	}
 	public EpsilonSettlement( SettlementSendInfo settlementSendInfo){
+		initUrl();
 		this.setSettlementSendInfo(settlementSendInfo);
 	}
 
@@ -164,7 +181,7 @@ public class EpsilonSettlement {
 
 	public List<NameValuePair> makeSendParam() {
 		SettlementSendInfo si = this.getSettlementSendInfo();
-		List<NameValuePair> param = new ArrayList<NameValuePair>();
+		List<NameValuePair> param = new ArrayList<>();
 		switch (si.processCode){
 			case 1: case 2: // 初回/登録済み課金
 				param.add( new BasicNameValuePair("version", si.version.toString()));
@@ -185,7 +202,9 @@ public class EpsilonSettlement {
 				param.add( new BasicNameValuePair("xml", si.xml.toString()));
 				param.add( new BasicNameValuePair("character_code", si.characterCode));
 				param.add( new BasicNameValuePair("user_agent", si.userAgent));
-
+				if(si.kariFlag != null){
+					param.add( new BasicNameValuePair("kari_flag", si.kariFlag.toString()));
+				}
 				if(si.securityCheck!=null){
 					param.add( new BasicNameValuePair("security_check", si.securityCheck.toString()));
 				}

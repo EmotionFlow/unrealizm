@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- for EPSILON -->
+<%if(Common.isDevEnv()){%>
+<script src='https://beta.epsilon.jp/js/token.js'></script>
+<%}else{%>
 <script src='https://secure.epsilon.jp/js/token.js' async></script>
-<%--<script src='https://beta.epsilon.jp/js/token.js'></script>--%>
+<%}%>
 <script>
 	const AGENT = {
-		"VERITRANS": 1,
+		//"VERITRANS": 1,
 		"EPSILON": 2,
 	};
 

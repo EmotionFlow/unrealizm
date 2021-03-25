@@ -4,7 +4,7 @@ import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Passport;
 
 public class CancelPassportC {
-	public int m_nErrCode = Passport.ERR_NONE;
+	public int m_nErrCode = Passport.ErrorKind.Unknown.getCode();
 
 	public boolean getResults(CheckLogin checkLogin, CancelPassportCParam cParam) {
 		if(cParam.m_nUserId<0) return false;
@@ -12,10 +12,8 @@ public class CancelPassportC {
 		if(checkLogin.m_bLogin && (cParam.m_nUserId != checkLogin.m_nUserId)) return false;
 
 		Passport cPassport = new Passport(checkLogin);
-
 		boolean result = cPassport.cancel();
-
-		m_nErrCode = cParam.m_nErrCode;
+		m_nErrCode = cPassport.errorKind.getCode();
 		return result;
 	}
 }

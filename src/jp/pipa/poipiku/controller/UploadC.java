@@ -14,7 +14,7 @@ import jp.pipa.poipiku.*;
 
 public class UploadC extends UpC {
 	protected int m_nContentId = -99;
-	public int deliverRequestResult = 0;
+	public boolean deliverRequestResult;
 	public int GetResults(UploadCParam cParam, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -23,15 +23,14 @@ public class UploadC extends UpC {
 		String strSql = "";
 		int idx = 0;
 
-		Request poipikuRequest = null;
+		DeliverRequestC deliverRequestC = null;
 		if (cParam.requestId > 0) {
-			poipikuRequest = new Request(cParam.requestId);
-			if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) {
-				deliverRequestResult = -98;
-				Log.d(String.format("クリエイターではないユーザーによる不正アクセス %d, %d, %d", poipikuRequest.id, poipikuRequest.creatorUserId, checkLogin.m_nUserId));
+			deliverRequestC = new DeliverRequestC(checkLogin, cParam.requestId);
+			if (deliverRequestC.errorKind != Controller.ErrorKind.None) {
 				return m_nContentId;
 			}
 		}
+
 
 		try {
 			// regist to DB
@@ -95,15 +94,10 @@ public class UploadC extends UpC {
 
 			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn);
 
-			if (poipikuRequest != null) {
-				deliverRequestResult = poipikuRequest.deliver(m_nContentId);
-				Log.d(String.format("ID %d deliver(%d) responce: %d", poipikuRequest.id, m_nContentId, deliverRequestResult));
-				if (deliverRequestResult == 0) {
-					RequestNotifier.notifyRequestDelivered(poipikuRequest);
-				}
-			} else {
-				deliverRequestResult = 0;
+			if (deliverRequestC != null) {
+				deliverRequestResult = deliverRequestC.getResults(m_nContentId);
 			}
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

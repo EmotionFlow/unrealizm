@@ -4,7 +4,7 @@ import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class AcceptRequestCParam {
+public class DeliverRequestCParam {
 	public int requestId = -1;
 
 	public int agentId = -1;

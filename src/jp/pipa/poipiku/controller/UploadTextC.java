@@ -14,6 +14,7 @@ import jp.pipa.poipiku.*;
 
 public class UploadTextC extends UpC {
 	protected int m_nContentId = -99;
+	public boolean deliverRequestResult;
 	public int GetResults(UploadTextCParam cParam, CheckLogin checkLogin) {
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -22,14 +23,26 @@ public class UploadTextC extends UpC {
 		String strSql = "";
 		int idx = 0;
 
+		DeliverRequestC deliverRequestC = null;
+		if (cParam.requestId > 0) {
+			deliverRequestC = new DeliverRequestC(checkLogin, cParam.requestId);
+			if (deliverRequestC.errorKind != Controller.ErrorKind.None) {
+				return m_nContentId;
+			}
+		}
+
 		try {
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
 			// get content id
-			ArrayList<String> lColumns = new ArrayList<String>();
-			lColumns.addAll(Arrays.asList("user_id", "genre_id", "category_id", "description", "text_body", "tag_list", "publish_id", "password", "list_id", "safe_filter", "editor_id", "cheer_ng", "open_id", "tweet_when_published", "limited_time_publish"));
+			ArrayList<String> lColumns = new ArrayList<>(
+					Arrays.asList(
+							"user_id", "genre_id", "category_id", "description",
+							"text_body", "tag_list", "publish_id", "password",
+							"list_id", "safe_filter", "editor_id", "cheer_ng",
+							"open_id", "tweet_when_published", "limited_time_publish"));
 
 			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
@@ -95,6 +108,9 @@ public class UploadTextC extends UpC {
 
 			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn);
 
+			if (deliverRequestC != null) {
+				deliverRequestResult = deliverRequestC.getResults(m_nContentId);
+			}
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

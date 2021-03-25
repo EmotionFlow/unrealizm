@@ -27,45 +27,52 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-// EPSILON定期課金解除API呼び出しクラス
-public class EpsilonSettlementCancel {
-	private String CANCEL_URL;
+// EPSILON実売上API呼び出しクラス
+public class EpsilonSettlementCapture {
+	private String CAPTURE_URL;
 	// dev
-	private static final String DEV_CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
+	private static final String DEV_CAPTURE_URL = "https://beta.epsilon.jp/cgi-bin/order/sales_payment.cgi";
 	// production
-	private static final String PROD_CANCEL_URL = "https://secure.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
+	private static final String PROD_CAPTURE_URL = "https://secure.epsilon.jp/cgi-bin/order/sales_payment.cgi";
 
-	public SettlementCancelSendInfo sendInfo;
+	private SettlementCaptureSendInfo settlementCaptureSendInfo;
+	public SettlementCaptureSendInfo getSettlementCaptureInfo() {
+		return settlementCaptureSendInfo;
+	}
+
+	public void setSettlementCaptureSendInfo(SettlementCaptureSendInfo settlementCaptureSendInfo) {
+		this.settlementCaptureSendInfo = settlementCaptureSendInfo;
+	}
 
 	private void initUrl() {
 		if (Common.isDevEnv()) {
-			Log.d("開発用CGIに接続");
-			CANCEL_URL = DEV_CANCEL_URL;
+			Log.d("開発用CGIへ接続");
+			CAPTURE_URL = DEV_CAPTURE_URL;
 		} else {
-			CANCEL_URL = PROD_CANCEL_URL;
+			CAPTURE_URL = PROD_CAPTURE_URL;
 		}
 	}
 
-	public EpsilonSettlementCancel(){
+	public EpsilonSettlementCapture(){
 		initUrl();
-		sendInfo = new SettlementCancelSendInfo();
+		this.setSettlementCaptureSendInfo(new SettlementCaptureSendInfo());
 	}
-	public EpsilonSettlementCancel(SettlementCancelSendInfo _sendInfo){
+	public EpsilonSettlementCapture(SettlementCaptureSendInfo settlementCaptureSendInfo){
 		initUrl();
-		sendInfo = _sendInfo;
+		this.setSettlementCaptureSendInfo(settlementCaptureSendInfo);
 	}
 
 	// 決済情報送信処理
-	public SettlementCancelResultInfo execCancel(){
+	public SettlementCaptureResultInfo execSettlement(){
 		// 決済情報送信
 		// 送信用の設定を作成
-		RequestConfig rc = RequestConfig.custom().setConnectTimeout(2000)
-				.setSocketTimeout(2000)
+		RequestConfig rc = RequestConfig.custom().setConnectTimeout(60000)
+				.setSocketTimeout(60000)
 				.setMaxRedirects(0)
 				.build();
 		// Header定義
-		List<Header> header = new ArrayList<Header>();
-		header.add( new BasicHeader("Accept-Charset","UTF-8" ))	;
+		List<Header> header = new ArrayList<>();
+		header.add( new BasicHeader("Accept-Charset","UTF-8" ));
 		header.add( new BasicHeader("User-Agent","EPSILON SAMPLE PROGRAM JAVA" ));
 
 		HttpClient client = HttpClientBuilder.create()
@@ -83,13 +90,13 @@ public class EpsilonSettlementCancel {
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			post.setURI(new URI(CANCEL_URL));
+			post.setURI(new URI(CAPTURE_URL));
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
 		}
-		SettlementCancelResultInfo resultInfo = new SettlementCancelResultInfo();
+		SettlementCaptureResultInfo settleResultInfo = new SettlementCaptureResultInfo();
 		if( res.getStatusLine().getStatusCode() == HttpStatus.SC_OK ){
 			// BODYを取得してXMLパーサー呼び出し
 			try{
@@ -108,30 +115,17 @@ public class EpsilonSettlementCancel {
 						Node attr = namedNodeMap.item(j);
 						switch (attr.getNodeName()) {
 							case "result":
-								resultInfo.result = attr.getNodeValue();
+								settleResultInfo.setResult(attr.getNodeValue());
 								break;
 							case "err_code":
-								resultInfo.errCode = attr.getNodeValue();
+								settleResultInfo.setErrCode(attr.getNodeValue());
 								break;
 							case "err_detail":
-								resultInfo.errDetail = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
-								break;
-							case "user_id":
-								resultInfo.userId = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
-								break;
-							case "item_code":
-								resultInfo.itemCode = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
-								break;
-							case "item_price":
-								resultInfo.itemPrice = attr.getNodeValue();
-								break;
-							case "mission_code":
-								resultInfo.missionCode = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
+								settleResultInfo.setErrDetail(new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
 								break;
 						}
 					}
 				}
-				Log.d(resultInfo.toString());
 			}catch(Exception e){
 				Log.d("caught exception");
 				for(NameValuePair p : param){
@@ -147,15 +141,20 @@ public class EpsilonSettlementCancel {
 			}
 			return null;
 		}
-		return resultInfo;
+		return settleResultInfo;
 	}
 
+	// 決済情報送信処理
+	public SettlementCaptureResultInfo execSettlement(SettlementCaptureSendInfo sendInfo){
+		this.setSettlementCaptureSendInfo(sendInfo);
+		return this.execSettlement();
+	}
 
 	public List<NameValuePair> makeSendParam() {
-		List<NameValuePair> param = new ArrayList<NameValuePair>();
+		SettlementCaptureSendInfo si = this.getSettlementCaptureInfo();
+		List<NameValuePair> param = new ArrayList<>();
 		param.add( new BasicNameValuePair("contract_code", EpsilonSettlement.CONTRACT_CODE ));
-		param.add( new BasicNameValuePair("user_id", sendInfo.userId));
-		param.add( new BasicNameValuePair("item_code", sendInfo.itemCode));
+		param.add( new BasicNameValuePair("order_number", si.orderNumber));
 		return param;
 	}
 }

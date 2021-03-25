@@ -1165,7 +1165,7 @@ function UploadPaste(user_id) {
 	return false;
 }
 
-function UploadText(user_id) {
+function UploadText(user_id, request_id) {
 	var genre = $('#TagInputItemData').val();
 	var nCategory = $('#EditCategory').val();
 	var strDescription = $.trim($("#EditDescription").val());
@@ -1183,14 +1183,14 @@ function UploadText(user_id) {
 	var nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	var strPublishStart = null;
 	var strPublishEnd = null;
-	if(nPublishId==10){
+	if(nPublishId === 10){
 		if($("#TwitterListNotFound").is(':visible')){
 			twitterListNotFoundMsg();
 			return;
 		}
 	nTwListId = $('#EditTwitterList').val();
 	}
-	if(nLimitedTime==1){
+	if(nLimitedTime === 1){
 		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
 		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
 		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
@@ -1202,13 +1202,13 @@ function UploadText(user_id) {
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
 	setLastCategorySetting(nCategory);
-	if(nPublishId == 99) {
+	if(nPublishId === 99) {
 		nTweet = 0;
 	}
 	startMsg();
 
 	var nTweetNow = nTweet;
-	if(nLimitedTime==1) nTweetNow = 0;
+	if(nLimitedTime === 1) nTweetNow = 0;
 
 	$.ajaxSingle({
 		"type": "post",
@@ -1230,6 +1230,7 @@ function UploadText(user_id) {
 			"ED":3,
 			"CNG":nCheerNg,
 			"REC":nRecent,
+			"RID":request_id
 		},
 		"url": "/f/UploadTextRefTwitterF.jsp",
 		"dataType": "json",

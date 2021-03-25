@@ -4,16 +4,16 @@ import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Passport;
 
 public class BuyPassportC {
-	public int m_nErrCode = Passport.ERR_NONE;
+	public int m_nErrCode = Passport.ErrorKind.Unknown.getCode();
 
 	public boolean getResults(CheckLogin checkLogin, BuyPassportCParam cParam) {
 		if(cParam.m_nUserId<0) return false;
 		if(!checkLogin.m_bLogin) return false;
 		if(checkLogin.m_bLogin && (cParam.m_nUserId != checkLogin.m_nUserId)) return false;
 
-		Passport cPassport = new Passport(checkLogin);
+		Passport passport = new Passport(checkLogin);
 
-		boolean result = cPassport.buy(
+		boolean result = passport.buy(
 				cParam.m_nPassportId,
 				cParam.m_strAgentToken,
 				cParam.m_strCardExpire,
@@ -21,7 +21,7 @@ public class BuyPassportC {
 				cParam.m_strUserAgent
 		);
 
-		m_nErrCode = cParam.m_nErrCode;
+		m_nErrCode = passport.errorKind.getCode();
 		return result;
 	}
 }

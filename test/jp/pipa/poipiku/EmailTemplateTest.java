@@ -22,7 +22,7 @@ public class EmailTemplateTest {
 			context.put("to_name", toName);
 			StringWriter sw = new StringWriter();
 			//テンプレートの作成
-			Template template = Velocity.getTemplate("header.vm", "UTF-8");
+			Template template = Velocity.getTemplate("ja/header.vm", "UTF-8");
 			//テンプレートとマージ
 			template.merge(context,sw);
 			//マージしたデータはWriterオブジェクトであるswが持っているのでそれを文字列として出力

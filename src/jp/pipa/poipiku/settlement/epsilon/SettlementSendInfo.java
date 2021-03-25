@@ -31,6 +31,8 @@ public class SettlementSendInfo {
 	public String ordererAddress;
 	public String ordererTel;
 
+	public Integer kariFlag;
+
 	public Integer securityCheck;
 	public String token;
 	public String userAgent;
