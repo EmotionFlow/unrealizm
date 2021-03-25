@@ -187,9 +187,9 @@
 
 <div class="SettingList">
 	<ul class="TabMenu">
-		<li><a id="TabMenuItem-<%=Request.Status.WaitingAppoval.getCode()%>"
+		<li><a id="TabMenuItem-<%=Request.Status.WaitingApproval.getCode()%>"
 			   class="TabMenuItem"
-			   onclick="onClickMenuItem(this,<%=Request.Status.WaitingAppoval.getCode()%>,0,null)"
+			   onclick="onClickMenuItem(this,<%=Request.Status.WaitingApproval.getCode()%>,0,null)"
 			   href="#">承認待ち</a>
 		</li>
 		<li><a id="TabMenuItem-<%=Request.Status.InProgress.getCode()%>"

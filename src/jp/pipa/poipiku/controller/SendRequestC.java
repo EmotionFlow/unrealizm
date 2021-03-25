@@ -15,6 +15,8 @@ public class SendRequestC extends Controller {
 	public String requestText = "";
 	public int requestCategory = -1;
 	public int amount = -1;
+	public int commission = -1;
+	public String paymentMethod = "";
 	public int agentId = -1;
 	public String ipAddress = "";
 	public String agentToken = "";
@@ -32,6 +34,8 @@ public class SendRequestC extends Controller {
 			requestText = Common.TrimAll(request.getParameter("TEXT"));
 			requestCategory = Util.toInt(request.getParameter("CATEGORY"));
 			amount = Util.toInt(request.getParameter("AMOUNT"));
+			commission = Util.toInt(request.getParameter("COMMISSION"));
+			paymentMethod = Util.toString(request.getParameter("PAYMENT_METHOD"));
 			agentId = Util.toInt(request.getParameter("AID"));
 			agentToken = Util.toString(request.getParameter("TKN"));
 			cardExpire	= Util.toString(request.getParameter("EXP"));
@@ -44,11 +48,27 @@ public class SendRequestC extends Controller {
 		}
 	}
 
+	private int calcCommission() {
+		return amount *
+				(Request.SYSTEM_COMMISSION_RATE_PER_MIL
+						+ Request.AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL) / 1000;
+	}
+
 	public boolean getResults(CheckLogin checkLogin) {
 		if (!checkLogin.m_bLogin || checkLogin.m_nUserId != clientUserId) {
 			errorKind = ErrorKind.Unknown;
 			return false;
 		}
+
+		// 手数料検証
+		if (commission != calcCommission()) {
+			Log.d("クライアントに提示している手数料とサーバ側で計算した手数料が異なる");
+			Log.d(String.format("amount: %d, commission:%d", commission, calcCommission()));
+			Log.d(String.format("cli: %d, srv:%d", commission, calcCommission()));
+			errorKind = ErrorKind.Unknown;
+			return false;
+		}
+
 		Request poipikuRequest = new Request();
 		poipikuRequest.clientUserId = clientUserId;
 		poipikuRequest.creatorUserId = creatorUserId;
@@ -67,7 +87,10 @@ public class SendRequestC extends Controller {
 		Order order = new Order();
 		order.customerId = clientUserId;
 		order.sellerId = creatorUserId;
-		order.paymentTotal = amount;
+		order.paymentTotal = amount + commission;
+		order.commission = commission;
+		order.commissionRateSystemPerMil = Request.SYSTEM_COMMISSION_RATE_PER_MIL;
+		order.commissionRateAgencyPerMil = Request.AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL;
 		order.cheerPointStatus = Order.CheerPointStatus.NotApplicable;
 		if (order.insert() != 0 || order.id < 0) {
 			errorKind = ErrorKind.DoRetry;
@@ -89,7 +112,7 @@ public class SendRequestC extends Controller {
 		CardSettlement cardSettlement = new CardSettlementEpsilon(clientUserId);
 		cardSettlement.requestId = poipikuRequest.id;
 		cardSettlement.poipikuOrderId = order.id;
-		cardSettlement.amount = amount;
+		cardSettlement.amount = order.paymentTotal;
 		cardSettlement.agentToken = agentToken;
 		cardSettlement.cardExpire = cardExpire;
 		cardSettlement.cardSecurityCode = cardSecurityCode;

@@ -14,6 +14,9 @@ public class Order extends Model{
     public Status status = Status.Init;
     public CheerPointStatus cheerPointStatus;
     public int paymentTotal = -1;
+    public int commissionRateSystemPerMil = 0;
+    public int commissionRateAgencyPerMil = 0;
+    public int commission = 0;
 
     public enum Status implements CodeEnum<Status> {
         Init(0),                  // 支払前(初期状態)
@@ -82,6 +85,9 @@ public class Order extends Model{
                 status = Status.byCode(resultSet.getInt("status"));
                 cheerPointStatus = CheerPointStatus.byCode(resultSet.getInt("cheer_point_status"));
                 paymentTotal = resultSet.getInt("payment_total");
+                commission = resultSet.getInt("commission");
+                commissionRateSystemPerMil = resultSet.getInt("commission_rate_system_per_mil");
+                commissionRateAgencyPerMil = resultSet.getInt("commission_rate_agency_per_mil");
             }
             resultSet.close(); resultSet=null;
             statement.close(); statement=null;
@@ -111,14 +117,17 @@ public class Order extends Model{
 
             Integer orderId = null;
             sql = "INSERT INTO orders(" +
-                    " customer_id, seller_id, status, payment_total, cheer_point_status)" +
-                    " VALUES (?, ?, ?, ?, ?)";
+                    " customer_id, seller_id, status, payment_total, commission, commission_rate_system_per_mil, commission_rate_agency_per_mil, cheer_point_status)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int idx=1;
             statement.setInt(idx++, customerId);                // customer_id
             statement.setInt(idx++, sellerId);                  // seller_id
-            statement.setInt(idx++, Status.Init.code);     // status
+            statement.setInt(idx++, Status.Init.code);          // status
             statement.setInt(idx++, paymentTotal);              // payment_total
+            statement.setInt(idx++, commission);
+            statement.setInt(idx++, commissionRateSystemPerMil);
+            statement.setInt(idx++, commissionRateAgencyPerMil);
             statement.setInt(idx++, cheerPointStatus.code);     // cheer_point_status
             statement.executeUpdate();
             resultSet = statement.getGeneratedKeys();

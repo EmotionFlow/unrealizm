@@ -40,7 +40,7 @@ public abstract class CardSettlement {
 
 	// 金額
 	public int amount = 0;
-	private final int AMOUNT_MAX = 10000;
+	private final int AMOUNT_MAX = 15000;
 
 	protected String errMsg = "";
 

@@ -11,7 +11,7 @@ public class SettlementCaptureResultInfo {
 		this.result = result;
 	}
 	public String getErrCode() {
-		return errCode;
+		return errCode!=null?errCode:"";
 	}
 	public void setErrCode(String errCode) {
 		this.errCode = errCode;

@@ -1,6 +1,5 @@
 package jp.pipa.poipiku;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -86,21 +85,21 @@ public class RequestTest {
 
 		Request r;
 		r = requests.get(0);
-		assertTrue(r.updateStatus(Request.Status.WaitingAppoval), Integer.toString(r.errorKind.getCode()));
+		assertTrue(r.updateStatus(Request.Status.WaitingApproval), Integer.toString(r.errorKind.getCode()));
 		assertTrue(r.accept(), Integer.toString(r.errorKind.getCode()));
 		assertTrue(r.deliver(1));
 
 		r = requests.get(1);
-		assertTrue(r.updateStatus(Request.Status.WaitingAppoval), Integer.toString(r.errorKind.getCode()));
+		assertTrue(r.updateStatus(Request.Status.WaitingApproval), Integer.toString(r.errorKind.getCode()));
 		assertTrue(r.cancel());
 
 		r = requests.get(2);
-		assertTrue(r.updateStatus(Request.Status.WaitingAppoval), Integer.toString(r.errorKind.getCode()));
+		assertTrue(r.updateStatus(Request.Status.WaitingApproval), Integer.toString(r.errorKind.getCode()));
 		assertTrue(r.accept());
 		assertTrue(r.cancel());
 
 		r = requests.get(4);
-		assertTrue(r.updateStatus(Request.Status.WaitingAppoval), Integer.toString(r.errorKind.getCode()));
+		assertTrue(r.updateStatus(Request.Status.WaitingApproval), Integer.toString(r.errorKind.getCode()));
 		assertTrue(r.accept());
 
 	}

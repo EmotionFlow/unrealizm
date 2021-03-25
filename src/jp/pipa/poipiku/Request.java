@@ -21,9 +21,12 @@ public class Request extends Model{
 	public int orderId = -1;
 	public int contentId = -1;
 
+	public static final int SYSTEM_COMMISSION_RATE_PER_MIL = 100;
+	public static final int AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL = 36;
+
 	public enum Status implements CodeEnum<Status> {
 		Undefined(0),       // 未定義
-		WaitingAppoval(1),  // 承認待ち
+		WaitingApproval(1),  // 承認待ち
 		InProgress(2),	  // 作業中
 		Done(3),            // 完了
 		Canceled(-1),       // キャンセル
@@ -49,8 +52,8 @@ public class Request extends Model{
 	public Request(ResultSet resultSet) throws SQLException {
 		set(resultSet);
 	}
-	public Request(int reauestId){
-		selectByRequestId(reauestId);
+	public Request(int requestId){
+		selectByRequestId(requestId);
 	}
 	private void set(ResultSet resultSet) throws SQLException {
 		id = resultSet.getInt("id");
@@ -166,7 +169,6 @@ public class Request extends Model{
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		int result = 0;
 		String sql = "";
 
 		try {
@@ -277,12 +279,12 @@ public class Request extends Model{
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
-		updateStatus(Request.Status.WaitingAppoval);
+		updateStatus(Request.Status.WaitingApproval);
 		return result;
 	}
 
 	public boolean accept() {
-		if (status != Status.WaitingAppoval) {
+		if (status != Status.WaitingApproval) {
 			updateStatus(Status.OtherError);
 			errorKind = ErrorKind.StatementError;
 			return false;
@@ -335,7 +337,7 @@ public class Request extends Model{
 	}
 
 	public boolean cancel() {
-		if (status != Status.InProgress && status != Status.WaitingAppoval) {
+		if (status != Status.InProgress && status != Status.WaitingApproval) {
 			updateStatus(Status.OtherError);
 			errorKind = ErrorKind.StatementError;
 			return false;

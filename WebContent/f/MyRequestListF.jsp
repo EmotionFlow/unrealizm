@@ -38,12 +38,12 @@
 	<div class="RequestHeader">
 		<span class="RequestAmount">¥<%=String.format("%,d",r.request.amount)%></span>
 		<span class="RequestLimits">
-			<%if(r.request.status == Request.Status.WaitingAppoval){%>
+			<%if(r.request.status == Request.Status.WaitingApproval){%>
 			<span class="RequestTimeStamp">
 				<span class="RequestTimeStampLabel">返答期限</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.returnLimit)%></span>
 			</span>
 			<%}%>
-			<%if(r.request.status == Request.Status.WaitingAppoval || r.request.status == Request.Status.InProgress){%>
+			<%if(r.request.status == Request.Status.WaitingApproval || r.request.status == Request.Status.InProgress){%>
 			<span class="RequestTimeStamp">
 				<span class="RequestTimeStampLabel">納品期限</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.deliveryLimit)%></span>
 			</span>
@@ -53,7 +53,7 @@
 	<div class="RequestBody">
 		<%if(r.request.status == Request.Status.Done){%>
 		<%if(r.textSummary!=null && !r.textSummary.isEmpty()){
-			String textMore = r.textSummary.length() > 100 ? "..." : "";
+			String textMore = r.textSummary.length() > 100 ? " ....." : "";
 		%>
 		<a class="IllustThumbImg"
 		   href="/IllustViewPcV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>">
@@ -76,10 +76,10 @@
 			</a>
 		</div>
 		<div class="RequestCmd">
-			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.WaitingAppoval){%>
+			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.WaitingApproval){%>
 			<a class="BtnBase RequestAgreeBtn" onclick="acceptRequest(<%=r.request.id%>)" href="javascript:void(0)">承認</a>
 			<%}%>
-			<%if(r.request.status == Request.Status.WaitingAppoval){%>
+			<%if(r.request.status == Request.Status.WaitingApproval){%>
 			<a class="BtnBase RequestCancelBtn" onclick="cancelRequest(<%=r.request.id%>)" href="javascript:void(0)">キャンセル</a>
 			<%}%>
 			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.InProgress){%>

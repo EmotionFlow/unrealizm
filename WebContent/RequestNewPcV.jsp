@@ -31,14 +31,14 @@ if (!results.getResults(checkLogin)) {
 				DispMsg("リクエスト本文が短すぎます");
 				return false;
 			}
-			const amount = parseInt($("#EditAmmount").val(), 10);
+			const amount = parseInt($("#EditAmount").val(), 10);
 			if (!amount) {
 				DispMsg("金額を入力してください");
 				return false;
 			}
 			if (amount < <%=results.requestCreator.amountMinimum%> ||
 				amount > <%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>){
-				DispMsg("金額が範囲外です");
+				DispMsg("リクエスト金額が範囲外です");
 				return false;
 			}
 			return true;
@@ -158,13 +158,18 @@ if (!results.getResults(checkLogin)) {
 				"securityCode": null,
 				"holderName": null,
 			};
+
+			const amount = parseInt($("#EditAmount").val(), 10);
+			const paymentMethod = "CREDITCARD";
 			const requestInfo = {
 				"CLIENT": <%=checkLogin.m_nUserId%>,
 				"CREATOR": <%=results.creatorUserId%>,
 				"MEDIA": $("#OptionMedia").val(),
 				"TEXT": $("#EditRequestText").val(),
 				"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
-				"AMOUNT": $("#EditAmmount").val()
+				"AMOUNT": amount,
+				"COMMISSION": _calcCommission(amount, paymentMethod),
+				"PAYMENT_METHOD": paymentMethod,
 			}
 			if (requestInfo.CLIENT === requestInfo.CREATOR) {
 				alert('自分宛にはリクエストできません');
@@ -181,16 +186,16 @@ if (!results.getResults(checkLogin)) {
 					return false;
 				} else if (result === 1) {
 					console.log("epsilonPayment");
-					if (confirm("このリクエストが" +
-						"承認されると、登録済みのクレジットカードに" + requestInfo.AMOUNT + "円が課金されます。" +
+					if (confirm("クリエイターがリクエストを承認すると、登録済みのクレジットカードに"
+						+ (requestInfo.AMOUNT + requestInfo.COMMISSION).toLocaleString() + "円が課金されます。" +
 						"よろしいですか？")) {
 						epsilonPayment(requestInfo, null);
 					}
 				} else if (result === 0) {
 					const title = "リクエスト送信";
 					const description = "クレジットカード情報を入力してください。" +
-						"リクエストが承認されると、入力されたカードに対し、" +
-						"<b>" + requestInfo.AMOUNT + "円</b>(税込)が課金されます。";
+						"クリエイターがリクエストを承認すると、入力されたカードに対し、" +
+						"<b>" + (requestInfo.AMOUNT + requestInfo.COMMISSION) + "円</b>(税込)が課金されます。";
 					<%// クレジットカード情報入力ダイアログを表示、%>
 					<%// 入力内容を代理店に送信し、Tokenを取得する。%>
 					Swal.fire({
@@ -229,8 +234,34 @@ if (!results.getResults(checkLogin)) {
 			$("#RequestTextCharNum").html(nCharNum);
 		}
 
-		$(function () {
+		const COMMISSION_RATE = {
+			"SYSTEM": <%=Request.SYSTEM_COMMISSION_RATE_PER_MIL%>,
+			"AGENCY": {
+				"CREDITCARD": <%=Request.AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL%>,
+			},
+		}
+
+		function _calcCommission(amount, paymentMethod) {
+			return Math.floor(parseInt(amount, 10) * (COMMISSION_RATE.SYSTEM + COMMISSION_RATE.AGENCY[paymentMethod]) / 1000);
+		}
+
+		function _calcAmountTotal(amount, paymentMethod) {
+			return parseInt(amount, 10) + _calcCommission(amount, paymentMethod);
+		}
+
+		function dispCommission(){
+			const paymentMethod = "CREDITCARD";
+			const amount = parseInt($("#EditAmount").val());
+			const commissionTotal = _calcCommission(amount, paymentMethod);
+			$("#Commission").text(commissionTotal.toLocaleString());
+			$("#AmountTotal").text((amount + commissionTotal).toLocaleString());
+			$("#CommissionRateSystem").text(((COMMISSION_RATE.SYSTEM) / 10).toFixed(1));
+			$("#CommissionRateAgency").text(((COMMISSION_RATE.AGENCY.CREDITCARD) / 10).toFixed(1));
+		}
+
+		$(() => {
 			dispRequestTextCharNum();
+			dispCommission();
 		});
 
 	</script>
@@ -251,6 +282,16 @@ if (!results.getResults(checkLogin)) {
             margin: 4px;
             padding: 8px;
 			font-size: 13px;
+		}
+		#EditAmount {
+            text-align: right;
+            width: 130px;
+            padding-right: 2px;
+		}
+		.RequestAmountUnit {
+            position: relative;
+            top: 6px;
+            margin-right: 3px;
 		}
 	</style>
 
@@ -314,7 +355,7 @@ if (!results.getResults(checkLogin)) {
 					</label>
 				</div>
 			</div>
-			<div class="OptionNotify">
+			<div class="OptionNotify" style="margin-bottom: 40px">
 				<%if (results.requestCreator.allowSensitive()) {%>
 				センシティブなリクエストは必ずON
 				<%}else{%>
@@ -322,16 +363,36 @@ if (!results.getResults(checkLogin)) {
 				<%}%>
 			</div>
 
-			<div id="ItemPassword" class="OptionItem">
+			<div id="ItemAmount" class="OptionItem">
 				<div class="OptionLabel">リクエスト金額</div>
 				<div class="OptionPublish">
-					<input id="EditAmmount" class="EditPassword" type="number" maxlength="6"
-						   value="<%=results.requestCreator.amountLeftToMe%>"
-						   placeholder="お任せ金額<%=results.requestCreator.amountLeftToMe%>円"/>
+					<span class="RequestAmountUnit">¥</span><input id="EditAmount" class="EditPassword" type="number" maxlength="6"
+						    value="<%=results.requestCreator.amountLeftToMe%>"
+						    placeholder="おまかせ金額<%=results.requestCreator.amountLeftToMe%>円"
+							onkeyup="dispCommission()"/>
 				</div>
 			</div>
-			<div class="OptionNotify">
+			<div class="OptionNotify" style="margin-bottom: 8px;">
 				¥<%=String.format("%,d", results.requestCreator.amountMinimum)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>
+			</div>
+
+			<div id="ItemCommission" class="OptionItem">
+				<div class="OptionLabel">手数料</div>
+				<div class="OptionPublish" style="font-size: 13px">
+					¥<span id="Commission"></span>
+				</div>
+			</div>
+			<div class="OptionNotify" style="margin-bottom: 8px; text-align: right;">
+				リクエスト手数料<span id="CommissionRateSystem"></span>%
+				+トランザクション手数料<span id="CommissionRateAgency"></span>%<br>
+				詳しくは<a style="text-decoration: underline;">こちら</a>
+			</div>
+
+			<div id="ItemAmountTotal" class="OptionItem" style="margin-bottom: 40px;">
+				<div class="OptionLabel">支払総額</div>
+				<div class="OptionPublish">
+					¥<span id="AmountTotal"></span>
+				</div>
 			</div>
 
 			<div class="OptionItem">
@@ -349,17 +410,18 @@ if (!results.getResults(checkLogin)) {
 		<div class="TextBody" style="margin-bottom: 10px">
 			ルール
 			<div class="RequestRule">
+				リクエストを送信した時点で与信が確保されます。<br/>
 				クリエイターが承認した時点で、指定した金額で決済されます。<br/>
 				金額の見積もり・打ち合わせ・リテイク・著作権譲渡はできません。<br/>
 				クリエイターとはリクエスト本文以外での連絡はできません。<br/>
 				リクエストを報酬の送金手段として使用することはできません。<br/>
-				個人鑑賞(SNSへの掲載・使用は含む)を超えた利用には本文へ用途の説明が必要。<br/>
-				納品されなかった場合、各支払方法を通して返金されます。
+				個人鑑賞(SNSへの掲載・使用は含む)を超えた利用には本文へ用途の説明が必要です。<br/>
+				承認後納品されなかった場合は、カード会社を通して返金されます。
 			</div>
 		</div>
 
 		<div class="UoloadCmd">
-			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">リクエストを送信する</a>
+			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ルールに合意してリクエストを送信する</a>
 		</div>
 
 		<%} // if(results.user.m_bRequestEnabled)%>
