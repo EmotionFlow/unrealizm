@@ -124,7 +124,7 @@ public class Order extends Model{
                     " customer_id, seller_id, status, payment_total, commission," +
                     " commission_rate_system_per_mil, commission_rate_agency_per_mil," +
                     " cheer_point_status, payment_method_id)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int idx=1;
             statement.setInt(idx++, customerId);                // customer_id
