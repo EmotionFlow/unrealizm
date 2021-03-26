@@ -52,14 +52,15 @@ public class OrderDetail {
             connection = dataSource.getConnection();
 
             sql = "INSERT INTO order_details(" +
-                    " order_id, content_id, content_user_id, request_id, product_id, product_category_id, product_name, list_price, amount_paid, quantity)" +
-                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    " order_id, content_id, content_user_id," +
+                    " product_id, product_category_id, product_name, list_price," +
+                    " amount_paid, quantity)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int idx=1;
             statement.setInt(idx++, orderId);               // order_id
             SqlUtil.setNullOrInt(statement, idx++, contentId);
             SqlUtil.setNullOrInt(statement, idx++, contentUserId);
-            SqlUtil.setNullOrInt(statement, idx++, requestId);
             SqlUtil.setNullOrInt(statement, idx++, productId);
             statement.setInt(idx++, productCategory.code);  // product_category_id
             statement.setString(idx++, productName);        // product_name
