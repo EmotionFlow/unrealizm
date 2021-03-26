@@ -70,7 +70,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 			// epsilonの商品コード=ポイピクのorder_id
 			cancelSendInfo.itemCode = Integer.toString(poipikuOrderId);
 
-			EpsilonSettlementCancel epsilonSettlementCancel = new EpsilonSettlementCancel(cancelSendInfo);
+			EpsilonSettlementCancel epsilonSettlementCancel = new EpsilonSettlementCancel(poipikuUserId, cancelSendInfo);
 			SettlementCancelResultInfo resultInfo = epsilonSettlementCancel.execCancel();
 
 			if (resultInfo != null) {
@@ -124,7 +124,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 			boolean isFirstSettlement = true;
 			strSql = "SELECT agent_user_id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, userId);
+			cState.setInt(1, poipikuUserId);
 			cState.setInt(2, agent.id);
 			cResSet = cState.executeQuery();
 			String strAgentUserId;
@@ -132,7 +132,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 				strAgentUserId = cResSet.getString(1);
 				isFirstSettlement = false;
 			} else {
-				strAgentUserId =  createAgentUserId(userId);
+				strAgentUserId =  createAgentUserId(poipikuUserId);
 				isFirstSettlement = true;
 			}
 			cResSet.close();cResSet = null;
@@ -183,14 +183,14 @@ public class CardSettlementEpsilon extends CardSettlement {
 				ssi.token = "";
 			}
 
-			ssi.orderNumber = createOrderId(userId, contentId);
+			ssi.orderNumber = createOrderId(poipikuUserId, contentId);
 			orderId = ssi.orderNumber;
 			ssi.memo1 = "DUMMY";
 			ssi.memo2 = "DUMMY";
 			ssi.userAgent = userAgent;
 
-			EpsilonSettlement epsilonSettlement = new EpsilonSettlement(ssi);
-			SettlementResultInfo settlementResultInfo = epsilonSettlement.execSettlement();
+			EpsilonSettlementAuthorize epsilonSettlementAuthorize = new EpsilonSettlementAuthorize(poipikuUserId, ssi);
+			SettlementResultInfo settlementResultInfo = epsilonSettlementAuthorize.execSettlement();
 			if (settlementResultInfo != null) {
 				/* settlementResultInfo.getResult()
 				0：決済NG
@@ -207,7 +207,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 								" VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
 						cState = cConn.prepareStatement(strSql);
 						int idx = 1;
-						cState.setInt(idx++, userId);
+						cState.setInt(idx++, poipikuUserId);
 						cState.setInt(idx++, Agent.EPSILON);
 						cState.setString(idx++, cardExpire);
 						cState.setString(idx++, cardSecurityCode);
@@ -222,7 +222,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 					} else {
 						strSql = "SELECT id FROM creditcards WHERE user_id=? AND agent_id=?";
 						cState = cConn.prepareStatement(strSql);
-						cState.setInt(1, userId);
+						cState.setInt(1, poipikuUserId);
 						cState.setInt(2, agent.id);
 						cResSet = cState.executeQuery();
 						if(cResSet.next()) {
@@ -245,17 +245,17 @@ public class CardSettlementEpsilon extends CardSettlement {
 					return true;
 				} else {
 					if("0".equals(settlementResultCode)) {
-						Log.d(String.format("決済NG userId=%d, contentId=%d", userId, contentId));
+						Log.d(String.format("決済NG userId=%d, contentId=%d", poipikuUserId, contentId));
 						Log.d("Code: " + settlementResultInfo.getErrCode());
 						Log.d("Detail: " + settlementResultInfo.getErrDetail());
 						errorKind = ErrorKind.CardAuth;
 					} else if("9".equals(settlementResultCode)) {
-						Log.d(String.format("イプシロンからシステムエラー返却された userId=%d, contentId=%d", userId, contentId));
+						Log.d(String.format("イプシロンからシステムエラー返却された userId=%d, contentId=%d", poipikuUserId, contentId));
 						Log.d("Code: " + settlementResultInfo.getErrCode());
 						Log.d("Detail: " + settlementResultInfo.getErrDetail());
 						errorKind = ErrorKind.NeedInquiry;
 					} else {
-						Log.d(String.format("settlementResultCodeが想定外の値 userId=%d, contentId=%d", userId, contentId));
+						Log.d(String.format("settlementResultCodeが想定外の値 userId=%d, contentId=%d", poipikuUserId, contentId));
 						Log.d("Code: " + settlementResultInfo.getErrCode());
 						Log.d("Detail: " + settlementResultInfo.getErrDetail());
 						errorKind = ErrorKind.Unknown;
@@ -264,7 +264,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 				}
 
 			} else {
-				Log.d(String.format("settlementResultInfo == null, userId=%d, contentId=%d", userId, contentId));
+				Log.d(String.format("settlementResultInfo == null, userId=%d, contentId=%d", poipikuUserId, contentId));
 				errorKind = ErrorKind.Unknown;
 				return false;
 			}
@@ -310,9 +310,9 @@ public class CardSettlementEpsilon extends CardSettlement {
 
 			SettlementCaptureSendInfo sendInfo = new SettlementCaptureSendInfo();
 			sendInfo.orderNumber = agentOrderId;
-			sendInfo.seles_amount = amount;
+			sendInfo.sales_amount = amount;
 
-			EpsilonSettlementCapture capture = new EpsilonSettlementCapture(sendInfo);
+			EpsilonSettlementCapture capture = new EpsilonSettlementCapture(poipikuUserId, sendInfo);
 			SettlementCaptureResultInfo resultInfo = capture.execSettlement();
 			if (resultInfo != null) {
 				/* resultInfo.getResult()

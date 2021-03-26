@@ -17,6 +17,7 @@ public class Order extends Model{
     public int commissionRateSystemPerMil = 0;
     public int commissionRateAgencyPerMil = 0;
     public int commission = 0;
+    public int paymentMethodId = -1;
 
     public enum Status implements CodeEnum<Status> {
         Init(0),                  // 支払前(初期状態)
@@ -88,6 +89,7 @@ public class Order extends Model{
                 commission = resultSet.getInt("commission");
                 commissionRateSystemPerMil = resultSet.getInt("commission_rate_system_per_mil");
                 commissionRateAgencyPerMil = resultSet.getInt("commission_rate_agency_per_mil");
+                paymentMethodId = resultSet.getInt("payment_method_id");
             }
             resultSet.close(); resultSet=null;
             statement.close(); statement=null;
@@ -110,6 +112,8 @@ public class Order extends Model{
         String sql = "";
         int result = 0;
 
+        CodeEnum.getEnum(CheerPointStatus.class, 0);
+
         try{
             Class.forName("org.postgresql.Driver");
             dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
@@ -117,7 +121,9 @@ public class Order extends Model{
 
             Integer orderId = null;
             sql = "INSERT INTO orders(" +
-                    " customer_id, seller_id, status, payment_total, commission, commission_rate_system_per_mil, commission_rate_agency_per_mil, cheer_point_status)" +
+                    " customer_id, seller_id, status, payment_total, commission," +
+                    " commission_rate_system_per_mil, commission_rate_agency_per_mil," +
+                    " cheer_point_status, payment_method_id)" +
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             int idx=1;
@@ -129,6 +135,7 @@ public class Order extends Model{
             statement.setInt(idx++, commissionRateSystemPerMil);
             statement.setInt(idx++, commissionRateAgencyPerMil);
             statement.setInt(idx++, cheerPointStatus.code);     // cheer_point_status
+            statement.setInt(idx++, paymentMethodId);
             statement.executeUpdate();
             resultSet = statement.getGeneratedKeys();
             if(resultSet.next()){

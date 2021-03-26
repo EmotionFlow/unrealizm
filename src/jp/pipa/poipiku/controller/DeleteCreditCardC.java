@@ -38,7 +38,7 @@ public class DeleteCreditCardC {
 				cardIds.add(cResSet.getInt("id"));
 				// EPSILONだったら、退会処理
 				if (cResSet.getInt("agent_id") == Agent.EPSILON) {
-					User epsilonUser = new User(cResSet.getString("agent_user_id"));
+					User epsilonUser = new User(cParam.m_nUserId, cResSet.getString("agent_user_id"));
 					if (!epsilonUser.deleteUserInfo()) {
 						Log.d("イプシロンユーザ情報削除に失敗: ", cParam.m_nUserId);
 					}

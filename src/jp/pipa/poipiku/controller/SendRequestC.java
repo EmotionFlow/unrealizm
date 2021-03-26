@@ -16,7 +16,7 @@ public class SendRequestC extends Controller {
 	public int requestCategory = -1;
 	public int amount = -1;
 	public int commission = -1;
-	public String paymentMethod = "";
+	public int paymentMethodId = -1;
 	public int agentId = -1;
 	public String ipAddress = "";
 	public String agentToken = "";
@@ -35,7 +35,7 @@ public class SendRequestC extends Controller {
 			requestCategory = Util.toInt(request.getParameter("CATEGORY"));
 			amount = Util.toInt(request.getParameter("AMOUNT"));
 			commission = Util.toInt(request.getParameter("COMMISSION"));
-			paymentMethod = Util.toString(request.getParameter("PAYMENT_METHOD"));
+			paymentMethodId = Util.toInt(request.getParameter("PAYMENT_METHOD"));
 			agentId = Util.toInt(request.getParameter("AID"));
 			agentToken = Util.toString(request.getParameter("TKN"));
 			cardExpire	= Util.toString(request.getParameter("EXP"));

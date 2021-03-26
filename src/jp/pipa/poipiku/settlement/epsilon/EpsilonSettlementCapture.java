@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.settlement.epsilon;
 
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -28,8 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 // EPSILON実売上API呼び出しクラス
-public class EpsilonSettlementCapture {
-	private String CAPTURE_URL;
+public class EpsilonSettlementCapture extends  EpsilonSettlement{
+	private String captureUrl;
 	// dev
 	private static final String DEV_CAPTURE_URL = "https://beta.epsilon.jp/cgi-bin/order/sales_payment.cgi";
 	// production
@@ -45,19 +44,21 @@ public class EpsilonSettlementCapture {
 	}
 
 	private void initUrl() {
-		if (Common.isDevEnv()) {
+		if (connectTo == ConnectTo.Dev) {
 			Log.d("開発用CGIへ接続");
-			CAPTURE_URL = DEV_CAPTURE_URL;
+			captureUrl = DEV_CAPTURE_URL;
 		} else {
-			CAPTURE_URL = PROD_CAPTURE_URL;
+			captureUrl = PROD_CAPTURE_URL;
 		}
 	}
 
-	public EpsilonSettlementCapture(){
+	public EpsilonSettlementCapture(int userId){
+		super(userId);
 		initUrl();
 		this.setSettlementCaptureSendInfo(new SettlementCaptureSendInfo());
 	}
-	public EpsilonSettlementCapture(SettlementCaptureSendInfo settlementCaptureSendInfo){
+	public EpsilonSettlementCapture(int userId, SettlementCaptureSendInfo settlementCaptureSendInfo){
+		super(userId);
 		initUrl();
 		this.setSettlementCaptureSendInfo(settlementCaptureSendInfo);
 	}
@@ -90,7 +91,7 @@ public class EpsilonSettlementCapture {
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			post.setURI(new URI(CAPTURE_URL));
+			post.setURI(new URI(captureUrl));
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -153,7 +154,7 @@ public class EpsilonSettlementCapture {
 	public List<NameValuePair> makeSendParam() {
 		SettlementCaptureSendInfo si = this.getSettlementCaptureInfo();
 		List<NameValuePair> param = new ArrayList<>();
-		param.add( new BasicNameValuePair("contract_code", EpsilonSettlement.CONTRACT_CODE ));
+		param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
 		param.add( new BasicNameValuePair("order_number", si.orderNumber));
 		return param;
 	}

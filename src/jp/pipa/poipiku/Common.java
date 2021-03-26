@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.util.CCnv;
 
-public class Common {
+public final class Common {
+	private Common(){}
+
 	// APIリターンコード
 	public static final int API_OK = 1;
 	public static final int API_NG = 0;

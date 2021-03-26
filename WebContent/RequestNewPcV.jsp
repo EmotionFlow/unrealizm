@@ -169,7 +169,7 @@ if (!results.getResults(checkLogin)) {
 				"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
 				"AMOUNT": amount,
 				"COMMISSION": _calcCommission(amount, paymentMethod),
-				"PAYMENT_METHOD": paymentMethod,
+				"PAYMENT_METHOD": 1,
 			}
 			if (requestInfo.CLIENT === requestInfo.CREATOR) {
 				alert('自分宛にはリクエストできません');

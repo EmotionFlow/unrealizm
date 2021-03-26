@@ -8,7 +8,7 @@ import java.util.List;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
-public class CheckLogin {
+public final class CheckLogin {
 	static private List<Integer> m_staffIds = Arrays.asList(
 			1,      // pipa
 			2,      // official
@@ -34,6 +34,9 @@ public class CheckLogin {
 
 	public boolean isStaff(){
 		return m_staffIds.contains(m_nUserId);
+	}
+	static public boolean isStaff(final int userId){
+		return m_staffIds.contains(userId);
 	}
 
 	private void setCookie(HttpServletResponse response) {

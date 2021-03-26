@@ -3,29 +3,28 @@ package jp.pipa.poipiku.settlement.epsilon;
 import jp.pipa.poipiku.util.Log;
 
 public class User {
-	private String m_strUserId;
-	public User(String strUserId) {
-		m_strUserId = strUserId;
+	private final int poipikuUserId;
+	private final String epsilonUserId;
+
+	public User(int _poipikuUserId, String _epsilonUserId) {
+		poipikuUserId = _poipikuUserId;
+		epsilonUserId = _epsilonUserId;
 	}
 
 	public boolean deleteUserInfo() {
 		SettlementSendInfo ssi = new SettlementSendInfo();
-		ssi.userId = m_strUserId;
+		ssi.userId = epsilonUserId;
 		ssi.processCode = 9; // 退会
 		ssi.memo1 = "DUMMY";
 		ssi.memo2 = "DUMMY";
 		ssi.xml = 1;
 
-		EpsilonSettlement epsilonSettlement = new EpsilonSettlement(ssi);
-		SettlementResultInfo settlementResultInfo = epsilonSettlement.execSettlement();
+		EpsilonSettlementAuthorize epsilonSettlementAuthorize = new EpsilonSettlementAuthorize(poipikuUserId, ssi);
+		SettlementResultInfo settlementResultInfo = epsilonSettlementAuthorize.execSettlement();
 		if (settlementResultInfo != null) {
 			String settlementResultCode = settlementResultInfo.getResult();
 			Log.d("settlementResultInfo: " + settlementResultInfo.toString());
-			if ("1".equals(settlementResultCode)) {
-				return true;
-			} else {
-				return false;
-			}
+			return "1".equals(settlementResultCode);
 		} else {
 			return false;
 		}

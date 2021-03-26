@@ -4,7 +4,7 @@ import jp.pipa.poipiku.util.Log;
 
 public abstract class CardSettlement {
 	protected Agent agent = new Agent();
-	protected int userId = -1;
+	protected int poipikuUserId = -1;
 	public int contentId = -1;
 	public int requestId = -1;
 	public String agentToken = null;
@@ -40,7 +40,7 @@ public abstract class CardSettlement {
 
 	// 金額
 	public int amount = 0;
-	private final int AMOUNT_MAX = 15000;
+	private static final int AMOUNT_MAX = 15000;
 
 	protected String errMsg = "";
 
@@ -52,7 +52,7 @@ public abstract class CardSettlement {
 	}
 
 	protected CardSettlement(int _userId){
-		userId = _userId;
+		poipikuUserId = _userId;
 	}
 
 	protected boolean authorizeCheckBase(){
@@ -61,7 +61,7 @@ public abstract class CardSettlement {
 			return false;
 		}
 		if(amount > AMOUNT_MAX){
-			Log.d("amount <= AMOUNT_MAX");
+			Log.d("amount > AMOUNT_MAX");
 			return false;
 		}
 		if(poipikuOrderId<0){

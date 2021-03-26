@@ -2,7 +2,7 @@ package jp.pipa.poipiku.settlement.epsilon;
 
 public class SettlementCaptureSendInfo {
 	public String orderNumber;
-	public Integer seles_amount;
+	public Integer sales_amount;
 
 	public String characterCode;
 	public Integer version;

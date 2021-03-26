@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.settlement.epsilon;
 
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -28,8 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 // EPSILON定期課金解除API呼び出しクラス
-public class EpsilonSettlementCancel {
-	private String CANCEL_URL;
+public class EpsilonSettlementCancel extends EpsilonSettlement{
+	private String cancelUrl;
 	// dev
 	private static final String DEV_CANCEL_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_cancel.cgi";
 	// production
@@ -38,19 +37,21 @@ public class EpsilonSettlementCancel {
 	public SettlementCancelSendInfo sendInfo;
 
 	private void initUrl() {
-		if (Common.isDevEnv()) {
+		if (connectTo == ConnectTo.Dev) {
 			Log.d("開発用CGIに接続");
-			CANCEL_URL = DEV_CANCEL_URL;
+			cancelUrl = DEV_CANCEL_URL;
 		} else {
-			CANCEL_URL = PROD_CANCEL_URL;
+			cancelUrl = PROD_CANCEL_URL;
 		}
 	}
 
-	public EpsilonSettlementCancel(){
+	public EpsilonSettlementCancel(int poipikuUserId){
+		super(poipikuUserId);
 		initUrl();
 		sendInfo = new SettlementCancelSendInfo();
 	}
-	public EpsilonSettlementCancel(SettlementCancelSendInfo _sendInfo){
+	public EpsilonSettlementCancel(int userId, SettlementCancelSendInfo _sendInfo){
+		super(userId);
 		initUrl();
 		sendInfo = _sendInfo;
 	}
@@ -83,7 +84,7 @@ public class EpsilonSettlementCancel {
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			post.setURI(new URI(CANCEL_URL));
+			post.setURI(new URI(cancelUrl));
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -153,7 +154,7 @@ public class EpsilonSettlementCancel {
 
 	public List<NameValuePair> makeSendParam() {
 		List<NameValuePair> param = new ArrayList<NameValuePair>();
-		param.add( new BasicNameValuePair("contract_code", EpsilonSettlement.CONTRACT_CODE ));
+		param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
 		param.add( new BasicNameValuePair("user_id", sendInfo.userId));
 		param.add( new BasicNameValuePair("item_code", sendInfo.itemCode));
 		return param;
