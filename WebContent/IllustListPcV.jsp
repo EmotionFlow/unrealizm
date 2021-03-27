@@ -201,6 +201,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 								  onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%>
 							</span>
 						<%}%>
+
+						<%@include file="inner/IllustBrowserVRequestButton.jsp"%>
+
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
