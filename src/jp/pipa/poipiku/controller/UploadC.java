@@ -31,7 +31,6 @@ public class UploadC extends UpC {
 			}
 		}
 
-
 		try {
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);

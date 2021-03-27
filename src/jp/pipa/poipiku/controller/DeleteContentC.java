@@ -65,6 +65,17 @@ public class DeleteContentC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
+
+				// リクエスト納品物でないことを確認
+				strSql = "SELECT * FROM requests WHERE content_id=?";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_nContentId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					cContent = null;
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
 			if(cContent==null) {
 				return false;
