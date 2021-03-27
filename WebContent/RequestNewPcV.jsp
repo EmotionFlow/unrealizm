@@ -313,7 +313,7 @@ if (!results.getResults(checkLogin)) {
 		 style="<%if(!bSmartPhone){%>width: 60%; max-width: 60%; margin: 0 20%;<%}%>padding-bottom: 100px;">
 		<div class="RequestTitle">
 			<%if(results.user.m_bRequestEnabled){%>
-			<%=results.user.m_strNickName%>さんへのリクエスト
+			<%=results.user.m_strNickName%>さんへのリクエスト(β)
 			<%}else{%>
 			現在、リクエストを受け付けていません
 			<%}%>
@@ -417,6 +417,7 @@ if (!results.getResults(checkLogin)) {
 				リクエストを報酬の送金手段として使用することはできません。<br/>
 				個人鑑賞(SNSへの掲載・使用は含む)を超えた利用には本文へ用途の説明が必要です。<br/>
 				承認後納品されなかった場合は、カード会社を通して返金されます。
+				現在β版の機能のため、ルールや機能が変更されることがあります。
 			</div>
 		</div>
 
