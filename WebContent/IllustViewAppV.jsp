@@ -169,6 +169,18 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper">
 			<div class="UserInfo">
+				<%if(!checkLogin.m_bLogin) {%>
+				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
+				<%} else if(cResults.m_bOwner) {
+					// 何も表示しない
+				} else if(cResults.m_bBlocking){%>
+				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
+				<%} else if(cResults.m_bBlocked){%>
+				<%} else if(cResults.m_bFollow){%>
+				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock " onclick="UpdateBlock()"></span>
+				<%} else {%>
+				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" onclick="UpdateBlock()"></span>
+				<%}%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
@@ -188,14 +200,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						&nbsp;
 						<%} else if(cResults.m_bBlocking){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
-						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
 						<%} else if(cResults.m_bBlocked){%>
 						<%} else if(cResults.m_bFollow){%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
-						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock " onclick="UpdateBlock()"></span>
 						<%} else {%>
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
-						<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock" onclick="UpdateBlock()"></span>
 						<%}%>
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
