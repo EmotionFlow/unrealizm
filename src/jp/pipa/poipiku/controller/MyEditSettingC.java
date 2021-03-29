@@ -40,6 +40,8 @@ public class MyEditSettingC {
 	public int m_nExchangePoint = 0;
 	public int m_nExchangeFee = 0;
 	public Passport m_cPassport = null;
+	public boolean m_hasInProgressRequests = false;
+	public boolean m_hasJustDeliveredRequest = false;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -190,6 +192,34 @@ public class MyEditSettingC {
 			}
 
 			m_cPassport = new Passport(checkLogin);
+
+			strSql = "SELECT id FROM requests WHERE (client_user_id=? OR creator_user_id=?) AND status=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setInt(2, checkLogin.m_nUserId);
+			statement.setInt(3, Request.Status.InProgress.getCode());
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				m_hasInProgressRequests = true;
+			}
+			resultSet.close();resultSet = null;
+			statement.close();statement = null;
+
+			strSql = "select c.content_id" +
+					" from requests r" +
+					"  inner join contents_0000 c on r.content_id=c.content_id" +
+					" where creator_user_id=?" +
+					"  and status=?" +
+					"  and date_trunc('day', upload_date) + interval '30 days' > date_trunc('day', current_timestamp)";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setInt(2, Request.Status.Done.getCode());
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				m_hasJustDeliveredRequest = true;
+			}
+			resultSet.close();resultSet = null;
+			statement.close();statement = null;
 
 			bRtn = true;
 		} catch(Exception e) {
