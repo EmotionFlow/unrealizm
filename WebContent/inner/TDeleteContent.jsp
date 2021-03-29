@@ -4,11 +4,11 @@
 		$.ajax({
 			"type": "post",
 			"data": {"CID": nContentId},
-			"url": "/f/CheckRequestExistF.jsp",
+			"url": "/f/CheckRequestStatusF.jsp",
 			"dataType": "json"
 		}).then( (data) => {
 			if (data.error_code === 0){
-				if (data.result === 1){
+				if (data.exist === 1){
 					DispMsg("リクエスト納品物は削除できません");
 				} else {
 					DeleteContentInteractive(

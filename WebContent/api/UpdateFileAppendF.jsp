@@ -56,6 +56,16 @@
 
 class UploadFileAppendC {
 	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
+		// リクエスト納品済みかつ納期後（おそらく不正アクセス）
+		Request poipikuRequest = new Request();
+		poipikuRequest.selectByContentId(cParam.m_nContentId);
+		if (poipikuRequest.id > 0 &&
+				poipikuRequest.status == Request.Status.Done &&
+				poipikuRequest.isDeliveryExpired()
+		) {
+			return -1;
+		}
+
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;

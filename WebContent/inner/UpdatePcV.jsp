@@ -18,6 +18,18 @@ if(!cResults.getResults(checkLogin)) {
 	return;
 }
 
+Request poipikuRequest = new Request();
+poipikuRequest.selectByContentId(cResults.m_nContentId);
+// 納品済かつ納品期限を過ぎている
+boolean noContentModification = false;
+if (poipikuRequest.id > 0 &&
+	poipikuRequest.status == Request.Status.Done &&
+	poipikuRequest.isDeliveryExpired()
+) {
+	noContentModification = true;
+}
+
+
 CTweet cTweet = new CTweet();
 boolean bTwRet = cTweet.GetResults(checkLogin.m_nUserId);
 int nTwLstRet = 0;
@@ -58,6 +70,16 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		});
 		</script>
 		<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
+		<%if(noContentModification){%>
+		<style>
+			.qq-upload-cancel-selector {
+				display: none;
+			}
+			#TimeLineAddImage {
+				display: none;
+			}
+		</style>
+		<%}%>
 
 		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
@@ -176,6 +198,9 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			}
 			$(function() {
 				initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
+				<%if(noContentModification){%>
+				multiFileUploader._options.callbacks.onValidateBatch = (arr, btn) => {return false;};
+				<%}%>
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			function UpdatePasteCheck(user_id, content_id) {
@@ -273,6 +298,13 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<article class="Wrapper">
 			<div class="UploadFile">
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
+				<%if(noContentModification){%>
+				<div class="OptionItem">
+					<div class="OptionLabel">
+						リクエスト納品期限後、タイトル・タグ・公開範囲等は変更はできますが、アップロードした画像は変更できません。
+					</div>
+				</div>
+				<%}%>
 				<div id="jQueryUploaderPane" class="TimeLineIllustCmd">
 				</div>
 				<!-- 元々の方式 -->
@@ -309,8 +341,15 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 
 				<%if(nEditorId==Common.EDITOR_TEXT){%>
+				<%if(noContentModification){%>
+				<div class="OptionItem">
+					<div class="OptionLabel">
+						リクエスト納品期限後、タイトル・タグ・公開範囲等は変更はできますが、アップロードした小説本文は変更できません。
+					</div>
+				</div>
+				<%}%>
 				<div class="TextBody">
-					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strTextBody)%></textarea>
+					<textarea <%if(noContentModification){%>readonly<%}%> id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strTextBody)%></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 				<%}%>

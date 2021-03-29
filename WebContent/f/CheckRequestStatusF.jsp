@@ -6,11 +6,10 @@ if(!checkLogin.m_bLogin) return;
 
 Request r = new Request();
 boolean result = r.selectByContentId(Util.toInt(request.getParameter("CID")));
-if (result) {
-	result = r.id > 0;
-}
 
 %>{
 "result" : <%=result?1:0%>,
+"exist" : <%=r.id>0?1:0%>,
+"status_code" : <%=r.status.getCode()%>,
 "error_code" : <%=r.errorKind.getCode()%>
 }

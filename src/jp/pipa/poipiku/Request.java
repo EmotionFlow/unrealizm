@@ -5,6 +5,8 @@ import jp.pipa.poipiku.util.Log;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 
 public class Request extends Model{
@@ -109,6 +111,12 @@ public class Request extends Model{
 
 	public boolean isClient(int userId) {
 		return (clientUserId > 0 && clientUserId == userId);
+	}
+
+	public boolean isDeliveryExpired(){
+		LocalDateTime deliveryLimitLocal = deliveryLimit.toLocalDateTime().truncatedTo(ChronoUnit.DAYS);
+		LocalDateTime today = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
+		return deliveryLimitLocal.isBefore(today);
 	}
 
 	public boolean selectByContentId(final int _contentId) {
