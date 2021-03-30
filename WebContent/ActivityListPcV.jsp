@@ -73,8 +73,10 @@
 	<ul class="TabMenu">
 		<li><a class="TabMenuItem <%if(infoType==1){%>Selected<%}%>" href="/ActivityListPcV.jsp?TY=1"><%=_TEX.T("THeader.Menu.Act.Reaction")%>
 		</a></li>
+		<%if(checkLogin.isStaff()){%>
 		<li><a class="TabMenuItem <%if(infoType==3){%>Selected<%}%>" href="/ActivityListPcV.jsp?TY=3"><%=_TEX.T("THeader.Menu.Act.Request")%>
 		</a></li>
+		<%}%>
 		<li><a class="TabMenuItem" href="/ActivityAnalyzePcV.jsp"><%=_TEX.T("THeader.Menu.Act.Analyze")%>
 		</a></li>
 	</ul>

@@ -12,6 +12,10 @@ if(!checkLogin.m_bLogin) {
 	}
 	return;
 }
+
+int infoType = Util.toInt(request.getParameter("TY"));
+if (infoType==-1) infoType = 1;
+
 %>
 <!DOCTYPE html>
 <html>
@@ -39,7 +43,7 @@ if(!checkLogin.m_bLogin) {
 			$(function(){
 				$.ajax({
 					"type": "post",
-					"data": {},
+					"data": {"TY":<%=infoType%>},
 					"url": "/f/ActivityListF.jsp",
 					"dataType": "html",
 					"success": function(data) {
