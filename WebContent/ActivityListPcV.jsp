@@ -10,7 +10,6 @@
 
 	int infoType = Util.toInt(request.getParameter("TY"));
 	if (infoType==-1) infoType = 1;
-
 %>
 <!DOCTYPE html>
 <html>

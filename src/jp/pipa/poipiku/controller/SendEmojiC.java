@@ -262,7 +262,7 @@ public class SendEmojiC {
 			statement.close();statement=null;
 
 			// 通知先デバイストークンの取得
-			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<CNotificationToken>();
+			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<>();
 			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cTargUser.m_nUserId);
@@ -275,21 +275,12 @@ public class SendEmojiC {
 			if(cNotificationTokens.isEmpty()) return bRtn;
 
 			// バッジに表示する数を取得
-			int nBadgeNum = 0;
-			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND had_read=false";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cTargUser.m_nUserId);
-			resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				nBadgeNum = resultSet.getInt(1);
-			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
+			final int nBadgeNum = InfoList.selectUnreadBadgeSum(cTargUser.m_nUserId, connection);
 
 			// 送信文字列
-			String strTitle = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Title"):_TEX.TEn("Notification.Reaction.Title");
-			String strSubTitle = "";
-			String strBody = (cTargUser.m_nLangId==1)?_TEX.TJa("ActivityList.Message.Comment"):_TEX.TEn("ActivityList.Message.Comment");
+			final String strTitle = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Title"):_TEX.TEn("Notification.Reaction.Title");
+			final String strSubTitle = "";
+			final String strBody = (cTargUser.m_nLangId==1)?_TEX.TJa("ActivityList.Message.Comment"):_TEX.TEn("ActivityList.Message.Comment");
 
 			// 通知DB登録
 			// 連射しないように同じタイプの未送信の通知を削除
@@ -302,21 +293,20 @@ public class SendEmojiC {
 				statement.executeUpdate();
 			}
 			statement.close();statement=null;
+
 			// 送信用に登録
-			strSql = "INSERT INTO notification_buffers_0000(notification_token, notification_type, badge_num, title, sub_title, body, token_type) VALUES(?, ?, ?, ?, ?, ?, ?)";
-			statement = connection.prepareStatement(strSql);
+			NotificationBuffer notificationBuffer = new NotificationBuffer();
+			notificationBuffer.notificationType = Common.NOTIFICATION_TYPE_REACTION;
+			notificationBuffer.badgeNum = nBadgeNum;
+			notificationBuffer.title = strTitle;
+			notificationBuffer.subTitle = strSubTitle;
+			notificationBuffer.body = strBody;
 			for(CNotificationToken cNotificationToken : cNotificationTokens) {
-				statement.setString(1, cNotificationToken.m_strNotificationToken);
-				statement.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-				statement.setInt(3, nBadgeNum);
-				statement.setString(4, strTitle);
-				statement.setString(5, strSubTitle);
-				statement.setString(6, strBody);
-				statement.setInt(7, cNotificationToken.m_nTokenType);
-				statement.executeUpdate();
-				//Log.d(cNotificationToken.m_strNotificationToken, ""+cNotificationToken.m_nTokenType, ""+nBadgeNum, strTitle, strSubTitle, strBody);
+				notificationBuffer.notificationToken = cNotificationToken.m_strNotificationToken;
+				notificationBuffer.tokenType = cNotificationToken.m_nTokenType;
+				notificationBuffer.insert(connection);
 			}
-			statement.close();statement=null;
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

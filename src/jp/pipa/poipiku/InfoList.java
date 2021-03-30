@@ -65,9 +65,37 @@ public final class InfoList extends Model{
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return true;
-
 	}
 
+	static public int selectUnreadBadgeSum(final int userId) {
+		return InfoList.selectUnreadBadgeSum(userId, null);
+	}
 
-
+	static public int selectUnreadBadgeSum(final int userId, Connection _connection) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		int badgeNum = -1;
+		try {
+			if (_connection == null) {
+				connection = DatabaseUtil.dataSource.getConnection();
+			} else {
+				connection = _connection;
+			}
+			final String sql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND had_read=false";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				badgeNum = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (resultSet != null) {try{resultSet.close();resultSet=null;}catch (Exception e){}}
+			if (statement != null) {try{statement.close();statement=null;}catch (Exception e){}}
+			if (_connection == null && connection != null) {try{connection.close();connection=null;}catch (Exception e){}}
+		}
+		return badgeNum;
+	}
 }
