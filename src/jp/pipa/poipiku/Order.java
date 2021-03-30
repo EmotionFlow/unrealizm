@@ -7,7 +7,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 
-public class Order extends Model{
+public final class Order extends Model{
     public int id = -1;
     public int customerId = -1;
     public int sellerId = -1;

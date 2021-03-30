@@ -7,7 +7,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.*;
 
-public class CheerPoint extends Model{
+public final class CheerPoint extends Model{
     public int id;
     public int userId;
     public int acquisitionPoints;

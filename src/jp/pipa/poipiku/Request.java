@@ -9,7 +9,12 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 
-public class Request extends Model{
+public final class Request extends Model{
+	// システム手数料率（‰）
+	public static final int SYSTEM_COMMISSION_RATE_PER_MIL = 100;
+	// 取引手数料率（‰）
+	public static final int AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL = 36;
+
 	public int id = -1;
 	public int clientUserId = -1;
 	public int creatorUserId = -1;
@@ -22,9 +27,6 @@ public class Request extends Model{
 	public Timestamp deliveryLimit = null;
 	public int orderId = -1;
 	public int contentId = -1;
-
-	public static final int SYSTEM_COMMISSION_RATE_PER_MIL = 100;
-	public static final int AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL = 36;
 
 	public enum Status implements CodeEnum<Status> {
 		Undefined(0),       // 未定義

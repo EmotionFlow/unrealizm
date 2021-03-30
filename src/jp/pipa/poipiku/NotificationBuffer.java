@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 
-public class NotificationBuffer extends Model {
+public final class NotificationBuffer extends Model {
 	public int notificationId = -1;
 	public String notificationToken = "";
 	public int notificationType = -1;
