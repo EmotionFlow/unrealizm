@@ -145,6 +145,7 @@ public final class RequestNotifier {
 		InfoList infoList = new InfoList();
 		infoList.userId = to.id;
 		infoList.requestId = request.id;
+		infoList.contentId = request.contentId;
 		infoList.contentType = request.requestCategory;
 		infoList.infoType = Common.NOTIFICATION_TYPE_REQUEST;
 		infoList.infoDesc = description;

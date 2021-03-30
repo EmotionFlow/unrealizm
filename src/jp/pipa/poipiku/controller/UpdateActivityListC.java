@@ -80,6 +80,13 @@ public class UpdateActivityListC extends Controller{
 					case Done:
 						menuId = "SENT";
 						break;
+					case Canceled:
+						if (poipikuRequest.creatorUserId == checkLogin.m_nUserId) {
+							menuId = "RECEIVED";
+						} else {
+							menuId = "SENT";
+						}
+						break;
 					default:
 						menuId = "RECEIVED";
 						break;
