@@ -1,9 +1,12 @@
 package jp.pipa.poipiku.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -479,6 +482,46 @@ public class Util {
 	public static String getUploadGenrePath() {
 		String path = "/user_img01/genre_img";
 		return path;
+	}
+
+	public static String escapeJsonString(CharSequence cs) {
+		final byte BACKSLASH = 0x5C;
+		final byte[] BS = new byte[]{BACKSLASH, 0x62};  /* \\b */
+		final byte[] HT = new byte[]{BACKSLASH, 0x74};  /* \\t */
+		final byte[] LF = new byte[]{BACKSLASH, 0x6E};  /* \\n */
+		final byte[] FF = new byte[]{BACKSLASH, 0x66};  /* \\f */
+		final byte[] CR = new byte[]{BACKSLASH, 0x72};  /* \\r */
+		try (
+				ByteArrayOutputStream strm = new ByteArrayOutputStream();
+		) {
+			byte[] bb = cs.toString().getBytes(StandardCharsets.UTF_8);
+			for (byte b : bb) {
+				if (b == 0x08 /* BS */) {
+					strm.write(BS);
+				} else if (b == 0x09 /* HT */) {
+					strm.write(HT);
+				} else if (b == 0x0A /* LF */) {
+					strm.write(LF);
+				} else if (b == 0x0C /* FF */) {
+					strm.write(FF);
+				} else if (b == 0x0D /* CR */) {
+					strm.write(CR);
+				} else if (
+					b == 0x22 /* " */
+					|| b == 0x2F /* / */
+					|| b == BACKSLASH /* \\ */
+				) {
+					strm.write(BACKSLASH);
+					strm.write(b);
+				} else {
+					strm.write(b);
+				}
+			}
+			return new String(strm.toByteArray(), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
 	}
 
 }

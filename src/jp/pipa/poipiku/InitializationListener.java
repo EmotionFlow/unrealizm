@@ -22,7 +22,7 @@ public class InitializationListener implements ServletContextListener {
 
 		CacheUsers0000 cacheUsers0000 = CacheUsers0000.getInstance();
 		cacheUsers0000.init();
-		Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, event.getServletContext().getRealPath("WEB-INF/email_templates"));
+		Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, event.getServletContext().getRealPath("WEB-INF/message_templates"));
 		Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_CACHE, true);
 		Velocity.init();
 

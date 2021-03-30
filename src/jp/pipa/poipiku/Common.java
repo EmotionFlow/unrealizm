@@ -38,6 +38,7 @@ public final class Common {
 	// お知らせ一覧種別
 	public static final int NOTIFICATION_TYPE_REACTION = 1;
 	public static final int NOTIFICATION_TYPE_FOLLOW = 2;
+	public static final int NOTIFICATION_TYPE_REQUEST = 3;
 	// お知らせ一覧サムネ種別
 	public static final int CONTENT_TYPE_IMAGE = 1;
 	public static final int CONTENT_TYPE_TEXT = 2;

@@ -106,32 +106,40 @@ public class RequestNotifier {
 		}
 	}
 
-	static public void notifyRequestReceived(Request request){
+	static public void notifyRequestReceived(final Request request){
 		final User client = new User(request.clientUserId);
 		final User creator = new User(request.creatorUserId);
 		if (client.id > 0 && creator.id > 0) {
+			final String toUrl = String.format("%s?MENUID=%s&ST=%d&RID=%d",
+					REQUEST_BOARD_URL, "RECEIVED",
+					Request.Status.WaitingApproval.getCode(), request.id);
+			final String subject = getSubject("received", creator.langLabel);
+
 			try {
 				StringWriter sw = new StringWriter();
 				VelocityContext context = new VelocityContext();
 				context.put("to_name", creator.nickname);
-				context.put("request_board_url",
-						String.format("%s?MENUID=%s&ST=%d&RID=%d",
-								REQUEST_BOARD_URL, "RECEIVED",
-								Request.Status.WaitingApproval.getCode(), request.id));
+				context.put("request_board_url", toUrl);
 				Template template = Velocity.getTemplate(getVmPath("received/body.vm", creator.langLabel), "UTF-8");
 				template.merge(context, sw);
 				final String mailBody = sw.toString();
 				sw.flush();
 
-				final String mailSubject = getSubject("received", creator.langLabel);
-
-				//TODO send email.
-				EmailUtil.send(creator.email, mailSubject, mailBody);
+				EmailUtil.send(creator.email, subject, mailBody);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.d("notifyRequestReceived failed.");
 			}
+
+			InfoList infoList = new InfoList();
+			infoList.userId = request.creatorUserId;
+			infoList.requestId = request.id;
+			infoList.contentType = request.requestCategory;
+			infoList.infoType = Common.NOTIFICATION_TYPE_REQUEST;
+			infoList.infoDesc = subject;
+			infoList.badgeNum = 1;
+			infoList.insert();
 		}
 	}
 
@@ -155,7 +163,6 @@ public class RequestNotifier {
 
 				final String mailSubject = getSubject("canceled", notifyTo.langLabel);
 
-				//TODO send email.
 				EmailUtil.send(notifyTo.email, mailSubject, mailBody);
 
 				sw.flush();
@@ -185,7 +192,6 @@ public class RequestNotifier {
 
 				final String mailSubject = getSubject("accepted", client.langLabel);
 
-				//TODO send email.
 				EmailUtil.send(client.email, mailSubject, mailBody);
 
 				sw.flush();
@@ -215,7 +221,6 @@ public class RequestNotifier {
 
 				final String mailSubject = getSubject("delivered", client.langLabel);
 
-				//TODO send email.
 				EmailUtil.send(client.email, mailSubject, mailBody);
 
 			} catch (Exception e) {

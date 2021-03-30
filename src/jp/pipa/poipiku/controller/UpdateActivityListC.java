@@ -4,67 +4,93 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.Request;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-public class UpdateActivityListC {
-	int user_id = -1;
-	int content_id = -1;
-	int info_type = Common.NOTIFICATION_TYPE_REACTION;
+public class UpdateActivityListC extends Controller{
+	private int userId = -1;
+	private int contentId = -1;
+	private int infoType = Common.NOTIFICATION_TYPE_REACTION;
+	private int requestId = -1;
+	public String toUrl = "";
 
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			info_type = Util.toInt(request.getParameter("TY"));
-			user_id = Util.toInt(request.getParameter("ID"));
-			content_id = Util.toInt(request.getParameter("TD"));
+			infoType = Util.toInt(request.getParameter("TY"));
+			userId = Util.toInt(request.getParameter("ID"));
+			contentId = Util.toInt(request.getParameter("TD"));
+			requestId = Util.toInt(request.getParameter("RID"));
 		} catch(Exception e) {
-			user_id = -1;
+			userId = -1;
 		}
 	}
 
-	public int getResults(CheckLogin checkLogin) {
-		if(!checkLogin.m_bLogin || (checkLogin.m_nUserId!=user_id)) return Common.API_NG;
+	public boolean getResults(CheckLogin checkLogin) {
+		if(!checkLogin.m_bLogin || (checkLogin.m_nUserId!= userId)) return false;
 
-		int rtn = Common.API_NG;
 		String sql = "";
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
-
-			// Get info_list
+			connection = DatabaseUtil.dataSource.getConnection();
 			sql = "UPDATE info_lists "
 					+ "SET had_read=true, badge_num=0 "
 					+ "WHERE user_id=? "
 					+ "AND content_id=? "
-					+ "AND info_type=? ";
+					+ "AND info_type=? "
+					+ "AND request_id=?";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, user_id);
-			statement.setInt(2, content_id);
-			statement.setInt(3, info_type);
+			statement.setInt(1, userId);
+			statement.setInt(2, contentId);
+			statement.setInt(3, infoType);
+			statement.setInt(4, requestId);
 			statement.executeUpdate();
 			statement.close();statement=null;
-			rtn = Common.API_OK;
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
-			rtn = Common.API_NG;
+			errorKind = ErrorKind.Unknown;
+			return false;
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
-		return rtn;
+
+		switch (infoType) {
+			case Common.NOTIFICATION_TYPE_REACTION:
+				toUrl = String.format("/%d/%d.html", userId, contentId);
+				break;
+			case Common.NOTIFICATION_TYPE_REQUEST:
+				String menuId = "";
+				Request poipikuRequest = new Request(requestId);
+				switch (poipikuRequest.status) {
+					case WaitingApproval:
+						menuId = "RECEIVED";
+						break;
+					case InProgress:
+					case Done:
+						menuId = "SENT";
+						break;
+					default:
+						menuId = "RECEIVED";
+						break;
+				}
+				toUrl = String.format("/MyRequestListPcV.jsp?MENUID=%s&ST=%d", menuId, poipikuRequest.status.getCode());
+				break;
+			default:
+				errorKind = ErrorKind.Unknown;
+				return false;
+		}
+		errorKind = ErrorKind.None;
+		return true;
 	}
 }
