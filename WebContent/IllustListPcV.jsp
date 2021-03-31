@@ -155,10 +155,12 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%} else if(cResults.m_bOwner){
 					// 何も表示しない
 				} else if(cResults.m_bBlocking){ // ブロックしている %>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected"
+				<span id="UserInfoCmdBlock"
+					  class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected"
+					  style="text-shadow: none;"
 					  onclick="UpdateBlock()">
-								<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Unblocking")%></span>
-							</span>
+					<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Unblocking")%></span>
+				</span>
 				<%} else if(cResults.m_bBlocked){%>
 				<%=_TEX.T("IllustV.Blocked")%>
 				<%} else if(cResults.m_bFollow){%>

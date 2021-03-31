@@ -2285,6 +2285,7 @@
 	float: right;
 	opacity: 0.9;
 	color: #ffffff;
+	text-shadow: 1px 0 5px grey;
 }
 
 #UserInfoCmdBlockLabel {
