@@ -206,7 +206,7 @@ public final class RequestNotifier {
 
 			final String title = getTitle(statusName, creator.langLabel);
 			notifyByWeb(creator, request, title);
-			notifyByApp(creator, title);
+			//notifyByApp(creator, title);
 		}
 	}
 
@@ -242,7 +242,7 @@ public final class RequestNotifier {
 
 			final String title = getTitle(statusName, notifyTo.langLabel);
 			notifyByWeb(notifyTo, request, title);
-			notifyByApp(notifyTo, title);
+			//notifyByApp(notifyTo, title);
 		}
 	}
 
@@ -276,7 +276,7 @@ public final class RequestNotifier {
 
 			final String title = getTitle(statusName, client.langLabel);
 			notifyByWeb(client, request, title);
-			notifyByApp(client, title);
+			//notifyByApp(client, title);
 		}
 	}
 
@@ -309,7 +309,7 @@ public final class RequestNotifier {
 
 			final String title = getTitle(statusName, client.langLabel);
 			notifyByWeb(client, request, title);
-			notifyByApp(client, title);
+			//notifyByApp(client, title);
 		}
 	}
 }
