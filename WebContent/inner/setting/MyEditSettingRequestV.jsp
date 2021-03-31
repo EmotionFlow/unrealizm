@@ -153,8 +153,11 @@
 
 		<div class="SettingListTitle">リクエストを募集する</div>
 		<div class="SettingBody">
-			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。<br/>
-			リクエスト報酬を受け取るには、メールアドレスの確認と日本の銀行口座が必要です。
+			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。
+			<ul>
+				<li>募集を開始するにはメールアドレスの確認が必要です。</li>
+				<li>リクエスト報酬を受け取るには日本の銀行口座が必要です。</li>
+			</ul>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >
 					<div class="onoffswitch OnOff">
