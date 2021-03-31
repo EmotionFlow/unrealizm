@@ -141,7 +141,7 @@
 
 <div class="SettingList">
 	<div class="SettingListItem">
-		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED"><i class="far fa-clipboard"></i> リクエストボード →</a>
+		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED"><i class="far fa-clipboard"></i> マイリクエスト →</a>
 
 		<div class="SettingListTitle">リクエストを募集する</div>
 		<div class="SettingBody">

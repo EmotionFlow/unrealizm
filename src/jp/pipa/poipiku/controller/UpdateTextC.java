@@ -156,8 +156,8 @@ public class UpdateTextC extends UpC {
 					e.printStackTrace();
 					return -300;
 				}finally{
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
+					if(cResSet!=null){cResSet.close();};cResSet=null;
+					if(cState!=null){cState.close();};cState=null;
 				}
 
 				if(nNewContentId!=null){
@@ -165,7 +165,7 @@ public class UpdateTextC extends UpC {
 					try{
 						// transaction
 						cConn.setAutoCommit(false);
-						String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "contents_appends_0000", "rank_contents_total", "tags_0000"};
+						String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests"};
 						for(String t : lUpdateTable){
 							strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
 							cState = cConn.prepareStatement(strSql);
@@ -180,23 +180,21 @@ public class UpdateTextC extends UpC {
 						e.printStackTrace();
 						cConn.rollback();
 					}finally{
-						cState.close();cState=null;
+						if(cState!=null){cState.close();};cState=null;
 						cConn.setAutoCommit(true);
 					}
 					if(bUpdateFaild){
 						try{
 							nNewContentId=null;
-							strSql = "DELETE FROM content_id_histories WEHRE old_id=?";
+							strSql = "DELETE FROM content_id_histories WHERE old_id=?";
 							cState = cConn.prepareStatement(strSql);
 							cState.setInt(1, cParam.m_nContentId);
 							cState.executeUpdate();
 						}catch(Exception e){
 							Log.d(strSql);
 							e.printStackTrace();
-							cConn.rollback();
 						}finally{
-							cState.close();cState=null;
-							cConn.setAutoCommit(true);
+							if(cState!=null){cState.close();};cState=null;
 						}
 						return -400;
 					}

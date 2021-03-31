@@ -102,7 +102,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 							</a>
 							<%if(checkLogin.isStaff()){%>
 							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
-								<i class="far fa-clipboard"></i> リクエストボード
+								<i class="far fa-clipboard"></i> マイリクエスト
 							</a>
 							<%}%>
 						</div>

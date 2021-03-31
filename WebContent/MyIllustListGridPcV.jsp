@@ -96,7 +96,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							</a>
 							<%if(checkLogin.isStaff()){%>
 							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
-								<i class="far fa-clipboard"></i> リクエストボード
+								<i class="far fa-clipboard"></i> マイリクエスト
 							</a>
 							<%}%>
 						</div>

@@ -429,7 +429,7 @@ function generateShowAppendFile(){
 		var tw_f = tw_friendships[user_id];
 		if(!tw_f){
 			tw_f = -1;
-		};
+		}
 
 		$.ajax({
 			"type": "post",
@@ -450,10 +450,9 @@ function generateShowAppendFile(){
 				if(data.tw_friendship >= 0){
 					tw_friendships[user_id] = data.tw_friendship;
 				}
-						},
-						"error": function(err){
-								console.log(err);
-						}
+			},"error": function(err){
+					console.log(err);
+			}
 		});
 
 	}

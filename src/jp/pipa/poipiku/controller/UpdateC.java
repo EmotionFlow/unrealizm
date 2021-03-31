@@ -152,8 +152,8 @@ public class UpdateC extends UpC {
 					e.printStackTrace();
 					return -300;
 				}finally{
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
+					if(cResSet!=null){cResSet.close();};cResSet=null;
+					if(cState!=null){cState.close();};cState=null;
 				}
 
 				if(nNewContentId!=null){
@@ -176,7 +176,7 @@ public class UpdateC extends UpC {
 						e.printStackTrace();
 						cConn.rollback();
 					}finally{
-						cState.close();cState=null;
+						if(cState!=null){cState.close();};cState=null;
 						cConn.setAutoCommit(true);
 					}
 					if(bUpdateFaild){
@@ -189,10 +189,8 @@ public class UpdateC extends UpC {
 						}catch(Exception e){
 							Log.d(strSql);
 							e.printStackTrace();
-							cConn.rollback();
 						}finally{
-							cState.close();cState=null;
-							cConn.setAutoCommit(true);
+							if(cState!=null){cState.close();};cState=null;
 						}
 						return -400;
 					}

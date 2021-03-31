@@ -13,6 +13,7 @@ import jp.pipa.poipiku.CContentAppend;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.CTweet;
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class ShowAppendFileC {
@@ -74,9 +75,24 @@ public class ShowAppendFileC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(m_cContent==null) return ERR_NOT_FOUND;
-			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS && !m_cContent.m_strPassword.equals(m_strPassword)) return ERR_PASS;
+
+			boolean bRequestClient = false;
+			strSql = "SELECT id FROM requests WHERE content_id=? AND client_user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nContentId);
+			cState.setInt(2, checkLogin.m_nUserId);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				bRequestClient = true;
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			boolean bOwner = m_cContent.m_nUserId==checkLogin.m_nUserId;
+
+			if(!bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS && !m_cContent.m_strPassword.equals(m_strPassword)) return ERR_PASS;
 			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN && !checkLogin.m_bLogin) return ERR_LOGIN;
-			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
+			if(!bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
 				boolean bFollow = (m_nUserId==checkLogin.m_nUserId);
 				if(!bFollow) {
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
@@ -92,10 +108,10 @@ public class ShowAppendFileC {
 				}
 				if(!bFollow) return ERR_FOLLOWER;
 			}
-			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN && m_cContent.m_nUserId!=checkLogin.m_nUserId) return ERR_HIDDEN;
+			if(!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN) return ERR_HIDDEN;
 
 			// twitter friendship
-			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)){
+			if(!(bRequestClient || bOwner) && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
@@ -119,7 +135,7 @@ public class ShowAppendFileC {
 			}
 
 			// twitter openlist
-			if(m_cContent.m_nUserId!=checkLogin.m_nUserId && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){
+			if(!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){return ERR_T_LIST;}
@@ -127,7 +143,9 @@ public class ShowAppendFileC {
 					if(nRet==CTweet.ERR_NOT_FOUND) return ERR_T_LIST;
 					if(nRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) return ERR_T_INVALID_OR_EXPIRED_TOKEN;
 					if(nRet==CTweet.ERR_RATE_LIMIT_EXCEEDED) return ERR_T_RATE_LIMIT_EXCEEDED;
-					if(nRet<0) return ERR_UNKNOWN;
+					if(nRet<0) {
+						return ERR_UNKNOWN;
+					}
 				} else {
 					return ERR_UNKNOWN;
 				}
