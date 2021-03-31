@@ -211,6 +211,7 @@ public final class RequestNotifier {
 	}
 
 	static public void notifyRequestCanceled(final CheckLogin checkLogin, Request request){
+		/** スケブに倣ってキャンセル通知はしないでおく。
 		final User client = new User(request.clientUserId);
 		final User creator = new User(request.creatorUserId);
 		final User notifyTo = checkLogin.m_nUserId==request.clientUserId ? creator : client;
@@ -244,6 +245,7 @@ public final class RequestNotifier {
 			notifyByWeb(notifyTo, request, title);
 			notifyByApp(notifyTo, title);
 		}
+		 **/
 	}
 
 	static public void notifyRequestAccepted(Request request) {
