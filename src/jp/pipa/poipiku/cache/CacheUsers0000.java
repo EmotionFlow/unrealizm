@@ -14,9 +14,9 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-public class CacheUsers0000 {
-	private static final ConcurrentHashMap<String, User> mapHashPass = new ConcurrentHashMap<String, User>();
-	private static final ConcurrentHashMap<Integer,  User> mapUserId = new ConcurrentHashMap<Integer, User>();
+public final class CacheUsers0000 {
+	private static final ConcurrentHashMap<String, User> mapHashPass = new ConcurrentHashMap<>();
+	private static final ConcurrentHashMap<Integer,  User> mapUserId = new ConcurrentHashMap<>();
 
 	public static class InstanceHolder {
 		private static final CacheUsers0000 instance = new CacheUsers0000();
@@ -59,16 +59,15 @@ public class CacheUsers0000 {
 			try{if(statement!=null)statement.close();statement=null;}catch(Exception e){;}
 			try{if(connection!=null)connection.close();connection=null;}catch(Exception e){;}
 		}
-		return;
 	}
 
-	public User getUser(String hashPassword) {
+	public User getUser(final String hashPassword) {
 		if(hashPassword==null || hashPassword.isEmpty()) return null;
 
 		final int UPDATE_INTERVAL = 60*60*1000; //	1時間
 
 		User user = mapHashPass.get(hashPassword);
-		Long timeNow = System.currentTimeMillis();
+		final long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.lastLogin>=timeNow-UPDATE_INTERVAL) {
 			//Log.d("From Hash Cache");
@@ -118,13 +117,13 @@ public class CacheUsers0000 {
 		return user;
 	}
 
-	public User getUser(int userId) {
+	public User getUser(final int userId) {
 		if(userId<=0) return null;
 
 		final int UPDATE_INTERVAL = 60*60*1000; //	1時間
 
 		User user = mapUserId.get(userId);
-		Long timeNow = System.currentTimeMillis();
+		final long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.lastLogin>=timeNow-UPDATE_INTERVAL) {
 			//Log.d("From ID Cache");
@@ -174,21 +173,21 @@ public class CacheUsers0000 {
 		return user;
 	}
 
-	public void clearUser(String hashPassword) {
+	public void clearUser(final String hashPassword) {
 		//Log.d("Clear Cache By Hash");
 		User user = mapHashPass.remove(hashPassword);
 		if(user==null) return;
 		mapUserId.remove(user.userId);
 	}
 
-	public void clearUser(int userId) {
+	public void clearUser(final int userId) {
 		//Log.d("Clear Cache By UserId");
 		User user = mapUserId.remove(userId);
 		if(user==null) return;
 		mapHashPass.remove(user.hashPass);
 	}
 
-	public class User {
+	public static class User {
 		public int userId = -1;
 		public String nickName = "no name";
 		public String hashPass = "";
@@ -202,7 +201,7 @@ public class CacheUsers0000 {
 		public int adMode = CUser.AD_MODE_HIDE;
 
 		public User() {}
-		public User(ResultSet resultSet) throws SQLException {
+		public User(final ResultSet resultSet) throws SQLException {
 			userId			= resultSet.getInt("user_id");
 			hashPass		= resultSet.getString("hash_password");
 			nickName		= resultSet.getString("nickname");

@@ -27,20 +27,20 @@ import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
 
-public class Util {
-	public static String getHashPass(String strPassword) {
+public final class Util {
+	public static String getHashPass(final String strPassword) {
 		String strRtn = "";
 		try {
 			MessageDigest md5 = MessageDigest.getInstance("SHA-256");
 			md5.reset();
 			md5.update((strPassword + Math.random()).getBytes());
 			byte[] hash= md5.digest();
-			StringBuffer sb= new StringBuffer();
-			for(int i=0; i<hash.length; i++) {
-				int d = hash[i];
-				if(d < 0) d += 256;
+			StringBuilder sb= new StringBuilder();
+			for (int b : hash) {
+				int d = b;
+				if (d < 0) d += 256;
 				String m = Integer.toString(d, 16);
-				if(d < 16) {
+				if (d < 16) {
 					m = String.format("%1$02x", d);
 				}
 				sb.append(m);
@@ -55,23 +55,21 @@ public class Util {
 	}
 
 
-	public static String toString(String strSrc) {
-		if(strSrc == null) return "";
-
-		return strSrc;
+	public static String toString(final String strSrc) {
+		return strSrc == null ? "" : strSrc;
 	}
 
 	public static String toStringHtml(String strSrc) {
 		if(strSrc == null) return "";
 
-		strSrc = strSrc.replace("\r\n", "\n");
-		strSrc = strSrc.replace("\r", "\n");
-		strSrc = strSrc.replace("&", "&amp;");
-		strSrc = strSrc.replace("<", "&lt;");
-		strSrc = strSrc.replaceAll(">", "&gt;");
-		strSrc = strSrc.replaceAll("\n", "<br />");
-		strSrc = strSrc.replaceAll("'", "&apos;");
-		strSrc = strSrc.replaceAll("\"", "&quot;");
+		strSrc = strSrc.replace("\r\n", "\n")
+						.replace("\r", "\n")
+						.replace("&", "&amp;")
+						.replace("<", "&lt;")
+						.replaceAll(">", "&gt;")
+						.replaceAll("\n", "<br />")
+						.replaceAll("'", "&apos;")
+						.replaceAll("\"", "&quot;");
 
 		return strSrc;
 	}
@@ -79,20 +77,20 @@ public class Util {
 	public static String toStringHtmlTextarea(String strSrc) {
 		if(strSrc == null) return "";
 
-		strSrc = strSrc.replace("&", "&amp;");
-		strSrc = strSrc.replace("<", "&lt;");
-		strSrc = strSrc.replaceAll(">", "&gt;");
-		strSrc = strSrc.replaceAll("'", "&apos;");
-		strSrc = strSrc.replaceAll("\"", "&quot;");
+		strSrc = strSrc.replace("&", "&amp;")
+						.replace("<", "&lt;")
+						.replaceAll(">", "&gt;")
+						.replaceAll("'", "&apos;")
+						.replaceAll("\"", "&quot;");
 
 		return strSrc;
 	}
 
 
-	public static int toInt(String strSrc) {
+	public static int toInt(final String strSrc) {
 		if(strSrc == null) return -1;
 
-		int nRet = -1;
+		int nRet;
 		try {
 			nRet = Integer.parseInt(strSrc);
 		} catch (Exception e) {
@@ -101,10 +99,10 @@ public class Util {
 		return nRet;
 	}
 
-	public static int toIntN(String strSrc, int nMin, int nMax) {
+	public static int toIntN(final String strSrc, final int nMin, final int nMax) {
 		if(strSrc == null) return nMin;
 
-		int nRet = nMin;
+		int nRet;
 		try {
 			nRet = Integer.parseInt(strSrc);
 		} catch (Exception e) {
@@ -115,10 +113,10 @@ public class Util {
 		return nRet;
 	}
 
-	public static long toLong(String strSrc) {
+	public static long toLong(final String strSrc) {
 		if(strSrc == null) return -1;
 
-		long nRet = -1;
+		long nRet;
 		try {
 			nRet = Long.parseLong(strSrc);
 		} catch (Exception e) {
@@ -127,7 +125,7 @@ public class Util {
 		return nRet;
 	}
 
-	public static boolean toBoolean(String strSrc){
+	public static boolean toBoolean(final String strSrc){
 		if(strSrc == null) return false;
 
 		try{
@@ -140,13 +138,13 @@ public class Util {
 		}
 	}
 
-	public static boolean toBoolean(int strSrc){
+	public static boolean toBoolean(final int strSrc){
 		boolean b = false;
 		if(strSrc >= 1) b = true;
 		return b;
 	}
 
-	public static Timestamp toSqlTimestamp(String strSrc){
+	public static Timestamp toSqlTimestamp(final String strSrc){
 		if(strSrc == null) return null;
 		if(strSrc.isEmpty()) return null;
 
@@ -155,7 +153,7 @@ public class Util {
 		return Timestamp.from(zdt.toInstant());
 	}
 
-	public static String toYMDHMString(Timestamp ts){
+	public static String toYMDHMString(final Timestamp ts){
 		if(ts==null) return "";
 
 		LocalDateTime ldt = ts.toLocalDateTime();
@@ -292,39 +290,40 @@ public class Util {
 		return sbRtn.toString();
 	}
 
-	public static boolean isBot(HttpServletRequest request) {
-		String agent =  Util.toString(request.getHeader("user-agent")).trim();
+	private static final List<String> vBot = Arrays.asList(
+			"ia_archiver",
+			"archive.org_bot",
+			"Baidu",
+			"BecomeBot",
+			"bingbot",
+			"DotBot",
+			//"Googlebot",
+			"Hatena",
+			"heritr",
+			"ICC-Crawler",
+			"ichiro",
+			"MJ12bo",
+			"msnbot",
+			"NaverBot",
+			"OutfoxBot",
+			"Pockey",
+			"Purebot",
+			"SiteBot",
+			"Steeler",
+			"TurnitinBot",
+			"Twiceler",
+			"Websi",
+			"Wget",
+			"Y!J",
+			"Yahoo!",
+			"YandexBot",
+			"Yeti",
+			"YodaoBot",
+			"Pinterestbot");
+
+	public static boolean isBot(final HttpServletRequest request) {
+		final String agent =  Util.toString(request.getHeader("user-agent")).trim();
 		if(agent.isEmpty()) return true;
-		final List<String> vBot = Arrays.asList(
-				"ia_archiver",
-				"archive.org_bot",
-				"Baidu",
-				"BecomeBot",
-				"bingbot",
-				"DotBot",
-				//"Googlebot",
-				"Hatena",
-				"heritr",
-				"ICC-Crawler",
-				"ichiro",
-				"MJ12bo",
-				"msnbot",
-				"NaverBot",
-				"OutfoxBot",
-				"Pockey",
-				"Purebot",
-				"SiteBot",
-				"Steeler",
-				"TurnitinBot",
-				"Twiceler",
-				"Websi",
-				"Wget",
-				"Y!J",
-				"Yahoo!",
-				"YandexBot",
-				"Yeti",
-				"YodaoBot",
-				"Pinterestbot");
 		return vBot.contains(agent);
 	}
 

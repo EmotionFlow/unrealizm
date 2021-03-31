@@ -9,7 +9,7 @@ import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public final class CheckLogin {
-	static private List<Integer> m_staffIds = Arrays.asList(
+	static private final List<Integer> m_staffIds = Arrays.asList(
 			1,      // pipa
 			2,      // official
 			21808,  // nino
@@ -39,11 +39,7 @@ public final class CheckLogin {
 		return m_staffIds.contains(userId);
 	}
 
-	private void setCookie(HttpServletResponse response) {
-		Util.setCookie(response, Common.POIPIKU_LK , m_strHashPass, Integer.MAX_VALUE);
-	}
-
-	private void getCookie(HttpServletRequest request) {
+	private void getCookie(final HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_strHashPass = Util.toString(request.getParameter(Common.POIPIKU_LK_POST));
@@ -55,14 +51,14 @@ public final class CheckLogin {
 		}
 	}
 
-	private boolean validateUser(HttpServletResponse response) {
+	private boolean validateUser(final HttpServletResponse response) {
 		cacheUser = CacheUsers0000.getInstance().getUser(m_strHashPass);
 		if(cacheUser==null) {
 			m_nUserId		= -1;
 			m_strNickName	= "guest";
 			m_strHashPass	= "";
 			m_bLogin = false;
-			setCookie(response);
+			Util.setCookie(response, Common.POIPIKU_LK , m_strHashPass, Integer.MAX_VALUE);
 		} else {
 			m_nUserId		= cacheUser.userId;
 			m_strNickName	= cacheUser.nickName;
