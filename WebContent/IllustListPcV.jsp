@@ -157,7 +157,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				} else if(cResults.m_bBlocking){ // ブロックしている %>
 				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected"
 					  onclick="UpdateBlock()">
-								<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Blocking")%></span>
+								<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Unblocking")%></span>
 							</span>
 				<%} else if(cResults.m_bBlocked){%>
 				<%=_TEX.T("IllustV.Blocked")%>
@@ -213,6 +213,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				</section>
 				<section class="UserInfoState">
 					<%@include file="inner/IllustBrowserVUserInfoState.jsp"%>
+					<%if(cResults.m_bBlocking){%>
+					<%=_TEX.T("IllustV.Blocking")%>
+					<%}%>
 				</section>
 			</div>
 		</article>
