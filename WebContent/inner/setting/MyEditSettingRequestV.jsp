@@ -128,6 +128,8 @@
 		alert('コピーしました');
 	}
 </script>
+<%@include file="../TRequestIntroduction.jsp"%>
+
 <style>
 	.RequestVarUnit {font-size: 18px;line-height: 28px;}
 	.RequestListLink {
@@ -142,6 +144,12 @@
 <div class="SettingList">
 	<div class="SettingListItem">
 		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED"><i class="far fa-clipboard"></i> マイリクエスト →</a>
+
+		<a href="javascrpt: void(0);"
+		   style="text-decoration: underline"
+		   onclick="dispRequestIntroduction()">
+			<i class="fas fa-info-circle"></i>リクエストとは
+		</a>
 
 		<div class="SettingListTitle">リクエストを募集する</div>
 		<div class="SettingBody">
@@ -274,6 +282,7 @@
 					</div>
 				</div>
 			</div>
+			<%if(false){ // まだなくても良い気がするので、非表示にしておく。%>
 			<div class="SettingListItem">
 				<div class="SettingListTitle">特定商取引法に基づく表記</div>
 				特定商取引法で定められた内容を記載してください。特定商取引法に基づく表記を設定するべきかどうかはクリエイターガイドラインを確認してください。
@@ -285,6 +294,7 @@
 					</div>
 				</div>
 			</div>
+			<%}%>
 		</div>
 	</div>
 </div>
