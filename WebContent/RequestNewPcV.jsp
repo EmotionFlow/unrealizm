@@ -325,8 +325,12 @@ if (!results.getResults(checkLogin)) {
 				<div class="OptionLabel">メディア</div>
 				<div class="OptionPublish">
 					<select id="OptionMedia">
+						<%if(results.requestCreator.allowIllust()){%>
 						<option value="1">イラスト</option>
-						<option value="10">小説</option>
+						<%}%>
+						<%if(results.requestCreator.allowNovel()){%>
+						<option value="10">テキスト</option>
+						<%}%>
 					</select>
 				</div>
 			</div>
