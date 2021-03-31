@@ -145,7 +145,7 @@
 	<div class="SettingListItem">
 		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED"><i class="far fa-clipboard"></i> マイリクエスト →</a>
 
-		<a href="javascrpt: void(0);"
+		<a href="javascript: void(0);"
 		   style="text-decoration: underline"
 		   onclick="dispRequestIntroduction()">
 			<i class="fas fa-info-circle"></i>リクエストとは
@@ -191,7 +191,6 @@
 				</div>
 
 			</div>
-
 			<div class="SettingListItem">
 				<div class="SettingListTitle">メディア</div>
 				リクエストを受け付けるメディアを設定します。
