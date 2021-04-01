@@ -1,4 +1,3 @@
-<%@page import="jp.pipa.poipiku.controller.*"%>
 <%@ page import="jp.pipa.poipiku.Request" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -17,7 +16,11 @@
 					$("#RequestPane-"+requestId).get(0).scrollIntoView();
 				} else {
 					$("*").scrollTop(0);
-					history.replaceState('','','MyRequestListPcV.jsp?MENUID=<%=category%>&ST=' + statusCode);
+					let jsp = location.href;
+					jsp = jsp.split('/');
+					jsp = jsp[jsp.length-1];
+					jsp = jsp.split('?')[0];
+					history.replaceState('','', jsp + '?MENUID=<%=category%>&ST=' + statusCode);
 				}
 			}
 		);

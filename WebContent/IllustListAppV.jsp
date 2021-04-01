@@ -115,13 +115,13 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							$('.UserInfoCmdFollow').removeClass('Selected');
 							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
 							$('.UserInfoCmdFollow').hide();
-							location.reload(true);
+							location.reload();
 						} else if(data.result==2) {
 							$('.UserInfoCmdBlock').removeClass('Selected');
 							$('.UserInfoCmdFollow').removeClass('Selected');
 							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
 							$('.UserInfoCmdFollow').show();
-							location.reload(true);
+							location.reload();
 						} else {
 							DispMsg('ブロックできませんでした');
 						}
@@ -237,6 +237,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<%} else {%>
 							<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
+
+						<%@include file="inner/IllustAppVRequestButton.jsp"%>
+
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>"></a>
