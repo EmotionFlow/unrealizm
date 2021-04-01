@@ -64,12 +64,6 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Footer .FooterLink dl dd {font-size: 12px; margin: 0; padding: 0;}
 .Footer .LinkApp {margin: 0 0 15px 0;}
 
-.TabMenuWrapper {display: block; width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 999; width: 100%;top: 51px;}
-.TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; height:27px; margin: 0 auto; background: #fff; overflow-x: scroll; padding: 0; list-style: none;}
-.TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
-.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #3498db; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
-.TabMenu .TabMenuItem.Selected {border-color: #3498db;}
-
 /********** AnalogicoInfo *********/
 .AnalogicoInfo {display: block; color: #fff; background: #3498db; height: auto; padding: 15px 0;float: none;width: 100%;}
 .AnalogicoInfo .AnalogicoInfoTitle {display: block; margin: 0 0 0 0; padding: 0; font-size: 16px; text-align: center; float: left; width: 100%;font-weight: normal;}
