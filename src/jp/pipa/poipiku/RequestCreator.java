@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 
-public class RequestCreator {
+public final class RequestCreator extends Model{
 	private boolean exists = false;
 	public int userId = -1;
 
@@ -25,7 +25,7 @@ public class RequestCreator {
 			return code;
 		}
 	}
-	private void setStatus(int code){
+	private void setStatus(final int code){
 		switch (code){
 			case 0:
 				status = Status.Undef;
@@ -72,11 +72,11 @@ public class RequestCreator {
 	public String commercialTransactionLaw = "";
 
 	public RequestCreator() { }
-	public RequestCreator(int _userId) {
+	public RequestCreator(final int _userId) {
 		userId = _userId;
 		init();
 	}
-	public RequestCreator(CheckLogin checkLogin){
+	public RequestCreator(final CheckLogin checkLogin){
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
 		userId = checkLogin.m_nUserId;
 		init();
@@ -173,9 +173,11 @@ public class RequestCreator {
 				result = cResSet.getInt("user_id");
 			}
 			cState.close();
+			errorKind = ErrorKind.None;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
@@ -207,21 +209,23 @@ public class RequestCreator {
 			cState.setInt(2, userId);
 			cState.executeUpdate();
 			cState.close();
-			return true;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
 			return false;
 		} finally {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
+		errorKind = ErrorKind.None;
+		return true;
 	}
-	private boolean update(String column, Integer intValue) {
+	private boolean update(final String column, final Integer intValue) {
 		return update(column, intValue, null);
 	}
 
-	private boolean update(String column, String strValue) {
+	private boolean update(final String column, final String strValue) {
 		return update(column, null, strValue);
 	}
 
@@ -241,16 +245,18 @@ public class RequestCreator {
 			cState.setInt(1, userId);
 			cState.executeUpdate();
 			cState.close();
+			errorKind = ErrorKind.None;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
 		} finally {
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 	}
 	
-	public boolean updateStatus(Status _status) {
+	public boolean updateStatus(final Status _status) {
 		if (!update("status", _status.getCode())){
 			return false;
 		} else {
@@ -269,9 +275,11 @@ public class RequestCreator {
 				cState.setInt(2, userId);
 				cState.executeUpdate();
 				cState.close();
+				errorKind = ErrorKind.None;
 			} catch(Exception e) {
 				Log.d(strSql);
 				e.printStackTrace();
+				errorKind = ErrorKind.DbError;
 				return false;
 			} finally {
 				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
@@ -282,7 +290,7 @@ public class RequestCreator {
 		}
 		return true;
 	}
-	public boolean updateAllowMedia(boolean illustOk, boolean novelOk) {
+	public boolean updateAllowMedia(final boolean illustOk, final boolean novelOk) {
 		int n = 0;
 		if (illustOk) { n += 1; }
 		if (novelOk) { n += 10; }
@@ -291,31 +299,31 @@ public class RequestCreator {
 	public boolean updateAllowSensitive(boolean isOk) {
 		return update("allow_sensitive", isOk ? 1 : 0);
 	}
-	public boolean updateReturnPeriod(int day) {
+	public boolean updateReturnPeriod(final int day) {
 		if (RETURN_PERIOD_MIN <= day && day <= RETURN_PERIOD_MAX) {
 			return update("return_period", day);
 		}
 		return false;
 	}
-	public boolean updateDeliveryPeriod(int day) {
+	public boolean updateDeliveryPeriod(final int day) {
 		if (DELIVERY_PERIOD_MIN <= day && day <= DELIVERY_PERIOD_MAX) {
 			return update("delivery_period", day);
 		}
 		return false;
 	}
-	public boolean updateAmountLeftToMe(int amount) {
+	public boolean updateAmountLeftToMe(final int amount) {
 		if (AMOUNT_LEFT_TO_ME_MIN <= amount && amount <= AMOUNT_LEFT_TO_ME_MAX) {
 			return update("amount_left_to_me", amount);
 		}
 		return false;
 	}
-	public boolean updateAmountMinimum(int amount) {
+	public boolean updateAmountMinimum(final int amount) {
 		if (AMOUNT_MINIMUM_MIN <= amount && amount <= AMOUNT_MINIMUM_MAX) {
 			return update("amount_minimum", amount);
 		}
 		return false;
 	}
-	public boolean updateCommercialTransactionLaw(String text) {
+	public boolean updateCommercialTransactionLaw(final String text) {
 		if (text.length() <= COMMERCIAL_TRANSACTION_LAW_MAX) {
 			return update("commercial_transaction_law", text);
 		}

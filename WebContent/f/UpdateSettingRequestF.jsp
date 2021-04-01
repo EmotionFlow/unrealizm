@@ -16,4 +16,4 @@ param.GetParam(request);
 UpdateRequestSettingC controller = new UpdateRequestSettingC();
 boolean result = controller.GetResults(param, checkLogin, _TEX);
 
-%>{"result":<%=result?1:0%>}
+%>{"result":<%=result?Common.API_OK:Common.API_NG%>,"error_code":<%=controller.errorKind.getCode()%>}

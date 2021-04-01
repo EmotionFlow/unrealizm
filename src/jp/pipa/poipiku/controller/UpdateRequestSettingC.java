@@ -5,20 +5,20 @@ import jp.pipa.poipiku.RequestCreator;
 import jp.pipa.poipiku.RequestNotifier;
 import jp.pipa.poipiku.ResourceBundleControl;
 
-public class UpdateRequestSettingC {
+public final class UpdateRequestSettingC extends Controller{
     public UpdateRequestSettingC(){}
 
-    public boolean GetResults(UpdateRequestSettingCParam param, CheckLogin checkLogin, ResourceBundleControl _TEX) {
-    	boolean result = false;
-    	RequestCreator requestCreator = new RequestCreator(checkLogin);
+    public boolean GetResults(final UpdateRequestSettingCParam param, final CheckLogin checkLogin, final ResourceBundleControl _TEX) {
+	    final RequestCreator requestCreator = new RequestCreator(checkLogin);
     	if (requestCreator.userId < 0) {
     		return false;
 	    }
 
     	final String paramValue = param.value;
+    	boolean updateResult;
     	switch (param.attribute) {
 		    case "RequestEnabled":
-		    	requestCreator.updateStatus(
+			    updateResult = requestCreator.updateStatus(
 					    paramValue.equals("1") ? RequestCreator.Status.Enabled : RequestCreator.Status.Disabled
 			    );
 		    	if (requestCreator.status == RequestCreator.Status.Enabled) {
@@ -27,45 +27,53 @@ public class UpdateRequestSettingC {
 		    	break;
 		    case "RequestMedia":
 		    	String[] allowMedias = paramValue.split(",");
-		    	requestCreator.updateAllowMedia(
+			    updateResult = requestCreator.updateAllowMedia(
 					    allowMedias[0].equals("1"),
 					    allowMedias[1].equals("1")
 			    );
 			    break;
 		    case "AllowSensitive":
-		    	requestCreator.updateAllowSensitive(
+			    updateResult = requestCreator.updateAllowSensitive(
 		    			paramValue.equals("1")
 			    );
 			    break;
 		    case "ReturnPeriod":
-		    	requestCreator.updateReturnPeriod(
+			    updateResult = requestCreator.updateReturnPeriod(
 		    			Integer.parseInt(paramValue, 10)
 			    );
 			    break;
 		    case "DeliveryPeriod":
-		    	requestCreator.updateDeliveryPeriod(
+			    updateResult = requestCreator.updateDeliveryPeriod(
 		    			Integer.parseInt(paramValue, 10)
 			    );
 			    break;
 		    case "AmountLeftToMe":
-		    	requestCreator.updateAmountLeftToMe(
+			    updateResult = requestCreator.updateAmountLeftToMe(
 		    			Integer.parseInt(paramValue, 10)
 			    );
 			    break;
 		    case "AmountMinimum":
-			    requestCreator.updateAmountMinimum(
+			    updateResult = requestCreator.updateAmountMinimum(
 					    Integer.parseInt(paramValue, 10)
 			    );
 			    break;
 		    case "CommercialTransactionLaw":
-		    	requestCreator.updateCommercialTransactionLaw(
+			    updateResult = requestCreator.updateCommercialTransactionLaw(
 		    			paramValue
 			    );
 			    break;
 		    default:
-			    result = false;
+			    updateResult = false;
 	    }
 
+	    boolean result;
+	    if (!updateResult) {
+	    	result = false;
+	    	errorKind = ErrorKind.Unknown;
+	    } else {
+	    	result = true;
+	    	errorKind = ErrorKind.None;
+	    }
 		return result;
 	}
 }
