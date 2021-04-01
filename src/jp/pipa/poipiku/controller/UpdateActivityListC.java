@@ -14,11 +14,15 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class UpdateActivityListC extends Controller{
-	private int userId = -1;
-	private int contentId = -1;
-	private int infoType = Common.NOTIFICATION_TYPE_REACTION;
-	private int requestId = -1;
-	public String toUrl = "";
+	// in
+	public int userId = -1;
+	public int contentId = -1;
+	public int infoType = Common.NOTIFICATION_TYPE_REACTION;
+	public int requestId = -1;
+
+	// out
+	public String requestListMenuId = "";
+	public int requestListSt = -1;
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -67,31 +71,29 @@ public class UpdateActivityListC extends Controller{
 
 		switch (infoType) {
 			case Common.NOTIFICATION_TYPE_REACTION:
-				toUrl = String.format("/%d/%d.html", userId, contentId);
 				break;
 			case Common.NOTIFICATION_TYPE_REQUEST:
-				String menuId = "";
 				Request poipikuRequest = new Request(requestId);
+				requestListSt = poipikuRequest.status.getCode();
 				switch (poipikuRequest.status) {
 					case WaitingApproval:
-						menuId = "RECEIVED";
+						requestListMenuId = "RECEIVED";
 						break;
 					case InProgress:
 					case Done:
-						menuId = "SENT";
+						requestListMenuId = "SENT";
 						break;
 					case Canceled:
 						if (poipikuRequest.creatorUserId == checkLogin.m_nUserId) {
-							menuId = "RECEIVED";
+							requestListMenuId = "RECEIVED";
 						} else {
-							menuId = "SENT";
+							requestListMenuId = "SENT";
 						}
 						break;
 					default:
-						menuId = "RECEIVED";
+						requestListMenuId = "RECEIVED";
 						break;
 				}
-				toUrl = String.format("/MyRequestListPcV.jsp?MENUID=%s&ST=%d", menuId, poipikuRequest.status.getCode());
 				break;
 			default:
 				errorKind = ErrorKind.Unknown;

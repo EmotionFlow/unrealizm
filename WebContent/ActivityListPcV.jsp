@@ -29,7 +29,7 @@
 			$.ajax({
 				"type": "post",
 				"data": {"TY": info_type, "ID": user_id, "TD": content_id, "RID": request_id},
-				"url": "/api/UpdateActivityListF.jsp",
+				"url": "/f/UpdateActivityListF.jsp",
 				"dataType": "json",
 			}).then(
 				(data) => {

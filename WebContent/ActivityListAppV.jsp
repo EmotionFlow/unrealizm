@@ -24,22 +24,28 @@ if (infoType==-1) infoType = 1;
 		<title><%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">
-			function UpdateActivityList(elm, info_type, user_id, content_id) {
-				$.ajaxSingle({
+			function UpdateActivityList(elm, info_type, user_id, content_id, request_id) {
+				console.log("UpdateActivityList");
+				$.ajax({
 					"type": "post",
-					"data": {"TY":info_type, "ID":user_id, "TD":content_id},
+					"data": {"TY": info_type, "ID": user_id, "TD": content_id, "RID": request_id},
 					"url": "/api/UpdateActivityListF.jsp",
 					"dataType": "json",
-					"success": function(data) {
-						if(data.result>=<%=Common.API_OK%>) {
+				}).then(
+					(data) => {
+						if (data.result === <%=Common.API_OK%>) {
 							$(elm).addClass("HadRead");
-							location.href="/IllustViewAppV.jsp?ID="+user_id+"&TD="+content_id;
+							location.href = data.to_url;
 						} else {
 							DispMsg('Connection error');
 						}
+					},
+					(jqXHR, textStatus, errorThrown) => {
+						DispMsg('Connection error');
 					}
-				});
+				)
 			}
+
 			$(function(){
 				$.ajax({
 					"type": "post",
@@ -55,7 +61,6 @@ if (infoType==-1) infoType = 1;
 	</head>
 	<body>
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
-
 		<article class="Wrapper ItemList">
 			<div class="IllustItemList" style="min-height: 600px;">
 				<div id="ActivityList" class="ActivityList">
