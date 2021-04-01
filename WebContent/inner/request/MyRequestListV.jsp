@@ -74,6 +74,15 @@
 		});
 	}
 
+	function deliveryRequest(toUrl) {
+		if (g_RequestProcessing) return;
+		<%if(!isApp){%>
+		location.href = toUrl;
+		<%}else{%>
+		alert("お手数ですが、納品はブラウザ版(https://poipiku.com/)からお願いいたします。アプリからの納品は現在開発中です。");
+		<%}%>
+	}
+
 	$(() => {
 		$(document).on("click", "#FollowListPageBar .PageBarItem", (ev) => {
 			const pageNum = $(ev.target).attr("data-page");

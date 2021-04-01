@@ -83,7 +83,7 @@
 			<a class="BtnBase RequestCancelBtn" onclick="cancelRequest(<%=r.request.id%>)" href="javascript:void(0)">キャンセル</a>
 			<%}%>
 			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.InProgress){%>
-			<a class="BtnBase RequestDeliveryBtn" href="<%=uploadJsp%>?ID=<%=checkLogin.m_nUserId%>&RID=<%=r.request.id%>">納品</a>
+			<a class="BtnBase RequestDeliveryBtn" onclick="deliveryRequest('<%=uploadJsp%>?ID=<%=checkLogin.m_nUserId%>&RID=<%=r.request.id%>')" href="javascript:void(0);" >納品</a>
 			<%}%>
 		</div>
 	</div>
