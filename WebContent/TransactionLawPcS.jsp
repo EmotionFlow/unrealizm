@@ -15,7 +15,7 @@
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
-					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「特定商取引法に基づく表記</div>
+					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">特定商取引法に基づく表記</div>
 				</div>
 				<div class="SettingListItem">
 					<div class="SettingListTitle">販売業者</div>
@@ -63,7 +63,7 @@
 					<div class="SettingListTitle">お支払い方法</div>
 					<div class="SettingBody">
 						クレジットカード(VISA/MASTER/JCB/AMEX/DINERS)<br />
-					</div>s
+					</div>
 				</div>
 
 				<div class="SettingListItem">
