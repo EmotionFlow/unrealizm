@@ -72,7 +72,11 @@ if (!results.getResults(checkLogin)) {
 						if(requestInfo.AMOUNT>0) {
 							DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
 							window.setTimeout(() => {
+								<%if(isApp){%>
+								location.href = "/IllustListAppV.jsp?ID=" + parseInt(requestInfo.CREATOR, 10);
+								<%}else{%>
 								location.href = "/" + parseInt(requestInfo.CREATOR, 10);
+								<%}%>
 							}, 5000);
 						}
 					} else {
