@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -805,5 +806,29 @@ public class CTweet {
 			try{if(cState != null) cState.close();cState=null;} catch(Exception e) {;}
 			try{if(connection != null) connection.close();connection=null;} catch(Exception e) {;}
 		}
+	}
+
+	public Date getCreatedAt() {
+		if (!m_bIsTweetEnable) return null;
+		User u = null;
+		try{
+			ConfigurationBuilder cb = new ConfigurationBuilder();
+			cb.setDebugEnabled(false)
+					.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+					.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+					.setOAuthAccessToken(m_strUserAccessToken)
+					.setOAuthAccessTokenSecret(m_strSecretToken);
+			TwitterFactory tf = new TwitterFactory(cb.build());
+			Twitter twitter = tf.getInstance();
+			u = twitter.showUser(m_lnTwitterUserId);
+
+		}catch(TwitterException te){
+			LoggingTwitterException(te);
+			return null;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return u.getCreatedAt();
 	}
 }

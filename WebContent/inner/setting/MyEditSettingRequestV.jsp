@@ -12,8 +12,16 @@
 			"dataType": "json"
 		})
 		.then(
-			(data) => {DispMsg("保存しました");},
-			(error) => {DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");}
+			(data) => {
+				if (data.result === <%=Common.API_OK%>) {
+					DispMsg("保存しました");
+				} else if (data.error_code === <%=Controller.ErrorKind.JudgeFailure.getCode()%>) {
+					DispMsg("利用歴が浅いため、リクエストの募集を開始できませんでした。");
+				}
+			},
+			(error) => {
+				DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+			}
 		);
 	}
 
