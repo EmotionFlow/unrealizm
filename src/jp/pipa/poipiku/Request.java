@@ -1,5 +1,6 @@
 package jp.pipa.poipiku;
 
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
@@ -119,6 +120,42 @@ public final class Request extends Model{
 		LocalDateTime deliveryLimitLocal = deliveryLimit.toLocalDateTime().truncatedTo(ChronoUnit.DAYS);
 		LocalDateTime today = LocalDateTime.now().truncatedTo(ChronoUnit.DAYS);
 		return deliveryLimitLocal.isBefore(today);
+	}
+
+	public int getCountOfRequestsByStatus(Status _status) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String strSql = "";
+		int cnt = 0;
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+
+			strSql = "SELECT count(*) FROM requests WHERE client_user_id=? AND status=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, clientUserId);
+			statement.setInt(2, _status.getCode());
+			resultSet = statement.executeQuery();
+
+			if(resultSet.next()){
+				cnt = resultSet.getInt(1);
+				errorKind = ErrorKind.None;
+			} else {
+				cnt = -1;
+				errorKind = ErrorKind.OtherError;
+			}
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
+			cnt = -1;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		return cnt;
+
 	}
 
 	public boolean selectByContentId(final int _contentId) {

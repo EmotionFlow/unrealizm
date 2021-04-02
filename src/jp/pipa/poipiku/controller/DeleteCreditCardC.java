@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.Request;
 import jp.pipa.poipiku.settlement.Agent;
 import jp.pipa.poipiku.settlement.epsilon.User;
 import jp.pipa.poipiku.util.Log;
@@ -27,6 +28,22 @@ public class DeleteCreditCardC {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
+
+			// ポイパス契約中であったり、承認待ちのリクエストがある場合は削除しない（UIで制限しているため、通常ここでは引っかからない）
+			strSql = "SELECT user_id FROM users_0000 WHERE user_id=? AND passport_id>0";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nUserId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()){
+				return false;
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+			Request poipikuRequest = new Request();
+			poipikuRequest.clientUserId = cParam.m_nUserId;
+			if (poipikuRequest.getCountOfRequestsByStatus(Request.Status.WaitingApproval) != 0) {
+				return false;
+			}
 
 			// SELECT
 			strSql = "SELECT id, agent_id, agent_user_id FROM creditcards WHERE user_id=? AND del_flg=false";

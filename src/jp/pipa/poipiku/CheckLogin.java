@@ -14,7 +14,8 @@ public final class CheckLogin {
 			2,      // official
 			21808,  // nino
 			1708444, // michi
-			1851512  // picさん
+			1851512,  // picさん
+			402902
 	);
 	public boolean m_bLogin = false;
 	public int m_nUserId = -1;
