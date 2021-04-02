@@ -2288,6 +2288,18 @@
 	text-shadow: 1px 0 5px grey;
 }
 
+.UserInfo .UserInfoCmdBlocked {
+	height: 22px;
+	vertical-align: bottom;
+	position: relative;
+	right: 4px;
+	top: 9px;
+	float: right;
+	opacity: 0.9;
+	color: #ffffff;
+	text-shadow: 1px 0 5px grey;
+}
+
 #UserInfoCmdBlockLabel {
 	font-size: 14px;
 	position: relative;
