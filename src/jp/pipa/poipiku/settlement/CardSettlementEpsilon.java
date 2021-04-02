@@ -118,6 +118,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 
 		try {
 			dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
+
 			cConn = dsPostgres.getConnection();
 
 			// 初回か登録済かを判定、EPSILON側user_id取得。
@@ -137,60 +138,17 @@ public class CardSettlementEpsilon extends CardSettlement {
 			}
 			cResSet.close();cResSet = null;
 			cState.close();cState = null;
+			// この後の決済処理に時間がかかり、connectionがcloseされたりされなかったりなので、
+			// ここで明示的にcloseする。
+			cConn.close();cConn = null;
 
-			SettlementSendInfo ssi = new SettlementSendInfo();
-			ssi.userId = strAgentUserId;
-			ssi.userName = "DUMMY";
-			ssi.userNameKana = "DUMMY";
-			ssi.userMailAdd = "dummy@example.com";
-			ssi.itemCode = Integer.toString(poipikuOrderId);
-			ssi.itemPrice = amount;
-
-			ssi.stCode = "11000-0000-00000";
-			ssi.cardStCode = "10";			 // 一括払い
-
-			// 課金区分
-			switch (billingCategory) {
-				// 一度払い
-				case OneTime:
-					ssi.missionCode = 1;
-					ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
-					ssi.itemName = "emoji" + contentId;
-					break;
-				// 定期課金（毎月）
-				case Monthly:
-					ssi.missionCode = 21;
-					ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
-					ssi.itemName = "poipass";
-					break;
-				case AuthorizeOnly:
-					ssi.missionCode = 1;
-					ssi.kariFlag = 1;       // 仮売上固定
-					ssi.itemName = "rquest" + requestId;
-					break;
-				default:
-					ssi.missionCode = -1;
-			}
-
-			ssi.processCode = isFirstSettlement ? 1 : 2; // 初回/登録済み課金
-			ssi.userTel = "00000000000";
-
-			if (isFirstSettlement) {
-				ssi.securityCheck = 1;
-				ssi.token = agentToken;
-			} else {
-				ssi.securityCheck = null;
-				ssi.token = "";
-			}
-
-			ssi.orderNumber = createOrderId(poipikuUserId, contentId);
-			orderId = ssi.orderNumber;
-			ssi.memo1 = "DUMMY";
-			ssi.memo2 = "DUMMY";
-			ssi.userAgent = userAgent;
+			SettlementSendInfo ssi = createSettlementSendInfo(isFirstSettlement, strAgentUserId);
 
 			EpsilonSettlementAuthorize epsilonSettlementAuthorize = new EpsilonSettlementAuthorize(poipikuUserId, ssi);
+
+			// epsilon側の都合で時間のかかる決済処理
 			SettlementResultInfo settlementResultInfo = epsilonSettlementAuthorize.execSettlement();
+
 			if (settlementResultInfo != null) {
 				/* settlementResultInfo.getResult()
 				0：決済NG
@@ -201,6 +159,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 				String settlementResultCode = settlementResultInfo.getResult();
 				Log.d("settlementResultInfo: " + settlementResultCode);
 				if ("1".equals(settlementResultCode)) {
+					cConn = dsPostgres.getConnection();
 					if (isFirstSettlement) {
 						strSql = "INSERT INTO creditcards" +
 								" (user_id, agent_id, card_expire, security_code, agent_user_id, last_agent_order_id)" +
@@ -277,6 +236,60 @@ public class CardSettlementEpsilon extends CardSettlement {
 			if(cState!=null){try{cState.close();cState=null;}catch(Exception ex){;}}
 			if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ex){;}}
 		}
+	}
+
+	private SettlementSendInfo createSettlementSendInfo(boolean isFirstSettlement, String strAgentUserId) {
+		SettlementSendInfo ssi = new SettlementSendInfo();
+		ssi.userId = strAgentUserId;
+		ssi.userName = "DUMMY";
+		ssi.userNameKana = "DUMMY";
+		ssi.userMailAdd = "dummy@example.com";
+		ssi.itemCode = Integer.toString(poipikuOrderId);
+		ssi.itemPrice = amount;
+
+		ssi.stCode = "11000-0000-00000";
+		ssi.cardStCode = "10";			 // 一括払い
+
+		// 課金区分
+		switch (billingCategory) {
+			// 一度払い
+			case OneTime:
+				ssi.missionCode = 1;
+				ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
+				ssi.itemName = "emoji" + contentId;
+				break;
+			// 定期課金（毎月）
+			case Monthly:
+				ssi.missionCode = 21;
+				ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
+				ssi.itemName = "poipass";
+				break;
+			case AuthorizeOnly:
+				ssi.missionCode = 1;
+				ssi.kariFlag = 1;       // 仮売上固定
+				ssi.itemName = "rquest" + requestId;
+				break;
+			default:
+				ssi.missionCode = -1;
+		}
+
+		ssi.processCode = isFirstSettlement ? 1 : 2; // 初回/登録済み課金
+		ssi.userTel = "00000000000";
+
+		if (isFirstSettlement) {
+			ssi.securityCheck = 1;
+			ssi.token = agentToken;
+		} else {
+			ssi.securityCheck = null;
+			ssi.token = "";
+		}
+
+		ssi.orderNumber = createOrderId(poipikuUserId, contentId);
+		orderId = ssi.orderNumber;
+		ssi.memo1 = "DUMMY";
+		ssi.memo2 = "DUMMY";
+		ssi.userAgent = userAgent;
+		return ssi;
 	}
 
 	public boolean capture(int poipikuOrderId) {
