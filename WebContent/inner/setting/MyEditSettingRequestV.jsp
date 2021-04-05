@@ -4,6 +4,14 @@
 %>
 <% if (checkLogin.isStaff()) { %>
 <script type="text/javascript">
+	function _getJudgeOkHtml() {
+		return `
+		<h1>募集を開始しました</h1>
+		<p style="text-align: left">募集開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。ご確認くださいませ。</p>
+		<p style="text-align: left">また、いま一度、予備のログイン手段として、メールとパスワードの組合せでログインできることをご確認願います。</p>
+		`;
+	}
+
 	function _getJudgeFailureHtml() {
 		return `
 		<h1>募集を開始できませんでした</h1>
@@ -13,6 +21,7 @@
 		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
 		</ul>
 		<p style="text-align: left">加えて、ポイピク・Twitterの利用歴から総合的に判定させていただいております。</p>
+		<p style="text-align: left">不正利用防止の観点から、ご協力よろしくお願いいたします。</p>
 		`;
 	}
 
@@ -26,7 +35,10 @@
 		.then(
 			(data) => {
 				if (data.result === <%=Common.API_OK%>) {
-					DispMsg("保存しました");
+					Swal.fire({
+						type: "info",
+						html: _getJudgeOkHtml(),
+					});
 				} else if (data.error_code === <%=Controller.ErrorKind.JudgeFailure.getCode()%>) {
 					Swal.fire({
 						type: "warning",
