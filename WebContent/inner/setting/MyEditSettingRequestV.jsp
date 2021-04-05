@@ -4,6 +4,18 @@
 %>
 <% if (checkLogin.isStaff()) { %>
 <script type="text/javascript">
+	function _getJudgeFailureHtml() {
+		return `
+		<h1>募集を開始できませんでした</h1>
+		<p style="text-align: left">リクエスト募集を開始するには、以下の条件が必須です。</p>
+		<ul style="text-align: left">
+		<li>Twitterアカウントと連携していること(Twitter設定)</li>
+		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
+		</ul>
+		<p style="text-align: left">加えて、ポイピク・Twitterの利用歴から総合的に判定させていただいております。</p>
+		`;
+	}
+
 	function _updateRequestSetting(attribute, variable){
 		$.ajax({
 			"type": "post",
@@ -16,7 +28,10 @@
 				if (data.result === <%=Common.API_OK%>) {
 					DispMsg("保存しました");
 				} else if (data.error_code === <%=Controller.ErrorKind.JudgeFailure.getCode()%>) {
-					DispMsg("利用歴が浅いため、リクエストの募集を開始できませんでした。");
+					Swal.fire({
+						type: "warning",
+						html: _getJudgeFailureHtml(),
+					});
 				}
 			},
 			(error) => {
