@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin checkLogin = new CheckLogin(request, response);
-String strFileUrl = "/img/poipiku_icon_512x512_2.png";
+CheckLogin checkLogin = new CheckLogin();
+final String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 %>
 <!DOCTYPE html>
 <html style="height: 100%;">
@@ -92,13 +92,13 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 			</section>
 			<section class="AnalogicoInfo Flyer Ura">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" />
+					<img class="PoipikuFlyerImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Title">
 				<div class="AnalogicoDesc Title">
 					<div>
-						<img class="TopTitleLogo" src="//img-cdn.poipiku.com/img/poipiku_icon_512x512_2.png" alt="<%=_TEX.T("THeader.Title")%>">
+						<img class="TopTitleLogo" loading="lazy" src="//img-cdn.poipiku.com/img/poipiku_icon_512x512_2.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</div>
 					<h1 class="TopTitleInfo"><%=_TEX.T("THeader.Title.Desc")%></h1>
 					<!--
@@ -196,7 +196,6 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 				</div>
 			</section>
 		</article>
-
 		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>

@@ -15,8 +15,8 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-boolean bRtn = cResults.getResults(checkLogin);
-ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+cResults.getResults(checkLogin);
+final ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
 <html>
@@ -156,7 +156,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarPc("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarPc("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, MyHomePcC.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>

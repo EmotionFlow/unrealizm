@@ -162,14 +162,14 @@ public final class Util {
 		return zdtGmt.format(DateTimeFormatter.ISO_INSTANT);
 	}
 
-	public static boolean isSmartPhone(HttpServletRequest request) {
-		String strUuserAgent = toString(request.getHeader("user-agent"));
+	public static boolean isSmartPhone(final HttpServletRequest request) {
+		final String useragent = toString(request.getHeader("user-agent"));
 		//String strReferer = toString(request.getHeader("Referer"));
 
 		//if(strReferer.indexOf("poipiku.com")<0) {
-			if(	(strUuserAgent.indexOf("iPhone")>=0 && strUuserAgent.indexOf("iPad")<0) ||
-					strUuserAgent.indexOf("iPod")>=0 ||
-					(strUuserAgent.indexOf("Android")>=0 && strUuserAgent.indexOf("Mobile")>=0)) {
+			if(	(useragent.indexOf("iPhone")>=0 && useragent.indexOf("iPad")<0) ||
+					useragent.indexOf("iPod")>=0 ||
+					(useragent.indexOf("Android")>=0 && useragent.indexOf("Mobile")>=0)) {
 				return true;
 			}
 		//}

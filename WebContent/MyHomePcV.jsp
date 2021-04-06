@@ -2,13 +2,12 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
+final boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
 	getServletContext().getRequestDispatcher("/MyHomeGridPcV.jsp").forward(request,response);
 	return;
 }
-
 
 MyHomePcC cResults = new MyHomePcC();
 cResults.getParam(request);
@@ -22,8 +21,8 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-boolean bRtn = cResults.getResults(checkLogin);
-ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+cResults.getResults(checkLogin);
+final ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
 <html>
@@ -92,7 +91,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%if(cResults.m_cSystemInfo!=null) {%>
 		<div class="SystemInfo" id="SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>">
 			<a class="SystemInfoTitle" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><i class="fas fa-bullhorn"></i></a>
-			<a class="SystemInfoDate" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><%=(new SimpleDateFormat("YYYY MM/dd")).format(cResults.m_cSystemInfo.m_timeUploadDate)%></a>
+			<a class="SystemInfoDate" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><%=(new SimpleDateFormat("yyyy MM/dd")).format(cResults.m_cSystemInfo.m_timeUploadDate)%></a>
 			<a class="SystemInfoDesc" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><%=Util.toStringHtml(cResults.m_cSystemInfo.m_strDescription)%></a>
 			<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>').hide();setCookie('<%=Common.POIPIKU_INFO%>', '<%=cResults.m_cSystemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 		</div>
@@ -124,7 +123,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, MyHomePcC.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>

@@ -11,7 +11,7 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.ResourceBundleControl;
 
-public class CCnv {
+public final class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
 	public static final int MODE_PC = 0;
 	public static final int MODE_SP = 1;

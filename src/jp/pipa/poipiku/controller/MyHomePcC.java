@@ -11,13 +11,13 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
-public class MyHomePcC {
+public final class MyHomePcC {
 	public int n_nUserId = -1;
 	public int n_nVersion = 0;
 	public int m_nPage = 0;
 	private int m_nLastSystemInfoId = -1;
 
-	public void getParam(HttpServletRequest request) {
+	public void getParam(final HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			n_nVersion = Util.toInt(request.getParameter("VER"));
@@ -34,27 +34,25 @@ public class MyHomePcC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 15;
-	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	static public final int SELECT_MAX_GALLERY = 15;
+	static public final int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
+	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public int m_nContentsNum = 0;
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
 	public CContent m_cSystemInfo = null;
 
-	public boolean getResults(CheckLogin checkLogin) {
+	public boolean getResults(final CheckLogin checkLogin) {
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
-		int idx = 1;
+		int idx;
 
 		try {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// POIPIKU INFO
 			if(m_nPage<=0) {
@@ -153,17 +151,17 @@ public class MyHomePcC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			m_vContentList = GridUtil.getEachComment(connection, m_vContentList);
+			GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();}}catch(Exception e){;}
 		}
 		return bRtn;
 	}
