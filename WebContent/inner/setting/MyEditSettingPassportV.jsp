@@ -426,7 +426,8 @@
 				</div>
 				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
 					<ul style="list-style-type: circle;">
-						<li>課金は一ヶ月単位です。</li>
+						<li>加入は一ヶ月単位です。（初回は加入日から月末まで、以降毎月1日に確定）</li>
+						<li>課金日は初回は加入日、以降毎月25日です（代行業者の都合で変更する場合あり）</li>
 						<li>解約に制限はありません。いつでもできます。</li>
 						<li>ポイパス加入で追加された機能は、解約した月の末日までお使いいただけます。</li>
 					</ul>
