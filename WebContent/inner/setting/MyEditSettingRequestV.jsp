@@ -7,8 +7,7 @@
 	function _getJudgeOkHtml() {
 		return `
 		<h1>募集を開始しました</h1>
-		<p style="text-align: left">募集開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。ご確認くださいませ。</p>
-		<p style="text-align: left">また、いま一度、予備のログイン手段として、メールとパスワードの組合せでログインできることをご確認願います。</p>
+		<p style="text-align: left">募集開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。必ずご確認ください。</p>
 		`;
 	}
 
@@ -21,7 +20,7 @@
 		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
 		</ul>
 		<p style="text-align: left">加えて、ポイピク・Twitterの利用歴から総合的に判定させていただいております。</p>
-		<p style="text-align: left">不正利用防止の観点から、ご協力よろしくお願いいたします。</p>
+		<p style="text-align: left">複数の連絡先確保と、不正利用防止の観点から、ご協力よろしくお願いいたします。</p>
 		`;
 	}
 
@@ -35,10 +34,18 @@
 		.then(
 			(data) => {
 				if (data.result === <%=Common.API_OK%>) {
-					Swal.fire({
-						type: "info",
-						html: _getJudgeOkHtml(),
-					});
+					if (attribute === "RequestEnabled") {
+						if (variable === 1) {
+							Swal.fire({
+								type: "info",
+								html: _getJudgeOkHtml(),
+							});
+						} else {
+							DispMsg("リクエスト募集を停止しました");
+						}
+					} else {
+						DispMsg("保存しました");
+					}
 				} else if (data.error_code === <%=Controller.ErrorKind.JudgeFailure.getCode()%>) {
 					Swal.fire({
 						type: "warning",
@@ -188,11 +195,17 @@
 
 		<div class="SettingListTitle">リクエストを募集する</div>
 		<div class="SettingBody">
+			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
 			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。
-			<ul>
-				<li>募集を開始するにはメールアドレスの確認が必要です。</li>
-				<li>リクエスト報酬を受け取るには日本の銀行口座が必要です。</li>
+			複数の連絡先確保と不正利用防止のため、受付開始には以下の条件を満たす必要があります。
+			<ul style="padding: 0 26px">
+				<li>メールアドレスとパスワードでログインできること</li>
+				<li>ある程度利用歴のあるTwitterアカウントと連携されていること</li>
+				<li>ポイピクの本アカウントにある程度利用歴があること</li>
 			</ul>
+			<%}else{%>
+			募集を停止しても、現在受信しているリクエストは承認したり、納品したりできます。
+			<%}%>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >
 					<div class="onoffswitch OnOff">
