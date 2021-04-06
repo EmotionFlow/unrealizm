@@ -254,7 +254,11 @@ if (requestId > 0) {
 		<%}%>
 
 		<%if(requestId<0){%>
+		<%if(nEditorId==Common.EDITOR_TEXT){%>
+		<%@ include file="/inner/TAdPoiPassHeaderUploadTextPcV.jsp"%>
+		<%}else{%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		<%}%>
 		<%}%>
 
 		<article class="Wrapper">
