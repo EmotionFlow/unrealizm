@@ -177,33 +177,31 @@ public final class RequestNotifier {
 		}
 	}
 
+	static private void notifyByEmail(User toUser, String menuId, Request.Status requestStatus, int requestId, String templateName) {
+		final String toUrl = String.format("%s?MENUID=%s&ST=%d&RID=%d",
+				REQUEST_BOARD_URL,menuId, requestStatus.getCode(), requestId);
+		final String subject = getSubject(templateName, toUser.langLabel);
+		try {
+			StringWriter sw = new StringWriter();
+			VelocityContext context = new VelocityContext();
+			context.put("to_name", toUser.nickname);
+			context.put("request_board_url", toUrl);
+			Template template = Velocity.getTemplate(getVmPath(templateName + "/body.vm", toUser.langLabel), "UTF-8");
+			template.merge(context, sw);
+			final String mailBody = sw.toString();
+			sw.flush();
+			EmailUtil.send(toUser.email, subject, mailBody);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	static public void notifyRequestReceived(final Request request){
 		final User client = new User(request.clientUserId);
 		final User creator = new User(request.creatorUserId);
 		final String statusName = "received";
 		if (client.id > 0 && creator.id > 0) {
-			final String toUrl = String.format("%s?MENUID=%s&ST=%d&RID=%d",
-					REQUEST_BOARD_URL, "RECEIVED",
-					Request.Status.WaitingApproval.getCode(), request.id);
-			final String subject = getSubject(statusName, creator.langLabel);
-
-			try {
-				StringWriter sw = new StringWriter();
-				VelocityContext context = new VelocityContext();
-				context.put("to_name", creator.nickname);
-				context.put("request_board_url", toUrl);
-				Template template = Velocity.getTemplate(getVmPath(statusName + "/body.vm", creator.langLabel), "UTF-8");
-				template.merge(context, sw);
-				final String mailBody = sw.toString();
-				sw.flush();
-
-				EmailUtil.send(creator.email, subject, mailBody);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				Log.d("notifyRequestReceived failed.");
-			}
-
+			notifyByEmail(creator, "RECEIVED", Request.Status.WaitingApproval, request.id, statusName);
 			final String title = getTitle(statusName, creator.langLabel);
 			notifyByWeb(creator, request, title);
 			notifyByApp(creator, title);
@@ -211,41 +209,20 @@ public final class RequestNotifier {
 	}
 
 	static public void notifyRequestCanceled(final CheckLogin checkLogin, Request request){
-		/** スケブに倣ってキャンセル通知はしないでおく。
+		// スケブに倣ってキャンセル通知はしないでおく。
 		final User client = new User(request.clientUserId);
 		final User creator = new User(request.creatorUserId);
 		final User notifyTo = checkLogin.m_nUserId==request.clientUserId ? creator : client;
 		final String statusName = "canceled";
 
 		if (client.id > 0 && creator.id > 0) {
-			try {
-				StringWriter sw = new StringWriter();
-				VelocityContext context = new VelocityContext();
-				context.put("to_name", notifyTo.nickname);
-				context.put("request_board_url",
-						String.format("%s?MENUID=%s&ST=%d&RID=%d",
-								REQUEST_BOARD_URL, notifyTo.equals(client) ? "SENT" : "RECEIVED",
-								Request.Status.Canceled.getCode(), request.id));
-				Template template = Velocity.getTemplate(getVmPath(statusName + "/body.vm", notifyTo.langLabel), "UTF-8");
-				template.merge(context, sw);
-				final String mailBody = sw.toString();
-				sw.flush();
-
-				final String mailSubject = getSubject(statusName, notifyTo.langLabel);
-
-				EmailUtil.send(notifyTo.email, mailSubject, mailBody);
-
-				sw.flush();
-			} catch (Exception e) {
-				e.printStackTrace();
-				Log.d("notifyRequestCanceled failed.");
-			}
-
+			notifyByEmail(notifyTo, notifyTo.equals(client) ? "SENT" : "RECEIVED",
+					Request.Status.Canceled, request.id, statusName);
 			final String title = getTitle(statusName, notifyTo.langLabel);
 			notifyByWeb(notifyTo, request, title);
 			notifyByApp(notifyTo, title);
 		}
-		 **/
+
 	}
 
 	static public void notifyRequestAccepted(Request request) {
@@ -253,30 +230,12 @@ public final class RequestNotifier {
 		final User creator = new User(request.creatorUserId);
 		final String statusName = "accepted";
 		if (client.id > 0 && creator.id > 0) {
-			try {
-				StringWriter sw = new StringWriter();
-				VelocityContext context = new VelocityContext();
-				context.put("to_name", client.nickname);
-				context.put("request_board_url",
-						String.format("%s?MENUID=%s&ST=%d&RID=%d",
-								REQUEST_BOARD_URL, "SENT",
-								Request.Status.InProgress.getCode(), request.id));
-				Template template = Velocity.getTemplate(getVmPath(statusName + "/body.vm", client.langLabel), "UTF-8");
-				template.merge(context, sw);
-				final String mailBody = sw.toString();
-				sw.flush();
+			notifyByEmail(client, "SENT",
+					Request.Status.InProgress, request.id, statusName + "_client");
+			notifyByEmail(creator, "RECEIVED",
+					Request.Status.InProgress, request.id, statusName + "_creator");
 
-				final String mailSubject = getSubject(statusName, client.langLabel);
-
-				EmailUtil.send(client.email, mailSubject, mailBody);
-
-				sw.flush();
-			} catch (Exception e) {
-				e.printStackTrace();
-				Log.d("notifyRequestDelivered failed.");
-			}
-
-			final String title = getTitle(statusName, client.langLabel);
+			final String title = getTitle(statusName + "_client", client.langLabel);
 			notifyByWeb(client, request, title);
 			notifyByApp(client, title);
 		}
@@ -287,27 +246,8 @@ public final class RequestNotifier {
 		final User creator = new User(request.creatorUserId);
 		final String statusName = "delivered";
 		if (client.id > 0 && creator.id > 0) {
-			try {
-				StringWriter sw = new StringWriter();
-				VelocityContext context = new VelocityContext();
-				context.put("to_name", client.nickname);
-				context.put("request_board_url",
-						String.format("%s?MENUID=%s&ST=%d&RID=%d",
-								REQUEST_BOARD_URL, "SENT",
-								Request.Status.Done.getCode(), request.id));
-				Template template = Velocity.getTemplate(getVmPath(statusName + "/body.vm", client.langLabel), "UTF-8");
-				template.merge(context, sw);
-				final String mailBody = sw.toString();
-				sw.flush();
-
-				final String mailSubject = getSubject(statusName, client.langLabel);
-
-				EmailUtil.send(client.email, mailSubject, mailBody);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				Log.d("notifyRequestDelivered failed.");
-			}
+			notifyByEmail(client, "SENT",
+					Request.Status.Done, request.id, statusName);
 
 			final String title = getTitle(statusName, client.langLabel);
 			notifyByWeb(client, request, title);
