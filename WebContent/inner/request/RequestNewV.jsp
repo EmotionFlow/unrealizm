@@ -452,7 +452,7 @@ if (!results.getResults(checkLogin)) {
 		</div>
 
 		<div class="UoloadCmd">
-			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに合意して送信する</a>
+			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して送信する</a>
 		</div>
 
 		<%} // if(results.user.m_bRequestEnabled)%>
