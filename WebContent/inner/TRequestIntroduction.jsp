@@ -41,7 +41,7 @@ function getRequestIntroductionHtml(){
 </ul>
 </div>
 <h2 class="RequestIntroDlgTitle">ガイドライン</h2>
-<div class="RequestIntroDlgInfo">
+<div class="RequestIntroDlgInfo" style="text-align: center;">
 <a style="color: #545454; text-decoration: underline;" href="/GuideLineRequestPcV.jsp">より詳しいガイドラインはこちらをご覧ください</a>
 </div>
 `;

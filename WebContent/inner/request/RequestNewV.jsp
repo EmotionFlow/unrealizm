@@ -29,6 +29,7 @@ if (!results.getResults(checkLogin)) {
 	<%}%>
 	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<%@ include file="/inner/TCreditCard.jsp"%>
+	<%@ include file="../TRequestIntroduction.jsp"%>
 	<title><%=_TEX.T("THeader.Title")%> - Request </title>
 	<script>
 		function _validate() {
@@ -289,7 +290,7 @@ if (!results.getResults(checkLogin)) {
             color: #6d6965;
             border-radius: 10px;
             margin: 4px;
-            padding: 8px;
+            padding: 1px;
 			font-size: 13px;
 		}
 		#EditAmount {
@@ -313,6 +314,13 @@ if (!results.getResults(checkLogin)) {
 
 <article class="Wrapper" <%if(!bSmartPhone){%>style="width: 100%;"<%}%>>
 	<div class="UserInfo Float">
+		<span id="UserInfoCmdBlock"
+			  class="BtnBase UserInfoCmdBlock Selected"
+			  style="text-shadow: none;"
+			  onclick="dispRequestIntroduction()">
+			<i class="fas fa-info-circle" style="font-size: 15px; margin-right: 4px;"></i><span id="UserInfoCmdBlockLabel" style="top:-1px">リクエストとは</span>
+		</span>
+
 		<div class="UserInfoBg"></div>
 		<section class="UserInfoUser">
 			<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(results.user.m_strFileName)%>')" href="/<%=results.user.m_nUserId%>/"></a>
@@ -423,22 +431,28 @@ if (!results.getResults(checkLogin)) {
 
 		</div>
 
+		<div class="TextBody" style="text-align: center; margin-bottom: 10px;">
+			<a style="text-align: center; text-decoration: underline;" href="/GuideLineRequestPcV.jsp">送信前にこちらのガイドラインをご一読ください</a>
+		</div>
+
 		<div class="TextBody" style="margin-bottom: 10px">
 			ルール
 			<div class="RequestRule">
-				リクエストを送信した時点で与信が確保されます。<br/>
-				クリエイターが承認した時点で、指定した金額で決済されます。<br/>
-				金額の見積もり・打ち合わせ・リテイク・著作権譲渡はできません。<br/>
-				クリエイターとはリクエスト本文以外での連絡はできません。<br/>
-				リクエストを報酬の送金手段として使用することはできません。<br/>
-				個人鑑賞(SNSへの掲載・使用は含む)を超えた利用には本文へ用途の説明が必要です。<br/>
-				承認後納品されなかった場合は、カード会社を通して返金されます。<br/>
-				現在β版の機能のため、ルールや機能が変更されることがあります。
+				<ol style="padding-inline-start: 25px;">
+					<li>リクエスト本文以外での連絡はできません。</li>
+					<li>金額の見積もり・打ち合わせ・リテイクはできません。</li>
+					<li>リクエスト送信時点で与信確保されます。</li>
+					<li>リクエスト承認時点で決済されます。</li>
+					<li>納品期限内に納品されなかった場合は、カード会社を通して返金されます。</li>
+					<li>個人間の送金手段としては使用できません。</li>
+					<li>個人鑑賞を超えた利用には本文へ用途の説明が必要です。</li>
+					<li>現在β版のため、ルールや機能が変更されることがあります。</li>
+				</ol>
 			</div>
 		</div>
 
 		<div class="UoloadCmd">
-			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ルールに合意してリクエストを送信する</a>
+			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに合意して送信する</a>
 		</div>
 
 		<%} // if(results.user.m_bRequestEnabled)%>
