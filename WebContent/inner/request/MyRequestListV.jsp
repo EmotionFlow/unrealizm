@@ -194,6 +194,22 @@
         margin: 10px auto;
     }
 
+	.RequestLicense {
+        color: #6d6965;
+        font-size: 12px;
+		margin-top: 4px;
+	}
+    .RequestLicense > .RequestLicenseLabel {
+        background: #3498db;
+        color: #ffffff;
+        border-radius: 4px 0 0 4px;
+        padding: 3px 2px 3px 4px;
+    }
+    .RequestLicense > .RequestLicenseTitle {
+        border: solid 1px #3498db;
+        border-radius: 0 4px 4px 0;
+        padding: 2px 3px;
+    }
 
 </style>
 

@@ -50,6 +50,12 @@
 			<%}%>
 		</span>
 	</div>
+	<div class="RequestHeader">
+		<div class="RequestLicense">
+			<span class="RequestLicenseLabel">用途</span><span class="RequestLicenseTitle"><%=_TEX.T(String.format("Request.License.%d.title",r.request.licenseId))%></span>
+		</div>
+	</div>
+
 	<div class="RequestBody">
 		<%if(r.request.status == Request.Status.Done){%>
 		<%if(r.textSummary!=null && !r.textSummary.isEmpty()){
