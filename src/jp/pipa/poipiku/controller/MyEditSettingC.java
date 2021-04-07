@@ -99,7 +99,7 @@ public class MyEditSettingC {
 			}
 			m_cUser.m_strMuteKeyword = strMuteKeyword.toString();
 
-			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=False";
+			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, checkLogin.m_nUserId);
 			statement.setInt(2, Common.TWITTER_PROVIDER_ID);

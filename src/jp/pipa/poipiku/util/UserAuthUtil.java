@@ -637,7 +637,7 @@ public class UserAuthUtil {
 
 			// 再登録も可能な認証
 			//Log.d("USERAUTH twitter userid : ", user_id);
-			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? AND del_flg=False ORDER BY fldUserId DESC LIMIT 1";
+			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? AND del_flg=false ORDER BY fldUserId DESC LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, user_id);
 			cResSet = cState.executeQuery();
@@ -667,7 +667,7 @@ public class UserAuthUtil {
 
 				if(nUserId>0) {
 					// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンとscreen_nameを更新
-					strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, twitter_screen_name=? WHERE fldUserId=? AND del_flg=False";
+					strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, twitter_screen_name=? WHERE fldUserId=? AND del_flg=false";
 					cState = cConn.prepareStatement(strSql);
 					cState.setString(1, accessToken);
 					cState.setString(2, tokenSecret);
