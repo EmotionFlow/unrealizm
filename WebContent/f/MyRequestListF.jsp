@@ -71,7 +71,7 @@
 	</div>
 	<div class="RequestFooter">
 		<div class="RequestUser">
-			<a class="RequestUserLink" href="/<%=results.category.equals("SENT")?r.request.creatorUserId:r.request.clientUserId%>>/">
+			<a class="RequestUserLink" href="/<%=results.category.equals("SENT")?r.request.creatorUserId:r.request.clientUserId%>/">
 				<span class="RequestUserLabel"><%=results.category.equals("SENT")?"To":"From"%></span><span class="RequestUserNickname"><%=r.nickname%></span>
 			</a>
 		</div>
