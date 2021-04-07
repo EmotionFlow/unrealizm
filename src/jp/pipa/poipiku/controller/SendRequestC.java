@@ -14,6 +14,7 @@ public class SendRequestC extends Controller {
 	public int mediaId = -1;
 	public String requestText = "";
 	public int requestCategory = -1;
+	public int licenseId = -1;
 	public int amount = -1;
 	public int commission = -1;
 	public int paymentMethodId = -1;
@@ -33,6 +34,7 @@ public class SendRequestC extends Controller {
 			mediaId = Util.toInt(request.getParameter("MEDIA"));
 			requestText = Common.TrimAll(request.getParameter("TEXT"));
 			requestCategory = Util.toInt(request.getParameter("CATEGORY"));
+			licenseId = Util.toInt(request.getParameter("LICENSE"));
 			amount = Util.toInt(request.getParameter("AMOUNT"));
 			commission = Util.toInt(request.getParameter("COMMISSION"));
 			paymentMethodId = Util.toInt(request.getParameter("PAYMENT_METHOD"));
@@ -75,7 +77,10 @@ public class SendRequestC extends Controller {
 		poipikuRequest.mediaId = mediaId;
 		poipikuRequest.requestText = requestText;
 		poipikuRequest.requestCategory = requestCategory;
+		poipikuRequest.licenseId = licenseId;
 		poipikuRequest.amount = amount;
+
+		Log.d(String.format("l %d",licenseId));
 
 		boolean insertResult = poipikuRequest.insert();
 		if (!insertResult) {

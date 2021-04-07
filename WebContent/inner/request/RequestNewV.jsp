@@ -177,6 +177,7 @@ if (!results.getResults(checkLogin)) {
 				"MEDIA": $("#OptionMedia").val(),
 				"TEXT": $("#EditRequestText").val(),
 				"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
+				"LICENSE": $("#OptionLicense").val(),
 				"AMOUNT": amount,
 				"COMMISSION": _calcCommission(amount, paymentMethod),
 				"PAYMENT_METHOD": 1,
@@ -270,6 +271,11 @@ if (!results.getResults(checkLogin)) {
 		}
 
 		$(() => {
+			$("#OptionLicense").change(()=>{
+				const val = $("#OptionLicense").val();
+				$(".RequestLicenseDetail").hide();
+				$("#RequestLicenseDetail"+val).show();
+			});
 			dispRequestTextCharNum();
 			dispCommission();
 		});
@@ -302,6 +308,9 @@ if (!results.getResults(checkLogin)) {
             position: relative;
             top: 6px;
             margin-right: 3px;
+		}
+		.RequestLicenseDetail {
+			padding: 0 5px;
 		}
 	</style>
 
@@ -385,6 +394,28 @@ if (!results.getResults(checkLogin)) {
 				<%}else{%>
 				このクリエイターはセンシティブな内容を受け付けません
 				<%}%>
+			</div>
+
+			<div class="UoloadCmdOption" style="margin-bottom: 0;">
+				<div class="OptionItem">
+					<div class="OptionLabel" style="flex: 0">利用範囲</div>
+					<div class="OptionPublish">
+						<select id="OptionLicense">
+							<%for(int id : Request.LICENSE_IDS){%>
+							<option value="<%=id%>"><%=_TEX.T(String.format("Request.License.%d.title",id))%></option>
+							<%}%>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="TextBody" style="margin-bottom: 10px">
+				<div class="RequestRule">
+					<%for(int id : Request.LICENSE_IDS){%>
+					<p id="RequestLicenseDetail<%=id%>" class="RequestLicenseDetail" style="display: <%=id==Request.LICENSE_IDS.get(0)?"block":"none"%>" >
+						<%=Util.toStringHtml(_TEX.T(String.format("Request.License.%d.txt",id)))%>
+					</p>
+					<%}%>
+				</div>
 			</div>
 
 			<div id="ItemAmount" class="OptionItem">

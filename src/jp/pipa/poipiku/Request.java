@@ -8,6 +8,8 @@ import javax.sql.DataSource;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public final class Request extends Model{
@@ -28,6 +30,15 @@ public final class Request extends Model{
 	public Timestamp deliveryLimit = null;
 	public int orderId = -1;
 	public int contentId = -1;
+	public int licenseId = -1;
+	public static final List<Integer> LICENSE_IDS = new ArrayList<>();
+
+	static {
+		LICENSE_IDS.add(10);
+		LICENSE_IDS.add(20);
+		LICENSE_IDS.add(30);
+		LICENSE_IDS.add(40);
+	}
 
 	public enum Status implements CodeEnum<Status> {
 		Undefined(0),       // 未定義
@@ -73,6 +84,7 @@ public final class Request extends Model{
 		deliveryLimit = resultSet.getTimestamp("delivery_limit");
 		orderId = resultSet.getInt("order_id");
 		contentId = resultSet.getInt("content_id");
+		licenseId = resultSet.getInt("license_id");
 	}
 
 	private void selectByRequestId(final int requestId){
@@ -206,6 +218,7 @@ public final class Request extends Model{
 			mediaId < 0 ||
 			requestText.isEmpty() ||
 			requestCategory < 0 ||
+			!LICENSE_IDS.contains(licenseId) ||
 			amount < RequestCreator.AMOUNT_MINIMUM_MIN
 		) {
 			errorKind = ErrorKind.OtherError;
@@ -226,8 +239,8 @@ public final class Request extends Model{
 				connection = dataSource.getConnection();
 				sql = "INSERT INTO public.requests(" +
 						" status, client_user_id, creator_user_id, media_id, request_text," +
-						" request_category, amount, return_limit, delivery_limit)" +
-						" VALUES (?, ?, ?, ?, ?, ?, ?, current_timestamp + interval '%d day', current_timestamp + interval '%d day')" +
+						" request_category, license_id, amount, return_limit, delivery_limit)" +
+						" VALUES (?, ?, ?, ?, ?, ?, ?, ?, current_timestamp + interval '%d day', current_timestamp + interval '%d day')" +
 						" RETURNING id";
 				sql = String.format(sql, requestCreator.returnPeriod, requestCreator.deliveryPeriod);
 				statement = connection.prepareStatement(sql);
@@ -238,6 +251,7 @@ public final class Request extends Model{
 				statement.setInt(idx++, mediaId);
 				statement.setString(idx++, requestText);
 				statement.setInt(idx++, requestCategory);
+				statement.setInt(idx++, licenseId);
 				statement.setInt(idx++, amount);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
