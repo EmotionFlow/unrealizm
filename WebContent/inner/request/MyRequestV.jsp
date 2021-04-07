@@ -51,7 +51,6 @@ HashMap<String, String> MENU = new HashMap<>();
 MENU.put("RECEIVED", "受信したリクエスト");
 MENU.put("SENT", "送信済みリクエスト");
 
-
 String[][] menuOrder = {
 		{
 		"RECEIVED",
@@ -82,6 +81,16 @@ int requestId = Util.toInt(request.getParameter("RID"));
 			$.ajaxSetup({
 				cache: false,
 			});
+
+			const licenses = {
+				<%for (int i : Request.LICENSE_IDS) {%>
+				"<%=i%>": "<%=_TEX.T(String.format("Request.License.%d.txt",i))%>" ,
+				<%}%>
+			}
+
+			function dispLicense(id) {
+				alert(licenses[id]);
+			}
 
 			$(function(){
 				<%if(cResults.m_strMessage.length()>0) {%>
