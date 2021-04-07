@@ -98,7 +98,7 @@ public class CTweet {
 		try {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
-			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=False";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -364,7 +364,7 @@ public class CTweet {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 			// ターゲットユーザのTokenとTwitterID取得
-			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=False";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nTargetUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -500,7 +500,7 @@ public class CTweet {
 			try {
 				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 				cConn = dsPostgres.getConnection();
-				strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+				strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=False";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, userId);
 				cState.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -569,7 +569,7 @@ public class CTweet {
 			// ポイピク上のuser_id紐付け
 			strSql = "UPDATE twitter_follows SET follow_user_id=fldUserId FROM tbloauth "
 					+ "WHERE twitter_follows.twitter_follow_user_id=cast(tbloauth.twitter_user_id as bigint) "
-					+ "AND follow_user_id IS NULL AND user_id=?";
+					+ "AND follow_user_id IS NULL AND user_id=? AND del_flg=False";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, userId);
 			cState.executeUpdate();

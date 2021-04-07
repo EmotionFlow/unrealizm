@@ -25,7 +25,7 @@ if(checkLogin.m_bLogin && (checkLogin.m_nUserId == m_nUserId)) {
 		dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 		cConn = dsPostgres.getConnection();
 
-		strSql = "UPDATE tbloauth SET auto_tweet_weekday=?, auto_tweet_time=?, auto_tweet_desc=?, auto_tweet_thumb_num=?  WHERE flduserid=?";
+		strSql = "UPDATE tbloauth SET auto_tweet_weekday=?, auto_tweet_time=?, auto_tweet_desc=?, auto_tweet_thumb_num=?  WHERE flduserid=? AND del_flg=False";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, m_nAutoTweetWeekDay);
 		cState.setInt(2, m_nAutoTweetTime);

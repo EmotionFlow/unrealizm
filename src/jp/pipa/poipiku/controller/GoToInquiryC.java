@@ -51,7 +51,7 @@ public class GoToInquiryC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=False";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, checkLogin.m_nUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);

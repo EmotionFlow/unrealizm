@@ -56,7 +56,7 @@ try
 	cConn = dsPostgres.getConnection();
 
 	// select
-	strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=?";
+	strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=False";
 	cState = cConn.prepareStatement(strSql);
 	cState.setInt(1, checkLogin.m_nUserId);
 	cState.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -70,7 +70,7 @@ try
 	if (bIsExist){
 		Log.d("TwitterToken Update : " + checkLogin.m_nUserId);
 		// update
-		strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=?";
+		strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=? AND del_flg=False";
 		cState = cConn.prepareStatement(strSql);
 		cState.setString(1, consumer.getToken());
 		cState.setString(2, consumer.getTokenSecret());
