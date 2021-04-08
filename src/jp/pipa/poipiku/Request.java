@@ -91,16 +91,13 @@ public final class Request extends Model{
 		if (requestId < 0) {
 			return;
 		}
-		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "SELECT * FROM requests WHERE id=? LIMIT 1";
 			statement = connection.prepareStatement(strSql);
@@ -109,6 +106,7 @@ public final class Request extends Model{
 
 			if(resultSet.next()){
 				set(resultSet);
+				errorKind = ErrorKind.None;
 			}
 
 			resultSet.close();

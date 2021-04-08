@@ -90,7 +90,6 @@ public final class IllustViewPcC {
 					" LEFT JOIN requests r ON r.content_id=c.content_id " +
 					" WHERE c.user_id=? AND c.content_id=? %s", strOpenCnd);
 
-			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, m_nUserId);

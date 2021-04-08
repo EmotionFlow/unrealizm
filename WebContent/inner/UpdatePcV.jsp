@@ -19,7 +19,7 @@ if(!cResults.getResults(checkLogin)) {
 }
 
 Request poipikuRequest = new Request();
-poipikuRequest.selectByContentId(cResults.m_nContentId);
+poipikuRequest.selectByContentId(cResults.m_nContentId, null);
 // 納品済かつ納品期限を過ぎている
 boolean noContentModification = false;
 if (poipikuRequest.id > 0 &&
@@ -243,7 +243,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
 			<%}%>
-			#FineUploaderPane { display:visible; }
+			#FineUploaderPane { display:block; }
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			<%if(!Util.isSmartPhone(request)) {%>
 			.PasteZone {min-height: 193px;}

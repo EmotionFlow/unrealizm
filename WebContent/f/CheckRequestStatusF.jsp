@@ -5,7 +5,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 
 Request r = new Request();
-boolean result = r.selectByContentId(Util.toInt(request.getParameter("CID")));
+boolean result = r.selectByContentId(Util.toInt(request.getParameter("CID")), null);
 
 %>{
 "result" : <%=result?1:0%>,
