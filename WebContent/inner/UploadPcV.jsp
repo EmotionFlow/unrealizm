@@ -324,7 +324,6 @@ if (requestId > 0) {
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=checkLogin.m_nUserId%>)">
-								<%if(requestId<0){%>
 								<option value="<%=Common.PUBLISH_ID_ALL%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.All")%></option>
 								<option value="<%=Common.PUBLISH_ID_R15%>"><%=_TEX.T("UploadFilePc.Option.Publish.R15")%></option>
 								<option value="<%=Common.PUBLISH_ID_R18%>"><%=_TEX.T("UploadFilePc.Option.Publish.R18")%></option>
@@ -338,9 +337,6 @@ if (requestId > 0) {
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}//if(cTweet.m_bIsTweetEnable)%>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
-								<%}else{ //if(requestId<0)%>
-								<option value="<%=Common.PUBLISH_ID_HIDDEN%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
-								<%}%>
 							</select>
 						</div>
 					</div>

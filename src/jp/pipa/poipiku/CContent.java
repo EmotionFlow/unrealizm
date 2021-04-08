@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import jp.pipa.poipiku.util.Util;
 
-public class CContent {
+public final class CContent {
 	public static final int BOOKMARK_NONE = 0;
 	public static final int BOOKMARK_BOOKMARKING = 1;
 	public static final int BOOKMARK_LIMIT = 2;
@@ -36,12 +36,13 @@ public class CContent {
 	public String m_strListId = "";
 	public String m_strTweetId = "";
 	public int m_nTweetWhenPublished = 0;
-	public ArrayList<CComment> m_vComment = new ArrayList<CComment>();
+	public ArrayList<CComment> m_vComment = new ArrayList<>();
 	public String m_strCommentsListsCache = "";
-	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<CContentAppend>();
+	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<>();
 	public boolean m_bCheerNg = true;
 	public String m_strTextBody = "";
 	public int m_nGenreId = 1;
+	public int m_nRequestId = -1;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 

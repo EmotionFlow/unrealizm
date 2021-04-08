@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!public class NewArrivalC {
-
+<%!
+public class NewArrivalC {
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {

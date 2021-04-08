@@ -103,8 +103,17 @@ public final class CCnv {
 		return (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-images\"></i> %d", cContent.m_nFileNum):"";
 	}
 	private static void appendIllustItemCategory(StringBuilder strRtn, CContent cContent, String SEARCH_CATEGORY, ResourceBundleControl _TEX){
+		if (cContent.m_nRequestId>0) {
+			strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
+			strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
+					cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
+					_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+			strRtn.append("</h2>");
+		}
 		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
-		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>", cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
+				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
+				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("</h2>");
 	}
 	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
