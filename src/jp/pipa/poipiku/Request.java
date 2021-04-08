@@ -181,6 +181,8 @@ public final class Request extends Model{
 		try {
 			if (_connection == null) {
 				connection = DatabaseUtil.dataSource.getConnection();
+			} else {
+				connection = _connection;
 			}
 
 			strSql = "SELECT * FROM requests WHERE content_id=? LIMIT 1";
