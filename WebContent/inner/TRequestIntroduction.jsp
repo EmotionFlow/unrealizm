@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script>
-function getRequestIntroductionHtml(){
+function _getRequestIntroductionHtml(){
 	return `
 <style>
 	.RequestIntroDlgTitle{padding: 10px 0 0 0;}
@@ -10,15 +10,16 @@ function getRequestIntroductionHtml(){
 </style>
 <h2 class="RequestIntroDlgTitle">リクエスト(β)とは？</h2>
 <div class="RequestIntroDlgInfo" style="margin-top: 11px;">
-	<p>ポイピクユーザー（クライアント）がお題を送り、受け取ったユーザー（クリエイター）がそのリクエストに応じたイラストやテキストを創作すると、投げ銭として報酬をもらうことができる仕組みです。</p>
-	<p>事前打ち合わせやリテイクは一切なしとし、クライアントは気軽にリクエストを送信し、クリエイターは気に入ったリクエストを気軽に創作する環境を目指しています。</p>
+	<p>ポイピクユーザー（クライアント）が投げ銭つきでお題を送り、受け取ったポイピクユーザー（クリエイター）がイラストやテキストを創作すると、投げ銭として報酬をもらうことができる仕組みです。</p>
+	<p>事前打ち合わせやリテイクは一切なしとし、気軽にリクエストを送信、創作できる場を目指しています。</p>
 </div>
 <h2 class="RequestIntroDlgTitle">特徴</h2>
 <div class="RequestIntroDlgInfo">
 <ul>
+	<li>クライアントは、リクエスト時に創作物の用途範囲を明確に選択できます。</li>
 	<li>クリエイターは、受け取ったリクエストから気に入ったもののみ承認できます。</li>
-	<li>クライアントからの要求はリクエスト時のみ。ポイピク内外問わず、それ以外のクリエイターとのコミュニケーションは禁止です。</li>
-	<li>創作物の内容は、リクエスト内容と金額から、クリエイターが判断します。</li>
+	<li>クライアントからの要求はリクエスト時のみ。ポイピク内外問わず、他のクリエイターとのコミュニケーションは禁止です。</li>
+	<li>創作物の内容は、リクエスト内容・用途・金額から、クリエイターが判断します。</li>
 </ul>
 </div>
 <h2 class="RequestIntroDlgTitle">利用の流れ</h2>
@@ -49,7 +50,7 @@ function getRequestIntroductionHtml(){
 
 function dispRequestIntroduction(){
 	Swal.fire({
-		html: getRequestIntroductionHtml(),
+		html: _getRequestIntroductionHtml(),
 		focusConfirm: true,
 		showConfirmButton: true,
 	})

@@ -4,11 +4,6 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-//if(!bSmartPhone) {
-//	getServletContext().getRequestDispatcher("/NewArrivalGridPcV.jsp").forward(request,response);
-//	return;
-//}
-
 NewArrivalRequestC cResults = new NewArrivalRequestC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 45;
@@ -30,17 +25,15 @@ if(cResults.m_nCategoryId >= 0) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TRequestIntroduction.jsp"%>
 		<meta name="description" content="<%=Util.toStringHtml(Util.deleteCrLf(description))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%>(<%=categoryName%>)</title>
 
 		<script type="text/javascript">
 		$(function(){
-			$('#MenuNew').addClass('Selected');
-			$('#MenuRecent').addClass('Selected');
-		});
-
-		$(function(){
-			updateCategoryMenuPos(0);
+			//$('#MenuNew').addClass('Selected');
+			//$('#MenuRecent').addClass('Selected');
 		});
 		</script>
 		<style>
@@ -51,7 +44,13 @@ if(cResults.m_nCategoryId >= 0) {
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%@ include file="/inner/TTabMenuRequestPotalPc.jsp"%>
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		<div class="HeaderPoiPassAd" style="width: 100%;padding-top: 10px">
+			<a onclick="dispRequestIntroduction()" href="javascript:void(0);" style="display: flex; flex-flow: row; padding: 3px 0 ; justify-content: center;">
+				<span style="font-weight: bold; font-size: 13px; line-height: 25px; text-decoration: underline;">
+					<i class="fas fa-info-circle"></i>リクエストとは？
+				</span>
+			</a>
+		</div>
 
 		<article class="Wrapper ThumbList">
 			<%if(!categoryInfo.isEmpty() && cResults.m_nPage<=0) {%>
