@@ -297,6 +297,11 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 		<article class="Wrapper">
 			<div class="UploadFile">
+				<%if(poipikuRequest.id>0){%>
+				<div class="RequestText">
+					<%=Util.toStringHtml(poipikuRequest.requestText)%>
+				</div>
+				<%}%>
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<%if(noContentModification){%>
 				<div class="OptionItem">
