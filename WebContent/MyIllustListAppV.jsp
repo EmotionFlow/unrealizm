@@ -121,9 +121,7 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 
 	<body>
 		<%@ include file="/inner/TMenuApp.jsp" %>
-
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
-
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>

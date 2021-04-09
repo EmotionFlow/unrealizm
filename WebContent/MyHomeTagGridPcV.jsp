@@ -29,6 +29,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		</script>
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
+		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
 		function UpdateFollow(nUserId, nFollowUserId) {

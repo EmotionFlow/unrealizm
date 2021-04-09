@@ -24,6 +24,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<title>home</title>
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
+		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
 		var g_nEndId = <%=cResults.m_nEndId%>;
