@@ -53,6 +53,7 @@ function dispRequestIntroduction(){
 		html: _getRequestIntroductionHtml(),
 		focusConfirm: true,
 		showConfirmButton: true,
+		showCloseButton: true,
 	})
 }
 </script>

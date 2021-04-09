@@ -177,7 +177,6 @@
 	color: #3498db;
 	margin: 10px 0 7px 0;
 	font-size: 18px;
-	height: 30px;
 	line-height: 30px;
 	display: block;
 	float: left;
@@ -219,7 +218,7 @@
 
 /********** genre contents **********/
 .SearchGenreFrame {
-	background-position: 0% 50%;
+	background-position: 0 50%;
 	background-size: cover;
 }
 
@@ -440,12 +439,11 @@
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	padding-bottom: 0px;
+	padding-bottom: 0;
 }
 
 /********** ILLUST LIST **********/
 .IllustThumb {
-	display: block;
 	float: left;
 	width: 112px;
 	height: 182px;
@@ -558,7 +556,6 @@
 }
 
 .IllustThumb .GenreInfo .GenreName {
-	display: block;
 	display: none;
 	flex: 0 0 82px;
 	width: 82px;
@@ -609,7 +606,7 @@
 	flex: 1 1;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 2px 2px 0px 2px;
+	padding: 2px 2px 0 2px;
 	top: 0;
 	overflow: hidden;
 }
@@ -628,7 +625,7 @@
 .IllustThumb .IllustInfoCenter {
 	display: block;
 	box-sizing: border-box;
-	padding: 0px;
+	padding: 0;
 	position: absolute;
 }
 .IllustThumb .IllustInfoBottom, .IllustItemThumb .IllustInfoBottom{
@@ -763,6 +760,10 @@
 	color: #6d6965;
 }
 
+.UserThumb:hover {
+	color: #a39c98;
+}
+
 .UserThumb .UserThumbImg {
 	display: block;
 	flex: 0 0 30px;
@@ -882,7 +883,7 @@
 
 
 .UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
-.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; padding: 0; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;-webkit-user-select: text;user-select: text;}
+.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;-webkit-user-select: text;user-select: text;}
 
 .UploadFile .CategorDesc {
 	display: block;
@@ -1171,7 +1172,6 @@
 }
 
 .IllustItem .IllustItemCommand .GenreInfo .GenreName {
-	display: block;
 	display: none;
 	flex: 1 1;
 	height: 42px;
@@ -1203,7 +1203,7 @@
 	margin:  4px 10px;
 }
 
-.IllustItem .IllustItemCommand .IllustItemCategoryEdit {display: none; float: left; margin: 0px 0 8px 0px;}
+.IllustItem .IllustItemCommand .IllustItemCategoryEdit {display: none; float: left; margin: 0 0 8px 0;}
 
 
 .IllustItemTProhibit{
@@ -1274,7 +1274,6 @@
 	font-size: 12px;
 	line-height: 20px;
 	height: 20px;
-	margin: 0;
 	padding: 0 12px;
 	border-radius: 20px;
 }
@@ -2437,7 +2436,7 @@
 .SettingList .SettingListItem .SettingListTitle .SettingListTitlePoipikuPass {
 	height: 30px;
 	vertical-align: middle;
-	margin: 0 3px 2px 0px
+	margin: 0 3px 2px 0
 }
 
 .SettingList .SettingListItem .SettingBody {
@@ -2538,7 +2537,6 @@
 	color: #ccc;
 	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.4);
 	box-sizing: border-box;
-	cursor: pointer;
 }
 
 .SettingList .SettingListItem .SettingBody .FileSelectFrame .typcn {
@@ -2591,7 +2589,7 @@
 .EventItemList .EventItem .EventBanner.NoBgBlue{background-image: linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%);}
 .EventItemList .EventItem .EventBanner.NoBgGold{background-image: linear-gradient( 135deg, #FFA8A8 10%, #FCFF00 100%);color: #ff3333;}
 .EventItemList .EventItem.Updated {position: relative;}
-.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; left: 0px;}
+.EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; left: 0;}
 .EventItemList .EventItem.Pre {position: relative;}
 .EventItemList .EventItem.Pre:after {display: block; content: '予告'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #3498db; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
 .EventItemList .EventItem.Start {position: relative;}
@@ -2605,7 +2603,7 @@
 .SystemInfo:hover a {color: #333;}
 .SystemInfo .SystemInfoTitle {display: block; flex: 0 0 30px; height: 36px; line-height: 36px;text-align: center; font-size: 14px;}
 .SystemInfo .SystemInfoDate {display: block; flex: 0 0 48px; height: 36px; line-height: 18px;text-align: center;font-size: 12px; }
-.SystemInfo .SystemInfoDesc {display: block; flex: 1 1; height: 36px; line-height: 18px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: underline;font-size: 12px;max-height: 36px; line-height: 18px;;}
+.SystemInfo .SystemInfoDesc {display: block; flex: 1 1; height: 36px; line-height: 18px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: underline;font-size: 12px;max-height: 36px;}
 .SystemInfo .SystemInfoClose {display: block; flex: 0 0 30px; height: 36px; line-height: 36px; text-align: center;font-size: 12px;}
 
 
