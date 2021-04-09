@@ -91,16 +91,13 @@ public final class Request extends Model{
 		if (requestId < 0) {
 			return;
 		}
-		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "SELECT * FROM requests WHERE id=? LIMIT 1";
 			statement = connection.prepareStatement(strSql);
@@ -109,6 +106,7 @@ public final class Request extends Model{
 
 			if(resultSet.next()){
 				set(resultSet);
+				errorKind = ErrorKind.None;
 			}
 
 			resultSet.close();
@@ -170,22 +168,22 @@ public final class Request extends Model{
 
 	}
 
-	public boolean selectByContentId(final int _contentId) {
+	public boolean selectByContentId(final int _contentId, Connection _connection) {
 		if (_contentId < 0) {
 			errorKind = ErrorKind.OtherError;
 			return false;
 		}
 
-		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
-
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			if (_connection == null) {
+				connection = DatabaseUtil.dataSource.getConnection();
+			} else {
+				connection = _connection;
+			}
 
 			strSql = "SELECT * FROM requests WHERE content_id=? LIMIT 1";
 			statement = connection.prepareStatement(strSql);
@@ -207,7 +205,7 @@ public final class Request extends Model{
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(_connection==null && connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 	}
 	

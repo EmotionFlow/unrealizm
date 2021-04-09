@@ -10,7 +10,7 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class IllustViewPcC {
+public final class IllustViewPcC {
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
 
@@ -45,8 +45,8 @@ public class IllustViewPcC {
 
 	public int SELECT_MAX_GALLERY = 6;
 	public int SELECT_MAX_RELATED_GALLERY = 30;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<CContent>();
+	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<>();
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
@@ -58,6 +58,7 @@ public class IllustViewPcC {
 	public int m_nContentsNumTotal = 0;
 	public Integer m_nNewContentId = null;
 	public boolean m_bCheerNg = true;
+
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
 		DataSource dataSource = null;
@@ -77,13 +78,18 @@ public class IllustViewPcC {
 				m_bOwner = true;
 			} else {
 				Request poipikuRequest = new Request();
-				poipikuRequest.selectByContentId(m_nContentId);
+				poipikuRequest.selectByContentId(m_nContentId, connection);
 				m_bRequestClient = (poipikuRequest.clientUserId == checkLogin.m_nUserId);
 			}
 
 			// content main
-			String strOpenCnd = (!m_bOwner && !m_bRequestClient)?" AND open_id<>2":"";
-			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
+			final String strOpenCnd = (!m_bOwner && !m_bRequestClient)?" AND open_id<>2":"";
+
+			strSql = String.format(
+					"SELECT c.*, r.id request_id FROM contents_0000 c" +
+					" LEFT JOIN requests r ON r.content_id=c.content_id " +
+					" WHERE c.user_id=? AND c.content_id=? %s", strOpenCnd);
+
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, m_nUserId);
@@ -92,6 +98,8 @@ public class IllustViewPcC {
 			boolean bContentExist = false;
 			if(resultSet.next()) {
 				m_cContent = new CContent(resultSet);
+				final int requestId = resultSet.getInt("request_id");
+				if(requestId>0) m_cContent.m_nRequestId=requestId;
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 				bContentExist = true;
 			}
@@ -247,7 +255,6 @@ public class IllustViewPcC {
 			if(SELECT_MAX_RELATED_GALLERY>0) {
 				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin);
 			}
-
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 		} catch(Exception e) {

@@ -20,16 +20,12 @@ public final class CCnv {
 	public static final int SP_MODE_WVIEW = 0;
 	public static final int SP_MODE_APP = 1;
 
-	private static String getIllustListContext(int nMode, int nSpMode, int nUserId){
-		String s = "";
+	private static String getIllustListContext(int nSpMode, int nUserId){
 		if(nSpMode==SP_MODE_APP){
-			s = String.format("/IllustListAppV.jsp?ID=%d", nUserId);
-		}else if(nMode==MODE_SP){
-			s = String.format("/%d/", nUserId);
+			return String.format("/IllustListAppV.jsp?ID=%d", nUserId);
 		}else{
-			s = String.format("/%d/", nUserId);
+			return String.format("/%d/", nUserId);
 		}
-		return s;
 	}
 	private static String getReportFormContext(int nMode){
 		return (nMode==MODE_SP)?"/ReportFormV.jsp":"/ReportFormPcV.jsp";
@@ -102,10 +98,19 @@ public final class CCnv {
 	private static String getContentsFileNumHtml(CContent cContent){
 		return (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-images\"></i> %d", cContent.m_nFileNum):"";
 	}
-	private static void appendIllustItemCategory(StringBuilder strRtn, CContent cContent, String SEARCH_CATEGORY, ResourceBundleControl _TEX){
+	private static void appendIllustItemCategory(StringBuilder strRtn, final CContent cContent, final String SEARCH_CATEGORY, final ResourceBundleControl _TEX, final int loginUserId){
 		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
-		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>", cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId, _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
+				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
+				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("</h2>");
+		if (CheckLogin.isStaff(loginUserId) && cContent.m_nRequestId>0) {
+			strRtn.append("<h2 class=\"IllustItemCategory\">");
+			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
+					cContent.m_nRequestId, _TEX.T("Request")
+			));
+			strRtn.append("</h2>");
+		}
 	}
 	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
@@ -372,10 +377,10 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustItemResList
 	}
 
-	public static String toMyThumbHtmlPc(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException {
+	public static String toMyThumbHtmlPc(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, SP_MODE_WVIEW, cContent.m_nUserId);
+		String ILLUST_LIST = getIllustListContext(SP_MODE_WVIEW, cContent.m_nUserId);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode, SP_MODE_WVIEW);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, SP_MODE_WVIEW);
@@ -402,7 +407,7 @@ public final class CCnv {
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
 
-		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
+		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 
 		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, MODE_PC, REPORT_FORM, _TEX);
@@ -427,18 +432,18 @@ public final class CCnv {
 		return strRtn.toString();
 	}
 
-	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult) throws UnsupportedEncodingException {
+	public static String Content2Html(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult) throws UnsupportedEncodingException {
 		return Content2Html(cContent,  nLoginUserId, nMode, _TEX, vResult, VIEW_LIST, SP_MODE_WVIEW);
 	}
 
-	public static String Content2Html(CContent cContent,  int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode) throws UnsupportedEncodingException {
+	public static String Content2Html(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode) throws UnsupportedEncodingException {
 		return Content2Html(cContent,  nLoginUserId, nMode, _TEX, vResult, nViewMode, SP_MODE_WVIEW);
 	}
 
-	public static String Content2Html(CContent cContent, int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
+	public static String Content2Html(final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
+		String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		String REPORT_FORM = getReportFormContext(nMode);
 		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
@@ -465,7 +470,7 @@ public final class CCnv {
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
 		// カテゴリー
-		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
+		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
@@ -536,7 +541,7 @@ public final class CCnv {
 		return strRtn.toString();
 	}
 
-	public static String MyContent2Html(CContent cContent, int nLoginUserId, int nMode, ResourceBundleControl _TEX, ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
+	public static String MyContent2Html(final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
 		//String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
@@ -553,7 +558,7 @@ public final class CCnv {
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
 
-		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX);
+		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 
 		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
@@ -617,7 +622,7 @@ public final class CCnv {
 	}
 
 	public static String toThumbHtml(CContent cContent, CheckLogin checkLogin, int nMode, int nSpMode, ResourceBundleControl _TEX) {
-		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
+		String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
@@ -739,7 +744,7 @@ public final class CCnv {
 	}
 
 	private static String _toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){
-		String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cUser.m_nUserId);
+		String ILLUST_LIST = getIllustListContext(nSpMode, cUser.m_nUserId);
 		StringBuilder strRtn = new StringBuilder();
 		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s\">", ILLUST_LIST));
 		strRtn.append(String.format("<span class=\"UserThumbImg\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cUser.m_strFileName)));

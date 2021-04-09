@@ -84,8 +84,9 @@ public final class MyHomePcC {
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("FROM contents_0000 ")
-			.append("WHERE open_id<>2 ")
-			.append("AND user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=? UNION SELECT ?) ");
+			.append(" LEFT JOIN requests ON requests.content_id=contents_0000.content_id")
+			.append(" WHERE open_id<>2 ")
+			.append(" AND user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=? UNION SELECT ?) ");
 			if(!strCondMute.isEmpty()){
 				sb.append(strCondMute);
 			}
@@ -122,8 +123,8 @@ public final class MyHomePcC {
 			statement.close();statement=null;
 
 			// NEW ARRIVAL
-			strSql = "SELECT * " + strSqlFromWhere;
-			strSql += "ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT contents_0000.*, requests.id request_id " + strSqlFromWhere;
+			strSql += " ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId);
@@ -142,6 +143,7 @@ public final class MyHomePcC {
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				cContent.m_cUser.m_nReaction	= user.reaction;
 				cContent.m_cUser.m_nFollowing	= CUser.FOLLOW_HIDE;
+				cContent.m_nRequestId = resultSet.getInt("request_id");
 				m_nEndId = cContent.m_nContentId;
 				m_vContentList.add(cContent);
 			}
