@@ -1,12 +1,4 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="org.apache.commons.lang3.RandomStringUtils"%>
-<%@page import="java.net.URLEncoder"%>
-<%@page import="java.sql.*"%>
-<%@page import="java.util.*"%>
-<%@page import="javax.naming.*"%>
-<%@page import="javax.sql.*"%>
-<%@page import="oauth.signpost.http.*"%>
-<%@page import="oauth.signpost.*"%>
 <%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");

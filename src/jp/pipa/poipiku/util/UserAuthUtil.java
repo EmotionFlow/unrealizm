@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -578,15 +580,15 @@ public class UserAuthUtil {
 
 	public static int registUserFromTwitter(HttpServletRequest request, HttpServletResponse response, HttpSession session, ResourceBundleControl _TEX) {
 		int nRtn = ERROR_UNKOWN;
+		List<Oauth> oauthResults = new ArrayList<>();
 		int nUserId = -1;
 		String strHashPass = "";
 
-		String accessToken="";
-		String tokenSecret="";
-		String user_id="";
-		String screen_name="";
+		String accessToken = "";
+		String tokenSecret = "";
+		String twitterUserId = "";
+		String twitterScreenName = "";
 
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -608,17 +610,14 @@ public class UserAuthUtil {
 			if(accessToken==null || accessToken.isEmpty()) return ERROR_TWITTER_ACCESS_TOKEN_ERROR;
 			if(tokenSecret==null || tokenSecret.isEmpty()) return ERROR_TWITTER_TOKEN_SECRET_ERROR;
 
+			HttpParameters responseParameters = provider.getResponseParameters();
+			if(responseParameters==null) return ERROR_TWITTER_PROVIDER_PARAMETER_ERROR;
+			twitterUserId = responseParameters.get("user_id").first();
+			if(twitterUserId==null || twitterUserId.isEmpty()) return ERROR_TWITTER_USER_ID_ERROR;
+			twitterScreenName = responseParameters.get("screen_name").first();
+			if(twitterScreenName==null || twitterScreenName.isEmpty()) return ERROR_TWITTER_SCREEN_NAME_ERROR;
 
-			HttpParameters hp = provider.getResponseParameters();
-			if(hp==null) return ERROR_TWITTER_PROVIDER_PARAMETER_ERROR;
-			user_id = hp.get("user_id").first();
-			if(user_id==null || user_id.isEmpty()) return ERROR_TWITTER_USER_ID_ERROR;
-			screen_name = hp.get("screen_name").first();
-			if(screen_name==null || screen_name.isEmpty()) return ERROR_TWITTER_SCREEN_NAME_ERROR;
-
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// check user
 			/*
@@ -637,19 +636,23 @@ public class UserAuthUtil {
 
 			// 再登録も可能な認証
 			//Log.d("USERAUTH twitter userid : ", user_id);
-			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? AND del_flg=false ORDER BY fldUserId DESC LIMIT 1";
+			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? ORDER BY fldUserId";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, user_id);
+			cState.setString(1, twitterUserId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
+				Oauth oauthResult = new Oauth(cResSet);
+				oauthResults.add(oauthResult);
 				nUserId = cResSet.getInt("fldUserId");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			//Log.d("USERAUTH poipiku user_id: ", nUserId);
 
-			if (nUserId>0){	// Login
-				//Log.d("USERAUTH Login : " + nUserId);
+			// TODO 複数レコード見つかった -> 選択を促す。
+			// １レコードだが、選択解除されている　-> 選択を促す。
+			// 1レコードで、選択解除されていない -> ログイン
+			// 0レコード -> 新規登録
+			if (nUserId>0) {	// Login
 				String strPassword = "";
 				String strEmail = "";
 				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
@@ -671,7 +674,7 @@ public class UserAuthUtil {
 					cState = cConn.prepareStatement(strSql);
 					cState.setString(1, accessToken);
 					cState.setString(2, tokenSecret);
-					cState.setString(3, screen_name);
+					cState.setString(3, twitterScreenName);
 					cState.setInt(4, nUserId);
 					cState.executeUpdate();
 					cState.close();cState=null;
@@ -733,8 +736,8 @@ public class UserAuthUtil {
 				response.addCookie(cLK);
 
 				nRtn = nUserId;
-			} else {		// Regist
-				//Log.d("USERAUTH Regist start");
+			} else { // Register
+				//Log.d("USERAUTH Register start");
 				String strPassword = RandomStringUtils.randomAlphanumeric(16);
 				strHashPass = Util.getHashPass(strPassword);
 				String strEmail = RandomStringUtils.randomAlphanumeric(16);
@@ -748,7 +751,7 @@ public class UserAuthUtil {
 				nLangId = (strLang.equals("en"))?0:1;
 
 				// User名被りチェック
-				String strUserName = screen_name;
+				String strUserName = twitterScreenName;
 				/*
 				boolean bUserName = false;
 				strSql = "SELECT * FROM users_0000 WHERE nickname=?";
@@ -774,7 +777,7 @@ public class UserAuthUtil {
 				cState.setString(2, strPassword);
 				cState.setString(3, strHashPass);
 				cState.setString(4, strEmail);
-				cState.setString(5, "@"+screen_name);
+				cState.setString(5, "@"+twitterScreenName);
 				cState.setInt(6, nLangId);
 				cState.executeUpdate();
 				cState.close();cState=null;
@@ -799,8 +802,8 @@ public class UserAuthUtil {
 					cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 					cState.setString(3, accessToken);
 					cState.setString(4, tokenSecret);
-					cState.setString(5, user_id);
-					cState.setString(6, screen_name);
+					cState.setString(5, twitterUserId);
+					cState.setString(6, twitterScreenName);
 					cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", nUserId));
 					cState.executeUpdate();
 					cState.close();cState=null;
