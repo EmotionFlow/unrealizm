@@ -93,6 +93,9 @@ int requestId = Util.toInt(request.getParameter("RID"));
 			}
 
 			$(function(){
+				$('#MenuRequest').addClass('Selected');
+				$('#MenuSearch').hide();
+
 				<%if(cResults.m_strMessage.length()>0) {%>
 					DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");
 				<%}%>
@@ -108,14 +111,12 @@ int requestId = Util.toInt(request.getParameter("RID"));
 				});
 
 				<%if(bSmartPhone){%>
-					$("#MenuMe").addClass("Selected");
 					<%if(cResults.m_strSelectedMenuId.isEmpty()){%>
 						$("#MENUROOT").show();
 					<%}else{%>
 						$("#<%=cResults.m_strSelectedMenuId%>").show();
 					<%}%>
 				<%}else{%>
-					$("#MenuSettings").addClass("Selected");
 					$("#MENUROOT").show();
 					var menuId = "<%=cResults.m_strSelectedMenuId%>";
 					if(menuId===""){

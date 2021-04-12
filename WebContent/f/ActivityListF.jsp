@@ -35,7 +35,7 @@ cResults.getResults(checkLogin);
 		</span>
 		<span class="ActivityListBody">
 			<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("YYYY MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=(new SimpleDateFormat("yyyy MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
 				<span class="Title"><%=_TEX.T("ActivityList.Message.Comment")%></span>
 			</span>
 			<span class="ActivityListDesc">
@@ -49,12 +49,11 @@ cResults.getResults(checkLogin);
 		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST) {%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
 		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
-				<span class="ActivityListThumb">
-					リ
+				<span class="ActivityListRequestThumb">
 				</span>
 			<span class="ActivityListBody">
 				<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("YYYY MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=(new SimpleDateFormat("yyyy MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
 					<span class="Title"><%=activityInfo.infoDesc%></span>
 				</span>
 				<span class="ActivityListDesc">

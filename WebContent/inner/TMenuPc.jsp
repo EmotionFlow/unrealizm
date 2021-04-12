@@ -1,6 +1,3 @@
-<%@page import="jp.pipa.poipiku.*"%>
-<%@page import="jp.pipa.poipiku.cache.*"%>
-<%@page import="jp.pipa.poipiku.controller.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header class="Header">
@@ -27,6 +24,10 @@
 				</form>
 				<%} else {%>
 				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
+					<span class="MenuMyRequestsIcon"></span>
+					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>
+				</a>
 				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 					<span class="MenuUploadIcon"></span>
 					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
@@ -48,20 +49,33 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
+			<%if(checkLogin.isStaff()){%>
+			<a id="MenuRequest" class="FooterMenuItem" href="/NewArrivalRequestPcV.jsp">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
+			</a>
+			<%}else{%>
 			<a id="MenuGenre" class="FooterMenuItem" href="/PopularGenreListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Genre")%></span>
 			</a>
-			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+			<%}%>
+			<a id="MenuAct" style="<%=Util.isSmartPhone(request)?"":"margin-right: 25px;"%>" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon">
 					<div id="InfoNumAct" class="InfoNum">0</div>
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			</a>
-			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID="+<%=checkLogin.m_nUserId%>">
+			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
+			<%if(checkLogin.isStaff()){%>
+			<a id="MenuMyRequests" class="FooterMenuItem" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("Request.MyRequests")%></span>
+			</a>
+			<%}%>
 		</nav>
 		<nav class="FooterMenu" style="float: right;">
 			<%if(!checkLogin.m_bLogin) {%>
@@ -125,10 +139,17 @@
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
+		<%if(checkLogin.isStaff()){%>
+		<a id="MenuRequest" class="FooterMenuItem" href="/NewArrivalRequestPcV.jsp">
+			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
+		</a>
+		<%}else{%>
 		<a id="MenuGenre" class="FooterMenuItem" href="/PopularGenreListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Genre")%></span>
 		</a>
+		<%}%>
 		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon">
 				<div id="InfoNumAct" class="InfoNum">0</div>
@@ -146,7 +167,7 @@
 <script>
 	function UpdateNotify() {
 		$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
-			var ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
+			const ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
 			//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
 			$('#InfoNumAct').html(ntfy_num);
 			if(ntfy_num>0) {
@@ -177,8 +198,7 @@
 		})
 	})
 </script>
-
-<!--
+<%if(false){%>
 <div id="AnalogicoInfo" class="AnalogicoInfo Float">
 	<h2 class="AnalogicoInfoTitle">
 		<%=_TEX.T("THeader.Title")%>
@@ -194,5 +214,5 @@
 		<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
 	</div>
 </div>
--->
 <%}%>
+<%} // if(!checkLogin.m_bLogin)%>

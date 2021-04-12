@@ -44,6 +44,13 @@ if(cResults.m_nCategoryId >= 0) {
 		<style>
 			body {padding-top: 79px !important;}
 		</style>
+		<script type="text/javascript">
+			$(function(){
+				$('#MenuRequest').addClass('Selected');
+				$('#MenuSearch').hide();
+				$('#MenuMyRequests').show();
+			});
+		</script>
 	</head>
 
 	<body>

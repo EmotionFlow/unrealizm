@@ -2082,6 +2082,18 @@
 	margin: 0 5px 0 0;
 }
 
+.IllustItemList .ActivityList .ActivityListItem .ActivityListRequestThumb {
+	display: block;
+	margin: 0 5px 0 0;
+	width: 60px;
+	height: 60px;
+	box-sizing: border-box;
+	border: solid 1px #eee;
+	background: url(/img/menu_pc-09.png) no-repeat;
+	background-size: 700%;
+	position: relative;
+}
+
 .IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbImg {
 	display: block;
 	width: 60px;
