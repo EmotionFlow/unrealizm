@@ -15,8 +15,8 @@
 <link rel="icon" href="/favicon_2.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-37.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-131.css" type="text/css" rel="stylesheet" />
-<link href="/css/TBasePc-66.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-132.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBasePc-67.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114_2.png" />
@@ -35,6 +35,6 @@
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-71.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-72.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
