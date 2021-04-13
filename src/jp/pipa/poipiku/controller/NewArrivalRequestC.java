@@ -92,7 +92,6 @@ public final class NewArrivalRequestC extends Controller{
 					+ strCondCat
 					+ strCondMute
 					+ "ORDER BY content_id DESC OFFSET ? LIMIT ? ";
-			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
