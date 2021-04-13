@@ -66,6 +66,7 @@ if (request.getParameter("ST") != null) {
 int requestId = Util.toInt(request.getParameter("RID"));
 
 %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -93,7 +94,11 @@ int requestId = Util.toInt(request.getParameter("RID"));
 			}
 
 			$(function(){
+				<%if(bSmartPhone){%>
 				$('#MenuRequest').addClass('Selected');
+				<%}else{%>
+				$('#MenuMyRequests').addClass('Selected');
+				<%}%>
 				$('#MenuSearch').hide();
 
 				<%if(cResults.m_strMessage.length()>0) {%>
@@ -118,7 +123,7 @@ int requestId = Util.toInt(request.getParameter("RID"));
 					<%}%>
 				<%}else{%>
 					$("#MENUROOT").show();
-					var menuId = "<%=cResults.m_strSelectedMenuId%>";
+					const menuId = "<%=cResults.m_strSelectedMenuId%>";
 					if(menuId===""){
 						menuId = "RECEIVED";
 					}

@@ -40,6 +40,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 #MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -56px -28px;}
 #MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -84px -28px;}
 #MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -112px -28px;}
+#MenuMyRequests.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -112px -28px;}
 #MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background-position: -140px -28px;}
 #MenuGenre.Selected .FooterMenuItemIcon, #MenuGenre:hover .FooterMenuItemIcon {background-position: -168px -28px;}
 
