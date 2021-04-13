@@ -185,7 +185,7 @@
 
 <div class="SettingList">
 	<div class="SettingListItem">
-		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED"><i class="far fa-clipboard"></i> マイリクエスト →</a>
+		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED">マイリクエスト →</a>
 
 		<a href="javascript: void(0);"
 		   style="text-decoration: underline"
