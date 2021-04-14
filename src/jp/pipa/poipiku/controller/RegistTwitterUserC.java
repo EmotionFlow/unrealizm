@@ -1,5 +1,6 @@
 package jp.pipa.poipiku.controller;
 
+import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.Oauth;
 import jp.pipa.poipiku.ResourceBundleControl;
@@ -29,9 +30,9 @@ import java.util.List;
 
 public final class RegistTwitterUserC {
 	public static class Result {
-		public int poipikuUserId;
-		public String hashPassword;
-		public Oauth oauth;
+		public CUser user = null;
+		public String hashPassword = null;
+		public Oauth oauth = null;
 	}
 
 	public List<Result> results;
@@ -50,21 +51,7 @@ public final class RegistTwitterUserC {
 	public static final int ERROR_TWITTER_USER_ID_ERROR = -17;
 	public static final int ERROR_TWITTER_SCREEN_NAME_ERROR = -18;
 
-	private final HttpServletRequest request;
-	private final HttpServletResponse response;
-	private final HttpSession session;
-
-	ResourceBundleControl _TEX;
-
-	public RegistTwitterUserC(HttpServletRequest _request,
-	                          HttpServletResponse _response,
-	                          HttpSession _session,
-	                          ResourceBundleControl __TEX) {
-		request = _request;
-		response = _response;
-		session = _session;
-		_TEX = __TEX;
-	}
+	public RegistTwitterUserC() { }
 
 	public static int login(final int userId, final String hashPassword, final Oauth oauth, HttpServletResponse response) {
 		Connection connection = null;
@@ -79,7 +66,7 @@ public final class RegistTwitterUserC {
 
 			String strPassword = "";
 			String strEmail = "";
-			strSql = "SELECT * FROM users_0000 WHERE user_id=? AND hash_password=?";
+			strSql = "SELECT password, email FROM users_0000 WHERE user_id=? AND hash_password=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, userId);
 			statement.setString(2, hashPassword);
@@ -89,6 +76,7 @@ public final class RegistTwitterUserC {
 				strEmail = Util.toString((resultSet.getString("email")));
 			} else {
 				Log.d(strSql);
+				Log.d(String.format("uid: %d, hashpasss: %s",userId,hashPassword));
 				return ERROR_UNKOWN;
 			}
 			resultSet.close();resultSet = null;
@@ -102,22 +90,6 @@ public final class RegistTwitterUserC {
 			statement.setString(3, oauth.twitterScreenName);
 			statement.setInt(4, userId);
 			statement.setInt(5, Common.TWITTER_PROVIDER_ID);
-			statement.executeUpdate();
-			statement.close();statement = null;
-
-			// 指定されたポイピクuserId以外のtbloauthレコードにdel_flgを立てる
-			strSql = "UPDATE tbloauth SET del_flg=true WHERE twitter_user_id=? AND fldproviderid=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setString(1, oauth.twitterUserId);
-			statement.setInt(2, Common.TWITTER_PROVIDER_ID);
-			statement.executeUpdate();
-			statement.close();statement = null;
-
-			strSql = "UPDATE tbloauth SET del_flg=false WHERE flduserid=? AND twitter_user_id=? AND fldproviderid=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, userId);
-			statement.setString(2, oauth.twitterUserId);
-			statement.setInt(3, Common.TWITTER_PROVIDER_ID);
 			statement.executeUpdate();
 			statement.close();statement = null;
 
@@ -168,8 +140,6 @@ public final class RegistTwitterUserC {
 						}
 					}
 				}
-			} else {
-				Log.d("USERAUTH Login error : no user : " + userId);
 			}
 
 			setCookie(response, nowHashPass);
@@ -314,7 +284,7 @@ public final class RegistTwitterUserC {
 		response.addCookie(cLK);
 	}
 
-	public boolean getResults() {
+	public boolean getResults(HttpServletRequest request, HttpSession session) {
 		results = new ArrayList<>();
 
 		final String accessToken;
@@ -413,16 +383,17 @@ public final class RegistTwitterUserC {
 
 			// 再登録も可能な認証
 			//Log.d("USERAUTH twitter userid : ", user_id);
-			strSql = "SELECT o.*, hash_password FROM tbloauth o INNER JOIN users_0000 u ON flduserid=user_id WHERE twitter_user_id=? ORDER BY fldUserId";
+			strSql = "SELECT o.*, user_id, nickname, file_name, passport_id, hash_password FROM tbloauth o INNER JOIN users_0000 u ON flduserid=user_id WHERE twitter_user_id=? ORDER BY fldUserId";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, twitterUserId);
 			resultSet = statement.executeQuery();
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				Oauth o = new Oauth(resultSet);
+				CUser u = new CUser(resultSet);
 				Result r = new Result();
-				r.poipikuUserId = resultSet.getInt("flduserid");
-				r.hashPassword = resultSet.getString("hash_password");
+				r.user = u;
 				r.oauth = o;
+				r.hashPassword = resultSet.getString("hash_password");
 				results.add(r);
 			}
 			errorCode = ERROR_NONE;
