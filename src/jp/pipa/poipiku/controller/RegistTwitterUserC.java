@@ -287,10 +287,10 @@ public final class RegistTwitterUserC {
 	public boolean getResults(HttpServletRequest request, HttpSession session) {
 		results = new ArrayList<>();
 
-		final String accessToken;
-		final String tokenSecret;
-		String twitterUserId="";
-		final String twitterScreenName;
+		String accessToken = "";
+		String tokenSecret = "";
+		String twitterUserId = "";
+		String twitterScreenName = "";
 		try {
 			OAuthConsumer consumer = (OAuthConsumer) session.getAttribute("consumer");
 			OAuthProvider provider = (OAuthProvider) session.getAttribute("provider");
@@ -396,6 +396,18 @@ public final class RegistTwitterUserC {
 				r.hashPassword = resultSet.getString("hash_password");
 				results.add(r);
 			}
+			Oauth o = new Oauth();
+			CUser u = new CUser();
+			Result r = new Result();
+			o.twitterUserId = twitterUserId;
+			o.twitterScreenName = twitterScreenName;
+			o.accessToken = accessToken;
+			o.tokenSecret = tokenSecret;
+			u.m_nUserId = -1;
+			r.oauth = o;
+			r.user = u;
+			results.add(r);
+
 			errorCode = ERROR_NONE;
 			return true;
 		} catch (SQLException e) {

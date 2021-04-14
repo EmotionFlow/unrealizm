@@ -12,24 +12,33 @@
 	RegistTwitterUserC controller = new RegistTwitterUserC();
 	Object sessionAttribute = session.getAttribute(SESSION_ATTRIBUTE);
 
+	final int NEW_USER = -1;
+	int selectedUserId = -99;
 	boolean result;
 	if (sessionAttribute == null) {
 		result = controller.getResults(request, session);
+		if (controller.results.size() == 1) {
+			selectedUserId = NEW_USER;
+		} else {
+			if (controller.results.size() == 2) {
+				RegistTwitterUserC.Result r = controller.results.get(0);
+				if (!r.oauth.delFlg) {
+					selectedUserId = r.user.m_nUserId;
+				}
+			}
+		}
 	} else {
 		controller.results = (List<RegistTwitterUserC.Result>)sessionAttribute;
-		int poipikuUserId = Util.toInt(request.getParameter("ID"));
-		if (poipikuUserId == -1) {
-			controller.results.clear();
-			result = true;
-		} else {
+		selectedUserId = Util.toInt(request.getParameter("ID"));
+		final int finalSelectedUserId1 = selectedUserId;
+		List<RegistTwitterUserC.Result> list = controller.results.stream()
+				.filter(s -> s.user.m_nUserId == finalSelectedUserId1)
+				.collect(Collectors.toList());
+		if (list.size() > 0 && selectedUserId > 0) {
 			result = Oauth.activatePoipikuUser(
-					controller.results.get(0).oauth.twitterUserId, poipikuUserId);
-			if (result) {
-				controller.results = controller.results.stream()
-						.filter(s -> s.user.m_nUserId == poipikuUserId)
-						.collect(Collectors.toList());
-				controller.results.get(0).oauth.delFlg = false;
-			}
+					list.get(0).oauth.twitterUserId, selectedUserId);
+		} else {
+			result = true;
 		}
 	}
 	if (!result) {
@@ -45,36 +54,34 @@
 	// １レコードだが、連携解除されている　-> 選択を促す。
 	// 1レコードで、連携解除されていない -> ログイン
 	// 0レコード -> 新規登録
+	if (selectedUserId == NEW_USER || selectedUserId > 0) {
+		final int finalSelectedUserId = selectedUserId;
+		final RegistTwitterUserC.Result r = controller.results.stream()
+				.filter(s -> (s.user.m_nUserId == finalSelectedUserId))
+				.collect(Collectors.toList()).get(0);
 
-	if (controller.results.size() == 0) {
-		Log.d("register new user");
-		loginResult = RegistTwitterUserC.ERROR_NONE;
+		String nextUrl = "/MyHomePcV.jsp";
+		if (selectedUserId == NEW_USER) {
+			loginResult = RegistTwitterUserC.register(request, controller.results.get(0).oauth, _TEX, response);
+		} else {
+			loginResult = RegistTwitterUserC.login(r.user.m_nUserId, r.hashPassword, r.oauth, response);
+			java.lang.Object callbackUrl = session.getAttribute("callback_uri");
+			if(callbackUrl!=null) {
+				nextUrl = callbackUrl.toString();
+			}
+			Log.d(String.format("USERAUTH RetistTwitterUser APP1 : user_id:%d, twitter_result:%d, url:%s", checkLogin.m_nUserId, loginResult, nextUrl));
+		}
 		if (sessionAttribute != null) {
 			session.removeAttribute(SESSION_ATTRIBUTE);
 		}
-	} else if (controller.results.size() == 1 && !controller.results.get(0).oauth.delFlg) {
-		final RegistTwitterUserC.Result r = controller.results.get(0);
-		loginResult = RegistTwitterUserC.login(r.user.m_nUserId, r.hashPassword, r.oauth, response);
-		String nextUrl = "/MyHomeAppV.jsp";
-		java.lang.Object callbackUrl = session.getAttribute("callback_uri");
-		if(callbackUrl!=null) {
-			nextUrl = callbackUrl.toString();
-		}
-		Log.d(String.format("USERAUTH RetistTwitterUser APP1 : user_id:%d, twitter_result:%d, url:%s", checkLogin.m_nUserId, loginResult, nextUrl));
-		if (sessionAttribute != null) {
-			session.removeAttribute(SESSION_ATTRIBUTE);
-		}
-		if(loginResult == r.user.m_nUserId) {
+		if(loginResult > 0) {
 			response.sendRedirect(nextUrl);
 			return;
 		}
 	} else {
-		Log.d("disconnected or found many users");
 		session.setAttribute(SESSION_ATTRIBUTE, controller.results);
 		loginResult = RegistTwitterUserC.ERROR_NONE;
 	}
-
-
 %>
 <!DOCTYPE html>
 <html>
@@ -102,7 +109,8 @@
 	<section id="IllustThumbList" class="IllustItemList">
 		<%
 		for (RegistTwitterUserC.Result r : controller.results) {
-			CUser user = r.user;
+			if (r.user.m_nUserId == -1) continue;
+			final CUser user = r.user;
 		%>
 		<a class="UserThumb" href="/RegistTwitterUserPc.jsp?ID=<%=user.m_nUserId%>">
 			<span class="UserThumbImg"
