@@ -181,17 +181,23 @@
 		margin-top: 2px;
 		text-decoration: underline;
 	}
+	.RequestWhatIs {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
+	}
 </style>
 
 <div class="SettingList">
 	<div class="SettingListItem">
-		<a class="RequestListLink" href="/MyRequestListPcV.jsp?MENUID=RECEIVED">マイリクエスト →</a>
-
-		<a href="javascript: void(0);"
-		   style="text-decoration: underline"
-		   onclick="dispRequestIntroduction()">
-			<i class="fas fa-info-circle"></i>リクエストとは
-		</a>
+		<div class="RequestWhatIs">
+			<i class="fas fa-info-circle" style="font-size: 18px"></i>
+			<a href="javascript: void(0);"
+			   style="text-decoration: underline"
+			   onclick="dispRequestIntroduction()">
+				リクエストとは？
+			</a>
+		</div>
 
 		<div class="SettingListTitle">リクエストを募集する</div>
 		<div class="SettingBody">
