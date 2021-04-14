@@ -29,11 +29,16 @@ public class Oauth extends Model{
 		errorKind = ErrorKind.None;
 	}
 
-	//
-	public static boolean activatePoipikuUser(String twitterUserId, int activatePoipikuUserId) {
+	/**
+	 * twitterUserIdとpoipikuUserIdを関連づける。
+	 * 同一twitterUserIdで複数レコードあったら、その内poipikuUserIdのみを有効化する。
+	 * @param twitterUserId twitter user id
+	 * @param poipikuUserId poipiku user id
+	 * @return result
+	 */
+	public static boolean connectPoipikuUser(String twitterUserId, int poipikuUserId) {
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		String strSql = "";
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
@@ -48,13 +53,12 @@ public class Oauth extends Model{
 
 			strSql = "UPDATE tbloauth SET del_flg=false WHERE flduserid=? AND twitter_user_id=? AND fldproviderid=?";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, activatePoipikuUserId);
+			statement.setInt(1, poipikuUserId);
 			statement.setString(2, twitterUserId);
 			statement.setInt(3, Common.TWITTER_PROVIDER_ID);
 			statement.executeUpdate();
 			statement.close();statement = null;
 			connection.commit();
-
 
 			return true;
 		} catch (SQLException e) {
@@ -65,7 +69,6 @@ public class Oauth extends Model{
 			e.printStackTrace();
 			return false;
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}

@@ -35,7 +35,7 @@
 				.filter(s -> s.user.m_nUserId == finalSelectedUserId1)
 				.collect(Collectors.toList());
 		if (list.size() > 0 && selectedUserId > 0) {
-			result = Oauth.activatePoipikuUser(
+			result = Oauth.connectPoipikuUser(
 					list.get(0).oauth.twitterUserId, selectedUserId);
 		} else {
 			result = true;
@@ -48,12 +48,8 @@
 		return;
 	}
 
-	int loginResult = RegistTwitterUserC.ERROR_UNKOWN;
+	int loginResult;
 
-	// TODO 複数レコード見つかった -> 選択を促す。LoginFormTwitter
-	// １レコードだが、連携解除されている　-> 選択を促す。
-	// 1レコードで、連携解除されていない -> ログイン
-	// 0レコード -> 新規登録
 	if (selectedUserId == NEW_USER || selectedUserId > 0) {
 		final int finalSelectedUserId = selectedUserId;
 		final RegistTwitterUserC.Result r = controller.results.stream()
@@ -62,6 +58,9 @@
 
 		String nextUrl = "/MyHomePcV.jsp";
 		if (selectedUserId == NEW_USER) {
+			if (controller.results.size()>2) { // 不正アクセス。
+				return;
+			}
 			loginResult = RegistTwitterUserC.register(request, controller.results.get(0).oauth, _TEX, response);
 		} else {
 			loginResult = RegistTwitterUserC.login(r.user.m_nUserId, r.hashPassword, r.oauth, response);
@@ -106,6 +105,7 @@
 		<%=_TEX.T("RegistUserV.UpdateError")%>
 	</a>
 	<%}else{%>
+	<p><%=_TEX.T("RegistTwitterUser.DoSelect")%></p>
 	<section id="IllustThumbList" class="IllustItemList">
 		<%
 		for (RegistTwitterUserC.Result r : controller.results) {
@@ -119,12 +119,14 @@
 			<span class="UserThumbName"><%=user.m_strNickName%> (<%=user.m_nUserId%>)</span>
 		</a>
 		<%}%>
+		<%if (controller.results.size()<=2) {%>
 		<a class="UserThumb" href="/RegistTwitterUserPc.jsp?ID=-1">
 			<span class="UserThumbImg"
 				  style="background-image:url('//img-cdn.poipiku.com/img/default_user.jpg')">
 			</span>
-			<span class="UserThumbName">新しいアカウントを作る</span>
+			<span class="UserThumbName"><%=_TEX.T("RegistTwitterUser.CreateNew")%></span>
 		</a>
+		<%}%>
 	</section>
 	<%}%>
 </article><!--Wrapper-->
