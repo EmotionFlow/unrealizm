@@ -2374,6 +2374,20 @@
 	font-size: 15px;
 }
 
+.UserInfoStateItem .SendRequestIcon {
+	display: inline-block;
+	width: 17px;
+	height: 17px;
+	background: url(/img/menu_pc-10.png) no-repeat;
+	background-size: 860%;
+	position: relative;
+	background-position: -130px -17px;
+}
+
+.UserInfoStateItem:hover .SendRequestIcon {
+	background-position: -130px 0px;
+}
+
 /**********IllustView InfoForm **********/
 .InfoForm {
 	display: block;
