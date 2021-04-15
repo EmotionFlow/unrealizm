@@ -3,44 +3,42 @@ package jp.pipa.poipiku.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
-import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
-public class CheckNotifyC {
+public final class CheckNotifyC {
 	public int m_nUserId = -1;
 
 	public void GetParam(HttpServletRequest request) {
-		try {
-			//cRequest.setCharacterEncoding("UTF-8");
-		} catch(Exception e) {
-			m_nUserId = -1;
-		}
+//		try {
+//			cRequest.setCharacterEncoding("UTF-8");
+//		} catch(Exception e) {
+//			m_nUserId = -1;
+//		}
 	}
 
 	public int m_nCheckComment = 0;
-	public int m_nCheckFollow = 0;
-	public int m_nCheckHeart = 0;
+//	public int m_nCheckFollow = 0;
+//	public int m_nCheckHeart = 0;
+	public int m_nCheckRequest = 0;
 	public int m_nNotifyComment = 0;
-	public int m_nNotifyFollow = 0;
-	public int m_nNotifyHeart = 0;
-	public boolean GetResults(CheckLogin checkLogin) {
+//	public int m_nNotifyFollow = 0;
+//	public int m_nNotifyHeart = 0;
+	public int m_nNotifyRequest = 0;
+	public boolean GetResults() {
 		String strSql = "";
 		boolean bRtn = false;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// フォロー通知を表示するか
 			/*
@@ -57,15 +55,43 @@ public class CheckNotifyC {
 			cState.close();cState=null;
 			*/
 
+			final Timestamp lastNotifyDate, lastCheckDate;
+			strSql = "SELECT last_notify_date, last_check_date FROM users_0000 WHERE user_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nUserId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				lastNotifyDate = cResSet.getTimestamp("last_notify_date");
+				lastCheckDate = cResSet.getTimestamp("last_check_date");
+			} else {
+				lastNotifyDate = null;
+				lastCheckDate = null;
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
 			// Check Comment
-			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>(SELECT last_check_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-			cState.setInt(3, m_nUserId);
+			cState.setTimestamp(3, lastCheckDate);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
 				m_nCheckComment = cResSet.getInt(1);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			// Check Request
+			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nUserId);
+			cState.setInt(2, Common.NOTIFICATION_TYPE_REQUEST);
+			cState.setTimestamp(3, lastCheckDate);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				m_nCheckRequest = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -101,14 +127,27 @@ public class CheckNotifyC {
 			*/
 
 			// Notify Comment
-			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>(SELECT last_notify_date FROM users_0000 WHERE user_id=?)";
+			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-			cState.setInt(3, m_nUserId);
+			cState.setTimestamp(3, lastNotifyDate);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
 				m_nCheckComment = cResSet.getInt(1);
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+
+			// Notify Request
+			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, m_nUserId);
+			cState.setInt(2, Common.NOTIFICATION_TYPE_REQUEST);
+			cState.setTimestamp(3, lastNotifyDate);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				m_nCheckRequest = cResSet.getInt(1);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

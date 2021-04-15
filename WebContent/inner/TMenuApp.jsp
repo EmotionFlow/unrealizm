@@ -15,7 +15,7 @@
 <script>
 	function UpdateNotify() {
 		$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
-			var ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart, 99);
+			const ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart + data.check_request, 99);
 			//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
 			$('#InfoNumAct').html(ntfy_num);
 			if(ntfy_num>0) {
