@@ -230,10 +230,10 @@ public final class RegistTwitterUserC {
 
 			// User ID 取得
 			connection = dataSource.getConnection();
-			strSql = "SELECT * FROM users_0000 WHERE email=? AND password=?";
+			strSql = "SELECT user_id FROM users_0000 WHERE hash_password=? AND email=?";
 			statement = connection.prepareStatement(strSql);
-			statement.setString(1, strEmail);
-			statement.setString(2, strPassword);
+			statement.setString(1, strHashPass);
+			statement.setString(2, strEmail);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				userId = resultSet.getInt("user_id");
