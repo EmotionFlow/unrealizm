@@ -57,31 +57,35 @@ String nextUrl = "/MyHomePcV.jsp";
 Status status = Status.Undef;
 
 if (selectedUserId == NEW_USER || selectedUserId > 0) {
-	final int finalSelectedUserId = selectedUserId;
-	final RegistTwitterUserC.Result r = controller.results.stream()
-			.filter(s -> (s.user.m_nUserId == finalSelectedUserId))
-			.collect(Collectors.toList()).get(0);
-
 	if (selectedUserId == NEW_USER) { // 新規登録
-		if (controller.results.size()>2) { // 不正アクセス。
+		if (!(controller.results.size() == 1 || controller.results.size() == 2)) { // 不正アクセス。
 			return;
 		}
 		int registerResult = RegistTwitterUserC.register(request, controller.results.get(0).oauth, _TEX, response);
 		selectedUserId = registerResult;
 		status = registerResult > 0 ? Status.RegisterSucceed : Status.Error;
 	} else { // ログイン
-		int loginResult = RegistTwitterUserC.login(r.user.m_nUserId, r.hashPassword, r.oauth, response);
-		Object callbackUrl = session.getAttribute("callback_uri");
-		if(callbackUrl!=null) {
-			nextUrl = callbackUrl.toString();
+		final int finalSelectedUserId = selectedUserId;
+		final List<RegistTwitterUserC.Result> list = controller.results.stream()
+				.filter(s -> (s.user.m_nUserId == finalSelectedUserId))
+				.collect(Collectors.toList());
+		RegistTwitterUserC.Result r;
+		if (list.size() > 0) {
+			r = list.get(0);
+			int loginResult = RegistTwitterUserC.login(r.user.m_nUserId, r.hashPassword, r.oauth, response);
+			Object callbackUrl = session.getAttribute("callback_uri");
+			if(callbackUrl!=null) {
+				nextUrl = callbackUrl.toString();
+			}
+			Log.d(String.format("USERAUTH RetistTwitterUser APP1 : user_id:%d, twitter_result:%d, url:%s", selectedUserId, loginResult, nextUrl));
+			status = loginResult > 0 ? Status.LoginSucceed : Status.Error;
+		} else {
+			status = Status.Error;
 		}
-		Log.d(String.format("USERAUTH RetistTwitterUser APP1 : user_id:%d, twitter_result:%d, url:%s", selectedUserId, loginResult, nextUrl));
-		status = loginResult > 0 ? Status.LoginSucceed : Status.Error;
 	}
 	if (sessionAttribute != null) {
 		session.removeAttribute(SESSION_ATTRIBUTE);
 	}
-
 } else {
 	session.setAttribute(SESSION_ATTRIBUTE, controller.results);
 	status = Status.SelectUser;

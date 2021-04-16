@@ -76,7 +76,7 @@ public final class RegistTwitterUserC {
 				strEmail = Util.toString((resultSet.getString("email")));
 			} else {
 				Log.d(strSql);
-				Log.d(String.format("uid: %d, hashpasss: %s",userId,hashPassword));
+				Log.d(String.format("not found uid: %d, hashpasss: %s",userId,hashPassword));
 				return ERROR_UNKOWN;
 			}
 			resultSet.close();resultSet = null;
@@ -403,7 +403,7 @@ public final class RegistTwitterUserC {
 			o.twitterScreenName = twitterScreenName;
 			o.accessToken = accessToken;
 			o.tokenSecret = tokenSecret;
-			u.m_nUserId = -1;
+			u.m_nUserId = -2;
 			r.oauth = o;
 			r.user = u;
 			results.add(r);
