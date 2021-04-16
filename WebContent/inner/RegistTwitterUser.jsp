@@ -10,14 +10,16 @@ request.setCharacterEncoding("UTF-8");
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 RegistTwitterUserC controller = new RegistTwitterUserC();
-Object sessionAttribute = session.getAttribute(SESSION_ATTRIBUTE);
+Object controllerResults = session.getAttribute(SESSION_ATTRIBUTE);
 
 final int NEW_USER = -2;
 int selectedUserId = -99;
 boolean result;
 
-if (sessionAttribute == null) { // 初回アクセス
+if (controllerResults == null) { // 初回アクセス
 	result = controller.getResults(request, session);
+	session.removeAttribute("consumer");
+	session.removeAttribute("provider");
 	if (controller.results.size() == 1) {
 		selectedUserId = NEW_USER;
 	} else {
@@ -29,7 +31,7 @@ if (sessionAttribute == null) { // 初回アクセス
 		}
 	}
 } else { // 一覧から選択した時のアクセス
-	controller.results = (List<RegistTwitterUserC.Result>)sessionAttribute;
+	controller.results = (List<RegistTwitterUserC.Result>) controllerResults;
 	selectedUserId = Util.toInt(request.getParameter("ID"));
 	if (selectedUserId == NEW_USER || selectedUserId > 0) {
 		final int finalSelectedUserId1 = selectedUserId;
@@ -47,7 +49,7 @@ if (sessionAttribute == null) { // 初回アクセス
 	}
 }
 if (!result) {
-	if (sessionAttribute != null) {
+	if (controllerResults != null) {
 		session.removeAttribute(SESSION_ATTRIBUTE);
 	}
 	return;
@@ -59,6 +61,9 @@ Status status = Status.Undef;
 if (selectedUserId == NEW_USER || selectedUserId > 0) {
 	if (selectedUserId == NEW_USER) { // 新規登録
 		if (!(controller.results.size() == 1 || controller.results.size() == 2)) { // 不正アクセス。
+			if (controllerResults != null) {
+				session.removeAttribute(SESSION_ATTRIBUTE);
+			}
 			return;
 		}
 		int registerResult = RegistTwitterUserC.register(request, controller.results.get(0).oauth, _TEX, response);
@@ -83,7 +88,7 @@ if (selectedUserId == NEW_USER || selectedUserId > 0) {
 			status = Status.Error;
 		}
 	}
-	if (sessionAttribute != null) {
+	if (controllerResults != null) {
 		session.removeAttribute(SESSION_ATTRIBUTE);
 	}
 } else {

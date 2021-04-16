@@ -176,25 +176,26 @@ public final class RegistTwitterUserC {
 			}
 			nLangId = (strLang.equals("en")) ? 0 : 1;
 
-			// User名被りチェック
 			String strUserName = oauth.twitterScreenName;
-				/*
-				boolean bUserName = false;
-				strSql = "SELECT * FROM users_0000 WHERE nickname=?";
-				cState = cConn.prepareStatement(strSql);
+
+			// User名被りチェック
+			/*
+			boolean bUserName = false;
+			strSql = "SELECT * FROM users_0000 WHERE nickname=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, strUserName);
+			cResSet = cState.executeQuery();
+			bUserName = cResSet.next();
+			cResSet.close();cResSet=null;
+			for(int nCnt=0; bUserName; nCnt++) {
+				strUserName = String.format("%s_%d", screen_name, nCnt);
 				cState.setString(1, strUserName);
 				cResSet = cState.executeQuery();
 				bUserName = cResSet.next();
 				cResSet.close();cResSet=null;
-				for(int nCnt=0; bUserName; nCnt++) {
-					strUserName = String.format("%s_%d", screen_name, nCnt);
-					cState.setString(1, strUserName);
-					cResSet = cState.executeQuery();
-					bUserName = cResSet.next();
-					cResSet.close();cResSet=null;
-				}
-				cState.close();cState=null;
-				*/
+			}
+			cState.close();cState=null;
+			*/
 
 			// User作成
 			connection = DatabaseUtil.dataSource.getConnection();
@@ -207,8 +208,7 @@ public final class RegistTwitterUserC {
 			statement.setString(5, "@" + oauth.twitterScreenName);
 			statement.setInt(6, nLangId);
 			statement.executeUpdate();
-			statement.close();
-			statement = null;
+			statement.close(); statement = null;
 
 			// User ID 取得
 			strSql = "SELECT * FROM users_0000 WHERE email=? AND password=?";
@@ -396,6 +396,11 @@ public final class RegistTwitterUserC {
 				r.hashPassword = resultSet.getString("hash_password");
 				results.add(r);
 			}
+			resultSet.close(); resultSet = null;
+			statement.close(); statement = null;
+			connection.close(); connection = null;
+
+			// new user
 			Oauth o = new Oauth();
 			CUser u = new CUser();
 			Result r = new Result();
