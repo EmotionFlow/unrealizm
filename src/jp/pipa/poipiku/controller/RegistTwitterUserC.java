@@ -226,8 +226,10 @@ public final class RegistTwitterUserC {
 			statement.setInt(6, nLangId);
 			statement.executeUpdate();
 			statement.close(); statement = null;
+			connection.close(); connection = null;
 
 			// User ID 取得
+			connection = dataSource.getConnection();
 			strSql = "SELECT * FROM users_0000 WHERE email=? AND password=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, strEmail);
@@ -240,12 +242,14 @@ public final class RegistTwitterUserC {
 			}
 			resultSet.close();resultSet = null;
 			statement.close();statement = null;
+			connection.close(); connection = null;
 
 			if (userId < 1) {
 				return ERROR_DB;
 			}
 
 			// tbloauthに登録
+			connection = dataSource.getConnection();
 			strSql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?) ";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, userId);
@@ -257,10 +261,12 @@ public final class RegistTwitterUserC {
 			statement.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt") + _TEX.T("Common.Title") + String.format(" https://poipiku.com/%d/", userId));
 			statement.executeUpdate();
 			statement.close();statement = null;
+			connection.close(); connection = null;
 
 			CTweet tweet = new CTweet();
 			String strTwEmail = null;
 			if (tweet.GetResults(userId) && (strTwEmail = tweet.GetEmailAddress()) != null) {
+				connection = dataSource.getConnection();
 				strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 				statement = connection.prepareStatement(strSql);
 				statement.setString(1, strTwEmail);
@@ -268,13 +274,16 @@ public final class RegistTwitterUserC {
 				boolean bEmailRegistered = resultSet.next();
 				resultSet.close();resultSet = null;
 				statement.close();statement = null;
+				connection.close(); connection = null;
 				if (!bEmailRegistered) {
+					connection = dataSource.getConnection();
 					strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 					statement = connection.prepareStatement(strSql);
 					statement.setString(1, strTwEmail);
 					statement.setInt(2, userId);
 					statement.executeUpdate();
 					statement.close();statement = null;
+					connection.close(); connection = null;
 				}
 			}
 
