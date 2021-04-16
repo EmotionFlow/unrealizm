@@ -154,7 +154,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 		<section id="IllustThumbList" class="IllustItemList">
 			<%
 				for (RegistTwitterUserC.Result r : controller.results) {
-					if (r.user.m_nUserId == -1) continue;
+					if (r.user.m_nUserId == NEW_USER) continue;
 					final CUser user = r.user;
 			%>
 			<a class="UserThumb" href="/RegistTwitterUser<%=isApp?"App":"Pc"%>.jsp?ID=<%=user.m_nUserId%>">
