@@ -1,6 +1,8 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
@@ -41,8 +43,9 @@ public class DeleteContentC {
 
 		try {
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
 
+			///////
+			connection = dataSource.getConnection();
 			// イラスト存在確認(不正アクセス対策)
 			if(m_nUserId==1) {
 				strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
@@ -80,7 +83,11 @@ public class DeleteContentC {
 			if(cContent==null) {
 				return false;
 			}
+			connection.close();connection=null;
+			//////
 
+			//////
+			connection = dataSource.getConnection();
 			// delete comment
 			strSql ="DELETE FROM comments_0000 WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -94,7 +101,11 @@ public class DeleteContentC {
 			statement.setInt(1, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
+			/////
 
+			/////
+			connection = dataSource.getConnection();
 			// delete info_lists
 			strSql ="DELETE FROM info_lists WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -115,22 +126,33 @@ public class DeleteContentC {
 			statement.setInt(1, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
+			//////
 
 			// delete append files
+			connection = dataSource.getConnection();
 			strSql ="SELECT * FROM contents_appends_0000 WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
 			resultSet = statement.executeQuery();
+			List<CContentAppend> contentAppends = new ArrayList<>();
 			while(resultSet.next()) {
 				CContentAppend cContentAppend = new CContentAppend(resultSet);
-				try{
-					ImageUtil.deleteFiles(m_cServletContext.getRealPath(cContentAppend.m_strFileName));
-				} catch (Exception e) {
-					Log.d("connot delete content_append file : " + cContentAppend.m_strFileName);
-				}
+				contentAppends.add(cContentAppend);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+			connection.close();connection=null;
+			for (CContentAppend c : contentAppends) {
+				try{
+					ImageUtil.deleteFiles(m_cServletContext.getRealPath(c.m_strFileName));
+				} catch (Exception e) {
+					Log.d("cannot delete content_append file : " + c.m_strFileName);
+				}
+			}
+
+			///////
+			connection = dataSource.getConnection();
 			// delete append data
 			strSql ="DELETE FROM contents_appends_0000 WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -144,6 +166,9 @@ public class DeleteContentC {
 			statement.setInt(1, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
+			///////
+
 			// delete files
 			try{
 				ImageUtil.deleteFiles(m_cServletContext.getRealPath(cContent.m_strFileName));
