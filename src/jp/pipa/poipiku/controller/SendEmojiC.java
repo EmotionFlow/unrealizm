@@ -57,7 +57,7 @@ public class SendEmojiC {
 		}
 	}
 
-	public boolean getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
+	public boolean getResults(final CheckLogin checkLogin, final ResourceBundleControl _TEX) {
 		if(!Arrays.asList(Emoji.EMOJI_ALL).contains(m_strEmoji)) {
 			Log.d("Invalid Emoji : "+ m_strEmoji);
 			return false;
@@ -75,14 +75,14 @@ public class SendEmojiC {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			Class.forName("org.postgresql.Driver");
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
 
 			// 投稿存在確認(不正アクセス対策) & 対象コンテンツ情報取得
 			CUser cTargUser = null;
 			CContent cTargContent = null;
 			Integer nContentUserId = null;
-			strSql = "SELECT * FROM contents_0000 "
-					+ "WHERE open_id<>2 AND content_id=?";
+
+			connection = dataSource.getConnection();
+			strSql = "SELECT * FROM contents_0000 WHERE content_id=? AND open_id<>2";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
 			resultSet = statement.executeQuery();
@@ -97,12 +97,13 @@ public class SendEmojiC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+			connection.close();connection=null;
 			if(cTargUser==null || cTargContent==null) return false;
 			if(cTargUser.m_nReaction!=CUser.REACTION_SHOW) return false;
 
-
 			// max 5 emoji
 			int nEmojiNum = 0;
+			connection = dataSource.getConnection();
 			if(checkLogin.m_bLogin) {
 				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
 				statement = connection.prepareStatement(strSql);
@@ -120,6 +121,7 @@ public class SendEmojiC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+			connection.close();connection=null;
 			if(nEmojiNum>=Common.EMOJI_MAX[checkLogin.m_nPassportId]) {
 				m_nErrCode = ERR_MAX_EMOJI;
 				return false;
@@ -178,6 +180,7 @@ public class SendEmojiC {
 			}
 
 			// add new comment
+			connection = dataSource.getConnection();
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id, to_user_id, ip_address) VALUES(?, ?, ?, ?, ?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
@@ -187,9 +190,12 @@ public class SendEmojiC {
 			statement.setString(5, m_strIpAddress);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// update comment_list
+			connection = dataSource.getConnection();
 			GridUtil.updateCommentsLists(connection, m_nContentId);
+			connection.close();connection=null;
 
 			/*
 			// 使ってないので一時的にコメントアウト
@@ -205,12 +211,14 @@ public class SendEmojiC {
 
 			// update making comment num
 			// update contents_0000 set contents_0000.people_num=T1.people_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
+			connection = dataSource.getConnection();
 			strSql ="UPDATE contents_0000 SET people_num=(SELECT COUNT(DISTINCT user_id) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
 			statement.setInt(2, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			bRtn = true; // 以下実行されなくてもOKを返す
 
@@ -233,6 +241,8 @@ public class SendEmojiC {
 			}
 
 			// 確認済みお知らせだった場合、通知絵文字一覧をリセット
+			connection = dataSource.getConnection();
+			connection.setAutoCommit(false);
 			strSql = "DELETE FROM info_lists WHERE user_id=? AND content_id=? AND info_type=? AND had_read=true;";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cTargContent.m_nUserId);
@@ -260,8 +270,12 @@ public class SendEmojiC {
 			statement.setString(7, m_strEmoji);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.commit();
+			connection.setAutoCommit(true);
+			connection.close();connection=null;
 
 			// 通知先デバイストークンの取得
+			connection = dataSource.getConnection();
 			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<>();
 			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -272,10 +286,11 @@ public class SendEmojiC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+			connection.close();connection=null;
 			if(cNotificationTokens.isEmpty()) return bRtn;
 
 			// バッジに表示する数を取得
-			final int nBadgeNum = InfoList.selectUnreadBadgeSum(cTargUser.m_nUserId, connection);
+			final int nBadgeNum = InfoList.selectUnreadBadgeSum(cTargUser.m_nUserId, null);
 
 			// 送信文字列
 			final String strTitle = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Title"):_TEX.TEn("Notification.Reaction.Title");
@@ -284,6 +299,7 @@ public class SendEmojiC {
 
 			// 通知DB登録
 			// 連射しないように同じタイプの未送信の通知を削除
+			connection = dataSource.getConnection();
 			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=? AND token_type=?";
 			statement = connection.prepareStatement(strSql);
 			for(CNotificationToken cNotificationToken : cNotificationTokens) {
@@ -306,6 +322,7 @@ public class SendEmojiC {
 				notificationBuffer.tokenType = cNotificationToken.m_nTokenType;
 				notificationBuffer.insert(connection);
 			}
+			connection.close();connection=null;
 
 		} catch(Exception e) {
 			Log.d(strSql);

@@ -48,7 +48,7 @@ public class GridUtil {
 
 	public static String updateCommentsLists(Connection connection, int contentId) throws SQLException {
 		// comments_0000から絵文字取得
-		StringBuffer sbDescription = new StringBuffer();
+		StringBuilder sbDescription = new StringBuilder();
 		String sql = "SELECT description FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setInt(1, contentId);
