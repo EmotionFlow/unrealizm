@@ -85,8 +85,10 @@ public final class RegistTwitterUserC {
 			}
 			resultSet.close();resultSet = null;
 			statement.close();statement = null;
+			connection.close();connection = null;
 
 			// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンとscreen_nameを更新
+			connection = dataSource.getConnection();
 			strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, twitter_screen_name=? WHERE fldUserId=? AND fldproviderid=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, oauth.accessToken);
@@ -96,22 +98,26 @@ public final class RegistTwitterUserC {
 			statement.setInt(5, Common.TWITTER_PROVIDER_ID);
 			statement.executeUpdate();
 			statement.close();statement = null;
+			connection.close(); connection = null;
 
 			if (hashPassword.isEmpty()) {
 				final String newHashPassword = Util.getHashPass(strPassword);
 				// LKをDB登録
+				connection = dataSource.getConnection();
 				strSql = "UPDATE users_0000 SET hash_password=? WHERE user_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setString(1, newHashPassword);
 				statement.setInt(2, userId);
 				statement.executeUpdate();
 				statement.close(); statement = null;
+				connection.close(); connection = null;
 				nowHashPass = newHashPassword;
 			}
 
 			// メアド未設定かつ確認中のメアドもなく、twitterから登録メアドを取得でき、
 			// 取得したメアドがusers_0000上で他に使われていなかったら、DBに反映させる。
 			if (!strEmail.contains("@")) {
+				connection = dataSource.getConnection();
 				strSql = "SELECT user_id FROM temp_emails_0000 WHERE user_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, userId);
@@ -119,11 +125,13 @@ public final class RegistTwitterUserC {
 				boolean isEmailChecking = resultSet.next();
 				resultSet.close(); resultSet = null;
 				statement.close(); statement = null;
+				connection.close(); connection = null;
 
 				if (!isEmailChecking) {
 					CTweet tweet = new CTweet();
 					String strTwEmail = tweet.GetEmailAddress();
 					if (tweet.GetResults(userId) && strTwEmail != null && !strTwEmail.isEmpty()) {
+						connection = dataSource.getConnection();
 						strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 						statement = connection.prepareStatement(strSql);
 						statement.setString(1, strTwEmail);
@@ -131,16 +139,19 @@ public final class RegistTwitterUserC {
 						boolean isEmailRegistered = resultSet.next();
 						resultSet.close();resultSet = null;
 						statement.close();statement = null;
+						connection.close();connection = null;
 
 						// twitterから取得したメアドが、他に登録されていなかったら、このポイピクアカウントの
 						// メアドとして登録する。
 						if (!isEmailRegistered) {
+							connection = dataSource.getConnection();
 							strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 							statement = connection.prepareStatement(strSql);
 							statement.setString(1, strTwEmail);
 							statement.setInt(2, userId);
 							statement.executeUpdate();
 							statement.close();statement = null;
+							connection.close();connection = null;
 						}
 					}
 				}

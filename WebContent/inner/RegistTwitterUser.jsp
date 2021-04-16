@@ -72,7 +72,7 @@ if (selectedUserId == NEW_USER || selectedUserId > 0) {
 	} else { // ログイン
 		final int finalSelectedUserId = selectedUserId;
 		final List<RegistTwitterUserC.Result> list = controller.results.stream()
-				.filter(s -> (s.user.m_nUserId == finalSelectedUserId))
+				.filter(s -> s.user.m_nUserId == finalSelectedUserId)
 				.collect(Collectors.toList());
 		RegistTwitterUserC.Result r;
 		if (list.size() > 0) {
@@ -81,6 +81,7 @@ if (selectedUserId == NEW_USER || selectedUserId > 0) {
 			Object callbackUrl = session.getAttribute("callback_uri");
 			if(callbackUrl!=null) {
 				nextUrl = callbackUrl.toString();
+				session.removeAttribute("callback_uri");
 			}
 			Log.d(String.format("USERAUTH RetistTwitterUser APP1 : user_id:%d, twitter_result:%d, url:%s", selectedUserId, loginResult, nextUrl));
 			status = loginResult > 0 ? Status.LoginSucceed : Status.Error;
@@ -98,6 +99,7 @@ if (selectedUserId == NEW_USER || selectedUserId > 0) {
 %>
 <%
 if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)) {
+	Log.d("redirect to: " + nextUrl);
 	response.sendRedirect(nextUrl);
 	return;
 } else {
@@ -116,7 +118,6 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 				<%
 				CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(selectedUserId);
 				%>
-				console.log("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.LANG_ID_POST%>=<%=(user.langId==0)?"en":"ja"%>");
 				sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.LANG_ID_POST%>=<%=(user.langId==0)?"en":"ja"%>");
 			});
 		</script>
@@ -134,7 +135,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 		<%if(isApp){%>
 		<meta http-equiv="refresh" content="3;URL=/MyHomeAppV.jsp?ID=<%=checkLogin.m_nUserId%>" />
 		<script>
-			$( () => {console.log("restart");sendObjectMessage("restart");});
+			$( () => {sendObjectMessage("restart");});
 		</script>
 		<%}else{%>
 		<meta http-equiv="refresh" content="3;URL=/MyHomePcV.jsp" />
