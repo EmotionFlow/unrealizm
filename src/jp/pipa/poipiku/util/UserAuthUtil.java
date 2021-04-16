@@ -32,7 +32,7 @@ import oauth.signpost.exception.OAuthMessageSignerException;
 import oauth.signpost.exception.OAuthNotAuthorizedException;
 import oauth.signpost.http.HttpParameters;
 
-public class UserAuthUtil {
+public final class UserAuthUtil {
 
 	public static final int OK = 1;
 	public static final int NG = -1;
@@ -578,6 +578,7 @@ public class UserAuthUtil {
 		return nRtn;
 	}
 
+	// WebContent/RegistTwitterUser.jspとともに廃止予定
 	public static int registUserFromTwitter(HttpServletRequest request, HttpServletResponse response, HttpSession session, ResourceBundleControl _TEX) {
 		int nRtn = ERROR_UNKOWN;
 		List<Oauth> oauthResults = new ArrayList<>();
@@ -648,10 +649,6 @@ public class UserAuthUtil {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			// TODO 複数レコード見つかった -> 選択を促す。
-			// １レコードだが、選択解除されている　-> 選択を促す。
-			// 1レコードで、選択解除されていない -> ログイン
-			// 0レコード -> 新規登録
 			if (nUserId>0) {	// Login
 				String strPassword = "";
 				String strEmail = "";
