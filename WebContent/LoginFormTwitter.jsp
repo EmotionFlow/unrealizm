@@ -42,7 +42,7 @@ try{
 	if(isApp){
 		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserApp.jsp";
 	}else{
-		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp";
+		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserPc.jsp";
 	}
 	//Log.d("USERAUTH twCallBackUri:" + strTwCallBackUri);
 	authUrl = provider.retrieveRequestToken(consumer, strTwCallBackUri);
