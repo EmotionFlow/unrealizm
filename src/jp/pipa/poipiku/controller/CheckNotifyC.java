@@ -56,7 +56,7 @@ public final class CheckNotifyC {
 			*/
 
 			final Timestamp lastNotifyDate, lastCheckDate;
-			strSql = "SELECT last_notify_date FROM users_0000 WHERE user_id=?";
+			strSql = "SELECT last_notify_date, last_check_date FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cResSet = cState.executeQuery();
