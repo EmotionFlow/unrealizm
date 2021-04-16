@@ -17,10 +17,12 @@ import oauth.signpost.exception.OAuthNotAuthorizedException;
 import oauth.signpost.http.HttpParameters;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import javax.naming.InitialContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,6 +56,7 @@ public final class RegistTwitterUserC {
 	public RegistTwitterUserC() { }
 
 	public static int login(final int userId, final String hashPassword, final Oauth oauth, HttpServletResponse response) {
+		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -62,7 +65,8 @@ public final class RegistTwitterUserC {
 
 		// table update or insert
 		try {
-			connection = DatabaseUtil.dataSource.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			String strPassword = "";
 			String strEmail = "";
@@ -159,6 +163,7 @@ public final class RegistTwitterUserC {
 
 	public static int register(final HttpServletRequest request, final Oauth oauth, final ResourceBundleControl _TEX, HttpServletResponse response) {
 		int userId;
+		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -198,7 +203,8 @@ public final class RegistTwitterUserC {
 			*/
 
 			// User作成
-			connection = DatabaseUtil.dataSource.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 			strSql = "INSERT INTO users_0000(nickname, password, hash_password, email, profile, lang_id) VALUES(?, ?, ?, ?, ?, ?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, strUserName);
@@ -358,13 +364,15 @@ public final class RegistTwitterUserC {
 			return false;
 		}
 
+		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 		// table update or insert
 		try {
-			connection = DatabaseUtil.dataSource.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			// check user
 			/*
