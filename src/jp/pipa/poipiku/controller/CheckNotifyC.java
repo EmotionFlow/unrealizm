@@ -56,7 +56,7 @@ public final class CheckNotifyC {
 			*/
 
 			final Timestamp lastNotifyDate, lastCheckDate;
-			strSql = "SELECT last_notify_date, last_check_date FROM users_0000 WHERE user_id=?";
+			strSql = "SELECT last_notify_date FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cResSet = cState.executeQuery();
@@ -184,11 +184,11 @@ public final class CheckNotifyC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Update Last Check Time
-			strSql = "UPDATE users_0000 SET last_notify_date=CURRENT_TIMESTAMP WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+//			strSql = "UPDATE users_0000 SET last_notify_date=CURRENT_TIMESTAMP WHERE user_id=?";
+//			cState = cConn.prepareStatement(strSql);
+//			cState.setInt(1, m_nUserId);
+//			cState.executeUpdate();
+//			cState.close();cState=null;
 
 			/*
 			// Update Last Login Time
