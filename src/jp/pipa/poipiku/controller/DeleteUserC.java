@@ -3,7 +3,6 @@ package jp.pipa.poipiku.controller;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
@@ -43,41 +42,49 @@ public class DeleteUserC {
 		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
 
 			// もらった絵文字だけ消す
 			// delete comment
+			connection = dataSource.getConnection();
 			strSql ="DELETE FROM comments_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
+
+			connection = dataSource.getConnection();
 			strSql ="DELETE FROM comments_desc_cache WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete info_lists
+			connection = dataSource.getConnection();
 			strSql ="DELETE FROM info_lists WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete tags
+			connection = dataSource.getConnection();
 			strSql = "DELETE FROM tags_0000 WHERE tags_0000.content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete bookmark
+			connection = dataSource.getConnection();
 			strSql = "DELETE FROM bookmarks_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
@@ -88,8 +95,10 @@ public class DeleteUserC {
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete follow
+			connection = dataSource.getConnection();
 			strSql = "DELETE FROM follows_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
@@ -100,8 +109,10 @@ public class DeleteUserC {
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete blocks
+			connection = dataSource.getConnection();
 			strSql = "DELETE FROM blocks_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
@@ -112,20 +123,28 @@ public class DeleteUserC {
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete append data
+			connection = dataSource.getConnection();
 			strSql ="DELETE FROM contents_appends_0000 WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete content data
+			connection = dataSource.getConnection();
 			strSql = "DELETE FROM contents_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
+
+			///////
+			connection = dataSource.getConnection();
 
 			// delete temp email
 			strSql = "DELETE FROM temp_emails_0000 WHERE user_id=?";
@@ -148,12 +167,17 @@ public class DeleteUserC {
 			statement.executeUpdate();
 			statement.close();statement=null;
 
+			connection.close();connection=null;
+			//////
+
 			// delete order, payment info
+			connection = dataSource.getConnection();
 			strSql = "UPDATE orders SET del_flg=true, updated_at=now() WHERE customer_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			DeleteCreditCardCParam deleteCreditCardCParam = new DeleteCreditCardCParam();
 			deleteCreditCardCParam.m_nUserId = m_nUserId;
@@ -161,11 +185,13 @@ public class DeleteUserC {
 			deleteCreditCardC.GetResults(deleteCreditCardCParam);
 
 			// delete user
+			connection = dataSource.getConnection();
 			strSql = "DELETE FROM users_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+			connection.close();connection=null;
 
 			// delete files
 			File fileDel = new File(m_cServletContext.getRealPath(Common.getUploadUserPath(m_nUserId)));
@@ -181,7 +207,6 @@ public class DeleteUserC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet != null) resultSet.close();resultSet=null;} catch(Exception e) {;}
 			try{if(statement != null) statement.close();statement=null;} catch(Exception e) {;}
 			try{if(connection != null) connection.close();connection=null;}catch(Exception e){;}
 		}
