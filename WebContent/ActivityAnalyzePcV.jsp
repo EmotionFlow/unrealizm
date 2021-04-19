@@ -98,10 +98,8 @@ if(!checkLogin.m_bLogin) {
 			<ul class="TabMenu">
 				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=1"><%=_TEX.T("THeader.Menu.Act.Reaction")%>
 				</a></li>
-				<%if(checkLogin.isStaff()){%>
 				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=3"><%=_TEX.T("THeader.Menu.Act.Request")%>
 				</a></li>
-				<%}%>
 				<li><a class="TabMenuItem Selected" href="/ActivityAnalyzePcV.jsp"><%=_TEX.T("THeader.Menu.Act.Analyze")%>
 				</a></li>
 			</ul>

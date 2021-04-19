@@ -104,7 +104,7 @@ public final class CCnv {
 				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
 				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("</h2>");
-		if (CheckLogin.isStaff(loginUserId) && cContent.m_nRequestId>0) {
+		if (cContent.m_nRequestId>0) {
 			strRtn.append("<h2 class=\"IllustItemCategory\">");
 			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
 					cContent.m_nRequestId, _TEX.T("Request")

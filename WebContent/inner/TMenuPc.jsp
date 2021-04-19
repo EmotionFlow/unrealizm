@@ -49,17 +49,10 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
-			<%if(checkLogin.isStaff()){%>
 			<a id="MenuRequest" class="FooterMenuItem" href="/NewArrivalRequestPcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
 			</a>
-			<%}else{%>
-			<a id="MenuGenre" class="FooterMenuItem" href="/PopularGenreListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Genre")%></span>
-			</a>
-			<%}%>
 			<a id="MenuAct" style="<%=Util.isSmartPhone(request)?"":"margin-right: 25px;"%>" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon">
 					<div id="InfoNumAct" class="InfoNum">0</div>
@@ -70,12 +63,10 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
-			<%if(checkLogin.isStaff()){%>
 			<a id="MenuMyRequests" class="FooterMenuItem" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("Request.MyRequests")%></span>
 			</a>
-			<%}%>
 		</nav>
 		<nav class="FooterMenu" style="float: right;">
 			<%if(!checkLogin.m_bLogin) {%>
@@ -139,17 +130,10 @@
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
-		<%if(checkLogin.isStaff()){%>
 		<a id="MenuRequest" class="FooterMenuItem" href="/NewArrivalRequestPcV.jsp">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
 		</a>
-		<%}else{%>
-		<a id="MenuGenre" class="FooterMenuItem" href="/PopularGenreListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Genre")%></span>
-		</a>
-		<%}%>
 		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon">
 				<div id="InfoNumAct" class="InfoNum">0</div>

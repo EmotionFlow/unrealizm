@@ -134,11 +134,9 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
-							<%if(checkLogin.isStaff()){%>
 							<a href="/MyRequestListAppV.jsp?MENUID=RECEIVED" class="BtnBase">
 								マイリクエスト
 							</a>
-							<%}%>
 						</div>
 					</span>
 				</section>

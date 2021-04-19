@@ -27,6 +27,11 @@ public class DeliverRequestC extends Controller{
 		CheerPoint cheerPoint = new CheerPoint();
 		cheerPoint.userId = poipikuRequest.creatorUserId;
 		cheerPoint.acquisitionPoints = poipikuRequest.amount;
+		if (cheerPoint.insert() < 0){
+			Log.d("ポチ袋付与エラー");
+			errorKind = ErrorKind.Unknown;
+			return false;
+		}
 
 		if (!poipikuRequest.deliver(contentId)) {
 			errorKind = ErrorKind.Unknown;

@@ -262,7 +262,7 @@ if (requestId > 0) {
 		<%}%>
 
 		<article class="Wrapper">
-			<div class="UploadFile">
+			<div class="UploadFile" <%if(requestId>0){%>style="padding-bottom: 80px"<%}%>>
 				<%if(requestId>0){%>
 				<div class="RequestText">
 					<%=Util.toStringHtml(poipikuRequest.requestText)%>

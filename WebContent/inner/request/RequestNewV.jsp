@@ -3,8 +3,6 @@
 <%
 final CheckLogin checkLogin = new CheckLogin(request, response);
 
-if (!checkLogin.isStaff()) return;
-
 if (!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request, response);
 	return;

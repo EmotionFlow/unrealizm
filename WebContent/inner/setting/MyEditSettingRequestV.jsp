@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	RequestCreator requestCreator = new RequestCreator(checkLogin);
+RequestCreator requestCreator = new RequestCreator(checkLogin);
 %>
-<% if (checkLogin.isStaff()) { %>
 <script type="text/javascript">
 	function _getJudgeOkHtml() {
 		return `
@@ -47,6 +46,7 @@
 						DispMsg("保存しました");
 					}
 				} else if (data.error_code === <%=Controller.ErrorKind.JudgeFailure.getCode()%>) {
+					$("#RequestEnabled").removeAttr("checked");
 					Swal.fire({
 						type: "warning",
 						html: _getJudgeFailureHtml(),
@@ -243,7 +243,6 @@
 					</div>
 					<a style="text-decoration: underline;" href="https://poipiku.com/RequestNewPcV.jsp?ID=<%=checkLogin.m_nUserId%>">プレビュー</a>
 				</div>
-
 			</div>
 			<div class="SettingListItem">
 				<div class="SettingListTitle">メディア</div>
@@ -300,7 +299,7 @@
 						<input id="DeliveryPeriod" type="number" placeholder="<%=RequestCreator.DELIVERY_PERIOD_DEFAULT%>" value="<%=requestCreator.deliveryPeriod%>" maxlength="3" />
 						<span class="RequestVarUnit">日</span>
 					</div>
-					<div class="RegistMessage">リクエストを得た日からの納品期限を設定します。<%=RequestCreator.DELIVERY_PERIOD_MIN%>日から<%=RequestCreator.DELIVERY_PERIOD_MAX%>日の間で設定できます。返答締切日数より短くすることはできません。</div>
+					<div class="RegistMessage">リクエスト受信日からの納品期限を設定します。<%=RequestCreator.DELIVERY_PERIOD_MIN%>日から<%=RequestCreator.DELIVERY_PERIOD_MAX%>日の間で設定できます。返答締切日数より短くすることはできません。</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateDeliveryPeriod()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 					</div>
@@ -314,7 +313,7 @@
 						<input id="AmountLeftToMe" type="number" placeholder="<%=RequestCreator.AMOUNT_LEFT_TO_ME_DEFAULT%>" value="<%=requestCreator.amountLeftToMe%>" maxlength="5" />
 					</div>
 					<div class="RegistMessage">
-						おまかせでリクエストされた時の金額を設定します。
+						リクエスト画面で初期表示する金額を設定します。
 						¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MAX)%>の間で設定できます。
 					</div>
 					<div class="SettingBodyCmd">
@@ -354,4 +353,3 @@
 		</div>
 	</div>
 </div>
-<%}%>

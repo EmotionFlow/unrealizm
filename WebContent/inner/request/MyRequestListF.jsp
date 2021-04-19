@@ -15,7 +15,7 @@ SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 	<%if (!bRtn) {%>
 	データ取得時にエラーが発生しました
 	<%}else if (results.pageNum==0) { %>
-	リクエストが見つかりませんでした
+	見つかりませんでした
 	<%} else {%>
 	これ以上ありません
 	<%}%>

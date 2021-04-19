@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/inner/THeaderCommonPc.jsp" %>
+	<%@ include file="/inner/THeaderCommon.jsp" %>
 	<title>リクエスト(β) ガイドライン</title>
 	<style>
         table {
@@ -37,12 +37,10 @@
 </head>
 
 <body>
-<%@ include file="/inner/TMenuPc.jsp" %>
 
 <article class="Wrapper">
 	<%@include file="inner/GuideLineRequestV.jsp"%>
 </article><!--Wrapper-->
 
-<%@ include file="/inner/TFooterBase.jsp" %>
 </body>
 </html>

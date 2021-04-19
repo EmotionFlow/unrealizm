@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp" %>
 <%
 	CheckLogin checkLogin = new CheckLogin(request, response);
-	if (!checkLogin.m_bLogin || !checkLogin.isStaff()) return;
+	if (!checkLogin.m_bLogin) return;
 %>
 <!DOCTYPE html>
 <html>

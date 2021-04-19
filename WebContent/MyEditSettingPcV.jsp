@@ -39,6 +39,7 @@ if(!checkLogin.m_bLogin) {
 }
 
 boolean bSmartPhone = Util.isSmartPhone(request);
+boolean isApp = false;
 
 //パラメータの取得
 //検索結果の取得
@@ -59,7 +60,7 @@ MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
-MENU.put("REQUEST", "リクエスト");
+MENU.put("REQUEST", _TEX.T("Request"));
 
 
 String[][] menuOrder = {
@@ -228,9 +229,7 @@ String[][] menuOrder = {
 							<%=getSettingMenuItem(m, MENU.get(m))%>
 						<%}%>
 					<%}%>
-					<%if (checkLogin.isStaff()) { %>
-						<%=getSettingMenuItem("REQUEST", MENU.get("REQUEST"))%>
-					<%}%>
+					<%=getSettingMenuItem("REQUEST", MENU.get("REQUEST"))%>
 				</div>
 			</div>
 

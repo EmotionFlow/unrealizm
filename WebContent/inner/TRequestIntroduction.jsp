@@ -44,15 +44,22 @@ function _getRequestIntroductionHtml(){
 </ul>
 </div>
 <div class="RequestIntroDlgInfo" style="text-align: center;">
-<a href="/GuideLineRequestPcV.jsp">より詳しいガイドラインはこちら</a>
+<a href="/GuideLineRequest<%=isApp?"App":"Pc"%>V.jsp">より詳しいガイドラインはこちら</a>
 </div>
+
+<%if(isApp){%>
+<div class="RequestIntroDlgInfo" style="text-align: center;margin-top: 20px; padding: 2px;border: solid 2px;border-radius: 4px;">
+リクエストの募集ははブラウザ版のポイピク設定画面からはじめられます
+</div>
+<%}else{%>
 <div class="RequestIntroDlgTitle" style="text-align: center;">
 <a href="/MyEditSettingPcV.jsp?MENUID=REQUEST">リクエスト募集をはじめる</a>
 </div>
+<%}%>
 
 </div>
 `;
-	}
+}
 
 function dispRequestIntroduction(){
 	Swal.fire({

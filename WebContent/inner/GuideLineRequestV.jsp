@@ -105,7 +105,7 @@
 
 	<div class="SettingListItem Additional">
 		<div class="SettingBody">
-			(2021/4/XX 制定)
+			(2021/4/20 制定)
 		</div>
 	</div>
 </div>
