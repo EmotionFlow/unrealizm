@@ -8,7 +8,7 @@
 	function getRequestsHtml(statusCode, pageNum, requestId) {
 		$.ajax({
 			"type": "POST",
-			"url": "/f/MyRequestListF.jsp",
+			"url": "/<%=isApp?"api":"f"%>/MyRequestListF.jsp",
 			"data": "CAT=<%=category%>&ST=" + statusCode + "&PG=" + pageNum,
 		}).then((data)=>{
 				$("#RequestList").html(data);
