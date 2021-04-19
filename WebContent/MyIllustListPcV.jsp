@@ -100,6 +100,9 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
+							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
+								マイリクエスト
+							</a>
 						</div>
 					</span>
 				</section>

@@ -136,7 +136,7 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 							</a>
 							<%if(checkLogin.isStaff()){%>
 							<a href="/MyRequestListAppV.jsp?MENUID=RECEIVED" class="BtnBase">
-								<i class="far fa-clipboard"></i> マイリクエスト
+								マイリクエスト
 							</a>
 							<%}%>
 						</div>
