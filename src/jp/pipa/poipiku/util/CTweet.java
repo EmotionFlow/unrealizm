@@ -93,7 +93,7 @@ public final class CTweet {
 
 		try {
 			cConn = DatabaseUtil.dataSource.getConnection();
-			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+			strSql = "SELECT fldaccesstoken,fldsecrettoken,twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
