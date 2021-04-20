@@ -590,7 +590,7 @@ public final class CTweet {
 
 			// DBのリストキャッシュを確認
 			//strSql = "SELECT * FROM twitter_lists WHERE list_id=? AND user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'15 minutes' LIMIT 1";
-			strSql = "SELECT * FROM twitter_lists WHERE list_id=? AND user_id=? LIMIT 1";
+			strSql = "SELECT user_id FROM twitter_lists WHERE list_id=? AND user_id=? LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setLong(1, Long.parseLong(cContent.m_strListId));
 			cState.setInt(2, m_nUserId);
