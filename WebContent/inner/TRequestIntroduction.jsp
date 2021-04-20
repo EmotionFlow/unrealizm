@@ -53,7 +53,7 @@ function _getRequestIntroductionHtml(){
 </div>
 <%}else{%>
 <div class="RequestIntroDlgTitle" style="text-align: center;">
-<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST">リクエスト募集をはじめる</a>
+<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST">リクエスト募集を設定する</a>
 </div>
 <%}%>
 

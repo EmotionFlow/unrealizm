@@ -60,6 +60,8 @@ if (request.getParameter("ST") != null) {
 
 int requestId = Util.toInt(request.getParameter("RID"));
 
+RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
+
 %>
 
 <!DOCTYPE html>
@@ -224,7 +226,7 @@ int requestId = Util.toInt(request.getParameter("RID"));
 		}
 		<%}%>
 
-		.SettingMenu > .WhatIsRequest {
+        .SettingMenu > .WhatIsRequest {
             background-color: #fff;
             min-height: calc(41.625px);
             width: 100%;
@@ -232,8 +234,17 @@ int requestId = Util.toInt(request.getParameter("RID"));
             line-height: 40px;
             border-bottom: 1px solid #ccc;
             color: #6d6965;
-			text-align: center;
-		}
+            text-align: center;
+        }
+        .SettingMenu > .RequestCreatorStatus {
+            background-color: #f6f6f7;
+            width: 100%;
+            display: block;
+            line-height: 30px;
+            border-bottom: 1px solid #ccc;
+            color: #6d6965;
+            text-align: center;
+        }
 		</style>
 	</head>
 
@@ -249,6 +260,9 @@ int requestId = Util.toInt(request.getParameter("RID"));
 		<article class="Wrapper">
 			<div id="MENUROOT" class="SettingPage" style="display: none;">
 				<div class="SettingMenu">
+					<div class="RequestCreatorStatus">
+						<%=requestCreator.status== RequestCreator.Status.Enabled ? "リクエスト受付中" : "リクエスト募集停止中"%>
+					</div>
 					<%for(String m : menuOrder[0]){%>
 						<%if(MENU.get(m)!=null){%>
 							<%=getSettingMenuItem(m, MENU.get(m))%>
