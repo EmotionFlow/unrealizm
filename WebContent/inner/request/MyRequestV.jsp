@@ -71,6 +71,7 @@ int requestId = Util.toInt(request.getParameter("RID"));
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%}%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TRequestIntroduction.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
@@ -222,6 +223,17 @@ int requestId = Util.toInt(request.getParameter("RID"));
 			background-color: #f3f3f3;
 		}
 		<%}%>
+
+		.SettingMenu > .WhatIsRequest {
+            background-color: #fff;
+            min-height: calc(41.625px);
+            width: 100%;
+            display: block;
+            line-height: 40px;
+            border-bottom: 1px solid #ccc;
+            color: #6d6965;
+			text-align: center;
+		}
 		</style>
 	</head>
 
@@ -242,6 +254,12 @@ int requestId = Util.toInt(request.getParameter("RID"));
 							<%=getSettingMenuItem(m, MENU.get(m))%>
 						<%}%>
 					<%}%>
+					<div class="WhatIsRequest">
+						<i class="fas fa-info-circle" style="font-size: 14px"></i>
+						<a href="javascript: void(0);" style="color:#6d6965; text-decoration: underline" onclick="dispRequestIntroduction()">
+							リクエストとは？
+						</a>
+					</div>
 				</div>
 			</div>
 
