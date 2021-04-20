@@ -74,7 +74,7 @@ try {
 			content.put("category_id", cContent.m_nCategoryId);
 			content.put("open_id", cContent.m_nOpenId);
 			content.put("publish_id", cContent.m_nPublishId);
-			content.put("content_twitter_link", CTweet.generateAfterTweerMsg(cContent, _TEX));
+			content.put("content_twitter_link", CTweet.generateAfterTweetMsg(cContent, _TEX));
 			content.put("file_num", cContent.m_nFileNum);
 			contentList.add(content);
 		}

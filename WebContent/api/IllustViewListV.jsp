@@ -78,7 +78,7 @@ try {
 			img.put("tag_list", cContent.m_strTagList);
 			img.put("description", cContent.m_strDescription);
 			img.put("category", strCategory);
-			img.put("content_twitter_link", CTweet.generateAfterTweerMsg(cContent, _TEX));
+			img.put("content_twitter_link", CTweet.generateAfterTweetMsg(cContent, _TEX));
 			img.put("file_num", cContent.m_nFileNum);
 			img.put("emoji_list", strEmojiList.toArray());
 			imglist.add(img);

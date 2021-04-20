@@ -31,7 +31,7 @@ import twitter4j.UploadedMedia;
 import twitter4j.UserList;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class CTweet {
+public final class CTweet {
 	public boolean m_bIsTweetEnable = false;
 	public String m_strUserAccessToken = "";
 	public String m_strSecretToken = "";
@@ -89,15 +89,13 @@ public class CTweet {
 
 	public boolean GetResults(int nUserId) {
 		boolean bResult = true;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 			strSql = "SELECT * FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
@@ -354,15 +352,13 @@ public class CTweet {
 		int nResult = FRIENDSHIP_UNDEF;
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
 
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 			// ターゲットユーザのTokenとTwitterID取得
 			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 			cState = cConn.prepareStatement(strSql);
@@ -375,6 +371,7 @@ public class CTweet {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			cConn.close();cConn=null;
 			if(m_lnLastTwitterTargetUserId==-1L) return ERR_OTHER;
 
 			// DBに15分以内のフォローがあるか
@@ -398,6 +395,7 @@ public class CTweet {
 			Twitter twitter = tf.getInstance();
 			ResponseList<Friendship> lookupResults = twitter.lookupFriendships(m_lnLastTwitterTargetUserId);
 			if(lookupResults.size() > 0){
+				cConn = DatabaseUtil.dataSource.getConnection();
 				//strSql = "INSERT INTO twitter_friends(user_id, twitter_user_id, twitter_follow_user_id) VALUES (?, ?, ?, ?) ON CONFLICT DO NOTHING;";
 				strSql = "INSERT INTO twitter_friends(user_id, twitter_user_id, follow_user_id, twitter_follow_user_id) "
 						+ "VALUES (?, ?, ?, ?) "
@@ -435,6 +433,7 @@ public class CTweet {
 					nResult = FRIENDSHIP_NONE;
 				}
 				cState.close();cState=null;
+				cConn.close();cConn=null;
 			}
 		} catch (TwitterException te) {
 			LoggingTwitterException(te);
@@ -454,18 +453,16 @@ public class CTweet {
 	// twitter_friendsに15分以内のフォローがあるか
 	private boolean checkDBFriendInfo(int userId, int targetUserId) {
 		boolean bFollow = false;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			//strSql = "SELECT * FROM twitter_friends WHERE user_id=? AND follow_user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'15 minutes' LIMIT 1";
-			strSql = "SELECT * FROM twitter_friends WHERE user_id=? AND follow_user_id=? LIMIT 1";
+			strSql = "SELECT user_id FROM twitter_friends WHERE user_id=? AND follow_user_id=? LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, userId);
 			cState.setInt(2, targetUserId);
@@ -484,7 +481,6 @@ public class CTweet {
 	}
 
 	public void updateDBFollowInfoFromTwitter(int userId) {
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -498,8 +494,7 @@ public class CTweet {
 			twitter_userId=m_lnLastTwitterTargetUserId;
 		} else {
 			try {
-				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				cConn = dsPostgres.getConnection();
+				cConn = DatabaseUtil.dataSource.getConnection();
 				strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, userId);
@@ -547,8 +542,7 @@ public class CTweet {
 
 		// 取れたものを追加
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 			// 古いものを削除
 			strSql = "DELETE FROM twitter_follows WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -590,14 +584,12 @@ public class CTweet {
 		int nResult = ERR_OTHER;
 
 		boolean bFind = false;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// DBのリストキャッシュを確認
 			//strSql = "SELECT * FROM twitter_lists WHERE list_id=? AND user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'15 minutes' LIMIT 1";
@@ -609,6 +601,7 @@ public class CTweet {
 			bFind = cResSet.next();
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			cConn.close();cConn=null;
 			if(bFind) return OK;
 
 			long lnListId = Long.parseLong(cContent.m_strListId);
@@ -625,6 +618,7 @@ public class CTweet {
 			nResult = OK;
 
 			// キャッシュへ登録
+			cConn = DatabaseUtil.dataSource.getConnection();
 			strSql = "INSERT INTO twitter_lists(list_id, twitter_user_id, user_id) "
 					+ "VALUES (?, ?, ?) ON CONFLICT (list_id, user_id) DO UPDATE SET last_update_date=CURRENT_TIMESTAMP;";
 			cState = cConn.prepareStatement(strSql);
@@ -633,6 +627,7 @@ public class CTweet {
 			cState.setInt(3, m_nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
+			cConn.close();cConn=null;
 		}catch(TwitterException te){
 			LoggingTwitterException(te);
 			nResult = GetErrorCode(te);
@@ -747,7 +742,7 @@ public class CTweet {
 		return strDesc + strFooter;
 	}
 
-	static public String generateAfterTweerMsg(CContent cContent, ResourceBundleControl _TEX) {
+	static public String generateAfterTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
 			String strUrl = String.format("https://poipiku.com/%d/%d.html",
@@ -773,14 +768,11 @@ public class CTweet {
 	}
 
 	static public void updateTwitterCash(int userId) {
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement cState = null;
 		String strSql = "";
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "DELETE FROM twitter_follows WHERE user_id=?";
 			cState = connection.prepareStatement(strSql);
@@ -821,7 +813,6 @@ public class CTweet {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			u = twitter.showUser(m_lnTwitterUserId);
-
 		}catch(TwitterException te){
 			LoggingTwitterException(te);
 			return null;
