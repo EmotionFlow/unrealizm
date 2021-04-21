@@ -100,17 +100,16 @@ public class MyHomeTagPcC {
 			strSql = subTable +
 					" SELECT count(t.*) FROM t";
 			if (!conditions.isEmpty()) {
-				conditions.forEach(Log::d);
 				strSql += " WHERE " + String.join(" AND ", conditions);
 			}
 
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId); // follows_0000.user_id=?
-			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
-			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId);        // follows_0000.user_id=?
+			statement.setInt(idx++, checkLogin.m_nSafeFilter);    // safe_filter<=?
+			statement.setInt(idx++, checkLogin.m_nUserId);        // follow_tags_0000.user_id=?
+			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
+			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -128,14 +127,14 @@ public class MyHomeTagPcC {
 
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId); // follows_0000.user_id=?
-			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
-			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId);      // follows_0000.user_id=?
+			statement.setInt(idx++, checkLogin.m_nSafeFilter);  // safe_filter<=?
+			statement.setInt(idx++, checkLogin.m_nUserId);      // follow_tags_0000.user_id=?
+			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
+			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY); // OFFSET ?
-			statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
+			statement.setInt(idx++, SELECT_MAX_GALLERY);              // LIMIT ?
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
