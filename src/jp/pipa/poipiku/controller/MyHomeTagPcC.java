@@ -2,14 +2,13 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
-
-import javax.naming.InitialContext;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
+
 
 public class MyHomeTagPcC {
 	public int n_nUserId = -1;
@@ -35,7 +34,6 @@ public class MyHomeTagPcC {
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -44,19 +42,32 @@ public class MyHomeTagPcC {
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
+
+			final String subTable = "WITH t as (" +
+					"SELECT contents_0000.*, follows_0000.follow_user_id FROM contents_0000 " +
+					" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " +
+					" WHERE open_id<>2 " +
+					" AND safe_filter<=? AND (" +
+					"   content_id IN (" +
+					"     SELECT content_id FROM tags_0000 WHERE genre_id IN(" +
+					"       SELECT genre_id FROM follow_tags_0000 WHERE user_id=?" +
+					"     ) AND tag_type=1 ORDER BY content_id DESC LIMIT 1000" +
+					"   ) " +
+					" )" +
+					" LIMIT 10000" +
+					")";
 
 			// BLOCK USER
 			String strCondBlockUser = "";
 			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
-				strCondBlockUser = "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+				strCondBlockUser = "t.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
 			}
 
 			// BLOCKED USER
 			String strCondBlocedkUser = "";
 			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
-				strCondBlocedkUser = "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+				strCondBlocedkUser = "t.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 
 			// MUTE KEYWORD
@@ -65,7 +76,7 @@ public class MyHomeTagPcC {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
 				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
+					strCondMute = "content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
 
@@ -81,26 +92,25 @@ public class MyHomeTagPcC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			List<String> conditions = new ArrayList<>();
+			if (!strCondBlockUser.isEmpty()) conditions.add(strCondBlockUser);
+			if (!strCondBlocedkUser.isEmpty()) conditions.add(strCondBlocedkUser);
+			if (!strCondMute.isEmpty()) conditions.add(strCondMute);
 
-			String strSqlFromWhere = "FROM contents_0000 "
-					+ "LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? "
-					+ "WHERE open_id<>2 "
-					+ strCondBlockUser
-					+ strCondBlocedkUser
-					+ "AND safe_filter<=? "
-					+ "AND (content_id IN (SELECT content_id FROM tags_0000 WHERE genre_id IN(SELECT genre_id FROM follow_tags_0000 WHERE user_id=?) AND tag_type=1) "
-					+ ") "
-					+ strCondMute;
+			strSql = subTable +
+					" SELECT count(t.*) FROM t";
+			if (!conditions.isEmpty()) {
+				conditions.forEach(Log::d);
+				strSql += " WHERE " + String.join(" AND ", conditions);
+			}
 
-			// NEW ARRIVAL
-			strSql = "SELECT count(contents_0000.*) " + strSqlFromWhere;
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId); // follows_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
 			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
 			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
+			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
+			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -109,17 +119,22 @@ public class MyHomeTagPcC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			strSql = "SELECT contents_0000.*, follows_0000.follow_user_id " + strSqlFromWhere
-					+ " ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = subTable +
+					" SELECT * FROM t";
+			if (!conditions.isEmpty()) {
+				strSql += " WHERE " + String.join(" AND ", conditions);
+			}
+			strSql += " ORDER BY content_id DESC OFFSET ? LIMIT ?";
+
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId); // follows_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
 			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
 			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
+			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.user_id=?
+			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId); // blocks_0000.block_user_id=?
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
-			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
+			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY); // OFFSET ?
 			statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
