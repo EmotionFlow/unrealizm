@@ -10,7 +10,7 @@ import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 
-public class MyHomeTagPcC {
+public final class MyHomeTagPcC {
 	public int n_nUserId = -1;
 	public int n_nVersion = 0;
 	public int m_nPage = 0;
@@ -27,7 +27,7 @@ public class MyHomeTagPcC {
 
 	public int SELECT_MAX_GALLERY = 15;
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public int m_nContentsNum = 0;
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
@@ -59,16 +59,10 @@ public class MyHomeTagPcC {
 					")";
 
 			// BLOCK USER
-			String strCondBlockUser = "";
-			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
-				strCondBlockUser = "t.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
-			}
+			final String strCondBlockUser = "t.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
 
 			// BLOCKED USER
-			String strCondBlocedkUser = "";
-			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
-				strCondBlocedkUser = "t.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
-			}
+			final String strCondBlocedkUser = "t.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
@@ -93,8 +87,8 @@ public class MyHomeTagPcC {
 			statement.close();statement=null;
 
 			List<String> conditions = new ArrayList<>();
-			if (!strCondBlockUser.isEmpty()) conditions.add(strCondBlockUser);
-			if (!strCondBlocedkUser.isEmpty()) conditions.add(strCondBlocedkUser);
+			conditions.add(strCondBlockUser);
+			conditions.add(strCondBlocedkUser);
 			if (!strCondMute.isEmpty()) conditions.add(strCondMute);
 
 			strSql = subTable +
@@ -108,8 +102,8 @@ public class MyHomeTagPcC {
 			statement.setInt(idx++, checkLogin.m_nUserId);        // follows_0000.user_id=?
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);    // safe_filter<=?
 			statement.setInt(idx++, checkLogin.m_nUserId);        // follow_tags_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -130,8 +124,8 @@ public class MyHomeTagPcC {
 			statement.setInt(idx++, checkLogin.m_nUserId);      // follows_0000.user_id=?
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);  // safe_filter<=?
 			statement.setInt(idx++, checkLogin.m_nUserId);      // follow_tags_0000.user_id=?
-			if(!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
-			if(!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
+			statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
 			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY); // OFFSET ?
 			statement.setInt(idx++, SELECT_MAX_GALLERY);              // LIMIT ?
