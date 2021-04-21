@@ -262,7 +262,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 				<div class="SettingMenu">
 					<div class="RequestCreatorStatus">
 						<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="color:#6d6965;">
-						<%=requestCreator.status== RequestCreator.Status.Enabled ? "リクエスト受付中" : "リクエスト募集停止中"%>
+						<%=requestCreator.status== RequestCreator.Status.Enabled ? "リクエスト募集：受付中" : "リクエスト募集：停止中"%>
 						</a>
 					</div>
 					<%for(String m : menuOrder[0]){%>
