@@ -203,12 +203,6 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 		<div class="SettingBody">
 			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
 			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。
-			複数の連絡先確保と不正利用防止のため、受付開始には以下の条件を満たす必要があります。
-			<ul style="padding: 0 26px">
-				<li>メールアドレスとパスワードでログインできること</li>
-				<li>ある程度利用歴のあるTwitterアカウントと連携されていること</li>
-				<li>ポイピクの本アカウントにある程度利用歴があること</li>
-			</ul>
 			<%}else{%>
 			募集を停止しても、現在受信しているリクエストは承認したり、納品したりできます。
 			<%}%>
