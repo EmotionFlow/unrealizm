@@ -38,7 +38,7 @@ if (requestId > 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-35.js" type="text/javascript"></script>
+		<script src="/js/upload-36.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -338,6 +338,13 @@ if (requestId > 0) {
 								<%}//if(cTweet.m_bIsTweetEnable)%>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
 							</select>
+						</div>
+					</div>
+
+					<div id="PublishHiddenInfo" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish" style="font-size: 11px;">
+							<%=_TEX.T("UploadFilePc.Option.Publish.HiddenInfo")%>
 						</div>
 					</div>
 

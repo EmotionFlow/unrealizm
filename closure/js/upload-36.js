@@ -667,16 +667,16 @@ function udpateMyTwitterList() {
 var updateMyTwitterListF = udpateMyTwitterList();
 
 function updatePublish(nUserId) {
-	var val = parseInt($('#EditPublish').val(), 10);
+	let val = parseInt($('#EditPublish').val(), 10);
 	updateAreaLimitedTimePublish(val);
 
-		var nSlideSpeed = 300;
-	var nChangeDelay = 150;
-	var elements = [$('#ItemTwitterList'), $('#ItemPassword')];
+	const nSlideSpeed = 300;
+	const nChangeDelay = 150;
+	const elements = [$('#ItemTwitterList'), $('#ItemPassword'), $('#PublishHiddenInfo')];
 
-		if (val==4 || val==10 || val==11){
-		var elToHide = null;
-		var elToVisible = null;
+	if (val===4 || val===10 || val===11 | val===99){
+		let elToHide = null;
+		let elToVisible = null;
 		switch (val) {
 			case 4:
 				elToVisible = $('#ItemPassword');
@@ -684,12 +684,15 @@ function updatePublish(nUserId) {
 			case 10:
 				elToVisible = $('#ItemTwitterList');
 				break;
+			case 99:
+				elToVisible = $('#PublishHiddenInfo');
+				break;
 			default:
 				;
 		}
 
-		for (var i=0; i<elements.length; i++){
-			var el = elements[i];
+		for (let i=0; i<elements.length; i++){
+			let el = elements[i];
 			if(el.is(':visible')){
 				elToHide = el;
 				break;
@@ -705,12 +708,12 @@ function updatePublish(nUserId) {
 				});
 		}
 
-		if(val == 10){
+		if(val === 10){
 			updateMyTwitterListF(nUserId);
 		}
 		} else {
-		for (var i=0; i<elements.length; i++){
-			var el = elements[i];
+		for (let i=0; i<elements.length; i++){
+			let el = elements[i];
 			if(el.is(':visible')){
 				el.slideUp(nSlideSpeed);
 			}
