@@ -3,15 +3,13 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
-public class SearchIllustByTagC {
+public final class SearchIllustByTagC {
 	public String m_strKeyword = "";
 	public int m_nPage = 0;
 	public int m_nGenreId = -1;
@@ -41,7 +39,6 @@ public class SearchIllustByTagC {
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -52,8 +49,7 @@ public class SearchIllustByTagC {
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// Check Following
 			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=?";
@@ -103,9 +99,10 @@ public class SearchIllustByTagC {
 			}
 
 			String strSqlFromWhere;
-			strSqlFromWhere = "FROM contents_0000 "
+			strSqlFromWhere = "FROM contents_0000 c "
+					+ "INNER JOIN tags_0000 t ON c.content_id=t.content_id "
 					+ "WHERE open_id<>2 "
-					+ "AND content_id IN (SELECT content_id FROM tags_0000 WHERE genre_id=? AND tag_type=1) "
+					+ "AND t.genre_id=? AND tag_type=1 "
 					+ "AND safe_filter<=? "
 					+ strCondBlockUser
 					+ strCondBlocedkUser
@@ -137,8 +134,8 @@ public class SearchIllustByTagC {
 			}
 
 			// contents
-			strSql = "SELECT * " + strSqlFromWhere
-					+ "ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT c.* " + strSqlFromWhere
+					+ "ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, m_nGenreId);
