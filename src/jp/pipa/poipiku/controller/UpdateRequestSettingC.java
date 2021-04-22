@@ -118,7 +118,12 @@ public final class UpdateRequestSettingC extends Controller{
 			    break;
 		    case "AllowSensitive":
 			    updateResult = requestCreator.updateAllowSensitive(
-		    			paramValue.equals("1")
+					    paramValue.equals("1")
+			    );
+			    break;
+		    case "AllowAnonymous":
+			    updateResult = requestCreator.updateAllowAnonymous(
+					    paramValue.equals("1")
 			    );
 			    break;
 		    case "ReturnPeriod":
