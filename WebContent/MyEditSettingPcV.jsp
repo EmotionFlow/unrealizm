@@ -335,7 +335,6 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
-			<%if (checkLogin.isStaff()) {%>
 			<%strPageId = "REQUEST";%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
@@ -343,7 +342,6 @@ String[][] menuOrder = {
 					<%@include file="/inner/setting/MyEditSettingRequestV.jsp"%>
 				</div>
 			</div>
-			<%}%>
 
 			<%if(!bSmartPhone){%>
 			</div>
