@@ -7,6 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +85,17 @@ public class UpCParam {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Class: " + this.getClass().getCanonicalName() + "\n");
 		sb.append("Settings:\n");
+		if (this.getClass().getSuperclass() != null) {
+			for (Field field : this.getClass().getSuperclass().getDeclaredFields()) {
+				try {
+					field.setAccessible(true);
+					sb.append(field.getName() + " = " + field.get(this) + "\n");
+				} catch (IllegalAccessException e) {
+					sb.append(field.getName() + " = " + "access denied\n");
+				}
+			}
+		}
+
 		for (Field field : this.getClass().getDeclaredFields()) {
 			try {
 				field.setAccessible(true);
