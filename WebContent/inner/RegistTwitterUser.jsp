@@ -167,7 +167,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 				<span class="UserThumbImg"
 					  style="background-image:url('//img-cdn.poipiku.com<%=user.m_strFileName%>')">
 				</span>
-				<span class="UserThumbName"><%=user.m_strNickName%> (<%=user.m_nUserId%>)</span>
+				<span class="UserThumbName"><%=user.m_strNickName%> (ID:<%=user.m_nUserId%>)</span>
 			</a>
 			<%}%>
 			<%if (controller.results.size()<=2) {%>
