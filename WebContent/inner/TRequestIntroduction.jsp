@@ -17,7 +17,8 @@ function _getRequestIntroductionHtml(){
 </div>
 <h2 class="RequestIntroDlgTitle">特徴</h2>
 <div class="RequestIntroDlgInfo">
-<ul>
+<ul style="font-weight:bold">
+	<li>クリエイターには、リクエストにかかる手数料が一切発生しません。</li>
 	<li>クライアントは、リクエスト時に創作物の用途範囲を明確に選択できます。</li>
 	<li>クリエイターは、受け取ったリクエストから気に入ったもののみ承認できます。</li>
 	<li>クライアントからの要求はリクエスト時のみ。それ以外はポイピク内外問わず、コミュニケーション禁止です。</li>
