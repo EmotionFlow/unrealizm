@@ -166,7 +166,7 @@
 
 <div class="SettingList">
 		<div class="SettingListItem">
-				<div class="SettingListTitle">現在のポチ袋ポイント</div>
+				<div class="SettingListTitle">現在のポイント</div>
 				<div class="SettingBody">
 						<p style="text-align: center; font-size: 17px; margin-bottom: 8px;">
 								<%=strCheerPointTotal%>ポイント

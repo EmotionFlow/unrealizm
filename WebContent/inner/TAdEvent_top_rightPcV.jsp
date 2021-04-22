@@ -27,6 +27,14 @@ $(function(){
 <%}%>
 <ul class="EventItemList">
 	<li class="EventItem">
+		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalRequestCreatorPcV.jsp">
+			<div style="text-align: center; font-size: 22px; font-weight: bold; line-height: 40px">リクエスト機能提供開始！</div>
+			<div style="text-align: center; font-size: 13px; line-height: 20px;">今クリエーターに登録すると</div>
+			<div style="text-align: center; font-size: 13px; line-height: 20px;">先着200名様にポイパス1ヶ月分プレゼント！</div>
+		</a>
+	</li>
+
+	<li class="EventItem">
 		<a href="/event/20190901/TopPcV.jsp">
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
 		</a>
@@ -35,20 +43,6 @@ $(function(){
 	<li class="EventItem">
 		<a href="/UploadTextPcV.jsp">
 			<img class="EventBanner" src="/img/banner_2020_10_25_text-post.png" />
-		</a>
-	</li>
-
-	<li class="EventItem End">
-		<a href="/NewArrivalPcV.jsp?CD=29">
-			<img class="EventBanner" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" />
-		</a>
-	</li>
-
-	<li class="EventItem End">
-		<a class="EventBanner NoBgRed End" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=28">
-			<div style="text-align: center; font-size: 26px; font-weight: bold; line-height: 40px">祝！200万ユーザ突破</div>
-			<div style="text-align: center; font-size: 16px; line-height: 20px;">どうか祝ってやって下さいm(_ _)m</div>
-			<div style="text-align: center; font-size: 13px; line-height: 20px;">抽選で100名様にポイパス1ヶ月分プレゼント</div>
 		</a>
 	</li>
 </ul>
