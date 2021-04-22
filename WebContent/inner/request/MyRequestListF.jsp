@@ -79,8 +79,13 @@ for(MyRequestListC.Result r : results.requests) {
 	</div>
 	<div class="RequestFooter">
 		<div class="RequestUser">
+			<%if(results.category.equals("RECEIVED") && r.request.isClientAnonymous){%>
+			<a class="RequestUserLink" href="javascript: void(0);">
+				<span class="RequestUserLabel">From</span><span class="RequestUserNickname">匿名リクエスト</span>
+			<%}else{%>
 			<a class="RequestUserLink" href="<%=String.format(requestUserUrlFmt, results.category.equals("SENT") ? r.request.creatorUserId : r.request.clientUserId)%>">
 				<span class="RequestUserLabel"><%=results.category.equals("SENT")?"To":"From"%></span><span class="RequestUserNickname"><%=r.nickname%></span>
+				<%}%>
 			</a>
 		</div>
 		<div class="RequestCmd">

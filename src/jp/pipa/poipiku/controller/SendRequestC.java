@@ -76,6 +76,7 @@ public class SendRequestC extends Controller {
 		Request poipikuRequest = new Request();
 		poipikuRequest.clientUserId = clientUserId;
 		poipikuRequest.creatorUserId = creatorUserId;
+		poipikuRequest.isClientAnonymous = anonymous == 1;
 		poipikuRequest.mediaId = mediaId;
 		poipikuRequest.requestText = requestText;
 		poipikuRequest.requestCategory = requestCategory;
