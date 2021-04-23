@@ -163,7 +163,7 @@ public final class RequestCreator extends Model{
 
 			strSql = "INSERT INTO request_creators" +
 					"(user_id, status, allow_media, allow_sensitive, allow_client, return_period, delivery_period, amount_left_to_me, amount_minimum, commercial_transaction_law, profile)" +
-					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (user_id) DO NOTHING RETURNING user_id";
+					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (user_id) DO NOTHING RETURNING user_id";
 			cState = cConn.prepareStatement(strSql);
 			int idx = 1;
 			cState.setInt(idx++, userId);
