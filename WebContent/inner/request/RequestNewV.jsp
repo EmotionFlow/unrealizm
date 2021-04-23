@@ -347,6 +347,12 @@ if (!results.getResults(checkLogin)) {
 			<%=results.user.m_strNickName%>さんへのリクエスト(β)
 			<%}else{%>
 			現在、リクエストを受け付けていません
+			<div>
+				<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ボタンをタップするとこのクリエイターにリクエスト募集してほしい気持ちを通知できます</div>
+				<a class="BtnBase" style="" href="javascript: void(0);" onclick="">
+					<span class="RequestEnabled">お願いしたい！</span>
+				</a>
+			</div>
 			<%}%>
 		</div>
 
