@@ -14,6 +14,7 @@ public class SendRequestC extends Controller {
 	public int mediaId = -1;
 	public String requestText = "";
 	public int requestCategory = -1;
+	public int anonymous = -1;
 	public int licenseId = -1;
 	public int amount = -1;
 	public int commission = -1;
@@ -34,6 +35,7 @@ public class SendRequestC extends Controller {
 			mediaId = Util.toInt(request.getParameter("MEDIA"));
 			requestText = Common.TrimAll(request.getParameter("TEXT"));
 			requestCategory = Util.toInt(request.getParameter("CATEGORY"));
+			anonymous = Util.toInt(request.getParameter("ANONYMOUS"));
 			licenseId = Util.toInt(request.getParameter("LICENSE"));
 			amount = Util.toInt(request.getParameter("AMOUNT"));
 			commission = Util.toInt(request.getParameter("COMMISSION"));
@@ -74,6 +76,7 @@ public class SendRequestC extends Controller {
 		Request poipikuRequest = new Request();
 		poipikuRequest.clientUserId = clientUserId;
 		poipikuRequest.creatorUserId = creatorUserId;
+		poipikuRequest.isClientAnonymous = anonymous == 1;
 		poipikuRequest.mediaId = mediaId;
 		poipikuRequest.requestText = requestText;
 		poipikuRequest.requestCategory = requestCategory;

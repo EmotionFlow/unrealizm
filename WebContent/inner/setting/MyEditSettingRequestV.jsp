@@ -51,6 +51,8 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 						type: "warning",
 						html: _getJudgeFailureHtml(),
 					});
+				} else {
+					DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 				}
 			},
 			(error) => {
@@ -75,6 +77,9 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 	}
 	function updateAllowSensitive(){
 		_updateRequestSetting("AllowSensitive", $("#AllowSensitive").prop("checked") ? 1 : 0);
+	}
+	function updateAllowAnonymous(){
+		_updateRequestSetting("AllowAnonymous", $("#AllowAnonymous").prop("checked") ? 1 : 0);
 	}
 
 	function _validateRange(min, max, value) {
@@ -270,6 +275,24 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 							</div>
 						</div>
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowSensitive()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+					</div>
+				</div>
+			</div>
+			<div class="SettingListItem">
+				<div class="SettingListTitle">匿名リクエスト許可</div>
+				<div class="SettingBody">
+					匿名でのリクエストを許可します
+					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
+						<div class="RegistMessage">
+							<div class="onoffswitch OnOff">
+								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AllowAnonymous" value="0" <%if(requestCreator.allowAnonymous()){%>checked="checked"<%}%> />
+								<label class="onoffswitch-label" for="AllowAnonymous">
+									<span class="onoffswitch-inner"></span>
+									<span class="onoffswitch-switch"></span>
+								</label>
+							</div>
+						</div>
+						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowAnonymous()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 					</div>
 				</div>
 			</div>

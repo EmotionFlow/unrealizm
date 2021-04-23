@@ -48,6 +48,10 @@ public final class RequestCreator extends Model{
 	static public final int ALLOW_SENSITIVE_DEFAULT = 0;
 	private Integer allowSensitive = ALLOW_SENSITIVE_DEFAULT;
 
+	static public final int ALLOW_CLIENT_SIGNED = 0;
+	static public final int ALLOW_CLIENT_ANONYMOUS = 1;  // 匿名リクエストOK
+	private Integer allowClient = ALLOW_CLIENT_SIGNED;
+
 	static public final int RETURN_PERIOD_MIN = 3;
 	static public final int RETURN_PERIOD_MAX = 30;
 	static public final int RETURN_PERIOD_DEFAULT = 7;
@@ -102,6 +106,7 @@ public final class RequestCreator extends Model{
 				setStatus(cResSet.getInt("status"));
 				allowSensitive = cResSet.getInt("allow_sensitive");
 				allowMedia = cResSet.getInt("allow_media");
+				allowClient = cResSet.getInt("allow_client");
 				returnPeriod = cResSet.getInt("return_period");
 				deliveryPeriod = cResSet.getInt("delivery_period");
 				amountLeftToMe = cResSet.getInt("amount_left_to_me");
@@ -125,16 +130,20 @@ public final class RequestCreator extends Model{
 
 	}
 
-	public boolean allowIllust(){
+	public boolean allowIllust() {
 		return allowMedia % 2 == 1;
 	}
 
-	public boolean allowNovel(){
+	public boolean allowNovel() {
 		return (allowMedia / 10) % 2 == 1;
 	}
 
-	public boolean allowSensitive(){
+	public boolean allowSensitive() {
 		return allowSensitive == 1;
+	}
+
+	public boolean allowAnonymous() {
+		return allowClient == ALLOW_CLIENT_ANONYMOUS;
 	}
 	
 	public int tryInsert() {
@@ -154,7 +163,7 @@ public final class RequestCreator extends Model{
 			cConn = dsPostgres.getConnection();
 
 			strSql = "INSERT INTO request_creators" +
-					"(user_id, status, allow_media, allow_sensitive, return_period, delivery_period, amount_left_to_me, amount_minimum, commercial_transaction_law)" +
+					"(user_id, status, allow_media, allow_sensitive, allow_client, return_period, delivery_period, amount_left_to_me, amount_minimum, commercial_transaction_law)" +
 					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (user_id) DO NOTHING RETURNING user_id";
 			cState = cConn.prepareStatement(strSql);
 			int idx = 1;
@@ -162,6 +171,7 @@ public final class RequestCreator extends Model{
 			cState.setInt(idx++, status.getCode());
 			cState.setInt(idx++, allowMedia);
 			cState.setInt(idx++, allowSensitive);
+			cState.setInt(idx++, allowClient);
 			cState.setInt(idx++, returnPeriod);
 			cState.setInt(idx++, deliveryPeriod);
 			cState.setInt(idx++, amountLeftToMe);
@@ -298,6 +308,9 @@ public final class RequestCreator extends Model{
 	}
 	public boolean updateAllowSensitive(boolean isOk) {
 		return update("allow_sensitive", isOk ? 1 : 0);
+	}
+	public boolean updateAllowAnonymous(boolean isOk) {
+		return update("allow_client", isOk ? ALLOW_CLIENT_ANONYMOUS : ALLOW_CLIENT_SIGNED);
 	}
 	public boolean updateReturnPeriod(final int day) {
 		if (RETURN_PERIOD_MIN <= day && day <= RETURN_PERIOD_MAX) {

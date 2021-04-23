@@ -5,7 +5,7 @@ import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UpdateRequestSettingCParam {
+public final class UpdateRequestSettingCParam {
 	public int userId = -1;
 	public String attribute = "";
 	public String value = "";

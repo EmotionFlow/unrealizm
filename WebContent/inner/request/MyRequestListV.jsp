@@ -208,6 +208,9 @@
         border-radius: 0 4px 4px 0;
         padding: 2px 3px;
     }
+    .RequestLicense > .RequestLicenseTitle:hover {
+        cursor: pointer;
+    }
 
 </style>
 

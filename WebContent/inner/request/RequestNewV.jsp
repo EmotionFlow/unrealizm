@@ -175,6 +175,7 @@ if (!results.getResults(checkLogin)) {
 				"MEDIA": $("#OptionMedia").val(),
 				"TEXT": $("#EditRequestText").val(),
 				"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
+				"ANONYMOUS": $("#OptionAnonymousRequest").prop("checked") ? 1 : 0,
 				"LICENSE": $("#OptionLicense").val(),
 				"AMOUNT": amount,
 				"COMMISSION": _calcCommission(amount, paymentMethod),
@@ -386,11 +387,32 @@ if (!results.getResults(checkLogin)) {
 					</label>
 				</div>
 			</div>
-			<div class="OptionNotify" style="margin-bottom: 40px">
+			<div class="OptionNotify">
 				<%if (results.requestCreator.allowSensitive()) {%>
 				センシティブなリクエストは必ずON
 				<%}else{%>
 				このクリエイターはセンシティブな内容を受け付けません
+				<%}%>
+			</div>
+
+			<div class="OptionItem">
+				<div class="OptionLabel">匿名でリクエスト</div>
+				<div class="onoffswitch OnOff <%=results.requestCreator.allowAnonymous() ? "" : "disabled"%> ">
+					<input type="checkbox" class="onoffswitch-checkbox"
+						   name="OptionRecent"
+						   id="OptionAnonymousRequest"
+						   value="0"
+							<%=results.requestCreator.allowAnonymous() ? "" : "onclick=\"return false;\""%>
+					/>
+					<label class="onoffswitch-label" for="OptionAnonymousRequest">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label>
+				</div>
+			</div>
+			<div class="OptionNotify" style="margin-bottom: 30px">
+				<%if (!results.requestCreator.allowAnonymous()) {%>
+				このクリエイターは匿名リクエストを受け付けません
 				<%}%>
 			</div>
 

@@ -20,6 +20,7 @@ public final class Request extends Model{
 
 	public int id = -1;
 	public int clientUserId = -1;
+	public boolean isClientAnonymous = false;
 	public int creatorUserId = -1;
 	public Status status = Status.Undefined;
 	public int mediaId = -1;
@@ -75,6 +76,7 @@ public final class Request extends Model{
 		id = resultSet.getInt("id");
 		status = Status.byCode(resultSet.getInt("status"));
 		clientUserId = resultSet.getInt("client_user_id");
+		isClientAnonymous = resultSet.getBoolean("client_anonymous");
 		creatorUserId = resultSet.getInt("creator_user_id");
 		mediaId = resultSet.getInt("media_id");
 		requestText = resultSet.getString("request_text");
@@ -236,15 +238,16 @@ public final class Request extends Model{
 				dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 				connection = dataSource.getConnection();
 				sql = "INSERT INTO public.requests(" +
-						" status, client_user_id, creator_user_id, media_id, request_text," +
+						" status, client_user_id, client_anonymous, creator_user_id, media_id, request_text," +
 						" request_category, license_id, amount, return_limit, delivery_limit)" +
-						" VALUES (?, ?, ?, ?, ?, ?, ?, ?, current_timestamp + interval '%d day', current_timestamp + interval '%d day')" +
+						" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp + interval '%d day', current_timestamp + interval '%d day')" +
 						" RETURNING id";
 				sql = String.format(sql, requestCreator.returnPeriod, requestCreator.deliveryPeriod);
 				statement = connection.prepareStatement(sql);
 				int idx = 1;
 				statement.setInt(idx++, Status.Undefined.getCode());
 				statement.setInt(idx++, clientUserId);
+				statement.setBoolean(idx++, isClientAnonymous);
 				statement.setInt(idx++, creatorUserId);
 				statement.setInt(idx++, mediaId);
 				statement.setString(idx++, requestText);
