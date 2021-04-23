@@ -333,8 +333,9 @@ if (!results.getResults(checkLogin)) {
 		<section class="UserInfoUser">
 			<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(results.user.m_strFileName)%>')" href="/<%=results.user.m_nUserId%>/"></a>
 			<h2 class="UserInfoUserName"><a href="/<%=results.user.m_nUserId%>/"><%=results.user.m_strNickName%></a></h2>
+			<%if(results.requestCreator.profile.isEmpty()){%>
 			<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(results.user.m_strProfile), results.user.m_nUserId, CCnv.MODE_PC)%></h3>
-			<%if(!results.requestCreator.profile.isEmpty()){%>
+			<%}else{%>
 			<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(results.requestCreator.profile), results.user.m_nUserId, CCnv.MODE_PC)%></h3>
 			<%}%>
 		</section>
