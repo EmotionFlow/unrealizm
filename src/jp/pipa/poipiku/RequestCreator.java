@@ -1,6 +1,7 @@
 package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.cache.CacheUsers0000;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
@@ -75,6 +76,9 @@ public final class RequestCreator extends Model{
 	static public final int COMMERCIAL_TRANSACTION_LAW_MAX = 1500;
 	public String commercialTransactionLaw = "";
 
+	static public final int PROFILE_MAX = 5000;
+	public String profile = "";
+
 	public RequestCreator() { }
 	public RequestCreator(final int _userId) {
 		userId = _userId;
@@ -86,46 +90,44 @@ public final class RequestCreator extends Model{
 		init();
 	}
 	private void init(){
-		DataSource dsPostgres;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "SELECT * FROM request_creators WHERE user_id=? LIMIT 1";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, userId);
-			cResSet = cState.executeQuery();
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
 
-			if(cResSet.next()){
-				setStatus(cResSet.getInt("status"));
-				allowSensitive = cResSet.getInt("allow_sensitive");
-				allowMedia = cResSet.getInt("allow_media");
-				allowClient = cResSet.getInt("allow_client");
-				returnPeriod = cResSet.getInt("return_period");
-				deliveryPeriod = cResSet.getInt("delivery_period");
-				amountLeftToMe = cResSet.getInt("amount_left_to_me");
-				amountMinimum = cResSet.getInt("amount_minimum");
-				commercialTransactionLaw = cResSet.getString("commercial_transaction_law");
+			if(resultSet.next()){
+				setStatus(resultSet.getInt("status"));
+				allowSensitive = resultSet.getInt("allow_sensitive");
+				allowMedia = resultSet.getInt("allow_media");
+				allowClient = resultSet.getInt("allow_client");
+				returnPeriod = resultSet.getInt("return_period");
+				deliveryPeriod = resultSet.getInt("delivery_period");
+				amountLeftToMe = resultSet.getInt("amount_left_to_me");
+				amountMinimum = resultSet.getInt("amount_minimum");
+				commercialTransactionLaw = resultSet.getString("commercial_transaction_law");
+				profile = resultSet.getString("profile");
 				exists = true;
 			}else{
 				status = Status.NotFound;
 			}
 
-			cResSet.close();
-			cState.close();
+			resultSet.close();
+			statement.close();
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 
 	}
@@ -148,7 +150,6 @@ public final class RequestCreator extends Model{
 	
 	public int tryInsert() {
 		if (userId < 0) return -1;
-		DataSource dsPostgres;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -158,13 +159,11 @@ public final class RequestCreator extends Model{
 		String strSql = "";
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "INSERT INTO request_creators" +
-					"(user_id, status, allow_media, allow_sensitive, allow_client, return_period, delivery_period, amount_left_to_me, amount_minimum, commercial_transaction_law)" +
-					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (user_id) DO NOTHING RETURNING user_id";
+					"(user_id, status, allow_media, allow_sensitive, allow_client, return_period, delivery_period, amount_left_to_me, amount_minimum, commercial_transaction_law, profile)" +
+					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (user_id) DO NOTHING RETURNING user_id";
 			cState = cConn.prepareStatement(strSql);
 			int idx = 1;
 			cState.setInt(idx++, userId);
@@ -177,6 +176,7 @@ public final class RequestCreator extends Model{
 			cState.setInt(idx++, amountLeftToMe);
 			cState.setInt(idx++, amountMinimum);
 			cState.setString(idx++, commercialTransactionLaw);
+			cState.setString(idx++, profile);
 
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
@@ -200,14 +200,11 @@ public final class RequestCreator extends Model{
 		if (userId < 0) return false;
 		if (!exists) tryInsert();
 
-		DataSource dsPostgres;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		String strSql = "";
 		try {
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "UPDATE request_creators SET " + column + "=? WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -231,6 +228,7 @@ public final class RequestCreator extends Model{
 		errorKind = ErrorKind.None;
 		return true;
 	}
+
 	private boolean update(final String column, final Integer intValue) {
 		return update(column, intValue, null);
 	}
@@ -241,28 +239,25 @@ public final class RequestCreator extends Model{
 
 	public void delete() {
 		if (userId < 0) return;
-		DataSource dsPostgres;
-		Connection cConn = null;
-		PreparedStatement cState = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
 		String strSql = "";
 		try {
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "DELETE FROM request_creators WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, userId);
-			cState.executeUpdate();
-			cState.close();
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, userId);
+			statement.executeUpdate();
+			statement.close();
 			errorKind = ErrorKind.None;
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 			errorKind = ErrorKind.DbError;
 		} finally {
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 	}
 	
@@ -270,21 +265,18 @@ public final class RequestCreator extends Model{
 		if (!update("status", _status.getCode())){
 			return false;
 		} else {
-			DataSource dsPostgres;
-			Connection cConn = null;
-			PreparedStatement cState = null;
+			Connection connection = null;
+			PreparedStatement statement = null;
 			String strSql = "";
 			try {
-				Class.forName("org.postgresql.Driver");
-				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				cConn = dsPostgres.getConnection();
+				connection = DatabaseUtil.dataSource.getConnection();
 
 				strSql = "UPDATE users_0000 SET request_creator_status=? WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, _status.getCode());
-				cState.setInt(2, userId);
-				cState.executeUpdate();
-				cState.close();
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, _status.getCode());
+				statement.setInt(2, userId);
+				statement.executeUpdate();
+				statement.close();
 				errorKind = ErrorKind.None;
 			} catch(Exception e) {
 				Log.d(strSql);
@@ -292,8 +284,8 @@ public final class RequestCreator extends Model{
 				errorKind = ErrorKind.DbError;
 				return false;
 			} finally {
-				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+				try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+				try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 			}
 			CacheUsers0000.getInstance().clearUser(userId);
 			status = _status;
@@ -342,4 +334,12 @@ public final class RequestCreator extends Model{
 		}
 		return false;
 	}
+	public boolean updateProfile(final String text) {
+		if (text.length() <= PROFILE_MAX) {
+			return update("profile", text);
+		}
+		return false;
+	}
+
+
 }

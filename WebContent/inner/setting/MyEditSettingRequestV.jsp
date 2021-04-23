@@ -169,6 +169,10 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 		const lawTxt = $("#CommercialTransactionLaw").val();
 		_updateRequestSetting("CommercialTransactionLaw", lawTxt);
 	}
+	function updateProfile(){
+		const profileTxt = $("#CreatorProfile").val();
+		_updateRequestSetting("Profile", profileTxt);
+	}
 	function copyMyRequestPageUrl(){
 		$("#RequestPageUrl").select();
 		document.execCommand("Copy");
@@ -209,7 +213,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
 			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。
 			<%}else{%>
-			募集を停止しても、現在受信しているリクエストは承認したり、納品したりできます。
+			募集を停止していても、現在受信しているリクエストは承認したり、納品したりできます。
 			<%}%>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >
@@ -244,6 +248,17 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				</div>
 			</div>
 			<div class="SettingListItem">
+				<div class="SettingListTitle">クリエイタープロフィール</div>
+				得意なジャンルなど、リクエストする方に向けてのメッセージを設定できます。リクエストページの上部に表示されます。
+				<div class="SettingBody">
+					<textarea id="CreatorProfile" class="SettingBodyTxt" rows="12" maxlength="5000"><%=Util.toStringHtmlTextarea(requestCreator.profile)%></textarea>
+					<div class="SettingBodyCmd">
+						<div id="CreatorProfileMessage" class="RegistMessage">5000文字まで</div>
+						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateProfile()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+					</div>
+				</div>
+			</div>
+			<div class="SettingListItem">
 				<div class="SettingListTitle">メディア</div>
 				リクエストを受け付けるメディアを設定します。
 				<div class="SettingBody">
@@ -263,7 +278,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			<div class="SettingListItem">
 				<div class="SettingListTitle">ワンクッション・R18リクエスト</div>
 				<div class="SettingBody">
-					センシティブな内容のリクエストを許可します
+					センシティブな内容のリクエストを許可します。
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage">
 							<div class="onoffswitch OnOff">
@@ -281,7 +296,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			<div class="SettingListItem">
 				<div class="SettingListTitle">匿名リクエスト許可</div>
 				<div class="SettingBody">
-					匿名でのリクエストを許可します
+					匿名でのリクエストを許可します。
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage">
 							<div class="onoffswitch OnOff">

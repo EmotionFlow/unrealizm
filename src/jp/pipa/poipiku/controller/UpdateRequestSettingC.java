@@ -148,7 +148,12 @@ public final class UpdateRequestSettingC extends Controller{
 			    break;
 		    case "CommercialTransactionLaw":
 			    updateResult = requestCreator.updateCommercialTransactionLaw(
-		    			paramValue
+					    paramValue
+			    );
+			    break;
+		    case "Profile":
+			    updateResult = requestCreator.updateProfile(
+					    paramValue
 			    );
 			    break;
 		    default:
