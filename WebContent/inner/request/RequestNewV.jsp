@@ -29,6 +29,37 @@ if (!results.getResults(checkLogin)) {
 	<%@ include file="/inner/TCreditCard.jsp"%>
 	<%@ include file="../TRequestIntroduction.jsp"%>
 	<title><%=_TEX.T("THeader.Title")%> - Request </title>
+
+	<%if (!results.user.m_bRequestEnabled && checkLogin.m_nUserId != results.creatorUserId){%>
+	<script>
+		function requestToStartRequesting() {
+			$.ajax({
+				"type": "post",
+				"data": {"CLIENT": <%=checkLogin.m_nUserId%>, "CREATOR": <%=results.creatorUserId%>},
+				"url": "/f/RequestToStartRequestingF.jsp",
+				"dataType": "json",
+			}).then(
+				data => {
+					if (data.result === <%=Common.API_OK%>) {
+						if (data.result_detail === <%=RequestToStartRequestingC.ResultDetail.Done.getCode()%>) {
+							DispMsg("通知しました！");
+						} else if (data.result_detail === <%=RequestToStartRequestingC.ResultDetail.AlreadyRequested.getCode()%>) {
+							DispMsg("通知済みです");
+						} else {
+							DispMsg("通信中にエラーが発生しました");
+						}
+					}
+				},
+				error => {
+					DispMsg("通信中にエラーが発生しました");
+				}
+			);
+		}
+	</script>
+	<%} // if (!results.user.m_bRequestEnabled && checkLogin.m_nUserId != results.creatorUserId) %>
+
+
+	<%if(results.user.m_bRequestEnabled){%>
 	<script>
 		function _validate() {
 			if ($("#EditRequestText").val().length <= 10) {
@@ -280,6 +311,7 @@ if (!results.getResults(checkLogin)) {
 		});
 
 	</script>
+	<%} // if(results.user.m_bRequestEnabled)%>
 
 	<style>
 		.RequestTitle {
@@ -349,7 +381,7 @@ if (!results.getResults(checkLogin)) {
 			現在、リクエストを受け付けていません
 			<div>
 				<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ボタンをタップするとこのクリエイターにリクエスト募集してほしい気持ちを通知できます</div>
-				<a class="BtnBase" style="" href="javascript: void(0);" onclick="">
+				<a class="BtnBase" style="" href="javascript: void(0);" onclick="requestToStartRequesting()">
 					<span class="RequestEnabled">お願いしたい！</span>
 				</a>
 			</div>

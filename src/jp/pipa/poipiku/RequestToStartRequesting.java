@@ -19,6 +19,37 @@ public final class RequestToStartRequesting extends Model {
 		creatorUserId = _creatorUserId;
 	}
 
+	public boolean isExists() {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "SELECT client_user_id FROM requests_to_start_requesting WHERE client_user_id=? AND creator_user_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, clientUserId);
+			statement.setInt(2, creatorUserId);
+			resultSet = statement.executeQuery();
+			errorKind = ErrorKind.None;
+			return resultSet.next();
+		} catch (SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorKind = ErrorKind.OtherError;
+			return false;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
+		}
+	}
+
+
 	public boolean insert(){
 		if (clientUserId < 0 || creatorUserId < 0) {
 			errorKind = ErrorKind.OtherError;
@@ -76,6 +107,7 @@ public final class RequestToStartRequesting extends Model {
 			e.printStackTrace();
 			return null;
 		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
