@@ -24,7 +24,7 @@ public final class RequestNotifier {
 			Connection connection = null;
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			final String sql = "SELECT * FROM users_0000 WHERE user_id=?";
+			final String sql = "SELECT nickname, email, lang_id FROM users_0000 WHERE user_id=?";
 			try {
 				connection = DatabaseUtil.dataSource.getConnection();
 
@@ -252,6 +252,16 @@ public final class RequestNotifier {
 			final String title = getTitle(statusName, client.langLabel);
 			notifyByWeb(client, request, title);
 			notifyByApp(client, title);
+		}
+	}
+
+	static public void notifyRequestToStartRequesting(Request request) {
+		final User creator = new User(request.creatorUserId);
+		final String statusName = "to_start_requesting";
+		if (creator.id > 0) {
+			final String title = getTitle(statusName, creator.langLabel);
+			notifyByWeb(creator, request, title);
+			notifyByApp(creator, title);
 		}
 	}
 }

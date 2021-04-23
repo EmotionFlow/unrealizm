@@ -42,7 +42,7 @@ if (!results.getResults(checkLogin)) {
 				data => {
 					if (data.result === <%=Common.API_OK%>) {
 						if (data.result_detail === <%=RequestToStartRequestingC.ResultDetail.Done.getCode()%>) {
-							DispMsg("通知しました！");
+							DispMsg("お願いを通知しました！");
 						} else if (data.result_detail === <%=RequestToStartRequestingC.ResultDetail.AlreadyRequested.getCode()%>) {
 							DispMsg("通知済みです");
 						} else {

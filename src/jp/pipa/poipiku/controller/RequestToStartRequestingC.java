@@ -71,6 +71,9 @@ public final class RequestToStartRequestingC extends Controller{
 			    }
 		    }
 		    //TODO notify to creator
+		    Request poipikuRequest = new Request();
+		    poipikuRequest.creatorUserId = creatorUserId;
+		    RequestNotifier.notifyRequestToStartRequesting(poipikuRequest);
 	    }
 
 		return result;
