@@ -24,7 +24,7 @@ public final class RequestNotifier {
 			Connection connection = null;
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
-			final String sql = "SELECT * FROM users_0000 WHERE user_id=?";
+			final String sql = "SELECT nickname, email, lang_id FROM users_0000 WHERE user_id=?";
 			try {
 				connection = DatabaseUtil.dataSource.getConnection();
 
@@ -253,5 +253,27 @@ public final class RequestNotifier {
 			notifyByWeb(client, request, title);
 			notifyByApp(client, title);
 		}
+	}
+
+	static public void notifyRequestToStartRequesting(int creatorUserId, int total_count, boolean isTotalMsg) {
+		if (total_count < 0) return;
+		final User creator = new User(creatorUserId);
+		final String statusName = "to_start_requesting";
+		if (creator.id < 0) return;
+		StringWriter sw = new StringWriter();
+		if (!isTotalMsg) {
+			Template template = Velocity.getTemplate(getVmPath(statusName + "/title-single.vm", creator.langLabel), "UTF-8");
+			template.merge(null, sw);
+		} else {
+			VelocityContext context = new VelocityContext();
+			context.put("total_count", total_count);
+			Template template = Velocity.getTemplate(getVmPath(statusName + "/title-total.vm", creator.langLabel), "UTF-8");
+			template.merge(context, sw);
+		}
+		final String title = sw.toString();
+		Request r = new Request();
+		r.id = total_count * -1;
+		notifyByWeb(creator, r, title);
+		notifyByApp(creator, title);
 	}
 }
