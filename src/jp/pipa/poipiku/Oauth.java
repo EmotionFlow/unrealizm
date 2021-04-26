@@ -57,20 +57,21 @@ public class Oauth extends Model{
 			statement.setString(2, twitterUserId);
 			statement.setInt(3, Common.TWITTER_PROVIDER_ID);
 			statement.executeUpdate();
-			statement.close();statement = null;
 			connection.commit();
+			statement.close();statement = null;
 
 			return true;
 		} catch (SQLException e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			try{if(connection!=null){connection.rollback();}}catch(SQLException ignore){}
 			return false;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		} finally {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.setAutoCommit(true); connection.close();connection=null;}}catch(Exception e){;}
 		}
 	}
 }

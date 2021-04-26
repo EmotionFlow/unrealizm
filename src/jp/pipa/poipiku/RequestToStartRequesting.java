@@ -24,6 +24,7 @@ public final class RequestToStartRequesting extends Model {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String sql = "";
+		boolean result = false;
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 			sql = "SELECT client_user_id FROM requests_to_start_requesting WHERE client_user_id=? AND creator_user_id=?";
@@ -31,8 +32,10 @@ public final class RequestToStartRequesting extends Model {
 			statement.setInt(1, clientUserId);
 			statement.setInt(2, creatorUserId);
 			resultSet = statement.executeQuery();
+			result = resultSet.next();
 			errorKind = ErrorKind.None;
-			return resultSet.next();
+			resultSet.close();resultSet = null;
+			statement.close();statement = null;
 		} catch (SQLException e) {
 			Log.d(sql);
 			e.printStackTrace();
@@ -47,6 +50,7 @@ public final class RequestToStartRequesting extends Model {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
+		return result;
 	}
 
 
@@ -65,6 +69,7 @@ public final class RequestToStartRequesting extends Model {
 			statement.setInt(1, clientUserId);
 			statement.setInt(2, creatorUserId);
 			statement.executeUpdate();
+			statement.close();statement = null;
 		} catch (SQLException e) {
 			Log.d(sql);
 			e.printStackTrace();
@@ -126,7 +131,6 @@ public final class RequestToStartRequesting extends Model {
 		if (creatorUserId < 0) {
 			return -1;
 		}
-		List<Integer> list = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -141,6 +145,8 @@ public final class RequestToStartRequesting extends Model {
 			if (resultSet.next()) {
 				cnt = resultSet.getInt(1);
 			}
+			resultSet.close();resultSet = null;
+			statement.close();statement = null;
 		} catch (SQLException e) {
 			Log.d(sql);
 			e.printStackTrace();

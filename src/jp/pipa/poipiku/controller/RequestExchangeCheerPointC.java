@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RequestExchangeCheerPointC {
@@ -69,53 +70,65 @@ public class RequestExchangeCheerPointC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			cConn.close();cConn=null;
 
-			// start transaction
-			cConn.setAutoCommit(false);
-
-			// 請求IDを発行する
+			cConn = dsPostgres.getConnection();
 			String strRequestId = "";
-			strRequestId = Long.toString(System.currentTimeMillis()) + "-" + Integer.toString(cParam.m_nUserId);
+			try {
+				// start transaction
+				cConn.setAutoCommit(false);
 
-			// 支払い請求を支払い待ちでINSERT
-			int idx = 1;
-			strSql = "INSERT INTO cheer_point_exchange_requests(" +
-					"request_id, user_id, exchange_point, commission_fee, payment_fee, f_code, f_name, f_subcode, f_subname, ac_code, ac_name, status)" +
-					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(idx++, strRequestId);
-			cState.setInt(idx++, cParam.m_nUserId);
-			cState.setInt(idx++, nTotalCheerPoint);
-			cState.setInt(idx++, 300);
-			cState.setInt(idx++, nTotalCheerPoint-300);
-			cState.setString(idx++, cParam.m_strFinancialCode);
-			cState.setString(idx++, cParam.m_strFinancialName);
-			cState.setString(idx++, cParam.m_strFinancialSubCode);
-			cState.setString(idx++, cParam.m_strFinancialSubName);
-			cState.setString(idx++, cParam.m_strAccountCode);
-			cState.setString(idx++, cParam.m_strAccountName);
-			cState.setInt(idx++, 0);
-			cState.executeUpdate();
-			cState.close();cState=null;
+				// 請求IDを発行する
+				strRequestId = Long.toString(System.currentTimeMillis()) + "-" + Integer.toString(cParam.m_nUserId);
 
-			// 交換対象ポイントを引き、請求と紐づける
-			strSql = "UPDATE cheer_points" +
-					" SET paying_points = remaining_points, remaining_points = 0, exchange_request_id = ?, updated_at = CURRENT_TIMESTAMP" +
-					" WHERE user_id=? AND exchange_request_id IS NULL AND id IN(" +
-					String.join(",", exchangePointIds) +
-					")";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strRequestId);
-			cState.setInt(2, cParam.m_nUserId);
-			cState.executeUpdate();
+				// 支払い請求を支払い待ちでINSERT
+				int idx = 1;
+				strSql = "INSERT INTO cheer_point_exchange_requests(" +
+						"request_id, user_id, exchange_point, commission_fee, payment_fee, f_code, f_name, f_subcode, f_subname, ac_code, ac_name, status)" +
+						" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				cState = cConn.prepareStatement(strSql);
+				cState.setString(idx++, strRequestId);
+				cState.setInt(idx++, cParam.m_nUserId);
+				cState.setInt(idx++, nTotalCheerPoint);
+				cState.setInt(idx++, 300);
+				cState.setInt(idx++, nTotalCheerPoint-300);
+				cState.setString(idx++, cParam.m_strFinancialCode);
+				cState.setString(idx++, cParam.m_strFinancialName);
+				cState.setString(idx++, cParam.m_strFinancialSubCode);
+				cState.setString(idx++, cParam.m_strFinancialSubName);
+				cState.setString(idx++, cParam.m_strAccountCode);
+				cState.setString(idx++, cParam.m_strAccountName);
+				cState.setInt(idx++, 0);
+				cState.executeUpdate();
+				cState.close();cState=null;
 
-			// do transaction
-			cConn.commit();
-			cState.close();cState=null;
-			cConn.setAutoCommit(true);
+				// 交換対象ポイントを引き、請求と紐づける
+				strSql = "UPDATE cheer_points" +
+						" SET paying_points = remaining_points, remaining_points = 0, exchange_request_id = ?, updated_at = CURRENT_TIMESTAMP" +
+						" WHERE user_id=? AND exchange_request_id IS NULL AND id IN(" +
+						String.join(",", exchangePointIds) +
+						")";
+				cState = cConn.prepareStatement(strSql);
+				cState.setString(1, strRequestId);
+				cState.setInt(2, cParam.m_nUserId);
+				cState.executeUpdate();
+
+				// do transaction
+				cConn.commit();
+				cState.close();cState=null;
+			} catch (SQLException sqlException) {
+				Log.d("transaction fail");
+				Log.d(strSql);
+				sqlException.printStackTrace();
+				cConn.rollback();
+			} finally {
+				cConn.setAutoCommit(true);
+				cConn.close();cConn=null;
+			}
 
 			// もし支払い待ちのレコードが複数存在したら、それは不正な状態であるため、INSERTした請求レコードをDELETEする。
 			// TODO ゆくゆくは複数請求可としたい
+			cConn = dsPostgres.getConnection();
 			strSql = "SELECT count(*) AS cnt FROM cheer_point_exchange_requests WHERE user_id=? AND status=0";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
@@ -143,11 +156,12 @@ public class RequestExchangeCheerPointC {
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
+			try{if(cConn!=null){cConn.rollback();}}catch(SQLException ignore){}
 			bRtn = false;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.setAutoCommit(true);cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 		return bRtn;
 	}

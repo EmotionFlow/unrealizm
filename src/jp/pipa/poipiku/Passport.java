@@ -233,7 +233,6 @@ public class Passport {
 			cState.executeUpdate();
 
 			cConn.commit();
-			cConn.setAutoCommit(true);
 
 			cState.close();cState=null;
 
@@ -246,11 +245,12 @@ public class Passport {
 			Log.d(strSql);
 			e.printStackTrace();
 			errorKind = ErrorKind.DoRetry;
+			try{if(cConn!=null){cConn.rollback();}}catch(SQLException ignore){}
 			return false;
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
 			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(cConn!=null){cConn.setAutoCommit(true);cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 		
 		return true;

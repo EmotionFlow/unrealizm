@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -240,39 +241,46 @@ public class SendEmojiC {
 				break;
 			}
 
-			// 確認済みお知らせだった場合、通知絵文字一覧をリセット
 			connection = dataSource.getConnection();
-			connection.setAutoCommit(false);
-			strSql = "DELETE FROM info_lists WHERE user_id=? AND content_id=? AND info_type=? AND had_read=true;";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cTargContent.m_nUserId);
-			statement.setInt(2, cTargContent.m_nContentId);
-			statement.setInt(3, Common.NOTIFICATION_TYPE_REACTION);
-			statement.executeUpdate();
-			statement.close();statement=null;
+			try {
+				// 確認済みお知らせだった場合、通知絵文字一覧をリセット
+				connection.setAutoCommit(false);
+				strSql = "DELETE FROM info_lists WHERE user_id=? AND content_id=? AND info_type=? AND had_read=true;";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, cTargContent.m_nUserId);
+				statement.setInt(2, cTargContent.m_nContentId);
+				statement.setInt(3, Common.NOTIFICATION_TYPE_REACTION);
+				statement.executeUpdate();
+				statement.close();statement=null;
 
-			// お知らせ一覧に追加
-			strSql = "INSERT INTO info_lists(user_id, content_id, content_type, info_type, info_thumb, info_desc) "
-					+ "VALUES(?, ?, ?, ?, ?, ?) "
-					+ "ON CONFLICT ON CONSTRAINT info_lists_pkey "
-					+ "DO UPDATE SET "
-					+ "info_desc=(COALESCE(info_lists.info_desc, '') || ?), "
-					+ "info_date=CURRENT_TIMESTAMP, "
-					+ "badge_num=(info_lists.badge_num+1), "
-					+ "had_read=false;";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cTargContent.m_nUserId);
-			statement.setInt(2, cTargContent.m_nContentId);
-			statement.setInt(3, contentType);
-			statement.setInt(4, Common.NOTIFICATION_TYPE_REACTION);
-			statement.setString(5, infoThumb);
-			statement.setString(6, m_strEmoji);
-			statement.setString(7, m_strEmoji);
-			statement.executeUpdate();
-			statement.close();statement=null;
-			connection.commit();
-			connection.setAutoCommit(true);
-			connection.close();connection=null;
+				// お知らせ一覧に追加
+				strSql = "INSERT INTO info_lists(user_id, content_id, content_type, info_type, info_thumb, info_desc) "
+						+ "VALUES(?, ?, ?, ?, ?, ?) "
+						+ "ON CONFLICT ON CONSTRAINT info_lists_pkey "
+						+ "DO UPDATE SET "
+						+ "info_desc=(COALESCE(info_lists.info_desc, '') || ?), "
+						+ "info_date=CURRENT_TIMESTAMP, "
+						+ "badge_num=(info_lists.badge_num+1), "
+						+ "had_read=false;";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, cTargContent.m_nUserId);
+				statement.setInt(2, cTargContent.m_nContentId);
+				statement.setInt(3, contentType);
+				statement.setInt(4, Common.NOTIFICATION_TYPE_REACTION);
+				statement.setString(5, infoThumb);
+				statement.setString(6, m_strEmoji);
+				statement.setString(7, m_strEmoji);
+				statement.executeUpdate();
+				connection.commit();
+				statement.close();statement=null;
+			} catch (SQLException sqlException) {
+				Log.d("transaction fail");
+				Log.d(strSql);
+				connection.rollback();
+			} finally {
+				connection.setAutoCommit(true);
+				connection.close();connection=null;
+			}
 
 			// 通知先デバイストークンの取得
 			connection = dataSource.getConnection();
@@ -330,7 +338,7 @@ public class SendEmojiC {
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bRtn;
 	}
