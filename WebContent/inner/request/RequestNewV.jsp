@@ -3,11 +3,6 @@
 <%
 final CheckLogin checkLogin = new CheckLogin(request, response);
 
-if (!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request, response);
-	return;
-}
-
 final boolean bSmartPhone = isApp ? true : Util.isSmartPhone(request);
 final RequestNewC results = new RequestNewC();
 results.getParam(request);
@@ -377,13 +372,20 @@ if (!results.getResults(checkLogin)) {
 		<div class="RequestTitle">
 			<%if(results.user.m_bRequestEnabled){%>
 			<%=results.user.m_strNickName%>さんへのリクエスト(β)
+			<%if(!checkLogin.m_bLogin){%>
+			<div style="text-align: center; font-size: 12px; font-weight: normal">ログインするとリクエストを送信できます</div>
+			<%}%>
 			<%}else{%>
 			現在、リクエストを受け付けていません
 			<div>
-				<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ボタンをタップするとこのクリエイターにリクエスト募集してほしい気持ちを通知できます</div>
+				<%if(checkLogin.m_bLogin){%>
+				<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">このクリエイターにリクエスト募集してほしい気持ちを通知できます(匿名)</div>
 				<a class="BtnBase" style="" href="javascript: void(0);" onclick="requestToStartRequesting()">
-					<span class="RequestEnabled">お願いしたい！</span>
+					<span class="RequestEnabled">お願いする</span>
 				</a>
+				<%}else{%>
+				<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ログインすると、このクリエイターにリクエスト募集してほしい気持ちを通知できます。</div>
+				<%}%>
 			</div>
 			<%}%>
 		</div>
@@ -542,9 +544,13 @@ if (!results.getResults(checkLogin)) {
 			</div>
 		</div>
 
+		<%if(checkLogin.m_bLogin){%>
 		<div class="UoloadCmd">
 			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して送信する</a>
 		</div>
+		<%}else{%>
+		<div style="text-align: center;">ログインするとリクエストを送信できます</div>
+		<%}%>
 
 		<%} // if(results.user.m_bRequestEnabled)%>
 	</div>

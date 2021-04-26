@@ -121,4 +121,38 @@ public final class RequestToStartRequesting extends Model {
 	public static List<Integer> selectByCreatorUserId(int _creatorUserId){
 		return select("creator_user_id", _creatorUserId);
 	}
+
+	public int countByCreator() {
+		if (creatorUserId < 0) {
+			return -1;
+		}
+		List<Integer> list = new ArrayList<>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		int cnt = -1;
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "SELECT count(*) FROM requests_to_start_requesting WHERE creator_user_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, creatorUserId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				cnt = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
+		}
+		return cnt;
+	}
 }

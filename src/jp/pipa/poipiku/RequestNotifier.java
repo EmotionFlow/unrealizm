@@ -255,13 +255,25 @@ public final class RequestNotifier {
 		}
 	}
 
-	static public void notifyRequestToStartRequesting(Request request) {
-		final User creator = new User(request.creatorUserId);
+	static public void notifyRequestToStartRequesting(int creatorUserId, int total_count, boolean isTotalMsg) {
+		if (total_count < 0) return;
+		final User creator = new User(creatorUserId);
 		final String statusName = "to_start_requesting";
-		if (creator.id > 0) {
-			final String title = getTitle(statusName, creator.langLabel);
-			notifyByWeb(creator, request, title);
-			notifyByApp(creator, title);
+		if (creator.id < 0) return;
+		StringWriter sw = new StringWriter();
+		if (!isTotalMsg) {
+			Template template = Velocity.getTemplate(getVmPath(statusName + "/title-single.vm", creator.langLabel), "UTF-8");
+			template.merge(null, sw);
+		} else {
+			VelocityContext context = new VelocityContext();
+			context.put("total_count", total_count);
+			Template template = Velocity.getTemplate(getVmPath(statusName + "/title-total.vm", creator.langLabel), "UTF-8");
+			template.merge(context, sw);
 		}
+		final String title = sw.toString();
+		Request r = new Request();
+		r.id = total_count * -1;
+		notifyByWeb(creator, r, title);
+		notifyByApp(creator, title);
 	}
 }

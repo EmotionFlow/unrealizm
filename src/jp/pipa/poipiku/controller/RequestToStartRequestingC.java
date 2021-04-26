@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public final class RequestToStartRequestingC extends Controller{
-
 	public enum ResultDetail implements CodeEnum<RequestToStartRequestingC.ResultDetail> {
 		Undef(0),
 		Done(1),
@@ -65,17 +64,20 @@ public final class RequestToStartRequestingC extends Controller{
 		    } else {
 			    if (req.insert()) {
 				    resultDetail = ResultDetail.Done;
+				    Request poipikuRequest = new Request();
+				    poipikuRequest.creatorUserId = creatorUserId;
+				    int total_count = req.countByCreator();
+				    if (total_count >= 1 && total_count <= 10) {
+					    RequestNotifier.notifyRequestToStartRequesting(poipikuRequest.creatorUserId, total_count, false);
+				    } else if (total_count % 10 == 0) {
+					    RequestNotifier.notifyRequestToStartRequesting(poipikuRequest.creatorUserId, total_count, true);
+				    }
 				    result = true;
 			    } else {
 				    resultDetail = ResultDetail.Error;
 			    }
 		    }
-		    //TODO notify to creator
-		    Request poipikuRequest = new Request();
-		    poipikuRequest.creatorUserId = creatorUserId;
-		    RequestNotifier.notifyRequestToStartRequesting(poipikuRequest);
 	    }
-
 		return result;
 	}
 }
