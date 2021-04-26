@@ -46,7 +46,9 @@ cResults.getResults(checkLogin);
 		</span>
 		<span class="ActivityListBadge"><%=activityInfo.badgeNum%></span>
 		</a>
-		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST) {%>
+		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST) {
+		final String[] infoDescLines = activityInfo.infoDesc.split("\n");
+		%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
 		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 				<span class="ActivityListRequestThumb">
@@ -54,9 +56,10 @@ cResults.getResults(checkLogin);
 			<span class="ActivityListBody">
 				<span class="ActivityListTitle">
 				<span class="Date"><%=(new SimpleDateFormat("yyyy MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
-					<span class="Title"><%=activityInfo.infoDesc%></span>
+					<span class="Title"><%=infoDescLines[0]%></span>
 				</span>
 				<span class="ActivityListDesc">
+					<span class="Title"><%=infoDescLines.length>1 ? infoDescLines[1] : ""%></span>
 				</span>
 			</span>
 		</a>
