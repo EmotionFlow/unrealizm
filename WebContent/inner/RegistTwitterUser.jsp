@@ -99,7 +99,6 @@ if (selectedUserId == NEW_USER || selectedUserId > 0) {
 %>
 <%
 if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)) {
-	Log.d("redirect to: " + nextUrl);
 	response.sendRedirect(nextUrl);
 	return;
 } else {
