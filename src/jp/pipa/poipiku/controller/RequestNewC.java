@@ -63,6 +63,7 @@ public class RequestNewC {
 				user.m_nMailComment		= resultSet.getInt("mail_comment");
 				if(user.m_strFileName.isEmpty()) user.m_strFileName="/img/default_user.jpg";
 				user.setRequestEnabled(resultSet);
+				user.m_nPassportId      = resultSet.getInt("passport_id");
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

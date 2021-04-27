@@ -299,7 +299,7 @@ if (!results.getResults(checkLogin)) {
 			Swal.fire({
 				html: `
 				<div style="text-align: left; font-size: 0.9em">
-					<p style="text-align: center; font-weight: 400;">リクエスト金額で指定した額がクリエイターの報酬になります。</p>
+					<p style="text-align: center; font-weight: 400;">リクエスト金額で指定した額が、そのままクリエイターの報酬になります。</p>
 					<p>リクエスト手数料：リクエストの仕組みを支えるための手数料です。</p>
 					<p>トランザクション手数料：トランザクションを実行するための手数料です。</p>
 				</div>
@@ -323,6 +323,19 @@ if (!results.getResults(checkLogin)) {
 	<%} // if(results.user.m_bRequestEnabled)%>
 
 	<style>
+		<%if(!results.user.m_strHeaderFileName.isEmpty()){%>
+        .UserInfo {background-image: url('<%=Common.GetUrl(results.user.m_strHeaderFileName)%>');}
+		<%}%>
+
+		<%if(results.user.m_nPassportId>=Common.PASSPORT_ON && !results.user.m_strBgFileName.isEmpty()) {%>
+         body {
+             background-image: url('<%=Common.GetUrl(results.user.m_strBgFileName)%>');
+             background-repeat: repeat;
+             background-position: 50% top;
+             background-attachment: fixed;
+         }
+		<%}%>
+
 		.RequestTitle {
             text-align: center;
             font-weight: bold;
@@ -382,8 +395,7 @@ if (!results.getResults(checkLogin)) {
 		</section>
 	</div>
 
-	<div class="UploadFile"
-		 style="<%if(!bSmartPhone){%>width: 60%; max-width: 60%; margin: 0 20%;<%}%>padding-bottom: 100px;">
+	<div class="UploadFile" style="<%if(!bSmartPhone){%>width: 60%; max-width: 60%; margin: 0 20%;<%}%>padding-bottom: 100px;">
 		<div class="RequestTitle">
 			<%if(results.isBlocking || results.isBlocked){%>
 			<%=results.isBlocking ? "ブロック中です。" : "ブロックされています。"%>
