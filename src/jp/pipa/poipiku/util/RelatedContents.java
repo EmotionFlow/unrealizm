@@ -15,7 +15,7 @@ import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 
-public class RelatedContents {
+public final class RelatedContents {
 	static public ArrayList<CContent> getUserContentList(int userId, int listNum, CheckLogin checkLogin){
 		ArrayList<CContent> contents = new ArrayList<CContent>();
 		DataSource dataSource = null;

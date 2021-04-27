@@ -69,7 +69,7 @@ public class RequestNewC {
 			statement.close();statement=null;
 
 			if(user.m_strHeaderFileName.isEmpty()) {
-				strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
+				strSql = "SELECT file_name FROM contents_0000 WHERE publish_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, creatorUserId);
 				resultSet = statement.executeQuery();

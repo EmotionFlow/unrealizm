@@ -25,7 +25,7 @@ public final class IllustViewPcC {
 	}
 
 	private Integer searchContentIdHistory(Connection cConn, PreparedStatement cState, ResultSet cResSet, int nContentId) throws SQLException {
-		int SEARCH_MAX = 100;
+		final int SEARCH_MAX = 100;
 		Integer cid = nContentId;
 		String strSql = "SELECT new_id FROM content_id_histories WHERE old_id=?";
 		cState = cConn.prepareStatement(strSql);
@@ -61,7 +61,6 @@ public final class IllustViewPcC {
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -69,9 +68,7 @@ public final class IllustViewPcC {
 		int idx = 1;
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// owner
 			if(m_nUserId == checkLogin.m_nUserId) {
@@ -85,10 +82,9 @@ public final class IllustViewPcC {
 			// content main
 			final String strOpenCnd = (!m_bOwner && !m_bRequestClient)?" AND open_id<>2":"";
 
-			strSql = String.format(
-					"SELECT c.*, r.id request_id FROM contents_0000 c" +
-					" LEFT JOIN requests r ON r.content_id=c.content_id " +
-					" WHERE c.user_id=? AND c.content_id=? %s", strOpenCnd);
+			strSql = "SELECT c.*, r.id request_id FROM contents_0000 c" +
+					 " LEFT JOIN requests r ON r.content_id=c.content_id " +
+					 " WHERE c.user_id=? AND c.content_id=? " + strOpenCnd;
 
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
@@ -138,7 +134,7 @@ public final class IllustViewPcC {
 			statement.close();statement=null;
 
 			if(m_cUser.m_strHeaderFileName.isEmpty()) {
-				strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
+				strSql = "SELECT file_name FROM contents_0000 WHERE publish_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setInt(idx++, m_nUserId);
@@ -153,7 +149,7 @@ public final class IllustViewPcC {
 
 			if(!m_bOwner) {
 				// blocking
-				strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				strSql = "SELECT user_id FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setInt(idx++, checkLogin.m_nUserId);
@@ -166,7 +162,7 @@ public final class IllustViewPcC {
 				statement.close();statement=null;
 
 				// blocked
-				strSql = "SELECT * FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				strSql = "SELECT user_id FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setInt(idx++, m_nUserId);
@@ -180,7 +176,7 @@ public final class IllustViewPcC {
 			}
 
 			// User contents total number
-			strSql = String.format("SELECT COUNT(*) FROM contents_0000 WHERE user_id=? %s", strOpenCnd);
+			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=? " + strOpenCnd;
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, m_nUserId);
@@ -198,7 +194,7 @@ public final class IllustViewPcC {
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
 			if(m_nUserId != checkLogin.m_nUserId) {
-				strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
+				strSql = "SELECT user_id FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setInt(idx++, checkLogin.m_nUserId);
@@ -234,7 +230,7 @@ public final class IllustViewPcC {
 
 			// Bookmark
 			if(checkLogin.m_bLogin) {
-				strSql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
+				strSql = "SELECT user_id FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, checkLogin.m_nUserId);
 				statement.setInt(2, m_cContent.m_nContentId);
