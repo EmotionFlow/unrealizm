@@ -295,6 +295,20 @@ if (!results.getResults(checkLogin)) {
 			$("#CommissionRateAgency").text(((COMMISSION_RATE.AGENCY.CREDITCARD) / 10).toFixed(1));
 		}
 
+		function dispCommissionDetailDlg(){
+			Swal.fire({
+				html: `
+				<div style="text-align: left; font-size: 0.9em">
+					<p style="text-align: center; font-weight: 400;">リクエスト金額で指定した額がクリエイターの報酬になります。</p>
+					<p>リクエスト手数料：リクエストの仕組みを支えるための手数料です。</p>
+					<p>トランザクション手数料：トランザクションを実行するための手数料です。</p>
+				</div>
+				`,
+				showCloseButton: true,
+				showConfirmButton: false,
+			});
+		}
+
 		$(() => {
 			$("#OptionLicense").change(()=>{
 				const val = $("#OptionLicense").val();
@@ -504,7 +518,7 @@ if (!results.getResults(checkLogin)) {
 			<div class="OptionNotify" style="margin-bottom: 8px; text-align: right;">
 				リクエスト手数料<span id="CommissionRateSystem"></span>%
 				+トランザクション手数料<span id="CommissionRateAgency"></span>%<br>
-				詳しくは<a style="text-decoration: underline;">こちら</a>
+				詳しくは<a style="text-decoration: underline;" href="javascript:void(0);" onclick="dispCommissionDetailDlg()">こちら</a>
 			</div>
 
 			<div id="ItemAmountTotal" class="OptionItem" style="margin-bottom: 40px;">
