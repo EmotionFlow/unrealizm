@@ -385,27 +385,31 @@ if (!results.getResults(checkLogin)) {
 	<div class="UploadFile"
 		 style="<%if(!bSmartPhone){%>width: 60%; max-width: 60%; margin: 0 20%;<%}%>padding-bottom: 100px;">
 		<div class="RequestTitle">
-			<%if(results.user.m_bRequestEnabled){%>
-			<%=results.user.m_strNickName%>さんへのリクエスト(β)
-			<%if(!checkLogin.m_bLogin){%>
-			<div style="text-align: center; font-size: 12px; font-weight: normal">ログインするとリクエストを送信できます</div>
-			<%}%>
+			<%if(results.isBlocking || results.isBlocked){%>
+			<%=results.isBlocking ? "ブロック中です。" : "ブロックされています。"%>
 			<%}else{%>
-			現在、リクエストを受け付けていません
-			<div>
-				<%if(checkLogin.m_bLogin){%>
-				<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">このクリエイターにリクエスト募集してほしい気持ちを通知できます(匿名)</div>
-				<a class="BtnBase" style="" href="javascript: void(0);" onclick="requestToStartRequesting()">
-					<span class="RequestEnabled">お願いする</span>
-				</a>
+				<%if(results.user.m_bRequestEnabled){%>
+				<%=results.user.m_strNickName%>さんへのリクエスト(β)
+					<%if(!checkLogin.m_bLogin){%>
+					<div style="text-align: center; font-size: 12px; font-weight: normal">ログインするとリクエストを送信できます</div>
+					<%}%>
 				<%}else{%>
-				<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ログインすると、このクリエイターにリクエスト募集してほしい気持ちを通知できます。</div>
+				現在、リクエストを受け付けていません
+				<div>
+					<%if(checkLogin.m_bLogin){%>
+					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">このクリエイターにリクエスト募集してほしい気持ちを通知できます(匿名)</div>
+					<a class="BtnBase" style="" href="javascript: void(0);" onclick="requestToStartRequesting()">
+						<span class="RequestEnabled">お願いする</span>
+					</a>
+					<%}else{%>
+					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ログインすると、このクリエイターにリクエスト募集してほしい気持ちを通知できます。</div>
+					<%}%>
+				</div>
 				<%}%>
-			</div>
 			<%}%>
 		</div>
 
-		<%if(results.user.m_bRequestEnabled){%>
+		<%if(results.user.m_bRequestEnabled && !results.isBlocking && !results.isBlocked){%>
 		<div class="UoloadCmdOption">
 			<div class="OptionItem">
 				<div class="OptionLabel">メディア</div>

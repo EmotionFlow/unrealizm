@@ -17,6 +17,8 @@ public class RequestNewC {
 	public String accessIpAddress = "";
 	public RequestCreator requestCreator = null;
 	public CUser user = new CUser();
+	public boolean isBlocking = false;
+	public boolean isBlocked = false;
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -77,6 +79,31 @@ public class RequestNewC {
 				statement.close();statement=null;
 			}
 			requestCreator = new RequestCreator(creatorUserId);
+
+			// blocking
+			strSql = "SELECT user_id FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setInt(2, creatorUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				isBlocking = true;
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			// blocked
+			strSql = "SELECT user_id FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, creatorUserId);
+			statement.setInt(2, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				isBlocked = true;
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
 			bRtn = true;
 		} catch(Exception e) {
 			Log.d(strSql);
