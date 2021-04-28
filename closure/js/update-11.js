@@ -563,7 +563,7 @@ function createUpdateText(){
 		let genre = $('#TagInputItemData').val();
 		const nCategory = parseInt($('#EditCategory').val(), 10);
 		const strDescription = $.trim($("#EditDescription").val());
-		const strTextBody = $.trim($("#EditTextBody").val());
+		const strTextBody = $("#EditTextBody").val();
 		let strTagList = $.trim($("#EditTagList").val());
 		strTagList = strTagList.substr(0 , 100);
 		const nOpenId = $('#ContentOpenId').val();

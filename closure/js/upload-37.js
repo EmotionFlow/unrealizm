@@ -1173,7 +1173,7 @@ function UploadText(user_id, request_id) {
 	let genre = $('#TagInputItemData').val();
 	const nCategory = parseInt($('#EditCategory').val(), 10);
 	const strDescription = $.trim($("#EditDescription").val());
-	const strTextBody = $.trim($("#EditTextBody").val());
+	const strTextBody = $("#EditTextBody").val();
 	let strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
 	const nPublishId = parseInt($('#EditPublish').val(), 10);

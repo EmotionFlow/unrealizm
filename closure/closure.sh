@@ -5,14 +5,14 @@
 
 /bin/cp ./js/common-47.js ../WebContent/js/
 #/bin/cp ./js/commonPc-03.js ../WebContent/js/
-/bin/cp ./js/upload-36.js ../WebContent/js/
-/bin/cp ./js/update-10.js ../WebContent/js/
+/bin/cp ./js/upload-37.js ../WebContent/js/
+/bin/cp ./js/update-11.js ../WebContent/js/
 
 CLOSURE_COMPILER_JAR="./closure-compiler-v20201006.jar"
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-47.js --js_output_file ../WebContent/js/common-47.js
 #java -jar ${CLOSURE_COMPILER_JAR} --js ./js/commonPc-03.js --js_output_file ../WebContent/js/commonPc-03.js
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-36.js --js_output_file ../WebContent/js/upload-36.js
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-10.js --js_output_file ../WebContent/js/update-10.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-37.js --js_output_file ../WebContent/js/upload-37.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-11.js --js_output_file ../WebContent/js/update-11.js
 
 ##for file in $( ls ./js | grep .js$ ); do
 #echo "${file}"

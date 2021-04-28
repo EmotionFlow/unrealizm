@@ -697,14 +697,13 @@ public final class CCnv {
 		} else /*if(cContent.m_nEditorId==Common.EDITOR_TEXT)*/ {
 			// テキスト
 			strRtn.append(String.format("<a class=\"IllustThumbText\" href=\"%s\" ", ILLUST_VIEW));
-			if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
-				strRtn.append(String.format("\">%s", Util.toStringHtml(cContent.m_strTextBody)));
-			} else {
-				strRtn.append("style=\"background: rgba(0,0,0,.5);")
-				.append(String.format("\">%s", Util.toStringHtml(cContent.m_strTextBody)));
+			if(!(cContent.m_nOpenId==0 || cContent.m_nOpenId==1)){
+				strRtn.append("style=\"background: rgba(0,0,0,.5);\"");
 			}
+			strRtn.append(">").append(
+					Util.toStringHtml(cContent.m_strTextBody.replaceAll("^[\\s　]*", ""))
+			);
 		}
-
 
 		// 公開非公開マーク
 		if(checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId && (cContent.m_nPublishId==99 || cContent.m_bLimitedTimePublish)){
@@ -734,10 +733,7 @@ public final class CCnv {
 			strRtn.append(String.format("<span class=\"Num\">%d %s</span>", cContent.m_strTextBody.length(), _TEX.T("Common.Unit.Text")));
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
-
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText
-
-
 		strRtn.append("</div>");	// IllustThumb
 
 		return strRtn.toString();

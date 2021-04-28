@@ -14,7 +14,7 @@ public class UpdateTextCParam extends UpCParam{
 	public int GetParam(HttpServletRequest request){
 		try {
 			super.GetParams(request);
-			m_strTextBody	= Common.TrimAll(request.getParameter("BDY"));
+			m_strTextBody	= Common.TrimBlankLines(request.getParameter("BDY"));
 			m_bNotRecently	= Util.toBoolean(request.getParameter("REC"));
 			m_nContentId	= Util.toInt(request.getParameter("IID"));
 			m_bDeleteTweet	= Util.toBoolean(request.getParameter("DELTW"));

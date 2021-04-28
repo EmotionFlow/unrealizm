@@ -244,8 +244,29 @@ public final class Common {
 		if(strSrc == null) {
 			return "";
 		}
-
 		return strSrc.replaceAll("^[\\s　]*", "").replaceAll("[\\s　]*$", "");
+	}
+
+	public static String TrimBlankLines(final String str){
+		if(str == null || str.isEmpty()){
+			return "";
+		}
+		String[] lines = str.split("\n");
+
+		int i=0;
+		for (String line : lines) {
+			if (line.replaceAll("^[\\s　]*$", "").isEmpty()) {
+				i++;
+			} else {
+				break;
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+		for (; i<lines.length; i++) {
+			sb.append(lines[i]).append("\n");
+		}
+		return sb.toString().replaceAll("[\\s　]*$", "");
 	}
 
 	public static String GetUrl(String strFileName) {
