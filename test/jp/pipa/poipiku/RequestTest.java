@@ -79,6 +79,7 @@ public class RequestTest {
 			request.requestCategory = 1;
 			request.amount = 10000;
 			request.requestText = "aaaaaaaaaaaaaaaaaaa";
+			request.licenseId = 10;
 			assertTrue(request.insert());
 			requests.add(request);
 		}
