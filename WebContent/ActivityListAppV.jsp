@@ -25,17 +25,29 @@ if (infoType==-1) infoType = 1;
 
 		<script type="text/javascript">
 			function UpdateActivityList(elm, info_type, user_id, content_id, request_id) {
-				console.log("UpdateActivityList");
 				$.ajax({
 					"type": "post",
 					"data": {"TY": info_type, "ID": user_id, "TD": content_id, "RID": request_id},
-					"url": "/api/UpdateActivityListF.jsp",
+					"url": "/f/UpdateActivityListF.jsp",
 					"dataType": "json",
 				}).then(
 					(data) => {
 						if (data.result === <%=Common.API_OK%>) {
 							$(elm).addClass("HadRead");
-							location.href = data.to_url;
+							if (info_type === <%=Common.NOTIFICATION_TYPE_REQUEST%> && request_id < 0){
+								swal.fire({
+									html: `
+								<p style="text-align: left">他のユーザーからあなた宛に「リクエストの受付を開始してほしい」という通知が来ました。
+									<a style="color: #545454;text-decoration: underline;"
+										href="https://poipiku.com/MyEditSettingPcV.jsp?MENUID=REQUEST">
+										設定画面で「リクエストを募集する」をONにする</a>と、受付を開始できます。</p>
+								`,
+									showCloseButton: true,
+									showConfirmButton: false,
+								});
+							} else {
+								location.href = data.to_url;
+							}
 						} else {
 							DispMsg('Connection error');
 						}
