@@ -190,7 +190,10 @@ function UpdateFile(user_id, content_id) {
 	if(nLimitedTime === 1){
 		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
 		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
-		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+		strPublishStartPresent = $('#EditTimeLimitedStartPresent').val();
+		strPublishEndPresent = $('#EditTimeLimitedEndPresent').val();
+		if(!checkPublishDatetime(strPublishStart, strPublishEnd, true, strPublishStartPresent, strPublishEndPresent)){
+			bEntered = false;
 			return;
 		}
 	}
