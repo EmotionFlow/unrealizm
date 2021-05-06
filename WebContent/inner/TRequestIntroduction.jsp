@@ -50,7 +50,7 @@ function _getRequestIntroductionHtml(){
 
 <%if(isApp){%>
 <div class="RequestIntroDlgInfo" style="text-align: center;margin-top: 20px; padding: 2px;border: solid 2px;border-radius: 4px;">
-リクエストの募集ははブラウザ版のポイピク設定画面からはじめられます
+リクエストの募集はブラウザ版のポイピク設定画面からはじめられます
 </div>
 <%}else{%>
 <div class="RequestIntroDlgTitle" style="text-align: center;">
