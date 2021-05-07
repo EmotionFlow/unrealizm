@@ -25,7 +25,7 @@ public final class SearchIllustByKeywordC {
 
 	// SELECTのLIMITが小さすぎると実行計画がバグってクエリが遅くなってしまうため、LIMITの下限を設けている。
 	// 将来的にはpg_hint_planによる制御をしたい。
-	private static final int SELECT_LIMIT_MIN = 100;
+	private static final int SELECT_LIMIT_MIN = 1000;
 
 	public int selectMaxGallery = 15;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
