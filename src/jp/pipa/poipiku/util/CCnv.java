@@ -277,7 +277,14 @@ public final class CCnv {
 			StringBuilder strRtn, CContent cContent, int nLoginUserId,
 			ArrayList<String> vResult, int nSpMode,
 			ResourceBundleControl _TEX){
-		strRtn.append(String.format("<div id=\"IllustItemResList_%d\" class=\"IllustItemResList\">", cContent.m_nContentId, cContent.m_nContentId));
+		final boolean isOwnerAndHidden = cContent.m_nUserId==nLoginUserId && cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN;
+		strRtn.append(
+			String.format(
+				"<div id=\"IllustItemResList_%d\" class=\"IllustItemResList\" %s>",
+				cContent.m_nContentId,
+				isOwnerAndHidden && cContent.m_strCommentsListsCache.length()>0 ? "style=\"display:block;\"" : ""
+			)
+		);
 		// もらった絵文字展開リンク
 		if(cContent.m_strCommentsListsCache.length()>=GridUtil.SELECT_MAX_EMOJI) {
 			// 全て表示リンク
@@ -292,7 +299,12 @@ public final class CCnv {
 		}
 		// もらった絵文字
 		for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
-			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))));
+			strRtn.append(
+				String.format(
+					"<span class=\"ResEmoji\">%s</span>",
+					CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))
+				)
+			);
 		}
 		/*
 		for(CComment comment : cContent.m_vComment) {
@@ -300,9 +312,15 @@ public final class CCnv {
 		}
 		*/
 
-
 		// 絵文字追加マーク
-		strRtn.append(String.format("<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\"><span class=\"fas fa-plus-square\"></span></span>", cContent.m_nContentId));
+		strRtn.append(
+			String.format(
+				"<span id=\"ResEmojiAdd_%d\" class=\"ResEmojiAdd\" %s><span class=\"fas fa-plus-square\"></span></span>",
+				cContent.m_nContentId,
+				isOwnerAndHidden ? "style=\"display:none;\"" : ""
+			)
+		);
+
 		strRtn.append("</div>");	// IllustItemResList
 		// 絵文字ボタン
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
