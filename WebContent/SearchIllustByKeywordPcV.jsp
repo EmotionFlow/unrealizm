@@ -17,7 +17,7 @@ if(strKeywordHan.matches("^[0-9]+$")) {
 	response.sendRedirect("/" + strKeywordHan + "/");
 	return;
 }
-cResults.SELECT_MAX_GALLERY = 45;
+cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
@@ -92,7 +92,7 @@ String strFileUrl = cResults.m_strRepFileName;
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchIllustByKeywordPcV.jsp", "&KWD="+strEncodedKeyword, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/SearchIllustByKeywordPcV.jsp", "&KWD="+strEncodedKeyword, cResults.m_nPage, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 

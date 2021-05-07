@@ -15,7 +15,7 @@ if(SP_REVIEW && !checkLogin.m_bLogin) {
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 45;
+cResults.selectMaxGallery = 45;
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = isApp ? "/IllustListAppV.jsp?ID=" : "/IllustListPcV.jsp?ID=";

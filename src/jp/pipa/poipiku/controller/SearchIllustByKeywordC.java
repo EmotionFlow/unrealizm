@@ -3,15 +3,13 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
-public class SearchIllustByKeywordC {
+public final class SearchIllustByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
 	public void getParam(HttpServletRequest cRequest) {
@@ -25,9 +23,12 @@ public class SearchIllustByKeywordC {
 		}
 	}
 
+	// SELECTのLIMITが小さすぎると実行計画がバグってクエリが遅くなってしまうため、LIMITの下限を設けている。
+	// 将来的にはpg_hint_planによる制御をしたい。
+	private static final int SELECT_LIMIT_MIN = 100;
 
-	public int SELECT_MAX_GALLERY = 15;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public int selectMaxGallery = 15;
+	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public int m_nContentsNum = 0;
 	public boolean m_bFollowing = false;
 	public String m_strRepFileName = "";
@@ -38,7 +39,6 @@ public class SearchIllustByKeywordC {
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -48,8 +48,7 @@ public class SearchIllustByKeywordC {
 		if(m_strKeyword.isEmpty()) return bResult;
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// BLOCK USER
 			String strCondBlockUser = "";
@@ -120,10 +119,12 @@ public class SearchIllustByKeywordC {
 			if(!strCondMute.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);
 			}
-			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
-			statement.setInt(idx++, SELECT_MAX_GALLERY);
+			statement.setInt(idx++, m_nPage * selectMaxGallery);
+			statement.setInt(idx++, Math.max(SELECT_LIMIT_MIN, selectMaxGallery));
 			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
+
+			int cnt = 0;
+			while (resultSet.next() && cnt < selectMaxGallery) {
 				CContent cContent = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
@@ -132,6 +133,7 @@ public class SearchIllustByKeywordC {
 					m_strRepFileName = cContent.m_strFileName;
 				}
 				m_vContentList.add(cContent);
+				cnt++;
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
