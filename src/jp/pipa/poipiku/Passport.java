@@ -127,7 +127,7 @@ public class Passport {
 			int nProdCatId = -1;
 			String strProdName = null;
 			int nListPrice = -1;
-			strSql = "SELECT prod.id, prod.category_id, prod.name, prod.list_price FROM passports AS pass" +
+			strSql = "SELECT prod.id, prod.category_id, prod.name, prod.list_price FROM passport_courses AS pass" +
 					" INNER JOIN products AS prod ON pass.product_id=prod.id" +
 					" WHERE pass.id=?;";
 			cState = cConn.prepareStatement(strSql);
