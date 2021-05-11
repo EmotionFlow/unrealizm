@@ -45,8 +45,17 @@ ${JAVAC} -Xlint:unchecked -Xlint:deprecation \
 
 echo build ok
 
-java -jar $JUNIT5_JAR \
-  -cp ${APP_JAR}:${CLASSES_TOMCAT}:${TEST_TARGET}:${TEST_CLASSES} \
-  --select-package jp.pipa.poipiku \
-  --include-classname='.*Test$'
+TEST_CMD="java -jar ${JUNIT5_JAR} -cp ${APP_JAR}:${CLASSES_TOMCAT}:${TEST_TARGET}:${TEST_CLASSES} --select-package jp.pipa.poipiku"
+TEST_CMD_OPT=--include-classname='.*Test$'
+
+if [ $# -eq 1 ]; then
+  TEST_CMD_OPT="--include-classname='.*"
+  TEST_CMD_OPT+=$1
+  TEST_CMD_OPT+="Test$'"
+fi
+
+echo TEST_CMD_OPT is ${TEST_CMD_OPT}
+
+bash -c "${TEST_CMD} ${TEST_CMD_OPT}"
+
 exit

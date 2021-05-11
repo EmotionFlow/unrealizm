@@ -20,6 +20,7 @@ release:
 	pushd deploy && ./deploy.sh && popd
 
 test: build-java
+	echo CLS=${CLS} && \
 	pushd test && \
-	./build_java_test.sh \
+	./build_java_test.sh ${CLS} &&\
 	popd

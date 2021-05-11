@@ -1,17 +1,17 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Passport;
+import jp.pipa.poipiku.PassportSubscription;
 
 public class BuyPassportC {
-	public int m_nErrCode = Passport.ErrorKind.Unknown.getCode();
+	public int m_nErrCode = PassportSubscription.ErrorKind.Unknown.getCode();
 
 	public boolean getResults(CheckLogin checkLogin, BuyPassportCParam cParam) {
 		if(cParam.m_nUserId<0) return false;
 		if(!checkLogin.m_bLogin) return false;
 		if(checkLogin.m_bLogin && (cParam.m_nUserId != checkLogin.m_nUserId)) return false;
 
-		Passport passport = new Passport(checkLogin);
+		PassportSubscription passport = new PassportSubscription(checkLogin);
 
 		boolean result = passport.buy(
 				cParam.m_nPassportId,
