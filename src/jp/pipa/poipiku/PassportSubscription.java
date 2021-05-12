@@ -1,13 +1,10 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.sql.*;
 
 
@@ -213,15 +210,6 @@ public final class PassportSubscription {
 
 			//// end transaction
 
-			// update users_0000
-			sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
-			statement = connection.prepareStatement(sql);
-			statement.setInt(1, nPassportCourseId);
-			statement.setInt(2, userId);
-			statement.executeUpdate();
-
-			CacheUsers0000.getInstance().clearUser(userId);
-
 			errorKind = ErrorKind.None;
 
 		} catch(Exception e) {
@@ -246,7 +234,6 @@ public final class PassportSubscription {
 			return false;
 		}
 
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		String strSql = "";
@@ -261,10 +248,8 @@ public final class PassportSubscription {
 				return false;
 			}
 
-			// update passport_logs
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			// update passport_subscriptions
+			cConn = DatabaseUtil.dataSource.getConnection();
 			strSql = "UPDATE passport_subscriptions SET cancel_datetime=current_timestamp WHERE user_id=? AND order_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, userId);
@@ -272,8 +257,6 @@ public final class PassportSubscription {
 			cState.executeUpdate();
 			cState.close();cState=null;
 			cConn.close();cConn=null;
-
-			/* users_0000は月末までそのまま。月初にスクリプトで更新 */
 
 			errorKind = ErrorKind.None;
 

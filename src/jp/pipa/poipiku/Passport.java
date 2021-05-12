@@ -14,10 +14,12 @@ import jp.pipa.poipiku.util.Log;
 
 
 public final class Passport {
+	public boolean exists = false;
 	public int userId = -1;
 	public int courseId = -1;
 	public Timestamp expiredAt = null;
 
+	// TODO べつんとこに移す
 //	public enum PaymentBy {
 //		Undef,
 //		Subscription,
@@ -45,10 +47,12 @@ public final class Passport {
 			return code;
 		}
 	}
-	Status status = Status.Undef;
+	public Status status = Status.Undef;
 
 	public Passport(CheckLogin checkLogin) {
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
+
+		userId = checkLogin.m_nUserId;
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -60,14 +64,16 @@ public final class Passport {
 
 			sql = "SELECT * FROM passports WHERE user_id=?";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setInt(1, userId);
 			resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
 				courseId = resultSet.getInt("course_id");
 				expiredAt = resultSet.getTimestamp("expired_at");
 				status = Status.byCode(resultSet.getInt("status"));
+				exists = true;
 			} else {
+				exists = false;
 				status = Status.NotYet;
 			}
 		} catch(Exception e) {
@@ -78,6 +84,40 @@ public final class Passport {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
+	}
+
+	public boolean activate(Timestamp _expiredAt) {
+		if (!exists) return false;
+
+		boolean result;
+		result = updateStatus(Status.Active);
+		if (result) {
+			result = updateExpired(_expiredAt);
+		}
+		if (result) {
+			Connection connection = null;
+			PreparedStatement statement = null;
+			final String sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
+			try {
+				connection = DatabaseUtil.dataSource.getConnection();
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, courseId);
+				statement.setInt(2, userId);
+				statement.executeUpdate();
+				result = true;
+			} catch (SQLException e) {
+				Log.d(sql);
+				e.printStackTrace();
+				result = false;
+			} finally {
+				try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+				try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+			}
+		}
+		if (result) {
+			CacheUsers0000.getInstance().clearUser(userId);
+		}
+		return result;
 	}
 
 	public boolean insert() {
@@ -91,10 +131,11 @@ public final class Passport {
 			sql = "INSERT INTO passports(user_id, status, course_id, expired_at) VALUES (?, ?, ?, ?)";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, userId);
-			statement.setInt(2, status.getCode());
+			statement.setInt(2, Status.NotYet.getCode());
 			statement.setInt(3, courseId);
 			statement.setTimestamp(4, expiredAt);
 			statement.executeUpdate();
+			exists = true;
 
 		} catch(Exception e) {
 			Log.d(sql);
@@ -129,6 +170,25 @@ public final class Passport {
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
 		return true;
+	}
+
+	public boolean cancelSubscription(){
+		boolean result;
+		result = updateStatus(Status.Cancelling);
+		if (!result) return false;
+
+		// 当月月末
+		LocalDateTime d =
+				LocalDateTime.now()
+				.plusMonths(1)
+				.withDayOfMonth(1)
+				.withHour(23)
+				.withMinute(59)
+				.withSecond(59)
+				.withNano(0)
+				.minusDays(1);
+
+		return updateExpired(Timestamp.valueOf(d));
 	}
 
 	public boolean updateStatus(Status _status) {
