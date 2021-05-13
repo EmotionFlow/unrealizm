@@ -68,7 +68,7 @@
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.DeleteAccount")%>
 		</div>
 		<div class="SettingBody">
-			<%if (cResults.m_cPassport.m_status != Passport.Status.NotMember) {%>
+			<%if (!(cResults.m_cPassport.status == Passport.Status.NotYet || cResults.m_cPassport.status == Passport.Status.InActive)) {%>
 			ポイパス購入中のため、退会処理ができません。まずポイパスの定期購入を解除していただいたのち、会員期間が終わりましたら、再度こちらのページへアクセスしてください。
 			<%} else if (cResults.m_bCardInfoExist) {%>
 			支払いカード情報が登録されているため、退会処理ができません。支払情報画面からカード情報を削除していただいたのち、再度こちらのページへアクセスしてください。

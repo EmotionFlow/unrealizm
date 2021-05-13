@@ -279,13 +279,16 @@
 <div class="SettingList">
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
-		<%{Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
+		<%{
+			Passport.Status passportStatus = cResults.m_cPassport.status;
+			boolean isNotMember = passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive;
+		%>
 			<div class="SettingBody">
 				<%if(passportStatus == Passport.Status.Cancelling){%>
 				ポイパスの解除を承りました。今までご加入いただき誠にありがとうございました。
 				なお、ポイパスでプラスされている機能は今月末までお使いいただけます。
 				また、最後の課金をさせていただく関係で、今月中はカード情報の削除ができません。ご了承くださいませ。
-				<%}else if(passportStatus == Passport.Status.NotMember) {%>
+				<%}else if(isNotMember) {%>
 				<%//_TEX.T("MyEditSettingPassportV.Text")%>
 				<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
 				平素よりポイピクをご愛顧頂き誠にありがとうございます。
@@ -303,7 +306,7 @@
 				現在、ポイパス加入中です！
 				<%}%>
 
-				<%if(passportStatus == Passport.Status.NotMember) {%>
+				<%if(isNotMember) {%>
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
@@ -316,7 +319,7 @@
 				<%}%>
 
 				<div class="SettingBodyCmd" style="font-size: 1.2em">
-					<%if(passportStatus == Passport.Status.NotMember) {%>
+					<%if(isNotMember) {%>
 					ポイパスでプラスされる機能
 					<%}%>
 				</div>
@@ -417,7 +420,7 @@
 					</table>
 				</div>
 
-				<%if(passportStatus == Passport.Status.NotMember) {%>
+				<%if(isNotMember) {%>
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
@@ -436,7 +439,7 @@
 					<span class="PoiPassLoading"></span><span>加入処理中</span>
 				</div>
 				<%}%>
-				<%if(passportStatus == Passport.Status.Billing){%>
+				<%if(passportStatus == Passport.Status.Active){%>
 				<div class="SettingBodyCmd">
 					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
 						ポイパスを解約する

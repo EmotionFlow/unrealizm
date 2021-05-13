@@ -11,5 +11,5 @@ BuyPassportC cResults = new BuyPassportC();
 boolean bRtn = cResults.getResults(checkLogin, cParam);
 %>{
 "result" : <%=(bRtn)?1:0%>,
-"error_code" : <%=cResults.m_nErrCode%>
+"error_code" : <%=cResults.errorCode%>
 }
