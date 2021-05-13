@@ -82,6 +82,15 @@ if(!cResults.getResults(checkLogin)) {
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+				<%if (cResults.isOwner) {%>
+				<br><span>
+				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>
+				(<%=_TEX.T("IllustView.DownloadInfo.Disallow")%>)
+				<%}else{%>
+				(<%=_TEX.T("IllustView.DownloadInfo.Allow")%>)
+				<%}%>
+				</span>
+				<%}%>
 			</div>
 			<%}%>
 			<div class="IllustItemLink" style="display: block;">
@@ -90,6 +99,15 @@ if(!cResults.getResults(checkLogin)) {
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+				<%if (cResults.isOwner) {%>
+				<br><span>
+				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>
+				(<%=_TEX.T("IllustView.DownloadInfo.Disallow")%>)
+				<%}else{%>
+				(<%=_TEX.T("IllustView.DownloadInfo.Allow")%>)
+				<%}%>
+				</span>
+				<%}%>
 			</div>
 			<%}%>
 			<div class="IllustItemTProhibit">

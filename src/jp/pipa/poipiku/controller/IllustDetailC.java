@@ -9,7 +9,7 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class IllustDetailC {
+public final class IllustDetailC {
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
 	public int m_nAppendId = -1;
@@ -25,24 +25,22 @@ public class IllustDetailC {
 	}
 
 	public CContent m_cContent = new CContent();
+	public boolean isOwner = false;
 	public int m_nDownload = CUser.DOWNLOAD_OFF;
 	public boolean isDownloadable = false;
 	public boolean isRequestClient = false;
 	public boolean getResults(CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// author profile
-			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+			strSql = "SELECT ng_download FROM users_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			resultSet = statement.executeQuery();
@@ -101,7 +99,7 @@ public class IllustDetailC {
 
 			if(m_nAppendId>0 && bRtn) {
 				bRtn = false;
-				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
+				strSql = "SELECT file_name FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, m_nContentId);
 				statement.setInt(2, m_nAppendId);
@@ -114,8 +112,9 @@ public class IllustDetailC {
 				statement.close();statement=null;
 			}
 
-			isDownloadable = m_cContent.m_nEditorId!=Common.EDITOR_TEXT &&
-					(m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || m_nDownload==CUser.DOWNLOAD_ON);
+			isOwner = m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId;
+
+			isDownloadable = m_cContent.m_nEditorId!=Common.EDITOR_TEXT && (isOwner || m_nDownload==CUser.DOWNLOAD_ON);
 
 			// リクエストしたユーザは必ずダウンロードできる
 			if(poipikuRequest.isClient(checkLogin.m_nUserId)){
