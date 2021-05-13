@@ -364,4 +364,13 @@ public class CardSettlementEpsilon extends CardSettlement {
 			if(connection!=null){try{connection.close();connection=null;}catch(Exception ex){;}}
 		}
 	}
+
+	public boolean changeRegularlyAmount(int amount) {
+		// epsilon側のuser_id, item_code検索
+
+		// 金額変更CGIを叩く
+
+
+		return false;
+	}
 }
