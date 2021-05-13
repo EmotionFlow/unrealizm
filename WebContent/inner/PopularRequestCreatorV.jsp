@@ -63,6 +63,9 @@
 			final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			for (int nCnt = 0; nCnt < cResults.m_vContentList.size(); nCnt++) {
 				CUser cUser = cResults.m_vContentList.get(nCnt);
+				if (CheckLogin.isStaff(cUser.m_nUserId)){
+					continue;
+				}
 		%>
 			<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
 			<%if (!isApp && Util.isSmartPhone(request)) {%>
