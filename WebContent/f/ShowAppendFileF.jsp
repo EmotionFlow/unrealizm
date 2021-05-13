@@ -19,19 +19,39 @@ if(nRtn<ShowAppendFileC.OK) {
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_LOGIN"));
 		break;
 	case ShowAppendFileC.ERR_FOLLOWER:
-		strHtml.append((checkLogin.m_bLogin)?_TEX.T("ShowAppendFileC.ERR_FOLLOWER"):_TEX.T("ShowAppendFileC.ERR_FOLLOWER.NeedLogin"));
+		if(checkLogin.m_bLogin) {
+			strHtml.append(_TEX.T("ShowAppendFileC.ERR_FOLLOWER"));
+		} else {
+			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+		}
 		break;
 	case ShowAppendFileC.ERR_T_FOLLOWER:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOWER"));
+		if(checkLogin.m_bLogin) {
+			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOWER"));
+		} else {
+			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+		}
 		break;
 	case ShowAppendFileC.ERR_T_FOLLOW:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOW"));
+		if(checkLogin.m_bLogin) {
+			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOW"));
+		} else {
+			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+		}
 		break;
 	case ShowAppendFileC.ERR_T_EACH:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_EACH"));
+		if(checkLogin.m_bLogin) {
+			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_EACH"));
+		} else {
+			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+		}
 		break;
 	case ShowAppendFileC.ERR_T_LIST:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_LIST"));
+		if(checkLogin.m_bLogin) {
+			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_LIST"));
+		} else {
+			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+		}
 		break;
 	case ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED"));
