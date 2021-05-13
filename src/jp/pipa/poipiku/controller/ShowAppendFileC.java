@@ -13,10 +13,11 @@ import jp.pipa.poipiku.CContentAppend;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.CTweet;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-public class ShowAppendFileC {
+public final class ShowAppendFileC {
 	public static final int OK = 0;
 	public static final int ERR_NOT_FOUND = -1;
 	public static final int ERR_PASS = -2;
@@ -53,15 +54,13 @@ public class ShowAppendFileC {
 	public CContent m_cContent = null;
 	public int getResults(CheckLogin checkLogin) {
 		int nRtn = OK;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -90,9 +89,15 @@ public class ShowAppendFileC {
 
 			boolean bOwner = m_cContent.m_nUserId==checkLogin.m_nUserId;
 
-			if(!bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS && !m_cContent.m_strPassword.equals(m_strPassword)) return ERR_PASS;
-			if(m_cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN && !checkLogin.m_bLogin) return ERR_LOGIN;
-			if(!bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
+			if (!bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS && !m_cContent.m_strPassword.equals(m_strPassword)) return ERR_PASS;
+
+			// login user
+			if (m_cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN && !checkLogin.m_bLogin) {
+				return ERR_LOGIN;
+			}
+
+			// POIPIKU fav
+			if (bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
 				boolean bFollow = (m_nUserId==checkLogin.m_nUserId);
 				if(!bFollow) {
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
@@ -108,13 +113,41 @@ public class ShowAppendFileC {
 				}
 				if(!bFollow) return ERR_FOLLOWER;
 			}
-			if(!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN) return ERR_HIDDEN;
 
-			// twitter friendship
-			if(!(bRequestClient || bOwner) && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)){
+			// hidden
+			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){
+				return ERR_HIDDEN;
+			}
+
+			// twitter follower, followee, each
+			if (!(bRequestClient || bOwner) && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)) {
+				if (!checkLogin.m_bLogin) {
+					if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER) {
+						return ERR_T_FOLLOWER;
+					}
+					if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE) {
+						return ERR_T_FOLLOW;
+					}
+					if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) {
+						return ERR_T_EACH;
+					}
+					return ERR_UNKNOWN;
+				}
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
-					if(!cTweet.m_bIsTweetEnable){return ERR_T_FOLLOWER;}
+					if (!cTweet.m_bIsTweetEnable) {
+						if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER) {
+							return ERR_T_FOLLOWER;
+						}
+						if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE) {
+							return ERR_T_FOLLOW;
+						}
+						if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) {
+							return ERR_T_EACH;
+						}
+						return ERR_UNKNOWN;
+					}
+
 					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF
 						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
 						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH     && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
@@ -135,10 +168,15 @@ public class ShowAppendFileC {
 			}
 
 			// twitter openlist
-			if(!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){
+			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){
+				if (!checkLogin.m_bLogin) {
+					return ERR_T_LIST;
+				}
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
-					if(!cTweet.m_bIsTweetEnable){return ERR_T_LIST;}
+					if(!cTweet.m_bIsTweetEnable){
+						return ERR_T_LIST;
+					}
 					int nRet = cTweet.LookupListMember(m_cContent);
 					if(nRet==CTweet.ERR_NOT_FOUND) return ERR_T_LIST;
 					if(nRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) return ERR_T_INVALID_OR_EXPIRED_TOKEN;
