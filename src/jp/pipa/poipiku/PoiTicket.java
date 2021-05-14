@@ -8,7 +8,7 @@ import jp.pipa.poipiku.util.Log;
 import java.sql.*;
 
 
-public final class PassportTicket {
+public final class PoiTicket {
 	public boolean isSkipSettlement = false;
 	public enum ErrorKind implements CodeEnum<ErrorKind> {
 		None(0),
@@ -35,7 +35,7 @@ public final class PassportTicket {
 
 	private static final int PRODUCT_ID = 2;
 
-	public PassportTicket(CheckLogin checkLogin) {
+	public PoiTicket(CheckLogin checkLogin) {
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
 
 		Connection connection = null;
@@ -46,7 +46,7 @@ public final class PassportTicket {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			sql = "SELECT amount FROM passport_tickets WHERE user_id=?";
+			sql = "SELECT amount FROM poi_tickets WHERE user_id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, checkLogin.m_nUserId);
 			resultSet = statement.executeQuery();
@@ -157,11 +157,11 @@ public final class PassportTicket {
 			//// begin transaction
 			connection.setAutoCommit(false);
 
-			// insert or update passport_tickets
-			sql = "INSERT INTO passport_tickets(user_id, amount)" +
+			// insert or update poi_tickets
+			sql = "INSERT INTO poi_tickets(user_id, amount)" +
 					" VALUES (?, ?)" +
-					" ON CONFLICT ON CONSTRAINT passport_tickets_pkey" +
-					" DO UPDATE SET amount=passport_tickets.amount+?, updated_at=current_timestamp" +
+					" ON CONFLICT ON CONSTRAINT poi_tickets_pkey" +
+					" DO UPDATE SET amount=poi_tickets.amount+?, updated_at=current_timestamp" +
 					" RETURNING amount";
 			Log.d(sql);
 			statement = connection.prepareStatement(sql);
@@ -216,7 +216,7 @@ public final class PassportTicket {
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "UPDATE passport_tickets SET amount=passport_tickets.amount-1, updated_at=current_timestamp WHERE user_id=? RETURNING amount";
+			sql = "UPDATE poi_tickets SET amount=poi_tickets.amount-1, updated_at=current_timestamp WHERE user_id=? RETURNING amount";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, userId);
 			resultSet = statement.executeQuery();
