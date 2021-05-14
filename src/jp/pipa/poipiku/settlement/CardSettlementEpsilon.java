@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.settlement;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.settlement.epsilon.*;
 
@@ -296,7 +297,6 @@ public class CardSettlementEpsilon extends CardSettlement {
 
 	public boolean capture(int poipikuOrderId) {
 		Log.d("capture() enter");
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -304,8 +304,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 		boolean result = false;
 
 		try {
-			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// EPSILON側order_number(注文番号)取得。
 			sql = "SELECT agency_order_id, payment_total FROM orders WHERE id=?";
@@ -359,18 +358,82 @@ public class CardSettlementEpsilon extends CardSettlement {
 			errorKind = ErrorKind.Exception;
 			return false;
 		} finally {
-			if(resultSet!=null){try{resultSet.close();resultSet=null;}catch(Exception ex){;}}
-			if(statement!=null){try{statement.close();statement=null;}catch(Exception ex){;}}
-			if(connection!=null){try{connection.close();connection=null;}catch(Exception ex){;}}
+			if(resultSet!=null){try{resultSet.close();resultSet=null;}catch(Exception ignored){;}}
+			if(statement!=null){try{statement.close();statement=null;}catch(Exception ignored){;}}
+			if(connection!=null){try{connection.close();connection=null;}catch(Exception ignored){;}}
 		}
 	}
 
 	public boolean changeRegularlyAmount(int amount) {
 		// epsilon側のuser_id, item_code検索
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+
+		String itemCode = null;
+		String epsilonUserId = null;
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+		
+			sql = "SELECT orders.id, agent_user_id" +
+					" FROM orders" +
+					"   INNER JOIN passport_subscriptions ps ON orders.id = ps.order_id" +
+					"   INNER JOIN creditcards c ON orders.creditcard_id = c.id" +
+					" WHERE ps.user_id = ?" +
+					"   AND agent_id = ?" +
+					"   AND orders.del_flg = FALSE" +
+					"   AND c.del_flg = FALSE" +
+					" ORDER BY orders.created_at DESC" +
+					" LIMIT 1;";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, poipikuUserId);
+			statement.setInt(2, Agent.EPSILON);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				itemCode = String.valueOf(resultSet.getInt(1));
+				epsilonUserId = resultSet.getString(2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorKind = ErrorKind.Exception;
+			return false;
+		} finally {
+			if(resultSet!=null){try{resultSet.close();resultSet=null;}catch(Exception ignored){;}}
+			if(statement!=null){try{statement.close();statement=null;}catch(Exception ignored){;}}
+			if(connection!=null){try{connection.close();connection=null;}catch(Exception ignored){;}}
+		}
 
 		// 金額変更CGIを叩く
+		EpsilonRegularlyAmountChange cmd = new EpsilonRegularlyAmountChange(poipikuUserId);
+		RegularlyAmountChangeSendInfo sendInfo = new RegularlyAmountChangeSendInfo();
+		sendInfo.userId = epsilonUserId;
+		sendInfo.itemCode = itemCode;
+		sendInfo.itemPrice = amount;
+		RegularlyAmountChangeResultInfo resultInfo = cmd.execAmountChange(sendInfo);
 
-
-		return false;
+		if (resultInfo != null) {
+			/* resultInfo.getResult()
+			1：金額変更OK
+			9：金額変更NG
+			 */
+			String resultCode = resultInfo.getResult();
+			Log.d("resultInfo: " + resultCode);
+			if ("1".equals(resultCode)) {
+				return true;
+			} else {
+				Log.d(String.format("金額変更処理でエラーが発生 requestId=%d", requestId));
+				Log.d("Code: " + resultInfo.getErrCode());
+				Log.d("Detail: " + resultInfo.getErrDetail());
+				errorKind = ErrorKind.CardAuth;
+				return false;
+			}
+		} else {
+			Log.d(String.format("金額変更処理でresultInfoが想定外の値 requestId=%d", requestId));
+			Log.d("Code: " + resultInfo.getErrCode());
+			Log.d("Detail: " + resultInfo.getErrDetail());
+			errorKind = ErrorKind.Unknown;
+			return false;
+		}
 	}
 }
