@@ -1,7 +1,7 @@
-/bin/rm ../WebContent/js/common-*.js
-#/bin/rm ../WebContent/js/commonPc-*.js
-/bin/rm ../WebContent/js/upload-*.js
-/bin/rm ../WebContent/js/update-*.js
+/bin/rm -f ../WebContent/js/common-*.js
+#/bin/rm -f ../WebContent/js/commonPc-*.js
+/bin/rm -f ../WebContent/js/upload-*.js
+/bin/rm -f ../WebContent/js/update-*.js
 
 /bin/cp ./js/common-48.js ../WebContent/js/
 #/bin/cp ./js/commonPc-03.js ../WebContent/js/
