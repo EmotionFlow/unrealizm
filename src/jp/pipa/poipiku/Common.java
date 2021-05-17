@@ -148,10 +148,10 @@ public final class Common {
 
 	public static final int[][] EDITOR_DESC_MAX = {
 			// normal, PASSPORT
-			{200, 500},
-			{200, 500},
-			{200, 500},
-			{200, 500}
+			{200, 3000},
+			{200, 3000},
+			{200, 3000},
+			{200, 3000}
 	};
 
 	public static final int[][] EDITOR_TEXT_MAX = {

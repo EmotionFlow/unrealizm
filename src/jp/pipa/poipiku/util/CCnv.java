@@ -150,12 +150,30 @@ public final class CCnv {
 
 	}
 	private static void appendIllustItemDesc(StringBuilder strRtn, CContent cContent, int nMode){
+		String description;
+
+		final int firstDispLen = Common.EDITOR_DESC_MAX[0][0] + 300;
+		int moreIndex = -1;
+		if (cContent.m_strDescription.length() > firstDispLen) {
+			moreIndex = cContent.m_strDescription.indexOf("\n", firstDispLen);
+		}
+
+		if (moreIndex < 0) {
+			description = Common.AutoLink(Util.toStringHtml(cContent.m_strDescription), cContent.m_nUserId, nMode);
+		} else {
+			description = Common.AutoLink(Util.toStringHtml(cContent.m_strDescription.substring(0, moreIndex)), cContent.m_nUserId, nMode);
+			description += "<a class=\"IllustItemDescMoreLink\" onclick=\"readMoreDescription(this);\">...more</a>";
+			description += String.format(
+					"<span class=\"IllustItemDescMore\" style=\"display:none;\">%s</span>",
+					Common.AutoLink(Util.toStringHtml(cContent.m_strDescription.substring(moreIndex)), cContent.m_nUserId, nMode)
+					);
+		}
 		strRtn.append(
-			String.format("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</h1>",
-				cContent.m_nContentId,
-				(cContent.m_strDescription.isEmpty())?"style=\"display: none;\"":"",
-				Common.AutoLink(Util.toStringHtml(cContent.m_strDescription), cContent.m_nUserId, nMode)
-			)
+				String.format("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</h1>",
+						cContent.m_nContentId,
+						(cContent.m_strDescription.isEmpty())?"style=\"display: none;\"":"",
+						description
+				)
 		);
 	}
 	private static void appendTag(StringBuilder strRtn, CContent cContent, int nMode, int nSpMode){

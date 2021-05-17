@@ -333,8 +333,8 @@
 						</tr>
 						<tr>
 							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />同時投稿枚数</td>
-							<td class="NormalCell">200枚、合計50MByteまで</td>
-							<td class="BenefitCell">400枚、合計100MByteまで<br />
+							<td class="NormalCell"><%=Common.UPLOAD_FILE_MAX[0]%>枚、合計<%=Common.UPLOAD_FILE_TOTAL_SIZE[0]%>MByteまで</td>
+							<td class="BenefitCell"><%=Common.UPLOAD_FILE_MAX[1]%>枚、合計<%=Common.UPLOAD_FILE_TOTAL_SIZE[1]%>MByteまで<br />
 							</td>
 						</tr>
 						<tr>
@@ -345,13 +345,13 @@
 						</tr>
 						<tr>
 							<td class="ListCell">投稿時のキャプション文字数</td>
-							<td class="NormalCell">200文字<br /></td>
-							<td class="BenefitCell">500文字</td>
+							<td class="NormalCell"><%=Common.EDITOR_DESC_MAX[0][0]%>文字</td>
+							<td class="BenefitCell"><%=Common.EDITOR_DESC_MAX[0][1]%>文字</td>
 						</tr>
 						<tr>
 							<td class="ListCell">文章投稿時の文字数</td>
-							<td class="NormalCell">1万文字<br /></td>
-							<td class="BenefitCell">10万文字<br />
+							<td class="NormalCell"><%=Common.EDITOR_TEXT_MAX[3][0]/10000%>万文字</td>
+							<td class="BenefitCell"><%=Common.EDITOR_TEXT_MAX[3][1]/10000%>万文字<br />
 								<span class="BenefitDetail">
 									(本機能はWeb版でβテスト中の機能です。アプリからの文章投稿機能は今暫くお待ち下さい)
 								</span></td>

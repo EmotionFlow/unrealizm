@@ -598,3 +598,8 @@ function updateGraph() {
 	g_chartAnalyze.clear();
 	g_chartAnalyze.update();
 }
+
+function readMoreDescription(el) {
+	$(el).hide();
+	$(el).next().show();
+}

@@ -1600,6 +1600,11 @@
 	color: #6d6965;
 }
 
+.IllustItem .IllustItemDescMoreLink {
+	text-decoration: underline;
+	color: #49a1ff;
+}
+
 .IllustItem .IllustItemTag {
 	display: block;
 	float: left;
