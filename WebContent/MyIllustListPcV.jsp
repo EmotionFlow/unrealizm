@@ -15,7 +15,7 @@ cResults.SELECT_MAX_GALLERY = 45;
 
 // ログインせずにUIDを指定した場合、間違ってマイボックスのURLを聞いてアクセスしている可能性がある
 if(!checkLogin.m_bLogin && cResults.m_nUserId>=1) {
-	response.sendRedirect("/IllustListPcV.jsp?ID="+cResults.m_nUserId);
+	response.sendRedirect("/" + cResults.m_nUserId);
 	return;
 }
 
@@ -25,8 +25,14 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-// ログインしていながら自分以外のIDを叩いた場合は自分のページへ矯正遷移
-cResults.m_nUserId = checkLogin.m_nUserId;
+if(cResults.m_nUserId < 0){
+	// パラメータなしだったら自分のマイボックス
+	cResults.m_nUserId = checkLogin.m_nUserId;
+} else if(checkLogin.m_nUserId != cResults.m_nUserId) {
+	// 自分と異なるuserIdが指定されていたら、その人のトップへ遷移。
+	response.sendRedirect("/"+cResults.m_nUserId);
+	return;
+}
 
 cResults.m_bDispUnPublished = true;
 if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
