@@ -15,8 +15,8 @@
 			int amount = Integer.parseInt(request.getParameter("AMT"));
 			if (userId>0 && amount>=0 && amount<=300) {
 				Log.d(String.format("received: %d, %d", userId, amount));
-//				CardSettlementEpsilon cardSettlementEpsilon = new CardSettlementEpsilon(userId);
-//				result = cardSettlementEpsilon.changeRegularlyAmount(amount);
+				CardSettlementEpsilon cardSettlementEpsilon = new CardSettlementEpsilon(userId);
+				result = cardSettlementEpsilon.changeRegularlyAmount(amount);
 			}
 			if (!result) {
 				Log.d("changeRegularlyAmount was failed");

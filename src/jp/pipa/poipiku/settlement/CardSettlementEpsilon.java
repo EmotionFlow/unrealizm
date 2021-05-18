@@ -385,7 +385,8 @@ public class CardSettlementEpsilon extends CardSettlement {
 					"   AND orders.del_flg = FALSE" +
 					"   AND c.del_flg = FALSE" +
 					" ORDER BY orders.created_at DESC" +
-					" LIMIT 1;";
+					" LIMIT 1";
+			Log.d(sql);
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, poipikuUserId);
 			statement.setInt(2, Agent.EPSILON);
