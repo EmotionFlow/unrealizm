@@ -235,7 +235,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 						}
 						cResSet.close();cResSet=null;
 					} else {
-						strSql = "SELECT id FROM creditcards WHERE user_id=? AND agent_id=?";
+						strSql = "SELECT id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
 						cState = cConn.prepareStatement(strSql);
 						cState.setInt(1, poipikuUserId);
 						cState.setInt(2, agent.id);

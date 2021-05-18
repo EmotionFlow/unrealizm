@@ -31,7 +31,7 @@ public final class BuyPassportC {
 				result = passport.insert();
 			}
 			if (result) {
-				result = passport.activate(null);
+				result = passport.activate();
 			} else {
 				Log.d("passport.insert() failed");
 			}
