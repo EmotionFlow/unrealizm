@@ -91,6 +91,8 @@ public final class PoiTicket {
 		String sql = "";
 
 		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+
 			// insert or update poi_tickets
 			sql = sqlAdd;
 			Log.d(sql);

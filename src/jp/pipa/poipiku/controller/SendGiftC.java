@@ -120,7 +120,7 @@ public class SendGiftC {
 			giftLog.insert();
 
 			Passport passport = new Passport(toUserId);
-			if (passport.status == Passport.Status.InActive) {
+			if (passport.status == Passport.Status.Active) {
 				// すでにポイパス加入していたら、チケット１枚追加
 				PoiTicket ticket = new PoiTicket(toUserId);
 				ticket.add(1);

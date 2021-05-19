@@ -18,18 +18,14 @@ function _getGiftIntroductionHtml(nickName){
 </div>
 <div class="GiftIntroDlgInfo">
 <ul>
-	<li>300円で1ヶ月分のポイパスのチケットをプレゼントできます。</li>
-	<li>受け取ったユーザーはポイパスが自動でONになります。</li>
-	<li>すでにポイピク購入中のユーザーにプレゼントした場合、翌月の課金が0円になります。</li>
-	<li>チケットは複数持っておくことができ、毎月1回、自動で使用されます。</li>
-<%if(isApp){%>
-	<li>アプリ版のさしいれ(β)は準備中です</li>
-<%}%>
+	<li>300円で1ヶ月分(初月は月末まで)のポイパスのチケット1枚をプレゼントできます。</li>
+	<li>差し入れは匿名です。贈った相手にユーザー情報は伝わりません。</li>
+	<li>相手がすでにポイピク加入中の場合、翌月以降の課金が0円になります。</li>
 </ul>
 </div>
 
-<div class="GiftIntroDlgInfo" style="margin-top: 11px;">
-	<p style="font-size: 11px">ポイパスとは、広告を非表示にしたり、定期ツイートをしたりして、ポイピクをより快適にお楽しみいただける、月額300円の機能です。</p>
+<div class="GiftIntroDlgInfo" style="margin-top: 11px; font-size: 11px;">
+	<p>ポイパスとは、広告を非表示にしたり、定期ツイートをしたりして、ポイピクをより快適にお楽しみいただける付加サービスです。</p>
 </div>
 
 <%if(!isApp){%>
@@ -37,12 +33,18 @@ function _getGiftIntroductionHtml(nickName){
 ` + nickName + `さんに<br>
 300円で1ヶ月分の
 </div>
+<%} else {%>
+<%if(isApp){%>
+<div class="GiftIntroDlgInfo" style="text-align: center; font-size: 16px;">
+	アプリ版のさしいれ(β)は準備中です。<br>ブラウザ版からの応援をお願いいたします。
+</div>
+<%}%>
+
 <%}%>
 
 </div>
 `;
 }
-
 
 // epsilonPayment - epsilonTrade間で受け渡しする変数。
 let g_giftEpsilonInfo = {
@@ -71,8 +73,7 @@ function _giftEpsilonTrade(response){
 function _giftEpsilonPayment(_giftInfo, _cardInfo){
 	DispMsgStatic("決済処理中です。ページを移動しないでください。");
 	if(_cardInfo == null){ // カード登録済
-		_sendGiftAjax(_giftInfo, _nCheerAmount, createAgentInfo(AGENT.EPSILON, null, null),
-			null, _elCheerNowPayment);
+		_sendGiftAjax(_giftInfo, createAgentInfo(AGENT.EPSILON, null, null), null);
 	} else { // 初回
 		g_giftEpsilonInfo.giftInfo = _giftInfo;
 		g_giftEpsilonInfo.cardInfo = _cardInfo;
@@ -109,8 +110,8 @@ function _sendGiftAjax(giftInfo, agentInfo, cardInfo) {
 	}).then( data => {
 			HideMsgStatic(0);
 			cardInfo = null;
-			if (data.result_num > 0) {
-				DispMsg(<%=_TEX.T("CheerDlg.Thanks")%>);
+			if (data.result > 0) {
+				DispMsg('ポイパスを差し入れました！');
 			} else {
 				switch (data.error_code) {
 					case -10:
@@ -149,7 +150,7 @@ function SendGift(userId, nickName){
 	Swal.fire({
 		html: _getGiftIntroductionHtml(nickName),
 		focusConfirm: false,
-		showConfirmButton: true,
+		showConfirmButton: <%=isApp?"false":"true"%>,
 		showCloseButton: true,
 		<%if(!isApp){%>
 		confirmButtonText: 'ポイパスを差し入れる',
@@ -158,17 +159,6 @@ function SendGift(userId, nickName){
 	}).then(formValues => {
 		// キャンセル
 		if(formValues.dismiss){return false;}
-
-		<%if(isApp){%>
-		Swal.fire({
-			type: "info",
-			text: "<%=_TEX.T("Cheer.BrowserOnly")%>",
-			focusConfirm: true,
-			showCloseButton: true,
-			showCancelButton: false,
-		});
-		return false;
-		<%}%>
 
 		$.ajax({
 			"type": "get",

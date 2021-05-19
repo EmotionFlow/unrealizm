@@ -29,6 +29,8 @@ if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request
 	return;
 }
 
+final boolean isApp = false;
+
 // R18によるアドの切り替え
 switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_R18:
@@ -77,7 +79,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -207,6 +211,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%{%>
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
+
+				<%@ include file="/inner/IllustBrowserVRequestButton.jsp"%>
+
 				<%if(!checkLogin.m_bLogin) {%>
 				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
 				<%} else if(cResults.m_bOwner) {
@@ -250,7 +257,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 
-						<%@include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
 
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>

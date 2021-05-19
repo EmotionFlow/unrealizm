@@ -15,6 +15,8 @@ if(cResults.m_nUserId==-1) {
 	}
 }
 
+final boolean isApp = true;
+
 if(checkLogin.m_nUserId != cResults.m_nUserId) {
 	// 他人のリスト
 	cResults.m_bDispUnPublished = false;
@@ -46,6 +48,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nPage = 1; // start 1
@@ -191,6 +196,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper">
 			<div class="UserInfo">
+
+				<%@include file="inner/IllustBrowserVRequestButton.jsp"%>
+
 				<%if(!checkLogin.m_bLogin) {%>
 				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
 				<%} else if(cResults.m_bOwner){
@@ -240,7 +248,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 
-						<%@include file="inner/IllustAppVRequestButton.jsp"%>
+						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
 
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">

@@ -3,6 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+final boolean isApp = false;
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
@@ -28,6 +29,8 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
+
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -144,6 +147,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
+
+				<%@include file="inner/IllustBrowserVRequestButton.jsp"%>
+
 				<%if(!checkLogin.m_bLogin) {%>
 				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
 				<%} else if(cResults.m_bOwner){
@@ -200,7 +206,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							</span>
 						<%}%>
 
-						<%@include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
 
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">

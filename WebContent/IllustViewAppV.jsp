@@ -7,6 +7,7 @@ if(Util.isBot(request)) {
 	return;
 }
 boolean bSmartPhone = Util.isSmartPhone(request);
+final boolean isApp = true;
 
 IllustViewPcC cResults = new IllustViewPcC();
 cResults.getParam(request);
@@ -63,7 +64,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
 		<title><%=Util.toDescString(strTitle)%></title>
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
@@ -170,6 +173,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper">
 			<div class="UserInfo">
+
+				<%@include file="inner/IllustAppVRequestButton.jsp"%>
+
 				<%if(!checkLogin.m_bLogin) {%>
 				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
 				<%} else if(cResults.m_bOwner) {
@@ -208,7 +214,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 
-						<%@include file="inner/IllustAppVRequestButton.jsp"%>
+						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
 
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
