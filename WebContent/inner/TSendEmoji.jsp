@@ -1,8 +1,4 @@
-<%@page import="jp.pipa.poipiku.Common"%>
-<%@page import="jp.pipa.poipiku.CheckLogin"%>
-<%@page import="jp.pipa.poipiku.controller.SendEmojiC"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="TCreditCard.jsp"%>
 <script>
 	function SendEmojiAjax(emojiInfo, nCheerAmount, agentInfo, cardInfo, elCheerNowPayment) {
 		let amount = -1;
@@ -94,41 +90,41 @@
 	}
 
 	// epsilonPayment - epsilonTrade間で受け渡しする変数。
-	let g_epsilonInfo = {
+	let g_emojiEpsilonInfo = {
 		"emojiInfo": null,
 		"cheerAmount": null,
 		"cardInfo": null,
 		"elCheerNowPayment": null,
 	};
 
-	function epsilonTrade(response){
+	function emojiEpsilonTrade(response){
 		// もう使うことはないので、カード番号を初期化する。
-		if(g_epsilonInfo.cardInfo.number){
-			g_epsilonInfo.cardInfo.number = null;
+		if(g_emojiEpsilonInfo.cardInfo.number){
+			g_emojiEpsilonInfo.cardInfo.number = null;
 		}
 
 		if( response.resultCode !== '000' ){
 			window.alert("購入処理中にエラーが発生しました");
 			console.log(response.resultCode);
-			g_epsilonInfo.elCheerNowPayment.hide();
+			g_emojiEpsilonInfo.elCheerNowPayment.hide();
 		}else{
 			const agentInfo = createAgentInfo(
 				AGENT.EPSILON, response.tokenObject.token,
 				response.tokenObject.toBeExpiredAt);
-			SendEmojiAjax(g_epsilonInfo.emojiInfo, g_epsilonInfo.nCheerAmount,
-				agentInfo, g_epsilonInfo.cardInfo, g_epsilonInfo.elCheerNowPayment);
+			SendEmojiAjax(g_emojiEpsilonInfo.emojiInfo, g_emojiEpsilonInfo.nCheerAmount,
+				agentInfo, g_emojiEpsilonInfo.cardInfo, g_emojiEpsilonInfo.elCheerNowPayment);
 		}
 	}
 
-	function epsilonPayment(_emojiInfo, _nCheerAmount, _cardInfo, _elCheerNowPayment){
+	function emojiEpsilonPayment(_emojiInfo, _nCheerAmount, _cardInfo, _elCheerNowPayment){
 		if(_cardInfo == null){ // カード登録済
 			SendEmojiAjax(_emojiInfo, _nCheerAmount, createAgentInfo(AGENT.EPSILON, null, null),
 			null, _elCheerNowPayment);
 		} else { // 初回
-			g_epsilonInfo.emojiInfo = _emojiInfo;
-			g_epsilonInfo.nCheerAmount = _nCheerAmount;
-			g_epsilonInfo.cardInfo = _cardInfo;
-			g_epsilonInfo.elCheerNowPayment = _elCheerNowPayment;
+			g_emojiEpsilonInfo.emojiInfo = _emojiInfo;
+			g_emojiEpsilonInfo.nCheerAmount = _nCheerAmount;
+			g_emojiEpsilonInfo.cardInfo = _cardInfo;
+			g_emojiEpsilonInfo.elCheerNowPayment = _elCheerNowPayment;
 
 			const contructCode = "68968190";
 			// var cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "TARO NAMAA"};
@@ -143,7 +139,7 @@
 
 			// epsilonTradeを無名関数で定義するとコールバックしてくれない。
 			// global領域に関数を定義し、関数名を引数指定しないとダメ。
-			EpsilonToken.getToken(cardObj , epsilonTrade);
+			EpsilonToken.getToken(cardObj , emojiEpsilonTrade);
 		}
 	}
 
@@ -223,7 +219,7 @@
 					if (typeof (result) === "undefined" || result == null || result === -1) {
 						return false;
 					} else if (result == 1) {
-						epsilonPayment(emojiInfo, nCheerAmount, null, elCheerNowPayment);
+						emojiEpsilonPayment(emojiInfo, nCheerAmount, null, elCheerNowPayment);
 					} else if (result === 0) {
 						const titleEmojiImgTag = emojiImgTag.replace(">", ' style="height: 32px">');
 						const title = "" + <%=_TEX.T("TSendEmoji.CardInfoDlg.Title")%>;
@@ -255,7 +251,7 @@
 							formValues.value.cardExp = '';
 							formValues.value.cardSec = '';
 
-							epsilonPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
+							emojiEpsilonPayment(emojiInfo, nCheerAmount, cardInfo, elCheerNowPayment);
 						});
 
 					} else {

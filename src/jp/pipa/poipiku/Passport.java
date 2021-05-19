@@ -43,10 +43,9 @@ public final class Passport {
 	}
 	public Status status = Status.Undef;
 
-	public Passport(CheckLogin checkLogin) {
-		if(checkLogin == null || !checkLogin.m_bLogin) return;
-
-		userId = checkLogin.m_nUserId;
+	private void init(int _userId) {
+		if (_userId<0) return;
+		userId = _userId;
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -78,6 +77,15 @@ public final class Passport {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
+	}
+
+	public Passport(int userId) {
+		init(userId);
+	}
+
+	public Passport(CheckLogin checkLogin) {
+		if(checkLogin == null || !checkLogin.m_bLogin) return;
+		init(checkLogin.m_nUserId);
 	}
 
 	public boolean activate() {
@@ -140,6 +148,7 @@ public final class Passport {
 	}
 
 	public boolean insert() {
+		if (userId<0 || courseId<0) return false;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String sql = "";

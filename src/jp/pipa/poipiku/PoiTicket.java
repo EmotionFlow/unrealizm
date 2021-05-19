@@ -35,20 +35,27 @@ public final class PoiTicket {
 
 	private static final int PRODUCT_ID = 2;
 
-	public PoiTicket(CheckLogin checkLogin) {
-		if(checkLogin == null || !checkLogin.m_bLogin) return;
+	private static final String sqlAdd =
+			"INSERT INTO poi_tickets(user_id, amount)" +
+			" VALUES (?, ?)" +
+			" ON CONFLICT ON CONSTRAINT poi_tickets_pkey" +
+			" DO UPDATE SET amount=poi_tickets.amount+?, updated_at=current_timestamp" +
+			" RETURNING amount";
 
+	private void init(int _userId) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String sql = "";
+
+		userId = _userId;
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			sql = "SELECT amount FROM poi_tickets WHERE user_id=?";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setInt(1, _userId);
 			resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
@@ -64,9 +71,49 @@ public final class PoiTicket {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
+	}
 
-		userId = checkLogin.m_nUserId;
-		errorKind = ErrorKind.None;
+	public PoiTicket(int userId) {
+		init(userId);
+	}
+
+	public PoiTicket(CheckLogin checkLogin) {
+		if(checkLogin == null || !checkLogin.m_bLogin) return;
+		init(checkLogin.m_nUserId);
+	}
+
+	public boolean add(int addNum) {
+		if (addNum<=0) return false;
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+
+		try {
+			// insert or update poi_tickets
+			sql = sqlAdd;
+			Log.d(sql);
+			statement = connection.prepareStatement(sqlAdd);
+			statement.setInt(1, userId);
+			statement.setInt (2, addNum);
+			statement.setInt (3, addNum);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			amount = resultSet.getInt(1);
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			errorKind = ErrorKind.DoRetry;
+			try{if(connection!=null){connection.rollback();}}catch(SQLException ignore){}
+			return false;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+
+		return true;
 	}
 
 	public boolean buy(int nPassportCourseId, int _amount, String strAgentToken, String strCardExpire,
@@ -136,6 +183,7 @@ public final class PoiTicket {
 				cardSettlement.cardSecurityCode = strCardSecurityCode;
 				cardSettlement.userAgent = strUserAgent;
 				cardSettlement.billingCategory = CardSettlement.BillingCategory.OneTime;
+				cardSettlement.itemName = CardSettlement.ItemName.Poipass;
 				authorizeResult = cardSettlement.authorize();
 				if (!authorizeResult) {
 					Log.d("cardSettlement.authorize() failed.");
@@ -158,11 +206,7 @@ public final class PoiTicket {
 			connection.setAutoCommit(false);
 
 			// insert or update poi_tickets
-			sql = "INSERT INTO poi_tickets(user_id, amount)" +
-					" VALUES (?, ?)" +
-					" ON CONFLICT ON CONSTRAINT poi_tickets_pkey" +
-					" DO UPDATE SET amount=poi_tickets.amount+?, updated_at=current_timestamp" +
-					" RETURNING amount";
+			sql = sqlAdd;
 			Log.d(sql);
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, userId);

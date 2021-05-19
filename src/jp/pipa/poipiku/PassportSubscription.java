@@ -195,6 +195,7 @@ public final class PassportSubscription {
 				cardSettlement.cardSecurityCode = strCardSecurityCode;
 				cardSettlement.userAgent = strUserAgent;
 				cardSettlement.billingCategory = CardSettlement.BillingCategory.Monthly;
+				cardSettlement.itemName = CardSettlement.ItemName.Poipass;
 				authorizeResult = cardSettlement.authorize();
 				if (!authorizeResult) {
 					Log.d("cardSettlement.authorize() failed.");

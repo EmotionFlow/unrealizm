@@ -126,6 +126,7 @@ public class SendRequestC extends Controller {
 		cardSettlement.cardSecurityCode = cardSecurityCode;
 		cardSettlement.userAgent = userAgent;
 		cardSettlement.billingCategory = CardSettlement.BillingCategory.AuthorizeOnly;
+		cardSettlement.itemName = CardSettlement.ItemName.Request;
 
 		boolean authorizeResult = cardSettlement.authorize();
 

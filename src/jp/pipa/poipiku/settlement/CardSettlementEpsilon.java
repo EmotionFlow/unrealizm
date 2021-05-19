@@ -124,22 +124,20 @@ public class CardSettlementEpsilon extends CardSettlement {
 			case OneTime:
 				ssi.missionCode = 1;
 				ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
-				ssi.itemName = "emoji" + contentId;
 				break;
 			// 定期課金（毎月）
 			case Monthly:
 				ssi.missionCode = 21;
 				ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
-				ssi.itemName = "poipass";
 				break;
 			case AuthorizeOnly:
 				ssi.missionCode = 1;
 				ssi.kariFlag = 1;       // 仮売上固定
-				ssi.itemName = "rquest" + requestId;
 				break;
 			default:
 				ssi.missionCode = -1;
 		}
+		ssi.itemName = getItemNameStr();
 
 		ssi.processCode = isFirstSettlement ? 1 : 2; // 初回/登録済み課金
 		ssi.userTel = "00000000000";

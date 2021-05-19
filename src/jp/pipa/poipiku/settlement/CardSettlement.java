@@ -13,6 +13,31 @@ public abstract class CardSettlement {
 	public String userAgent = null;
 	public int creditcardIdToPay = -1;
 
+	public enum ItemName {
+		Emoji, Poipass, Request, Gift
+	}
+	public ItemName itemName = ItemName.Emoji;
+	protected String getItemNameStr() {
+		final String s;
+		switch (itemName) {
+			case Emoji:
+				s = "emoji" + contentId;
+				break;
+			case Poipass:
+				s = "poipass";
+				break;
+			case Request:
+				s = "request";
+				break;
+			case Gift:
+				s = "gift";
+				break;
+			default:
+				s = "";
+		}
+		return s;
+	}
+
 	public enum BillingCategory {
 		Undef,	  // 未定義
 		OneTime,	// 一回限り

@@ -166,6 +166,7 @@ public class SendEmojiC {
 				cardSettlement.cardSecurityCode = m_strCardSecurityCode;
 				cardSettlement.userAgent = m_strUserAgent;
 				cardSettlement.billingCategory = CardSettlement.BillingCategory.OneTime;
+				cardSettlement.itemName = CardSettlement.ItemName.Emoji;
 
 				boolean authorizeResult = cardSettlement.authorize();
 
