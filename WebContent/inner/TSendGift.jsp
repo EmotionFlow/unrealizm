@@ -19,8 +19,9 @@ function _getGiftIntroductionHtml(nickName){
 <div class="GiftIntroDlgInfo">
 <ul>
 	<li>300円で1ヶ月分(初月は月末まで)のポイパスのチケット1枚をプレゼントできます。</li>
-	<li>差し入れは匿名です。贈った相手にユーザー情報は伝わりません。</li>
+	<li>匿名での差し入れです。贈った相手にユーザー情報は伝わりません。</li>
 	<li>相手がすでにポイピク加入中の場合、翌月以降の課金が0円になります。</li>
+	<li>チケットは換金できません。</li>
 </ul>
 </div>
 
