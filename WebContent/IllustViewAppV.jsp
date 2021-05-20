@@ -144,7 +144,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<article class="Wrapper">
 			<div class="UserInfo">
 				<%@ include file="inner/IllustAppVRequestButton.jsp"%>
-				<%@ include file="inner/IllustVBlockBtn.jsp"%>
+				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>

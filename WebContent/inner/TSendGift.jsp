@@ -208,7 +208,4 @@ function SendGift(userId, nickName){
 		});
 	});
 }
-
-
-
 </script>
