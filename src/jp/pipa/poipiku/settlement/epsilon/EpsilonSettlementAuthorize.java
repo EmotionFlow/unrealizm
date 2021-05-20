@@ -8,8 +8,6 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -111,6 +109,7 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
+			notifyErrorToSlack("EpsilonSettlementAuthorize:client.execute()で例外発生");
 			return null;
 		}
 		SettlementResultInfo settleResultInfo = new SettlementResultInfo();
@@ -161,6 +160,7 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 					Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 				}
 				e.printStackTrace();
+				notifyErrorToSlack("EpsilonSettlementAuthorize:settleResultInfo解析で例外発生");
 				return null;
 			}
 		}else{
@@ -168,6 +168,7 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 			for(NameValuePair p : param){
 				Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 			}
+			notifyErrorToSlack("EpsilonSettlementAuthorize:サーバ側からエラーを受信");
 			return null;
 		}
 		return settleResultInfo;

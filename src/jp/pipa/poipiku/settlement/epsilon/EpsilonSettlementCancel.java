@@ -88,6 +88,7 @@ public class EpsilonSettlementCancel extends EpsilonSettlement{
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
+			notifyErrorToSlack("EpsilonSettlementCancel:client.execute()で例外発生");
 			return null;
 		}
 		SettlementCancelResultInfo resultInfo = new SettlementCancelResultInfo();
@@ -139,6 +140,7 @@ public class EpsilonSettlementCancel extends EpsilonSettlement{
 					Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 				}
 				e.printStackTrace();
+				notifyErrorToSlack("EpsilonSettlementCancel:resultInfo解析で例外発生");
 				return null;
 			}
 		}else{
@@ -146,6 +148,7 @@ public class EpsilonSettlementCancel extends EpsilonSettlement{
 			for(NameValuePair p : param){
 				Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 			}
+			notifyErrorToSlack("EpsilonSettlementCancel:サーバ側からエラー受信");
 			return null;
 		}
 		return resultInfo;

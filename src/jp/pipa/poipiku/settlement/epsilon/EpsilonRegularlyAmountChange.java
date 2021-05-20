@@ -27,7 +27,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-// EPSILON決済API呼び出しクラス
+// EPSILON定期課金 金額変更API呼び出しクラス
 public final class EpsilonRegularlyAmountChange extends EpsilonSettlement{
 	private String amountChangeUrl;
 
@@ -98,6 +98,7 @@ public final class EpsilonRegularlyAmountChange extends EpsilonSettlement{
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
+			notifyErrorToSlack("EpsilonRegularlyAmountChange:client.execute()例外発生");
 			return null;
 		}
 
@@ -149,6 +150,7 @@ public final class EpsilonRegularlyAmountChange extends EpsilonSettlement{
 					Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 				}
 				e.printStackTrace();
+				notifyErrorToSlack("EpsilonRegularlyAmountChange:resultInfo解析で例外発生");
 				return null;
 			}
 		}else{
@@ -156,6 +158,7 @@ public final class EpsilonRegularlyAmountChange extends EpsilonSettlement{
 			for(NameValuePair p : param){
 				Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 			}
+			notifyErrorToSlack("EpsilonRegularlyAmountChange:サーバ側からエラー受信");
 			return null;
 		}
 		return resultInfo;
