@@ -106,7 +106,8 @@ public final class UpdateRequestSettingC extends Controller{
 					    paramValue.equals("1") ? RequestCreator.Status.Enabled : RequestCreator.Status.Disabled
 			    );
 		    	if (requestCreator.status == RequestCreator.Status.Enabled) {
-				    RequestNotifier.notifyRequestEnabled(checkLogin, _TEX);
+				    RequestNotifier notifier = new RequestNotifier();
+				    notifier.notifyRequestEnabled(checkLogin, _TEX);
 			    }
 		    	break;
 		    case "RequestMedia":

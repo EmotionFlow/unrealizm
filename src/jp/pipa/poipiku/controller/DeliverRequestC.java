@@ -38,7 +38,8 @@ public class DeliverRequestC extends Controller{
 			return false;
 		}
 
-		RequestNotifier.notifyRequestDelivered(poipikuRequest);
+		RequestNotifier notifier = new RequestNotifier();
+		notifier.notifyRequestDelivered(poipikuRequest);
 		errorKind = ErrorKind.None;
 		return true;
 	}

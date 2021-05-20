@@ -33,10 +33,11 @@ public final class ActivityListC {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			// Get info_list
-			strSql = "SELECT * FROM info_lists WHERE user_id=? AND info_type=? ORDER BY had_read, info_date DESC LIMIT 50";
+			strSql = "SELECT * FROM info_lists WHERE user_id=? AND " +
+					(infoType==Common.NOTIFICATION_TYPE_REACTION ? "(info_type=1 OR info_type=4)" : "info_type=3") +
+					" ORDER BY had_read, info_date DESC LIMIT 50";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, userId);
-			statement.setInt(2, infoType);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				InfoList activityInfo = new InfoList(resultSet);

@@ -36,7 +36,8 @@ public class AcceptRequestC extends Controller{
 			return false;
 		}
 
-		RequestNotifier.notifyRequestAccepted(poipikuRequest);
+		RequestNotifier notifier = new RequestNotifier();
+		notifier.notifyRequestAccepted(poipikuRequest);
 		errorKind = ErrorKind.None;
 		return true;
 	}

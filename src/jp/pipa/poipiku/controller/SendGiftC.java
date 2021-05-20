@@ -136,46 +136,8 @@ public class SendGiftC {
 			m_nErrCode = ERR_NONE;
 			bRtn = true;
 
-			/* TODO 通知
-			// 通知先デバイストークンの取得
-			connection = dataSource.getConnection();
-			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<>();
-			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cTargUser.m_nUserId);
-			resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				cNotificationTokens.add(new CNotificationToken(resultSet));
-			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-			connection.close();connection=null;
-			if(cNotificationTokens.isEmpty()) return bRtn;
-
-			// バッジに表示する数を取得
-			final int nBadgeNum = InfoList.selectUnreadBadgeSum(cTargUser.m_nUserId, null);
-
-			// 送信文字列
-			final String strTitle = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Title"):_TEX.TEn("Notification.Reaction.Title");
-			final String strSubTitle = "";
-			final String strBody = (cTargUser.m_nLangId==1)?_TEX.TJa("ActivityList.Message.Comment"):_TEX.TEn("ActivityList.Message.Comment");
-
-			// 通知DB登録
-			// 送信用に登録
-			NotificationBuffer notificationBuffer = new NotificationBuffer();
-			notificationBuffer.notificationType = Common.NOTIFICATION_TYPE_REACTION;
-			notificationBuffer.badgeNum = nBadgeNum;
-			notificationBuffer.title = strTitle;
-			notificationBuffer.subTitle = strSubTitle;
-			notificationBuffer.body = strBody;
-			for(CNotificationToken cNotificationToken : cNotificationTokens) {
-				notificationBuffer.notificationToken = cNotificationToken.m_strNotificationToken;
-				notificationBuffer.tokenType = cNotificationToken.m_nTokenType;
-				notificationBuffer.insert(connection);
-			}
-			connection.close();connection=null;
-
-			 */
+			GiftNotifier notifier = new GiftNotifier();
+			notifier.notifyGiftReceived(toUserId);
 
 		} catch(Exception e) {
 			Log.d(sql);

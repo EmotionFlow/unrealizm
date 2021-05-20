@@ -162,7 +162,8 @@ public class SendRequestC extends Controller {
 			return false;
 		}
 
-		RequestNotifier.notifyRequestReceived(poipikuRequest);
+		RequestNotifier notifier = new RequestNotifier();
+		notifier.notifyRequestReceived(poipikuRequest);
 
 		return true;
 	}
