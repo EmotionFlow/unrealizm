@@ -12,15 +12,15 @@ function _getGiftIntroductionHtml(nickName){
 </style>
 <div class="GiftIntroDlg">
 
-<h2 class="GiftIntroDlgTitle"><i class="fas fa-gift"></i> さしいれ(β)</h2>
+<h2 class="GiftIntroDlgTitle"><i class="fas fa-gift"></i> オフセ(β)</h2>
 <div class="GiftIntroDlgInfo" style="margin-top: 11px;">
-	<p style="text-align:center; font-weight: bold;">応援したいユーザーに<br>ポイパスを贈ろう</p>
+	<p style="text-align:center; font-weight: normal; font-size:17px; color: #3498db;">応援したいユーザーに<br>ポイパスを贈ろう</p>
 </div>
 <div class="GiftIntroDlgInfo">
 <ul>
-	<li>300円で1ヶ月分(初月は月末まで)のポイパスのチケット1枚をプレゼントできます。</li>
-	<li>匿名での差し入れです。贈った相手にユーザー情報は伝わりません。</li>
-	<li>相手がすでにポイピク加入中の場合、翌月以降の課金が0円になります。</li>
+	<li>300円で1ヶ月分(初月は月末まで)のポイパスをONにできるチケットをプレゼントできます。</li>
+	<li>匿名でのプレゼントです。贈ったことは通知されますが、ユーザー情報は伝わりません。</li>
+	<li>相手がすでにポイピク加入中の場合、翌月以降1ヶ月分課金されなくなります。</li>
 	<li>チケットは換金できません。</li>
 </ul>
 </div>
@@ -37,7 +37,7 @@ function _getGiftIntroductionHtml(nickName){
 <%} else {%>
 <%if(isApp){%>
 <div class="GiftIntroDlgInfo" style="text-align: center; font-size: 16px;">
-	アプリ版のさしいれ(β)は準備中です。<br>ブラウザ版からの応援をお願いいたします。
+	アプリ版のオフセ(β)は準備中です。<br>ブラウザ版からの応援をお願いいたします。
 </div>
 <%}%>
 
@@ -154,7 +154,7 @@ function SendGift(userId, nickName){
 		showConfirmButton: <%=isApp?"false":"true"%>,
 		showCloseButton: true,
 		<%if(!isApp){%>
-		confirmButtonText: 'ポイパスを差し入れる',
+		confirmButtonText: 'ポイパスをオフセする',
 		footer:'<%=_TEX.T("CheerDlg.PaymentNotice")%>',
 		<%}%>
 	}).then(formValues => {
@@ -172,7 +172,7 @@ function SendGift(userId, nickName){
 			} else if (result == 1) {
 				_giftEpsilonPayment(giftInfo, null);
 			} else if (result === 0) {
-				const title = "さしいれ(β)";
+				const title = "オフセ(β)";
 				const description = "決済のための情報を入力してください。OKボタンをクリックすると、差し入れが実行されます。";
 				Swal.fire({
 					html: getRegistCreditCardDlgHtml(title, description),
