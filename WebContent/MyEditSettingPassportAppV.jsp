@@ -1,8 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="oauth.signpost.OAuthConsumer"%>
-<%@page import="oauth.signpost.OAuthProvider"%>
-<%@page import="oauth.signpost.basic.DefaultOAuthProvider"%>
-<%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
 <%@include file="/inner/Common.jsp"%>
 <%
 String strDebug = "";
@@ -60,36 +56,33 @@ cResults.getResults(checkLogin);
 			<div class="SettingList" style="background: #fff;">
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Title")%></div>
-					<%{Passport.Status passportStatus = cResults.m_cPassport.m_status;%>
+					<%{Passport.Status passportStatus = cResults.m_cPassport.status;%>
 					<div class="SettingBody">
-						<%if(passportStatus == Passport.Status.NotMember) {%>
+						<%if(passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive) {%>
 						<%//_TEX.T("MyEditSettingPassportV.Text")%>
 						<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
 						平素よりポイピクをご愛顧頂き誠にありがとうございます。
 						サーバの過負荷状態が続きサービス継続に支障が出ていたため、一部機能の提供を中止し皆様にはご迷惑をおかけいたしました。申し訳ございません。
 						検討した結果、この度「ポイピクパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。
 						また「可能であればイラストと一緒に広告を表示したくない」というポイピクチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
-						iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、パスポートの機能が有効となります。
+						iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、ポイパスの機能が有効となります。
 						高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
 						収益はポイピクサービスの維持・発展に使用させていただきます。
 						ぜひポイパスへのご加入をご検討いただけますと幸いです。
 						(2020年12月 株式会社pipa.jp代表 川合和寛)
 						</div>
+						<%}else{%>
+						現在、ポイパス加入中です！
 						<%}%>
-
-						<%if(passportStatus == Passport.Status.NotMember) {%>
+						<%if(passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive) {%>
 						<div class="SettingBodyCmd">
 							<div class="RegistMessage"></div>
-							現在ポイパスはWebブラウザ版からのみお申し込みいただけます。
+							現在ポイパスはWebブラウザ版からのみ申し込めます。
 						</div>
 						<%}%>
 
 						<div class="SettingBodyCmd" style="font-size: 1.2em">
-							<%if(passportStatus == Passport.Status.NotMember) {%>
 							ポイパスでプラスされる機能
-							<%}else{%>
-							ポイパスでプラスされている機能
-							<%}%>
 						</div>
 						<div class="SettingBodyCmd">
 							<table class="BenefitTable">
@@ -187,10 +180,10 @@ cResults.getResults(checkLogin);
 								</tbody>
 							</table>
 						</div>
-						<%if(passportStatus == Passport.Status.NotMember) {%>
+						<%if(passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive) {%>
 						<div class="SettingBodyCmd">
 							<div class="RegistMessage"></div>
-							現在ポイパスはWebブラウザ版からのみお申し込みいただけます。
+							現在ポイパスはWebブラウザ版からのみ申し込めます。。
 						</div>
 						<%}%>
 					</div>
