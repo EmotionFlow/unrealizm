@@ -28,6 +28,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 
