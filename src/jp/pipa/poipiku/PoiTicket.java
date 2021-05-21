@@ -95,7 +95,6 @@ public final class PoiTicket {
 
 			// insert or update poi_tickets
 			sql = sqlAdd;
-			Log.d(sql);
 			statement = connection.prepareStatement(sqlAdd);
 			statement.setInt(1, userId);
 			statement.setInt (2, addNum);

@@ -11,7 +11,7 @@ public final class GiftNotifier extends Notifier{
 		final String statusName = "received";
 		if (user.id > 0) {
 			final String title = getTitle(statusName, user.langLabel);
-			notifyByWeb(user, -1, -1, Common.CONTENT_TYPE_TEXT, title);
+			notifyByWeb(user, -1, (int)Math.ceil(Math.random() * -10000000), Common.CONTENT_TYPE_TEXT, title);
 			notifyByApp(user, title);
 		}
 	}

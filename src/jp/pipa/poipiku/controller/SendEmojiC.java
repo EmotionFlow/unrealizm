@@ -277,6 +277,7 @@ public class SendEmojiC {
 			} catch (SQLException sqlException) {
 				Log.d("transaction fail");
 				Log.d(strSql);
+				sqlException.printStackTrace();
 				connection.rollback();
 			} finally {
 				connection.setAutoCommit(true);
