@@ -28,7 +28,7 @@ if (infoType==-1) infoType = 1;
 				$.ajax({
 					"type": "post",
 					"data": {"TY": info_type, "ID": user_id, "TD": content_id, "RID": request_id},
-					"url": "/f/UpdateActivityListF.jsp",
+					"url": "/api/UpdateActivityListF.jsp",
 					"dataType": "json",
 				}).then(
 					(data) => {
