@@ -35,10 +35,13 @@ public final class Common {
 	public static final String HUSH_TAG_PATTERN = "[^#]#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 	public static final String MY_TAG_PATTERN = "##([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 
+	public static final String SLACK_WEBHOOK_ERROR = "https://hooks.slack.com/services/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";
+
 	// お知らせ一覧種別
 	public static final int NOTIFICATION_TYPE_REACTION = 1;
 	public static final int NOTIFICATION_TYPE_FOLLOW = 2;
 	public static final int NOTIFICATION_TYPE_REQUEST = 3;
+	public static final int NOTIFICATION_TYPE_GIFT = 4;
 	// お知らせ一覧サムネ種別
 	public static final int CONTENT_TYPE_IMAGE = 1;
 	public static final int CONTENT_TYPE_TEXT = 2;

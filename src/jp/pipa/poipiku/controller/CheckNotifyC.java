@@ -1,9 +1,6 @@
 package jp.pipa.poipiku.controller;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,10 +23,14 @@ public final class CheckNotifyC {
 //	public int m_nCheckFollow = 0;
 //	public int m_nCheckHeart = 0;
 	public int m_nCheckRequest = 0;
+	public int m_nCheckGift = 0;
+
 	public int m_nNotifyComment = 0;
 //	public int m_nNotifyFollow = 0;
 //	public int m_nNotifyHeart = 0;
 	public int m_nNotifyRequest = 0;
+	public int m_nNotifyGift = 0;
+
 	public boolean GetResults() {
 		String strSql = "";
 		boolean bRtn = false;
@@ -55,46 +56,40 @@ public final class CheckNotifyC {
 			cState.close();cState=null;
 			*/
 
-			final Timestamp lastNotifyDate, lastCheckDate;
+//			final Timestamp lastNotifyDate;
+
+			final Timestamp lastCheckDate;
 			strSql = "SELECT last_notify_date, last_check_date FROM users_0000 WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				lastNotifyDate = cResSet.getTimestamp("last_notify_date");
+				// lastNotifyDate = cResSet.getTimestamp("last_notify_date");
 				lastCheckDate = cResSet.getTimestamp("last_check_date");
 			} else {
-				lastNotifyDate = null;
+				// lastNotifyDate = null;
 				lastCheckDate = null;
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			// Check Comment
-			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
+			strSql = "SELECT info_type, SUM(badge_num) FROM info_lists WHERE user_id=? AND had_read=false AND info_date>? GROUP BY info_type";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, m_nUserId);
-			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-			cState.setTimestamp(3, lastCheckDate);
+			cState.setTimestamp(2, lastCheckDate);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_nCheckComment = cResSet.getInt(1);
+				if (cResSet.getInt(1) == Common.NOTIFICATION_TYPE_REACTION) {
+					m_nCheckComment = cResSet.getInt(2);
+				} else if (cResSet.getInt(1) == Common.NOTIFICATION_TYPE_REQUEST) {
+					m_nCheckRequest = cResSet.getInt(2);
+				} else if (cResSet.getInt(1) == Common.NOTIFICATION_TYPE_GIFT) {
+					m_nCheckGift = cResSet.getInt(2);
+				}
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			// Check Request
-			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, Common.NOTIFICATION_TYPE_REQUEST);
-			cState.setTimestamp(3, lastCheckDate);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nCheckRequest = cResSet.getInt(1);
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			// Check Follower
 			/*
@@ -126,31 +121,6 @@ public final class CheckNotifyC {
 			cState.close();cState=null;
 			*/
 
-			// Notify Comment
-			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-			cState.setTimestamp(3, lastNotifyDate);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nCheckComment = cResSet.getInt(1);
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-
-			// Notify Request
-			strSql = "SELECT SUM(badge_num) FROM info_lists WHERE user_id=? AND info_type=? AND had_read=false AND info_date>?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, Common.NOTIFICATION_TYPE_REQUEST);
-			cState.setTimestamp(3, lastNotifyDate);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
-				m_nCheckRequest = cResSet.getInt(1);
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
 
 			// Notify Follower
 			/*
@@ -181,6 +151,7 @@ public final class CheckNotifyC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			*/
+
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Update Last Check Time

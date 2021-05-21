@@ -59,24 +59,12 @@ public class PassportTest {
 		Passport passport = new Passport(checkLogin);
 		passport.courseId = 1;
 		assertTrue(passport.insert());
-		assertTrue(passport.activate(null));
+		assertTrue(passport.activate());
 
 		Passport passport2 = new Passport(checkLogin);
 		assertNull(passport2.expiredAt);
 	}
-
-	@Test
-	public void testActivate2() {
-		CheckLogin checkLogin = createCheckLogin();
-		Passport passport = new Passport(checkLogin);
-		passport.courseId = 1;
-		assertTrue(passport.insert());
-		assertTrue(passport.activate(Timestamp.valueOf("2021-01-23 12:34:56")));
-
-		Passport passport2 = new Passport(checkLogin);
-		assertTrue(Timestamp.valueOf("2021-01-23 12:34:56").equals(passport2.expiredAt));
-	}
-
+	
 	@Test
 	public void testUpdateExpiredEndOfThisMonth() {
 		CheckLogin checkLogin = createCheckLogin();

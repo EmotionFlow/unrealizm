@@ -71,6 +71,7 @@ public class UpdateActivityListC extends Controller{
 
 		switch (infoType) {
 			case Common.NOTIFICATION_TYPE_REACTION:
+			case Common.NOTIFICATION_TYPE_GIFT:
 				break;
 			case Common.NOTIFICATION_TYPE_REQUEST:
 				Request poipikuRequest = new Request(requestId);

@@ -68,9 +68,11 @@ public final class RequestToStartRequestingC extends Controller{
 				    poipikuRequest.creatorUserId = creatorUserId;
 				    int total_count = req.countByCreator();
 				    if (total_count >= 1 && total_count <= 10) {
-					    RequestNotifier.notifyRequestToStartRequesting(poipikuRequest.creatorUserId, total_count, false);
+				    	RequestNotifier notifier = new RequestNotifier();
+					    notifier.notifyRequestToStartRequesting(poipikuRequest.creatorUserId, total_count, false);
 				    } else if (total_count % 10 == 0) {
-					    RequestNotifier.notifyRequestToStartRequesting(poipikuRequest.creatorUserId, total_count, true);
+				    	RequestNotifier notifier = new RequestNotifier();
+					    notifier.notifyRequestToStartRequesting(poipikuRequest.creatorUserId, total_count, true);
 				    }
 				    result = true;
 			    } else {

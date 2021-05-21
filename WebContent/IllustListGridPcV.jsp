@@ -3,6 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+final boolean isApp = false;
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);
@@ -27,7 +28,10 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
+
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -85,36 +89,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				}
 			});
 		}
-
-		function UpdateBlock() {
-			var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
-			$.ajaxSingle({
-				"type": "post",
-				"data": { "UID": <%=checkLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
-				"url": "/f/UpdateBlockF.jsp",
-				"dataType": "json",
-				"success": function(data) {
-					if(data.result==1) {
-						$('.UserInfoCmdBlock').addClass('Selected');
-						$('.UserInfoCmdFollow').removeClass('Selected');
-						$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-						$('.UserInfoCmdFollow').hide();
-						location.reload(true);
-					} else if(data.result==2) {
-						$('.UserInfoCmdBlock').removeClass('Selected');
-						$('.UserInfoCmdFollow').removeClass('Selected');
-						$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-						$('.UserInfoCmdFollow').show();
-						location.reload(true);
-					} else {
-						DispMsg('ブロックできませんでした');
-					}
-				},
-				"error": function(req, stat, ex){
-					DispMsg('Connection error');
-				}
-			});
-		}
 		</script>
 		<style>
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
@@ -144,27 +118,10 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
-				<%if(!checkLogin.m_bLogin) {%>
-				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
-				<%} else if(cResults.m_bOwner){
-					// 何も表示しない
-				} else if(cResults.m_bBlocking){ // ブロックしている %>
-				<span id="UserInfoCmdBlock"
-					  class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected"
-					  style="text-shadow: none;"
-					  onclick="UpdateBlock()">
-					<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Unblocking")%></span>
-				</span>
-				<%} else if(cResults.m_bBlocked){%>
-				<span class="BtnBase Selected UserInfoCmdBlocked">
-					<span><%=_TEX.T("IllustV.Blocked")%></span>
-				</span>
-				<%} else if(cResults.m_bFollow){%>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock " onclick="UpdateBlock()"></span>
-				<%} else {%>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" onclick="UpdateBlock()"></span>
+				<%if(checkLogin.isStaff()){%>
+				<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
 				<%}%>
-
+				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
@@ -200,7 +157,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							</span>
 						<%}%>
 
-						<%@include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%if(checkLogin.isStaff()){%>
+						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
+						<%}else{%>
+						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%}%>
 
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">

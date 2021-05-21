@@ -22,6 +22,8 @@ if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request
 	return;
 }
 
+final boolean isApp = false;
+
 // R18によるアドの切り替え
 switch(cResults.m_cContent.m_nPublishId) {
 case Common.PUBLISH_ID_R18:
@@ -70,7 +72,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
@@ -116,36 +120,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
 						} else {
 							DispMsg('フォローできませんでした');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			function UpdateBlock() {
-				var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=checkLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
-					"url": "/f/UpdateBlockF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result==1) {
-							$('.UserInfoCmdBlock').addClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').hide();
-							location.reload(true);
-						} else if(data.result==2) {
-							$('.UserInfoCmdBlock').removeClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').show();
-							location.reload(true);
-						} else {
-							DispMsg('ブロックできませんでした');
 						}
 					},
 					"error": function(req, stat, ex){
@@ -206,19 +180,10 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
-				<%if(!checkLogin.m_bLogin) {%>
-				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
-				<%} else if(cResults.m_bOwner) {
-					// 何も表示しない
-				} else if(cResults.m_bBlocking){%>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected" onclick="UpdateBlock()"></span>
-				<%} else if(cResults.m_bBlocked){%>
-				<%} else if(cResults.m_bFollow){%>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock " onclick="UpdateBlock()"></span>
-				<%} else {%>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" onclick="UpdateBlock()"></span>
+				<%if(checkLogin.isStaff()){%>
+				<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
 				<%}%>
-
+				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
@@ -249,7 +214,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 						
-						<%@include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%if(checkLogin.isStaff()){%>
+						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
+						<%}else{%>
+						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%}%>
 
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>

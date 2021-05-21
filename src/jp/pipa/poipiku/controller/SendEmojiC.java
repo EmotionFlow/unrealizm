@@ -166,6 +166,7 @@ public class SendEmojiC {
 				cardSettlement.cardSecurityCode = m_strCardSecurityCode;
 				cardSettlement.userAgent = m_strUserAgent;
 				cardSettlement.billingCategory = CardSettlement.BillingCategory.OneTime;
+				cardSettlement.itemName = CardSettlement.ItemName.Emoji;
 
 				boolean authorizeResult = cardSettlement.authorize();
 
@@ -276,6 +277,7 @@ public class SendEmojiC {
 			} catch (SQLException sqlException) {
 				Log.d("transaction fail");
 				Log.d(strSql);
+				sqlException.printStackTrace();
 				connection.rollback();
 			} finally {
 				connection.setAutoCommit(true);

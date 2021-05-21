@@ -1,6 +1,7 @@
 package jp.pipa.poipiku;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.naming.InitialContext;
@@ -19,13 +20,6 @@ public final class Passport {
 	public int courseId = -1;
 	public Timestamp expiredAt = null;
 
-	// TODO べつんとこに移す
-//	public enum PaymentBy {
-//		Undef,
-//		Subscription,
-//		Ticket
-//	}
-//	PaymentBy paymentByThisMonth = PaymentBy.Undef;
 
 	public enum Status implements CodeEnum<Status> {
 		Undef(-1),      // 未定義
@@ -49,10 +43,9 @@ public final class Passport {
 	}
 	public Status status = Status.Undef;
 
-	public Passport(CheckLogin checkLogin) {
-		if(checkLogin == null || !checkLogin.m_bLogin) return;
-
-		userId = checkLogin.m_nUserId;
+	private void init(int _userId) {
+		if (_userId<0) return;
+		userId = _userId;
 
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -86,24 +79,58 @@ public final class Passport {
 		}
 	}
 
-	public boolean activate(Timestamp _expiredAt) {
+	public Passport(int userId) {
+		init(userId);
+	}
+
+	public Passport(CheckLogin checkLogin) {
+		if(checkLogin == null || !checkLogin.m_bLogin) return;
+		init(checkLogin.m_nUserId);
+	}
+
+	public boolean activate() {
 		if (!exists) return false;
 
 		boolean result;
 		result = updateStatus(Status.Active);
 		if (result) {
-			result = updateExpired(_expiredAt);
+			// 期限を今月末に設定。以降はスクリプトにて毎月更新。
+			LocalDateTime endOfMonth = LocalDateTime.now()
+					.plusMonths(1)
+					.withDayOfMonth(1)
+					.withHour(23)
+					.withMinute(59)
+					.withSecond(59)
+					.withNano(0)
+					.minusDays(1);
+			result = updateExpired(Timestamp.valueOf(endOfMonth));
 		}
 		if (result) {
 			Connection connection = null;
 			PreparedStatement statement = null;
-			final String sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
+			String sql = "";
 			try {
 				connection = DatabaseUtil.dataSource.getConnection();
+
+				sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, courseId);
 				statement.setInt(2, userId);
 				statement.executeUpdate();
+				statement.close();
+
+				LocalDate today = LocalDate.now();
+				sql = "INSERT INTO passport_payments(user_id, year, month, by)" +
+						" VALUES(?, ?, ?, ?)" +
+						" ON CONFLICT ON CONSTRAINT passport_payments_pkey DO NOTHING";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, userId);
+				statement.setInt(2, today.getYear());
+				statement.setInt(3, today.getMonthValue());
+				statement.setInt(4, PassportPayment.By.CreditCard.getCode());
+				statement.executeUpdate();
+				statement.close();
+
 				result = true;
 			} catch (SQLException e) {
 				Log.d(sql);
@@ -121,6 +148,7 @@ public final class Passport {
 	}
 
 	public boolean insert() {
+		if (userId<0 || courseId<0) return false;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String sql = "";
@@ -173,22 +201,7 @@ public final class Passport {
 	}
 
 	public boolean cancelSubscription(){
-		boolean result;
-		result = updateStatus(Status.Cancelling);
-		if (!result) return false;
-
-		// 当月月末
-		LocalDateTime d =
-				LocalDateTime.now()
-				.plusMonths(1)
-				.withDayOfMonth(1)
-				.withHour(23)
-				.withMinute(59)
-				.withSecond(59)
-				.withNano(0)
-				.minusDays(1);
-
-		return updateExpired(Timestamp.valueOf(d));
+		return updateStatus(Status.Cancelling);
 	}
 
 	public boolean updateStatus(Status _status) {

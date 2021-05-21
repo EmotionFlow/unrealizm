@@ -1,5 +1,14 @@
 package jp.pipa.poipiku.settlement.epsilon;
 
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import jp.pipa.poipiku.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -18,53 +27,47 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+// EPSILON定期課金 金額変更API呼び出しクラス
+public final class EpsilonRegularlyAmountChange extends EpsilonSettlement{
+	private String amountChangeUrl;
 
-// EPSILON実売上API呼び出しクラス
-public class EpsilonSettlementCapture extends  EpsilonSettlement{
-	private String captureUrl;
 	// dev
-	private static final String DEV_CAPTURE_URL = "https://beta.epsilon.jp/cgi-bin/order/sales_payment.cgi";
-	// production
-	private static final String PROD_CAPTURE_URL = "https://secure.epsilon.jp/cgi-bin/order/sales_payment.cgi";
+	private static final String DEV_AMOUNT_CHANGE_URL = "https://beta.epsilon.jp/cgi-bin/order/regularly_amount_change.cgi";
 
-	private SettlementCaptureSendInfo settlementCaptureSendInfo;
-	public SettlementCaptureSendInfo getSettlementCaptureInfo() {
-		return settlementCaptureSendInfo;
+	// production
+	private static final String PROD_AMOUNT_CHANGE_URL = "https://secure.epsilon.jp/cgi-bin/order/regularly_amount_change.cgi";
+
+	private RegularlyAmountChangeSendInfo sendInfo;
+	public RegularlyAmountChangeSendInfo getSendInfo() {
+		return sendInfo;
 	}
 
-	public void setSettlementCaptureSendInfo(SettlementCaptureSendInfo settlementCaptureSendInfo) {
-		this.settlementCaptureSendInfo = settlementCaptureSendInfo;
+	public void setSendInfo(RegularlyAmountChangeSendInfo sendInfo) {
+		this.sendInfo = sendInfo;
 	}
 
 	private void initUrl() {
 		if (connectTo == ConnectTo.Dev) {
 			Log.d("開発用CGIへ接続");
-			captureUrl = DEV_CAPTURE_URL;
+			amountChangeUrl = DEV_AMOUNT_CHANGE_URL;
 		} else {
-			captureUrl = PROD_CAPTURE_URL;
+			amountChangeUrl = PROD_AMOUNT_CHANGE_URL;
 		}
 	}
 
-	public EpsilonSettlementCapture(int userId){
+	public EpsilonRegularlyAmountChange(int userId){
 		super(userId);
 		initUrl();
-		this.setSettlementCaptureSendInfo(new SettlementCaptureSendInfo());
+		this.setSendInfo(new RegularlyAmountChangeSendInfo());
 	}
-	public EpsilonSettlementCapture(int userId, SettlementCaptureSendInfo settlementCaptureSendInfo){
+	public EpsilonRegularlyAmountChange(int userId, RegularlyAmountChangeSendInfo _sendInfo){
 		super(userId);
 		initUrl();
-		this.setSettlementCaptureSendInfo(settlementCaptureSendInfo);
+		this.setSendInfo(_sendInfo);
 	}
 
 	// 決済情報送信処理
-	public SettlementCaptureResultInfo execSettlement(){
+	public RegularlyAmountChangeResultInfo execSettlement(){
 		// 決済情報送信
 		// 送信用の設定を作成
 		RequestConfig rc = RequestConfig.custom().setConnectTimeout(60000)
@@ -73,7 +76,7 @@ public class EpsilonSettlementCapture extends  EpsilonSettlement{
 				.build();
 		// Header定義
 		List<Header> header = new ArrayList<>();
-		header.add( new BasicHeader("Accept-Charset","UTF-8" ));
+		header.add( new BasicHeader("Accept-Charset","UTF-8" ))	;
 		header.add( new BasicHeader("User-Agent","EPSILON SAMPLE PROGRAM JAVA" ));
 
 		HttpClient client = HttpClientBuilder.create()
@@ -91,14 +94,15 @@ public class EpsilonSettlementCapture extends  EpsilonSettlement{
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			post.setURI(new URI(captureUrl));
+			post.setURI(new URI(amountChangeUrl));
 			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
-			notifyErrorToSlack("EpsilonSettlementCancel:client.execute()で例外発生");
+			notifyErrorToSlack("EpsilonRegularlyAmountChange:client.execute()例外発生");
 			return null;
 		}
-		SettlementCaptureResultInfo settleResultInfo = new SettlementCaptureResultInfo();
+
+		RegularlyAmountChangeResultInfo resultInfo = new RegularlyAmountChangeResultInfo();
 		if( res.getStatusLine().getStatusCode() == HttpStatus.SC_OK ){
 			// BODYを取得してXMLパーサー呼び出し
 			try{
@@ -117,13 +121,25 @@ public class EpsilonSettlementCapture extends  EpsilonSettlement{
 						Node attr = namedNodeMap.item(j);
 						switch (attr.getNodeName()) {
 							case "result":
-								settleResultInfo.setResult(attr.getNodeValue());
+								resultInfo.setResult(attr.getNodeValue());
 								break;
 							case "err_code":
-								settleResultInfo.setErrCode(attr.getNodeValue());
+								resultInfo.setErrCode(attr.getNodeValue());
 								break;
 							case "err_detail":
-								settleResultInfo.setErrDetail(new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								resultInfo.setErrDetail(new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								break;
+							case "user_id":
+								resultInfo.setUserId( new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								break;
+							case "item_code":
+								resultInfo.setItemCode( new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								break;
+							case "item_price":
+								resultInfo.setItemPrice(new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								break;
+							case "mission_code":
+								resultInfo.setMissionCode(attr.getNodeValue());
 								break;
 						}
 					}
@@ -134,7 +150,7 @@ public class EpsilonSettlementCapture extends  EpsilonSettlement{
 					Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 				}
 				e.printStackTrace();
-				notifyErrorToSlack("EpsilonSettlementCancel:resultInfo解析で例外発生");
+				notifyErrorToSlack("EpsilonRegularlyAmountChange:resultInfo解析で例外発生");
 				return null;
 			}
 		}else{
@@ -142,23 +158,25 @@ public class EpsilonSettlementCapture extends  EpsilonSettlement{
 			for(NameValuePair p : param){
 				Log.d(String.format("%s => %s", p.getName(), p.getValue()));
 			}
-			notifyErrorToSlack("EpsilonSettlementCancel:サーバ側からエラー受信");
+			notifyErrorToSlack("EpsilonRegularlyAmountChange:サーバ側からエラー受信");
 			return null;
 		}
-		return settleResultInfo;
+		return resultInfo;
 	}
 
-	// 決済情報送信処理
-	public SettlementCaptureResultInfo execSettlement(SettlementCaptureSendInfo sendInfo){
-		this.setSettlementCaptureSendInfo(sendInfo);
+	// 金額変更情報送信処理
+	public RegularlyAmountChangeResultInfo execAmountChange(RegularlyAmountChangeSendInfo _sendInfo){
+		this.setSendInfo(_sendInfo);
 		return this.execSettlement();
 	}
 
 	public List<NameValuePair> makeSendParam() {
-		SettlementCaptureSendInfo si = this.getSettlementCaptureInfo();
+		RegularlyAmountChangeSendInfo si = this.getSendInfo();
 		List<NameValuePair> param = new ArrayList<>();
 		param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
-		param.add( new BasicNameValuePair("order_number", si.orderNumber));
+		param.add( new BasicNameValuePair("user_id", si.userId));
+		param.add( new BasicNameValuePair("item_code", si.itemCode));
+		param.add( new BasicNameValuePair("item_price", si.itemPrice.toString()));
 		return param;
 	}
 }

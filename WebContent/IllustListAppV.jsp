@@ -15,6 +15,8 @@ if(cResults.m_nUserId==-1) {
 	}
 }
 
+final boolean isApp = true;
+
 if(checkLogin.m_nUserId != cResults.m_nUserId) {
 	// 他人のリスト
 	cResults.m_bDispUnPublished = false;
@@ -46,6 +48,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nPage = 1; // start 1
@@ -94,36 +99,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
 						} else {
 							DispMsg('フォローできませんでした');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
-			function UpdateBlock() {
-				var bBlocked = $("#UserInfoCmdBlock").hasClass('Selected');
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": <%=checkLogin.m_nUserId%>, "IID": <%=cResults.m_cUser.m_nUserId%>, "CHK": (bBlocked)?0:1 },
-					"url": "/f/UpdateBlockF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result==1) {
-							$('.UserInfoCmdBlock').addClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').hide();
-							location.reload();
-						} else if(data.result==2) {
-							$('.UserInfoCmdBlock').removeClass('Selected');
-							$('.UserInfoCmdFollow').removeClass('Selected');
-							$('.UserInfoCmdFollow').html("<%=_TEX.T("IllustV.Follow")%>");
-							$('.UserInfoCmdFollow').show();
-							location.reload();
-						} else {
-							DispMsg('ブロックできませんでした');
 						}
 					},
 					"error": function(req, stat, ex){
@@ -191,25 +166,10 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper">
 			<div class="UserInfo">
-				<%if(!checkLogin.m_bLogin) {%>
-				<a id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" href="/"></a>
-				<%} else if(cResults.m_bOwner){
-					// 何も表示しない
-				} else if(cResults.m_bBlocking){ // ブロックしている %>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel BtnBase UserInfoCmdBlock Selected"
-					  onclick="UpdateBlock()">
-					<span id="UserInfoCmdBlockLabel"><%=_TEX.T("IllustV.Blocking")%></span>
-				</span>
-				<%} else if(cResults.m_bBlocked){%>
-				<span class="BtnBase Selected UserInfoCmdBlocked">
-					<span><%=_TEX.T("IllustV.Blocked")%></span>
-				</span>
-				<%} else if(cResults.m_bFollow){%>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock " onclick="UpdateBlock()"></span>
-				<%} else {%>
-				<span id="UserInfoCmdBlock" class="typcn typcn-cancel UserInfoCmdBlock" onclick="UpdateBlock()"></span>
+				<%if(checkLogin.isStaff()){%>
+				<%@ include file="inner/IllustAppVRequestButton.jsp"%>
 				<%}%>
-
+				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"></a>
@@ -240,7 +200,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 
-						<%@include file="inner/IllustAppVRequestButton.jsp"%>
+						<%if(checkLogin.isStaff()){%>
+						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
+						<%}else{%>
+						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%}%>
 
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">

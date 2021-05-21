@@ -126,6 +126,7 @@ public class SendRequestC extends Controller {
 		cardSettlement.cardSecurityCode = cardSecurityCode;
 		cardSettlement.userAgent = userAgent;
 		cardSettlement.billingCategory = CardSettlement.BillingCategory.AuthorizeOnly;
+		cardSettlement.itemName = CardSettlement.ItemName.Request;
 
 		boolean authorizeResult = cardSettlement.authorize();
 
@@ -161,7 +162,8 @@ public class SendRequestC extends Controller {
 			return false;
 		}
 
-		RequestNotifier.notifyRequestReceived(poipikuRequest);
+		RequestNotifier notifier = new RequestNotifier();
+		notifier.notifyRequestReceived(poipikuRequest);
 
 		return true;
 	}

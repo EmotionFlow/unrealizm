@@ -13,8 +13,10 @@ cResults.GetResults();
 "check_follow":0,
 "check_heart":0,
 "check_request":<%=cResults.m_nCheckRequest%>,
-"notify_comment":<%=cResults.m_nNotifyComment%>,
+"check_gift":<%=cResults.m_nCheckGift%>,
+"notify_comment":0,
 "notify_follow":0,
 "notify_heart":0,
-"notify_request":<%=cResults.m_nNotifyRequest%>
+"notify_request":0,
+"notify_gift":0
 }

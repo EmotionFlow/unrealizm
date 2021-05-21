@@ -6,6 +6,8 @@ import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 public final class PassportSubscription {
@@ -29,13 +31,41 @@ public final class PassportSubscription {
 	}
 	public ErrorKind errorKind = ErrorKind.Unknown;
 
+	public boolean exists = false;
 	public int userId = -1;
 	public int orderId = -1;
 	public Timestamp subscriptionAt = null;
 	public Timestamp cancelAt = null;
 	public int passportCourseId = -1;
+
+	public enum Status {
+		Undefined,
+		UnderContraction,
+		Cancelling,
+		UnContracted;
+	}
 	
 	private static final int PRODUCT_ID = 1;
+
+	public Status getStatus(){
+		Status status;
+		if (!exists) {
+			status = Status.UnContracted;
+		} else {
+			if (cancelAt == null) {
+				status = Status.UnderContraction;
+			} else {
+				LocalDate now = LocalDate.now();
+				LocalDateTime cancelDt = cancelAt.toLocalDateTime();
+				if (now.getYear() == cancelDt.getYear() && now.getMonthValue() == cancelDt.getMonthValue()) {
+					status = Status.Cancelling;
+				} else {
+					status = Status.UnContracted;
+				}
+			}
+ 		}
+		return status;
+	}
 
 	public PassportSubscription(CheckLogin checkLogin) {
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
@@ -57,6 +87,7 @@ public final class PassportSubscription {
 				orderId = resultSet.getInt("order_id");
 				subscriptionAt = resultSet.getTimestamp("subscription_datetime");
 				cancelAt = resultSet.getTimestamp("cancel_datetime");
+				exists = true;
 			}
 
 		} catch(Exception e) {
@@ -164,6 +195,7 @@ public final class PassportSubscription {
 				cardSettlement.cardSecurityCode = strCardSecurityCode;
 				cardSettlement.userAgent = strUserAgent;
 				cardSettlement.billingCategory = CardSettlement.BillingCategory.Monthly;
+				cardSettlement.itemName = CardSettlement.ItemName.Poipass;
 				authorizeResult = cardSettlement.authorize();
 				if (!authorizeResult) {
 					Log.d("cardSettlement.authorize() failed.");

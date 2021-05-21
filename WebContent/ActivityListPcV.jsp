@@ -46,6 +46,23 @@
 								showCloseButton: true,
 								showConfirmButton: false,
 							});
+						} else if(info_type === <%=Common.NOTIFICATION_TYPE_GIFT%>) {
+							swal.fire({
+								html: `
+								<h2 style="color: #3498db;">他のユーザーからあなた宛に<br>ポイパスチケットが届きました。</h2>
+								<ul style="font-size: 14px;
+											text-align: left;
+											margin-block-start: 0.5em;
+											padding-inline-start: 20px;">
+								<li>ポイパス未加入の方は、今月末までポイパスがONになります</li>
+								<li>ポイパス定期購入中の方は、来月以降１ヶ月分、課金が0円になります</li>
+								<li>ポイパスの設定は設定画面から確認できます</li>
+								</ul>
+								`,
+								showCloseButton: true,
+								showConfirmButton: false,
+							});
+
 						} else {
 							location.href = data.to_url;
 						}

@@ -9,14 +9,14 @@ import java.sql.PreparedStatement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PassportTicketTest {
+public class PoiTicketTest {
 	private static final int testUserId = 88888888;
 
 	@BeforeEach
 	void clearTable() throws Exception {
 		DataSource dataSource = (DataSource) DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
-		String sql = "DELETE FROM passport_tickets WHERE user_id=?";
+		String sql = "DELETE FROM poi_tickets WHERE user_id=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setInt(1, testUserId);
 		statement.executeUpdate();
@@ -46,7 +46,7 @@ public class PassportTicketTest {
 		CheckLogin checkLogin = createCheckLogin();
 		checkLogin.m_nPassportId = 0;
 
-		PassportTicket ticket = new PassportTicket(checkLogin);
+		PoiTicket ticket = new PoiTicket(checkLogin);
 		ticket.isSkipSettlement = true;
 
 		assertEquals(testUserId, ticket.userId);
@@ -61,7 +61,7 @@ public class PassportTicketTest {
 		assertEquals(3, ticket.amount);
 
 		ticket = null;
-		ticket = new PassportTicket(checkLogin);
+		ticket = new PoiTicket(checkLogin);
 		ticket.isSkipSettlement = true;
 		assertEquals(testUserId, ticket.userId);
 		assertEquals(3, ticket.amount);
@@ -88,7 +88,7 @@ public class PassportTicketTest {
 		CheckLogin checkLogin = createCheckLogin();
 		checkLogin.m_nPassportId = 0;
 
-		PassportTicket ticket = new PassportTicket(checkLogin);
+		PoiTicket ticket = new PoiTicket(checkLogin);
 		ticket.isSkipSettlement = true;
 
 		assertFalse(ticket.use());
@@ -96,7 +96,7 @@ public class PassportTicketTest {
 		assertTrue(ticket.use());
 		assertEquals(1, ticket.amount);
 
-		ticket = new PassportTicket(checkLogin);
+		ticket = new PoiTicket(checkLogin);
 		ticket.isSkipSettlement = true;
 		assertEquals(1, ticket.amount);
 		assertTrue(ticket.use());
@@ -104,7 +104,7 @@ public class PassportTicketTest {
 		assertFalse(ticket.use());
 		assertEquals(0, ticket.amount);
 
-		ticket = new PassportTicket(checkLogin);
+		ticket = new PoiTicket(checkLogin);
 		ticket.isSkipSettlement = true;
 		assertEquals(0, ticket.amount);
 	}

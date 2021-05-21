@@ -2316,7 +2316,7 @@
 	font-size: 24px;
 	position: relative;
 	right: 4px;
-	top: 9px;
+	top: 7px;
 	float: right;
 	opacity: 0.9;
 	color: #ffffff;
@@ -2375,22 +2375,34 @@
 	font-size: 14px;
 }
 
-.UserInfo .UserInfoState .UserInfoStateItem .RequestEnabled {
-	text-decoration: underline;
-	font-size: 15px;
+.UserInfo > .UserInfoCmd > .RequestBtn .RequestEnabled {
+	font-size: 14px;
 }
 
-.UserInfoStateItem .SendRequestIcon {
+.UserInfo > .UserInfoCmd > .RequestBtn {
+	display: inline-block;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+}
+
+.UserInfo > .RequestBtn {
+	margin: 5px 0 0 4px;
+	padding: 1px 6px 2px 6px;
+	font-size: 13px;
+}
+
+.RequestBtn .SendRequestIcon {
 	display: inline-block;
 	width: 17px;
 	height: 17px;
 	background: url(/img/menu_pc-10.png) no-repeat;
 	background-size: 860%;
 	position: relative;
-	background-position: -130px -17px;
+	background-position: -130px -16px;
 }
 
-.UserInfoStateItem:hover .SendRequestIcon {
+.RequestBtn:hover .SendRequestIcon {
 	background-position: -130px 0px;
 }
 

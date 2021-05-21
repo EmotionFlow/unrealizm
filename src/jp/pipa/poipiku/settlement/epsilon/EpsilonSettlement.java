@@ -2,6 +2,7 @@ package jp.pipa.poipiku.settlement.epsilon;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.SlackNotifier;
 
 public abstract class EpsilonSettlement {
 	protected static final String CONTRACT_CODE = "68968190";
@@ -15,5 +16,9 @@ public abstract class EpsilonSettlement {
 		} else {
 			connectTo = ConnectTo.Prod;
 		}
+	}
+	protected void notifyErrorToSlack(String message) {
+		SlackNotifier slackNotifier = new SlackNotifier(Common.SLACK_WEBHOOK_ERROR);
+		slackNotifier.notify(message);
 	}
 }

@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+final PassportPayment payment = new PassportPayment(checkLogin);
+final PassportSubscription subscription = new PassportSubscription(checkLogin);
+final PoiTicket ticket = new PoiTicket(checkLogin);
+%>
 <%@ include file="../TCreditCard.jsp"%>
 <script type="text/javascript">
 	function BuyPassportAjax(passportInfo, nPassportAmount, agentInfo, cardInfo, elPassportNowPayment) {
@@ -283,46 +288,78 @@
 			Passport.Status passportStatus = cResults.m_cPassport.status;
 			boolean isNotMember = passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive;
 		%>
+		<div class="SettingBody">
+			<%if(passportStatus == Passport.Status.Cancelling){%>
+			ポイパスの定期購入の解除を承りました。今まで継続いただき誠にありがとうございました。
+			ポイパスでプラスされている機能は今月末までお使いいただけます。
+			チケットをお持ちの場合は、 来月以降もそのままお使いいただけます。
+			また、システムの都合上、今月中はカード情報の削除ができません。ご了承くださいませ。
+			<%}else if(isNotMember) {%>
+			<%//_TEX.T("MyEditSettingPassportV.Text")%>
+			<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
+			平素よりポイピクをご愛顧頂き誠にありがとうございます。
+			サーバの過負荷状態が続きサービス継続に支障が出ていたため、一部機能の提供を中止し皆様にはご迷惑をおかけいたしました。申し訳ございません。
+			検討した結果、この度「ポイピクパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。
+			また「可能であればイラストと一緒に広告を表示したくない」というポイピクチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
+			iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、ポイパスの機能が有効となります。
+			高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
+			収益はポイピクサービスの維持・発展に使用させていただきます。
+			ぜひポイパスへのご加入をご検討いただけますと幸いです。
+			(2020年12月 株式会社pipa.jp代表 川合和寛)
+			</div>
+			ポイパスに加入すると、ポイピクをより楽しく便利にお使いいただけます！
+			<%}else{%>
+			現在、ポイパス加入中です！
+			<%}%>
+
+			<%if(isNotMember) {%>
+			<div class="SettingBodyCmd">
+				<div class="RegistMessage"></div>
+				<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
+					ポイパスを定期購入する
+				</a>
+			</div>
+			<div id="PassportNowPayment" style="display:none">
+				<span class="PoiPassLoading"></span><span>購入処理中</span>
+			</div>
+			<%}%>
+		</div>
+	</div>
+
+	<%if(checkLogin.isStaff()){%>
+	<div class="SettingListItem">
+		<div class="SettingListTitle">チケット: <%=ticket.exists?ticket.amount:0%>枚</div>
+		チケットは他の方からの匿名のおふせでストックされ、1枚で1ヶ月分、ポイパスがONになります。（初回は月末まで）
+		<ul>
+			<li>毎月1日に自動でチケットが使用されます。(表示は6時頃に更新)</li>
+			<li>ポイパス定期購入済みの場合、チケット使用が優先され、その間は課金がストップします。</li>
+		</ul>
+	</div>
+
+	<%if(!isNotMember){%>
+	<div class="SettingListItem">
+		<div class="SettingListTitle">今月分の支払い</div>
+		<%if(payment.exists){%>
+			<%if(payment.by == PassportPayment.By.Ticket){%>
+			ストックされていたチケットが使用されました。
+				<%if(subscription.getStatus() == PassportSubscription.Status.UnderContraction){%>
+				クレジットカードへ課金はありません。
+				<%}%>
+			<%}else if(payment.by == PassportPayment.By.CreditCard){%>
+			25日に指定されているクレジットカードに課金されます。
+			<%}else{%>
+			処理中です。(毎月1日6時頃更新)
+			<%}%>
+		<%}else{%>
+		処理中です。(毎月1日6時頃更新)
+		<%}%>
+	</div>
+	<%}%>
+	<%}%>
+
+	<div class="SettingListItem">
+		<div class="SettingListTitle">ポイパスでプラスされる機能</div>
 			<div class="SettingBody">
-				<%if(passportStatus == Passport.Status.Cancelling){%>
-				ポイパスの解除を承りました。今までご加入いただき誠にありがとうございました。
-				なお、ポイパスでプラスされている機能は今月末までお使いいただけます。
-				また、最後の課金をさせていただく関係で、今月中はカード情報の削除ができません。ご了承くださいませ。
-				<%}else if(isNotMember) {%>
-				<%//_TEX.T("MyEditSettingPassportV.Text")%>
-				<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
-				平素よりポイピクをご愛顧頂き誠にありがとうございます。
-				サーバの過負荷状態が続きサービス継続に支障が出ていたため、一部機能の提供を中止し皆様にはご迷惑をおかけいたしました。申し訳ございません。
-				検討した結果、この度「ポイピクパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。
-				また「可能であればイラストと一緒に広告を表示したくない」というポイピクチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
-				iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、パスポートの機能が有効となります。
-				高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
-				収益はポイピクサービスの維持・発展に使用させていただきます。
-				ぜひポイパスへのご加入をご検討いただけますと幸いです。
-				(2020年12月 株式会社pipa.jp代表 川合和寛)
-				</div>
-				ポイピクパスポート（ポイパス）に加入すると、ポイピクをより楽しく便利にお使いいただけます！
-				<%}else{%>
-				現在、ポイパス加入中です！
-				<%}%>
-
-				<%if(isNotMember) {%>
-				<div class="SettingBodyCmd">
-					<div class="RegistMessage"></div>
-					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-						ポイパスに加入する
-					</a>
-				</div>
-				<div id="PassportNowPayment" style="display:none">
-					<span class="PoiPassLoading"></span><span>加入処理中</span>
-				</div>
-				<%}%>
-
-				<div class="SettingBodyCmd" style="font-size: 1.2em">
-					<%if(isNotMember) {%>
-					ポイパスでプラスされる機能
-					<%}%>
-				</div>
 				<div class="SettingBodyCmd">
 					<table class="BenefitTable">
 						<tbody>
@@ -424,28 +461,28 @@
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-						ポイパスに加入する
+						ポイパスを定期購入する
 					</a>
 				</div>
 				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
 					<ul style="list-style-type: circle;">
 						<li>加入は一ヶ月単位です。（初回は加入日から月末まで、以降毎月1日に確定）</li>
 						<li>課金日は初回は加入日、以降毎月25日です（代行業者の都合で変更する場合あり）</li>
-						<li>解約に制限はありません。いつでもできます。</li>
-						<li>ポイパス加入で追加された機能は、解約した月の末日までお使いいただけます。</li>
+						<li>解除に制限はありません。いつでもできます。</li>
+						<li>ポイパス加入で追加された機能は、解除した月の末日までお使いいただけます。</li>
 					</ul>
 				</div>
 				<div id="PassportNowPayment2" style="display:none">
-					<span class="PoiPassLoading"></span><span>加入処理中</span>
+					<span class="PoiPassLoading"></span><span>購入処理中</span>
 				</div>
 				<%}%>
-				<%if(passportStatus == Passport.Status.Active){%>
+				<%if(subscription.getStatus() == PassportSubscription.Status.UnderContraction) {%>
 				<div class="SettingBodyCmd">
 					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
-						ポイパスを解約する
+						ポイパス定期購入を解除する
 					</a>
 					<div id="PassportNowCancelling" style="display:none">
-						<span class="PoiPassLoading"></span><span>解約処理中</span>
+						<span class="PoiPassLoading"></span><span>解除処理中</span>
 					</div>
 				</div>
 				<%}%>
