@@ -12,7 +12,7 @@ function _getGiftIntroductionHtml(nickName){
 </style>
 <div class="GiftIntroDlg">
 
-<h2 class="GiftIntroDlgTitle"><i class="fas fa-gift"></i> オフセ(β)</h2>
+<h2 class="GiftIntroDlgTitle"><i class="fas fa-gift"></i> おふせ(β)</h2>
 <div class="GiftIntroDlgInfo" style="margin-top: 11px;">
 	<p style="text-align:center; font-weight: normal; font-size:17px; color: #3498db;">応援したいユーザーに<br>ポイパスを贈ろう</p>
 </div>
@@ -37,7 +37,7 @@ function _getGiftIntroductionHtml(nickName){
 <%} else {%>
 <%if(isApp){%>
 <div class="GiftIntroDlgInfo" style="text-align: center; font-size: 16px;">
-	アプリ版のオフセ(β)は準備中です。<br>ブラウザ版からの応援をお願いいたします。
+	アプリ版のおふせ(β)は準備中です。<br>ブラウザ版からの応援をお願いいたします。
 </div>
 <%}%>
 
@@ -154,7 +154,7 @@ function SendGift(userId, nickName){
 		showConfirmButton: <%=isApp?"false":"true"%>,
 		showCloseButton: true,
 		<%if(!isApp){%>
-		confirmButtonText: 'ポイパスをオフセする',
+		confirmButtonText: 'ポイパスをおふせする',
 		footer:'<%=_TEX.T("CheerDlg.PaymentNotice")%>',
 		<%}%>
 	}).then(formValues => {
@@ -172,7 +172,7 @@ function SendGift(userId, nickName){
 			} else if (result == 1) {
 				_giftEpsilonPayment(giftInfo, null);
 			} else if (result === 0) {
-				const title = "オフセ(β)";
+				const title = "おふせ(β)";
 				const description = "決済のための情報を入力してください。OKボタンをクリックすると、差し入れが実行されます。";
 				Swal.fire({
 					html: getRegistCreditCardDlgHtml(title, description),

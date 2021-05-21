@@ -329,7 +329,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 	<%if(checkLogin.isStaff()){%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle">チケット: <%=ticket.exists?ticket.amount:0%>枚</div>
-		チケットは他の方からの匿名のオフセでストックされ、1枚で1ヶ月分、ポイパスがONになります。（初回は月末まで）
+		チケットは他の方からの匿名のおふせでストックされ、1枚で1ヶ月分、ポイパスがONになります。（初回は月末まで）
 		<ul>
 			<li>毎月1日に自動でチケットが使用されます。(表示は6時頃に更新)</li>
 			<li>ポイパス定期購入済みの場合、チケット使用が優先され、その間は課金がストップします。</li>

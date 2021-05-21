@@ -2370,14 +2370,21 @@
 	font-size: 14px;
 }
 
-.RequestBtn .RequestEnabled {
-	font-size: 12px;
+.UserInfo > .UserInfoCmd > .RequestBtn .RequestEnabled {
+	font-size: 14px;
 }
 
-.UserInfo .RequestBtn {
+.UserInfo > .UserInfoCmd > .RequestBtn {
+	display: inline-block;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+}
+
+.UserInfo > .RequestBtn {
 	margin: 5px 0 0 4px;
-	padding: 1px 6px;
-	opacity: 0.95;
+	padding: 1px 6px 2px 6px;
+	font-size: 13px;
 }
 
 .RequestBtn .SendRequestIcon {
