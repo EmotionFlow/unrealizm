@@ -11,7 +11,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
-public class NewArrivalC {
+public final class NewArrivalC {
 
 	public int m_nCategoryId = 0;
 	public int m_nPage = 0;
@@ -79,7 +79,7 @@ public class NewArrivalC {
 			}
 
 			strSql = "SELECT * FROM contents_0000 "
-					+ "WHERE open_id=0 "
+					+ "WHERE open_id=0 AND (publish_id NOT IN (7,8,9,10))"
 					+ "AND safe_filter<=? "
 					+ strCondBlockUser
 					+ strCondBlocedkUser
