@@ -346,7 +346,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				クレジットカードへ課金はありません。
 				<%}%>
 			<%}else if(payment.by == PassportPayment.By.CreditCard){%>
-			25日に指定されているクレジットカードに課金されます。
+			25日に指定されているクレジットカードに課金されます。(初回は加入日)
 			<%}else{%>
 			処理中です。(毎月1日6時頃更新)
 			<%}%>
