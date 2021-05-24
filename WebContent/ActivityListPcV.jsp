@@ -62,8 +62,7 @@
 								showCloseButton: true,
 								showConfirmButton: false,
 							});
-
-						} else {
+						} else if(data.to_url) {
 							location.href = data.to_url;
 						}
 					} else {

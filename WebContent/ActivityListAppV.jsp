@@ -21,6 +21,7 @@ if (infoType==-1) infoType = 1;
 <html>
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">
@@ -38,14 +39,28 @@ if (infoType==-1) infoType = 1;
 								swal.fire({
 									html: `
 								<p style="text-align: left">他のユーザーからあなた宛に「リクエストの受付を開始してほしい」という通知が来ました。
-									<a style="color: #545454;text-decoration: underline;"
-										href="https://poipiku.com/MyEditSettingPcV.jsp?MENUID=REQUEST">
-										設定画面で「リクエストを募集する」をONにする</a>と、受付を開始できます。</p>
+										ブラウザ版ポイピクの設定画面で「リクエストを募集する」をONにすると、受付を開始できます。</p>
 								`,
 									showCloseButton: true,
 									showConfirmButton: false,
 								});
-							} else {
+							} else if(info_type === <%=Common.NOTIFICATION_TYPE_GIFT%>) {
+								swal.fire({
+									html: `
+								<h2 style="color: #3498db;">他のユーザーからあなた宛に<br>ポイパスチケットが届きました。</h2>
+								<ul style="font-size: 14px;
+											text-align: left;
+											margin-block-start: 0.5em;
+											padding-inline-start: 20px;">
+								<li>ポイパス未加入の方は、今月末までポイパスがONになります</li>
+								<li>ポイパス定期購入中の方は、来月以降１ヶ月分、課金が0円になります</li>
+								<li>ポイパスの設定はブラウザ版ポイピクの設定画面から確認できます</li>
+								</ul>
+								`,
+									showCloseButton: true,
+									showConfirmButton: false,
+								});
+							} else if(data.to_url) {
 								location.href = data.to_url;
 							}
 						} else {
