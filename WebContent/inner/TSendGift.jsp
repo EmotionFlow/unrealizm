@@ -109,29 +109,32 @@ function _sendGiftAjax(giftInfo, agentInfo, cardInfo) {
 		"url": "/f/SendGiftF.jsp",
 		"dataType": "json",
 	}).then( data => {
-			HideMsgStatic(0);
-			cardInfo = null;
-			if (data.result > 0) {
-				DispMsg('ポイパスを差し入れました！');
-			} else {
-				switch (data.error_code) {
-					case -10:
-						DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
-						break;
-					case -20:
-						alert("<%=_TEX.T("CheerDlg.Err.AuthCritical")%>");
-						break;
-					case -30:
-						DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
-						break;
-					case -99:
-						DispMsg("<%=_TEX.T("CheerDlg.Err.AuthOther")%>");
-						break;
+			$("#DispMsg").slideUp(200, () => {
+				cardInfo = null;
+				if (data.result > 0) {
+					DispMsg(giftInfo.nickName + 'さんにポイパスをおふせしました！', 4000);
+				} else {
+					switch (data.error_code) {
+						case -10:
+							DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
+							break;
+						case -20:
+							alert("<%=_TEX.T("CheerDlg.Err.AuthCritical")%>");
+							break;
+						case -30:
+							DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
+							break;
+						case -99:
+							DispMsg("<%=_TEX.T("CheerDlg.Err.AuthOther")%>");
+							break;
+					}
 				}
-			}},
+			});
+		},
 		error => {
 			cardInfo = null;
 			DispMsg("<%=_TEX.T("CheerDlg.Err.PoipikuSrv")%>");
+			return false;
 		}
 	);
 }
@@ -139,6 +142,7 @@ function _sendGiftAjax(giftInfo, agentInfo, cardInfo) {
 function SendGift(userId, nickName){
 	const giftInfo = {
 		"userId": userId,
+		"nickName": nickName,
 	};
 
 	let cardInfo = {
@@ -169,7 +173,7 @@ function SendGift(userId, nickName){
 			const result = Number(data.result);
 			if (typeof (result) === "undefined" || result == null || result === -1) {
 				return false;
-			} else if (result == 1) {
+			} else if (result === 1) {
 				_giftEpsilonPayment(giftInfo, null);
 			} else if (result === 0) {
 				const title = "おふせ(β)";

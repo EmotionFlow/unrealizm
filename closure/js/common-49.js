@@ -156,7 +156,7 @@ function GotoLogin() {
 	location.href = "/LoginFormV.jsp";
 }
 
-function DispMsg(strMessage) {
+function DispMsg(strMessage, timeout=3000) {
 	if($('#DispMsg').length<=0) {
 		$('body').append($("<div/>").attr("id", "DispMsg"));
 	}
@@ -164,7 +164,7 @@ function DispMsg(strMessage) {
 	$("#DispMsg").slideDown(200, function() {
 		setTimeout(function() {
 			$("#DispMsg").slideUp(200);
-		}, 3000);
+		}, timeout);
 	});
 }
 
@@ -179,9 +179,13 @@ function DispMsgStatic(strMessage) {
 }
 
 function HideMsgStatic(timeout=1000) {
-	setTimeout(function(){
+	if (timeout <= 0) {
 		$("#DispMsg").slideUp(200);
-	}, timeout);
+ 	} else {
+		setTimeout(function(){
+			$("#DispMsg").slideUp(200);
+		}, timeout);
+	}
 }
 
 function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
