@@ -97,7 +97,7 @@ public final class ShowAppendFileC {
 			}
 
 			// POIPIKU fav
-			if (bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
+			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
 				boolean bFollow = (m_nUserId==checkLogin.m_nUserId);
 				if(!bFollow) {
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";

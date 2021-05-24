@@ -96,7 +96,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 				<div class="SettingListItem">
 					<div class="SettingListTitle">5.倫理基準</div>
 					<div class="SettingBody">
-公開方法(パスワード・ふぁぼ限定など)はあらゆる目的で利用可能ですが、これら機能を利用し直接閲覧できない状態とする基準は以下の通りとします。<br />
+公開方法(パスワード・こっそりフォロワー限定など)はあらゆる目的で利用可能ですが、これら機能を利用し直接閲覧できない状態とする基準は以下の通りとします。<br />
 <br />
 
 <table>
@@ -121,7 +121,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	</tr>
 	<tr>
 		<td>
-公開方法を「ワンクッション」「パスワード」「ログイン限定」「ふぁぼ限定」にし「R-18G」相当であることを明記することが必須のもの
+公開方法を「ワンクッション」「パスワード」「ログイン限定」「こっそりフォロワー限定」にし「R-18G」相当であることを明記することが必須のもの
 (※スマートフォンアプリからは投稿できません)
 		</td>
 		<td>
@@ -140,7 +140,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	</tr>
 	<tr>
 		<td>
-公開方法を「R-18」にするか、「ワンクッション」「パスワード」「ログイン限定」「ふぁぼ限定」にし「R-18」相当であることを明記することが必須のもの
+公開方法を「R-18」にするか、「ワンクッション」「パスワード」「ログイン限定」「こっそりフォロワー限定」にし「R-18」相当であることを明記することが必須のもの
 (※スマートフォンアプリからは投稿できません)
 		</td>
 		<td>
@@ -156,7 +156,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	</tr>
 	<tr>
 		<td>
-公開方法を「ワンクッション」「パスワード」「ログイン限定」「ふぁぼ限定」にすることを推奨するもの
+公開方法を「ワンクッション」「パスワード」「ログイン限定」「こっそりフォロワー限定」にすることを推奨するもの
 		</td>
 		<td>
 <ul>
@@ -239,6 +239,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
+						(2021/5/24 公開方法の名称変更)<br />
 						(2019/1/12 公開方法追加に合わせて倫理基準を修正)<br />
 						(2018/10/19 R18分離に合わせて変更)<br />
 						(2018/10/17 R18分離に向けた変更)<br />
