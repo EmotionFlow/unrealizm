@@ -35,6 +35,5 @@ try {
 } finally {
 	try{if(cState != null) cState.close();cState=null;} catch(Exception e) {;}
 	try{if(cConn != null) cConn.close();cConn=null;} catch(Exception e) {;}
-	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 }
 %>{"result":<%=nRtn%>}

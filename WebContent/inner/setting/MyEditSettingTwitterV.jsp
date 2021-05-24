@@ -95,7 +95,7 @@
 	p:first-child {margin-top: 0}
 	p {margin-bottom: 0}
 	.RegistStatus{
-		font-size: 15px;
+		font-size: 14px;
 		background-color: #f5f5f5;
 		padding: 4px 0px;
 		text-align: center;
@@ -103,7 +103,7 @@
 </style>
 
 <div class="SettingList">
-	<div class="RegistStatus"><%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%></div>
+	<div class="RegistStatus"><%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), checkLogin.m_strNickName, cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%></div>
 	<div class="SettingListItem" style="border: none;">
 		<a id="TwitterSetting" name="TwitterSetting"></a>
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Regist")%></div>

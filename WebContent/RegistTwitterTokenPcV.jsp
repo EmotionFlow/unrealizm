@@ -2,8 +2,6 @@
 language="java"
 contentType="text/html; charset=UTF-8"%>
 <%@page import="java.sql.*"%>
-<%@page import="javax.sql.*"%>
-<%@page import="javax.naming.*"%>
 <%@page import="oauth.signpost.OAuthConsumer"%>
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.http.HttpParameters"%>
@@ -31,13 +29,12 @@ String tokenSecret="";
 String twitter_user_id ="";
 String screen_name="";
 
-DataSource dsPostgres = null;
 Connection cConn = null;
 PreparedStatement cState = null;
 ResultSet cResSet = null;
 String strSql = "";
 
-boolean bIsExist = false;
+boolean bIsExist;
 
 // table update or insert
 try
@@ -54,9 +51,7 @@ try
 	twitter_user_id = hp.get("user_id").first();
 	screen_name = hp.get("screen_name").first();
 
-	Class.forName("org.postgresql.Driver");
-	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-	cConn = dsPostgres.getConnection();
+	cConn = DatabaseUtil.dataSource.getConnection();
 
 	// 他のポイピクアカウントがこのTwitterアカウントと紐づいてるかを検索
 	strSql = "SELECT flduserid FROM tbloauth WHERE flduserid<>? AND twitter_user_id=? AND del_flg=false";
@@ -70,17 +65,35 @@ try
 	cResSet.close();cResSet=null;
 	cState.close();cState=null;
 	if(result!=Result.LINKED_OTHER_POIPIKU_ID) {
-		// select
-		strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+		bIsExist = false;
+
+		// 以前同じuser_id, twitter_use_idの組み合わせで連携していたら、そのレコードを復活させる。
+		strSql = "UPDATE tbloauth SET del_flg=false WHERE flduserid=? AND fldproviderid=? AND twitter_user_id=? AND del_flg=true RETURNING flduserid";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, checkLogin.m_nUserId);
 		cState.setInt(2, Common.TWITTER_PROVIDER_ID);
+		cState.setString(3, twitter_user_id);
 		cResSet = cState.executeQuery();
-		if(cResSet.next()){
+		if (cResSet.next()) {
+			Log.d("以前同じuser_id, twitter_use_idの組み合わせで連携していた");
 			bIsExist = true;
 		}
 		cResSet.close();cResSet=null;
 		cState.close();cState=null;
+
+		if (!bIsExist) {
+			// select
+			strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, checkLogin.m_nUserId);
+			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()){
+				bIsExist = true;
+			}
+			cResSet.close();cResSet=null;
+			cState.close();cState=null;
+		}
 
 		if (bIsExist){
 			Log.d("TwitterToken Update : " + checkLogin.m_nUserId);
