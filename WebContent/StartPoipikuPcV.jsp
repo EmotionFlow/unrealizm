@@ -23,7 +23,7 @@ final String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 			.Wrapper.ThumbList {width: 100%; display: flex; align-content: center; justify-content: center; background: #fff;}
 			.AnalogicoDesc {display: block;width: 80%; margin: 0 auto; padding: 15px 0; box-sizing: border-box; text-align: center; font-size: 24px; color: #fff; font-weight: bold;}
 			.AnalogicoDesc.Title {display: flex; flex-flow: column; align-items: center; justify-content: center;}
-			.TopTitleLogo {width: 100px; height: 100px; border-radius: 200px; padding: 10px; background: #fff; box-sizing: border-box;}
+			.TopTitleLogo {width: 100px; height: 100px; border-radius: 30px; padding: 10px; background: #fff; box-sizing: border-box;}
 			.TopTitleLogo .TopTitleLogoImg {width: 100%;}
 			.TopTitleInfo {font-size: 15px; margin: 10px 0 0 0;}
 			.TopTitleInfoSub {font-size: 14px; margin: 10px 0 0 0;}

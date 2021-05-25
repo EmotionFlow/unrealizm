@@ -4,6 +4,7 @@ import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.RequestCreator;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
@@ -45,6 +46,7 @@ public final class NewArrivalRequestCreatorC {
 		String strSql = "";
 
 		try {
+			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
@@ -61,14 +63,23 @@ public final class NewArrivalRequestCreatorC {
 				cState.close();cState=null;
 			}
 
-			strSql = "SELECT u.* FROM users_0000 u INNER JOIN request_creators r ON u.user_id=r.user_id WHERE r.status=? ORDER BY r.id DESC OFFSET ? LIMIT ?";
+			//strSql = "SELECT u.* FROM users_0000 u INNER JOIN request_creators r ON u.user_id=r.user_id WHERE r.status=? ORDER BY r.id DESC OFFSET ? LIMIT ?";
+			strSql = "SELECT * FROM request_creators WHERE status=? ORDER BY id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, RequestCreator.Status.Enabled.getCode());
 			cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(3, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				m_vContentList.add(new CUser(cResSet));
+				CacheUsers0000.User cashUser = users.getUser(cResSet.getInt("user_id"));
+				if(cashUser==null) continue;
+				CUser user = new CUser();
+				user.m_nUserId = cashUser.userId;
+				user.m_strFileName = cashUser.fileName;
+				user.m_strHeaderFileName = cashUser.headerFileName;
+				user.m_strNickName = cashUser.nickName;
+				user.m_strProfile = cashUser.profile;
+				m_vContentList.add(user);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

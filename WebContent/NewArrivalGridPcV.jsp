@@ -87,5 +87,6 @@ if(cResults.m_nCategoryId >= 0) {
 		</article>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
+
 	</body>
 </html>

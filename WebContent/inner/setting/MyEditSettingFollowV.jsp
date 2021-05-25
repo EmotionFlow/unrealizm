@@ -40,10 +40,10 @@ cFollowListResults.getResults(checkLogin);
 </script>
 
 <div class="SettingList">
-	<div id="FollowList" class="IllustItemList">
+	<div id="FollowList" class="IllustThumbList">
 		<%for(int nCnt = 0; nCnt< cFollowListResults.m_vContentList.size(); nCnt++) {
 			CUser cUser = cFollowListResults.m_vContentList.get(nCnt);%>
-		<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
+		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
 		<%if(bSmartPhone && (nCnt+1)%15==0) {%>
 		<%@ include file="/inner/TAd336x280_mid.jsp"%>
 		<%}%>

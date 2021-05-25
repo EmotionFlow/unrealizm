@@ -31,9 +31,9 @@
 	<meta name="description" content="人気クリエイター"/>
 	<title><%=_TEX.T("THeader.Title")%> - 人気クリエイター</title>
 	<style>
-        body {
-            padding-top: 79px !important;
-        }
+				body {
+						padding-top: 79px !important;
+				}
 	</style>
 	<script type="text/javascript">
 		$(function(){
@@ -57,8 +57,8 @@
 	</a>
 </div>
 
-<article class="Wrapper ItemList">
-	<section id="IllustThumbList" class="IllustItemList">
+<article class="Wrapper GridList">
+	<section id="IllustThumbList" class="IllustThumbList">
 		<%
 			final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			for (int nCnt = 0; nCnt < cResults.m_vContentList.size(); nCnt++) {
@@ -67,7 +67,7 @@
 					continue;
 				}
 		%>
-			<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
+			<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
 			<%if (!isApp && Util.isSmartPhone(request)) {%>
 				<%if (nCnt == 14) {%>
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp" %>

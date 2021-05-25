@@ -77,19 +77,19 @@ boolean bRtn = cResults.getResults(checkLogin);
 	</head>
 
 	<body>
-		<article class="Wrapper">
+		<article class="Wrapper GridList">
 			<div id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_FOLLOW){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_FOLLOW%>)"><%=_TEX.T("IllustListV.Follow")%></a>
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_BLOCK){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_BLOCK%>)"><%=_TEX.T("IllustListV.Block")%></a>
 			</div>
 
-			<div id="IllustThumbList" class="IllustItemList">
+			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
 					<%if(isApp){%>
-						<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
+						<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 					<%}else{%>
-						<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX)%>
+						<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX)%>
 					<%}%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
