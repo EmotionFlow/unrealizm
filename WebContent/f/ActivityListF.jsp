@@ -44,7 +44,7 @@ cResults.getResults(checkLogin);
 
 		<span class="ActivityListBody">
 			<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("yyyy MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=(new SimpleDateFormat("M/d H:mm")).format(activityInfo.infoDate)%></span>
 				<span class="Title">
 					<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
 					<%=_TEX.T("ActivityList.Message.Comment")%>
@@ -72,7 +72,7 @@ cResults.getResults(checkLogin);
 				</span>
 			<span class="ActivityListBody">
 				<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("yyyy MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=(new SimpleDateFormat("MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
 					<span class="Title"><%=infoDescLines[0]%></span>
 				</span>
 				<span class="ActivityListDesc">
