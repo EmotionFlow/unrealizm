@@ -2120,6 +2120,7 @@
 	overflow: hidden;
 }
 
+<<<<<<< HEAD
 .IllustItemList .ActivityList .ActivityListItem .ActivityListBody {
 	display: block;
 	flex: 1 1;
@@ -2424,6 +2425,294 @@
 }
 /* for user list */
 
+=======
+.IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbIcon {
+	display: block;
+	width: 60px;
+	height: 60px;
+	box-sizing: border-box;
+	border: solid 1px #eee;
+	overflow: hidden;
+	text-align: center;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbIcon .GiftIcon {
+	font-size: 50px;
+	color: #3498db;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBody {
+	display: block;
+	flex: 1 1;
+	height: 60px;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBody .ActivityListTitle {
+	display: block;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBody .ActivityListTitle .Date {
+	display: block;
+	width: 100%;
+	font-size: 10px;
+	height: 15px;
+	line-height: 15px;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBody .ActivityListTitle .Title {
+	display: block;
+	width: 100%;
+	font-size: 14px;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBody .ActivityListDesc {
+	display: block;
+	width: 100%;
+	height: 18px;
+	overflow: hidden;
+	padding: 7px 0 0 0 ;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBody .ActivityListDesc .Twemoji {
+	width: 18px;
+	height: 18px;
+	margin: 0 5px 0 0;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBadge {
+	display: block;
+	position: absolute;
+	min-width: 9px;
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	top: 5px;
+	right: 5px;
+	border-radius: 100px;
+	font-size: 9px;
+	background: #ff0000;
+	color: #fff;
+	padding: 0 3px
+}
+
+.IllustItemList .ActivityList .ActivityListItem.HadRead .ActivityListBadge {
+	display: none;
+	background: #aaa;
+}
+
+
+
+/*********** IllustView UserInfo **********/
+.UserInfo {
+	display: block;
+	float: left;
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+	overflow: hidden;
+	background: #3498db;
+	background-size: cover;
+	background-repeat: no-repeat;
+	border-bottom: solid 1px #eee;
+	background-position: 50% 50%;
+	color: #6d6965;
+}
+
+.UserInfo a {
+	color: #6d6965;
+}
+
+.UserInfo .BtnBase {
+	border: 1px solid #3498db;
+	background: #fff;
+	color: #3498db;
+}
+
+.UserInfo .BtnBase.Selected,
+.UserInfo .BtnBase:hover {
+	border: 1px solid #fff;
+	background: #3498db;
+	color: #fff;
+}
+
+
+.UserInfo .UserInfoBg {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 100px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+.UserInfo .UserInfoUser {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+	background: rgba(255, 2555, 255, 0.80);
+}
+
+.UserInfoUser .UserInfoUserName .SettingBody .RegistMessage {
+	display: block;
+	flex: 1 1;
+	font-size: 13px;
+}
+
+.UserInfo .UserInfoUser .UserInfoUserThumb {
+	display: block;
+	width: 80px;
+	height: 80px;
+	overflow: hidden;
+	border: solid 2px #ccc;
+	border-radius: 80px;
+	margin: -42px auto 0 auto;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-color: #fff;
+}
+
+.UserInfo .UserInfoUser .UserInfoUserName {
+	display: block;
+	float: left;
+	width: 100%;
+	padding: 15px 0 0 0;
+	text-align: center;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.UserInfo .UserInfoUser .UserInfoProgile {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 5px 20px;
+	margin: 0;
+	text-align: center;
+	font-size: 13px;
+}
+
+.UserInfo .UserInfoCmd {
+	display: block;
+	position: relative;
+	float: left;
+	width: 100%;
+	text-align: center;
+	padding: 5px 0 15px 0;
+}
+
+.UserInfo .UserInfoCmd .UserInfoCmdFollow {
+	display: inline-block;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.UserInfo .UserInfoCmd .IllustItemCommandSub {
+	display: block;
+	position: absolute;
+	right: 5px;
+	bottom: 15px;
+	font-size: 22px;
+}
+
+.UserInfo .UserInfoCmd .IllustItemCommandSub .IllustItemCommandTweet {
+	color: #aaa;
+}
+
+.UserInfo .UserInfoCmdBlock {
+	height: 22px;
+	line-height: 17px;
+	vertical-align: bottom;
+	font-size: 24px;
+	position: relative;
+	right: 4px;
+	top: 7px;
+	float: right;
+	opacity: 0.9;
+	color: #ffffff;
+	text-shadow: 1px 0 5px grey;
+}
+
+.UserInfo .UserInfoCmdBlocked {
+	height: 22px;
+	vertical-align: bottom;
+	position: relative;
+	right: 4px;
+	top: 9px;
+	float: right;
+	opacity: 0.9;
+	color: #ffffff;
+	text-shadow: 1px 0 5px grey;
+}
+
+#UserInfoCmdBlockLabel {
+	font-size: 14px;
+	position: relative;
+	top: -2px;
+}
+
+.UserInfo .UserInfoState {
+	display: block;
+	float: left;
+	width: 100%;
+	height: 32px;
+	overflow: hidden;
+	text-align: center;
+	padding: 3px 0;
+	background: rgba(255, 2555, 255, 0.9);
+	border-top: solid 1px #eee;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem {
+	display: inline-block;
+	min-width: 50px;
+	margin: 0 6px;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem .UserInfoStateItemTitle {
+	display: block;
+	width: 100%;
+	font-size: 9px;
+	height: 14px;
+	line-height: 14px;
+}
+
+.UserInfo .UserInfoState .UserInfoStateItem .UserInfoStateItemNum {
+	display: block;
+	width: 100%;
+	height: 18px;
+	line-height: 18px;
+	font-size: 14px;
+}
+
+.UserInfo > .UserInfoCmd > .RequestBtn .RequestEnabled {
+	font-size: 14px;
+}
+
+.UserInfo > .UserInfoCmd > .RequestBtn {
+	display: inline-block;
+	height: 22px;
+	line-height: 23px;
+	cursor: pointer;
+}
+
+.UserInfo > .RequestBtn {
+	margin: 5px 0 0 4px;
+	padding: 1px 6px 2px 6px;
+	font-size: 13px;
+}
+>>>>>>> branch 'master' of https://github.com/pipajp/poipiku.git
 
 .RequestBtn .SendRequestIcon {
 	display: inline-block;

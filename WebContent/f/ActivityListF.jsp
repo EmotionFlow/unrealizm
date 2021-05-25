@@ -1,3 +1,4 @@
+<%@ page import="static jp.pipa.poipiku.controller.ActivityListC.TIMESTAMP_FORMAT" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -31,16 +32,20 @@ cResults.getResults(checkLogin);
 		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 
 		<span class="ActivityListThumb">
-			<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE) {%>
-			<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.infoThumb)%>_360.jpg')"></span>
-			<%} else if(activityInfo.contentType==Common.CONTENT_TYPE_TEXT) {%>
-			<span class="ActivityListThumbTxt"><%=Util.toStringHtml(activityInfo.infoThumb)%></span>
+			<%if(activityInfo.infoType == Common.NOTIFICATION_TYPE_GIFT){%>
+				<span class="ActivityListThumbIcon"><i class="fas fa-gift GiftIcon"></i></span>
+			<%}else{%>
+				<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE) {%>
+				<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.infoThumb)%>_360.jpg')"></span>
+				<%} else if(activityInfo.contentType==Common.CONTENT_TYPE_TEXT) {%>
+				<span class="ActivityListThumbTxt"><%=Util.toStringHtml(activityInfo.infoThumb)%></span>
+				<%}%>
 			<%}%>
 		</span>
 
 		<span class="ActivityListBody">
 			<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("yyyy MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=TIMESTAMP_FORMAT.format(activityInfo.infoDate)%></span>
 				<span class="Title">
 					<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
 					<%=_TEX.T("ActivityList.Message.Comment")%>
@@ -68,7 +73,7 @@ cResults.getResults(checkLogin);
 				</span>
 			<span class="ActivityListBody">
 				<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("yyyy MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=TIMESTAMP_FORMAT.format(activityInfo.infoDate)%></span>
 					<span class="Title"><%=infoDescLines[0]%></span>
 				</span>
 				<span class="ActivityListDesc">
