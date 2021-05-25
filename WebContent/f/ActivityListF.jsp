@@ -1,3 +1,4 @@
+<%@ page import="static jp.pipa.poipiku.controller.ActivityListC.TIMESTAMP_FORMAT" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -44,7 +45,7 @@ cResults.getResults(checkLogin);
 
 		<span class="ActivityListBody">
 			<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("M/d H:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=TIMESTAMP_FORMAT.format(activityInfo.infoDate)%></span>
 				<span class="Title">
 					<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
 					<%=_TEX.T("ActivityList.Message.Comment")%>
@@ -72,7 +73,7 @@ cResults.getResults(checkLogin);
 				</span>
 			<span class="ActivityListBody">
 				<span class="ActivityListTitle">
-				<span class="Date"><%=(new SimpleDateFormat("MM/dd HH:mm")).format(activityInfo.infoDate)%></span>
+				<span class="Date"><%=TIMESTAMP_FORMAT.format(activityInfo.infoDate)%></span>
 					<span class="Title"><%=infoDescLines[0]%></span>
 				</span>
 				<span class="ActivityListDesc">

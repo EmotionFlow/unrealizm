@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public final class ActivityListC {
+	public static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("M/dd HH:mm");
 	public int userId = -1;
 	public int infoType;
 
