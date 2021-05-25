@@ -31,10 +31,14 @@ cResults.getResults(checkLogin);
 		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 
 		<span class="ActivityListThumb">
-			<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE) {%>
-			<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.infoThumb)%>_360.jpg')"></span>
-			<%} else if(activityInfo.contentType==Common.CONTENT_TYPE_TEXT) {%>
-			<span class="ActivityListThumbTxt"><%=Util.toStringHtml(activityInfo.infoThumb)%></span>
+			<%if(activityInfo.infoType == Common.NOTIFICATION_TYPE_GIFT){%>
+				<span class="ActivityListThumbIcon"><i class="fas fa-gift GiftIcon"></i></span>
+			<%}else{%>
+				<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE) {%>
+				<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.infoThumb)%>_360.jpg')"></span>
+				<%} else if(activityInfo.contentType==Common.CONTENT_TYPE_TEXT) {%>
+				<span class="ActivityListThumbTxt"><%=Util.toStringHtml(activityInfo.infoThumb)%></span>
+				<%}%>
 			<%}%>
 		</span>
 

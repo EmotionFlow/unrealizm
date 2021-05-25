@@ -2120,6 +2120,21 @@
 	overflow: hidden;
 }
 
+.IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbIcon {
+	display: block;
+	width: 60px;
+	height: 60px;
+	box-sizing: border-box;
+	border: solid 1px #eee;
+	overflow: hidden;
+	text-align: center;
+}
+
+.IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbIcon .GiftIcon {
+	font-size: 50px;
+	color: #3498db;
+}
+
 .IllustItemList .ActivityList .ActivityListItem .ActivityListBody {
 	display: block;
 	flex: 1 1;
