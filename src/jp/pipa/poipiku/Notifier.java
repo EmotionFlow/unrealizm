@@ -62,10 +62,10 @@ public class Notifier {
 		return user.langLabel.equals("ja") ? "ポイピク" : "POIPIKU";
 	}
 
-	protected String getVmPath(final String path, final ResourceBundleControl _TEX){
-		// TODO 英語のVMテンプレート実装
-		// return _TEX.T("Lang") + "/" + CATEGORY + "/" + path;
-		return "ja/" + CATEGORY + "/" + path;
+	protected String merge(Template template, VelocityContext context) {
+		StringWriter sw = new StringWriter();
+		template.merge(context, sw);
+		return sw.toString();
 	}
 
 	protected String getVmPath(final String path, final String langLabel){
@@ -74,25 +74,34 @@ public class Notifier {
 		return "ja/" + CATEGORY + "/" + path;
 	}
 
+	protected Template getTemplate(String vmPath, String langLabel) {
+		return Velocity.getTemplate(getVmPath(vmPath, langLabel), "UTF-8");
+	}
+
 	protected String getSubject(final String statusName, final ResourceBundleControl _TEX) {
-		StringWriter sw = new StringWriter();
-		Template template = Velocity.getTemplate(getVmPath(statusName + "/subject.vm", _TEX), "UTF-8");
-		template.merge(null, sw);
-		return sw.toString();
+		return getSubject(statusName, _TEX.T("Lang"));
 	}
 
 	protected String getSubject(final String statusName, final String langLabel) {
-		StringWriter sw = new StringWriter();
-		Template template = Velocity.getTemplate(getVmPath(statusName + "/subject.vm", langLabel), "UTF-8");
-		template.merge(null, sw);
-		return sw.toString();
+		return merge(
+				getTemplate(statusName + "/subject.vm", langLabel),
+				null
+		);
+	}
+
+	protected Template getBodyTemplate(final String statusName, final ResourceBundleControl _TEX) {
+		return getBodyTemplate(statusName, _TEX.T("Lang"));
+	}
+
+	protected Template getBodyTemplate(final String statusName, final String langLabel) {
+		return getTemplate(statusName + "/body.vm",langLabel);
 	}
 
 	protected String getTitle(final String statusName, final String langLabel) {
-		StringWriter sw = new StringWriter();
-		Template template = Velocity.getTemplate(getVmPath(statusName + "/title.vm", langLabel), "UTF-8");
-		template.merge(null, sw);
-		return sw.toString();
+		return merge(
+				Velocity.getTemplate(getVmPath(statusName + "/title.vm", langLabel), "UTF-8"),
+				null
+		);
 	}
 
 	protected boolean notifyByApp(User to, String body) {
@@ -153,21 +162,11 @@ public class Notifier {
 		infoList.infoType = NOTIFICATION_INFO_TYPE;
 		infoList.infoDesc = description;
 		infoList.badgeNum = 1;
-		infoList.insert();
+		infoList.upsert();
 		return true;
 	}
 
-	protected void notifyByEmail(User toUser, String templateName, VelocityContext context) {
-		try {
-			StringWriter sw = new StringWriter();
-			context.put("to_name", toUser.nickname);
-			Template template = Velocity.getTemplate(getVmPath(templateName + "/body.vm", toUser.langLabel), "UTF-8");
-			template.merge(context, sw);
-			final String mailBody = sw.toString();
-			sw.flush();
-			EmailUtil.send(toUser.email, getSubject(templateName, toUser.langLabel), mailBody);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	protected void notifyByEmail(User toUser, String subject, String body) {
+		EmailUtil.send(toUser.email, subject, body);
 	}
 }

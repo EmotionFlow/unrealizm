@@ -19,38 +19,41 @@ public final class RequestNotifier extends Notifier{
 		return super.notifyByWeb(to, request.id, -1, request.requestCategory, description);
 	}
 
+	private void notifyByEmail(User toUser, String menuId, Request.Status requestStatus, int requestId, String statusName) {
+		final String toUrl = String.format(
+				"%s?MENUID=%s&ST=%d&RID=%d",
+				REQUEST_BOARD_URL, menuId, requestStatus.getCode(), requestId);
+		try {
+			VelocityContext context = new VelocityContext();
+			context.put("request_board_url", toUrl);
+			context.put("to_name", toUser.nickname);
+
+			Template template = getBodyTemplate(statusName, toUser.langLabel);
+
+			super.notifyByEmail(toUser, getSubject(statusName, toUser.langLabel), merge(template, context));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void notifyRequestEnabled(final CheckLogin checkLogin, final ResourceBundleControl _TEX){
 		try {
 			User creator = new User(checkLogin.m_nUserId);
-			StringWriter sw = new StringWriter();
+
 			VelocityContext context = new VelocityContext();
 			context.put("to_name", checkLogin.m_strNickName);
 			context.put("user_id", checkLogin.m_nUserId);
-			Template template = Velocity.getTemplate(getVmPath("enabled/body.vm", _TEX), "UTF-8");
-			template.merge(context, sw);
-			final String mailBody = sw.toString();
-			sw.flush();
 
+			Template template = getBodyTemplate("enabled", _TEX);
+
+			final String mailBody = merge(template, context);
 			final String mailSubject = getSubject("enabled", _TEX);
 
-			EmailUtil.send(creator.email, mailSubject, mailBody);
+			super.notifyByEmail(creator, mailSubject, mailBody);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.d("notifyRequestEnabled failed.");
-		}
-	}
-
-	private void notifyByEmail(User toUser, String menuId, Request.Status requestStatus, int requestId, String templateName) {
-		final String toUrl = String.format("%s?MENUID=%s&ST=%d&RID=%d",
-				REQUEST_BOARD_URL,menuId, requestStatus.getCode(), requestId);
-		try {
-			StringWriter sw = new StringWriter();
-			VelocityContext context = new VelocityContext();
-			context.put("request_board_url", toUrl);
-			super.notifyByEmail(toUser, templateName, context);
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

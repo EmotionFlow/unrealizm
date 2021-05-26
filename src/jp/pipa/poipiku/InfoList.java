@@ -34,6 +34,50 @@ public final class InfoList extends Model{
 		requestId = resultSet.getInt("request_id");
 	}
 
+	public boolean upsert() {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			final String sql =
+					"INSERT INTO info_lists(" +
+					" user_id, content_id, content_type, " +
+					" info_type, info_thumb, info_desc, info_date, badge_num, request_id)" +
+					" VALUES(?, ?, ?, ?, ?, ?, current_timestamp, ?, ?)" +
+					" ON CONFLICT ON CONSTRAINT info_lists_pkey DO UPDATE" +
+					" SET info_desc=?, info_date=current_timestamp, badge_num=?, had_read=false";
+			statement = connection.prepareStatement(sql);
+
+			int idx = 1;
+
+			// insert
+			statement.setInt(idx++, userId);
+			statement.setInt(idx++, contentId);
+			statement.setInt(idx++, contentType);
+			statement.setInt(idx++, infoType);
+			statement.setString(idx++, infoThumb);
+			statement.setString(idx++, infoDesc);
+			statement.setInt(idx++, badgeNum);
+			statement.setInt(idx++, requestId);
+
+			// update
+			statement.setString(idx++, infoDesc);
+			statement.setInt(idx++, badgeNum);
+
+			statement.executeUpdate();
+			errorKind = ErrorKind.None;
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+			errorKind = ErrorKind.DbError;
+			return false;
+		} finally {
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		return true;
+
+	}
+
 	public boolean insert() {
 		Connection connection = null;
 		PreparedStatement statement = null;
