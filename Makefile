@@ -24,3 +24,10 @@ test: build-java
 	pushd test && \
 	./build_java_test.sh ${CLS} &&\
 	popd
+
+batch: build-java
+	echo CLS=${CLS} && \
+	pushd batch && \
+	./build_java_batch.sh &&\
+	./run.sh ${CLS} &&\
+	popd
