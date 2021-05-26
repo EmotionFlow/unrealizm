@@ -64,7 +64,7 @@ cResults.getResults(checkLogin);
 		</span>
 		<span class="ActivityListBadge"><%=activityInfo.badgeNum%></span>
 		</a>
-		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST) {
+		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST || activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST_STARTED) {
 		final String[] infoDescLines = activityInfo.infoDesc.split("\n");
 		%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"

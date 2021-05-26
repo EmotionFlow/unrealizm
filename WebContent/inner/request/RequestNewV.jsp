@@ -334,6 +334,9 @@ if (!results.getResults(checkLogin)) {
              background-position: 50% top;
              background-attachment: fixed;
          }
+		 .UploadFile {
+             background-color: rgba(0,0,0,0.4);
+		 }
 		<%}%>
 
 		.RequestTitle {

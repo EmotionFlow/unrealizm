@@ -78,10 +78,6 @@ public class Notifier {
 		return Velocity.getTemplate(getVmPath(vmPath, langLabel), "UTF-8");
 	}
 
-	protected String getSubject(final String statusName, final ResourceBundleControl _TEX) {
-		return getSubject(statusName, _TEX.T("Lang"));
-	}
-
 	protected String getSubject(final String statusName, final String langLabel) {
 		return merge(
 				getTemplate(statusName + "/subject.vm", langLabel),
@@ -89,17 +85,17 @@ public class Notifier {
 		);
 	}
 
-	protected Template getBodyTemplate(final String statusName, final ResourceBundleControl _TEX) {
-		return getBodyTemplate(statusName, _TEX.T("Lang"));
-	}
-
 	protected Template getBodyTemplate(final String statusName, final String langLabel) {
 		return getTemplate(statusName + "/body.vm",langLabel);
 	}
 
+	protected Template getTitleTemplate(final String statusName, final String langLabel){
+		return Velocity.getTemplate(getVmPath(statusName + "/title.vm", langLabel), "UTF-8");
+	}
+
 	protected String getTitle(final String statusName, final String langLabel) {
 		return merge(
-				Velocity.getTemplate(getVmPath(statusName + "/title.vm", langLabel), "UTF-8"),
+				getTitleTemplate(statusName, langLabel),
 				null
 		);
 	}
@@ -153,7 +149,13 @@ public class Notifier {
 		return true;
 	}
 
-	protected boolean notifyByWeb(User to, int requestId, int contentId, int contentType, String description) {
+	protected enum InsertMode {
+		Insert,
+		Upsert,
+		TryInsert  // on conflict do nothing
+	}
+
+	protected boolean notifyByWeb(User to, int requestId, int contentId, int contentType, String description, InsertMode insertMode) {
 		InfoList infoList = new InfoList();
 		infoList.userId = to.id;
 		infoList.requestId = requestId;
@@ -162,7 +164,19 @@ public class Notifier {
 		infoList.infoType = NOTIFICATION_INFO_TYPE;
 		infoList.infoDesc = description;
 		infoList.badgeNum = 1;
-		infoList.upsert();
+		switch (insertMode) {
+			case Insert:
+				infoList.insert();
+				break;
+			case Upsert:
+				infoList.upsert();
+				break;
+			case TryInsert:
+				infoList.tryInsert();
+				break;
+			default:
+				break;
+		}
 		return true;
 	}
 

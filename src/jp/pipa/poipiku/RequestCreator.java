@@ -79,6 +79,11 @@ public final class RequestCreator extends Model{
 	static public final int PROFILE_MAX = 5000;
 	public String profile = "";
 
+	static public final int NOTIFIED_ERROR = -1;
+	static public final int NOTIFIED_NOT_YET = 0;
+	static public final int NOTIFIED_STARTED = 1;
+	public int notified = NOTIFIED_NOT_YET;
+
 	public RequestCreator() { }
 	public RequestCreator(final int _userId) {
 		userId = _userId;
@@ -114,6 +119,7 @@ public final class RequestCreator extends Model{
 				amountMinimum = resultSet.getInt("amount_minimum");
 				commercialTransactionLaw = resultSet.getString("commercial_transaction_law");
 				profile = resultSet.getString("profile");
+				notified = resultSet.getInt("notified");
 				exists = true;
 			}else{
 				status = Status.NotFound;
@@ -265,6 +271,10 @@ public final class RequestCreator extends Model{
 		if (!update("status", _status.getCode())){
 			return false;
 		} else {
+			if (_status == Status.Disabled) {
+				update("notified", NOTIFIED_NOT_YET);
+			}
+
 			Connection connection = null;
 			PreparedStatement statement = null;
 			String strSql = "";
@@ -340,6 +350,7 @@ public final class RequestCreator extends Model{
 		}
 		return false;
 	}
-
-
+	public boolean updateNotifiedStarted() {
+		return update("notified", NOTIFIED_STARTED);
+	}
 }

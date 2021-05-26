@@ -1,7 +1,6 @@
 package jp.pipa.poipiku;
 import java.io.StringWriter;
 
-import jp.pipa.poipiku.util.EmailUtil;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -16,7 +15,7 @@ public final class RequestNotifier extends Notifier{
 	}
 
 	private boolean notifyByWeb(User to, Request request, String description){
-		return super.notifyByWeb(to, request.id, -1, request.requestCategory, description);
+		return super.notifyByWeb(to, request.id, -1, request.requestCategory, description, InsertMode.Upsert);
 	}
 
 	private void notifyByEmail(User toUser, String menuId, Request.Status requestStatus, int requestId, String statusName) {
@@ -44,13 +43,12 @@ public final class RequestNotifier extends Notifier{
 			context.put("to_name", checkLogin.m_strNickName);
 			context.put("user_id", checkLogin.m_nUserId);
 
-			Template template = getBodyTemplate("enabled", _TEX);
+			Template template = getBodyTemplate("enabled", _TEX.T("Lang"));
 
 			final String mailBody = merge(template, context);
-			final String mailSubject = getSubject("enabled", _TEX);
+			final String mailSubject = getSubject("enabled", _TEX.T("Lang"));
 
 			super.notifyByEmail(creator, mailSubject, mailBody);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.d("notifyRequestEnabled failed.");

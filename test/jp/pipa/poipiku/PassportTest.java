@@ -60,9 +60,6 @@ public class PassportTest {
 		passport.courseId = 1;
 		assertTrue(passport.insert());
 		assertTrue(passport.activate());
-
-		Passport passport2 = new Passport(checkLogin);
-		assertNull(passport2.expiredAt);
 	}
 	
 	@Test
@@ -71,6 +68,7 @@ public class PassportTest {
 		Passport passport = new Passport(checkLogin);
 		passport.courseId = 1;
 		assertTrue(passport.insert());
+		assertTrue(passport.activate());
 		assertTrue(passport.cancelSubscription());
 
 		Passport passport2 = new Passport(checkLogin);
