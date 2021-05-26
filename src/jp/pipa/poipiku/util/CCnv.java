@@ -775,23 +775,41 @@ public final class CCnv {
 		return strRtn.toString();
 	}
 
-	private static String _toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){
-		String ILLUST_LIST = getIllustListContext(nSpMode, cUser.m_nUserId);
-		StringBuilder strRtn = new StringBuilder();
-		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s\">", ILLUST_LIST));
-		strRtn.append(String.format("<span class=\"UserThumbImg\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cUser.m_strFileName)));
-		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", Util.toStringHtml(cUser.m_strNickName)));
-		strRtn.append("</a>");
+//	private static String _toHtmlUser(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){
+//		String ILLUST_LIST = getIllustListContext(nSpMode, cUser.m_nUserId);
+//		StringBuilder strRtn = new StringBuilder();
+//		strRtn.append(String.format("<a class=\"UserThumb\" href=\"%s\">", ILLUST_LIST));
+//		strRtn.append(String.format("<span class=\"UserThumbImg\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cUser.m_strFileName)));
+//		strRtn.append(String.format("<span class=\"UserThumbName\">%s</span>", Util.toStringHtml(cUser.m_strNickName)));
+//		strRtn.append("</a>");
+//
+//		return strRtn.toString();
+//	}
 
+	private static String _toHtmlUser(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){
+		String ILLUST_LIST = getIllustListContext(nSpMode, cUser.m_nUserId);
+		String headerFileName = "";
+		if(!cUser.m_strHeaderFileName.isEmpty()) {
+			headerFileName = String.format("background-image: url('%s');", Common.GetUrl(cUser.m_strHeaderFileName));
+		}
+		StringBuilder strRtn = new StringBuilder();
+		strRtn.append(String.format("<a class=\"UserInfo Thumb\" href=\"%s\" style=\"%s\">", ILLUST_LIST, headerFileName));
+		strRtn.append("<span class=\"UserInfoBg\"></span>");
+		strRtn.append("<section class=\"UserInfoUser\">");
+		strRtn.append(String.format("<span class=\"UserInfoUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cUser.m_strFileName)));
+		strRtn.append(String.format("<span class=\"UserInfoUserName\">%s</span>", Util.toStringHtml(cUser.m_strNickName)));
+		strRtn.append(String.format("<span class=\"UserInfoProgile\">%s</span>", Util.toStringHtml(cUser.m_strProfile)));
+		strRtn.append("</section>");
+		strRtn.append("</a>");
 		return strRtn.toString();
 	}
 
-	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
-		return  _toHtml(cUser, nMode, _TEX, SP_MODE_WVIEW);
+	public static String toHtmlUser(CUser cUser, int nMode,  ResourceBundleControl _TEX) {
+		return  _toHtmlUser(cUser, nMode, _TEX, SP_MODE_WVIEW);
 	}
 
-	public static String toHtml(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode) {
-		return  _toHtml(cUser, nMode, _TEX, nSpMode);
+	public static String toHtmlUser(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode) {
+		return  _toHtmlUser(cUser, nMode, _TEX, nSpMode);
 	}
 
 	private static String _toHtml(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {

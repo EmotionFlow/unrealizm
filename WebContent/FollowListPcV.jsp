@@ -36,11 +36,11 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<article class="Wrapper ItemList ViewPc">
-			<div id="IllustThumbList" class="IllustItemList">
+		<article class="Wrapper GridList">
+			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toHtml(cUser, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
 					<%if(bSmartPhone && (nCnt+1)%18==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>
@@ -49,13 +49,13 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 			<%if(!bSmartPhone) {%>
 			<div class="PcSideBar" style="margin-top: 16px;">
-				 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
 				<%}%>
 
-				 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>

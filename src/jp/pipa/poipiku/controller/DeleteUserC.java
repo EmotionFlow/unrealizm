@@ -166,7 +166,6 @@ public class DeleteUserC {
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
-
 			connection.close();connection=null;
 			//////
 
@@ -179,6 +178,16 @@ public class DeleteUserC {
 			statement.close();statement=null;
 			connection.close();connection=null;
 
+			// delete request_creators
+			connection = dataSource.getConnection();
+			strSql = "DELETE FROM request_creators WHERE user_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nUserId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+			connection.close();connection=null;
+
+			// delete credit card
 			DeleteCreditCardCParam deleteCreditCardCParam = new DeleteCreditCardCParam();
 			deleteCreditCardCParam.m_nUserId = m_nUserId;
 			DeleteCreditCardC deleteCreditCardC = new DeleteCreditCardC();

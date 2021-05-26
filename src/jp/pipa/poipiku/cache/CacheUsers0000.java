@@ -190,10 +190,12 @@ public final class CacheUsers0000 {
 	public static class User {
 		public int userId = -1;
 		public String nickName = "no name";
+		public String profile = "";
 		public String hashPass = "";
 		public int safeFilter = Common.SAFE_FILTER_R18;
 		public int langId = 0;
 		public String fileName = "";
+		public String headerFileName = "";
 		public boolean emailValid = false;
 		public int passportId = Common.PASSPORT_OFF;
 		public long lastLogin = -1;
@@ -203,12 +205,14 @@ public final class CacheUsers0000 {
 		public User() {}
 		public User(final ResultSet resultSet) throws SQLException {
 			userId			= resultSet.getInt("user_id");
-			hashPass		= resultSet.getString("hash_password");
-			nickName		= resultSet.getString("nickname");
+			hashPass		= Util.toString(resultSet.getString("hash_password"));
+			nickName		= Util.toString(resultSet.getString("nickname"));
+			profile			= Util.toString(resultSet.getString("profile"));
 			langId			= Math.min(Math.max(resultSet.getInt("lang_id"), Common.LANG_ID_OTHER), Common.LANG_ID_JP);
 			lastLogin		= resultSet.getTimestamp("last_login_date").getTime();
 			fileName		= Util.toString(resultSet.getString("file_name"));
 			if(fileName.isEmpty()) fileName = "/img/default_user.jpg";
+			headerFileName	= Util.toString(resultSet.getString("header_file_name"));
 			emailValid		= Util.toString(resultSet.getString("email")).contains("@");
 			passportId		= resultSet.getInt("passport_id");
 			reaction		= resultSet.getInt("ng_reaction");

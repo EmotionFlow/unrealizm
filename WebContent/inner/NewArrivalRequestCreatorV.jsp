@@ -14,7 +14,10 @@
 
 	NewArrivalRequestCreatorC cResults = new NewArrivalRequestCreatorC();
 	cResults.getParam(request);
-	cResults.SELECT_MAX_GALLERY = 45;
+	cResults.SELECT_MAX_GALLERY = 48;
+	if (isApp || Util.isSmartPhone(request)){
+		cResults.SELECT_MAX_GALLERY = 42;
+	}
 	boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -25,13 +28,19 @@
 	<%}else{%>
 	<%@ include file="/inner/THeaderCommonPc.jsp"%>
 	<%}%>
+	<%if (isApp || Util.isSmartPhone(request)) {%>
 	<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
+	<%} else {%>
+	<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
+	<%}%>
 	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<%@ include file="/inner/TRequestIntroduction.jsp"%>
 	<meta name="description" content="新着クリエイター"/>
 	<title><%=_TEX.T("THeader.Title")%> - 新着クリエイター</title>
 	<style>
-        body {padding-top: 79px !important;}
+	<%if(!isApp){%>
+				body {padding-top: 79px !important;}
+	<%}%>
 	</style>
 	<script type="text/javascript">
 		$(function(){
@@ -45,8 +54,8 @@
 <body>
 <%if(!isApp){%>
 <%@ include file="/inner/TMenuPc.jsp"%>
-<%}%>
 <%@ include file="/inner/TTabMenuRequestPotalPc.jsp"%>
+<%}%>
 <div class="HeaderPoiPassAd" style="width: 100%;padding-top: 10px">
 	<a onclick="dispRequestIntroduction()" href="javascript:void(0);" style="display: flex; flex-flow: row; padding: 3px 0 ; justify-content: center;">
 		<span style="font-weight: bold; font-size: 13px; line-height: 25px; text-decoration: underline;">
@@ -55,32 +64,22 @@
 	</a>
 </div>
 
-<article class="Wrapper ItemList">
-	<section id="IllustThumbList" class="IllustItemList">
+<article class="Wrapper GridList">
+	<section id="IllustThumbList" class=IllustThumbList>
 		<%
 			final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			for (int nCnt = 0; nCnt < cResults.m_vContentList.size(); nCnt++) {
 				CUser cUser = cResults.m_vContentList.get(nCnt);
 		%>
-			<%=CCnv.toHtml(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
-			<%if (!isApp && Util.isSmartPhone(request)) {%>
-				<%if (nCnt == 14) {%>
-				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp" %>
-				<%}%>
-				<%if (nCnt == 29) {%>
-				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp" %>
-				<%}%>
-				<%} else {%>
-				<%if (nCnt == 14) {%>
-				<%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_1.jsp" %>
-				<%}%>
-				<%if (nCnt == 29) {%>
-				<%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_2.jsp" %>
-				<%}%>
+			<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
+			<%if (isApp || Util.isSmartPhone(request)) {%>
+				<%if(nCnt==13) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+				<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+			<%} else {%>
+				<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
+				<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
+				<%if(nCnt==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
 			<%}%>
-		<%}%>
-		<%if(isApp){%>
-		<%@ include file="/inner/TAd336x280_mid.jsp"%>
 		<%}%>
 	</section>
 
@@ -88,10 +87,8 @@
 	<nav class="PageBar">
 		<%=CPageBar.CreatePageBarSp("/NewArrivalRequestCreatorPcV.jsp", "&KWD=", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 	</nav>
+	<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	<%}%>
 </article>
-<%if(!isApp){%>
-<%@ include file="/inner/TFooterSingleAd.jsp"%>
-<%}%>
 </body>
 </html>

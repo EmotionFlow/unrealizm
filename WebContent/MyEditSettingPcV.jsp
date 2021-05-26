@@ -263,7 +263,9 @@ String[][] menuOrder = {
 				</div>
 			</div>
 
-			<%strPageId = "BLOCK";%>
+			<%
+			strPageId = "BLOCK";
+			%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
