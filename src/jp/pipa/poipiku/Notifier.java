@@ -1,8 +1,10 @@
 package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.util.DatabaseUtil;
+import jp.pipa.poipiku.util.EmailUtil;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
 import java.io.StringWriter;
@@ -153,5 +155,19 @@ public class Notifier {
 		infoList.badgeNum = 1;
 		infoList.insert();
 		return true;
+	}
+
+	protected void notifyByEmail(User toUser, String templateName, VelocityContext context) {
+		try {
+			StringWriter sw = new StringWriter();
+			context.put("to_name", toUser.nickname);
+			Template template = Velocity.getTemplate(getVmPath(templateName + "/body.vm", toUser.langLabel), "UTF-8");
+			template.merge(context, sw);
+			final String mailBody = sw.toString();
+			sw.flush();
+			EmailUtil.send(toUser.email, getSubject(templateName, toUser.langLabel), mailBody);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

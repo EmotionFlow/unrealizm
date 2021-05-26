@@ -44,17 +44,11 @@ public final class RequestNotifier extends Notifier{
 	private void notifyByEmail(User toUser, String menuId, Request.Status requestStatus, int requestId, String templateName) {
 		final String toUrl = String.format("%s?MENUID=%s&ST=%d&RID=%d",
 				REQUEST_BOARD_URL,menuId, requestStatus.getCode(), requestId);
-		final String subject = getSubject(templateName, toUser.langLabel);
 		try {
 			StringWriter sw = new StringWriter();
 			VelocityContext context = new VelocityContext();
-			context.put("to_name", toUser.nickname);
 			context.put("request_board_url", toUrl);
-			Template template = Velocity.getTemplate(getVmPath(templateName + "/body.vm", toUser.langLabel), "UTF-8");
-			template.merge(context, sw);
-			final String mailBody = sw.toString();
-			sw.flush();
-			EmailUtil.send(toUser.email, subject, mailBody);
+			super.notifyByEmail(toUser, templateName, context);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
