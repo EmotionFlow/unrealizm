@@ -532,7 +532,7 @@ public final class CTweet {
 				cursor = ids.getNextCursor();
 			} while(cursor>=0 && cursor<GET_FRIEND_MAX);
 		} catch (Exception e) {
-			Log.d("Limit error : " + twitter_userId + "," + id_list.size());
+			Log.d("getFriendsIDs Limit error : " + twitter_userId + "," + id_list.size());
 			//e.printStackTrace();
 		}
 		if(id_list.isEmpty()) return;

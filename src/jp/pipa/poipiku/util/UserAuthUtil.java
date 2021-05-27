@@ -586,7 +586,6 @@ public class UserAuthUtil {
 		String user_id="";
 		String screen_name="";
 
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -616,9 +615,7 @@ public class UserAuthUtil {
 			screen_name = hp.get("screen_name").first();
 			if(screen_name==null || screen_name.isEmpty()) return ERROR_TWITTER_SCREEN_NAME_ERROR;
 
-			Class.forName("org.postgresql.Driver");
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// check user
 			/*
@@ -826,6 +823,8 @@ public class UserAuthUtil {
 							cState.close();cState=null;
 						}
 					}
+
+					tweet.updateDBFollowInfoFromTwitter(nUserId);
 
 					Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
 					cLK.setMaxAge(Integer.MAX_VALUE);
