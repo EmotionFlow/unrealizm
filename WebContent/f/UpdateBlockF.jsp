@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<%!class UpdateFollowCParam {
+<%!class UpdateBlockCParam {
 	public int m_nBlockUserId = -1;
 	public int m_nUserId = -1;
 	public boolean m_bBlock = false;
@@ -19,8 +19,8 @@
 	}
 }
 
-class UpdateFollowC {
-	public int GetResults(UpdateFollowCParam cParam, ResourceBundleControl _TEX) {
+class UpdateBlockC {
+	public int GetResults(UpdateBlockCParam cParam, ResourceBundleControl _TEX) {
 		int nRtn = -1;
 		DataSource dsPostgres = null;
 		Connection cConn = null;
@@ -77,12 +77,12 @@ class UpdateFollowC {
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-UpdateFollowCParam cParam = new UpdateFollowCParam();
+UpdateBlockCParam cParam = new UpdateBlockCParam();
 cParam.GetParam(request);
 
 int nRtn = -1;
 if( checkLogin.m_bLogin && cParam.m_nUserId == checkLogin.m_nUserId ) {
-	UpdateFollowC cResults = new UpdateFollowC();
+	UpdateBlockC cResults = new UpdateBlockC();
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 %>{"result":<%=nRtn%>}

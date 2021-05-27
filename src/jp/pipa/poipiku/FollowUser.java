@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class FollowUser extends Model {
+	static public final int FOLLOWING_MAX = 2000;
+
 	// 自分がフォローしている人リスト
 	public static List<Integer> selectFollowerList (int userId) {
 		List<Integer> list = new ArrayList<>();
