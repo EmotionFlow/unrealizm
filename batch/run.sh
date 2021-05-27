@@ -12,7 +12,7 @@ source ${ENV_FILE}
 
 BATCH_CLASSES="./classes"
 
-APP_JAR_PATH="../WebContent/WEB-INF/lib/"
+APP_JAR_PATH="${WEB_INF_PATH}/lib/"
 POSTGRES_JAR="${APP_JAR_PATH}postgresql-42.2.14.jre7.jar"
 VELOCITY_JAR="${APP_JAR_PATH}velocity-engine-core-2.3.jar:${APP_JAR_PATH}slf4j-api-1.7.9.jar"
 COMMONS_JAR="${APP_JAR_PATH}commons-lang3-3.7.jar:${APP_JAR_PATH}commons-io-2.4.jar"
@@ -21,7 +21,7 @@ JACKSON_JAR="${APP_JAR_PATH}jackson-all-1.9.7.jar"
 
 APP_JAR="${POSTGRES_JAR}:${VELOCITY_JAR}:${COMMONS_JAR}:${HTTP_CLI_JAR}:${JACKSON_JAR}"
 
-WEB_CONENT_CLASSES="../WebContent/WEB-INF/classes/"
+WEB_CONENT_CLASSES="${WEB_INF_PATH}/classes/"
 
 java -DdbPass=${DB_PASS} -DdbPort=${DB_PORT} -cp ${APP_JAR}:${CLASSES_TOMCAT}:${WEB_CONENT_CLASSES}:${BATCH_CLASSES} jp.pipa.poipiku.batch.$1
 
