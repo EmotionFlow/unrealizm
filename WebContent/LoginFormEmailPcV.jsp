@@ -104,8 +104,8 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 		<style>
 		.Wrapper {width: 360px;}
 		.AnalogicoInfo {display: none;}
-		#RegistForm {display: block; float: left; width: 100%;}
-		#LoginForm {display: none; float: left; width: 100%;}
+		#RegistForm {display: none; float: left; width: 100%;}
+		#LoginForm {display: block; float: left; width: 100%;}
 		.SettingList .SettingListItem {color: #fff;}
 		</style>
 	</head>
@@ -135,6 +135,9 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 						<div class="RegistItem">
 							<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
 						</div>
+
+						ただいま、メールによる新規登録を一時的に停止しております。
+						<%if(false){%>
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
 								<%=_TEX.T("LoginFormV.Label.Email")%>
@@ -160,6 +163,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 								</div>
 							</div>
 						</div>
+						<%}%>
 					</form>
 
 					<form id="LoginForm" onsubmit="return LoginUser()">
@@ -182,7 +186,8 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
-									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
+									<%if(false){%><a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a><%}%>
+									<a href="javascript:void(0);" onclick="alert('ただいま、メールによる新規登録を一時的に停止しております。')"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
 									<div class="RegistMessage"></div>

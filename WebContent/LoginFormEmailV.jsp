@@ -89,8 +89,8 @@ if(strRequestUri != null) {
 		<style>
 		.Wrapper {width: 360px;}
 		.AnalogicoInfo {display: none;}
-		#RegistForm {display: block; float: left; width: 100%;}
-		#LoginForm {display: none; float: left; width: 100%;}
+		#RegistForm {display: none; float: left; width: 100%;}
+		#LoginForm {display: block; float: left; width: 100%;}
 		.SettingList .SettingListItem {color: #fff;}
 		.SettingList .BtnBase {border: 1px solid #fff; background: #3498db; color: #fff;}
 		.SettingList .BtnBase.Selected, ,SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
@@ -107,6 +107,9 @@ if(strRequestUri != null) {
 						<div class="RegistItem">
 							<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
 						</div>
+
+						ただいま、メールによる新規登録を一時的に停止しております。
+						<%if(false){%>
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
 								<%=_TEX.T("LoginFormV.Label.Email")%>
@@ -132,6 +135,7 @@ if(strRequestUri != null) {
 								</div>
 							</div>
 						</div>
+						<%}%>
 					</form>
 
 					<form id="LoginForm" onsubmit="return LoginUser()">
@@ -154,7 +158,8 @@ if(strRequestUri != null) {
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
-									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
+									<%if(false){%><a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a><%}%>
+									<a href="javascript:void(0);" onclick="alert('ただいま、メールによる新規登録を一時的に停止しております。')"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
 									<div class="RegistMessage"></div>
