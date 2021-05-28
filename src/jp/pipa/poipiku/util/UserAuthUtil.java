@@ -146,9 +146,6 @@ public class UserAuthUtil {
 			e.printStackTrace();
 		}
 
-		Log.d(String.format("%s, %s, %s, %s",strEmail,strPassword,strNickName,request.getRemoteAddr()));
-		if (!strEmail.isEmpty()) return nRtn;
-
 		//Log.d("1:"+strEmail);
 		if(strEmail.isEmpty()) return ERROR_EMAIL_EMPTY;
 		//Log.d("2:"+strPassword);

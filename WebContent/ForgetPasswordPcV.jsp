@@ -1,10 +1,15 @@
-<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="org.apache.commons.lang3.RandomStringUtils" %>
+<%@ include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 
 // login check
 CheckLogin checkLogin = new CheckLogin(request, response);
+
+final String strSendPasswordFToken = RandomStringUtils.randomAlphanumeric(64);
+session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -32,7 +37,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 					"type": "post",
 					"data": {
 						"EM":toHalfWidth(strEmail),
-						"TW":toHalfWidth(strTwScreenName).replace(/^@/, '')
+						"TW":toHalfWidth(strTwScreenName).replace(/^@/, ''),
+						"TK":"<%=strSendPasswordFToken%>"
 					},
 					"url": "/f/SendPasswordF.jsp",
 					"dataType": "json",

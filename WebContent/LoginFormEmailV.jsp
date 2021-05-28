@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="/inner/Common.jsp"%>
+<%@ page import="org.apache.commons.lang3.RandomStringUtils" %>
+<%@ include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 
@@ -8,6 +9,9 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 String strRequestUri = (String)request.getAttribute("javax.servlet.forward.request_uri");
 String strRequestQuery = (String)request.getAttribute("javax.servlet.forward.query_string");
+
+final String strRegistUserFToken = RandomStringUtils.randomAlphanumeric(64);
+session.setAttribute("RegistUserFToken", strRegistUserFToken);
 
 String strMessage = "";
 session.removeAttribute("LoginUri");
@@ -43,7 +47,7 @@ if(strRequestUri != null) {
 				}
 				$.ajaxSingle({
 					"type": "post",
-					"data": {"NN":strNickname, "EM":strEmail, "PW":strPassword},
+					"data": {"NN":strNickname, "EM":strEmail, "PW":strPassword, "TK":"<%=strRegistUserFToken%>"},
 					"url": "/f/RegistUserF.jsp",
 					"dataType": "json",
 					"success": function(data) {
@@ -89,11 +93,11 @@ if(strRequestUri != null) {
 		<style>
 		.Wrapper {width: 360px;}
 		.AnalogicoInfo {display: none;}
-		#RegistForm {display: none; float: left; width: 100%;}
-		#LoginForm {display: block; float: left; width: 100%;}
+		#RegistForm {display: block; float: left; width: 100%;}
+		#LoginForm {display: none; float: left; width: 100%;}
 		.SettingList .SettingListItem {color: #fff;}
 		.SettingList .BtnBase {border: 1px solid #fff; background: #3498db; color: #fff;}
-		.SettingList .BtnBase.Selected, ,SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
+		.SettingList .BtnBase.Selected, SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
 		</style>
 	</head>
 
@@ -102,14 +106,10 @@ if(strRequestUri != null) {
 		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div class="SettingListItem">
-
 					<form id="RegistForm" onsubmit="return RegistUser()">
 						<div class="RegistItem">
 							<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
 						</div>
-
-						ただいま、メールによる新規登録を一時的に停止しております。
-						<%if(false){%>
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
 								<%=_TEX.T("LoginFormV.Label.Email")%>
@@ -135,7 +135,6 @@ if(strRequestUri != null) {
 								</div>
 							</div>
 						</div>
-						<%}%>
 					</form>
 
 					<form id="LoginForm" onsubmit="return LoginUser()">
@@ -158,8 +157,7 @@ if(strRequestUri != null) {
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
 									<div class="RegistMessage"></div>
-									<%if(false){%><a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a><%}%>
-									<a href="javascript:void(0);" onclick="alert('ただいま、メールによる新規登録を一時的に停止しております。')"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
+									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 								</div>
 								<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
 									<div class="RegistMessage"></div>
