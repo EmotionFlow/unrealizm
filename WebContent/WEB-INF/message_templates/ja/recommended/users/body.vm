@@ -1,6 +1,6 @@
 #parse("ja/header.vm")
 
-ポイピクでフォローしていないおすすめユーザーを紹介します。
+あなたがポイピクでフォローしていないおすすめユーザーを紹介します。
 
 #foreach($u in $recommend_users)
 【$u.nickname】 #if($u.requestCreatorStatus==2) ☆リクエスト募集中 #end
