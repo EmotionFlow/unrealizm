@@ -1,0 +1,16 @@
+#parse("ja/header.vm")
+
+ポイピクでフォローしていないおすすめユーザーを紹介します。
+
+#foreach($u in $recommend_users)
+【$u.nickname】 #if($u.requestCreatorStatus==2) ☆リクエスト募集中 #end
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+ポイピクのフォローは相手に伝わりません。気軽にフォローしてみましょう。
+
+#parse("ja/footer.vm")

@@ -17,13 +17,14 @@ public class Notifier {
 	protected String CATEGORY = "";
 	protected int NOTIFICATION_INFO_TYPE = -1;
 
-	protected static class User {
+	public static class User {
 		public int id = -1;
 		public String nickname;
 		public String email;
 		public int langId = Common.LANG_ID_JP;
 		public String langLabel;
-		User(int userId){
+		public User(){};
+		protected User(int userId){
 			Connection connection = null;
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
@@ -39,11 +40,7 @@ public class Notifier {
 					nickname = resultSet.getString("nickname");
 					email = resultSet.getString("email");
 					langId = resultSet.getInt("lang_id");
-					if (langId == Common.LANG_ID_JP) {
-						langLabel = "ja";
-					} else {
-						langLabel = "en";
-					}
+					setLangLabel();
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -55,6 +52,17 @@ public class Notifier {
 				try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 				try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 			}
+		}
+		public void setLangLabel() {
+			if (langId == Common.LANG_ID_JP) {
+				langLabel = "ja";
+			} else {
+				langLabel = "en";
+			}
+		}
+		public String toString() {
+			return String.format("%d, %s, %s, %d, %s",
+					id, nickname, email, langId, langLabel);
 		}
 	}
 
