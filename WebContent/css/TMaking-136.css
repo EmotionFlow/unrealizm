@@ -2386,10 +2386,9 @@
 	cursor: pointer;
 }
 
-.UserInfo > .RequestBtn {
+.UserInfo > .GiftBtn {
 	margin: 5px 0 0 4px;
 	padding: 1px 6px 2px 6px;
-	font-size: 13px;
 }
 
 /* for user list */

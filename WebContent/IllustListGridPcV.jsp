@@ -118,9 +118,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
-				<%if(checkLogin.isStaff()){%>
-				<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
-				<%}%>
 				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
@@ -157,10 +154,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							</span>
 						<%}%>
 
+						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
 						<%if(checkLogin.isStaff()){%>
 						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
-						<%}else{%>
-						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
 						<%}%>
 
 						<%if(!cResults.m_bOwner) {%>

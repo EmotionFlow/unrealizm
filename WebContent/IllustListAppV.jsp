@@ -167,7 +167,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<article class="Wrapper">
 			<div class="UserInfo">
 				<%if(checkLogin.isStaff()){%>
-				<%@ include file="inner/IllustAppVRequestButton.jsp"%>
+				<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
 				<%}%>
 				<%@ include file="inner/IllustVBlockButton.jsp"%>
 				<div class="UserInfoBg"></div>
@@ -200,11 +200,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
 						<%}%>
 
-						<%if(checkLogin.isStaff()){%>
-						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
-						<%}else{%>
 						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
-						<%}%>
 
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">
