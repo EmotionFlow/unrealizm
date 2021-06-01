@@ -64,7 +64,7 @@ public final class RecommendedUsersNotifier extends Notifier {
 					"  AND email IS NOT NULL" +
 					"  AND email LIKE '%@%'" +
 					"  AND user_id NOT IN (SELECT user_id FROM temp_emails_0000)" +
-					" ORDER BY last_login_date DESC LIMIT 100;";
+					" ORDER BY last_login_date DESC LIMIT 200;";
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			List<User> deliveryTargets = new ArrayList<>();
@@ -86,7 +86,6 @@ public final class RecommendedUsersNotifier extends Notifier {
 			}
 
 			for (User targetUser : deliveryTargets) {
-				Log.d("", Integer.toString(targetUser.id), targetUser.nickname);
 				// Twitterでフォローしているが、こそフォロしていないユーザー
 				// Twitterでフォローしているが、こそフォロしていないユーザーのうち、リクエスト募集しているユーザー
 				sql = "WITH" +

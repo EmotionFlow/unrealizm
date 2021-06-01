@@ -18,9 +18,6 @@ public class EmailUtil {
 			Log.d("body: " + body);
 			return true;
 		}
-
-		Log.d("本番環境");
-
 		final String FROM_NAME = "POIPIKU";
 		final String FROM_ADDR = "info@poipiku.com";
 		final String SMTP_HOST = "localhost";
