@@ -84,8 +84,8 @@ public class RequestExchangeCheerPointC {
 				// 支払い請求を支払い待ちでINSERT
 				int idx = 1;
 				strSql = "INSERT INTO cheer_point_exchange_requests(" +
-						"request_id, user_id, exchange_point, commission_fee, payment_fee, f_code, f_name, f_subcode, f_subname, ac_code, ac_name, status)" +
-						" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+						"request_id, user_id, exchange_point, commission_fee, payment_fee, f_code, f_name, f_subcode, f_subname, ac_type, ac_code, ac_name, status)" +
+						" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(idx++, strRequestId);
 				cState.setInt(idx++, cParam.m_nUserId);
@@ -96,6 +96,7 @@ public class RequestExchangeCheerPointC {
 				cState.setString(idx++, cParam.m_strFinancialName);
 				cState.setString(idx++, cParam.m_strFinancialSubCode);
 				cState.setString(idx++, cParam.m_strFinancialSubName);
+				cState.setInt(idx++, cParam.m_nAccountType);
 				cState.setString(idx++, cParam.m_strAccountCode);
 				cState.setString(idx++, cParam.m_strAccountName);
 				cState.setInt(idx++, 0);

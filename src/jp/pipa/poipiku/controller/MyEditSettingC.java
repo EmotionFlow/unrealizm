@@ -35,13 +35,13 @@ public class MyEditSettingC {
 	public String m_strNewEmail = "";
 	public int m_nPublishedContentsTotal = 0;
 	public boolean m_bCardInfoExist = false;
-	public boolean m_bExchangeCheerPointRequested = false;
 	public int m_nCheerPoint = 0;
 	public int m_nExchangePoint = 0;
 	public int m_nExchangeFee = 0;
 	public Passport m_cPassport = null;
 	public boolean m_hasInProgressRequests = false;
 	public boolean m_hasJustDeliveredRequest = false;
+	public CheerPointExchangeRequest exchangeRequest = null;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -158,13 +158,7 @@ public class MyEditSettingC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			strSql = "SELECT 1 FROM cheer_point_exchange_requests WHERE user_id=? AND status=0";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, checkLogin.m_nUserId);
-			resultSet = statement.executeQuery();
-			m_bExchangeCheerPointRequested = resultSet.next();
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
+			exchangeRequest = new CheerPointExchangeRequest(checkLogin.m_nUserId);
 
 			strSql = "SELECT sum(remaining_points) FROM cheer_points WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -178,7 +172,7 @@ public class MyEditSettingC {
 			resultSet.close();resultSet = null;
 			statement.close();statement = null;
 
-			if(m_bExchangeCheerPointRequested) {
+			if(exchangeRequest.status == CheerPointExchangeRequest.Status.Waiting) {
 				strSql = "SELECT exchange_point, payment_fee FROM cheer_point_exchange_requests WHERE user_id=? AND status=0";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, checkLogin.m_nUserId);
