@@ -96,7 +96,7 @@ public final class RecommendedUsersNotifier extends Notifier {
 						")," +
 						" not_following_users AS (" +
 						"    SELECT follow_user_id" +
-						"    FROM twitter_follows" +
+						"    FROM twitter_friends" +
 						"    WHERE user_id = ?" +
 						"      AND follow_user_id IS NOT NULL" +
 						"      AND follow_user_id NOT IN (SELECT * FROM poipiku_followers)" +
