@@ -329,9 +329,10 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 	<%if(checkLogin.isStaff()){%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle">チケット: <%=ticket.exists?ticket.amount:0%>枚</div>
-		チケットは他の方からの匿名のおふせでストックされ、1枚で1ヶ月分、ポイパスがONになります。（初回は月末まで）
+		チケットは他の方からのおふせ(β)でストックされ、１枚で１ヶ月分、ポイパスがONになります。（初回は適用日〜月末まで）
 		<ul>
-			<li>毎月1日に自動でチケットが使用されます。(表示は6時頃に更新)</li>
+			<li>毎月１日に自動でチケットが使用されます。</li>
+			<li>ポイパスOFF時にチケットを取得した場合は、取得と同時に使用されます。</li>
 			<li>ポイパス定期購入済みの場合、チケット使用が優先され、その間は課金がストップします。</li>
 		</ul>
 	</div>
@@ -469,7 +470,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 						<li>加入は一ヶ月単位です。（初回は加入日から月末まで、以降毎月1日に確定）</li>
 						<li>課金日は初回は加入日、以降毎月25日です（代行業者の都合で変更する場合あり）</li>
 						<li>解除に制限はありません。いつでもできます。</li>
-						<li>ポイパス加入で追加された機能は、解除した月の末日までお使いいただけます。</li>
+						<li>いつ解除しても、解除した月の末日までは有効のままになります。</li>
 					</ul>
 				</div>
 				<div id="PassportNowPayment2" style="display:none">
