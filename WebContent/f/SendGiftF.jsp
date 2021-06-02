@@ -5,5 +5,5 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 SendGiftC c = new SendGiftC();
 c.getParam(request);
-boolean result = c.getResults(checkLogin, _TEX);
+boolean result = c.getResults(checkLogin, true, _TEX);
 %>{ "result" : <%=(result)?1:0%>, "error_code" : <%=c.m_nErrCode%>}

@@ -45,7 +45,23 @@ public class SendGiftC {
 		}
 	}
 
-	public boolean getResults(final CheckLogin checkLogin, final ResourceBundleControl _TEX) {
+	private void giftPassport(int toUserId) {
+		Passport passport = new Passport(toUserId);
+		if (passport.status == Passport.Status.Active) {
+			// すでにポイパス加入していたら、チケット１枚追加
+			PoiTicket ticket = new PoiTicket(toUserId);
+			ticket.add(1);
+		} else {
+			// ポイパスに加入していなかったら、ポイパスONする（チケットは追加しない）
+			if (!passport.exists) {
+				passport.courseId = 1;
+				passport.insert();
+			}
+			passport.activate();
+		}
+	}
+
+	public boolean getResults(final CheckLogin checkLogin, final boolean giftForMyself, final ResourceBundleControl _TEX) {
 		if(!checkLogin.m_bLogin  || toUserId<0) return false;
 
 		final int fromUserId = checkLogin.m_nUserId;
@@ -119,18 +135,16 @@ public class SendGiftC {
 			giftLog.orderId = order.id;
 			giftLog.insert();
 
-			Passport passport = new Passport(toUserId);
-			if (passport.status == Passport.Status.Active) {
-				// すでにポイパス加入していたら、チケット１枚追加
-				PoiTicket ticket = new PoiTicket(toUserId);
-				ticket.add(1);
-			} else {
-				// ポイパスに加入していなかったら、ポイパスONする（チケットは追加しない）
-				if (!passport.exists) {
-					passport.courseId = 1;
-					passport.insert();
-				}
-				passport.activate();
+			giftPassport(toUserId);
+
+			// 贈った人にもポイチケ１枚
+			if (giftForMyself) {
+				PoiTicketGiftLog giftLogMyself = new PoiTicketGiftLog();
+				giftLogMyself.fromUserId = 2;
+				giftLogMyself.toUserId = fromUserId;
+				giftLogMyself.orderId = order.id;
+				giftLogMyself.insert();
+				giftPassport(fromUserId);
 			}
 
 			m_nErrCode = ERR_NONE;

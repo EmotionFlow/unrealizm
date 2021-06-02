@@ -338,7 +338,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 
 	<%if(!isNotMember){%>
 	<div class="SettingListItem">
-		<div class="SettingListTitle">今月分の支払い</div>
+		<div class="SettingListTitle">今月分のお支払</div>
 		<%if(payment.exists){%>
 			<%if(payment.by == PassportPayment.By.Ticket){%>
 			ストックされていたチケットが使用されました。

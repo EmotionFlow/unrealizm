@@ -9,6 +9,23 @@ function _getGiftIntroductionHtml(nickName){
 	.GiftIntroDlgInfo ol {padding-inline-start: 25px;}
 	.swal2-popup .swal2-footer {font-size: 0.75em;}
 	.swal2-popup .swal2-actions {margin-top: 0}
+	.GiftCampaignInfo {
+		margin-top: 23px;
+		margin-bottom: 18px;
+		font-size: 13px;
+		padding: 8px;
+		width: 95%;
+		border: 1px solid #3185d6;
+		border-radius: 5px;
+		text-align: left;
+		color: #000000;
+	}
+	.GiftCampaignTitle {
+		font-weight: 400;
+		text-align: center;
+		font-size: 14px;
+		color: #3185d6;
+	}
 </style>
 <div class="GiftIntroDlg">
 
@@ -18,15 +35,23 @@ function _getGiftIntroductionHtml(nickName){
 </div>
 <div class="GiftIntroDlgInfo">
 <ul>
-	<li>300円で1ヶ月分(初月は月末まで)のポイパスをONにできるチケットをプレゼントできます。</li>
-	<li>匿名でのプレゼントです。贈ったことは通知されますが、ユーザー情報は伝わりません。</li>
-	<li>相手がすでにポイピク加入中の場合、翌月以降1ヶ月分課金されなくなります。</li>
-	<li>チケットは換金できません。</li>
+	<li>任意のユーザーに、ポイパスをONにするチケットをプレゼントできます。</li>
+	<li>チケットは換金できません。投げ銭ではありません。</li>
+	<li>匿名です。おふせされたことは通知されますが、ユーザー情報は伝わりません。</li>
+	<li>相手がポイパスOFFの場合、本日〜月末までポイパスがONになります。すでにONの場合、翌月以降１ヶ月分が課金なしになります。</li>
 </ul>
 </div>
 
 <div class="GiftIntroDlgInfo" style="margin-top: 11px; font-size: 11px;">
-	<p>ポイパスとは、広告を非表示にしたり、定期ツイートをしたりして、ポイピクをより快適にお楽しみいただける付加サービスです。</p>
+	<p><a style="color: inherit; text-decoration: underline" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">ポイパスとは</a>、広告非表示や絵文字100連打など、ポイピクをよりお楽しみいただける付加サービスです。１日〜末日の１ヶ月単位で加入できます。</p>
+</div>
+
+<div class="GiftCampaignInfo">
+	<div class="GiftCampaignTitle">限定キャンペーン<br>おふせした側にもチケットプレゼント！</div>
+	<p>おふせをする毎に、あなたにもチケットが１枚プレゼントされます！</p>
+	<p>人数や回数の制限はありません。おふせをした分だけ、自分のチケットが増えてゆきます。</p>
+	<p>現在ポイパスOFFの方は、おふせをすると同時にONに切り替わります。</p>
+	<p>期間：6/30まで（予定数を超えた場合は早期に終了することがあります）</p>
 </div>
 
 <%if(!isApp){%>
