@@ -778,12 +778,6 @@ public final class CTweet {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			strSql = "DELETE FROM twitter_friends WHERE user_id=?";
-			cState = connection.prepareStatement(strSql);
-			cState.setInt(1, userId);
-			cState.executeUpdate();
-			cState.close();cState=null;
-
 			strSql = "DELETE FROM twitter_lists WHERE user_id=?";
 			cState = connection.prepareStatement(strSql);
 			cState.setInt(1, userId);
