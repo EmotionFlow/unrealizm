@@ -155,9 +155,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<%}%>
 
 						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
-						<%if(checkLogin.isStaff()){%>
 						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
-						<%}%>
 
 						<%if(!cResults.m_bOwner) {%>
 						<span class="IllustItemCommandSub">

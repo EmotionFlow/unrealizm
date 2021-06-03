@@ -478,42 +478,42 @@ public final class CTweet {
 	}
 
 	public void updateDBFollowInfoFromTwitter(int userId) {
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 
 		// twitter_user_id取得
-		long twitter_userId = -1;
+		long twitterUserId = -1;
 		if(userId==m_nUserId) {
-			twitter_userId=m_lnTwitterUserId;
-		} else  if(userId==m_nLastTargetUserId) {
-			twitter_userId=m_lnLastTwitterTargetUserId;
+			twitterUserId=m_lnTwitterUserId;
+		} else if(userId==m_nLastTargetUserId) {
+			twitterUserId=m_lnLastTwitterTargetUserId;
 		} else {
 			try {
-				cConn = DatabaseUtil.dataSource.getConnection();
-				strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, userId);
-				cState.setInt(2, Common.TWITTER_PROVIDER_ID);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()){
-					twitter_userId = Long.parseLong(cResSet.getString("twitter_user_id"));
+				connection = DatabaseUtil.dataSource.getConnection();
+				sql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, userId);
+				statement.setInt(2, Common.TWITTER_PROVIDER_ID);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()){
+					twitterUserId = Long.parseLong(resultSet.getString("twitter_user_id"));
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			} catch (Exception e) {
 				e.printStackTrace();
 			} finally {
-				try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
-				try {if(cState!=null)cState.close();}catch(Exception e){}
-				try {if(cConn!=null)cConn.close();}catch(Exception e){}
+				try {if(resultSet!=null)resultSet.close();}catch(Exception e){}
+				try {if(statement!=null)statement.close();}catch(Exception e){}
+				try {if(connection!=null)connection.close();}catch(Exception e){}
 			}
 		}
-		if(twitter_userId==-1) return;
+		if(twitterUserId==-1) return;
 
 		// userIdがフォローしているIDをTwitterから取得
-		ArrayList<Long> id_list = new ArrayList<>(); // エラーが起きてもそれまで取れたものがあれば続行
+		ArrayList<Long> followIdList = new ArrayList<>(); // エラーが起きてもそれまで取れたものがあれば続行
 		try {
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
@@ -525,52 +525,53 @@ public final class CTweet {
 			Twitter twitter = tf.getInstance();
 			long cursor = -1;
 			do {
-				IDs ids = twitter.getFriendsIDs(twitter_userId, cursor);
+				IDs ids = twitter.getFriendsIDs(twitterUserId, cursor);
 				for (long id : ids.getIDs()) {
-					id_list.add(id);
+					followIdList.add(id);
 				}
 				cursor = ids.getNextCursor();
 			} while(cursor>=0 && cursor<GET_FRIEND_MAX);
 		} catch (Exception e) {
-			Log.d("getFriendsIDs Limit error : " + twitter_userId + "," + id_list.size());
+			Log.d("getFriendsIDs Limit error : " + twitterUserId + "," + followIdList.size());
 			//e.printStackTrace();
 		}
-		if(id_list.isEmpty()) return;
+		if(followIdList.isEmpty()) return;
 
 		// 取れたものを追加
 		try {
-			cConn = DatabaseUtil.dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
+
 			// 古いものを削除
-			strSql = "DELETE FROM twitter_follows WHERE user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setLong(1, userId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			sql = "DELETE FROM twitter_friends WHERE user_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setLong(1, userId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 			// 新しく追加
-			strSql = "INSERT INTO twitter_follows(user_id, twitter_user_id, twitter_follow_user_id) "
+			sql = "INSERT INTO twitter_friends(user_id, twitter_user_id, twitter_follow_user_id) "
 					+ "VALUES (?, ?, ?) ON CONFLICT (user_id, twitter_follow_user_id) DO UPDATE SET last_update_date=CURRENT_TIMESTAMP;";
-			cState = cConn.prepareStatement(strSql);
-			for(long id: id_list) {
-				cState.setInt(1, userId);
-				cState.setLong(2, m_lnTwitterUserId);
-				cState.setLong(3, id);
-				cState.executeUpdate();
+			statement = connection.prepareStatement(sql);
+			for(long id: followIdList) {
+				statement.setInt(1, userId);
+				statement.setLong(2, m_lnTwitterUserId);
+				statement.setLong(3, id);
+				statement.executeUpdate();
 			}
-			cState.close();cState=null;
+			statement.close();statement=null;
 			// ポイピク上のuser_id紐付け
-			strSql = "UPDATE twitter_follows SET follow_user_id=fldUserId FROM tbloauth "
-					+ "WHERE twitter_follows.twitter_follow_user_id=cast(tbloauth.twitter_user_id as bigint) "
+			sql = "UPDATE twitter_friends SET follow_user_id=fldUserId FROM tbloauth "
+					+ "WHERE twitter_friends.twitter_follow_user_id=cast(tbloauth.twitter_user_id as bigint) "
 					+ "AND follow_user_id IS NULL AND user_id=? AND del_flg=false";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, userId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {if(cResSet!=null)cResSet.close();}catch(Exception e){}
-			try {if(cState!=null)cState.close();}catch(Exception e){}
-			try {if(cConn!=null)cConn.close();}catch(Exception e){}
+			try {if(resultSet!=null)resultSet.close();}catch(Exception e){}
+			try {if(statement!=null)statement.close();}catch(Exception e){}
+			try {if(connection!=null)connection.close();}catch(Exception e){}
 		}
 	}
 
@@ -770,12 +771,6 @@ public final class CTweet {
 		String strSql = "";
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-
-			strSql = "DELETE FROM twitter_follows WHERE user_id=?";
-			cState = connection.prepareStatement(strSql);
-			cState.setInt(1, userId);
-			cState.executeUpdate();
-			cState.close();cState=null;
 
 			strSql = "DELETE FROM twitter_friends WHERE user_id=?";
 			cState = connection.prepareStatement(strSql);

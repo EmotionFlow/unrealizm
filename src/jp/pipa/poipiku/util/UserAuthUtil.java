@@ -806,26 +806,27 @@ public class UserAuthUtil {
 
 					CTweet tweet = new CTweet();
 					String strTwEmail = null;
-					if(tweet.GetResults(nUserId) && (strTwEmail = tweet.GetEmailAddress()) != null){
-						strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, strTwEmail);
-						cResSet = cState.executeQuery();
-						boolean bEmailRegistered = cResSet.next();
-						cResSet.close();cResSet=null;
-						cState.close();cState=null;
-
-						if(!bEmailRegistered) {
-							strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+					if(tweet.GetResults(nUserId)) {
+						if ((strTwEmail = tweet.GetEmailAddress()) != null) {
+							strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 							cState = cConn.prepareStatement(strSql);
 							cState.setString(1, strTwEmail);
-							cState.setInt(2, nUserId);
-							cState.executeUpdate();
+							cResSet = cState.executeQuery();
+							boolean bEmailRegistered = cResSet.next();
+							cResSet.close();cResSet=null;
 							cState.close();cState=null;
-						}
-					}
 
-					tweet.updateDBFollowInfoFromTwitter(nUserId);
+							if(!bEmailRegistered) {
+								strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
+								cState = cConn.prepareStatement(strSql);
+								cState.setString(1, strTwEmail);
+								cState.setInt(2, nUserId);
+								cState.executeUpdate();
+								cState.close();cState=null;
+							}
+						}
+						tweet.updateDBFollowInfoFromTwitter(nUserId);
+					}
 
 					Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
 					cLK.setMaxAge(Integer.MAX_VALUE);

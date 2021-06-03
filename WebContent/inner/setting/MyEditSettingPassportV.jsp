@@ -326,7 +326,6 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		</div>
 	</div>
 
-	<%if(checkLogin.isStaff()){%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle">チケット: <%=ticket.exists?ticket.amount:0%>枚</div>
 		チケットは他の方からのおふせ(β)でストックされ、１枚で１ヶ月分、ポイパスがONになります。（初回は適用日〜月末まで）
@@ -347,7 +346,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				クレジットカードへ課金はありません。
 				<%}%>
 			<%}else if(payment.by == PassportPayment.By.CreditCard){%>
-			25日に指定されているクレジットカードに課金されます。(初回は加入日)
+			初回は加入日、翌月からは毎月25日に、指定のクレジットカードに課金されます。
 			<%}else{%>
 			処理中です。(毎月1日6時頃更新)
 			<%}%>
@@ -355,7 +354,6 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		処理中です。(毎月1日6時頃更新)
 		<%}%>
 	</div>
-	<%}%>
 	<%}%>
 
 	<div class="SettingListItem">
