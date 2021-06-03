@@ -93,34 +93,27 @@ public final class RegisteredNotifier extends Notifier {
 
 			for (NewUserFollower newUserFollower : newUserFollowerList) {
 				// メール本文生成
-//				String mailSubject = getSubject("twitter_follower", newUserFollower.follower.langLabel);
-//
-//				VelocityContext context = new VelocityContext();
-//				context.put("to_name", newUserFollower.follower.nickname);
-//				context.put("recommend_users", newUserFollower.newUsers);
-//
-//				Template template = getBodyTemplate("twitter_follower", newUserFollower.follower.langLabel);
-//				String mailBody = merge(template, context);
-//
-//				// 配信
-//				notifyByEmail(newUserFollower.follower, mailSubject, mailBody);
+				String mailSubject = getSubject("twitter_follower", newUserFollower.follower.langLabel);
 
-				// 配信日時更新
-//				sql = "UPDATE users_0000 SET last_dm_delivery_date=current_timestamp WHERE user_id=?";
-//				statement = connection.prepareStatement(sql);
-//				statement.setInt(1, newUserFollower.follower.id);
-//				statement.executeUpdate();
-//				statement.close();
+				VelocityContext context = new VelocityContext();
+				context.put("to_name", newUserFollower.follower.nickname);
+				context.put("recommend_users", newUserFollower.newUsers);
+
+				Template template = getBodyTemplate("twitter_follower", newUserFollower.follower.langLabel);
+				String mailBody = merge(template, context);
+
+				// 配信
+				notifyByEmail(newUserFollower.follower, mailSubject, mailBody);
 
 				// Amazon SES Maximum send rate is
 				// 14 emails per second
-//				Thread.sleep(100);
+				Thread.sleep(100);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Log.d(sql);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		} finally {
 			if(resultSet!=null){try{resultSet.close();}catch(SQLException ignored){}};
 			if(statement!=null){try{statement.close();}catch(SQLException ignored){}};
