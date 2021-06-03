@@ -212,9 +212,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<%}%>
 						
 						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
-						<%if(checkLogin.isStaff()){%>
 						<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
-						<%}%>
 
 						<span class="IllustItemCommandSub">
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
