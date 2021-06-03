@@ -30,7 +30,7 @@ public class NotifyTwitterFollowerRegistered extends Batch {
 			resultSet.next();
 			userIdTo = resultSet.getInt(1);
 
-			userIdFrom = userIdTo;
+//			userIdFrom = userIdTo;
 
 			Log.d(String.format("%d - %d", userIdFrom, userIdTo));
 

@@ -1,6 +1,5 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -11,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public final class RegisteredNotifier extends Notifier {
@@ -38,20 +36,20 @@ public final class RegisteredNotifier extends Notifier {
 					"SELECT flduserid, cast(twitter_user_id AS bigint) twitter_user_id_bigint FROM tbloauth WHERE" +
 					"            flduserid >= ? AND flduserid <= ? AND del_flg = false" +
 					")," +
-					" followers AS (" +
+					"followers AS (" +
 					"    SELECT twitter_friends.user_id follower_user_id, new_users.flduserid new_user_id" +
 					"    FROM twitter_friends" +
 					"    INNER JOIN new_users ON twitter_friends.twitter_follow_user_id = new_users.twitter_user_id_bigint" +
 					")" +
-					" SELECT f_users.user_id f_user_id, f_users.nickname f_nickname, f_users.email f_email, f_users.lang_id f_lang_id," +
-					"       new_users.user_id n_user_id, new_users.nickname n_nickname, new_users.profile n_profile" +
-					" FROM followers" +
-					"         LEFT JOIN users_0000 f_users ON f_users.user_id=followers.follower_user_id" +
-					"         LEFT JOIN users_0000 new_users ON new_users.user_id=followers.new_user_id" +
-					"         LEFT JOIN temp_emails_0000 t ON t.user_id = followers.follower_user_id" +
-					"       WHERE f_users.email LIKE '%@%'" +
-					"         AND t.hash_key IS NULL" +
-					" ORDER BY f_users.user_id, new_users.user_id;";
+					" SELECT f.user_id f_user_id, f.nickname f_nickname, f.email f_email, f.lang_id f_lang_id," +
+					"   n.user_id n_user_id, n.nickname n_nickname, n.profile n_profile" +
+					" FROM followers fol" +
+					"   LEFT JOIN users_0000 f ON f.user_id=fol.follower_user_id" +
+					"   LEFT JOIN users_0000 n ON n.user_id=fol.new_user_id" +
+					" WHERE f.email LIKE '%@%'" +
+					"   AND f.user_id NOT IN (SELECT user_id FROM temp_emails_0000)" +
+					"   AND f.email NOT IN (SELECT email FROM temp_emails_0000)" +
+					" ORDER BY f_user_id, n_user_id;";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, newUserIdFrom);
 			statement.setInt(2, newUserIdTo);
@@ -95,17 +93,17 @@ public final class RegisteredNotifier extends Notifier {
 
 			for (NewUserFollower newUserFollower : newUserFollowerList) {
 				// メール本文生成
-				String mailSubject = getSubject("twitter_follower", newUserFollower.follower.langLabel);
-
-				VelocityContext context = new VelocityContext();
-				context.put("to_name", newUserFollower.follower.nickname);
-				context.put("recommend_users", newUserFollower.newUsers);
-
-				Template template = getBodyTemplate("twitter_follower", newUserFollower.follower.langLabel);
-				String mailBody = merge(template, context);
-
-				// 配信
-				notifyByEmail(newUserFollower.follower, mailSubject, mailBody);
+//				String mailSubject = getSubject("twitter_follower", newUserFollower.follower.langLabel);
+//
+//				VelocityContext context = new VelocityContext();
+//				context.put("to_name", newUserFollower.follower.nickname);
+//				context.put("recommend_users", newUserFollower.newUsers);
+//
+//				Template template = getBodyTemplate("twitter_follower", newUserFollower.follower.langLabel);
+//				String mailBody = merge(template, context);
+//
+//				// 配信
+//				notifyByEmail(newUserFollower.follower, mailSubject, mailBody);
 
 				// 配信日時更新
 //				sql = "UPDATE users_0000 SET last_dm_delivery_date=current_timestamp WHERE user_id=?";
@@ -116,13 +114,13 @@ public final class RegisteredNotifier extends Notifier {
 
 				// Amazon SES Maximum send rate is
 				// 14 emails per second
-				Thread.sleep(100);
+//				Thread.sleep(100);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Log.d(sql);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
 		} finally {
 			if(resultSet!=null){try{resultSet.close();}catch(SQLException ignored){}};
 			if(statement!=null){try{statement.close();}catch(SQLException ignored){}};
