@@ -547,9 +547,12 @@ public final class CTweet {
 			statement.setLong(1, userId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
 			// 新しく追加
-			sql = "INSERT INTO twitter_friends(user_id, twitter_user_id, twitter_follow_user_id) "
-					+ "VALUES (?, ?, ?) ON CONFLICT (user_id, twitter_follow_user_id) DO UPDATE SET last_update_date=CURRENT_TIMESTAMP;";
+			sql = "INSERT INTO twitter_friends(user_id, twitter_user_id, twitter_follow_user_id) " +
+					" VALUES (?, ?, ?)" +
+					" ON CONFLICT (user_id, twitter_follow_user_id)" +
+					" DO UPDATE SET last_update_date=CURRENT_TIMESTAMP;";
 			statement = connection.prepareStatement(sql);
 			for(long id: followIdList) {
 				statement.setInt(1, userId);
@@ -558,14 +561,35 @@ public final class CTweet {
 				statement.executeUpdate();
 			}
 			statement.close();statement=null;
+
 			// ポイピク上のuser_id紐付け
-			sql = "UPDATE twitter_friends SET follow_user_id=fldUserId FROM tbloauth "
-					+ "WHERE twitter_friends.twitter_follow_user_id=cast(tbloauth.twitter_user_id as bigint) "
-					+ "AND follow_user_id IS NULL AND user_id=? AND del_flg=false";
+			sql = "UPDATE twitter_friends" +
+					" SET follow_user_id=fldUserId" +
+					" FROM tbloauth " +
+					" WHERE twitter_friends.twitter_follow_user_id=cast(tbloauth.twitter_user_id as bigint) " +
+					" AND follow_user_id IS NULL AND user_id=? AND del_flg=false";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, userId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+			// 既存レコードに自分のTwitterIDがあったらUPDATE
+			sql = "UPDATE twitter_friends" +
+					" SET follow_user_id = ?" +
+					" WHERE twitter_follow_user_id = (" +
+					"    SELECT CAST(tbloauth.twitter_user_id AS bigint)" +
+					"    FROM tbloauth" +
+					"    WHERE flduserid = ?" +
+					"      AND del_flg = FALSE" +
+					"    ORDER BY id DESC" +
+					"    LIMIT 1" +
+					")";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			statement.setInt(2, userId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -1,5 +1,6 @@
 package jp.pipa.poipiku;
 
+import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -14,40 +15,17 @@ import java.util.Iterator;
 import java.util.List;
 
 public final class RegisteredNotifier extends Notifier {
-	private static final int MAX_RECOMMENDED_USERS = 10;
-
-	public static class RecommendedUser {
-		public int userId = -1;
-		public String nickname = "";
-		public String profile = "";
-		public Integer requestCreatorStatus = null;
-
-		public String getNickname(){
-			return nickname;
-		}
-		public int getUserId(){
-			return userId;
-		}
-		public String getProfile(){
-			if (profile.isEmpty()) return "";
-			String[] lines = profile.split("\n");
-			String line = lines[0];
-			if (lines.length > 1) {
-				line += " " + lines[1];
-			}
-			return line;
-		}
-		public int getRequestCreatorStatus(){
-			return requestCreatorStatus;
-		}
-	}
-
 	public RegisteredNotifier() {
-		CATEGORY = "recommended";
-		NOTIFICATION_INFO_TYPE = Common.NOTIFICATION_TYPE_REQUEST_STARTED;
+		CATEGORY = "register";
 	}
 
-	public boolean notifyToMyTwitterFollower(DataSource dataSource, int userId) {
+	private static class NewUserFollower {
+		User follower = new User();
+		List<RecommendedUser> newUsers = new ArrayList<>();
+	}
+
+	// Twitterで自分をフォローしているユーザーに、自分がポイピクを始めたことをメールする。
+	public boolean notifyToMyTwitterFollower(DataSource dataSource, int newUserIdFrom, int newUserIdTo) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -56,138 +34,85 @@ public final class RegisteredNotifier extends Notifier {
 		boolean result = false;
 		try {
 			connection = dataSource.getConnection();
-			// Twitterで自分をフォローしているユーザー
-			sql = "SELECT user_id, email, nickname, lang_id, last_login_date" +
-					" FROM users_0000" +
-					" WHERE last_login_date < CURRENT_TIMESTAMP - INTERVAL '1 month'" +
-					"  AND (last_dm_delivery_date IS NULL OR last_dm_delivery_date < CURRENT_TIMESTAMP - INTERVAL '1 week')" +
-					"  AND email IS NOT NULL" +
-					"  AND email LIKE '%@%'" +
-					"  AND user_id NOT IN (SELECT user_id FROM temp_emails_0000)" +
-					" ORDER BY last_login_date DESC LIMIT 500;";
+			sql = "WITH new_users AS (" +
+					"SELECT flduserid, cast(twitter_user_id AS bigint) twitter_user_id_bigint FROM tbloauth WHERE" +
+					"            flduserid >= ? AND flduserid <= ? AND del_flg = false" +
+					")," +
+					" followers AS (" +
+					"    SELECT twitter_friends.user_id follower_user_id, new_users.flduserid new_user_id" +
+					"    FROM twitter_friends" +
+					"    INNER JOIN new_users ON twitter_friends.twitter_follow_user_id = new_users.twitter_user_id_bigint" +
+					")" +
+					" SELECT f_users.user_id f_user_id, f_users.nickname f_nickname, f_users.email f_email, f_users.lang_id f_lang_id," +
+					"       new_users.user_id n_user_id, new_users.nickname n_nickname, new_users.profile n_profile" +
+					" FROM followers" +
+					"         LEFT JOIN users_0000 f_users ON f_users.user_id=followers.follower_user_id" +
+					"         LEFT JOIN users_0000 new_users ON new_users.user_id=followers.new_user_id" +
+					"         LEFT JOIN temp_emails_0000 t ON t.user_id = followers.follower_user_id" +
+					"       WHERE f_users.email LIKE '%@%'" +
+					"         AND t.hash_key IS NULL" +
+					" ORDER BY f_users.user_id, new_users.user_id;";
 			statement = connection.prepareStatement(sql);
+			statement.setInt(1, newUserIdFrom);
+			statement.setInt(2, newUserIdTo);
 			resultSet = statement.executeQuery();
-			List<User> deliveryTargets = new ArrayList<>();
-			while (resultSet.next()) {
-				User u = new User();
-				u.id = resultSet.getInt("user_id");
-				u.email = resultSet.getString("email");
-				u.nickname = resultSet.getString("nickname");
-				u.langId = resultSet.getInt("lang_id");
-				u.setLangLabel();
-				deliveryTargets.add(u);
+
+			List<NewUserFollower> newUserFollowerList = new ArrayList<>();
+			{
+				int uid = -1;
+				NewUserFollower newUserFollower = null;
+				while (resultSet.next()) {
+					if (uid != resultSet.getInt("f_user_id")) {
+						uid = resultSet.getInt("f_user_id");
+						newUserFollower = new NewUserFollower();
+						User follower = new User();
+						follower.id = resultSet.getInt("f_user_id");
+						follower.email = resultSet.getString("f_email");
+						follower.nickname = resultSet.getString("f_nickname");
+						follower.langId = resultSet.getInt("f_lang_id");
+						follower.setLangLabel();
+						newUserFollower.follower = follower;
+						newUserFollowerList.add(newUserFollower);
+					}
+					RecommendedUser newUser = new RecommendedUser();
+					newUser.userId = resultSet.getInt("n_user_id");
+					newUser.nickname = resultSet.getString("n_nickname");
+					newUser.profile = resultSet.getString("n_profile");
+					if (newUserFollower != null) {
+						newUserFollower.newUsers.add(newUser);
+					}
+				}
 			}
 			resultSet.close();
 			statement.close();
 
-			if (deliveryTargets.isEmpty()) {
+			if (newUserFollowerList.isEmpty()) {
 				Log.d("配信対象なし");
 				return true;
+			} else {
+				Log.d(String.format("配信数 %d", newUserFollowerList.size()));
 			}
 
-			for (User targetUser : deliveryTargets) {
-				// Twitterでフォローしているが、こそフォロしていないユーザー
-				// Twitterでフォローしているが、こそフォロしていないユーザーのうち、リクエスト募集しているユーザー
-				sql = "WITH" +
-						" poipiku_followers AS (" +
-						"    SELECT follow_user_id" +
-						"    FROM follows_0000" +
-						"    WHERE user_id = ?" +
-						")," +
-						" not_following_users AS (" +
-						"    SELECT follow_user_id" +
-						"    FROM twitter_follows" +
-						"    WHERE user_id = ?" +
-						"      AND follow_user_id IS NOT NULL" +
-						"      AND follow_user_id NOT IN (SELECT * FROM poipiku_followers)" +
-						")" +
-						" SELECT u.user_id, nickname, u.profile, rc.status" +
-						" FROM users_0000 u" +
-						"         INNER JOIN not_following_users ON u.user_id = not_following_users.follow_user_id" +
-						"         INNER JOIN (SELECT user_id, COUNT(*) cnt FROM contents_0000 GROUP BY user_id) content_cnt" +
-						"                    ON u.user_id = content_cnt.user_id" +
-						"         LEFT JOIN request_creators rc ON u.user_id = rc.user_id" +
-						" ORDER BY content_cnt.cnt DESC;";
-
-				statement = connection.prepareStatement(sql);
-				statement.setInt(1, targetUser.id);
-				statement.setInt(2, targetUser.id);
-				resultSet = statement.executeQuery();
-				List<RecommendedUser> recommendedUsers = new ArrayList<>();
-				while (resultSet.next()) {
-					RecommendedUser user = new RecommendedUser();
-					user.userId = resultSet.getInt("user_id");
-					user.nickname = resultSet.getString("nickname");
-					user.profile = resultSet.getString("profile");
-					user.requestCreatorStatus = resultSet.getInt("status");
-					recommendedUsers.add(user);
-					if (recommendedUsers.size()>=MAX_RECOMMENDED_USERS) {
-						break;
-					}
-				}
-				resultSet.close();
-				statement.close();
-
-				if (recommendedUsers.size()<MAX_RECOMMENDED_USERS) {
-					List<RecommendedUser> popularUsers = new ArrayList<>();
-					sql = "WITH populars AS (" +
-							"    SELECT user_id" +
-							"    FROM rank_contents_total" +
-							"    ORDER BY add_date DESC" +
-							"    LIMIT 100" +
-							")" +
-							"   , sorted_users AS (" +
-							"    SELECT c.user_id" +
-							"    FROM contents_0000 c" +
-							"    WHERE c.user_id IN (SELECT * FROM populars)" +
-							"      AND publish_id = 0" +
-							"    GROUP BY c.user_id" +
-							"    ORDER BY COUNT(*) DESC" +
-							")" +
-							"SELECT u.user_id, u.nickname, u.profile, rc.status" +
-							" FROM users_0000 u" +
-							"         LEFT JOIN request_creators rc ON u.user_id = rc.user_id" +
-							" WHERE u.user_id IN (SELECT * FROM sorted_users)" +
-							" AND u.user_id NOT IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?)";
-					statement = connection.prepareStatement(sql);
-					statement.setInt(1, targetUser.id);
-					resultSet = statement.executeQuery();
-					while (resultSet.next()) {
-						RecommendedUser user = new RecommendedUser();
-						user.userId = resultSet.getInt("user_id");
-						user.nickname = resultSet.getString("nickname");
-						user.profile = resultSet.getString("profile");
-						user.requestCreatorStatus = resultSet.getInt("status");
-						popularUsers.add(user);
-					}
-					resultSet.close();
-					statement.close();
-
-					Iterator<RecommendedUser> it = popularUsers.iterator();
-					while (recommendedUsers.size()<MAX_RECOMMENDED_USERS && it.hasNext()) {
-						recommendedUsers.add(it.next());
-					}
-				}
-
+			for (NewUserFollower newUserFollower : newUserFollowerList) {
 				// メール本文生成
-				String mailSubject = getSubject("users", targetUser.langLabel);
+				String mailSubject = getSubject("twitter_follower", newUserFollower.follower.langLabel);
 
 				VelocityContext context = new VelocityContext();
-				context.put("to_name", targetUser.nickname);
-				context.put("recommend_users", recommendedUsers);
+				context.put("to_name", newUserFollower.follower.nickname);
+				context.put("recommend_users", newUserFollower.newUsers);
 
-				Template template = getBodyTemplate("users", targetUser.langLabel);
+				Template template = getBodyTemplate("twitter_follower", newUserFollower.follower.langLabel);
 				String mailBody = merge(template, context);
 
 				// 配信
-				notifyByEmail(targetUser, mailSubject, mailBody);
+				notifyByEmail(newUserFollower.follower, mailSubject, mailBody);
 
 				// 配信日時更新
-				sql = "UPDATE users_0000 SET last_dm_delivery_date=current_timestamp WHERE user_id=?";
-				statement = connection.prepareStatement(sql);
-				statement.setInt(1, targetUser.id);
-				statement.executeUpdate();
-				statement.close();
+//				sql = "UPDATE users_0000 SET last_dm_delivery_date=current_timestamp WHERE user_id=?";
+//				statement = connection.prepareStatement(sql);
+//				statement.setInt(1, newUserFollower.follower.id);
+//				statement.executeUpdate();
+//				statement.close();
 
 				// Amazon SES Maximum send rate is
 				// 14 emails per second
