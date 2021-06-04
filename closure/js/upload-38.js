@@ -672,14 +672,26 @@ function updatePublish(nUserId) {
 
 	const nSlideSpeed = 300;
 	const nChangeDelay = 150;
-	const elements = [$('#ItemTwitterList'), $('#ItemPassword'), $('#PublishHiddenInfo')];
+	const elements = [
+		$('#ItemTwitterList'),
+		$('#ItemPassword'),
+		$('#PublishFollowerInfo'),
+		$('#PublishLoginInfo'),
+		$('#PublishHiddenInfo')
+	];
 
-	if (val===4 || val===10 || val===11 | val===99){
+	if (val===4 || val===5 || val===6 || val===10 || val===11 || val===99 ){
 		let elToHide = null;
 		let elToVisible = null;
 		switch (val) {
 			case 4:
 				elToVisible = $('#ItemPassword');
+				break;
+			case 5:
+				elToVisible = $('#PublishLoginInfo');
+				break;
+			case 6:
+				elToVisible = $('#PublishFollowerInfo');
 				break;
 			case 10:
 				elToVisible = $('#ItemTwitterList');

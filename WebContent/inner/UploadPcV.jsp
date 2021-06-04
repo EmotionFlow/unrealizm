@@ -38,7 +38,7 @@ if (requestId > 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-37.js" type="text/javascript"></script>
+		<script src="/js/upload-38.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -328,14 +328,14 @@ if (requestId > 0) {
 								<option value="<%=Common.PUBLISH_ID_R15%>"><%=_TEX.T("UploadFilePc.Option.Publish.R15")%></option>
 								<option value="<%=Common.PUBLISH_ID_R18%>"><%=_TEX.T("UploadFilePc.Option.Publish.R18")%></option>
 								<option value="<%=Common.PUBLISH_ID_PASS%>"><%=_TEX.T("UploadFilePc.Option.Publish.Pass")%></option>
-								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
-								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
 								<%if(cTweet.m_bIsTweetEnable){%>
 								<option value="<%=Common.PUBLISH_ID_T_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follower")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_FOLLOWEE%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Followee")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_EACH%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Each")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
 								<%}//if(cTweet.m_bIsTweetEnable)%>
+								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
+								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
 								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
 							</select>
 						</div>
@@ -345,6 +345,18 @@ if (requestId > 0) {
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish" style="font-size: 11px;">
 							<%=_TEX.T("UploadFilePc.Option.Publish.HiddenInfo")%>
+						</div>
+					</div>
+					<div id="PublishFollowerInfo" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish" style="font-size: 11px;">
+							<%=_TEX.T("UploadFilePc.Option.Publish.FollowerInfo")%>
+						</div>
+					</div>
+					<div id="PublishLoginInfo" style="display: none;">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish" style="font-size: 11px;">
+							<%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%>
 						</div>
 					</div>
 
