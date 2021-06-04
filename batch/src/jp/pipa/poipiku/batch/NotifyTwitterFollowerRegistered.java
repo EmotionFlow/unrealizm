@@ -7,9 +7,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class NotifyTwitterFollowerRegistered extends Batch {
+	// 配信時間帯
+	private static final int[] DELIVERY_TIME = {1, 23};
+
 	public static void main(String[] args) {
+		// 配信時間帯外だったら何もしない
+		LocalDateTime now = LocalDateTime.now();
+		if (!(DELIVERY_TIME[0] < now.getHour() && now.getHour() < DELIVERY_TIME[1])) {
+			Log.d("配信時間外");
+			return;
+		}
+
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
