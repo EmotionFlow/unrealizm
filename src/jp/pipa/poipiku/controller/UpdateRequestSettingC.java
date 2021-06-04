@@ -53,7 +53,7 @@ public final class UpdateRequestSettingC extends Controller{
 		    statement = connection.prepareStatement(strSql);
 		    resultSet = statement.executeQuery();
 		    if(resultSet.next()){
-			    if ( resultSet.getInt(1) - checkLogin.m_nUserId < 5000){
+			    if ( resultSet.getInt(1) - checkLogin.m_nUserId < 10){
 			    	return false;
 			    }
 		    } else {
