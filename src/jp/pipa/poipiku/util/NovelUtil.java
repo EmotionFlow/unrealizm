@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 import jp.pipa.poipiku.*;
 
 public class NovelUtil {
-	public static String genarateHtml(String strTitle, String strBody, String strCoverFilePath) {
+	public static String genarateHtml(String title, String textBody, String coverFilePath) {
 		String strRtn = "";
 
 		try {
-			strBody = Util.toStringHtmlTextarea(strBody);
+			textBody = Util.toStringHtmlTextarea(textBody);
 			StringBuilder sbHtml = new StringBuilder();
 
 			// ページの始まり
@@ -18,18 +18,18 @@ public class NovelUtil {
 
 
 			// 表紙
-			if(!strCoverFilePath.isEmpty()) {
-				sbHtml.append(String.format("<div class=\"NovelCover\"><img class=\"NovelCoverImage\" src=\"%s\" /></div>", strCoverFilePath));
+			if(!coverFilePath.isEmpty()) {
+				sbHtml.append(String.format("<div class=\"NovelCover\"><img class=\"NovelCoverImage\" src=\"%s\" /></div>", coverFilePath));
 			}
 
 
 			// タイトル
-			sbHtml.append(String.format("<span class=\"NovelTitle\">%s</span>", strTitle));
+			sbHtml.append(String.format("<span class=\"NovelTitle\">%s</span>", title));
 
 			// 目次
 			// 章の抽出
 			Pattern ptn = Pattern.compile("\\[chapter:(.+)\\]", Pattern.MULTILINE);
-			Matcher matcher = ptn.matcher(strBody);
+			Matcher matcher = ptn.matcher(textBody);
 			StringBuilder sbMenu = new StringBuilder();
 			int nSectionNum = 0;
 			while (matcher.find()) {
@@ -47,39 +47,39 @@ public class NovelUtil {
 
 			// 本文
 			// [newpage]
-			strBody = strBody.replaceAll("(?:\r\n|\n|\r)?\\[newpage\\](?:\r\n|\n|\r)?", "</div><div class=\"NovelSection\">");
+			textBody = textBody.replaceAll("(?:\r\n|\n|\r)?\\[newpage\\](?:\r\n|\n|\r)?", "</div><div class=\"NovelSection\">");
 
 			// [chapter:章タイトル]
-			strBody = strBody.replaceAll("(?:\r\n|\n|\r)?\\[chapter:(.+?)\\](?:\r\n|\n|\r)?", "<span class=\"NovelSectionTitle\">$1</span>");
+			textBody = textBody.replaceAll("(?:\r\n|\n|\r)?\\[chapter:(.+?)\\](?:\r\n|\n|\r)?", "<span class=\"NovelSectionTitle\">$1</span>");
 
 			// 傍点
-			strBody = strBody.replaceAll("《《(.+?)》》", "<span class=\"TextEmphasis\">$1</span>");
+			textBody = textBody.replaceAll("《《(.+?)》》", "<span class=\"TextEmphasis\">$1</span>");
 
 			// ルビ
 			// カクヨム文法：｜《ルビを入力…》
 			// pixiv文法：[[rb:漢字 > ふりがな]]
-			strBody = strBody
+			textBody = textBody
 					.replaceAll("[\\|｜](.+?)《(.+?)》", "<ruby>$1<rt>$2</rt></ruby>")
 					.replaceAll("([一-龠]+)《(.+?)》", "<ruby>$1<rt>$2</rt></ruby>")
 					.replaceAll("[\\|｜]《(.+?)》", "《$1》")
 				.replaceAll("\\[\\[rb:(.+?) &gt; (.+?)\\]\\]", "<ruby>$1<rt>$2</rt></ruby>");
 
 			// URL [[jumpuri:タイトル > リンク先URL]]
-			strBody = strBody.replaceAll("\\[\\[jumpuri:(.+?) &gt; (.+?)\\]\\]", "<a class=\"NovelUrl\" href=\"$2\" target=\"_blank\">$1</a>");
+			textBody = textBody.replaceAll("\\[\\[jumpuri:(.+?) &gt; (.+?)\\]\\]", "<a class=\"NovelUrl\" href=\"$2\" target=\"_blank\">$1</a>");
 
 			// 挿絵[image:イラストID]
-			strBody = strBody.replaceAll("\\[image:(.+?)\\]", "<span class=\"NovelArtWork\" data-iid=\"$1\"></span>");
+			textBody = textBody.replaceAll("\\[image:(.+?)\\]", "<span class=\"NovelArtWork\" data-iid=\"$1\"></span>");
 
 			// 名前[name:名前]
-			strBody = strBody.replaceAll("\\[name:(.+?)\\]", "<span class=\"NovelChangeName\">$1</span>");
+			textBody = textBody.replaceAll("\\[name:(.+?)\\]", "<span class=\"NovelChangeName\">$1</span>");
 
 			// 改行
-			strBody = strBody
+			textBody = textBody
 				.replace("\r\n", "\n")
 				.replace("\r", "\n")
 				.replace("\n", "<br />\n");
 			//
-			sbHtml.append(strBody);
+			sbHtml.append(textBody);
 
 
 			// ページの終わり <span class="NovelSection">
@@ -93,59 +93,67 @@ public class NovelUtil {
 		return strRtn;
 	}
 
-	public static String genarateHtmlShort(String strBody) {
+	public static String genarateHtmlShort(String title, String textBody, String coverFilePath) {
 		String strRtn = "";
 
 		try {
-			strBody = Util.toStringHtmlTextarea(strBody);
+			textBody = Util.toStringHtmlTextarea(textBody);
 			StringBuilder sbHtml = new StringBuilder();
 
-			String[] arrBody = Common.SubStrNum(strBody, 1000).replace("\r\n", "\n").replace("\r", "\n").split("\n");
+			String[] arrBody = Common.SubStrNum(textBody, 1000).replace("\r\n", "\n").replace("\r", "\n").split("\n");
 			int nLength = 0;
 			for(int nCnt=0; nCnt < arrBody.length; nCnt++) {
 				sbHtml.append(arrBody[nCnt]).append("\n");
 				nLength += arrBody[nCnt].length();
 				if(nLength>300) break;
 			}
-			strBody = sbHtml.toString();
+			textBody = sbHtml.toString();
 			sbHtml = new StringBuilder();
 
 			// ページの始まり
 			sbHtml.append("<div class=\"NovelSection\">");
 
+			// 表紙
+			if(!coverFilePath.isEmpty()) {
+				sbHtml.append(String.format("<div class=\"NovelCover\"><img class=\"NovelCoverImage\" src=\"%s\" /></div>", coverFilePath));
+			}
+
+			// タイトル
+			sbHtml.append(String.format("<span class=\"NovelTitle\">%s</span>", title));
+
 			// 本文
 			// [newpage]
-			strBody = strBody.replaceAll("(?:\r\n|\n|\r)?\\[newpage\\](?:\r\n|\n|\r)?", "</div><div class=\"NovelSection\">");
+			textBody = textBody.replaceAll("(?:\r\n|\n|\r)?\\[newpage\\](?:\r\n|\n|\r)?", "</div><div class=\"NovelSection\">");
 			//strBody = strBody.replaceAll("(?:\r\n|\n|\r)?\\[newpage\\](?:\r\n|\n|\r)?", "\n");
 
 			// [chapter:章タイトル]
-			strBody = strBody.replaceAll("(?:\r\n|\n|\r)?\\[chapter:(.+)\\](?:\r\n|\n|\r)?", "<span class=\"NovelSectionTitle\">$1</span>");
+			textBody = textBody.replaceAll("(?:\r\n|\n|\r)?\\[chapter:(.+)\\](?:\r\n|\n|\r)?", "<span class=\"NovelSectionTitle\">$1</span>");
 
 			// 傍点
-			strBody = strBody.replaceAll("《《(.+?)》》", "<span class=\"TextEmphasis\">$1</span>");
+			textBody = textBody.replaceAll("《《(.+?)》》", "<span class=\"TextEmphasis\">$1</span>");
 
 			// ルビ
 			// カクヨム文法：｜《ルビを入力…》
 			// pixiv文法：[[rb:漢字 > ふりがな]]
-			strBody = strBody
+			textBody = textBody
 				.replaceAll("[\\|｜](.+?)《(.+?)》", "<ruby>$1<rt>$2</rt></ruby>")
 				.replaceAll("([一-龠]+)《(.+?)》", "<ruby>$1<rt>$2</rt></ruby>")
 				.replaceAll("[\\|｜]《(.+?)》", "《$1》")
 				.replaceAll("\\[\\[rb:(.+?) > (.+?)\\]\\]", "<ruby>$1<rt>$2</rt></ruby>");
 
 			// URL [[jumpuri:タイトル > リンク先URL]]
-			strBody = strBody.replaceAll("\\[\\[jumpuri:(.+?) > (.+?)\\]\\]", "<span class=\"NovelUrl\">$1</span>");
+			textBody = textBody.replaceAll("\\[\\[jumpuri:(.+?) > (.+?)\\]\\]", "<span class=\"NovelUrl\">$1</span>");
 
 			// 挿絵[image:イラストID]
-			strBody = strBody.replaceAll("\\[image:(.+)\\]", "");
+			textBody = textBody.replaceAll("\\[image:(.+)\\]", "");
 
 			// 名前[name:名前]
-			strBody = strBody.replaceAll("\\[name:(.+)\\]", "<span class=\"NovelChangeName\">$1</span>");
+			textBody = textBody.replaceAll("\\[name:(.+)\\]", "<span class=\"NovelChangeName\">$1</span>");
 
 			// 改行
-			strBody = strBody.replace("\n", "<br />\n");
+			textBody = textBody.replace("\n", "<br />\n");
 			//
-			sbHtml.append(strBody);
+			sbHtml.append(textBody);
 
 
 			// ページの終わり <span class="NovelSection">

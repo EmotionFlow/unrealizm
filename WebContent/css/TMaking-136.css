@@ -930,12 +930,20 @@
 	position: relative;
 }
 
+.UploadFile .TextBody .EditTextTitle {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+}
+
 .UploadFile .TextBody .EditTextBody {
 	display: block;
 	float: left;
 	width: 100%;
 	height: 300px;
 	box-sizing: border-box;
+	margin: 5px 0 0 0;
 }
 
 .UploadFile .TextBody .TextBodyCharNum {
@@ -2120,7 +2128,7 @@
 	overflow: hidden;
 }
 
-<<<<<<< HEAD
+
 .IllustItemList .ActivityList .ActivityListItem .ActivityListBody {
 	display: block;
 	flex: 1 1;
@@ -2425,7 +2433,6 @@
 }
 /* for user list */
 
-=======
 .IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbIcon {
 	display: block;
 	width: 60px;
@@ -2712,7 +2719,6 @@
 	padding: 1px 6px 2px 6px;
 	font-size: 13px;
 }
->>>>>>> branch 'master' of https://github.com/pipajp/poipiku.git
 
 .RequestBtn .SendRequestIcon {
 	display: inline-block;
@@ -2972,6 +2978,8 @@
 .SystemInfo .SystemInfoDesc {display: block; flex: 1 1; height: 36px; line-height: 18px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: underline;font-size: 12px;max-height: 36px;}
 .SystemInfo .SystemInfoClose {display: block; flex: 0 0 30px; height: 36px; line-height: 36px; text-align: center;font-size: 12px;}
 
+/********** NOVEL **********/
+.IllustTimeLineNovel {display: flex; justify-content: center;  background-color: #fff; color: #505043; position: relative; flex-wrap: wrap; font-size: 17px;font-family: 'YuMincho', '游明朝', '游明朝体', 'Yu Mincho', 'ヒラギノ明朝 ProN', 'Hiragino Mincho ProN', 'HiraMinProN-W3', 'HiraMinProN-W6', 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'HiraMinPro-W3', 'HiraMinPro-W6', 'HG明朝E', 'HGP明朝E', 'HGS明朝E', 'HGMinchoE', 'HGPMinchoE', 'HGSMinchoE', 'HG明朝B', 'HGP明朝B', 'HGS明朝B', 'HGMinchoB', 'HGPMinchoB', 'HGSMinchoB', '平成明朝', '平成明朝 Std', '平成明朝 Pro', 'Heisei Mincho', 'Heisei Mincho Std', 'Heisei Mincho Pro', 'IPA明朝', 'IPAMincho', Georgia, 'georgia ref', 'times new roman', SerifJP, serif;}
 
 
 

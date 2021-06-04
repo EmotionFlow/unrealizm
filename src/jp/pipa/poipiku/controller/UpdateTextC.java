@@ -12,11 +12,11 @@ import jp.pipa.poipiku.*;
 
 public class UpdateTextC extends UpC {
 	public int GetResults(UpdateTextCParam cParam, CheckLogin checkLogin) {
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 		int idx = 0;
 		int nPublishIdPresend = -1;
 		String strTweetId = "";
@@ -28,30 +28,30 @@ public class UpdateTextC extends UpC {
 		int nEditorId = Common.EDITOR_UPLOAD;
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
-			strSql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setInt(2, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				nOpenIdPresent = cResSet.getInt("open_id");
-				nPublishIdPresend = cResSet.getInt("publish_id");
-				strTweetId = cResSet.getString("tweet_id");
-				bLimitedTimePublishPresent = cResSet.getBoolean("limited_time_publish");
-				tsUploadDatePresent = cResSet.getTimestamp("upload_date");
-				tsEndDatePresent = cResSet.getTimestamp("end_date");
-				nEditorId = Math.max(cResSet.getInt("editor_id"), Common.EDITOR_UPLOAD);
+			sql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, cParam.m_nUserId);
+			statement.setInt(2, cParam.m_nContentId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				nOpenIdPresent = resultSet.getInt("open_id");
+				nPublishIdPresend = resultSet.getInt("publish_id");
+				strTweetId = resultSet.getString("tweet_id");
+				bLimitedTimePublishPresent = resultSet.getBoolean("limited_time_publish");
+				tsUploadDatePresent = resultSet.getTimestamp("upload_date");
+				tsEndDatePresent = resultSet.getTimestamp("end_date");
+				nEditorId = Math.max(resultSet.getInt("editor_id"), Common.EDITOR_UPLOAD);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 		} catch(Exception e) {
 			e.printStackTrace();
 			return -100;
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 		}
 
 		try {
@@ -70,9 +70,11 @@ public class UpdateTextC extends UpC {
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<String>();
 				lColumns.addAll(Arrays.asList(
-					"genre_id=?", "category_id=?", "open_id=?", "description=?", "text_body=?", "tag_list=?", "publish_id=?",
-					"password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
-					"not_recently=?", "limited_time_publish=?"
+					"genre_id=?", "category_id=?", "open_id=?", "description=?",
+					"text_body=?", "tag_list=?", "publish_id=?", "password=?",
+					"list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
+					"not_recently=?", "limited_time_publish=?", "title=?", "novel_html=?",
+					"novel_html_short=?", "novel_direction=?"
 					));
 
 			if(!cParam.m_bLimitedTimePublish){
@@ -98,103 +100,108 @@ public class UpdateTextC extends UpC {
 			String sqlSet = "SET " + String.join(",", lColumns);
 			String sqlWhere = "WHERE user_id=? AND content_id=?";
 
-			strSql = String.join(" ", Arrays.asList(sqlUpdate, sqlSet, sqlWhere));
-			cState = cConn.prepareStatement(strSql);
+			sql = String.join(" ", Arrays.asList(sqlUpdate, sqlSet, sqlWhere));
+			String textBody = Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]);
+			statement = connection.prepareStatement(sql);
 			try {
 				idx = 1;
 				// set values
-				cState.setInt(idx++, cParam.genre);
-				cState.setInt(idx++, cParam.m_nCategoryId);
-				cState.setInt(idx++, nOpenId);
-				cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
-				cState.setString(idx++, Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]));
-				cState.setString(idx++, cParam.m_strTagList);
-				cState.setInt(idx++, cParam.m_nPublishId);
-				cState.setString(idx++, cParam.m_strPassword);
-				cState.setString(idx++, cParam.m_strListId);
-				cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
-				cState.setBoolean(idx++, cParam.m_bCheerNg);
-				cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
-				cState.setBoolean(idx++, cParam.m_bNotRecently);
-				cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
+				statement.setInt(idx++, cParam.genre);
+				statement.setInt(idx++, cParam.m_nCategoryId);
+				statement.setInt(idx++, nOpenId);
+				statement.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
+				statement.setString(idx++, textBody);
+				statement.setString(idx++, cParam.m_strTagList);
+				statement.setInt(idx++, cParam.m_nPublishId);
+				statement.setString(idx++, cParam.m_strPassword);
+				statement.setString(idx++, cParam.m_strListId);
+				statement.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
+				statement.setBoolean(idx++, cParam.m_bCheerNg);
+				statement.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+				statement.setBoolean(idx++, cParam.m_bNotRecently);
+				statement.setBoolean(idx++, cParam.m_bLimitedTimePublish);
+				statement.setString(idx++, cParam.title);
+				statement.setString(idx++, NovelUtil.genarateHtml(cParam.title, textBody, ""));
+				statement.setString(idx++, NovelUtil.genarateHtmlShort(cParam.title, textBody, ""));
+				statement.setInt(idx++, cParam.novelDirection);
 
 				if(cParam.m_bLimitedTimePublish){
 					if(cParam.m_tsPublishStart != null ){
-						cState.setTimestamp(idx++, cParam.m_tsPublishStart);
+						statement.setTimestamp(idx++, cParam.m_tsPublishStart);
 					}
 					if(cParam.m_tsPublishEnd != null ){
-						cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
+						statement.setTimestamp(idx++, cParam.m_tsPublishEnd);
 					}
 				}
 
 				// set where params
-				cState.setInt(idx++, cParam.m_nUserId);
-				cState.setInt(idx++, cParam.m_nContentId);
+				statement.setInt(idx++, cParam.m_nUserId);
+				statement.setInt(idx++, cParam.m_nContentId);
 
-				cState.executeUpdate();
+				statement.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
 				return -200;
 			}
-			cState.close();cState=null;
+			statement.close();statement=null;
 
 			// content_idを振り直す
 			// 処理更新時は、 https://github.com/gochipon/poipiku_script にもその内容を反映させること。
 			if(bToPublish){
 				try{
-					strSql = "INSERT INTO content_id_histories VALUES(?, nextval('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, cParam.m_nContentId);
-					cResSet = cState.executeQuery();
-					if(cResSet.next()) {
-						nNewContentId = cResSet.getInt("new_id");
+					sql = "INSERT INTO content_id_histories VALUES(?, nextval('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(1, cParam.m_nContentId);
+					resultSet = statement.executeQuery();
+					if(resultSet.next()) {
+						nNewContentId = resultSet.getInt("new_id");
 					} else {
 						throw new Exception("new content id is null.");
 					}
 				}catch(Exception e){
-					Log.d(strSql);
+					Log.d(sql);
 					e.printStackTrace();
 					return -300;
 				}finally{
-					if(cResSet!=null){cResSet.close();};cResSet=null;
-					if(cState!=null){cState.close();};cState=null;
+					if(resultSet!=null){resultSet.close();};resultSet=null;
+					if(statement!=null){statement.close();};statement=null;
 				}
 
 				if(nNewContentId!=null){
 					boolean bUpdateFaild = false;
 					try{
 						// transaction
-						cConn.setAutoCommit(false);
+						connection.setAutoCommit(false);
 						String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests"};
 						for(String t : lUpdateTable){
-							strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
-							cState = cConn.prepareStatement(strSql);
-							cState.setInt(1, nNewContentId);
-							cState.setInt(2, cParam.m_nContentId);
-							cState.executeUpdate();
+							sql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
+							statement = connection.prepareStatement(sql);
+							statement.setInt(1, nNewContentId);
+							statement.setInt(2, cParam.m_nContentId);
+							statement.executeUpdate();
 						}
-						cConn.commit();
+						connection.commit();
 					}catch(Exception e){
 						bUpdateFaild = true;
-						Log.d(strSql);
+						Log.d(sql);
 						e.printStackTrace();
-						cConn.rollback();
+						connection.rollback();
 					}finally{
-						if(cState!=null){cState.close();};cState=null;
-						cConn.setAutoCommit(true);
+						if(statement!=null){statement.close();};statement=null;
+						connection.setAutoCommit(true);
 					}
 					if(bUpdateFaild){
 						try{
 							nNewContentId=null;
-							strSql = "DELETE FROM content_id_histories WHERE old_id=?";
-							cState = cConn.prepareStatement(strSql);
-							cState.setInt(1, cParam.m_nContentId);
-							cState.executeUpdate();
+							sql = "DELETE FROM content_id_histories WHERE old_id=?";
+							statement = connection.prepareStatement(sql);
+							statement.setInt(1, cParam.m_nContentId);
+							statement.executeUpdate();
 						}catch(Exception e){
-							Log.d(strSql);
+							Log.d(sql);
 							e.printStackTrace();
 						}finally{
-							if(cState!=null){cState.close();};cState=null;
+							if(statement!=null){statement.close();};statement=null;
 						}
 						return -400;
 					}
@@ -203,20 +210,20 @@ public class UpdateTextC extends UpC {
 
 			// Delete old tags
 			if (!cParam.m_strDescription.isEmpty() || !cParam.m_strTagList.isEmpty()) {
-				strSql = "DELETE FROM tags_0000 WHERE content_id=?;";
-				cState = cConn.prepareStatement(strSql);
+				sql = "DELETE FROM tags_0000 WHERE content_id=?;";
+				statement = connection.prepareStatement(sql);
 				try {
-					cState.setInt(1, nNewContentId==null?cParam.m_nContentId:nNewContentId);
-					cState.executeUpdate();
+					statement.setInt(1, nNewContentId==null?cParam.m_nContentId:nNewContentId);
+					statement.executeUpdate();
 				} catch(Exception e) {
 					e.printStackTrace();
 					return -500;
 				}
-				cState.close();cState=null;
+				statement.close();statement=null;
 			}
 
 			// Add tags
-			AddTags(cParam.m_strDescription, cParam.m_strTagList, nNewContentId==null?cParam.m_nContentId:nNewContentId, cConn);
+			AddTags(cParam.m_strDescription, cParam.m_strTagList, nNewContentId==null?cParam.m_nContentId:nNewContentId, connection);
 
 			// もし、(期間限定OFFからONに変更 || (期間限定 & (非公開中|公開中&期間変更あり))
 			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
@@ -235,25 +242,25 @@ public class UpdateTextC extends UpC {
 						Log.d("Delete tweet failed.");
 						// 処理自体は続行する
 					}
-					strSql = "UPDATE contents_0000 SET tweet_id=NULL WHERE content_id=?";
-					cState = cConn.prepareStatement(strSql);
+					sql = "UPDATE contents_0000 SET tweet_id=NULL WHERE content_id=?";
+					statement = connection.prepareStatement(sql);
 					try {
-						cState.setInt(1,  nNewContentId==null?cParam.m_nContentId:nNewContentId);
-						cState.executeUpdate();
+						statement.setInt(1,  nNewContentId==null?cParam.m_nContentId:nNewContentId);
+						statement.executeUpdate();
 					} catch(Exception e) {
 						e.printStackTrace();
 						return -600;
 					}
-					cState.close();cState=null;
+					statement.close();statement=null;
 				}
 			}
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 			return -700;
 		} finally {
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return  nNewContentId==null?cParam.m_nContentId:nNewContentId;
 	}

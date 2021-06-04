@@ -354,6 +354,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 				<%}%>
 				<div class="TextBody">
+					<input <%if(noContentModification){%>readonly<%}%> id="EditTextTitle" class="EditTextTitle" type="text" maxlength="50" placeholder="<%=_TEX.T("UploadFilePc.Text.Title")%>" value="<%=Util.toStringHtml(cResults.m_cContent.title)%>" />
 					<textarea <%if(noContentModification){%>readonly<%}%> id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strTextBody)%></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
@@ -365,6 +366,14 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 				<div class="UoloadCmdOption">
 					<input id="ContentOpenId" value="<%=cResults.m_cContent.m_nOpenId%>" type="hidden"/>
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Text.Direction")%></div>
+						<div class="OptionPublish">
+							<label><input type="radio" name="EditTextDirection" value="0" <%if(cResults.m_cContent.novelDirection==0){%>checked="checked"<%}%> /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
+							<label><input type="radio" name="EditTextDirection" value="1" <%if(cResults.m_cContent.novelDirection==1){%>checked="checked"<%}%> /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>
+						</div>
+					</div>
+
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">

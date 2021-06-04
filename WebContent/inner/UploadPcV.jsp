@@ -238,15 +238,15 @@ if (requestId > 0) {
 				}
 			%>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_UPLOAD ? "Selected" : ""%>"
-					   href="/UploadFilePcV.jsp<%=cgiParams%>">
+						href="/UploadFilePcV.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.File")%>
 				</a></li>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_TEXT ? "Selected" : ""%>"
-					   href="/UploadTextPcV.jsp<%=cgiParams%>">
+						href="/UploadTextPcV.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.Text")%>
 				</a></li>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_PASTE ? "Selected" : ""%>"
-					   href="/UploadPastePcV.jsp<%=cgiParams%>">
+						href="/UploadPastePcV.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.Paste")%>
 				</a></li>
 			</ul>
@@ -310,6 +310,7 @@ if (requestId > 0) {
 
 				<%if(nEditorId==Common.EDITOR_TEXT){%>
 				<div class="TextBody">
+					<input id="EditTextTitle" class="EditTextTitle" type="text" maxlength="50" placeholder="<%=_TEX.T("UploadFilePc.Text.Title")%>" />
 					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
@@ -320,6 +321,13 @@ if (requestId > 0) {
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">
+					<div class="OptionItem">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Text.Direction")%></div>
+						<div class="OptionPublish">
+							<label><input type="radio" name="EditTextDirection" value="0" checked="checked" /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
+							<label><input type="radio" name="EditTextDirection" value="1" /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>
+						</div>
+					</div>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
@@ -441,14 +449,14 @@ if (requestId > 0) {
 
 				<div class="UoloadCmd">
 					<a id="UoloadCmdBtn"
-					   class="BtnBase UoloadCmdBtn"
-					   href="javascript:void(0)"
+						class="BtnBase UoloadCmdBtn"
+						href="javascript:void(0)"
 					<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-					   onclick="UploadFileCheck(<%=checkLogin.m_nUserId%>)"
+						onclick="UploadFileCheck(<%=checkLogin.m_nUserId%>)"
 					<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-					   onclick="UploadPasteCheck(<%=checkLogin.m_nUserId%>)"
+						onclick="UploadPasteCheck(<%=checkLogin.m_nUserId%>)"
 					<%}else if(nEditorId==Common.EDITOR_TEXT){%>
-					   onclick="UploadTextCheck(<%=checkLogin.m_nUserId%>)"
+						onclick="UploadTextCheck(<%=checkLogin.m_nUserId%>)"
 					<%}%>
 					>
 						<%if(requestId < 0){%>

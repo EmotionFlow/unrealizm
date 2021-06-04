@@ -736,9 +736,7 @@ public final class CCnv {
 			if(!(cContent.m_nOpenId==0 || cContent.m_nOpenId==1)){
 				strRtn.append("style=\"background: rgba(0,0,0,.5);\"");
 			}
-			strRtn.append(">").append(
-					Util.toStringHtml(cContent.m_strTextBody.replaceAll("^[\\s　]*", ""))
-			);
+			strRtn.append(">").append(cContent.novelHtmlShort);
 		}
 
 		// 公開非公開マーク

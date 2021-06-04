@@ -43,6 +43,10 @@ public final class CContent {
 	public String m_strTextBody = "";
 	public int m_nGenreId = 1;
 	public int m_nRequestId = -1;
+	public String title = "";
+	public String novelHtml = "";
+	public String novelHtmlShort = "";
+	public int novelDirection = 0;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
@@ -73,8 +77,12 @@ public final class CContent {
 		m_strTweetId		= Util.toString(resultSet.getString("tweet_id"));
 		m_nTweetWhenPublished=resultSet.getInt("tweet_when_published");
 		m_bCheerNg			= resultSet.getBoolean("cheer_ng");
-		m_strTextBody		= resultSet.getString("text_body");
+		m_strTextBody		= Util.toString(resultSet.getString("text_body"));
 		m_nGenreId			= resultSet.getInt("genre_id");
+		title				= Util.toString(resultSet.getString("title"));
+		novelHtml			= Util.toString(resultSet.getString("novel_html"));
+		novelHtmlShort		= Util.toString(resultSet.getString("novel_html_short"));
+		novelDirection		= Util.toIntN(resultSet.getInt("novel_direction"), 0, 1);
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {

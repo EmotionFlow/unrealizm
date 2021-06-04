@@ -373,7 +373,7 @@ function UploadTextRefTwitterFAjax(
 	user_id, content_id, genre, nCategory, strDescription, strBodyText, strTagList,
 	nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
 	nLimitedTime, strPublishStart, strPublishEnd,
-	nTweetText, nTweetImage, nDeleteTweet){
+	nTweetText, nTweetImage, nDeleteTweet, title, direction){
 	return $.ajax({
 		"type": "post",
 		"data": {
@@ -396,6 +396,8 @@ function UploadTextRefTwitterFAjax(
 			"DELTW":nDeleteTweet,
 			"ED":1,
 			"CNG":nCheerNg,
+			"TIT":title,
+			"DIR":direction,
 		},
 		"url": "/f/UpdateTextRefTwitterF.jsp",
 		"dataType": "json",
@@ -575,6 +577,9 @@ function createUpdateText(){
 		const nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
 		const nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 		let nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+		const title = $("#EditTextTitle").val();
+		const direction = $('input:radio[name="EditTextDirection"]:checked').val();
+
 		const nTweetImage = 0;
 		const nDeleteTweet = ($('#OptionDeleteTweet').prop('checked'))?1:0;
 		let nTwListId = null;
@@ -624,7 +629,7 @@ function createUpdateText(){
 			user_id, content_id, genre, nCategory, strDescription, strTextBody, strTagList,
 			nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
 			nLimitedTime, strPublishStart, strPublishEnd,
-			getTweetSetting(), getTweetImageSetting(), nDeleteTweet);
+			getTweetSetting(), getTweetImageSetting(), nDeleteTweet, title, direction);
 
 		let aryFunc = [];
 		let fTweet = null;
