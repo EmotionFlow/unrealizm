@@ -593,12 +593,64 @@
 	color: #333;
 }
 
-.IllustThumb .IllustThumbText:first-letter {
-	font-size: 35px;
-	line-height: 36px;
-	float: left;
-	margin: 0 2px 0 0;
+.NovelSection {
+	font-family: 'YuMincho', '游明朝', '游明朝体', 'Yu Mincho', 'ヒラギノ明朝 ProN', 'Hiragino Mincho ProN', 'HiraMinProN-W3', 'HiraMinProN-W6', 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'HiraMinPro-W3', 'HiraMinPro-W6', 'HG明朝E', 'HGP明朝E', 'HGS明朝E', 'HGMinchoE', 'HGPMinchoE', 'HGSMinchoE', 'HG明朝B', 'HGP明朝B', 'HGS明朝B', 'HGMinchoB', 'HGPMinchoB', 'HGSMinchoB', '平成明朝', '平成明朝 Std', '平成明朝 Pro', 'Heisei Mincho', 'Heisei Mincho Std', 'Heisei Mincho Pro', 'IPA明朝', 'IPAMincho', Georgia, 'georgia ref', 'times new roman', SerifJP, serif;
 }
+
+.IllustThumb .IllustThumbText .NovelSection {
+	display: block;
+	width: 100%;
+	font-size: 12px;
+}
+
+
+.NovelSection .NovelTitle {
+	display: block;
+	margin: 5px 0 ;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.NovelSection .NovelMenu {
+	display: none;
+}
+
+.NovelSection .NovelSectionTitle {
+	display: block;
+	margin: 5px 0;
+	font-weight: bold;
+}
+
+.NovelSection .TextEmphasis {-webkit-text-emphasis: dot; text-emphasis: dot;}
+
+.IllustThumb .IllustThumbText.Vertical,
+.IllustItem.Text .IllustItemText .IllustItemThumbText.Vertical {
+	writing-mode: vertical-rl;
+	overflow-x: scroll;
+}
+
+.IllustThumb .IllustThumbText.Vertical .NovelTitle {
+	margin: 0 0 0 5px;
+}
+
+.IllustThumb .IllustThumbText.Vertical .NovelSectionTitle {
+	margin: 0 5px;
+}
+
+.IllustItemThumbText.Vertical .NovelTitle {
+	margin: 0 5px 0 50px;
+}
+.IllustItemThumbText.Vertical .NovelSectionTitle {
+	margin: 0 50px;
+}
+
+
+
+/**********
+Decoration
+**********/
+.IllustTimeLineNovel .TextEmphasis {-webkit-text-emphasis: dot; text-emphasis: dot;}
+
 
 .IllustThumb .IllustInfo {
 	display: flex;
@@ -637,6 +689,7 @@
 .IllustThumb .IllustInfoBottom{
 	bottom: 3px;
 	left: 4px;
+	writing-mode: horizontal-tb;
 }
 .IllustItemThumb .IllustInfoBottom{
 	bottom: 4px;
@@ -1765,7 +1818,7 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	min-height: 140px;
-	max-height: 280px;
+	max-height: 450px;
 	text-align: left;
 	padding: 0 8px;
 	margin: 15px 0 0 0;
@@ -2977,9 +3030,6 @@
 .SystemInfo .SystemInfoDate {display: block; flex: 0 0 48px; height: 36px; line-height: 18px;text-align: center;font-size: 12px; }
 .SystemInfo .SystemInfoDesc {display: block; flex: 1 1; height: 36px; line-height: 18px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: underline;font-size: 12px;max-height: 36px;}
 .SystemInfo .SystemInfoClose {display: block; flex: 0 0 30px; height: 36px; line-height: 36px; text-align: center;font-size: 12px;}
-
-/********** NOVEL **********/
-.IllustTimeLineNovel {display: flex; justify-content: center;  background-color: #fff; color: #505043; position: relative; flex-wrap: wrap; font-size: 17px;font-family: 'YuMincho', '游明朝', '游明朝体', 'Yu Mincho', 'ヒラギノ明朝 ProN', 'Hiragino Mincho ProN', 'HiraMinProN-W3', 'HiraMinProN-W6', 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'HiraMinPro-W3', 'HiraMinPro-W6', 'HG明朝E', 'HGP明朝E', 'HGS明朝E', 'HGMinchoE', 'HGPMinchoE', 'HGSMinchoE', 'HG明朝B', 'HGP明朝B', 'HGS明朝B', 'HGMinchoB', 'HGPMinchoB', 'HGSMinchoB', '平成明朝', '平成明朝 Std', '平成明朝 Pro', 'Heisei Mincho', 'Heisei Mincho Std', 'Heisei Mincho Pro', 'IPA明朝', 'IPAMincho', Georgia, 'georgia ref', 'times new roman', SerifJP, serif;}
 
 
 

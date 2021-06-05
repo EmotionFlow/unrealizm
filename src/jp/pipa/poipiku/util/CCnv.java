@@ -279,14 +279,19 @@ public final class CCnv {
 
 
 	private static void _appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
-		String strTextBody = Util.toStringHtml(cContent.m_strTextBody);
+		//String strTextBody = Util.toStringHtml(cContent.m_strTextBody);
+		String strTextBody = cContent.novelHtml;
+		String className = "IllustItemThumbText";
+		if(cContent.novelDirection==1) {
+			className += " Vertical";
+		}
 		if(nViewMode==VIEW_DETAIL) {
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s?ID=%d&TD=%d\">", cContent.m_nContentId, ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-			strRtn.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", strTextBody));
+			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, strTextBody));
 			strRtn.append("</a>");
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s\">", cContent.m_nContentId, ILLUST_VIEW));
-			strRtn.append(String.format("<span class=\"IllustItemThumbText\">%s</span>", strTextBody));
+			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, strTextBody));
 			strRtn.append("</a>");
 		}
 	}
@@ -732,7 +737,11 @@ public final class CCnv {
 			}
 		} else /*if(cContent.m_nEditorId==Common.EDITOR_TEXT)*/ {
 			// テキスト
-			strRtn.append(String.format("<a class=\"IllustThumbText\" href=\"%s\" ", ILLUST_VIEW));
+			String className = "IllustThumbText";
+			if(cContent.novelDirection==1) {
+				className += " Vertical";
+			}
+			strRtn.append(String.format("<a class=\"%s\" href=\"%s\" ", className, ILLUST_VIEW));
 			if(!(cContent.m_nOpenId==0 || cContent.m_nOpenId==1)){
 				strRtn.append("style=\"background: rgba(0,0,0,.5);\"");
 			}
