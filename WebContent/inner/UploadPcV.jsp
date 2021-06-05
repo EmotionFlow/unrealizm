@@ -321,7 +321,7 @@ if (requestId > 0) {
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">
-					<div class="OptionItem">
+					<div class="OptionItem" style="display: <%=nEditorId==Common.EDITOR_TEXT ? "block" : "none"%>">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Text.Direction")%></div>
 						<div class="OptionPublish">
 							<label><input type="radio" name="EditTextDirection" value="0" checked="checked" /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
