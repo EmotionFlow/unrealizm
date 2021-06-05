@@ -113,6 +113,10 @@ public final class Util {
 		return nRet;
 	}
 
+	public static int toIntN(final int nSrc, final int nMin, final int nMax) {
+		return Math.min(Math.max(nSrc, nMin), nMax);
+	}
+
 	public static long toLong(final String strSrc) {
 		if(strSrc == null) return -1;
 

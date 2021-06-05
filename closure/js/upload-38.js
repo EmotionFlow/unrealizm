@@ -1193,6 +1193,9 @@ function UploadText(user_id, request_id) {
 	const nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
 	const nRecent = ($('#OptionRecent').prop('checked'))?1:0;
 	let nTweet = ($('#OptionTweet').prop('checked'))?1:0;
+	const title = $("#EditTextTitle").val();
+	const direction = $('input:radio[name="EditTextDirection"]:checked').val();
+
 	const nTweetImage = 0;
 	let nTwListId = null;
 	const nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
@@ -1245,7 +1248,9 @@ function UploadText(user_id, request_id) {
 			"ED":3,
 			"CNG":nCheerNg,
 			"REC":nRecent,
-			"RID":request_id
+			"RID":request_id,
+			"TIT":title,
+			"DIR":direction,
 		},
 		"url": "/f/UploadTextRefTwitterF.jsp",
 		"dataType": "json",

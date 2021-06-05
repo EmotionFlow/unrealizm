@@ -16,11 +16,11 @@ public class UploadTextC extends UpC {
 	protected int m_nContentId = -99;
 	public boolean deliverRequestResult;
 	public int GetResults(UploadTextCParam cParam, CheckLogin checkLogin) {
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
+		DataSource dataSource = null;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 		int idx = 0;
 
 		DeliverRequestC deliverRequestC = null;
@@ -33,8 +33,8 @@ public class UploadTextC extends UpC {
 
 		try {
 			// regist to DB
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			connection = dataSource.getConnection();
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<>(
@@ -42,7 +42,8 @@ public class UploadTextC extends UpC {
 							"user_id", "genre_id", "category_id", "description",
 							"text_body", "tag_list", "publish_id", "password",
 							"list_id", "safe_filter", "editor_id", "cheer_ng",
-							"open_id", "tweet_when_published", "limited_time_publish"));
+							"open_id", "tweet_when_published", "limited_time_publish",
+							"title", "novel_html", "novel_html_short", "novel_direction"));
 
 			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){throw new Exception("m_nPublishId is 'limited time', but start and end is null.");};
@@ -68,56 +69,61 @@ public class UploadTextC extends UpC {
 				null,null);
 
 
+			String textBody = Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]);
 			ArrayList<String> lVals = new ArrayList<String>();
 			lColumns.forEach(c -> lVals.add("?"));
-			strSql = String.format("INSERT INTO contents_0000(%s) VALUES(%s) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
+			sql = String.format("INSERT INTO contents_0000(%s) VALUES(%s) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
 
-			cState = cConn.prepareStatement(strSql);
+			statement = connection.prepareStatement(sql);
 			idx = 1;
-			cState.setInt(idx++, cParam.m_nUserId);
-			cState.setInt(idx++, cParam.genre);
-			cState.setInt(idx++, cParam.m_nCategoryId);
-			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
-			cState.setString(idx++, Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
-			cState.setString(idx++, cParam.m_strTagList);
-			cState.setInt(idx++, cParam.m_nPublishId);
-			cState.setString(idx++, cParam.m_strPassword);
-			cState.setString(idx++, cParam.m_strListId);
-			cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
-			cState.setInt(idx++, cParam.m_nEditorId);
-			cState.setBoolean(idx++, cParam.m_bCheerNg);
-			cState.setInt(idx++, nOpenId);
-			cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
-			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
+			statement.setInt(idx++, cParam.m_nUserId);
+			statement.setInt(idx++, cParam.genre);
+			statement.setInt(idx++, cParam.m_nCategoryId);
+			statement.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
+			statement.setString(idx++, textBody);
+			statement.setString(idx++, cParam.m_strTagList);
+			statement.setInt(idx++, cParam.m_nPublishId);
+			statement.setString(idx++, cParam.m_strPassword);
+			statement.setString(idx++, cParam.m_strListId);
+			statement.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
+			statement.setInt(idx++, cParam.m_nEditorId);
+			statement.setBoolean(idx++, cParam.m_bCheerNg);
+			statement.setInt(idx++, nOpenId);
+			statement.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+			statement.setBoolean(idx++, cParam.m_bLimitedTimePublish);
+			statement.setString(idx++, cParam.title);
+			statement.setString(idx++, NovelUtil.genarateHtml(cParam.title, textBody, ""));
+			statement.setString(idx++, NovelUtil.genarateHtmlShort(cParam.title, textBody, ""));
+			statement.setInt(idx++, cParam.novelDirection);
 
 			if(cParam.m_bLimitedTimePublish){
 				if(cParam.m_tsPublishStart != null){
-					cState.setTimestamp(idx++, cParam.m_tsPublishStart);
+					statement.setTimestamp(idx++, cParam.m_tsPublishStart);
 				}
 				if(cParam.m_tsPublishEnd != null ){
-					cState.setTimestamp(idx++, cParam.m_tsPublishEnd);
+					statement.setTimestamp(idx++, cParam.m_tsPublishEnd);
 				}
 			}
 
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_nContentId = cResSet.getInt("content_id");
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_nContentId = resultSet.getInt("content_id");
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
-			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn);
+			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, connection);
 
 			if (deliverRequestC != null) {
 				deliverRequestResult = deliverRequestC.getResults(m_nContentId);
 			}
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return m_nContentId;
 	}
