@@ -447,7 +447,8 @@ function generateShowAppendFile(){
 					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
 					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
 					//for text
-					$('#IllustItemText_' + content_id).css('max-height','none');
+					$('#IllustItemText_' + content_id).css('max-height','500px');
+					$('#IllustItemText_' + content_id).css('overflow','scroll');
 				} else {
 					DispMsg(data.html);
 				}
