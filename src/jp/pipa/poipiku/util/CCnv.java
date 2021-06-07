@@ -260,7 +260,7 @@ public final class CCnv {
 	}
 
 
-	private static void appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
+	private static void _appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
 		_appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 	}
 
@@ -280,23 +280,22 @@ public final class CCnv {
 
 	private static void _appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
 		//String strTextBody = Util.toStringHtml(cContent.m_strTextBody);
-		String strTextBody = cContent.novelHtml;
 		String className = "IllustItemThumbText";
 		if(cContent.novelDirection==1) {
 			className += " Vertical";
 		}
 		if(nViewMode==VIEW_DETAIL) {
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s?ID=%d&TD=%d\">", cContent.m_nContentId, ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, strTextBody));
+			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, cContent.novelHtml));
 			strRtn.append("</a>");
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s\">", cContent.m_nContentId, ILLUST_VIEW));
-			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, strTextBody));
+			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, cContent.novelHtmlShort));
 			strRtn.append("</a>");
 		}
 	}
 
-	private static void appendIllustItemResList(
+	private static void _appendIllustItemResList(
 			StringBuilder strRtn, CContent cContent, int nLoginUserId,
 			ArrayList<String> vResult, int nSpMode,
 			ResourceBundleControl _TEX){
@@ -465,7 +464,7 @@ public final class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, SP_MODE_WVIEW, _TEX);
+			_appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, SP_MODE_WVIEW, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -551,7 +550,7 @@ public final class CCnv {
 				cContent.m_nContentId,
 				nMode,
 				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
-		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT) {
+		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
 			strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\"><input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"password\" maxlength=\"16\" placeholder=\"%s\" /></div>",
 				_TEX.T("ShowAppendFileC.EnterPassword")));
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s</a>",
@@ -574,7 +573,7 @@ public final class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
+			_appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -625,7 +624,7 @@ public final class CCnv {
 
 
 		// 画像
-		appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+		_appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 2枚目以降用の場所
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
@@ -654,7 +653,7 @@ public final class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
+			_appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -737,15 +736,7 @@ public final class CCnv {
 			}
 		} else /*if(cContent.m_nEditorId==Common.EDITOR_TEXT)*/ {
 			// テキスト
-			String className = "IllustThumbText";
-			if(cContent.novelDirection==1) {
-				className += " Vertical";
-			}
-			strRtn.append(String.format("<a class=\"%s\" href=\"%s\" ", className, ILLUST_VIEW));
-			if(!(cContent.m_nOpenId==0 || cContent.m_nOpenId==1)){
-				strRtn.append("style=\"background: rgba(0,0,0,.5);\"");
-			}
-			strRtn.append(">").append(cContent.novelHtmlShort);
+			appendIllustThumbText(strRtn, cContent, ILLUST_VIEW);
 		}
 
 		// 公開非公開マーク
@@ -780,6 +771,18 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustThumb
 
 		return strRtn.toString();
+	}
+
+	private static void appendIllustThumbText(StringBuilder sb, CContent cContent, String ILLUST_VIEW) {
+		String className = "IllustThumbText";
+		if(cContent.novelDirection==1) {
+			className += " Vertical";
+		}
+		sb.append(String.format("<a class=\"%s\" href=\"%s\" ", className, ILLUST_VIEW));
+		if(!(cContent.m_nOpenId==0 || cContent.m_nOpenId==1)){
+			sb.append("style=\"background: rgba(0,0,0,.5);\"");
+		}
+		sb.append(">").append(cContent.novelHtmlShort);
 	}
 
 //	private static String _toHtmlUser(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){

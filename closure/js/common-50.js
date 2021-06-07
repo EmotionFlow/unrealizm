@@ -455,7 +455,7 @@ function generateShowAppendFile(){
 					tw_friendships[user_id] = data.tw_friendship;
 				}
 			},"error": function(err){
-					console.log(err);
+				console.log(err);
 			}
 		});
 
