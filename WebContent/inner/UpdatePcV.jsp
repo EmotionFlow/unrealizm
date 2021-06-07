@@ -1,6 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="jp.pipa.poipiku.util.CTweet"%>
 <%@ page import="twitter4j.UserList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
@@ -366,7 +366,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 				<div class="UoloadCmdOption">
 					<input id="ContentOpenId" value="<%=cResults.m_cContent.m_nOpenId%>" type="hidden"/>
-					<div class="OptionItem">
+					<div class="OptionItem" style="display: <%=nEditorId==Common.EDITOR_TEXT ? "block" : "none"%>">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Text.Direction")%></div>
 						<div class="OptionPublish">
 							<label><input type="radio" name="EditTextDirection" value="0" <%if(cResults.m_cContent.novelDirection==0){%>checked="checked"<%}%> /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
