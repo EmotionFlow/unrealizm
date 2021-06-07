@@ -434,7 +434,7 @@ if (!results.getResults(checkLogin)) {
 						<option value="1">イラスト</option>
 						<%}%>
 						<%if(results.requestCreator.allowNovel()){%>
-						<option value="10">テキスト</option>
+						<option value="10">小説</option>
 						<%}%>
 					</select>
 				</div>
