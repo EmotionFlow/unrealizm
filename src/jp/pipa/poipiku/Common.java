@@ -163,7 +163,7 @@ public final class Common {
 			{0, 0},
 			{0, 0},
 			{0, 0},
-			{10000, 100000}
+			{100000, 1000000}
 	};
 
 	public static final int[] EMOJI_MAX = {
