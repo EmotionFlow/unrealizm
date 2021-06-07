@@ -83,7 +83,7 @@ if(nRtn<ShowAppendFileC.OK) {
 				// 2枚目の場所に本文を表示する
 				nRtn=2;
 				strHtml.append(String.format("<a class=\"IllustItemText\" %s href=\"%s?ID=%d&TD=%d\">",
-						cResults.m_cContent.novelDirection==1 ? "" : "style=\"max-height:none;\"",
+						cResults.m_cContent.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
 						ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
 				strHtml.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
 						cResults.m_cContent.novelDirection==1 ? "Vertical" : "",
