@@ -394,7 +394,7 @@ function UploadTextRefTwitterFAjax(
 			"TWT":nTweetText,
 			"TWI":nTweetImage,
 			"DELTW":nDeleteTweet,
-			"ED":1,
+			"ED":3,
 			"CNG":nCheerNg,
 			"TIT":title,
 			"DIR":direction,
