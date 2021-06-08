@@ -84,6 +84,14 @@ public final class CContent {
 		novelHtmlShort		= Util.toString(resultSet.getString("novel_html_short"));
 		novelDirection		= Util.toIntN(resultSet.getInt("novel_direction"), 0, 1);
 
+		// 後方互換
+		if (novelHtml.isEmpty()) {
+			novelHtml = m_strTextBody;
+		}
+		if (novelHtmlShort.isEmpty()) {
+			novelHtmlShort = m_strTextBody;
+		}
+
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {
 			case Common.SAFE_FILTER_R15:
