@@ -591,6 +591,7 @@
 	padding: 1px 0 0 0;
 	border-top: solid 1px #eee;
 	color: #333;
+	overflow: scroll;
 }
 
 .NovelSection {
@@ -682,7 +683,6 @@ Decoration
 }
 .IllustThumb .IllustInfoBottom, .IllustItemThumb .IllustInfoBottom{
 	display: block;
-	width: 100%;
 	box-sizing: border-box;
 	position: absolute;
 }
