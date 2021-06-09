@@ -86,10 +86,10 @@ public final class CContent {
 
 		// 後方互換
 		if (novelHtml.isEmpty()) {
-			novelHtml = m_strTextBody;
+			novelHtml = Util.toStringHtml(m_strTextBody);
 		}
 		if (novelHtmlShort.isEmpty()) {
-			novelHtmlShort = m_strTextBody;
+			novelHtmlShort = Util.toStringHtml(m_strTextBody);
 		}
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
