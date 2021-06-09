@@ -272,6 +272,7 @@ public final class RegistTwitterUserC {
 						statement.setInt(2, userId);
 						statement.executeUpdate();
 						statement.close();statement = null;
+						strEmail = strTwEmail;
 					}
 				}
 				tweet.updateDBFollowInfoFromTwitter(userId);
@@ -279,7 +280,7 @@ public final class RegistTwitterUserC {
 
 			setCookie(response, strHashPass);
 
-			if (strTwEmail != null && !strTwEmail.isEmpty()) {
+			if (strEmail != null && !strEmail.isEmpty() && strEmail.contains("@")) {
 				RegisteredNotifier registeredNotifier = new RegisteredNotifier();
 				registeredNotifier.welcomeFromTwitter(DatabaseUtil.dataSource, userId);
 			}
