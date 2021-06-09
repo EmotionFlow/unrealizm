@@ -89,7 +89,7 @@ public final class CContent {
 			novelHtml = Util.toStringHtml(m_strTextBody);
 		}
 		if (novelHtmlShort.isEmpty()) {
-			novelHtmlShort = Util.toStringHtml(m_strTextBody);
+			novelHtmlShort = Util.toStringHtml(Util.subStrNum(m_strTextBody, 500));
 		}
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
