@@ -103,6 +103,8 @@ public final class RegisteredNotifier extends Notifier {
 			// 配信
 			notifyByEmail(user, mailSubject, mailBody);
 
+			Log.d("sent welcome mail: " + user.email);
+
 			result = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
