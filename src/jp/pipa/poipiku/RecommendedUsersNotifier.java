@@ -103,39 +103,8 @@ public final class RecommendedUsersNotifier extends Notifier {
 				statement.close();
 
 				if (recommendedUsers.size()<MAX_RECOMMENDED_USERS) {
-					List<RecommendedUser> popularUsers = new ArrayList<>();
-					sql = "WITH populars AS (" +
-							"    SELECT user_id" +
-							"    FROM rank_contents_total" +
-							"    ORDER BY add_date DESC" +
-							"    LIMIT 100" +
-							")" +
-							"   , sorted_users AS (" +
-							"    SELECT c.user_id" +
-							"    FROM contents_0000 c" +
-							"    WHERE c.user_id IN (SELECT * FROM populars)" +
-							"      AND publish_id = 0" +
-							"    GROUP BY c.user_id" +
-							"    ORDER BY COUNT(*) DESC" +
-							")" +
-							"SELECT u.user_id, u.nickname, u.profile, rc.status" +
-							" FROM users_0000 u" +
-							"         LEFT JOIN request_creators rc ON u.user_id = rc.user_id" +
-							" WHERE u.user_id IN (SELECT * FROM sorted_users)" +
-							" AND u.user_id NOT IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?)";
-					statement = connection.prepareStatement(sql);
-					statement.setInt(1, targetUser.id);
-					resultSet = statement.executeQuery();
-					while (resultSet.next()) {
-						RecommendedUser user = new RecommendedUser();
-						user.userId = resultSet.getInt("user_id");
-						user.nickname = resultSet.getString("nickname");
-						user.profile = resultSet.getString("profile");
-						user.requestCreatorStatus = resultSet.getInt("status");
-						popularUsers.add(user);
-					}
-					resultSet.close();
-					statement.close();
+					List<RecommendedUser> popularUsers = RecommendedUser.getPopularUsers(
+							targetUser.id, connection, statement, resultSet);
 
 					Iterator<RecommendedUser> it = popularUsers.iterator();
 					while (recommendedUsers.size()<MAX_RECOMMENDED_USERS && it.hasNext()) {

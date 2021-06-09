@@ -1,9 +1,6 @@
 package jp.pipa.poipiku.controller;
 
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.Oauth;
-import jp.pipa.poipiku.ResourceBundleControl;
+import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
@@ -259,7 +256,8 @@ public final class RegistTwitterUserC {
 			CTweet tweet = new CTweet();
 			String strTwEmail = null;
 			if (tweet.GetResults(userId)) {
-				if ((strTwEmail = tweet.GetEmailAddress()) != null) {
+				strTwEmail = tweet.GetEmailAddress();
+				if (strTwEmail != null) {
 					strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 					statement = connection.prepareStatement(strSql);
 					statement.setString(1, strTwEmail);
@@ -280,6 +278,12 @@ public final class RegistTwitterUserC {
 			}
 
 			setCookie(response, strHashPass);
+
+			if (strTwEmail != null && !strTwEmail.isEmpty()) {
+				RegisteredNotifier registeredNotifier = new RegisteredNotifier();
+				registeredNotifier.welcomeFromTwitter(DatabaseUtil.dataSource, userId);
+			}
+
 			return userId;
 			//Log.d("USERAUTH Regist : " + nUserId);
 		} catch (SQLException e) {
