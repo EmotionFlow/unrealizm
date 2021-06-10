@@ -185,11 +185,11 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 									<span style="font-size: 9px;"> (<%=_TEX.T("LoginFormV.Label.Nickname.Info")%>)</span>
 								</div>
 								<input id="RegistNickname" class="SettingBodyTxt" type="text" />
-								<div class="SettingBodyCmd" style="margin-top: 20px;">
+								<div style="text-align: center;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
 								</div>
-								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
+								<div style="margin-top: 10px; text-align: center;">
 									<div class="RegistMessage"></div>
 									<a href="javascript:void(0);" onclick="$('#RegistForm').slideUp();$('#LoginForm').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
 								</div>
@@ -210,18 +210,18 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 								<%=_TEX.T("LoginFormV.Label.Password")%>
 							</div>
 							<input id="LoginPassword" class="SettingBodyTxt" type="password" />
-							<div class="LoginItem">
-								<div class="SettingBodyCmd" style="margin-top: 20px;">
-									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
+							<div class="SettingListItem">
+								<div style="margin-top: 20px; text-align: center;">
 									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
+									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 								</div>
-								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
-									<div class="RegistMessage"></div>
+								<div style="margin-top: 15px; text-align: center;">
 									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
-								</div>
-								<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
 									<div class="RegistMessage"></div>
+								</div>
+								<div style="margin-top: 10px; text-align: center;">
 									<a href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
+									<div class="RegistMessage"></div>
 								</div>
 							</div>
 						</div>

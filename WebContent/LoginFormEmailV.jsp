@@ -113,8 +113,8 @@ if(strRequestUri != null) {
 			function reCAPTCHAonLoad() {
 				let badge = $(".grecaptcha-badge");
 				badge.css("bottom", "50px");
-				badge.css("left", "54px");
-				badge.css("position", "absolute");
+				// badge.css("left", "54px");
+				badge.css("position", "fixed");
 			}
 		</script>
 		<style>
@@ -152,11 +152,11 @@ if(strRequestUri != null) {
 									<span style="font-size: 9px;"> (<%=_TEX.T("LoginFormV.Label.Nickname.Info")%>)</span>
 								</div>
 								<input id="RegistNickname" class="SettingBodyTxt" type="text" />
-								<div class="SettingBodyCmd" style="margin-top: 20px;">
+								<div style="margin-top: 20px; text-align: center;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Regist")%>" />
 								</div>
-								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
+								<div style="margin-top: 15px; text-align: center;">
 									<div class="RegistMessage"></div>
 									<a href="javascript:void(0);" onclick="$('#RegistForm').slideUp();$('#LoginForm').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
 								</div>
@@ -178,15 +178,15 @@ if(strRequestUri != null) {
 							</div>
 							<input id="LoginPassword" class="SettingBodyTxt" type="password" />
 							<div class="LoginItem">
-								<div class="SettingBodyCmd" style="margin-top: 20px;">
+								<div style="margin-top: 20px; text-align: center;">
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 									<input class="BtnBase Rev SettingBodyCmdRegist" type="submit" value="<%=_TEX.T("LoginFormV.Button.Login")%>" />
 								</div>
-								<div class="SettingBodyCmd" style="margin-top: 15px; text-align: right;">
+								<div style="margin-top: 15px; text-align: center;">
 									<div class="RegistMessage"></div>
 									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 								</div>
-								<div class="SettingBodyCmd" style="margin-top: 10px; text-align: right;">
+								<div style="margin-top: 10px; text-align: center;">
 									<div class="RegistMessage"></div>
 									<a href="/ForgetPasswordPcV.jsp"><%=_TEX.T("LoginFormV.Button.ForgotPassword")%></a>
 								</div>
