@@ -43,11 +43,12 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%> | <%=_TEX.T("THeader.Title")%></title>
+		<%=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
 		<script>
 			function RegistUser() {
-				var strEmail = $.trim($("#RegistEmail").val());
-				var strPassword = $.trim($("#RegistPassword").val());
-				var strNickname = $.trim($("#RegistNickname").val());
+				const strEmail = $.trim($("#RegistEmail").val());
+				const strPassword = $.trim($("#RegistPassword").val());
+				const strNickname = $.trim($("#RegistNickname").val());
 				if(!strEmail.match(/.+@.+\..+/)) {
 					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
 					return false;
@@ -60,49 +61,78 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 					DispMsg('<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>');
 					return false;
 				}
-				$.ajaxSingle({
-					"type": "post",
-					"data": {"NN":strNickname, "EM":strEmail, "PW":strPassword, "TK":"<%=strRegistUserFToken%>"},
-					"url": "/f/RegistUserF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result>0) {
-							DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
-							location.href = "<%=strNextUrl%>";
-						} else if(data.result==<%=UserAuthUtil.ERROR_USER_EXIST%>) {
-							DispMsg('<%=_TEX.T("LoginV.Faild.Regist.ExistEmail")%>');
-						} else {
-							DispMsg('<%=_TEX.T("LoginV.Faild.Regist.Message")%>');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
+
+				grecaptcha.ready( () => {
+					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_browser'}).then((reCAPTCHAtoken) => {
+						$.ajaxSingle({
+							"type": "post",
+							"data": {
+								"NN":strNickname,
+								"EM":strEmail,
+								"PW":strPassword,
+								"TK":"<%=strRegistUserFToken%>",
+								"RTK":reCAPTCHAtoken,
+							},
+							"url": "/f/RegistUserF.jsp",
+							"dataType": "json",
+							"success": (data) => {
+								if(data.result>0) {
+									DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
+									location.href = "<%=strNextUrl%>";
+								} else if(data.result===<%=UserAuthUtil.ERROR_USER_EXIST%>) {
+									DispMsg('<%=_TEX.T("LoginV.Faild.Regist.ExistEmail")%>');
+								} else {
+									DispMsg('<%=_TEX.T("LoginV.Faild.Regist.Message")%>');
+								}
+							},
+							"error": function(req, stat, ex){
+								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+							}
+						});
+					});
 				});
 				return false;
 			}
 
 			function LoginUser() {
-				var strEmail = $.trim($("#LoginEmail").val());
-				var strPassword = $.trim($("#LoginPassword").val());
-				$.ajaxSingle({
-					"type": "post",
-					"data": {"EM":strEmail, "PW":strPassword},
-					"url": "/f/LoginUserF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result>0) {
-							DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
-							location.href = "<%=strNextUrl%>";
-						} else {
-							DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
+				const strEmail = $.trim($("#LoginEmail").val());
+				const strPassword = $.trim($("#LoginPassword").val());
+				grecaptcha.ready( () => {
+					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_browser'}).then((reCAPTCHAtoken) => {
+						$.ajaxSingle({
+							"type": "post",
+							"data": {
+								"EM":strEmail,
+								"PW":strPassword,
+								"RTK": reCAPTCHAtoken,
+							},
+							"url": "/f/LoginUserF.jsp",
+							"dataType": "json",
+							"success": function(data) {
+								if(data.result>0) {
+									DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
+									location.href = "<%=strNextUrl%>";
+								} else {
+									DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
+								}
+							},
+							"error": function(req, stat, ex){
+								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+							}
+						});
+					});
 				});
 				return false;
+			}
+
+			function reCAPTCHAonLoad() {
+				let badge = $(".grecaptcha-badge");
+				<%if(Util.isSmartPhone(request)){%>
+				badge.css("bottom", "-15px");
+				badge.css("left", "54px");
+				badge.css("position", "absolute");
+				$(".Footer").css("margin-top", "90px");
+				<%}%>
 			}
 		</script>
 		<style>

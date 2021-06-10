@@ -28,11 +28,12 @@ if(strRequestUri != null) {
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>
+		<%=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
 		<script>
 			function RegistUser() {
-				var strEmail = $.trim($("#RegistEmail").val());
-				var strPassword = $.trim($("#RegistPassword").val());
-				var strNickname = $.trim($("#RegistNickname").val());
+				const strEmail = $.trim($("#RegistEmail").val());
+				const strPassword = $.trim($("#RegistPassword").val());
+				const strNickname = $.trim($("#RegistNickname").val());
 				if(!strEmail.match(/.+@.+\..+/)) {
 					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
 					return false;
@@ -45,49 +46,75 @@ if(strRequestUri != null) {
 					DispMsg('<%=_TEX.T("EditSettingV.NickName.Message.Empty")%>');
 					return false;
 				}
-				$.ajaxSingle({
-					"type": "post",
-					"data": {"NN":strNickname, "EM":strEmail, "PW":strPassword, "TK":"<%=strRegistUserFToken%>"},
-					"url": "/f/RegistUserF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result>0) {
-							DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
-							sendObjectMessage("restart");
-						} else if(data.result==<%=UserAuthUtil.ERROR_USER_EXIST%>) {
-							DispMsg('<%=_TEX.T("LoginV.Faild.Regist.ExistEmail")%>');
-						} else {
-							DispMsg('<%=_TEX.T("LoginV.Faild.Regist.Message")%>');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
+
+				grecaptcha.ready( () => {
+					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_app'}).then((reCAPTCHAtoken) => {
+						$.ajaxSingle({
+							"type": "post",
+							"data": {
+								"NN":strNickname,
+								"EM":strEmail,
+								"PW":strPassword,
+								"TK":"<%=strRegistUserFToken%>",
+								"RTK":reCAPTCHAtoken,
+							},
+							"url": "/f/RegistUserF.jsp",
+							"dataType": "json",
+							"success": function(data) {
+								if(data.result>0) {
+									DispMsg('<%=_TEX.T("LoginV.Success.Regist.Message")%>');
+									sendObjectMessage("restart");
+								} else if(data.result===<%=UserAuthUtil.ERROR_USER_EXIST%>) {
+									DispMsg('<%=_TEX.T("LoginV.Faild.Regist.ExistEmail")%>');
+								} else {
+									DispMsg('<%=_TEX.T("LoginV.Faild.Regist.Message")%>');
+								}
+							},
+							"error": function(req, stat, ex){
+								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+							}
+						});
+					});
 				});
 				return false;
 			}
 
 			function LoginUser() {
-				var strEmail = $.trim($("#LoginEmail").val());
-				var strPassword = $.trim($("#LoginPassword").val());
-				$.ajaxSingle({
-					"type": "post",
-					"data": {"EM":strEmail, "PW":strPassword},
-					"url": "/f/LoginUserF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result>0) {
-							DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
-							sendObjectMessage("restart");
-						} else {
-							DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
-					}
+				const strEmail = $.trim($("#LoginEmail").val());
+				const strPassword = $.trim($("#LoginPassword").val());
+				grecaptcha.ready( () => {
+					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_app'}).then((reCAPTCHAtoken) => {
+						$.ajaxSingle({
+							"type": "post",
+							"data": {
+								"EM":strEmail,
+								"PW":strPassword,
+								"RTK": reCAPTCHAtoken,
+							},
+							"url": "/f/LoginUserF.jsp",
+							"dataType": "json",
+							"success": function(data) {
+								if(data.result>0) {
+									DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
+									sendObjectMessage("restart");
+								} else {
+									DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
+								}
+							},
+							"error": function(req, stat, ex){
+								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+							}
+						});
+					});
 				});
 				return false;
+			}
+
+			function reCAPTCHAonLoad() {
+				let badge = $(".grecaptcha-badge");
+				badge.css("bottom", "111px");
+				badge.css("left", "54px");
+				badge.css("position", "absolute");
 			}
 		</script>
 		<style>

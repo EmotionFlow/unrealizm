@@ -18,6 +18,12 @@ if (request.getHeader("REFERER")==null || !request.getHeader("REFERER").contains
 	isPrecheckOK = false;
 }
 
+ReCAPTCHA.VerifyResult verifyResult = ReCAPTCHA.verify(request.getParameter("RTK"));
+if (!verifyResult.success || verifyResult.score < 0.5) {
+	Log.d("reCAPTCHA failure: " + verifyResult.toString());
+	isPrecheckOK = false;
+}
+
 int result = -1;
 session.removeAttribute("RegistUserFToken");
 if (isPrecheckOK) {
