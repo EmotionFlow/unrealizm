@@ -128,9 +128,9 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 			function reCAPTCHAonLoad() {
 				let badge = $(".grecaptcha-badge");
 				<%if(Util.isSmartPhone(request)){%>
-				badge.css("bottom", "-15px");
-				badge.css("left", "54px");
-				badge.css("position", "absolute");
+				badge.css("bottom", "52px");
+				//badge.css("left", "54px");
+				badge.css("position", "fixed");
 				$(".Footer").css("margin-top", "90px");
 				<%}%>
 			}
@@ -148,7 +148,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<div id="DispMsg"></div>
 		<article class="Wrapper">
-			<div class="SettingList" style="margin-top: 50px;">
+			<div class="SettingList" style="margin-top: 30px;">
 				<div class="SettingListItem">
 					<div style="text-align: center;">
 						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
@@ -167,7 +167,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 
 					<form id="RegistForm" onsubmit="return RegistUser()">
 						<div class="RegistItem">
-							<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
+							<div class="SettingListTitle" style="margin-top: 0"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
 						</div>
 
 						<div class="SettingBody">
@@ -199,7 +199,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 
 					<form id="LoginForm" onsubmit="return LoginUser()">
 						<div class="LoginItem">
-							<div class="SettingListTitle"><%=_TEX.T("LoginFormV.Label.Login")%></div>
+							<div class="SettingListTitle" style="margin-top: 0"><%=_TEX.T("LoginFormV.Label.Login")%></div>
 						</div>
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
