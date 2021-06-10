@@ -112,7 +112,7 @@ if(strRequestUri != null) {
 
 			function reCAPTCHAonLoad() {
 				let badge = $(".grecaptcha-badge");
-				badge.css("bottom", "111px");
+				badge.css("bottom", "50px");
 				badge.css("left", "54px");
 				badge.css("position", "absolute");
 			}
