@@ -144,6 +144,7 @@ public final class RegisteredNotifier extends Notifier {
 					"   LEFT JOIN users_0000 f ON f.user_id=fol.follower_user_id" +
 					"   LEFT JOIN users_0000 n ON n.user_id=fol.new_user_id" +
 					" WHERE f.email LIKE '%@%'" +
+					"   AND f.send_email_mode = 1" +
 					"   AND f.user_id NOT IN (SELECT user_id FROM temp_emails_0000)" +
 					"   AND f.email NOT IN (SELECT email FROM temp_emails_0000)" +
 					" ORDER BY f_user_id, n_user_id;";

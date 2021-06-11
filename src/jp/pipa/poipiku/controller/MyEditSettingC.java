@@ -4,11 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
@@ -45,16 +44,13 @@ public class MyEditSettingC {
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -83,6 +79,7 @@ public class MyEditSettingC {
 				m_cUser.m_nReaction			= resultSet.getInt("ng_reaction");
 				m_cUser.m_nAdMode			= resultSet.getInt("ng_ad_mode");
 				m_cUser.m_nDownload			= resultSet.getInt("ng_download");
+				m_cUser.m_nSendEmailMode    = resultSet.getInt("send_email_mode");
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

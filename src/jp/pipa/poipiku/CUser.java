@@ -21,6 +21,9 @@ public class CUser {
 	public static final int DOWNLOAD_OFF = 0;
 	public static final int DOWNLOAD_ON = 1;
 
+	public static final int SEND_EMAIL_OFF = 0;
+	public static final int SEND_EMAIL_ON = 1;
+
 	public int m_nUserId = 0;
 	public String m_strNickName = "";
 	public String m_strProfile = "";
@@ -42,6 +45,7 @@ public class CUser {
 	public int m_nAdMode = AD_MODE_HIDE;
 	public int m_nDownload = DOWNLOAD_OFF;
 	public int m_nPassportId = Common.PASSPORT_OFF;
+	public int m_nSendEmailMode = 1;
 
 	// tblOAuth
 	public int m_nAutoTweetTime=-99;

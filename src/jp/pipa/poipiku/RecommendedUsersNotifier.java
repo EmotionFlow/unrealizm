@@ -30,13 +30,15 @@ public final class RecommendedUsersNotifier extends Notifier {
 		boolean result = false;
 		try {
 			connection = dataSource.getConnection();
-			// １ヶ月以上アクセスしていないユーザーのうち、一週間以上DMしていないユーザー
+			// １ヶ月以上アクセスしていないユーザーのうち、２週間以上DMしていないユーザー
+			// かつ、DM許可しているユーザー。
 			sql = "SELECT user_id, email, nickname, lang_id, last_login_date" +
 					" FROM users_0000" +
 					" WHERE last_login_date < CURRENT_TIMESTAMP - INTERVAL '1 month'" +
-					"  AND (last_dm_delivery_date IS NULL OR last_dm_delivery_date < CURRENT_TIMESTAMP - INTERVAL '1 week')" +
+					"  AND (last_dm_delivery_date IS NULL OR last_dm_delivery_date < CURRENT_TIMESTAMP - INTERVAL '2 week')" +
 					"  AND email IS NOT NULL" +
 					"  AND email LIKE '%@%'" +
+					"  AND send_email_mode = 1" +
 					"  AND user_id NOT IN (SELECT user_id FROM temp_emails_0000)" +
 					" ORDER BY last_login_date DESC LIMIT 1000;";
 			statement = connection.prepareStatement(sql);
