@@ -15,7 +15,6 @@ import jp.pipa.poipiku.util.Log;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.http.HttpParameters;
-import oauth.signpost.http.HttpRequest;
 
 public final class RegistTwitterTokenC extends Controller {
 	public enum Result {
@@ -61,10 +60,8 @@ public final class RegistTwitterTokenC extends Controller {
 			statement.close();statement=null;
 
 			if(result!=Result.LINKED_OTHER_POIPIKU_ID) {
-				bIsExist = false;
-
 				// 以前同じuser_id, twitter_use_idの組み合わせで連携していたら、そのレコードを復活させる。
-				sql = "UPDATE tbloauth SET del_flg=false WHERE flduserid=? AND fldproviderid=? AND twitter_user_id=? AND del_flg=true RETURNING flduserid";
+				sql = "UPDATE tbloauth SET del_flg=FALSE WHERE flduserid=? AND fldproviderid=? AND twitter_user_id=? AND del_flg=TRUE RETURNING flduserid";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
 				statement.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -72,55 +69,53 @@ public final class RegistTwitterTokenC extends Controller {
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					Log.d("以前同じuser_id, twitter_use_idの組み合わせで連携していた");
-					bIsExist = true;
 				}
-				resultSet.close();resultSet=null;
-				statement.close();statement=null;
-
-				if (!bIsExist) {
-					// select
-					sql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
-					statement = connection.prepareStatement(sql);
-					statement.setInt(1, checkLogin.m_nUserId);
-					statement.setInt(2, Common.TWITTER_PROVIDER_ID);
-					resultSet = statement.executeQuery();
-					if(resultSet.next()){
-						bIsExist = true;
-					}
-					resultSet.close();resultSet=null;
-					statement.close();statement=null;
-				}
-
-				if (bIsExist){
-					Log.d("TwitterToken Update : " + checkLogin.m_nUserId);
-					// update
-					sql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
-					statement = connection.prepareStatement(sql);
-					statement.setString(1, consumer.getToken());
-					statement.setString(2, consumer.getTokenSecret());
-					statement.setString(3, twitterUserId);
-					statement.setString(4, screenName);
-					statement.setInt(5, checkLogin.m_nUserId);
-					statement.setInt(6, Common.TWITTER_PROVIDER_ID);
-					statement.executeUpdate();
-					statement.close();statement=null;
-				} else {
-					Log.d("TwitterToken Insert : " + checkLogin.m_nUserId);
-					// insert
-					sql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?) ";
-					statement = connection.prepareStatement(sql);
-					statement.setInt(1, checkLogin.m_nUserId);
-					statement.setInt(2, Common.TWITTER_PROVIDER_ID);
-					statement.setString(3, consumer.getToken());
-					statement.setString(4, consumer.getTokenSecret());
-					statement.setString(5, twitterUserId);
-					statement.setString(6, screenName);
-					statement.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
-					statement.executeUpdate();
-					statement.close();statement=null;
-				}
-				result = Result.OK;
+				resultSet.close();resultSet = null;
+				statement.close();statement = null;
 			}
+
+			bIsExist = false;
+			// select
+			sql = "SELECT 1 FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setInt(2, Common.TWITTER_PROVIDER_ID);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()){
+				bIsExist = true;
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			if (bIsExist){
+				Log.d("TwitterToken Update : " + checkLogin.m_nUserId);
+				// update
+				sql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, consumer.getToken());
+				statement.setString(2, consumer.getTokenSecret());
+				statement.setString(3, twitterUserId);
+				statement.setString(4, screenName);
+				statement.setInt(5, checkLogin.m_nUserId);
+				statement.setInt(6, Common.TWITTER_PROVIDER_ID);
+				statement.executeUpdate();
+				statement.close();statement=null;
+			} else {
+				Log.d("TwitterToken Insert : " + checkLogin.m_nUserId);
+				// insert
+				sql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?) ";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, checkLogin.m_nUserId);
+				statement.setInt(2, Common.TWITTER_PROVIDER_ID);
+				statement.setString(3, consumer.getToken());
+				statement.setString(4, consumer.getTokenSecret());
+				statement.setString(5, twitterUserId);
+				statement.setString(6, screenName);
+				statement.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
+				statement.executeUpdate();
+				statement.close();statement=null;
+			}
+			result = Result.OK;
 
 		} catch(Exception e) {
 			Log.d(sql);

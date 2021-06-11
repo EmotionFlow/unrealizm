@@ -414,6 +414,12 @@ public final class RegistTwitterUserC {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Oauth o = new Oauth(resultSet);
+				// OAuthで取得した情報で上書きする
+				o.twitterUserId = twitterUserId;
+				o.twitterScreenName = twitterScreenName;
+				o.accessToken = accessToken;
+				o.tokenSecret = tokenSecret;
+
 				CUser u = new CUser(resultSet);
 				Result r = new Result();
 				r.user = u;

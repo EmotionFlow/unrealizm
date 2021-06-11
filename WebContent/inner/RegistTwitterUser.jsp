@@ -83,7 +83,7 @@ if (selectedUserId == NEW_USER || selectedUserId > 0) {
 				nextUrl = callbackUrl.toString();
 				session.removeAttribute("callback_uri");
 			}
-			Log.d(String.format("USERAUTH RetistTwitterUser APP1 : user_id:%d, twitter_result:%d, url:%s", selectedUserId, loginResult, nextUrl));
+			Log.d(String.format("USERAUTH RetistTwitterUser BROWSER1 : user_id:%d, twitter_result:%d, url:%s", selectedUserId, loginResult, nextUrl));
 			status = loginResult > 0 ? Status.LoginSucceed : Status.Error;
 		} else {
 			status = Status.Error;
