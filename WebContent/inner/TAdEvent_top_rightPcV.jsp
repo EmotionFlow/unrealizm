@@ -27,6 +27,13 @@ $(function(){
 <%}%>
 <ul class="EventItemList">
 	<li class="EventItem">
+		<a class="EventBanner" style="padding: 5px; background: #333; color: #fff; font-family: yumincho, 游明朝, 游明朝体, yu mincho, ヒラギノ明朝 pron, hiragino mincho pron, hiraminpron-w3, hiraminpron-w6, ヒラギノ明朝 pro, hiragino mincho pro, hiraminpro-w3, hiraminpro-w6, hg明朝e, hgp明朝e, hgs明朝e, hgminchoe, hgpminchoe, hgsminchoe, hg明朝b, hgp明朝b, hgs明朝b, hgminchob, hgpminchob, hgsminchob, 平成明朝, 平成明朝 std, 平成明朝 pro, heisei mincho, heisei mincho std, heisei mincho pro, ipa明朝, ipamincho, Georgia, georgia ref, times new roman, SerifJP, serif;" href="/UploadTextPcV.jsp">
+			<div style="text-align: center; font-size: 34px; font-weight: bold; line-height: 62px">縦書き10万文字</div>
+			<div style="text-align: center; font-size: 16px; line-height: 20px;">小説(β)提供開始</div>
+		</a>
+	</li>
+
+	<li class="EventItem">
 		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalRequestCreatorPcV.jsp">
 			<div style="text-align: center; font-size: 22px; font-weight: bold; line-height: 22px">ポイパスあげると<br />ポイパスもらる！</div>
 			<div style="text-align: center; font-size: 12px; line-height: 20px;">おふせ開始記念！6/30までにおふせした人全員に</div>
@@ -37,12 +44,6 @@ $(function(){
 	<li class="EventItem">
 		<a href="/event/20190901/TopPcV.jsp">
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
-		</a>
-	</li>
-
-	<li class="EventItem">
-		<a href="/UploadTextPcV.jsp">
-			<img class="EventBanner" src="/img/banner_2020_10_25_text-post.png" />
 		</a>
 	</li>
 </ul>
