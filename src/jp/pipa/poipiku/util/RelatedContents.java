@@ -140,8 +140,7 @@ public final class RelatedContents {
 	}
 
 	static public ArrayList<CContent> getGenreContentList(int contentId, int listNum, CheckLogin checkLogin){
-		ArrayList<CContent> contents = new ArrayList<CContent>();
-		DataSource dataSource = null;
+		ArrayList<CContent> contents = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -151,8 +150,7 @@ public final class RelatedContents {
 		if(listNum<1) return contents;
 		try {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
-			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// genre tag
 			String tag = getTitleTag(contentId);
@@ -162,7 +160,7 @@ public final class RelatedContents {
 			strSql = "SELECT contents_0000.* "
 					+ "FROM contents_0000 "
 					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
-					+ "WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND safe_filter<=? ";
+					+ "WHERE open_id<>2 AND publish_id IN (0,1,2,3,5,6,11) AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND safe_filter<=? ";
 			if(checkLogin.m_bLogin) {
 				strSql += "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
 						+ "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
@@ -176,7 +174,7 @@ public final class RelatedContents {
 				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
-			statement.setInt(idx++, listNum);
+			statement.setInt(idx++, listNum * 20);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
@@ -189,6 +187,10 @@ public final class RelatedContents {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 			Collections.shuffle(contents);
+			while (contents.size() > listNum) {
+				contents.remove(contents.size() - 1);
+			}
+
 		} catch (Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

@@ -198,7 +198,7 @@
 	padding: 0 18px;
 	margin: 0;
 	border-radius: 6px;
-	font-weight: bold;
+	font-weight: 500;
 }
 
 .SearchResultTitle .TitleCmdFollow,
@@ -1649,6 +1649,18 @@ Decoration
 }
 
 
+.IllustItemList .CategoryMore {
+	display: block;
+	float: left;
+	width: 100%;
+	text-align: right;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 0 7px;
+	box-sizing: border-box;
+}
+
+
 .IllustItem .IllustItemDesc {
 	display: block;
 	float: left;
@@ -2256,7 +2268,18 @@ Decoration
 	background: #aaa;
 }
 
-
+.IllustItemListRelatedTitle {
+	display: block;
+	float: left;
+	width: 100%;
+	margin-top: 24px;
+	background: rgba(255,255,255,0.9);
+	color: #3498da;
+	box-sizing: border-box;
+	padding: 8px;
+	font-size: 15px;
+	font-weight: 500;
+}
 
 /*********** IllustView UserInfo **********/
 .UserInfo {

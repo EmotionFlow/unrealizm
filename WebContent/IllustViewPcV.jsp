@@ -273,26 +273,25 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			</section>
 		</article>
 
-		<%
-			if(!cResults.m_vRelatedContentList.isEmpty()) {
-		%>
+		<%if (cResults.m_vRelatedContentList.size() > 0) {%>
+		<h2 class="IllustItemListRelatedTitle">同じタグの作品</h2>
 		<article class="Wrapper GridList">
-			<section id="IllustItemList" class="IllustItemList Related Tag">
-				<header class="SearchResultTitle" style="float: none;">
-					<%
-						String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);
-					%>
-					<a class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
-				</header>
-				<%
-					for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-									CContent cContent = cResults.m_vRelatedContentList.get(nCnt);
-				%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
+			<section class="IllustItemList Related Tag">
+				<%for(CContent cContent: cResults.m_vRelatedContentList) {%>
+				<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 				<%}%>
 			</section>
 		</article>
 		<%}%>
+
+		<h2 class="IllustItemListRelatedTitle">おすすめ作品</h2>
+		<article class="Wrapper GridList">
+			<section class="IllustItemList Related Tag">
+				<%for(CContent cContent: cResults.m_vRecommendedList) {%>
+				<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
+				<%}%>
+			</section>
+		</article>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>

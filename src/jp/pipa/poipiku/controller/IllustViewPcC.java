@@ -43,10 +43,12 @@ public final class IllustViewPcC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 6;
-	public int SELECT_MAX_RELATED_GALLERY = 30;
+	public int SELECT_MAX_GALLERY = 9;
+	public int SELECT_MAX_RELATED_GALLERY = 9;
+	public int SELECT_MAX_RECOMMENDED_GALLERY = 9;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<>();
+	public ArrayList<CContent> m_vRecommendedList = new ArrayList<>();
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
@@ -250,6 +252,11 @@ public final class IllustViewPcC {
 			// Related Contents
 			if(SELECT_MAX_RELATED_GALLERY>0) {
 				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin);
+			}
+
+			// Recommended Contents
+			if(SELECT_MAX_RECOMMENDED_GALLERY>0) {
+				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin);
 			}
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
