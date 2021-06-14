@@ -8,6 +8,7 @@
 <meta http-equiv="Cache-Control" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Language" content="ja">
 <meta name="robots" content="index,follow" />
 <meta name="pinterest" content="nopin" />
 <link rel="icon" href="/favicon_2.ico" />
