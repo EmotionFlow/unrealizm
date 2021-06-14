@@ -76,27 +76,30 @@ if(cResults.isDownloadable) {
 
 		<style>
 		body {height: 100%; background: #333333;}
+		<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT ){%>
+		body {background: #fff;}
+		<%}%>
 		.AnalogicoInfo {display: none;}
 
-        .IllustItemLink {padding: 4px;}
+		.IllustItemLink {padding: 4px;}
 		.IllustItemImage {max-width: 100%; height: auto;}
 
-        .IllustItemTextDetail {
-            display: block;
-            float: left;
-            box-sizing: border-box;
-            color: #eee;
-            text-align: left;
-            font-size: 1.3em;
-            line-height: 1.8;
+		.IllustItemTextDetail {
+			display: block;
+			float: left;
+			box-sizing: border-box;
+			color: #333;
+			text-align: left;
+			font-size: 1.3em;
+			line-height: 1.8;
 			margin: 0 4px;
-            font-family: yumincho, 游明朝, 游明朝体, yu mincho, ヒラギノ明朝 pron, hiragino mincho pron, hiraminpron-w3, hiraminpron-w6, ヒラギノ明朝 pro, hiragino mincho pro, hiraminpro-w3, hiraminpro-w6, hg明朝e, hgp明朝e, hgs明朝e, hgminchoe, hgpminchoe, hgsminchoe, hg明朝b, hgp明朝b, hgs明朝b, hgminchob, hgpminchob, hgsminchob, 平成明朝, 平成明朝 std, 平成明朝 pro, heisei mincho, heisei mincho std, heisei mincho pro, ipa明朝, ipamincho, Georgia, georgia ref, times new roman, SerifJP, serif;
-        }
+			font-family: yumincho, 游明朝, 游明朝体, yu mincho, ヒラギノ明朝 pron, hiragino mincho pron, hiraminpron-w3, hiraminpron-w6, ヒラギノ明朝 pro, hiragino mincho pro, hiraminpro-w3, hiraminpro-w6, hg明朝e, hgp明朝e, hgs明朝e, hgminchoe, hgpminchoe, hgsminchoe, hg明朝b, hgp明朝b, hgs明朝b, hgminchob, hgpminchob, hgsminchob, 平成明朝, 平成明朝 std, 平成明朝 pro, heisei mincho, heisei mincho std, heisei mincho pro, ipa明朝, ipamincho, Georgia, georgia ref, times new roman, SerifJP, serif;
+		}
 
-        .IllustItemTextDetail.Vertical{
-            writing-mode: vertical-rl;
-            overflow-x: scroll;
-            height: 500px;
+		.IllustItemTextDetail.Vertical{
+			writing-mode: vertical-rl;
+			overflow-x: scroll;
+			height: 500px;
 			width: 100%;
 		}
 
