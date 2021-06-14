@@ -67,13 +67,11 @@ public final class RecommendedContents {
 			statement.setInt(2, showUserId);
 			statement.setInt(3, showUserId);
 			resultSet = statement.executeQuery();
-			
 			while (resultSet.next()) {
 				contentIds.add(resultSet.getInt(1));
 			}
-			
-			resultSet.close();
-			statement.close();
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			
 			// いま〜3ヶ月前のPopular
 			strSql = "SELECT content_id" +
@@ -86,8 +84,8 @@ public final class RecommendedContents {
 			while (resultSet.next()) {
 				contentIds.add(resultSet.getInt(1));
 			}
-			resultSet.close();
-			statement.close();
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			
 			// 300日以上前のランダム
 			Random rnd = new Random();
@@ -103,8 +101,8 @@ public final class RecommendedContents {
 			while (resultSet.next()) {
 				contentIds.add(resultSet.getInt(1));
 			}
-			resultSet.close();
-			statement.close();
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			Collections.shuffle(contentIds);
 
@@ -118,10 +116,12 @@ public final class RecommendedContents {
 					" AND publish_id=0";
 
 			if(checkLogin.m_bLogin) {
-				strSql += "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-						+ "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+				strSql += " AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
+						+ " AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 			strSql += " LIMIT ?";
+
+			Log.d(strSql);
 
 			statement = connection.prepareStatement(strSql);
 			idx = 1;

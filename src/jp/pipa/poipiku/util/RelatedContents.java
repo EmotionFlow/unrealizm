@@ -37,10 +37,10 @@ public final class RelatedContents {
 					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
 					+ "WHERE contents_0000.user_id=? AND open_id<>2 AND safe_filter<=?";
 			if(checkLogin.m_bLogin) {
-				strSql += "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-						+ "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+				strSql += " AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
+						+ " AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
-			strSql += "ORDER BY content_id DESC LIMIT ?";
+			strSql += " ORDER BY content_id DESC LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, userId);
