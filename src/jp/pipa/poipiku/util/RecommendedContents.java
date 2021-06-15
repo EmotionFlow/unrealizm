@@ -33,26 +33,13 @@ public final class RecommendedContents {
 //			long start;
 //			start = System.currentTimeMillis();
 			// タグによるおすすめ
-			// showUserIdが他に使っているタグ
-			// showUserIdがフォローしているタグ
-			// showUserIdがフォローしているユーザーがフォローしているタグ
-			strSql = "WITH follows AS (" +
-					"    SELECT follow_user_id" +
-					"    FROM follows_0000" +
-					"    WHERE user_id = ?" +
-					"    LIMIT 10" +
-					")" +
-					", recommended_tags AS (" +
+			//// showUserIdが他に使っているタグ
+			strSql = "WITH recommended_tags AS (" +
 					"    SELECT t.genre_id" +
 					"    FROM tags_0000 t" +
-					"             LEFT JOIN contents_0000 c ON t.content_id = c.content_id" +
+					"      LEFT JOIN contents_0000 c ON t.content_id = c.content_id" +
 					"    WHERE user_id = ?" +
 					"      AND t.genre_id > 0" +
-					"    UNION ALL" +
-					"    SELECT genre_id" +
-					"    FROM follow_tags_0000" +
-					"    WHERE user_id = ?" +
-					"       OR user_id IN (SELECT follow_user_id FROM follows)" +
 					"    LIMIT 10" +
 					")" +
 					"SELECT content_id" +
@@ -62,8 +49,6 @@ public final class RecommendedContents {
 					" LIMIT 30";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, showUserId);
-			statement.setInt(2, showUserId);
-			statement.setInt(3, showUserId);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				contentIds.add(resultSet.getInt(1));
@@ -110,7 +95,6 @@ public final class RecommendedContents {
 
 //			start = System.currentTimeMillis();
 			Collections.shuffle(contentIds);
-
 			String selectContentIds = contentIds.stream()
 					.distinct()
 					.map(Object::toString)
