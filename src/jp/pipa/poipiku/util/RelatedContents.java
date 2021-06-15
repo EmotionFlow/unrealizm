@@ -160,7 +160,7 @@ public final class RelatedContents {
 			strSql = "SELECT contents_0000.* "
 					+ "FROM contents_0000 "
 					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
-					+ "WHERE open_id<>2 AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND safe_filter<=? ";
+					+ "WHERE open_id<>2 AND publish_id IN (0,1,2,3,5,6,11) AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) AND safe_filter<=? ";
 			if(checkLogin.m_bLogin) {
 				strSql += "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
 						+ "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";

@@ -284,6 +284,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		</article>
 		<%}%>
 
+		<%if (cResults.m_vRecommendedList.size() > 0) {%>
 		<h2 class="IllustItemListRelatedTitle">おすすめ作品</h2>
 		<article class="Wrapper GridList">
 			<section class="IllustItemList Related Tag">
@@ -292,6 +293,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%}%>
 			</section>
 		</article>
+		<%}%>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
