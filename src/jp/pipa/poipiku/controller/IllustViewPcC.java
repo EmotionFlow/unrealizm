@@ -255,10 +255,11 @@ public final class IllustViewPcC {
 			}
 
 			// Recommended Contents
-			if(checkLogin.isStaff() && SELECT_MAX_RECOMMENDED_GALLERY>0) {
-				long start = System.currentTimeMillis();
+			long start = System.currentTimeMillis();
+			if((checkLogin.isStaff() || start % 1000 == 0)  && SELECT_MAX_RECOMMENDED_GALLERY>0) {
+				Log.d(String.format("RecommendedContents st: %d, %d, %d", m_cContent.m_nUserId, m_cContent.m_nContentId, checkLogin.m_nUserId));
 				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin);
-				Log.d(String.format("RecommendedContents: %d", System.currentTimeMillis() - start));
+				Log.d(String.format("RecommendedContents ed: %d", System.currentTimeMillis() - start));
 			}
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う

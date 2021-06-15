@@ -63,7 +63,6 @@ public final class RecommendedContents {
 					" WHERE genre_id IN (SELECT * FROM recommended_tags)" +
 					" ORDER BY RANDOM()" +
 					" LIMIT 30";
-			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, showUserId);
 			statement.setInt(2, showUserId);
