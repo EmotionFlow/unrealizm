@@ -120,9 +120,6 @@ public final class RecommendedContents {
 						+ " AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 			strSql += " LIMIT ?";
-
-			Log.d(strSql);
-
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			if(checkLogin.m_bLogin) {
