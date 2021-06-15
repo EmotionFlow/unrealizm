@@ -291,24 +291,24 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 					%>
 				</div>
 
-				<%
-					if(!cResults.m_vRelatedContentList.isEmpty()) {
-				%>
+				<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
+				<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Related")%></h2>
 				<div class="RelatedItemList">
-					<header class="SearchResultTitle">
-						<%
-							String keyword = RelatedContents.getTitleTag(cResults.m_cContent.m_nContentId);
-						%>
-						<a class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
-					</header>
-					<%
-						for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-												CContent cContent = cResults.m_vRelatedContentList.get(nCnt);
-					%>
+					<%for(CContent cContent: cResults.m_vRelatedContentList) {%>
 						<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%}%>
 				</div>
 				<%}%>
+
+				<%if (cResults.m_vRecommendedList.size() > 0) {%>
+				<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Recommended")%></h2>
+				<div class="RelatedItemList">
+						<%for(CContent cContent: cResults.m_vRecommendedList) {%>
+						<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
+						<%}%>
+				</div>
+				<%}%>
+
 				<!--
 				<nav class="PageBar">
 					<%//if(bSmartPhone) {%>

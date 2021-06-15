@@ -274,7 +274,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		</article>
 
 		<%if (cResults.m_vRelatedContentList.size() > 0) {%>
-		<h2 class="IllustItemListRelatedTitle">同じタグの作品</h2>
+		<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Related")%></h2>
 		<article class="Wrapper GridList">
 			<section class="IllustItemList Related Tag">
 				<%for(CContent cContent: cResults.m_vRelatedContentList) {%>
@@ -285,7 +285,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%}%>
 
 		<%if (cResults.m_vRecommendedList.size() > 0) {%>
-		<h2 class="IllustItemListRelatedTitle">おすすめ作品</h2>
+		<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Recommended")%></h2>
 		<article class="Wrapper GridList">
 			<section class="IllustItemList Related Tag">
 				<%for(CContent cContent: cResults.m_vRecommendedList) {%>
