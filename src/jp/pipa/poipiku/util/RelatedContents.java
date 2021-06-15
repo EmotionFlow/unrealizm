@@ -16,20 +16,16 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 
 public final class RelatedContents {
-	static public ArrayList<CContent> getUserContentList(int userId, int listNum, CheckLogin checkLogin){
-		ArrayList<CContent> contents = new ArrayList<CContent>();
-		DataSource dataSource = null;
-		Connection connection = null;
+	static public ArrayList<CContent> getUserContentList(int userId, int listNum, CheckLogin checkLogin, Connection connection){
+		ArrayList<CContent> contents = new ArrayList<>();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 1;
 
-		if(listNum<1) return contents;
+		if(userId<1 || listNum<1 || checkLogin==null || connection==null) return contents;
 		try {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
-			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
 
 			// user contents
 			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
@@ -67,7 +63,6 @@ public final class RelatedContents {
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return contents;
 	}
@@ -139,18 +134,16 @@ public final class RelatedContents {
 		return tags;
 	}
 
-	static public ArrayList<CContent> getGenreContentList(int contentId, int listNum, CheckLogin checkLogin){
+	static public ArrayList<CContent> getGenreContentList(int contentId, int listNum, CheckLogin checkLogin, Connection connection){
 		ArrayList<CContent> contents = new ArrayList<>();
-		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 1;
 
-		if(listNum<1) return contents;
+		if(contentId<1 || listNum<1 || checkLogin==null || connection==null) return contents;
 		try {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
-			connection = DatabaseUtil.dataSource.getConnection();
 
 			// genre tag
 			String tag = getTitleTag(contentId);
@@ -186,7 +179,6 @@ public final class RelatedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			connection.close();connection=null;
 			Collections.shuffle(contents);
 		} catch (Exception e) {
 			Log.d(strSql);
@@ -194,7 +186,6 @@ public final class RelatedContents {
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return contents;
 	}

@@ -18,19 +18,16 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 public final class RecommendedContents {
-	static public ArrayList<CContent> getContents(int showUserId, int showContentId, int listNum, CheckLogin checkLogin){
+	static public ArrayList<CContent> getContents(int showUserId, int showContentId, int listNum, CheckLogin checkLogin, Connection connection){
 		ArrayList<CContent> contents = new ArrayList<>();
-		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 1;
 
-		if(listNum<1 || showUserId<1 || showContentId<1) return contents;
+		if(listNum<1 || showUserId<1 || showContentId<1 || checkLogin==null || connection==null) return contents;
 		try {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
-			connection = DatabaseUtil.dataSource.getConnection();
-			
 			List<Integer> contentIds = new ArrayList<>();
 
 //			long start;
@@ -157,7 +154,6 @@ public final class RecommendedContents {
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return contents;
 	}

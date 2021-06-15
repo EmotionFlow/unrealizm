@@ -3,9 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
@@ -246,19 +244,19 @@ public final class IllustViewPcC {
 
 			// Owner Contents
 			if(SELECT_MAX_GALLERY>0) {
-				m_vContentList = RelatedContents.getUserContentList(m_nUserId, SELECT_MAX_GALLERY, checkLogin);
+				m_vContentList = RelatedContents.getUserContentList(m_nUserId, SELECT_MAX_GALLERY, checkLogin, connection);
 			}
 
 			// Related Contents
 			if(SELECT_MAX_RELATED_GALLERY>0) {
-				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin);
+				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin, connection);
 			}
 
 			// Recommended Contents
 			long start = System.currentTimeMillis();
 			if((checkLogin.isStaff() || start % 10 == 0)  && SELECT_MAX_RECOMMENDED_GALLERY>0) {
 //				Log.d(String.format("RecommendedContents st: %d, %d, %d", m_cContent.m_nUserId, m_cContent.m_nContentId, checkLogin.m_nUserId));
-				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin);
+				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
 //				Log.d(String.format("RecommendedContents ed: %d", System.currentTimeMillis() - start));
 			}
 
