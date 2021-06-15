@@ -1,20 +1,15 @@
 package jp.pipa.poipiku.util;
 
 import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CTag;
 import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public final class RecommendedContents {
@@ -30,8 +25,6 @@ public final class RecommendedContents {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
 			List<Integer> contentIds = new ArrayList<>();
 
-//			long start;
-//			start = System.currentTimeMillis();
 			// タグによるおすすめ
 			//// showUserIdが他に使っているタグ
 			strSql = "WITH recommended_tags AS (" +
@@ -55,10 +48,8 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-//			Log.d(String.format("RecommendedContents タグによるおすすめ: %d", System.currentTimeMillis() - start));
 
-//			start = System.currentTimeMillis();
-			// いま〜3ヶ月前のPopular
+			// 2〜3ヶ月前のPopular
 			strSql = "SELECT content_id" +
 					" FROM rank_contents_total" +
 					" WHERE add_date BETWEEN NOW() - INTERVAL '3 month' AND NOW() - INTERVAL '2 month'" +
@@ -71,10 +62,7 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-//			Log.d(String.format("RecommendedContents いま〜3ヶ月前のPopular: %d", System.currentTimeMillis() - start));
 
-
-//			start = System.currentTimeMillis();
 			// 300日前のランダム
 			strSql = String.format("SELECT content_id" +
 					" FROM contents_0000" +
@@ -89,11 +77,9 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-//			Log.d(String.format("RecommendedContents 300日以上前のランダム: %d", System.currentTimeMillis() - start));
 
 			if (contentIds.isEmpty()) return contents;
 
-//			start = System.currentTimeMillis();
 			Collections.shuffle(contentIds);
 			String selectContentIds = contentIds.stream()
 					.distinct()
@@ -127,7 +113,6 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-//			Log.d(String.format("RecommendedContents コンテンツ取得: %d", System.currentTimeMillis() - start));
 
 		} catch (Exception e) {
 			Log.d(strSql);
