@@ -17,6 +17,7 @@ public final class IllustViewPcC {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
 			m_nContentId	= Util.toInt(cRequest.getParameter("TD"));
+			m_bIsBot        = Util.isBot(cRequest);
 		} catch(Exception e) {
 			m_nContentId = -1;
 		}
@@ -58,6 +59,7 @@ public final class IllustViewPcC {
 	public int m_nContentsNumTotal = 0;
 	public Integer m_nNewContentId = null;
 	public boolean m_bCheerNg = true;
+	private boolean m_bIsBot = false;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -105,8 +107,6 @@ public final class IllustViewPcC {
 				m_nNewContentId = searchContentIdHistory(connection, statement, resultSet, m_nContentId);
 				return false;
 			}
-
-			if(!bContentExist) return false;
 
 			// author profile
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
@@ -242,22 +242,24 @@ public final class IllustViewPcC {
 				statement.close();statement=null;
 			}
 
-			// Owner Contents
-			if(SELECT_MAX_GALLERY>0) {
-				m_vContentList = RelatedContents.getUserContentList(m_nUserId, SELECT_MAX_GALLERY, checkLogin, connection);
-			}
+			if(!m_bIsBot) {
+				// Owner Contents
+				if(SELECT_MAX_GALLERY>0) {
+					m_vContentList = RelatedContents.getUserContentList(m_nUserId, SELECT_MAX_GALLERY, checkLogin, connection);
+				}
 
-			// Related Contents
-			if(SELECT_MAX_RELATED_GALLERY>0) {
-				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin, connection);
-			}
+				// Related Contents
+				if(SELECT_MAX_RELATED_GALLERY>0) {
+					m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin, connection);
+				}
 
-			// Recommended Contents
-			long start = System.currentTimeMillis();
-			if((checkLogin.isStaff() || start % 5 == 0)  && SELECT_MAX_RECOMMENDED_GALLERY>0) {
+				// Recommended Contents
+				long start = System.currentTimeMillis();
+				if((checkLogin.isStaff() || start % 5 == 0)  && SELECT_MAX_RECOMMENDED_GALLERY>0) {
 //				Log.d(String.format("RecommendedContents st: %d, %d, %d", m_cContent.m_nUserId, m_cContent.m_nContentId, checkLogin.m_nUserId));
-				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
+					m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
 //				Log.d(String.format("RecommendedContents ed: %d", System.currentTimeMillis() - start));
+				}
 			}
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
