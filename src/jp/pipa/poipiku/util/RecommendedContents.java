@@ -72,12 +72,11 @@ public final class RecommendedContents {
 			statement.close();statement=null;
 //			Log.d(String.format("RecommendedContents タグによるおすすめ: %d", System.currentTimeMillis() - start));
 
-
 //			start = System.currentTimeMillis();
 			// いま〜3ヶ月前のPopular
 			strSql = "SELECT content_id" +
 					" FROM rank_contents_total" +
-					" WHERE add_date > NOW() - INTERVAL '3 month'" +
+					" WHERE add_date BETWEEN NOW() - INTERVAL '3 month' AND NOW() - INTERVAL '2 month'" +
 					" ORDER BY RANDOM()" +
 					" LIMIT 30;";
 			statement = connection.prepareStatement(strSql);
@@ -91,15 +90,13 @@ public final class RecommendedContents {
 
 
 //			start = System.currentTimeMillis();
-			// 300日以上前のランダム
-			Random rnd = new Random();
-			int dayOffset = rnd.nextInt(50) + 300;
+			// 300日前のランダム
 			strSql = String.format("SELECT content_id" +
 					" FROM contents_0000" +
 					" WHERE upload_date" +
 					"    BETWEEN NOW() - INTERVAL '%d days' AND NOW() - INTERVAL '%d days'" +
 					" ORDER BY RANDOM()" +
-					" LIMIT 30", dayOffset, dayOffset-1);
+					" LIMIT 30", 300, 300-1);
 			statement = connection.prepareStatement(strSql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
