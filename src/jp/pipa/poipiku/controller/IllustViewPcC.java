@@ -251,17 +251,15 @@ public final class IllustViewPcC {
 
 			// Related Contents
 			if(SELECT_MAX_RELATED_GALLERY>0) {
-//				long start = System.currentTimeMillis();
 				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin);
-//				Log.d(String.format("RelatedContents: %d", System.currentTimeMillis() - start));
 			}
 
 			// Recommended Contents
-//			if(checkLogin.isStaff() && SELECT_MAX_RECOMMENDED_GALLERY>0) {
-//				long start = System.currentTimeMillis();
-//				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin);
-//				Log.d(String.format("RecommendedContents: %d", System.currentTimeMillis() - start));
-//			}
+			if(checkLogin.isStaff() && SELECT_MAX_RECOMMENDED_GALLERY>0) {
+				long start = System.currentTimeMillis();
+				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin);
+				Log.d(String.format("RecommendedContents: %d", System.currentTimeMillis() - start));
+			}
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 		} catch(Exception e) {

@@ -188,10 +188,6 @@ public final class RelatedContents {
 			statement.close();statement=null;
 			connection.close();connection=null;
 			Collections.shuffle(contents);
-//			while (contents.size() > listNum) {
-//				contents.remove(contents.size() - 1);
-//			}
-
 		} catch (Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
