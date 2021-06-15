@@ -255,7 +255,7 @@ public final class IllustViewPcC {
 
 				// Recommended Contents
 				long start = System.currentTimeMillis();
-				if((checkLogin.isStaff() || start % 5 == 0)  && SELECT_MAX_RECOMMENDED_GALLERY>0) {
+				if((checkLogin.isStaff() || start % 2 == 0)  && SELECT_MAX_RECOMMENDED_GALLERY>0) {
 //				Log.d(String.format("RecommendedContents st: %d, %d, %d", m_cContent.m_nUserId, m_cContent.m_nContentId, checkLogin.m_nUserId));
 					m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
 //				Log.d(String.format("RecommendedContents ed: %d", System.currentTimeMillis() - start));
