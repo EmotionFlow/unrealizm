@@ -255,8 +255,10 @@ public final class IllustViewPcC {
 			}
 
 			// Recommended Contents
-			if(SELECT_MAX_RECOMMENDED_GALLERY>0) {
+			if(checkLogin.isStaff() && SELECT_MAX_RECOMMENDED_GALLERY>0) {
+				long start = System.currentTimeMillis();
 				m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin);
+				Log.d(String.format("RecommendedContents: %d", System.currentTimeMillis() - start));
 			}
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う

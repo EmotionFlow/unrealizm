@@ -26,7 +26,7 @@ public final class RecommendedContents {
 		String strSql = "";
 		int idx = 1;
 
-		if(listNum<1) return contents;
+		if(listNum<1 || showUserId<1 || showContentId<1) return contents;
 		try {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
@@ -103,6 +103,8 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+
+			if (contentIds.isEmpty()) return contents;
 
 			Collections.shuffle(contentIds);
 
