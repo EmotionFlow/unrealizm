@@ -33,8 +33,8 @@ public final class RecommendedContents {
 			
 			List<Integer> contentIds = new ArrayList<>();
 
-			long start;
-			start = System.currentTimeMillis();
+//			long start;
+//			start = System.currentTimeMillis();
 			// タグによるおすすめ
 			// showUserIdが他に使っているタグ
 			// showUserIdがフォローしているタグ
@@ -73,10 +73,10 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			Log.d(String.format("RecommendedContents タグによるおすすめ: %d", System.currentTimeMillis() - start));
+//			Log.d(String.format("RecommendedContents タグによるおすすめ: %d", System.currentTimeMillis() - start));
 
 
-			start = System.currentTimeMillis();
+//			start = System.currentTimeMillis();
 			// いま〜3ヶ月前のPopular
 			strSql = "SELECT content_id" +
 					" FROM rank_contents_total" +
@@ -90,10 +90,10 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			Log.d(String.format("RecommendedContents いま〜3ヶ月前のPopular: %d", System.currentTimeMillis() - start));
+//			Log.d(String.format("RecommendedContents いま〜3ヶ月前のPopular: %d", System.currentTimeMillis() - start));
 
 
-			start = System.currentTimeMillis();
+//			start = System.currentTimeMillis();
 			// 300日以上前のランダム
 			Random rnd = new Random();
 			int dayOffset = rnd.nextInt(50) + 300;
@@ -110,11 +110,11 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			Log.d(String.format("RecommendedContents 300日以上前のランダム: %d", System.currentTimeMillis() - start));
+//			Log.d(String.format("RecommendedContents 300日以上前のランダム: %d", System.currentTimeMillis() - start));
 
 			if (contentIds.isEmpty()) return contents;
 
-			start = System.currentTimeMillis();
+//			start = System.currentTimeMillis();
 			Collections.shuffle(contentIds);
 
 			String selectContentIds = contentIds.stream()
@@ -149,7 +149,7 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			Log.d(String.format("RecommendedContents コンテンツ取得: %d", System.currentTimeMillis() - start));
+//			Log.d(String.format("RecommendedContents コンテンツ取得: %d", System.currentTimeMillis() - start));
 
 		} catch (Exception e) {
 			Log.d(strSql);
