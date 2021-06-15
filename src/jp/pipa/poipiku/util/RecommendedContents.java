@@ -33,6 +33,8 @@ public final class RecommendedContents {
 			
 			List<Integer> contentIds = new ArrayList<>();
 
+			long start;
+			start = System.currentTimeMillis();
 			// タグによるおすすめ
 			// showUserIdが他に使っているタグ
 			// showUserIdがフォローしているタグ
@@ -58,10 +60,10 @@ public final class RecommendedContents {
 					")" +
 					"SELECT content_id" +
 					" FROM tags_0000 t" +
-					"         INNER JOIN recommended_tags r ON t.genre_id = r.genre_id" +
-					" GROUP BY content_id" +
+					" WHERE genre_id IN (SELECT * FROM recommended_tags)" +
 					" ORDER BY RANDOM()" +
 					" LIMIT 30";
+			Log.d(strSql);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, showUserId);
 			statement.setInt(2, showUserId);
@@ -72,7 +74,10 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			
+			Log.d(String.format("RecommendedContents タグによるおすすめ: %d", System.currentTimeMillis() - start));
+
+
+			start = System.currentTimeMillis();
 			// いま〜3ヶ月前のPopular
 			strSql = "SELECT content_id" +
 					" FROM rank_contents_total" +
@@ -86,10 +91,13 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			
+			Log.d(String.format("RecommendedContents いま〜3ヶ月前のPopular: %d", System.currentTimeMillis() - start));
+
+
+			start = System.currentTimeMillis();
 			// 300日以上前のランダム
 			Random rnd = new Random();
-			int dayOffset = rnd.nextInt(100) + 300;
+			int dayOffset = rnd.nextInt(50) + 300;
 			strSql = String.format("SELECT content_id" +
 					" FROM contents_0000" +
 					" WHERE upload_date" +
@@ -103,9 +111,11 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+			Log.d(String.format("RecommendedContents 300日以上前のランダム: %d", System.currentTimeMillis() - start));
 
 			if (contentIds.isEmpty()) return contents;
 
+			start = System.currentTimeMillis();
 			Collections.shuffle(contentIds);
 
 			String selectContentIds = contentIds.stream()
@@ -140,6 +150,8 @@ public final class RecommendedContents {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+			Log.d(String.format("RecommendedContents コンテンツ取得: %d", System.currentTimeMillis() - start));
+
 		} catch (Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
