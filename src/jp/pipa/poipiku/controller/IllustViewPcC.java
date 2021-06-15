@@ -251,9 +251,9 @@ public final class IllustViewPcC {
 
 			// Related Contents
 			if(SELECT_MAX_RELATED_GALLERY>0) {
-				long start = System.currentTimeMillis();
+//				long start = System.currentTimeMillis();
 				m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin);
-				Log.d(String.format("RelatedContents: %d", System.currentTimeMillis() - start));
+//				Log.d(String.format("RelatedContents: %d", System.currentTimeMillis() - start));
 			}
 
 			// Recommended Contents
