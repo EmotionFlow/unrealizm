@@ -28,7 +28,7 @@ if(strRequestUri != null) {
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>
-		<%=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
+		<%// ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
 		<script>
 			function RegistUser() {
 				const strEmail = $.trim($("#RegistEmail").val());
@@ -47,8 +47,10 @@ if(strRequestUri != null) {
 					return false;
 				}
 
+				<%if(false){%>
 				grecaptcha.ready( () => {
 					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_app'}).then((reCAPTCHAtoken) => {
+				<%}%>
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
@@ -56,9 +58,9 @@ if(strRequestUri != null) {
 								"EM":strEmail,
 								"PW":strPassword,
 								"TK":"<%=strRegistUserFToken%>",
-								"RTK":reCAPTCHAtoken,
+								<%//"RTK":reCAPTCHAtoken,%>
 							},
-							"url": "/f/RegistUserF.jsp",
+							"url": "/api/RegistUserF.jsp",
 							"dataType": "json",
 							"success": function(data) {
 								if(data.result>0) {
@@ -74,24 +76,28 @@ if(strRequestUri != null) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
+				<%if(false){%>
 					});
 				});
+				<%}%>
 				return false;
 			}
 
 			function LoginUser() {
 				const strEmail = $.trim($("#LoginEmail").val());
 				const strPassword = $.trim($("#LoginPassword").val());
+				<%if(false){%>
 				grecaptcha.ready( () => {
 					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_app'}).then((reCAPTCHAtoken) => {
+				<%}%>
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
 								"EM":strEmail,
 								"PW":strPassword,
-								"RTK": reCAPTCHAtoken,
+								<%//"RTK": reCAPTCHAtoken,%>
 							},
-							"url": "/f/LoginUserF.jsp",
+							"url": "/api/LoginUserF.jsp",
 							"dataType": "json",
 							"success": function(data) {
 								if(data.result>0) {
@@ -105,17 +111,21 @@ if(strRequestUri != null) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
+				<%if(false){%>
 					});
 				});
+				<%}%>
 				return false;
 			}
 
+			<%if(false){%>
 			function reCAPTCHAonLoad() {
 				let badge = $(".grecaptcha-badge");
 				badge.css("bottom", "50px");
 				// badge.css("left", "54px");
 				badge.css("position", "fixed");
 			}
+			<%}%>
 		</script>
 		<style>
 		.Wrapper {width: 360px;}
@@ -124,7 +134,7 @@ if(strRequestUri != null) {
 		#LoginForm {display: none; float: left; width: 100%;}
 		.SettingList .SettingListItem {color: #fff;}
 		.SettingList .BtnBase {border: 1px solid #fff; background: #3498db; color: #fff;}
-		.SettingList .BtnBase.Selected, SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
+		.SettingList .BtnBase.Selected, .SettingList .BtnBase:hover {border: 1px solid #3498db; background: #fff; color: #3498db;}
 		</style>
 	</head>
 

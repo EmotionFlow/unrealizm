@@ -1,10 +1,8 @@
 package jp.pipa.poipiku.util;
 
 import okhttp3.*;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import org.json.simple.parser.ContainerFactory;
 import org.json.simple.parser.JSONParser;
@@ -32,12 +30,16 @@ public final class ReCAPTCHA {
 				"<script src=\"https://www.google.com/recaptcha/api.js?render=%s&onload=%s\"></script>",
 				SITE_KEY, onLoadFuncName);
 	}
+
+	@SuppressWarnings("unchecked")
 	public static VerifyResult verify(String token) {
 		final String verifyUrl = String.format(
 				"https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s",
 				SECRET_KEY, token
 		);
 		VerifyResult verifyResult = new VerifyResult();
+		if (token==null || token.isEmpty()) return verifyResult;
+
 		OkHttpClient client = new OkHttpClient();
 		try {
 			Request request = new Request.Builder()
@@ -47,23 +49,27 @@ public final class ReCAPTCHA {
 			JSONParser parser = new JSONParser();
 			ContainerFactory containerFactory = new ContainerFactory() {
 				@Override
-				public Map createObjectContainer() {
+				public Map<String, Object> createObjectContainer() {
 					return new LinkedHashMap<>();
 				}
 				@Override
-				public List creatArrayContainer() {
+				public List<Object> creatArrayContainer() {
 					return new LinkedList<>();
 				}
 			};
 
 			Map<String, Object> map;
 			try {
-				map = (Map<String, Object>)parser.parse(response.body().string(), containerFactory);
+				map = (Map<String, Object>)parser.parse(Objects.requireNonNull(response.body()).string(), containerFactory);
 				verifyResult.success = (Boolean) map.get("success");
-				verifyResult.score = ((Number) map.get("score")).floatValue();
+				if (verifyResult.success) {
+					verifyResult.score = ((Number) map.get("score")).floatValue();
+				}
 			} catch(ParseException pe) {
 				Log.d("position: " + pe.getPosition());
 				pe.printStackTrace();
+			} catch(NullPointerException ne) {
+				ne.printStackTrace();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
