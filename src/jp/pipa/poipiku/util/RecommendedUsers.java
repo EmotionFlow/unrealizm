@@ -32,7 +32,7 @@ public final class RecommendedUsers {
 					" )," +
 					"     tw AS (" +
 					"         SELECT follow_user_id" +
-					"         FROM twitter_follows" +
+					"         FROM twitter_friends" +
 					"         WHERE user_id = ?" +
 					"           AND follow_user_id IS NOT NULL" +
 					"     )" +
