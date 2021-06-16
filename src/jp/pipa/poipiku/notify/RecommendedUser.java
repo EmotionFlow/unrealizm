@@ -1,4 +1,4 @@
-package jp.pipa.poipiku;
+package jp.pipa.poipiku.notify;
 
 import java.sql.*;
 import java.util.ArrayList;

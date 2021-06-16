@@ -1,5 +1,6 @@
-package jp.pipa.poipiku;
+package jp.pipa.poipiku.notify;
 
+import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;

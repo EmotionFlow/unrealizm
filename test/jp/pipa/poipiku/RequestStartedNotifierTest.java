@@ -3,8 +3,8 @@ package jp.pipa.poipiku;
 import javax.sql.DataSource;
 import java.sql.*;
 
+import jp.pipa.poipiku.notify.RequestStartedNotifier;
 import org.apache.velocity.app.Velocity;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

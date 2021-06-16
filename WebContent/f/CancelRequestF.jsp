@@ -10,7 +10,8 @@ Request r = new Request(Util.toInt(request.getParameter("ID")));
 if (r.creatorUserId == checkLogin.m_nUserId || r.clientUserId == checkLogin.m_nUserId) {
 	result = r.cancel();
 	if (result) {
-		RequestNotifier.notifyRequestCanceled(checkLogin, r);
+		// スケブに倣ってキャンセル通知はしないでおく。
+		//RequestNotifier.notifyRequestCanceled(checkLogin, r);
 	} else {
 		errorCode = r.errorKind.getCode();
 	}

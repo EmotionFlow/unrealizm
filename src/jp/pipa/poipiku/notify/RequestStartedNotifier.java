@@ -1,12 +1,15 @@
-package jp.pipa.poipiku;
+package jp.pipa.poipiku.notify;
 
+import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.FollowUser;
+import jp.pipa.poipiku.RequestCreator;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 
 import java.util.List;
 
-public final class RequestStartedNotifier extends Notifier{
+public final class RequestStartedNotifier extends Notifier {
 	public RequestStartedNotifier(){
 		CATEGORY = "request";
 		NOTIFICATION_INFO_TYPE = Common.NOTIFICATION_TYPE_REQUEST_STARTED;

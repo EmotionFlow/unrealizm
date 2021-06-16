@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.notify.RegisteredNotifier;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;

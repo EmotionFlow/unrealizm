@@ -1,6 +1,6 @@
 package jp.pipa.poipiku.batch;
 
-import jp.pipa.poipiku.RecommendedUsersNotifier;
+import jp.pipa.poipiku.notify.RecommendedUsersNotifier;
 import jp.pipa.poipiku.util.Log;
 
 import java.time.LocalDateTime;

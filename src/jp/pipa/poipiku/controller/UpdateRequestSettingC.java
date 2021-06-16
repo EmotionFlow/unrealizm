@@ -1,13 +1,11 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
-import jp.pipa.poipiku.cache.CacheUsers0000;
+import jp.pipa.poipiku.notify.RequestNotifier;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

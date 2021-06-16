@@ -1,4 +1,4 @@
-package jp.pipa.poipiku;
+package jp.pipa.poipiku.notify;
 
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;

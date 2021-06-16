@@ -1,7 +1,7 @@
 package jp.pipa.poipiku.batch;
 
 import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.RequestStartedNotifier;
+import jp.pipa.poipiku.notify.RequestStartedNotifier;
 import jp.pipa.poipiku.util.Log;
 
 import java.sql.Connection;

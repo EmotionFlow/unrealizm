@@ -1,6 +1,6 @@
 package jp.pipa.poipiku.batch;
 
-import jp.pipa.poipiku.RegisteredNotifier;
+import jp.pipa.poipiku.notify.RegisteredNotifier;
 import jp.pipa.poipiku.util.Log;
 
 import java.sql.Connection;

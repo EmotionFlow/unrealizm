@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.notify.GiftNotifier;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.DatabaseUtil;

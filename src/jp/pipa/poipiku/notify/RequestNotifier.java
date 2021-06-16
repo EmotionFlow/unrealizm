@@ -1,12 +1,13 @@
-package jp.pipa.poipiku;
+package jp.pipa.poipiku.notify;
 import java.io.StringWriter;
 
+import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
-public final class RequestNotifier extends Notifier{
+public final class RequestNotifier extends Notifier {
 	private static final String REQUEST_BOARD_URL = "https://poipiku.com/MyRequestListPcV.jsp";
 
 	public RequestNotifier(){

@@ -1,6 +1,8 @@
-package jp.pipa.poipiku;
+package jp.pipa.poipiku.notify;
 
-public final class GiftNotifier extends Notifier{
+import jp.pipa.poipiku.Common;
+
+public final class GiftNotifier extends Notifier {
 	public GiftNotifier(){
 		CATEGORY = "gift_passport";
 		NOTIFICATION_INFO_TYPE = Common.NOTIFICATION_TYPE_GIFT;
