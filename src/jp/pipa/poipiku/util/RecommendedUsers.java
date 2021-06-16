@@ -30,12 +30,12 @@ public final class RecommendedUsers {
 					"    FROM follows_0000" +
 					"    WHERE user_id = ?" +
 					" )," +
-					"     tw AS (" +
-					"         SELECT follow_user_id" +
-					"         FROM twitter_friends" +
-					"         WHERE user_id = ?" +
-					"           AND follow_user_id IS NOT NULL" +
-					"     )" +
+					" tw AS (" +
+					"    SELECT follow_user_id" +
+					"    FROM twitter_friends" +
+					"    WHERE user_id = ?" +
+					"      AND follow_user_id IS NOT NULL" +
+					" )" +
 					" SELECT *" +
 					" FROM tw" +
 					"    LEFT JOIN poi ON tw.follow_user_id = poi.follow_user_id" +
