@@ -2268,17 +2268,23 @@ Decoration
 	background: #aaa;
 }
 
-.IllustItemListRelatedTitle {
+
+.IllustItemListRelatedTitle, .IllustItemListRecommendedTitle {
 	display: block;
 	float: left;
 	width: 100%;
-	margin-top: 24px;
 	background: rgba(255,255,255,0.95);
 	color: #3498da;
 	box-sizing: border-box;
 	padding: 8px;
 	font-size: 15px;
 	font-weight: 500;
+}
+.IllustItemListRelatedTitle {
+	margin-top: 24px;
+}
+.IllustItemListRecommendedTitle {
+	margin-top: 6px;
 }
 
 /*********** IllustView UserInfo **********/
@@ -2490,7 +2496,7 @@ Decoration
 	color: #6d6965;
 	border-radius: 4px;
 	border: solid 1px #eee;
-	margin: 9px 0px 0px 9px;
+	margin: 9px 0 0 9px;
 	width: 166px;
 	height: 274px;
 	background-color: #eee;
@@ -2498,7 +2504,6 @@ Decoration
 .UserInfo.Thumb .UserInfoBg {
 	height: 157px;
 }
-
 .UserInfo.Thumb .UserInfoUser {
 	height: 117px;
 }
@@ -2515,6 +2520,48 @@ Decoration
 	line-height: 18px;
 	overflow: hidden;
 }
+.UserInfo.ThumbSmall {
+	border-radius: 4px;
+	border: solid 1px #eee;
+	margin: 9px 0 0 9px;
+	width: 110px;
+	height: 182px;
+	color: #6d6965;
+	background-color: #eee;
+}
+.UserInfo.ThumbSmall .UserInfoBg {
+	height: 104px;
+}
+.UserInfo.ThumbSmall .UserInfoUser {
+	height: 78px;
+}
+.UserInfo.ThumbSmall .UserInfoUser .UserInfoUserName{
+	padding: 2px 0 0 0;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	height: 17px;
+	line-height: 17px;
+	font-size: 11px;
+}
+.UserInfo.ThumbSmall .UserInfoUser .UserInfoProgile {
+	padding: 0;
+	height: 24px;
+	line-height: 12px;
+	overflow: hidden;
+}
+.UserInfo.ThumbSmall .UserInfoUser .UserInfoUserThumb {
+	display: block;
+	width: 55px;
+	height: 55px;
+	overflow: hidden;
+	border: solid 2px #ccc;
+	border-radius: 55px;
+	margin: -42px auto 0 auto;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-color: #fff;
+}
+
 /* for user list */
 
 .UserInfo > .UserInfoCmd > .RequestBtn .RequestEnabled {
@@ -2791,11 +2838,3 @@ Decoration
 .SystemInfo .SystemInfoDate {display: block; flex: 0 0 48px; height: 36px; line-height: 18px;text-align: center;font-size: 12px; }
 .SystemInfo .SystemInfoDesc {display: block; flex: 1 1; height: 36px; line-height: 18px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: underline;font-size: 12px;max-height: 36px;}
 .SystemInfo .SystemInfoClose {display: block; flex: 0 0 30px; height: 36px; line-height: 36px; text-align: center;font-size: 12px;}
-
-
-
-
-
-
-
-

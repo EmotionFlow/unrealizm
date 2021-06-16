@@ -73,12 +73,7 @@ public final class NewArrivalRequestCreatorC {
 			while (cResSet.next()) {
 				CacheUsers0000.User cashUser = users.getUser(cResSet.getInt("user_id"));
 				if(cashUser==null) continue;
-				CUser user = new CUser();
-				user.m_nUserId = cashUser.userId;
-				user.m_strFileName = cashUser.fileName;
-				user.m_strHeaderFileName = cashUser.headerFileName;
-				user.m_strNickName = cashUser.nickName;
-				user.m_strProfile = cashUser.profile;
+				CUser user = new CUser(cashUser);
 				m_vContentList.add(user);
 			}
 			cResSet.close();cResSet=null;

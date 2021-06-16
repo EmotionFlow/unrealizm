@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +34,6 @@ public final class MyHomePcC {
 		}
 	}
 
-
 	static public final int SELECT_MAX_GALLERY = 15;
 	static public final int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
@@ -41,6 +41,8 @@ public final class MyHomePcC {
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
 	public CContent m_cSystemInfo = null;
+	public List<CUser> m_vRecommendedUserList = null;
+	public List<CUser> m_vRecommendedRequestCreatorList = null;
 
 	public boolean getResults(final CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -157,6 +159,22 @@ public final class MyHomePcC {
 
 			// Bookmark
 			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+
+			if (checkLogin.isStaff()) {
+				long start = System.currentTimeMillis();
+
+				// Recommended Users
+				Log.d(String.format("m_vRecommendedUserList st: %d", checkLogin.m_nUserId));
+				m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(6, checkLogin, connection);
+				Log.d(String.format("m_vRecommendedUserList ed: %d", System.currentTimeMillis() - start));
+
+				// Recommended Request Creators
+				start = System.currentTimeMillis();
+				Log.d(String.format("m_vRecommendedRequestCreatorList st: %d", checkLogin.m_nUserId));
+				m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(6, checkLogin, connection);
+				Log.d(String.format("m_vRecommendedRequestCreatorList ed: %d", System.currentTimeMillis() - start));
+			}
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
