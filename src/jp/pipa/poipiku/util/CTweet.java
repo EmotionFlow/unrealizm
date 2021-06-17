@@ -32,6 +32,7 @@ public final class CTweet {
 	public boolean m_bIsTweetEnable = false;
 	public String m_strUserAccessToken = "";
 	public String m_strSecretToken = "";
+	public String m_strScreenName = "";
 	public int m_nUserId = -1;
 	public long m_lnTwitterUserId = -1;
 	public ResponseList<UserList> m_listOpenList = null;
@@ -93,7 +94,7 @@ public final class CTweet {
 
 		try {
 			cConn = DatabaseUtil.dataSource.getConnection();
-			strSql = "SELECT fldaccesstoken,fldsecrettoken,twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+			strSql = "SELECT fldaccesstoken,fldsecrettoken,twitter_user_id,twitter_screen_name FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -104,6 +105,7 @@ public final class CTweet {
 				m_strSecretToken = cResSet.getString("fldsecrettoken");
 				m_nUserId = nUserId;
 				m_lnTwitterUserId = Util.toLong(cResSet.getString("twitter_user_id"));
+				m_strScreenName = cResSet.getString("twitter_screen_name");
 				m_bIsTweetEnable = true;
 			} else {
 				m_bIsTweetEnable = false;

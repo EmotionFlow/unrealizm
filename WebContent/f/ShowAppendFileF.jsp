@@ -1,5 +1,3 @@
-<%@page import="jp.pipa.poipiku.ResourceBundleControl.CResourceBundleUtil"%>
-<%@page import="jp.pipa.poipiku.util.CTweet"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -17,6 +15,9 @@ if(nRtn<ShowAppendFileC.OK) {
 		break;
 	case ShowAppendFileC.ERR_LOGIN:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_LOGIN"));
+		break;
+	case ShowAppendFileC.ERR_T_UNLINKED:
+		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_UNLINKED"));
 		break;
 	case ShowAppendFileC.ERR_FOLLOWER:
 		if(checkLogin.m_bLogin) {
@@ -64,8 +65,24 @@ if(nRtn<ShowAppendFileC.OK) {
 	case ShowAppendFileC.ERR_UNKNOWN:
 	default:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_UNKNOWN"));
-		break;
+		;
 	}
+
+	switch(nRtn) {
+		case ShowAppendFileC.ERR_T_FOLLOWER:
+		case ShowAppendFileC.ERR_T_FOLLOW:
+		case ShowAppendFileC.ERR_T_EACH:
+		case ShowAppendFileC.ERR_T_LIST:
+			strHtml.append(
+					String.format(
+							_TEX.T("ShowAppendFileC.ERR_T_LINKED_ACCOUNT"), cResults.m_strMyTwitterScreenName
+					)
+			);
+			break;
+		default:
+			;
+	}
+
 } else {
 	String ILLUST_DETAIL = (cResults.m_nMode==CCnv.MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 	switch(cResults.m_cContent.m_nPublishId) {

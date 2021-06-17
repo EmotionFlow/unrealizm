@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.CContentAppend;
@@ -14,7 +12,6 @@ import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public final class ShowAppendFileC {
@@ -29,6 +26,7 @@ public final class ShowAppendFileC {
 	public static final int ERR_T_LIST = -8;
 	public static final int ERR_T_RATE_LIMIT_EXCEEDED = -429088;
 	public static final int ERR_T_INVALID_OR_EXPIRED_TOKEN = -404089;
+	public static final int ERR_T_UNLINKED = -10;
 	public static final int ERR_HIDDEN = -9;
 	public static final int ERR_UNKNOWN = -99;
 
@@ -37,6 +35,7 @@ public final class ShowAppendFileC {
 	public String m_strPassword = "";
 	public int m_nMode = 0;
 	public int m_nTwFriendship = CTweet.FRIENDSHIP_UNDEF;
+	public String m_strMyTwitterScreenName = "";
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -136,18 +135,10 @@ public final class ShowAppendFileC {
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if (!cTweet.m_bIsTweetEnable) {
-						if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER) {
-							return ERR_T_FOLLOWER;
-						}
-						if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE) {
-							return ERR_T_FOLLOW;
-						}
-						if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) {
-							return ERR_T_EACH;
-						}
-						return ERR_UNKNOWN;
+						return ERR_T_UNLINKED;
 					}
 
+					m_strMyTwitterScreenName = cTweet.m_strScreenName;
 					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF
 						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
 						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH     && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
@@ -175,8 +166,9 @@ public final class ShowAppendFileC {
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(checkLogin.m_nUserId)){
 					if(!cTweet.m_bIsTweetEnable){
-						return ERR_T_LIST;
+						return ERR_T_UNLINKED;
 					}
+					m_strMyTwitterScreenName = cTweet.m_strScreenName;
 					int nRet = cTweet.LookupListMember(m_cContent);
 					if(nRet==CTweet.ERR_NOT_FOUND) return ERR_T_LIST;
 					if(nRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) return ERR_T_INVALID_OR_EXPIRED_TOKEN;

@@ -427,10 +427,10 @@ function ShowAllReaction(content_id, elm) {
 function generateShowAppendFile(){
 	var tw_friendships = {}; // target user id -> friendship id (see CTweet)
 	return function(user_id, content_id, mode, elm) {
-		console.log(user_id, content_id, mode);
-		console.log("twitter friendships: " + tw_friendships);
-		var password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
-		var tw_f = tw_friendships[user_id];
+		// console.log(user_id, content_id, mode);
+		// console.log("twitter friendships: " + tw_friendships);
+		const password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
+		let tw_f = tw_friendships[user_id];
 		if(!tw_f){
 			tw_f = -1;
 		}
