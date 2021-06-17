@@ -160,8 +160,8 @@ public final class MyHomePcC {
 			// Bookmark
 			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 
-			if (checkLogin.isStaff()) {
-				long start = System.currentTimeMillis();
+			long start = System.currentTimeMillis();
+			if (start % 10 == 0 || checkLogin.isStaff() || checkLogin.m_nUserId==402902) {
 
 				// Recommended Users
 				Log.d(String.format("m_vRecommendedUserList st: %d", checkLogin.m_nUserId));
