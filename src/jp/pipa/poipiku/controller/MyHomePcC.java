@@ -4,9 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
@@ -41,6 +39,7 @@ public final class MyHomePcC {
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
 	public CContent m_cSystemInfo = null;
+	public int m_nSelectRecommendedListNum = 6;
 	public List<CUser> m_vRecommendedUserList = null;
 	public List<CUser> m_vRecommendedRequestCreatorList = null;
 
@@ -161,10 +160,10 @@ public final class MyHomePcC {
 			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 
 			// Recommended Users
-			m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(6, checkLogin, connection);
+			m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
 
 			// Recommended Request Creators
-			m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(6, checkLogin, connection);
+			m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
 
 		} catch(Exception e) {
 			Log.d(strSql);

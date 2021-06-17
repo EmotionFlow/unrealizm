@@ -112,7 +112,7 @@ final ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				</div>
 				<%}%>
 
-				<%  int nCnt=0;
+				<%  int nCnt;
 				    for(nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL)%>
@@ -139,13 +139,13 @@ final ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<%if(nCnt<=2 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
 				<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
-				<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, bSmartPhone?1:0)%>
+				<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, 1)%>
 				<%}%>
 				<%}%>
 				<%if(nCnt<=6 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
 				<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
-				<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, bSmartPhone?1:0)%>
+				<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, 1)%>
 				<%}%>
 				<%}%>
 

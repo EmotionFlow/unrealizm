@@ -2268,6 +2268,10 @@ Decoration
 	background: #aaa;
 }
 
+.IllustItemListRecommended {
+	margin-bottom: 32px;
+	float: left;
+}
 
 .IllustItemListRelatedTitle, .IllustItemListRecommendedTitle {
 	display: block;
