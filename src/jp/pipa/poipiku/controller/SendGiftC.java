@@ -139,7 +139,8 @@ public class SendGiftC {
 			giftPassport(toUserId);
 
 			// 贈った人にもポイチケ１枚
-			if (giftForMyself) {
+			// スタッフから送った時は無効
+			if (giftForMyself && !checkLogin.isStaff()) {
 				PoiTicketGiftLog giftLogMyself = new PoiTicketGiftLog();
 				giftLogMyself.fromUserId = 2;
 				giftLogMyself.toUserId = fromUserId;
