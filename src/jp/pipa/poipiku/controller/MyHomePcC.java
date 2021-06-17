@@ -160,20 +160,11 @@ public final class MyHomePcC {
 			// Bookmark
 			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 
-			long start = System.currentTimeMillis();
-			if (start % 10 == 0 || checkLogin.isStaff() || checkLogin.m_nUserId==402902) {
+			// Recommended Users
+			m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(6, checkLogin, connection);
 
-				// Recommended Users
-				Log.d(String.format("m_vRecommendedUserList st: %d", checkLogin.m_nUserId));
-				m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(6, checkLogin, connection);
-				Log.d(String.format("m_vRecommendedUserList ed: %d", System.currentTimeMillis() - start));
-
-				// Recommended Request Creators
-				start = System.currentTimeMillis();
-				Log.d(String.format("m_vRecommendedRequestCreatorList st: %d", checkLogin.m_nUserId));
-				m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(6, checkLogin, connection);
-				Log.d(String.format("m_vRecommendedRequestCreatorList ed: %d", System.currentTimeMillis() - start));
-			}
+			// Recommended Request Creators
+			m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(6, checkLogin, connection);
 
 		} catch(Exception e) {
 			Log.d(strSql);
