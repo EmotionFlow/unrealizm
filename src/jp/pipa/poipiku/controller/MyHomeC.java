@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +47,10 @@ public class MyHomeC {
 	public int m_nContentsNumTotal = 0;
 	public int m_nEndId = -1;
 	public CContent m_cSystemInfo = null;
+	public int m_nSelectRecommendedListNum = 6;
+	public List<CUser> m_vRecommendedUserList = null;
+	public List<CUser> m_vRecommendedRequestCreatorList = null;
+
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -134,10 +139,17 @@ public class MyHomeC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			m_vContentList = GridUtil.getEachComment(connection, m_vContentList);
+			GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+
+			// Recommended Users
+			m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
+
+			// Recommended Request Creators
+			m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

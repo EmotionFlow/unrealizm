@@ -105,23 +105,51 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
 
 			<%if(cResults.m_vContentList.size()<=0) {%>
-			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
+			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 50px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 				<%=_TEX.T("MyHome.FirstMsg")%>
-				<br />
-				<a class="BtnBase" href="/NewArrivalAppV.jsp"><%=_TEX.T("MyHome.FirstMsg.FindPeople")%></a>
-				<br />
 				<br />
 				<a class="BtnBase" href="/how_to/TopV.jsp"><%=_TEX.T("HowTo.Title")%></a>
 			</div>
 			<%}%>
 			<section id="IllustItemList" class="IllustItemList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
-					<%if((nCnt+1)%5==0) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+				<%	int nCnt;
+					for(nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
+						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+						<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+
+						<%if(nCnt==2 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
+						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
+						<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
+						<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, bSmartPhone?1:0)%>
+						<%}%>
+						<%}%>
+
+						<%if(nCnt==6 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
+						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
+						<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
+						<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, bSmartPhone?1:0)%>
+						<%}%>
+						<%}%>
+
+						<%if((nCnt+1)%5==0) {%>
+							<%@ include file="/inner/TAd336x280_mid.jsp"%>
+						<%}%>
 				<%}%>
+
+				<%if(nCnt<=2 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
+				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
+				<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
+				<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, 1)%>
+				<%}%>
+				<%}%>
+
+				<%if(nCnt<=6 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
+				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
+				<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
+				<%=CCnv.toHtmlUserMini(recommendedUser, CCnv.MODE_SP, _TEX, 1)%>
+				<%}%>
+				<%}%>
+
 			</section>
 		</article>
 	</body>
