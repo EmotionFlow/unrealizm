@@ -190,6 +190,10 @@ function SendGift(userId, nickName){
 		// キャンセル
 		if(formValues.dismiss){return false;}
 
+		<%if(!checkLogin.m_bLogin){%>
+		DispMsg("おふせするにはログインする必要があります");
+		return false;
+		<%} else {%>
 		$.ajax({
 			"type": "get",
 			"url": "/f/CheckCreditCardF.jsp",
@@ -236,6 +240,7 @@ function SendGift(userId, nickName){
 			console.log("CheckCreditCardF error" + err);
 			DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
 		});
+		<%}%>
 	});
 }
 </script>
