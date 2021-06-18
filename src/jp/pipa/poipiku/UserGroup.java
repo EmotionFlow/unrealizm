@@ -8,11 +8,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public final class UserGroup {
-	public int groupId = -1;
-	public int loginUserId = -1;
-	int userId1 = -1;
-	int userId2 = -1;
-	int userId3 = -1;
+	public int groupId = 0;
+	public int loginUserId;
+	public int userId1 = 0;
+	public int userId2 = 0;
+	public int userId3 = 0;
+
+	public enum Error {
+		None, AlreadyLinkedOthers, Unknown
+	}
+	public Error error = Error.None;
 
 	public UserGroup(int _loginUserId) {
 		loginUserId = _loginUserId;
@@ -46,6 +51,8 @@ public final class UserGroup {
 	}
 
 	public boolean add(int addId){
+		if (addId < 1) return false;
+		if (addId==userId1 || addId==userId2 || addId==userId3) return true;
 		if (userId1>0 && userId2>0 && userId3>0) return false;
 
 		Connection connection = null;
@@ -56,46 +63,34 @@ public final class UserGroup {
 			String columnName = "";
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			// もし、追加したいIDが他で登録済みだったら、そこからIDを消す。
-			sql = "SELECT id, user_id_1, user_id_2, user_id_3 FROM user_groups WHERE user_id_1=? OR user_id_2=? OR user_id_3=?";
+			// もし、追加したいIDが他で登録済みだったら、エラーとする。
+			sql = "SELECT 1 FROM user_groups WHERE" +
+					" user_id_1=? OR user_id_2=? OR user_id_3=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, addId);
 			statement.setInt(2, addId);
 			statement.setInt(3, addId);
 			resultSet = statement.executeQuery();
-
-			int grpId = -1;
 			if (resultSet.next()) {
-				grpId = resultSet.getInt(1);
-				for (int i=2; i<=4; i++) {
-					if (resultSet.getInt(i) == addId) {
-						columnName = "user_id_" + (i-1);
-						break;
-					}
-				}
+				error = Error.AlreadyLinkedOthers;
+				return false;
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			if (grpId>0 && columnName.isEmpty()) {
-				sql = String.format(
-						"UPDATE user_groups SET %s=NULL updated_at=now() WHERE id=%d",
-						columnName, addId);
-				statement = connection.prepareStatement(sql);
-				statement.executeUpdate();
-				statement.close();
-			}
-
-			if (groupId<0) {
+			if (groupId<1) {
 				userId1 = loginUserId;
 				userId2 = addId;
 				sql = "INSERT INTO user_groups(user_id_1, user_id_2, user_id_3)" +
-						" VALUES (?,?,NULL)";
+						" VALUES (?,?,0) RETURNING id";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, loginUserId);
 				statement.setInt(2, addId);
-				statement.executeUpdate();
-				statement.close();
+				resultSet = statement.executeQuery();
+				resultSet.next();
+				groupId = resultSet.getInt(1);
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			} else {
 				if (userId1<1) {
 					userId1 = addId;
@@ -128,27 +123,30 @@ public final class UserGroup {
 		return true;
 	}
 
-	public boolean remove(int userId){
-		if (groupId<0 || userId<0) return false;
+	public boolean remove(int removeId){
+		if (groupId<1 || removeId<1 || removeId==loginUserId) return false;
 
 		String columnName;
-		if (userId1 == userId) {
+		if (userId1 == removeId) {
 			columnName = "user_id_1";
-		} else if (userId2 == userId) {
+			userId1 = 0;
+		} else if (userId2 == removeId) {
 			columnName = "user_id_2";
-		} else if (userId3 == userId) {
+			userId2 = 0;
+		} else if (userId3 == removeId) {
 			columnName = "user_id_3";
+			userId3 = 0;
 		} else {
 			return false;
 		}
 
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		String sql = "";
 		try {
+			connection = DatabaseUtil.dataSource.getConnection();
 			sql = String.format(
-					"UPDATE user_groups SET %s=NULL, updated_at=now() WHERE id=%d",
+					"UPDATE user_groups SET %s=0, updated_at=now() WHERE id=%d",
 					columnName, groupId);
 			statement = connection.prepareStatement(sql);
 			statement.executeUpdate();
@@ -158,12 +156,10 @@ public final class UserGroup {
 			e.printStackTrace();
 			return false;
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
 
-
-		return false;
+		return true;
 	}
 }
