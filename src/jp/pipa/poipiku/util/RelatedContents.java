@@ -150,21 +150,20 @@ public final class RelatedContents {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
 
 			// genre contents
-			strSql = "WITH tagged_content_ids AS(" +
-					"    SELECT t1.content_id" +
+			strSql = "WITH tagged_contents AS (" +
+					"    SELECT c.*" +
 					"    FROM tags_0000 t1" +
-					"    WHERE t1.genre_id IN (SELECT genre_id" +
-					"                          FROM tags_0000 t2" +
-					"                          WHERE t2.content_id = ?)" +
-					"    LIMIT 100" +
-					")" +
-					" SELECT contents_0000.* " +
-					" FROM contents_0000 " +
-					"   INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id " +
-					" WHERE content_id IN (SELECT content_id FROM tagged_content_ids) AND open_id<>2 AND publish_id IN (0,1,2,3,5,6,11) AND safe_filter<=? ";
+					"    INNER JOIN contents_0000 c ON c.content_id=t1.content_id" +
+					"    WHERE t1.genre_id IN (SELECT genre_id FROM tags_0000 t2 WHERE t2.content_id = ? ORDER BY random() LIMIT 1)" +
+					"    LIMIT 100)" +
+					" SELECT tagged_contents.*" +
+					" FROM tagged_contents" +
+					"    INNER JOIN users_0000 ON users_0000.user_id = tagged_contents.user_id" +
+					" WHERE open_id <> 2" +
+					"  AND safe_filter <= ?";
 			if(checkLogin.m_bLogin) {
-				strSql += "AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-						+ "AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+				strSql += "AND tagged_contents.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
+						+ "AND tagged_contents.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 			strSql += "LIMIT ?";
 			statement = connection.prepareStatement(strSql);
