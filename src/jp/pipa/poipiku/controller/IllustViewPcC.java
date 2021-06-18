@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -253,12 +254,12 @@ public final class IllustViewPcC {
 					m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin, connection);
 				}
 
-				// Recommended Contents
-//				long start = System.currentTimeMillis();
-				if(SELECT_MAX_RECOMMENDED_GALLERY>0) {
-//				Log.d(String.format("RecommendedContents st: %d, %d, %d", m_cContent.m_nUserId, m_cContent.m_nContentId, checkLogin.m_nUserId));
-					m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
-//				Log.d(String.format("RecommendedContents ed: %d", System.currentTimeMillis() - start));
+				final int h = LocalDateTime.now().getHour();
+				if (h != 23 && h != 0){
+					// Recommended Contents
+					if(SELECT_MAX_RECOMMENDED_GALLERY>0) {
+						m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
+					}
 				}
 			}
 

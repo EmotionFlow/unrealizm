@@ -143,11 +143,11 @@ public final class RelatedContents {
 
 		if(contentId<1 || listNum<1 || checkLogin==null || connection==null) return contents;
 		try {
-			CacheUsers0000 users = CacheUsers0000.getInstance();
-
 			// genre tag
 			String tag = getTitleTag(contentId);
 			if(tag.isEmpty()) return contents;
+
+			CacheUsers0000 users = CacheUsers0000.getInstance();
 
 			// genre contents
 			strSql = "WITH tagged_content_ids AS(" +
