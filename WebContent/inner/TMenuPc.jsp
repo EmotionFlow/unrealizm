@@ -28,6 +28,10 @@
 					<span class="MenuMyRequestsIcon"></span>
 					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>
 				</a>
+				<a id="MenuSwitchUser" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="javascript: void(0);" onclick="toggleSwitchUserList();">
+					<span class="MenuSwitchUserIcon"></span>
+					<span class="MenuSwitchUserName">きりかえ</span>
+				</a>
 				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 					<span class="MenuUploadIcon"></span>
 					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>

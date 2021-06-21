@@ -146,7 +146,7 @@ public final class UserGroup {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 			sql = String.format(
-					"UPDATE user_groups SET %s=0, updated_at=now() WHERE id=%d",
+					"UPDATE user_groups SET %s=NULL, updated_at=now() WHERE id=%d",
 					columnName, groupId);
 			statement = connection.prepareStatement(sql);
 			statement.executeUpdate();

@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +48,6 @@ public class IllustListC {
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		String strSql = "";
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -62,9 +62,7 @@ public class IllustListC {
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			if(!bContentOnly) {
 				// author profile

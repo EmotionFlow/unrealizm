@@ -9,7 +9,7 @@ if(!bSmartPhone) {
 	return;
 }
 
-IllustListC cResults = new IllustListC();
+MyIllustListC cResults = new MyIllustListC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 45;
 
@@ -57,6 +57,10 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 
 		<script type="text/javascript">
+		function toggleSwitchUserList(){
+			$("#SwitchUserList").stop(true).animate({'height': 'toggle'});
+		}
+
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateCategoryMenuPos(100);
@@ -82,6 +86,58 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			}
 		</style>
 		<%}%>
+
+		<style>
+			#SwitchUserList{
+                float: left;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+                position: relative;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                color: #6d6965;
+                display: flex;
+                flex-flow: column;
+			}
+			.SwitchUserItem {
+                display: flex;
+                flex-flow: row nowrap;
+                width: 100%;
+				height: 55px;
+                box-sizing: border-box;
+                position: relative;
+                text-align: center;
+                padding: 2px 2px 2px 2px;
+                border-bottom: solid 1px #eee;
+                align-items: center;
+                color: #6d6965;
+			}
+			.SwitchUserThumb {
+                display: block;
+                flex: 0 0 40px;
+                height: 40px;
+                overflow: hidden;
+                border-radius: 40px;
+                background-size: cover;
+                background-position: 50% 50%;
+			}
+			.SwitchUserNickname {
+                display: block;
+                flex: 1 1 80px;
+                padding: 0;
+                margin: 0 0 0 3px;
+                text-align: left;
+                font-size: 16px;
+                white-space: nowrap;
+                overflow: hidden;
+			}
+			.SwitchUserSelected {
+                margin: 0 10px;
+                font-size: 16px;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -90,9 +146,33 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			$("#MenuSearch").hide();
 			$("#MenuUpload").show();
 			$("#MenuSettings").show();
+			$("#MenuSwitchUser").show();
 		})</script>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
+		<div id="SwitchUserList">
+			<%for (MyIllustListC.SwitchUser switchUser: cResults.switchUsers) {%>
+			<div class="SwitchUserItem">
+				<span class="SwitchUserThumb" style="background-image:url('<%=Common.GetUrl(switchUser.user.m_strFileName)%>')"></span>
+				<span class="SwitchUserNickname"><%=switchUser.user.m_strNickName%></span>
+				<span class="SwitchUserSelected">
+				<%if(switchUser.signInIt){%>
+				<i class="fas fa-check"></i>
+				<%}%>
+				</span>
+			</div>
+			<%}%>
+
+			<%if(cResults.switchUsers.size()<2){%>
+			<div class="SwitchUserItem">
+				<span class="SwitchUserNickname" style="text-align: center">既存のアカウントを追加</span>
+			</div>
+			<%}%>
+			<div class="SwitchUserItem">
+				<span class="SwitchUserNickname" style="text-align: center">アカウントを管理</span>
+			</div>
+		</div>
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
