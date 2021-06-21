@@ -12,6 +12,7 @@ import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public final class ShowAppendFileC {
@@ -26,6 +27,7 @@ public final class ShowAppendFileC {
 	public static final int ERR_T_LIST = -8;
 	public static final int ERR_T_RATE_LIMIT_EXCEEDED = -429088;
 	public static final int ERR_T_INVALID_OR_EXPIRED_TOKEN = -404089;
+	public static final int ERR_T_TARGET_ACCOUNT_NOT_FOUND = -98;
 	public static final int ERR_T_UNLINKED = -10;
 	public static final int ERR_HIDDEN = -9;
 	public static final int ERR_UNKNOWN = -99;
@@ -146,9 +148,12 @@ public final class ShowAppendFileC {
 						m_nTwFriendship = cTweet.LookupFriendship(m_nUserId);
 						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
 							return ERR_T_RATE_LIMIT_EXCEEDED;
-						}else if(m_nTwFriendship==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){
+						} else if (m_nTwFriendship==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) {
 							return ERR_T_INVALID_OR_EXPIRED_TOKEN;
-						}else if(m_nTwFriendship==CTweet.ERR_OTHER){
+						} else if (m_nTwFriendship==CTweet.ERR_TARGET_TW_ACCOUNT_NOT_FOUND) {
+							return ERR_T_TARGET_ACCOUNT_NOT_FOUND;
+						} else if (m_nTwFriendship==CTweet.ERR_OTHER) {
+							Log.d("m_nTwFriendship==CTweet.ERR_OTHER");
 							return ERR_UNKNOWN;
 						}
 					}
@@ -174,9 +179,11 @@ public final class ShowAppendFileC {
 					if(nRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) return ERR_T_INVALID_OR_EXPIRED_TOKEN;
 					if(nRet==CTweet.ERR_RATE_LIMIT_EXCEEDED) return ERR_T_RATE_LIMIT_EXCEEDED;
 					if(nRet<0) {
+						Log.d("nRet<0)");
 						return ERR_UNKNOWN;
 					}
 				} else {
+					Log.d("cTweet.GetResults(checkLogin.m_nUserId) return false");
 					return ERR_UNKNOWN;
 				}
 			}

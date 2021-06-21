@@ -49,6 +49,7 @@ public final class CTweet {
 	public static final int ERR_RATE_LIMIT_EXCEEDED = -429088;
 	public static final int ERR_INVALID_OR_EXPIRED_TOKEN = -404089;
 	public static final int ERR_USER_IS_OVER_DAILY_STATUS_UPDATE_LIMIT = -403185;
+	public static final int ERR_TARGET_TW_ACCOUNT_NOT_FOUND = -999997;
 	public static final int ERR_TWEET_DISABLE = -999998;
 	public static final int ERR_OTHER = -999999;
 	public Status m_statusLastTweet = null;
@@ -367,11 +368,15 @@ public final class CTweet {
 			if(cResSet.next()){
 				m_nLastTargetUserId = nTargetUserId;
 				m_lnLastTwitterTargetUserId = Long.parseLong(cResSet.getString("twitter_user_id"));
+			} else {
+				return ERR_TARGET_TW_ACCOUNT_NOT_FOUND;
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			cConn.close();cConn=null;
-			if(m_lnLastTwitterTargetUserId==-1L) return ERR_OTHER;
+			if(m_lnLastTwitterTargetUserId==-1L){
+				return ERR_OTHER;
+			}
 
 			// DBに15分以内のフォローがあるか
 			boolean bFollowing = checkDBFriendInfo(m_nUserId, nTargetUserId);

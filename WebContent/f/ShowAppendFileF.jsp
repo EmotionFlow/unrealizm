@@ -60,6 +60,9 @@ if(nRtn<ShowAppendFileC.OK) {
 	case ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN"));
 		break;
+	case ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND:
+		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND"));
+		break;
 	case ShowAppendFileC.ERR_NOT_FOUND:
 	case ShowAppendFileC.ERR_HIDDEN :
 	case ShowAppendFileC.ERR_UNKNOWN:
