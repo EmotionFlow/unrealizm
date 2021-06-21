@@ -24,20 +24,28 @@ public final class IllustViewPcC {
 		}
 	}
 
-	private Integer searchContentIdHistory(Connection cConn, PreparedStatement cState, ResultSet cResSet, int nContentId) throws SQLException {
+	private Integer searchContentIdHistory(Connection cConn, int nContentId) throws SQLException {
 		final int SEARCH_MAX = 100;
-		Integer cid = nContentId;
+		int cid = nContentId;
 		String strSql = "SELECT new_id FROM content_id_histories WHERE old_id=?";
-		cState = cConn.prepareStatement(strSql);
 
-		for(int i=0; i<SEARCH_MAX; i++){
-			cState.setInt(1, cid);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()){
-				cid = cResSet.getInt("new_id");
-			}else{
-				break;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+
+		try {
+			statement = cConn.prepareStatement(strSql);
+			for(int i=0; i<SEARCH_MAX; i++){
+				statement.setInt(1, cid);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()){
+					cid = resultSet.getInt("new_id");
+				}else{
+					break;
+				}
 			}
+		}finally {
+			if(resultSet!=null){resultSet.close();}
+			if(statement!=null){statement.close();}
 		}
 		return cid;
 	}
@@ -105,7 +113,7 @@ public final class IllustViewPcC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 			if(!bContentExist){
-				m_nNewContentId = searchContentIdHistory(connection, statement, resultSet, m_nContentId);
+				m_nNewContentId = searchContentIdHistory(connection, m_nContentId);
 				return false;
 			}
 

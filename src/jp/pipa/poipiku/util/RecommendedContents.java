@@ -7,13 +7,72 @@ import jp.pipa.poipiku.cache.CacheUsers0000;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class RecommendedContents {
-	static public ArrayList<CContent> getContents(int showUserId, int showContentId, int listNum, CheckLogin checkLogin, Connection connection){
+	static private final int OLD_CONTENTS_LIMIT = 30;
+	static private final List<Integer> oldPopularContents;
+	static private final List<Integer> veryOldContents;
+
+	static private final String SQL_SELECT_RECOMMENDED_BY_TAG = "WITH recommended_tags AS (" +
+			"    SELECT t.genre_id" +
+			"    FROM tags_0000 t" +
+			"      LEFT JOIN contents_0000 c ON t.content_id = c.content_id" +
+			"    WHERE user_id = ?" +
+			"      AND t.genre_id > 0" +
+			"    LIMIT 10" +
+			")" +
+			"SELECT content_id" +
+			" FROM tags_0000 t" +
+			" WHERE genre_id IN (SELECT * FROM recommended_tags)" +
+			" ORDER BY RANDOM()" +
+			" LIMIT 30";
+
+	static private final String SQL_SELECT_OLD_POPULARS = "SELECT content_id" +
+			" FROM rank_contents_total" +
+			" WHERE add_date BETWEEN NOW() - INTERVAL '3 month' AND NOW() - INTERVAL '2 month'";
+
+	static private final String SQL_SELECT_VERY_OLD_CONTENTS = "SELECT content_id" +
+			" FROM contents_0000" +
+			" WHERE upload_date" +
+			"    BETWEEN NOW() - INTERVAL '300 days' AND NOW() - INTERVAL '299 days'" +
+			" AND publish_id=0";
+
+	static {
+		oldPopularContents = new ArrayList<>();
+		veryOldContents = new ArrayList<>();
+
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			statement = connection.prepareStatement(SQL_SELECT_OLD_POPULARS);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				oldPopularContents.add(resultSet.getInt(1));
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			statement = connection.prepareStatement(SQL_SELECT_VERY_OLD_CONTENTS);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				veryOldContents.add(resultSet.getInt(1));
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+	}
+
+	static public ArrayList<CContent> getContents(int showUserId, int showContentId, int listNum, final CheckLogin checkLogin, Connection connection){
 		ArrayList<CContent> contents = new ArrayList<>();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -27,20 +86,7 @@ public final class RecommendedContents {
 
 			// タグによるおすすめ
 			//// showUserIdが他に使っているタグ
-			strSql = "WITH recommended_tags AS (" +
-					"    SELECT t.genre_id" +
-					"    FROM tags_0000 t" +
-					"      LEFT JOIN contents_0000 c ON t.content_id = c.content_id" +
-					"    WHERE user_id = ?" +
-					"      AND t.genre_id > 0" +
-					"    LIMIT 10" +
-					")" +
-					"SELECT content_id" +
-					" FROM tags_0000 t" +
-					" WHERE genre_id IN (SELECT * FROM recommended_tags)" +
-					" ORDER BY RANDOM()" +
-					" LIMIT 30";
-			statement = connection.prepareStatement(strSql);
+			statement = connection.prepareStatement(SQL_SELECT_RECOMMENDED_BY_TAG);
 			statement.setInt(1, showUserId);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
@@ -50,33 +96,18 @@ public final class RecommendedContents {
 			statement.close();statement=null;
 
 			// 2〜3ヶ月前のPopular
-			strSql = "SELECT content_id" +
-					" FROM rank_contents_total" +
-					" WHERE add_date BETWEEN NOW() - INTERVAL '3 month' AND NOW() - INTERVAL '2 month'" +
-					" ORDER BY RANDOM()" +
-					" LIMIT 30;";
-			statement = connection.prepareStatement(strSql);
-			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				contentIds.add(resultSet.getInt(1));
+			List<Integer> oldPopulars = new ArrayList<>(oldPopularContents);
+			Collections.shuffle(oldPopulars);
+			for (int i=0; i<OLD_CONTENTS_LIMIT && i<oldPopulars.size(); i++) {
+				contentIds.add(oldPopulars.get(i));
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 			// 300日前のランダム
-			strSql = String.format("SELECT content_id" +
-					" FROM contents_0000" +
-					" WHERE upload_date" +
-					"    BETWEEN NOW() - INTERVAL '%d days' AND NOW() - INTERVAL '%d days'" +
-					" ORDER BY RANDOM()" +
-					" LIMIT 30", 300, 300-1);
-			statement = connection.prepareStatement(strSql);
-			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				contentIds.add(resultSet.getInt(1));
+			List<Integer> veryOlds = new ArrayList<>(veryOldContents);
+			Collections.shuffle(veryOlds);
+			for (int i=0; i<OLD_CONTENTS_LIMIT && i<veryOlds.size(); i++) {
+				contentIds.add(veryOlds.get(i));
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 			if (contentIds.isEmpty()) return contents;
 
@@ -111,8 +142,6 @@ public final class RecommendedContents {
 				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
 				contents.add(content);
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 		} catch (Exception e) {
 			Log.d(strSql);

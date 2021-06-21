@@ -67,28 +67,24 @@ public final class RelatedContents {
 		return contents;
 	}
 
-	static public String getTitleTag(int contentId) {
-		String tag = "";
-		DataSource dataSource = null;
+	static private final String SQL_SELECT_TAG_TXT = "SELECT tag_txt FROM tags_0000 WHERE content_id=? AND tag_type=1 ORDER BY tag_id LIMIT 1";
+	static public String getTitleTag(final int contentId) {
+		String tag = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
-			dataSource = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// genre tag
-			strSql = "SELECT tag_txt FROM tags_0000 WHERE content_id=? AND tag_type=1 ORDER BY tag_id LIMIT 1";
-			statement = connection.prepareStatement(strSql);
+			statement = connection.prepareStatement(SQL_SELECT_TAG_TXT);
 			statement.setInt(1, contentId);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				tag = Util.toString(resultSet.getString(1)).trim();
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 		} catch (Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -97,6 +93,8 @@ public final class RelatedContents {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
+
+		if(tag==null) tag="";
 		return tag;
 	}
 
@@ -134,7 +132,19 @@ public final class RelatedContents {
 		return tags;
 	}
 
-	static public ArrayList<CContent> getGenreContentList(int contentId, int listNum, CheckLogin checkLogin, Connection connection){
+	static private final String SQL_SELECT_GENRE_CONTENTS = "WITH tagged_contents AS (" +
+			"    SELECT c.*" +
+			"    FROM tags_0000 t1" +
+			"    INNER JOIN contents_0000 c ON c.content_id=t1.content_id" +
+			"    WHERE t1.genre_id IN (SELECT genre_id FROM tags_0000 t2 WHERE t2.content_id = ? ORDER BY random() LIMIT 1)" +
+			"    LIMIT 100)" +
+			" SELECT tagged_contents.*" +
+			" FROM tagged_contents" +
+			"    INNER JOIN users_0000 ON users_0000.user_id = tagged_contents.user_id" +
+			" WHERE open_id <> 2" +
+			"  AND safe_filter <= ?";
+
+	static public ArrayList<CContent> getGenreContentList(int contentId, int listNum, final CheckLogin checkLogin, Connection connection){
 		ArrayList<CContent> contents = new ArrayList<>();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -150,17 +160,7 @@ public final class RelatedContents {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
 
 			// genre contents
-			strSql = "WITH tagged_contents AS (" +
-					"    SELECT c.*" +
-					"    FROM tags_0000 t1" +
-					"    INNER JOIN contents_0000 c ON c.content_id=t1.content_id" +
-					"    WHERE t1.genre_id IN (SELECT genre_id FROM tags_0000 t2 WHERE t2.content_id = ? ORDER BY random() LIMIT 1)" +
-					"    LIMIT 100)" +
-					" SELECT tagged_contents.*" +
-					" FROM tagged_contents" +
-					"    INNER JOIN users_0000 ON users_0000.user_id = tagged_contents.user_id" +
-					" WHERE open_id <> 2" +
-					"  AND safe_filter <= ?";
+			strSql = SQL_SELECT_GENRE_CONTENTS;
 			if(checkLogin.m_bLogin) {
 				strSql += "AND tagged_contents.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
 						+ "AND tagged_contents.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
@@ -184,8 +184,6 @@ public final class RelatedContents {
 				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
 				contents.add(content);
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 			Collections.shuffle(contents);
 		} catch (Exception e) {
 			Log.d(strSql);

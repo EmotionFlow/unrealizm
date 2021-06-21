@@ -26,6 +26,12 @@ public class InitializationListener implements ServletContextListener {
 		Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_CACHE, true);
 		Velocity.init();
 
+		try {
+			Class.forName("jp.pipa.poipiku.util.RecommendedContents");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		//AccessUnique accessUnique = AccessUnique.getInstance();
 		//accessUnique.init();
 }
