@@ -98,7 +98,7 @@ public class UserAuthUtil {
 
 			strSql = "SELECT * FROM users_0000 WHERE email=? AND password=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strEmail);
+			cState.setString(1, strEmail.toLowerCase());
 			cState.setString(2, strPassword);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
@@ -174,7 +174,7 @@ public class UserAuthUtil {
 
 			strSql = "SELECT * FROM users_0000 WHERE email=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strEmail);
+			cState.setString(1, strEmail.toLowerCase());
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				nUserId = cResSet.getInt("user_id");
@@ -207,7 +207,7 @@ public class UserAuthUtil {
 			cState.setString(2, strPassword);
 			cState.setString(3, strHashPass);
 			cState.setInt(4, checkLogin.m_nLangId);
-			cState.setString(5, strEmail);
+			cState.setString(5, strEmail.toLowerCase());
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				nUserId = cResSet.getInt("user_id");
@@ -241,7 +241,7 @@ public class UserAuthUtil {
 			strSql = "INSERT INTO temp_emails_0000(user_id, email, hash_key) VALUES(?, ?, ?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
-			cState.setString(2, strEmail);
+			cState.setString(2, strEmail.toLowerCase());
 			cState.setString(3, strHashKey);
 			cState.executeUpdate();
 			cState.close();cState=null;
@@ -327,7 +327,7 @@ public class UserAuthUtil {
 
 			strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strEmail);
+			cState.setString(1, strEmail.toLowerCase());
 			cState.setInt(2, nUserId);
 			cState.executeUpdate();
 			cState.close();cState=null;
@@ -476,7 +476,7 @@ public class UserAuthUtil {
 			boolean bFound = false;
 			strSql = "SELECT * FROM users_0000 WHERE email=? AND user_id<>?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strEmail);
+			cState.setString(1, strEmail.toLowerCase());
 			cState.setInt(2, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			bFound = cResSet.next();
@@ -525,7 +525,7 @@ public class UserAuthUtil {
 			strSql = "INSERT INTO temp_emails_0000(user_id, email, hash_key) VALUES(?, ?, ?)";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nUserId);
-			cState.setString(2, strEmail);
+			cState.setString(2, strEmail.toLowerCase());
 			cState.setString(3, strHashKey);
 			cState.executeUpdate();
 			cState.close();cState=null;
@@ -700,9 +700,9 @@ public class UserAuthUtil {
 							CTweet tweet = new CTweet();
 							String strTwEmail = tweet.GetEmailAddress();
 							if(tweet.GetResults(nUserId) && strTwEmail != null && !strTwEmail.isEmpty()){
-								strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
+								strSql = "SELECT user_id FROM users_0000 WHERE email=?";
 								cState = cConn.prepareStatement(strSql);
-								cState.setString(1, strTwEmail);
+								cState.setString(1, strTwEmail.toLowerCase());
 								cResSet = cState.executeQuery();
 								boolean bEmailRegistered = cResSet.next();
 								cResSet.close();cResSet=null;
@@ -713,7 +713,7 @@ public class UserAuthUtil {
 								if(!bEmailRegistered){
 									strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 									cState = cConn.prepareStatement(strSql);
-									cState.setString(1, strTwEmail);
+									cState.setString(1, strTwEmail.toLowerCase());
 									cState.setInt(2, nUserId);
 									cState.executeUpdate();
 									cState.close();cState=null;
@@ -771,7 +771,7 @@ public class UserAuthUtil {
 				cState.setString(1, strUserName);
 				cState.setString(2, strPassword);
 				cState.setString(3, strHashPass);
-				cState.setString(4, strEmail);
+				cState.setString(4, strEmail.toLowerCase());
 				cState.setString(5, "@"+screen_name);
 				cState.setInt(6, nLangId);
 				cState.executeUpdate();
@@ -780,7 +780,7 @@ public class UserAuthUtil {
 				// User ID 取得
 				strSql = "SELECT * FROM users_0000 WHERE email=? AND password=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, strEmail);
+				cState.setString(1, strEmail.toLowerCase());
 				cState.setString(2, strPassword);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
@@ -808,9 +808,9 @@ public class UserAuthUtil {
 					String strTwEmail = null;
 					if(tweet.GetResults(nUserId)) {
 						if ((strTwEmail = tweet.GetEmailAddress()) != null) {
-							strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
+							strSql = "SELECT user_id FROM users_0000 WHERE email=?";
 							cState = cConn.prepareStatement(strSql);
-							cState.setString(1, strTwEmail);
+							cState.setString(1, strTwEmail.toLowerCase());
 							cResSet = cState.executeQuery();
 							boolean bEmailRegistered = cResSet.next();
 							cResSet.close();cResSet=null;
@@ -819,7 +819,7 @@ public class UserAuthUtil {
 							if(!bEmailRegistered) {
 								strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 								cState = cConn.prepareStatement(strSql);
-								cState.setString(1, strTwEmail);
+								cState.setString(1, strTwEmail.toLowerCase());
 								cState.setInt(2, nUserId);
 								cState.executeUpdate();
 								cState.close();cState=null;

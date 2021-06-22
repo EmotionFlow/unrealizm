@@ -132,7 +132,7 @@ public final class RegistTwitterUserC {
 						connection = dataSource.getConnection();
 						strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 						statement = connection.prepareStatement(strSql);
-						statement.setString(1, strTwEmail);
+						statement.setString(1, strTwEmail.toLowerCase());
 						resultSet = statement.executeQuery();
 						boolean isEmailRegistered = resultSet.next();
 						resultSet.close();resultSet = null;
@@ -145,7 +145,7 @@ public final class RegistTwitterUserC {
 							connection = dataSource.getConnection();
 							strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 							statement = connection.prepareStatement(strSql);
-							statement.setString(1, strTwEmail);
+							statement.setString(1, strTwEmail.toLowerCase());
 							statement.setInt(2, userId);
 							statement.executeUpdate();
 							statement.close();statement = null;
@@ -217,7 +217,7 @@ public final class RegistTwitterUserC {
 			statement.setString(1, strUserName);
 			statement.setString(2, strPassword);
 			statement.setString(3, strHashPass);
-			statement.setString(4, strEmail);
+			statement.setString(4, strEmail.toLowerCase());
 			statement.setString(5, "@" + oauth.twitterScreenName);
 			statement.setInt(6, nLangId);
 			statement.executeUpdate();
@@ -227,7 +227,7 @@ public final class RegistTwitterUserC {
 			strSql = "SELECT user_id FROM users_0000 WHERE hash_password=? AND email=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, strHashPass);
-			statement.setString(2, strEmail);
+			statement.setString(2, strEmail.toLowerCase());
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				userId = resultSet.getInt("user_id");
@@ -261,7 +261,7 @@ public final class RegistTwitterUserC {
 				if (strTwEmail != null) {
 					strSql = "SELECT user_id FROM users_0000 WHERE email = ?";
 					statement = connection.prepareStatement(strSql);
-					statement.setString(1, strTwEmail);
+					statement.setString(1, strTwEmail.toLowerCase());
 					resultSet = statement.executeQuery();
 					boolean bEmailRegistered = resultSet.next();
 					resultSet.close();resultSet = null;
@@ -269,7 +269,7 @@ public final class RegistTwitterUserC {
 					if (!bEmailRegistered) {
 						strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 						statement = connection.prepareStatement(strSql);
-						statement.setString(1, strTwEmail);
+						statement.setString(1, strTwEmail.toLowerCase());
 						statement.setInt(2, userId);
 						statement.executeUpdate();
 						statement.close();statement = null;
