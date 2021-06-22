@@ -86,6 +86,10 @@
 				</a>
 			</form>
 			<%} else {%>
+			<a id="MenuSwitchUser" class="FooterMenuItem" style="display: none;" href="javascript: void(0);" onclick="toggleSwitchUserList();">
+				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>
+				<span class="FooterMenuItemName">きりかえ</span>
+			</a>
 			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>

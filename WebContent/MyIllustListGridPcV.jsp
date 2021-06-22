@@ -3,7 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-IllustListC cResults = new IllustListC();
+MyIllustListC cResults = new MyIllustListC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 48;
 
@@ -41,6 +41,8 @@ if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
+final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
+
 %>
 <!DOCTYPE html>
 <html>
@@ -50,6 +52,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
+		<%@ include file="/inner/TSwitchUser.jsp"%>
 
 		<script type="text/javascript">
 		$(function(){
@@ -77,6 +80,75 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			}
 		</style>
 		<%}%>
+		<style>
+			#SwitchUserList {
+                display: block;
+                position: fixed;
+                top: 51px;
+                right: 30%;
+                z-index: 1;
+                width: 40%;
+                box-sizing: border-box;
+                overflow: hidden;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                color: #6d6965;
+                flex-flow: column;
+			}
+            .SwitchUserItem {
+                display: flex;
+                flex-flow: row nowrap;
+                width: 100%;
+                height: 42px;
+                box-sizing: border-box;
+                position: relative;
+                text-align: center;
+                padding: 2px 2px 2px 2px;
+                border-bottom: solid 1px #eee;
+                align-items: center;
+                color: #6d6965;
+            }
+            .SwitchUserItem:hover {
+                color: #6d6965;
+			}
+            .SwitchUserThumb {
+                display: block;
+                flex: 0 0 40px;
+                height: 40px;
+                overflow: hidden;
+                border-radius: 40px;
+                background-size: cover;
+                background-position: 50% 50%;
+            }
+            .SwitchUserNickname {
+				color: #6d6965;
+                display: block;
+                flex: 1 1 80px;
+                padding: 0;
+                margin: 0 0 0 3px;
+                text-align: left;
+                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .SwitchUserNickname:hover {
+				color: inherit;
+				text-decoration: underline;
+			}
+            .SwitchUserStatus {
+                border-left: solid 1px #eee;
+                padding: 10px 13px;
+                font-size: 16px;
+            }
+            .SwitchUserStatus > .Selected {
+                color: #3498da;
+            }
+            .SwitchUserStatus > .Other {
+                color: #f27474;
+            }
+
+		</style>
 	</head>
 
 	<body>
@@ -84,7 +156,34 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<script>$(function () {
 			$("#MenuSearch").hide();
 			$("#MenuSettings").show();
+			$("#MenuSwitchUser").show();
 		})</script>
+
+		<div id="SwitchUserList" style="display: <%=openSwUsrLst?"block":"none"%>">
+			<%for (MyIllustListC.SwitchUser switchUser: cResults.switchUsers) {%>
+			<div class="SwitchUserItem">
+				<span class="SwitchUserThumb"
+					  style="background-image:url('<%=Common.GetUrl(switchUser.user.m_strFileName)%>')"
+					  onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)"></span>
+				<span class="SwitchUserNickname"
+					  onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)"><%=switchUser.user.m_strNickName%></span>
+				<span class="SwitchUserStatus">
+				<%if(switchUser.signInIt){%>
+				<i class="fas fa-check Selected"></i>
+				<%}else{%>
+				<i class="far fa-trash-alt Other"
+				   onclick="removeSwitchUser(<%=switchUser.user.m_nUserId%>)"></i>
+				<%}%>
+				</span>
+			</div>
+			<%}%>
+
+			<%if(cResults.switchUsers.size()<2){%>
+			<a class="SwitchUserItem" href="javascript: void(0)" onclick="addSwitchUser(<%=checkLogin.m_nUserId%>)">
+				<span class="SwitchUserNickname" style="text-align: center">既存のアカウントを追加</span>
+			</a>
+			<%}%>
+		</div>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
