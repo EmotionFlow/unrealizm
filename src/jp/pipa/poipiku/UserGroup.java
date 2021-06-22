@@ -162,4 +162,8 @@ public final class UserGroup {
 
 		return true;
 	}
-}
+
+	public boolean contain(int userId){
+		return (userId == userId1 || userId == userId2 || userId == userId3);
+	}
+ }

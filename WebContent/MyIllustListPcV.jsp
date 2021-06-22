@@ -55,12 +55,9 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
+		<%@ include file="/inner/TSwitchUser.jsp"%>
 
 		<script type="text/javascript">
-		function toggleSwitchUserList(){
-			$("#SwitchUserList").stop(true).animate({'height': 'toggle'});
-		}
-
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateCategoryMenuPos(100);
@@ -98,7 +95,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
                 justify-content: center;
                 background: #fff;
                 color: #6d6965;
-                display: flex;
+                display: block;
                 flex-flow: column;
 			}
 			.SwitchUserItem {
@@ -133,10 +130,17 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
                 white-space: nowrap;
                 overflow: hidden;
 			}
-			.SwitchUserSelected {
-                margin: 0 10px;
+            .SwitchUserStatus {
+                border-left: solid 1px #eee;
+                padding: 10px 13px;
                 font-size: 16px;
-			}
+            }
+            .SwitchUserStatus > .Selected {
+				color: #3498da;
+            }
+            .SwitchUserStatus > .Other {
+				color: #f27474;
+            }
 		</style>
 	</head>
 
@@ -153,25 +157,26 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 		<div id="SwitchUserList">
 			<%for (MyIllustListC.SwitchUser switchUser: cResults.switchUsers) {%>
-			<div class="SwitchUserItem">
+			<a class="SwitchUserItem"
+			   href="javascript: void(0)"
+			   onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)">
 				<span class="SwitchUserThumb" style="background-image:url('<%=Common.GetUrl(switchUser.user.m_strFileName)%>')"></span>
 				<span class="SwitchUserNickname"><%=switchUser.user.m_strNickName%></span>
-				<span class="SwitchUserSelected">
+				<span class="SwitchUserStatus">
 				<%if(switchUser.signInIt){%>
-				<i class="fas fa-check"></i>
+				<i class="fas fa-check Selected"></i>
+				<%}else{%>
+				<i class="far fa-trash-alt Other"></i>
 				<%}%>
 				</span>
-			</div>
+			</a>
 			<%}%>
 
 			<%if(cResults.switchUsers.size()<2){%>
-			<div class="SwitchUserItem">
+			<a class="SwitchUserItem" href="javascript: void(0)" onclick="addSwitchUser(<%=checkLogin.m_nUserId%>)">
 				<span class="SwitchUserNickname" style="text-align: center">既存のアカウントを追加</span>
-			</div>
+			</a>
 			<%}%>
-			<div class="SwitchUserItem">
-				<span class="SwitchUserNickname" style="text-align: center">アカウントを管理</span>
-			</div>
 		</div>
 
 		<article class="Wrapper" style="width: 100%;">
@@ -182,14 +187,14 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
-						<div class="TweetMyBox">
+						<span class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
 							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
 								マイリクエスト
 							</a>
-						</div>
+						</span>
 					</span>
 				</section>
 				<section class="UserInfoState">
