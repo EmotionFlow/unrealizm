@@ -67,7 +67,7 @@ public class AddSwitchUserC extends Controller {
 			// メアド、PWからユーザーを検索
 			strSql = "SELECT user_id, hash_password FROM users_0000 WHERE email=? AND password=?";
 			statement = connection.prepareStatement(strSql);
-			statement.setString(1, switchUserEmail);
+			statement.setString(1, switchUserEmail.toLowerCase());
 			statement.setString(2, switchUserPassword);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {

@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="jp.pipa.poipiku.Common" %>
 
-<style>
-</style>
 <script type="text/javascript">
 	function toggleSwitchUserList(){
 		$("#SwitchUserList").stop(true).animate({'height': 'toggle'});
@@ -55,13 +53,13 @@
 </style>
 <div class="SwitchUserDlg">
 
-<h2 class="SwitchUserDlgTitle">ユーザー切り替え(β)</h2>
+<h2 class="SwitchUserDlgTitle">きりかえ(β)</h2>
 <div class="SwitchUserDlgInfo">
 <ul>
-	<li>アカウントをグループ化して簡単に切り替えられるようになりました。</li>
-	<li>アカウントごとに別のTwitterアカウントと連携しておけば、投稿・閲覧で使い分けることができます。</li>
-	<li>紐付けにはメールアドレスとパスワードの登録が必要です。</li>
-	<li>１つのアカウントは１つのグループのみ所属できます、別のアカウントと組み合わせたい場合は、一度グループから外す必要があります。</li>
+	<li>２つのアカウントをグループ化して簡単に切り替えられるようになりました。</li>
+	<li>アカウントごとに別のTwitterアカウントと連携しておけば、投稿・閲覧・ジャンルなどで使い分けることができます。</li>
+	<li>グループ化にはメールアドレスとパスワードの登録が必要です。</li>
+	<li>１つのアカウントは１つのグループにのみ所属できます、別のアカウントと組み合わせたい場合は、一度グループから外す必要があります。</li>
 </ul>
 </div>
 
@@ -103,7 +101,6 @@
 			confirmButtonText: '<%=_TEX.T("AddSwitchUserDlg.Submit")%>',
 			preConfirm: _verifyAddSwitchUserDlgInput,
 		}).then(formValues => {
-			// キャンセル
 			if(formValues.dismiss){return false;}
 
 			const email = String(formValues.value.email);
@@ -121,7 +118,7 @@
 				data => {
 					if (data.result === <%=Common.API_OK%>) {
 						HideMsgStatic();
-						location.href = "/MyIllustListPcV.jsp?ID=" + data.user_id;
+						location.href = "/MyIllustListPcV.jsp?SW=1&ID=" + data.user_id;
 						return true;
 					} else {
 						switch (data.error_detail_code) {
@@ -142,6 +139,7 @@
 				},
 				error => {
 					DispMsg("error.");
+					return false;
 				}
 			);
 		});

@@ -46,6 +46,8 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
+final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
+
 %>
 <!DOCTYPE html>
 <html>
@@ -95,7 +97,6 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
                 justify-content: center;
                 background: #fff;
                 color: #6d6965;
-                display: block;
                 flex-flow: column;
 			}
 			.SwitchUserItem {
@@ -155,7 +156,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<div id="SwitchUserList">
+		<div id="SwitchUserList" style="display: <%=openSwUsrLst?"block":"none"%>">
 			<%for (MyIllustListC.SwitchUser switchUser: cResults.switchUsers) {%>
 			<div class="SwitchUserItem">
 				<span class="SwitchUserThumb"
