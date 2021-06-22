@@ -157,19 +157,21 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 		<div id="SwitchUserList">
 			<%for (MyIllustListC.SwitchUser switchUser: cResults.switchUsers) {%>
-			<a class="SwitchUserItem"
-			   href="javascript: void(0)"
-			   onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)">
-				<span class="SwitchUserThumb" style="background-image:url('<%=Common.GetUrl(switchUser.user.m_strFileName)%>')"></span>
-				<span class="SwitchUserNickname"><%=switchUser.user.m_strNickName%></span>
+			<div class="SwitchUserItem">
+				<span class="SwitchUserThumb"
+					  style="background-image:url('<%=Common.GetUrl(switchUser.user.m_strFileName)%>')"
+					  onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)"></span>
+				<span class="SwitchUserNickname"
+					  onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)"><%=switchUser.user.m_strNickName%></span>
 				<span class="SwitchUserStatus">
 				<%if(switchUser.signInIt){%>
 				<i class="fas fa-check Selected"></i>
 				<%}else{%>
-				<i class="far fa-trash-alt Other"></i>
+				<i class="far fa-trash-alt Other"
+				   onclick="removeSwitchUser(<%=switchUser.user.m_nUserId%>)"></i>
 				<%}%>
 				</span>
-			</a>
+			</div>
 			<%}%>
 
 			<%if(cResults.switchUsers.size()<2){%>

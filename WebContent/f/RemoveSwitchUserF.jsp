@@ -8,8 +8,8 @@ boolean result;
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 
-AddSwitchUserC controller = new AddSwitchUserC();
+RemoveSwitchUserC controller = new RemoveSwitchUserC();
 controller.getParam(request);
-result = controller.getResults(checkLogin, response);
+result = controller.getResults(checkLogin);
 
 %>{"result":<%=result?Common.API_OK:Common.API_NG%>,"error_code":<%=controller.errorKind.getCode()%>,"error_detail_code":<%=controller.errorDetail.getCode()%>}

@@ -89,16 +89,16 @@ public class UserGroupTest {
 		assertEquals(4, userGroup.userId3);
 
 		assertTrue(userGroup.remove(2));
+		assertEquals(0, userGroup.groupId);
 		assertEquals(0, userGroup.userId1);
 		assertEquals(0, userGroup.userId2);
-		assertEquals(4, userGroup.userId3);
+		assertEquals(0, userGroup.userId3);
 
 		userGroup = new UserGroup(4);
+		assertEquals(0, userGroup.groupId);
 		assertEquals(0, userGroup.userId1);
 		assertEquals(0, userGroup.userId2);
-		assertEquals(4, userGroup.userId3);
-
-
+		assertEquals(0, userGroup.userId3);
 	}
 
 

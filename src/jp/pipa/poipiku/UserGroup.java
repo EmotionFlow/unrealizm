@@ -142,6 +142,7 @@ public final class UserGroup {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		String sql = "";
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
@@ -151,6 +152,34 @@ public final class UserGroup {
 			statement = connection.prepareStatement(sql);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+			sql = "SELECT user_id_1, user_id_2, user_id_3 FROM user_groups WHERE id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, groupId);
+			resultSet = statement.executeQuery();
+			int existNum = 0;
+			if (resultSet.next()) {
+				if (resultSet.getInt("user_id_1") > 0) existNum++;
+				if (resultSet.getInt("user_id_2") > 0) existNum++;
+				if (resultSet.getInt("user_id_3") > 0) existNum++;
+			} else {
+				return false;
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			if (existNum <= 1 ) {
+				sql = "DELETE FROM user_groups WHERE id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, groupId);
+				statement.executeUpdate();
+				statement.close();statement=null;
+				groupId = 0;
+				userId1 = 0;
+				userId2 = 0;
+				userId3 = 0;
+			}
+
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
@@ -158,6 +187,7 @@ public final class UserGroup {
 		} finally {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
 		}
 
 		return true;

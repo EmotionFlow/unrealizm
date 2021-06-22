@@ -109,6 +109,8 @@
 			const email = String(formValues.value.email);
 			const password = String(formValues.value.password);
 
+			DispMsgStatic("追加処理中...");
+
 			$.ajax({
 				"type": "post",
 				"data": {"ID": loginUserId, "EM": email, "PW": password},
@@ -118,18 +120,65 @@
 			.then(
 				data => {
 					if (data.result === <%=Common.API_OK%>) {
-						location.href = "/MyIllustListPcV.jsp?ID=" + userId;
+						HideMsgStatic();
+						location.href = "/MyIllustListPcV.jsp?ID=" + data.user_id;
 						return true;
 					} else {
-						DispMsg("Error.");
+						switch (data.error_detail_code) {
+							case <%=AddSwitchUserC.ErrorDetail.AuthError.getCode()%> :
+								DispMsg("AuthError.");
+								break;
+							case <%=AddSwitchUserC.ErrorDetail.FoundMe.getCode()%> :
+								DispMsg("FoundMe.");
+								break;
+							case <%=AddSwitchUserC.ErrorDetail.FoundOtherGroup.getCode()%> :
+								DispMsg("FoundOtherGroup.");
+								break;
+							default:
+								break;
+						}
+						return false;
 					}
 				},
 				error => {
 					DispMsg("error.");
 				}
 			);
-
-
 		});
 	}
+
+	function removeSwitchUser(removeUserId) {
+		$.ajax({
+			"type": "post",
+			"data": {"ID": removeUserId},
+			"url": "/f/RemoveSwitchUserF.jsp",
+			"dataType": "json"
+		})
+		.then(
+			data => {
+				if (data.result === <%=Common.API_OK%>) {
+					HideMsgStatic();
+					location.reload();
+					return true;
+				} else {
+					switch (data.error_detail_code) {
+						case <%=RemoveSwitchUserC.ErrorDetail.RemoveMe.getCode()%> :
+							DispMsg("RemoveMe.");
+							break;
+						case <%=RemoveSwitchUserC.ErrorDetail.NotFound.getCode()%> :
+							DispMsg("NotFound.");
+							break;
+						default:
+							DispMsg("Error.");
+							break;
+					}
+					return false;
+				}
+			},
+			error => {
+				DispMsg("error.");
+			}
+		);
+	}
+
 </script>
