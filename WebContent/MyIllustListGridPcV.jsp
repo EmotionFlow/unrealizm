@@ -2,6 +2,7 @@
 <%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+final boolean isApp = false;
 
 MyIllustListC cResults = new MyIllustListC();
 cResults.getParam(request);
@@ -163,11 +164,11 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 			<%}%>
 		})</script>
 
+
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<%if(checkLogin.isStaff()){%>
 		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
 		<%}%>
-
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">

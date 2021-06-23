@@ -2,7 +2,8 @@
 <%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
+final boolean bSmartPhone = Util.isSmartPhone(request);
+final boolean isApp = false;
 
 if(!bSmartPhone) {
 	request.getRequestDispatcher("/MyIllustListGridPcV.jsp").forward(request,response);

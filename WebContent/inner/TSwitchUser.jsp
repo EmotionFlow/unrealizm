@@ -148,7 +148,7 @@ Accounts to be grouped
 				data => {
 					if (data.result === <%=Common.API_OK%>) {
 						HideMsgStatic();
-						location.href = "/MyIllustListPcV.jsp?ID=" + data.user_id;
+						location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=" + data.user_id;
 						return true;
 					} else {
 						switch (data.error_detail_code) {
@@ -191,7 +191,7 @@ Accounts to be grouped
 		.then(
 			data => {
 				if (data.result === <%=Common.API_OK%>) {
-					location.href = "/MyIllustListPcV.jsp?SW=1&ID=<%=checkLogin.m_nUserId%>";
+					location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?SW=1&ID=<%=checkLogin.m_nUserId%>";
 					return true;
 				} else {
 					switch (data.error_detail_code) {

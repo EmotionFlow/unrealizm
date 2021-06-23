@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% //boolean isApp = true; %>
 <%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+final boolean isApp = true;
 
 if(!bSmartPhone) {
-	request.getRequestDispatcher("/MyIllustListGridPcV.jsp").forward(request,response);
+	request.getRequestDispatcher("/MyIllustListAppV.jsp").forward(request,response);
 	return;
 }
 
-IllustListC cResults = new IllustListC();
+MyIllustListC cResults = new MyIllustListC();
 cResults.getParam(request);
 if(cResults.m_nUserId==-1) {
 	if(!checkLogin.m_bLogin) {
@@ -27,6 +27,10 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
+
+// used at /inner/MyIllustListSwitchUserList.jsp
+final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
+
 %>
 <!DOCTYPE html>
 <html>
@@ -35,6 +39,8 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
+		<%@ include file="/inner/TSwitchUser.jsp"%>
+
 		<script>
 			var g_nPage = 1; // start 1
 			var g_strKeyword = '<%=cResults.m_strKeyword%>';
@@ -117,11 +123,75 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 			}
 		</style>
 		<%}%>
+
+		<style>
+            #SwitchUserList{
+                float: left;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+                position: fixed;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                color: #6d6965;
+                flex-flow: column;
+                z-index: 999;
+            }
+            .SwitchUserItem {
+                display: flex;
+                flex-flow: row nowrap;
+                width: 100%;
+                height: 55px;
+                box-sizing: border-box;
+                position: relative;
+                text-align: center;
+                padding: 2px 2px 2px 2px;
+                border-bottom: solid 1px #eee;
+                align-items: center;
+                color: #6d6965;
+            }
+            .SwitchUserThumb {
+                display: block;
+                flex: 0 0 40px;
+                height: 40px;
+                overflow: hidden;
+                border-radius: 40px;
+                background-size: cover;
+                background-position: 50% 50%;
+            }
+            .SwitchUserNickname {
+                display: block;
+                flex: 1 1 80px;
+                padding: 0;
+                margin: 0 0 0 3px;
+                text-align: left;
+                font-size: 16px;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            .SwitchUserStatus {
+                width: 19px;
+                border-left: solid 1px #eee;
+                padding: 10px 13px;
+                font-size: 16px;
+            }
+            .SwitchUserStatus > .Selected {
+                color: #3498da;
+            }
+            .SwitchUserStatus > .Other {
+                color: #f27474;
+            }
+		</style>
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuApp.jsp" %>
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+		<%if(checkLogin.isStaff()){%>
+		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
+		<%}%>
+
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
@@ -135,8 +205,13 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
 							<a href="/MyRequestListAppV.jsp?MENUID=RECEIVED" class="BtnBase">
-								マイリクエスト
+								<%=_TEX.T("Request.MyRequests")%>
 							</a>
+							<%if(checkLogin.isStaff()){%>
+							<a id="MenuSwitchUser" class="BtnBase" href="javascript: void(0);" onclick="toggleSwitchUserList();">
+								<%=_TEX.T("SwitchAccount")%>
+							</a>
+							<%}%>
 						</div>
 					</span>
 				</section>
