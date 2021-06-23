@@ -51,6 +51,11 @@
 		text-align: left;
 		color: #000000;
 	}
+	.SwitchUserForgetPassword{
+		text-align: right;
+		display: block;color: #3498db;
+		width: 100%;
+	}
 </style>
 <div class="SwitchUserDlg">
 
@@ -73,6 +78,7 @@
 <input id="SwitchUserEmail" type="email" class="swal2-input">
 <label for="SwitchUserPassword">パスワード</label>
 <input id="SwitchUserPassword" type="password" class="swal2-input">
+<a href="/ForgetPasswordPcV.jsp" class="SwitchUserForgetPassword">パスワードを忘れた</a>
 </div>
 <%}else{%>
 <h2 class="SwitchUserDlgTitle">Account switch</h2>
@@ -93,6 +99,7 @@ Accounts to be grouped
 <input id="SwitchUserEmail" type="email" class="swal2-input">
 <label for="SwitchUserPassword">Password</label>
 <input id="SwitchUserPassword" type="password" class="swal2-input">
+<a href="/ForgetPasswordPcV.jsp" class="SwitchUserForgetPassword">Forgot my password?</a>
 </div>
 <%}%>
 
