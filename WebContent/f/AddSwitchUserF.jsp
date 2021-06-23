@@ -22,4 +22,4 @@ AddSwitchUserC controller = new AddSwitchUserC();
 controller.getParam(request);
 result = controller.getResults(checkLogin, response);
 
-%>{"result":<%=result?Common.API_OK:Common.API_NG%>,"error_code":<%=controller.errorKind.getCode()%>,"error_detail_code":<%=controller.errorDetail.getCode()%>}
+%>{"result":<%=result?Common.API_OK:Common.API_NG%>,"user_id":<%=controller.switchUserId%> ,"error_code":<%=controller.errorKind.getCode()%>,"error_detail_code":<%=controller.errorDetail.getCode()%>}

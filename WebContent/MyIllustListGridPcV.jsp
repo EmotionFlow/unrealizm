@@ -41,6 +41,7 @@ if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
+// used at /inner/MyIllustListSwitchUserList.jsp
 final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 
 %>
@@ -86,7 +87,7 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
                 position: fixed;
                 top: 51px;
                 right: 30%;
-                z-index: 1;
+                z-index: 999;
                 width: 40%;
                 box-sizing: border-box;
                 overflow: hidden;
@@ -137,6 +138,7 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 				text-decoration: underline;
 			}
             .SwitchUserStatus {
+                width: 30px;
                 border-left: solid 1px #eee;
                 padding: 10px 13px;
                 font-size: 16px;
@@ -159,32 +161,7 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 			$("#MenuSwitchUser").show();
 		})</script>
 
-		<div id="SwitchUserList" style="display: <%=openSwUsrLst?"block":"none"%>">
-			<%for (MyIllustListC.SwitchUser switchUser: cResults.switchUsers) {%>
-			<div class="SwitchUserItem">
-				<span class="SwitchUserThumb"
-					  style="background-image:url('<%=Common.GetUrl(switchUser.user.m_strFileName)%>')"
-					  onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)"></span>
-				<span class="SwitchUserNickname"
-					  onclick="switchUser(<%=switchUser.signInIt ? "-1" : switchUser.user.m_nUserId%>)"><%=switchUser.user.m_strNickName%></span>
-				<span class="SwitchUserStatus">
-				<%if(switchUser.signInIt){%>
-				<i class="fas fa-check Selected"></i>
-				<%}else{%>
-				<i class="far fa-trash-alt Other"
-				   onclick="removeSwitchUser(<%=switchUser.user.m_nUserId%>)"></i>
-				<%}%>
-				</span>
-			</div>
-			<%}%>
-
-			<%if(cResults.switchUsers.size()<2){%>
-			<a class="SwitchUserItem" href="javascript: void(0)" onclick="addSwitchUser(<%=checkLogin.m_nUserId%>)">
-				<span class="SwitchUserNickname" style="text-align: center">既存のアカウントを追加</span>
-			</a>
-			<%}%>
-		</div>
-
+		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper" style="width: 100%;">
@@ -197,10 +174,10 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 					<span class="UserInfoCmd">
 						<div class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
-								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
+								<i class="fab fa-twitter"></i><%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
 							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
-								マイリクエスト
+								<%=_TEX.T("Request.MyRequests")%>
 							</a>
 						</div>
 					</span>

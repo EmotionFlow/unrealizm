@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="jp.pipa.poipiku.Common" %>
+<%@ page import="static jp.pipa.poipiku.ResourceBundleControl.ID_JA" %>
 
 <script type="text/javascript">
 	function toggleSwitchUserList(){
@@ -53,6 +54,7 @@
 </style>
 <div class="SwitchUserDlg">
 
+<%if(_TEX.ID == ID_JA){%>
 <h2 class="SwitchUserDlgTitle">きりかえ(β)</h2>
 <div class="SwitchUserDlgInfo">
 <ul>
@@ -67,11 +69,32 @@
 グループ化したいアカウント
 </div>
 <div class="SwitchUserInputInfo">
-<label for="SwitchUserEmail">email</label>
+<label for="SwitchUserEmail">メールアドレス</label>
 <input id="SwitchUserEmail" type="email" class="swal2-input">
-<label for="SwitchUserPassword">password</label>
+<label for="SwitchUserPassword">パスワード</label>
 <input id="SwitchUserPassword" type="password" class="swal2-input">
 </div>
+<%}else{%>
+<h2 class="SwitchUserDlgTitle">Account switch</h2>
+<div class="SwitchUserDlgInfo">
+<ul>
+	<li>You can now group two accounts together and switch between them easily.</li>
+	<li>If you link each account with a different Twitter account, you can use them separately for posting, browsing, genres, etc.</li>
+	<li>You will need to register your email address and password in order to create a group.</li>
+	<li>An account can only belong to one group, if you want to combine it with another account, you need to remove it from the group once.</li>
+</ul>
+</div>
+
+<div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
+Accounts to be grouped
+</div>
+<div class="SwitchUserInputInfo">
+<label for="SwitchUserEmail">Email address</label>
+<input id="SwitchUserEmail" type="email" class="swal2-input">
+<label for="SwitchUserPassword">Password</label>
+<input id="SwitchUserPassword" type="password" class="swal2-input">
+</div>
+<%}%>
 
 </div>
 `;
@@ -106,7 +129,7 @@
 			const email = String(formValues.value.email);
 			const password = String(formValues.value.password);
 
-			DispMsgStatic("追加処理中...");
+			DispMsgStatic("<%=_TEX.T("SwitchAccount.Processing")%>");
 
 			$.ajax({
 				"type": "post",
@@ -118,18 +141,18 @@
 				data => {
 					if (data.result === <%=Common.API_OK%>) {
 						HideMsgStatic();
-						location.href = "/MyIllustListPcV.jsp?SW=1&ID=" + data.user_id;
+						location.href = "/MyIllustListPcV.jsp?ID=" + data.user_id;
 						return true;
 					} else {
 						switch (data.error_detail_code) {
 							case <%=AddSwitchUserC.ErrorDetail.AuthError.getCode()%> :
-								DispMsg("AuthError.");
+								DispMsg("<%=_TEX.T("SwitchAccount.Error.AuthError")%>");
 								break;
 							case <%=AddSwitchUserC.ErrorDetail.FoundMe.getCode()%> :
-								DispMsg("FoundMe.");
+								DispMsg("<%=_TEX.T("SwitchAccount.Error.FoundMe")%>");
 								break;
 							case <%=AddSwitchUserC.ErrorDetail.FoundOtherGroup.getCode()%> :
-								DispMsg("FoundOtherGroup.");
+								DispMsg("<%=_TEX.T("SwitchAccount.Error.FoundOtherGroup")%>");
 								break;
 							default:
 								break;
@@ -146,6 +169,12 @@
 	}
 
 	function removeSwitchUser(removeUserId) {
+		if (removeUserId<0) return false;
+
+		if (!window.confirm("<%=_TEX.T("SwitchAccount.Remove.Confirm")%>")){
+			return false;
+		}
+
 		$.ajax({
 			"type": "post",
 			"data": {"ID": removeUserId},
@@ -155,8 +184,7 @@
 		.then(
 			data => {
 				if (data.result === <%=Common.API_OK%>) {
-					HideMsgStatic();
-					location.reload();
+					location.href = "/MyIllustListPcV.jsp?SW=1&ID=<%=checkLogin.m_nUserId%>";
 					return true;
 				} else {
 					switch (data.error_detail_code) {
@@ -175,6 +203,7 @@
 			},
 			error => {
 				DispMsg("error.");
+				return false;
 			}
 		);
 	}

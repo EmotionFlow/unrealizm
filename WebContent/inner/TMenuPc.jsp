@@ -30,7 +30,7 @@
 				</a>
 				<a id="MenuSwitchUser" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="javascript: void(0);" onclick="toggleSwitchUserList();">
 					<span class="MenuSwitchUserIcon"></span>
-					<span class="MenuSwitchUserName">きりかえ</span>
+					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>
 				</a>
 				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 					<span class="MenuUploadIcon"></span>
@@ -88,7 +88,7 @@
 			<%} else {%>
 			<a id="MenuSwitchUser" class="FooterMenuItem" style="display: none;" href="javascript: void(0);" onclick="toggleSwitchUserList();">
 				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>
-				<span class="FooterMenuItemName">きりかえ</span>
+				<span class="FooterMenuItemName"><%=_TEX.T("SwitchAccount")%></span>
 			</a>
 			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
