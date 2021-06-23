@@ -31,6 +31,8 @@ JUNIT5_JAR="../test/lib/junit-platform-console-standalone-1.7.1.jar"
 
 CLASS_PATH="${APP_JAR}:${CLASSES_TOMCAT}:${JUNIT5_JAR}:${TEST_TARGET}"
 
+rm -rf ${TEST_CLASSES}/jp
+
 java -version
 
 echo ${CLASS_PATH}

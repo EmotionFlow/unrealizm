@@ -9,7 +9,7 @@ if(!bSmartPhone) {
 	return;
 }
 
-IllustListC cResults = new IllustListC();
+MyIllustListC cResults = new MyIllustListC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 45;
 
@@ -46,6 +46,9 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
+// used at /inner/MyIllustListSwitchUserList.jsp
+final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
+
 %>
 <!DOCTYPE html>
 <html>
@@ -55,6 +58,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
+		<%@ include file="/inner/TSwitchUser.jsp"%>
 
 		<script type="text/javascript">
 		$(function(){
@@ -82,6 +86,66 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			}
 		</style>
 		<%}%>
+
+		<style>
+			#SwitchUserList{
+                float: left;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+                position: fixed;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                color: #6d6965;
+                flex-flow: column;
+				z-index: 999;
+			}
+			.SwitchUserItem {
+                display: flex;
+                flex-flow: row nowrap;
+                width: 100%;
+				height: 55px;
+                box-sizing: border-box;
+                position: relative;
+                text-align: center;
+                padding: 2px 2px 2px 2px;
+                border-bottom: solid 1px #eee;
+                align-items: center;
+                color: #6d6965;
+			}
+			.SwitchUserThumb {
+                display: block;
+                flex: 0 0 40px;
+                height: 40px;
+                overflow: hidden;
+                border-radius: 40px;
+                background-size: cover;
+                background-position: 50% 50%;
+			}
+			.SwitchUserNickname {
+                display: block;
+                flex: 1 1 80px;
+                padding: 0;
+                margin: 0 0 0 3px;
+                text-align: left;
+                font-size: 16px;
+                white-space: nowrap;
+                overflow: hidden;
+			}
+            .SwitchUserStatus {
+                width: 19px;
+                border-left: solid 1px #eee;
+                padding: 10px 13px;
+                font-size: 16px;
+            }
+            .SwitchUserStatus > .Selected {
+				color: #3498da;
+            }
+            .SwitchUserStatus > .Other {
+				color: #f27474;
+            }
+		</style>
 	</head>
 
 	<body>
@@ -90,9 +154,16 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			$("#MenuSearch").hide();
 			$("#MenuUpload").show();
 			$("#MenuSettings").show();
+			<%if(checkLogin.isStaff()){%>
+			$("#MenuSwitchUser").show();
+			<%}%>
 		})</script>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
+		<%if(checkLogin.isStaff()){%>
+		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
+		<%}%>
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
@@ -102,14 +173,14 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
-						<div class="TweetMyBox">
+						<span class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
-								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
+								<i class="fab fa-twitter"></i><%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
 							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
-								マイリクエスト
+								<%=_TEX.T("Request.MyRequests")%>
 							</a>
-						</div>
+						</span>
 					</span>
 				</section>
 				<section class="UserInfoState">
@@ -120,7 +191,6 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 				</section>
 			</div>
 		</article>
-
 
 		<article class="Wrapper">
 			<%if(cResults.m_vCategoryList.size()>0) {%>

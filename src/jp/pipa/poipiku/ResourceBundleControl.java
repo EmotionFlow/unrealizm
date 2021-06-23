@@ -12,10 +12,13 @@ import jp.pipa.poipiku.util.Util;
 
 
 public class ResourceBundleControl {
-	private ResourceBundle objRb;
-	private ResourceBundle objRbJa;
-	private ResourceBundle objRbEn;
-	public int ID = 1;
+	private final ResourceBundle objRb;
+	private final ResourceBundle objRbJa;
+	private final ResourceBundle objRbEn;
+	public int ID;
+	static public final int ID_EN = 0;
+	static public final int ID_JA = 1;
+
 
 	public ResourceBundleControl(HttpServletRequest request) {
 		String strLang="";
@@ -23,7 +26,7 @@ public class ResourceBundleControl {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			strLang = Util.toString(request.getParameter(Common.LANG_ID_POST));
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 			;
 		}
 		if(strLang.isEmpty()) {
@@ -35,10 +38,10 @@ public class ResourceBundleControl {
 
 		if(strLang.equals("en")){
 			objRb = objRbEn;
-			ID = 0;
+			ID = ID_EN;
 		} else {
 			objRb = objRbJa;
-			ID = 1;
+			ID = ID_JA;
 		}
 	}
 
@@ -78,7 +81,6 @@ public class ResourceBundleControl {
 				return 5000;
 			}
 		};
-
 
 		static public ResourceBundle getRoot(){
 			return ResourceBundle.getBundle("rs", Locale.ROOT, CTRL);
