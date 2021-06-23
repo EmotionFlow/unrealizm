@@ -158,10 +158,15 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 		<script>$(function () {
 			$("#MenuSearch").hide();
 			$("#MenuSettings").show();
+			<%if(checkLogin.isStaff()){%>
 			$("#MenuSwitchUser").show();
+			<%}%>
 		})</script>
 
+		<%if(checkLogin.isStaff()){%>
 		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
+		<%}%>
+
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper" style="width: 100%;">
