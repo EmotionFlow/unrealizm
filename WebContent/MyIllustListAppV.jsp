@@ -6,7 +6,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 final boolean isApp = true;
 
 if(!bSmartPhone) {
-	request.getRequestDispatcher("/MyIllustListAppV.jsp").forward(request,response);
+	request.getRequestDispatcher("/MyIllustListPcV.jsp").forward(request,response);
 	return;
 }
 
