@@ -65,11 +65,23 @@ if(cResults.isDownloadable) {
 		</script>
 		<%}%>
 
-		<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==1){%>
+		<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT){%>
 		<script>
 		$(function () {
+			<%if(cResults.m_cContent.novelDirection==0){%>
+			if (window.innerWidth< $(".NovelSection").width()){
+				$(".IllustItemLink").css("width", String(window.innerWidth - 10) +"px");
+			}
+			<%}else{%>
 			$(".IllustItemTextDetail").css("width", (window.innerWidth - 10) + "px");
 			$(".IllustItemTextDetail").scrollLeft(100000);
+			const h = window.innerHeight - $("#HeaderTitleWrapper").height() - $(".FooterMenuWrapper").height();
+			if (h < $(".IllustItemTextDetail.Vertical").height()){
+				$(".IllustItemLink").css("height", String(h - 30) +"px");
+				$(".IllustItemLink").css("padding", 0);
+				$(".IllustItemTextDetail.Vertical").css("height", String(h - 30) +"px");
+			}
+			<%}%>
 		})
 		</script>
 		<%}%>
@@ -81,7 +93,14 @@ if(cResults.isDownloadable) {
 		<%}%>
 		.AnalogicoInfo {display: none;}
 
-		.IllustItemLink {padding: 4px;}
+		.IllustItemLink {
+			<%if(cResults.m_cContent.novelDirection==0){%>
+			margin: 0 auto;
+			width: 38em;
+			<%}else{%>
+            padding: 4px;
+			<%}%>
+		}
 		.IllustItemImage {max-width: 100%; height: auto;}
 
 		.IllustItemTextDetail {
@@ -93,7 +112,6 @@ if(cResults.isDownloadable) {
 			font-size: 1.3em;
 			line-height: 1.8;
 			margin: 0 4px;
-			font-family: yumincho, 游明朝, 游明朝体, yu mincho, ヒラギノ明朝 pron, hiragino mincho pron, hiraminpron-w3, hiraminpron-w6, ヒラギノ明朝 pro, hiragino mincho pro, hiraminpro-w3, hiraminpro-w6, hg明朝e, hgp明朝e, hgs明朝e, hgminchoe, hgpminchoe, hgsminchoe, hg明朝b, hgp明朝b, hgs明朝b, hgminchob, hgpminchob, hgsminchob, 平成明朝, 平成明朝 std, 平成明朝 pro, heisei mincho, heisei mincho std, heisei mincho pro, ipa明朝, ipamincho, Georgia, georgia ref, times new roman, SerifJP, serif;
 		}
 
 		.IllustItemTextDetail.Vertical{
