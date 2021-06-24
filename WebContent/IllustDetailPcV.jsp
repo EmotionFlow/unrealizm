@@ -75,11 +75,11 @@ if(cResults.isDownloadable) {
 			<%}else{%>
 			$(".IllustItemTextDetail").css("width", (window.innerWidth - 10) + "px");
 			$(".IllustItemTextDetail").scrollLeft(100000);
-			const h = window.innerHeight - $("#HeaderTitleWrapper").height() - $(".FooterMenuWrapper").height();
+			const h = $(".Wrapper").height();
 			if (h < $(".IllustItemTextDetail.Vertical").height()){
-				$(".IllustItemLink").css("height", String(h - 30) +"px");
+				$(".IllustItemLink").css("height", String(h - 10) +"px");
 				$(".IllustItemLink").css("padding", 0);
-				$(".IllustItemTextDetail.Vertical").css("height", String(h - 30) +"px");
+				$(".IllustItemTextDetail.Vertical").css("height", String(h - 10) +"px");
 			}
 			<%}%>
 		})
