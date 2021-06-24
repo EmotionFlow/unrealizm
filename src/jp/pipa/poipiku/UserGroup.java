@@ -82,7 +82,7 @@ public final class UserGroup {
 				userId1 = loginUserId;
 				userId2 = addId;
 				sql = "INSERT INTO user_groups(user_id_1, user_id_2, user_id_3)" +
-						" VALUES (?,?,0) RETURNING id";
+						" VALUES (?,?,NULL) RETURNING id";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, loginUserId);
 				statement.setInt(2, addId);
