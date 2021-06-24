@@ -42,9 +42,6 @@ if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
-// used at /inner/MyIllustListSwitchUserList.jsp
-final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
-
 %>
 <!DOCTYPE html>
 <html>
@@ -111,9 +108,6 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
                 align-items: center;
                 color: #6d6965;
             }
-            .SwitchUserItem:hover {
-                color: #6d6965;
-			}
             .SwitchUserThumb {
                 display: block;
                 flex: 0 0 40px;
@@ -134,10 +128,14 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
                 white-space: nowrap;
                 overflow: hidden;
             }
-            .SwitchUserNickname:hover {
+            .SwitchUserNicknameSelected:hover {
 				color: inherit;
-				text-decoration: underline;
 			}
+			.SwitchUserNicknameOther:hover {
+                color: inherit;
+                text-decoration: underline;
+                cursor: pointer;
+            }
             .SwitchUserStatus {
                 width: 30px;
                 border-left: solid 1px #eee;
@@ -148,9 +146,9 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
                 color: #3498da;
             }
             .SwitchUserStatus > .Other {
+                cursor: pointer;
                 color: #f27474;
             }
-
 		</style>
 	</head>
 
@@ -159,16 +157,12 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 		<script>$(function () {
 			$("#MenuSearch").hide();
 			$("#MenuSettings").show();
-			<%if(checkLogin.isStaff()){%>
 			$("#MenuSwitchUser").show();
-			<%}%>
 		})</script>
 
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
-		<%if(checkLogin.isStaff()){%>
 		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
-		<%}%>
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
@@ -196,7 +190,6 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 				</section>
 			</div>
 		</article>
-
 
 		<article class="Wrapper GridList">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
@@ -226,7 +219,6 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 				<%=CPageBar.CreatePageBarPc("/MyIllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
-
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>

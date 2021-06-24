@@ -18,7 +18,7 @@
 		.then(
 			data => {
 				if (data.result === <%=Common.API_OK%>) {
-					location.href = "/MyIllustListPcV.jsp?ID=" + userId;
+					location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=" + userId;
 					return true;
 				} else {
 					DispMsg("Error.");
@@ -175,7 +175,7 @@ Accounts to be grouped
 		});
 	}
 
-	function removeSwitchUser(removeUserId) {
+	function removeSwitchUser(removeUserId, elThis) {
 		if (removeUserId<0) return false;
 
 		if (!window.confirm("<%=_TEX.T("SwitchAccount.Remove.Confirm")%>")){
@@ -191,7 +191,9 @@ Accounts to be grouped
 		.then(
 			data => {
 				if (data.result === <%=Common.API_OK%>) {
-					location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?SW=1&ID=<%=checkLogin.m_nUserId%>";
+					$(elThis).parents(".SwitchUserItem").stop(true).animate({'height': 'hide'});
+					let elAddUser = $("#SwitchUserItemAddUser");
+					elAddUser.show(400, () => {elAddUser.css('display', 'flex');});
 					return true;
 				} else {
 					switch (data.error_detail_code) {
@@ -214,5 +216,4 @@ Accounts to be grouped
 			}
 		);
 	}
-
 </script>

@@ -47,9 +47,6 @@ String strFileUrl = cResults.m_cUser.m_strFileName;
 if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
-// used at /inner/MyIllustListSwitchUserList.jsp
-final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
-
 %>
 <!DOCTYPE html>
 <html>
@@ -155,16 +152,11 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 			$("#MenuSearch").hide();
 			$("#MenuUpload").show();
 			$("#MenuSettings").show();
-			<%if(checkLogin.isStaff()){%>
 			$("#MenuSwitchUser").show();
-			<%}%>
 		})</script>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
-
-		<%if(checkLogin.isStaff()){%>
 		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
-		<%}%>
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
@@ -208,8 +200,8 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-						<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-						<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 					<%}%>
 				<%}else{%>
 					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>

@@ -4,6 +4,15 @@
 request.setCharacterEncoding("UTF-8");
 
 boolean result = false;
+final String referer = Util.toString(request.getHeader("Referer"));
+if (referer.indexOf("https://poipiku.com/MyIllustList") != 0) {
+	Log.d("Illegal referer.");
+	return;
+}
+if (Util.isBot(request)) {
+	Log.d("Access by bot.");
+	return;
+}
 
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;

@@ -28,9 +28,6 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 	return;
 }
 
-// used at /inner/MyIllustListSwitchUserList.jsp
-final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
-
 %>
 <!DOCTYPE html>
 <html>
@@ -188,9 +185,7 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 	<body>
 		<%@ include file="/inner/TMenuApp.jsp" %>
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
-		<%if(checkLogin.isStaff()){%>
 		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
-		<%}%>
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
@@ -200,19 +195,17 @@ final boolean openSwUsrLst = Util.toBoolean(request.getParameter("SW"));
 					<h2 class="UserInfoUserName"><a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
-						<div class="TweetMyBox">
+						<span class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i> <%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
 							<a href="/MyRequestListAppV.jsp?MENUID=RECEIVED" class="BtnBase">
 								<%=_TEX.T("Request.MyRequests")%>
 							</a>
-							<%if(checkLogin.isStaff()){%>
 							<a id="MenuSwitchUser" class="BtnBase" href="javascript: void(0);" onclick="toggleSwitchUserList();">
 								<%=_TEX.T("SwitchAccount")%>
 							</a>
-							<%}%>
-						</div>
+						</span>
 					</span>
 				</section>
 				<section class="UserInfoState">
