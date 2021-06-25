@@ -63,7 +63,7 @@
 <h2 class="SwitchUserDlgTitle">きりかえ(β)</h2>
 <div class="SwitchUserDlgInfo">
 <ul>
-	<li>２つのアカウントをグループ化して簡単に切り替えられるようになりました。</li>
+	<li>２つのポイピクアカウントをグループ化して簡単に切り替えられるようになりました。</li>
 	<li>アカウントごとに別のTwitterアカウントと連携しておけば、投稿・閲覧・ジャンルなどで使い分けることができます。</li>
 	<li>グループ化にはメールアドレスとパスワードの登録が必要です。</li>
 	<li>１つのアカウントは１つのグループにのみ所属できます、別のアカウントと組み合わせたい場合は、一度グループから外す必要があります。</li>
@@ -71,7 +71,7 @@
 </div>
 
 <div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
-グループ化したいアカウント
+グループ化したいポイピクアカウント
 </div>
 <div class="SwitchUserInputInfo">
 <label for="SwitchUserEmail">メールアドレス</label>
@@ -84,7 +84,7 @@
 <h2 class="SwitchUserDlgTitle">Account switch</h2>
 <div class="SwitchUserDlgInfo">
 <ul>
-	<li>You can now group two accounts together and switch between them easily.</li>
+	<li>You can now group two POIPIKU accounts together and switch between them easily.</li>
 	<li>If you link each account with a different Twitter account, you can use them separately for posting, browsing, genres, etc.</li>
 	<li>You will need to register your email address and password in order to create a group.</li>
 	<li>An account can only belong to one group, if you want to combine it with another account, you need to remove it from the group once.</li>
@@ -92,7 +92,7 @@
 </div>
 
 <div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
-Accounts to be grouped
+POIPIKU account to be grouped
 </div>
 <div class="SwitchUserInputInfo">
 <label for="SwitchUserEmail">Email address</label>
