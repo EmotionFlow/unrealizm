@@ -87,14 +87,18 @@ if(cResults.isDownloadable) {
 		<%}%>
 
 		<style>
-		body {height: 100%; background: #333333;}
-		<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT ){%>
-		body {background: #fff;}
-		<%}%>
+		body {
+			height: 100%;
+			<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT ){%>
+			background: #ffffff;
+			<%}else{%>
+            background: #333333;
+			<%}%>
+		}
 		.AnalogicoInfo {display: none;}
 
 		.IllustItemLink {
-			<%if(cResults.m_cContent.novelDirection==0){%>
+			<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==0){%>
 			margin: 0 auto;
 			width: 38em;
 			<%}else{%>
