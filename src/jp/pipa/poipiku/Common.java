@@ -273,12 +273,17 @@ public final class Common {
 		return sb.toString().replaceAll("[\\s　]*$", "");
 	}
 
-	public static String GetUrl(String strFileName) {
+	public static String GetUrl(final String strFileName) {
 		if(strFileName==null) return "";
 		return "//img-cdn.poipiku.com" + strFileName;
 	}
 
-	public static String GetPoipikuUrl(String strFileName) {
+	public static String GetOrgImgUrl(final String strFileName) {
+		if(strFileName==null) return "";
+		return "//img-org.poipiku.com" + strFileName;
+	}
+
+	public static String GetPoipikuUrl(final String strFileName) {
 		if(strFileName==null) return "";
 		return "https://poipiku.com" + strFileName;
 	}

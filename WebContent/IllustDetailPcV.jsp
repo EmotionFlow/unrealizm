@@ -51,7 +51,7 @@ if(cResults.isDownloadable) {
 				user-select:  all;
 				-webkit-user-select: all;
 				-moz-user-select: all;
-				-ms-user-select: element;
+				-ms-user-select: all;
 				-webkit-touch-callout: default;
 			}
 		</style>
@@ -149,7 +149,7 @@ if(cResults.isDownloadable) {
 			</div>
 			<%}%>
 			<div class="IllustItemLink">
-				<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
+				<img class="IllustItemImage" src="<%=Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName)%>" />
 			</div>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">

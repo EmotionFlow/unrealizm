@@ -94,7 +94,7 @@ if(!cResults.getResults(checkLogin)) {
 			</div>
 			<%}%>
 			<div class="IllustItemLink" style="display: block;">
-				<img class="IllustItemImage" src="<%=Common.GetUrl(cResults.m_cContent.m_strFileName)%>" />
+				<img class="IllustItemImage" src="<%=Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName)%>" />
 			</div>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
