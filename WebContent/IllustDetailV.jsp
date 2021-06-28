@@ -31,6 +31,9 @@ if(!cResults.getResults(checkLogin)) {
 		<meta name="robots" content="noindex" />
 		<meta name="pinterest" content="nopin" />
 		<link rel="icon" href="/favicon_2.ico" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 		<link href="/css/TBase-37.css" type="text/css" rel="stylesheet" />
 		<link href="/css/TMaking-143.css" type="text/css" rel="stylesheet" />
