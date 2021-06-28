@@ -106,7 +106,7 @@ if(!cResults.getResults(checkLogin)) {
             .IllustItemLink {
 				<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==0){%>
                 margin: 0 auto;
-                width: 38em;
+                width: 25em;
 				<%}else{%>
                 padding: 4px;
 				<%}%>
