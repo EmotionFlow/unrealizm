@@ -54,7 +54,7 @@ if(!cResults.getResults(checkLogin)) {
 				user-select:  all;
 				-webkit-user-select: all;
 				-moz-user-select: all;
-				-ms-user-select: element;
+				-ms-user-select: all;
 				-webkit-touch-callout: default;
 			}
 		</style>
@@ -68,11 +68,66 @@ if(!cResults.getResults(checkLogin)) {
 		</script>
 		<%}%>
 
+		<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT){%>
+		<script>
+			$(function () {
+				<%if(cResults.m_cContent.novelDirection==0){%>
+				if (window.innerWidth< $(".NovelSection").width()){
+					$(".IllustItemLink").css("width", String(window.innerWidth - 10) +"px");
+				}
+				<%}else{%>
+				$(".IllustItemTextDetail").css("width", (window.innerWidth - 10) + "px");
+				$(".IllustItemTextDetail").scrollLeft(100000);
+				const h = $("body").height();
+				if (h < $(".IllustItemTextDetail.Vertical").height()){
+					$(".IllustItemLink").css("height", String(h - 10) +"px");
+					$(".IllustItemLink").css("padding", 0);
+					$(".IllustItemTextDetail.Vertical").css("height", String(h - 10) +"px");
+				}
+				<%}%>
+			})
+		</script>
+		<%}%>
+
 		<style>
-			body {height: 100%;background: #333333; padding: 0 !important;}
-			.IllustDetail {display: flex; align-content: center; justify-content: center; flex-flow: column;}
-			.IllustItemImage {max-width: 100%; height: auto;}
-			.IllustItemText {color: #eee; text-align: left; font-size: 1.2em; width: 90%; margin: auto; line-height: 1.8; font-family: yumincho,游明朝,游明朝体,yu mincho,ヒラギノ明朝 pron,hiragino mincho pron,hiraminpron-w3,hiraminpron-w6,ヒラギノ明朝 pro,hiragino mincho pro,hiraminpro-w3,hiraminpro-w6,hg明朝e,hgp明朝e,hgs明朝e,hgminchoe,hgpminchoe,hgsminchoe,hg明朝b,hgp明朝b,hgs明朝b,hgminchob,hgpminchob,hgsminchob,平成明朝,平成明朝 std,平成明朝 pro,heisei mincho,heisei mincho std,heisei mincho pro,ipa明朝,ipamincho,Georgia,georgia ref,times new roman,SerifJP,serif;  }
+			body {
+                height: 100%;
+				<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT ){%>
+                background: #ffffff;
+				<%}else{%>
+                background: #333333;
+				<%}%>
+                padding: 0 !important;
+			}
+
+            .IllustItemLink {
+				<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==0){%>
+                margin: 0 auto;
+                width: 38em;
+				<%}else{%>
+                padding: 4px;
+				<%}%>
+            }
+
+            .IllustItemImage {max-width: 100%; height: auto;}
+
+            .IllustItemTextDetail {
+				color: #333333;
+                display: block;
+                float: left;
+                box-sizing: border-box;
+                text-align: left;
+                font-size: 1.3em;
+                line-height: 1.8;
+                margin: 0 4px;
+            }
+
+            .IllustItemTextDetail.Vertical{
+                writing-mode: vertical-rl;
+                overflow-x: scroll;
+                height: 500px;
+                width: 100%;
+            }
 		</style>
 	</head>
 
@@ -115,8 +170,8 @@ if(!cResults.getResults(checkLogin)) {
 			</div>
 			<%} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
 			<div class="IllustItemLink">
-				<div class="IllustItemText">
-					<%=Util.toStringHtml(cResults.m_cContent.m_strTextBody)%>
+				<div class="IllustItemTextDetail <%=cResults.m_cContent.novelDirection==1 ? "Vertical" : ""%>">
+					<%=cResults.m_cContent.novelHtml%>
 				</div>
 			</div>
 			<%} else {%>
