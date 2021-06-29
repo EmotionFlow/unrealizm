@@ -87,18 +87,18 @@ final String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 		<article class="Wrapper">
 			<section class="AnalogicoInfo Flyer Omote">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" />
+					<img class="PoipikuFlyerImg" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Flyer Ura">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" />
+					<img class="PoipikuFlyerImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Title">
 				<div class="AnalogicoDesc Title">
 					<div>
-						<img class="TopTitleLogo" loading="lazy" src="//img-cdn.poipiku.com/img/poipiku_icon_512x512_2.png" alt="<%=_TEX.T("THeader.Title")%>">
+						<img class="TopTitleLogo" loading="lazy" src="//img.poipiku.com/img/poipiku_icon_512x512_2.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</div>
 					<h1 class="TopTitleInfo"><%=_TEX.T("THeader.Title.Desc")%></h1>
 					<!--
@@ -124,25 +124,25 @@ final String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 			<section class="PoipikuInfo">
 
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img-cdn.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
 				</div>
 
 				<div class="PoipikuDesc Full">

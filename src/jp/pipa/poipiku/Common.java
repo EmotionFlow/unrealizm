@@ -275,7 +275,7 @@ public final class Common {
 
 	public static String GetUrl(final String strFileName) {
 		if(strFileName==null) return "";
-		return "//img-cdn.poipiku.com" + strFileName;
+		return "//img.poipiku.com" + strFileName;
 	}
 
 	public static String GetOrgImgUrl(final String strFileName) {

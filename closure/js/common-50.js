@@ -543,7 +543,7 @@ function initGraph(ctx) {
 	return new Chart(ctx, {
 		type: 'doughnut',
 		data: {
-			labels : ["https://img-cdn.poipiku.com/img/pc_top_title-03.png"],
+			labels : ["https://img.poipiku.com/img/pc_top_title-03.png"],
 			datasets: [{
 				data: [100],
 				backgroundColor: ["#3498db"]
