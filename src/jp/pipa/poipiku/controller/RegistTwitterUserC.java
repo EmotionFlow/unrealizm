@@ -287,8 +287,9 @@ public final class RegistTwitterUserC {
 				registeredNotifier.welcomeFromTwitter(DatabaseUtil.dataSource, userId);
 			}
 
+			Log.d(String.format("RegisterUser, %d, %s, %s, %s,", userId, request.getRemoteAddr(), oauth.twitterUserId, oauth.twitterScreenName));
+
 			return userId;
-			//Log.d("USERAUTH Regist : " + nUserId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return ERROR_DB;

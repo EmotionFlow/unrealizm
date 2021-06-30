@@ -8,6 +8,6 @@ cResults.GetParam(request);
 
 int nRtn = 0;
 if( checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId ) {
-	nRtn = cResults.GetResults(checkLogin, request.getServletContext());
+	nRtn = cResults.GetResults(checkLogin, request);
 }
 %>{"result":<%=nRtn%>}

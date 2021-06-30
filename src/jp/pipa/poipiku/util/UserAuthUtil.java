@@ -145,6 +145,7 @@ public class UserAuthUtil {
 			strNickName		= Common.EscapeInjection(Util.toString(request.getParameter("NN")).trim());
 		} catch(Exception e) {
 			e.printStackTrace();
+			return nRtn;
 		}
 
 		//Log.d("1:"+strEmail);
@@ -283,6 +284,7 @@ public class UserAuthUtil {
 			cLK.setPath("/");
 			response.addCookie(cLK);
 			nRtn = nUserId;
+			Log.d(String.format("RegisterUser, %d, %s, , ,%s", nUserId, request.getRemoteAddr(), strEmail));
 		} else {
 			nRtn = NG;
 		}

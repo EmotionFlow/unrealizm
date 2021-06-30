@@ -8,7 +8,7 @@ cResults.GetParam(request);
 
 int nRtn = 0;
 if( checkLogin.m_bLogin && cResults.m_nUserId == checkLogin.m_nUserId ) {
-	nRtn = cResults.GetResults(checkLogin, request.getServletContext());
+	nRtn = cResults.GetResults(checkLogin, request);
 }else{
 	Log.d(String.format("DeleteUserF invalid user:%b, %d, %d", checkLogin.m_bLogin, cResults.m_nUserId, checkLogin.m_nUserId));
 }

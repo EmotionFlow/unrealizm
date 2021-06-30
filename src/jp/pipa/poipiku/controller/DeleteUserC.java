@@ -27,9 +27,9 @@ public class DeleteUserC {
 	}
 
 	private ServletContext m_cServletContext = null;
-	public int GetResults(CheckLogin checkLogin, ServletContext context) {
-		Log.d(String.format("DeleteUserC Start:%d", checkLogin.m_nUserId));
-		m_cServletContext = context;
+	public int GetResults(CheckLogin checkLogin, HttpServletRequest request) {
+		m_cServletContext = request.getServletContext();
+		Log.d(String.format("DeleteUser, %d, %s", checkLogin.m_nUserId, request.getRemoteAddr()));
 
 		int nRtn = 0;
 		if(!checkLogin.m_bLogin || (checkLogin.m_nUserId != m_nUserId)) {
@@ -222,6 +222,8 @@ public class DeleteUserC {
 
 		if(nRtn>0) {
 			Log.d(String.format("DeleteUserV Complete:%d", m_nUserId));
+		} else {
+			Log.d(String.format("DeleteUserV Failed:%d", m_nUserId));
 		}
 		return nRtn;
 	}
