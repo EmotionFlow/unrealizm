@@ -46,7 +46,7 @@ public class SendEmojiC {
 			m_strEmoji		= Util.toString(request.getParameter("EMJ")).trim();
 			m_nUserId		= Util.toInt(request.getParameter("UID"));
 			m_nAgentId		= Util.toInt(request.getParameter("AID"));
-			m_strIpAddress	= request.getRemoteAddr();
+			m_strIpAddress	= request.getRemoteAddr().substring(0, 16);
 			m_nAmount		= Util.toIntN(request.getParameter("AMT"), -1, 10000);
 			m_strAgentToken = Util.toString(request.getParameter("TKN"));
 			m_strCardExpire	= Util.toString(request.getParameter("EXP"));
