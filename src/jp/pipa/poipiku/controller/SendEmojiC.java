@@ -15,6 +15,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.GridUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -46,13 +47,17 @@ public class SendEmojiC {
 			m_strEmoji		= Util.toString(request.getParameter("EMJ")).trim();
 			m_nUserId		= Util.toInt(request.getParameter("UID"));
 			m_nAgentId		= Util.toInt(request.getParameter("AID"));
-			m_strIpAddress	= request.getRemoteAddr().substring(0, 16);
+			String remoteAddr = request.getRemoteAddr();
+			if (remoteAddr != null && !remoteAddr.isEmpty()) {
+				m_strIpAddress	= request.getRemoteAddr().substring(0, 16);
+			}
 			m_nAmount		= Util.toIntN(request.getParameter("AMT"), -1, 10000);
 			m_strAgentToken = Util.toString(request.getParameter("TKN"));
 			m_strCardExpire	= Util.toString(request.getParameter("EXP"));
 			m_strCardSecurityCode	= Util.toString(request.getParameter("SEC"));
 			m_strUserAgent  = request.getHeader("user-agent");
 		} catch(Exception e) {
+			e.printStackTrace();
 			m_nContentId = -1;
 			m_nUserId = -1;
 		}
@@ -63,10 +68,12 @@ public class SendEmojiC {
 			Log.d("Invalid Emoji : "+ m_strEmoji);
 			return false;
 		}
-		if(checkLogin.m_bLogin && (m_nUserId != checkLogin.m_nUserId)) return false;	// ログインしてるのにIDが異なる
+		if(checkLogin.m_bLogin && (m_nUserId != checkLogin.m_nUserId)){
+			Log.d("ログインしているのにUserIdが異なる");
+			return false;
+		}
 
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -74,15 +81,13 @@ public class SendEmojiC {
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 
 			// 投稿存在確認(不正アクセス対策) & 対象コンテンツ情報取得
 			CUser cTargUser = null;
 			CContent cTargContent = null;
 			Integer nContentUserId = null;
 
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			strSql = "SELECT * FROM contents_0000 WHERE content_id=? AND open_id<>2";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
@@ -98,13 +103,11 @@ public class SendEmojiC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			connection.close();connection=null;
 			if(cTargUser==null || cTargContent==null) return false;
 			if(cTargUser.m_nReaction!=CUser.REACTION_SHOW) return false;
 
 			// max 5 emoji
 			int nEmojiNum = 0;
-			connection = dataSource.getConnection();
 			if(checkLogin.m_bLogin) {
 				strSql = "SELECT COUNT(*) FROM comments_0000 WHERE content_id=? AND user_id=? AND upload_date > CURRENT_TIMESTAMP-interval'1day'";
 				statement = connection.prepareStatement(strSql);
@@ -122,7 +125,6 @@ public class SendEmojiC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			connection.close();connection=null;
 			if(nEmojiNum>=Common.EMOJI_MAX[checkLogin.m_nPassportId]) {
 				m_nErrCode = ERR_MAX_EMOJI;
 				return false;
@@ -182,7 +184,6 @@ public class SendEmojiC {
 			}
 
 			// add new comment
-			connection = dataSource.getConnection();
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id, to_user_id, ip_address) VALUES(?, ?, ?, ?, ?)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
@@ -192,12 +193,9 @@ public class SendEmojiC {
 			statement.setString(5, m_strIpAddress);
 			statement.executeUpdate();
 			statement.close();statement=null;
-			connection.close();connection=null;
 
 			// update comment_list
-			connection = dataSource.getConnection();
 			GridUtil.updateCommentsLists(connection, m_nContentId);
-			connection.close();connection=null;
 
 			/*
 			// 使ってないので一時的にコメントアウト
@@ -213,14 +211,12 @@ public class SendEmojiC {
 
 			// update making comment num
 			// update contents_0000 set contents_0000.people_num=T1.people_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
-			connection = dataSource.getConnection();
 			strSql ="UPDATE contents_0000 SET people_num=(SELECT COUNT(DISTINCT user_id) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
 			statement.setInt(2, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
-			connection.close();connection=null;
 
 			bRtn = true; // 以下実行されなくてもOKを返す
 
@@ -242,7 +238,6 @@ public class SendEmojiC {
 				break;
 			}
 
-			connection = dataSource.getConnection();
 			try {
 				// 確認済みお知らせだった場合、通知絵文字一覧をリセット
 				connection.setAutoCommit(false);
@@ -281,11 +276,9 @@ public class SendEmojiC {
 				connection.rollback();
 			} finally {
 				connection.setAutoCommit(true);
-				connection.close();connection=null;
 			}
 
 			// 通知先デバイストークンの取得
-			connection = dataSource.getConnection();
 			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<>();
 			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -296,7 +289,6 @@ public class SendEmojiC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			connection.close();connection=null;
 			if(cNotificationTokens.isEmpty()) return bRtn;
 
 			// バッジに表示する数を取得
@@ -309,7 +301,6 @@ public class SendEmojiC {
 
 			// 通知DB登録
 			// 連射しないように同じタイプの未送信の通知を削除
-			connection = dataSource.getConnection();
 			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=? AND token_type=?";
 			statement = connection.prepareStatement(strSql);
 			for(CNotificationToken cNotificationToken : cNotificationTokens) {
@@ -332,15 +323,14 @@ public class SendEmojiC {
 				notificationBuffer.tokenType = cNotificationToken.m_nTokenType;
 				notificationBuffer.insert(connection);
 			}
-			connection.close();connection=null;
 
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception ignored){;}
 		}
 		return bRtn;
 	}
