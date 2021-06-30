@@ -49,7 +49,11 @@ public class SendEmojiC {
 			m_nAgentId		= Util.toInt(request.getParameter("AID"));
 			String remoteAddr = request.getRemoteAddr();
 			if (remoteAddr != null && !remoteAddr.isEmpty()) {
-				m_strIpAddress	= request.getRemoteAddr().substring(0, 16);
+				if (remoteAddr.length() > 16) {
+					m_strIpAddress	= remoteAddr.substring(0, 16);
+				} else {
+					m_strIpAddress	= remoteAddr;
+				}
 			}
 			m_nAmount		= Util.toIntN(request.getParameter("AMT"), -1, 10000);
 			m_strAgentToken = Util.toString(request.getParameter("TKN"));
