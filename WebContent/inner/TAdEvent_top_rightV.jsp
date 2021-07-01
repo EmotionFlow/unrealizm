@@ -30,6 +30,7 @@ $(function(){
 		</a>
 	</li>
 
+<!--
 	<li class="EventItem End">
 		<a href="/NewArrivalV.jsp?CD=29">
 			<img class="EventBanner" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" />
@@ -43,4 +44,5 @@ $(function(){
 			<div style="text-align: center; font-size: 13px; line-height: 20px;">抽選で100名様にポイパス1ヶ月分プレゼント</div>
 		</a>
 	</li>
+-->
 </ul>

@@ -228,11 +228,17 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%}%>
 
 		<article class="Wrapper ViewPc">
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+			<%}%>
+
 			<section id="IllustItemList" class="IllustItemList">
 				<%= CCnv.Content2Html(cResults.m_cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 			</section>
 
-			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+			<%//@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%;">
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>
@@ -274,6 +280,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		</article>
 
 		<%if (cResults.m_vRelatedContentList.size() > 0) {%>
+		<%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%>
 		<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Related")%></h2>
 		<article class="Wrapper GridList">
 			<section class="IllustItemList Related Tag">

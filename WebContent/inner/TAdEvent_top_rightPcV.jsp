@@ -33,6 +33,7 @@ $(function(){
 		</a>
 	</li>
 
+<!--
 	<li class="EventItem">
 		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalRequestCreatorPcV.jsp">
 			<div style="text-align: center; font-size: 22px; font-weight: bold; line-height: 22px">ポイパスあげると<br />ポイパスもらる！</div>
@@ -40,6 +41,7 @@ $(function(){
 			<div style="text-align: center; font-size: 12px; line-height: 20px;">ポイパス1ヶ月分をプレゼント！</div>
 		</a>
 	</li>
+-->
 
 	<li class="EventItem">
 		<a href="/event/20190901/TopPcV.jsp">
