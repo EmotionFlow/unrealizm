@@ -140,14 +140,14 @@ public class SendGiftC {
 
 			// 贈った人にもポイチケ１枚
 			// スタッフから送った時は無効
-			if (giftForMyself && !checkLogin.isStaff()) {
-				PoiTicketGiftLog giftLogMyself = new PoiTicketGiftLog();
-				giftLogMyself.fromUserId = 2;
-				giftLogMyself.toUserId = fromUserId;
-				giftLogMyself.orderId = order.id;
-				giftLogMyself.insert();
-				giftPassport(fromUserId);
-			}
+//			if (giftForMyself && !checkLogin.isStaff()) {
+//				PoiTicketGiftLog giftLogMyself = new PoiTicketGiftLog();
+//				giftLogMyself.fromUserId = 2;
+//				giftLogMyself.toUserId = fromUserId;
+//				giftLogMyself.orderId = order.id;
+//				giftLogMyself.insert();
+//				giftPassport(fromUserId);
+//			}
 
 			m_nErrCode = ERR_NONE;
 			bRtn = true;
