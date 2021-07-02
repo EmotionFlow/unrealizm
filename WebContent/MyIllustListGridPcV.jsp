@@ -2,7 +2,7 @@
 <%@ include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-final boolean isApp = false;
+boolean isApp = false;
 
 MyIllustListC cResults = new MyIllustListC();
 cResults.getParam(request);

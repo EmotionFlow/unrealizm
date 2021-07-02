@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin();
-final String strFileUrl = "/img/poipiku_icon_512x512_2.png";
+String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 %>
 <!DOCTYPE html>
 <html style="height: 100%;">

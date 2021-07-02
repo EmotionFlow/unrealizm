@@ -7,7 +7,7 @@ request.setCharacterEncoding("UTF-8");
 // login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-final String strSendPasswordFToken = RandomStringUtils.randomAlphanumeric(64);
+String strSendPasswordFToken = RandomStringUtils.randomAlphanumeric(64);
 session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 
 %>

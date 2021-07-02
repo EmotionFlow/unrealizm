@@ -3,7 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
-final boolean isApp = false;
+boolean isApp = false;
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);

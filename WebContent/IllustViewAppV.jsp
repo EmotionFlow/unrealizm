@@ -7,7 +7,7 @@ if(Util.isBot(request)) {
 	return;
 }
 boolean bSmartPhone = Util.isSmartPhone(request);
-final boolean isApp = true;
+boolean isApp = true;
 
 IllustViewPcC cResults = new IllustViewPcC();
 cResults.getParam(request);

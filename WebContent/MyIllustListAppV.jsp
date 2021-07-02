@@ -3,7 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
-final boolean isApp = true;
+boolean isApp = true;
 
 if(!bSmartPhone) {
 	request.getRequestDispatcher("/MyIllustListPcV.jsp").forward(request,response);

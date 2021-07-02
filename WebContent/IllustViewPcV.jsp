@@ -29,7 +29,7 @@ if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_ALL && Util.isBot(request
 	return;
 }
 
-final boolean isApp = false;
+boolean isApp = false;
 
 // R18によるアドの切り替え
 switch(cResults.m_cContent.m_nPublishId) {

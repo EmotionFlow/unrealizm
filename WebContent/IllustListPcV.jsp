@@ -10,7 +10,7 @@ if(!bSmartPhone) {
 	return;
 }
 
-final boolean isApp = false;
+boolean isApp = false;
 
 IllustListC cResults = new IllustListC();
 cResults.getParam(request);

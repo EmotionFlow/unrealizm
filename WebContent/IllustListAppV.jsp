@@ -15,7 +15,7 @@ if(cResults.m_nUserId==-1) {
 	}
 }
 
-final boolean isApp = true;
+boolean isApp = true;
 
 if(checkLogin.m_nUserId != cResults.m_nUserId) {
 	// 他人のリスト

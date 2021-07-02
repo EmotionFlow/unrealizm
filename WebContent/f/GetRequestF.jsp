@@ -10,7 +10,7 @@ boolean result = false;
 int error_code;
 String text = "";
 
-final int requestId = Util.toInt(request.getParameter("ID"));
+int requestId = Util.toInt(request.getParameter("ID"));
 
 Request poipikuRequest = null;
 if (requestId>0) {

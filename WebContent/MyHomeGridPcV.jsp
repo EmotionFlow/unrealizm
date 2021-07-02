@@ -18,7 +18,7 @@ if(!checkLogin.m_bLogin) {
 cResults.m_nSelectRecommendedListNum = 10;
 cResults.getResults(checkLogin);
 
-final ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
 <html>

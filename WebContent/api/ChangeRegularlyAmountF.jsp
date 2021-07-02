@@ -7,8 +7,8 @@
 	String accessIpAddress = request.getRemoteAddr();
 	if (!accessIpAddress.equals("127.0.0.1")) return;
 
-	final String TOKEN = "08yg3qghpwj48q6742o97qwqvh";
-	final String token = request.getParameter("TOKEN");
+	String TOKEN = "08yg3qghpwj48q6742o97qwqvh";
+	String token = request.getParameter("TOKEN");
 	if (token != null && token.equals(TOKEN)) {
 		try {
 			int userId = Integer.parseInt(request.getParameter("ID"));

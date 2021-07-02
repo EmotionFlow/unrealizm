@@ -65,7 +65,7 @@ cResults.getResults(checkLogin);
 		<span class="ActivityListBadge"><%=activityInfo.badgeNum%></span>
 		</a>
 		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST || activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST_STARTED) {
-		final String[] infoDescLines = activityInfo.infoDesc.split("\n");
+				String[] infoDescLines = activityInfo.infoDesc.split("\n");
 		%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
 		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">

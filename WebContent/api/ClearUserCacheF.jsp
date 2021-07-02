@@ -2,8 +2,8 @@
 <%@ page import="jp.pipa.poipiku.cache.CacheUsers0000"%>
 <%
 	String resp = "OK";
-	final String TOKEN = "kkvjaw8per32qt3j28ycb4";
-	final String token = request.getParameter("TOKEN");
+	String TOKEN = "kkvjaw8per32qt3j28ycb4";
+	String token = request.getParameter("TOKEN");
 	if (token != null && token.equals(TOKEN)) {
 		try {
 			int userId = Integer.parseInt(request.getParameter("ID"));

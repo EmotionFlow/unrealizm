@@ -10,7 +10,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 String strRequestUri = Util.toString((String)request.getAttribute("javax.servlet.forward.request_uri"));
 String strRequestQuery = Util.toString((String)request.getAttribute("javax.servlet.forward.query_string"));
 
-final String strRegistUserFToken = RandomStringUtils.randomAlphanumeric(64);
+String strRegistUserFToken = RandomStringUtils.randomAlphanumeric(64);
 session.setAttribute("RegistUserFToken", strRegistUserFToken);
 
 String strMessage = "";

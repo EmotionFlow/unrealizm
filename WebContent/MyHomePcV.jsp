@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-final boolean bSmartPhone = Util.isSmartPhone(request);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
 	getServletContext().getRequestDispatcher("/MyHomeGridPcV.jsp").forward(request,response);
@@ -22,7 +22,7 @@ if(!checkLogin.m_bLogin) {
 }
 
 cResults.getResults(checkLogin);
-final ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
 <html>
