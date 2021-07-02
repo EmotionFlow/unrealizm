@@ -11,7 +11,7 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:site" content="@pipajp" />
-		<meta property="og:url" content="https://poipiku.com/" />
+		<meta property="og:url" content="https://stg.poipiku.com/" />
 		<meta property="og:title" content="<%=_TEX.T("THeader.Title")%>" />
 		<meta property="og:description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />

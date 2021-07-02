@@ -9,7 +9,7 @@ results.SELECT_MAX_GALLERY = 48;
 boolean bRtn = results.getResults(checkLogin);
 String strTitle = String.format(_TEX.T("SearchIllustByGenre.Title"), results.genre.genreName) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByGenre.Title.Desc"), results.genre.genreName, results.contentsNum);
-String strUrl = "https://poipiku.com/SearchIllustByGenrePcV.jsp?GD="+results.genreId;
+String strUrl = "https://stg.poipiku.com/SearchIllustByGenrePcV.jsp?GD="+results.genreId;
 String strFileUrl = results.repFileName;
 %>
 <!DOCTYPE html>

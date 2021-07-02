@@ -8,7 +8,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
 public final class RequestNotifier extends Notifier {
-	private static final String REQUEST_BOARD_URL = "https://poipiku.com/MyRequestListPcV.jsp";
+	private static final String REQUEST_BOARD_URL = "https://stg.poipiku.com/MyRequestListPcV.jsp";
 
 	public RequestNotifier(){
 		CATEGORY = "request";

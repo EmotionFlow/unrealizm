@@ -17,7 +17,7 @@ g_strSearchWord = cResults.m_strKeyword;
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 String strTitle = cResults.m_strKeyword + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
-String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKeyword;
+String strUrl = "https://stg.poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKeyword;
 String strFileUrl = cResults.m_strRepFileName;
 %>
 <!DOCTYPE html>

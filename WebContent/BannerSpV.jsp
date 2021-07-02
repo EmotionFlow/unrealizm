@@ -28,7 +28,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	<body>
 		<article class="Wrapper">
 			<div class="AnalogicoStart">
-				<a class="BtnBase" href="https://poipiku.com/">
+				<a class="BtnBase" href="https://stg.poipiku.com/">
 					<img class="Logo" src="//img.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>">
 				</a>
 			</div>

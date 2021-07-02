@@ -28,7 +28,7 @@ PNG, JPEG, GIF(アニメGIF含む)をアップロードできます。複数枚�
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://poipiku.com/$u.userId
+https://stg.poipiku.com/$u.userId
 
 #end
 
@@ -57,7 +57,7 @@ Twitter連携がうまくいかない時や、Twitterアカウントを削除し
 ポイピクとTwitterの公式アカウントです。更新情報やキャンペーン情報を随時投稿しますので、よろしければフォローください。
 
 ポイピク
-https://poipiku.com/2
+https://stg.poipiku.com/2
 
 Twitter
 https://twitter.com/pipajp

@@ -25,7 +25,7 @@ public final class Common {
 	public static int TWITTER_PROVIDER_ID = 1;
 	public static String TWITTER_CONSUMER_KEY = "Wh6tHeINW6IQbSd1nJP9i1yUN";
 	public static String TWITTER_CONSUMER_SECRET = "kXYW0KkWlfDszfGn0m8lj3aEz6vB3iWzY5M1SO9T8DNM9rXJY0";
-	public static String TWITTER_CALLBAK_DOMAIN = "https://poipiku.com";
+	public static String TWITTER_CALLBAK_DOMAIN = "https://stg.poipiku.com";
 	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
 	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
 
@@ -285,7 +285,7 @@ public final class Common {
 
 	public static String GetPoipikuUrl(final String strFileName) {
 		if(strFileName==null) return "";
-		return "https://poipiku.com" + strFileName;
+		return "https://stg.poipiku.com" + strFileName;
 	}
 
 	public static String GetUploadPath() {

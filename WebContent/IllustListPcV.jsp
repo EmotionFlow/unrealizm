@@ -23,7 +23,7 @@ if(!cResults.getResults(checkLogin)) {
 	return;
 }
 
-String strUrl = "https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
+String strUrl = "https://stg.poipiku.com/"+cResults.m_cUser.m_nUserId+"/";
 String strTitle = Util.toStringHtml(String.format(_TEX.T("IllustListPc.Title"), cResults.m_cUser.m_strNickName)) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = "/img/poipiku_icon_512x512_2.png";
@@ -140,7 +140,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 										_TEX.T("Twitter.UserAddition"),
 										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
 										_TEX.T("Common.Title")), "UTF-8"),
-								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+								URLEncoder.encode("https://stg.poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(!checkLogin.m_bLogin) {%>
 							<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>

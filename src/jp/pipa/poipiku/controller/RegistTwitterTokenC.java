@@ -111,7 +111,7 @@ public final class RegistTwitterTokenC extends Controller {
 				statement.setString(4, consumer.getTokenSecret());
 				statement.setString(5, twitterUserId);
 				statement.setString(6, screenName);
-				statement.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
+				statement.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://stg.poipiku.com/%d/", checkLogin.m_nUserId));
 				statement.executeUpdate();
 				statement.close();statement=null;
 			}

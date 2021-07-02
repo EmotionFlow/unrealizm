@@ -251,7 +251,7 @@ public final class RegistTwitterUserC {
 			statement.setString(4, oauth.tokenSecret);
 			statement.setString(5, oauth.twitterUserId);
 			statement.setString(6, oauth.twitterScreenName);
-			statement.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt") + _TEX.T("Common.Title") + String.format(" https://poipiku.com/%d/", userId));
+			statement.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt") + _TEX.T("Common.Title") + String.format(" https://stg.poipiku.com/%d/", userId));
 			statement.executeUpdate();
 			statement.close();statement = null;
 

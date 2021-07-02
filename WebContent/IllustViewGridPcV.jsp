@@ -62,7 +62,7 @@ default:
 String strDesc = Util.deleteCrLf(cResults.m_cContent.title);
 strDesc = (strDesc.isEmpty())?Util.deleteCrLf(cResults.m_cContent.m_strDescription):strDesc;
 String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 15) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
-String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
+String strUrl = "https://stg.poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
@@ -197,7 +197,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 										_TEX.T("Twitter.UserAddition"),
 										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
 										_TEX.T("Common.Title")), "UTF-8"),
-								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+								URLEncoder.encode("https://stg.poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(!checkLogin.m_bLogin) {%>
 						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>

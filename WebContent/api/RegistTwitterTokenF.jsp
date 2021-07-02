@@ -90,7 +90,7 @@ try
 		cState.setString(4, consumer.getTokenSecret());
 		cState.setString(5, user_id);
 		cState.setString(6, screen_name);
-		cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
+		cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://stg.poipiku.com/%d/", checkLogin.m_nUserId));
 		cState.executeUpdate();
 	}
 	cState.close();cState=null;

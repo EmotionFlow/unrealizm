@@ -111,10 +111,10 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 									_TEX.T("Twitter.UserAddition"),
 									String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
 									_TEX.T("Common.Title")), "UTF-8"),
-							URLEncoder.encode("https://poipiku.com/"+checkLogin.m_nUserId+"/", "UTF-8"));
+							URLEncoder.encode("https://stg.poipiku.com/"+checkLogin.m_nUserId+"/", "UTF-8"));
 					%>
 					<div style="text-align: center;">
-						<input id="MyUrl" class="MyUrl" type="text" value="https://poipiku.com/<%=checkLogin.m_nUserId%>/" onclick="this.select(); document.execCommand('copy');" style="box-sizing: border-box; width: 100%; padding: 5px; margin: 0 0 10px 0;" />
+						<input id="MyUrl" class="MyUrl" type="text" value="https://stg.poipiku.com/<%=checkLogin.m_nUserId%>/" onclick="this.select(); document.execCommand('copy');" style="box-sizing: border-box; width: 100%; padding: 5px; margin: 0 0 10px 0;" />
 						<a class="BtnBase" href="javascript:void(0)" onclick="$('#MyUrl').select(); document.execCommand('Copy');"><i class="far fa-copy"></i> <%=_TEX.T("Twitter.Share.Copy.Btn")%></a>
 						<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
 					</div>
