@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eu
 
 ENV_FILE=.env
 if [ ! -f ${ENV_FILE} ]; then
