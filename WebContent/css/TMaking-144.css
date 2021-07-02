@@ -1647,6 +1647,13 @@ Decoration
 	background-color: #e4027f;
 	color: #fff;
 }
+.Category.C30 {
+	background-color: #eb7f10;
+}
+.CategoryBtn.C30 {
+	border-color: #eb7f10;
+	color: #eb7f10;
+}
 
 
 .IllustItemList .CategoryMore {
