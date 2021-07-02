@@ -20,7 +20,7 @@ JAVA_FILE_DIRS=("/controller" "/servlet" "/util" "/settlement/epsilon" "/settlem
 java -version
 
 echo /
-${JAVAC} -Xlint:unchecked -sourcepath $SOURCE_PATH -d $DEPLOY_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT:$DEST_PATH $JAVA_FILE_ROOT/*.java
+${JAVAC} -Xlint:unchecked -sourcepath $SOURCE_PATH -d $DEPLOY_PATH -cp $CLASSES_WEB_INF:$CLASSES_TOMCAT $JAVA_FILE_ROOT/*.java
 
 for dir in "${JAVA_FILE_DIRS[@]}"; do
 		echo $dir
