@@ -1,5 +1,9 @@
 /build/
 /**/.env
+/WebContent/js/common-*.js
+/WebContent/js/commonPc-*.js
+/WebContent/js/update-*.js
+/WebContent/js/upload-*.js
 
 # Created by https://www.gitignore.io/api/java,macos,windows,eclipse,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=java,macos,windows,eclipse,visualstudiocode
