@@ -22,9 +22,8 @@
 		try {
 			String strRelativePath = Common.GetUploadPath();
 			String strRealPath = getServletContext().getRealPath(strRelativePath);
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			factory.setSizeThreshold(40*1024*1024);	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
-			factory.setRepository(new File(strRealPath));
+			// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+			DiskFileItemFactory factory = new DiskFileItemFactory(40*1024*1024, new File(strRealPath));
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			upload.setSizeMax(40*1024*1024);
 			upload.setHeaderEncoding("UTF-8");

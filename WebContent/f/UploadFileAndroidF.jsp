@@ -19,9 +19,7 @@
 		try {
 	String strRelativePath = Common.GetUploadPath();
 	String strRealPath = getServletContext().getRealPath(strRelativePath);
-	DiskFileItemFactory factory = new DiskFileItemFactory();
-	factory.setSizeThreshold(20*1024*1024);
-	factory.setRepository(new File(strRealPath));
+	DiskFileItemFactory factory = new DiskFileItemFactory(20*1024*1024, new File(strRealPath));
 	ServletFileUpload upload = new ServletFileUpload(factory);
 	upload.setSizeMax(20*1024*1024);
 	upload.setHeaderEncoding("UTF-8");
