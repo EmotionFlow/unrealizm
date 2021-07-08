@@ -28,6 +28,8 @@ public class SearchTagByKeywordC {
 	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public int m_nContentsNum = 0;
+	private static final String PG_HINT = "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */";
+
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -46,7 +48,7 @@ public class SearchTagByKeywordC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			final String strSqlFromWhere = "SELECT tag_txt "
+			final String strSqlFromWhere = PG_HINT + " SELECT tag_txt "
 					+ "FROM tags_0000 "
 					+ "WHERE tag_txt &@~ ? GROUP BY tag_txt ";
 			// NEW ARRIVAL
