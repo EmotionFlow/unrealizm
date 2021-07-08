@@ -28,7 +28,7 @@ public class SearchUserByKeywordC {
 	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
-	private static final String PG_HINT = "/*+ BitmapScan(contents_0000 contents_0000_description_pgidx) */";
+	private static final String PG_HINT = "/*+ BitmapScan(users_0000 users_0000_nickname_pgidx) */";
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
