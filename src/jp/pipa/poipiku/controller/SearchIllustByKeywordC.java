@@ -25,7 +25,8 @@ public final class SearchIllustByKeywordC {
 
 	// SELECTのLIMITが小さすぎると実行計画がバグってクエリが遅くなってしまうため、LIMITの下限を設けている。
 	// 将来的にはpg_hint_planによる制御をしたい。
-	private static final int SELECT_LIMIT_MIN = 1000;
+	//private static final int SELECT_LIMIT_MIN = 1000;
+	private static final String PG_HINT = "/*+ BitmapScan(contents_0000 contents_0000_description_pgidx) */";
 
 	public int selectMaxGallery = 15;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
@@ -72,7 +73,7 @@ public final class SearchIllustByKeywordC {
 				}
 			}
 
-			String strSqlFromWhere = "FROM contents_0000 "
+			final String strSqlFromWhere = "FROM contents_0000 "
 					+ "WHERE open_id<>2 "
 					+ "AND description &@~ ? "
 					+ "AND safe_filter<=? "
@@ -82,7 +83,7 @@ public final class SearchIllustByKeywordC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) " + strSqlFromWhere;
+				strSql = PG_HINT + " SELECT count(*) " + strSqlFromWhere;
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setString(idx++, m_strKeyword);
@@ -104,7 +105,7 @@ public final class SearchIllustByKeywordC {
 				statement.close();statement=null;
 			}
 
-			strSql = "SELECT * " + strSqlFromWhere
+			strSql = PG_HINT + " SELECT * " + strSqlFromWhere
 					+ "ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
@@ -120,7 +121,7 @@ public final class SearchIllustByKeywordC {
 				statement.setString(idx++, strMuteKeyword);
 			}
 			statement.setInt(idx++, m_nPage * selectMaxGallery);
-			statement.setInt(idx++, Math.max(SELECT_LIMIT_MIN, selectMaxGallery));
+			statement.setInt(idx++, selectMaxGallery);
 			resultSet = statement.executeQuery();
 
 			int cnt = 0;

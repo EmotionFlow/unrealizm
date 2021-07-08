@@ -46,7 +46,7 @@ public class SearchTagByKeywordC {
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 			cConn = dsPostgres.getConnection();
 
-			String strSqlFromWhere = "SELECT tag_txt "
+			final String strSqlFromWhere = "SELECT tag_txt "
 					+ "FROM tags_0000 "
 					+ "WHERE tag_txt &@~ ? GROUP BY tag_txt ";
 			// NEW ARRIVAL
