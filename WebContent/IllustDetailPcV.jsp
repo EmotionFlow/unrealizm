@@ -2,6 +2,13 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+
+String referer = Util.toString(request.getHeader("Referer"));
+if (!referer.contains("poipiku")) {
+	response.sendRedirect("/NotFoundPcV.jsp");
+	return;
+}
+
 if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
