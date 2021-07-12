@@ -67,11 +67,11 @@ public final class UpdateC extends UpC {
 				tsUploadDatePresent,
 				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
-			ArrayList<String> lColumns = new ArrayList<String>();
+			ArrayList<String> lColumns = new ArrayList<>();
 				lColumns.addAll(Arrays.asList(
 					"genre_id=?", "category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?",
 					"password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
-					"not_recently=?", "limited_time_publish=?"
+					"not_recently=?", "limited_time_publish=?", "updated_at=now()"
 					));
 
 			if(!cParam.m_bLimitedTimePublish){

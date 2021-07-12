@@ -12,11 +12,10 @@ import javax.sql.DataSource;
 import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
-public class UploadTextC extends UpC {
+public final class UploadTextC extends UpC {
 	protected int m_nContentId = -99;
 	public boolean deliverRequestResult;
 	public int GetResults(UploadTextCParam cParam, CheckLogin checkLogin) {
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -33,8 +32,7 @@ public class UploadTextC extends UpC {
 
 		try {
 			// regist to DB
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<>(
@@ -70,9 +68,9 @@ public class UploadTextC extends UpC {
 
 
 			String textBody = Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]);
-			ArrayList<String> lVals = new ArrayList<String>();
+			ArrayList<String> lVals = new ArrayList<>();
 			lColumns.forEach(c -> lVals.add("?"));
-			sql = String.format("INSERT INTO contents_0000(%s) VALUES(%s) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
+			sql = String.format("INSERT INTO contents_0000(%s, updated_at) VALUES(%s, now()) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
 
 			statement = connection.prepareStatement(sql);
 			idx = 1;

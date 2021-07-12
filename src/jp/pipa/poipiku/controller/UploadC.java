@@ -12,11 +12,10 @@ import javax.sql.DataSource;
 import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
-public class UploadC extends UpC {
+public final class UploadC extends UpC {
 	protected int m_nContentId = -99;
 	public boolean deliverRequestResult;
 	public int GetResults(UploadCParam cParam, CheckLogin checkLogin) {
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -33,8 +32,7 @@ public class UploadC extends UpC {
 
 		try {
 			// regist to DB
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<>(
@@ -57,7 +55,7 @@ public class UploadC extends UpC {
 
 			ArrayList<String> lVals = new ArrayList<>();
 			lColumns.forEach(c -> lVals.add("?"));
-			strSql = String.format("INSERT INTO contents_0000(%s) VALUES(%s) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
+			strSql = String.format("INSERT INTO contents_0000(%s, updated_at) VALUES(%s, now()) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
 
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;

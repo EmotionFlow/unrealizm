@@ -54,6 +54,8 @@
 class UploadReferenceC extends UpC {
 	int m_nContentId = -99;
 	public int GetResults(UploadReferenceCParam cParam, ResourceBundleControl _TEX, CheckLogin checkLogin) {
+		// TODO おそらくこのファイルは使われていない。このログが出てこないようなら、ファイルごと削除する。
+		Log.d("UploadReferenceC.GetResults");
 		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -66,7 +68,7 @@ class UploadReferenceC extends UpC {
 			cConn = dsPostgres.getConnection();
 
 			// get content id
-			strSql ="INSERT INTO contents_0000(user_id, category_id, safe_filter, description, tag_list) VALUES(?, ?, ?, ?, ?) RETURNING content_id";
+			strSql ="INSERT INTO contents_0000(user_id, category_id, safe_filter, description, tag_list, updated_at) VALUES(?, ?, ?, ?, ?, now()) RETURNING content_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nCategoryId);

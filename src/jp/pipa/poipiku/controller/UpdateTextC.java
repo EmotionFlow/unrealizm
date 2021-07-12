@@ -10,9 +10,8 @@ import javax.sql.DataSource;
 import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
-public class UpdateTextC extends UpC {
+public final class UpdateTextC extends UpC {
 	public int GetResults(UpdateTextCParam cParam, CheckLogin checkLogin) {
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -28,8 +27,7 @@ public class UpdateTextC extends UpC {
 		int nEditorId = Common.EDITOR_UPLOAD;
 
 		try {
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			sql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
 			statement = connection.prepareStatement(sql);
@@ -68,13 +66,13 @@ public class UpdateTextC extends UpC {
 				tsUploadDatePresent,
 				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
-			ArrayList<String> lColumns = new ArrayList<String>();
+			ArrayList<String> lColumns = new ArrayList<>();
 				lColumns.addAll(Arrays.asList(
 					"genre_id=?", "category_id=?", "open_id=?", "description=?",
 					"text_body=?", "tag_list=?", "publish_id=?", "password=?",
 					"list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?", "title=?", "novel_html=?",
-					"novel_html_short=?", "novel_direction=?"
+					"novel_html_short=?", "novel_direction=?", "updated_at=now()"
 					));
 
 			if(!cParam.m_bLimitedTimePublish){
