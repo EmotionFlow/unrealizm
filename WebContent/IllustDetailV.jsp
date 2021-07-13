@@ -3,8 +3,6 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-String referer = Util.toString(request.getHeader("Referer"));
-
 if (!Util.isIOS(request) && !Util.isSmartPhone(request)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
