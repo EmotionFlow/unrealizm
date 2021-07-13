@@ -182,7 +182,7 @@ if(cResults.isDownloadable) {
 			<%} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
 			<div class="IllustItemLink">
 				<div class="IllustItemTextDetail <%=cResults.m_cContent.novelDirection==1 ? "Vertical" : ""%>">
-					<%=cResults.m_cContent.novelHtml%>
+					<%=Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)%>
 				</div>
 			</div>
 			<%} else {%>

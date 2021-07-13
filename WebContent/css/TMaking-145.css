@@ -595,13 +595,19 @@
 }
 
 .NovelSection {
-	font-family: 'Noto Serif JP', 'YuMincho', '游明朝', '游明朝体', 'Yu Mincho', 'ヒラギノ明朝 ProN', 'Hiragino Mincho ProN', 'HiraMinProN-W3', 'HiraMinProN-W6', 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'HiraMinPro-W3', 'HiraMinPro-W6', 'HG明朝E', 'HGP明朝E', 'HGS明朝E', 'HGMinchoE', 'HGPMinchoE', 'HGSMinchoE', 'HG明朝B', 'HGP明朝B', 'HGS明朝B', 'HGMinchoB', 'HGPMinchoB', 'HGSMinchoB', '平成明朝', '平成明朝 Std', '平成明朝 Pro', 'Heisei Mincho', 'Heisei Mincho Std', 'Heisei Mincho Pro', 'IPA明朝', 'IPAMincho', Georgia, 'georgia ref', 'times new roman', SerifJP, serif;
+	letter-spacing: 0.01em;
+	line-height: 1.7em;
+	word-break: break-all;
+	overflow-wrap: break-word;
+	font-family: 'GenEiKoburiMin6-R', 'Noto Serif JP', 'YuMincho', '游明朝', '游明朝体', 'Yu Mincho', 'ヒラギノ明朝 ProN', 'Hiragino Mincho ProN', 'HiraMinProN-W3', 'HiraMinProN-W6', 'ヒラギノ明朝 Pro', 'Hiragino Mincho Pro', 'HiraMinPro-W3', 'HiraMinPro-W6', 'HG明朝E', 'HGP明朝E', 'HGS明朝E', 'HGMinchoE', 'HGPMinchoE', 'HGSMinchoE', 'HG明朝B', 'HGP明朝B', 'HGS明朝B', 'HGMinchoB', 'HGPMinchoB', 'HGSMinchoB', '平成明朝', '平成明朝 Std', '平成明朝 Pro', 'Heisei Mincho', 'Heisei Mincho Std', 'Heisei Mincho Pro', 'IPA明朝', 'IPAMincho', Georgia, 'georgia ref', 'times new roman', SerifJP, serif;
 }
 
 .IllustThumb .IllustThumbText .NovelSection {
 	display: block;
 	width: 100%;
 	font-size: 12px;
+	word-break: break-all;
+	overflow-wrap: break-word;
 }
 
 
@@ -628,6 +634,9 @@
 .IllustItem.Text .IllustItemText .IllustItemThumbText.Vertical {
 	writing-mode: vertical-rl;
 	overflow-x: scroll;
+	word-break: break-all;
+	overflow-wrap: break-word;
+	height: 440px;
 }
 
 .IllustThumb .IllustThumbText.Vertical .NovelTitle {

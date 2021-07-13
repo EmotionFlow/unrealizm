@@ -10,14 +10,10 @@
 		url('/font/websymbolsligaregular.svg#WebSymbolsRegular') format('svg');
 }
 
-/*
 @font-face {
-	font-family: EmojiFontFamily;
-	src: url('/font/Twemoji4Android.woff') format('woff'),
-		url('/font/Twemoji4Android.eot') format('embedded-opentype'),
-		url('/font/Twemoji4Android.ttf') format('truetype');
+	font-family: 'GenEiKoburiMin6-R';
+	src: url(/font/GenEiKoburiMin6-R.woff2);
 }
-*/
 
 @font-face {
 	font-family: EmojiFontFamily;
@@ -111,10 +107,9 @@ body {
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
-	-webkit-text-size-adjust: 100%;
 	color: #fff;
-	background: #b8d6e0;
-	background: #f3f3f3;
+	/*background: #b8d6e0;*/
+	/*background: #f3f3f3;*/
 	background: #3498db;
 	/* background: #ff9900; Halloween color */
 	-webkit-text-size-adjust: none;

@@ -107,7 +107,7 @@ if(nRtn<ShowAppendFileC.OK) {
 						ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
 				strHtml.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
 						cResults.m_cContent.novelDirection==1 ? "Vertical" : "",
-						cResults.m_cContent.novelHtml));
+						Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)));
 				strHtml.append("</a>");
 			} else {
 				// 2枚目の場所に1枚目を表示する

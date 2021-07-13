@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.Cookie;
@@ -28,6 +27,127 @@ import javax.sql.DataSource;
 import jp.pipa.poipiku.*;
 
 public final class Util {
+	private static final Map<String, String> GenEiFontMapDakuten;
+	private static final Map<String, String> GenEiFontMapHanDakuten;
+	static {
+		Map<String, String> mapDakuten = new LinkedHashMap<>();
+		char c = (char) 0xe082;
+		mapDakuten.put("あ", Character.toString(c++));
+		mapDakuten.put("い", Character.toString(c++));
+		mapDakuten.put("え", Character.toString(c++));
+		mapDakuten.put("お", Character.toString(c++));
+		mapDakuten.put("ん", Character.toString(c++));
+
+		mapDakuten.put("ア", Character.toString(c++));
+		mapDakuten.put("イ", Character.toString(c++));
+		mapDakuten.put("エ", Character.toString(c++));
+		mapDakuten.put("オ", Character.toString(c++));
+		mapDakuten.put("ン", Character.toString(c++));
+
+		c = (char) 0xe09a;
+		mapDakuten.put("な", Character.toString(c++));
+		mapDakuten.put("に", Character.toString(c++));
+		mapDakuten.put("ぬ", Character.toString(c++));
+		mapDakuten.put("ね", Character.toString(c++));
+		mapDakuten.put("の", Character.toString(c++));
+
+		mapDakuten.put("ま", Character.toString(c++));
+		mapDakuten.put("み", Character.toString(c++));
+		mapDakuten.put("む", Character.toString(c++));
+		mapDakuten.put("め", Character.toString(c++));
+		mapDakuten.put("も", Character.toString(c++));
+
+		mapDakuten.put("や", Character.toString(c++));
+		mapDakuten.put("ゆ", Character.toString(c++));
+		mapDakuten.put("よ", Character.toString(c++));
+
+		mapDakuten.put("ら", Character.toString(c++));
+		mapDakuten.put("り", Character.toString(c++));
+		mapDakuten.put("る", Character.toString(c++));
+		mapDakuten.put("れ", Character.toString(c++));
+		mapDakuten.put("ろ", Character.toString(c++));
+
+		mapDakuten.put("わ", Character.toString(c++));
+		mapDakuten.put("ゐ", Character.toString(c++));
+		mapDakuten.put("ゑ", Character.toString(c++));
+		mapDakuten.put("を", Character.toString(c++));
+
+		mapDakuten.put("ぁ", Character.toString(c++));
+		mapDakuten.put("ぃ", Character.toString(c++));
+		mapDakuten.put("ぅ", Character.toString(c++));
+		mapDakuten.put("ぇ", Character.toString(c++));
+		mapDakuten.put("ぉ", Character.toString(c++));
+
+		mapDakuten.put("ゕ", Character.toString(c++));
+		mapDakuten.put("ゖ", Character.toString(c++));
+		mapDakuten.put("っ", Character.toString(c++));
+		mapDakuten.put("ゃ", Character.toString(c++));
+		mapDakuten.put("ゅ", Character.toString(c++));
+		mapDakuten.put("ょ", Character.toString(c++));
+		mapDakuten.put("ゎ", Character.toString(c++));
+
+		mapDakuten.put("ナ", Character.toString(c++));
+		mapDakuten.put("ニ", Character.toString(c++));
+		mapDakuten.put("ヌ", Character.toString(c++));
+		mapDakuten.put("ネ", Character.toString(c++));
+		mapDakuten.put("ノ", Character.toString(c++));
+
+		mapDakuten.put("マ", Character.toString(c++));
+		mapDakuten.put("ミ", Character.toString(c++));
+		mapDakuten.put("ム", Character.toString(c++));
+		mapDakuten.put("メ", Character.toString(c++));
+		mapDakuten.put("モ", Character.toString(c++));
+
+		mapDakuten.put("ヤ", Character.toString(c++));
+		mapDakuten.put("ユ", Character.toString(c++));
+		mapDakuten.put("ヨ", Character.toString(c++));
+
+		mapDakuten.put("ラ", Character.toString(c++));
+		mapDakuten.put("リ", Character.toString(c++));
+		mapDakuten.put("ル", Character.toString(c++));
+		mapDakuten.put("レ", Character.toString(c++));
+		mapDakuten.put("ロ", Character.toString(c++));
+
+		mapDakuten.put("ァ", Character.toString(c++));
+		mapDakuten.put("ィ", Character.toString(c++));
+		mapDakuten.put("ゥ", Character.toString(c++));
+		mapDakuten.put("ェ", Character.toString(c++));
+		mapDakuten.put("ォ", Character.toString(c++));
+
+		mapDakuten.put("ヵ", Character.toString(c++));
+		mapDakuten.put("ヶ", Character.toString(c++));
+		mapDakuten.put("ッ", Character.toString(c++));
+
+		mapDakuten.put("ャ", Character.toString(c++));
+		mapDakuten.put("ュ", Character.toString(c++));
+		mapDakuten.put("ョ", Character.toString(c++));
+		mapDakuten.put("ヮ", Character.toString(c++));
+
+		GenEiFontMapDakuten = Collections.unmodifiableMap(mapDakuten);
+
+		Map<String, String> mapHanDakuten = new LinkedHashMap<>();
+		c = (char) 0xe08c;
+		mapHanDakuten.put("か", Character.toString(c++));
+		mapHanDakuten.put("き", Character.toString(c++));
+		mapHanDakuten.put("く", Character.toString(c++));
+		mapHanDakuten.put("け", Character.toString(c++));
+		mapHanDakuten.put("こ", Character.toString(c++));
+
+		mapHanDakuten.put("カ", Character.toString(c++));
+		mapHanDakuten.put("キ", Character.toString(c++));
+		mapHanDakuten.put("ク", Character.toString(c++));
+		mapHanDakuten.put("ケ", Character.toString(c++));
+		mapHanDakuten.put("コ", Character.toString(c++));
+
+		mapHanDakuten.put("セ", Character.toString(c++));
+		mapHanDakuten.put("ツ", Character.toString(c++));
+		mapHanDakuten.put("ト", Character.toString(c++));
+		mapHanDakuten.put("ㇷ", Character.toString(c++));
+
+		GenEiFontMapHanDakuten = Collections.unmodifiableMap(mapHanDakuten);
+
+	}
+
 	public static String getHashPass(final String strPassword) {
 		String strRtn = "";
 		try {
@@ -526,5 +646,27 @@ public final class Util {
 			throw new RuntimeException(e);
 		}
 	}
-
+	
+	
+	
+	
+	private static String _replaceForGenEiFontDakuten(String text, final String target, final char replace) {
+		text = text.replaceAll(target + "゛", Character.toString(replace));
+		text = text.replaceAll(target + "ﾞ", Character.toString(replace));
+		return text;
+	}
+	
+	public static String replaceForGenEiFont(String str) {
+		if (str==null || str.isEmpty()) return str;
+		String s = str;
+		for (Map.Entry<String, String> entry : GenEiFontMapDakuten.entrySet()) {
+			s = s.replaceAll(entry.getKey() + "゛", entry.getValue());
+			s = s.replaceAll(entry.getKey() + "ﾞ", entry.getValue());
+		}
+		for (Map.Entry<String, String> entry : GenEiFontMapHanDakuten.entrySet()) {
+			s = s.replaceAll(entry.getKey() + "゜", entry.getValue());
+			s = s.replaceAll(entry.getKey() + "ﾟ", entry.getValue());
+		}
+		return s;
+	}
 }
