@@ -4,7 +4,9 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 String referer = Util.toString(request.getHeader("Referer"));
-if (!referer.contains("poipiku")) {
+
+// iOS版アプリは別タブで表示していて、refererが取れないので、チェック対象から外す
+if (!Util.isIOS(request) && !referer.contains("poipiku")) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
