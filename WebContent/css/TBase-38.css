@@ -3,16 +3,16 @@
 @font-face {
 	font-family: "WebSymbolsLigaRegular";
 	src: url('/font/websymbolsligaregular.eot');
-	src: url('/font/websymbolsligaregular.eot?#iefix')
-		format('embedded-opentype'), url('/font/websymbolsligaregular.woff')
-		format('woff'), url('/font/websymbolsligaregular.ttf')
-		format('truetype'),
-		url('/font/websymbolsligaregular.svg#WebSymbolsRegular') format('svg');
+	src: url('/font/websymbolsligaregular.eot?#iefix') format('embedded-opentype'),
+		 url('/font/websymbolsligaregular.woff') format('woff'),
+	     url('/font/websymbolsligaregular.ttf') format('truetype'),
+		 url('/font/websymbolsligaregular.svg#WebSymbolsRegular') format('svg');
 }
 
 @font-face {
 	font-family: 'GenEiKoburiMin6-R';
-	src: url(/font/GenEiKoburiMin6-R.woff2);
+	src: url(/font/GenEiKoburiMin6-R.woff2) format('woff2'),
+	     url(/font/GenEiKoburiMin6-R.woff) format('woff');
 }
 
 @font-face {

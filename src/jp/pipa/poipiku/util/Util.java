@@ -29,6 +29,7 @@ import jp.pipa.poipiku.*;
 public final class Util {
 	private static final Map<String, String> GenEiFontMapDakuten;
 	private static final Map<String, String> GenEiFontMapHanDakuten;
+	private static final Map<String, String> GenEiFontMapOther;
 	static {
 		Map<String, String> mapDakuten = new LinkedHashMap<>();
 		char c = (char) 0xe082;
@@ -145,6 +146,16 @@ public final class Util {
 		mapHanDakuten.put("ㇷ", Character.toString(c++));
 
 		GenEiFontMapHanDakuten = Collections.unmodifiableMap(mapHanDakuten);
+
+		Map<String, String> mapOther = new LinkedHashMap<>();
+		mapOther.put("!!!", Character.toString((char) 0xe007));
+		mapOther.put("!!", Character.toString((char) 0xe002));
+		mapOther.put("\\?\\?", Character.toString((char) 0xe003));
+		mapOther.put("\\?!", Character.toString((char) 0xe004));
+		mapOther.put("!\\?", Character.toString((char) 0xe005));
+		mapOther.put("!", Character.toString((char) 0xe000));
+		mapOther.put("\\?", Character.toString((char) 0xe001));
+		GenEiFontMapOther = Collections.unmodifiableMap(mapOther);
 
 	}
 
@@ -646,10 +657,7 @@ public final class Util {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
-	
-	
+
 	private static String _replaceForGenEiFontDakuten(String text, final String target, final char replace) {
 		text = text.replaceAll(target + "゛", Character.toString(replace));
 		text = text.replaceAll(target + "ﾞ", Character.toString(replace));
@@ -666,6 +674,9 @@ public final class Util {
 		for (Map.Entry<String, String> entry : GenEiFontMapHanDakuten.entrySet()) {
 			s = s.replaceAll(entry.getKey() + "゜", entry.getValue());
 			s = s.replaceAll(entry.getKey() + "ﾟ", entry.getValue());
+		}
+		for (Map.Entry<String, String> entry : GenEiFontMapOther.entrySet()) {
+			s = s.replaceAll(entry.getKey(), entry.getValue());
 		}
 		return s;
 	}
