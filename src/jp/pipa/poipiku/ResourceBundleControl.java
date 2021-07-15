@@ -45,6 +45,21 @@ public class ResourceBundleControl {
 		}
 	}
 
+	public ResourceBundleControl(String strLang) {
+		strLang="ja";
+
+		objRbJa = CResourceBundleUtil.getJa();
+		objRbEn = CResourceBundleUtil.getEn();
+
+		if(strLang.equals("en")){
+			objRb = objRbEn;
+			ID = 0;
+		} else {
+			objRb = objRbJa;
+			ID = 1;
+		}
+	}
+
 	public String T(String key) {
 		return objRb.getString(key);
 	}
