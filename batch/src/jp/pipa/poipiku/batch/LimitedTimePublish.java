@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
+
 import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.ResourceBundleControl;
@@ -265,27 +267,40 @@ public class LimitedTimePublish extends Batch {
 			strSql = "SELECT * FROM contents_0000 WHERE limited_time_publish=true AND (open_id=0 OR open_id=1) AND (upload_date > CURRENT_TIMESTAMP OR end_date < CURRENT_TIMESTAMP)";
 			cState = cConn.prepareStatement(strSql);
 			cResSet = cState.executeQuery();
-			ArrayList<String> unpublishIds = new ArrayList<String>();
+			ArrayList<CContent> unpublishContents = new ArrayList<>();
 			while(cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
-				int cid = cContent.m_nContentId;
-				unpublishIds.add(Integer.toString(cid));
+				unpublishContents.add(cContent);
 				LimitedTimePublishLog l = new LimitedTimePublishLog();
 				l.m_datetime = dtStart;
-				l.m_nOldContentId = cid;
-				l.m_nNewContentId = cid;
+				l.m_nOldContentId = cContent.m_nContentId;
+				l.m_nNewContentId = cContent.m_nContentId;
 				l.m_nUserId = cContent.m_nUserId;
 				l.m_nOpenId = 2;
-				lLogsByOldId.put(cid, l);
+				lLogsByOldId.put(cContent.m_nContentId, l);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			if(unpublishIds.size()>0){
-				strSql = "UPDATE contents_0000 SET open_id=2 WHERE content_id IN (" + String.join(",", unpublishIds) + ")";
+			if(unpublishContents.size()>0){
+				strSql = "UPDATE contents_0000 SET open_id=2 WHERE content_id IN (" +
+						unpublishContents.stream()
+								.map( e -> Integer.valueOf(e.m_nContentId).toString())
+								.collect(Collectors.joining(",")) +
+						" )";
 				cState = cConn.prepareStatement(strSql);
 				cState.executeUpdate();
 				cState.close();cState=null;
+			}
+
+			CTweet tweet = new CTweet();
+			for (CContent content : unpublishContents) {
+				if (!content.m_strTweetId.isEmpty()) {
+					tweet.GetResults(content.m_nUserId);
+					if (tweet.m_bIsTweetEnable) {
+						tweet.Delete(content.m_strTweetId);
+					}
+				}
 			}
 
 			for(Integer key : lLogsByOldId.keySet()){
