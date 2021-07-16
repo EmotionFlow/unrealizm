@@ -94,8 +94,8 @@ cResults.getResults(checkLogin);
 								</tr>
 								<tr>
 									<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />同時投稿枚数</td>
-									<td class="NormalCell">200枚、合計50MByteまで</td>
-									<td class="BenefitCell">400枚、合計100MByteまで<br />
+									<td class="NormalCell"><%=Common.UPLOAD_FILE_MAX[0]%>枚、合計<%=Common.UPLOAD_FILE_TOTAL_SIZE[0]%>MByteまで</td>
+									<td class="BenefitCell"><%=Common.UPLOAD_FILE_MAX[1]%>枚、合計<%=Common.UPLOAD_FILE_TOTAL_SIZE[1]%>MByteまで<br />
 									</td>
 								</tr>
 								<tr>
@@ -106,16 +106,16 @@ cResults.getResults(checkLogin);
 								</tr>
 								<tr>
 									<td class="ListCell">投稿時のキャプション文字数</td>
-									<td class="NormalCell">200文字<br /></td>
-									<td class="BenefitCell">500文字</td>
+									<td class="NormalCell"><%=Common.EDITOR_DESC_MAX[0][0]%>文字</td>
+									<td class="BenefitCell"><%=Common.EDITOR_DESC_MAX[0][1]%>文字</td>
 								</tr>
 								<tr>
 									<td class="ListCell">文章投稿時の文字数</td>
-									<td class="NormalCell">1万文字<br /></td>
-									<td class="BenefitCell">10万文字<br />
+									<td class="NormalCell"><%=Common.EDITOR_TEXT_MAX[3][0]/10000%>万文字</td>
+									<td class="BenefitCell"><%=Common.EDITOR_TEXT_MAX[3][1]/10000%>万文字<br />
 										<span class="BenefitDetail">
-											(本機能はWeb版でβテスト中の機能です。アプリからの文章投稿機能は今暫くお待ち下さい)
-										</span></td>
+									(本機能はWeb版でβテスト中の機能です。アプリからの文章投稿機能は今暫くお待ち下さい)
+								</span></td>
 								</tr>
 								<tr>
 									<td class="ListCell">自分のページの背景設定</td>
@@ -127,8 +127,8 @@ cResults.getResults(checkLogin);
 									<td class="NormalCell">あり</td>
 									<td class="BenefitCell">なし<br />
 										<span class="BenefitDetail">
-											広告表示スクリプト自体が出力されなくなるので全体の表示速度も上がります
-										</span>
+									広告表示スクリプト自体が出力されなくなるので全体の表示速度も上がります
+								</span>
 									</td>
 								</tr>
 								<tr>
@@ -136,8 +136,8 @@ cResults.getResults(checkLogin);
 									<td class="NormalCell">あり</td>
 									<td class="BenefitCell">あり/なし設定可能<br />
 										<span class="BenefitDetail">
-											(デフォルトは表示なし)
-										</span>
+									(デフォルトは表示なし)
+								</span>
 									</td>
 								</tr>
 								<tr>
@@ -145,8 +145,8 @@ cResults.getResults(checkLogin);
 									<td class="NormalCell">不許可</td>
 									<td class="BenefitCell">許可/不許可設定可能<br />
 										<span class="BenefitDetail">
-											(デフォルトは不許可)
-										</span>
+									(デフォルトは不許可)
+								</span>
 									</td>
 								</tr>
 								<tr>
@@ -154,8 +154,8 @@ cResults.getResults(checkLogin);
 									<td class="NormalCell">なし</td>
 									<td class="BenefitCell">あり<br />
 										<span class="BenefitDetail">
-											避けたいコンテンツをキーワード指定して検索結果などから省くことができます。
-										</span>
+									避けたいコンテンツをキーワード指定して検索結果などから省くことができます。
+								</span>
 									</td>
 								</tr>
 								<tr>
@@ -163,9 +163,9 @@ cResults.getResults(checkLogin);
 									<td class="NormalCell">なし</td>
 									<td class="BenefitCell">あり<br />
 										<span class="BenefitDetail">
-											最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br />
-											一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br />
-										</span></td>
+									最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br />
+									一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br />
+								</span></td>
 								</tr>
 								<tr>
 									<td class="ListCell">送れる絵文字の数</td>
@@ -183,7 +183,7 @@ cResults.getResults(checkLogin);
 						<%if(passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive) {%>
 						<div class="SettingBodyCmd">
 							<div class="RegistMessage"></div>
-							現在ポイパスはWebブラウザ版からのみ申し込めます。。
+							現在、ポイパスはWebブラウザ版からのみ、お申し込みいただけます。
 						</div>
 						<%}%>
 					</div>
