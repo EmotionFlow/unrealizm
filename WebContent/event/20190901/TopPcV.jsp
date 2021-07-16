@@ -17,7 +17,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.contentsNum);
-String strUrl = "https://stg.poipiku.com/event/20190901/TopPcV.jsp";
+String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 %>
 <!DOCTYPE html>
 <html>

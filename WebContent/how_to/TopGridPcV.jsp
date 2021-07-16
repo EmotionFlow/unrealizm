@@ -57,7 +57,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				</div>
 
 				<div id="HowToMangaList" class="HowToMangaList">
-					<a class="HowToManga" href="https://stg.poipiku.com/2/857776.html"></a>
+					<a class="HowToManga" href="https://poipiku.com/2/857776.html"></a>
 				</div>
 
 				<a class="CmdUp" href="javascript:void(0);" onclick="$('html, body').animate({scrollTop:0});"></a>

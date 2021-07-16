@@ -7,7 +7,7 @@
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://stg.poipiku.com/$u.userId
+https://poipiku.com/$u.userId
 
 #end
 

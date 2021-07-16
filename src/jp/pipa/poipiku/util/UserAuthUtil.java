@@ -802,7 +802,7 @@ public class UserAuthUtil {
 					cState.setString(4, tokenSecret);
 					cState.setString(5, user_id);
 					cState.setString(6, screen_name);
-					cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://stg.poipiku.com/%d/", nUserId));
+					cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", nUserId));
 					cState.executeUpdate();
 					cState.close();cState=null;
 

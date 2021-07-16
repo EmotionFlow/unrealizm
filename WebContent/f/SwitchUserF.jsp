@@ -5,7 +5,7 @@ request.setCharacterEncoding("UTF-8");
 
 boolean result = false;
 String referer = Util.toString(request.getHeader("Referer"));
-if (referer.indexOf("https://stg.poipiku.com/MyIllustList") != 0) {
+if (referer.indexOf("https://poipiku.com/MyIllustList") != 0) {
 	Log.d("Illegal referer.");
 	return;
 }

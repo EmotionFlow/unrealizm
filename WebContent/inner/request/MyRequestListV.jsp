@@ -77,7 +77,7 @@
 		<%if(!isApp){%>
 		location.href = toUrl;
 		<%}else{%>
-		alert("お手数ですが、納品はブラウザ版(https://stg.poipiku.com/)からお願いいたします。アプリからの納品は現在開発中です。");
+		alert("お手数ですが、納品はブラウザ版(https://poipiku.com/)からお願いいたします。アプリからの納品は現在開発中です。");
 		<%}%>
 	}
 

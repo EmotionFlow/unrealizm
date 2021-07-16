@@ -67,7 +67,7 @@ boolean bRtn = cResults.GetResults();
 <html style="height: <%=nImgWidth%>px;">
 	<body style="margin:0; padding:0; width: <%=nBodyWidth%>px;">
 		<%for(CContent cContent : cResults.m_vContentList) {%>
-		<a style="display: block; float: left;" href="https://stg.poipiku.com/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html" target="_blank">
+		<a style="display: block; float: left;" href="https://poipiku.com/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html" target="_blank">
 			<img style="display: block; float: left; width: <%=nImgWidth%>px; height: <%=nImgWidth%>px;" src="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg">
 		</a>
 		<%}%>

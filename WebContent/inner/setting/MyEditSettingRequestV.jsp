@@ -240,11 +240,11 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				<div class="SettingBody">
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage" style="margin: 0; width:100%;">
-							<input id="RequestPageUrl" style="width: 100%;" type="text" readonly value="https://stg.poipiku.com/RequestNewPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+							<input id="RequestPageUrl" style="width: 100%;" type="text" readonly value="https://poipiku.com/RequestNewPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 						</div>
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="copyMyRequestPageUrl()">コピー</a>
 					</div>
-					<a style="text-decoration: underline;" href="https://stg.poipiku.com/RequestNewPcV.jsp?ID=<%=checkLogin.m_nUserId%>">プレビュー</a>
+					<a style="text-decoration: underline;" href="https://poipiku.com/RequestNewPcV.jsp?ID=<%=checkLogin.m_nUserId%>">プレビュー</a>
 				</div>
 			</div>
 			<div class="SettingListItem">
