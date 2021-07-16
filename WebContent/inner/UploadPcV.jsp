@@ -60,11 +60,6 @@ if (requestId > 0) {
 				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 			}
 
-			function errorMsg() {
-				$('#UoloadCmdBtn').removeClass('Disabled').html('<%=_TEX.T("UploadFilePc.UploadBtn")%>');
-				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.content_id);
-			}
-
 			function dateTimeEmptyMsg() {
 				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
 			}
@@ -108,10 +103,12 @@ if (requestId > 0) {
 			}
 
 			function errorMsg(result) {
-				if(data.result == Common.UPLOAD_FILE_TOTAL_ERROR) {
+				$('#UoloadCmdBtn').removeClass('Disabled').html('<%=_TEX.T("UploadFilePc.UploadBtn")%>');
+
+				if(data.result == <%=Common.UPLOAD_FILE_TOTAL_ERROR%>) {
 					// file size error
 					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-				} else if(data.result == Common.UPLOAD_FILE_TYPE_ERROR) {
+				} else if(data.result == <%=Common.UPLOAD_FILE_TYPE_ERROR%>) {
 					// file type error
 					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
 				} else {

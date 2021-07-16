@@ -286,11 +286,11 @@ public final class CCnv {
 		}
 		if(nViewMode==VIEW_DETAIL) {
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s?ID=%d&TD=%d\">", cContent.m_nContentId, ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, cContent.novelHtml));
+			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, Util.replaceForGenEiFont(cContent.novelHtml)));
 			strRtn.append("</a>");
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s\">", cContent.m_nContentId, ILLUST_VIEW));
-			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, cContent.novelHtmlShort));
+			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, Util.replaceForGenEiFont(cContent.novelHtmlShort)));
 			strRtn.append("</a>");
 		}
 	}
@@ -782,7 +782,7 @@ public final class CCnv {
 		if(!(cContent.m_nOpenId==0 || cContent.m_nOpenId==1)){
 			sb.append("style=\"background: rgba(0,0,0,.5);\"");
 		}
-		sb.append(">").append(cContent.novelHtmlShort);
+		sb.append(">").append(Util.replaceForGenEiFont(cContent.novelHtmlShort));
 	}
 
 //	private static String _toHtmlUser(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode){

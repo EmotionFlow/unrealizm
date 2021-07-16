@@ -104,24 +104,25 @@ public final class Common {
 	public static final int SAFE_FILTER_R18G = 6;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 29;
+	public static final int CATEGORY_ID_MAX = 30;
 	public static final int[] CATEGORY_ID = {
+			30,	// 尻を叩く
 			4,	// らくがき
 			6,	// できた
 			10,	// 作業進捗
-			7,	// 過去絵を晒す
-			5,	// 自主練
-			9,	// 供養
-			15,	// 描きかけ
-			17,	// メモ
 			23,	// ネタバレ
+			9,	// 供養
+			7,	// 過去絵を晒す
+			17,	// メモ
+			5,	// 自主練
+			15,	// 描きかけ
 			16,	// 描けねえ
 			22,	// リハビリ
-			1,	// 飽きた
 			18,	// ほぼ白紙
 			14,	// お知らせ
 
 //			0,	// いちほ
+//			1,	// 飽きた
 //			2,	// 力尽きた
 //			3,	// ボツ
 //			8,	// 黒歴史
@@ -136,8 +137,8 @@ public final class Common {
 //			25,	// 胸キュン
 //			26,	// 2020年ベスト1
 //			27, // 煩悩を晒せ
-//			29,	// 腐女子は見た
 //			28,	// 200万祝ってください
+//			29,	// 腐女子は見た
 	};
 
 	public static final int EDITOR_UPLOAD = 0;
