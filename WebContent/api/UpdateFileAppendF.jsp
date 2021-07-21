@@ -66,7 +66,6 @@ class UploadFileAppendC {
 		}
 
 		int nRtn = -1;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -74,8 +73,7 @@ class UploadFileAppendC {
 
 		try {
 			// regist to DB
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// check ext
 			if(cParam.item_file==null) return nRtn;
@@ -96,6 +94,8 @@ class UploadFileAppendC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			// この後の処理に時間がかかるので、一旦closeする。
+			cConn.close();cConn=null;
 
 			// save file
 			String strFileName = "";
@@ -132,6 +132,7 @@ class UploadFileAppendC {
 			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
 			// update file name
+			cConn = DatabaseUtil.dataSource.getConnection();
 			strSql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
