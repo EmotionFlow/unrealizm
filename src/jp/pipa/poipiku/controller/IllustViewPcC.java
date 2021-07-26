@@ -262,13 +262,13 @@ public final class IllustViewPcC {
 					m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin, connection);
 				}
 
-				//final int h = LocalDateTime.now().getHour();
-				//if (h != 23 && h != 0){
+				final int h = LocalDateTime.now().getHour();
+				if (h != 23 && h != 0){
 					// Recommended Contents
 					if(SELECT_MAX_RECOMMENDED_GALLERY>0) {
 						m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
 					}
-				//}
+				}
 			}
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
