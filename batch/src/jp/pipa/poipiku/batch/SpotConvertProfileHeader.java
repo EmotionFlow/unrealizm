@@ -77,19 +77,19 @@ public class SpotConvertProfileHeader extends Batch {
 						connection = dataSource.getConnection();
 						sql = "update counters set num1=? WHERE id=-1";
 						statement = connection.prepareStatement(sql);
-						statement.setInt(1, cnt);
+						statement.setInt(1, record.userId);
 						statement.executeUpdate();
 						statement.close();
 						connection.close();
 					}
-
+					Thread.sleep(500);
 					cnt++;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Log.d(sql);
-		} catch (IOException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		} finally {
 			if (resultSet != null) {
