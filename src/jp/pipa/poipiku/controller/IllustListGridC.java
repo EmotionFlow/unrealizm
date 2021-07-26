@@ -97,7 +97,7 @@ public class IllustListGridC {
 				statement.close();statement=null;
 
 				if(m_cUser.m_strHeaderFileName.isEmpty()) {
-					strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
+					strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
 					statement = connection.prepareStatement(strSql);
 					statement.setInt(1, m_nUserId);
 					resultSet = statement.executeQuery();
