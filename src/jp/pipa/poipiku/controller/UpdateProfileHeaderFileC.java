@@ -69,7 +69,7 @@ public class UpdateProfileHeaderFileC {
 			}
 			String strFileName = String.format("%s/header_%s.%s",
 					Common.getUploadUserPath(m_nUserId),
-					(new SimpleDateFormat("YYYYMMddHHmmss")).format(new java.util.Date()),
+					(new SimpleDateFormat("yyyyMMddHHmmss")).format(new java.util.Date()),
 					ext);
 			String strRealFileName = context.getRealPath(strFileName);
 			// ImageIO.write(cImage, "png", new File(strRealFileName));
@@ -77,6 +77,8 @@ public class UpdateProfileHeaderFileC {
 			output.write(imageBinary);
 			output.flush();
 			output.close();
+
+			ImageUtil.createThumbProfileHeader(strRealFileName);
 
 			// regist to DB
 			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);

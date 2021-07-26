@@ -60,7 +60,9 @@ public class ImageUtil {
 		deleteFilesClean(strSrcFileName);
 		ImageUtil.createThumbNormalize(strSrcFileName, strSrcFileName+"_120.jpg",  120, true);
 	}
-
+	public static void createThumbProfileHeader(String strSrcFileName) throws IOException {
+		createThumbIllust(strSrcFileName, true);
+	}
 
 	public static boolean createThumbNormalize(String strSrcFileName, String strDstFileName, int newWidth, boolean bLoop) throws IOException {
 		boolean bRtn = false;
