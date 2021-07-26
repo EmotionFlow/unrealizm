@@ -82,7 +82,7 @@ public class SpotConvertProfileHeader extends Batch {
 						statement.close();
 						connection.close();
 					}
-					Thread.sleep(500);
+					Thread.sleep(2000);
 					cnt++;
 				}
 			}
