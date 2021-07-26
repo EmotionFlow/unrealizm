@@ -85,6 +85,17 @@ public class IllustViewListC {
 			cState.close();cState=null;
 			if(cUser.m_nUserId<=0) return false;
 
+			if(cUser.m_strHeaderFileName.isEmpty()) {
+				strSql = "SELECT file_name FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, m_nUserId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					cUser.m_strHeaderFileName	= Util.toString(cResSet.getString("file_name")) + "_640.jpg";
+				}
+				cResSet.close();cResSet=null;
+				cState.close();cState=null;
+			}
 
 			// NEW ARRIVAL
 			String strOpenCnd = (m_nUserId!=checkLogin.m_nUserId)?" AND open_id<>2":"";
