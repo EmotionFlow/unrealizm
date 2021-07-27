@@ -80,7 +80,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	<meta name="twitter:site" content="@pipajp" />
 	<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
 	<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
-	<meta name="twitter:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+	<meta name="twitter:image" content="https:<%=Common.GetPoipikuUrl(strFileUrl)%>_360.jpg" />
 	<link rel="canonical" href="<%=strUrl%>" />
 	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 	<title><%=Util.toDescString(strTitle)%></title>
@@ -89,7 +89,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "https:<%=Common.GetUrl(strFileUrl)%>_640.jpg"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "https:<%=Common.GetUrl(strFileUrl)%>_360.jpg"}
 			]
 		}
 		</script>
