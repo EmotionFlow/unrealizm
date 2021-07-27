@@ -89,7 +89,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetPoipikuUrl(strFileUrl)%>"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "<%=Common.GetUrl(strFileUrl)%>_640.jpg"}
 			]
 		}
 		</script>
