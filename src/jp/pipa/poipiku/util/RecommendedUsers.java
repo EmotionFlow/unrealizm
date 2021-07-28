@@ -54,9 +54,9 @@ public final class RecommendedUsers {
 			strSql = "SELECT user_id" +
 					" FROM contents_0000" +
 					" WHERE user_id IN (SELECT user_id FROM vw_hot_contents_hour)" +
-					"  AND publish_id BETWEEN 0 AND 6" +
+					"  AND publish_id = 0" +
 					" GROUP BY user_id" +
-					" HAVING COUNT(*)>1" +
+					" HAVING COUNT(*)>5" +
 					" ORDER BY RANDOM()" +
 					" LIMIT 20;";
 			statement = connection.prepareStatement(strSql);
@@ -72,12 +72,12 @@ public final class RecommendedUsers {
 					.collect(Collectors.toList());
 			Collections.shuffle(selectUserIds);
 
-			// 上記のうち、ブロックしていない・されていない・フォロー済みユーザー
+			// 上記のうち、ブロックしてる・されている・フォロー済みユーザー
 			List<Integer> skipUsers = new ArrayList<>();
 			strSql = "select block_user_id as uid from blocks_0000 where user_id=?" +
 					" union all" +
 					" select user_id as uid from blocks_0000 where block_user_id=?" +
-					" union ALL " +
+					" union all " +
 					" select follow_user_id as uid from follows_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, checkLogin.m_nUserId);
@@ -102,8 +102,8 @@ public final class RecommendedUsers {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 		}
 		return unFollowedUsers;
 	}
