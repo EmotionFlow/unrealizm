@@ -158,28 +158,23 @@ public final class IllustViewPcC {
 
 			if(!m_bOwner) {
 				// blocking
-				strSql = "SELECT user_id FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				strSql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
-				idx = 1;
-				statement.setInt(idx++, checkLogin.m_nUserId);
-				statement.setInt(idx++, m_nUserId);
+				statement.setInt(1, checkLogin.m_nUserId);
+				statement.setInt(2, m_nUserId);
 				resultSet = statement.executeQuery();
-				if(resultSet.next()) {
-					m_bBlocking = true;
-				}
+				m_bBlocking = resultSet.next();
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 
 				// blocked
-				strSql = "SELECT user_id FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				strSql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setInt(idx++, m_nUserId);
-				statement.setInt(idx++, checkLogin.m_nUserId);
+				statement.setInt(1, m_nUserId);
+				statement.setInt(2, checkLogin.m_nUserId);
 				resultSet = statement.executeQuery();
-				if(resultSet.next()) {
-					m_bBlocked = true;
-				}
+				m_bBlocked = resultSet.next();
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}
@@ -187,8 +182,7 @@ public final class IllustViewPcC {
 			// User contents total number
 			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=? " + strOpenCnd;
 			statement = connection.prepareStatement(strSql);
-			idx = 1;
-			statement.setInt(idx++, m_nUserId);
+			statement.setInt(1, m_nUserId);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				m_nContentsNumTotal = resultSet.getInt(1);
@@ -203,7 +197,7 @@ public final class IllustViewPcC {
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
 			if(m_nUserId != checkLogin.m_nUserId) {
-				strSql = "SELECT user_id FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
+				strSql = "SELECT 1 FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				statement.setInt(idx++, checkLogin.m_nUserId);
@@ -222,7 +216,7 @@ public final class IllustViewPcC {
 			m_cContent.m_cUser.m_nFollowing = m_nFollow;
 
 			// Each append image
-			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
+			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id LIMIT 1000";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_cContent.m_nContentId);
 			resultSet = statement.executeQuery();
@@ -239,7 +233,7 @@ public final class IllustViewPcC {
 
 			// Bookmark
 			if(checkLogin.m_bLogin) {
-				strSql = "SELECT user_id FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
+				strSql = "SELECT 1 FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, checkLogin.m_nUserId);
 				statement.setInt(2, m_cContent.m_nContentId);

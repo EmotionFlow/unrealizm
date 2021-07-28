@@ -16,6 +16,15 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 
 public final class RelatedContents {
+	static final String SELECT_USER_CONTENTS = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
+			+ "FROM contents_0000 "
+			+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
+			+ "WHERE contents_0000.user_id=? AND open_id<>2 AND safe_filter<=?";
+	static final String SELECT_USER_CONTENTS_BLOCK_COND =
+			" AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?)" +
+			" AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?)";
+	static final String SELECT_USER_CONTENTS_ORDER_BY = " ORDER BY content_id DESC LIMIT ?";
+
 	static public ArrayList<CContent> getUserContentList(int userId, int listNum, CheckLogin checkLogin, Connection connection){
 		ArrayList<CContent> contents = new ArrayList<>();
 		PreparedStatement statement = null;
@@ -28,24 +37,22 @@ public final class RelatedContents {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
 
 			// user contents
-			strSql = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
-					+ "FROM contents_0000 "
-					+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
-					+ "WHERE contents_0000.user_id=? AND open_id<>2 AND safe_filter<=?";
-			if(checkLogin.m_bLogin) {
-				strSql += " AND contents_0000.user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
-						+ " AND contents_0000.user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			if (!checkLogin.m_bLogin) {
+				strSql = SELECT_USER_CONTENTS + SELECT_USER_CONTENTS_ORDER_BY;
+			} else {
+				strSql = SELECT_USER_CONTENTS +
+						SELECT_USER_CONTENTS_BLOCK_COND +
+						SELECT_USER_CONTENTS_ORDER_BY;
 			}
-			strSql += " ORDER BY content_id DESC LIMIT ?";
+
 			statement = connection.prepareStatement(strSql);
-			idx = 1;
 			statement.setInt(idx++, userId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(checkLogin.m_bLogin) {
 				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
-			statement.setInt(idx++, listNum);
+			statement.setInt(idx, listNum);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
@@ -61,8 +68,8 @@ public final class RelatedContents {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 		}
 		return contents;
 	}
@@ -167,14 +174,13 @@ public final class RelatedContents {
 			}
 			strSql += "LIMIT ?";
 			statement = connection.prepareStatement(strSql);
-			idx = 1;
 			statement.setInt(idx++, contentId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(checkLogin.m_bLogin) {
 				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
-			statement.setInt(idx++, listNum);
+			statement.setInt(idx, listNum);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
