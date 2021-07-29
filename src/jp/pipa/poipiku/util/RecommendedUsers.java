@@ -54,11 +54,11 @@ public final class RecommendedUsers {
 			strSql = "SELECT user_id" +
 					" FROM contents_0000" +
 					" WHERE user_id IN (SELECT user_id FROM vw_hot_contents_hour)" +
-					"  AND publish_id = 0" +
+					"  AND publish_id BETWEEN 0 AND 3" +
 					" GROUP BY user_id" +
-					" HAVING COUNT(*)>5" +
+					" HAVING COUNT(*)>2" +
 					" ORDER BY RANDOM()" +
-					" LIMIT 20;";
+					" LIMIT 20";
 			statement = connection.prepareStatement(strSql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {

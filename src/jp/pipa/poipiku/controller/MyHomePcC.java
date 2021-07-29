@@ -159,11 +159,13 @@ public final class MyHomePcC {
 			// Bookmark
 			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 
-			// Recommended Users
-			m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
-
 			// Recommended Request Creators
 			m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
+
+			// Recommended Users
+			if (m_nPage == 1) {
+				m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
+			}
 
 		} catch(Exception e) {
 			Log.d(strSql);
