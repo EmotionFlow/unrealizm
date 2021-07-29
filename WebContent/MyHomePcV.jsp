@@ -119,13 +119,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 					<%if(nCnt==4) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 
-					<%if(nCnt==7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
-					<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-					<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
-					<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
-					<%}%>
-					<%}%>
-
 					<%if(nCnt==6 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
 					<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
 					<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
@@ -133,19 +126,26 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					<%}%>
 					<%}%>
 
-					<%if(nCnt==9) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
-				<%}%>
+					<%if(nCnt==7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
+					<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
+					<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
+					<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
+					<%}%>
+					<%}%>
 
-				<%if(nCnt<=7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
-				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-				<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
-				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
-				<%}%>
+					<%if(nCnt==9) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
 
 				<%if(nCnt<=6 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
 				<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
+				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
+				<%}%>
+				<%}%>
+
+				<%if(nCnt<=7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
+				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
+				<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
 				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
 				<%}%>
 				<%}%>

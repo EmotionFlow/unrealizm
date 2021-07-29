@@ -178,6 +178,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<%=CCnv.toHtmlUserMini(recommendedUser, 0, _TEX, CCnv.SP_MODE_WVIEW)%>
 				<%}%>
 				<%}%>
+
 				<%if(nCnt<=7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
 				<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
