@@ -16,6 +16,10 @@ public final class CheckLogin {
 			1708444, // michi
 			1851512  // picさん
 	);
+	static private final List<Integer> m_testStaffIds = Arrays.asList(
+			21808,  // nino
+			1851512  // picさん
+	);
 	public boolean m_bLogin = false;
 	public int m_nUserId = -1;
 	public String m_strNickName = "no name";
@@ -37,10 +41,10 @@ public final class CheckLogin {
 	}
 
 	public boolean isTester198(){
-		return m_staffIds.contains(m_nUserId);
+		return m_testStaffIds.contains(m_nUserId);
 	}
 	static public boolean isTester198(final int userId){
-		return m_staffIds.contains(userId);
+		return m_testStaffIds.contains(userId);
 	}
 
 	static public boolean isStaff(final int userId){
