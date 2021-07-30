@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.Util;
 
@@ -64,6 +63,7 @@ public class CUser {
 		m_nUserId		= resultSet.getInt("user_id");
 		m_strNickName	= Util.toString(resultSet.getString("nickname"));
 		m_strFileName	= Util.toString(resultSet.getString("file_name"));
+		m_strHeaderFileName = Util.toString(resultSet.getString("header_file_name"));
 		m_nPassportId	= resultSet.getInt("passport_id");
 		if(m_strFileName.isEmpty()) m_strFileName="/img/default_user.jpg";
 	}

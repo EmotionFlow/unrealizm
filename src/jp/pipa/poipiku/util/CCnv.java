@@ -811,7 +811,8 @@ public final class CCnv {
 					"<span class=\"UserInfoProgile\">%s</span>" +
 					"</section></a>",
 				ILLUST_LIST,
-				headerFileName,Common.GetUrl(cUser.m_strFileName),
+				headerFileName,
+				Common.GetUrl(cUser.m_strFileName),
 				Util.toStringHtml(cUser.m_strNickName),
 				Util.toStringHtml(cUser.m_strProfile)
 		);
