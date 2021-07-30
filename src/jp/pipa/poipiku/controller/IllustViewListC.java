@@ -95,6 +95,8 @@ public class IllustViewListC {
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
+			} else {
+				cUser.m_strHeaderFileName += "_640.jpg";
 			}
 
 			// NEW ARRIVAL

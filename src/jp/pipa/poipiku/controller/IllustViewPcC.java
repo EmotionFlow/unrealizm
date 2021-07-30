@@ -153,8 +153,9 @@ public final class IllustViewPcC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
+			} else {
+				m_cUser.m_strHeaderFileName += "_640.jpg";
 			}
-
 
 			if(!m_bOwner) {
 				// blocking

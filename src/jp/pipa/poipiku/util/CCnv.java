@@ -800,7 +800,7 @@ public final class CCnv {
 		String ILLUST_LIST = getIllustListContext(nSpMode, cUser.m_nUserId);
 		String headerFileName = "";
 		if(!cUser.m_strHeaderFileName.isEmpty()) {
-			headerFileName = String.format("background-image: url('%s');", Common.GetUrl(cUser.m_strHeaderFileName));
+			headerFileName = String.format("background-image: url('%s');", Common.GetUrl(cUser.m_strHeaderFileName) + "_360.jpg");
 		}
 		return String.format(
 			"<a class=\"UserInfo Thumb\" href=\"%s\" style=\"%s\">" +
