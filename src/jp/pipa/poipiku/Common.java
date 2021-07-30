@@ -289,8 +289,8 @@ public final class Common {
 		return "https://poipiku.com" + strFileName;
 	}
 
-	public static String GetUploadPath() {
-		String path = "/user_img01";
+	public static String GetUploadTemporaryPath() {
+		return "/user_img_tmp";
 		/*
 		Random rnd = new Random();
 		int rand = rnd.nextInt(6);
@@ -300,12 +300,22 @@ public final class Common {
 		} else if(rand>=1 && rand<=2) {
 			path = "user_img6";
 		}
-		*/
 		return path;
+		*/
 	}
-	public static String getUploadUserPath(int nUserId) {
+
+	public static String getUploadContentsPath(int nUserId) {
 		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
-		return String.format("/user_img01/%09d", nUserId);
+		if (!CheckLogin.isTester198(nUserId)) {
+			return String.format("/user_img01/%09d", nUserId);
+		} else {
+			return String.format("/user_img00/%09d", nUserId);
+		}
+	}
+
+	public static String getUploadUsersPath(int nUserId) {
+		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
+		return String.format("/user_img00/%09d", nUserId);
 	}
 
 	public static String SubStrNum(String strSrc, int nNum) {

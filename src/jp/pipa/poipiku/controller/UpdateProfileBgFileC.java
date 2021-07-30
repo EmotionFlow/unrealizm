@@ -63,12 +63,12 @@ public class UpdateProfileBgFileC {
 			}
 
 			// save file
-			File cDir = new File(context.getRealPath(Common.getUploadUserPath(m_nUserId)));
+			File cDir = new File(context.getRealPath(Common.getUploadUsersPath(m_nUserId)));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
 			String strFileName = String.format("%s/bg_%s.%s",
-					Common.getUploadUserPath(m_nUserId),
+					Common.getUploadUsersPath(m_nUserId),
 					(new SimpleDateFormat("YYYYMMddHHmmss")).format(new java.util.Date()),
 					ext);
 			String strRealFileName = context.getRealPath(strFileName);

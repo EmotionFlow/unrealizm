@@ -1,38 +1,35 @@
 package jp.pipa.poipiku.controller;
 
-import java.util.Iterator;
-import java.util.List;
-
-import java.io.File;
-
-import org.apache.commons.fileupload.*;
-import org.apache.commons.fileupload.disk.*;
-import org.apache.commons.fileupload.servlet.*;
-
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Util;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 
-public class UpFileFirstCParam {
+public class UpFileAppendCParam {
 	protected ServletContext m_cServletContext = null;
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
-	public boolean m_bNotRecently = false;
-	public String m_strEncodeImg = "";
 	public boolean m_bPasteUpload = false;
+	String m_strEncodeImg = "";
 	FileItem item_file = null;
 
-	UpFileFirstCParam(ServletContext context){
+	UpFileAppendCParam(ServletContext context){
 		m_cServletContext = context;
 	}
 
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
 		try {
-			if(request.getContentType().indexOf("multipart")>=0){
+			if(request.getContentType().contains("multipart")){
 				m_bPasteUpload = false;
 				String strRelativePath = Common.GetUploadTemporaryPath();
 				String strRealPath = m_cServletContext.getRealPath(strRelativePath);
@@ -52,8 +49,6 @@ public class UpFileFirstCParam {
 							m_nUserId = Util.toInt(item.getString());
 						} else if(strName.equals("IID")) {
 							m_nContentId = Util.toInt(item.getString());
-						} else if(strName.equals("REC")) {
-							m_bNotRecently = Util.toBoolean(item.getString());
 						}
 						item.delete();
 					} else {
@@ -66,14 +61,16 @@ public class UpFileFirstCParam {
 				m_nUserId		= Util.toInt(request.getParameter("UID"));
 				m_nContentId	= Util.toInt(request.getParameter("IID"));
 				m_strEncodeImg	= Util.toString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
-				m_bNotRecently  = Util.toBoolean(request.getParameter("REC"));
 
 				nRtn = 0;
 			}
 		} catch(FileUploadException e) {
-			nRtn = ErrorOccured(e, -2);
+			e.printStackTrace();
+			nRtn = -1;
 		} catch(Exception e) {
-			nRtn = ErrorOccured(e, -99);
+			e.printStackTrace();
+			m_nUserId = -1;
+			nRtn = -99;
 		}
 		return nRtn;
 	}

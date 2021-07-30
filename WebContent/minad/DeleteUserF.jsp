@@ -124,7 +124,7 @@ try {
 	cState.executeUpdate();
 	cState.close();cState=null;
 	// delete files
-	File fileDel = new File(getServletContext().getRealPath(Common.getUploadUserPath(m_nUserId)));
+	File fileDel = new File(getServletContext().getRealPath(Common.getUploadContentsPath(m_nUserId)));
 	Common.rmDir(fileDel);
 
 	// キャッシュからもユーザを消す

@@ -35,6 +35,14 @@ public final class CheckLogin {
 	public boolean isStaff(){
 		return m_staffIds.contains(m_nUserId);
 	}
+
+	public boolean isTester198(){
+		return m_staffIds.contains(m_nUserId);
+	}
+	static public boolean isTester198(final int userId){
+		return m_staffIds.contains(userId);
+	}
+
 	static public boolean isStaff(final int userId){
 		return m_staffIds.contains(userId);
 	}

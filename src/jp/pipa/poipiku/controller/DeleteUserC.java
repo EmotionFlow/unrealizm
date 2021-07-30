@@ -203,7 +203,7 @@ public class DeleteUserC {
 			connection.close();connection=null;
 
 			// delete files
-			File fileDel = new File(m_cServletContext.getRealPath(Common.getUploadUserPath(m_nUserId)));
+			File fileDel = new File(m_cServletContext.getRealPath(Common.getUploadUsersPath(m_nUserId)));
 			Common.rmDir(fileDel);
 
 			// キャッシュからもユーザを消す

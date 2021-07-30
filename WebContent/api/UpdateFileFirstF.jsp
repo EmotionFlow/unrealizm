@@ -20,7 +20,7 @@
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
 		try {
-			String strRelativePath = Common.GetUploadPath();
+			String strRelativePath = Common.GetUploadTemporaryPath();
 			String strRealPath = getServletContext().getRealPath(strRelativePath);
 			// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
 			DiskFileItemFactory factory = new DiskFileItemFactory(40*1024*1024, new File(strRealPath));
@@ -97,12 +97,12 @@ class UpdateFileFirstC {
 			cState.close();cState=null;
 
 			// save file
-			File cDir = new File(getServletContext().getRealPath(Common.getUploadUserPath(cParam.m_nUserId)));
+			File cDir = new File(getServletContext().getRealPath(Common.getUploadContentsPath(cParam.m_nUserId)));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
 			String strRandom = RandomStringUtils.randomAlphanumeric(9);
-			String strFileName = String.format("%s/%09d_%s.%s", Common.getUploadUserPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
+			String strFileName = String.format("%s/%09d_%s.%s", Common.getUploadContentsPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
