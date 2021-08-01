@@ -230,7 +230,7 @@ public class Emoji {
 				connection = dataSource.getConnection();
 
 				if(nUserId>0) {
-					strSql = "SELECT description, count(description) FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?";
+					strSql = "SELECT description FROM vw_comments_0000_last_7days WHERE user_id=? GROUP BY description ORDER BY count(description) DESC LIMIT ?";
 					statement = connection.prepareStatement(strSql);
 					statement.setInt(1, nUserId);
 					statement.setInt(2, EMOJI_KEYBORD_MAX);
@@ -241,11 +241,10 @@ public class Emoji {
 					resultSet.close();resultSet=null;
 					statement.close();statement=null;
 					if(vResult.size()>0 && vResult.size()<EMOJI_KEYBORD_MAX){
-						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM comments_0000 WHERE user_id=? AND upload_date>CURRENT_DATE-7 GROUP BY description ORDER BY count(description) DESC LIMIT ?) ORDER BY rank DESC LIMIT ?";
+						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM vw_comments_0000_last_7days WHERE user_id=?) ORDER BY rank DESC LIMIT ?";
 						statement = connection.prepareStatement(strSql);
 						statement.setInt(1, nUserId);
-						statement.setInt(2, EMOJI_KEYBORD_MAX);
-						statement.setInt(3, EMOJI_KEYBORD_MAX-vResult.size());
+						statement.setInt(2, EMOJI_KEYBORD_MAX-vResult.size());
 						resultSet = statement.executeQuery();
 						while (resultSet.next()) {
 							vResult.add(Util.toString(resultSet.getString(1)).trim());
