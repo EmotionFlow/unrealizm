@@ -3,9 +3,9 @@ package jp.pipa.poipiku.batch;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import okhttp3.*;
 
@@ -13,10 +13,9 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 public class SpotChagePassportSubscrioptinAmount extends Batch{
-	private static Logger logger = LogManager.getLogger(SpotChagePassportSubscrioptinAmount.class);
 	static final String URL_SCHEME      = "https";
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		java.sql.Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -79,14 +78,14 @@ public class SpotChagePassportSubscrioptinAmount extends Batch{
 			);
 
 			// epsilon api
-//			for (Integer userId: changeAmountUserIds) {
-//				Request request = new Request.Builder().url(
-//						String.format(urlChangeRegularlyAmountF, userId, 0)
-//				).build();
-//				try (Response response = client.newCall(request).execute()) {
-//					System.out.println(userId.toString() + " " + response.body().string());
-//				}
-//			}
+			for (Integer userId: changeAmountUserIds) {
+				Request request = new Request.Builder().url(
+						String.format(urlChangeRegularlyAmountF, userId, 0)
+				).build();
+				try (Response response = client.newCall(request).execute()) {
+					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string());
+				}
+			}
 			changeAmountUserIds.clear();
 
 
@@ -110,14 +109,14 @@ public class SpotChagePassportSubscrioptinAmount extends Batch{
 			);
 
 			// epsilon api
-//			for (Integer userId: changeAmountUserIds) {
-//				Request request = new Request.Builder().url(
-//						String.format(urlChangeRegularlyAmountF, userId, 300)
-//				).build();
-//				try (Response response = client.newCall(request).execute()) {
-//					System.out.println(userId.toString() + " " + response.body().string());
-//				}
-//			}
+			for (Integer userId: changeAmountUserIds) {
+				Request request = new Request.Builder().url(
+						String.format(urlChangeRegularlyAmountF, userId, 300)
+				).build();
+				try (Response response = client.newCall(request).execute()) {
+					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string());
+				}
+			}
 			changeAmountUserIds.clear();
 
 		} catch (Exception e) {
@@ -128,7 +127,7 @@ public class SpotChagePassportSubscrioptinAmount extends Batch{
 				if(resultSet!=null) resultSet.close();
 				if(statement!=null) statement.close();
 				if(connection!=null) {connection.setAutoCommit(true); connection.close();}
-			} catch (SQLException se) {
+			} catch (SQLException ignored) {
 			}
 		}
 	}
