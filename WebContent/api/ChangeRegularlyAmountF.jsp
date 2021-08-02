@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="jp.pipa.poipiku.settlement.CardSettlementEpsilon" %>
 <%@ page import="jp.pipa.poipiku.util.Log" %>
+<%@ page import="jp.pipa.poipiku.Common" %>
 <%
 	// 例：https://poipiku.com/api/ChangeRegularlyAmountF.jsp?TOKEN=08yg3qghpwj48q6742o97qwqvh&ID=21808&AMT=300
 	boolean result = false;
 	String accessIpAddress = request.getRemoteAddr();
-	if (!accessIpAddress.equals("127.0.0.1")) return;
+	if (!(accessIpAddress.equals("127.0.0.1") || accessIpAddress.equals(Common.GLOBAL_IP_ADDRESS))) return;
 
 	String TOKEN = "08yg3qghpwj48q6742o97qwqvh";
 	String token = request.getParameter("TOKEN");

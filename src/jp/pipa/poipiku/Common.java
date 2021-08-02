@@ -15,6 +15,8 @@ import jp.pipa.poipiku.util.CCnv;
 public final class Common {
 	private Common(){}
 
+	public static final String GLOBAL_IP_ADDRESS = "118.238.233.16";
+
 	// APIリターンコード
 	public static final int API_OK = 1;
 	public static final int API_NG = 0;
