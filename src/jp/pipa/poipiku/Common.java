@@ -317,7 +317,7 @@ public final class Common {
 
 	public static String getUploadUsersPath(int nUserId) {
 		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
-		return String.format("/user_img00/%09d", nUserId);
+		return String.format("/user_img01/%09d", nUserId);
 	}
 
 	public static String SubStrNum(String strSrc, int nNum) {
