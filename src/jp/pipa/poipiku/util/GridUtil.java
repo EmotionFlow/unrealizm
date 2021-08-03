@@ -46,13 +46,14 @@ public class GridUtil {
 		return contents;
 	}
 
-	public static String updateCommentsLists(Connection connection, int contentId) throws SQLException {
+	public static void updateCommentsLists(Connection connection, int contentId, int toUserId) throws SQLException {
 		// comments_0000から絵文字取得
 		StringBuilder sbDescription = new StringBuilder();
-		String sql = "SELECT description FROM comments_0000 WHERE content_id=? ORDER BY comment_id DESC LIMIT ?";
+		String sql = "SELECT description FROM comments_0000 WHERE content_id=? AND to_user_id=? ORDER BY comment_id DESC LIMIT ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setInt(1, contentId);
-		statement.setInt(2, SELECT_MAX_EMOJI);
+		statement.setInt(2, toUserId);
+		statement.setInt(3, SELECT_MAX_EMOJI);
 		ResultSet resultSet = statement.executeQuery();
 		while (resultSet.next()) {
 			sbDescription.insert(0, Util.toString(resultSet.getString(1)));
@@ -70,8 +71,6 @@ public class GridUtil {
 		statement.setString(3, sbDescription.toString());
 		statement.executeUpdate();
 		statement.close();statement=null;
-
-		return sbDescription.toString();
 	}
 
 	public static String getComment(Connection connection, CContent content) throws SQLException {

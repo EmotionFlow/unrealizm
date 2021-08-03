@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
@@ -199,7 +197,7 @@ public class SendEmojiC {
 			statement.close();statement=null;
 
 			// update comment_list
-			GridUtil.updateCommentsLists(connection, m_nContentId);
+			GridUtil.updateCommentsLists(connection, m_nContentId, cTargUser.m_nUserId);
 
 			/*
 			// 使ってないので一時的にコメントアウト
