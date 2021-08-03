@@ -46,14 +46,6 @@ function _getGiftIntroductionHtml(nickName){
 	<p><a style="color: inherit; text-decoration: underline" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">ポイパスとは</a>、広告非表示や絵文字100連打など、ポイピクをよりお楽しみいただける付加サービスです。１日〜末日の１ヶ月単位で加入できます。</p>
 </div>
 
-<div class="GiftCampaignInfo">
-	<div class="GiftCampaignTitle">限定キャンペーン<br>おふせした側にもチケットプレゼント！</div>
-	<p>おふせをする毎に、あなたにもチケットが１枚プレゼントされます！</p>
-	<p>人数や回数の制限はありません。おふせをした分だけ、自分のチケットが増えてゆきます。</p>
-	<p>現在ポイパスOFFの方は、おふせをすると同時にONに切り替わります。</p>
-	<p>期間：6/30まで（予定数を超えた場合は早期に終了することがあります）</p>
-</div>
-
 <%if(!isApp){%>
 <div class="GiftIntroDlgInfo" style="text-align: center; font-size: 16px;">
 ` + nickName + `さんに<br>
