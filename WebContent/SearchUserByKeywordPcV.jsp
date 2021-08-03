@@ -66,7 +66,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
+					<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX)%>
 					<%if(Util.isSmartPhone(request)) {%>
 						<%if(nCnt==13) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>

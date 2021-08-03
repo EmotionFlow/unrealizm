@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class SearchUserByKeywordC {
@@ -36,7 +37,7 @@ public class SearchUserByKeywordC {
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dsPostgres = null;
+		CacheUsers0000 users  = CacheUsers0000.getInstance();
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -44,8 +45,7 @@ public class SearchUserByKeywordC {
 
 		if(m_strKeyword.isEmpty()) return bResult;
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
@@ -60,14 +60,17 @@ public class SearchUserByKeywordC {
 				cState.close();cState=null;
 			}
 
-			strSql = PG_HINT + " SELECT * FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?";
+			strSql = PG_HINT + " SELECT user_id FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, m_strKeyword);
 			cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);
 			cState.setInt(3, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				m_vContentList.add(new CUser(cResSet));
+				CacheUsers0000.User cashUser = users.getUser(cResSet.getInt("user_id"));
+				if(cashUser==null) continue;
+				CUser user = new CUser(cashUser);
+				m_vContentList.add(user);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
