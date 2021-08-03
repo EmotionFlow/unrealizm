@@ -115,7 +115,7 @@ public final class WriteBackFile extends Model{
 		return true;
 	}
 
-	static public List<WriteBackFile> select(Status _status, Timestamp createdAtAfter) {
+	static public List<WriteBackFile> select(Status _status, int hoursBefore) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -123,10 +123,9 @@ public final class WriteBackFile extends Model{
 		List<WriteBackFile> list = new ArrayList<>();
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "SELECT * FROM write_back_files WHERE status=? AND created_at>?";
+			sql = "SELECT * FROM write_back_files WHERE status=? AND created_at < now() - INTERVAL '%d hours'";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, _status.getCode());
-			statement.setTimestamp(2, createdAtAfter);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				list.add(new WriteBackFile(resultSet));
@@ -142,7 +141,7 @@ public final class WriteBackFile extends Model{
 		return list;
 	}
 
-	static public boolean remove(Timestamp updatedAtAfter) {
+	static public boolean delete(Timestamp updatedAtAfter) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String sql = "";
