@@ -410,6 +410,7 @@ if (requestId > 0) {
 							<%}%>
 						</div>
 					</div>
+
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
@@ -421,7 +422,9 @@ if (requestId > 0) {
 						</div>
 					</div>
 					<div class="OptionItem">
-						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%>
+							<a style="text-decoration: underline;" onclick="$('#PublishLimitedInfo').toggle()"><i class="fas fa-info-circle"></i></a>
+						</div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
 							<label class="onoffswitch-label" for="OptionTweet">
@@ -430,6 +433,10 @@ if (requestId > 0) {
 							</label>
 						</div>
 					</div>
+					<div id="PublishLimitedInfo" style="font-size: 13px; text-align: left; margin: 0 15px; display: none;">
+						<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.Info")%>
+					</div>
+
 					<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
 					<div id="ImageSwitch" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
