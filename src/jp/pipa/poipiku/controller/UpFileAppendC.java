@@ -184,6 +184,7 @@ public class UpFileAppendC extends UpC{
 
 			if (CheckLogin.isTester198(cParam.m_nUserId)) {
 				WriteBackFile writeBackFile = new WriteBackFile();
+				writeBackFile.userId = cParam.m_nUserId;
 				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
 				writeBackFile.rowId = nAppendId;
 				writeBackFile.path = strFileName;

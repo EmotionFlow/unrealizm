@@ -18,6 +18,7 @@ public final class CheckLogin {
 	);
 	static private final List<Integer> m_testStaffIds = Arrays.asList(
 			21808,  // nino
+			402902,  // snssnssnsさん
 			1851512  // picさん
 	);
 	public boolean m_bLogin = false;

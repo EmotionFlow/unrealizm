@@ -173,6 +173,7 @@ public class UpFileFirstC extends UpC{
 
 			if (CheckLogin.isTester198(cParam.m_nUserId)) {
 				WriteBackFile writeBackFile = new WriteBackFile();
+				writeBackFile.userId = cParam.m_nUserId;
 				writeBackFile.tableCode = WriteBackFile.TableCode.Contents;
 				writeBackFile.rowId = cContent.m_nContentId;
 				writeBackFile.path = strFileName;

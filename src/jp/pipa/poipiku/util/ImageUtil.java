@@ -18,6 +18,8 @@ import javax.imageio.stream.FileImageOutputStream;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
+import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.WriteBackFile;
 import org.w3c.dom.*;
 
 import com.drew.imaging.ImageMetadataReader;
@@ -685,9 +687,18 @@ public class ImageUtil {
 	}
 
 	public static void deleteFiles(String strFileName) {
-		if(strFileName==null || strFileName.isEmpty()) return;
+		if (strFileName==null || strFileName.isEmpty()) return;
+
+		String otherFileName;
+		if (strFileName.contains(Common.CONTENTS_CACHE_DIR)) {
+			otherFileName = strFileName.replace(Common.CONTENTS_CACHE_DIR, Common.CONTENTS_STORAGE_DIR);
+		} else {
+			otherFileName = strFileName.replace(Common.CONTENTS_STORAGE_DIR, Common.CONTENTS_CACHE_DIR);
+		}
 		Util.deleteFile(strFileName);
 		deleteFilesClean(strFileName);
+		Util.deleteFile(otherFileName);
+		deleteFilesClean(otherFileName);
 	}
 
 	static void deleteFilesClean(String strFileName) {

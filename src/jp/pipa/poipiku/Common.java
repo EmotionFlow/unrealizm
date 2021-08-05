@@ -17,6 +17,10 @@ public final class Common {
 
 	public static final String GLOBAL_IP_ADDRESS = "118.238.233.16";
 
+	public static final String CONTENTS_ROOT = "/var/www/html/poipiku_img";
+	public static final String CONTENTS_CACHE_DIR = "user_img00";
+	public static final String CONTENTS_STORAGE_DIR = "user_img01";
+
 	// APIリターンコード
 	public static final int API_OK = 1;
 	public static final int API_NG = 0;

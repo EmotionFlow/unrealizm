@@ -46,6 +46,7 @@ public final class WriteBackFile extends Model{
 		}
 	}
 
+	public int userId = -1;
 	public TableCode tableCode = TableCode.Undefined;
 	public int rowId = -1;
 	public Status status = Status.Undefined;
@@ -59,6 +60,7 @@ public final class WriteBackFile extends Model{
 	}
 
 	public void set(ResultSet resultSet) throws SQLException {
+		userId = resultSet.getInt("user_id");
 		tableCode = TableCode.byCode(resultSet.getInt("table_code"));
 		rowId = resultSet.getInt("row_id");
 		status = Status.byCode(resultSet.getInt("status"));
@@ -73,11 +75,36 @@ public final class WriteBackFile extends Model{
 		String sql = "";
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "INSERT INTO write_back_files(table_code, row_id, path) VALUES (?,?,?)";
+			sql = "INSERT INTO write_back_files(user_id, table_code, row_id, path) VALUES (?,?,?,?)";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			statement.setInt(2, tableCode.getCode());
+			statement.setInt(3, rowId);
+			statement.setString(4, path);
+			statement.executeUpdate();
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			errorKind = ErrorKind.DbError;
+			return false;
+		} finally {
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+		return true;
+	}
+
+	public boolean delete() {
+		if (rowId<0) return false;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String sql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "DELETE FROM write_back_files WHERE table_code=? AND row_id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, tableCode.getCode());
 			statement.setInt(2, rowId);
-			statement.setString(3, path);
 			statement.executeUpdate();
 		} catch(Exception e) {
 			Log.d(sql);
@@ -99,7 +126,7 @@ public final class WriteBackFile extends Model{
 			connection = DatabaseUtil.dataSource.getConnection();
 			sql = "UPDATE write_back_files SET status=?, updated_at=now() WHERE table_code=? AND row_id=?";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, status.getCode());
+			statement.setInt(1, newStatus.getCode());
 			statement.setInt(2, tableCode.getCode());
 			statement.setInt(3, rowId);
 			statement.executeUpdate();
@@ -123,7 +150,7 @@ public final class WriteBackFile extends Model{
 		List<WriteBackFile> list = new ArrayList<>();
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "SELECT * FROM write_back_files WHERE status=? AND created_at < now() - INTERVAL '%d hours'";
+			sql = String.format("SELECT * FROM write_back_files WHERE status=? AND created_at < now() - INTERVAL '%d hours'", hoursBefore);
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, _status.getCode());
 			resultSet = statement.executeQuery();
@@ -135,22 +162,67 @@ public final class WriteBackFile extends Model{
 			e.printStackTrace();
 			return null;
 		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
 		return list;
 	}
 
-	static public boolean delete(Timestamp updatedAtAfter) {
+	static public boolean deleteByStatus(Status _status, int hoursBefore) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String sql = "";
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "DELETE FROM write_back_files WHERE status=? AND updated_at > ?";
+			sql = String.format("DELETE FROM write_back_files WHERE status=? AND updated_at < now() - INTERVAL '%d hours'", hoursBefore);
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, Status.Moved.getCode());
-			statement.setTimestamp(2, updatedAtAfter);
+			statement.setInt(1, _status.getCode());
+			statement.executeUpdate();
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			return false;
+		} finally {
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+		return true;
+	}
+
+	static public boolean deleteByUserId(int userId) {
+		if (userId < 0) return false;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String sql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "DELETE FROM write_back_files WHERE user_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			statement.executeUpdate();
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			return false;
+		} finally {
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+		return true;
+	}
+
+	static public boolean deleteByPrimaryKeys(TableCode _tableCode, int _rowId) {
+		if (_rowId < 0) return false;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String sql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "DELETE FROM write_back_files WHERE table_code=? AND row_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, _tableCode.getCode());
+			statement.setInt(2, _rowId);
 			statement.executeUpdate();
 		} catch(Exception e) {
 			Log.d(sql);

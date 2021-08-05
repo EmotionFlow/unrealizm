@@ -1,7 +1,9 @@
 package jp.pipa.poipiku.controller;
 
+import java.awt.*;
 import java.sql.*;
 import java.util.*;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
@@ -126,7 +128,7 @@ public class UpdateFileOrderC {
 			}
 
 			//元リストにあって新リストにないファイルを抽出（削除候補）
-			List<CEditedContent> cDiff = new ArrayList<CEditedContent>();
+			List<CEditedContent> cDiff = new ArrayList<>();
 			for (CEditedContent cOld: vOldFileList) {
 				boolean bExist = false;
 				for (int append_id: m_vNewIdList) {
@@ -151,18 +153,11 @@ public class UpdateFileOrderC {
 
 					if(content.name!=null && !content.name.isEmpty()) {
 						String strPath = m_cServletContext.getRealPath(content.name);
-						Util.deleteFile(strPath);
-						Util.deleteFile(strPath + "_360.jpg");
-						Util.deleteFile(strPath + "_640.jpg");
+						ImageUtil.deleteFiles(strPath);
 					}
 
 					//元リストからも削除
-					Iterator<CEditedContent> it = vOldFileList.iterator();
-					while (it.hasNext()) {
-						if (it.next().append_id == append_id && append_id != 0) {
-							it.remove();
-						}
-					}
+					vOldFileList.removeIf(cEditedContent -> cEditedContent.append_id == append_id && append_id != 0);
 
 					//先頭画像の削除有無
 					if (append_id == 0) bHead = true;
@@ -175,6 +170,12 @@ public class UpdateFileOrderC {
 					cState.setInt(1, m_nContentId);
 					cState.executeUpdate();
 					cState.close();cState=null;
+
+					strSql = "DELETE FROM write_back_files WHERE table_code=? AND row_id IN (" + String.join(",", strDelList) + ");";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
+					cState.executeUpdate();
+					cState.close();cState=null;
 				}
 
 				//先頭が削除されて1個ずつズレるケース
@@ -183,6 +184,13 @@ public class UpdateFileOrderC {
 					strSql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id=?;";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, m_nContentId);
+					cState.setInt(2, vOldFileList.get(vOldFileList.size() - 1).append_id);
+					cState.executeUpdate();
+					cState.close();cState=null;
+
+					strSql = "DELETE FROM write_back_files WHERE table_code=? AND row_id=?;";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
 					cState.setInt(2, vOldFileList.get(vOldFileList.size() - 1).append_id);
 					cState.executeUpdate();
 					cState.close();cState=null;
@@ -215,6 +223,15 @@ public class UpdateFileOrderC {
 			cState.setInt(6, m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
+
+			strSql = "UPDATE write_back_files SET path=? WHERE table_code=? AND row_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, vNewFileList.get(0).name);
+			cState.setInt(2, WriteBackFile.TableCode.Contents.getCode());
+			cState.setInt(3, m_nContentId);
+			cState.executeUpdate();
+			cState.close();cState=null;
+
 			//2枚目以降はcontents_appends_0000にセット
 			strSql = "UPDATE contents_appends_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=? AND append_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -230,6 +247,17 @@ public class UpdateFileOrderC {
 			}
 			cState.close();cState=null;
 
+			strSql = "UPDATE write_back_files SET path=? WHERE table_code=? AND row_id=?";
+			cState = cConn.prepareStatement(strSql);
+			for (int i=1; i<vNewFileList.size(); i++) {
+				cState.setString(1, vNewFileList.get(i).name);
+				cState.setInt(2, WriteBackFile.TableCode.ContentsAppends.getCode());
+				cState.setInt(3, vNewFileList.get(i).append_id);
+				cState.executeUpdate();
+
+			}
+			cState.close();cState=null;
+
 			//画像枚数の更新
 			strSql = "UPDATE contents_0000 SET file_num=(SELECT COUNT(*) FROM contents_appends_0000 WHERE content_id=?)+1 WHERE content_id=?;";
 			cState = cConn.prepareStatement(strSql);
@@ -240,7 +268,7 @@ public class UpdateFileOrderC {
 
 			nRtn = 0;
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(strSql);S
 			e.printStackTrace();
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}

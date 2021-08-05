@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.WriteBackFile;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -203,12 +204,17 @@ public class DeleteUserC {
 			connection.close();connection=null;
 
 			// delete files
-			File fileDel = new File(m_cServletContext.getRealPath(Common.getUploadUsersPath(m_nUserId)));
+			File fileDel;
+			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadUsersPath(m_nUserId)));
+			Common.rmDir(fileDel);
+			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(m_nUserId)));
 			Common.rmDir(fileDel);
 
 			// キャッシュからもユーザを消す
 			CacheUsers0000 users0000 = CacheUsers0000.getInstance();
 			users0000.clearUser(m_nUserId);
+
+			WriteBackFile.deleteByUserId(m_nUserId);
 
 			nRtn = 1;
 

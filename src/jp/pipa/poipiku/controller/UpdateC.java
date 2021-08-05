@@ -11,6 +11,42 @@ import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
 public final class UpdateC extends UpC {
+	public static boolean doUpdateContentIdTransaction (Connection connection, int oldContentId, int newContentId) throws SQLException {
+		PreparedStatement statement = null;
+		String strSql = "";
+		try{
+			// transaction
+			connection.setAutoCommit(false);
+			String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "comments_desc_cache", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests"};
+			for(String t : lUpdateTable){
+				strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, newContentId);
+				statement.setInt(2, oldContentId);
+				statement.executeUpdate();
+			}
+			strSql = "UPDATE write_back_files SET row_id=? WHERE table_code=? AND row_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, newContentId);
+			statement.setInt(2, WriteBackFile.TableCode.Contents.getCode());
+			statement.setInt(3, oldContentId);
+			statement.executeUpdate();
+
+			connection.commit();
+		}catch(Exception e){
+			Log.d(strSql);
+			e.printStackTrace();
+			connection.rollback();
+			return false;
+		}finally{
+			if(statement!=null){statement.close();};statement=null;
+			connection.setAutoCommit(true);
+		}
+
+		return true;
+	}
+
+
 	public int GetResults(UpdateCParam cParam, CheckLogin checkLogin) {
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -156,29 +192,8 @@ public final class UpdateC extends UpC {
 				}
 
 				if(nNewContentId!=null){
-					boolean bUpdateFaild = false;
-					try{
-						// transaction
-						connection.setAutoCommit(false);
-						String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "comments_desc_cache", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests"};
-						for(String t : lUpdateTable){
-							strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
-							statement = connection.prepareStatement(strSql);
-							statement.setInt(1, nNewContentId);
-							statement.setInt(2, cParam.m_nContentId);
-							statement.executeUpdate();
-						}
-						connection.commit();
-					}catch(Exception e){
-						bUpdateFaild = true;
-						Log.d(strSql);
-						e.printStackTrace();
-						connection.rollback();
-					}finally{
-						if(statement!=null){statement.close();};statement=null;
-						connection.setAutoCommit(true);
-					}
-					if(bUpdateFaild){
+					boolean bUpdateResult = doUpdateContentIdTransaction(connection,  cParam.m_nContentId, nNewContentId);
+					if(!bUpdateResult){
 						try{
 							nNewContentId=null;
 							strSql = "DELETE FROM content_id_histories WHERE old_id=?";

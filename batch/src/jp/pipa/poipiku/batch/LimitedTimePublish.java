@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import jp.pipa.poipiku.controller.UpdateC;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -63,40 +64,28 @@ public class LimitedTimePublish extends Batch {
 		}
 
 		if(nNewContentId!=null){
-			boolean bUpdateFaild = false;
-			try{
-				// transaction
-				cConn.setAutoCommit(false);
-				String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "comments_desc_cache", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests"};
-				for(String t : lUpdateTable){
-					strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, nNewContentId);
-					cState.setInt(2, nOldContentId);
-					cState.executeUpdate();
-				}
-				cConn.commit();
-			}catch(Exception e){
-				bUpdateFaild = true;
+			boolean bUpdateResult;
+			try {
+				bUpdateResult = UpdateC.doUpdateContentIdTransaction(cConn, nOldContentId, nNewContentId);
+			} catch (SQLException e) {
 				e.printStackTrace();
-				try{cConn.rollback();}catch(SQLException se){se.printStackTrace();}
-			}finally{
-				try{cState.close();cState=null;}catch(SQLException se){};
-				try{cConn.setAutoCommit(true);}catch(SQLException se){se.printStackTrace();}
+				bUpdateResult = false;
+			} finally {
+				try{cConn.close();cConn=null;}catch(SQLException se){};
 			}
-			if(bUpdateFaild){
+
+			if(!bUpdateResult){
 				try{
+					cConn = dataSource.getConnection();
 					nNewContentId=null;
-					strSql = "DELETE FROM content_id_histories WEHRE old_id=?";
+					strSql = "DELETE FROM content_id_histories WHERE old_id=?";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, nOldContentId);
 					cState.executeUpdate();
 				}catch(Exception e){
 					e.printStackTrace();
-					try{cConn.rollback();}catch(SQLException se){se.printStackTrace();}
 				}finally{
 					try{cState.close();cState=null;}catch(SQLException se){};
-					try{cConn.setAutoCommit(true);}catch(SQLException se){se.printStackTrace();}
 				}
 			}
 		}

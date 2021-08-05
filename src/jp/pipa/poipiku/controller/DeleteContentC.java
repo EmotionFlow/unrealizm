@@ -149,6 +149,7 @@ public class DeleteContentC {
 				} catch (Exception e) {
 					Log.d("cannot delete content_append file : " + c.m_strFileName);
 				}
+				WriteBackFile.deleteByPrimaryKeys(WriteBackFile.TableCode.ContentsAppends, c.m_nAppendId);
 			}
 
 			///////
@@ -167,14 +168,17 @@ public class DeleteContentC {
 			statement.executeUpdate();
 			statement.close();statement=null;
 			connection.close();connection=null;
+
 			///////
 
 			// delete files
 			try{
 				ImageUtil.deleteFiles(m_cServletContext.getRealPath(cContent.m_strFileName));
 			} catch (Exception e) {
-				Log.d("connot delete content file : " + cContent.m_strFileName);
+				Log.d("cannot delete content file : " + cContent.m_strFileName);
 			}
+			WriteBackFile.deleteByPrimaryKeys(WriteBackFile.TableCode.Contents, m_nContentId);
+
 
 			// delete tweet
 			if(m_nUserId==cContent.m_nUserId && m_nDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
