@@ -268,7 +268,7 @@ public class UpdateFileOrderC {
 
 			nRtn = 0;
 		} catch(Exception e) {
-			Log.d(strSql);S
+			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
 			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
