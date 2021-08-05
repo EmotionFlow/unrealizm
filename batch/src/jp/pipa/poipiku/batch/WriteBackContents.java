@@ -40,6 +40,8 @@ public class WriteBackContents extends Batch {
 	}
 
 	public static void main(String[] args) {
+		Log.d("WriteBackContents batch start");
+
 		if (!WriteBackFile.deleteByStatus(WriteBackFile.Status.Moved, HOLD_IN_RECORD_MOVED_HOURS)){
 			Log.d("DBから「ステータス：移動済み」レコード削除に失敗");
 		}
@@ -50,8 +52,11 @@ public class WriteBackContents extends Batch {
 
 		// HDDへの移動対象を抽出
 		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS);
+		Log.d("moveTargets.size(): " + moveTargets.size());
 
+		int cnt = 1;
 		for (WriteBackFile writeBackFile: moveTargets) {
+			Log.d(String.format("writeBackFile move start: %d/%d", cnt++, moveTargets.size()));
 			writeBackFile.updateStatus(WriteBackFile.Status.Moving);
 
 			Path destDir = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path.replace(Common.CONTENTS_CACHE_DIR, Common.CONTENTS_STORAGE_DIR)).getParent();
@@ -130,6 +135,9 @@ public class WriteBackContents extends Batch {
 
 			// write_back_filesを更新
 			writeBackFile.updateStatus(WriteBackFile.Status.Moved);
+
+			Log.d(String.format("writeBackFile move end: %d/%d", cnt++, moveTargets.size()));
 		}
+		Log.d("WriteBackContents batch end");
 	}
 }
