@@ -107,8 +107,8 @@ class UploadFileAppendC {
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
 
+			WriteBackFile writeBackFile = new WriteBackFile();
 			if (CheckLogin.isTester198(cParam.m_nUserId)) {
-				WriteBackFile writeBackFile = new WriteBackFile();
 				writeBackFile.userId = cParam.m_nUserId;
 				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
 				writeBackFile.rowId = nAppendId;
@@ -185,7 +185,9 @@ class UploadFileAppendC {
 				cState.executeUpdate();
 				cState.close();cState=null;
 
-				writeBackFile.delete();
+				if (CheckLogin.isTester198(cParam.m_nUserId)) {
+					writeBackFile.delete();
+				}
 
 				return Common.UPLOAD_FILE_TOTAL_ERROR;
 			}
