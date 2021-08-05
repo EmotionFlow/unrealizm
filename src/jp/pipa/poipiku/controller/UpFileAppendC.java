@@ -189,7 +189,7 @@ public class UpFileAppendC extends UpC{
 				writeBackFile.rowId = nAppendId;
 				writeBackFile.path = strFileName;
 				if (!writeBackFile.insert()) {
-					Log.d("writeBackFile.add() error: " + cParam.m_nContentId);
+					Log.d("writeBackFile.insert() error: " + cParam.m_nContentId);
 				}
 			}
 

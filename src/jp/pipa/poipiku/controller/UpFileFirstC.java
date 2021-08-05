@@ -178,7 +178,7 @@ public class UpFileFirstC extends UpC{
 				writeBackFile.rowId = cContent.m_nContentId;
 				writeBackFile.path = strFileName;
 				if (!writeBackFile.insert()) {
-					Log.d("writeBackFile.add() error: " + cParam.m_nContentId);
+					Log.d("writeBackFile.insert() error: " + cParam.m_nContentId);
 				}
 			}
 

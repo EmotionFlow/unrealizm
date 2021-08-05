@@ -113,7 +113,9 @@ class UploadFileAppendC {
 				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
 				writeBackFile.rowId = nAppendId;
 				writeBackFile.path = strFileName;
-				writeBackFile.insert();
+				if (!writeBackFile.insert()) {
+					Log.d("writeBackFile.insert() error: " + nAppendId);
+				}
 			}
 
 			// ファイルサイズ系情報
