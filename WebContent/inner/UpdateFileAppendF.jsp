@@ -107,13 +107,14 @@ class UploadFileAppendC {
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);
 
-			WriteBackFile writeBackFile = new WriteBackFile();
-			writeBackFile.userId = cParam.m_nUserId;
-			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
-			writeBackFile.rowId = nAppendId;
-			writeBackFile.path = strFileName;
-			writeBackFile.insert();
-
+			if (CheckLogin.isTester198(cParam.m_nUserId)) {
+				WriteBackFile writeBackFile = new WriteBackFile();
+				writeBackFile.userId = cParam.m_nUserId;
+				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
+				writeBackFile.rowId = nAppendId;
+				writeBackFile.path = strFileName;
+				writeBackFile.insert();
+			}
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
