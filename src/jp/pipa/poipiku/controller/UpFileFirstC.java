@@ -139,13 +139,14 @@ public class UpFileFirstC extends UpC{
 			cConn = DatabaseUtil.dataSource.getConnection();
 			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
 				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
-				Util.deleteFile(strRealFileName);
 				strSql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nUserId);
 				cState.setInt(2, cParam.m_nContentId);
 				cState.executeUpdate();
 				cState.close();cState=null;
+				cConn.close();cConn=null;
+				Util.deleteFile(strRealFileName);
 				return Common.UPLOAD_FILE_TOTAL_ERROR;
 			}
 

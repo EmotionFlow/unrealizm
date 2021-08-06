@@ -178,17 +178,17 @@ class UploadFileAppendC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			if(fileTotalSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
-				Util.deleteFile(strRealFileName);
 				strSql ="DELETE FROM contents_appends_0000 WHERE append_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, nAppendId);
 				cState.executeUpdate();
 				cState.close();cState=null;
-
+				cConn.close();cConn=null;
 				if (CheckLogin.isTester198(cParam.m_nUserId)) {
 					writeBackFile.delete();
 				}
 
+				Util.deleteFile(strRealFileName);
 				return Common.UPLOAD_FILE_TOTAL_ERROR;
 			}
 

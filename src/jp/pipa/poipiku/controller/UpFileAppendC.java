@@ -166,12 +166,13 @@ public class UpFileAppendC extends UpC{
 			cState.close();cState=null;
 			if(fileTotalSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
 				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+fileTotalSize);
-				Util.deleteFile(strRealFileName);
 				strSql ="DELETE FROM contents_appends_0000 WHERE append_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, nAppendId);
 				cState.executeUpdate();
 				cState.close();cState=null;
+				cConn.close();cConn=null;
+				Util.deleteFile(strRealFileName);
 				return Common.UPLOAD_FILE_TOTAL_ERROR;
 			}
 
