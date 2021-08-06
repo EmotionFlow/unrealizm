@@ -88,6 +88,8 @@ public class UpFileFirstC extends UpC{
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
+			// この後の処理に時間がかかるので、一旦closeする。
+			cConn.close();cConn=null;
 			if(!bExist) {
 				Log.d("content not exist error : cParam.m_nUserId="+ cParam.m_nUserId + ", cParam.m_nContentId="+cParam.m_nContentId);
 				return nRtn;
@@ -133,6 +135,8 @@ public class UpFileFirstC extends UpC{
 			// ファイルサイズチェック
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
+
+			cConn = DatabaseUtil.dataSource.getConnection();
 			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
 				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
 				Util.deleteFile(strRealFileName);
