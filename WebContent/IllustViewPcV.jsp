@@ -279,7 +279,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			</section>
 		</article>
 
-		<%if (cResults.m_vRelatedContentList.size() > 0) {%>
+		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
 		<%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%>
 		<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Related")%></h2>
 		<article class="Wrapper GridList">

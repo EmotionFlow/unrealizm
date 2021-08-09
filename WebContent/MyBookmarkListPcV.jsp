@@ -57,15 +57,20 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</div>
 			<%}%>
 
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+			<%}%>
 
-			<div id="IllustThumbList" class="IllustThumbList">
+			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
-			</div>
+			</section>
 
 			<nav class="PageBar">
 				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

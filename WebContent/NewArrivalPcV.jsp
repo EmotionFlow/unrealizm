@@ -63,6 +63,13 @@ if(cResults.m_nCategoryId >= 0) {
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ThumbList">
+
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+			<%}%>
+
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_nCategoryId<0){%> Selected<%}%>" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>

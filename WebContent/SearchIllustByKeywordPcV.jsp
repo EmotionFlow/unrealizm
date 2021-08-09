@@ -77,10 +77,16 @@ String strFileUrl = cResults.m_strRepFileName;
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ThumbList">
+
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+			<%}%>
+
 			<header class="SearchResultTitle">
 				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
 			</header>
-
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {

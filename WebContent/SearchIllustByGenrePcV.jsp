@@ -97,6 +97,11 @@ String strFileUrl = results.repFileName;
 
 		<article class="Wrapper ThumbList">
 
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
