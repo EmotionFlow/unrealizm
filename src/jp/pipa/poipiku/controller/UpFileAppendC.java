@@ -183,15 +183,13 @@ public class UpFileAppendC extends UpC{
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			if (CheckLogin.isTester198(cParam.m_nUserId)) {
-				WriteBackFile writeBackFile = new WriteBackFile();
-				writeBackFile.userId = cParam.m_nUserId;
-				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
-				writeBackFile.rowId = nAppendId;
-				writeBackFile.path = strFileName;
-				if (!writeBackFile.insert()) {
-					Log.d("writeBackFile.insert() error: " + cParam.m_nContentId);
-				}
+			WriteBackFile writeBackFile = new WriteBackFile();
+			writeBackFile.userId = cParam.m_nUserId;
+			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
+			writeBackFile.rowId = nAppendId;
+			writeBackFile.path = strFileName;
+			if (!writeBackFile.insert()) {
+				Log.d("writeBackFile.insert() error: " + cParam.m_nContentId);
 			}
 
 			nRtn = nAppendId;
