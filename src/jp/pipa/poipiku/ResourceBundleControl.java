@@ -7,34 +7,40 @@ import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import jp.pipa.poipiku.util.Util;
 
 
-public class ResourceBundleControl {
+public final class ResourceBundleControl {
 	private final ResourceBundle objRb;
-	private final ResourceBundle objRbJa;
-	private final ResourceBundle objRbEn;
+	static private final ResourceBundle objRbJa;
+	static private final ResourceBundle objRbEn;
 	public int ID;
 	static public final int ID_EN = 0;
 	static public final int ID_JA = 1;
 
+	static {
+		objRbJa = CResourceBundleUtil.getJa();
+		objRbEn = CResourceBundleUtil.getEn();
+	}
 
-	public ResourceBundleControl(HttpServletRequest request) {
-		String strLang="";
+
+	public ResourceBundleControl(HttpServletRequest request, HttpServletResponse response) {
+		String strLangParam = "";
+		String strLang = "";
 
 		try {
 			request.setCharacterEncoding("UTF-8");
-			strLang = Util.toString(request.getParameter(Common.LANG_ID_POST));
+			strLangParam = Util.toString(request.getParameter(Common.LANG_ID_POST));
 		} catch (Exception ignored) {
 			;
 		}
-		if(strLang.isEmpty()) {
+		if(strLangParam.isEmpty()) {
 			strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
+		} else {
+			strLang = strLangParam;
 		}
-
-		objRbJa = CResourceBundleUtil.getJa();
-		objRbEn = CResourceBundleUtil.getEn();
 
 		if(strLang.equals("en")){
 			objRb = objRbEn;
@@ -43,21 +49,15 @@ public class ResourceBundleControl {
 			objRb = objRbJa;
 			ID = ID_JA;
 		}
+
+		if (!strLangParam.isEmpty()) {
+			Util.setCookie(response, Common.LANG_ID, strLangParam, Integer.MAX_VALUE);
+		}
 	}
 
-	public ResourceBundleControl(String strLang) {
-		strLang="ja";
-
-		objRbJa = CResourceBundleUtil.getJa();
-		objRbEn = CResourceBundleUtil.getEn();
-
-		if(strLang.equals("en")){
-			objRb = objRbEn;
-			ID = 0;
-		} else {
-			objRb = objRbJa;
-			ID = 1;
-		}
+	public ResourceBundleControl() {
+		objRb = objRbJa;
+		ID = ID_JA;
 	}
 
 	public String T(String key) {

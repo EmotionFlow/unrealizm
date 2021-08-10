@@ -17,7 +17,7 @@
 <%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%
-ResourceBundleControl _TEX = new ResourceBundleControl(request);
+ResourceBundleControl _TEX = new ResourceBundleControl(request, response);
 int g_nSafeFilter = Common.AD_ID_ALL;
 String g_strSearchWord = "";
 boolean SP_REVIEW = true;
