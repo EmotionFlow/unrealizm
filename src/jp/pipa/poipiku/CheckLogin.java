@@ -41,13 +41,6 @@ public final class CheckLogin {
 		return m_staffIds.contains(m_nUserId);
 	}
 
-	public boolean isTester198(){
-		return m_testStaffIds.contains(m_nUserId);
-	}
-	static public boolean isTester198(final int userId){
-		return m_testStaffIds.contains(userId);
-	}
-
 	static public boolean isStaff(final int userId){
 		return m_staffIds.contains(userId);
 	}

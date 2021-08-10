@@ -108,14 +108,12 @@ class UploadFileAppendC {
 			ImageUtil.createThumbIllust(strRealFileName);
 
 			WriteBackFile writeBackFile = new WriteBackFile();
-			if (CheckLogin.isTester198(cParam.m_nUserId)) {
-				writeBackFile.userId = cParam.m_nUserId;
-				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
-				writeBackFile.rowId = nAppendId;
-				writeBackFile.path = strFileName;
-				if (!writeBackFile.insert()) {
-					Log.d("writeBackFile.insert() error: " + nAppendId);
-				}
+			writeBackFile.userId = cParam.m_nUserId;
+			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
+			writeBackFile.rowId = nAppendId;
+			writeBackFile.path = strFileName;
+			if (!writeBackFile.insert()) {
+				Log.d("writeBackFile.insert() error: " + nAppendId);
 			}
 
 			// ファイルサイズ系情報
@@ -184,9 +182,7 @@ class UploadFileAppendC {
 				cState.executeUpdate();
 				cState.close();cState=null;
 				cConn.close();cConn=null;
-				if (CheckLogin.isTester198(cParam.m_nUserId)) {
-					writeBackFile.delete();
-				}
+				writeBackFile.delete();
 
 				Util.deleteFile(strRealFileName);
 				return Common.UPLOAD_FILE_TOTAL_ERROR;
