@@ -6,6 +6,8 @@ import javax.servlet.ServletContextListener;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import org.apache.velocity.app.Velocity;
 
+import java.util.Locale;
+
 
 public class InitializationListener implements ServletContextListener {
 	//AccessUnique accessUnique = new AccessUnique();
@@ -16,6 +18,8 @@ public class InitializationListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 		//ServletContext context=event.getServletContext();
 		//context.setAttribute("access_unique", accessUnique);
+
+		Locale.setDefault(Locale.ENGLISH);
 
 		Emoji emoji = Emoji.getInstance();
 		emoji.init();
