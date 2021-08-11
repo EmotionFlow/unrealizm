@@ -177,6 +177,7 @@ public final class RegistTwitterUserC {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
+
 		try {
 			String strPassword = RandomStringUtils.randomAlphanumeric(16);
 			String strHashPass = Util.getHashPass(strPassword);

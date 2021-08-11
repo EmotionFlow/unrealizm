@@ -1,38 +1,37 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-	request.setCharacterEncoding("UTF-8");
+request.setCharacterEncoding("UTF-8");
 
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
-
-int m_nLangId = Util.toIntN(request.getParameter("LD"), 0, 1);
-
 if(!checkLogin.m_bLogin) return;
 
-DataSource dsPostgres = null;
-Connection cConn = null;
-PreparedStatement cState = null;
-ResultSet cResSet = null;
+final int langId;
+String strLocale = Util.toString(request.getParameter("LD"));
+if (!strLocale.isEmpty()) {
+	langId = SupportedLocales.findId(strLocale);
+} else {
+	return;
+}
+
+Connection connection = null;
+PreparedStatement statement = null;
 String strSql = "";
 
 try {
-	Class.forName("org.postgresql.Driver");
-	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-	cConn = dsPostgres.getConnection();
-
+	connection = DatabaseUtil.dataSource.getConnection();
 	strSql = "UPDATE users_0000 SET lang_id=? WHERE user_id=?";
-	cState = cConn.prepareStatement(strSql);
-	cState.setInt(1, m_nLangId);
-	cState.setInt(2, checkLogin.m_nUserId);
-	cState.executeUpdate();
-	cState.close();cState=null;
+	statement = connection.prepareStatement(strSql);
+	statement.setInt(1, langId);
+	statement.setInt(2, checkLogin.m_nUserId);
+	statement.executeUpdate();
+	statement.close();statement =null;
 	CacheUsers0000.getInstance().clearUser(checkLogin.m_strHashPass);
 } catch(Exception e) {
 	e.printStackTrace();
 } finally {
-	try{if(cState != null) cState.close();cState=null;} catch(Exception e) {;}
-	try{if(cConn != null) cConn.close();cConn=null;} catch(Exception e) {;}
-	try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+	try{if(statement != null) statement.close();statement =null;} catch(Exception ignored) {;}
+	try{if(connection != null) connection.close();connection =null;} catch(Exception ignored) {;}
 }
-%>{"result":<%=m_nLangId%>}
+%>{"result":<%=langId%>}

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="jp.pipa.poipiku.Common" %>
-<%@ page import="static jp.pipa.poipiku.ResourceBundleControl.ID_JA" %>
 
 <script type="text/javascript">
 	function toggleSwitchUserList(){
@@ -59,7 +58,7 @@
 </style>
 <div class="SwitchUserDlg">
 
-<%if(_TEX.ID == ID_JA){%>
+<%if(_TEX.getLocale() == java.util.Locale.JAPANESE){%>
 <h2 class="SwitchUserDlgTitle">きりかえ(β)</h2>
 <div class="SwitchUserDlgInfo">
 <ul>

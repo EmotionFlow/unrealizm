@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -215,7 +216,6 @@ public final class Common {
 	public static int LANG_ID_OTHER = 0;
 	public static int LANG_ID_JP = 1;
 	public static int LANG_ID_EN = 0;
-
 
 	public static String CrLfInjection(String strSrc) {
 		if(strSrc == null) {

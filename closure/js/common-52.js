@@ -87,14 +87,16 @@ function ChLang(l){
 		setCookie('LANG',l);
 	} else {
 		deleteCookie('LANG');
+		location.reload();
+		return;
 	}
-	var nLangId = (l=="ja")?1:0;
+
 	$.ajaxSingle({
 		"type": "post",
-		"data": { "LD":nLangId },
+		"data": { "LD":l },
 		"url": "/f/UpdateLanguageF.jsp",
 		"success": function(data) {
-			location.reload(true);
+			location.reload();
 		}
 	});
 }
