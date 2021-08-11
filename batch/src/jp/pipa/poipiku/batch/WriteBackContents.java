@@ -20,7 +20,7 @@ public class WriteBackContents extends Batch {
 	static final int HOLD_IN_CACHE_HOURS = 36;
 
 	// HDDへの移動後も、DBにレコードを保持しておく時間
-	static final int HOLD_IN_RECORD_MOVED_HOURS = 180;
+	static final int HOLD_AFTER_RECORD_MOVED_HOURS = 180;
 
 	static List<String> TGT_FILE_NAMES;
 	static final String SQL_UPDATE_CONTENT_FILENAME =
@@ -42,7 +42,7 @@ public class WriteBackContents extends Batch {
 	public static void main(String[] args) {
 		Log.d("WriteBackContents batch start");
 
-		if (!WriteBackFile.deleteByStatus(WriteBackFile.Status.Moved, HOLD_IN_RECORD_MOVED_HOURS)){
+		if (!WriteBackFile.deleteByStatus(WriteBackFile.Status.Moved, HOLD_AFTER_RECORD_MOVED_HOURS)){
 			Log.d("DBから「ステータス：移動済み」レコード削除に失敗");
 		}
 
@@ -52,6 +52,9 @@ public class WriteBackContents extends Batch {
 
 		// HDDへの移動対象を抽出
 		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS);
+		if (moveTargets == null) {
+			moveTargets = new ArrayList<>();
+		}
 		Log.d("moveTargets.size(): " + moveTargets.size());
 
 		int cnt = 1;
@@ -99,8 +102,10 @@ public class WriteBackContents extends Batch {
 					Log.d("想定外のtable_code: " + writeBackFile.tableCode.getCode());
 					isSuccess = false;
 				}
-				statement.setInt(1, writeBackFile.rowId);
-				statement.executeUpdate();
+				if (isSuccess){
+					statement.setInt(1, writeBackFile.rowId);
+					statement.executeUpdate();
+				}
 			} catch (SQLException e) {
 				Log.d(sql);
 				e.printStackTrace();
