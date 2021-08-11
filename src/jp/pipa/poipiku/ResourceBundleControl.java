@@ -9,52 +9,23 @@ import java.util.ResourceBundle.Control;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
-import org.postgresql.util.PGobject;
 
 
 public final class ResourceBundleControl {
 	private ResourceBundle objRb;
-
-	static private final ResourceBundle objRbJa;
-	static private final ResourceBundle objRbEn;
-
-	static {
-		objRbJa = CResourceBundleUtil.getJa();
-		objRbEn = CResourceBundleUtil.getEn();
-	}
-
-	static private Locale getLocale(String langStr) {
-		Locale locale;
-		String[] lcv = langStr.split("-");
-		switch (lcv.length) {
-			case 1:
-				locale = new Locale(lcv[0]);
-				break;
-			case 2:
-				locale = new Locale(lcv[0], lcv[1]);
-				break;
-			case 3:
-				locale = new Locale(lcv[0], lcv[1], lcv[2]);
-				break;
-			default:
-				locale = new Locale("");
-		}
-		return locale;
-	}
 
 	public ResourceBundleControl(HttpServletRequest request, HttpServletResponse response) {
 		/*
 		url paramにhlあり
 			サポートしている言語 -> rs_??を採用
 			サポートしていない言語 -> rs_enを採用
-			setCookie
+			採用されたロケールでsetCookieする。
 
 		url paramにhlなし
 			CookieにLANGあり -> それ採用
 			CookieにLANGなし -> rs_jaを採用
-			 */
+		*/
 		String strLangParam = null;
 		String strLangCookie = null;
 
@@ -65,9 +36,9 @@ public final class ResourceBundleControl {
 			strLangParam = request.getParameter(Common.LANG_ID_POST);
 
 			if (strLangParam != null) {
-				locale = getLocale(strLangParam);
+				locale = SupportedLocales.getLocale(strLangParam);
 				objRb = CResourceBundleUtil.get(locale);
-				Util.setCookie(response, Common.LANG_ID, strLangParam, Integer.MAX_VALUE);
+				Util.setCookie(response, Common.LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
 				return;
 			}
 		} catch (Exception ignored) {}
@@ -77,7 +48,7 @@ public final class ResourceBundleControl {
 			if (strLangCookie == null) {
 				objRb = CResourceBundleUtil.getJa();
 			} else {
-				objRb = CResourceBundleUtil.get(getLocale(strLangCookie));
+				objRb = CResourceBundleUtil.get(SupportedLocales.getLocale(strLangCookie));
 			}
 		}
 	}
@@ -87,17 +58,14 @@ public final class ResourceBundleControl {
 	}
 
 	public ResourceBundleControl() {
-		objRb = objRbJa;
+		objRb = CResourceBundleUtil.getJa();
 	}
 
 	public String T(String key) {
 		return objRb.getString(key);
 	}
-	public String TJa(String key) {
-		return objRbJa.getString(key);
-	}
-	public String TEn(String key) {
-		return objRbEn.getString(key);
+	static public String T(Locale locale, String key) {
+		return CResourceBundleUtil.get(locale).getString(key);
 	}
 
 	static public class CResourceBundleUtil {
@@ -105,7 +73,7 @@ public final class ResourceBundleControl {
 		static private final long TIME_TO_LIVE = 30000L;
 
 		static final List<Locale> JP = Arrays.asList(Locale.JAPANESE, Locale.ROOT);
-		static final List<Locale> ROOT = Arrays.asList(Locale.ROOT, Locale.ENGLISH);
+		static final List<Locale> EN = Arrays.asList(Locale.ENGLISH, Locale.ROOT);
 
 		static final Control CTRL = new ResourceBundle.Control() {
 			@Override
@@ -117,9 +85,9 @@ public final class ResourceBundleControl {
 				if (locale.equals(Locale.JAPAN) || locale.equals(Locale.JAPANESE)) {
 					return JP;
 				} else if(locale.equals(Locale.US) || locale.equals(Locale.UK) || locale.equals(Locale.ENGLISH)) {
-					return ROOT;
+					return EN;
 				} else {
-					return ROOT;
+					return EN;
 				}
 			}
 			@Override

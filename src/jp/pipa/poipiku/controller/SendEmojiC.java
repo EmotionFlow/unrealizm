@@ -297,9 +297,9 @@ public class SendEmojiC {
 			final int nBadgeNum = InfoList.selectUnreadBadgeSum(cTargUser.m_nUserId, null);
 
 			// 送信文字列
-			final String strTitle = (cTargUser.m_nLangId==1)?_TEX.TJa("Notification.Reaction.Title"):_TEX.TEn("Notification.Reaction.Title");
+			final String strTitle = ResourceBundleControl.T(CUser.LANG_MAP.get(cTargUser.m_nLangId),"Notification.Reaction.Title");
 			final String strSubTitle = "";
-			final String strBody = (cTargUser.m_nLangId==1)?_TEX.TJa("ActivityList.Message.Comment"):_TEX.TEn("ActivityList.Message.Comment");
+			final String strBody = ResourceBundleControl.T(CUser.LANG_MAP.get(cTargUser.m_nLangId),"ActivityList.Message.Comment");
 
 			// 通知DB登録
 			// 連射しないように同じタイプの未送信の通知を削除
