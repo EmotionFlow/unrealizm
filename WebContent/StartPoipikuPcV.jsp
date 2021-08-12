@@ -113,6 +113,11 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 						</a>
 					</form>
 				</div>
+				<div class="AnalogicoInfoRegist">
+					<a class="RegistByMainLink" href="/MyHomePcV.jsp">
+						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+					</a>
+				</div>
 				<div class="AnalogicoStart" style="margin-top: 0;">
 					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
 					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
@@ -147,28 +152,27 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 
 				<div class="PoipikuDesc Full">
 					<div class="DescTitle">
-						転載対策もOK！
+						<%=_TEX.T("StartPoipiku.Desc01.Title")%>
 						<div class="DescSubTitle">
-							転載禁止表示と右クリック禁止対策
+							<%=_TEX.T("StartPoipiku.Desc01.TitleSub")%>
 						</div>
 					</div>
 					<div class="DescTitle">
-						動くイラストもOK！
+						<%=_TEX.T("StartPoipiku.Desc02.Title")%>
 						<div class="DescSubTitle">
-							アニメーションGIFにもフル対応
+							<%=_TEX.T("StartPoipiku.Desc02.TitleSub")%>
 						</div>
 					</div>
 					<div class="DescTitle">
-						ポイピクの活動を定期ツイート！
+						<%=_TEX.T("StartPoipiku.Desc03.Title")%>
 						<div class="DescSubTitle">
-							週1回もしくは毎日の指定時間に定期ツイート ＆ 古い定期ツイート自動削除でTwitterの画像一覧が埋まらない
+							<%=_TEX.T("StartPoipiku.Desc03.TitleSub")%>
 						</div>
 					</div>
 					<div class="DescTitle">
-						イラストSNS12年の運営実績
+						<%=_TEX.T("StartPoipiku.Desc04.Title")%>
 						<div class="DescSubTitle">
-							2007年から手書きブログを開始し、イラストSNS運営実績は13年。
-							安心してご利用ください。
+							<%=_TEX.T("StartPoipiku.Desc04.TitleSub")%>
 						</div>
 					</div>
 				</div>
@@ -178,7 +182,7 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 		<article class="Wrapper">
 			<section class="AnalogicoInfo" style="display: block; padding: 100px 0;">
 				<div class="AnalogicoDesc Title">
-						さあ、はじめよう！
+						<%=_TEX.T("StartPoipiku.LetsStart")%>
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="/LoginFormTwitter.jsp?CBPATH=">
