@@ -9,6 +9,7 @@ import java.util.ResourceBundle.Control;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 
@@ -37,6 +38,7 @@ public final class ResourceBundleControl {
 
 			if (strLangParam != null) {
 				locale = SupportedLocales.getLocale(strLangParam);
+				Log.d("locale: ", locale.toString());
 				objRb = CResourceBundleUtil.get(locale);
 				Util.setCookie(response, Common.LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
 				return;
