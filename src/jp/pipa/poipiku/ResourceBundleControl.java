@@ -66,6 +66,18 @@ public final class ResourceBundleControl {
 	public String T(String key) {
 		return objRb.getString(key);
 	}
+
+	public String getLangStr() {
+		Locale locale = objRb.getLocale();
+		if (locale.equals(Locale.SIMPLIFIED_CHINESE)) {
+			return "zh-cmn-Hans";
+		} else if (locale.equals(Locale.TRADITIONAL_CHINESE)) {
+			return "zh-cmn-Hant";
+		} else {
+			return locale.getLanguage();
+		}
+	}
+
 	static public String T(Locale locale, String key) {
 		return CResourceBundleUtil.get(locale).getString(key);
 	}
