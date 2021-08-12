@@ -11,6 +11,7 @@ public final class SupportedLocales {
 		List<UserLocale> l = new ArrayList<>();
 		l.add(new UserLocale(0, Locale.ENGLISH));
 		l.add(new UserLocale(1, Locale.JAPANESE));
+		l.add(new UserLocale(3, Locale.SIMPLIFIED_CHINESE));
 		list = Collections.unmodifiableList(l);
 	}
 

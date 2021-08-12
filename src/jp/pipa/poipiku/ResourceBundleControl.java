@@ -80,16 +80,19 @@ public final class ResourceBundleControl {
 			public long getTimeToLive(String baseName, Locale locale) {
 				return TIME_TO_LIVE;
 			}
-			@Override
-			public List<Locale> getCandidateLocales(String baseName, Locale locale) {
-				if (locale.equals(Locale.JAPAN) || locale.equals(Locale.JAPANESE)) {
-					return JP;
-				} else if(locale.equals(Locale.US) || locale.equals(Locale.UK) || locale.equals(Locale.ENGLISH)) {
-					return EN;
-				} else {
-					return EN;
-				}
-			}
+//			@Override
+//			public List<Locale> getCandidateLocales(String baseName, Locale locale) {
+//				if (locale.equals(Locale.JAPAN)
+//						|| locale.equals(Locale.JAPANESE)) {
+//					return JP;
+//				} else if(locale.equals(Locale.US)
+//						|| locale.equals(Locale.UK)
+//						|| locale.equals(Locale.ENGLISH)) {
+//					return EN;
+//				} else {
+//					return EN;
+//				}
+//			}
 			@Override
 			public List<String> getFormats(String baseName){
 				return FORMAT_PROPERTIES;
