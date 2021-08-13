@@ -600,8 +600,8 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Language")%></div>
 					<div class="SettingBody">
-						<a style="text-decoration: underline;" onclick="ChLang('en')" href="javascript:void(0);">English</a>
-						<a style="text-decoration: underline;" onclick="ChLang('ja')" href="javascript:void(0);">日本語</a><br />
+						<a style="text-decoration: underline;" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a>
+						<a style="text-decoration: underline;" hreflang="ja" onclick="ChLang('ja', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">日本語</a><br />
 					</div>
 				</div>
 

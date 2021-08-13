@@ -82,7 +82,7 @@ function deleteCookie(key, tmp) {
 	document.cookie = tmp;
 }
 
-function ChLang(l){
+function ChLang(l,isLogin){
 	if(l.length>0) {
 		setCookie('LANG',l);
 	} else {
@@ -91,14 +91,18 @@ function ChLang(l){
 		return;
 	}
 
-	$.ajaxSingle({
-		"type": "post",
-		"data": { "LD":l },
-		"url": "/f/UpdateLanguageF.jsp",
-		"success": function(data) {
-			location.reload();
-		}
-	});
+	if(isLogin){
+		$.ajaxSingle({
+			"type": "post",
+			"data": { "LD":l },
+			"url": "/f/UpdateLanguageF.jsp",
+			"success": function(data) {
+				location.reload();
+			}
+		});
+	}else{
+		location.reload();
+	}
 }
 
 function setLocalStrage(key, val) {

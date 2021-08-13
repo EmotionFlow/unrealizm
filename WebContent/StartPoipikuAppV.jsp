@@ -51,7 +51,6 @@ if(strRequestUri != null) {
 	</script>
 
 	<body>
-
 		<article class="Wrapper">
 			<section id="InfoMsg" style="float: left; width: 100%; padding: 60px 0 0 0; text-align: center;">
 				<div class="AnalogicoDesc Title">
@@ -76,9 +75,9 @@ if(strRequestUri != null) {
 					</p>
 				</div>
 				<div class="AnalogicoLang">
-					<a style="text-decoration: underline; color: #fff;" onclick="ChLang('en')" href="javascript:void(0);">English</a>
+					<a style="text-decoration: underline; color: #fff;" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a>
 					&nbsp
-					<a style="text-decoration: underline; color: #fff;" onclick="ChLang('ja')" href="javascript:void(0);">日本語</a>
+					<a style="text-decoration: underline; color: #fff;" hreflang="ja" onclick="ChLang('ja', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">日本語</a>
 				</div>
 			</section>
 		</article><!--Wrapper-->

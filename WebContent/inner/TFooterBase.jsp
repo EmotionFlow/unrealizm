@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jp.pipa.poipiku.*"%>
-<%@page import="jp.pipa.poipiku.cache.*"%>
-<%@page import="jp.pipa.poipiku.controller.*"%>
-<%@page import="jp.pipa.poipiku.settlement.*"%>
-<%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <div style="clear: both;"></div>
 <footer class="Footer">
@@ -48,8 +44,8 @@
 	<nav class="FooterLink">
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Language")%></dt>
-			<dd><a class="FooterHref" onclick="ChLang('ja')" href="javascript:void(0);">日本語</a></dd>
-			<dd><a class="FooterHref" onclick="ChLang('en')" href="javascript:void(0);">English</a></dd>
+			<dd><a class="FooterHref" hreflang="ja" onclick="ChLang('ja', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">日本語</a></dd>
+			<dd><a class="FooterHref" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a></dd>
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Usage")%></dt>
