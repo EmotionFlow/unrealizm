@@ -38,7 +38,7 @@ public final class ResourceBundleControl {
 
 			if (strLangParam != null) {
 				locale = SupportedLocales.getLocale(strLangParam);
-				Log.d("locale: ", locale.toString());
+				// Log.d("locale: ", locale.toString());
 				objRb = CResourceBundleUtil.get(locale);
 				Util.setCookie(response, Common.LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
 				return;
