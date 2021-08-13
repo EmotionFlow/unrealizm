@@ -46,4 +46,35 @@ public class EmailUtil {
 		}
 		return true;
 	}
+	public static boolean sendByUTF8(final String toAddress, final String subject, final String body) {
+		final String FROM_NAME = "POIPIKU";
+		final String FROM_ADDR = "info@poipiku.com";
+		final String SMTP_HOST = "127.0.0.1";
+		final String CHARSET = "UTF-8";
+		try{
+			Properties objSmtp = System.getProperties();
+			objSmtp.put("mail.smtp.host", SMTP_HOST);
+			objSmtp.put("mail.host", SMTP_HOST);
+			objSmtp.put("mail.smtp.localhost", SMTP_HOST);
+			Session objSession = Session.getDefaultInstance(objSmtp, null);
+			MimeMessage objMime = new MimeMessage(objSession);
+			objMime.setFrom(new InternetAddress(FROM_ADDR, FROM_NAME, CHARSET));
+			objMime.setRecipients(Message.RecipientType.TO, toAddress);
+			objMime.setSubject(subject, CHARSET);
+			objMime.setText(body, CHARSET);
+			objMime.setHeader("Content-Type", "text/plain");
+			objMime.setHeader("Content-Transfer-Encoding", CHARSET);
+			objMime.setSentDate(new java.util.Date());
+			Transport.send(objMime);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			Log.d("メールの送信に失敗しました");
+			Log.d("to: " + toAddress);
+			Log.d("subject: " + subject);
+			Log.d("body: " + body);
+			return false;
+		}
+		return true;
+	}
+
 }

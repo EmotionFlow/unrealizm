@@ -553,20 +553,24 @@ public class UserAuthUtil {
 						strPassword);
 			}
 
-			Properties objSmtp = System.getProperties();
-			objSmtp.put("mail.smtp.host", SMTP_HOST);
-			objSmtp.put("mail.host", SMTP_HOST);
-			objSmtp.put("mail.smtp.localhost", SMTP_HOST);
-			Session objSession = Session.getDefaultInstance(objSmtp, null);
-			MimeMessage objMime = new MimeMessage(objSession);
-			objMime.setFrom(new InternetAddress(FROM_ADDR, FROM_NAME, "iso-2022-jp"));
-			objMime.setRecipients(Message.RecipientType.TO, strEmail);
-			objMime.setSubject(EMAIL_TITLE, "iso-2022-jp");
-			objMime.setText(strEmailText, "iso-2022-jp");
-			objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
-			objMime.setHeader("Content-Transfer-Encoding", "7bit");
-			objMime.setSentDate(new java.util.Date());
-			Transport.send(objMime);
+			if (checkLogin.isStaff()) {
+				EmailUtil.sendByUTF8(strEmail, EMAIL_TITLE, strEmailText);
+			} else {
+				Properties objSmtp = System.getProperties();
+				objSmtp.put("mail.smtp.host", SMTP_HOST);
+				objSmtp.put("mail.host", SMTP_HOST);
+				objSmtp.put("mail.smtp.localhost", SMTP_HOST);
+				Session objSession = Session.getDefaultInstance(objSmtp, null);
+				MimeMessage objMime = new MimeMessage(objSession);
+				objMime.setFrom(new InternetAddress(FROM_ADDR, FROM_NAME, "iso-2022-jp"));
+				objMime.setRecipients(Message.RecipientType.TO, strEmail);
+				objMime.setSubject(EMAIL_TITLE, "iso-2022-jp");
+				objMime.setText(strEmailText, "iso-2022-jp");
+				objMime.setHeader("Content-Type", "text/plain; charset=iso-2022-jp");
+				objMime.setHeader("Content-Transfer-Encoding", "7bit");
+				objMime.setSentDate(new java.util.Date());
+				Transport.send(objMime);
+			}
 			nRtn = nUserId;
 		} catch(Exception e) {
 			Log.d(strSql);
