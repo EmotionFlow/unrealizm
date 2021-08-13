@@ -51,6 +51,7 @@ public class EmailUtil {
 		final String FROM_ADDR = "info@poipiku.com";
 		final String SMTP_HOST = "127.0.0.1";
 		final String CHARSET = "UTF-8";
+		final String ENCODE   = "8bit";
 		try{
 			Properties objSmtp = System.getProperties();
 			objSmtp.put("mail.smtp.host", SMTP_HOST);
@@ -63,7 +64,7 @@ public class EmailUtil {
 			objMime.setSubject(subject, CHARSET);
 			objMime.setText(body, CHARSET);
 			objMime.setHeader("Content-Type", "text/plain");
-			objMime.setHeader("Content-Transfer-Encoding", CHARSET);
+			objMime.setHeader("Content-Transfer-Encoding", ENCODE);
 			objMime.setSentDate(new java.util.Date());
 			Transport.send(objMime);
 		} catch (Exception ex) {
