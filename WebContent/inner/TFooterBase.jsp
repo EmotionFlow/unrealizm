@@ -83,7 +83,7 @@
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Company")%></dt>
-			<dd><a class="FooterHref" href="http://www.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Company")%></a></dd>
+			<dd><a class="FooterHref" href="https://www.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Company")%></a></dd>
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Service")%></dt>
@@ -102,6 +102,6 @@
 	<div class="FooterCopy">
 		Copyright(C) 2017 -
 		based on <a class="FooterHref" href="https://analogico.pipa.jp/" target="_blank">analogico</a> by
-		<a class="FooterHref" href="http://www.pipa.jp/" target="_blank">Pipa.jp Ltd.</a>
+		<a class="FooterHref" href="https://www.pipa.jp/" target="_blank">Pipa.jp Ltd.</a>
 	</div>
 </footer>
