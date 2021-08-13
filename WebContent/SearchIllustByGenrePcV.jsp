@@ -19,7 +19,7 @@ String strUrl = "https://poipiku.com/SearchIllustByGenrePcV.jsp?GD="+results.gen
 String strFileUrl = results.repFileName;
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>

@@ -13,7 +13,7 @@ if (!results.getResults(checkLogin)) {
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
 	<%if(isApp){%>
 	<%@ include file="/inner/THeaderCommon.jsp" %>

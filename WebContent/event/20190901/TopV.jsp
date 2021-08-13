@@ -12,7 +12,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(cResults.m_strKeyword)%></title>

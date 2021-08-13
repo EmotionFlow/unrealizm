@@ -33,7 +33,7 @@ if (requestId > 0) {
 
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />

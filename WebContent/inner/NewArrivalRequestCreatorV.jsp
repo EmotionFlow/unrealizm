@@ -21,7 +21,7 @@
 	boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 <head>
 	<%if(isApp){%>
 	<%@ include file="/inner/THeaderCommon.jsp"%>

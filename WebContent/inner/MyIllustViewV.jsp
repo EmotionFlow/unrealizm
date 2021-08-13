@@ -63,7 +63,7 @@ String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResult
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 <head>
 	<%=isApp?"<!-- ":""%>
 	<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>

@@ -11,7 +11,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bMobile = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title>問題の報告</title>

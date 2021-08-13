@@ -9,7 +9,7 @@ int nContentId	= Util.toInt(request.getParameter("TD"));
 CheckLogin checkLogin = new CheckLogin(request, response);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>問題の報告</title>

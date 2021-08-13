@@ -5,7 +5,7 @@
 	if (!checkLogin.m_bLogin) return;
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 <head>
 	<%@ include file="/inner/THeaderCommonPc.jsp" %>
 	<title>リクエスト(β) ガイドライン</title>

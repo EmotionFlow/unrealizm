@@ -4,7 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - PonQコラボ開催中</title>

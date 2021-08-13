@@ -18,7 +18,7 @@ String categoryInfo = "";
 if(cResults.m_nCategoryId>=0) categoryInfo = _TEX.T(String.format("Category.C%d.Info", cResults.m_nCategoryId)).trim();
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>recent</title>

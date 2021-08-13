@@ -12,7 +12,7 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("LoginFormV.Button.ForgotPassword")%> | <%=_TEX.T("THeader.Title")%></title>

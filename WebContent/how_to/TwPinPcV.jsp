@@ -10,7 +10,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 //}
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("HowTo.Title")%></title>

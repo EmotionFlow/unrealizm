@@ -10,7 +10,7 @@ if(!bSmartPhone) {
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - 使い回しハロウィン</title>

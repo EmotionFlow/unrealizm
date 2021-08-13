@@ -15,7 +15,7 @@ cResults.SELECT_MAX_GALLERY = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>

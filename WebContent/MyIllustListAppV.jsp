@@ -30,7 +30,7 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>

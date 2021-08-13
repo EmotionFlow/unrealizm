@@ -16,7 +16,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdSearchUserPcHeader.jsp"%>

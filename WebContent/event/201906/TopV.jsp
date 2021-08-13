@@ -4,7 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - うまい棒40周年記念勝手企画</title>

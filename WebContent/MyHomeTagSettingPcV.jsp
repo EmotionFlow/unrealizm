@@ -13,7 +13,7 @@ cResults.getParam(request);
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />

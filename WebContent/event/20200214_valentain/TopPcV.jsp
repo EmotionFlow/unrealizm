@@ -10,7 +10,7 @@ if(!bSmartPhone) {
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title>ポイピクバレンタイン | <%=_TEX.T("THeader.Title")%></title>

@@ -18,7 +18,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - ギャップにもえろ</title>

@@ -11,7 +11,7 @@ checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - ポイピク誕生祭</title>

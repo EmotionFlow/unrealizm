@@ -10,7 +10,7 @@ cResults.getParam(request);
 cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp" %>
 		<title><%=_TEX.T("MyEditSettingPassportV.Title")%></title>

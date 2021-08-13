@@ -39,7 +39,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%> | <%=_TEX.T("THeader.Title")%></title>

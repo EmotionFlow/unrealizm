@@ -104,7 +104,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 } else {
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 <head>
 	<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("EditSettingV.Twitter")%></title>
 

@@ -15,7 +15,7 @@ String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>

@@ -18,7 +18,7 @@ if (infoType==-1) infoType = 1;
 
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/TSweetAlert.jsp"%>

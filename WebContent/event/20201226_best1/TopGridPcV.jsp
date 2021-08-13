@@ -5,7 +5,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title>自分的祭りマンガ2020 | <%=_TEX.T("THeader.Title")%></title>

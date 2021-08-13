@@ -21,7 +21,7 @@ String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKe
 String strFileUrl = cResults.m_strRepFileName;
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>

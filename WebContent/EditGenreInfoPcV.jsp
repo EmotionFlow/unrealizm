@@ -29,7 +29,7 @@ boolean editable = (genre.genreId>=1);
 String disable = (editable)?"":"Disabled";
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>

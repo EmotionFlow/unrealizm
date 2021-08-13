@@ -20,7 +20,7 @@ String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.
 String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>

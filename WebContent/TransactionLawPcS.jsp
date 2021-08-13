@@ -2,7 +2,7 @@
 <%@ include file="/inner/Common.jsp"%>
 <%CheckLogin checkLogin = new CheckLogin(request, response);%>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>特定商取引法に基づく表記</title>

@@ -4,7 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - 利用規約</title>

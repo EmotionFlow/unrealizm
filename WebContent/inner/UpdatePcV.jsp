@@ -54,7 +54,7 @@ final int[] PUBLISH_ID = {
 response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />

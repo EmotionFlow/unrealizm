@@ -29,7 +29,7 @@ if(cResults.m_nCategoryId >= 0) {
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%if(isApp){%>
 		<%@ include file="/inner/THeaderCommon.jsp"%>

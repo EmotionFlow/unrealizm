@@ -24,7 +24,7 @@ if(strRequestUri != null) {
 
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%></title>

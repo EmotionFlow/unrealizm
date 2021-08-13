@@ -6,7 +6,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 int nRtn = UserAuthUtil.activateEmail(request, response);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />

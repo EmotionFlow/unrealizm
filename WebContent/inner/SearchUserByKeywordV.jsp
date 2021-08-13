@@ -23,7 +23,7 @@ if(strKeywordHan.matches("^[0-9]+$")) {
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=Util.toStringHtml(cResults.m_strKeyword)%></title>

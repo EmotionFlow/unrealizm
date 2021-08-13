@@ -27,7 +27,7 @@ if(cResults.m_bUpdate) {
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp" %>
 		<title>setting</title>

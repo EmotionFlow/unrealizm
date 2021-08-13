@@ -5,7 +5,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>ポイピククリスマス | <%=_TEX.T("THeader.Title")%></title>

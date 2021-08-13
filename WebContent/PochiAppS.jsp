@@ -4,7 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title>ポチ袋</title>

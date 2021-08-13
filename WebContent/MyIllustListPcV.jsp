@@ -49,7 +49,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>

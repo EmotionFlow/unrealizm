@@ -15,7 +15,7 @@ results.SELECT_MAX = 45;
 boolean bRtn = results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>

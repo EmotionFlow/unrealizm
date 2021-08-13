@@ -15,7 +15,7 @@ String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKe
 String strFileUrl = results.m_strRepFileName;
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>tags</title>

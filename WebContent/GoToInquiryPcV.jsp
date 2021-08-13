@@ -10,7 +10,7 @@
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 <head>
     <%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
     <title></title>

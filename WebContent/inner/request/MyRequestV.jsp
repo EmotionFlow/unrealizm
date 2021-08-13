@@ -65,7 +65,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 %>
 
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%if(!isApp){%>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>

@@ -6,7 +6,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 %>
 <!DOCTYPE html>
-<html>
+<html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("ActivityList.Title")%></title>
