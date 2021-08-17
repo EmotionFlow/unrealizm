@@ -66,6 +66,10 @@ if(!authUrl.isEmpty()) {
 	<body>
 		<article class="Wrapper" style="text-align: center;">
 			<p>
+				Twitter側の認証処理にに障害が発生しているようです。<br />
+				しばらくお待ちいただくか、Twitter認証の代わりに、<a href="/LoginFormEmailPcV.jsp">メールアドレスとパスワードによるログイン</a>をお試しください。
+			</p>
+			<p>
 				Twitter is not working.<br />
 				Wait for a moment.
 			</p>
