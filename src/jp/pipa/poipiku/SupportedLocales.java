@@ -31,7 +31,7 @@ public final class SupportedLocales {
 			if (lcv.size() >= 2) {
 				if (lcv.get(1).equals("Hans") || lcv.get(1).equals("SG")) {
 					lcv.set(1, "CN");
-				} else if (lcv.get(1).equals("Hant") || lcv.get(1).equals("HK") || lcv.get(1).equals("MO")) {
+				} else if (lcv.get(1).equals("Hant") || lcv.get(1).equals("HK") || lcv.get(1).equals("MO")|| lcv.get(1).equals("TW")) {
 					lcv.set(1, "TW");
 				} else {
 					lcv.set(1, "CN");
