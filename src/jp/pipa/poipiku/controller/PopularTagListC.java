@@ -102,14 +102,9 @@ public class PopularTagListC {
 					+ strCondMute
 					+ "ORDER BY content_id DESC LIMIT ? ";
 
-			Log.d(strSql);
-
 			statement = connection.prepareStatement(strSql);
 			for(int nCnt=0; nCnt<m_vContentListWeekly.size() && nCnt<SELECT_MAX_SAMPLE_GALLERY; nCnt++) {
 				CTag cTag = m_vContentListWeekly.get(nCnt);
-
-				Log.d(cTag.m_strTagTxt);
-
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 				idx = 1;
 				statement.setString(idx++, cTag.m_strTagTxt);
