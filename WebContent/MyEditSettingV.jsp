@@ -604,6 +604,7 @@ if(cResults.m_bUpdate) {
 						<a style="text-decoration: underline;" hreflang="ko" onclick="ChLang('ko', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">한국</a>
 						<a style="text-decoration: underline;" hreflang="zh-cmn-Hans" onclick="ChLang('zh_CN', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">简体中文</a>
 						<a style="text-decoration: underline;" hreflang="zh-cmn-Hant" onclick="ChLang('zh_TW', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">繁體中文</a>
+						<a style="text-decoration: underline;" hreflang="th" onclick="ChLang('th', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">ไทย</a>
 						<a style="text-decoration: underline;" hreflang="ja" onclick="ChLang('ja', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">日本語</a><br />
 					</div>
 				</div>
