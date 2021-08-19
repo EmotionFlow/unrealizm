@@ -90,8 +90,8 @@ public class PopularTagListC {
 			}
 
 			// WEEKLY SAMPLE
-			strSql = "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */"
-					+ "SELECT * FROM contents_0000 "
+			// "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */"
+			strSql = "SELECT * FROM contents_0000 "
 					+ "WHERE open_id<>2 "
 					+ "AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) "
 					+ "AND safe_filter<=? "
