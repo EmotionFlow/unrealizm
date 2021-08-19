@@ -34,7 +34,6 @@ public class PopularTagListC {
 
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bResult = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -43,8 +42,7 @@ public class PopularTagListC {
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// TAG LIST
 			/*
@@ -104,9 +102,14 @@ public class PopularTagListC {
 					+ strCondMute
 					+ "ORDER BY content_id DESC LIMIT ? ";
 
+			Log.d(strSql);
+
 			statement = connection.prepareStatement(strSql);
 			for(int nCnt=0; nCnt<m_vContentListWeekly.size() && nCnt<SELECT_MAX_SAMPLE_GALLERY; nCnt++) {
 				CTag cTag = m_vContentListWeekly.get(nCnt);
+
+				Log.d(cTag.m_strTagTxt);
+
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 				idx = 1;
 				statement.setString(idx++, cTag.m_strTagTxt);
