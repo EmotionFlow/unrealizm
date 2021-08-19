@@ -11,9 +11,9 @@ if(!bSmartPhone) {
 
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 50;
-cResults.SELECT_MAX_SAMPLE_GALLERY = 50;
-cResults.SELECT_SAMPLE_GALLERY = 3;
+cResults.selectMaxGallery = 15;
+cResults.selectMaxSampleGallery = 15;
+cResults.selectSampleGallery = 3;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -76,10 +76,10 @@ boolean bRtn = cResults.getResults(checkLogin);
 			<%}%>
 		</article>
 
-		<%if(cResults.SELECT_MAX_SAMPLE_GALLERY-cResults.SELECT_MAX_GALLERY>0) {%>
+		<%if(cResults.selectMaxSampleGallery -cResults.selectMaxGallery >0) {%>
 		<article class="Wrapper ItemList">
 			<section id="IllustThumbList" class="IllustThumbList" style="padding: 0;">
-			<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
+			<%for(int nCnt = cResults.selectMaxSampleGallery; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 				<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
 				<%if((nCnt+1)%15==0) {%>

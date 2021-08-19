@@ -3,9 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
@@ -23,9 +21,9 @@ public class PopularTagListC {
 		}
 	}
 
-	public int SELECT_MAX_GALLERY = 20;
-	public int SELECT_MAX_SAMPLE_GALLERY = 10;
-	public int SELECT_SAMPLE_GALLERY = 3;
+	public int selectMaxGallery = 20;
+	public int selectMaxSampleGallery = 10;
+	public int selectSampleGallery = 3;
 	//public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
 	public ArrayList<CTag> m_vContentListWeekly = new ArrayList<CTag>();
 	//public ArrayList<ArrayList<CContent>> m_vContentSamplpeList = new ArrayList<ArrayList<CContent>>();
@@ -60,8 +58,8 @@ public class PopularTagListC {
 			//strSql = "select tag_txt FROM vw_rank_tag_weekly order by rank desc offset ? limit ?";
 			strSql = "select tag_txt FROM vw_rank_tag_daily order by rank desc offset ? limit ?";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_nPage*SELECT_MAX_GALLERY);
-			statement.setInt(2, SELECT_MAX_GALLERY);
+			statement.setInt(1, m_nPage* selectMaxGallery);
+			statement.setInt(2, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				m_vContentListWeekly.add(new CTag(resultSet));
@@ -103,7 +101,7 @@ public class PopularTagListC {
 					+ "ORDER BY content_id DESC LIMIT ? ";
 
 			statement = connection.prepareStatement(strSql);
-			for(int nCnt=0; nCnt<m_vContentListWeekly.size() && nCnt<SELECT_MAX_SAMPLE_GALLERY; nCnt++) {
+			for(int nCnt = 0; nCnt<m_vContentListWeekly.size() && nCnt< selectMaxSampleGallery; nCnt++) {
 				CTag cTag = m_vContentListWeekly.get(nCnt);
 				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
 				idx = 1;
@@ -118,7 +116,7 @@ public class PopularTagListC {
 				if(!strCondMute.isEmpty()){
 					statement.setString(idx++, strMuteKeyword);
 				}
-				statement.setInt(idx++, SELECT_SAMPLE_GALLERY);
+				statement.setInt(idx++, selectSampleGallery);
 				resultSet = statement.executeQuery();
 				while (resultSet.next()) {
 					CContent cContent = new CContent(resultSet);

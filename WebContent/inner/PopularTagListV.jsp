@@ -14,9 +14,9 @@ if(SP_REVIEW && !checkLogin.m_bLogin) {
 
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 50;
-cResults.SELECT_MAX_SAMPLE_GALLERY = 50;
-cResults.SELECT_SAMPLE_GALLERY = 3;
+cResults.selectMaxGallery = 50;
+cResults.selectMaxSampleGallery = 50;
+cResults.selectSampleGallery = 3;
 boolean bRtn = cResults.getResults(checkLogin);
 
 int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
@@ -61,10 +61,10 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			<%}%>
 		</article>
 
-		<%if(cResults.SELECT_MAX_SAMPLE_GALLERY-cResults.SELECT_MAX_GALLERY>0) {%>
+		<%if(cResults.selectMaxSampleGallery -cResults.selectMaxGallery >0) {%>
 		<article class="Wrapper ItemList">
 			<section id="IllustThumbList" class="IllustItemList">
-			<%for(int nCnt=cResults.SELECT_MAX_SAMPLE_GALLERY; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
+			<%for(int nCnt = cResults.selectMaxSampleGallery; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
 				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
 				<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%>
 				<%if((nCnt+1)%15==0) {%>
