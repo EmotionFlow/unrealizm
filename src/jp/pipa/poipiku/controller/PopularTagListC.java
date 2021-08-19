@@ -23,7 +23,7 @@ public class PopularTagListC {
 		}
 	}
 
-	public int SELECT_MAX_GALLERY = 50;
+	public int SELECT_MAX_GALLERY = 20;
 	public int SELECT_MAX_SAMPLE_GALLERY = 10;
 	public int SELECT_SAMPLE_GALLERY = 3;
 	//public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
