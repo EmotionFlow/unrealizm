@@ -4,8 +4,8 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-cResults.selectMaxGallery = 30;
-cResults.selectMaxSampleGallery = 30;
+cResults.selectMaxGallery = 15;
+cResults.selectMaxSampleGallery = 15;
 cResults.selectSampleGallery = 6;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
