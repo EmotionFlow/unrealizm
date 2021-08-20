@@ -37,8 +37,18 @@ public final class RegistTwitterTokenC extends Controller {
 		try {
 			OAuthConsumer consumer = (OAuthConsumer) session.getAttribute("consumer");
 			OAuthProvider provider = (OAuthProvider) session.getAttribute("provider");
+			if (provider==null) {
+				Log.d("provider is null");
+				result = Result.ERROR;
+				return false;
+			}
 
 			String oauth_verifier = request.getParameter("oauth_verifier");
+			if (oauth_verifier==null) {
+				Log.d("oauth_verifier is null");
+				result = Result.ERROR;
+				return false;
+			}
 			provider.retrieveAccessToken(consumer, oauth_verifier);
 
 			HttpParameters hp = provider.getResponseParameters();
