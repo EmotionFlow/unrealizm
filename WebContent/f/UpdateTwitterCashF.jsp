@@ -10,7 +10,5 @@ int userId = Util.toInt(request.getParameter("ID"));
 
 if(!checkLogin.m_bLogin || (checkLogin.m_nUserId != userId)) return;
 
-Log.d("UpdateTwitterCash");
-
 CTweet.updateTwitterCash(userId);
 %>{"result":1}

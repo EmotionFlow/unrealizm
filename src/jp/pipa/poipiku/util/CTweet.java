@@ -348,7 +348,7 @@ public final class CTweet {
 		return nResult;
 	}
 
-	public int LookupFriendship(int nTargetUserId){
+	public int LookupFriendship(int nTargetUserId, int publishId){
 		int nResult = FRIENDSHIP_UNDEF;
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
 
@@ -384,9 +384,9 @@ public final class CTweet {
 			boolean bFollower = checkDBFriendInfo(nTargetUserId, m_nUserId);
 
 			// 判定
-			if(bFollowing && bFollower) {return FRIENDSHIP_EACH;};
-			if(bFollowing) {return FRIENDSHIP_FOLLOWEE;};
-			if(bFollower) {return FRIENDSHIP_FOLLOWER;};
+			if(publishId == Common.PUBLISH_ID_T_EACH && bFollowing && bFollower) {return FRIENDSHIP_EACH;};
+			if(publishId == Common.PUBLISH_ID_T_FOLLOWER && bFollowing) {return FRIENDSHIP_FOLLOWEE;};
+			if(publishId == Common.PUBLISH_ID_T_FOLLOWEE && bFollower) {return FRIENDSHIP_FOLLOWER;};
 
 			// DBに無い場合、ID間のFriend関係を確認
 			ConfigurationBuilder cb = new ConfigurationBuilder();

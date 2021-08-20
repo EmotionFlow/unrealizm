@@ -32,8 +32,8 @@ public final class ShowAppendFileC {
 	public static final int ERR_HIDDEN = -9;
 	public static final int ERR_UNKNOWN = -99;
 
-	public int m_nUserId = -1;
-	public int m_nContentId = -1;
+	public int contentUserId = -1;
+	public int contentId = -1;
 	public String m_strPassword = "";
 	public int m_nMode = 0;
 	public int m_nTwFriendship = CTweet.FRIENDSHIP_UNDEF;
@@ -41,14 +41,14 @@ public final class ShowAppendFileC {
 
 	public void getParam(HttpServletRequest request) {
 		try {
-			m_nUserId	= Util.toInt(request.getParameter("UID"));
-			m_nContentId	= Util.toInt(request.getParameter("IID"));
+			contentUserId = Util.toInt(request.getParameter("UID"));
+			contentId = Util.toInt(request.getParameter("IID"));
 			m_strPassword = request.getParameter("PAS");
 			m_nMode = Util.toInt(request.getParameter("MD"));
 			m_nTwFriendship = Util.toInt(request.getParameter("TWF"));
 			request.setCharacterEncoding("UTF-8");
 		} catch(Exception e) {
-			m_nContentId = -1;
+			contentId = -1;
 		}
 	}
 
@@ -65,8 +65,8 @@ public final class ShowAppendFileC {
 
 			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, m_nContentId);
+			cState.setInt(1, contentUserId);
+			cState.setInt(2, contentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				m_cContent = new CContent(cResSet);
@@ -79,7 +79,7 @@ public final class ShowAppendFileC {
 			boolean bRequestClient = false;
 			strSql = "SELECT id FROM requests WHERE content_id=? AND client_user_id=?";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
+			cState.setInt(1, contentId);
 			cState.setInt(2, checkLogin.m_nUserId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
@@ -97,14 +97,14 @@ public final class ShowAppendFileC {
 				return ERR_LOGIN;
 			}
 
-			// POIPIKU fav
+			// POIPIKU favo
 			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
-				boolean bFollow = (m_nUserId==checkLogin.m_nUserId);
+				boolean bFollow = (contentUserId == checkLogin.m_nUserId);
 				if(!bFollow) {
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
 					cState = cConn.prepareStatement(strSql);
 					cState.setInt(1, checkLogin.m_nUserId);
-					cState.setInt(2, m_nUserId);
+					cState.setInt(2, contentUserId);
 					cResSet = cState.executeQuery();
 					if(cResSet.next()) {
 						bFollow = true;
@@ -145,7 +145,7 @@ public final class ShowAppendFileC {
 						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
 						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH     && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
 						){
-						m_nTwFriendship = cTweet.LookupFriendship(m_nUserId);
+						m_nTwFriendship = cTweet.LookupFriendship(contentUserId, m_cContent.m_nPublishId);
 						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
 							return ERR_T_RATE_LIMIT_EXCEEDED;
 						} else if (m_nTwFriendship==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) {
@@ -191,7 +191,7 @@ public final class ShowAppendFileC {
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
 			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nContentId);
+			cState.setInt(1, contentId);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				m_cContent.m_vContentAppend.add(new CContentAppend(cResSet));

@@ -77,7 +77,7 @@ public final class IllustDetailC {
 				if(m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST){
 					bRtn = (tweet.LookupListMember(m_cContent) == CTweet.OK);
 				}else{
-					final int friendshipResult = tweet.LookupFriendship(m_cContent.m_nUserId);
+					final int friendshipResult = tweet.LookupFriendship(m_cContent.m_nUserId, m_cContent.m_nPublishId);
 					switch (m_cContent.m_nPublishId){
 						case Common.PUBLISH_ID_T_FOLLOWER:
 							bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWEE || friendshipResult == CTweet.FRIENDSHIP_EACH);
