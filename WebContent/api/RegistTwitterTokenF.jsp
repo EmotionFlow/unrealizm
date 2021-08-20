@@ -25,7 +25,7 @@ if(!checkLogin.m_bLogin || checkLogin.m_nUserId < 1){
 
 String accessToken="";
 String tokenSecret="";
-String user_id="";
+String twitterUserId ="";
 String screen_name="";
 
 DataSource dsPostgres = null;
@@ -48,7 +48,7 @@ try
 	tokenSecret = consumer.getTokenSecret();
 
 	HttpParameters hp = provider.getResponseParameters();
-	user_id = hp.get("user_id").first();
+	twitterUserId = hp.get("twitterUserId").first();
 	screen_name = hp.get("screen_name").first();
 
 	Class.forName("org.postgresql.Driver");
@@ -74,7 +74,7 @@ try
 		cState = cConn.prepareStatement(strSql);
 		cState.setString(1, consumer.getToken());
 		cState.setString(2, consumer.getTokenSecret());
-		cState.setString(3, user_id);
+		cState.setString(3, twitterUserId);
 		cState.setString(4, screen_name);
 		cState.setInt(5, checkLogin.m_nUserId);
 		cState.setInt(6, Common.TWITTER_PROVIDER_ID);
@@ -88,7 +88,7 @@ try
 		cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 		cState.setString(3, consumer.getToken());
 		cState.setString(4, consumer.getTokenSecret());
-		cState.setString(5, user_id);
+		cState.setString(5, twitterUserId);
 		cState.setString(6, screen_name);
 		cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
 		cState.executeUpdate();

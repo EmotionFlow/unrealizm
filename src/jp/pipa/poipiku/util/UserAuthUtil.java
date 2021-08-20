@@ -552,7 +552,7 @@ public class UserAuthUtil {
 
 		String accessToken="";
 		String tokenSecret="";
-		String user_id="";
+		String twitterUserId="";
 		String screen_name="";
 
 		Connection cConn = null;
@@ -579,8 +579,8 @@ public class UserAuthUtil {
 
 			HttpParameters hp = provider.getResponseParameters();
 			if(hp==null) return ERROR_TWITTER_PROVIDER_PARAMETER_ERROR;
-			user_id = hp.get("user_id").first();
-			if(user_id==null || user_id.isEmpty()) return ERROR_TWITTER_USER_ID_ERROR;
+			twitterUserId = hp.get("user_id").first();
+			if(twitterUserId==null || twitterUserId.isEmpty()) return ERROR_TWITTER_USER_ID_ERROR;
 			screen_name = hp.get("screen_name").first();
 			if(screen_name==null || screen_name.isEmpty()) return ERROR_TWITTER_SCREEN_NAME_ERROR;
 
@@ -605,7 +605,7 @@ public class UserAuthUtil {
 			//Log.d("USERAUTH twitter userid : ", user_id);
 			strSql = "SELECT fldUserId FROM tbloauth WHERE twitter_user_id=? AND del_flg=false ORDER BY fldUserId DESC LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, user_id);
+			cState.setString(1, twitterUserId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				nUserId = cResSet.getInt("fldUserId");
@@ -633,12 +633,13 @@ public class UserAuthUtil {
 
 				if(nUserId>0) {
 					// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンとscreen_nameを更新
-					strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, twitter_screen_name=? WHERE fldUserId=? AND del_flg=false";
+					strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, twitter_user_id=?, twitter_screen_name=? WHERE fldUserId=? AND del_flg=false";
 					cState = cConn.prepareStatement(strSql);
 					cState.setString(1, accessToken);
 					cState.setString(2, tokenSecret);
-					cState.setString(3, screen_name);
-					cState.setInt(4, nUserId);
+					cState.setString(3, twitterUserId);
+					cState.setString(4, screen_name);
+					cState.setInt(5, nUserId);
 					cState.executeUpdate();
 					cState.close();cState=null;
 
@@ -765,7 +766,7 @@ public class UserAuthUtil {
 					cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 					cState.setString(3, accessToken);
 					cState.setString(4, tokenSecret);
-					cState.setString(5, user_id);
+					cState.setString(5, twitterUserId);
 					cState.setString(6, screen_name);
 					cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", nUserId));
 					cState.executeUpdate();

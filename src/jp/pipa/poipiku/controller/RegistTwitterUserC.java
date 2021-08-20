@@ -88,13 +88,14 @@ public final class RegistTwitterUserC {
 
 			// twitter_user_idのみでの認証を可能とする場合は、ログイン都度トークンとscreen_nameを更新
 			connection = dataSource.getConnection();
-			strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, twitter_screen_name=? WHERE fldUserId=? AND fldproviderid=?";
+			strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, twitter_user_id=?, twitter_screen_name=? WHERE fldUserId=? AND fldproviderid=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, oauth.accessToken);
 			statement.setString(2, oauth.tokenSecret);
-			statement.setString(3, oauth.twitterScreenName);
-			statement.setInt(4, userId);
-			statement.setInt(5, Common.TWITTER_PROVIDER_ID);
+			statement.setString(3, oauth.twitterUserId);
+			statement.setString(4, oauth.twitterScreenName);
+			statement.setInt(5, userId);
+			statement.setInt(6, Common.TWITTER_PROVIDER_ID);
 			statement.executeUpdate();
 			statement.close();statement = null;
 			connection.close(); connection = null;

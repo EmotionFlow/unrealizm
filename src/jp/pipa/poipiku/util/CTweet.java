@@ -360,7 +360,7 @@ public final class CTweet {
 		try {
 			cConn = DatabaseUtil.dataSource.getConnection();
 			// ターゲットユーザのTokenとTwitterID取得
-			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false ORDER BY id DESC";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nTargetUserId);
 			cState.setInt(2, Common.TWITTER_PROVIDER_ID);
@@ -398,6 +398,7 @@ public final class CTweet {
 			TwitterFactory tf = new TwitterFactory(cb.build());
 			Twitter twitter = tf.getInstance();
 			ResponseList<Friendship> lookupResults = twitter.lookupFriendships(m_lnLastTwitterTargetUserId);
+			Log.d("lookupResults.size(): " + lookupResults.size());
 			if(lookupResults.size() > 0){
 				cConn = DatabaseUtil.dataSource.getConnection();
 				//strSql = "INSERT INTO twitter_friends(user_id, twitter_user_id, twitter_follow_user_id) VALUES (?, ?, ?, ?) ON CONFLICT DO NOTHING;";
@@ -436,6 +437,7 @@ public final class CTweet {
 				} else {
 					nResult = FRIENDSHIP_NONE;
 				}
+				Log.d("nResult: " + nResult);
 				cState.close();cState=null;
 				cConn.close();cConn=null;
 			}
