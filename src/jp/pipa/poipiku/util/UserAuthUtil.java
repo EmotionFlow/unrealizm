@@ -712,7 +712,9 @@ public class UserAuthUtil {
 				if(strLang.isEmpty()) {
 					strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
 				}
-				nLangId = (strLang.equals("en"))?0:1;
+				if (!strLang.isEmpty()) {
+					nLangId = SupportedLocales.findId(strLang);
+				}
 
 				// User名被りチェック
 				String strUserName = screen_name;

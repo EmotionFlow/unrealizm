@@ -190,7 +190,9 @@ public final class RegistTwitterUserC {
 			if (strLang.isEmpty()) {
 				strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
 			}
-			nLangId = (strLang.equals("en")) ? 0 : 1;
+			if (!strLang.isEmpty()) {
+				nLangId = SupportedLocales.findId(strLang);
+			}
 
 			String strUserName = oauth.twitterScreenName;
 
@@ -284,7 +286,7 @@ public final class RegistTwitterUserC {
 
 			setCookie(response, strHashPass);
 
-			if (strEmail != null && !strEmail.isEmpty() && strEmail.contains("@")) {
+			if (strEmail.contains("@")) {
 				RegisteredNotifier registeredNotifier = new RegisteredNotifier();
 				registeredNotifier.welcomeFromTwitter(DatabaseUtil.dataSource, userId);
 			}

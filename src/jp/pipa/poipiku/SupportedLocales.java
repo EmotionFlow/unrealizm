@@ -19,6 +19,9 @@ public final class SupportedLocales {
 	}
 
 	static public Locale getLocale(String langStr) {
+		if (langStr==null || langStr.isEmpty()) {
+			return LOCALE_DEFAULT;
+		}
 		Locale locale;
 		String separator = langStr.indexOf("_")>0 ? "_" : "-";
 		List<String> lcv = new ArrayList<>(Arrays.asList(langStr.split(separator)));
