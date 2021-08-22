@@ -21,13 +21,13 @@ boolean bRtn = cResults.getResults(checkLogin);
 	<url>
 		<loc>https://poipiku.com/?hl=<%=lang%></loc>
 		<lastmod><%=NOW%></lastmod>
-		<changefreq>always</changefreq>
+		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
 	</url>
 	<url>
 		<loc>https://poipiku.com/PopularTagListPcV.jsp?hl=<%=lang%></loc>
 		<lastmod><%=NOW%></lastmod>
-		<changefreq>always</changefreq>
+		<changefreq>daily</changefreq>
 		<priority>0.5</priority>
 	</url>
 	<%for(CTag tag : cResults.m_vContentListWeekly) {%>
