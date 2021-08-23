@@ -66,5 +66,15 @@
 		<to>/IllustViewPcV.jsp?ID=$1&amp;TD=$2</to>
 	</rule>
 
+
+	<rule>
+		<note>
+			for sitemap.xml
+		</note>
+		<from>^/sitemap.xml$</from>
+		<to>/sitemap.jsp</to>
+	</rule>
+
+
 </urlrewrite>
 
