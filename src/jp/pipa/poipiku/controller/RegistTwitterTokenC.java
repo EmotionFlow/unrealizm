@@ -71,7 +71,9 @@ public final class RegistTwitterTokenC extends Controller {
 
 			bIsExist = false;
 
-			if(result!=Result.LINKED_OTHER_POIPIKU_ID) {
+			if (result==Result.LINKED_OTHER_POIPIKU_ID) {
+				return false;
+			} else {
 				// 以前同じuser_id, twitter_use_idの組み合わせで連携していたら、そのレコードを復活させる。
 				sql = "UPDATE tbloauth SET del_flg=FALSE WHERE flduserid=? AND fldproviderid=? AND twitter_user_id=? AND del_flg=TRUE RETURNING flduserid";
 				statement = connection.prepareStatement(sql);
