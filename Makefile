@@ -1,6 +1,9 @@
 all:
 	pushd closure && \
 	./build_java_and_js.sh && \
+	popd && \
+	pushd batch && \
+	./build_java_batch.sh &&\
 	popd
 
 build-java:
