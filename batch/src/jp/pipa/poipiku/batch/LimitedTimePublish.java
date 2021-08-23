@@ -94,7 +94,7 @@ public class LimitedTimePublish extends Batch {
 
 
 	public static void main(String args[]) {
-		ResourceBundleControl _TEX = new ResourceBundleControl("ja");
+		ResourceBundleControl _TEX = new ResourceBundleControl();
 
 		//Logger.getLogger(PushNotification.class).setLevel(Level.OFF);
 		System.setProperty("log4j.rootLogger","INFO");
