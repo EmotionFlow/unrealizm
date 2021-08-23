@@ -27,6 +27,7 @@ try {
 	cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 	cState.execute();
 	cState.close();cState=null;
+	CTweet.updateTwitterCash(checkLogin.m_nUserId);
 
 	nRtn = 1;
 } catch(Exception e) {

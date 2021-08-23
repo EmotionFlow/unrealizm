@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.ResourceBundleControl;
+import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import oauth.signpost.OAuthConsumer;
@@ -131,6 +132,8 @@ public final class RegistTwitterTokenC extends Controller {
 				statement.executeUpdate();
 				statement.close();statement=null;
 			}
+
+			CTweet.updateTwitterCash(checkLogin.m_nUserId);
 			result = Result.OK;
 
 		} catch(Exception e) {
