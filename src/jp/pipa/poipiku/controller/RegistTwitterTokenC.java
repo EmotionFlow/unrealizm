@@ -69,6 +69,8 @@ public final class RegistTwitterTokenC extends Controller {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			bIsExist = false;
+
 			if(result!=Result.LINKED_OTHER_POIPIKU_ID) {
 				// 以前同じuser_id, twitter_use_idの組み合わせで連携していたら、そのレコードを復活させる。
 				sql = "UPDATE tbloauth SET del_flg=FALSE WHERE flduserid=? AND fldproviderid=? AND twitter_user_id=? AND del_flg=TRUE RETURNING flduserid";
@@ -79,23 +81,25 @@ public final class RegistTwitterTokenC extends Controller {
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					Log.d("以前同じuser_id, twitter_use_idの組み合わせで連携していた");
+					bIsExist = true;
 				}
 				resultSet.close();resultSet = null;
 				statement.close();statement = null;
 			}
 
-			bIsExist = false;
-			// select
-			sql = "SELECT 1 FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
-			statement = connection.prepareStatement(sql);
-			statement.setInt(1, checkLogin.m_nUserId);
-			statement.setInt(2, Common.TWITTER_PROVIDER_ID);
-			resultSet = statement.executeQuery();
-			if(resultSet.next()){
-				bIsExist = true;
+			if (!bIsExist) {
+				// select
+				sql = "SELECT 1 FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, checkLogin.m_nUserId);
+				statement.setInt(2, Common.TWITTER_PROVIDER_ID);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()){
+					bIsExist = true;
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 			if (bIsExist){
 				Log.d("TwitterToken Update : " + checkLogin.m_nUserId);
