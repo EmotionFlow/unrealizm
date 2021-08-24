@@ -38,7 +38,7 @@ if (requestId > 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-39.js" type="text/javascript"></script>
+		<script src="/js/upload-40.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -346,22 +346,15 @@ if (requestId > 0) {
 						</div>
 					</div>
 
-					<div id="PublishHiddenInfo" style="display: none;">
+					<div id="PublishInfo">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish" style="font-size: 11px;">
-							<%=_TEX.T("UploadFilePc.Option.Publish.HiddenInfo")%>
-						</div>
-					</div>
-					<div id="PublishFollowerInfo" style="display: none;">
-						<div class="OptionLabel"></div>
-						<div class="OptionPublish" style="font-size: 11px;">
-							<%=_TEX.T("UploadFilePc.Option.Publish.FollowerInfo")%>
-						</div>
-					</div>
-					<div id="PublishLoginInfo" style="display: none;">
-						<div class="OptionLabel"></div>
-						<div class="OptionPublish" style="font-size: 11px;">
-							<%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%>
+							<span id="PublishHiddenInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.HiddenInfo")%></span>
+							<span id="PublishFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.FollowerInfo")%></span>
+							<span id="PublishTwitterFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowerInfo")%></span>
+							<span id="PublishTwitterFollowingInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowingInfo")%></span>
+							<span id="PublishTwitterFollowEachInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowEachInfo")%></span>
+							<span id="PublishLoginInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%></span>
 						</div>
 					</div>
 

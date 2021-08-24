@@ -676,11 +676,14 @@ function updatePublish(nUserId) {
 		$('#ItemTwitterList'),
 		$('#ItemPassword'),
 		$('#PublishFollowerInfo'),
+		$('#PublishTwitterFollowerInfo'),
+		$('#PublishTwitterFollowingInfo'),
+		$('#PublishTwitterFollowEachInfo'),
 		$('#PublishLoginInfo'),
 		$('#PublishHiddenInfo')
 	];
 
-	if (val===4 || val===5 || val===6 || val===10 || val===11 || val===99 ){
+	if (val===4 || val===5 || val===6 || val===7 || val===8 || val===9 || val===10 || val===11 || val===99 ){
 		let elToHide = null;
 		let elToVisible = null;
 		switch (val) {
@@ -692,6 +695,15 @@ function updatePublish(nUserId) {
 				break;
 			case 6:
 				elToVisible = $('#PublishFollowerInfo');
+				break;
+			case 7:
+				elToVisible = $('#PublishTwitterFollowerInfo');
+				break;
+			case 8:
+				elToVisible = $('#PublishTwitterFollowingInfo');
+				break;
+			case 9:
+				elToVisible = $('#PublishTwitterFollowEachInfo');
 				break;
 			case 10:
 				elToVisible = $('#ItemTwitterList');
