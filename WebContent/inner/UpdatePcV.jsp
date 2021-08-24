@@ -385,6 +385,19 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							</select>
 						</div>
 					</div>
+
+					<div id="PublishInfo">
+						<div class="OptionLabel"></div>
+						<div class="OptionPublish" style="font-size: 11px;">
+							<span id="PublishHiddenInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.HiddenInfo")%></span>
+							<span id="PublishFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.FollowerInfo")%></span>
+							<span id="PublishTwitterFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowerInfo")%></span>
+							<span id="PublishTwitterFollowingInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowingInfo")%></span>
+							<span id="PublishTwitterFollowEachInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowEachInfo")%></span>
+							<span id="PublishLoginInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%></span>
+						</div>
+					</div>
+
 					<div id="ItemPassword" class="OptionItem"
 						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_PASS){%>style="display: none;"<%}%>
 						>
