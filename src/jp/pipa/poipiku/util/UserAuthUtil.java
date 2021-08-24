@@ -568,12 +568,14 @@ public class UserAuthUtil {
 			if(provider==null) return ERROR_TWITTER_PROVIDER_ERROR;
 
 			String oauth_verifier = request.getParameter("oauth_verifier");
-			if(oauth_verifier==null || oauth_verifier.isEmpty()) throw(new Exception("USERAUTH oauth_verifier error"));
+			if(oauth_verifier==null || oauth_verifier.isEmpty()) throw(new Exception("USERAUTH oauth_verifier is null or empty"));
 
 			provider.retrieveAccessToken(consumer, oauth_verifier);
+
 			accessToken = consumer.getToken();
-			tokenSecret = consumer.getTokenSecret();
 			if(accessToken==null || accessToken.isEmpty()) return ERROR_TWITTER_ACCESS_TOKEN_ERROR;
+
+			tokenSecret = consumer.getTokenSecret();
 			if(tokenSecret==null || tokenSecret.isEmpty()) return ERROR_TWITTER_TOKEN_SECRET_ERROR;
 
 

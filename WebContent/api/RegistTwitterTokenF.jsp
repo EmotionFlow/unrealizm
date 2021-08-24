@@ -1,21 +1,12 @@
-<%@page
-language="java"
-contentType="text/html; charset=UTF-8"%>
-<%@page import="java.awt.*"%>
-<%@page import="java.util.*"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"%>
 <%@page import="java.sql.*"%>
-<%@page import="javax.sql.*"%>
-<%@page import="javax.naming.*"%>
 <%@page import="oauth.signpost.OAuthConsumer"%>
 <%@page import="oauth.signpost.OAuthProvider"%>
 <%@page import="oauth.signpost.http.HttpParameters"%>
-<%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
 <%@include file="/inner/Common.jsp"%>
 <%
 request.setCharacterEncoding("UTF-8");
 CheckLogin checkLogin = new CheckLogin(request, response);
-
-boolean bResult = false;
 
 //login check
 if(!checkLogin.m_bLogin || checkLogin.m_nUserId < 1){
@@ -42,8 +33,16 @@ try {
 
 	String oauth_verifier = request.getParameter("oauth_verifier");
 	provider.retrieveAccessToken(consumer, oauth_verifier);
+
 	accessToken = consumer.getToken();
+	if (accessToken == null || accessToken.isEmpty()) {
+		throw new Exception("accessToken == null || accessToken.isEmpty()");
+	}
+
 	tokenSecret = consumer.getTokenSecret();
+	if (tokenSecret == null || tokenSecret.isEmpty()) {
+		throw new Exception("tokenSecret == null || tokenSecret.isEmpty()");
+	}
 
 	HttpParameters hp = provider.getResponseParameters();
 	twitterUserId = hp.get("user_id").first();
@@ -113,7 +112,6 @@ try {
 		cState.executeUpdate();
 	}
 	cState.close();cState=null;
-	bResult = true;
 } catch(Exception e) {
 	Log.d(strSql);
 	e.printStackTrace();
