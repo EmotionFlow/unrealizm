@@ -97,6 +97,7 @@ try {
 		cState.setInt(5, checkLogin.m_nUserId);
 		cState.setInt(6, Common.TWITTER_PROVIDER_ID);
 		cState.executeUpdate();
+		CTweet.updateTwitterCash(checkLogin.m_nUserId);
 	} else {
 		Log.d("TwitterToken Insert(api) : " + checkLogin.m_nUserId);
 		// insert
