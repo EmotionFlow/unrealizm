@@ -48,7 +48,7 @@ try
 	tokenSecret = consumer.getTokenSecret();
 
 	HttpParameters hp = provider.getResponseParameters();
-	twitterUserId = hp.get("twitterUserId").first();
+	twitterUserId = hp.get("user_id").first();
 	screen_name = hp.get("screen_name").first();
 
 	Class.forName("org.postgresql.Driver");
