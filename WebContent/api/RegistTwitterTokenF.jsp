@@ -28,7 +28,6 @@ String tokenSecret="";
 String twitterUserId ="";
 String screen_name="";
 
-DataSource dsPostgres = null;
 Connection cConn = null;
 PreparedStatement cState = null;
 
@@ -37,8 +36,7 @@ String strSql = "";
 boolean bIsExist = false;
 
 // table update or insert
-try
-{
+try {
 	OAuthConsumer consumer = (OAuthConsumer) session.getAttribute("consumer");
 	OAuthProvider provider = (OAuthProvider) session.getAttribute("provider");
 
@@ -51,43 +49,63 @@ try
 	twitterUserId = hp.get("user_id").first();
 	screen_name = hp.get("screen_name").first();
 
-	Class.forName("org.postgresql.Driver");
-	dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-	cConn = dsPostgres.getConnection();
+	cConn = DatabaseUtil.dataSource.getConnection();
 
 	// select
-	strSql = "SELECT flduserid FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
+	strSql = "SELECT 1 FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 	cState = cConn.prepareStatement(strSql);
 	cState.setInt(1, checkLogin.m_nUserId);
 	cState.setInt(2, Common.TWITTER_PROVIDER_ID);
 	cResSet = cState.executeQuery();
-	if(cResSet.next()){
-		bIsExist = true;
-	}
+	bIsExist = cResSet.next();
 	cResSet.close();cResSet=null;
 	cState.close();cState=null;
 
+	if (!bIsExist) {
+		strSql = "SELECT id FROM tbloauth WHERE flduserid=? AND twitter_user_id=? AND fldproviderid=? AND del_flg=true";
+		cState = cConn.prepareStatement(strSql);
+		cState.setInt(1, checkLogin.m_nUserId);
+		cState.setString(2, twitterUserId);
+		cState.setInt(3, Common.TWITTER_PROVIDER_ID);
+		cResSet = cState.executeQuery();
+		int id = -1;
+		if (cResSet.next()) {
+			id = cResSet.getInt(1);
+		}
+		cResSet.close();cResSet=null;
+		cState.close();cState=null;
+
+		if (id > 0) {
+			strSql = "UPDATE tbloauth SET del_flg=false WHERE id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, id);
+			cState.executeUpdate();
+			cState.close();cState=null;
+			bIsExist = true;
+		}
+	}
+
 	if (bIsExist){
-		Log.d("TwitterToken Update : " + checkLogin.m_nUserId);
+		Log.d("TwitterToken Update(api) : " + checkLogin.m_nUserId);
 		// update
 		strSql = "UPDATE tbloauth SET fldaccesstoken=?, fldsecrettoken=?, fldDefaultEnable=true, twitter_user_id=?, twitter_screen_name=? WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 		cState = cConn.prepareStatement(strSql);
-		cState.setString(1, consumer.getToken());
-		cState.setString(2, consumer.getTokenSecret());
+		cState.setString(1, accessToken);
+		cState.setString(2, tokenSecret);
 		cState.setString(3, twitterUserId);
 		cState.setString(4, screen_name);
 		cState.setInt(5, checkLogin.m_nUserId);
 		cState.setInt(6, Common.TWITTER_PROVIDER_ID);
 		cState.executeUpdate();
 	} else {
-		Log.d("TwitterToken Insert : " + checkLogin.m_nUserId);
+		Log.d("TwitterToken Insert(api) : " + checkLogin.m_nUserId);
 		// insert
 		strSql = "INSERT INTO tbloauth(flduserid, fldproviderid, fldDefaultEnable, fldaccesstoken, fldsecrettoken, twitter_user_id, twitter_screen_name, auto_tweet_desc) VALUES(?, ?, true, ?, ?, ?, ?, ?) ";
 		cState = cConn.prepareStatement(strSql);
 		cState.setInt(1, checkLogin.m_nUserId);
 		cState.setInt(2, Common.TWITTER_PROVIDER_ID);
-		cState.setString(3, consumer.getToken());
-		cState.setString(4, consumer.getTokenSecret());
+		cState.setString(3, accessToken);
+		cState.setString(4, tokenSecret);
 		cState.setString(5, twitterUserId);
 		cState.setString(6, screen_name);
 		cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
