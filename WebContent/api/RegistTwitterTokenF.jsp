@@ -50,6 +50,20 @@ try {
 
 	cConn = DatabaseUtil.dataSource.getConnection();
 
+	strSql = "SELECT id, flduserid FROM tbloauth WHERE flduserid<>? AND twitter_user_id=? AND del_flg=false";
+	cState = cConn.prepareStatement(strSql);
+	cState.setInt(1, checkLogin.m_nUserId);
+	cState.setString(2, twitterUserId);
+	cResSet = cState.executeQuery();
+	boolean alreadyUsed = false;
+	while (cResSet.next()) {
+		alreadyUsed = true;
+		Log.d(String.format("twitter_user_id %s was already used: %d, %d, %d", twitterUserId, checkLogin.m_nUserId, cResSet.getInt(1), cResSet.getInt(2)));
+	}
+	if (alreadyUsed) {
+		throw new Exception("twitter_user_id was already used");
+	}
+
 	// select
 	strSql = "SELECT 1 FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
 	cState = cConn.prepareStatement(strSql);
