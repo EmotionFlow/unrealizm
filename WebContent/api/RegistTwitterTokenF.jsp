@@ -63,6 +63,9 @@ try {
 	if (alreadyUsed) {
 		throw new Exception("twitter_user_id was already used");
 	}
+	cResSet.close();cResSet=null;
+	cState.close();cState=null;
+
 
 	// select
 	strSql = "SELECT 1 FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false";
