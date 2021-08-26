@@ -103,7 +103,7 @@ public final class IllustDetailC {
 				statement.setInt(2, m_nAppendId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
-					m_cContent.m_strFileName = resultSet.getString("file_name");
+					m_cContent.m_strFileName = Util.toString(resultSet.getString("file_name"));
 					bRtn = true;
 				}
 				resultSet.close();resultSet=null;
