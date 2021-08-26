@@ -84,11 +84,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
 		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
-		<meta name="twitter:image" content="https://<%=Common.GetUrl(strFileUrl)%>_360.jpg" />
+		<meta name="twitter:image" content="https://img.poipiku.com/img/pc_top_title-03.png" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
@@ -97,7 +97,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "https://<%=Common.GetUrl(strFileUrl)%>_360.jpg"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>"}
 			]
 		}
 		</script>
