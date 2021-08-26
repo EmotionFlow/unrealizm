@@ -88,7 +88,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
 		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
-		<meta name="twitter:image" content="https://img.poipiku.com/img/pc_top_title-03.png" />
+		<meta name="twitter:image" content="https://poipiku.com/img/pc_top_title-03.png" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
