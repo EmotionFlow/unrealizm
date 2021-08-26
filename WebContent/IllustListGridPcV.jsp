@@ -33,8 +33,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TSendGift.jsp"%>
 
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:site" content="@pipajp" />
+		<meta name="twitter:image" content="<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>" />
 		<meta property="og:url" content="<%=strUrl%>" />
 		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
