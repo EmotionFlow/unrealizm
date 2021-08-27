@@ -66,7 +66,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<%}%>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/FollowListPcV.jsp", String.format("&MD=%d", cResults.m_nMode), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/FollowListPcV.jsp", String.format("&MD=%d", cResults.m_nMode), cResults.m_nPage, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 

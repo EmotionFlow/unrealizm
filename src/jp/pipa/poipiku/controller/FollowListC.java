@@ -11,7 +11,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
-public class FollowListC {
+public final class FollowListC {
 	public static int MODE_FOLLOW = 0;
 	public static int MODE_BLOCK = 1;
 
@@ -29,7 +29,7 @@ public class FollowListC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 36;
+	public int selectMaxGallery = 36;
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
 
@@ -39,7 +39,6 @@ public class FollowListC {
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -47,8 +46,7 @@ public class FollowListC {
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
@@ -70,8 +68,9 @@ public class FollowListC {
 			}
 
 			if(m_nMode==MODE_FOLLOW) {
-				strSql = "SELECT follow_user_id FROM follows_0000 "
-						+ "WHERE user_id=? "
+				strSql = "SELECT follow_user_id FROM follows_0000 f "
+						+ "INNER JOIN users_0000 u ON f.follow_user_id=u.user_id "
+						+ "WHERE f.user_id=? "
 						+ "ORDER BY upload_date DESC OFFSET ? LIMIT ?";
 			} else {
 				strSql = "SELECT block_user_id as follow_user_id FROM blocks_0000 "
@@ -80,16 +79,18 @@ public class FollowListC {
 			}
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, checkLogin.m_nUserId);
-			statement.setInt(2, m_nPage * SELECT_MAX_GALLERY);
-			statement.setInt(3, SELECT_MAX_GALLERY);
+			statement.setInt(2, m_nPage * selectMaxGallery);
+			statement.setInt(3, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CUser cContent = new CUser();
 				cContent.m_nUserId		= resultSet.getInt("follow_user_id");
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_strNickName	= Util.toString(user.nickName);
-				cContent.m_strFileName	= Util.toString(user.fileName);
-				m_vContentList.add(cContent);
+				if (user != null) {
+					cContent.m_strNickName	= Util.toString(user.nickName);
+					cContent.m_strFileName	= Util.toString(user.fileName);
+					m_vContentList.add(cContent);
+				}
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

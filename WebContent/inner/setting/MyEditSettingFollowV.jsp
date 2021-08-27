@@ -1,11 +1,14 @@
 <%@page import="jp.pipa.poipiku.controller.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%!
+	static final int SELECT_MAX_GALLERY = 30;
+%>
 <%
 FollowListC cFollowListResults = new FollowListC();
 cFollowListResults.getParam(request);
 cFollowListResults.m_nMode = 0;
 cFollowListResults.m_nPage = cResults.m_nListPage;
-cFollowListResults.SELECT_MAX_GALLERY = 30;
+cFollowListResults.selectMaxGallery = SELECT_MAX_GALLERY;
 cFollowListResults.getResults(checkLogin);
 %>
 <script type="application/javascript">
@@ -15,13 +18,13 @@ cFollowListResults.getResults(checkLogin);
 			$.ajax({
 				"type": "POST",
 				"url": "/f/FollowListF.jsp",
-				"data": "MAX=<%=cFollowListResults.SELECT_MAX_GALLERY%>&MD=0&PG=" + pageNum,
+				"data": "MAX=<%=SELECT_MAX_GALLERY%>&MD=0&PG=" + pageNum,
 			}).then(
 				function(htmlList){
 					$.ajax({
 						"type": "POST",
 						"url": "/f/PageBarF.jsp",
-						"data": "TOTAL=<%=cFollowListResults.m_nContentsNum%>&PARPAGE=<%=cFollowListResults.SELECT_MAX_GALLERY%>&PG=" + pageNum,
+						"data": "TOTAL=<%=cFollowListResults.m_nContentsNum%>&PARPAGE=<%=cFollowListResults.selectMaxGallery%>&PG=" + pageNum,
 					}).then(
 						function(htmlPageBar){
 							$("#FollowListPageBar").empty();
@@ -44,13 +47,13 @@ cFollowListResults.getResults(checkLogin);
 		<%for(int nCnt = 0; nCnt< cFollowListResults.m_vContentList.size(); nCnt++) {
 			CUser cUser = cFollowListResults.m_vContentList.get(nCnt);%>
 		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
-		<%if(bSmartPhone && (nCnt+1)%15==0) {%>
+		<%if(bSmartPhone && (nCnt+1)%8==0) {%>
 		<%@ include file="/inner/TAd336x280_mid.jsp"%>
 		<%}%>
 		<%}%>
 	</div>
 
 	<nav id="FollowListPageBar" class="PageBar">
-		<%=CPageBar.CreatePageBarSp(null, null, cFollowListResults.m_nPage, cFollowListResults.m_nContentsNum, cFollowListResults.SELECT_MAX_GALLERY)%>
+		<%=CPageBar.CreatePageBarSp(null, null, cFollowListResults.m_nPage, cFollowListResults.m_nContentsNum, cFollowListResults.selectMaxGallery)%>
 	</nav>
 </div>

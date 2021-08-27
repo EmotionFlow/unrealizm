@@ -6,9 +6,6 @@ if(!checkLogin.m_bLogin) return;
 
 FollowListC cResults = new FollowListC();
 cResults.getParam(request);
-if(!isApp) {
-	cResults.SELECT_MAX_GALLERY = 8;
-}
 
 boolean bRtn = cResults.getResults(checkLogin);
 %>
@@ -19,7 +16,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 	<%}else{%>
 		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX)%>
 	<%}%>
-	<%if((nCnt+1)%9==0) {%>
+	<%if( Util.isSmartPhone(request) && (nCnt+1) % 8 == 0) {%>
 	<%@ include file="/inner/TAd336x280_mid.jsp"%>
 	<%}%>
 <%}%>

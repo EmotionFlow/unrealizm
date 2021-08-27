@@ -5,7 +5,7 @@ FollowListC cBlockListResults = new FollowListC();
 cBlockListResults.getParam(request);
 cBlockListResults.m_nMode = 1;
 cBlockListResults.m_nPage = cResults.m_nListPage;
-cBlockListResults.SELECT_MAX_GALLERY = 30;
+cBlockListResults.selectMaxGallery = 30;
 cBlockListResults.getResults(checkLogin);
 %>
 <script type="application/javascript">
@@ -15,13 +15,13 @@ cBlockListResults.getResults(checkLogin);
 			$.ajax({
 				"type": "POST",
 				"url": "/f/BlockListF.jsp",
-				"data": "MAX=<%=cBlockListResults.SELECT_MAX_GALLERY%>&MD=1&PG=" + pageNum,
+				"data": "MAX=<%=cBlockListResults.selectMaxGallery%>&MD=1&PG=" + pageNum,
 			}).then(
 				function(htmlList){
 					$.ajax({
 						"type": "POST",
 						"url": "/f/PageBarF.jsp",
-						"data": "TOTAL=<%=cBlockListResults.m_nContentsNum%>&PARPAGE=<%=cBlockListResults.SELECT_MAX_GALLERY%>&PG=" + pageNum,
+						"data": "TOTAL=<%=cBlockListResults.m_nContentsNum%>&PARPAGE=<%=cBlockListResults.selectMaxGallery%>&PG=" + pageNum,
 					}).then(
 						function(htmlPageBar){
 							$("#BlockListPageBar").empty();
@@ -51,6 +51,6 @@ cBlockListResults.getResults(checkLogin);
 	</div>
 
 	<nav id="BlockListPageBar" class="PageBar">
-		<%=CPageBar.CreatePageBarSp(null, null, cBlockListResults.m_nPage, cBlockListResults.m_nContentsNum, cBlockListResults.SELECT_MAX_GALLERY)%>
+		<%=CPageBar.CreatePageBarSp(null, null, cBlockListResults.m_nPage, cBlockListResults.m_nContentsNum, cBlockListResults.selectMaxGallery)%>
 	</nav>
 </div>
