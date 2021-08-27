@@ -114,6 +114,7 @@ public final class ShowAppendFileC {
 				}
 				if(!bFollow) return ERR_FOLLOWER;
 			}
+			cConn.close();cConn=null;
 
 			// hidden
 			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){
@@ -189,6 +190,7 @@ public final class ShowAppendFileC {
 			}
 
 			// Each append image
+			cConn = DatabaseUtil.dataSource.getConnection();
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, contentId);
