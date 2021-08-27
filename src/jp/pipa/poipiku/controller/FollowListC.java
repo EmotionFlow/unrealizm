@@ -73,8 +73,9 @@ public final class FollowListC {
 						+ "WHERE f.user_id=? "
 						+ "ORDER BY upload_date DESC OFFSET ? LIMIT ?";
 			} else {
-				strSql = "SELECT block_user_id as follow_user_id FROM blocks_0000 "
-						+ "WHERE user_id=? "
+				strSql = "SELECT block_user_id as follow_user_id FROM blocks_0000 b "
+						+ "INNER JOIN users_0000 u ON b.block_user_id=u.user_id "
+						+ "WHERE b.user_id=? "
 						+ "ORDER BY upload_date DESC OFFSET ? LIMIT ?";
 			}
 			statement = connection.prepareStatement(strSql);
