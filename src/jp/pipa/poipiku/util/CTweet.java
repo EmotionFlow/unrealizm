@@ -13,6 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import jp.pipa.poipiku.*;
 import twitter4j.Friendship;
@@ -557,28 +560,49 @@ public final class CTweet {
 
 			// 新しく追加
 			sql = "INSERT INTO twitter_friends(user_id, twitter_user_id, twitter_follow_user_id) " +
-					" VALUES (?, ?, ?)" +
-					" ON CONFLICT (user_id, twitter_follow_user_id)" +
-					" DO UPDATE SET last_update_date=CURRENT_TIMESTAMP;";
+					" VALUES ";
+			final String prefix = String.format("(%d,%d,", userId, m_lnTwitterUserId);
+			final String suffix = ")";
+			sql += followIdList.stream()
+					.map(e -> prefix + e + suffix)
+					.collect(Collectors.joining(","));
 			statement = connection.prepareStatement(sql);
-			for(long id: followIdList) {
-				statement.setInt(1, userId);
-				statement.setLong(2, m_lnTwitterUserId);
-				statement.setLong(3, id);
-				statement.executeUpdate();
-			}
-			statement.close();statement=null;
-
-			// ポイピク上のuser_id紐付け
-			sql = "UPDATE twitter_friends" +
-					" SET follow_user_id=fldUserId" +
-					" FROM tbloauth " +
-					" WHERE twitter_friends.twitter_follow_user_id=cast(tbloauth.twitter_user_id as bigint) " +
-					" AND follow_user_id IS NULL AND user_id=? AND del_flg=false";
-			statement = connection.prepareStatement(sql);
-			statement.setInt(1, userId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+
+			// ポイピク上のuser_id紐付け
+			sql = "WITH a AS (" +
+					"    SELECT twitter_follow_user_id" +
+					"    FROM twitter_friends" +
+					"    WHERE user_id = ?" +
+					" )" +
+					" SELECT DISTINCT flduserid, CAST(twitter_user_id AS bigint)" +
+					" FROM tbloauth" +
+					" WHERE twitter_user_id IN (SELECT CAST(twitter_follow_user_id AS varchar) FROM a)" +
+					"   AND del_flg = FALSE";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
+
+			Map<Integer, Long> map = new HashMap<>();
+			while (resultSet.next()) {
+				map.put(resultSet.getInt(1), resultSet.getLong(2));
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			if (map.size()>0) {
+				sql = "UPDATE twitter_friends SET follow_user_id=? WHERE user_id=? AND twitter_follow_user_id=?";
+				statement = connection.prepareStatement(sql);
+				for (Map.Entry<Integer, Long> entry: map.entrySet()) {
+					statement.setInt(1, entry.getKey());
+					statement.setInt(2, userId);
+					statement.setLong(3, entry.getValue());
+					statement.executeUpdate();
+				}
+				statement.close();statement=null;
+			}
 
 			// 既存レコードに自分のTwitterIDがあったらUPDATE
 			sql = "UPDATE twitter_friends" +
