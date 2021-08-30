@@ -16,7 +16,7 @@
 	<!-- /4789880/poipiku/poipiku_336x280_top_right_r18 -->
 	<div id='div-gpt-ad-1597961111008-0'>
 		<script>
-			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597961321668-0'); });
+			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597961111008-0'); });
 		</script>
 	</div>
 <%}%>

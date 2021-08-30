@@ -5,7 +5,7 @@
 <div class="SideBarMid">
 	<a class="PassAd" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">ポイパスで広告非表示! &nbsp; <i class="fas fa-times"></i></a>
 
-	<!-- /4789880/poipiku/poipikumobile_336x280_mid_2 -->
+	<!-- /4789880/poipiku/poipikumobile_336x280_mid -->
 	<!-- /4789880/poipiku/poipikumobile_336x280_mid_R18 -->
 
 	<div id='div-gpt-ad-1597961677347-0'>
