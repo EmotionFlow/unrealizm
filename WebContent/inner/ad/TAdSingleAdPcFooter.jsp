@@ -15,33 +15,20 @@
 		</div>
 	</div>
 	<%}else{%>
-	<div class="PcSideBarAd">
-		<!-- /4789880/poipiku/poipiku_300x250_footer_left -->
-		<!-- /4789880/poipiku/poipiku_300x250_footer_left_R18 -->
-		<div id='div-gpt-ad-1597964764341-0' style='width: 300px; height: 250px;'>
-			<script>
-				googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597964764341-0'); });
-			</script>
-		</div>
-	</div>
-	<div class="PcSideBarAd">
-		<!-- /4789880/poipiku/poipiku_300x250_footer_center -->
-		<!-- /4789880/poipiku/poipiku_300x250_footer_center_R18 -->
-		<div id='div-gpt-ad-1597964832589-0' style='width: 300px; height: 250px;'>
-			<script>
-				googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597964832589-0'); });
-			</script>
-		</div>
-	</div>
-	<div class="PcSideBarAd">
-		<!-- /4789880/poipiku/poipiku_300x250_footer_right -->
-		<!-- /4789880/poipiku/poipiku_300x250_footer_right_r18 -->
-		<div id='div-gpt-ad-1597964525272-0' style='width: 300px; height: 250px;'>
-			<script>
-				googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597964525272-0'); });
-			</script>
-		</div>
-	</div>
+<div style="width: 1140px; height: 280px;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0260822034407772"
+		crossorigin="anonymous"></script>
+<!-- poipiku_footer_display -->
+<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-0260822034407772"
+		data-ad-slot="6972560397"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
 	<%}%>
 </div>
 <%}%>

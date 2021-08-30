@@ -21,16 +21,16 @@
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right', [300, 250], 'div-gpt-ad-1598035277896-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x600_right_bottom', [[300, 600], [300, 250]], 'div-gpt-ad-1598035432316-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid', [[300, 250], [336, 280]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
 		<%}else{%>
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right_r18', [[300, 250], [336, 280]], 'div-gpt-ad-1598035277896-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x600_right_bottom', [[300, 600], [300, 250]], 'div-gpt-ad-1598035432316-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid', [[300, 250], [336, 280]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
 		<%}%>
 	<%}%>
 	googletag.pubads().enableSingleRequest();

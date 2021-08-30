@@ -20,15 +20,15 @@
 		<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right', [300, 250], 'div-gpt-ad-1598035277896-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x600_right_bottom', [[300, 600], [300, 250]], 'div-gpt-ad-1598035432316-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
 		<%}else{%>
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right', [300, 250], 'div-gpt-ad-1598035277896-0').addService(googletag.pubads());
 		googletag.defineSlot('/4789880/poipiku/poipiku_300x600_right_bottom', [[300, 600], [300, 250]], 'div-gpt-ad-1598035432316-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
+		//googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
 		<%}%>
 	<%}%>
 	googletag.pubads().enableSingleRequest();
