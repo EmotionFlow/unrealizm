@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	<%}else{%>
-<div style="width: 1140px; height: 280px;">
+<div style="width: 1116px; height: 280px;">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0260822034407772"
 		crossorigin="anonymous"></script>
 <!-- poipiku_footer_display -->
