@@ -5,20 +5,12 @@
 <div class="PcSideBarAd" style="float: right;">
 	<a class="PassAd" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">ポイパスで広告非表示! &nbsp; <i class="fas fa-times"></i></a>
 
-<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-<!-- /4789880/poipiku/poipiku_336x280_top_right -->
-	<div id='div-gpt-ad-1597961111008-0'>
-		<script>
-			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597961111008-0'); });
-		</script>
-	</div>
-<%}else{%>
+	<!-- /4789880/poipiku/poipiku_336x280_top_right -->
 	<!-- /4789880/poipiku/poipiku_336x280_top_right_r18 -->
 	<div id='div-gpt-ad-1597961111008-0'>
 		<script>
 			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597961111008-0'); });
 		</script>
 	</div>
-<%}%>
 </div>
 <%}%>
