@@ -34,3 +34,8 @@ batch: build-java
 	./build_java_batch.sh &&\
 	./run.sh ${CLS} &&\
 	popd
+
+translation:
+	pushd dev-tool/translate &&\
+	python3 translate_rs_properties.py &&\
+	popd
