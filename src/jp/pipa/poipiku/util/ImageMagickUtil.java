@@ -22,8 +22,8 @@ public class ImageMagickUtil {
         cmd.add("-thumbnail");
         cmd.add(String.format(
                 "%sx%s",
-                width!=null&&width>0?width.toString():"",
-                height!=null&height>0?height.toString():"")
+                width!=null && width>0 ? width.toString() : "",
+                height!=null && height>0 ? height.toString() : "")
         );
         cmd.add(dstPath);
 
