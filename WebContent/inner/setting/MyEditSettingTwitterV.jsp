@@ -96,7 +96,7 @@
 	p {margin-bottom: 0}
 	.RegistStatus{
 		font-size: 14px;
-		background-color: #f5f5f5;
+		background-color: #efefef;
 		padding: 4px 0px;
 		text-align: center;
 	}
@@ -104,8 +104,19 @@
 
 <div class="SettingList">
 	<div class="RegistStatus"><%=(cResults.m_cUser.m_bTweet)?String.format(_TEX.T("EditSettingV.Twitter.Info.State.On"), checkLogin.m_strNickName, cResults.m_cUser.m_strTwitterScreenName):_TEX.T("EditSettingV.Twitter.Info.State.Off")%></div>
+
+	<%if(cResults.m_cUser.m_bTweet){%>
+	<div class="SettingListItem" style="background-color: #f5f5f5;border: none; padding: 10px;">
+		<div class="SettingBody" style="background-color: #f5f5f5; font-size: 13px">
+			<p><%=_TEX.T("EditSettingV.Twitter.Link.Note1")%></p>
+			<p><%=_TEX.T("EditSettingV.Twitter.Link.Note2")%></p>
+			<p><%=_TEX.T("EditSettingV.Twitter.Link.Note3")%></p>
+		</div>
+	</div>
+	<%}%>
+
 	<div class="SettingListItem" style="border: none;">
-		<a id="TwitterSetting" name="TwitterSetting"></a>
+		<a id="TwitterSetting"></a>
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Regist")%></div>
 		<div class="SettingBody">
 			<%if(!cResults.m_cUser.m_bTweet){%>
