@@ -32,6 +32,7 @@ public class Oauth extends Model{
 	/**
 	 * twitterUserIdとpoipikuUserIdを関連づける。
 	 * 同一twitterUserIdで複数レコードあったら、その内poipikuUserIdのみを有効化する。
+	 * 同一twitterUserId, poipikuUserIdで複数レコードあったら、idが新しいものを有効化する。
 	 * @param twitterUserId twitter user id
 	 * @param poipikuUserId poipiku user id
 	 * @return result
@@ -51,7 +52,7 @@ public class Oauth extends Model{
 			statement.executeUpdate();
 			statement.close();statement = null;
 
-			strSql = "UPDATE tbloauth SET del_flg=false WHERE flduserid=? AND twitter_user_id=? AND fldproviderid=?";
+			strSql = "UPDATE tbloauth SET del_flg=false WHERE id=(SELECT id FROM tbloauth WHERE flduserid=? AND twitter_user_id=? AND fldproviderid=? ORDER BY id DESC limit 1)";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, poipikuUserId);
 			statement.setString(2, twitterUserId);

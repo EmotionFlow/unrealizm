@@ -76,14 +76,14 @@ public final class RegistTwitterTokenC extends Controller {
 				return false;
 			} else {
 				// 以前同じuser_id, twitter_use_idの組み合わせで連携していたら、そのレコードを復活させる。
-				sql = "UPDATE tbloauth SET del_flg=FALSE WHERE flduserid=? AND fldproviderid=? AND twitter_user_id=? AND del_flg=TRUE RETURNING flduserid";
+				sql = "UPDATE tbloauth SET del_flg=false WHERE id=(SELECT id FROM tbloauth WHERE flduserid=? AND twitter_user_id=? AND fldproviderid=? ORDER BY id DESC limit 1) RETURNING flduserid";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
-				statement.setInt(2, Common.TWITTER_PROVIDER_ID);
-				statement.setString(3, twitterUserId);
+				statement.setString(2, twitterUserId);
+				statement.setInt(3, Common.TWITTER_PROVIDER_ID);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
-					Log.d("以前同じuser_id, twitter_use_idの組み合わせで連携していた");
+					Log.d("以前同じuser_id, twitter_use_idの組み合わせで連携していたので、そのレコードを復活させた。");
 					bIsExist = true;
 				}
 				resultSet.close();resultSet = null;
