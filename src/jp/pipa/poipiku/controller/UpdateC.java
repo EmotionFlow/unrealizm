@@ -146,9 +146,9 @@ public final class UpdateC extends UpC {
 				statement.setInt(idx++, cParam.m_nPublishId);
 				statement.setString(idx++, cParam.m_strPassword);
 				statement.setString(idx++, cParam.m_strListId);
-				statement.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
+				statement.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));
 				statement.setBoolean(idx++, cParam.m_bCheerNg);
-				statement.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+				statement.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg));
 				statement.setBoolean(idx++, cParam.m_bNotRecently);
 				statement.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 				if(cParam.m_bLimitedTimePublish){

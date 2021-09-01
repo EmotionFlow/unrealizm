@@ -12,6 +12,9 @@ public final class CContent {
 	public static final int BOOKMARK_BOOKMARKING = 1;
 	public static final int BOOKMARK_LIMIT = 2;
 
+	public static final int TWEET_CONCURRENT = 1;
+	public static final int TWEET_WITH_THUMBNAIL = 2;
+
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
 	public String m_strDescription = "";
@@ -49,6 +52,37 @@ public final class CContent {
 	public int novelDirection = 0;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
+
+	public static int getSafeFilterDB(int publishId){
+		int safe_filter = Common.SAFE_FILTER_ALL;
+		switch(publishId) {
+			case Common.PUBLISH_ID_R15:
+				safe_filter = Common.SAFE_FILTER_R15;
+				break;
+			case Common.PUBLISH_ID_R18:
+				safe_filter = Common.SAFE_FILTER_R18;
+				break;
+			case Common.PUBLISH_ID_R18G:
+				safe_filter = Common.SAFE_FILTER_R18G;
+				break;
+		}
+		return safe_filter;
+	}
+
+	public static int getTweetWhenPublishedId(boolean isTweetTxt, boolean isTweetImg) {
+		int ret = 0;
+		if(isTweetTxt) ret += TWEET_CONCURRENT;
+		if(isTweetImg) ret += TWEET_WITH_THUMBNAIL;
+		return ret;
+	}
+
+	public boolean isTweetConcurrent() {
+		return (m_nTweetWhenPublished & TWEET_CONCURRENT) != 0;
+	}
+
+	public boolean isTweetWithThumbnail() {
+		return (m_nTweetWhenPublished & TWEET_WITH_THUMBNAIL) != 0;
+	}
 
 	public CContent() {}
 	public CContent(ResultSet resultSet) throws SQLException {

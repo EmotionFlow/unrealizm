@@ -513,23 +513,26 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" <%if(cResults.m_cContent.m_nTweetWhenPublished%2==1){%>checked<%}%> />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" <%if(cResults.m_cContent.isTweetConcurrent()){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionTweet">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>
 						</div>
 					</div>
+
+					<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
 					<div id="ImageSwitch" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" <%if(cResults.m_cContent.m_nTweetWhenPublished==3){%>checked<%}%>/>
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" <%if(cResults.m_cContent.isTweetWithThumbnail()){%>checked<%}%>/>
 							<label class="onoffswitch-label" for="OptionImage">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>
 						</div>
 					</div>
+					<%}%>
 					<div id="DeleteTweetSwitch" class="OptionItem"
 						<%if(cResults.m_cContent.m_strTweetId.isEmpty()){%>style="display: none;"<%}%>
 						>

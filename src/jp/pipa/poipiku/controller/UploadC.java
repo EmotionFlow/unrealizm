@@ -13,7 +13,7 @@ import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
 public final class UploadC extends UpC {
-	protected int m_nContentId = -99;
+	private int m_nContentId = -99;
 	public boolean deliverRequestResult;
 	public int GetResults(UploadCParam cParam, CheckLogin checkLogin) {
 		Connection cConn = null;
@@ -67,10 +67,10 @@ public final class UploadC extends UpC {
 			cState.setInt(idx++, cParam.m_nPublishId);
 			cState.setString(idx++, cParam.m_strPassword);
 			cState.setString(idx++, cParam.m_strListId);
-			cState.setInt(idx++, GetSafeFilterDB(cParam.m_nPublishId));
+			cState.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));
 			cState.setInt(idx++, cParam.m_nEditorId);
 			cState.setBoolean(idx++, cParam.m_bCheerNg);
-			cState.setInt(idx++, GetTweetParamDB(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+			cState.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg));
 			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
 			if(cParam.m_bLimitedTimePublish){
