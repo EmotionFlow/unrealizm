@@ -31,7 +31,7 @@ public class SpotUpdateTbloauth2 extends Batch {
 			connection = dataSource.getConnection();
 
 			sql = "select flduserid, twitter_user_id, fldaccesstoken, twitter_screen_name, count(flduserid) from tbloauth\n" +
-					"where del_flg=true\n" +
+					"where del_flg=false\n" +
 					"group by flduserid, twitter_user_id, fldaccesstoken, twitter_screen_name\n" +
 					"having count(*)>1";
 
@@ -49,7 +49,7 @@ public class SpotUpdateTbloauth2 extends Batch {
 			statement.close();
 
 			List<Integer> ids = new ArrayList<>();
-			sql = "SELECT id FROM tbloauth WHERE flduserid=? AND twitter_user_id=? AND fldaccesstoken=? AND twitter_screen_name=? AND del_flg=true ORDER BY id DESC";
+			sql = "SELECT id FROM tbloauth WHERE flduserid=? AND twitter_user_id=? AND fldaccesstoken=? AND twitter_screen_name=? AND del_flg=false ORDER BY id DESC";
 			statement = connection.prepareStatement(sql);
 			for (DeleteTarget tgt: deleteTargets) {
 				statement.setInt(1, tgt.userId);
