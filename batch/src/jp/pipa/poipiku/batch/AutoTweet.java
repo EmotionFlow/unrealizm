@@ -13,8 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class AutoTweet extends Batch{
-	static final boolean _DEBUG = false;
+public class AutoTweet extends Batch {
+	static final boolean _DEBUG = true;
 	static final String PROF_PATH = "/var/www/html/poipiku/user_img01/";
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
@@ -43,7 +43,7 @@ public class AutoTweet extends Batch{
 			cConn = dataSource.getConnection();
 			// SELECT TWITTER TOKEN & OLD TWEET_ID
 			if(_DEBUG) {
-				strSql = "SELECT * FROM tbloauth WHERE flduserid=1 AND fldproviderid=?";	// for test
+				strSql = "SELECT * FROM tbloauth WHERE flduserid=1851512 AND fldproviderid=?";	// for test
 			} else {
 				strSql = "SELECT tbloauth.* FROM tbloauth" +
 						" INNER JOIN users_0000 ON users_0000.user_id=tbloauth.flduserid" +
@@ -70,7 +70,7 @@ public class AutoTweet extends Batch{
 			cState.close();cState=null;
 
 			// SELECT THUMBNAIL FILE NAME
-			strSql = "SELECT * FROM contents_0000 WHERE open_id<>2 AND user_id=? AND file_name NOT ILIKE '%.gif' ORDER BY content_id DESC LIMIT 9";
+			strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND user_id=? AND file_name NOT ILIKE '%.gif' ORDER BY content_id DESC LIMIT 9";
 			cState = cConn.prepareStatement(strSql);
 			for(CTweetUser cTweetUser : m_vTweetUser) {
 				Log.d("cTweetUser.m_nUserId:"+cTweetUser.m_nUserId);
