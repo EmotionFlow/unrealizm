@@ -70,7 +70,7 @@ public class AutoTweet extends Batch {
 			cState.close();cState=null;
 
 			// SELECT THUMBNAIL FILE NAME
-			strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND user_id=? AND file_name NOT ILIKE '%.gif' ORDER BY content_id DESC LIMIT 9";
+			strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND user_id=? AND file_name NOT ILIKE '%.gif' AND file_name <> '' ORDER BY content_id DESC LIMIT 9";
 			cState = cConn.prepareStatement(strSql);
 			for(CTweetUser cTweetUser : m_vTweetUser) {
 				Log.d("cTweetUser.m_nUserId:"+cTweetUser.m_nUserId);
