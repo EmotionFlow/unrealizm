@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class AutoTweet extends Batch {
-	static final boolean _DEBUG = true;
+	static final boolean _DEBUG = false;
 	static final String PROF_PATH = "/var/www/html/poipiku/user_img01/";
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
