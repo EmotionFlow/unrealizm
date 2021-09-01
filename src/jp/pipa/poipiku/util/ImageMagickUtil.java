@@ -35,7 +35,7 @@ public class ImageMagickUtil {
     }
 
     public static int createMontage(List<String> srcPathList, String dstPath) {
-        if (srcPathList.size() < 1 || dstPath == null || dstPath.isEmpty()){
+        if (srcPathList.isEmpty()|| dstPath == null || dstPath.isEmpty()){
             return -1;
         }
 

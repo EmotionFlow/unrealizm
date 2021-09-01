@@ -127,7 +127,13 @@ public class AutoTweet extends Batch {
 				// CREATE IMAGE
 				String strTweetId = "";
 				if(!cTweetUser.m_vFileName.isEmpty()) {
-					ImageMagickUtil.createMontage(cTweetUser.m_vFileName, strDestFileName);
+					int exitCode = ImageMagickUtil.createMontage(cTweetUser.m_vFileName, strDestFileName);
+					if (exitCode<0) {
+						Log.d("ImageMagickUtil.createMontage return < 0", exitCode);
+					}
+				} else {
+					Log.d("cTweetUser.m_vFileName.isEmpty");
+					continue;
 				}
 
 				if(!_DEBUG) {
