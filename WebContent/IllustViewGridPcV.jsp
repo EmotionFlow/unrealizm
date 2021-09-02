@@ -38,26 +38,29 @@ default:
 String strFileUrl = "";
 boolean bHidden = false;	// テキスト用カバー画像表示フラグ
 switch(cResults.m_cContent.m_nPublishId) {
-case Common.PUBLISH_ID_R15:
-case Common.PUBLISH_ID_R18:
-case Common.PUBLISH_ID_R18G:
-case Common.PUBLISH_ID_PASS:
-case Common.PUBLISH_ID_LOGIN:
-case Common.PUBLISH_ID_FOLLOWER:
-case Common.PUBLISH_ID_T_FOLLOWER:
-case Common.PUBLISH_ID_T_FOLLOWEE:
-case Common.PUBLISH_ID_T_EACH:
-case Common.PUBLISH_ID_T_LIST:
-	strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
-	bHidden = true;
-	break;
-case Common.PUBLISH_ID_ALL:
-case Common.PUBLISH_ID_HIDDEN:
-default:
-	strFileUrl = cResults.m_cContent.m_strFileName;
-	if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
-	break;
+	case Common.PUBLISH_ID_R15:
+	case Common.PUBLISH_ID_R18:
+	case Common.PUBLISH_ID_R18G:
+	case Common.PUBLISH_ID_PASS:
+	case Common.PUBLISH_ID_LOGIN:
+	case Common.PUBLISH_ID_FOLLOWER:
+	case Common.PUBLISH_ID_T_FOLLOWER:
+	case Common.PUBLISH_ID_T_FOLLOWEE:
+	case Common.PUBLISH_ID_T_EACH:
+	case Common.PUBLISH_ID_T_LIST:
+		strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
+		bHidden = true;
+		break;
+	case Common.PUBLISH_ID_HIDDEN:
+		strFileUrl="/img/poipiku_icon_512x512_2.png";
+		break;
+	case Common.PUBLISH_ID_ALL:
+	default:
+		strFileUrl = cResults.m_cContent.m_strFileName;
+		if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
+		break;
 }
+
 
 String strDesc = Util.deleteCrLf(cResults.m_cContent.title);
 strDesc = (strDesc.isEmpty())?Util.deleteCrLf(cResults.m_cContent.m_strDescription):strDesc;
@@ -81,7 +84,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
 		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
-		<meta name="twitter:image" content="https://poipiku.com/img/poipiku_icon_512x512_2.png" />
+		<%if(cResults.m_cContent.isTweetWithThumbnail()){%>
+		<meta name="twitter:image" content="<%="https://img.poipiku.com" + strFileUrl%>" />
+		<%}else{%>
+		<meta name="twitter:image" content="https://img.poipiku.com/img/poipiku_icon_512x512_2.png" />
+		<%}%>
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
@@ -90,7 +97,14 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			"@context":"http://schema.org",
 			"@type":"ItemList",
 			"itemListElement":[
-				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>", "name": "<%=Util.toDescString(strTitle)%>", "image": "https://poipiku.com/img/poipiku_icon_512x512_2.png"}
+				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>",
+				 "name": "<%=Util.toDescString(strTitle)%>",
+				 <%if(cResults.m_cContent.isTweetWithThumbnail()){%>
+				 "image": "<%="https://img.poipiku.com" + strFileUrl%>"
+				 <%}else{%>
+				 "image": "https://poipiku.com/img/poipiku_icon_512x512_2.png"
+				 <%}%>
+				}
 			]
 		}
 		</script>
