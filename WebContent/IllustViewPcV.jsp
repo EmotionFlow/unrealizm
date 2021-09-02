@@ -63,8 +63,11 @@ switch(cResults.m_cContent.m_nPublishId) {
 		break;
 	case Common.PUBLISH_ID_ALL:
 	default:
-		strFileUrl = cResults.m_cContent.m_strFileName;
-		if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
+		if (cResults.m_cContent.m_strFileName.isEmpty()) {
+			strFileUrl = "/img/poipiku_icon_512x512_2.png";
+		} else {
+			strFileUrl = cResults.m_cContent.m_strFileName + "_640.jpg";
+		}
 		break;
 }
 
