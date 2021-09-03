@@ -5,14 +5,7 @@ import requests
 import json
 import os
 
-# GASへのURI。翻訳はGASで実行している。
-SCRIPT_URI = 'https://script.google.com/macros/s/AKfycbxBAsqbAeDfzmGJmd6hmUjhs-0vjHMuYYboOpR1OkvfNxl8J2foIDPdk3ZdzdTTC6O3/exec'
-
-# 対象言語。rs_??.propertiesの??部分
-TARGET_LOCALES = ['ko', 'zh_CN', 'zh_TW', 'th']
-
-# TARGET_LOCALESとGoogle translate api の言語コードマップ。中国語が微妙に異なる。
-GOOGLE_TRANSLATE_LOCALES = {'ko': 'ko', 'th': 'th', 'zh_CN': 'zh_Hans', 'zh_TW': 'zh_Hant'}
+import translate
 
 PROP_FILE_DIR = '../../WebContent/WEB-INF/classes/'
 BASE_NAME = 'rs'
@@ -36,7 +29,7 @@ with open(f'{PROP_FILE_DIR}{BASE_NAME}_{SOURCE_LOCALE}{PROP_EXT}', 'r') as sourc
         line = source_file.readline()
 
 
-for target_locale in TARGET_LOCALES:
+for target_locale in translate.TARGET_LOCALES:
     target_file_path = f'{PROP_FILE_DIR}{BASE_NAME}_{target_locale}{PROP_EXT}'
     new_file_path = f'{PROP_FILE_DIR}{BASE_NAME}_{target_locale}{PROP_EXT}.new'
 
@@ -62,7 +55,7 @@ for target_locale in TARGET_LOCALES:
                 try:
                     word = SRC_DICT[splitted[0].strip()].encode('ascii').decode('unicode-escape')
                     print(word)
-                    response = requests.post(f"{SCRIPT_URI}", data={'text': word, 'source': SOURCE_LOCALE, 'target': GOOGLE_TRANSLATE_LOCALES[target_locale]})
+                    response = requests.post(translate.SCRIPT_URI, data={'text': word, 'source': SOURCE_LOCALE, 'target': translate.GOOGLE_TRANSLATE_LOCALES[target_locale]})
                     resp = json.loads(response.text)
                     trans_word = resp['text']
                     new_file.write(f"{splitted[0]}= {trans_word.encode('unicode-escape').decode('ascii')}\n")

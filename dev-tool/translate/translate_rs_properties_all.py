@@ -3,8 +3,7 @@
 import requests
 import json
 
-# GASへのURI。翻訳はGASで実行している。
-SCRIPT_URI = 'https://script.google.com/macros/s/AKfycbxBAsqbAeDfzmGJmd6hmUjhs-0vjHMuYYboOpR1OkvfNxl8J2foIDPdk3ZdzdTTC6O3/exec'
+import translate
 
 # 元の言語
 SOURCE_LOCALE = 'en'
@@ -37,7 +36,7 @@ for target_locale in TARGET_LOCALES:
             try:
                 word = s.strip().encode('ascii').decode('unicode-escape')
                 print(word)
-                response = requests.post(f"{SCRIPT_URI}", data={'text': word, 'source': SOURCE_LOCALE, 'target': target_locale})
+                response = requests.post(f"{translate.SCRIPT_URI}", data={'text': word, 'source': SOURCE_LOCALE, 'target': target_locale})
                 resp = json.loads(response.text)
                 trans_word = resp['text']
                 target_file.write(f"{splitted[0]}= {trans_word.encode('unicode-escape').decode('ascii')}\n")
