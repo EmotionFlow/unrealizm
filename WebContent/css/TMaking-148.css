@@ -1072,6 +1072,13 @@ Decoration
 	margin-bottom: 20px;
 }
 
+.UploadFile .UoloadCmdOption .OptionInfo {
+	font-size: 11px;
+	text-align: left;
+	margin: 0 15px;
+	display: none;
+}
+
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel {
 	display: block;
 	margin: 0;

@@ -365,13 +365,19 @@ if (requestId > 0) {
 							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
-					<div id="ItemTwitterList" class="OptionItem" style="display: none;">
-						<div class="OptionLabel"></div>
-						<div class="OptionPublish">
-							<span id="TwitterListLoading"></span>
-							<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
-							<select id="EditTwitterList" class="EditPublish" style="display: none;">
-							</select>
+					<div id="ItemTwitterList" style="display: none;">
+						<div class="OptionItem">
+							<div class="OptionPublish">
+								<span id="TwitterListLoading"></span>
+								<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
+								<select id="EditTwitterList" class="EditPublish" style="display: none;">
+								</select>
+							</div>
+						</div>
+						<div class="OptionItem">
+							<div class="OptionPublish" style="font-size: 11px;">
+								<span><%=_TEX.T("UploadFilePc.Option.Publish.TwitterListInfo")%></span>
+							</div>
 						</div>
 					</div>
 					<div id="ItemTimeLimitedFlg" class="OptionItem">
@@ -426,13 +432,15 @@ if (requestId > 0) {
 							</label>
 						</div>
 					</div>
-					<div id="PublishLimitedInfo" style="font-size: 13px; text-align: left; margin: 0 15px; display: none;">
+					<div id="PublishLimitedInfo" class="OptionInfo">
 						<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.Info")%>
 					</div>
 
 					<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
 					<div id="ImageSwitch" class="OptionItem">
-						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
+						<div class="OptionLabel">
+							<%=_TEX.T("UploadFilePc.Option.TweetImage")%><a onclick="$('#ImageSwitchInfo').toggle()"> <i class="fas fa-info-circle"></i></a>
+						</div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" />
 							<label class="onoffswitch-label" for="OptionImage">
@@ -441,6 +449,10 @@ if (requestId > 0) {
 							</label>
 						</div>
 					</div>
+					<div id="ImageSwitchInfo" class="OptionInfo">
+						<%=_TEX.T("UploadFilePc.Option.TweetImage.Info")%>
+					</div>
+
 					<%}%>
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%>
