@@ -8,17 +8,8 @@
 
 	<div id='div-gpt-ad-1597961771258-0'>
 		<script>
-			//googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597961771258-0'); });
+			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597961771258-0'); });
 		</script>
-<script type="text/javascript">
-google_ad_client = "ca-pub-2810565410663306";
-/* adx_poipikumobile_336x280_mid_2 */
-google_ad_slot = "adx_poipikumobile_336x280_mid_2";
-google_ad_width = 336;
-google_ad_height = 280;
-</script>
-<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
 	</div>
 </div>
 <%}%>
