@@ -87,62 +87,59 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 
 		<style>
 			#SwitchUserList{
-								float: left;
-								width: 100%;
-								box-sizing: border-box;
-								overflow: hidden;
-								position: fixed;
-								align-items: center;
-								justify-content: center;
-								background: #fff;
-								color: #6d6965;
-								flex-flow: column;
+				float: left;
+				width: 100%;
+				box-sizing: border-box;
+				overflow: hidden;
+				position: fixed;
+				align-items: center;
+				justify-content: center;
+				background: #fff;
+				color: #6d6965;
+				flex-flow: column;
 				z-index: 999;
 			}
 			.SwitchUserItem {
-								display: flex;
-								flex-flow: row nowrap;
-								width: 100%;
+				display: flex;
+				flex-flow: row nowrap;
+				width: 100%;
 				height: 55px;
-								box-sizing: border-box;
-								position: relative;
-								text-align: center;
-								padding: 2px 2px 2px 2px;
-								border-bottom: solid 1px #eee;
-								align-items: center;
-								color: #6d6965;
+				box-sizing: border-box;
+				position: relative;
+				text-align: center;
+				padding: 2px 2px 2px 2px;
+				border-bottom: solid 1px #eee;
+				align-items: center;
+				color: #6d6965;
 			}
 			.SwitchUserThumb {
-								display: block;
-								flex: 0 0 40px;
-								height: 40px;
-								overflow: hidden;
-								border-radius: 40px;
-								background-size: cover;
-								background-position: 50% 50%;
+				display: block;
+				flex: 0 0 40px;
+				height: 40px;
+				overflow: hidden;
+				border-radius: 40px;
+				background-size: cover;
+				background-position: 50% 50%;
 			}
 			.SwitchUserNickname {
-								display: block;
-								flex: 1 1 80px;
-								padding: 0;
-								margin: 0 0 0 3px;
-								text-align: left;
-								font-size: 16px;
-								white-space: nowrap;
-								overflow: hidden;
+				display: block;
+				flex: 1 1 80px;
+				padding: 0;
+				margin: 0 0 0 3px;
+				text-align: left;
+				font-size: 16px;
+				white-space: nowrap;
+				overflow: hidden;
 			}
-						.SwitchUserStatus {
-								width: 19px;
-								border-left: solid 1px #eee;
-								padding: 10px 13px;
-								font-size: 16px;
-						}
-						.SwitchUserStatus > .Selected {
+			.SwitchUserStatus {
+				width: 19px;
+				border-left: solid 1px #eee;
+				padding: 10px 13px;
+				font-size: 16px;
+			}
+			.SwitchUserStatus > .Selected {
 				color: #3498da;
-						}
-						.SwitchUserStatus > .Other {
-				color: #f27474;
-						}
+			}
 		</style>
 	</head>
 

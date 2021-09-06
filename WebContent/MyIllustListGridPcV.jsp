@@ -147,7 +147,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
             }
             .SwitchUserStatus > .Other {
                 cursor: pointer;
-                color: #f27474;
             }
 		</style>
 	</head>

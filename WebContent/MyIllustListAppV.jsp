@@ -176,9 +176,6 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
             .SwitchUserStatus > .Selected {
                 color: #3498da;
             }
-            .SwitchUserStatus > .Other {
-                color: #f27474;
-            }
 		</style>
 	</head>
 

@@ -12,10 +12,9 @@
 				<%if(switchUser.signInIt){%>
 				<i class="fas fa-check Selected"></i>
 				<%}else{%>
-				<i class="far fa-trash-alt Other"
-				   onclick="removeSwitchUser(<%=switchUser.user.m_nUserId%>, this)"></i>
+				<i class="fas fa-unlink Other" onclick="removeSwitchUser(<%=switchUser.user.m_nUserId%>, this)"></i>
 				<%}%>
-				</span>
+		</span>
 	</div>
 	<%}%>
 
