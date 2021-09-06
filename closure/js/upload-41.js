@@ -473,6 +473,15 @@ function getTweetImageSetting() {
 	return false;
 }
 
+function setTwitterCardThumbnailSetting(val) {
+	setLocalStrage('upload_twitter_card_thumbnail', val);
+}
+
+function getTwitterCardThumbnailSetting() {
+	const upload_twitter_card_thumbnail = getLocalStrage('upload_twitter_card_thumbnail');
+	return !!upload_twitter_card_thumbnail;
+}
+
 function setLastCategorySetting(val) {
 	setLocalStrage('last_category', val);
 }
@@ -524,23 +533,15 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 	return true;
 }
 function updateTweetButton() {
-	var bTweet = $('#OptionTweet').prop('checked');
-	if (!$('#ImageSwitc').length) return;
-	if(!bTweet) {
-		$('#ImageSwitch .OptionLabel').addClass('disabled');
-		$('#ImageSwitch .onoffswitch').addClass('disabled');
-		$('#OptionImage:checkbox').prop('disabled',true);
-
-		$('#DeleteTweetSwitch .OptionLabel').addClass('disabled');
-		$('#DeleteTweetSwitch .onoffswitch').addClass('disabled');
-		$('#OptionDeleteTweet:checkbox').prop('disabled',true);
+	const $ImageSwitch = $('#ImageSwitch');
+	if (!$ImageSwitch.length) return;
+	const bTweet = $('#OptionTweet').prop('checked');
+	const $ImageSwitchInfo = $('#OptionImageSwitchInfo');
+	if(bTweet) {
+		$ImageSwitch.show();
 	} else {
-		$('#ImageSwitch .OptionLabel').removeClass('disabled');
-		$('#ImageSwitch .onoffswitch').removeClass('disabled');
-		$('#OptionImage:checkbox').prop('disabled',false);
-		$('#DeleteTweetSwitch .OptionLabel').removeClass('disabled');
-		$('#DeleteTweetSwitch .onoffswitch').removeClass('disabled');
-		$('#OptionDeleteTweet:checkbox').prop('disabled',false);
+		$ImageSwitch.hide();
+		$ImageSwitchInfo.hide();
 	}
 }
 
@@ -930,6 +931,7 @@ function UploadFile(user_id, request_id) {
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
+	setTwitterCardThumbnailSetting($('#OptionTwitterCardThumbnail').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId === 99) {
 		nTweet = 0;
@@ -955,6 +957,7 @@ function UploadFile(user_id, request_id) {
 			"PED":strPublishEnd,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
+			"TWCT":getTwitterCardThumbnailSetting(),
 			"ED":0,
 			"CNG":nCheerNg,
 			"RID":request_id
@@ -1006,17 +1009,6 @@ function initUploadPaste() {
 
 function createPasteElm(src) {
 	var $InputFile = $('<div />').addClass('InputFile');
-	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
-		$(this).parent().remove();
-		updatePasteNum();
-	});
-	var $imgView = $('<img />').addClass('imgView').attr('src', src);
-	$InputFile.append($DeletePaste).append($imgView);
-	return $InputFile
-}
-
-function createPasteListItem(src, append_id) {
-	var $InputFile = $('<li />').addClass('InputFile').attr('id', append_id);
 	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
 		$(this).parent().remove();
 		updatePasteNum();
@@ -1298,9 +1290,9 @@ function UploadText(user_id, request_id) {
 function initOption() {
 	$('#OptionTweet').prop('checked', getTweetSetting());
 	$('#OptionImage').prop('checked', getTweetImageSetting());
-	var cCategory = getLastCategorySetting();
+	$('#OptionTwitterCardThumbnail').prop('checked', getTwitterCardThumbnailSetting());
+	const cCategory = getLastCategorySetting();
 	$('#EditCategory option').each(function(){
-		//console.log($(this).val());
 		if($(this).val()==cCategory) {
 			$('#EditCategory').val(cCategory);
 		}

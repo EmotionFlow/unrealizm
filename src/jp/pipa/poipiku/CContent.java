@@ -14,6 +14,7 @@ public final class CContent {
 
 	public static final int TWEET_CONCURRENT = 1;
 	public static final int TWEET_WITH_THUMBNAIL = 2;
+	public static final int TWITTER_CARD_THUMBNAIL = 4;
 
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
@@ -69,10 +70,11 @@ public final class CContent {
 		return safe_filter;
 	}
 
-	public static int getTweetWhenPublishedId(boolean isTweetTxt, boolean isTweetImg) {
+	public static int getTweetWhenPublishedId(boolean isTweetTxt, boolean isTweetImg, boolean isTwitterCardThumbnail) {
 		int ret = 0;
 		if(isTweetTxt) ret += TWEET_CONCURRENT;
 		if(isTweetImg) ret += TWEET_WITH_THUMBNAIL;
+		if(isTwitterCardThumbnail) ret += TWITTER_CARD_THUMBNAIL;
 		return ret;
 	}
 
@@ -82,6 +84,10 @@ public final class CContent {
 
 	public boolean isTweetWithThumbnail() {
 		return (m_nTweetWhenPublished & TWEET_WITH_THUMBNAIL) != 0;
+	}
+
+	public boolean isTwitterCardThumbnail() {
+		return (m_nTweetWhenPublished & TWITTER_CARD_THUMBNAIL) != 0;
 	}
 
 	public CContent() {}

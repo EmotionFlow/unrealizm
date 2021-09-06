@@ -89,11 +89,15 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
+		<meta name="twitter:card" content="summary_large_image" />
+		<%}else{%>
 		<meta name="twitter:card" content="summary" />
+		<%}%>
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
-		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
-		<%if(cResults.m_cContent.isTweetWithThumbnail()){%>
+		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 		<meta name="twitter:image" content="<%="https://img.poipiku.com" + strFileUrl%>" />
 		<%}else{%>
 		<meta name="twitter:image" content="https://img.poipiku.com/img/poipiku_icon_512x512_2.png" />
@@ -108,7 +112,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			"itemListElement":[
 				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>",
 				 "name": "<%=Util.toDescString(strTitle)%>",
-				 <%if(cResults.m_cContent.isTweetWithThumbnail()){%>
+				 <%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 				 "image": "<%="https://img.poipiku.com" + strFileUrl%>"
 				 <%}else{%>
 				 "image": "https://poipiku.com/img/poipiku_icon_512x512_2.png"

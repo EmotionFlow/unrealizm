@@ -25,6 +25,7 @@ public class UpCParam {
 	public Timestamp m_tsPublishEnd = null;
 	public boolean m_bTweetTxt = false;
 	public boolean m_bTweetImg = false;
+	public boolean m_bTwitterCardThumbnail = false;
 	public int m_nEditorId = Common.EDITOR_UPLOAD;
 	public boolean m_bCheerNg = true;
 	public int genre = -1;
@@ -48,6 +49,7 @@ public class UpCParam {
 		m_nEditorId			= Util.toIntN(request.getParameter("ED"), 0, Common.EDITOR_ID_MAX);
 		m_bTweetTxt			= Util.toBoolean(request.getParameter("TWT"));
 		m_bTweetImg			= Util.toBoolean(request.getParameter("TWI"));
+		m_bTwitterCardThumbnail = Util.toBoolean(request.getParameter("TWCT"));
 		m_bCheerNg			= Util.toInt(request.getParameter("CNG"))!=0;
 		genre				= Util.toInt(request.getParameter("GD"));
 		requestId           = Util.toInt(request.getParameter("RID"));
@@ -55,7 +57,7 @@ public class UpCParam {
 		// format tag list
 		if(!m_strTagList.isEmpty()) {
 			ArrayList<String> listTag = new ArrayList<String>();
-			String tags[] = m_strTagList.split(" ");
+			String[] tags = m_strTagList.split(" ");
 			for(String tag : tags) {
 				tag = tag.trim();
 				if(tag.isEmpty()) continue;

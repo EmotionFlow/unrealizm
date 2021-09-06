@@ -70,7 +70,7 @@ public final class UploadC extends UpC {
 			cState.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));
 			cState.setInt(idx++, cParam.m_nEditorId);
 			cState.setBoolean(idx++, cParam.m_bCheerNg);
-			cState.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+			cState.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg, cParam.m_bTwitterCardThumbnail));
 			cState.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 
 			if(cParam.m_bLimitedTimePublish){

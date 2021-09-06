@@ -87,7 +87,7 @@ public final class UploadTextC extends UpC {
 			statement.setInt(idx++, cParam.m_nEditorId);
 			statement.setBoolean(idx++, cParam.m_bCheerNg);
 			statement.setInt(idx++, nOpenId);
-			statement.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg));
+			statement.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg, cParam.m_bTwitterCardThumbnail));
 			statement.setBoolean(idx++, cParam.m_bLimitedTimePublish);
 			statement.setString(idx++, cParam.title);
 			statement.setString(idx++, NovelUtil.genarateHtml(cParam.title, textBody, ""));

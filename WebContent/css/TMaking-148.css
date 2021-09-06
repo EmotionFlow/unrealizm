@@ -1090,6 +1090,17 @@ Decoration
 	flex: 0 0 40%;
 }
 
+.UploadFile .UoloadCmdOption .OptionItem .OptionLabelSub {
+	display: block;
+	font-size: 14px;
+	height: 15px;
+	line-height: 15px;
+	text-align: left;
+	white-space: nowrap;
+	flex: 0 0 40%;
+	margin: 0 0 0 1em;
+}
+
 .UploadFile .UoloadCmdOption .OptionItem .OptionLabel.disabled {
 	color: #ccc;
 }

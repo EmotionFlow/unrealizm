@@ -201,6 +201,7 @@ function UpdateFile(user_id, content_id) {
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
+	setTwitterCardThumbnailSetting($('#OptionTwitterCardThumbnail').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId === 99) {
 		nTweet = 0;
@@ -238,6 +239,7 @@ function UpdateFile(user_id, content_id) {
 			"PED":strPublishEnd,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
+			"TWCT":getTwitterCardThumbnailSetting(),
 			"DELTW":nDeleteTweet,
 			"ED":0,
 			"CNG":nCheerNg,
