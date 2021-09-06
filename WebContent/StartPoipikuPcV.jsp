@@ -2,7 +2,6 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin();
-String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 %>
 <!DOCTYPE html>
 <html style="height: 100%;">
@@ -14,7 +13,7 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 		<meta property="og:url" content="https://poipiku.com/" />
 		<meta property="og:title" content="<%=_TEX.T("THeader.Title")%>" />
 		<meta property="og:description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<meta property="og:image" content="<%=Common.GetPoipikuUrl("/img/poipiku_icon_512x512_2.png")%>" />
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
@@ -87,12 +86,12 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 		<article class="Wrapper">
 			<section class="AnalogicoInfo Flyer Omote">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" />
+					<img class="PoipikuFlyerImg" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Omote")%>"/>
 				</div>
 			</section>
 			<section class="AnalogicoInfo Flyer Ura">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" />
+					<img class="PoipikuFlyerImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Ura")%>" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Title">
@@ -127,27 +126,26 @@ String strFileUrl = "/img/poipiku_icon_512x512_2.png";
 
 		<article class="Wrapper ThumbList">
 			<section class="PoipikuInfo">
-
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" alt="<%=_TEX.T("StartPoipiku.Capture01")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" alt="<%=_TEX.T("StartPoipiku.Capture02")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" alt="<%=_TEX.T("StartPoipiku.Capture03")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" alt="<%=_TEX.T("StartPoipiku.Capture04")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" alt="<%=_TEX.T("StartPoipiku.Capture05")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" alt="<%=_TEX.T("StartPoipiku.Capture06")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" />
+					<img class="PoipikuDescImg" loading="lazy" src="//img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" alt="<%=_TEX.T("StartPoipiku.Capture07")%>"/>
 				</div>
 
 				<div class="PoipikuDesc Full">
