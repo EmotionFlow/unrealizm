@@ -83,7 +83,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
+		<meta name="twitter:card" content="summary_large_image" />
+		<%}else{%>
 		<meta name="twitter:card" content="summary" />
+		<%}%>
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
 		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
