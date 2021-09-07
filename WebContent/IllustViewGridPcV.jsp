@@ -91,7 +91,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
 		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX)%>" />
-		<%if(cResults.m_cContent.isTweetWithThumbnail()){%>
+		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 		<meta name="twitter:image" content="<%="https://img.poipiku.com" + strFileUrl%>" />
 		<%}else{%>
 		<meta name="twitter:image" content="https://img.poipiku.com/img/poipiku_icon_512x512_2.png" />
