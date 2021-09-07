@@ -217,6 +217,15 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			<%}%>
 			$(function() {
 				DispDescCharNum();
+				$(".onoffswitch-label").on('click',
+					(ev)=>{
+						const $tgt = $(ev.target).parent().parent().parent();
+						$tgt.css('color','#f9ffb3');
+						setTimeout(()=>{
+							$tgt.css('color','#ffffff');
+						}, 400);
+					}
+				);
 			});
 
 		</script>
