@@ -12,9 +12,10 @@ public final class CContent {
 	public static final int BOOKMARK_BOOKMARKING = 1;
 	public static final int BOOKMARK_LIMIT = 2;
 
-	public static final int TWEET_CONCURRENT = 1;
-	public static final int TWEET_WITH_THUMBNAIL = 2;
-	public static final int TWITTER_CARD_THUMBNAIL = 4;
+	//contents_0000.tweet_when_published
+	public static final int TWEET_CONCURRENT = 1;       // 0001
+	public static final int TWEET_WITH_THUMBNAIL = 2;   // 0010
+	public static final int TWITTER_CARD_THUMBNAIL = 4; // 0100
 
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
