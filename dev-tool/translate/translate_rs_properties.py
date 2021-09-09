@@ -16,7 +16,6 @@ SRC_DICT = {}
 with open(f'{PROP_FILE_DIR}{BASE_NAME}_{SOURCE_LOCALE}{PROP_EXT}', 'r') as source_file:
     line = source_file.readline()
     while line:
-        print(line)
         if not line.strip() or line[0] == '#':
             pass
         else:
@@ -56,6 +55,7 @@ for target_locale in translate.TARGET_LOCALES:
                     word = SRC_DICT[splitted[0].strip()].encode('ascii').decode('unicode-escape')
                     print(word)
                     response = requests.post(translate.SCRIPT_URI, data={'text': word, 'source': SOURCE_LOCALE, 'target': translate.GOOGLE_TRANSLATE_LOCALES[target_locale]})
+                    print(response)
                     resp = json.loads(response.text)
                     trans_word = resp['text']
                     new_file.write(f"{splitted[0]}= {trans_word.encode('unicode-escape').decode('ascii')}\n")
