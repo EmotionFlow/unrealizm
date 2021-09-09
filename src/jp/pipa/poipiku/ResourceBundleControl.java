@@ -70,9 +70,9 @@ public final class ResourceBundleControl {
 	public String getLangStr() {
 		Locale locale = objRb.getLocale();
 		if (locale.equals(Locale.SIMPLIFIED_CHINESE)) {
-			return "zh-cmn-Hans";
+			return "zh-CN";
 		} else if (locale.equals(Locale.TRADITIONAL_CHINESE)) {
-			return "zh-cmn-Hant";
+			return "zh-TW";
 		} else {
 			return locale.getLanguage();
 		}
