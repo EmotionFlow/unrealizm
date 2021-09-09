@@ -83,12 +83,12 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			g_epsilonInfo.elPassportNowPayment = _elPassportNowPayment;
 
 			const contructCode = "68968190";
-			//let cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "POI PASS"};
+			<%//let cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "POI PASS"};%>
 			let cardObj = {
 				"cardno": String(_cardInfo.number),
 				"expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
 				"securitycode": String(_cardInfo.securityCode),
-				// "holdername": "DUMMY",
+				<%// "holdername": "DUMMY",%>
 			};
 
 			EpsilonToken.init(contructCode);
@@ -106,7 +106,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		}
 
 		if( response.resultCode !== '000' ){
-			window.alert("ポイパス加入処理中にエラーが発生しました");
+			window.alert("<%=_TEX.T("MyEditSettingPassportV.BuySubscription.ErrorOccured")%>");
 			console.log(response.resultCode);
 			g_epsilonInfo.elPassportNowPayment.hide();
 		}else{
@@ -132,7 +132,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		};
 		let elPassportNowPayment = $('#PassportNowPayment');
 		if(elPassportNowPayment.css('display') !== 'none'){
-			alert("決済処理中です");
+			alert("<%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%>");
 			return;
 		}
 		elPassportNowPayment.show();
@@ -147,8 +147,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			if (typeof (result) === "undefined" || result == null || result === -1) {
 				return false;
 			} else if (result === 1) {
-				console.log("epsilonPayment");
-				if (confirm("登録済みのクレジットカードで毎月300円(税込)の課金を決済します。よろしいですか？")) {
+				if (confirm("<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm01")%>")) {
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
 					elPassportNowPayment.hide();
@@ -156,8 +155,8 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 					$(".BuyPassportButton").show();
 				}
 			} else if (result === 0) {
-				const title = "ポイパス加入";
-				const description = "クレジットカード情報を入力してください。入力されたカードから、<b>毎月300円</b>(税込)が課金されます。";
+				const title = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>";
+				const description = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm02")%>";
 				<%// クレジットカード情報入力ダイアログを表示、%>
 				<%// 入力内容を代理店に送信し、Tokenを取得する。%>
 				Swal.fire({
@@ -195,8 +194,8 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 
 	function CancelPassport() {
 		Swal.fire({
-			title: 'ポイパス解約',
-			text: 'ポイパスを解約してよろしいですか？現在プラスされている機能は解約月の翌月から使えなくなります。',
+			title: '<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel")%>',
+			text: '<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel.Confirm")%>',
 			focusConfirm: false,
 			showCloseButton: true,
 			showCancelButton: true,
@@ -219,7 +218,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			}).then( data => {
 					$("#PassportNowCancelling").hide();
 					if (data.result === 1) {
-						DispMsg("解約しました。これまでポイパスにご加入いただき、ありがとうございました！");
+						DispMsg("<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel.Done")%>");
 					} else {
 						switch (data.error_code) {
 							case -10:
@@ -434,28 +433,28 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				<div class="SettingBodyCmd">
 					<div class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-						ポイパスを定期購入する
+						<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>
 					</a>
 				</div>
 				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px; padding-right: 10px;">
 					<ul style="list-style-type: circle;">
-						<li>加入は一ヶ月単位です。（初回は加入日から月末まで、以降毎月1日に確定）</li>
-						<li>課金日は初回は加入日、以降毎月25日です（代行業者の都合で変更する場合あり）</li>
-						<li>解除に制限はありません。いつでもできます。</li>
-						<li>いつ解除しても、解除した月の末日までは有効のままになります。</li>
+						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo01")%></li>
+						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo02")%></li>
+						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo03")%></li>
+						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo04")%></li>
 					</ul>
 				</div>
 				<div id="PassportNowPayment2" style="display:none">
-					<span class="PoiPassLoading"></span><span>購入処理中</span>
+					<span class="PoiPassLoading"></span><span><%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%></span>
 				</div>
 				<%}%>
 				<%if(subscription.getStatus() == PassportSubscription.Status.UnderContraction) {%>
 				<div class="SettingBodyCmd">
 					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
-						ポイパス定期購入を解除する
+						<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel")%>
 					</a>
 					<div id="PassportNowCancelling" style="display:none">
-						<span class="PoiPassLoading"></span><span>解除処理中</span>
+						<span class="PoiPassLoading"></span><span><%=_TEX.T("MyEditSettingPassportV.SubscriptionCancelling")%></span>
 					</div>
 				</div>
 				<%}%>
