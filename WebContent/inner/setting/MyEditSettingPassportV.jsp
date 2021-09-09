@@ -35,16 +35,16 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			} else {
 				switch (data.error_code) {
 					case -10:
-						DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+						DispMsg('<%=_TEX.T("PassportDlg.Err.CardAuth")%>');
 						break;
 					case -20:
-						alert("<%=_TEX.T("PassportDlg.Err.AuthCritical")%>");
+						alert('<%=_TEX.T("PassportDlg.Err.AuthCritical")%>');
 						break;
 					case -30:
-						DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+						DispMsg('<%=_TEX.T("PassportDlg.Err.CardAuth")%>');
 						break;
 					case -99:
-						DispMsg("<%=_TEX.T("PassportDlg.Err.AuthOther")%>");
+						DispMsg('<%=_TEX.T("PassportDlg.Err.AuthOther")%>');
 						break;
 				}
 				if (elPassportNowPayment != null) {
@@ -223,16 +223,16 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 					} else {
 						switch (data.error_code) {
 							case -10:
-								DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+								DispMsg('<%=_TEX.T("PassportDlg.Err.CardAuth")%>');
 								break;
 							case -20:
-								alert("<%=_TEX.T("PassportDlg.Err.AuthCritical")%>");
+								alert('<%=_TEX.T("PassportDlg.Err.AuthCritical")%>');
 								break;
 							case -30:
-								DispMsg("<%=_TEX.T("PassportDlg.Err.CardAuth")%>");
+								DispMsg('<%=_TEX.T("PassportDlg.Err.CardAuth")%>');
 								break;
 							case -99:
-								DispMsg("<%=_TEX.T("PassportDlg.Err.AuthOther")%>");
+								DispMsg('<%=_TEX.T("PassportDlg.Err.AuthOther")%>');
 								break;
 						}
 					}
@@ -261,24 +261,28 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 	.PoipikuPassportLogoFrame {display: block; float: left; width: 100%;}
 	.PoipikuPassportLogoFrame .PoipikuPassportLogo {display: block; height: 45px;}
 	.BenefitTable {
-				width: 100%;
-				text-align: center;
-				border-collapse: collapse;
-		}
-		.BenefitTable td {height: 100px;}
-		.BenefitTable td, table th {
-				border: solid 1px #ddd;
-				padding: 5px 8px;
-				vertical-align: middle;
-		}
-		.BenefitTable .ListCell {background: #eee;}
-		.BenefitTable td {height: 100px;}
-		.BenefitTable .NormalCell {}
-		.BenefitTable .BenefitCell {font-weight: bold;}
-		.BenefitTable .BenefitDetail {
-				font-size: 0.85em;
-				color: #62605c;
-		}
+			width: 100%;
+			text-align: center;
+			border-collapse: collapse;
+	}
+	.BenefitTable td {height: 100px;}
+	.BenefitTable td, table th {
+			border: solid 1px #ddd;
+			padding: 5px 8px;
+			vertical-align: middle;
+	}
+	.BenefitTable .ListCell {background: #eee;}
+	.BenefitTable td {height: 100px;}
+	.BenefitTable .NormalCell {}
+	.BenefitTable .BenefitCell {font-weight: bold;}
+	.BenefitTable .BenefitDetail {
+			font-size: 0.85em;
+			color: #62605c;
+	}
+	.CEOMessage {
+        float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;
+	}
+
 </style>
 
 <div class="SettingList">
@@ -290,167 +294,137 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		%>
 		<div class="SettingBody">
 			<%if(passportStatus == Passport.Status.Cancelling){%>
-			ポイパスの定期購入の解除を承りました。今まで継続いただき誠にありがとうございました。
-			ポイパスでプラスされている機能は今月末までお使いいただけます。
-			チケットをお持ちの場合は、 来月以降もそのままお使いいただけます。
-			また、システムの都合上、今月中はカード情報の削除ができません。ご了承くださいませ。
+			<%=_TEX.T("MyEditSettingPassportV.Cancelling")%>
 			<%}else if(isNotMember) {%>
 			<%//_TEX.T("MyEditSettingPassportV.Text")%>
-			<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
-			平素よりポイピクをご愛顧頂き誠にありがとうございます。
-			サーバの過負荷状態が続きサービス継続に支障が出ていたため、一部機能の提供を中止し皆様にはご迷惑をおかけいたしました。申し訳ございません。
-			検討した結果、この度「ポイピクパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。
-			また「可能であればイラストと一緒に広告を表示したくない」というポイピクチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
-			iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、ポイパスの機能が有効となります。
-			高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
-			収益はポイピクサービスの維持・発展に使用させていただきます。
-			ぜひポイパスへのご加入をご検討いただけますと幸いです。
-			(2020年12月 株式会社pipa.jp代表 川合和寛)
+			<div class="CEOMessage">
+				<p class="HeadLine">
+					<%=_TEX.T("MyEditSettingPassportV.CEOMessage.HeadLine")%>
+					<a class="AutoLink" href="javascript: void(0)" onclick="$('#CEOMessageMore').toggle();">more...</a>
+				</p>
+				<p id="CEOMessageMore" style="display: none;">
+					<%=_TEX.T("MyEditSettingPassportV.CEOMessage.More")%>
+				</p>
 			</div>
-			ポイパスに加入すると、ポイピクをより楽しく便利にお使いいただけます！
+			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
 			<%}else{%>
-			現在、ポイパス加入中です！
+			<%=_TEX.T("MyEditSettingPassportV.Joining")%>
 			<%}%>
 
 			<%if(isNotMember) {%>
 			<div class="SettingBodyCmd">
 				<div class="RegistMessage"></div>
 				<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-					ポイパスを定期購入する
+					<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>
 				</a>
 			</div>
 			<div id="PassportNowPayment" style="display:none">
-				<span class="PoiPassLoading"></span><span>購入処理中</span>
+				<span class="PoiPassLoading"></span><span><%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%></span>
 			</div>
 			<%}%>
 		</div>
 	</div>
 
 	<div class="SettingListItem">
-		<div class="SettingListTitle">チケット: <%=ticket.exists?ticket.amount:0%>枚</div>
-		チケットは他の方からのおふせ(β)でストックされ、１枚で１ヶ月分、ポイパスがONになります。（初回は適用日〜月末まで）
+		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Ticket")%>: <%=ticket.exists?ticket.amount:0%> <%=_TEX.T("MyEditSettingPassportV.Ticket.Amount")%></div>
+		<%=_TEX.T("MyEditSettingPassportV.Ticket.Description")%>
 		<ul>
-			<li>毎月１日に自動でチケットが使用されます。</li>
-			<li>ポイパスOFF時にチケットを取得した場合は、取得と同時に使用されます。</li>
-			<li>ポイパス定期購入済みの場合、チケット使用が優先され、その間は課金がストップします。</li>
+			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List01")%></li>
+			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List02")%></li>
+			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List03")%></li>
 		</ul>
 	</div>
 
 	<%if(!isNotMember){%>
 	<div class="SettingListItem">
-		<div class="SettingListTitle">今月分のお支払</div>
+		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Title")%></div>
 		<%if(payment.exists){%>
 			<%if(payment.by == PassportPayment.By.Ticket){%>
-			ストックされていたチケットが使用されました。
+				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.ByTicket")%>
 				<%if(subscription.getStatus() == PassportSubscription.Status.UnderContraction){%>
-				クレジットカードへ課金はありません。
+				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.NotToPayByCreditCard")%>
 				<%}%>
 			<%}else if(payment.by == PassportPayment.By.CreditCard){%>
-			初回は加入日、翌月からは毎月25日に、指定のクレジットカードに課金されます。
+				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.ByCreditCard")%>
 			<%}else{%>
-			処理中です。(毎月1日6時頃更新)
+			<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>
 			<%}%>
 		<%}else{%>
-		処理中です。(毎月1日6時頃更新)
+		<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>
 		<%}%>
 	</div>
 	<%}%>
 
 	<div class="SettingListItem">
-		<div class="SettingListTitle">ポイパスでプラスされる機能</div>
+		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Features.Title")%></div>
 			<div class="SettingBody">
 				<div class="SettingBodyCmd">
 					<table class="BenefitTable">
 						<tbody>
 						<tr class="ListCell">
 							<th style="width: 20%"></th>
-							<th class="NormalCell" style="width: 30%">ポイパスなし</th>
-							<th class="BenefitCell" style="width: 30%">ポイパスあり</th>
+							<th class="NormalCell" style="width: 30%"><%=_TEX.T("MyEditSettingPassportV.Features.Header.Normal")%></th>
+							<th class="BenefitCell" style="width: 30%"><%=_TEX.T("MyEditSettingPassportV.Features.Header.Benefit")%></th>
 						</tr>
 						<tr>
-							<td class="ListCell"><span style="color: red; font-size: 9px; font-weight: bold;">new!!</span><br />同時投稿枚数</td>
-							<td class="NormalCell"><%=Common.UPLOAD_FILE_MAX[0]%>枚、合計<%=Common.UPLOAD_FILE_TOTAL_SIZE[0]%>MByteまで</td>
-							<td class="BenefitCell"><%=Common.UPLOAD_FILE_MAX[1]%>枚、合計<%=Common.UPLOAD_FILE_TOTAL_SIZE[1]%>MByteまで<br />
-							</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List01")%></td>
+							<td class="NormalCell"><%=String.format(_TEX.T("MyEditSettingPassportV.Features.List01.Normal"), Common.UPLOAD_FILE_MAX[0], Common.UPLOAD_FILE_TOTAL_SIZE[0])%></td>
+							<td class="BenefitCell"><%=String.format(_TEX.T("MyEditSettingPassportV.Features.List01.Benefit"), Common.UPLOAD_FILE_MAX[1], Common.UPLOAD_FILE_TOTAL_SIZE[1])%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">複数枚投稿時のTwitter同時投稿の画像</td>
-							<td class="NormalCell">複数枚を1枚に集約して投稿(最初の4枚)</td>
-							<td class="BenefitCell">同時投稿した全ての画像を1枚に集約して投稿<br />
-							</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List02")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List02.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List02.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">投稿時のキャプション文字数</td>
-							<td class="NormalCell"><%=Common.EDITOR_DESC_MAX[0][0]%>文字</td>
-							<td class="BenefitCell"><%=Common.EDITOR_DESC_MAX[0][1]%>文字</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List03")%></td>
+							<td class="NormalCell"><%=String.format(_TEX.T("MyEditSettingPassportV.Features.List03.Normal"), Common.EDITOR_DESC_MAX[0][0])%></td>
+							<td class="BenefitCell"><%=String.format(_TEX.T("MyEditSettingPassportV.Features.List03.Benefit"), Common.EDITOR_DESC_MAX[0][1])%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">文章投稿時の文字数</td>
-							<td class="NormalCell"><%=Common.EDITOR_TEXT_MAX[3][0]/10000%>万文字</td>
-							<td class="BenefitCell"><%=Common.EDITOR_TEXT_MAX[3][1]/10000%>万文字<br />
-								<span class="BenefitDetail">
-									(本機能はWeb版でβテスト中の機能です。アプリからの文章投稿機能は今暫くお待ち下さい)
-								</span></td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List04")%></td>
+							<td class="NormalCell"><%=String.format(_TEX.T("MyEditSettingPassportV.Features.List04.Normal"), Common.EDITOR_TEXT_MAX[3][0]/10000)%></td>
+							<td class="BenefitCell"><%=String.format(_TEX.T("MyEditSettingPassportV.Features.List04.Benefit"), Common.EDITOR_TEXT_MAX[3][1]/10000)%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">自分のページの背景設定</td>
-							<td class="NormalCell">なし</td>
-							<td class="BenefitCell">自由な画像ファイルを設定可能</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List05")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List05.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List05.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">広告表示</td>
-							<td class="NormalCell">あり</td>
-							<td class="BenefitCell">なし<br />
-								<span class="BenefitDetail">
-									広告表示スクリプト自体が出力されなくなるので全体の表示速度も上がります
-								</span>
-							</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List06")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List06.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List06.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">自分のページの広告表示</td>
-							<td class="NormalCell">あり</td>
-							<td class="BenefitCell">あり/なし設定可能<br />
-								<span class="BenefitDetail">
-									(デフォルトは表示なし)
-								</span>
-							</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List07")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List07.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List07.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">ダウンロードの許可</td>
-							<td class="NormalCell">不許可</td>
-							<td class="BenefitCell">許可/不許可設定可能<br />
-								<span class="BenefitDetail">
-									(デフォルトは不許可)
-								</span>
-							</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List08")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List08.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List08.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">ミュートキーワード</td>
-							<td class="NormalCell">なし</td>
-							<td class="BenefitCell">あり<br />
-								<span class="BenefitDetail">
-									避けたいコンテンツをキーワード指定して検索結果などから省くことができます。
-								</span>
-							</td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List09")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List09.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List09.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">定期ツイート<br />(前ツイート自動削除つき)</td>
-							<td class="NormalCell">なし</td>
-							<td class="BenefitCell">あり<br />
-								<span class="BenefitDetail">
-									最近の自分のコンテンツを１画像にまとめて自動ツイートできます。<br />
-									一つ前のツイートは自動削除できるので、TLをスッキリ保てます！<br />
-								</span></td>
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List10")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List10.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List10.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">送れる絵文字の数</td>
-							<td class="NormalCell">1作品あたり10個/日</td>
-							<td class="BenefitCell">1作品あたり100個/日<br />
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List11")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List11.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List11.Benefit")%></td>
 						</tr>
 						<tr>
-							<td class="ListCell">もらった絵文字解析</td>
-							<td class="NormalCell">過去一週間分</td>
-							<td class="BenefitCell">過去30日分、全期間も対応<br />
+							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List12")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List12.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List12.Benefit")%></td>
 						</tr>
 						</tbody>
 					</table>
@@ -463,7 +437,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 						ポイパスを定期購入する
 					</a>
 				</div>
-				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
+				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px; padding-right: 10px;">
 					<ul style="list-style-type: circle;">
 						<li>加入は一ヶ月単位です。（初回は加入日から月末まで、以降毎月1日に確定）</li>
 						<li>課金日は初回は加入日、以降毎月25日です（代行業者の都合で変更する場合あり）</li>
