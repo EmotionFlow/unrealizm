@@ -29,42 +29,38 @@ function _getGiftIntroductionHtml(nickName){
 </style>
 <div class="GiftIntroDlg">
 
-<h2 class="GiftIntroDlgTitle"><i class="fas fa-gift"></i> おふせ(β)</h2>
+<h2 class="GiftIntroDlgTitle"><i class="fas fa-gift"></i> <%=_TEX.T("Ofuse")%>(β)</h2>
 <div class="GiftIntroDlgInfo" style="margin-top: 11px;">
-	<p style="text-align:center; font-weight: normal; font-size:17px; color: #3498db;">応援したいユーザーに<br>ポイパスを贈ろう</p>
+	<p style="text-align:center; font-weight: normal; font-size:17px; color: #3498db;"><%=_TEX.T("TSendGift.LetsGift")%></p>
 </div>
 <div class="GiftIntroDlgInfo">
 <ul>
-	<li>ポイパスをONにするチケットをプレゼントできます。</li>
-	<li>匿名です。おふせされたことは通知されますが、ユーザー情報は伝わりません。</li>
-	<li>投げ銭ではありませんので、チケットは換金できません。</li>
-	<li>相手がポイパスOFFの場合、本日〜月末までポイパスがONになります。すでにONの場合、翌月以降１ヶ月分が課金なしになります。</li>
+	<li><%=_TEX.T("TSendGift.Intro.List01")%></li>
+	<li><%=_TEX.T("TSendGift.Intro.List02")%></li>
+	<li><%=_TEX.T("TSendGift.Intro.List03")%></li>
+	<li><%=_TEX.T("TSendGift.Intro.List04")%></li>
 </ul>
 </div>
 
 <div class="GiftIntroDlgInfo" style="margin-top: 11px; font-size: 11px;">
-	<p><a style="color: inherit; text-decoration: underline" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">ポイパスとは</a>、広告非表示や絵文字100連打など、ポイピクをよりお楽しみいただける付加サービスです。１日〜末日の１ヶ月単位で加入できます。</p>
+	<p><a style="color: inherit; text-decoration: underline" href="/MyEditSettingPcV.jsp?MENUID=POIPASS"><%=_TEX.T("TSendGift.WhatIsPoipass01")%></a><%=_TEX.T("TSendGift.WhatIsPoipass02")%></p>
 </div>
 
 <%if(!isApp){%>
 <div class="GiftIntroDlgInfo" style="text-align: center; font-size: 16px;">
-` + nickName + `さんに<br>
-300円で1ヶ月分の
+<%=_TEX.T("TSendGift.SendTo01")%>
 </div>
 <%} else {%>
-<%if(isApp){%>
 <div class="GiftIntroDlgInfo" style="text-align: center; font-size: 16px;">
-	アプリ版のおふせ(β)は準備中です。<br>ブラウザ版からの応援をお願いいたします。
+	<%=_TEX.T("TSendGift.AppInfo")%>
 </div>
-<%}%>
-
 <%}%>
 
 </div>
 `;
 }
 
-// epsilonPayment - epsilonTrade間で受け渡しする変数。
+<%// epsilonPayment - epsilonTrade間で受け渡しする変数。%>
 let g_giftEpsilonInfo = {
 	"giftInfo": null,
 	"cardInfo": null,
@@ -77,7 +73,7 @@ function _giftEpsilonTrade(response){
 	}
 
 	if( response.resultCode !== '000' ){
-		window.alert("購入処理中にエラーが発生しました");
+		window.alert("<%=_TEX.T("TSendGift.ErrorOccurred")%>");
 		console.log(response.resultCode);
 		g_giftEpsilonInfo.elCheerNowPayment.hide();
 	}else{
@@ -89,26 +85,20 @@ function _giftEpsilonTrade(response){
 }
 
 function _giftEpsilonPayment(_giftInfo, _cardInfo){
-	DispMsgStatic("決済処理中です。ページを移動しないでください。");
-	if(_cardInfo == null){ // カード登録済
+	DispMsgStatic("<%=_TEX.T("TSendGift.ProcessingPayment")%>");
+	if(_cardInfo == null){
 		_sendGiftAjax(_giftInfo, createAgentInfo(AGENT.EPSILON, null, null), null);
-	} else { // 初回
+	} else {
 		g_giftEpsilonInfo.giftInfo = _giftInfo;
 		g_giftEpsilonInfo.cardInfo = _cardInfo;
 
 		const contructCode = "68968190";
-		// var cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "TARO NAMAA"};
 		let cardObj = {
 			"cardno": String(_cardInfo.number),
 			"expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
 			"securitycode": String(_cardInfo.securityCode),
-			// "holdername": "DUMMY",
 		};
-
 		EpsilonToken.init(contructCode);
-
-		// epsilonTradeを無名関数で定義するとコールバックしてくれない。
-		// global領域に関数を定義し、関数名を引数指定しないとダメ。
 		EpsilonToken.getToken(cardObj , _giftEpsilonTrade);
 	}
 }
@@ -129,7 +119,7 @@ function _sendGiftAjax(giftInfo, agentInfo, cardInfo) {
 			$("#DispMsg").slideUp(200, () => {
 				cardInfo = null;
 				if (data.result > 0) {
-					DispMsg(giftInfo.nickName + 'さんにポイパスをおふせしました！', 4000);
+					DispMsg(<%=_TEX.T("TSendGift.Done")%>, 4000);
 				} else {
 					switch (data.error_code) {
 						case -10:
@@ -175,7 +165,7 @@ function SendGift(userId, nickName){
 		showConfirmButton: <%=isApp?"false":"true"%>,
 		showCloseButton: true,
 		<%if(!isApp){%>
-		confirmButtonText: 'ポイパスをおふせする',
+		confirmButtonText: '<%=_TEX.T("TSendGift.SendTo02")%>',
 		footer:'<%=_TEX.T("CheerDlg.PaymentNotice")%>',
 		<%}%>
 	}).then(formValues => {
@@ -183,7 +173,7 @@ function SendGift(userId, nickName){
 		if(formValues.dismiss){return false;}
 
 		<%if(!checkLogin.m_bLogin){%>
-		DispMsg("おふせするにはログインする必要があります");
+		DispMsg("<%=_TEX.T("TSendGift.NeedToSignIn")%>");
 		return false;
 		<%} else {%>
 		$.ajax({
@@ -197,8 +187,8 @@ function SendGift(userId, nickName){
 			} else if (result === 1) {
 				_giftEpsilonPayment(giftInfo, null);
 			} else if (result === 0) {
-				const title = "おふせ(β)";
-				const description = "決済のための情報を入力してください。OKボタンをクリックすると、差し入れが実行されます。";
+				const title = "<%=_TEX.T("Ofuse")%>";
+				const description = "<%=_TEX.T("TSendGift.SubmitDescription")%>";
 				Swal.fire({
 					html: getRegistCreditCardDlgHtml(title, description),
 					focusConfirm: false,
