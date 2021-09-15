@@ -18,11 +18,14 @@
 						for(let i=0; i<3; i++){s.shift();}
 						$('#login_from_twitter_tmenupc_callback_00').val("/" + s.join("/"));
 					}</script>
-					<a class="BtnBase Rev HeaderLoginBtn LoginButton" href="javascript:login_from_twitter_tmenupc_00.submit()">
+					<a class="BtnBase Rev HeaderLoginBtn LoginButton" style="right: 35px" href="javascript:login_from_twitter_tmenupc_00.submit()">
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 					</a>
 				</form>
-				<%} else {%>
+				<div class="HeaderSelectLang" onclick="showSelectLangDlg(false);">
+					<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
+				</div>
+			<%} else {%>
 				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
 				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
 					<span class="MenuMyRequestsIcon"></span>

@@ -614,3 +614,21 @@ function readMoreDescription(el) {
 	$(el).hide();
 	$(el).next().show();
 }
+
+function showSelectLangDlg(isLogin) {
+	Swal.fire({
+		html: `
+		<dl class="HeaderSelectLangList">
+			<dd><a hreflang="en" onclick="ChLang('en', ` + isLogin + `)" href="javascript:void(0);">English</a></dd>
+			<dd><a hreflang="ko" onclick="ChLang('ko', ` + isLogin + `)" href="javascript:void(0);">한국</a></dd>
+			<dd><a hreflang="zh-cmn-Hans" onclick="ChLang('zh_CN', ` + isLogin + `)" href="javascript:void(0);">简体中文</a></dd>
+			<dd><a hreflang="zh-cmn-Hant" onclick="ChLang('zh_TW', ` + isLogin + `)" href="javascript:void(0);">繁體中文</a></dd>
+			<dd><a hreflang="th" onclick="ChLang('th', ` + isLogin + `)" href="javascript:void(0);">ไทย</a></dd>
+			<dd><a hreflang="ja" onclick="ChLang('ja', ` + isLogin + `)" href="javascript:void(0);">日本語</a></dd>
+		</dl>
+		`,
+		showCloseButton: true,
+		showCancelButton: false,
+		showConfirmButton: false,
+	});
+}
