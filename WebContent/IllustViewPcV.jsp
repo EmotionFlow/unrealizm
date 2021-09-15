@@ -132,7 +132,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 		<script type="text/javascript">
 			function UpdateFollow(nUserId, nFollowUserId) {
-				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 				$.ajaxSingle({
 					"type": "post",
 					"data": { "UID": nUserId, "IID": nFollowUserId },
@@ -220,19 +219,8 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 										_TEX.T("Common.Title")), "UTF-8"),
 								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
-						<%if(!checkLogin.m_bLogin) {%>
-						<a id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
-						<%} else if(cResults.m_bOwner) {
-							// 何も表示しない
-						} else if(cResults.m_bBlocking){%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" style="display: none;" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
-						<%} else if(cResults.m_bBlocked){%>
-						<%} else if(cResults.m_bFollow){%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%></span>
-						<%} else {%>
-						<span id="UserInfoCmdFollow" class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>" onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%></span>
-						<%}%>
 
+						<%@ include file="inner/TFollowButton.jsp"%>
 						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
 
 						<span class="IllustItemCommandSub">
@@ -273,29 +261,22 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%//}%>
 			</nav>
 -->
-		</article>
-
-		<article class="Wrapper GridList">
-			<section id="IllustItemList" class="IllustItemList Related User">
+			<section id="IllustItemListRelatedUser" class="IllustItemList Related User">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
-					<div class="IllustItem ">
-						<div class="IllustItemUser">
+					<div class="IllustItem" style="background: rgba(255,255,255,0.90); margin: 0; width: 100%; border: none; border-radius: 0;">
+						<div class="IllustItemUser" style="padding: 6px 8px 6px 8px;">
 							<a class="IllustItemUserThumb" href="/<%=cResults.m_cUser.m_nUserId%>/" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
 							<h2 class="IllustItemUserName">
 								<a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=Util.toStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
 							</h2>
-							<span id="UserInfoCmdFollow"
-								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?" Selected":""%>"
-								onclick="UpdateFollow(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")%></span>
+							<%@ include file="inner/TFollowButton.jsp"%>
 						</div>
 					</div>
 				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-				<%
-					}
-				%>
+				<%}%>
 			</section>
 		</article>
 

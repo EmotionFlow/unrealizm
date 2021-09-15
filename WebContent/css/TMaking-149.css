@@ -591,7 +591,6 @@
 	padding: 1px 0 0 0;
 	border-top: solid 1px #eee;
 	color: #333;
-	overflow: scroll;
 }
 
 .NovelSection {
@@ -1227,6 +1226,7 @@ Decoration
 	padding: 0 3px;
 	height: 24px;
 	line-height: 24px;
+	font-weight: 400;
 }
 
 .IllustItem .IllustItemCommand {

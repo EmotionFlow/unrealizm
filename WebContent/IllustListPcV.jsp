@@ -75,7 +75,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<script>
 		function UpdateFollow(nUserId, nFollowUserId) {
-			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
 			$.ajaxSingle({
 				"type": "post",
 				"data": { "UID": nUserId, "IID": nFollowUserId },
@@ -207,9 +206,23 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%}%>
 			</section>
 
-			<nav class="PageBar">
+			<nav class="PageBar" style="margin-bottom: 4px;">
 				<%=CPageBar.CreatePageBarSp("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
+
+			<section id="IllustItemListRelatedUser" class="IllustItemList Related User" style="height: auto">
+				<header class="SearchResultTitle" style="overflow: unset; height: auto; padding: 0;">
+					<div class="IllustItem" style="background: rgba(255,255,255,0.90); margin: 0; width: 100%; border: none; border-radius: 0;">
+						<div class="IllustItemUser" style="padding: 6px 8px 6px 8px; border: none;">
+							<a class="IllustItemUserThumb" href="/<%=cResults.m_cUser.m_nUserId%>/" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>_120.jpg')"></a>
+							<h2 class="IllustItemUserName">
+								<a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=Util.toStringHtml(cResults.m_cUser.m_strNickName)%></a>
+							</h2>
+							<%@ include file="inner/TFollowButton.jsp"%>
+						</div>
+					</div>
+				</header>
+			</section>
 		</article>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
