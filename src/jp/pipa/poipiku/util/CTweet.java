@@ -62,7 +62,7 @@ public final class CTweet {
 	private long m_lnLastTwitterTargetUserId = -1;
 
 
-	private void LoggingTwitterException(TwitterException te){
+	private void LoggingTwitterException(TwitterException te, long targetTwitterUserId, long listId){
 		String strCallFrom = "";
 		StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
 		if (steArray.length <= 3) {
@@ -71,7 +71,18 @@ public final class CTweet {
 			StackTraceElement ste = steArray[2];
 			strCallFrom = ste.getMethodName();
 		}
-		Log.d(String.format("TwitterException, %s, %d, %s, %d, %s", strCallFrom, te.getStatusCode() , m_strUserAccessToken, te.getErrorCode(), te.getMessage()));
+		//Log.d(String.format("TwitterException, %s, %d, %s, %d, %s", strCallFrom, te.getStatusCode() , m_strUserAccessToken, te.getErrorCode(), te.getMessage()));
+		TwitterApiErrorLog log = new TwitterApiErrorLog();
+		log.userId = m_nUserId;
+		log.twitterUserid = m_lnTwitterUserId;
+		log.targetTwitterUserid = targetTwitterUserId;
+		log.listId = listId;
+		log.callMethod = strCallFrom;
+		log.statusCode = te.getStatusCode();
+		log.accessToken = m_strUserAccessToken;
+		log.errorCode = te.getErrorCode();
+		log.errorMessage = te.getErrorMessage();
+		log.insert();
 	}
 
 	private static int GetErrorCode(TwitterException te){
@@ -144,7 +155,7 @@ public final class CTweet {
 			m_listOpenList.removeIf(a -> !a.isPublic());
 		} catch (TwitterException te) {
 			te.printStackTrace();
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -169,7 +180,7 @@ public final class CTweet {
 			m_statusLastTweet = twitter.updateStatus(strTweet);
 		} catch (TwitterException te) {
 			te.printStackTrace();
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -194,7 +205,7 @@ public final class CTweet {
 			m_statusLastTweet = twitter.updateStatus(new StatusUpdate(strTweet).media(new File(strFileName)));
 		} catch (TwitterException te) {
 			te.printStackTrace();
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -263,7 +274,7 @@ public final class CTweet {
 			Util.deleteFile(strDstFileName);
 		} catch (TwitterException te) {
 			te.printStackTrace();
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -317,7 +328,7 @@ public final class CTweet {
 			m_statusLastTweet = twitter.updateStatus(update);
 		} catch (TwitterException te) {
 			te.printStackTrace();
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -342,7 +353,7 @@ public final class CTweet {
 			m_statusLastTweet = twitter.destroyStatus(Long.parseLong(strTweetId));
 		} catch (TwitterException te) {
 			te.printStackTrace();
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -443,7 +454,7 @@ public final class CTweet {
 				cConn.close();cConn=null;
 			}
 		} catch (TwitterException te) {
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, m_lnLastTwitterTargetUserId, -1);
 			nResult = GetErrorCode(te);
 		} catch (Exception e) {
 			Log.d(strSql);
@@ -641,6 +652,7 @@ public final class CTweet {
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
+		long lnListId = -1;
 		try {
 			cConn = DatabaseUtil.dataSource.getConnection();
 
@@ -657,7 +669,7 @@ public final class CTweet {
 			cConn.close();cConn=null;
 			if(bFind) return OK;
 
-			long lnListId = Long.parseLong(cContent.m_strListId);
+			lnListId = Long.parseLong(cContent.m_strListId);
 			// DBに存在しなければTwitterに問い合わせ
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
@@ -682,7 +694,7 @@ public final class CTweet {
 			cState.close();cState=null;
 			cConn.close();cConn=null;
 		}catch(TwitterException te){
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, lnListId);
 			nResult = GetErrorCode(te);
 		}catch(Exception e) {
 			Log.d(strSql);
@@ -711,7 +723,7 @@ public final class CTweet {
 			Twitter twitter = tf.getInstance();
 			u = twitter.verifyCredentials();
 		}catch(TwitterException te){
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			return null;
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -861,7 +873,7 @@ public final class CTweet {
 			Twitter twitter = tf.getInstance();
 			u = twitter.showUser(m_lnTwitterUserId);
 		}catch(TwitterException te){
-			LoggingTwitterException(te);
+			LoggingTwitterException(te, -1, -1);
 			return null;
 		}catch(Exception e) {
 			e.printStackTrace();
