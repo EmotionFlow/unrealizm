@@ -1,0 +1,19 @@
+#parse("ja/header.vm")
+
+あなたがTwitterでフォローしているユーザーがポイピクをはじめています。
+
+#foreach($u in $recommend_users)
+【$u.nickname】
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+ポイピクのフォローは相手に伝わりません。気軽にフォローしてみましょう。
+
+
+※ メール配信のON/OFFは、ブラウザ版ポイピクの設定画面にて切り替えられます。
+※ Twitter認証だけでなく、本メールを受信されたメールアドレスによるログインもできます。トップページから「メールで新規登録/ログイン」へお進みください。
+#parse("ja/footer.vm")

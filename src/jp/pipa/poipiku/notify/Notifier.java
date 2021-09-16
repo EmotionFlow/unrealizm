@@ -1,17 +1,17 @@
 package jp.pipa.poipiku.notify;
 
-import jp.pipa.poipiku.CNotificationToken;
-import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.InfoList;
-import jp.pipa.poipiku.NotificationBuffer;
+import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.EmailUtil;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.exception.ResourceNotFoundException;
 
 import java.io.StringWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,11 +58,7 @@ public class Notifier {
 			}
 		}
 		public void setLangLabel() {
-			if (langId == Common.LANG_ID_JP) {
-				langLabel = "ja";
-			} else {
-				langLabel = "en";
-			}
+			langLabel = SupportedLocales.findLocale(langId).toString();
 		}
 		public String toString() {
 			return String.format("%d, %s, %s, %d, %s",
@@ -81,9 +77,14 @@ public class Notifier {
 	}
 
 	protected String getVmPath(final String path, final String langLabel){
-		// TODO 英語のVMテンプレート実装
-		// return langLabel + "/" + CATEGORY + "/" + path;
-		return "ja/" + CATEGORY + "/" + path;
+		// 指定の言語にファイルがなかったら、英語のテンプレートをつかう
+		Path vmPath = Paths.get(langLabel, CATEGORY, path);
+		try {
+			Velocity.getTemplate(vmPath.toString());
+		} catch (ResourceNotFoundException ignore) {
+			vmPath = Paths.get("en", CATEGORY, path);
+		}
+		return vmPath.toString();
 	}
 
 	protected Template getTemplate(String vmPath, String langLabel) {
