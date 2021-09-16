@@ -24,7 +24,6 @@ String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:site" content="@pipajp" />

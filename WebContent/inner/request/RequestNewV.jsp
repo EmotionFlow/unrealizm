@@ -20,7 +20,6 @@ if (!results.getResults(checkLogin)) {
 	<%}else{%>
 	<%@ include file="/inner/THeaderCommonNoindexPc.jsp" %>
 	<%}%>
-	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<%@ include file="/inner/TCreditCard.jsp"%>
 	<%@ include file="../TRequestIntroduction.jsp"%>
 	<title><%=_TEX.T("THeader.Title")%> - Request </title>

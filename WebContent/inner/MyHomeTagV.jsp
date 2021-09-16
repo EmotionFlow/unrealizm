@@ -21,7 +21,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title>home</title>

@@ -21,7 +21,6 @@ if (infoType==-1) infoType = 1;
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">

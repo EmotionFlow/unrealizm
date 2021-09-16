@@ -33,7 +33,6 @@
 	<%} else {%>
 	<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
 	<%}%>
-	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<%@ include file="/inner/TRequestIntroduction.jsp"%>
 	<meta name="description" content="新着クリエイター"/>
 	<title><%=_TEX.T("THeader.Title")%> - 新着クリエイター</title>

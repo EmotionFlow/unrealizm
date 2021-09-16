@@ -26,7 +26,6 @@
 	<%@ include file="/inner/THeaderCommonPc.jsp"%>
 	<%}%>
 	<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
-	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<%@ include file="/inner/TRequestIntroduction.jsp"%>
 	<meta name="description" content="人気クリエイター"/>
 	<title><%=_TEX.T("THeader.Title")%> - 人気クリエイター</title>

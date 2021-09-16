@@ -15,7 +15,6 @@
 <html lang="<%=_TEX.getLangStr()%>">
 <head>
 	<%@ include file="/inner/THeaderCommonPc.jsp" %>
-	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%>
 	</title>
 

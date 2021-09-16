@@ -33,7 +33,6 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 		<%@ include file="/inner/TSwitchUser.jsp"%>

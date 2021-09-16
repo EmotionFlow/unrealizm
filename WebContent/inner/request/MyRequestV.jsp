@@ -72,7 +72,6 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 		<%}else{%>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%}%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TRequestIntroduction.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 

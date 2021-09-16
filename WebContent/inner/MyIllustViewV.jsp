@@ -72,7 +72,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	<%@ include file="/inner/THeaderCommon.jsp"%>
 	<%=!isApp?" -->":""%>
 
-	<%@ include file="/inner/TSweetAlert.jsp"%>
 	<%@ include file="/inner/TCreditCard.jsp"%>
 	<%@ include file="/inner/TSendEmoji.jsp"%>
 	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />

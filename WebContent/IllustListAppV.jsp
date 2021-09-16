@@ -48,7 +48,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>

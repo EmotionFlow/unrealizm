@@ -37,7 +37,6 @@ if(cResults.m_nCategoryId >= 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%}%>
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
-		<%@ include file="/inner/TSweetAlert.jsp"%>
 		<%@ include file="/inner/TRequestIntroduction.jsp"%>
 		<meta name="description" content="<%=Util.toStringHtml(Util.deleteCrLf(description))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("Request")%>(<%=categoryName%>)</title>
