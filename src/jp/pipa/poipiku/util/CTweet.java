@@ -651,7 +651,6 @@ public final class CTweet {
 		List<TwitterApiErrorLog> errorLogs = TwitterApiErrorLog.selectListErrors(m_nUserId, Long.parseLong(cContent.m_strListId), 60);
 		if (errorLogs.size() > 0) {
 			TwitterApiErrorLog log = errorLogs.get(0);
-			Log.d("60秒以内にエラーを起こしていた");
 			return GetErrorCode(log.errorCode, log.statusCode);
 		}
 
@@ -678,7 +677,6 @@ public final class CTweet {
 			cState.close();cState=null;
 			cConn.close();cConn=null;
 			if(bFind){
-				Log.d("キャッシュで確認");
 				return OK;
 			}
 

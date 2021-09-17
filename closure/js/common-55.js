@@ -456,7 +456,7 @@ function generateShowAppendFile(){
 					$('#IllustItemText_' + content_id).css('max-height','500px');
 					$('#IllustItemText_' + content_id).css('overflow','scroll');
 				} else {
-					DispMsg(data.html);
+					DispMsg(data.html, 5000);
 				}
 				if(data.tw_friendship >= 0){
 					tw_friendships[user_id] = data.tw_friendship;

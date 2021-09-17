@@ -85,7 +85,6 @@ public final class TwitterApiErrorLog extends Model{
         String sql = "";
         try{
             connection = DatabaseUtil.dataSource.getConnection();
-
             sql = String.format("SELECT * FROM twitter_api_error_logs WHERE user_id=? AND created_at > now() - INTERVAL '%d sec' ORDER BY created_at DESC", secAgo);
             statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
