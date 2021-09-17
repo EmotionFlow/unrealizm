@@ -10,6 +10,7 @@ import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class TwitterApiErrorLog extends Model{
     public int userId = -1;
@@ -32,7 +33,8 @@ public final class TwitterApiErrorLog extends Model{
         listId = resultSet.getLong("list_id");
         callMethod = resultSet.getString("call_method");
         accessToken = resultSet.getString("access_token");
-        statusCode = resultSet.getInt("error_code");
+        statusCode = resultSet.getInt("status_code");
+        errorCode = resultSet.getInt("error_code");
         errorMessage = resultSet.getString("error_message");
         created_at = resultSet.getTimestamp("created_at");
     }
@@ -50,15 +52,15 @@ public final class TwitterApiErrorLog extends Model{
                     " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
             int idx=1;
-            statement.setInt(idx++, userId);
-            statement.setLong(idx++, twitterUserid);
-            statement.setLong(idx++, targetTwitterUserid);
-            statement.setLong(idx++, listId);
-            statement.setString(idx++, callMethod);
-            statement.setString(idx++, accessToken);
-            statement.setInt(idx++, statusCode);
-            statement.setInt(idx++, errorCode);
-            statement.setString(idx++, errorMessage);
+            statement.setInt(idx++, userId);                // user_id
+            statement.setLong(idx++, twitterUserid);        // twitter_user_id
+            statement.setLong(idx++, targetTwitterUserid);  // target_twitter_user_id
+            statement.setLong(idx++, listId);               // list_id
+            statement.setString(idx++, callMethod);         // call_method
+            statement.setString(idx++, accessToken);        // access_token
+            statement.setInt(idx++, statusCode);            // status_code
+            statement.setInt(idx++, errorCode);             // error_code
+            statement.setString(idx++, errorMessage);       // error_message
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +72,12 @@ public final class TwitterApiErrorLog extends Model{
         return result;
     }
 
-    static public List<TwitterApiErrorLog> selectByUserId(int userId, int limit) {
+    static public List<TwitterApiErrorLog> selectListErrors(int userId, long listId, int secAgo) {
+        List<TwitterApiErrorLog> logs = selectByUserId(userId, secAgo);
+        return logs.stream().filter(e -> e.listId==listId).collect(Collectors.toList());
+    }
+
+    static public List<TwitterApiErrorLog> selectByUserId(int userId, int secAgo) {
         List<TwitterApiErrorLog> logs = new ArrayList<>();
         Connection connection = null;
         PreparedStatement statement = null;
@@ -79,11 +86,9 @@ public final class TwitterApiErrorLog extends Model{
         try{
             connection = DatabaseUtil.dataSource.getConnection();
 
-            sql = "SELECT * FROM twitter_api_error_logs WHERE user_id=? ORDER BY created_at DESC LIMIT ?";
+            sql = String.format("SELECT * FROM twitter_api_error_logs WHERE user_id=? AND created_at > now() - INTERVAL '%d sec' ORDER BY created_at DESC", secAgo);
             statement = connection.prepareStatement(sql);
-            int idx=1;
-            statement.setInt(idx++, userId);
-            statement.setInt(idx++, limit);
+            statement.setInt(1, userId);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 TwitterApiErrorLog l = new TwitterApiErrorLog(resultSet);

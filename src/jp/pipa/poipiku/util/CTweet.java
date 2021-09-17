@@ -11,10 +11,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import jp.pipa.poipiku.*;
@@ -86,19 +83,25 @@ public final class CTweet {
 	}
 
 	private static int GetErrorCode(TwitterException te){
+		return GetErrorCode(te.getErrorCode(), te.getStatusCode());
+	}
+
+	private static int GetErrorCode(int twitterErrorCode, int statusCode) {
+		Log.d(String.format("err: %d, st:%d", twitterErrorCode, statusCode));
 		int nErrCode = ERR_OTHER;
-		int nTwErrCode = te.getErrorCode();
-		if(nTwErrCode==89){
+		if(twitterErrorCode==89){
 			nErrCode = ERR_INVALID_OR_EXPIRED_TOKEN;
-		} else if(nTwErrCode==88) {
+		} else if(twitterErrorCode==88) {
 			nErrCode = ERR_RATE_LIMIT_EXCEEDED;
-		} else if(nTwErrCode==185) {
+		} else if(twitterErrorCode==185) {
 			nErrCode = ERR_USER_IS_OVER_DAILY_STATUS_UPDATE_LIMIT;
-		} else if(te.getStatusCode()==404){
+		} else if(statusCode==404) {
 			nErrCode = ERR_NOT_FOUND;
 		}
+		Log.d("nErrCode: " + nErrCode);
 		return nErrCode;
 	}
+
 
 	public boolean GetResults(int nUserId) {
 		boolean bResult = true;
@@ -645,6 +648,13 @@ public final class CTweet {
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
 		if (cContent.m_strListId.isEmpty()) return ERR_OTHER;
 
+		List<TwitterApiErrorLog> errorLogs = TwitterApiErrorLog.selectListErrors(m_nUserId, Long.parseLong(cContent.m_strListId), 60);
+		if (errorLogs.size() > 0) {
+			TwitterApiErrorLog log = errorLogs.get(0);
+			Log.d("60秒以内にエラーを起こしていた");
+			return GetErrorCode(log.errorCode, log.statusCode);
+		}
+
 		int nResult = ERR_OTHER;
 
 		boolean bFind = false;
@@ -667,7 +677,10 @@ public final class CTweet {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 			cConn.close();cConn=null;
-			if(bFind) return OK;
+			if(bFind){
+				Log.d("キャッシュで確認");
+				return OK;
+			}
 
 			lnListId = Long.parseLong(cContent.m_strListId);
 			// DBに存在しなければTwitterに問い合わせ
