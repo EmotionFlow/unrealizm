@@ -37,7 +37,7 @@ public final class RecommendedContents {
 			" FROM contents_0000" +
 			" WHERE upload_date" +
 			"    BETWEEN NOW() - INTERVAL '300 days' AND NOW() - INTERVAL '299 days'" +
-			" AND publish_id=0";
+			" AND publish_id=0 AND open_id=0";
 
 	static {
 		oldPopularContents = new ArrayList<>();
@@ -119,7 +119,7 @@ public final class RecommendedContents {
 
 			strSql = "SELECT * FROM contents_0000 WHERE" +
 					" content_id IN " + selectContentIds +
-					" AND publish_id=0";
+					" AND publish_id=0 AND open_id=0";
 
 			if(checkLogin.m_bLogin) {
 				strSql += " AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) "
