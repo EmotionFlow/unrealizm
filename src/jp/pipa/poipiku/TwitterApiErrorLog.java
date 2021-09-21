@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class TwitterApiErrorLog extends Model{
+    static private final int ERR_INVALID_OR_EXPIRED_TOKEN = 89;
     public int userId = -1;
     public long twitterUserid = -1;
     public long targetTwitterUserid = -1;
@@ -72,10 +73,20 @@ public final class TwitterApiErrorLog extends Model{
         return result;
     }
 
+    public boolean isInvalidOrExpiredTokenErr(){
+        return errorCode == ERR_INVALID_OR_EXPIRED_TOKEN;
+    }
+
     static public List<TwitterApiErrorLog> selectListErrors(int userId, long listId, int secAgo) {
         List<TwitterApiErrorLog> logs = selectByUserId(userId, secAgo);
         return logs.stream().filter(e -> e.listId==listId).collect(Collectors.toList());
     }
+
+    static public List<TwitterApiErrorLog> selectLookupFriendshipErrors(int userId, int secAgo) {
+        List<TwitterApiErrorLog> logs = selectByUserId(userId, secAgo);
+        return logs.stream().filter(e -> e.targetTwitterUserid>0).collect(Collectors.toList());
+    }
+
 
     static public List<TwitterApiErrorLog> selectByUserId(int userId, int secAgo) {
         List<TwitterApiErrorLog> logs = new ArrayList<>();

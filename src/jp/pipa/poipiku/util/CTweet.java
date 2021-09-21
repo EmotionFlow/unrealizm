@@ -376,7 +376,7 @@ public final class CTweet {
 
 		try {
 			cConn = DatabaseUtil.dataSource.getConnection();
-			// ターゲットユーザのTokenとTwitterID取得
+			// ターゲットユーザのTwitterID取得
 			strSql = "SELECT twitter_user_id FROM tbloauth WHERE flduserid=? AND fldproviderid=? AND del_flg=false ORDER BY id DESC";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, nTargetUserId);
@@ -400,10 +400,16 @@ public final class CTweet {
 			// DBに15分以内の被フォローがあるか
 			boolean bFollower = checkDBFriendInfo(nTargetUserId, m_nUserId);
 
-			// 判定
+			// DBキャッシュによる判定
 			if(publishId == Common.PUBLISH_ID_T_EACH && bFollowing && bFollower) {return FRIENDSHIP_EACH;};
 			if(publishId == Common.PUBLISH_ID_T_FOLLOWER && bFollowing) {return FRIENDSHIP_FOLLOWEE;};
 			if(publishId == Common.PUBLISH_ID_T_FOLLOWEE && bFollower) {return FRIENDSHIP_FOLLOWER;};
+
+			// 60秒以内のAPIエラーを取得、新しい順。
+			List<TwitterApiErrorLog> errorLogs = TwitterApiErrorLog.selectLookupFriendshipErrors(m_nUserId, 60);
+			if (errorLogs.size() > 0) {
+				return GetErrorCode(errorLogs.get(0).errorCode, errorLogs.get(0).statusCode);
+			}
 
 			// DBに無い場合、ID間のFriend関係を確認
 			ConfigurationBuilder cb = new ConfigurationBuilder();
