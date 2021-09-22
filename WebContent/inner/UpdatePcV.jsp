@@ -89,7 +89,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 		<%if(nEditorId==Common.EDITOR_PASTE){%>
 		<!-- 画像並び替え用 -->
-		<script src="/js/jquery-ui.js"></script>
+		<script src="/js/jquery-ui-1.12.1.min.js"></script>
 			<script type="text/javascript">
 		$(function(){
 			$(".qq-upload-list-selector.qq-upload-list").sortable({
@@ -260,7 +260,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 		<!-- 画像並び替え用 -->
-		<script src="/js/jquery-ui.js"></script>
+		<script src="/js/jquery-ui-1.12.1.min.js"></script>
 			<script type="text/javascript">
 		$(function(){
 			$(".qq-upload-list-selector.qq-upload-list").sortable({
