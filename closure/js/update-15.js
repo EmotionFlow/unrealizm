@@ -1,11 +1,11 @@
 //並べ替え情報の送信
-function UpdateFileOrder(user_id, content_id, location_href) {
-	var json_array = [];
+function UpdateFileOrderAjax(user_id, content_id) {
+	let json_array = [];
 	$.each($('.qq-upload-list-selector.qq-upload-list').sortable('toArray'), function(i, item) {
 		json_array.push(parseInt(item))
 	});
 
-	$.ajax({
+	return $.ajax({
 		"type": "post",
 		"data": {
 			UID: user_id,
@@ -14,15 +14,6 @@ function UpdateFileOrder(user_id, content_id, location_href) {
 		},
 		"url": "/f/UpdateFileOrderF.jsp",
 		"dataType": "json",
-		"success": function (data) {
-			console.log("UploadFileOrderF:" + data.result);
-			if (location_href && location_href.length > 0) {
-				completeMsg();
-				setTimeout(function(){location.href=location_href;}, 1000);
-			}
-		},"error": function(err){
-			console.log(err);
-		}
 	});
 }
 
@@ -79,26 +70,26 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 			onAllComplete: function(succeeded, failed) {
 				console.log("onAllComplete", succeeded, failed, this.tweet);
 				if (this.newfile_num && this.newfile_num > 0) {
-					if(this.tweet==1) {
-						Tweet(this.user_id, this.content_id, this.tweet_image, this.delete_tweet);
-					} else {
-						// complete
-						completeMsg();
-						setTimeout(function(){
-							location.href="/MyIllustListPcV.jsp";
-						}, 1000);
-					}
-
 					//並べ替え情報の送信
-					UpdateFileOrder(this.user_id, this.content_id, "/MyIllustListPcV.jsp");
+					const deferred = UpdateFileOrderAjax(this.user_id, this.content_id);
+					deferred.done( () => {
+						if(this.tweet === 1) {
+							Tweet(this.user_id, this.content_id, this.tweet_image, this.delete_tweet);
+						} else {
+							completeMsg();
+							setTimeout(function(){
+								location.href="/MyIllustListPcV.jsp";
+							}, 2000);
+						}
+					}).fail(()=>{console.log("UpdateFileOrderAjax failed")});
 				} else {
 					$("li.qq-upload-success").removeClass("qq-upload-success");
 					$("button.qq-upload-cancel").removeClass("qq-hide");
 				}
 			},
 			onValidate: function(data) {
-				var total = this.getSubmittedSize();
-				var submit_num = this.getSubmittedNum();
+				let total = this.getSubmittedSize();
+				const submit_num = this.getSubmittedNum();
 				this.showTotalSize(total, submit_num);
 				total += data.size;
 				if (total>this.total_size) return false;
@@ -112,16 +103,16 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 		}
 	});
 	multiFileUploader.getSubmittedNum = function() {
-		var uploads = this.getUploads({
+		const uploads = this.getUploads({
 			status: qq.status.SUBMITTED
 		});
 		return uploads.length;
 	};
 	multiFileUploader.getSubmittedSize = function() {
-		var uploads = this.getUploads({
+		const uploads = this.getUploads({
 			status: qq.status.SUBMITTED
 		});
-		var total = 0;
+		let total = 0;
 		$.each(uploads,function(){
 			total+=this.size;
 		});
@@ -257,12 +248,17 @@ function UpdateFile(user_id, content_id) {
 					multiFileUploader.newfile_num = multiFileUploader.getSubmittedNum();
 					multiFileUploader.uploadStoredFiles();
 				} else {
-					if(nTweetNow === 1){
-						UpdateFileOrder(user_id, data.content_id, null);
-						Tweet(user_id, data.content_id, nTweetImage, nDeleteTweet);
-					}else{
-						UpdateFileOrder(user_id, data.content_id, "/MyIllustListPcV.jsp");
-					}
+					const deferred = UpdateFileOrderAjax(user_id, data.content_id);
+					deferred.done(()=>{
+						if(nTweetNow === 1){
+							Tweet(user_id, data.content_id, nTweetImage, nDeleteTweet);
+						}else{
+							completeMsg();
+							setTimeout(function(){
+								location.href="/MyIllustListPcV.jsp";
+							}, 2000);
+						}
+					});
 				}
 			} else {
 				errorMsg();
