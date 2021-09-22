@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -17,6 +19,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.Cookie;
@@ -679,5 +683,30 @@ public final class Util {
 			s = s.replaceAll(entry.getKey(), entry.getValue());
 		}
 		return s;
+	}
+
+	public static int findUserIdFromUrl(String strUrl) {
+		final int NOT_FOUND = -1;
+		if (strUrl.isEmpty()) return NOT_FOUND;
+
+		int userId = NOT_FOUND;
+		try {
+			URL url = new URL(strUrl);
+			try {
+				userId = Integer.parseInt(url.getPath().split("/")[1]);
+			} catch (Exception ignored) {}
+
+			if (userId == NOT_FOUND) {
+				Pattern p = Pattern.compile("ID=(\\d+)");
+				Matcher m = p.matcher(url.getQuery());
+				if (m.find()) {
+					userId = Integer.parseInt(m.group(1));
+				}
+			}
+		} catch (Exception ignored) {}
+
+		if (userId < 0) userId = NOT_FOUND;
+
+		return userId;
 	}
 }

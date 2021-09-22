@@ -61,14 +61,21 @@ Status status = Status.Undef;
 if (selectedUserId == NEW_USER || selectedUserId > 0) {
 	if (selectedUserId == NEW_USER) { // 新規登録
 		if (!(controller.results.size() == 1 || controller.results.size() == 2)) { // 不正アクセス。
-			if (controllerResults != null) {
-				session.removeAttribute(SESSION_ATTRIBUTE);
-			}
+			session.removeAttribute(SESSION_ATTRIBUTE);
 			return;
 		}
 		int registerResult = RegistTwitterUserC.register(request, controller.results.get(0).oauth, _TEX, response);
 		selectedUserId = registerResult;
 		status = registerResult > 0 ? Status.RegisterSucceed : Status.Error;
+
+		final int initFollowUserId = Util.findUserIdFromUrl(session.getAttribute("callback_uri").toString());
+		if (initFollowUserId > 0) {
+			FollowUser followUser = new FollowUser();
+			followUser.userId = selectedUserId;
+			followUser.followUserId = initFollowUserId;
+			followUser.insert();
+		}
+
 	} else { // ログイン
 		final int finalSelectedUserId = selectedUserId;
 		final List<RegistTwitterUserC.Result> list = controller.results.stream()

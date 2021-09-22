@@ -42,6 +42,7 @@ public final class MyHomePcC {
 	public int m_nSelectRecommendedListNum = 6;
 	public List<CUser> m_vRecommendedUserList = null;
 	public List<CUser> m_vRecommendedRequestCreatorList = null;
+	public int followUserNum = -1;
 
 	public boolean getResults(final CheckLogin checkLogin) {
 		boolean bRtn = false;
@@ -165,6 +166,10 @@ public final class MyHomePcC {
 			// Recommended Users
 			if (m_nContentsNum <= SELECT_MAX_GALLERY || m_nPage == 1) {
 				m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
+			}
+
+			if (m_nPage < 1) {
+				followUserNum = FollowUser.countFollower(checkLogin.m_nUserId);
 			}
 
 		} catch(Exception e) {
