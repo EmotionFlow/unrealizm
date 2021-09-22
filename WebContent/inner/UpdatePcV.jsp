@@ -239,7 +239,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
 			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
 			.qq-gallery .qq-file-info {display: none;}
-			.qq-upload-retry-selector qq-upload-retry {display: none;}
+			.qq-upload-retry-selector .qq-upload-retry {display: none;}
 			.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
 			.qq-gallery .qq-upload-retry {display: none;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
@@ -261,7 +261,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui-1.12.1.min.js"></script>
-			<script type="text/javascript">
+		<%if(checkLogin.isStaff() && Util.isSmartPhone(request)){%>
+		<script src="/js/jquery.ui.touch-punch.min.js"></script>
+		<%}%>
+		<script type="text/javascript">
 		$(function(){
 			$(".qq-upload-list-selector.qq-upload-list").sortable({
 				placeholder: 'placeholder',
@@ -272,6 +275,9 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				}
 			})
 			.disableSelection();
+			<%if(checkLogin.isStaff() && Util.isSmartPhone(request)){%>
+			$(".qq-upload-list-selector.qq-upload-list").draggable();
+			<%}%>
 		});
 		</script>
 		<!-- 画像並び替え用 -->
