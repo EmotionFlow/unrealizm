@@ -237,18 +237,20 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; max-height: none;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
-			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
+			.qq-gallery .qq-upload-list li {margin: 6px; height: 100px; padding: 0; box-shadow: none; max-width: 100px; background-color: #f3f3f3; border-radius: 4px;}
 			.qq-gallery .qq-file-info {display: none;}
 			.qq-upload-retry-selector .qq-upload-retry {display: none;}
 			.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
 			.qq-gallery .qq-upload-retry {display: none;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
 			.qq-gallery .qq-upload-cancel {right: -8px; top: -8px; width: 26px; height: 26px; line-height: 20px; font-size: 12px; padding: 0; border: solid 3px #fafafa; border-radius: 30px;}
+
 			<%if(!Util.isSmartPhone(request)) {%>
 			.qq-gallery.qq-uploader {min-height: 193px;}
 			.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
 			<%}%>
+
 			#FineUploaderPane { display:block; }
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			<%if(!Util.isSmartPhone(request)) {%>
@@ -275,9 +277,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				}
 			})
 			.disableSelection();
-			<%if(checkLogin.isStaff() && Util.isSmartPhone(request)){%>
-			$(".qq-upload-list-selector.qq-upload-list").draggable();
-			<%}%>
 		});
 		</script>
 		<!-- 画像並び替え用 -->
