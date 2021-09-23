@@ -263,7 +263,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui-1.12.1.min.js"></script>
-		<%if(checkLogin.isStaff() && Util.isSmartPhone(request)){%>
+		<%if(Util.isSmartPhone(request)){%>
 		<script src="/js/jquery.ui.touch-punch.min.js"></script>
 		<%}%>
 		<script type="text/javascript">
