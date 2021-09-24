@@ -139,7 +139,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</aside>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(cResults.followUserNum == 0 || cResults.followUserNum == 1) {%>
+				<%if(!(cResults.followUserNum > 1 || cResults.m_nContentsNumTotal > 1)) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 50px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 					<%=_TEX.T("MyHome.FirstMsg")%>
 					<br />

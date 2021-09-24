@@ -112,11 +112,10 @@ public final class MyHomePcC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			// PC版右ペイン用
+			// PC版右ペインならびに初期メッセージ表示判定用
 			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
-			idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(1, checkLogin.m_nUserId);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				m_nContentsNumTotal = resultSet.getInt(1);
