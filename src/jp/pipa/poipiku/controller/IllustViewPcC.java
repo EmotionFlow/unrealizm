@@ -258,7 +258,7 @@ public final class IllustViewPcC {
 				}
 
 				final int h = LocalDateTime.now().getHour();
-				if (h != 23 && h != 0){
+				if (h != 22 && h != 23 && h != 0){
 					// Recommended Contents
 					if(SELECT_MAX_RECOMMENDED_GALLERY>0) {
 						m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
