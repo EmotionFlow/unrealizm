@@ -9,10 +9,6 @@ if(!bSmartPhone) {
 	return;
 }
 
-if(checkLogin.isStaff()) {
-	getServletContext().getRequestDispatcher("/MyHomePcInfV.jsp").forward(request,response);
-}
-
 MyHomePcC cResults = new MyHomePcC();
 cResults.getParam(request);
 
@@ -46,10 +42,112 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
-		$(function(){
-			$('body, .Wrapper').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
+			//navigator.serviceWorker.register('/serviceworker-01.js', {scope: '/MyHomePcInfV.jsp'});
+			var lastContentId = -1;
+
+			const CACHE_VERSION = 1;
+			const CURRENT_CACHES = {
+				myHomeContents: 'my-home-contents-v' + CACHE_VERSION
+			};
+			const CACHE_PATH = '/MyHomePcInfV.jsp';
+			self.addEventListener('activate', function(event) {
+				let expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES));
+				event.waitUntil(
+					caches.keys().then(function(cacheNames) {
+						return Promise.all(
+							cacheNames.map(function(cacheName) {
+								if (!expectedCacheNamesSet.has(cacheName)) {
+									console.log('Deleting out of date cache:', cacheName);
+									return caches.delete(cacheName);
+								}
+							})
+						);
+					})
+				);
 			});
+
+			function _putCache() {
+				caches.open(CURRENT_CACHES.myHomeContents).then((cache) => {
+					const response = new Response(
+						$("#IllustItemList").html(),
+						{headers: new Headers({
+								"scroll": $(window).scrollTop()
+							})}
+					);
+					cache.put(CACHE_PATH, response)
+				});
+			}
+
+			$(function(){
+				console.log("$(function(){");
+				$('body, .Wrapper').each(function(index, element){
+					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
+				)});
+
+				const contents = document.getElementById('IllustItemList');
+
+				$(document).on('click',
+					'.TabMenu a, .SystemInfo a, .slick-list a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .FooterMenu a',
+					_putCache);
+
+				const referrer = document.referrer;
+				if (referrer.indexOf('https://poipiku.com/MyHomePcV.jsp') === 0  || referrer.indexOf('https://poipiku.com/MyHomePcInfV.jsp') === 0) {
+					caches.open(CURRENT_CACHES.myHomeContents).then((cache) => {
+						cache.delete(CACHE_PATH);
+						console.log("cache deleted");
+						addContents();
+					}, () => {addContents();});
+				} else {
+					caches.open(CURRENT_CACHES.myHomeContents).then((cache) => {
+						cache.match(CACHE_PATH).then((res) => {
+							if (res) {
+								res.text().then((txt) => {
+									$("#IllustItemList").html(txt);
+									$(window).scrollTop(parseInt(res.headers.get("scroll")));
+									observer.observe(contents.lastElementChild);
+									lastContentId = parseInt($(contents.lastElementChild).attr('id').split('_')[1], 10);
+									console.log("cache pulled");
+								});
+							}
+						}, () => {addContents();});
+					}, () => {addContents();});
+				}
+
+				const observer = new IntersectionObserver(entries => {
+					entries.forEach(entry => {
+						if ( ! entry.isIntersecting ) return;
+						observer.unobserve(entry.target);
+						console.log("observe");
+						addContents();
+					});
+				});
+
+				const addContents = () => {
+					let $objMessage = $("<div/>").addClass("Waiting");
+					$("#IllustItemList").append($objMessage);
+					$.ajax({
+						"type": "post",
+						"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>},
+						"dataType": "json",
+						"url": "/f/MyHomeF.jsp",
+					})
+						.then((data) => {
+							if (data.end_id > 0) {
+								lastContentId = data.end_id;
+								console.log("lastContentId:" + lastContentId);
+								$("#IllustItemList").append(data.html);
+								$(".Waiting").remove();
+								//if (vg) vg.vgrefresh();
+								console.log(location.pathname + '/' + lastContentId + '.html');
+								//gtag('config', 'UA-125150180-1', {'page_location': location.pathname + '/' + g_nEndId + '.html'});
+								observer.observe(document.getElementById("IllustItem_" + lastContentId));
+							}
+							$(".Waiting").remove();
+
+						}, (error) => {DispMsg('Connection error');});
+				}
+			});
+
 			<%if(!checkLogin.m_bEmailValid && System.currentTimeMillis() % 100 == 0){%>
 			Swal.fire({
 				html:
@@ -71,7 +169,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				cancelButtonClass: "RequestEmailLater",
 			})
 			<%}%>
-		});
 		</script>
 
 		<style>
@@ -115,50 +212,15 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				</div>
 				<%}%>
 
-				<%  int nCnt;
-				    for(nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-
-					<%if(nCnt==4) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-
-					<%if(nCnt==6 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
-					<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
-					<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
-					<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
-					<%}%>
-					<%}%>
-
-					<%if(nCnt==7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
-					<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-					<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
-					<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
-					<%}%>
-					<%}%>
-
-					<%if(nCnt==9) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
-				<%}%>
-
-				<%if(nCnt<=6 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
-				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
-				<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
-				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
-				<%}%>
-				<%}%>
-
-				<%if(nCnt<=7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
-				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-				<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
-				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
-				<%}%>
-				<%}%>
-
 			</section>
-
-			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, MyHomePcC.SELECT_MAX_GALLERY)%>
-			</nav>
 		</article>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
+	<script>
+		if (!('IntersectionObserver' in window)){
+			document.body.classList.add('polyfill');
+			console.log("use in polyfill");
+		}
+	</script>
+	<script src="/js/polyfill/intersectionobserver.js"></script>
 </html>

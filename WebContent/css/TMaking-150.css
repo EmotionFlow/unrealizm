@@ -1153,6 +1153,7 @@ Decoration
 	display: block;
 	float: left;
 	width: 344px;
+	min-height: 200px;
 	padding: 0;
 	box-sizing: border-box;
 	overflow: hidden;
