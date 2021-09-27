@@ -1354,6 +1354,14 @@ Decoration
 	height: 30px;
 }
 
+.IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPassVisible {
+	color: #77c8e3;
+	font-size: 12px;
+	position: relative;
+	margin-left: 4px;
+	vertical-align: bottom;
+}
+
 .IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPass::placeholder {
 	color: #bbb;
 	font-style: italic;

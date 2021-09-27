@@ -632,3 +632,15 @@ function showSelectLangDlg(isLogin) {
 		showConfirmButton: false,
 	});
 }
+
+function visibleContentPassword(el) {
+	$(el).prev().attr('type','text');
+	$(el).next().show();
+	$(el).hide();
+}
+
+function hideContentPassword(el) {
+	$(el).prev().prev().attr('type','password');
+	$(el).prev().show();
+	$(el).hide();
+}

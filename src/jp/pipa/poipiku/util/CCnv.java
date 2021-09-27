@@ -543,16 +543,14 @@ public final class CCnv {
 		// 全て表示ボタン
 		strRtn.append("<div class=\"IllustItemExpand\">");
 		if(cContent.m_nFileNum>1) {
-			strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\"><input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"password\" maxlength=\"16\" placeholder=\"%s\" /></div>",
-					_TEX.T("ShowAppendFileC.EnterPassword")));
+			appendIllustItemExpandPassFrame(_TEX, strRtn);
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
 				nMode,
 				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
-			strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\"><input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"password\" maxlength=\"16\" placeholder=\"%s\" /></div>",
-				_TEX.T("ShowAppendFileC.EnterPassword")));
+			appendIllustItemExpandPassFrame(_TEX, strRtn);
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
@@ -579,6 +577,18 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustItem
 
 		return strRtn.toString();
+	}
+
+	private static void appendIllustItemExpandPassFrame(ResourceBundleControl _TEX, StringBuilder strRtn) {
+		strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\">" +
+						"<input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"password\" maxlength=\"16\" placeholder=\"%s\" />" +
+						"<a class=\"IllustItemExpandPassVisible Display\" href=\"javascript:void(0)\" onclick=\"visibleContentPassword(this)\">%s</a>" +
+						"<a class=\"IllustItemExpandPassVisible Hide\" style=\"display:none\" href=\"javascript:void(0)\" onclick=\"hideContentPassword(this)\">%s</a>" +
+						"</div>",
+				_TEX.T("ShowAppendFileC.EnterPassword"),
+				_TEX.T("ShowAppendFileC.EnterPassword.Show"),
+				_TEX.T("ShowAppendFileC.EnterPassword.Hide")
+				));
 	}
 
 	public static String MyContent2Html(final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
