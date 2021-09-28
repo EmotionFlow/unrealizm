@@ -652,7 +652,11 @@ function hideContentPassword(el) {
 /******** Cache API ********/
 /* https://developer.mozilla.org/ja/docs/Web/API/Cache */
 const CURRENT_CACHES = {
-	MyHomeContents: 'my-home-contents-v' + 1
+	MyHomeContents: {
+		name: 'my-home-contents-v' + 1,
+		request: '/MyHomePcInfV.jsp#IllustItemList',
+		maxAge:  15 * 60 * 1000,
+	}
 };
 
 function putHtmlCache(cacheName, cacheRequest, html, lastContentId, page) {
@@ -663,6 +667,7 @@ function putHtmlCache(cacheName, cacheRequest, html, lastContentId, page) {
 					"scroll": $(window).scrollTop(),
 					"lastContentId":  lastContentId,
 					"page": page,
+					"updatedAt": Date.now(),
 			})}
 		);
 		cache.put(cacheRequest, response);
@@ -678,7 +683,8 @@ function pullHtmlCache(cacheName, cacheRequest, restoreHandler, notFoundHandler)
 						txt,
 						parseInt(res.headers.get("scroll")),
 						parseInt(res.headers.get("lastContentId")),
-						parseInt(res.headers.get("page"))
+						parseInt(res.headers.get("page")),
+						parseInt(res.headers.get("updatedAt")),
 					);
 				});
 			} else {

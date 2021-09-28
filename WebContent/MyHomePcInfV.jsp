@@ -42,11 +42,11 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
+			const CURRENT_CACHE = CURRENT_CACHES.MyHomeContents;
 			let lastContentId = -1;
 			let page = 0;
-			const CACHE_REQUEST = '/MyHomePcInfV.jsp';
 			self.addEventListener('activate', function(event) {
-				let expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES));
+				let expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES).map(e => e.name));
 				event.waitUntil(
 					caches.keys().then(function(cacheNames) {
 						return Promise.all(
@@ -92,17 +92,24 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				});
 			}
 
-			function restoreContents(txt, scrollTo, _lastContentId, _page){
-				const contents = document.getElementById('IllustItemList');
-				$(contents).html(txt);
-				$(window).scrollTop(scrollTo);
-				if (_lastContentId) lastContentId = _lastContentId;
-				if (_page) page = _page;
-				observer.observe(contents.lastElementChild);
+			function restoreContents(txt, scrollTo, _lastContentId, _page, _updatedAt){
+				if (Date.now() - _updatedAt > CURRENT_CACHE.maxAge) {
+					console.log("cache was expired");
+					addContents();
+				} else {
+					const contents = document.getElementById('IllustItemList');
+					$(contents).html(txt);
+					$(window).scrollTop(scrollTo);
+					if (_lastContentId) lastContentId = _lastContentId;
+					if (_page) page = _page;
+					observer.observe(contents.lastElementChild);
+				}
 			}
 
-			 function _putCache(event) {
-				 putHtmlCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, $("#IllustItemList").html(), lastContentId, page);
+			function _putCache(event) {
+				event.waitUntil(
+					putHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, $("#IllustItemList").html(), lastContentId, page)
+				)
 			}
 
 			$(function(){
@@ -116,9 +123,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 				const referrer = document.referrer;
 				if (referrer.indexOf('https://poipiku.com/MyHomePcV.jsp') === 0  || referrer.indexOf('https://poipiku.com/MyHomePcInfV.jsp') === 0) {
-					deleteCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, addContents);
+					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, addContents);
 				} else {
-					pullHtmlCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, restoreContents, addContents);
+					pullHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, restoreContents, addContents);
 				}
 			});
 
