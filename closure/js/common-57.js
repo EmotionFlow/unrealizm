@@ -633,6 +633,10 @@ function showSelectLangDlg(isLogin) {
 	});
 }
 
+function getLoadingSpinnerHtml() {
+	return '<div class="loadingSpinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
+}
+
 function visibleContentPassword(el) {
 	$(el).prev().attr('type','text');
 	$(el).next().show();
@@ -644,3 +648,46 @@ function hideContentPassword(el) {
 	$(el).prev().show();
 	$(el).hide();
 }
+
+/******** Cache Storage API ********/
+const CURRENT_CACHES = {
+	MyHomeContents: 'my-home-contents-v' + 1
+};
+
+function putHtmlCache(cacheName, cacheRequest, html) {
+	return caches.open(cacheName).then((cache) => {
+		const response = new Response(
+			html,
+			{headers: new Headers({"scroll": $(window).scrollTop()})}
+		);
+		cache.put(cacheRequest, response);
+	});
+}
+
+function pullHtmlCache(cacheName, cacheRequest, callFound, callNotFound) {
+	caches.open(cacheName).then((cache) => {
+		cache.match(cacheRequest).then((res) => {
+			if (res) {
+				res.text().then((txt) => {
+					const scrollTo = parseInt(res.headers.get("scroll"));
+					callFound(txt, scrollTo);
+				});
+			} else {
+				callNotFound();
+			}
+		}, () => {callWhenNotFound();});
+	}, () => {callNotFound();});
+}
+
+function deleteCache(cacheName, cacheRequest, callBackFunction) {
+	caches.open(cacheName).then((cache) => {
+		cache.delete(cacheRequest);
+	}, () => {
+		console.log("delete error")
+	}).finally(() => {
+		callBackFunction();
+	});
+}
+
+
+

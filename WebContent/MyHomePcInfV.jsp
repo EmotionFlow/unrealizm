@@ -42,14 +42,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
-			//navigator.serviceWorker.register('/serviceworker-01.js', {scope: '/MyHomePcInfV.jsp'});
 			var lastContentId = -1;
-
-			const CACHE_VERSION = 1;
-			const CURRENT_CACHES = {
-				myHomeContents: 'my-home-contents-v' + CACHE_VERSION
-			};
-			const CACHE_PATH = '/MyHomePcInfV.jsp';
+			const CACHE_REQUEST = '/MyHomePcInfV.jsp';
 			self.addEventListener('activate', function(event) {
 				let expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES));
 				event.waitUntil(
@@ -66,25 +60,52 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				);
 			});
 
-			function _putCache() {
-				caches.open(CURRENT_CACHES.myHomeContents).then((cache) => {
-					const response = new Response(
-						$("#IllustItemList").html(),
-						{headers: new Headers({
-								"scroll": $(window).scrollTop()
-							})}
-					);
-					cache.put(CACHE_PATH, response)
+			const observer = new IntersectionObserver(entries => {
+				entries.forEach(entry => {
+					if (!entry.isIntersecting) return;
+					observer.unobserve(entry.target);
+					addContents();
+				});
+			});
+
+			function addContents(){
+				$("#IllustItemList").append(getLoadingSpinnerHtml());
+				$.ajax({
+					"type": "post",
+					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>},
+					"dataType": "json",
+					"url": "/f/MyHomeF.jsp",
+				}).then((data) => {
+					$(".loadingSpinner").remove();
+					if (data.end_id > 0) {
+						lastContentId = data.end_id;
+						console.log("lastContentId:" + lastContentId);
+						$("#IllustItemList").append(data.html);
+						//if (vg) vg.vgrefresh();
+						//gtag('config', 'UA-125150180-1', {'page_location': location.pathname + '/' + g_nEndId + '.html'});
+						observer.observe(document.getElementById("IllustItem_" + lastContentId));
+					}
+				}, (error) => {
+					DispMsg('Connection error');
 				});
 			}
 
+			function restoreContents(txt, scrollTo){
+				const contents = document.getElementById('IllustItemList');
+				$(contents).html(txt);
+				$(window).scrollTop(scrollTo);
+				observer.observe(contents.lastElementChild);
+				lastContentId = parseInt($(contents.lastElementChild).attr('id').split('_')[1], 10);
+			}
+
+			async function _putCache() {
+				await putHtmlCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, $("#IllustItemList").html());
+			}
+
 			$(function(){
-				console.log("$(function(){");
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
 				)});
-
-				const contents = document.getElementById('IllustItemList');
 
 				$(document).on('click',
 					'.TabMenu a, .SystemInfo a, .slick-list a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .FooterMenu a',
@@ -92,59 +113,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 				const referrer = document.referrer;
 				if (referrer.indexOf('https://poipiku.com/MyHomePcV.jsp') === 0  || referrer.indexOf('https://poipiku.com/MyHomePcInfV.jsp') === 0) {
-					caches.open(CURRENT_CACHES.myHomeContents).then((cache) => {
-						cache.delete(CACHE_PATH);
-						console.log("cache deleted");
-						addContents();
-					}, () => {addContents();});
+					deleteCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, addContents);
 				} else {
-					caches.open(CURRENT_CACHES.myHomeContents).then((cache) => {
-						cache.match(CACHE_PATH).then((res) => {
-							if (res) {
-								res.text().then((txt) => {
-									$("#IllustItemList").html(txt);
-									$(window).scrollTop(parseInt(res.headers.get("scroll")));
-									observer.observe(contents.lastElementChild);
-									lastContentId = parseInt($(contents.lastElementChild).attr('id').split('_')[1], 10);
-									console.log("cache pulled");
-								});
-							}
-						}, () => {addContents();});
-					}, () => {addContents();});
-				}
-
-				const observer = new IntersectionObserver(entries => {
-					entries.forEach(entry => {
-						if ( ! entry.isIntersecting ) return;
-						observer.unobserve(entry.target);
-						console.log("observe");
-						addContents();
-					});
-				});
-
-				const addContents = () => {
-					let $objMessage = $("<div/>").addClass("Waiting");
-					$("#IllustItemList").append($objMessage);
-					$.ajax({
-						"type": "post",
-						"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>},
-						"dataType": "json",
-						"url": "/f/MyHomeF.jsp",
-					})
-						.then((data) => {
-							if (data.end_id > 0) {
-								lastContentId = data.end_id;
-								console.log("lastContentId:" + lastContentId);
-								$("#IllustItemList").append(data.html);
-								$(".Waiting").remove();
-								//if (vg) vg.vgrefresh();
-								console.log(location.pathname + '/' + lastContentId + '.html');
-								//gtag('config', 'UA-125150180-1', {'page_location': location.pathname + '/' + g_nEndId + '.html'});
-								observer.observe(document.getElementById("IllustItem_" + lastContentId));
-							}
-							$(".Waiting").remove();
-
-						}, (error) => {DispMsg('Connection error');});
+					pullHtmlCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, restoreContents, addContents);
 				}
 			});
 
@@ -211,7 +182,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					<a class="BtnBase" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a>
 				</div>
 				<%}%>
-
 			</section>
 		</article>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>

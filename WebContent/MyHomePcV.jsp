@@ -9,7 +9,7 @@ if(!bSmartPhone) {
 	return;
 }
 
-if(checkLogin.isStaff()) {
+if(checkLogin.isTestStaff212()) {
 	getServletContext().getRequestDispatcher("/MyHomePcInfV.jsp").forward(request,response);
 }
 
