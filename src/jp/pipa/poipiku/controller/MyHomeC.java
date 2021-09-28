@@ -4,37 +4,38 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
+
 public class MyHomeC {
-	public int n_nUserId = -1;
-	public int n_nVersion = 0;
-	public int m_nMode = CCnv.MODE_PC;
-	public int m_nStartId = -1;
-	public int m_nViewMode = CCnv.VIEW_LIST;
-	private int m_nLastSystemInfoId = -1;
+	public int userId = -1;
+	public int version = 0;
+	public int mode = CCnv.MODE_PC;
+	public int startId = -1;
+	public int viewMode = CCnv.VIEW_LIST;
+	public int page = 1;
+	private int lastSystemInfoId = -1;
 
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			n_nVersion = Util.toInt(request.getParameter("VER"));
-			m_nMode = Util.toInt(request.getParameter("MD"));
-			m_nStartId = Util.toInt(request.getParameter("SD"));
-			n_nUserId = Util.toInt(request.getParameter("ID"));
-			m_nViewMode = Util.toInt(request.getParameter("VD"));
-			if(m_nStartId<=0) {
+			version = Util.toInt(request.getParameter("VER"));
+			mode = Util.toInt(request.getParameter("MD"));
+			startId = Util.toInt(request.getParameter("SD"));
+			userId = Util.toInt(request.getParameter("ID"));
+			viewMode = Util.toInt(request.getParameter("VD"));
+			page = Util.toInt(request.getParameter("PG"));
+			if(startId <=0) {
 				String strPoipikuInfoId = Util.getCookie(request, Common.POIPIKU_INFO);
 				if(strPoipikuInfoId!=null && !strPoipikuInfoId.isEmpty()) {
-					m_nLastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
+					lastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
 				}
 			}
-		} catch(Exception e) {
+		} catch(Exception ignored) {
 			;
 		}
 	}
@@ -42,19 +43,21 @@ public class MyHomeC {
 
 	public int SELECT_MAX_GALLERY = 10;
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
-	public int m_nContentsNum = 0;
-	public int m_nContentsNumTotal = 0;
-	public int m_nEndId = -1;
-	public CContent m_cSystemInfo = null;
-	public int m_nSelectRecommendedListNum = 6;
-	public List<CUser> m_vRecommendedUserList = null;
-	public List<CUser> m_vRecommendedRequestCreatorList = null;
-
+	public ArrayList<CContent> contentList = new ArrayList<>();
+	public int contentsNum = 0;
+	public int contentsNumTotal = 0;
+	public int lastContentId = -1;
+	public CContent systemInfo = null;
+	public int recommendedMax = 6;
+	public List<CUser> recommendedUserList = null;
+	public List<CUser> recommendedRequestCreatorList = null;
 
 	public boolean getResults(CheckLogin checkLogin) {
+		return getResults(checkLogin, true, true);
+	}
+
+	public boolean getResults(CheckLogin checkLogin, boolean needRecommendedUsers, boolean needRecommendedRequestCreator) {
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -63,22 +66,21 @@ public class MyHomeC {
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// POIPIKU INFO
-			if(m_nStartId<=0) {
+			if(startId <=0) {
 				strSql = "SELECT content_id, upload_date, description FROM contents_0000 WHERE user_id=2 AND category_id=14 AND content_id>? ORDER BY content_id DESC LIMIT 1";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setInt(idx++, m_nLastSystemInfoId);
+				statement.setInt(idx++, lastSystemInfoId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
-					m_cSystemInfo = new CContent();
-					m_cSystemInfo.m_nUserId		= 2;
-					m_cSystemInfo.m_nContentId		= resultSet.getInt("content_id");
-					m_cSystemInfo.m_timeUploadDate	= resultSet.getTimestamp("upload_date");
-					m_cSystemInfo.m_strDescription	= Util.toString(resultSet.getString("description"));
+					systemInfo = new CContent();
+					systemInfo.m_nUserId		= 2;
+					systemInfo.m_nContentId		= resultSet.getInt("content_id");
+					systemInfo.m_timeUploadDate	= resultSet.getTimestamp("upload_date");
+					systemInfo.m_strDescription	= Util.toString(resultSet.getString("description"));
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -93,7 +95,7 @@ public class MyHomeC {
 					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
-			String strCondStart = (m_nStartId>0)?"AND content_id<? ":"";
+			String strCondStart = (startId >0)?"AND content_id<? ":"";
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("SELECT * FROM contents_0000 ")
@@ -118,7 +120,7 @@ public class MyHomeC {
 				statement.setString(idx++, strMuteKeyword);
 			}
 			if(!strCondStart.isEmpty()) {
-				statement.setInt(idx++, m_nStartId);
+				statement.setInt(idx++, startId);
 			}
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
@@ -130,8 +132,8 @@ public class MyHomeC {
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				cContent.m_cUser.m_nReaction	= user.reaction;
 				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
-				m_nEndId = cContent.m_nContentId;
-				m_vContentList.add(cContent);
+				lastContentId = cContent.m_nContentId;
+				contentList.add(cContent);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -139,16 +141,20 @@ public class MyHomeC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			GridUtil.getEachComment(connection, m_vContentList);
+			GridUtil.getEachComment(connection, contentList);
 
 			// Bookmark
-			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(connection, contentList, checkLogin);
 
 			// Recommended Users
-			m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
+			if (needRecommendedUsers) {
+				recommendedUserList = RecommendedUsers.getUnFollowedUsers(recommendedMax, checkLogin, connection);
+			}
 
 			// Recommended Request Creators
-			m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
+			if (needRecommendedRequestCreator) {
+				recommendedRequestCreatorList = RecommendedUsers.getRequestCreators(recommendedMax, checkLogin, connection);
+			}
 
 		} catch(Exception e) {
 			Log.d(strSql);

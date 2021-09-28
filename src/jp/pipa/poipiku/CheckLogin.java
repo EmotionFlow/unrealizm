@@ -46,7 +46,7 @@ public final class CheckLogin {
 	}
 
 	public boolean isTestStaff212(){
-		return m_staffIds.contains(m_nUserId);
+		return m_testStaffIds.contains(m_nUserId);
 	}
 
 

@@ -28,7 +28,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
+		<%//@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
 
@@ -42,7 +42,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
-			var lastContentId = -1;
+			let lastContentId = -1;
+			let page = 0;
 			const CACHE_REQUEST = '/MyHomePcInfV.jsp';
 			self.addEventListener('activate', function(event) {
 				let expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES));
@@ -72,34 +73,36 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				$("#IllustItemList").append(getLoadingSpinnerHtml());
 				$.ajax({
 					"type": "post",
-					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>},
+					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page + 1},
 					"dataType": "json",
 					"url": "/f/MyHomeF.jsp",
 				}).then((data) => {
+					page++;
 					$(".loadingSpinner").remove();
 					if (data.end_id > 0) {
 						lastContentId = data.end_id;
 						console.log("lastContentId:" + lastContentId);
-						$("#IllustItemList").append(data.html);
-						//if (vg) vg.vgrefresh();
+						const contents = document.getElementById('IllustItemList');
+						$(contents).append(data.html);
 						//gtag('config', 'UA-125150180-1', {'page_location': location.pathname + '/' + g_nEndId + '.html'});
-						observer.observe(document.getElementById("IllustItem_" + lastContentId));
+						observer.observe(contents.lastElementChild);
 					}
 				}, (error) => {
 					DispMsg('Connection error');
 				});
 			}
 
-			function restoreContents(txt, scrollTo){
+			function restoreContents(txt, scrollTo, _lastContentId, _page){
 				const contents = document.getElementById('IllustItemList');
 				$(contents).html(txt);
 				$(window).scrollTop(scrollTo);
+				if (_lastContentId) lastContentId = _lastContentId;
+				if (_page) page = _page;
 				observer.observe(contents.lastElementChild);
-				lastContentId = parseInt($(contents.lastElementChild).attr('id').split('_')[1], 10);
 			}
 
-			async function _putCache() {
-				await putHtmlCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, $("#IllustItemList").html());
+			 function _putCache(event) {
+				 putHtmlCache(CURRENT_CACHES.MyHomeContents, CACHE_REQUEST, $("#IllustItemList").html(), lastContentId, page);
 			}
 
 			$(function(){

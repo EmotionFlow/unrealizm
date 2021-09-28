@@ -649,43 +649,52 @@ function hideContentPassword(el) {
 	$(el).hide();
 }
 
-/******** Cache Storage API ********/
+/******** Cache API ********/
+/* https://developer.mozilla.org/ja/docs/Web/API/Cache */
 const CURRENT_CACHES = {
 	MyHomeContents: 'my-home-contents-v' + 1
 };
 
-function putHtmlCache(cacheName, cacheRequest, html) {
+function putHtmlCache(cacheName, cacheRequest, html, lastContentId, page) {
 	return caches.open(cacheName).then((cache) => {
 		const response = new Response(
 			html,
-			{headers: new Headers({"scroll": $(window).scrollTop()})}
+			{headers: new Headers({
+					"scroll": $(window).scrollTop(),
+					"lastContentId":  lastContentId,
+					"page": page,
+			})}
 		);
 		cache.put(cacheRequest, response);
 	});
 }
 
-function pullHtmlCache(cacheName, cacheRequest, callFound, callNotFound) {
+function pullHtmlCache(cacheName, cacheRequest, restoreHandler, notFoundHandler) {
 	caches.open(cacheName).then((cache) => {
 		cache.match(cacheRequest).then((res) => {
 			if (res) {
 				res.text().then((txt) => {
-					const scrollTo = parseInt(res.headers.get("scroll"));
-					callFound(txt, scrollTo);
+					restoreHandler(
+						txt,
+						parseInt(res.headers.get("scroll")),
+						parseInt(res.headers.get("lastContentId")),
+						parseInt(res.headers.get("page"))
+					);
 				});
 			} else {
-				callNotFound();
+				notFoundHandler();
 			}
-		}, () => {callWhenNotFound();});
-	}, () => {callNotFound();});
+		}, () => {notFoundHandler();});
+	}, () => {notFoundHandler();});
 }
 
-function deleteCache(cacheName, cacheRequest, callBackFunction) {
+function deleteCache(cacheName, cacheRequest, handler) {
 	caches.open(cacheName).then((cache) => {
 		cache.delete(cacheRequest);
 	}, () => {
-		console.log("delete error")
+		console.log("delete error");
 	}).finally(() => {
-		callBackFunction();
+		handler();
 	});
 }
 

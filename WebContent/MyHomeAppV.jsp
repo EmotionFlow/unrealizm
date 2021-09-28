@@ -26,7 +26,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
-		var g_nEndId = <%=cResults.m_nEndId%>;
+		var g_nEndId = <%=cResults.lastContentId%>;
 		var g_bAdding = false;
 		function addContents() {
 			if(g_bAdding) return;
@@ -79,18 +79,18 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	<body>
 		<article class="Wrapper">
 
-			<%if(cResults.m_cSystemInfo!=null) {%>
-			<div class="SystemInfo" id="SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>">
-				<a class="SystemInfoTitle" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.m_cSystemInfo.m_nContentId%>"><i class="fas fa-bullhorn"></i></a>
-				<a class="SystemInfoDate" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.m_cSystemInfo.m_nContentId%>"><%=(new SimpleDateFormat("YYYY MM/dd")).format(cResults.m_cSystemInfo.m_timeUploadDate)%></a>
-				<a class="SystemInfoDesc" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.m_cSystemInfo.m_nContentId%>"><%=Util.toStringHtml(cResults.m_cSystemInfo.m_strDescription)%></a>
-				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>').hide();setCookie('<%=Common.POIPIKU_INFO%>', '<%=cResults.m_cSystemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
+			<%if(cResults.systemInfo !=null) {%>
+			<div class="SystemInfo" id="SystemInfo_<%=cResults.systemInfo.m_nContentId%>">
+				<a class="SystemInfoTitle" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><i class="fas fa-bullhorn"></i></a>
+				<a class="SystemInfoDate" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><%=(new SimpleDateFormat("YYYY MM/dd")).format(cResults.systemInfo.m_timeUploadDate)%></a>
+				<a class="SystemInfoDesc" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><%=Util.toStringHtml(cResults.systemInfo.m_strDescription)%></a>
+				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.systemInfo.m_nContentId%>').hide();setCookie('<%=Common.POIPIKU_INFO%>', '<%=cResults.systemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 			</div>
 			<%}%>
 
 			<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
 
-			<%if(Util.needUpdate(cResults.n_nVersion)) {%>
+			<%if(Util.needUpdate(cResults.version)) {%>
 			<div class="UpdateInfo">
 				<div class="UpdateInfoMsg"><%=_TEX.T("UpdateInfo.Msg")%></div>
 				<%if(Util.isIOS(request)){%>
@@ -103,7 +103,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
 
-			<%if(cResults.m_vContentList.size()<=0) {%>
+			<%if(cResults.contentList.size()<=0) {%>
 			<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 50px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 				<%=_TEX.T("MyHome.FirstMsg")%>
 				<br />
@@ -112,20 +112,20 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			<%}%>
 			<section id="IllustItemList" class="IllustItemList">
 				<%	int nCnt;
-					for(nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-						CContent cContent = cResults.m_vContentList.get(nCnt);%>
+					for(nCnt=0; nCnt<cResults.contentList.size(); nCnt++) {
+						CContent cContent = cResults.contentList.get(nCnt);%>
 						<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 
-						<%if(nCnt==7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
+						<%if(nCnt==7 && cResults.recommendedRequestCreatorList !=null && !cResults.recommendedRequestCreatorList.isEmpty()) {%>
 						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-						<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
+						<%for (CUser recommendedUser: cResults.recommendedRequestCreatorList){%>
 						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
 						<%}%>
 						<%}%>
 
-						<%if(nCnt==6 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
+						<%if(nCnt==6 && cResults.recommendedUserList !=null && !cResults.recommendedUserList.isEmpty()) {%>
 						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
-						<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
+						<%for (CUser recommendedUser: cResults.recommendedUserList){%>
 						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
 						<%}%>
 						<%}%>
@@ -135,16 +135,16 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 						<%}%>
 				<%}%>
 
-				<%if(nCnt<=7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
+				<%if(nCnt<=7 && cResults.recommendedRequestCreatorList !=null && !cResults.recommendedRequestCreatorList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-				<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
+				<%for (CUser recommendedUser: cResults.recommendedRequestCreatorList){%>
 				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
 				<%}%>
 				<%}%>
 
-				<%if(nCnt<=6 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>
+				<%if(nCnt<=6 && cResults.recommendedUserList !=null && !cResults.recommendedUserList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
-				<%for (CUser recommendedUser: cResults.m_vRecommendedUserList){%>
+				<%for (CUser recommendedUser: cResults.recommendedUserList){%>
 				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
 				<%}%>
 				<%}%>
