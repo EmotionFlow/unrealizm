@@ -107,7 +107,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					_putCache);
 
 				const referrer = document.referrer;
-				console.log("referrer: " + referrer);
 				if (referrer.indexOf('https://poipiku.com/MyHomePcV.jsp') === 0  || referrer.indexOf('https://poipiku.com/MyHomePcInfV.jsp') === 0) {
 					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, addContents);
 				} else {
