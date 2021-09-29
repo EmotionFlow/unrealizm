@@ -637,6 +637,14 @@ function getLoadingSpinnerHtml() {
 	return '<div class="loadingSpinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
 }
 
+function appendLoadingSpinner(nodeId){
+	$("#" + nodeId).append(getLoadingSpinnerHtml());
+}
+
+function removeLoadingSpinners(){
+	$(".loadingSpinner").remove();
+}
+
 function visibleContentPassword(el) {
 	$(el).prev().attr('type','text');
 	$(el).next().show();
@@ -651,13 +659,28 @@ function hideContentPassword(el) {
 
 /******** Cache API ********/
 /* https://developer.mozilla.org/ja/docs/Web/API/Cache */
-const CURRENT_CACHES = {
+
+const CURRENT_CACHES_INFO = {
 	MyHomeContents: {
 		name: 'my-home-contents-v' + 1,
-		request: '/MyHomePcInfV.jsp#IllustItemList',
-		maxAge:  15 * 60 * 1000,
+		request_prefix: '/_/IllustItemList/',
+		maxAgeMin:  15,
+	},
+	MyHomeTagContents: {
+		name: 'my-home-tag-contents-v' + 1,
+		request_prefix: '/_/IllustItemList/',
+		maxAgeMin:  15,
 	}
 };
+
+class CacheApiCache {
+	constructor(cacheInfo, userId) {
+		this.name = cacheInfo.name;
+		this.request = cacheInfo.request_prefix + userId;
+		this.maxAge = cacheInfo.maxAgeMin * 60 * 1000;
+	}
+}
+
 
 function putHtmlCache(cacheName, cacheRequest, html, lastContentId, page) {
 	return caches.open(cacheName).then((cache) => {
@@ -698,11 +721,24 @@ function deleteCache(cacheName, cacheRequest, handler) {
 	caches.open(cacheName).then((cache) => {
 		cache.delete(cacheRequest);
 	}, () => {
-		console.log("delete error");
+		console.log("cache delete error");
 	}).finally(() => {
-		handler();
+		if (handler) handler();
 	});
 }
 
+function deleteOldVersionCache() {
+	let expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES_INFO).map(e => e.name));
+	caches.keys().then(function(cacheNames) {
+		return Promise.all(
+			cacheNames.map(function(cacheName) {
+				if (!expectedCacheNamesSet.has(cacheName)) {
+					console.log('Deleting out of date cache:', cacheName);
+					return caches.delete(cacheName);
+				}
+			})
+		);
+	});
+}
 
 

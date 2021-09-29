@@ -42,24 +42,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
-			const CURRENT_CACHE = CURRENT_CACHES.MyHomeContents;
+			const CURRENT_CACHE = new CacheApiCache(CURRENT_CACHES_INFO.MyHomeContents, <%=checkLogin.m_nUserId%>);
 			let lastContentId = -1;
 			let page = 0;
-			self.addEventListener('activate', function(event) {
-				let expectedCacheNamesSet = new Set(Object.values(CURRENT_CACHES).map(e => e.name));
-				event.waitUntil(
-					caches.keys().then(function(cacheNames) {
-						return Promise.all(
-							cacheNames.map(function(cacheName) {
-								if (!expectedCacheNamesSet.has(cacheName)) {
-									console.log('Deleting out of date cache:', cacheName);
-									return caches.delete(cacheName);
-								}
-							})
-						);
-					})
-				);
-			});
 
 			const observer = new IntersectionObserver(entries => {
 				entries.forEach(entry => {
@@ -70,7 +55,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			});
 
 			function addContents(){
-				$("#IllustItemList").append(getLoadingSpinnerHtml());
+				appendLoadingSpinner("IllustItemList");
 				$.ajax({
 					"type": "post",
 					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page + 1},
@@ -78,7 +63,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					"url": "/f/MyHomeF.jsp",
 				}).then((data) => {
 					page++;
-					$(".loadingSpinner").remove();
+					removeLoadingSpinners();
 					if (data.end_id > 0) {
 						lastContentId = data.end_id;
 						console.log("lastContentId:" + lastContentId);
@@ -95,6 +80,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			function restoreContents(txt, scrollTo, _lastContentId, _page, _updatedAt){
 				if (Date.now() - _updatedAt > CURRENT_CACHE.maxAge) {
 					console.log("cache was expired");
+					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, null);
 					addContents();
 				} else {
 					const contents = document.getElementById('IllustItemList');
@@ -112,7 +98,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				)
 			}
 
-			$(function(){
+			$(function(event){
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
 				)});
@@ -122,10 +108,15 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					_putCache);
 
 				const referrer = document.referrer;
+				console.log("referrer: " + referrer);
 				if (referrer.indexOf('https://poipiku.com/MyHomePcV.jsp') === 0  || referrer.indexOf('https://poipiku.com/MyHomePcInfV.jsp') === 0) {
 					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, addContents);
 				} else {
 					pullHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, restoreContents, addContents);
+				}
+
+				if ((Math.random() * 50) | 0 === 0){
+					deleteOldVersionCache();
 				}
 			});
 
