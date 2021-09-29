@@ -20,6 +20,8 @@ public final class CCnv {
 	public static final int SP_MODE_WVIEW = 0;
 	public static final int SP_MODE_APP = 1;
 
+	private static final String ILLUST_ITEM_THUMB_IMG = "<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" onload=\"setImgHeightStyle(this)\"/>";
+
 	private static String getIllustListContext(int nSpMode, int nUserId){
 		if(nSpMode==SP_MODE_APP){
 			return String.format("/IllustListAppV.jsp?ID=%d", nUserId);
@@ -189,7 +191,7 @@ public final class CCnv {
 	private static void appendMyIllustListItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
 		String strFileUrl = Common.GetUrl(cContent.m_strFileName);
 		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
-		strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
+		strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
 
 		if(cContent.m_nOpenId==2){
 			strRtn.append("<span class=\"IllustInfoPrivate\">");
@@ -239,11 +241,11 @@ public final class CCnv {
 			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
 			if(nViewMode==VIEW_DETAIL) {
 				strRtn.append("<span class=\"IllustItemThumb\">");
-				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
+				strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
 				strRtn.append("</span>");
 			} else {
 				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
-				strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
+				strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
 				strRtn.append("</a>");
 			}
 			break;
@@ -268,11 +270,11 @@ public final class CCnv {
 		String strFileUrl = Common.GetUrl(cContent.m_strFileName);
 		if(nViewMode==VIEW_DETAIL) {
 			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
-			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
+			strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
 			strRtn.append("</a>");
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
-			strRtn.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", strFileUrl));
+			strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
 			strRtn.append("</a>");
 		}
 	}

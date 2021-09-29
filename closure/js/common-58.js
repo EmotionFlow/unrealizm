@@ -657,6 +657,10 @@ function hideContentPassword(el) {
 	$(el).hide();
 }
 
+function setImgHeightStyle(element) {
+	$(element).css('height', $(element).height());
+}
+
 /******** Cache API ********/
 /* https://developer.mozilla.org/ja/docs/Web/API/Cache */
 const CURRENT_CACHES_INFO = {
