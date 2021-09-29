@@ -211,7 +211,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 			<section id="IllustItemListRelatedUser" class="IllustItemList Related User" style="height: auto">
 				<header class="SearchResultTitle" style="overflow: unset; height: auto; padding: 0;">
-					<div class="IllustItem" style="background: rgba(255,255,255,0.90); margin: 0; width: 100%; border: none; border-radius: 0;">
+					<div class="IllustItem" style="background: rgba(255,255,255,0.90); margin: 0; width: 100%; border: none; border-radius: 0; min-height: auto;">
 						<div class="IllustItemUser" style="padding: 6px 8px 6px 8px; border: none;">
 							<a class="IllustItemUserThumb" href="/<%=cResults.m_cUser.m_nUserId%>/" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>_120.jpg')"></a>
 							<h2 class="IllustItemUserName">
