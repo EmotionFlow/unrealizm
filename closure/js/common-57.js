@@ -659,7 +659,6 @@ function hideContentPassword(el) {
 
 /******** Cache API ********/
 /* https://developer.mozilla.org/ja/docs/Web/API/Cache */
-
 const CURRENT_CACHES_INFO = {
 	MyHomeContents: {
 		name: 'my-home-contents-v' + 1,
