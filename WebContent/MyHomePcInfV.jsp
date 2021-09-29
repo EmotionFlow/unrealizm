@@ -82,8 +82,10 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, null);
 					addContents();
 				} else {
+					appendLoadingSpinner("IllustItemList");
 					const contents = document.getElementById('IllustItemList');
 					$(contents).html(txt);
+					removeLoadingSpinners();
 					$(window).scrollTop(scrollTo);
 					if (_lastContentId) lastContentId = _lastContentId;
 					if (_page) page = _page;
@@ -91,10 +93,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				}
 			}
 
-			function _putCache(event) {
-				event.waitUntil(
-					putHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, $("#IllustItemList").html(), lastContentId, page)
-				)
+			async function _putCache() {
+				await putHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, $("#IllustItemList").html(), lastContentId, page);
 			}
 
 			$(function(event){
