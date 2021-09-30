@@ -549,14 +549,14 @@ public final class CCnv {
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
-				nMode,
+				nSpMode,
 				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
 			appendIllustItemExpandPassFrame(_TEX, strRtn);
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
-				nMode,
+				nSpMode,
 				String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length())));
 		}
 		strRtn.append("</div>");	// IllustItemExpand
@@ -649,7 +649,7 @@ public final class CCnv {
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
 					cContent.m_nUserId,
 					cContent.m_nContentId,
-					nMode,
+					nSpMode,
 					String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		}
 		strRtn.append("</div>");	// IllustItemExpand

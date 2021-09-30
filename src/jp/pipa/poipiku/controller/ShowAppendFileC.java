@@ -35,7 +35,7 @@ public final class ShowAppendFileC {
 	public int contentUserId = -1;
 	public int contentId = -1;
 	public String m_strPassword = "";
-	public int m_nMode = 0;
+	public int m_nSpMode = 0;
 	public int m_nTwFriendship = CTweet.FRIENDSHIP_UNDEF;
 	public String m_strMyTwitterScreenName = "";
 
@@ -44,7 +44,7 @@ public final class ShowAppendFileC {
 			contentUserId = Util.toInt(request.getParameter("UID"));
 			contentId = Util.toInt(request.getParameter("IID"));
 			m_strPassword = request.getParameter("PAS");
-			m_nMode = Util.toInt(request.getParameter("MD"));
+			m_nSpMode = Util.toInt(request.getParameter("MD"));
 			m_nTwFriendship = Util.toInt(request.getParameter("TWF"));
 			request.setCharacterEncoding("UTF-8");
 		} catch(Exception e) {

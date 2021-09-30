@@ -87,7 +87,7 @@ if(nRtn<ShowAppendFileC.OK) {
 	}
 
 } else {
-	String ILLUST_DETAIL = (cResults.m_nMode==CCnv.MODE_SP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
+	final String illustDetailUrl = (cResults.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 	switch(cResults.m_cContent.m_nPublishId) {
 		case Common.PUBLISH_ID_R15:
 		case Common.PUBLISH_ID_R18:
@@ -104,7 +104,7 @@ if(nRtn<ShowAppendFileC.OK) {
 				nRtn=2;
 				strHtml.append(String.format("<a class=\"IllustItemText\" %s href=\"%s?ID=%d&TD=%d\">",
 						cResults.m_cContent.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
-						ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+						illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
 				strHtml.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
 						cResults.m_cContent.novelDirection==1 ? "Vertical" : "",
 						Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)));
@@ -112,7 +112,7 @@ if(nRtn<ShowAppendFileC.OK) {
 			} else {
 				// 2枚目の場所に1枚目を表示する
 				nRtn++;
-				strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+				strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
 				strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
 				strHtml.append("</a>");
 			}
@@ -126,7 +126,7 @@ if(nRtn<ShowAppendFileC.OK) {
 
 	// 以降の画像・文章を表示
 	for(CContentAppend cContentAppend : cResults.m_cContent.m_vContentAppend) {
-		strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\">", ILLUST_DETAIL, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
+		strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\">", illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
 		strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
 		strHtml.append("</a>");
 	}
