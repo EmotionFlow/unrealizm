@@ -93,18 +93,18 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				}
 			}
 
-			async function _putCache() {
-				await putHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, $("#IllustItemList").html(), lastContentId, page);
-			}
-
 			$(function(event){
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
 				)});
 
 				$(document).on('click',
-					'.TabMenu a, .SystemInfo a, .slick-list a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .FooterMenu a',
-					_putCache);
+					'#HeaderSearchBtn, .TabMenu a, .SystemInfo a, .slick-list a, ' +
+					'a.IllustItemThumb, .IllustItemDesc a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .IllustItemTag a, ' +
+					'.FooterMenu a',
+					async () => {
+						await putHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, $("#IllustItemList").html(), lastContentId, page);
+					});
 
 				const referrer = document.referrer;
 				if (referrer.indexOf('https://poipiku.com/MyHomePcV.jsp') === 0  || referrer.indexOf('https://poipiku.com/MyHomePcInfV.jsp') === 0) {
