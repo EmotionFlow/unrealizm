@@ -561,7 +561,6 @@ public final class CCnv {
 		}
 		strRtn.append("</div>");	// IllustItemExpand
 
-
 		// 転載禁止表示
 		String strSizeAppendex = "";
 		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {

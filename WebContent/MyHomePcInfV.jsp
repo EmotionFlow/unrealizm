@@ -106,9 +106,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 						await putHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, $("#IllustItemList").html(), lastContentId, page);
 					});
 
-				const referrer = document.referrer;
-				if (referrer.indexOf('https://poipiku.com/MyHomePcV.jsp') === 0  || referrer.indexOf('https://poipiku.com/MyHomePcInfV.jsp') === 0) {
+				if (getClearCacheParam()) {
 					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, addContents);
+					history.replaceState('', '', 'MyHomePcV.jsp');
 				} else {
 					pullHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, restoreContents, addContents);
 				}

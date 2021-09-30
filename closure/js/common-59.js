@@ -657,6 +657,24 @@ function hideContentPassword(el) {
 	$(el).hide();
 }
 
+/**
+ * 指定要素の表示上の高さを、指定要素sytleのheightに設定する。
+ * imgタグのonloadと組み合わせて使う。
+ *
+ * [背景]
+ * Cache APIを用いたコンテンツリストのキャッシュをリストアする際、
+ * DOMを流し込んでスクロール位置を指定している。
+ *
+ * このとき、サムネ画像のimgタグにheight指定が無いと、画像がロード
+ * されるまで高さが定まらい。
+ * すると、流し込んだDOMのheightが想定より短くなっているタイミングで、
+ * スクロール位置指定が動いてしまい、位置がうまく復元できない。
+ *
+ * そこで、サムネ画像読み込みのタイミングで、imgタグのstyle属性にheight
+ * を指定することで、キャッシュに格納する前に高さを指定しておくことにした。
+ *
+ * @param element imgタグの要素
+ */
 function setImgHeightStyle(element) {
 	$(element).css('height', $(element).height());
 }
@@ -683,7 +701,6 @@ class CacheApiCache {
 		this.maxAge = cacheInfo.maxAgeMin * 60 * 1000;
 	}
 }
-
 
 function putHtmlCache(cacheName, cacheRequest, html, lastContentId, page) {
 	return caches.open(cacheName).then((cache) => {
@@ -744,4 +761,7 @@ function deleteOldVersionCache() {
 	});
 }
 
-
+function getClearCacheParam() {
+	const urlParams = new URLSearchParams(window.location.search);
+	return urlParams.get('CC') === '1';
+}
