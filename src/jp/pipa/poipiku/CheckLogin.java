@@ -17,6 +17,7 @@ public final class CheckLogin {
 			1851512  // picさん
 	);
 	static private final List<Integer> m_testStaffIds = Arrays.asList(
+			2,      // official
 			21808,  // nino
 			402902,  // snssnssnsさん
 			1851512  // picさん
