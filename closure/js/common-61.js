@@ -633,16 +633,13 @@ function showSelectLangDlg(isLogin) {
 	});
 }
 
-function getLoadingSpinnerHtml() {
-	return '<div class="loadingSpinner"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
+function appendLoadingSpinner(appendTo, spinnerClassName){
+	const LOADING_SPINNER_HTML = '<div class="' + spinnerClassName + '"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>';
+	$(appendTo).append(LOADING_SPINNER_HTML);
 }
 
-function appendLoadingSpinner(nodeId){
-	$("#" + nodeId).append(getLoadingSpinnerHtml());
-}
-
-function removeLoadingSpinners(){
-	$(".loadingSpinner").remove();
+function removeLoadingSpinners(spinnerClassName){
+	$("." + spinnerClassName).remove();
 }
 
 function visibleContentPassword(el) {
@@ -785,7 +782,6 @@ function deleteOldVersionCache() {
 function initContents(){
 	addContents().then(()=>{$(window).scrollTop(0);});
 }
-
 
 class ClearCacheNext {
 	constructor() {

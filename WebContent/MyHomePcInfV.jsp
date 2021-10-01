@@ -44,12 +44,15 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			let lastContentId = -1;
 			let page = 0;
 
+			const loadingSpinner = {
+				appendTo: "#IllustItemList",
+				className: "loadingSpinner",
+			}
 			const htmlCache = new CacheApiHtmlCache(CURRENT_CACHES_INFO.MyHomeContents, <%=checkLogin.m_nUserId%>);
 			const observer = createIntersectionObserver(addContents);
 
 			function addContents(){
-				console.log("addContents");
-				appendLoadingSpinner("IllustItemList");
+				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 				return $.ajax({
 					"type": "post",
 					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page + 1},
@@ -58,16 +61,15 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				}).then((data) => {
 					page++;
 					htmlCache.header.page = page;
-					removeLoadingSpinners();
 					if (data.end_id > 0) {
 						lastContentId = data.end_id;
 						htmlCache.header.lastContentId = lastContentId;
-						console.log("lastContentId:" + lastContentId);
 						const contents = document.getElementById('IllustItemList');
 						$(contents).append(data.html);
 						//gtag('config', 'UA-125150180-1', {'page_location': location.pathname + '/' + g_nEndId + '.html'});
 						observer.observe(contents.lastElementChild);
 					}
+					removeLoadingSpinners(loadingSpinner.className);
 				}, (error) => {
 					DispMsg('Connection error');
 				});
@@ -75,15 +77,13 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 			function restoreContents(txt){
 				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
-					console.log("cache was expired");
 					htmlCache.delete(null);
 					addContents();
 				} else {
-					console.log("restoreContents");
-					appendLoadingSpinner("IllustItemList");
+					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 					const contents = document.getElementById('IllustItemList');
 					$(contents).empty().html(txt);
-					removeLoadingSpinners();
+					removeLoadingSpinners(loadingSpinner.className);
 					$(window).scrollTop(htmlCache.header.scrollTop);
 					lastContentId = htmlCache.header.lastContentId;
 					page = htmlCache.header.page;
