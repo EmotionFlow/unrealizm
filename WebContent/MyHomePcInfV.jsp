@@ -41,30 +41,27 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
-			const CURRENT_CACHE = new CacheApiCache(CURRENT_CACHES_INFO.MyHomeContents, <%=checkLogin.m_nUserId%>);
 			let lastContentId = -1;
 			let page = 0;
 
-			const observer = new IntersectionObserver(entries => {
-				entries.forEach(entry => {
-					if (!entry.isIntersecting) return;
-					observer.unobserve(entry.target);
-					addContents();
-				});
-			});
+			const htmlCache = new CacheApiHtmlCache(CURRENT_CACHES_INFO.MyHomeContents, <%=checkLogin.m_nUserId%>);
+			const observer = createIntersectionObserver(addContents);
 
 			function addContents(){
+				console.log("addContents");
 				appendLoadingSpinner("IllustItemList");
-				$.ajax({
+				return $.ajax({
 					"type": "post",
 					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page + 1},
 					"dataType": "json",
 					"url": "/f/MyHomeF.jsp",
 				}).then((data) => {
 					page++;
+					htmlCache.header.page = page;
 					removeLoadingSpinners();
 					if (data.end_id > 0) {
 						lastContentId = data.end_id;
+						htmlCache.header.lastContentId = lastContentId;
 						console.log("lastContentId:" + lastContentId);
 						const contents = document.getElementById('IllustItemList');
 						$(contents).append(data.html);
@@ -76,42 +73,39 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				});
 			}
 
-			function restoreContents(txt, scrollTo, _lastContentId, _page, _updatedAt){
-				if (Date.now() - _updatedAt > CURRENT_CACHE.maxAge) {
+			function restoreContents(txt){
+				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
 					console.log("cache was expired");
-					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, null);
+					htmlCache.delete(null);
 					addContents();
 				} else {
+					console.log("restoreContents");
 					appendLoadingSpinner("IllustItemList");
 					const contents = document.getElementById('IllustItemList');
-					$(contents).html(txt);
+					$(contents).empty().html(txt);
 					removeLoadingSpinners();
-					$(window).scrollTop(scrollTo);
-					if (_lastContentId) lastContentId = _lastContentId;
-					if (_page) page = _page;
+					$(window).scrollTop(htmlCache.header.scrollTop);
+					lastContentId = htmlCache.header.lastContentId;
+					page = htmlCache.header.page;
 					observer.observe(contents.lastElementChild);
+					htmlCache.delete(null);
 				}
 			}
 
-			$(function(event){
+			$(function(){
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
 				)});
 
-				$(document).on('click',
-					'#HeaderSearchBtn, .TabMenu a, .SystemInfo a, .slick-list a, ' +
+				htmlCache.addClickEventListener(
+					'#HeaderSearchBtn, .SystemInfo a, .slick-list a, ' +
+					'#TabMenuMyHomeTag, #TabMenuMyBookmark, ' +
 					'a.IllustItemThumb, .IllustItemDesc a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .IllustItemTag a, ' +
-					'.FooterMenu a',
-					async () => {
-						await putHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, $("#IllustItemList").html(), lastContentId, page);
-					});
+					'#MenuNew, #MenuRequest, #MenuAct, #MenuMe',
+					'#IllustItemList'
+				);
 
-				if (getClearCacheParam()) {
-					deleteCache(CURRENT_CACHE.name, CURRENT_CACHE.request, addContents);
-					history.replaceState('', '', 'MyHomePcV.jsp');
-				} else {
-					pullHtmlCache(CURRENT_CACHE.name, CURRENT_CACHE.request, restoreContents, addContents);
-				}
+				htmlCache.pull(restoreContents, initContents);
 
 				if ((Math.random() * 50) | 0 === 0){
 					deleteOldVersionCache();
@@ -153,9 +147,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem Selected" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a></li>
-				<li><a class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a></li>
-				<li><a class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a></li>
+				<li><a id="TabMenuMyHome" class="TabMenuItem Selected" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a></li>
+				<li><a id="TabMenuMyHomeTag" class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a></li>
+				<li><a id="TabMenuMyBookmark" class="TabMenuItem" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a></li>
 			</ul>
 		</nav>
 

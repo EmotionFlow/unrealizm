@@ -133,7 +133,7 @@
 <%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
-		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%><%=request.getRequestURI().indexOf("MyHome")>0 ? "&CC=1" : ""%>">
+		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>

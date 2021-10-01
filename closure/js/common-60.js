@@ -694,57 +694,78 @@ const CURRENT_CACHES_INFO = {
 	}
 };
 
-class CacheApiCache {
+class CacheApiHtmlCache {
 	constructor(cacheInfo, userId) {
 		this.name = cacheInfo.name;
 		this.request = cacheInfo.request_prefix + userId;
 		this.maxAge = cacheInfo.maxAgeMin * 60 * 1000;
+		this.header = {
+			scrollTop: 0,
+			scrollHeight: 0,
+			lastContentId: -1,
+			page: 0,
+			updatedAt: 0,
+		}
 	}
-}
 
-function putHtmlCache(cacheName, cacheRequest, html, lastContentId, page) {
-	return caches.open(cacheName).then((cache) => {
-		const response = new Response(
-			html,
-			{headers: new Headers({
-					"scroll": $(window).scrollTop(),
-					"lastContentId":  lastContentId,
-					"page": page,
-					"updatedAt": Date.now(),
-			})}
-		);
-		cache.put(cacheRequest, response);
-	});
-}
+	addClickEventListener(triggerSelector, contentsElementName) {
+		$(document).on('click', triggerSelector,
+			async () => {
+				await this.put($(contentsElementName).html());
+			});
+	}
 
-function pullHtmlCache(cacheName, cacheRequest, restoreHandler, notFoundHandler) {
-	caches.open(cacheName).then((cache) => {
-		cache.match(cacheRequest).then((res) => {
-			if (res) {
-				res.text().then((txt) => {
-					restoreHandler(
-						txt,
-						parseInt(res.headers.get("scroll")),
-						parseInt(res.headers.get("lastContentId")),
-						parseInt(res.headers.get("page")),
-						parseInt(res.headers.get("updatedAt")),
-					);
-				});
-			} else {
-				notFoundHandler();
-			}
-		}, () => {notFoundHandler();});
-	}, () => {notFoundHandler();});
-}
+	put(html) {
+		return caches.open(this.name).then((cache) => {
+			const now = Date.now();
+			const response = new Response(
+				html,
+				{headers: new Headers({
+						"scrollTop": $(window).scrollTop(),
+						"scrollHeight": $("body").get(0).scrollHeight,
+						"lastContentId": this.header.lastContentId,
+						"page": this.header.page,
+						"updatedAt": now,
+					})}
+			);
+			cache.put(this.request, response)
+				.then(()=>{this.header.updatedAt = now;});
+		});
+	}
 
-function deleteCache(cacheName, cacheRequest, handler) {
-	caches.open(cacheName).then((cache) => {
-		cache.delete(cacheRequest);
-	}, () => {
-		console.log("cache delete error");
-	}).finally(() => {
-		if (handler) handler();
-	});
+	pull(restoreCallback, notFoundCallback) {
+		caches.open(this.name).then((cache) => {
+			cache.match(this.request).then((res) => {
+				if (res) {
+					res.text().then((html) => {
+						this.header.scrollTop = parseInt(res.headers.get("scrollTop"));
+						this.header.scrollHeight = parseInt(res.headers.get("scrollHeight"));
+						this.header.lastContentId = parseInt(res.headers.get("lastContentId"));
+						this.header.page = parseInt(res.headers.get("page"));
+						this.header.updatedAt = parseInt(res.headers.get("updatedAt"));
+						restoreCallback(html);
+					});
+				} else {
+					notFoundCallback();
+				}
+			}, () => {notFoundCallback();});
+		}, () => {notFoundCallback();});
+	}
+
+	delete(callBack) {
+		caches.open(this.name).then((cache) => {
+			cache.delete(this.request).then(r => {console.log('cache deleted.')});
+		}, () => {
+			console.log("cache delete error");
+		}).finally(() => {
+			this.header.scrollTop = 0;
+			this.header.scrollHeight = 0;
+			this.header.lastContentId = -1;
+			this.header.page = 0;
+			this.header.updatedAt = 0;
+			if (callBack) callBack();
+		});
+	}
 }
 
 function deleteOldVersionCache() {
@@ -761,7 +782,34 @@ function deleteOldVersionCache() {
 	});
 }
 
-function getClearCacheParam() {
-	const urlParams = new URLSearchParams(window.location.search);
-	return urlParams.get('CC') === '1';
+function initContents(){
+	addContents().then(()=>{$(window).scrollTop(0);});
+}
+
+
+class ClearCacheNext {
+	constructor() {
+		this.isClear = sessionStorage.clearCacheNext === 't';
+	}
+
+	set(isClear) {
+		if (isClear) {
+			this.isClear = true;
+			sessionStorage.clearCacheNext = 't';
+		} else if (this.isClear) {
+			this.isClear = false;
+			sessionStorage.clearCacheNext = 'f';
+		}
+	}
+}
+
+/******** 無限スクロール *******/
+function createIntersectionObserver(callback) {
+	return new IntersectionObserver(entries => {
+		entries.forEach(entry => {
+			if (!entry.isIntersecting) return;
+			observer.unobserve(entry.target);
+			callback();
+		});
+	});
 }
