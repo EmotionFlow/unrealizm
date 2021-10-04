@@ -43,7 +43,4 @@ for (int nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	}
 }
 
-%>{
-"end_id" : <%=cResults.lastContentId%>,
-"html" : "<%=CEnc.E(sbHtml.toString())%>"
-}
+%>{"end_id":<%=cResults.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}

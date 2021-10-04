@@ -693,6 +693,7 @@ const CURRENT_CACHES_INFO = {
 
 class CacheApiHtmlCache {
 	constructor(cacheInfo, userId) {
+		console.log("constructor: " + cacheInfo);
 		this.name = cacheInfo.name;
 		this.request = cacheInfo.request_prefix + userId;
 		this.maxAge = cacheInfo.maxAgeMin * 60 * 1000;
@@ -755,11 +756,6 @@ class CacheApiHtmlCache {
 		}, () => {
 			console.log("cache delete error");
 		}).finally(() => {
-			this.header.scrollTop = 0;
-			this.header.scrollHeight = 0;
-			this.header.lastContentId = -1;
-			this.header.page = 0;
-			this.header.updatedAt = 0;
 			if (callBack) callBack();
 		});
 	}
@@ -783,21 +779,6 @@ function initContents(){
 	addContents().then(()=>{$(window).scrollTop(0);});
 }
 
-class ClearCacheNext {
-	constructor() {
-		this.isClear = sessionStorage.clearCacheNext === 't';
-	}
-
-	set(isClear) {
-		if (isClear) {
-			this.isClear = true;
-			sessionStorage.clearCacheNext = 't';
-		} else if (this.isClear) {
-			this.isClear = false;
-			sessionStorage.clearCacheNext = 'f';
-		}
-	}
-}
 
 /******** 無限スクロール *******/
 function createIntersectionObserver(callback) {

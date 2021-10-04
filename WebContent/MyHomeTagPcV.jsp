@@ -14,6 +14,10 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
+if(checkLogin.isTestStaff212()) {
+	getServletContext().getRequestDispatcher("/MyHomeTagPcInfV.jsp").forward(request,response);
+}
+
 MyHomeTagPcC cResults = new MyHomeTagPcC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(checkLogin);
