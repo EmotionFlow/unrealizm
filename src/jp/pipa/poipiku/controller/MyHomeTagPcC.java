@@ -19,9 +19,7 @@ public final class MyHomeTagPcC {
 			cRequest.setCharacterEncoding("UTF-8");
 			n_nVersion = Util.toInt(cRequest.getParameter("VER"));
 			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
-		} catch(Exception e) {
-			;
-		}
+		} catch(Exception ignored) {}
 	}
 
 
@@ -146,10 +144,10 @@ public final class MyHomeTagPcC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			m_vContentList = GridUtil.getEachComment(connection, m_vContentList);
+			GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
