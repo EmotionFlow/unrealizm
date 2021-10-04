@@ -3,13 +3,13 @@
 /bin/rm -f ../WebContent/js/upload-*.js
 /bin/rm -f ../WebContent/js/update-*.js
 
-/bin/cp ./js/common-61.js ../WebContent/js/
+/bin/cp ./js/common-62.js ../WebContent/js/
 #/bin/cp ./js/commonPc-03.js ../WebContent/js/
 /bin/cp ./js/upload-41.js ../WebContent/js/
 /bin/cp ./js/update-15.js ../WebContent/js/
 
 CLOSURE_COMPILER_JAR="./closure-compiler-v20201006.jar"
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-61.js --js_output_file ../WebContent/js/common-61.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-62.js --js_output_file ../WebContent/js/common-62.js
 #java -jar ${CLOSURE_COMPILER_JAR} --js ./js/commonPc-03.js --js_output_file ../WebContent/js/commonPc-03.js
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-41.js --js_output_file ../WebContent/js/upload-41.js
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-15.js --js_output_file ../WebContent/js/update-15.js
