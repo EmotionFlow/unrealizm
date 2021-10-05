@@ -167,11 +167,5 @@ cResults.getResults(checkLogin);
 		</article>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
-	<script>
-		if (!('IntersectionObserver' in window)){
-			document.body.classList.add('polyfill');
-			console.log("use in polyfill");
-		}
-	</script>
-	<script src="/js/polyfill/intersectionobserver.js"></script>
+	<%@include file="/inner/PolyfillIntersectionObserver.jsp"%>
 </html>
