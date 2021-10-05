@@ -16,6 +16,7 @@ if(!checkLogin.m_bLogin) {
 
 MyHomeTagPcC cResults = new MyHomeTagPcC();
 cResults.getParam(request);
+cResults.m_bNoContents = true;
 cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -158,9 +159,9 @@ cResults.getResults(checkLogin);
 			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(cResults.m_vContentList.size()<=0) {%>
+				<%if(cResults.m_nContentsNumTotal<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
-					<%=_TEX.T("MyHomeTag.FirstMsg")%>>
+					<%=_TEX.T("MyHomeTag.FirstMsg")%>
 				</div>
 				<%}%>
 			</section>

@@ -14,6 +14,7 @@ public final class MyHomeTagPcC {
 	public int n_nUserId = -1;
 	public int n_nVersion = 0;
 	public int m_nPage = 0;
+	public boolean m_bNoContents= false;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
@@ -110,44 +111,49 @@ public final class MyHomeTagPcC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			strSql = subTable +
-					" SELECT * FROM t";
-			if (!conditions.isEmpty()) {
-				strSql += " WHERE " + String.join(" AND ", conditions);
-			}
-			strSql += " ORDER BY content_id DESC OFFSET ? LIMIT ?";
+			if (!m_bNoContents) {
+				strSql = subTable +
+						" SELECT * FROM t";
+				if (!conditions.isEmpty()) {
+					strSql += " WHERE " + String.join(" AND ", conditions);
+				}
+				strSql += " ORDER BY content_id DESC OFFSET ? LIMIT ?";
 
-			statement = connection.prepareStatement(strSql);
-			idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId);      // follows_0000.user_id=?
-			statement.setInt(idx++, checkLogin.m_nSafeFilter);  // safe_filter<=?
-			statement.setInt(idx++, checkLogin.m_nUserId);      // follow_tags_0000.user_id=?
-			statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
-			statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
-			if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
-			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY); // OFFSET ?
-			statement.setInt(idx++, SELECT_MAX_GALLERY);              // LIMIT ?
-			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				CContent content = new CContent(resultSet);
-				CacheUsers0000.User user = users.getUser(content.m_nUserId);
-				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
-				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
-				content.m_cUser.m_nReaction		= user.reaction;
-				content.m_cUser.m_nFollowing	= (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
-				m_nEndId = content.m_nContentId;
-				m_vContentList.add(content);
+				statement = connection.prepareStatement(strSql);
+				idx = 1;
+				statement.setInt(idx++, checkLogin.m_nUserId);      // follows_0000.user_id=?
+				statement.setInt(idx++, checkLogin.m_nSafeFilter);  // safe_filter<=?
+				statement.setInt(idx++, checkLogin.m_nUserId);      // follow_tags_0000.user_id=?
+				statement.setInt(idx++, checkLogin.m_nUserId);      // blocks_0000.user_id=?
+				statement.setInt(idx++, checkLogin.m_nUserId);    // blocks_0000.block_user_id=?
+				if(!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
+				statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY); // OFFSET ?
+				statement.setInt(idx++, SELECT_MAX_GALLERY);              // LIMIT ?
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					CContent content = new CContent(resultSet);
+					CacheUsers0000.User user = users.getUser(content.m_nUserId);
+					content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+					content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+					content.m_cUser.m_nReaction		= user.reaction;
+					content.m_cUser.m_nFollowing	= (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+					m_nEndId = content.m_nContentId;
+					m_vContentList.add(content);
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
-			// Each Comment
-			GridUtil.getEachComment(connection, m_vContentList);
+			if (!m_vContentList.isEmpty()) {
+				// Each Comment
+				GridUtil.getEachComment(connection, m_vContentList);
 
-			// Bookmark
-			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+				// Bookmark
+				GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			}
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

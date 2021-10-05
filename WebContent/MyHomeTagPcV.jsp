@@ -105,7 +105,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			<section id="IllustItemList" class="IllustItemList">
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
-					<%=_TEX.T("MyHomeTag.FirstMsg")%>>
+					<%=_TEX.T("MyHomeTag.FirstMsg")%>
 				</div>
 				<%}%>
 

@@ -21,6 +21,7 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
+cResults.m_bNoContents = true;
 cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>

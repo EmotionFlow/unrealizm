@@ -14,6 +14,7 @@ public final class MyHomePcC {
 	public int n_nUserId = -1;
 	public int n_nVersion = 0;
 	public int m_nPage = 0;
+	public boolean m_bNoContents = false;
 	private int m_nLastSystemInfoId = -1;
 
 	public void getParam(final HttpServletRequest request) {
@@ -123,48 +124,53 @@ public final class MyHomePcC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			// NEW ARRIVAL
-			strSql = "SELECT contents_0000.*, requests.id request_id " + strSqlFromWhere;
-			strSql += " ORDER BY content_id DESC OFFSET ? LIMIT ?";
-			statement = connection.prepareStatement(strSql);
-			idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId);
-			statement.setInt(idx++, checkLogin.m_nUserId);
-			if(!strMuteKeyword.isEmpty()) {
-				statement.setString(idx++, strMuteKeyword);
+			if (!m_bNoContents) {
+				// NEW ARRIVAL
+				strSql = "SELECT contents_0000.*, requests.id request_id " + strSqlFromWhere;
+				strSql += " ORDER BY content_id DESC OFFSET ? LIMIT ?";
+				statement = connection.prepareStatement(strSql);
+				idx = 1;
+				statement.setInt(idx++, checkLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
+				if(!strMuteKeyword.isEmpty()) {
+					statement.setString(idx++, strMuteKeyword);
+				}
+				statement.setInt(idx++, checkLogin.m_nSafeFilter);
+				statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
+				statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					CContent cContent = new CContent(resultSet);
+					CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+					cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+					cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+					cContent.m_cUser.m_nReaction	= user.reaction;
+					cContent.m_cUser.m_nFollowing	= CUser.FOLLOW_HIDE;
+					cContent.m_nRequestId = resultSet.getInt("request_id");
+					m_nEndId = cContent.m_nContentId;
+					m_vContentList.add(cContent);
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 			}
-			statement.setInt(idx++, checkLogin.m_nSafeFilter);
-			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
-			statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
-			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				CContent cContent = new CContent(resultSet);
-				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
-				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
-				cContent.m_cUser.m_nReaction	= user.reaction;
-				cContent.m_cUser.m_nFollowing	= CUser.FOLLOW_HIDE;
-				cContent.m_nRequestId = resultSet.getInt("request_id");
-				m_nEndId = cContent.m_nContentId;
-				m_vContentList.add(cContent);
-			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
-			// Each Comment
-			GridUtil.getEachComment(connection, m_vContentList);
+			if (!m_bNoContents) {
+				if (!m_vContentList.isEmpty()) {
+					// Each Comment
+					GridUtil.getEachComment(connection, m_vContentList);
 
-			// Bookmark
-			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+					// Bookmark
+					GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+				}
+				// Recommended Request Creators
+				m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
 
-			// Recommended Request Creators
-			m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
-
-			// Recommended Users
-			if (m_nContentsNum <= SELECT_MAX_GALLERY || m_nPage == 1) {
-				m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
+				// Recommended Users
+				if (m_nContentsNum <= SELECT_MAX_GALLERY || m_nPage == 1) {
+					m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
+				}
 			}
 
 			if (m_nPage < 1) {
