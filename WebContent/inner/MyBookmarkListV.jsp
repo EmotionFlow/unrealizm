@@ -115,7 +115,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				htmlCache.addClickEventListener(
 					'#HeaderSearchBtn, .SystemInfo a, .slick-list a, ' +
 					'#TabMenuMyHome, #TabMenuMyHomeTag, ' +
-					'a.IllustItemThumb, .IllustItemDesc a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .IllustItemTag a, ' +
+					'.IllustThumb a, ' +
 					'#MenuHome, #MenuNew, #MenuRequest, #MenuAct, #MenuMe',
 					'#IllustThumbList'
 				);
