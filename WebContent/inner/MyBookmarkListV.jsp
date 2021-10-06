@@ -91,7 +91,10 @@ boolean bRtn = cResults.getResults(checkLogin);
 			function restoreContents(txt){
 				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
 					htmlCache.delete(null);
-					addContents();
+					addContents().then(()=>{
+						$(".ThumbListHeader").show();
+						$("#Footer").show();
+					});
 				} else {
 					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 					const contents = document.getElementById('IllustThumbList');
@@ -102,6 +105,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 					page = htmlCache.header.page;
 					observer.observe(contents.lastElementChild);
 					htmlCache.delete(null);
+					$(".ThumbListHeader").show();
+					$("#Footer").show();
 				}
 			}
 			<%}%>
@@ -147,7 +152,9 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%if(isApp){%>
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
 		<%}else{%>
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		<div class="ThumbListHeader" style="display: none">
+			<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		</div>
 		<%}%>
 
 		<article class="Wrapper ThumbList">
@@ -167,7 +174,9 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</section>
 		</article>
 		<%if(!isApp){%>
-		<%@ include file="/inner/TFooterBase.jsp"%>
+		<div id="Footer" style="display: none">
+			<%@ include file="/inner/TFooterBase.jsp"%>
+		</div>
 		<%}%>
 	</body>
 </html>

@@ -78,7 +78,7 @@ cResults.getResults(checkLogin);
 			function restoreContents(txt){
 				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
 					htmlCache.delete(null);
-					addContents();
+					addContents().then(()=>{$(".ThumbListHeader").show();});
 				} else {
 					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 					const contents = document.getElementById('IllustItemList');
@@ -89,6 +89,7 @@ cResults.getResults(checkLogin);
 					page = htmlCache.header.page;
 					observer.observe(contents.lastElementChild);
 					htmlCache.delete(null);
+					$(".ThumbListHeader").show();
 				}
 			}
 
@@ -153,6 +154,7 @@ cResults.getResults(checkLogin);
 			</ul>
 		</nav>
 
+		<div class="ThumbListHeader" style="display: none">
 		<%if(cResults.m_cSystemInfo!=null) {%>
 		<div class="SystemInfo" id="SystemInfo_<%=cResults.m_cSystemInfo.m_nContentId%>">
 			<a class="SystemInfoTitle" href="/2/<%=cResults.m_cSystemInfo.m_nContentId%>.html"><i class="fas fa-bullhorn"></i></a>
@@ -163,9 +165,12 @@ cResults.getResults(checkLogin);
 		<%}%>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		</div>
 
 		<article class="Wrapper ThumbList">
+			<div class="ThumbListHeader" style="display: none">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
 				<%if(!(cResults.followUserNum > 1 || cResults.m_nContentsNumTotal > 1)) {%>

@@ -94,9 +94,10 @@ cResults.getResults(checkLogin);
 			}
 
 			function restoreContents(txt){
-				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
+//				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
+					if (true) {
 					htmlCache.delete(null);
-					addContents();
+					addContents().then(()=>{$(".ThumbListHeader").show();})
 				} else {
 					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 					const contents = document.getElementById('IllustItemList');
@@ -107,6 +108,7 @@ cResults.getResults(checkLogin);
 					page = htmlCache.header.page;
 					observer.observe(contents.lastElementChild);
 					htmlCache.delete(null);
+					$(".ThumbListHeader").show();
 				}
 			}
 
@@ -149,10 +151,14 @@ cResults.getResults(checkLogin);
 			</ul>
 		</nav>
 
+		<div class="ThumbListHeader" style="display: none">
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		</div>
 
 		<article class="Wrapper ViewPc">
+			<div class="ThumbListHeader" style="display: none">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+			</div>
 
 			<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
 				<a href="/MyHomeTagSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
