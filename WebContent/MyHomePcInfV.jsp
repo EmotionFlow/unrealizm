@@ -75,21 +75,27 @@ cResults.getResults(checkLogin);
 				});
 			}
 
+			function initContents(){
+				$(window).scrollTop(0);
+				$(".ThumbListHeader").show();
+				addContents();
+			}
+
 			function restoreContents(txt){
 				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
 					htmlCache.delete(null);
-					addContents().then(()=>{$(".ThumbListHeader").show();});
+					initContents();
 				} else {
 					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 					const contents = document.getElementById('IllustItemList');
 					$(contents).empty().html(txt);
 					removeLoadingSpinners(loadingSpinner.className);
+					$(".ThumbListHeader").show();
 					$(window).scrollTop(htmlCache.header.scrollTop);
 					lastContentId = htmlCache.header.lastContentId;
 					page = htmlCache.header.page;
 					observer.observe(contents.lastElementChild);
 					htmlCache.delete(null);
-					$(".ThumbListHeader").show();
 				}
 			}
 

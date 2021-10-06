@@ -783,11 +783,6 @@ function deleteOldVersionCache() {
 	});
 }
 
-function initContents(){
-	addContents().then(()=>{$(window).scrollTop(0);});
-}
-
-
 /******** 無限スクロール *******/
 function createIntersectionObserver(callback) {
 	return new IntersectionObserver(entries => {

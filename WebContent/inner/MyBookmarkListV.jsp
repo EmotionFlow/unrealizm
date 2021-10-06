@@ -87,26 +87,31 @@ boolean bRtn = cResults.getResults(checkLogin);
 				});
 			}
 
+			function initContents(){
+				$(window).scrollTop(0);
+				$(".ThumbListHeader").show();
+				addContents().then(()=>{
+					$("#Footer").show();
+				});
+			}
+
 			<%if(!isApp){%>
 			function restoreContents(txt){
 				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
 					htmlCache.delete(null);
-					addContents().then(()=>{
-						$(".ThumbListHeader").show();
-						$("#Footer").show();
-					});
+					initContents();
 				} else {
 					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 					const contents = document.getElementById('IllustThumbList');
 					$(contents).empty().html(txt);
 					removeLoadingSpinners(loadingSpinner.className);
+					$(".ThumbListHeader").show();
+					$("#Footer").show();
 					$(window).scrollTop(htmlCache.header.scrollTop);
 					lastBookmarkId = htmlCache.header.lastContentId;
 					page = htmlCache.header.page;
 					observer.observe(contents.lastElementChild);
 					htmlCache.delete(null);
-					$(".ThumbListHeader").show();
-					$("#Footer").show();
 				}
 			}
 			<%}%>
@@ -126,7 +131,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				);
 				htmlCache.pull(restoreContents, initContents);
 				<%} else {%>
-				addContents();
+				initContents();
 				<%}%>
 			});
 		</script>
