@@ -2,84 +2,172 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone;
+if (isApp) {
+	bSmartPhone = true;
+} else {
+	bSmartPhone = Util.isSmartPhone(request);
+}
 
 if(!checkLogin.m_bLogin) {
 	if(isApp){
 		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
 	} else {
-		getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	}
 	return;
 }
 
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/MyBookmarkListGridPcV.jsp").forward(request,response);
+	return;
+}
+
+MyBookmarkC myBookmarkC = new MyBookmarkC();
+myBookmarkC.getParam(request);
+myBookmarkC.noContents = true;
+if (isApp) checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+myBookmarkC.getResults(checkLogin, false);
+
 MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
-checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
+		<%if(isApp){%>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title>Bookmark</title>
-		<script>
-			var g_nPage = 1;
-			var g_bAdding = false;
-			function addContents() {
-				if(g_bAdding) return;
-				g_bAdding = true;
-				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
-				$.ajax({
+		<%} else {%>
+		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+		<%}%>
+		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyBookmarkList.Title")%></title>
+
+		<%if(!isApp){%>
+		<script type="text/javascript">
+			$(function(){
+				$('#MenuHome').addClass('Selected');
+			});
+		</script>
+		<%}%>
+
+		<script type="text/javascript">
+			let lastBookmarkId = 0;
+			let page = 0;
+
+			const loadingSpinner = {
+				appendTo: "#IllustThumbList",
+				className: "loadingSpinner",
+			}
+			const htmlCache = new CacheApiHtmlCache(CURRENT_CACHES_INFO.MyBookmarkListContents, <%=checkLogin.m_nUserId%>);
+			const observer = createIntersectionObserver(addContents);
+
+			function addContents(){
+				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
+				return $.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage},
-					"url": "/f/MyBookmarkList<%=isApp?"App":""%>F.jsp",
-					"success": function(data) {
-						if($.trim(data).length>0) {
-							g_nPage++;
-							$('#InfoMsg').hide();
-							$("#IllustThumbList").append(data);
-							g_bAdding = false;
-							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
-						} else {
-							$(window).unbind("scroll.addContents");
-						}
-						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
+					"data": {"SD": lastBookmarkId, "PG": page},
+					"dataType": "json",
+					"url": "/f/MyBookmarkList<%=isApp ? "App" : ""%>F.jsp",
+				}).then((data) => {
+					page++;
+					htmlCache.header.page = page;
+					if (data.end_id > 0) {
+						lastBookmarkId = data.end_id;
+						htmlCache.header.lastContentId = lastBookmarkId;
+						const contents = document.getElementById('IllustThumbList');
+						$(contents).append(data.html);
+						//gtag('config', 'UA-125150180-1', {'page_location': location.pathname + '/' + g_nEndId + '.html'});
+						observer.observe(contents.lastElementChild);
 					}
+					removeLoadingSpinners(loadingSpinner.className);
+				}, (error) => {
+					DispMsg('Connection error');
 				});
 			}
 
+			<%if(!isApp){%>
+			function restoreContents(txt){
+				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
+					htmlCache.delete(null);
+					addContents();
+				} else {
+					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
+					const contents = document.getElementById('IllustThumbList');
+					$(contents).empty().html(txt);
+					removeLoadingSpinners(loadingSpinner.className);
+					$(window).scrollTop(htmlCache.header.scrollTop);
+					lastBookmarkId = htmlCache.header.lastContentId;
+					page = htmlCache.header.page;
+					observer.observe(contents.lastElementChild);
+					htmlCache.delete(null);
+				}
+			}
+			<%}%>
+
 			$(function(){
-				$(window).bind("scroll.addContents", function() {
-					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
-						addContents();
-					}
-				});
+				$('body, .Wrapper').each(function(index, element){
+					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
+					)});
+
+				<%if(!isApp){%>
+				htmlCache.addClickEventListener(
+					'#HeaderSearchBtn, .SystemInfo a, .slick-list a, ' +
+					'#TabMenuMyHome, #TabMenuMyHomeTag, ' +
+					'a.IllustItemThumb, .IllustItemDesc a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .IllustItemTag a, ' +
+					'#MenuHome, #MenuNew, #MenuRequest, #MenuAct, #MenuMe',
+					'#IllustThumbList'
+				);
+				htmlCache.pull(restoreContents, initContents);
+				<%} else {%>
+				addContents();
+				<%}%>
 			});
 		</script>
+		<%if(!isApp){%>
+		<style>
+            body {padding-top: 79px !important;}
+		</style>
+		<%}%>
 	</head>
 
 	<body>
-		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+		<%if(!isApp){%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a id="TabMenuMyHome" class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a></li>
+				<li><a id="TabMenuMyHomeTag" class="TabMenuItem" href="/MyHomeTagPcV.jsp"><%=_TEX.T("THeader.Menu.Home.FollowTag")%></a></li>
+				<li><a id="TabMenuMyBookmark" class="TabMenuItem Selected" href="/MyBookmarkListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Bookmark")%></a></li>
+			</ul>
+		</nav>
+		<%}%>
 
-		<article class="Wrapper">
+		<%if(isApp){%>
+		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+		<%}else{%>
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		<%}%>
+
+		<article class="Wrapper ThumbList">
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%=Util.poipiku_300x100_top(checkLogin)%>
+			</span>
+			<%}%>
+
+			<%if(myBookmarkC.m_nContentsNum<=0) {%>
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
 				<%=_TEX.T("MyBookmarkList.LetsMessage")%>
 			</div>
-			<div id="IllustThumbList" class="IllustThumbList">
-				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
-					<%if(nCnt==17) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
-				<%}%>
-			</div>
+			<%}%>
+
+			<section id="IllustThumbList" class="IllustThumbList" style="padding-bottom: 5px;">
+			</section>
 		</article>
+		<%if(!isApp){%>
+		<%@ include file="/inner/TFooterBase.jsp"%>
+		<%}%>
 	</body>
 </html>

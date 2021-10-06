@@ -14,9 +14,13 @@ if(!bSmartPhone) {
 	return;
 }
 
+if(checkLogin.isTestStaff212()) {
+	getServletContext().getRequestDispatcher("/MyBookmarkListPcInfV.jsp").forward(request,response);
+}
+
 MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 45;
+cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -73,7 +77,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.page, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 

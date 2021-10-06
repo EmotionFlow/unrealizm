@@ -382,6 +382,31 @@ public final class Util {
 		if(strSrc.length()<=nNum) return strSrc;
 		return strSrc.substring(0, nNum);
 	}
+	public static String poipiku_300x100_top(CheckLogin checkLogin) {
+		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
+		StringBuilder sbRtn = new StringBuilder();
+
+		sbRtn.append("<div class=\"SideBarMid\">");
+		int nRand = (int)(Math.random()*10000);
+		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_300x100_top -->");
+		sbRtn.append("<div id='div-gpt-ad-1625176558051-").append(nRand).append("'>");
+
+		// adrea
+		//sbRtn.append("<script src=\"//ad.adpon.jp/fr.js?fid=2fbe0897-f359-45ae-9561-dc172561ce91\"></script>");
+
+		// Ad Manager
+		sbRtn.append("<script>");
+		sbRtn.append("googletag.cmd.push(function() {");
+		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_300x100_top', [[300, 50]], 'div-gpt-ad-1625176558051-").append(nRand).append("').addService(googletag.pubads());");
+		sbRtn.append("googletag.enableServices();");
+		sbRtn.append("googletag.display('div-gpt-ad-1625176558051-").append(nRand).append("');");
+		sbRtn.append("});");
+		sbRtn.append("</script>");
+
+		sbRtn.append("</div>");
+		sbRtn.append("</div>");
+		return sbRtn.toString();
+	}
 
 	public static String poipiku_336x280_sp_mid(CheckLogin checkLogin) {
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
@@ -407,7 +432,6 @@ public final class Util {
 		sbRtn.append("</div>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
-
 	}
 
 	public static String poipiku_336x280_pc_mid(CheckLogin checkLogin) {

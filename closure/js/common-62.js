@@ -688,12 +688,16 @@ const CURRENT_CACHES_INFO = {
 		name: 'my-home-tag-contents-v' + 1,
 		request_prefix: '/_/IllustItemList/',
 		maxAgeMin:  15,
+	},
+	MyBookmarkListContents: {
+		name: 'my-bookmark-list-contents-v' + 1,
+		request_prefix: '/_/IllustThumbList/',
+		maxAgeMin:  15,
 	}
 };
 
 class CacheApiHtmlCache {
 	constructor(cacheInfo, userId) {
-		console.log("constructor: " + cacheInfo);
 		this.name = cacheInfo.name;
 		this.request = cacheInfo.request_prefix + userId;
 		this.maxAge = cacheInfo.maxAgeMin * 60 * 1000;
@@ -736,12 +740,16 @@ class CacheApiHtmlCache {
 			cache.match(this.request).then((res) => {
 				if (res) {
 					res.text().then((html) => {
-						this.header.scrollTop = parseInt(res.headers.get("scrollTop"));
-						this.header.scrollHeight = parseInt(res.headers.get("scrollHeight"));
-						this.header.lastContentId = parseInt(res.headers.get("lastContentId"));
-						this.header.page = parseInt(res.headers.get("page"));
-						this.header.updatedAt = parseInt(res.headers.get("updatedAt"));
-						restoreCallback(html);
+						if (html && parseInt(res.headers.get("lastContentId"))>0) {
+							this.header.scrollTop = parseInt(res.headers.get("scrollTop"));
+							this.header.scrollHeight = parseInt(res.headers.get("scrollHeight"));
+							this.header.lastContentId = parseInt(res.headers.get("lastContentId"));
+							this.header.page = parseInt(res.headers.get("page"));
+							this.header.updatedAt = parseInt(res.headers.get("updatedAt"));
+							restoreCallback(html);
+						} else {
+							notFoundCallback();
+						}
 					});
 				} else {
 					notFoundCallback();

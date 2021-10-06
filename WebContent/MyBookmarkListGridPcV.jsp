@@ -10,7 +10,7 @@ if(!checkLogin.m_bLogin) {
 
 MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 48;
+cResults.selectMaxGallery = 48;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -63,7 +63,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</div>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.page, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 
