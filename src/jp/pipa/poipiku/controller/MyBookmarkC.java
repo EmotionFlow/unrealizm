@@ -10,7 +10,6 @@ import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public class MyBookmarkC {
-
 	public int page = 0;
 	public int startId = 0;
 	public boolean noContents = false;
@@ -19,15 +18,13 @@ public class MyBookmarkC {
 			request.setCharacterEncoding("UTF-8");
 			page = Math.max(Util.toInt(request.getParameter("PG")), 0);
 			startId = Util.toInt(request.getParameter("SD"));
-		} catch(Exception ignored) {
-			;
-		}
+		} catch(Exception ignored) {}
 	}
 
 	public int selectMaxGallery = 36;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
-	public int m_nEndId = -1;
-	public int m_nContentsNum = 0;
+	public int endId = -1;
+	public int contentsNum = 0;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -38,8 +35,7 @@ public class MyBookmarkC {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		String strSql = "";
-		int idx = 1;
+		String sql = "";
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
@@ -51,12 +47,12 @@ public class MyBookmarkC {
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = "SELECT count(*) " + strSqlFromWhere;
-				statement = connection.prepareStatement(strSql);
+				sql = "SELECT count(*) " + strSqlFromWhere;
+				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
-					m_nContentsNum = resultSet.getInt(1);
+					contentsNum = resultSet.getInt(1);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -66,15 +62,12 @@ public class MyBookmarkC {
 				if (startId > 0) {
 					strSqlFromWhere += " AND bookmark_id<" + startId;
 				}
-				strSql = "SELECT bookmark_id, contents_0000.* " + strSqlFromWhere + " ORDER BY bookmarks_0000.bookmark_id DESC";
+				sql = "SELECT bookmark_id, contents_0000.* " + strSqlFromWhere + " ORDER BY bookmarks_0000.bookmark_id DESC";
 				if (startId <= 0) {
-					strSql += String.format(" OFFSET %d", page * selectMaxGallery);
+					sql += String.format(" OFFSET %d", page * selectMaxGallery);
 				}
-				strSql += String.format(" LIMIT %d", selectMaxGallery);
-
-				Log.d(strSql);
-
-				statement = connection.prepareStatement(strSql);
+				sql += String.format(" LIMIT %d", selectMaxGallery);
+				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
 				resultSet = statement.executeQuery();
 				while (resultSet.next()) {
@@ -82,7 +75,7 @@ public class MyBookmarkC {
 					CacheUsers0000.User user = users.getUser(content.m_nUserId);
 					content.m_cUser.m_strNickName	= Util.toString(user.nickName);
 					content.m_cUser.m_strFileName	= Util.toString(user.fileName);
-					m_nEndId = resultSet.getInt("bookmark_id");
+					endId = resultSet.getInt("bookmark_id");
 					m_vContentList.add(content);
 				}
 				resultSet.close();resultSet=null;
@@ -90,7 +83,7 @@ public class MyBookmarkC {
 			}
 			bResult = true;
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}

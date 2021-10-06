@@ -164,7 +164,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</span>
 			<%}%>
 
-			<%if(myBookmarkC.m_nContentsNum<=0) {%>
+			<%if(myBookmarkC.contentsNum <=0) {%>
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
 				<%=_TEX.T("MyBookmarkList.LetsMessage")%>
 			</div>

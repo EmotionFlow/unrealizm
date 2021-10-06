@@ -73,7 +73,7 @@ cResults.getResults(checkLogin);
 				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 				return $.ajax({
 					"type": "post",
-					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page + 1},
+					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page},
 					"dataType": "json",
 					"url": "/f/MyHomeTagF.jsp",
 				}).then((data) => {
@@ -94,8 +94,7 @@ cResults.getResults(checkLogin);
 			}
 
 			function restoreContents(txt){
-//				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
-					if (true) {
+				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
 					htmlCache.delete(null);
 					addContents().then(()=>{$(".ThumbListHeader").show();})
 				} else {

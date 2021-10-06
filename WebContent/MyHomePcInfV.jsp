@@ -55,7 +55,7 @@ cResults.getResults(checkLogin);
 				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
 				return $.ajax({
 					"type": "post",
-					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page + 1},
+					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page},
 					"dataType": "json",
 					"url": "/f/MyHomeF.jsp",
 				}).then((data) => {

@@ -24,5 +24,5 @@ for (int nCnt = 0; nCnt < cResults.m_vContentList.size(); nCnt++) {
 	}
 }
 
-%>{"end_id":<%=cResults.m_nEndId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
+%>{"end_id":<%=cResults.endId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
 

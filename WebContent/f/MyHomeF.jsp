@@ -11,7 +11,7 @@ if(cResults.mode == CCnv.MODE_SP) {
 	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 }
 
-if (cResults.page != 2) {
+if (cResults.page != 1) {
 	cResults.getResults(checkLogin, false, false);
 } else {
 	cResults.getResults(checkLogin, true, true);
@@ -24,7 +24,7 @@ for (int nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	CContent cContent = cResults.contentList.get(nCnt);
 	sbHtml.append(CCnv.Content2Html(cContent, checkLogin.m_nUserId, cResults.mode, _TEX, vResult, cResults.viewMode));
 
-	if (cResults.page == 2) {
+	if (cResults.page == 1) {
 		if (nCnt == 2) {
 			sbHtml.append("<h2 class=\"IllustItemListRecommendedTitle\">").append(_TEX.T("MyHome.Recommended.Users")).append("</h2>");
 			for (CUser recommendedUser: cResults.recommendedUserList) {

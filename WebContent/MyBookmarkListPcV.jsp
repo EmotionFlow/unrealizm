@@ -77,7 +77,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.page, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
+				<%=CPageBar.CreatePageBarSp("/MyBookmarkListPcV.jsp", "&ID="+checkLogin.m_nUserId, cResults.page, cResults.contentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 

@@ -7,7 +7,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 MyHomeTagC cResults = new MyHomeTagC();
 cResults.getParam(request);
-if(cResults.m_nMode==CCnv.MODE_SP) {
+if(isApp) {
 	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 }
 
