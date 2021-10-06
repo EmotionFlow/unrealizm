@@ -20,27 +20,33 @@ if (cResults.page != 1) {
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 StringBuilder sbHtml = new StringBuilder();
-for (int nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
+int nCnt;
+for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	CContent cContent = cResults.contentList.get(nCnt);
 	sbHtml.append(CCnv.Content2Html(cContent, checkLogin.m_nUserId, cResults.mode, _TEX, vResult, cResults.viewMode));
 
 	if (cResults.page == 1) {
 		if (nCnt == 2) {
 			sbHtml.append("<h2 class=\"IllustItemListRecommendedTitle\">").append(_TEX.T("MyHome.Recommended.Users")).append("</h2>");
-			for (CUser recommendedUser: cResults.recommendedUserList) {
+			for (CUser recommendedUser : cResults.recommendedUserList) {
 				sbHtml.append(CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW));
 			}
+		} else if (nCnt == 5 && bSmartPhone){
+			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
 		} else if (nCnt == 6) {
 			sbHtml.append("<h2 class=\"IllustItemListRecommendedTitle\">").append(_TEX.T("MyHome.Recommended.RequestCreators")).append("</h2>");
 			for (CUser recommendedUser: cResults.recommendedRequestCreatorList) {
 				sbHtml.append(CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW));
 			}
 		}
+	} else {
+		if ((nCnt == 2 || nCnt == 7) && bSmartPhone){
+			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
+		}
 	}
-
-	if (nCnt == 5 && bSmartPhone) {
-		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
-	}
+}
+if (nCnt < 7 && bSmartPhone){
+	sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
 }
 
 %>{"end_id":<%=cResults.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
