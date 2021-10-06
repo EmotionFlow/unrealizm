@@ -177,7 +177,6 @@ cResults.getResults(checkLogin);
 				<%}%>
 			</section>
 		</article>
-		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 	<%@include file="/inner/PolyfillIntersectionObserver.jsp"%>
 </html>
