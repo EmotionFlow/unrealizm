@@ -19,7 +19,6 @@ import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
 import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.WriteBackFile;
 import org.w3c.dom.*;
 
 import com.drew.imaging.ImageMetadataReader;
@@ -50,7 +49,6 @@ public class ImageUtil {
 			Path pathDst = Paths.get(strSrcFileName+"_360.jpg");
 			Files.copy(pathSrc, pathDst);
 		} else {
-			//ImageUtil.createThumbNormalize(strSrcFileName, strSrcFileName+"_360.jpg", 360, bLoop);
 			int nCalWidth = (int)(nWidth * lfZoom);
 			ImageUtil.createThumb(strSrcFileName, strSrcFileName+"_360.jpg", nCalWidth, 0, bLoop);
 		}
@@ -175,7 +173,7 @@ public class ImageUtil {
 	}
 
 	public static void createThumbJpg(String strSrcFileName, String strDstFileName, int newWidth, int newHeight) {
-		int ret = ImageMagickUtil.createThumbnail(strSrcFileName, strDstFileName, newWidth, newHeight);
+		int ret = ImageMagickUtil.createThumbnail(strSrcFileName, strDstFileName, "jpg", newWidth, newHeight);
 		if(ret!=0){
 			Log.d("createThumbJpg error. code: ", Integer.toString(ret));
 		}
@@ -183,12 +181,33 @@ public class ImageUtil {
 
 	public static void createThumbPng(String strSrcFileName, String strDstFileName, int newWidth, int newHeight)
 			throws IOException {
-		BufferedImage image = resizeImage(ImageUtil.readPng(strSrcFileName), newWidth, newHeight);
-		long lnJpegSize = saveJpeg(image, strDstFileName);
-		long lnPngSize = savePng(image, strDstFileName);
-		//Log.d(String.format("createThumbPng:jpq=%d, png=%d", lnJpegSize, lnPngSize));
-		if(lnJpegSize < lnPngSize*.7) {
-			saveJpeg(image, strDstFileName);
+		Log.d(String.format("createThumbPng %s %s %d %d ",strSrcFileName, strDstFileName, newWidth, newHeight));
+
+		final String jpgThumbFileName = strDstFileName + ".jpg";
+
+		createThumbJpg(strSrcFileName, jpgThumbFileName, newWidth, newHeight);
+		int ret = ImageMagickUtil.createThumbnail(strSrcFileName, strDstFileName, "png", newWidth, newHeight);
+		if(ret!=0){
+			Log.d("createThumbPng error. code: ", Integer.toString(ret));
+		}
+
+		Path jpgThumbPath = Paths.get(jpgThumbFileName);
+		Path pngThumbPath = Paths.get(strDstFileName);
+
+		long jpgSize = 0;
+		long pngSize = 0;
+		try {
+			jpgSize = Files.size(jpgThumbPath);
+			pngSize = Files.size(pngThumbPath);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (jpgSize != 0 && jpgSize < pngSize * .7) {
+			Files.deleteIfExists(pngThumbPath);
+			Files.move(jpgThumbPath, pngThumbPath);
+		} else {
+			Files.deleteIfExists(jpgThumbPath);
 		}
 	}
 

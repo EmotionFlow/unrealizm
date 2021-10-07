@@ -12,7 +12,7 @@ public class ImageMagickUtil {
     private static final Path AUTO_TWEET_HEADER = Paths.get("/var/www/html/poipiku/img/AutoTweetHeader.png");
     private static final Path DEV_NULL = Paths.get("/dev/null");
 
-    public static int createThumbnail(String srcPath, String dstPath, Integer width, Integer height) {
+    public static int createThumbnail(String srcPath, String dstPath, String format, Integer width, Integer height) {
         int exitCode = -1;
         List<String> cmd = new ArrayList<>();
 
@@ -27,8 +27,7 @@ public class ImageMagickUtil {
                 width!=null && width>0 ? width.toString() : "",
                 height!=null && height>0 ? height.toString() : "")
         );
-        cmd.add(dstPath);
-
+        cmd.add(format + ":" + dstPath);
         exitCode = runExternalCommand(cmd, null);
 
         return exitCode;
