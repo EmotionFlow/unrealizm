@@ -199,20 +199,7 @@ public class SendEmojiC {
 			// update comment_list
 			GridUtil.updateCommentsLists(connection, m_nContentId, cTargUser.m_nUserId);
 
-			/*
-			// 使ってないので一時的にコメントアウト
-			// update contents_0000 set contents_0000.comment_num=T1.comment_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
 			// update making comment num
-			strSql ="UPDATE contents_0000 SET comment_num=(SELECT COUNT(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_nContentId);
-			statement.setInt(2, m_nContentId);
-			statement.executeUpdate();
-			statement.close();statement=null;
-			*/
-
-			// update making comment num
-			// update contents_0000 set contents_0000.people_num=T1.people_num from ()as T1 WHERE contents_0000.content_id=T1.content_id
 			strSql ="UPDATE contents_0000 SET people_num=(SELECT COUNT(DISTINCT user_id) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
@@ -224,8 +211,8 @@ public class SendEmojiC {
 
 			// お知らせ一覧更新
 			// サムネイルタイプの判定
-			int contentType = Common.CONTENT_TYPE_IMAGE;
-			String infoThumb = "";
+			final int contentType;
+			final String infoThumb;
 			switch(cTargContent.m_nEditorId) {
 			case Common.EDITOR_TEXT:
 				contentType = Common.CONTENT_TYPE_TEXT;

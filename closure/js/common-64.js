@@ -654,6 +654,33 @@ function hideContentPassword(el) {
 	$(el).hide();
 }
 
+function getIntroductionPoipassDlgHtml(strTitle, strDescription){
+	return `<style>
+.RecommendedPoipassDlgTitle{padding: 10px 0 0 0;}
+.RecommendedPoipassDlgInfo{font-size: 14px; text-align: left;}
+.RecommendedPoipassDlgInfo strong{color:#ff7272}
+</style>
+<img src="/img/poipiku_passport_logo2_60.png" height="45px" alt="poipass"/>
+<h2 class="RecommendedPoipassDlgTitle">` + strTitle + `</h2>
+<div class="RecommendedPoipassDlgInfo">	<p>` + strDescription + `</p></div>`;
+}
+
+function showIntroductionPoipassDlgHtml(title, description, showButtonLabel) {
+	Swal.fire({
+		html: getIntroductionPoipassDlgHtml(title, description),
+		focusConfirm: false,
+		showCloseButton: true,
+		showCancelButton: false,
+		confirmButtonText: showButtonLabel,
+	}).then(formValues => {
+		if(formValues.dismiss){
+			return false;
+		} else {
+			location.href = "/MyEditSettingPcV.jsp?MENUID=POIPASS";
+		}
+	});
+}
+
 /**
  * 指定要素の表示上の高さを、指定要素sytleのheightに設定する。
  * imgタグのonloadと組み合わせて使う。
@@ -793,3 +820,4 @@ function createIntersectionObserver(callback) {
 		});
 	});
 }
+

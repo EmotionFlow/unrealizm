@@ -41,6 +41,16 @@
 						case -30:
 							DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
 							break;
+						case -40:
+							<%if(checkLogin.m_nPassportId==0){%>
+							showIntroductionPoipassDlgHtml(
+								"<%=_TEX.T("TSendEmoji.IntroductionPoipass.Title")%>",
+								"<%=_TEX.T("TSendEmoji.IntroductionPoipass.Description")%>",
+								"<%=_TEX.T("TSendEmoji.IntroductionPoipass.ShowButton")%>");
+							<%}else{%>
+							DispMsg("limit to send emoji");
+							<%}%>
+							break;
 						case -99:
 							DispMsg("<%=_TEX.T("CheerDlg.Err.AuthOther")%>");
 							break;
