@@ -181,10 +181,7 @@ public class ImageUtil {
 
 	public static void createThumbPng(String strSrcFileName, String strDstFileName, int newWidth, int newHeight)
 			throws IOException {
-		Log.d(String.format("createThumbPng %s %s %d %d ",strSrcFileName, strDstFileName, newWidth, newHeight));
-
 		final String jpgThumbFileName = strDstFileName + ".jpg";
-
 		createThumbJpg(strSrcFileName, jpgThumbFileName, newWidth, newHeight);
 		int ret = ImageMagickUtil.createThumbnail(strSrcFileName, strDstFileName, "png", newWidth, newHeight);
 		if(ret!=0){
