@@ -14,20 +14,15 @@ if(!checkLogin.m_bLogin) {
 	return;
 }
 
-if(checkLogin.isTestStaff212()) {
-	getServletContext().getRequestDispatcher("/MyHomeTagPcInfV.jsp").forward(request,response);
-}
-
 MyHomeTagPcC cResults = new MyHomeTagPcC();
 cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
-ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+cResults.m_bNoContents = true;
+cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
 
@@ -41,35 +36,103 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 
 		<script>
-		function UpdateFollow(nUserId, nFollowUserId) {
-			var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
-			$.ajaxSingle({
-				"type": "post",
-				"data": { "UID": nUserId, "IID": nFollowUserId },
-				"url": "/f/UpdateFollowF.jsp",
-				"dataType": "json",
-				"success": function(data) {
-					if(data.result==1) {
-						$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
-						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
-					} else if(data.result==2) {
-						$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
-						$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
-					} else {
-						DispMsg('フォローできませんでした');
+			function UpdateFollow(nUserId, nFollowUserId) {
+				$.ajaxSingle({
+					"type": "post",
+					"data": { "UID": nUserId, "IID": nFollowUserId },
+					"url": "/f/UpdateFollowF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						if(data.result===1) {
+							$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
+							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
+						} else if(data.result===2) {
+							$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
+							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
+						} else {
+							DispMsg('フォローできませんでした');
+						}
+					},
+					"error": function(req, stat, ex){
+						DispMsg('Connection error');
 					}
-				},
-				"error": function(req, stat, ex){
-					DispMsg('Connection error');
-				}
-			});
-		}
+				});
+			}
 
-		$(function(){
-			$('body, .Wrapper').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
+			let lastContentId = -1;
+			let page = 0;
+
+			const loadingSpinner = {
+				appendTo: "#IllustItemList",
+				className: "loadingSpinner",
+			}
+			const htmlCache = new CacheApiHtmlCache(CURRENT_CACHES_INFO.MyHomeTagContents, <%=checkLogin.m_nUserId%>);
+			const observer = createIntersectionObserver(addContents);
+
+			function addContents(){
+				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
+				return $.ajax({
+					"type": "post",
+					"data": {"SD": lastContentId, "MD": <%=CCnv.MODE_SP%>, "VD": <%=CCnv.VIEW_DETAIL%>, "PG": page},
+					"dataType": "json",
+					"url": "/f/MyHomeTagF.jsp",
+				}).then((data) => {
+					page++;
+					htmlCache.header.page = page;
+					if (data.end_id > 0) {
+						lastContentId = data.end_id;
+						htmlCache.header.lastContentId = lastContentId;
+						const contents = document.getElementById('IllustItemList');
+						$(contents).append(data.html);
+						//gtag('config', 'UA-125150180-1', {'page_location': location.pathname + '/' + g_nEndId + '.html'});
+						observer.observe(contents.lastElementChild);
+					}
+					removeLoadingSpinners(loadingSpinner.className);
+				}, (error) => {
+					DispMsg('Connection error');
+				});
+			}
+
+			function initContents(){
+				$(window).scrollTop(0);
+				$(".ThumbListHeader").show();
+				addContents();
+			}
+
+			function restoreContents(txt){
+				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
+					htmlCache.delete(null);
+					addContents().then(()=>{$(".ThumbListHeader").show();})
+				} else {
+					appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
+					const contents = document.getElementById('IllustItemList');
+					$(contents).empty().html(txt);
+					removeLoadingSpinners(loadingSpinner.className);
+					$(".ThumbListHeader").show();
+					$(window).scrollTop(htmlCache.header.scrollTop);
+					lastContentId = htmlCache.header.lastContentId;
+					page = htmlCache.header.page;
+					observer.observe(contents.lastElementChild);
+					htmlCache.delete(null);
+				}
+			}
+
+			$(function(){
+				$('body, .Wrapper').each(function(index, element){
+					$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
+					)});
+
+				htmlCache.addClickEventListener(
+					'#HeaderSearchBtn, .SystemInfo a, .slick-list a, ' +
+					'#TabMenuMyHome, #TabMenuMyBookmark, ' +
+					'a.IllustItemThumb, .IllustItemDesc a, .IllustItemCategory a, .IllustItemUser a, .IllustItemCommandEdit, .IllustItemTag a, ' +
+					'#MenuHome, #MenuNew, #MenuRequest, #MenuAct, #MenuMe',
+					'#IllustItemList'
+				);
+
+				htmlCache.pull(restoreContents, initContents);
 			});
-		});
+
 		</script>
 
 		<style>
@@ -93,34 +156,27 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</ul>
 		</nav>
 
+		<div class="ThumbListHeader" style="display: none">
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		</div>
 
 		<article class="Wrapper ViewPc">
+			<div class="ThumbListHeader" style="display: none">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
+			</div>
 
 			<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
 				<a href="/MyHomeTagSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
 			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(cResults.m_vContentList.size()<=0) {%>
+				<%if(cResults.m_nContentsNumTotal<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 					<%=_TEX.T("MyHomeTag.FirstMsg")%>
 				</div>
 				<%}%>
-
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-					<%if(nCnt==4) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==9) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
-				<%}%>
 			</section>
-
-			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/MyHomeTagPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-			</nav>
 		</article>
-		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
+	<%@include file="/inner/PolyfillIntersectionObserver.jsp"%>
 </html>
