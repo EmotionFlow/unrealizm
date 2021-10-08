@@ -7,9 +7,8 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
-if(cResults.mode ==CCnv.MODE_SP) {
-	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-}
+checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+
 boolean bRtn = cResults.getResults(checkLogin);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 StringBuilder sbHtml = new StringBuilder();

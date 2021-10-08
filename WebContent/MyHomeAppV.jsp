@@ -11,7 +11,8 @@ if(!checkLogin.m_bLogin) {
 
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
-//checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+
 boolean bRtn = cResults.getResults(checkLogin);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
