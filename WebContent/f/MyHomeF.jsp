@@ -7,9 +7,6 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 MyHomeC cResults = new MyHomeC();
 cResults.getParam(request);
-if(cResults.mode == CCnv.MODE_SP) {
-	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-}
 
 if (cResults.page != 1) {
 	cResults.getResults(checkLogin, false, false);
