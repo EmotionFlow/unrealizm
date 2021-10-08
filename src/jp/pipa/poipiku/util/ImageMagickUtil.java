@@ -27,6 +27,7 @@ public class ImageMagickUtil {
                 width!=null && width>0 ? width.toString() : "",
                 height!=null && height>0 ? height.toString() : "")
         );
+        cmd.add("-flatten");
         cmd.add(format + ":" + dstPath);
         exitCode = runExternalCommand(cmd, null);
 
