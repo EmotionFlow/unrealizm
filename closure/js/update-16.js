@@ -64,8 +64,7 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 			},
 			onComplete: function(id, name, response, xhr) {
 				//画像追加アップによって払い出されたappend_idをDOMに設定
-				append_id = response.append_id
-				$('.qq-file-id-' + id).attr('id', append_id);
+				$('.qq-file-id-' + id).attr('id', response.append_id);
 			},
 			onAllComplete: function(succeeded, failed) {
 				console.log("onAllComplete", succeeded, failed, this.tweet);
@@ -334,69 +333,20 @@ function UpdatePasteAppendFAjax(img_element, user_id, content_id){
 	});
 }
 
-function UpdateFileRefTwitterFAjax(
-	user_id, content_id, genre, nCategory, strDescription, strTagList,
-	nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
-	nLimitedTime, strPublishStart, strPublishEnd,
-	nTweetText, nTweetImage, nDeleteTweet){
+function UpdateFileRefTwitterFAjax(data){
 	return $.ajax({
 		"type": "post",
-		"data": {
-			"UID":user_id,
-			"IID":content_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"REC":nRecent,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":nTweetText,
-			"TWI":nTweetImage,
-			"DELTW":nDeleteTweet,
-			"ED":1,
-			"CNG":nCheerNg,
-		},
+		"data": data,
 		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
 	});
 }
 
 
-function UploadTextRefTwitterFAjax(
-	user_id, content_id, genre, nCategory, strDescription, strBodyText, strTagList,
-	nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
-	nLimitedTime, strPublishStart, strPublishEnd,
-	nTweetText, nTweetImage, nDeleteTweet, title, direction){
+function UploadTextRefTwitterFAjax(data){
 	return $.ajax({
 		"type": "post",
-		"data": {
-			"UID":user_id,
-			"IID":content_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"BDY":strBodyText,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"REC":nRecent,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":nTweetText,
-			"TWI":nTweetImage,
-			"DELTW":nDeleteTweet,
-			"ED":3,
-			"CNG":nCheerNg,
-			"TIT":title,
-			"DIR":direction,
-		},
+		"data": data,
 		"url": "/f/UpdateTextRefTwitterF.jsp",
 		"dataType": "json",
 	});
@@ -416,7 +366,7 @@ function UploadFileTweetFAjax(user_id, content_id, nTweetImage, nDeleteTweet){
 	});
 }
 
-//ペースト画像のアップロード
+//ペースト画像の更新
 function createUpdatePaste(){
 	var bEntered = false;
 	return function UpdatePaste(user_id, content_id) {
@@ -472,6 +422,7 @@ function createUpdatePaste(){
 
 		setTweetSetting($('#OptionTweet').prop('checked'));
 		setTweetImageSetting($('#OptionImage').prop('checked'));
+		setTwitterCardThumbnailSetting($('#OptionTwitterCardThumbnail').prop('checked'));
 		setLastCategorySetting(nCategory);
 		if(nPublishId === 99) {
 			nTweet = 0;
@@ -490,11 +441,28 @@ function createUpdatePaste(){
 
 		startMsg();
 
-		let fUpdateFile = UpdateFileRefTwitterFAjax(
-			user_id, content_id, genre, nCategory, strDescription, strTagList,
-			nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
-			nLimitedTime, strPublishStart, strPublishEnd,
-			getTweetSetting(), getTweetImageSetting(), nDeleteTweet);
+		const data = {
+			"UID":user_id,
+			"IID":content_id,
+			"GD" :genre,
+			"CAT":nCategory,
+			"DES":strDescription,
+			"TAG":strTagList,
+			"PID":nPublishId,
+			"PPW":strPassword,
+			"PLD":nTwListId,
+			"LTP":nLimitedTime,
+			"REC":nRecent,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
+			"TWT":getTweetSetting(),
+			"TWI":getTweetImageSetting(),
+			"TWCT":getTwitterCardThumbnailSetting(),
+			"DELTW":nDeleteTweet,
+			"ED":1,
+			"CNG":nCheerNg,
+		};
+		let fUpdateFile = UpdateFileRefTwitterFAjax(data);
 
 		let aryFunc = [];
 		let fTweet = null;
@@ -623,12 +591,30 @@ function createUpdateText(){
 
 		startMsg();
 
-		let fUpdateFile = UploadTextRefTwitterFAjax(
-			user_id, content_id, genre, nCategory, strDescription, strTextBody, strTagList,
-			nPublishId, strPassword, nTwListId, nCheerNg, nRecent,
-			nLimitedTime, strPublishStart, strPublishEnd,
-			getTweetSetting(), getTweetImageSetting(), nDeleteTweet, title, direction);
-
+		const data = {
+			"UID":user_id,
+			"IID":content_id,
+			"GD" :genre,
+			"CAT":nCategory,
+			"DES":strDescription,
+			"BDY":strTextBody,
+			"TAG":strTagList,
+			"PID":nPublishId,
+			"PPW":strPassword,
+			"PLD":nTwListId,
+			"LTP":nLimitedTime,
+			"REC":nRecent,
+			"PST":strPublishStart,
+			"PED":strPublishEnd,
+			"TWT":getTweetSetting(),
+			"TWI":getTweetImageSetting(),
+			"DELTW":nDeleteTweet,
+			"ED":3,
+			"CNG":nCheerNg,
+			"TIT":title,
+			"DIR":direction,
+		};
+		let fUpdateFile = UploadTextRefTwitterFAjax(data);
 		let aryFunc = [];
 		let fTweet = null;
 

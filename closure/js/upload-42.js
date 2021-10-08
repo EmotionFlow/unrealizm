@@ -339,7 +339,7 @@ $.ajaxSetup({
 				});
 				}
 			}
-			if (clipboardData = window.clipboardData) {
+			if (clipboardData === window.clipboardData) {
 				if ((ref3 = (text = clipboardData.getData('Text'))) != null ? ref3.length : void 0) {
 				setTimeout(function() {
 					_this._target.trigger('pasteText', {
@@ -458,9 +458,8 @@ function setTweetSetting(val) {
 }
 
 function getTweetSetting() {
-	var upload_tweet = getLocalStrage('upload_tweet');
-	if(upload_tweet) return true;
-	return false;
+	const upload_tweet = getLocalStrage('upload_tweet');
+	return !!upload_tweet;
 }
 
 function setTweetImageSetting(val) {
@@ -468,9 +467,8 @@ function setTweetImageSetting(val) {
 }
 
 function getTweetImageSetting() {
-	var upload_tweet = getLocalStrage('upload_tweet_image');
-	if(upload_tweet) return true;
-	return false;
+	const upload_tweet = getLocalStrage('upload_tweet_image');
+	return !!upload_tweet;
 }
 
 function setTwitterCardThumbnailSetting(val) {
@@ -499,7 +497,7 @@ function comparePublishDate(a, b){
 	}
 }
 function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPublishStartPresent=null, strPublishEndPresent=null){
-	if(strPublishStart=='' || strPublishEnd==''){
+	if(strPublishStart==='' || strPublishEnd===''){
 		dateTimeEmptyMsg();
 		return false;
 	}
@@ -1049,9 +1047,9 @@ function updatePasteNum() {
 
 function UploadPaste(user_id) {
 	// check image
-	var nImageNum = 0;
+	let nImageNum = 0;
 	$('.imgView').each(function(){
-		var strSrc = $.trim($(this).attr('src'));
+		const strSrc = $.trim($(this).attr('src'));
 		if(strSrc.length>0) nImageNum++;
 	});
 	if(nImageNum<=0) return;
@@ -1089,6 +1087,7 @@ function UploadPaste(user_id) {
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
 	setTweetImageSetting($('#OptionImage').prop('checked'));
+	setTwitterCardThumbnailSetting($('#OptionTwitterCardThumbnail').prop('checked'));
 	setLastCategorySetting(nCategory);
 	if(nPublishId === 99) {
 		nTweet = 0;
@@ -1114,6 +1113,7 @@ function UploadPaste(user_id) {
 			"PED":strPublishEnd,
 			"TWT":getTweetSetting(),
 			"TWI":getTweetImageSetting(),
+			"TWCT":getTwitterCardThumbnailSetting(),
 			"ED":1,
 			"CNG":nCheerNg,
 		},
@@ -1121,10 +1121,10 @@ function UploadPaste(user_id) {
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileReferenceF", data.content_id);
-			var first_file = true;
+			let first_file = true;
 			$('.imgView').each(function(){
 				$(this).parent().addClass('Done');
-				var strEncodeImg = $(this).attr('src').replace('data:image/png;base64,', '');
+				const strEncodeImg = $(this).attr('src').replace('data:image/png;base64,', '');
 				if(strEncodeImg.length<=0) return true;
 
 				if(first_file) {
@@ -1161,7 +1161,7 @@ function UploadPaste(user_id) {
 					});
 				}
 			});
-			if(nTweetNow==1) {
+			if(nTweetNow===1) {
 				$.ajax({
 					"type": "post",
 					"data": {
