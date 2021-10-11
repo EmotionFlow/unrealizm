@@ -582,9 +582,9 @@ public final class CCnv {
 
 	private static void appendIllustItemExpandPassFrame(ResourceBundleControl _TEX, StringBuilder strRtn) {
 		strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\">" +
-						"<input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"password\" maxlength=\"16\" placeholder=\"%s\" />" +
-						"<a class=\"IllustItemExpandPassVisible Display\" href=\"javascript:void(0)\" onclick=\"visibleContentPassword(this)\">%s</a>" +
-						"<a class=\"IllustItemExpandPassVisible Hide\" style=\"display:none\" href=\"javascript:void(0)\" onclick=\"hideContentPassword(this)\">%s</a>" +
+						"<input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"text\" maxlength=\"16\" placeholder=\"%s\" />" +
+						"<a class=\"IllustItemExpandPassVisible Display\" style=\"display:none\" href=\"javascript:void(0)\" onclick=\"visibleContentPassword(this)\">%s</a>" +
+						"<a class=\"IllustItemExpandPassVisible Hide\" href=\"javascript:void(0)\" onclick=\"hideContentPassword(this)\">%s</a>" +
 						"</div>",
 				_TEX.T("ShowAppendFileC.EnterPassword"),
 				_TEX.T("ShowAppendFileC.EnterPassword.Show"),
@@ -643,7 +643,7 @@ public final class CCnv {
 		// 2枚目以降ボタン
 		strRtn.append("<div class=\"IllustItemExpand\">");
 		if(cContent.m_nFileNum>1) {
-			strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\"><input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"password\" maxlength=\"16\" placeholder=\"%s\" /></div>",
+			strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\"><input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"text\" maxlength=\"16\" placeholder=\"%s\" /></div>",
 					_TEX.T("ShowAppendFileC.EnterPassword")));
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
 					cContent.m_nUserId,
