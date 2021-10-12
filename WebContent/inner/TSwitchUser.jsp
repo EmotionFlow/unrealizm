@@ -62,11 +62,11 @@
 <h2 class="SwitchUserDlgTitle">きりかえ(β)</h2>
 
 <div class="SwitchUserDlgInfo" style="margin: 6px 0 16px 0;">
-すでに登録済みの２つのポイピクアカウントをグループ化し、簡単に切り替えることができます。
+登録済みの２つのポイピクアカウントをグループ化し、簡単に切り替えることができます。
 </div>
 
 <div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
-組み合わせ対象アカウントの認証
+対象アカウントの認証
 </div>
 <div class="SwitchUserInputInfo">
 <div style="margin: 0 0 18px 0;">
