@@ -2,6 +2,7 @@
 <%
 final PassportPayment payment = new PassportPayment(checkLogin);
 final PassportSubscription subscription = new PassportSubscription(checkLogin);
+final boolean existsBuyHistory = subscription.existsBuyHistory();
 final PoiTicket ticket = new PoiTicket(checkLogin);
 %>
 <%@ include file="../TCreditCard.jsp"%>
@@ -305,12 +306,26 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 					<%=_TEX.T("MyEditSettingPassportV.CEOMessage.More")%>
 				</p>
 			</div>
-			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
 			<%}else{%>
 			<%=_TEX.T("MyEditSettingPassportV.Joining")%>
 			<%}%>
 
-			<%if(isNotMember) {%>
+			<div class="SettingListTitle">金額</div>
+			<div>月額300円</div>
+
+			<%if (isNotMember) {%>
+			<%if (existsBuyHistory) {%>
+			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
+			<%} else {%>
+			<div class="SettingListTitle" style="text-align: center;">はじめての方向け<br>初月おためし無料キャンペーン実施中！</div>
+			<div>定期購入最初の月は、申込日から月末まで無料です！無料期間中も解約OKで、解約についての違約金・手数料等は発生しません！</div>
+			<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
+				<ul style="list-style-type: circle;padding-inline: 25px; font-size: 12px">
+					<li>初めての定期購入時にのみ適用されます。２度目以降は申し込みと同時に課金されます。</li>
+					<li>日時は日本標準時（UTC+9）により判定されます。</li>
+				</ul>
+			</div>
+			<%}%>
 			<div class="SettingBodyCmd">
 				<div class="RegistMessage"></div>
 				<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
@@ -326,8 +341,8 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Ticket")%>: <%=ticket.exists?ticket.amount:0%> <%=_TEX.T("MyEditSettingPassportV.Ticket.Amount")%></div>
-		<%=_TEX.T("MyEditSettingPassportV.Ticket.Description")%>
-		<ul>
+		<%=_TEX.T("MyEditSettingPassportV.Ticket.Description")%> <a class="AutoLink" href="javascript: void(0)" onclick="$('#TicketInfoList').toggle();">more...</a>
+		<ul id="TicketInfoList" style="display: none;">
 			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List01")%></li>
 			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List02")%></li>
 			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List03")%></li>
