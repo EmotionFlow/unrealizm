@@ -60,19 +60,18 @@
 
 <%if(_TEX.getLocale() == java.util.Locale.JAPANESE){%>
 <h2 class="SwitchUserDlgTitle">きりかえ(β)</h2>
-<div class="SwitchUserDlgInfo">
-<ul>
-	<li>２つのポイピクアカウントをグループ化して簡単に切り替えられるようになりました。</li>
-	<li>アカウントごとに別のTwitterアカウントと連携しておけば、投稿・閲覧・ジャンルなどで使い分けることができます。</li>
-	<li>グループ化にはメールアドレスとパスワードの登録が必要です。</li>
-	<li>１つのアカウントは１つのグループにのみ所属できます、別のアカウントと組み合わせたい場合は、一度グループから外す必要があります。</li>
-</ul>
+
+<div class="SwitchUserDlgInfo" style="margin: 6px 0 16px 0;">
+すでに登録済みの２つのポイピクアカウントをグループ化し、簡単に切り替えることができます。
 </div>
 
 <div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
-グループ化したいポイピクアカウント
+組み合わせ対象アカウントの認証
 </div>
 <div class="SwitchUserInputInfo">
+<div style="margin: 0 0 18px 0;">
+このアカウントと組み合わせたい他のアカウントで設定している、メールアドレスとパスワードを入力してください。
+</div>
 <label for="SwitchUserEmail">メールアドレス</label>
 <input id="SwitchUserEmail" type="email" class="swal2-input">
 <label for="SwitchUserPassword">パスワード</label>
@@ -81,14 +80,6 @@
 </div>
 <%}else{%>
 <h2 class="SwitchUserDlgTitle">Account switch</h2>
-<div class="SwitchUserDlgInfo">
-<ul>
-	<li>You can now group two POIPIKU accounts together and switch between them easily.</li>
-	<li>If you link each account with a different Twitter account, you can use them separately for posting, browsing, genres, etc.</li>
-	<li>You will need to register your email address and password in order to create a group.</li>
-	<li>An account can only belong to one group, if you want to combine it with another account, you need to remove it from the group once.</li>
-</ul>
-</div>
 
 <div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
 POIPIKU account to be grouped
@@ -104,6 +95,24 @@ POIPIKU account to be grouped
 
 </div>
 `;
+	}
+
+	function _getAddSwitchUserFooterHtml(){
+		<%if(_TEX.getLocale() == java.util.Locale.JAPANESE){%>
+		return `<ul>
+	<li>アカウントごとに別のTwitterアカウントと連携しておけば、投稿・閲覧・ジャンルなどで使い分けることができます。</li>
+	<li>１つのアカウントは１つのグループにのみ所属できます、別のアカウントと組み合わせたい場合は、一度グループから外す必要があります。</li>
+</ul>
+`;
+		<%}else{%>
+		return `<ul>
+	<li>You can now group two POIPIKU accounts together and switch between them easily.</li>
+	<li>If you link each account with a different Twitter account, you can use them separately for posting, browsing, genres, etc.</li>
+	<li>You will need to register your email address and password in order to create a group.</li>
+	<li>An account can only belong to one group, if you want to combine it with another account, you need to remove it from the group once.</li>
+</ul>
+`;
+		<%}%>
 	}
 
 	function _verifyAddSwitchUserDlgInput(){
@@ -124,6 +133,7 @@ POIPIKU account to be grouped
 		if (loginUserId<0) return false;
 		Swal.fire({
 			html: _getAddSwitchUserHtml(),
+			footer: _getAddSwitchUserFooterHtml(),
 			focusConfirm: false,
 			showConfirmButton: true,
 			showCloseButton: true,
