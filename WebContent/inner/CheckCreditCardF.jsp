@@ -20,7 +20,7 @@ try {
 
     //JSONに変換して出力
     mapper = new ObjectMapper();
-    Log.d(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));
+    //Log.d(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));
     out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));
 } catch(JsonGenerationException e)  {
     e.printStackTrace();

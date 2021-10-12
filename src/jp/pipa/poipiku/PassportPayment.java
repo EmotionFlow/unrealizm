@@ -17,9 +17,10 @@ public final class PassportPayment extends Model{
 	public int year = -1;
 	public int month = -1;
 	public enum By implements CodeEnum<By> {
-		Undefined(0),
-		CreditCard(1),
-		Ticket(2);
+		Undefined(0),   // 未定義
+		CreditCard(1),  // クレカ
+		Ticket(2),      // ポイチケ
+		FreePeriod(3);  // 無料期間
 
 		static public By byCode(int _code) {
 			return CodeEnum.getEnum(By.class, _code);
