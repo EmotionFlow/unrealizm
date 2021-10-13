@@ -130,13 +130,15 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			"securityCode": null,
 			"holderName": null,
 		};
-		let elPassportNowPayment = $('#PassportNowPayment');
-		if(elPassportNowPayment.css('display') !== 'none'){
+		let elPassportNowPayment = $('.NowPayment').first();
+
+		if($('.BuyPassportButton').first() === 'none'){
 			alert("<%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%>");
 			return;
 		}
-		elPassportNowPayment.show();
-		$('#PassportNowPayment2').show();
+
+		$('.NowPayment').show();
+
 		$.ajax({
 			"type": "get",
 			"url": "/f/CheckCreditCardF.jsp",
@@ -150,8 +152,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				if (confirm("<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm01" + (existsBuyHistory ? "" : ".FreePeriod"))%>")) {
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
-					elPassportNowPayment.hide();
-					$('#PassportNowPayment2').hide();
+					$('.NowPayment').hide();
 					$(".BuyPassportButton").show();
 				}
 			} else if (result === 0) {
@@ -168,8 +169,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				}).then(formValues => {
 					<%// キャンセルボタンがクリックされた%>
 					if (formValues.dismiss) {
-						elPassportNowPayment.hide();
-						$('#PassportNowPayment2').hide();
+						$('.NowPayment').hide();
 						$(".BuyPassportButton").show();
 						return false;
 					}
@@ -329,15 +329,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				</ul>
 			</div>
 			<%}%>
-			<div class="SettingBodyCmd">
-				<div class="RegistMessage"></div>
-				<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-					<%=_TEX.T("MyEditSettingPassportV.BuySubscription" + (existsBuyHistory ? "" : ".FreePeriod"))%>
-				</a>
-			</div>
-			<div id="PassportNowPayment" style="display:none">
-				<span class="PoiPassLoading"></span><span><%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%></span>
-			</div>
+			<%@ include file="MyEditSettingPassportBuyButton.jsp"%>
 			<%}%>
 		</div>
 	</div>
@@ -417,6 +409,13 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List06.Normal")%></td>
 							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List06.Benefit")%></td>
 						</tr>
+						<%if(isNotMember){%>
+						<tr>
+							<td colspan="3">
+								<%@ include file="MyEditSettingPassportBuyButton.jsp"%>
+							</td>
+						</tr>
+						<%}%>
 						<tr>
 							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List07")%></td>
 							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List07.Normal")%></td>
@@ -451,14 +450,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 					</table>
 				</div>
 
-				<%if(isNotMember) {%>
-				<div class="SettingBodyCmd">
-					<div class="RegistMessage"></div>
-					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-						<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>
-					</a>
-				</div>
-				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px; padding-right: 10px;">
+				<div class="SettingBodyCmd" style="font-size:12px;">
 					<ul style="list-style-type: circle;">
 						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo01")%></li>
 						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo02")%></li>
@@ -466,10 +458,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo04")%></li>
 					</ul>
 				</div>
-				<div id="PassportNowPayment2" style="display:none">
-					<span class="PoiPassLoading"></span><span><%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%></span>
-				</div>
-				<%}%>
+				<%@ include file="MyEditSettingPassportBuyButton.jsp"%>
 				<%if(subscription.getStatus() == PassportSubscription.Status.UnderContraction) {%>
 				<div class="SettingBodyCmd">
 					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
