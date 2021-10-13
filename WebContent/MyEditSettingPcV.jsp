@@ -6,14 +6,12 @@
 <%@include file="/inner/Common.jsp"%>
 <%!
 	static String getSettingMenuItem(String id, String title){
-		StringBuilder sb = new StringBuilder();
-		sb.append("<a data-to=\"").append(id).append("\" class=\"SettingMenuItemLink SettingChangePageLink\" >")
-				.append("<span class=\"SettingMenuItemTitle\">")
-				.append(title)
-				.append("</span>")
-				.append("<i class=\"SettingMenuItemArrow fas fa-angle-right\"></i>")
-				.append("</a>");
-		return sb.toString();
+		return "<a data-to=\"" + id + "\" class=\"SettingMenuItemLink SettingChangePageLink\" >" +
+				"<span class=\"SettingMenuItemTitle\">" +
+				title +
+				"</span>" +
+				"<i class=\"SettingMenuItemArrow fas fa-angle-right\"></i>" +
+				"</a>";
 	}
 	static String getSettingMenuHeader(String title, boolean bSmartPhone){
 		StringBuilder sb = new StringBuilder();
@@ -114,7 +112,7 @@ String[][] menuOrder = {
 				<%}else{%>
 					$("#MenuSettings").addClass("Selected");
 					$("#MENUROOT").show();
-					var menuId = "<%=cResults.m_strSelectedMenuId%>";
+					let menuId = "<%=cResults.m_strSelectedMenuId%>";
 					if(menuId===""){
 						menuId = "PROFILE";
 					}
