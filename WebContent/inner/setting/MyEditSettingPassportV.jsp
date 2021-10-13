@@ -65,7 +65,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		);
 	}
 
-	// epsilonPayment - epsilonTrade間で受け渡しする変数。
+	<%// epsilonPayment - epsilonTrade間で受け渡しする変数。%>
 	let g_epsilonInfo = {
 		"passportInfo": null,
 		"passportAmount": null,
@@ -94,14 +94,13 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 
 			EpsilonToken.init(contructCode);
 
-			// epsilonTradeを無名関数で定義するとコールバックしてくれない。
-			// global領域に関数を定義し、関数名を引数指定しないとダメ。
+			<%// epsilonTradeを無名関数で定義するとコールバックしてくれない。%>
+			<%// global領域に関数を定義し、関数名を引数指定しないとダメ。%>
 			EpsilonToken.getToken(cardObj , epsilonTrade);
 		}
 	}
 
 	function epsilonTrade(response){
-		// もう使うことはないので、カード番号を初期化する。
 		if(g_epsilonInfo.cardInfo.number){
 			g_epsilonInfo.cardInfo.number = null;
 		}
@@ -293,6 +292,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			boolean isNotMember = passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive;
 		%>
 		<div class="SettingBody">
+			<%//ポイパス%>
 			<%if(passportStatus == Passport.Status.Cancelling){%>
 			<%=_TEX.T("MyEditSettingPassportV.Cancelling")%>
 			<%}else if(isNotMember) {%>
@@ -310,15 +310,17 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			<%=_TEX.T("MyEditSettingPassportV.Joining")%>
 			<%}%>
 
-			<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Fee.Title")%>></div>
+			<%//金額%>
+			<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Fee.Title")%></div>
 			<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Fee.Amount")%></div>
 
 			<%if (isNotMember) {%>
 			<%if (existsBuyHistory) {%>
 			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
 			<%} else {%>
-				<div class="SettingListTitle" style="background: #fffff0;text-align: center;"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Title")%></div>
-				<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Description")%></div>
+			<%//初月無料キャンペーン%>
+			<div class="SettingListTitle" style="background: #fffff0;text-align: center;"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Title")%></div>
+			<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Description")%></div>
 			<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
 				<ul style="list-style-type: circle;padding-inline: 25px; font-size: 12px">
 					<li><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.List01")%></li>
@@ -340,6 +342,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		</div>
 	</div>
 
+	<%//チケット%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Ticket")%>: <%=ticket.exists?ticket.amount:0%> <%=_TEX.T("MyEditSettingPassportV.Ticket.Amount")%></div>
 		<%=_TEX.T("MyEditSettingPassportV.Ticket.Description")%> <a class="AutoLink" href="javascript: void(0)" onclick="$('#TicketInfoList').toggle();">more...</a>
@@ -351,6 +354,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 	</div>
 
 	<%if(!isNotMember){%>
+	<%//今月のお支払い%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Title")%></div>
 		<%if(payment.exists){%>
@@ -361,8 +365,10 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				<%}%>
 			<%}else if(payment.by == PassportPayment.By.CreditCard){%>
 				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.ByCreditCard")%>
+			<%}else if(payment.by == PassportPayment.By.FreePeriod){%>
+				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.ByFreePeriod")%>
 			<%}else{%>
-			<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>
+				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>
 			<%}%>
 		<%}else{%>
 		<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>

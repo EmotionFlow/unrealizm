@@ -23,6 +23,11 @@ public class PassportTest {
 		statement.setInt(1, testUserId);
 		statement.executeUpdate();
 		statement.close();
+		sql = "DELETE FROM passport_payments WHERE user_id=?";
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1, testUserId);
+		statement.executeUpdate();
+		statement.close();
 	}
 
 	private CheckLogin createCheckLogin() {
@@ -59,16 +64,39 @@ public class PassportTest {
 		Passport passport = new Passport(checkLogin);
 		passport.courseId = 1;
 		assertTrue(passport.insert());
-		assertTrue(passport.activate());
+		assertTrue(passport.activate(PassportPayment.By.CreditCard));
+		PassportPayment passportPayment = new PassportPayment(checkLogin);
+		assertEquals(PassportPayment.By.CreditCard, passportPayment.by);
 	}
-	
+	@Test
+	public void testActivate2() {
+		CheckLogin checkLogin = createCheckLogin();
+		Passport passport = new Passport(checkLogin);
+		passport.courseId = 1;
+		assertTrue(passport.insert());
+		assertTrue(passport.activate(PassportPayment.By.Ticket));
+		PassportPayment passportPayment = new PassportPayment(checkLogin);
+		assertEquals(PassportPayment.By.Ticket, passportPayment.by);
+	}
+	@Test
+	public void testActivate3() {
+		CheckLogin checkLogin = createCheckLogin();
+		Passport passport = new Passport(checkLogin);
+		passport.courseId = 1;
+		assertTrue(passport.insert());
+		assertTrue(passport.activate(PassportPayment.By.FreePeriod));
+		PassportPayment passportPayment = new PassportPayment(checkLogin);
+		assertEquals(PassportPayment.By.FreePeriod, passportPayment.by);
+	}
+
+
 	@Test
 	public void testUpdateExpiredEndOfThisMonth() {
 		CheckLogin checkLogin = createCheckLogin();
 		Passport passport = new Passport(checkLogin);
 		passport.courseId = 1;
 		assertTrue(passport.insert());
-		assertTrue(passport.activate());
+		assertTrue(passport.activate(PassportPayment.By.CreditCard));
 		assertTrue(passport.cancelSubscription());
 
 		Passport passport2 = new Passport(checkLogin);

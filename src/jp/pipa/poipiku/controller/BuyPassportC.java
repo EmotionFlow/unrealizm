@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Passport;
+import jp.pipa.poipiku.PassportPayment;
 import jp.pipa.poipiku.PassportSubscription;
 import jp.pipa.poipiku.util.Log;
 
@@ -33,7 +34,7 @@ public final class BuyPassportC {
 				result = passport.insert();
 			}
 			if (result) {
-				result = passport.activate();
+				result = passport.activate(exitsBuyHistory ? PassportPayment.By.CreditCard : PassportPayment.By.FreePeriod);
 			} else {
 				Log.d("passport.insert() failed");
 			}

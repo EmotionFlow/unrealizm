@@ -88,7 +88,7 @@ public final class Passport {
 		init(checkLogin.m_nUserId);
 	}
 
-	public boolean activate() {
+	public boolean activate(PassportPayment.By by) {
 		if (!exists) return false;
 
 		boolean result;
@@ -127,7 +127,7 @@ public final class Passport {
 				statement.setInt(1, userId);
 				statement.setInt(2, today.getYear());
 				statement.setInt(3, today.getMonthValue());
-				statement.setInt(4, PassportPayment.By.CreditCard.getCode());
+				statement.setInt(4, by.getCode());
 				statement.executeUpdate();
 				statement.close();
 
