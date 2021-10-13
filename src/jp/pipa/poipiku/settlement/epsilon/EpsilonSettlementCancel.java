@@ -60,8 +60,8 @@ public class EpsilonSettlementCancel extends EpsilonSettlement{
 	public SettlementCancelResultInfo execCancel(){
 		// 決済情報送信
 		// 送信用の設定を作成
-		RequestConfig rc = RequestConfig.custom().setConnectTimeout(2000)
-				.setSocketTimeout(2000)
+		RequestConfig rc = RequestConfig.custom().setConnectTimeout(10000)
+				.setSocketTimeout(10000)
 				.setMaxRedirects(0)
 				.build();
 		// Header定義
