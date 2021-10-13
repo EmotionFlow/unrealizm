@@ -148,7 +148,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			if (typeof (result) === "undefined" || result == null || result === -1) {
 				return false;
 			} else if (result === 1) {
-				if (confirm("<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm01")%>")) {
+				if (confirm("<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm01" + (existsBuyHistory ? "" : ".FreePeriod"))%>")) {
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
 					elPassportNowPayment.hide();
@@ -157,7 +157,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				}
 			} else if (result === 0) {
 				const title = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>";
-				const description = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm02")%>";
+				const description = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm02" + (existsBuyHistory ? "" : ".FreePeriod"))%>";
 				<%// クレジットカード情報入力ダイアログを表示、%>
 				<%// 入力内容を代理店に送信し、Tokenを取得する。%>
 				Swal.fire({
@@ -310,26 +310,27 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			<%=_TEX.T("MyEditSettingPassportV.Joining")%>
 			<%}%>
 
-			<div class="SettingListTitle">金額</div>
-			<div>月額300円</div>
+			<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Fee.Title")%>></div>
+			<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Fee.Amount")%></div>
 
 			<%if (isNotMember) {%>
 			<%if (existsBuyHistory) {%>
 			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
 			<%} else {%>
-			<div class="SettingListTitle" style="text-align: center;">はじめての方向け<br>初月おためし無料キャンペーン実施中！</div>
-			<div>定期購入最初の月は、申込日から月末まで無料です！無料期間中も解約OKで、解約についての違約金・手数料等は発生しません！</div>
+				<div class="SettingListTitle" style="background: #fffff0;text-align: center;"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Title")%></div>
+				<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Description")%></div>
 			<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
 				<ul style="list-style-type: circle;padding-inline: 25px; font-size: 12px">
-					<li>初めての定期購入時にのみ適用されます。２度目以降は申し込みと同時に課金されます。</li>
-					<li>日時は日本標準時（UTC+9）により判定されます。</li>
+					<li><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.List01")%></li>
+					<li><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.List02")%></li>
+					<li><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.List03")%></li>
 				</ul>
 			</div>
 			<%}%>
 			<div class="SettingBodyCmd">
 				<div class="RegistMessage"></div>
 				<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-					<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>
+					<%=_TEX.T("MyEditSettingPassportV.BuySubscription" + (existsBuyHistory ? "" : ".FreePeriod"))%>
 				</a>
 			</div>
 			<div id="PassportNowPayment" style="display:none">
