@@ -104,6 +104,8 @@ String[][] menuOrder = {
 
 				<%if(bSmartPhone){%>
 					$("#MenuMe").addClass("Selected");
+					$("#MenuSearch").hide();
+					$("#MenuSettings").show();
 					<%if(cResults.m_strSelectedMenuId.isEmpty()){%>
 						$("#MENUROOT").show();
 					<%}else{%>
