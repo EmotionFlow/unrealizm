@@ -15,15 +15,15 @@
     <%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
     <title></title>
     <script>
-        $(function () {
-            setTimeout(function () {
-                <%if(checkLogin.m_bLogin){%>
-                go_inquiry.submit();
-                <%}else{%>
-                location.href = "<%=Common.GetPoipikuUrl("/")%>";
-                <%}%>
-            }, 2000);
-        })
+        <%--$(function () {--%>
+        <%--    setTimeout(function () {--%>
+        <%--        <%if(checkLogin.m_bLogin){%>--%>
+        <%--        go_inquiry.submit();--%>
+        <%--        <%}else{%>--%>
+        <%--        location.href = "<%=Common.GetPoipikuUrl("/")%>";--%>
+        <%--        <%}%>--%>
+        <%--    }, 2000);--%>
+        <%--})--%>
     </script>
 </head>
 
@@ -32,7 +32,11 @@
 <article class="Wrapper" style="min-height: 400px; text-align: center;">
     <%if(checkLogin.m_bLogin){%>
     <div class="SettingList" style="margin: 50px 0;">
-        <%=_TEX.T("GoToInquiry.Info")%>
+        サーバメンテナンスのため、ただいまお問い合わせページをご利用いただけません。<br>
+        恐れ入りますが、しばらくお待ちくださいませ。<br>
+        <br>
+        Due to server maintenance, the "Inquiry" page is currently unavailable.
+<%--        <%=_TEX.T("GoToInquiry.Info")%>--%>
     </div>
     <form method="post" name="go_inquiry" action="https://cs.pipa.jp/InquiryPcV.jsp">
         <input type="hidden" name="SRV" value="Poipiku"/>
@@ -41,7 +45,7 @@
         <input type="hidden" name="TWNAME" value="<%=cResults.m_cUser.m_strTwitterScreenName%>"/>
         <input type="hidden" name="UID" value="<%=checkLogin.m_nUserId%>"/>
         <input type="hidden" name="RET" value="<%=cResults.m_strReturnUrl%>" />
-        <a class="BtnBase" href="javascript:go_inquiry.submit()" style="font-size: 14px; padding: 10px 20px;" ><%=_TEX.T("Inquiry.Title")%></a>
+<%--        <a class="BtnBase" href="javascript:go_inquiry.submit()" style="font-size: 14px; padding: 10px 20px;" ><%=_TEX.T("Inquiry.Title")%></a>--%>
     </form>
     <%}else{%>
     <div class="SettingList" style="margin: 50px 0;">
