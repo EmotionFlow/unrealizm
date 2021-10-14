@@ -46,8 +46,8 @@
 							showIntroductionPoipassDlgHtml(
 								'<%=_TEX.T("TSendEmoji.IntroductionPoipass.Title")%>',
 								'<%=_TEX.T("TSendEmoji.IntroductionPoipass.Description")%>',
-								'<%=_TEX.T("TSendEmoji.IntroductionPoipass.ShowButton")%>',
-								'<%=_TEX.T("TSendEmoji.IntroductionPoipass.FooterHtml")%>'
+								'<%=_TEX.T("IntroductionPoipass.ShowButton")%>',
+								'<%=_TEX.T("IntroductionPoipass.FooterHtml")%>'
 							);
 							<%}else{%>
 							DispMsg("limit to send emoji");

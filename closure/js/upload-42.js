@@ -784,6 +784,13 @@ function tweetSucceeded(data){
 	}
 }
 
+// update-*.jspでも使っています
+const FINE_UPLOADER_ERROR = {
+	typeError: 'TypeError',
+	tooManyItemsError: 'TooManyItemsError',
+	sizeError: 'SizeError',
+	totalSizeError: 'TotalSizeError',
+}
 function initUploadFile(fileNumMax, fileSizeMax) {
 	multiFileUploader = new qq.FineUploader({
 		element: document.getElementById("file-drop-area"),
@@ -798,6 +805,11 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 		},
 		retry: {
 			enableAuto: false
+		},
+		messages: FINE_UPLOADER_ERROR,
+		showMessage: function() {
+			// FineUploader側で実装されているDlg表示をしないようにする。
+			// エラーダイアログ表示は、onValidate(), onErrror()で実装する。
 		},
 		callbacks: {
 			onUpload: function(id, name) {
@@ -839,15 +851,21 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 				}
 			},
 			onValidate: function(data) {
-				var total = this.getSubmittedSize();
-				var submit_num = this.getSubmittedNum();
+				let total = this.getSubmittedSize();
+				const submit_num = this.getSubmittedNum();
 				this.showTotalSize(total, submit_num);
 				total += data.size;
-				if (total>this.total_size) return false;
+				if (total > this._options.validation.sizeLimit) {
+					showFineUploaderErrorDialog(FINE_UPLOADER_ERROR.totalSizeError);
+					return false;
+				}
 				this.showTotalSize(total, submit_num+1);
 			},
 			onStatusChange: function(id, oldStatus, newStatus) {
 				this.showTotalSize(this.getSubmittedSize(), this.getSubmittedNum());
+			},
+			onError: function(id, name, errorReason, xhrOrXdr) {
+				showFineUploaderErrorDialog(errorReason);
 			}
 		}
 	});

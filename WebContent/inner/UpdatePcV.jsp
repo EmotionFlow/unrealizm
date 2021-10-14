@@ -106,83 +106,12 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<!-- 画像並び替え用 -->
 		<%}%>
 
+		<%@ include file="UpPcV.jsp"%>
 		<script>
-			function startMsg() {
-				$('#UoloadCmdBtn').addClass('Disabled').html('<%=_TEX.T("EditIllustVCommon.Uploading")%>');
-				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
-			}
-
-			function dateTimeEmptyMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
-			}
-
-			function dateTimePastMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
-			}
-
-			function dateTimeReverseMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
-			}
-
-			function twtterListRateLimiteExceededMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
-			}
-			function twtterListInvalidTokenMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.InvalidToken")%>");
-			}
-			function twitterListNotFoundMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%>");
-			}
-			function twtterListOtherErrMsg(nErrCode) {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.OtherErr")%>: " + nErrCode);
-			}
-
-			function twtterTweetInvalidTokenMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.InvalidToken")%>");
-			}
-			function twtterTweetRateLimitMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.RateLimiteExceeded")%>");
-			}
-			function twtterTweetTooMuchMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.TooMuch")%>");
-			}
-			function twtterTweetOtherErrMsg(nErrCode) {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.OtherErr")%>: " + nErrCode);
-			}
-
-			function completeMsg() {
-				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-			}
-
 			function completeAddFile() {
 				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
 
-			function errorMsg(result) {
-				$('#UoloadCmdBtn').removeClass('Disabled').html('<%=_TEX.T("UploadFilePc.UploadBtn")%>');
-
-				if(result == <%=Common.UPLOAD_FILE_TOTAL_ERROR%>) {
-					// file size error
-					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-				} else if(result == <%=Common.UPLOAD_FILE_TYPE_ERROR%>) {
-					// file type error
-					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
-				} else {
-					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
-				}
-			}
-
-			function DispDescCharNum() {
-				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditDescription").val().length;
-				$("#DescriptionCharNum").html(nCharNum);
-			}
-
-			<%if(nEditorId==Common.EDITOR_TEXT){%>
-			function DispTextCharNum() {
-				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditTextBody").val().length;
-				$("#TextBodyCharNum").html(nCharNum);
-			}
-			<%}%>
 
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			function UpdateFileCheck(user_id, content_id) {
@@ -194,7 +123,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				UpdateFile(user_id, content_id);
 			}
 			$(function() {
-				initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
+				//initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
+				initUpdateFile(3,5, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 				<%if(noContentModification){%>
 				multiFileUploader._options.callbacks.onValidateBatch = (arr, btn) => {return false;};
 				<%}%>

@@ -33,7 +33,6 @@ function UpdatePasteOrderAjax(user_id, content_id, append_ids){
 //ファイル選択エリアの初期化
 function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 	updateTweetButton();
-
 	multiFileUploader = new qq.FineUploader({
 		session: {
 			endpoint: '/f/GetIllustFileListF.jsp?TD=' + contentid + '&ID=' + userid,
@@ -43,6 +42,11 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 		autoUpload: false,
 		button: document.getElementById('TimeLineAddImage'),
 		maxConnections: 1,
+		messages: FINE_UPLOADER_ERROR,
+		showMessage: function() {
+			// FineUploader側で実装されているDlg表示をしないようにする。
+			// エラーダイアログ表示は、onValidate(), onErrror()で実装する。
+		},
 		validation: {
 			allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
 			itemLimit: fileNumMax,
@@ -91,13 +95,19 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 				const submit_num = this.getSubmittedNum();
 				this.showTotalSize(total, submit_num);
 				total += data.size;
-				if (total>this.total_size) return false;
+				if (total > this._options.validation.sizeLimit) {
+					showFineUploaderErrorDialog(FINE_UPLOADER_ERROR.totalSizeError);
+					return false;
+				}
 				this.showTotalSize(total, submit_num+1);
 			},
 			onStatusChange: function(id, oldStatus, newStatus) {
 				if (this.newfile_num && this.newfile_num > 0) {
 					this.showTotalSize(this.getSubmittedSize(), this.getSubmittedNum());
 				}
+			},
+			onError: function(id, name, errorReason, xhrOrXdr) {
+				showFineUploaderErrorDialog(errorReason);
 			}
 		}
 	});
