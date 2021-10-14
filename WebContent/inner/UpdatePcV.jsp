@@ -123,8 +123,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				UpdateFile(user_id, content_id);
 			}
 			$(function() {
-				//initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
-				initUpdateFile(3,5, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
+				initUpdateFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>, <%=cResults.m_nUserId%>, <%=cResults.m_nContentId%>);
 				<%if(noContentModification){%>
 				multiFileUploader._options.callbacks.onValidateBatch = (arr, btn) => {return false;};
 				<%}%>

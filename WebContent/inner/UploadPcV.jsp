@@ -77,8 +77,7 @@ if (requestId > 0) {
 				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
 			$(function(){
-				<%--initUploadFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>);--%>
-				initUploadFile(3, 5);
+				initUploadFile(<%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>, <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>);
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			function UploadPasteCheck(user_id) {
@@ -205,8 +204,7 @@ if (requestId > 0) {
 				<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<div class="TimeLineIllustCmd">
 					<span id="file-drop-area"></span>
-<%--					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, <%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>files, total <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>MByte)</span>--%>
-					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, 3files, total 5MByte)</span>
+					<span id="TotalSize" class="TotalSize">(jpeg|png|gif, <%=Common.UPLOAD_FILE_MAX[checkLogin.m_nPassportId]%>files, total <%=Common.UPLOAD_FILE_TOTAL_SIZE[checkLogin.m_nPassportId]%>MByte)</span>
 					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase Rev">
 						<i class="far fa-images"></i>
 						<span id="UploadBtn"><%=_TEX.T("UploadFilePc.SelectImg")%></span>
