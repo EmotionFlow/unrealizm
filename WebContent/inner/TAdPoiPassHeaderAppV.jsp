@@ -10,23 +10,26 @@
 	<a href="/MyEditSettingPassportAppV.jsp" style="display: flex; flex-flow: row; padding: 3px 0 ; justify-content: center;background-image: linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%);">
 		<img style="height: 25px; margin: 0 10px 0 0;" src="/img/poipiku_passport_logo2_60.png" />
 		<%
-		String message = "ポイパスで絵文字100連打！";
+		final String message ;
 		int nRnd = (int)(Math.random()*5.0);
 		switch(nRnd) {
-		case 0:
-			message = "ポイパスでもらった絵文字解析！";
-			break;
-		case 1:
-			message = "ポイパスで広告非表示！";
-			break;
-		case 2:
-			message = "ポイパスで400枚まとめて投稿！";
-			break;
-		case 3:
-			message = "ポイパスで自分のページの背景を設定！";
-			break;
-		default:
-			break;
+			case 0:
+				message = _TEX.T("TAdPoiPassHeader.Message02");
+				break;
+			case 1:
+				message = _TEX.T("TAdPoiPassHeader.Message03");
+				break;
+			case 2:
+				message = _TEX.T("TAdPoiPassHeader.Message04");
+				break;
+			case 3:
+				message = _TEX.T("TAdPoiPassHeader.Message05");
+				break;
+			case 4:
+				message = _TEX.T("TAdPoiPassHeader.Message06");
+				break;
+			default:
+				message = _TEX.T("TAdPoiPassHeader.Message01");
 		}
 		%>
 		<span style="font-weight: bold; font-size: 13px; line-height: 25px; text-decoration: underline;"><%=message%></span>
