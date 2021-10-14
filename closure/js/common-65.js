@@ -665,13 +665,14 @@ function getIntroductionPoipassDlgHtml(strTitle, strDescription){
 <div class="RecommendedPoipassDlgInfo">	<p>` + strDescription + `</p></div>`;
 }
 
-function showIntroductionPoipassDlgHtml(title, description, showButtonLabel) {
+function showIntroductionPoipassDlgHtml(title, description, showButtonLabel, footerHtml) {
 	Swal.fire({
 		html: getIntroductionPoipassDlgHtml(title, description),
 		focusConfirm: false,
 		showCloseButton: true,
 		showCancelButton: false,
 		confirmButtonText: showButtonLabel,
+		footer: footerHtml,
 	}).then(formValues => {
 		if(formValues.dismiss){
 			return false;
