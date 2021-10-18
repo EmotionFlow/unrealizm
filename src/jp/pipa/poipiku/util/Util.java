@@ -392,18 +392,18 @@ public final class Util {
 
 		if(checkLogin.m_nLangId==1) {	// 国内
 			if(Math.random()>0.8) {	// 男性
-				sbRtn.append(String.format("<div data-cptid=\"1508582-%d\">", nRand));
+				sbRtn.append(String.format("<div data-cptid=\"1508582\">", nRand));
 				sbRtn.append("<script>");
 				sbRtn.append("gnshbrequest.cmd.push(function() {");
-				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508582\", \"[data-cptid='1508582-%d']\");", nRand));
+				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508582\", \"[data-cptid='1508582']\");", nRand));
 				sbRtn.append("});");
 				sbRtn.append("</script>");
 				sbRtn.append("</div>");
 			} else {	// 女性
-				sbRtn.append(String.format("<div data-cptid=\"1508583-%d\">", nRand));
+				sbRtn.append(String.format("<div data-cptid=\"1508583\">", nRand));
 				sbRtn.append("<script>");
 				sbRtn.append("gnshbrequest.cmd.push(function() {");
-				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508583\", \"[data-cptid='1508583-%d']\");", nRand));
+				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508583\", \"[data-cptid='1508583']\");", nRand));
 				sbRtn.append("});");
 				sbRtn.append("</script>");
 				sbRtn.append("</div>");
