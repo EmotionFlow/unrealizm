@@ -6,7 +6,6 @@
 	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
 		<%if(checkLogin.m_nLangId==1) {	// 国内%>
 <script>
-	window.gnshbrequest = window.gnshbrequest || {cmd:[]};
 	gnshbrequest.cmd.push(function(){
 		gnshbrequest.registerPassback("1508593");
 		gnshbrequest.registerPassback("1508597");
@@ -37,7 +36,6 @@
 <script async src="https://cpt.geniee.jp/hb/v1/213456/426/wrapper.min.js"></script>
 		<%} else {	// 海外%>
 <script>
-	window.gnshbrequest = window.gnshbrequest || {cmd:[]};
 	gnshbrequest.cmd.push(function(){
 		gnshbrequest.registerPassback("1508562");
 		gnshbrequest.registerPassback("1508566");

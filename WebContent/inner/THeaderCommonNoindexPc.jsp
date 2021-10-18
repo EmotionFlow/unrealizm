@@ -32,6 +32,7 @@
 <%@ include file="/inner/TSweetAlert.jsp"%>
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>window.googletag = window.googletag || {cmd: []};</script>
+<script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
 <%if(false /*checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd*/) {%>
 <script data-ad-client="ca-pub-0260822034407772" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <%}%>
