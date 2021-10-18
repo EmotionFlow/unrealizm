@@ -527,9 +527,9 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 		dateTimePastMsg();
 		return false;
 	}
-
 	return true;
 }
+
 function updateTweetButton() {
 	const $ImageSwitch = $('#ImageSwitch');
 	if (!$ImageSwitch.length) return;
@@ -678,11 +678,12 @@ function updatePublish(nUserId) {
 		$('#PublishTwitterFollowerInfo'),
 		$('#PublishTwitterFollowingInfo'),
 		$('#PublishTwitterFollowEachInfo'),
+		$('#PublishTwitterRTInfo'),
 		$('#PublishLoginInfo'),
 		$('#PublishHiddenInfo')
 	];
 
-	if (val===4 || val===5 || val===6 || val===7 || val===8 || val===9 || val===10 || val===11 || val===99 ){
+	if (val===4 || val===5 || val===6 || val===7 || val===8 || val===9 || val===10 || val===11 || val===12 || val===99 ){
 		let elToHide = null;
 		let elToVisible = null;
 		switch (val) {
@@ -706,6 +707,11 @@ function updatePublish(nUserId) {
 				break;
 			case 10:
 				elToVisible = $('#ItemTwitterList');
+				break;
+			case 12:
+				elToVisible = $('#PublishTwitterRTInfo');
+				$('#OptionTweet').prop("checked",true);
+				updateTweetButton();
 				break;
 			case 99:
 				elToVisible = $('#PublishHiddenInfo');
@@ -935,6 +941,11 @@ function UploadFile(user_id, request_id) {
 			return;
 		}
 		nTwListId = $('#EditTwitterList').val();
+	} else if(nPublishId === 12) {
+		if (nTweet === 0) {
+			needTweetForRTLimitMsg();
+			return;
+		}
 	}
 	if(nLimitedTime === 1){
 		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());

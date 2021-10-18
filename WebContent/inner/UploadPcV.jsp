@@ -274,6 +274,7 @@ if (requestId > 0) {
 								<option value="<%=Common.PUBLISH_ID_T_FOLLOWEE%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Followee")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_EACH%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Each")%></option>
 								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
+								<option value="<%=Common.PUBLISH_ID_T_RT%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_RT")%></option>
 								<%}//if(cTweet.m_bIsTweetEnable)%>
 								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
 								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
@@ -290,6 +291,7 @@ if (requestId > 0) {
 							<span id="PublishTwitterFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowerInfo")%></span>
 							<span id="PublishTwitterFollowingInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowingInfo")%></span>
 							<span id="PublishTwitterFollowEachInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowEachInfo")%></span>
+							<span id="PublishTwitterRTInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterRTInfo")%></span>
 							<span id="PublishLoginInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%></span>
 						</div>
 					</div>

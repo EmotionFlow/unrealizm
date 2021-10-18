@@ -87,6 +87,7 @@ public final class Common {
 	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー
 	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト
 	public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// 期間限定
+	public static final int PUBLISH_ID_T_RT		    = 12;	// ツイッターリツイート
 	public static final int PUBLISH_ID_HIDDEN		= 99;	// 非公開
 	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
 	public static final String[] PUBLISH_ID_FILE = {
