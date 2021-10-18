@@ -130,6 +130,10 @@ public class CardSettlementEpsilon extends CardSettlement {
 				ssi.missionCode = 21;
 				ssi.kariFlag = null;    // 仮・実売上は管理画面の設定に従う
 				break;
+			case MonthlyFirstFree:
+				ssi.missionCode = 23;
+				ssi.kariFlag = null;
+				break;
 			case AuthorizeOnly:
 				ssi.missionCode = 1;
 				ssi.kariFlag = 1;       // 仮売上固定

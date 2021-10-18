@@ -58,7 +58,7 @@ public class SendGiftC {
 				passport.courseId = 1;
 				passport.insert();
 			}
-			passport.activate();
+			passport.activate(PassportPayment.By.Ticket);
 		}
 	}
 

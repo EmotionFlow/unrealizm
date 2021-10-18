@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import jp.pipa.poipiku.PassportPayment;
 import okhttp3.*;
 
 public class UpdatePassportMember extends Batch{
 	static final boolean _DEBUG = false;
-	static final String URL_SCHEME      = (_DEBUG)?"http":"https";
-
+	static final String URL_SCHEME = (_DEBUG)?"http":"https";
 
 	public static void main(String[] args) {
 		java.sql.Connection connection = null;
@@ -179,14 +179,11 @@ public class UpdatePassportMember extends Batch{
 
 			System.out.println(sql);
 
-			// PassportPayment.java
-			//     CreditCard(1),
-			//     Ticket(2);
 			// 今月はチケット払い
 			// -> 金額を0円にする
 			List<Integer> changeAmountUserIds = new ArrayList<>();
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, 2);
+			statement.setInt(1, PassportPayment.By.Ticket.getCode());
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				changeAmountUserIds.add(resultSet.getInt(1));
@@ -218,7 +215,7 @@ public class UpdatePassportMember extends Batch{
 			// -> 金額を300円にする
 			connection = dataSource.getConnection();
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, 1);
+			statement.setInt(1, PassportPayment.By.CreditCard.getCode());
 			resultSet = statement.executeQuery();
 
 			while (resultSet.next()) {
@@ -240,7 +237,7 @@ public class UpdatePassportMember extends Batch{
 				).build();
 				try (Response response = client.newCall(request).execute()) {
 					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string());
-				}
+				} catch(NullPointerException ignored) {}
 			}
 			changeAmountUserIds.clear();
 
@@ -248,8 +245,8 @@ public class UpdatePassportMember extends Batch{
 			for (Integer userId: ignoredUserIds){
 				Request request = new Request.Builder().url(urlClearUserCacheF + userId.toString()).build();
 				try (Response response = client.newCall(request).execute()) {
-					System.out.println(userId.toString() + " " + response.body().string());
-				}
+					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string());
+				} catch(NullPointerException ignored) {}
 			}
 		} catch (Exception e) {
 			System.out.println(sql);

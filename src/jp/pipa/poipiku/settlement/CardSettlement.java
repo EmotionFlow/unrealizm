@@ -42,6 +42,7 @@ public abstract class CardSettlement {
 		Undef,	  // 未定義
 		OneTime,	// 一回限り
 		Monthly,	 // 毎月課金
+		MonthlyFirstFree, // 毎月課金、登録月無料
 		AuthorizeOnly // 仮売上
 	}
 	public BillingCategory billingCategory = BillingCategory.Undef;

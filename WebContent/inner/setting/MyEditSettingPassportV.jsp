@@ -2,6 +2,7 @@
 <%
 final PassportPayment payment = new PassportPayment(checkLogin);
 final PassportSubscription subscription = new PassportSubscription(checkLogin);
+final boolean existsBuyHistory = subscription.existsBuyHistory();
 final PoiTicket ticket = new PoiTicket(checkLogin);
 %>
 <%@ include file="../TCreditCard.jsp"%>
@@ -64,7 +65,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		);
 	}
 
-	// epsilonPayment - epsilonTrade間で受け渡しする変数。
+	<%// epsilonPayment - epsilonTrade間で受け渡しする変数。%>
 	let g_epsilonInfo = {
 		"passportInfo": null,
 		"passportAmount": null,
@@ -93,14 +94,13 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 
 			EpsilonToken.init(contructCode);
 
-			// epsilonTradeを無名関数で定義するとコールバックしてくれない。
-			// global領域に関数を定義し、関数名を引数指定しないとダメ。
+			<%// epsilonTradeを無名関数で定義するとコールバックしてくれない。%>
+			<%// global領域に関数を定義し、関数名を引数指定しないとダメ。%>
 			EpsilonToken.getToken(cardObj , epsilonTrade);
 		}
 	}
 
 	function epsilonTrade(response){
-		// もう使うことはないので、カード番号を初期化する。
 		if(g_epsilonInfo.cardInfo.number){
 			g_epsilonInfo.cardInfo.number = null;
 		}
@@ -130,13 +130,15 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			"securityCode": null,
 			"holderName": null,
 		};
-		let elPassportNowPayment = $('#PassportNowPayment');
-		if(elPassportNowPayment.css('display') !== 'none'){
+		let elPassportNowPayment = $('.NowPayment').first();
+
+		if($('.BuyPassportButton').first() === 'none'){
 			alert("<%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%>");
 			return;
 		}
-		elPassportNowPayment.show();
-		$('#PassportNowPayment2').show();
+
+		$('.NowPayment').show();
+
 		$.ajax({
 			"type": "get",
 			"url": "/f/CheckCreditCardF.jsp",
@@ -147,16 +149,15 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			if (typeof (result) === "undefined" || result == null || result === -1) {
 				return false;
 			} else if (result === 1) {
-				if (confirm("<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm01")%>")) {
+				if (confirm("<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm01" + (existsBuyHistory ? "" : ".FreePeriod"))%>")) {
 					epsilonPayment(passportInfo, nPassportAmount, null, elPassportNowPayment);
 				} else {
-					elPassportNowPayment.hide();
-					$('#PassportNowPayment2').hide();
+					$('.NowPayment').hide();
 					$(".BuyPassportButton").show();
 				}
 			} else if (result === 0) {
 				const title = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>";
-				const description = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm02")%>";
+				const description = "<%=_TEX.T("MyEditSettingPassportV.BuySubscription.Confirm02" + (existsBuyHistory ? "" : ".FreePeriod"))%>";
 				<%// クレジットカード情報入力ダイアログを表示、%>
 				<%// 入力内容を代理店に送信し、Tokenを取得する。%>
 				Swal.fire({
@@ -168,8 +169,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				}).then(formValues => {
 					<%// キャンセルボタンがクリックされた%>
 					if (formValues.dismiss) {
-						elPassportNowPayment.hide();
-						$('#PassportNowPayment2').hide();
+						$('.NowPayment').hide();
 						$(".BuyPassportButton").show();
 						return false;
 					}
@@ -292,6 +292,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			boolean isNotMember = passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive;
 		%>
 		<div class="SettingBody">
+			<%//ポイパス%>
 			<%if(passportStatus == Passport.Status.Cancelling){%>
 			<%=_TEX.T("MyEditSettingPassportV.Cancelling")%>
 			<%}else if(isNotMember) {%>
@@ -305,29 +306,39 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 					<%=_TEX.T("MyEditSettingPassportV.CEOMessage.More")%>
 				</p>
 			</div>
-			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
 			<%}else{%>
 			<%=_TEX.T("MyEditSettingPassportV.Joining")%>
 			<%}%>
 
-			<%if(isNotMember) {%>
-			<div class="SettingBodyCmd">
-				<div class="RegistMessage"></div>
-				<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-					<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>
-				</a>
+			<%//金額%>
+			<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Fee.Title")%></div>
+			<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Fee.Amount")%></div>
+
+			<%if (isNotMember) {%>
+			<%if (existsBuyHistory) {%>
+			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
+			<%} else {%>
+			<%//初月無料キャンペーン%>
+			<div class="SettingListTitle" style="background: #fffff0;text-align: center;"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Title")%></div>
+			<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Description")%></div>
+			<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px;">
+				<ul style="list-style-type: circle;padding-inline: 25px; font-size: 12px">
+					<li><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.List01")%></li>
+					<li><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.List02")%></li>
+					<li><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.List03")%></li>
+				</ul>
 			</div>
-			<div id="PassportNowPayment" style="display:none">
-				<span class="PoiPassLoading"></span><span><%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%></span>
-			</div>
+			<%}%>
+			<%@ include file="MyEditSettingPassportBuyButton.jsp"%>
 			<%}%>
 		</div>
 	</div>
 
+	<%//チケット%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.Ticket")%>: <%=ticket.exists?ticket.amount:0%> <%=_TEX.T("MyEditSettingPassportV.Ticket.Amount")%></div>
-		<%=_TEX.T("MyEditSettingPassportV.Ticket.Description")%>
-		<ul>
+		<%=_TEX.T("MyEditSettingPassportV.Ticket.Description")%> <a class="AutoLink" href="javascript: void(0)" onclick="$('#TicketInfoList').toggle();">more...</a>
+		<ul id="TicketInfoList" style="display: none;">
 			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List01")%></li>
 			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List02")%></li>
 			<li><%=_TEX.T("MyEditSettingPassportV.Ticket.List03")%></li>
@@ -335,6 +346,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 	</div>
 
 	<%if(!isNotMember){%>
+	<%//今月のお支払い%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Title")%></div>
 		<%if(payment.exists){%>
@@ -345,8 +357,10 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				<%}%>
 			<%}else if(payment.by == PassportPayment.By.CreditCard){%>
 				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.ByCreditCard")%>
+			<%}else if(payment.by == PassportPayment.By.FreePeriod){%>
+				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.ByFreePeriod")%>
 			<%}else{%>
-			<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>
+				<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>
 			<%}%>
 		<%}else{%>
 		<%=_TEX.T("MyEditSettingPassportV.ThisMonthPayment.Processing")%>
@@ -395,6 +409,13 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List06.Normal")%></td>
 							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List06.Benefit")%></td>
 						</tr>
+						<%if(isNotMember){%>
+						<tr>
+							<td colspan="3">
+								<%@ include file="MyEditSettingPassportBuyButton.jsp"%>
+							</td>
+						</tr>
+						<%}%>
 						<tr>
 							<td class="ListCell"><%=_TEX.T("MyEditSettingPassportV.Features.List07")%></td>
 							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List07.Normal")%></td>
@@ -429,14 +450,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 					</table>
 				</div>
 
-				<%if(isNotMember) {%>
-				<div class="SettingBodyCmd">
-					<div class="RegistMessage"></div>
-					<a class="BtnBase SettingBodyCmdRegist BuyPassportButton" href="javascript:void(0)" onclick="BuyPassport(this)">
-						<%=_TEX.T("MyEditSettingPassportV.BuySubscription")%>
-					</a>
-				</div>
-				<div class="SettingBodyCmd" style="border: solid 1px #999999; border-radius: 6px; padding-right: 10px;">
+				<div class="SettingBodyCmd" style="font-size:12px;">
 					<ul style="list-style-type: circle;">
 						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo01")%></li>
 						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo02")%></li>
@@ -444,10 +458,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 						<li><%=_TEX.T("MyEditSettingPassportV.SubscriptionInfo04")%></li>
 					</ul>
 				</div>
-				<div id="PassportNowPayment2" style="display:none">
-					<span class="PoiPassLoading"></span><span><%=_TEX.T("MyEditSettingPassportV.PurchaseInProcess")%></span>
-				</div>
-				<%}%>
+				<%@ include file="MyEditSettingPassportBuyButton.jsp"%>
 				<%if(subscription.getStatus() == PassportSubscription.Status.UnderContraction) {%>
 				<div class="SettingBodyCmd">
 					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">

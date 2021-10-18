@@ -105,6 +105,32 @@ public final class PassportSubscription {
 		errorKind = ErrorKind.None;
 	}
 
+	public boolean existsBuyHistory() {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		final String sql = "select count(*) from passport_subscriptions where user_id=? and order_id>0";
+		int cnt = -1;
+
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			cnt = resultSet.getInt(1);
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			errorKind = ErrorKind.DoRetry;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+		return cnt > 0;
+	}
+
 	public boolean buy(int nPassportCourseId, String strAgentToken, String strCardExpire,
 					   String strCardSecurityCode, String strUserAgent) {
 		if(userId < 1){
@@ -194,7 +220,11 @@ public final class PassportSubscription {
 				cardSettlement.cardExpire = strCardExpire;
 				cardSettlement.cardSecurityCode = strCardSecurityCode;
 				cardSettlement.userAgent = strUserAgent;
-				cardSettlement.billingCategory = CardSettlement.BillingCategory.Monthly;
+
+				// 過去に登録歴がなかったら、登録月無料とする。
+				cardSettlement.billingCategory =
+						existsBuyHistory() ? CardSettlement.BillingCategory.Monthly : CardSettlement.BillingCategory.MonthlyFirstFree;
+
 				cardSettlement.itemName = CardSettlement.ItemName.Poipass;
 				authorizeResult = cardSettlement.authorize();
 				if (!authorizeResult) {

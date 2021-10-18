@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Passport;
+import jp.pipa.poipiku.PassportPayment;
 import jp.pipa.poipiku.PassportSubscription;
 import jp.pipa.poipiku.util.Log;
 
@@ -11,17 +12,19 @@ public final class BuyPassportC {
 	public boolean getResults(CheckLogin checkLogin, BuyPassportCParam cParam) {
 		if(cParam.m_nUserId<0) return false;
 		if(!checkLogin.m_bLogin) return false;
-		if(checkLogin.m_bLogin && (cParam.m_nUserId != checkLogin.m_nUserId)) return false;
+		if(cParam.m_nUserId != checkLogin.m_nUserId) return false;
 
 		PassportSubscription subscription = new PassportSubscription(checkLogin);
 
+		boolean exitsBuyHistory = subscription.existsBuyHistory();
+
 		boolean result;
 		result = subscription.buy(
-				cParam.m_nPassportId,
-				cParam.m_strAgentToken,
-				cParam.m_strCardExpire,
-				cParam.m_strCardSecurityCode,
-				cParam.m_strUserAgent
+			cParam.m_nPassportId,
+			cParam.m_strAgentToken,
+			cParam.m_strCardExpire,
+			cParam.m_strCardSecurityCode,
+			cParam.m_strUserAgent
 		);
 
 		if (result) {
@@ -31,7 +34,7 @@ public final class BuyPassportC {
 				result = passport.insert();
 			}
 			if (result) {
-				result = passport.activate();
+				result = passport.activate(exitsBuyHistory ? PassportPayment.By.CreditCard : PassportPayment.By.FreePeriod);
 			} else {
 				Log.d("passport.insert() failed");
 			}

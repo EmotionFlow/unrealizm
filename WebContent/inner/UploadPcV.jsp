@@ -38,7 +38,7 @@ if (requestId > 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-42.js" type="text/javascript"></script>
+		<script src="/js/upload-43.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -54,80 +54,8 @@ if (requestId > 0) {
 			<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<%}%>
 
+		<%@ include file="UpPcV.jsp"%>
 		<script>
-			function startMsg() {
-				$('#UoloadCmdBtn').addClass('Disabled').html('<%=_TEX.T("EditIllustVCommon.Uploading")%>');
-				DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
-			}
-
-			function dateTimeEmptyMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.EmptyError")%>');
-			}
-
-			function dateTimePastMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.PastError")%>');
-			}
-
-			function dateTimeReverseMsg() {
-				DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
-			}
-
-			function twtterListRateLimiteExceededMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
-			}
-			function twtterListInvalidTokenMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.InvalidToken")%>");
-			}
-			function twitterListNotFoundMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%>");
-			}
-			function twtterListOtherErrMsg(nErrCode) {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.OtherErr")%>: " + nErrCode);
-			}
-
-			function twtterTweetInvalidTokenMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.InvalidToken")%>");
-			}
-			function twtterTweetRateLimitMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.RateLimiteExceeded")%>");
-			}
-			function twtterTweetTooMuchMsg() {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.TooMuch")%>");
-			}
-			function twtterTweetOtherErrMsg(nErrCode) {
-				DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.OtherErr")%>: " + nErrCode);
-			}
-
-			function completeMsg() {
-				DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
-			}
-
-			function errorMsg(result) {
-				$('#UoloadCmdBtn').removeClass('Disabled').html('<%=_TEX.T("UploadFilePc.UploadBtn")%>');
-
-				if(data.result == <%=Common.UPLOAD_FILE_TOTAL_ERROR%>) {
-					// file size error
-					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>');
-				} else if(data.result == <%=Common.UPLOAD_FILE_TYPE_ERROR%>) {
-					// file type error
-					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
-				} else {
-					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
-				}
-			}
-
-			function DispDescCharNum() {
-				var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditDescription").val().length;
-				$("#DescriptionCharNum").html(nCharNum);
-			}
-
-			<%if(nEditorId==Common.EDITOR_TEXT){%>
-			function DispTextCharNum() {
-				var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditTextBody").val().length;
-				$("#TextBodyCharNum").html(nCharNum);
-			}
-			<%}%>
-
 			function onCompleteUpload(){
 				<%if(requestId<0){%>
 				location.href = "/MyIllustListPcV.jsp";
@@ -193,7 +121,6 @@ if (requestId > 0) {
 					}
 				);
 			});
-
 		</script>
 
 		<style>
