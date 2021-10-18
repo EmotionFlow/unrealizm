@@ -137,7 +137,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		</script>
 		<%if(!isApp){%>
 		<style>
-            body {padding-top: 79px !important;}
+						body {padding-top: 79px !important;}
 		</style>
 		<%}%>
 	</head>
@@ -165,7 +165,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<article class="Wrapper ThumbList">
 			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
-				<%=Util.poipiku_300x100_top(checkLogin)%>
+				<%@ include file="/inner/TAdSp300x100_top.jsp"%>
 			</span>
 			<%}%>
 

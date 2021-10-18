@@ -2,39 +2,62 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+<!-- Geniee Wrapper Head Tag -->
+	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
+		<%if(checkLogin.m_nLangId==1) {	// 国内%>
 <script>
-	googletag.cmd.push(function() {
-	<%if(Util.isSmartPhone(request)) {%>
-		<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_300x100_top', [300, 50], 'div-gpt-ad-1625176558051-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[300, 250], [336, 280]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid_2', [[300, 250], [336, 280]], 'div-gpt-ad-1597961771258-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_300x250_footer_left', [[336, 280], [300, 250]], 'div-gpt-ad-1598037992742-0').addService(googletag.pubads());
-		<%}else{%>
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_300x100_top', [300, 50], 'div-gpt-ad-1625176558051-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid_R18', [[300, 250], [336, 280]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid_R18', [[300, 250], [336, 280]], 'div-gpt-ad-1597961771258-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_footer_R18', [[300, 250], [336, 280]], 'div-gpt-ad-1598037992742-0').addService(googletag.pubads());
-		<%}%>
-	<%}else{%>
-		<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right', [300, 250], 'div-gpt-ad-1598035277896-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x600_right_bottom', [[300, 600], [300, 250]], 'div-gpt-ad-1598035432316-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid', [[300, 250], [336, 280]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
-		<%}else{%>
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_top_right_r18', [[300, 250], [336, 280]], 'div-gpt-ad-1598035277896-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_right_botto_r18', [300, 250], 'div-gpt-ad-1598035432316-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid_r18', [[336, 280], [300, 250]], 'div-gpt-ad-1597961677347-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_left_R18', [300, 250], 'div-gpt-ad-1597964764341-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_center_R18', [300, 250], 'div-gpt-ad-1597964832589-0').addService(googletag.pubads());
-		googletag.defineSlot('/4789880/poipiku/poipiku_300x250_footer_right_r18', [300, 250], 'div-gpt-ad-1597964525272-0').addService(googletag.pubads());
-		<%}%>
-	<%}%>
-	googletag.pubads().enableSingleRequest();
-	googletag.enableServices();
+	window.gnshbrequest = window.gnshbrequest || {cmd:[]};
+	gnshbrequest.cmd.push(function(){
+		gnshbrequest.registerPassback("1508593");
+		gnshbrequest.registerPassback("1508597");
+		gnshbrequest.registerPassback("1508598");
+		gnshbrequest.registerPassback("1508599");
+		gnshbrequest.registerPassback("1508600");
+		gnshbrequest.registerPassback("1508596");
+		gnshbrequest.registerPassback("1508595");
+		gnshbrequest.registerPassback("1508496");
+		gnshbrequest.registerPassback("1508565");
+		gnshbrequest.registerPassback("1508569");
+		gnshbrequest.registerPassback("1508573");
+		gnshbrequest.registerPassback("1508577");
+		gnshbrequest.registerPassback("1508581");
+		gnshbrequest.registerPassback("1508582");
+		gnshbrequest.registerPassback("1508583");
+		gnshbrequest.registerPassback("1508584");
+		gnshbrequest.registerPassback("1508585");
+		gnshbrequest.registerPassback("1508591");
+		gnshbrequest.registerPassback("1508592");
+		gnshbrequest.registerPassback("1508594");
+		gnshbrequest.registerPassback("1508662");
+		gnshbrequest.registerPassback("1508690");
+		gnshbrequest.registerPassback("1508857");
+		gnshbrequest.registerPassback("1508858");
 	});
 </script>
+<script async src="https://cpt.geniee.jp/hb/v1/213456/426/wrapper.min.js"></script>
+		<%} else {	// 海外%>
+<script>
+	window.gnshbrequest = window.gnshbrequest || {cmd:[]};
+	gnshbrequest.cmd.push(function(){
+		gnshbrequest.registerPassback("1508562");
+		gnshbrequest.registerPassback("1508566");
+		gnshbrequest.registerPassback("1508570");
+		gnshbrequest.registerPassback("1508574");
+		gnshbrequest.registerPassback("1508578");
+		gnshbrequest.registerPassback("1508601");
+		gnshbrequest.registerPassback("1508603");
+		gnshbrequest.registerPassback("1508604");
+		gnshbrequest.registerPassback("1508605");
+		gnshbrequest.registerPassback("1508606");
+		gnshbrequest.registerPassback("1508663");
+		gnshbrequest.registerPassback("1508691");
+	});
+</script>
+<script async src="https://cpt.geniee.jp/hb/v1/213495/433/wrapper.min.js"></script>
+		<%}%>
+	<%} else {	// R18%>
+		<%if(checkLogin.m_nLangId==1) {	// 国内%>
+		<%} else {	// 海外%>
+		<%}%>
+	<%}%>
 <%}%>

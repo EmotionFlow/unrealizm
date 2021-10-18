@@ -27,7 +27,7 @@ public final class CheckLogin {
 	public String m_strNickName = "no name";
 	public String m_strHashPass = "";
 	public int m_nSafeFilter = Common.SAFE_FILTER_R18;
-	public int m_nLangId = 0;
+	public int m_nLangId = 1;
 	public String m_strFileName = "";
 	public boolean m_bEmailValid = false;
 	public int m_nPassportId = Common.PASSPORT_OFF;

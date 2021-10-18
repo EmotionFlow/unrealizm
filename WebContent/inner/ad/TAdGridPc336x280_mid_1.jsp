@@ -3,14 +3,32 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <div class="PcSideBarAd">
-	<a class="PassAd" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">ポイパスで広告非表示! &nbsp; <i class="fas fa-times"></i></a>
+	<a class="PassAd" href="/MyEditSettingPcV.jsp?MENUID=POIPASS"><%=_TEX.T("Common.Ad.Hide")%> &nbsp; <i class="fas fa-times"></i></a>
 
-	<!-- /4789880/poipiku/poipiku_336x280_mid_1 -->
-	<!-- /4789880/poipiku/poipiku_336x280_mid_r18 -->
-	<div id='div-gpt-ad-1597961677347-0'>
+	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
+	<!-- /4789880/poipiku/poipiku_336x280_mid -->
+	<%int nRand = (int)(Math.random()*10000);%>
+	<div id='div-gpt-ad-1592940074228-<%=nRand%>'>
 		<script>
-			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1597961677347-0'); });
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-<%=nRand%>').addService(googletag.pubads());
+			googletag.enableServices();
+			googletag.display('div-gpt-ad-1592940074228-<%=nRand%>');
+		});
 		</script>
 	</div>
+	<%} else {	// R18%>
+	<!-- /4789880/poipiku/poipiku_336x280_mid_r18 -->
+	<%int nRand = (int)(Math.random()*10000);%>
+	<div id='div-gpt-ad-1594920278323-<%=nRand%>'>
+		<script>
+		googletag.cmd.push(function() {
+			googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid_r18', [[336, 280], [300, 250]], 'div-gpt-ad-1594920278323-<%=nRand%>').addService(googletag.pubads());
+			googletag.enableServices();
+			googletag.display('div-gpt-ad-1594920278323-<%=nRand%>');
+		});
+		</script>
+	</div>
+	<%}%>
 </div>
 <%}%>

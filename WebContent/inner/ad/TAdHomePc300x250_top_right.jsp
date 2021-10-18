@@ -3,12 +3,44 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <div class="PcSideBarAd">
-	<!-- /4789880/poipiku/poipiku_300x250_top_right -->
-	<!-- /4789880/poipiku/poipiku_300x250_top_right_r18 -->
-	<div id='div-gpt-ad-1598035277896-0' style='width: 300px; height: 250px;'>
-		<script>
-			googletag.cmd.push(function() { googletag.display('div-gpt-ad-1598035277896-0'); });
-		</script>
-	</div>
+	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
+		<%if(checkLogin.m_nLangId==1) {	// 国内%>
+			<%if(Math.random()>0.8) {	// 男性%>
+<div data-cptid="1508591">
+<script>
+	gnshbrequest.cmd.push(function() {
+		gnshbrequest.applyPassback("1508591", "[data-cptid='1508591']");
+	});
+</script>
+</div>
+			<%} else {	// 女性%>
+<div data-cptid="1508592">
+<script>
+	gnshbrequest.cmd.push(function() {
+		gnshbrequest.applyPassback("1508592", "[data-cptid='1508592']");
+	});
+</script>
+</div>
+			<%}%>
+		<%} else {	// 海外%>
+<div data-cptid="1508601">
+<script>
+	gnshbrequest.cmd.push(function() {
+		gnshbrequest.applyPassback("1508601", "[data-cptid='1508601']");
+	});
+</script>
+</div>
+		<%}%>
+	<%} else {	// R18%>
+		<%if(checkLogin.m_nLangId==1) {	// 国内%>
+			<%if(Math.random()>0.8) {	// 男性%>
+<script type="text/javascript" src="https://js.gsspcln.jp/t/508/607/a1508607.js"></script>
+			<%} else {	// 女性%>
+<script type="text/javascript" src="https://js.gsspcln.jp/t/508/608/a1508608.js"></script>
+			<%}%>
+		<%} else {	// 海外%>
+<script type="text/javascript" src="https://js.gsspcln.jp/t/508/608/a1508608.js"></script>
+		<%}%>
+	<%}%>
 </div>
 <%}%>
