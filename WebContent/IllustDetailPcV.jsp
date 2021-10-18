@@ -174,6 +174,9 @@ if(cResults.isDownloadable) {
 				<%}%>
 				</span>
 				<%}%>
+				<%if (checkLogin.m_nPassportId == 0) {%>
+				<br><span><a style="text-decoration: underline;" href="https://poipiku.com/MyEditSettingPcV.jsp?MENUID=POIPASS"><%=_TEX.T("IllustDetailPc.PoipassBenefit")%></a></span>
+				<%}%>
 			</div>
 			<%}%>
 			<div class="IllustItemTProhibit">

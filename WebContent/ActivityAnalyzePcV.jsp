@@ -25,7 +25,7 @@ if(!checkLogin.m_bLogin) {
 
 			function addContents() {
 				g_chartAnalyze.stop();	//g_bAdding代わり
-				var $objMessage = $("<div/>").addClass("Waiting");
+				const $objMessage = $("<div/>").addClass("Waiting");
 				$("#AnalyzeGraph").append($objMessage);
 				$.ajax({
 					"type": "post",
@@ -55,6 +55,17 @@ if(!checkLogin.m_bLogin) {
 			}
 
 			function changeCategory(elm, param) {
+				<%if(checkLogin.m_nPassportId == Common.PASSPORT_OFF) {%>
+				if (param > 0) {
+					showIntroductionPoipassDlgHtml(
+						'',
+						"<%=_TEX.T("ActivityAnalyze.IntroductionPoipass")%>",
+						'<%=_TEX.T("IntroductionPoipass.ShowButton")%>',
+						'<%=_TEX.T("IntroductionPoipass.FooterHtml")%>'
+					);
+					return;
+				}
+				<%}%>
 				g_nPage = 0;
 				g_nCategory = param;
 				$("#IllustThumbList").empty();
@@ -110,13 +121,8 @@ if(!checkLogin.m_bLogin) {
 		<article class="Wrapper">
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>
-				<%if(checkLogin.m_nPassportId >=Common.PASSPORT_ON) {%>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 1)"><%=_TEX.T("ActivityList.Category.30days")%></a>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 2)"><%=_TEX.T("ActivityList.Category.Total")%></a>
-				<%} else {%>
-				<span class="BtnBase CategoryBtn Disabled"><%=_TEX.T("ActivityList.Category.30days")%></span>
-				<span class="BtnBase CategoryBtn Disabled"><%=_TEX.T("ActivityList.Category.Total")%></span>
-				<%}%>
 			</nav>
 			<section id="AnalyzeGraph" class="IllustItemList" style="padding: 10px;">
 				<canvas id="AnalyzeChart" width="340" height="340"></canvas>
