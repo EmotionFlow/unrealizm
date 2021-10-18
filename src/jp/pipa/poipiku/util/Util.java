@@ -390,44 +390,46 @@ public final class Util {
 		sbRtn.append("<div class=\"SideBarMid\">");
 		int nRand = (int)(Math.random()*10000);
 
-		if(checkLogin.m_nLangId==1) {	// 国内
-			if(Math.random()>0.8) {	// 男性
-				sbRtn.append(String.format("<div data-cptid=\"1508582-%d\">", nRand));
-				sbRtn.append("<script>");
-				sbRtn.append("gnshbrequest.cmd.push(function() {");
-				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508582\", \"[data-cptid='1508582-%d']\");", nRand));
-				sbRtn.append("});");
-				sbRtn.append("</script>");
-				sbRtn.append("</div>");
-			} else {	// 女性
-				sbRtn.append(String.format("<div data-cptid=\"1508583-%d\">", nRand));
-				sbRtn.append("<script>");
-				sbRtn.append("gnshbrequest.cmd.push(function() {");
-				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508583\", \"[data-cptid='1508583-%d']\");", nRand));
-				sbRtn.append("});");
-				sbRtn.append("</script>");
-				sbRtn.append("</div>");
-			}
-		} else {	// 海外
-			sbRtn.append(String.format("<div data-cptid=\"1508574-%d\">", nRand));
-			sbRtn.append("<script>");
-			sbRtn.append("gnshbrequest.cmd.push(function() {");
-			sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508574\", \"[data-cptid='1508574-%d']\");", nRand));
-			sbRtn.append("});");
-			sbRtn.append("</script>");
-			sbRtn.append("</div>");
-		}
+		// SB Ad
+//		if(checkLogin.m_nLangId==1) {	// 国内
+//			if(Math.random()>0.8) {	// 男性
+//				sbRtn.append(String.format("<div data-cptid=\"1508582-%d\">", nRand));
+//				sbRtn.append("<script>");
+//				sbRtn.append("gnshbrequest.cmd.push(function() {");
+//				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508582\", \"[data-cptid='1508582-%d']\");", nRand));
+//				sbRtn.append("});");
+//				sbRtn.append("</script>");
+//				sbRtn.append("</div>");
+//			} else {	// 女性
+//				sbRtn.append(String.format("<div data-cptid=\"1508583-%d\">", nRand));
+//				sbRtn.append("<script>");
+//				sbRtn.append("gnshbrequest.cmd.push(function() {");
+//				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508583\", \"[data-cptid='1508583-%d']\");", nRand));
+//				sbRtn.append("});");
+//				sbRtn.append("</script>");
+//				sbRtn.append("</div>");
+//			}
+//		} else {	// 海外
+//			sbRtn.append(String.format("<div data-cptid=\"1508574-%d\">", nRand));
+//			sbRtn.append("<script>");
+//			sbRtn.append("gnshbrequest.cmd.push(function() {");
+//			sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508574\", \"[data-cptid='1508574-%d']\");", nRand));
+//			sbRtn.append("});");
+//			sbRtn.append("</script>");
+//			sbRtn.append("</div>");
+//		}
 
-//		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
-//		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
-//		sbRtn.append("<script>");
-//		sbRtn.append("googletag.cmd.push(function() {");
-//		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
-//		sbRtn.append("googletag.enableServices();");
-//		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
-//		sbRtn.append("});");
-//		sbRtn.append("</script>");
-//		sbRtn.append("</div>");
+		// AdManager
+		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
+		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
+		sbRtn.append("<script>");
+		sbRtn.append("googletag.cmd.push(function() {");
+		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
+		sbRtn.append("googletag.enableServices();");
+		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
+		sbRtn.append("});");
+		sbRtn.append("</script>");
+		sbRtn.append("</div>");
 
 		sbRtn.append("</div>");
 		return sbRtn.toString();
