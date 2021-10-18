@@ -102,6 +102,8 @@ public final class Common {
 			"/img/publish_t_follow.png",	// 8
 			"/img/publish_t_each.png",		// 9
 			"/img/publish_t_list.png",		// 10
+			"",		// 11
+			"/img/publish_t_rt.png",		// 12
 	};
 
 

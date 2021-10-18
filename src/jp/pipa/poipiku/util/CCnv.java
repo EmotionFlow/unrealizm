@@ -236,7 +236,8 @@ public final class CCnv {
 		case Common.PUBLISH_ID_T_FOLLOWEE:
 		case Common.PUBLISH_ID_T_EACH:
 		case Common.PUBLISH_ID_T_LIST:
-			// R18の時は1枚目にWarningを出すのでずらす
+		case Common.PUBLISH_ID_T_RT:
+			// 1枚目にWarningを出すのでずらす
 			cContent.m_nFileNum++;
 			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
 			if(nViewMode==VIEW_DETAIL) {
