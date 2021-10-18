@@ -296,7 +296,6 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			<%if(passportStatus == Passport.Status.Cancelling){%>
 			<%=_TEX.T("MyEditSettingPassportV.Cancelling")%>
 			<%}else if(isNotMember) {%>
-			<%//_TEX.T("MyEditSettingPassportV.Text")%>
 			<div class="CEOMessage">
 				<p class="HeadLine">
 					<%=_TEX.T("MyEditSettingPassportV.CEOMessage.HeadLine")%>
@@ -307,7 +306,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				</p>
 			</div>
 			<%}else{%>
-			<%=_TEX.T("MyEditSettingPassportV.Joining")%>
+			<div class="SettingBody"><%=_TEX.T("MyEditSettingPassportV.Joining")%></div>
 			<%}%>
 
 			<%//金額%>
@@ -316,7 +315,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 
 			<%if (isNotMember) {%>
 			<%if (existsBuyHistory) {%>
-			<%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%>
+			<div class="SettingBody" style="margin-top: 18px;"><%=_TEX.T("MyEditSettingPassportV.WhenYouJoin")%></div>
 			<%} else {%>
 			<%//初月無料キャンペーン%>
 			<div class="SettingListTitle" style="background: #fffff0;text-align: center;"><%=_TEX.T("MyEditSettingPassportV.Campaign.FirstMonthFree.Title")%></div>
