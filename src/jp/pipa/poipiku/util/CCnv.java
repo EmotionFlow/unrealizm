@@ -89,6 +89,7 @@ public final class CCnv {
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE) strThumbClass += " TFollow";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) strThumbClass += " TEach";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST) strThumbClass += " TList";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_RT) strThumbClass += " TRT";
 
 		// Editor Class
 		if(cContent.m_nEditorId==Common.EDITOR_UPLOAD) strThumbClass += " Upload";

@@ -446,11 +446,12 @@ function generateShowAppendFile(){
 			"data": {"UID":user_id, "IID":content_id, "PAS":password, "MD":mode, "TWF":tw_f},
 			"url": "/f/ShowAppendFileF.jsp",
 			"dataType": "json",
-			"success": function(data) {
+		}).then(
+			data => {
 				if(data.result_num>0) {
 					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
 					$(elm).parent().hide();
-					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
+					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList TRT');
 					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
 					//for text
 					$('#IllustItemText_' + content_id).css('max-height','500px');
@@ -461,11 +462,10 @@ function generateShowAppendFile(){
 				if(data.tw_friendship >= 0){
 					tw_friendships[user_id] = data.tw_friendship;
 				}
-			},"error": function(err){
+			},err => {
 				console.log(err);
 			}
-		});
-
+		);
 	}
 }
 
