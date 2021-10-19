@@ -388,13 +388,18 @@ public final class CTweet {
 
 		int result;
 		try{
+			int loops = 0;
 			long cursor = -1;
 			Twitter twitter = createTwitter4jInstance();
 			IDs ids;
 			boolean isFound = false;
-			while (cursor<100) {
+			while (loops++ < 20) {
 				ids = twitter.getRetweeterIds(tweetId, cursor++);
 				long[] idAry = ids.getIDs();
+
+//				Long[] idLst = Arrays.stream(idAry).boxed().toArray(Long[]::new);
+//				Log.d(Arrays.stream(idLst).map(Object::toString).collect(Collectors.joining(",")));
+
 				for (long id: idAry){
 					if (id == m_lnTwitterUserId) {
 						isFound = true;
@@ -403,6 +408,8 @@ public final class CTweet {
 				}
 				if (!ids.hasNext()) {
 					break;
+				} else {
+					cursor = ids.getNextCursor();
 				}
 			}
 			if (isFound) {
@@ -410,6 +417,7 @@ public final class CTweet {
 				return RETWEET_ALREADY;
 			} else {
 				twitter.retweetStatus(tweetId);
+				TwitterRetweet.insert(m_nUserId, m_lnTwitterUserId, contentId);
 				return RETWEET_DONE;
 			}
 		} catch (TwitterException te) {

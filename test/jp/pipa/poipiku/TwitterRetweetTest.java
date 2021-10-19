@@ -24,26 +24,19 @@ public class TwitterRetweetTest {
 		connection.close();
 	}
 
-	private CheckLogin createCheckLogin() {
-		CheckLogin checkLogin = new CheckLogin();
-		checkLogin.m_bLogin = true;
-		checkLogin.m_nUserId = testUserId;
-		return checkLogin;
-	}
-
+	/*
 	@Test
 	public void testRetweet() {
 		CTweet cTweet = new CTweet();
 
 		final int uid = 1851512;
 		final int contentId = 5364011;
-		final long twId = 1450004197412278274L;
+		final long twId = 1450239888238858242L;
 
 		assertTrue(cTweet.GetResults(uid));
 
 		assertEquals(CTweet.RETWEET_DONE, cTweet.ReTweet(contentId, twId));
 		assertEquals(CTweet.RETWEET_ALREADY, cTweet.ReTweet(contentId, twId));
-
-
 	}
+	*/
 }
