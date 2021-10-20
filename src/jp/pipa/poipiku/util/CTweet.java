@@ -416,7 +416,8 @@ public final class CTweet {
 				TwitterRetweet.insert(m_nUserId, m_lnTwitterUserId, contentId);
 				return RETWEET_ALREADY;
 			} else {
-				twitter.retweetStatus(tweetId);
+				//TODO comment in
+				//twitter.retweetStatus(tweetId);
 				TwitterRetweet.insert(m_nUserId, m_lnTwitterUserId, contentId);
 				return RETWEET_DONE;
 			}

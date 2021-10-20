@@ -8,6 +8,8 @@ ShowAppendFileC cResults = new ShowAppendFileC();
 cResults.getParam(request);
 nRtn = cResults.getResults(checkLogin);
 
+Log.d("nRtn " + nRtn);
+
 if(nRtn<ShowAppendFileC.OK) {
 	switch(nRtn) {
 	case ShowAppendFileC.ERR_PASS:
@@ -63,6 +65,9 @@ if(nRtn<ShowAppendFileC.OK) {
 	case ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND"));
 		break;
+	case ShowAppendFileC.ERR_T_NEED_RETWEET:
+		strHtml.append("need retweet");
+		break;
 	case ShowAppendFileC.ERR_NOT_FOUND:
 	case ShowAppendFileC.ERR_HIDDEN :
 	case ShowAppendFileC.ERR_UNKNOWN:
@@ -99,6 +104,7 @@ if(nRtn<ShowAppendFileC.OK) {
 		case Common.PUBLISH_ID_T_FOLLOWEE:
 		case Common.PUBLISH_ID_T_EACH:
 		case Common.PUBLISH_ID_T_LIST:
+		case Common.PUBLISH_ID_T_RT:
 			if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
 				// 2枚目の場所に本文を表示する
 				nRtn=2;
@@ -131,8 +137,4 @@ if(nRtn<ShowAppendFileC.OK) {
 		strHtml.append("</a>");
 	}
 }
-%>{
-"result_num" : <%=nRtn%>,
-"html" : "<%=CEnc.E(strHtml.toString())%>",
-"tw_friendship" : "<%=cResults.m_nTwFriendship%>"
-}
+%>{"result_num":<%=nRtn%>,"html":"<%=CEnc.E(strHtml.toString())%>","tw_friendship":"<%=cResults.m_nTwFriendship%>"}

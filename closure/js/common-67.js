@@ -433,8 +433,6 @@ function ShowAllReaction(content_id, elm) {
 function generateShowAppendFile(){
 	var tw_friendships = {}; // target user id -> friendship id (see CTweet)
 	return function(user_id, content_id, mode, elm) {
-		// console.log(user_id, content_id, mode);
-		// console.log("twitter friendships: " + tw_friendships);
 		const password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
 		let tw_f = tw_friendships[user_id];
 		if(!tw_f){
@@ -448,6 +446,7 @@ function generateShowAppendFile(){
 			"dataType": "json",
 		}).then(
 			data => {
+				console.log(data.result_num);
 				if(data.result_num>0) {
 					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
 					$(elm).parent().hide();
@@ -456,6 +455,31 @@ function generateShowAppendFile(){
 					//for text
 					$('#IllustItemText_' + content_id).css('max-height','500px');
 					$('#IllustItemText_' + content_id).css('overflow','scroll');
+				} else if(data.result_num===-20) { // need retweet
+					showRetweetContentDlg().then(
+						formValues => {
+							if (formValues.dismiss) {
+								return;
+							}
+							// retweet
+							$.ajax({
+								"type": "post",
+								"data": {"TD":content_id},
+								"url": "/f/RetweetContentF.jsp",
+								"dataType": "json",
+							}).then(
+								data => {
+									if(data.result === 1) {
+										DispMsg("リツイートしました！");
+										ShowAppendFile(user_id, content_id, mode, elm);
+									}
+								},err => {
+									console.log(err);
+								}
+							);
+						}
+					);
+					return;
 				} else {
 					DispMsg(data.html, 5000);
 				}
