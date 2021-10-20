@@ -213,4 +213,4 @@ if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 %>
-{"append_id": <%=nRtn%>}
+{"append_id":<%=nRtn%>,"success":true,"reset":false}

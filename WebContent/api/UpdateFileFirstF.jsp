@@ -178,4 +178,4 @@ if (checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	nRtn = cResults.GetResults(cParam, _TEX);
 }
 %>
-{"content_id": <%=cParam.m_nContentId%>}
+{"content_id":<%=cParam.m_nContentId%>,"success":true,"reset":false}
