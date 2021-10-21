@@ -15,7 +15,7 @@
 </div>
 
 <div class="RetweetContentDlgInfo" style="text-align: center;">
-<input id="NotDisplayFeature" type="checkbox" checked>
+<input id="NotDisplayFeature" name="NotDisplayFeature" type="checkbox" checked>
 <label for="NotDisplayFeature" class="RetweetContentDlgInfo">今後はこのダイアログを表示しない</label>
 <div>
 
@@ -30,6 +30,7 @@
 			showCloseButton: true,
 			showCancelButton: false,
 			confirmButtonText: "リツイートしてつづきを見る",
+			preConfirm: () => {return {'NotDisplayFeature': $("#NotDisplayFeature").prop('checked')};},
 		});
 	}
 </script>

@@ -8,8 +8,6 @@ ShowAppendFileC cResults = new ShowAppendFileC();
 cResults.getParam(request);
 nRtn = cResults.getResults(checkLogin);
 
-Log.d("nRtn " + nRtn);
-
 if(nRtn<ShowAppendFileC.OK) {
 	switch(nRtn) {
 	case ShowAppendFileC.ERR_PASS:
