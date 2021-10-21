@@ -438,14 +438,14 @@ function _retweetContentF(userId, contentId, mode, elm) {
 		"dataType": "json",
 	}).then(
 		data => {
-			if(data.result === 1) {
-				DispMsg("リツイートしました！");
+			if (data.result === 1) {
 				ShowAppendFile(userId, contentId, mode, elm);
-			} else {
-				console.log(data);
 			}
+			DispRetweetMsg(data);
 		},err => {
 			console.log(err);
+			const data = {result: -888};
+			DispRetweetMsg(data);
 		}
 	);
 }

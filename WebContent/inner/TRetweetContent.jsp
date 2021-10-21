@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
+	function DispRetweetMsg(respRetweetContentF) {
+		if (respRetweetContentF.result === 1) {
+			DispMsg("リツイートしました！");
+		} else {
+			DispMsg("リツイートできませんでした。<br>作者のツイートにアクセスできない、非公開ツイートである、自分のツイート数が上限に達しているなどの可能性があります。", 5000);
+		}
+	}
+
 	function _getRetweetContentHtml(){
 		return `
 <style>
@@ -8,7 +16,7 @@
 </style>
 <div class="RetweetContentDlg">
 
-<div class="RetweetContentDlgTitle">リツイート限定コンテンツ</div>
+<div class="RetweetContentDlgTitle"><i class="fab fa-twitter"></i> リツイート限定</div>
 
 <div class="RetweetContentDlgInfo" style="margin: 15px 0 15px 0;">
 作者による作品紹介ツイートをリツイートすると、つづきを見ることができます！
