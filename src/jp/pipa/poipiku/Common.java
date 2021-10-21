@@ -86,7 +86,7 @@ public final class Common {
 	public static final int PUBLISH_ID_T_FOLLOWEE	= 8;	// ツイッターフォロー
 	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー
 	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト
-	public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// 期間限定
+	//廃止：public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// 期間限定
 	public static final int PUBLISH_ID_T_RT		    = 12;	// ツイッターリツイート
 	public static final int PUBLISH_ID_HIDDEN		= 99;	// 非公開
 	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
@@ -106,6 +106,21 @@ public final class Common {
 			"/img/publish_t_rt.png",		// 12
 	};
 
+	// 投稿・更新画面で選択可能な公開指定
+	public static final int[] PUBLISH_ID = {
+			PUBLISH_ID_ALL,			// 全体
+			PUBLISH_ID_R15,			// ワンクッション
+			PUBLISH_ID_R18,			// R18
+			PUBLISH_ID_PASS,		// パスワード
+			PUBLISH_ID_LOGIN,		// ログイン限定
+			PUBLISH_ID_FOLLOWER,	// ふぁぼ限定
+			PUBLISH_ID_T_FOLLOWER,	// ツイッターフォロワー限定
+			PUBLISH_ID_T_FOLLOWEE,	// ツイッターフォロー限定
+			PUBLISH_ID_T_EACH,		// ツイッター相互フォロー限定
+			PUBLISH_ID_T_LIST,		// ツイッターリスト限定
+			PUBLISH_ID_T_RT,		// ツイッターRT限定
+			PUBLISH_ID_HIDDEN		// 非公開
+	};
 
 	// Safe Filter
 	public static final int SAFE_FILTER_ALL = 0;

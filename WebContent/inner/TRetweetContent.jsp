@@ -15,7 +15,7 @@
 </div>
 
 <div class="RetweetContentDlgInfo" style="text-align: center;">
-<input id="NotDisplayFeature" name="NotDisplayFeature" type="checkbox" checked>
+<input id="NotDisplayFeature" name="NotDisplayFeature" type="checkbox">
 <label for="NotDisplayFeature" class="RetweetContentDlgInfo">今後はこのダイアログを表示しない</label>
 <div>
 

@@ -265,20 +265,13 @@ if (requestId > 0) {
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=checkLogin.m_nUserId%>)">
-								<option value="<%=Common.PUBLISH_ID_ALL%>" selected="selected"><%=_TEX.T("UploadFilePc.Option.Publish.All")%></option>
-								<option value="<%=Common.PUBLISH_ID_R15%>"><%=_TEX.T("UploadFilePc.Option.Publish.R15")%></option>
-								<option value="<%=Common.PUBLISH_ID_R18%>"><%=_TEX.T("UploadFilePc.Option.Publish.R18")%></option>
-								<option value="<%=Common.PUBLISH_ID_PASS%>"><%=_TEX.T("UploadFilePc.Option.Publish.Pass")%></option>
-								<%if(cTweet.m_bIsTweetEnable){%>
-								<option value="<%=Common.PUBLISH_ID_T_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Follower")%></option>
-								<option value="<%=Common.PUBLISH_ID_T_FOLLOWEE%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Followee")%></option>
-								<option value="<%=Common.PUBLISH_ID_T_EACH%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_Each")%></option>
-								<option value="<%=Common.PUBLISH_ID_T_LIST%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_List")%></option>
-								<option value="<%=Common.PUBLISH_ID_T_RT%>"><%=_TEX.T("UploadFilePc.Option.Publish.T_RT")%></option>
-								<%}//if(cTweet.m_bIsTweetEnable)%>
-								<option value="<%=Common.PUBLISH_ID_LOGIN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Login")%></option>
-								<option value="<%=Common.PUBLISH_ID_FOLLOWER%>"><%=_TEX.T("UploadFilePc.Option.Publish.Follower")%></option>
-								<option value="<%=Common.PUBLISH_ID_HIDDEN%>"><%=_TEX.T("UploadFilePc.Option.Publish.Hidden")%></option>
+								<%for(int nPublishId : Common.PUBLISH_ID) {
+									if(Common.PUBLISH_ID_T_FOLLOWER<=nPublishId && nPublishId<=Common.PUBLISH_ID_T_RT && !cTweet.m_bIsTweetEnable){
+										continue;
+									}
+								%>
+								<option value="<%=nPublishId%>"><%=_TEX.T(String.format("Publish.C%d", nPublishId))%></option>
+								<%}%>
 							</select>
 						</div>
 					</div>
