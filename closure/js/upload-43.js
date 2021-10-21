@@ -1103,6 +1103,11 @@ function UploadPaste(user_id) {
 			return;
 		}
 		nTwListId = $('#EditTwitterList').val();
+	} else if(nPublishId === 12) {
+		if (nTweet === 0) {
+			needTweetForRTLimitMsg();
+			return;
+		}
 	}
 
 	if(nLimitedTime === 1){
@@ -1240,6 +1245,11 @@ function UploadText(user_id, request_id) {
 			return;
 		}
 		nTwListId = $('#EditTwitterList').val();
+	} else if(nPublishId === 12) {
+		if (nTweet === 0) {
+			needTweetForRTLimitMsg();
+			return;
+		}
 	}
 	if(nLimitedTime === 1){
 		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
