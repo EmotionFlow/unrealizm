@@ -2,9 +2,9 @@
 <script type="text/javascript">
 	function DispRetweetMsg(respRetweetContentF) {
 		if (respRetweetContentF.result === 1) {
-			DispMsg("リツイートしました！");
+			DispMsg("<%=_TEX.T("TRetweetContent.Msg.Done")%>");
 		} else {
-			DispMsg("リツイートできませんでした。<br>作者のツイートにアクセスできない、非公開ツイートである、自分のツイート数が上限に達しているなどの可能性があります。", 5000);
+			DispMsg("<%=_TEX.T("TRetweetContent.Msg.Error")%>", 5000);
 		}
 	}
 
@@ -16,15 +16,15 @@
 </style>
 <div class="RetweetContentDlg">
 
-<div class="RetweetContentDlgTitle"><i class="fab fa-twitter"></i> リツイート限定</div>
+<div class="RetweetContentDlgTitle"><i class="fab fa-twitter"></i> <%=_TEX.T("TRetweetContent.Dlg.Title")%></div>
 
 <div class="RetweetContentDlgInfo" style="margin: 15px 0 15px 0;">
-作者による作品紹介ツイートをリツイートすると、つづきを見ることができます！
+<%=_TEX.T("TRetweetContent.Dlg.Info")%>
 </div>
 
 <div class="RetweetContentDlgInfo" style="text-align: center;">
 <input id="NotDisplayFeature" name="NotDisplayFeature" type="checkbox">
-<label for="NotDisplayFeature" class="RetweetContentDlgInfo">今後はこのダイアログを表示しない</label>
+<label for="NotDisplayFeature" class="RetweetContentDlgInfo"><%=_TEX.T("TRetweetContent.Dlg.NotDisplayFeature")%></label>
 <div>
 
 </div>
@@ -37,7 +37,7 @@
 			focusConfirm: false,
 			showCloseButton: true,
 			showCancelButton: false,
-			confirmButtonText: "リツイートしてつづきを見る",
+			confirmButtonText: "<%=_TEX.T("TRetweetContent.Dlg.Confirm")%>",
 			preConfirm: () => {return {'NotDisplayFeature': $("#NotDisplayFeature").prop('checked')};},
 		});
 	}
