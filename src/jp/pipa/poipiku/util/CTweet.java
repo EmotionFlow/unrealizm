@@ -412,13 +412,23 @@ public final class CTweet {
 					cursor = ids.getNextCursor();
 				}
 			}
+
 			if (isFound) {
 				TwitterRetweet.insert(m_nUserId, m_lnTwitterUserId, contentId);
 				return RETWEET_ALREADY;
 			} else {
-				twitter.retweetStatus(tweetId);
+				boolean alreadyRetweeted = false;
+				try {
+					twitter.retweetStatus(tweetId);
+				} catch (TwitterException retwtex) {
+					if (retwtex.getErrorCode() == 327) {
+						alreadyRetweeted = true;
+					} else {
+						throw retwtex;
+					}
+				}
 				TwitterRetweet.insert(m_nUserId, m_lnTwitterUserId, contentId);
-				return RETWEET_DONE;
+				return alreadyRetweeted ? RETWEET_ALREADY : RETWEET_DONE;
 			}
 		} catch (TwitterException te) {
 			te.printStackTrace();

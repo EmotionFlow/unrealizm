@@ -40,12 +40,13 @@ public class RetweetContentC extends Controller {
 		} catch(Exception ignored) { }
 	}
 
-	public boolean getResults(CheckLogin checkLogin) {
+	public int getResults(CheckLogin checkLogin) {
 		if (!checkLogin.m_bLogin) {
 			errorKind = ErrorKind.Unknown;
-			return false;
+			return CTweet.ERR_OTHER;
 		}
 
+		int result = CTweet.ERR_OTHER;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -73,8 +74,8 @@ public class RetweetContentC extends Controller {
 
 			CTweet cTweet = new CTweet();
 			cTweet.GetResults(checkLogin.m_nUserId);
-			final int reTweetResult = cTweet.ReTweet(contentId, retweetId);
-			if (reTweetResult == CTweet.RETWEET_DONE || reTweetResult == CTweet.RETWEET_ALREADY) {
+			result = cTweet.ReTweet(contentId, retweetId);
+			if (result == CTweet.RETWEET_DONE || result == CTweet.RETWEET_ALREADY) {
 				errorDetail = ErrorDetail.None;
 			} else {
 				errorDetail = ErrorDetail.Unknown;
@@ -87,6 +88,6 @@ public class RetweetContentC extends Controller {
 			try {if(connection!=null)connection.close();}catch(Exception e){}
 		}
 
-		return errorDetail == ErrorDetail.None;
+		return result;
 	}
 }
