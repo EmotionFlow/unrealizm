@@ -37,20 +37,6 @@ if(bTwRet && cTweet.m_bIsTweetEnable && cResults.m_cContent.m_nPublishId == Comm
 	nTwLstRet = cTweet.GetMyOpenLists();
 }
 
-final int[] PUBLISH_ID = {
-		0,			// 全体
-		1,			// ワンクッション
-		2,			// R18
-		4,			// パスワード
-		5,			// ログイン限定
-		6,			// ふぁぼ限定
-		7,			// ツイッターフォロワー限定
-		8,			// ツイッターフォロー限定
-		9,			// ツイッター相互フォロー限定
-		10,			// ツイッターリスト限定
-		99			// 非公開
-};
-
 response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 %>
 <!DOCTYPE html>
@@ -318,8 +304,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=checkLogin.m_nUserId%>)">
-								<%for(int nPublishId : PUBLISH_ID) {
-									if(7<=nPublishId && nPublishId<=10 && !cTweet.m_bIsTweetEnable){
+								<%for(int nPublishId : Common.PUBLISH_ID) {
+									if(Common.PUBLISH_ID_T_FOLLOWER<=nPublishId && nPublishId<=Common.PUBLISH_ID_T_RT && !cTweet.m_bIsTweetEnable){
 										continue;
 									}
 								%>
@@ -337,6 +323,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							<span id="PublishTwitterFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowerInfo")%></span>
 							<span id="PublishTwitterFollowingInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowingInfo")%></span>
 							<span id="PublishTwitterFollowEachInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowEachInfo")%></span>
+							<span id="PublishTwitterRTInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterRTInfo")%></span>
 							<span id="PublishLoginInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%></span>
 						</div>
 					</div>

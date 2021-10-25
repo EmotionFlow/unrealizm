@@ -43,6 +43,10 @@
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.OtherErr")%>: " + nErrCode);
 	}
 
+	function needTweetForRTLimitMsg() {
+		DispMsg("リツイート限定で公開するときは同時ツイートをONにしてください");
+	}
+
 	function completeMsg() {
 		DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
 	}

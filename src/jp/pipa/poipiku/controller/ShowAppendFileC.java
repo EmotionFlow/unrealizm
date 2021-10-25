@@ -6,10 +6,7 @@ import java.sql.ResultSet;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CContentAppend;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
@@ -25,6 +22,7 @@ public final class ShowAppendFileC {
 	public static final int ERR_T_FOLLOW = -6;
 	public static final int ERR_T_EACH = -7;
 	public static final int ERR_T_LIST = -8;
+	public static final int ERR_T_NEED_RETWEET = -20;
 	public static final int ERR_T_RATE_LIMIT_EXCEEDED = -429088;
 	public static final int ERR_T_INVALID_OR_EXPIRED_TOKEN = -404089;
 	public static final int ERR_T_TARGET_ACCOUNT_NOT_FOUND = -98;
@@ -186,6 +184,13 @@ public final class ShowAppendFileC {
 				} else {
 					Log.d("cTweet.GetResults(checkLogin.m_nUserId) return false");
 					return ERR_UNKNOWN;
+				}
+			}
+
+			// twitter retweet
+			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_RT) {
+				if (!TwitterRetweet.find(checkLogin.m_nUserId, m_cContent.m_nContentId)) {
+					return ERR_T_NEED_RETWEET;
 				}
 			}
 
