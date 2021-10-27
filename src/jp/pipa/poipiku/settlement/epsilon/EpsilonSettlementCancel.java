@@ -116,7 +116,7 @@ public class EpsilonSettlementCancel extends EpsilonSettlement{
 								resultInfo.errCode = attr.getNodeValue();
 								break;
 							case "err_detail":
-								resultInfo.errDetail = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
+								resultInfo.errDetail = new String(URLDecoder.decode(attr.getNodeValue(),"SHIFT-JIS").getBytes("SHIFT-JIS"),"SHIFT-JIS" );
 								break;
 							case "user_id":
 								resultInfo.userId = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );

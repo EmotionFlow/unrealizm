@@ -39,7 +39,6 @@ public class CardSettlementEpsilon extends CardSettlement {
 
 	public boolean cancelSubscription(int poipikuOrderId) {
 		Log.d("cancelSubscription() enter");
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -47,8 +46,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 		boolean result = false;
 
 		try {
-			dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// EPSILON側user_id取得。
 			strSql = "SELECT c.agent_user_id FROM creditcards c INNER JOIN orders o ON c.id=o.creditcard_id WHERE o.id=?";
@@ -76,9 +74,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 			SettlementCancelResultInfo resultInfo = epsilonSettlementCancel.execCancel();
 
 			if (resultInfo != null) {
-				/* resultInfo.result
-					1:解除OK 9:解除NG
-				 */
+				// resultInfo.result 1:解除OK 9:解除NG
 				if ("1".equals(resultInfo.result)) {
 					Log.d("解除OK");
 					result = true;
@@ -86,7 +82,10 @@ public class CardSettlementEpsilon extends CardSettlement {
 					Log.d("解除NG");
 					Log.d(resultInfo.errCode);
 					Log.d(resultInfo.errDetail);
-					result = false;
+
+					// 解除NGの理由がすでに解除処理中または解除済みの定期課金に対する解除だったら、result=trueとする。
+					// errCodeに識別可能な値が入ってこないので、detailの文字列で判定している。
+					result = resultInfo.errDetail.equals("既に解除処理中です") || resultInfo.errDetail.equals("既に解除済です");
 				} else {
 					Log.d("EPSILONから想定外のresult: " + resultInfo.result);
 					result = false;
@@ -168,16 +167,13 @@ public class CardSettlementEpsilon extends CardSettlement {
 			return false;
 		}
 
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 
 		try {
-			dsPostgres = (DataSource) new InitialContext().lookup(Common.DB_POSTGRESQL);
-
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// 初回か登録済かを判定、EPSILON側user_id取得。
 			boolean isFirstSettlement = true;
@@ -214,10 +210,10 @@ public class CardSettlementEpsilon extends CardSettlement {
 				5：3DS処理　（カード会社に接続必要）<- 3DS認証は使っていないため、この値は返却されないはず。
 				9：システムエラー（パラメータ不足、不正等）
 				 */
-				String settlementResultCode = settlementResultInfo.getResult();
+				String settlementResultCode = settlementResultInfo.result;
 				Log.d("settlementResultInfo: " + settlementResultCode);
 				if ("1".equals(settlementResultCode)) {
-					cConn = dsPostgres.getConnection();
+					cConn = DatabaseUtil.dataSource.getConnection();
 					if (isFirstSettlement) {
 						strSql = "INSERT INTO creditcards" +
 								" (user_id, agent_id, card_expire, security_code, agent_user_id, last_agent_order_id)" +
@@ -263,18 +259,18 @@ public class CardSettlementEpsilon extends CardSettlement {
 				} else {
 					if("0".equals(settlementResultCode)) {
 						Log.d(String.format("決済NG userId=%d, contentId=%d", poipikuUserId, contentId));
-						Log.d("Code: " + settlementResultInfo.getErrCode());
-						Log.d("Detail: " + settlementResultInfo.getErrDetail());
+						Log.d("Code: " + settlementResultInfo.errCode);
+						Log.d("Detail: " + settlementResultInfo.errDetail);
 						errorKind = ErrorKind.CardAuth;
 					} else if("9".equals(settlementResultCode)) {
 						Log.d(String.format("イプシロンからシステムエラー返却された userId=%d, contentId=%d", poipikuUserId, contentId));
-						Log.d("Code: " + settlementResultInfo.getErrCode());
-						Log.d("Detail: " + settlementResultInfo.getErrDetail());
+						Log.d("Code: " + settlementResultInfo.errCode);
+						Log.d("Detail: " + settlementResultInfo.errDetail);
 						errorKind = ErrorKind.NeedInquiry;
 					} else {
 						Log.d(String.format("settlementResultCodeが想定外の値 userId=%d, contentId=%d", poipikuUserId, contentId));
-						Log.d("Code: " + settlementResultInfo.getErrCode());
-						Log.d("Detail: " + settlementResultInfo.getErrDetail());
+						Log.d("Code: " + settlementResultInfo.errCode);
+						Log.d("Detail: " + settlementResultInfo.errDetail);
 						errorKind = ErrorKind.Unknown;
 					}
 					return false;
@@ -438,5 +434,69 @@ public class CardSettlementEpsilon extends CardSettlement {
 			errorKind = ErrorKind.Unknown;
 			return false;
 		}
+	}
+
+	public String changeCreditCardInfo() {
+		Log.d("changeCreditCardInfo() enter");
+		String redirectUrl = null;
+		Connection cConn = null;
+		PreparedStatement cState = null;
+		ResultSet cResSet = null;
+		String strSql = "";
+		boolean result = false;
+
+		try {
+			cConn = DatabaseUtil.dataSource.getConnection();
+
+			// EPSILON側user_id取得。
+			strSql = "SELECT c.agent_user_id FROM creditcards c WHERE user_id=? AND del_flg=false";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, poipikuUserId);
+			cResSet = cState.executeQuery();
+			String agentUserId="";
+			if(cResSet.next()){
+				agentUserId = cResSet.getString(1);
+			} else {
+				Log.d("EPSILON user_idが取得できない：" + poipikuOrderId);
+			}
+			cResSet.close();cResSet = null;
+			cState.close();cState = null;
+			cConn.close();cConn = null;
+
+			SettlementSendInfo sendInfo = new SettlementSendInfo();
+			sendInfo.userId = agentUserId;
+			sendInfo.stCode = "10000-0000-00000";
+			sendInfo.processCode = 4;
+			sendInfo.memo1 = "poipiku";
+			sendInfo.memo2 = Integer.toString(poipikuUserId);
+
+			EpsilonSettlementAuthorize authorize = new EpsilonSettlementAuthorize(poipikuUserId, sendInfo);
+			SettlementResultInfo resultInfo = authorize.execSettlement();
+
+			if (resultInfo != null) {
+				/* resultInfo.result
+					1:成功 0:失敗
+				 */
+				if ("1".equals(resultInfo.result)) {
+					Log.d("カード情報変更要求成功");
+					redirectUrl = resultInfo.redirect;
+				} else if ("0".equals(resultInfo.result)) {
+					Log.d("カード情報変更要求失敗");
+					Log.d(resultInfo.errCode);
+					Log.d(resultInfo.errDetail);
+				} else {
+					Log.d("EPSILONから想定外のresult: " + resultInfo.result);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorKind = ErrorKind.Exception;
+		} finally {
+			if(cResSet!=null){try{cResSet.close();cResSet=null;}catch(Exception ex){;}}
+			if(cState!=null){try{cState.close();cState=null;}catch(Exception ex){;}}
+			if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ex){;}}
+		}
+
+		return redirectUrl;
 	}
 }

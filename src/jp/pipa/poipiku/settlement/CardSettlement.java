@@ -101,4 +101,5 @@ public abstract class CardSettlement {
 	public abstract boolean capture(int poipikuOrderId);
 	public abstract boolean cancelSubscription(int poipikuOrderId);
 	public abstract boolean changeRegularlyAmount(int amount);
+	public abstract String changeCreditCardInfo();
 }
