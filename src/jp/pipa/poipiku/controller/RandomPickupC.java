@@ -89,7 +89,7 @@ public class RandomPickupC {
 			}
 
 			strSql = "SELECT * FROM contents_0000 "
-					+ "WHERE open_id=0"
+					+ "WHERE open_id<>2 AND publish_id NOT IN (7,8,9,10) "
 					+ "AND safe_filter<=? "
 					+ "AND content_id<(SELECT (max(content_id) * random())::int FROM contents_0000) "
 					+ strCondBlockUser

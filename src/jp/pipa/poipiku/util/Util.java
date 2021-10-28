@@ -377,6 +377,14 @@ public final class Util {
 		return strSrc;
 	}
 
+	public static String deleteInvalidChar(String s) {
+		if (s == null || s.isEmpty()) return "";
+		return s.replaceAll("\u0000", "")
+				.replaceAll("\u0007", "")
+				.replaceAll("\u0008", "")
+				.replaceAll("\u007f", "");
+	}
+
 	public static String subStrNum(String strSrc, int nNum) {
 		if(strSrc==null) return "";
 		if(strSrc.length()<=nNum) return strSrc;

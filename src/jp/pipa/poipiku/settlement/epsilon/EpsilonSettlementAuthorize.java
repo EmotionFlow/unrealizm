@@ -57,13 +57,13 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 		}
 	}
 
-	public EpsilonSettlementAuthorize(int userId){
-		super(userId);
+	public EpsilonSettlementAuthorize(int poipikuUserId){
+		super(poipikuUserId);
 		initUrl();
 		this.setSettlementSendInfo(new SettlementSendInfo());
 	}
-	public EpsilonSettlementAuthorize(int userId, SettlementSendInfo settlementSendInfo){
-		super(userId);
+	public EpsilonSettlementAuthorize(int poipikuUserId, SettlementSendInfo settlementSendInfo){
+		super(poipikuUserId);
 		initUrl();
 		this.setSettlementSendInfo(settlementSendInfo);
 	}
@@ -101,7 +101,7 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 				case 1: case 2: // 初回/登録済み課金
 					url = tokenSettlementUrl;
 					break;
-				case 7: case 9: // ユーザ退会又は退会取消
+				case 4: case 7: case 9: // 登録内容(カード情報)変更又はユーザ退会又は退会取消
 					url = linkSettlementUrl;
 					break;
 			}
@@ -131,25 +131,25 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 						Node attr = namedNodeMap.item(j);
 						switch (attr.getNodeName()) {
 							case "result":
-								settleResultInfo.setResult(attr.getNodeValue());
+								settleResultInfo.result = attr.getNodeValue();
 								break;
 							case "err_code":
-								settleResultInfo.setErrCode(attr.getNodeValue());
+								settleResultInfo.errCode = attr.getNodeValue();
 								break;
 							case "err_detail":
-								settleResultInfo.setErrDetail(new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								settleResultInfo.errDetail = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
 								break;
 							case "memo1":
-								settleResultInfo.setMemo1( new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								settleResultInfo.memo1 =  new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
 								break;
 							case "memo2":
-								settleResultInfo.setMemo2( new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								settleResultInfo.memo2 = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
 								break;
 							case "redirect":
-								settleResultInfo.setRedirect(new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" ));
+								settleResultInfo.redirect = new String(URLDecoder.decode(attr.getNodeValue(),"UTF-8").getBytes("UTF-8"),"UTF-8" );
 								break;
 							case "trans_code":
-								settleResultInfo.setTransCode(attr.getNodeValue());
+								settleResultInfo.transCode = attr.getNodeValue();
 								break;
 						}
 					}
@@ -234,19 +234,15 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 				 */
 				break;
 			case 3: case 4: // ユーザ登録のみ、又は登録変更
-				/*
-				param.add( new BasicNameValuePair("version", si.getVersion().toString()));
+				param.add( new BasicNameValuePair("version", si.version.toString()));
 				param.add( new BasicNameValuePair("contract_code", CONTRACT_CODE ));
-				param.add( new BasicNameValuePair("user_id", si.getUserId()));
-				param.add( new BasicNameValuePair("user_name", si.getUserName()));
-				param.add( new BasicNameValuePair("user_mail_add", si.getUserMailAdd()));
+				param.add( new BasicNameValuePair("user_id", si.userId));
 				// ここでは設定からカード変更有無を読み取る
-				param.add( new BasicNameValuePair("st_code",  getConfig().getSt_code()));
-				param.add( new BasicNameValuePair("process_code", si.getProcessCode().toString()));
-				param.add( new BasicNameValuePair("memo1", si.getMemo1()));
-				param.add( new BasicNameValuePair("memo2", si.getMemo2()));
-				param.add( new BasicNameValuePair("xml", si.getXml().toString()));
-				 */
+				param.add( new BasicNameValuePair("st_code", si.stCode));
+				param.add( new BasicNameValuePair("process_code", si.processCode.toString()));
+				param.add( new BasicNameValuePair("memo1", si.memo1));
+				param.add( new BasicNameValuePair("memo2", si.memo2));
+				param.add( new BasicNameValuePair("xml",si.xml.toString()));
 				break;
 			case 7: case 9: // ユーザ退会又は退会取消
 				Log.d("ユーザ退会又は退会取消");

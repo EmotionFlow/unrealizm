@@ -1,5 +1,6 @@
 package jp.pipa.poipiku;
 
+import jp.pipa.poipiku.settlement.Agent;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.DatabaseUtil;
@@ -332,6 +333,88 @@ public final class PassportSubscription {
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception ignored){;}
 		}
 
+		return true;
+	}
+
+	public boolean changeCreditCard(String strAgentToken, String strCardExpire, String strCardSecurityCode, String strUserAgent) {
+		// 定期課金キャンセル
+		CardSettlement cardSettlement = new CardSettlementEpsilon(userId);
+		boolean authorizeResult = cardSettlement.cancelSubscription(orderId);
+		if (!authorizeResult) {
+			Log.d("cardSettlement.authorize() failed.");
+			errorKind = ErrorKind.DoRetry;
+			return false;
+		}
+
+		// カード情報削除
+		// 前のカード情報を削除する（削除フラグを立てる）
+		CreditCard oldCard = new CreditCard(userId, Agent.EPSILON);
+		boolean disableResult = false;
+		if (oldCard.select()) {
+			disableResult = oldCard.disable();
+		}
+		if (!disableResult) {
+			Log.d("カード情報の削除に失敗した");
+			return false;
+		}
+
+		// 定期課金開始（初月無料）
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+
+		int listPrice = -1;
+
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+
+			sql = "SELECT list_price FROM products WHERE id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, PRODUCT_ID);
+			resultSet = statement.executeQuery();
+
+			if(resultSet.next()){
+				listPrice = resultSet.getInt(1);
+			}else{
+				Log.d("不正なproduct_id");
+				errorKind = ErrorKind.DoRetry;
+				return false;
+			}
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			errorKind = ErrorKind.DoRetry;
+			return false;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
+		}
+
+		cardSettlement.poipikuOrderId = orderId;
+		cardSettlement.amount = listPrice;
+		cardSettlement.agentToken = strAgentToken;
+		cardSettlement.cardExpire = strCardExpire;
+		cardSettlement.cardSecurityCode = strCardSecurityCode;
+		cardSettlement.userAgent = strUserAgent;
+		cardSettlement.billingCategory = CardSettlement.BillingCategory.MonthlyFirstFree;
+		cardSettlement.itemName = CardSettlement.ItemName.Poipass;
+
+		// 新しいカード情報はauthorize()内で登録されている
+		authorizeResult = cardSettlement.authorize();
+
+		if (!authorizeResult) {
+			Log.d("cardSettlement.authorize() failed.");
+			if (cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth) {
+				errorKind = ErrorKind.CardAuth;
+			} else if(cardSettlement.errorKind == CardSettlement.ErrorKind.NeedInquiry) {
+				errorKind = ErrorKind.NeedInquiry;
+			} else {
+				errorKind = ErrorKind.DoRetry;
+			}
+			return false;
+		}
 		return true;
 	}
 }

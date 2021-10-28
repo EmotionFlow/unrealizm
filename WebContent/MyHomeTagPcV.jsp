@@ -34,6 +34,7 @@ cResults.getResults(checkLogin);
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
+		<%@ include file="/inner/TRetweetContent.jsp"%>
 
 		<script>
 			function UpdateFollow(nUserId, nFollowUserId) {

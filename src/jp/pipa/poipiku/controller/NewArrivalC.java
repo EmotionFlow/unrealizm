@@ -79,7 +79,7 @@ public final class NewArrivalC {
 			}
 
 			strSql = "SELECT * FROM contents_0000 "
-					+ "WHERE open_id=0 AND (publish_id NOT IN (7,8,9,10))"
+					+ "WHERE open_id=0 AND publish_id NOT IN (7,8,9,10) "
 					+ "AND safe_filter<=? "
 					+ strCondBlockUser
 					+ strCondBlocedkUser

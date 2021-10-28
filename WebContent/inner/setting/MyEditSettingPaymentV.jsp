@@ -1,13 +1,25 @@
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     boolean deletableCreditCardInfo = true;
     Request poipikuRequest = new Request();
     poipikuRequest.clientUserId = checkLogin.m_nUserId;
     final int countOfRequests = poipikuRequest.getCountOfRequestsByStatus(Request.Status.WaitingApproval);
+    CreditCard creditCard = new CreditCard(checkLogin.m_nUserId, Agent.EPSILON);
+
+    LocalDate cardExpire = null;
+    boolean isCardExpired = false;
+    if (creditCard.select()) {
+        String[] s = creditCard.cardExpire.split("/");
+        cardExpire = LocalDate.of(Integer.parseInt(s[1]) + 2000, Integer.parseInt(s[0]), 1);
+        cardExpire = cardExpire.plusMonths(1).minusDays(1);
+        isCardExpired = LocalDate.now().isAfter(cardExpire);
+    }
 %>
 
-<%if(checkLogin.m_nPassportId==0 && countOfRequests == 0){%>
 <script type="text/javascript">
+    <%if(checkLogin.m_nPassportId==0 && countOfRequests == 0){%>
     function DeleteCreditCardInfo() {
         $.ajax({
             "type": "post",
@@ -28,12 +40,147 @@
             }
         )
     }
+    <%}%>
+    <%if(checkLogin.m_nPassportId > 0){%>
+    let g_changeCardEpsilonInfo = { "cardInfo": null };
+    function _sendGiftAjax(giftInfo, agentInfo, cardInfo) {
+        $.ajax({
+            "type": "post",
+            "data": {
+                "AID": agentInfo == null ? '' :  agentInfo.agentId,
+                "TKN": agentInfo == null ? '' : agentInfo.token,
+                "EXP": cardInfo == null ? '' : cardInfo.expire,
+                "SEC": cardInfo == null ? '' : cardInfo.securityCode,
+            },
+            "url": "/f/ChangeCreditCardInfoF.jsp",
+            "dataType": "json",
+        }).then( data => {
+                $("#DispMsg").slideUp(200, () => {
+                    cardInfo = null;
+                    if (data.result > 0) {
+                        DispMsg('<%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Done")%>', 4000);
+                    } else {
+                        switch (data.error_code) {
+                            case -10:
+                                DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
+                                break;
+                            case -20:
+                                alert("<%=_TEX.T("CheerDlg.Err.AuthCritical")%>");
+                                break;
+                            case -30:
+                                DispMsg("<%=_TEX.T("CheerDlg.Err.CardAuth")%>");
+                                break;
+                            case -99:
+                                DispMsg("<%=_TEX.T("CheerDlg.Err.AuthOther")%>");
+                                break;
+                        }
+                    }
+                });
+                setTimeout(()=>{location.reload()}, 3000);
+            },
+            error => {
+                cardInfo = null;
+                DispMsg("<%=_TEX.T("CheerDlg.Err.PoipikuSrv")%>");
+                return false;
+            }
+        );
+    }
+    function _changeCardEpsilonTrade(response){
+        if(g_changeCardEpsilonInfo.cardInfo.number){
+            g_changeCardEpsilonInfo.cardInfo.number = null;
+        }
+
+        if( response.resultCode !== '000' ){
+            window.alert("<%=_TEX.T("TSendGift.ErrorOccurred")%>");
+            console.log(response.resultCode);
+            g_changeCardEpsilonInfo.elCheerNowPayment.hide();
+        }else{
+            const agentInfo = createAgentInfo(
+                    AGENT.EPSILON, response.tokenObject.token,
+                    response.tokenObject.toBeExpiredAt);
+            _sendGiftAjax(g_changeCardEpsilonInfo.giftInfo, agentInfo, g_changeCardEpsilonInfo.cardInfo);
+        }
+    }
+
+    function _changeCardEpsilon(_cardInfo){
+        DispMsgStatic("<%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Processing")%>");
+        g_changeCardEpsilonInfo.cardInfo = _cardInfo;
+
+        const contractCode = "68968190";
+        let cardObj = {
+            "cardno": String(_cardInfo.number),
+            "expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
+            "securitycode": String(_cardInfo.securityCode),
+        };
+        EpsilonToken.init(contractCode);
+        EpsilonToken.getToken(cardObj , _changeCardEpsilonTrade);
+    }
+
+    function changeCreditCardInfo() {
+        let cardInfo = {
+            "number": null,
+            "expire": null,
+            "securityCode": null,
+            "holderName": null,
+        };
+        const title = "<%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Dlg.Title")%>";
+        const description = "<%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Dlg.Description")%>";
+        Swal.fire({
+            html: getRegistCreditCardDlgHtml(title, description),
+            focusConfirm: false,
+            showCloseButton: true,
+            showCancelButton: true,
+            preConfirm: verifyCardDlgInput,
+        }).then( formValues => {
+            if(formValues.dismiss){
+                elCheerNowPayment.hide();
+                formValues.value.cardNum = '';
+                formValues.value.cardExp = '';
+                formValues.value.cardSec = '';
+                return false;
+            }
+
+            cardInfo.number = String(formValues.value.cardNum);
+            cardInfo.expire = String(formValues.value.cardExp);
+            cardInfo.securityCode = String(formValues.value.cardSec);
+
+            formValues.value.cardNum = '';
+            formValues.value.cardExp = '';
+            formValues.value.cardSec = '';
+
+            _changeCardEpsilon(cardInfo);
+        });
+    }
+    <%}%>
 </script>
-<%}%>
 
 <div class="SettingList">
     <div class="SettingListItem">
         <%if(cResults.m_bCardInfoExist){%>
+        <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Title")%></div>
+        <div class="SettingBody">
+            <%=cardExpire!=null ? cardExpire.format(DateTimeFormatter.ofPattern("MM/yyyy")) : ""%>
+            <%if(creditCard.isInvalid){%>
+            <span style="color: #f27474"><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Invalid")%></span>
+            <div><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Invalid.Message")%></div>
+            <%}else if(isCardExpired){%>
+            <span style="color: #f27474"><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Expired")%></span>
+            <%if(checkLogin.m_nPassportId > 0){%>
+            <div><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Expired.Message")%></div>
+            <%}%>
+            <%}%>
+        </div>
+
+        <%if(checkLogin.m_nPassportId > 0){%>
+        <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Title")%></div>
+        <div class="SettingBody">
+            <%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Text")%>
+            <div class="SettingBodyCmd">
+                <a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="changeCreditCardInfo()"><%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Submit")%></a>
+            </div>
+        </div>
+        <%}%>
+
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Title")%></div>
         <div class="SettingBody">
             <%if(checkLogin.m_nPassportId==0 && countOfRequests == 0){%>
@@ -43,10 +190,10 @@
             </div>
             <%}else{%>
             <%if(checkLogin.m_nPassportId > 0){%>
-            <p>カード情報がポイパスの加入に使われているため、削除できません。</p>
-            <p>ポイパスの加入を解除していただいたのち、解除の翌月に再度こちらのページにアクセスしてください。</p>
+            <p><%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Cannot.Poipass01")%></p>
+            <p><%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Cannot.Poipass02")%></p>
             <%}else if(countOfRequests > 0){%>
-            <p>承認待ちの送信リクエストがあるため、削除できません。</p>
+            <p><%=_TEX.T("MyEditSettingPaymentV.DeleteCardInfo.Cannot.Request")%></p>
             <%}%>
             <%}%>
         </div>

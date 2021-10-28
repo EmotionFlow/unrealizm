@@ -22,7 +22,7 @@ public class User {
 		EpsilonSettlementAuthorize epsilonSettlementAuthorize = new EpsilonSettlementAuthorize(poipikuUserId, ssi);
 		SettlementResultInfo settlementResultInfo = epsilonSettlementAuthorize.execSettlement();
 		if (settlementResultInfo != null) {
-			String settlementResultCode = settlementResultInfo.getResult();
+			String settlementResultCode = settlementResultInfo.result;
 			Log.d("settlementResultInfo: " + settlementResultInfo.toString());
 			return "1".equals(settlementResultCode);
 		} else {

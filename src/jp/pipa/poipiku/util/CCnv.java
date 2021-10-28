@@ -89,6 +89,7 @@ public final class CCnv {
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE) strThumbClass += " TFollow";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) strThumbClass += " TEach";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST) strThumbClass += " TList";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_RT) strThumbClass += " TRT";
 
 		// Editor Class
 		if(cContent.m_nEditorId==Common.EDITOR_UPLOAD) strThumbClass += " Upload";
@@ -236,7 +237,8 @@ public final class CCnv {
 		case Common.PUBLISH_ID_T_FOLLOWEE:
 		case Common.PUBLISH_ID_T_EACH:
 		case Common.PUBLISH_ID_T_LIST:
-			// R18の時は1枚目にWarningを出すのでずらす
+		case Common.PUBLISH_ID_T_RT:
+			// 1枚目にWarningを出すのでずらす
 			cContent.m_nFileNum++;
 			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
 			if(nViewMode==VIEW_DETAIL) {
@@ -724,6 +726,7 @@ public final class CCnv {
 				case Common.PUBLISH_ID_T_FOLLOWEE:
 				case Common.PUBLISH_ID_T_EACH:
 				case Common.PUBLISH_ID_T_LIST:
+				case Common.PUBLISH_ID_T_RT:
 					strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
 					bHidden = true;
 					break;
@@ -766,7 +769,7 @@ public final class CCnv {
 		// 公開種別マーク
 		strRtn.append("<span class=\"IllustInfoBottom\">");
 		if(checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId){
-			if(cContent.m_nPublishId>=1 && cContent.m_nPublishId<=10) {
+			if(cContent.m_nPublishId>=1 && cContent.m_nPublishId<=12) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 		}

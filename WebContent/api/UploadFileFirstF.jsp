@@ -12,7 +12,7 @@ if(checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0){
 	UploadFileFirstC cResults = new UploadFileFirstC(getServletContext());
 	nRtn = cResults.GetResults(cParam);
 }
+
+// success, resetはfine uploader側で必要なパラメータ
 %>
-{
-"content_id":<%=nRtn%>
-}
+{"content_id":<%=nRtn%>,"success":true,"reset":false}

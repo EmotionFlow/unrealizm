@@ -38,11 +38,15 @@ public final class CTweet {
 	public ResponseList<UserList> m_listOpenList = null;
 	public static final int MAX_LENGTH = 140;
 	public static final String ELLIPSE = "...";
+
 	public static final int FRIENDSHIP_UNDEF = -1;		// 未定義
 	public static final int FRIENDSHIP_NONE = 0;		// 無関係
-	public static final int FRIENDSHIP_FOLLOWEE = 1;		// フォローしている
+	public static final int FRIENDSHIP_FOLLOWEE = 1;	// フォローしている
 	public static final int FRIENDSHIP_FOLLOWER = 2;	// フォローされている
 	public static final int FRIENDSHIP_EACH = 3;		// 相互フォロー
+
+	public static final int RETWEET_ALREADY = 4;		// すでにRT済み
+	public static final int RETWEET_DONE    = 5;		// RTした
 
 	public static final int OK = 1;
 	public static final int ERR_NOT_FOUND = -404000;
@@ -57,6 +61,18 @@ public final class CTweet {
 	public static final long GET_FRIEND_MAX = 30000L;
 	private int m_nLastTargetUserId = -1;
 	private long m_lnLastTwitterTargetUserId = -1;
+
+
+	private Twitter createTwitter4jInstance(){
+		ConfigurationBuilder cb = new ConfigurationBuilder();
+		cb.setDebugEnabled(true)
+				.setOAuthConsumerKey(Common.TWITTER_CONSUMER_KEY)
+				.setOAuthConsumerSecret(Common.TWITTER_CONSUMER_SECRET)
+				.setOAuthAccessToken(m_strUserAccessToken)
+				.setOAuthAccessTokenSecret(m_strSecretToken);
+		TwitterFactory tf = new TwitterFactory(cb.build());
+		return tf.getInstance();
+	}
 
 
 	private void LoggingTwitterException(TwitterException te, long targetTwitterUserId, long listId){
@@ -363,6 +379,66 @@ public final class CTweet {
 			nResult = ERR_OTHER;
 		}
 		return nResult;
+	}
+
+	public int ReTweet(int contentId, long tweetId){
+		if (TwitterRetweet.find(m_nUserId, contentId)) {
+			return RETWEET_ALREADY;
+		}
+
+		int result;
+		try{
+			int loops = 0;
+			long cursor = -1;
+			Twitter twitter = createTwitter4jInstance();
+			IDs ids;
+			boolean isFound = false;
+			while (loops++ < 20) {
+				ids = twitter.getRetweeterIds(tweetId, cursor++);
+				long[] idAry = ids.getIDs();
+
+//				Long[] idLst = Arrays.stream(idAry).boxed().toArray(Long[]::new);
+//				Log.d(Arrays.stream(idLst).map(Object::toString).collect(Collectors.joining(",")));
+
+				for (long id: idAry){
+					if (id == m_lnTwitterUserId) {
+						isFound = true;
+						break;
+					}
+				}
+				if (!ids.hasNext()) {
+					break;
+				} else {
+					cursor = ids.getNextCursor();
+				}
+			}
+
+			if (isFound) {
+				TwitterRetweet.insert(m_nUserId, m_lnTwitterUserId, contentId);
+				return RETWEET_ALREADY;
+			} else {
+				boolean alreadyRetweeted = false;
+				try {
+					twitter.retweetStatus(tweetId);
+				} catch (TwitterException retwtex) {
+					if (retwtex.getErrorCode() == 327) {
+						alreadyRetweeted = true;
+					} else {
+						throw retwtex;
+					}
+				}
+				TwitterRetweet.insert(m_nUserId, m_lnTwitterUserId, contentId);
+				return alreadyRetweeted ? RETWEET_ALREADY : RETWEET_DONE;
+			}
+		} catch (TwitterException te) {
+			te.printStackTrace();
+			LoggingTwitterException(te, -1, -1);
+			result = GetErrorCode(te);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = ERR_OTHER;
+		}
+		return result;
 	}
 
 	public int LookupFriendship(int nTargetUserId, int publishId){

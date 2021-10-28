@@ -430,11 +430,29 @@ function ShowAllReaction(content_id, elm) {
 	return false;
 }
 
+function _retweetContentF(userId, contentId, mode, elm) {
+	$.ajax({
+		"type": "post",
+		"data": {"TD":contentId},
+		"url": "/f/RetweetContentF.jsp",
+		"dataType": "json",
+	}).then(
+		data => {
+			if (data.result === 4 || data.result === 5) {
+				ShowAppendFile(userId, contentId, mode, elm);
+			}
+			DispRetweetMsg(data);
+		},err => {
+			console.log(err);
+			const data = {result: -888};
+			DispRetweetMsg(data);
+		}
+	);
+}
+
 function generateShowAppendFile(){
 	var tw_friendships = {}; // target user id -> friendship id (see CTweet)
 	return function(user_id, content_id, mode, elm) {
-		// console.log(user_id, content_id, mode);
-		// console.log("twitter friendships: " + tw_friendships);
 		const password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
 		let tw_f = tw_friendships[user_id];
 		if(!tw_f){
@@ -446,26 +464,43 @@ function generateShowAppendFile(){
 			"data": {"UID":user_id, "IID":content_id, "PAS":password, "MD":mode, "TWF":tw_f},
 			"url": "/f/ShowAppendFileF.jsp",
 			"dataType": "json",
-			"success": function(data) {
+		}).then(
+			data => {
+				console.log(data.result_num);
 				if(data.result_num>0) {
-					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').html(data.html);
+					const $IllustItemThubExpand = $('#IllustItem_' + content_id + ' .IllustItemThubExpand');
+					$IllustItemThubExpand.html(data.html);
 					$(elm).parent().hide();
-					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList');
-					$('#IllustItem_' + content_id + ' .IllustItemThubExpand').slideDown(300, function(){if(vg)vg.vgrefresh();});
+					$('#IllustItem_' + content_id).removeClass('R15 R18 R18G Password Login Follower TFollower TFollow TEach TList TRT');
+					$IllustItemThubExpand.slideDown(300, function(){if(vg)vg.vgrefresh();});
+
 					//for text
-					$('#IllustItemText_' + content_id).css('max-height','500px');
-					$('#IllustItemText_' + content_id).css('overflow','scroll');
+					const $IllustItemText = $('#IllustItemText_' + content_id);
+					$IllustItemText.css('max-height','500px');
+					$IllustItemText.css('overflow','scroll');
+				} else if(data.result_num===-20) { // need retweet
+					if (!getLocalStrage('not_show_retweet_confirm')) {
+						showRetweetContentDlg().then(
+							formValues => {
+								if (formValues.dismiss) {return;}
+								setLocalStrage('not_show_retweet_confirm', formValues.value.NotDisplayFeature);
+								_retweetContentF(user_id, content_id, mode, elm);
+							}
+						);
+					} else {
+						_retweetContentF(user_id, content_id, mode, elm);
+					}
+					return;
 				} else {
 					DispMsg(data.html, 5000);
 				}
 				if(data.tw_friendship >= 0){
 					tw_friendships[user_id] = data.tw_friendship;
 				}
-			},"error": function(err){
+			},err => {
 				console.log(err);
 			}
-		});
-
+		);
 	}
 }
 

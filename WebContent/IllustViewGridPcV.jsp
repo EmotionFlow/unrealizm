@@ -123,7 +123,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
-
+		<%@ include file="/inner/TRetweetContent.jsp"%>
 		<script type="text/javascript">
 			function UpdateFollow(nUserId, nFollowUserId) {
 				var bFollow = $("#UserInfoCmdFollow").hasClass('Selected');
