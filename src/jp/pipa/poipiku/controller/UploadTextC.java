@@ -13,7 +13,7 @@ import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
 public final class UploadTextC extends UpC {
-	protected int m_nContentId = -99;
+	private int m_nContentId = -99;
 	public boolean deliverRequestResult;
 	public int GetResults(UploadTextCParam cParam, CheckLogin checkLogin) {
 		Connection connection = null;
