@@ -59,7 +59,7 @@ public class WriteBackContents extends Batch {
 
 		int cnt = 1;
 		for (WriteBackFile writeBackFile: moveTargets) {
-			Log.d(String.format("writeBackFile move start: %d/%d", cnt, moveTargets.size()));
+			Log.d(String.format("writeBackFile move start: %d/%d", cnt++, moveTargets.size()));
 			writeBackFile.updateStatus(WriteBackFile.Status.Moving);
 
 			Path destDir = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path.replace(Common.CONTENTS_CACHE_DIR, Common.CONTENTS_STORAGE_DIR)).getParent();
@@ -140,7 +140,6 @@ public class WriteBackContents extends Batch {
 
 			// write_back_filesを更新
 			writeBackFile.updateStatus(WriteBackFile.Status.Moved);
-			cnt++;
 		}
 		Log.d("WriteBackContents batch end");
 	}
