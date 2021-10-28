@@ -140,8 +140,7 @@ public class WriteBackContents extends Batch {
 
 			// write_back_filesを更新
 			writeBackFile.updateStatus(WriteBackFile.Status.Moved);
-
-			Log.d(String.format("writeBackFile move end: %d/%d", cnt++, moveTargets.size()));
+			cnt++;
 		}
 		Log.d("WriteBackContents batch end");
 	}
