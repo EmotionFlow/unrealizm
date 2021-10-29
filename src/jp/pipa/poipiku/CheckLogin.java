@@ -46,10 +46,6 @@ public final class CheckLogin {
 		return m_staffIds.contains(userId);
 	}
 
-	public boolean isTestStaff212(){
-		return m_testStaffIds.contains(m_nUserId);
-	}
-
 
 	private void getCookie(final HttpServletRequest request) {
 		try {

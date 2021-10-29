@@ -1,20 +1,13 @@
-<%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-    boolean deletableCreditCardInfo = true;
     Request poipikuRequest = new Request();
     poipikuRequest.clientUserId = checkLogin.m_nUserId;
     final int countOfRequests = poipikuRequest.getCountOfRequestsByStatus(Request.Status.WaitingApproval);
-    CreditCard creditCard = new CreditCard(checkLogin.m_nUserId, Agent.EPSILON);
-
-    LocalDate cardExpire = null;
-    boolean isCardExpired = false;
-    if (creditCard.select()) {
-        String[] s = creditCard.cardExpire.split("/");
-        cardExpire = LocalDate.of(Integer.parseInt(s[1]) + 2000, Integer.parseInt(s[0]), 1);
-        cardExpire = cardExpire.plusMonths(1).minusDays(1);
-        isCardExpired = LocalDate.now().isAfter(cardExpire);
+    CreditCard creditCard = null;
+    if (cResults.m_bCardInfoExist) {
+        creditCard = new CreditCard(checkLogin.m_nUserId, Agent.EPSILON);
+        creditCard.select();
     }
 %>
 
@@ -156,14 +149,14 @@
 
 <div class="SettingList">
     <div class="SettingListItem">
-        <%if(cResults.m_bCardInfoExist){%>
+        <%if(creditCard != null && creditCard.isExist){%>
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Title")%></div>
         <div class="SettingBody">
-            <%=cardExpire!=null ? cardExpire.format(DateTimeFormatter.ofPattern("MM/yyyy")) : ""%>
+            <%=creditCard.getExpireDateTime().format(DateTimeFormatter.ofPattern("MM/yyyy"))%>
             <%if(creditCard.isInvalid){%>
             <span style="color: #f27474"><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Invalid")%></span>
             <div><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Invalid.Message")%></div>
-            <%}else if(isCardExpired){%>
+            <%}else if(creditCard.isExpired(0)){%>
             <span style="color: #f27474"><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Expired")%></span>
             <%if(checkLogin.m_nPassportId > 0){%>
             <div><%=_TEX.T("MyEditSettingPaymentV.CardExpire.Expired.Message")%></div>
@@ -198,7 +191,10 @@
             <%}%>
         </div>
         <%}else{%>
+        <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.CardInfo")%></div>
+        <div class="SettingBody">
         <%=_TEX.T("MyEditSettingPaymentV.CardInfoNotRegisterd")%>
+        </div>
         <%}%>
     </div>
 </div>

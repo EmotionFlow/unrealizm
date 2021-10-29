@@ -68,6 +68,7 @@ public final class PassportSubscription {
 		return status;
 	}
 
+	public PassportSubscription() {}
 	public PassportSubscription(CheckLogin checkLogin) {
 		if(checkLogin == null || !checkLogin.m_bLogin) return;
 
@@ -239,7 +240,7 @@ public final class PassportSubscription {
 					}
 					return false;
 				}
-				nCreditCardId = cardSettlement.creditcardIdToPay;
+				nCreditCardId = cardSettlement.creditCardIdToPay;
 			} else {
 				nCreditCardId = -1;
 				authorizeResult = true;
@@ -351,7 +352,7 @@ public final class PassportSubscription {
 		CreditCard oldCard = new CreditCard(userId, Agent.EPSILON);
 		boolean disableResult = false;
 		if (oldCard.select()) {
-			disableResult = oldCard.disable();
+			if (oldCard.isExist) disableResult = oldCard.delete();
 		}
 		if (!disableResult) {
 			Log.d("カード情報の削除に失敗した");

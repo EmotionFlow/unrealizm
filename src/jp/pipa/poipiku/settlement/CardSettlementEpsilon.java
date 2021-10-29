@@ -1,12 +1,10 @@
 package jp.pipa.poipiku.settlement;
 
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.CreditCard;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.settlement.epsilon.*;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -213,47 +211,32 @@ public class CardSettlementEpsilon extends CardSettlement {
 				String settlementResultCode = settlementResultInfo.result;
 				Log.d("settlementResultInfo: " + settlementResultCode);
 				if ("1".equals(settlementResultCode)) {
-					cConn = DatabaseUtil.dataSource.getConnection();
+					CreditCard creditCard = new CreditCard(poipikuUserId, Agent.EPSILON);
 					if (isFirstSettlement) {
-						strSql = "INSERT INTO creditcards" +
-								" (user_id, agent_id, card_expire, security_code, agent_user_id, last_agent_order_id)" +
-								" VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
-						cState = cConn.prepareStatement(strSql);
-						int idx = 1;
-						cState.setInt(idx++, poipikuUserId);
-						cState.setInt(idx++, Agent.EPSILON);
-						cState.setString(idx++, cardExpire);
-						cState.setString(idx++, cardSecurityCode);
-						cState.setString(idx++, ssi.userId);
-						cState.setString(idx++, ssi.orderNumber);
-						cResSet = cState.executeQuery();
-						if(cResSet.next()) {
-							creditcardIdToPay = cResSet.getInt(1);
-							Log.d("m_nCreditcardIdToPay: " + creditcardIdToPay);
-						}
-						cResSet.close();cResSet=null;
-					} else {
-						strSql = "SELECT id FROM creditcards WHERE user_id=? AND agent_id=? AND del_flg=false";
-						cState = cConn.prepareStatement(strSql);
-						cState.setInt(1, poipikuUserId);
-						cState.setInt(2, agent.id);
-						cResSet = cState.executeQuery();
-						if(cResSet.next()) {
-							creditcardIdToPay = cResSet.getInt("id");
-							Log.d("m_nCreditcardIdToPay: " + creditcardIdToPay);
-						}
-						cResSet.close();cResSet=null;
+						creditCard.setExpire(cardExpire);
+						creditCard.securityCode = cardSecurityCode;
+						creditCard.agentUserId = ssi.userId;
+						creditCard.lastAgentOrderId = ssi.orderNumber;
 
-						strSql = "UPDATE creditcards" +
-								" SET updated_at=now(), last_agent_order_id=?" +
-								" WHERE id=?";
-						cState = cConn.prepareStatement(strSql);
-						cState.setString(1, ssi.orderNumber);
-						cState.setInt(2, creditcardIdToPay);
-						cState.executeUpdate();
+						if (creditCard.insert()) {
+							creditCardIdToPay = creditCard.id;
+							Log.d("creditcardIdToPay: " + creditCardIdToPay);
+						} else {
+							Log.d("creditCard.insert() error");
+							return false;
+						}
+					} else {
+						creditCardIdToPay = creditCard.id;
+						if (creditCard.select()) {
+							if (!creditCard.isExist) {
+								Log.d("クレジットカード情報が見つからない");
+							} else {
+								if (!creditCard.updateLastAgentOrderId(ssi.orderNumber)) {
+									Log.d("updateLastAgentOrderId() error");
+								}
+							}
+						}
 					}
-					cState.close();cState = null;
-					cConn.close();cConn = null;
 					errorKind = ErrorKind.None;
 					return true;
 				} else {
@@ -286,9 +269,9 @@ public class CardSettlementEpsilon extends CardSettlement {
 			errorKind = ErrorKind.Exception;
 			return false;
 		} finally {
-			if(cResSet!=null){try{cResSet.close();cResSet=null;}catch(Exception ex){;}}
-			if(cState!=null){try{cState.close();cState=null;}catch(Exception ex){;}}
-			if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ex){;}}
+			if(cResSet!=null){try{cResSet.close();cResSet=null;}catch(Exception ignored){}}
+			if(cState!=null){try{cState.close();cState=null;}catch(Exception ignored){}}
+			if(cConn!=null){try{cConn.close();cConn=null;}catch(Exception ignored){}}
 		}
 	}
 

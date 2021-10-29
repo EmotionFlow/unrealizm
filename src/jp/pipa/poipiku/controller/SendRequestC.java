@@ -141,7 +141,7 @@ public class SendRequestC extends Controller {
 		boolean updateOrderResult = order.update(
 				newStatus,
 				cardSettlement.orderId,
-				cardSettlement.creditcardIdToPay);
+				cardSettlement.creditCardIdToPay);
 
 		if (newStatus == Order.Status.SettlementError){
 			if (cardSettlement.errorKind == CardSettlement.ErrorKind.CardAuth) {

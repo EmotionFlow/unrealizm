@@ -32,7 +32,7 @@ batch: build-java
 	echo CLS=${CLS} && \
 	pushd batch && \
 	./build_java_batch.sh &&\
-	./run.sh ${CLS} &&\
+	./run.sh ${CLS} ${ARGS} &&\
 	popd
 
 translation:

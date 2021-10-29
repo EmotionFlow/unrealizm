@@ -197,7 +197,7 @@ public final class PoiTicket {
 					}
 					return false;
 				}
-				nCreditCardId = cardSettlement.creditcardIdToPay;
+				nCreditCardId = cardSettlement.creditCardIdToPay;
 			} else {
 				nCreditCardId = -1;
 				authorizeResult = true;

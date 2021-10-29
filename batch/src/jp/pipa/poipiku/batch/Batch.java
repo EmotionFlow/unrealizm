@@ -9,7 +9,7 @@ public class Batch {
 	static {
 		try {
 			Class.forName("jp.pipa.poipiku.Common");
-		} catch (Exception igunore){};
+		} catch (Exception ignore){}
 		Velocity.init("velocity.properties");
 		dataSource = DBConnection.getDataSource();
 	}
