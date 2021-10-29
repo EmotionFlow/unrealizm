@@ -12,7 +12,6 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 class EpsilonRegularlyPayment {
 	public String userId;
@@ -55,7 +54,7 @@ public class DeactivateCreditCards extends Batch {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		final String sql =
-				"SELECT c.user_id, c.del_flg card_del_flg, c.invalid_flg card_invalid_flg, ps.cancel_datetime subscription_cancel_datetime" +
+				"SELECT c.user_id, c.id card_id, c.del_flg card_del_flg, c.invalid_flg card_invalid_flg, ps.cancel_datetime subscription_cancel_datetime" +
 				" FROM orders o" +
 				"   INNER JOIN passport_subscriptions ps ON o.id = ps.order_id" +
 				"   INNER JOIN creditcards c ON o.creditcard_id = c.id" +
@@ -64,6 +63,7 @@ public class DeactivateCreditCards extends Batch {
 		try {
 			int poipikuUserId;
 			boolean isFound;
+			int cardId;
 			boolean cardDelFlg;
 			boolean cardInvalidFlg;
 			Timestamp subscriptionCancelDatetime;
@@ -77,12 +77,14 @@ public class DeactivateCreditCards extends Batch {
 				if (resultSet.next()) {
 					isFound = true;
 					poipikuUserId = resultSet.getInt("user_id");
+					cardId = resultSet.getInt("card_id");
 					cardDelFlg = resultSet.getBoolean("card_del_flg");
 					cardInvalidFlg = resultSet.getBoolean("card_invalid_flg");
 					subscriptionCancelDatetime = resultSet.getTimestamp("subscription_cancel_datetime");
 				} else {
 					poipikuUserId = -1;
 					isFound = false;
+					cardId = -1;
 					cardDelFlg = false;
 					cardInvalidFlg = false;
 					subscriptionCancelDatetime = null;
@@ -105,9 +107,13 @@ public class DeactivateCreditCards extends Batch {
 				}
 
 				// ポイピクDB上でカードを無効化する
+				Log.d(String.format("card: %d, %b, %b", cardId, cardDelFlg, cardInvalidFlg));
 				if (!cardDelFlg && !cardInvalidFlg) {
 					CreditCard creditCard = new CreditCard(poipikuUserId, Agent.EPSILON);
-					if (!creditCard.invalidate()) {
+					creditCard.select();
+					if (creditCard.invalidate()) {
+						Log.d("クレジットカードを無効化した");
+					} else {
 						Log.d("クレジットカードの無効化に失敗した");
 					}
 				}
@@ -121,10 +127,6 @@ public class DeactivateCreditCards extends Batch {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
-
-		regularlyPayments.forEach(e -> {
-			Log.d(String.format("%s, %d", e.userId, e.itemCode));
-		});
 
 		Log.d("DeactivateCreditCards batch end");
 	}
