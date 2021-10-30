@@ -150,6 +150,10 @@
 	overflow: hidden;
 	width: 100%;
 	text-align: center;
+	float: none;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
 }
 
 .FooterAd .SideBarMid {
@@ -2942,7 +2946,7 @@ Decoration
 		transform: scaleY(0.4);
 		-webkit-transform: scaleY(0.4);
 	}  20% {
-		   transform: scaleY(1.0);
-		   -webkit-transform: scaleY(1.0);
-	   }
+			transform: scaleY(1.0);
+			-webkit-transform: scaleY(1.0);
+		}
 }
