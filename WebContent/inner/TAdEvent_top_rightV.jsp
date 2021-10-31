@@ -25,18 +25,18 @@ $(function(){
 </script>
 <ul class="EventItemList">
 	<li class="EventItem">
-		<a href="/NewArrivalPcV.jsp?CD=13">
-			<img class="EventBanner" src="/event/20191026_halloween/banner_halloween_2021.png" />
-		</a>
-	</li>
-
-	<li class="EventItem">
 		<a href="/event/20190901/TopV.jsp">
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
 		</a>
 	</li>
 
 <!--
+	<li class="EventItem">
+		<a href="/NewArrivalPcV.jsp?CD=13">
+			<img class="EventBanner" src="/event/20191026_halloween/banner_halloween_2021.png" />
+		</a>
+	</li>
+
 	<li class="EventItem End">
 		<a href="/NewArrivalV.jsp?CD=29">
 			<img class="EventBanner" src="/event/2021_02_18_blskip/poipiku_blskip_bn.png" />

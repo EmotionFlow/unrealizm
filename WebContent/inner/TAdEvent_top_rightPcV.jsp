@@ -25,6 +25,7 @@ $(function(){
 });
 </script>
 <%}%>
+<!--
 <ul class="EventItemList">
 	<li class="EventItem">
 		<a href="/NewArrivalPcV.jsp?CD=13">
@@ -32,7 +33,6 @@ $(function(){
 		</a>
 	</li>
 
-<!--
 	<li class="EventItem">
 		<a class="EventBanner" style="padding: 5px; background: #333; color: #fff; font-family: yumincho, 游明朝, 游明朝体, yu mincho, ヒラギノ明朝 pron, hiragino mincho pron, hiraminpron-w3, hiraminpron-w6, ヒラギノ明朝 pro, hiragino mincho pro, hiraminpro-w3, hiraminpro-w6, hg明朝e, hgp明朝e, hgs明朝e, hgminchoe, hgpminchoe, hgsminchoe, hg明朝b, hgp明朝b, hgs明朝b, hgminchob, hgpminchob, hgsminchob, 平成明朝, 平成明朝 std, 平成明朝 pro, heisei mincho, heisei mincho std, heisei mincho pro, ipa明朝, ipamincho, Georgia, georgia ref, times new roman, SerifJP, serif;" href="/UploadTextPcV.jsp">
 			<div style="text-align: center; font-size: 34px; font-weight: bold; line-height: 62px">縦書き10万文字</div>
