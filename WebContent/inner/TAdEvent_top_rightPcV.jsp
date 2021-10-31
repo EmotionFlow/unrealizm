@@ -25,8 +25,8 @@ $(function(){
 });
 </script>
 <%}%>
-<!--
 <ul class="EventItemList">
+<!--
 	<li class="EventItem">
 		<a href="/NewArrivalPcV.jsp?CD=13">
 			<img class="EventBanner" src="/event/20191026_halloween/banner_halloween_2021.png" />
