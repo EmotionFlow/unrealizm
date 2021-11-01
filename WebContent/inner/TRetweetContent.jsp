@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	function DispRetweetMsg(respRetweetContentF) {
-		if (respRetweetContentF.result === <%=CTweet.RETWEET_DONE%>) {
+		if (respRetweetContentF.result === <%=Common.API_OK%>) {
 			DispMsg("<%=_TEX.T("TRetweetContent.Msg.Done")%>");
 		} else if(respRetweetContentF.result === <%=CTweet.RETWEET_ALREADY%>) {
 			// pass
 		} else {
-			DispMsg("<%=_TEX.T("TRetweetContent.Msg.Error")%>", 5000);
+			if (respRetweetContentF.error_detail_code === <%=RetweetContentC.ErrorDetail.NotSignedIn.getCode()%>) {
+				DispMsg("<%=_TEX.T("TRetweetContent.Msg.Error.NeedSignIn")%>>", 4000);
+			} else {
+				DispMsg("<%=_TEX.T("TRetweetContent.Msg.Error")%>", 5000);
+			}
 		}
 	}
 

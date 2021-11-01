@@ -120,6 +120,10 @@ public final class CTweet {
 
 
 	public boolean GetResults(int nUserId) {
+		if (nUserId<=0) {
+			m_bIsTweetEnable = false;
+			return false;
+		}
 		boolean bResult = true;
 		Connection cConn = null;
 		PreparedStatement cState = null;
@@ -382,9 +386,11 @@ public final class CTweet {
 	}
 
 	public int ReTweet(int contentId, long tweetId){
-		if (TwitterRetweet.find(m_nUserId, contentId)) {
-			return RETWEET_ALREADY;
+		if (!m_bIsTweetEnable || contentId<=0 || tweetId<=0 || m_nUserId<=0) {
+			Log.d(String.format("ReTweetError: %b, %d, %d, %d",m_bIsTweetEnable, contentId, tweetId, m_nUserId));
+			return ERR_TWEET_DISABLE;
 		}
+		if (TwitterRetweet.find(m_nUserId, contentId)) return RETWEET_ALREADY;
 
 		int result;
 		try{

@@ -4,6 +4,7 @@ import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.CodeEnum;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ public class RetweetContentC extends Controller {
 		RecordNotFound(-10),	    // 自分を外そうとした
 		TweetIdNotFound(-20),	    // 削除対象が見つからなかった
 		RetweetError(-30),          // リツイート時にエラー
+		NotSignedIn(-40),           // ポイピクにログインしていない
 		Unknown(-99);         // 不明。通常ありえない。
 
 		@Override
@@ -43,6 +45,7 @@ public class RetweetContentC extends Controller {
 	public int getResults(CheckLogin checkLogin) {
 		if (!checkLogin.m_bLogin) {
 			errorKind = ErrorKind.Unknown;
+			errorDetail = ErrorDetail.NotSignedIn;
 			return CTweet.ERR_OTHER;
 		}
 
@@ -60,7 +63,7 @@ public class RetweetContentC extends Controller {
 			resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
-				retweetId = resultSet.getLong(1);
+				retweetId = Long.parseLong(resultSet.getString(1));
 				if (retweetId <= 0) {
 					errorDetail = ErrorDetail.TweetIdNotFound;
 				}
@@ -72,13 +75,16 @@ public class RetweetContentC extends Controller {
 			statement.close();statement=null;
 			connection.close();connection=null;
 
-			CTweet cTweet = new CTweet();
-			cTweet.GetResults(checkLogin.m_nUserId);
-			result = cTweet.ReTweet(contentId, retweetId);
-			if (result == CTweet.RETWEET_DONE || result == CTweet.RETWEET_ALREADY) {
-				errorDetail = ErrorDetail.None;
-			} else {
-				errorDetail = ErrorDetail.Unknown;
+			if (errorDetail != ErrorDetail.TweetIdNotFound && errorDetail != ErrorDetail.RecordNotFound) {
+				CTweet cTweet = new CTweet();
+				cTweet.GetResults(checkLogin.m_nUserId);
+				result = cTweet.ReTweet(contentId, retweetId);
+				if (result == CTweet.RETWEET_DONE || result == CTweet.RETWEET_ALREADY) {
+					errorDetail = ErrorDetail.None;
+				} else {
+					Log.d("cTweet.ReTweet() failed: " + result);
+					errorDetail = ErrorDetail.Unknown;
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

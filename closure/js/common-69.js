@@ -438,7 +438,7 @@ function _retweetContentF(userId, contentId, mode, elm) {
 		"dataType": "json",
 	}).then(
 		data => {
-			if (data.result === 4 || data.result === 5) {
+			if (data.result === 1) { // Common.API_OK
 				ShowAppendFile(userId, contentId, mode, elm);
 			}
 			DispRetweetMsg(data);
