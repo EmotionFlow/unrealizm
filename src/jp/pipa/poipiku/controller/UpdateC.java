@@ -191,23 +191,20 @@ public final class UpdateC extends UpC {
 					if(statement!=null){statement.close();};statement=null;
 				}
 
-				if(nNewContentId!=null){
-					boolean bUpdateResult = doUpdateContentIdTransaction(connection,  cParam.m_nContentId, nNewContentId);
-					if(!bUpdateResult){
-						try{
-							nNewContentId=null;
-							strSql = "DELETE FROM content_id_histories WHERE old_id=?";
-							statement = connection.prepareStatement(strSql);
-							statement.setInt(1, cParam.m_nContentId);
-							statement.executeUpdate();
-						}catch(Exception e){
-							Log.d(strSql);
-							e.printStackTrace();
-						}finally{
-							if(statement!=null){statement.close();};statement=null;
-						}
-						return -400;
+				boolean bUpdateResult = doUpdateContentIdTransaction(connection,  cParam.m_nContentId, nNewContentId);
+				if(!bUpdateResult){
+					try{
+						strSql = "DELETE FROM content_id_histories WHERE old_id=?";
+						statement = connection.prepareStatement(strSql);
+						statement.setInt(1, cParam.m_nContentId);
+						statement.executeUpdate();
+					}catch(Exception e){
+						Log.d(strSql);
+						e.printStackTrace();
+					}finally{
+						if(statement!=null){statement.close();};statement=null;
 					}
+					return -400;
 				}
 			}
 
