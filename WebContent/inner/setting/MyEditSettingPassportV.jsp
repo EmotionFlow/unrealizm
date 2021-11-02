@@ -1,3 +1,4 @@
+<%@ page import="java.time.LocalDate" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 final PassportPayment payment = new PassportPayment(checkLogin);
@@ -193,6 +194,11 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 	}
 
 	function CancelPassport() {
+		const jstNow = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
+		if (jstNow.getDate() >= 25) {
+			DispMsg("<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel.OutOfPeriod")%>", 4000);
+			return;
+		}
 		Swal.fire({
 			title: '<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel")%>',
 			text: '<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel.Confirm")%>',
@@ -459,8 +465,20 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				</div>
 				<%@ include file="MyEditSettingPassportBuyButton.jsp"%>
 				<%if(subscription.getStatus() == PassportSubscription.Status.UnderContraction) {%>
+				<% boolean isCancelOutOfPeriod = LocalDate.now().getDayOfMonth() >= 25; %>
+
+				<%if(isCancelOutOfPeriod){%>
 				<div class="SettingBodyCmd">
-					<a id="CancelPassportButton" class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="CancelPassport()">
+				<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel.OutOfPeriod")%>
+				</div>
+				<%}%>
+
+				<div class="SettingBodyCmd">
+					<a id="CancelPassportButton"
+					   class="BtnBase SettingBodyCmdRegist <%=isCancelOutOfPeriod?"Disabled":""%>"
+					   href="javascript:void(0)"
+					   <%if(!isCancelOutOfPeriod){%>onclick="CancelPassport()"<%}%>
+					>
 						<%=_TEX.T("MyEditSettingPassportV.SubscriptionCancel")%>
 					</a>
 					<div id="PassportNowCancelling" style="display:none">
