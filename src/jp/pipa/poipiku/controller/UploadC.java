@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -38,7 +39,7 @@ public final class UploadC extends UpC {
 			ArrayList<String> lColumns = new ArrayList<>(
 					Arrays.asList(
 							"user_id", "genre_id", "category_id", "description",
-							"tag_list", "publish_id", "password", "list_id", "safe_filter",
+							"tag_list", "publish_id", "anyone_can_show_num", "password", "list_id", "safe_filter",
 							"editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
 
 			if(cParam.m_bLimitedTimePublish){
@@ -65,6 +66,11 @@ public final class UploadC extends UpC {
 			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
 			cState.setString(idx++, cParam.m_strTagList);
 			cState.setInt(idx++, cParam.m_nPublishId);
+			if (cParam.m_nAnyoneCanShowNum <= 0) {
+				cState.setNull(idx++, Types.INTEGER);
+			} else {
+				cState.setInt(idx++, cParam.m_nAnyoneCanShowNum);
+			}
 			cState.setString(idx++, cParam.m_strPassword);
 			cState.setString(idx++, cParam.m_strListId);
 			cState.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));

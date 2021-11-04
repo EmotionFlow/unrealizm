@@ -783,6 +783,13 @@ Decoration
 .PublishIco12{ background-position: center; background-size: contain; background-image: url(/img/ico_rt.png);}
 .PublishIco99{ background-position: center; background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
 
+.IllustItemExpandBtn > .Publish{
+	height: 19px;
+	padding: 0 16px;
+	border-radius: 16px;
+	background-color: #3498db;
+}
+
 .IllustThumb .PublishLimitedPublished{
 	width: 40px;
 	height: 40px;
@@ -1378,10 +1385,10 @@ Decoration
 .IllustItem .IllustItemExpand .IllustItemExpandBtn {
 	display: inline-block;
 	margin: 0;
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 20px;
 	height: 20px;
-	padding: 0 12px;
+	padding: 3 12px;
 	border-radius: 20px;
 }
 

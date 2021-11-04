@@ -548,7 +548,7 @@ public final class CCnv {
 		strRtn.append("<div class=\"IllustItemExpand\">");
 		if(cContent.m_nFileNum>1) {
 			appendIllustItemExpandPassFrame(_TEX, strRtn);
-			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
+			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><span class=\"Publish PublishIco12\"></span><!--<i class=\"far fa-clone\"></i>--> %s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
 				nSpMode,

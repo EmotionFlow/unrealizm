@@ -304,6 +304,16 @@ if (requestId > 0) {
 							</div>
 						</div>
 					</div>
+					<div id="ItemAnyoneCanViewFirst" class="OptionItem" style="display: none">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.AnyoneCanViewFirst")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionAnyoneCanViewFirst" id="OptionAnyoneCanViewFirst" value="0" />
+							<label class="onoffswitch-label" for="OptionAnyoneCanViewFirst">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
 					<div id="ItemTimeLimitedFlg" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></div>
 						<div class="onoffswitch OnOff">

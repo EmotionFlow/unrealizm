@@ -677,7 +677,7 @@ function udpateMyTwitterList() {
 var updateMyTwitterListF = udpateMyTwitterList();
 
 function updatePublish(nUserId) {
-	let val = parseInt($('#EditPublish').val(), 10);
+	const val = parseInt($('#EditPublish').val(), 10);
 	updateAreaLimitedTimePublish(val);
 
 	const nSlideSpeed = 300;
@@ -694,7 +694,7 @@ function updatePublish(nUserId) {
 		$('#PublishHiddenInfo')
 	];
 
-	if (val===4 || val===5 || val===6 || val===7 || val===8 || val===9 || val===10 || val===11 || val===12 || val===99 ){
+	if (val === 4 || val === 5 || val === 6 || val === 7 || val === 8 || val === 9 || val === 10 || val === 11 || val === 12 || val === 99) {
 		let elToHide = null;
 		let elToVisible = null;
 		switch (val) {
@@ -721,7 +721,7 @@ function updatePublish(nUserId) {
 				break;
 			case 12:
 				elToVisible = $('#PublishTwitterRTInfo');
-				$('#OptionTweet').prop("checked",true);
+				$('#OptionTweet').prop("checked", true);
 				updateTweetButton();
 				break;
 			case 99:
@@ -731,33 +731,39 @@ function updatePublish(nUserId) {
 				;
 		}
 
-		for (let i=0; i<elements.length; i++){
+		for (let i = 0; i < elements.length; i++) {
 			let el = elements[i];
-			if(el.is(':visible')){
+			if (el.is(':visible')) {
 				elToHide = el;
 				break;
 			}
 		}
 
-		if (elToHide==null){
+		if (elToHide == null) {
 			elToVisible.slideDown(nSlideSpeed);
 		} else {
 			elToHide.slideUp(nSlideSpeed,
-				function(){
+				function () {
 					elToVisible.delay(nChangeDelay).slideDown(nSlideSpeed);
 				});
 		}
 
-		if(val === 10){
+		if (val === 10) {
 			updateMyTwitterListF(nUserId);
 		}
-		} else {
-		for (let i=0; i<elements.length; i++){
+	} else {
+		for (let i = 0; i < elements.length; i++) {
 			let el = elements[i];
-			if(el.is(':visible')){
+			if (el.is(':visible')) {
 				el.slideUp(nSlideSpeed);
 			}
 		}
+	}
+
+	if (val === 0 || val === 99) {
+		$('#ItemAnyoneCanViewFirst').slideUp();
+	} else {
+		$('#ItemAnyoneCanViewFirst').slideDown();
 	}
 }
 
@@ -965,6 +971,12 @@ function UploadFile(user_id, request_id) {
 			return;
 		}
 	}
+	const nAnyoneCanShowNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
+	if (nAnyoneCanShowNum > 0 && multiFileUploader.getSubmittedNum() < 2) {
+		DispMsg("「最初の１枚目だけ公開する」オプションは複数枚投稿時のみ有効です");
+		return;
+	}
+
 	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -998,7 +1010,8 @@ function UploadFile(user_id, request_id) {
 			"TWCT":getTwitterCardThumbnailSetting(),
 			"ED":0,
 			"CNG":nCheerNg,
-			"RID":request_id
+			"RID":request_id,
+			"ANYSHW":nAnyoneCanShowNum,
 		},
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
