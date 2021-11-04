@@ -531,15 +531,26 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 }
 
 function updateTweetButton() {
-	const $ImageSwitch = $('#ImageSwitch');
-	if (!$ImageSwitch.length) return;
 	const bTweet = $('#OptionTweet').prop('checked');
+	const $TweetInfo = $("#OptionTweetInfo");
+	const $ImageSwitch = $('#OptionImage');
 	const $ImageSwitchInfo = $('#OptionImageSwitchInfo');
-	if(bTweet) {
-		$ImageSwitch.show();
+	let bImgTweet;
+	if ($ImageSwitch) {
+		bImgTweet = $ImageSwitch.prop('checked');
+	}
+	if (bTweet) {
+		$TweetInfo.show();
+		if ($ImageSwitch) {
+			$("#ImageSwitch").show();
+			bImgTweet ? $ImageSwitchInfo.show() : $ImageSwitchInfo.hide();
+		}
 	} else {
-		$ImageSwitch.hide();
-		$ImageSwitchInfo.hide();
+		$TweetInfo.hide();
+		if ($ImageSwitch) {
+			$("#ImageSwitch").hide();
+			$ImageSwitchInfo.hide();
+		}
 	}
 }
 
@@ -1337,5 +1348,34 @@ function initOption() {
 		}
 	});
 	updateTweetButton();
+}
+
+function onClickOptionItem() {
+	$(".OptionItem").on('click', (ev) => {
+		let $targets;
+		if (ev.target.classList.contains("OptionItem")) {
+			$targets = $(ev.target).find("div > input");
+		} else {
+			$targets = $(ev.target).closest(".OptionItem").find("div > input");
+		}
+		if ($targets.length === 1) {
+			let $OptionItem;
+			if (ev.target.classList.contains("OptionItem")) {
+				$OptionItem = $(ev.target);
+			} else {
+				$OptionItem = $(ev.target).closest(".OptionItem");
+			}
+
+			const bgColor = '#4fa9e5';
+			if ($OptionItem.css('background') !== bgColor) {
+				$OptionItem.css('background', bgColor);
+				setTimeout(()=>{$OptionItem.css('background', 'none');}, 220);
+			}
+
+			if ($(ev.target).closest(".onoffswitch").length === 0) {
+				$targets[0].click();
+			}
+		}
+	});
 }
 

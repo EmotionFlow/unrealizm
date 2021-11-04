@@ -45,7 +45,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-43.js" type="text/javascript"></script>
+		<script src="/js/upload-44.js" type="text/javascript"></script>
 		<script src="/js/update-17.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
@@ -132,17 +132,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			<%}%>
 			$(function() {
 				DispDescCharNum();
-				$(".onoffswitch-label").on('click',
-					(ev)=>{
-						const $tgt = $(ev.target).parent().parent().parent();
-						$tgt.css('color','#f9ffb3');
-						setTimeout(()=>{
-							$tgt.css('color','#ffffff');
-						}, 400);
-					}
-				);
+				onClickOptionItem();
 			});
-
 		</script>
 
 		<style>
@@ -441,9 +432,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						</div>
 					</div>
 					<div class="OptionItem">
-						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%>
-							<a style="text-decoration: underline;" onclick="$('#OptionTweetInfo').toggle()"><i class="fas fa-info-circle"></i></a>
-						</div>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" <%if(cResults.m_cContent.isTweetConcurrent()){%>checked<%}%> />
 							<label class="onoffswitch-label" for="OptionTweet">
@@ -458,11 +447,9 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 					<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
 					<div id="ImageSwitch" class="OptionItem" style="display: none;">
-						<div class="OptionLabelSub">
-							<%=_TEX.T("UploadFilePc.Option.TweetImage")%><a onclick="$('#OptionImageSwitchInfo').toggle()"> <i class="fas fa-info-circle"></i></a>
-						</div>
+						<div class="OptionLabelSub"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" <%if(cResults.m_cContent.isTweetWithThumbnail()){%>checked<%}%>/>
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0" onchange="updateTweetButton()" <%if(cResults.m_cContent.isTweetWithThumbnail()){%>checked<%}%>/>
 							<label class="onoffswitch-label" for="OptionImage">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -475,17 +462,26 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 					<div id="TwitterCardThumbnailSwitch" class="OptionItem">
 						<div class="OptionLabel">
-							<%=_TEX.T("UploadFilePc.Option.TwitterCardThumbnail")%><a onclick="$('#OptionTwitterCardThumbnailSwitchInfo').toggle()"> <i class="fas fa-info-circle"></i></a>
+							<%=_TEX.T("UploadFilePc.Option.TwitterCardThumbnail")%>
 						</div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTwitterCardThumbnail" id="OptionTwitterCardThumbnail" value="0" <%if(cResults.m_cContent.isTwitterCardThumbnail()){%>checked<%}%>/>
+							<input type="checkbox"
+								   class="onoffswitch-checkbox"
+								   name="OptionTwitterCardThumbnail"
+								   id="OptionTwitterCardThumbnail"
+								   value="0"
+								   onchange="const $info=$('#OptionTwitterCardThumbnailSwitchInfo'); $(this).prop('checked') ? $info.show() : $info.hide()"
+								   <%if(cResults.m_cContent.isTwitterCardThumbnail()){%>checked<%}%>/>
 							<label class="onoffswitch-label" for="OptionTwitterCardThumbnail">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>
 						</div>
 					</div>
-					<div id="OptionTwitterCardThumbnailSwitchInfo" class="OptionInfo">
+					<div id="OptionTwitterCardThumbnailSwitchInfo"
+						 class="OptionInfo"
+						 <%if(cResults.m_cContent.isTwitterCardThumbnail()){%>style="display: block"<%}%>
+					>
 						<%=_TEX.T("UploadFilePc.Option.TwitterCardThumbnail.Info")%>
 					</div>
 

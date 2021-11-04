@@ -1066,8 +1066,9 @@ Decoration
 	width: 100%;
 	display: flex;
 	flex-flow: row;
-	margin: 5px 0;
+	padding: 9px 0;
 	align-items: center;
+	border-radius: 2px;
 }
 
 .UploadFile .UoloadCmdOption .OptionNotify {
