@@ -50,6 +50,13 @@ $(function(){
 -->
 
 	<li class="EventItem">
+		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=31">
+			<div style="text-align: center; font-size: 70px; font-weight: bold; line-height: 62px">1111</div>
+			<div style="text-align: center; font-size: 16px; line-height: 20px;">11/11まで</div>
+		</a>
+	</li>
+
+	<li class="EventItem">
 		<a href="/event/20190901/TopPcV.jsp">
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
 		</a>

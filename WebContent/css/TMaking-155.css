@@ -1700,6 +1700,14 @@ Decoration
 	border-color: #eb7f10;
 	color: #eb7f10;
 }
+.Category.C31 {
+	background-color: #7F460A;
+	color: #fff;
+}
+.CategoryBtn.C31 {
+	border-color: #7F460A;
+	color: #fff;
+}
 
 
 .IllustItemList .CategoryMore {
