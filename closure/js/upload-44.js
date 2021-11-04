@@ -1011,7 +1011,7 @@ function UploadFile(user_id, request_id) {
 			"ED":0,
 			"CNG":nCheerNg,
 			"RID":request_id,
-			"ANYSHW":nAnyoneCanShowNum,
+			"PUBALL":nAnyoneCanShowNum,
 		},
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
