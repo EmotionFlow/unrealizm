@@ -17,6 +17,10 @@
 		DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
 	}
 
+	function anyoneCanViewFirstErrMsg() {
+		DispMsg("「最初の１枚目だけ公開する」オプションは複数枚投稿時のみ有効です");
+	}
+
 	function twtterListRateLimiteExceededMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
 	}

@@ -760,10 +760,13 @@ function updatePublish(nUserId) {
 		}
 	}
 
-	if (val === 0 || val === 99) {
-		$('#ItemAnyoneCanViewFirst').slideUp();
-	} else {
-		$('#ItemAnyoneCanViewFirst').slideDown();
+	const $ItemAnyoneCanViewFirst = $('#ItemAnyoneCanViewFirst');
+	if ($ItemAnyoneCanViewFirst) {
+		if (val === 0 || val === 99) {
+			$ItemAnyoneCanViewFirst.slideUp();
+		} else {
+			$ItemAnyoneCanViewFirst.slideDown();
+		}
 	}
 }
 
@@ -971,9 +974,9 @@ function UploadFile(user_id, request_id) {
 			return;
 		}
 	}
-	const nAnyoneCanShowNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
-	if (nAnyoneCanShowNum > 0 && multiFileUploader.getSubmittedNum() < 2) {
-		DispMsg("「最初の１枚目だけ公開する」オプションは複数枚投稿時のみ有効です");
+	const nPublishAllNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
+	if (nPublishAllNum > 0 && multiFileUploader.getSubmittedNum() < 2) {
+		anyoneCanViewFirstErrMsg();
 		return;
 	}
 
@@ -1011,7 +1014,7 @@ function UploadFile(user_id, request_id) {
 			"ED":0,
 			"CNG":nCheerNg,
 			"RID":request_id,
-			"PUBALL":nAnyoneCanShowNum,
+			"PUBALL":nPublishAllNum,
 		},
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",

@@ -93,41 +93,29 @@ if(nRtn<ShowAppendFileC.OK) {
 
 } else {
 	final String illustDetailUrl = (cResults.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
-	switch(cResults.m_cContent.m_nPublishId) {
-		case Common.PUBLISH_ID_R15:
-		case Common.PUBLISH_ID_R18:
-		case Common.PUBLISH_ID_R18G:
-		case Common.PUBLISH_ID_PASS:
-		case Common.PUBLISH_ID_LOGIN:
-		case Common.PUBLISH_ID_FOLLOWER:
-		case Common.PUBLISH_ID_T_FOLLOWER:
-		case Common.PUBLISH_ID_T_FOLLOWEE:
-		case Common.PUBLISH_ID_T_EACH:
-		case Common.PUBLISH_ID_T_LIST:
-		case Common.PUBLISH_ID_T_RT:
-			if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
-				// 2枚目の場所に本文を表示する
-				nRtn=2;
-				strHtml.append(String.format("<a class=\"IllustItemText\" %s href=\"%s?ID=%d&TD=%d\">",
-						cResults.m_cContent.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
-						illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
-				strHtml.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
-						cResults.m_cContent.novelDirection==1 ? "Vertical" : "",
-						Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)));
-				strHtml.append("</a>");
-			} else {
-				// 2枚目の場所に1枚目を表示する
-				nRtn++;
-				strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
-				strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
-				strHtml.append("</a>");
-			}
-			break;
-		case Common.PUBLISH_ID_ALL:
-		case Common.PUBLISH_ID_HIDDEN:
-		default:
-			if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {nRtn=1;}
-			break;
+	final int publishId = cResults.m_cContent.m_nPublishId;
+	if (publishId == Common.PUBLISH_ID_ALL || publishId == Common.PUBLISH_ID_HIDDEN || cResults.m_cContent.publishAllNum == 1) {
+		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
+			nRtn=1;
+		}
+	} else {
+		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
+			// 2枚目の場所に本文を表示する
+			nRtn=2;
+			strHtml.append(String.format("<a class=\"IllustItemText\" %s href=\"%s?ID=%d&TD=%d\">",
+					cResults.m_cContent.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
+					illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+			strHtml.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
+					cResults.m_cContent.novelDirection==1 ? "Vertical" : "",
+					Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)));
+			strHtml.append("</a>");
+		} else {
+			// 2枚目の場所に1枚目を表示する
+			nRtn++;
+			strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+			strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
+			strHtml.append("</a>");
+		}
 	}
 
 	// 以降の画像・文章を表示

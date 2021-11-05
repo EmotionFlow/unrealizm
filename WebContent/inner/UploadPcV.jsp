@@ -304,6 +304,8 @@ if (requestId > 0) {
 							</div>
 						</div>
 					</div>
+
+					<%if(nEditorId!=Common.EDITOR_TEXT){%>
 					<div id="ItemAnyoneCanViewFirst" class="OptionItem" style="display: none">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.AnyoneCanViewFirst")%></div>
 						<div class="onoffswitch OnOff">
@@ -314,6 +316,8 @@ if (requestId > 0) {
 							</label>
 						</div>
 					</div>
+					<%}%>
+
 					<div id="ItemTimeLimitedFlg" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></div>
 						<div class="onoffswitch OnOff">

@@ -197,6 +197,14 @@ function UpdateFile(user_id, content_id) {
 			return;
 		}
 	}
+
+	console.log(multiFileUploader.getSubmittedNum());
+	const nPublishAllNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
+	if (nPublishAllNum > 0 && multiFileUploader.getSubmittedNum() < 2) {
+		anyoneCanViewFirstErrMsg();
+		return;
+	}
+
 	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -243,6 +251,7 @@ function UpdateFile(user_id, content_id) {
 			"DELTW":nDeleteTweet,
 			"ED":0,
 			"CNG":nCheerNg,
+			"PUBALL":nPublishAllNum,
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
