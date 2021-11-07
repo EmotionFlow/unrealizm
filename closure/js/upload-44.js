@@ -975,7 +975,7 @@ function UploadFile(user_id, request_id) {
 		}
 	}
 	const nPublishAllNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
-	if (nPublishAllNum > 0 && multiFileUploader.getSubmittedNum() < 2) {
+	if (nPublishAllNum > 0 && getPreviewAreaImageNum() < 2) {
 		anyoneCanViewFirstErrMsg();
 		return;
 	}
@@ -1394,4 +1394,9 @@ function onClickOptionItem() {
 		}
 	});
 }
+
+function getPreviewAreaImageNum() {
+	return $('.qq-upload-list-selector.qq-upload-list').children('li').length;
+}
+
 

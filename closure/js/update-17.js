@@ -198,9 +198,8 @@ function UpdateFile(user_id, content_id) {
 		}
 	}
 
-	console.log(multiFileUploader.getSubmittedNum());
 	const nPublishAllNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
-	if (nPublishAllNum > 0 && multiFileUploader.getSubmittedNum() < 2) {
+	if (nPublishAllNum > 0 && getPreviewAreaImageNum() < 2) {
 		anyoneCanViewFirstErrMsg();
 		return;
 	}

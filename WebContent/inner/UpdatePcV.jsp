@@ -102,7 +102,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			function UpdateFileCheck(user_id, content_id) {
 				if(!multiFileUploader) return;
-				if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) {
+				if(getPreviewAreaImageNum()<=0) {
 					DispMsg('<%=_TEX.T("UploadFilePc.Image.NeedImage")%>');
 					return;
 				}
