@@ -27,7 +27,7 @@ $(function(){
 	<li class="EventItem">
 		<a class="EventBanner NoBgRed" style="padding: 5px;" href="/NewArrivalAppV.jsp?ID=31">
 			<div style="text-align: center; font-size: 70px; font-weight: bold; line-height: 62px">1111</div>
-			<div style="text-align: center; font-size: 16px; line-height: 20px;">11/11まで</div>
+			<div style="text-align: center; font-size: 16px; line-height: 20px;">〜11/11</div>
 		</a>
 	</li>
 
@@ -36,6 +36,14 @@ $(function(){
 			<img class="EventBanner" src="/event/20190901/banner_odai.png" />
 		</a>
 	</li>
+
+	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>
+	<li class="EventItem">
+		<a href="/MyEditSettingPassportAppV.jsp">
+			<img class="EventBanner" src="/img/poipiku_passport_banner_01.png" />
+		</a>
+	</li>
+	<%}%>
 
 <!--
 	<li class="EventItem">

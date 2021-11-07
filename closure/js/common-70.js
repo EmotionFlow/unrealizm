@@ -695,7 +695,7 @@ function getIntroductionPoipassDlgHtml(strTitle, strDescription){
 .RecommendedPoipassDlgInfo{font-size: 14px; text-align: left;}
 .RecommendedPoipassDlgInfo strong{color:#ff7272}
 </style>
-<img src="/img/poipiku_passport_logo2_60.png" height="45px" alt="poipass"/>
+<img src="/img/poipiku_passport_logo3_60.png" height="45px" alt="poipass"/>
 <h2 class="RecommendedPoipassDlgTitle">` + strTitle + `</h2>
 <div class="RecommendedPoipassDlgInfo">	<p>` + strDescription + `</p></div>`;
 }

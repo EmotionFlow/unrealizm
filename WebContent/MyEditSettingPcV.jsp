@@ -53,7 +53,7 @@ MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
-MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo2_60.png\" />" + _TEX.T("EditSettingV.Passport"));
+MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo3_60.png\" />" + _TEX.T("EditSettingV.Passport"));
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));

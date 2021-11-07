@@ -41,7 +41,7 @@ if(!cResults.getResults(checkLogin)) {
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
-		<link href="/css/TBase-39.css" type="text/css" rel="stylesheet" />
+		<link href="/css/TBase-40.css" type="text/css" rel="stylesheet" />
 		<link href="/css/TMaking-155.css" type="text/css" rel="stylesheet" />
 		<link href="/css/TBasePc-71.css" type="text/css" rel="stylesheet" />
 		<link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
@@ -50,7 +50,7 @@ if(!cResults.getResults(checkLogin)) {
 		<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72_2.png" />
 		<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon_2.png" />
 		<script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-		<script type="text/javascript" src="/js/common-69.js"></script>
+		<script type="text/javascript" src="/js/common-70.js"></script>
 		<script type="text/javascript" src="/js/commonPc-03.js"></script>
 		<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 		<%@ include file="/inner/TGoogleAnalytics.jsp"%>
