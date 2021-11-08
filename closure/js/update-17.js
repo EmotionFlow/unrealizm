@@ -198,9 +198,9 @@ function UpdateFile(user_id, content_id) {
 		}
 	}
 
-	const nPublishAllNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
+	const nPublishAllNum = $('#OptionShowAllFirst').prop('checked') ? 1 : 0;
 	if (nPublishAllNum > 0 && getPreviewAreaImageNum() < 2) {
-		anyoneCanViewFirstErrMsg();
+		showAllFirstErrMsg();
 		return;
 	}
 
@@ -436,9 +436,9 @@ function createUpdatePaste(){
 				return;
 			}
 		}
-		const nPublishAllNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
+		const nPublishAllNum = $('#OptionShowAllFirst').prop('checked') ? 1 : 0;
 		if (nPublishAllNum > 0 && getPasteAreaImageNum() < 2) {
-			anyoneCanViewFirstErrMsg();
+			showAllFirstErrMsg();
 			return;
 		}
 

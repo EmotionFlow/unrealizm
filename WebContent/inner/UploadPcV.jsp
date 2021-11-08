@@ -306,11 +306,11 @@ if (requestId > 0) {
 					</div>
 
 					<%if(nEditorId!=Common.EDITOR_TEXT){%>
-					<div id="ItemAnyoneCanViewFirst" class="OptionItem" style="display: none">
-						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.AnyoneCanViewFirst")%></div>
+					<div id="ItemShowAllFirst" class="OptionItem" style="display: none">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
 						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionAnyoneCanViewFirst" id="OptionAnyoneCanViewFirst" value="0" />
-							<label class="onoffswitch-label" for="OptionAnyoneCanViewFirst">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionShowAllFirst" id="OptionShowAllFirst" value="0" />
+							<label class="onoffswitch-label" for="OptionShowAllFirst">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>

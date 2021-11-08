@@ -376,15 +376,15 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					</div>
 
 					<%if(nEditorId!=Common.EDITOR_TEXT){%>
-					<div id="ItemAnyoneCanViewFirst" class="OptionItem"
+					<div id="ItemShowAllFirst" class="OptionItem"
 						 style="<%=(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_ALL||cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN) ? "display: none" : ""%>">
-						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.AnyoneCanViewFirst")%></div>
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox"
-								   name="OptionAnyoneCanViewFirst" id="OptionAnyoneCanViewFirst"
+								   name="OptionShowAllFirst" id="OptionShowAllFirst"
 								   value="0" <%if(cResults.m_cContent.publishAllNum>0){%>checked<%}%>
 							/>
-							<label class="onoffswitch-label" for="OptionAnyoneCanViewFirst">
+							<label class="onoffswitch-label" for="OptionShowAllFirst">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
 							</label>

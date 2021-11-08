@@ -535,7 +535,7 @@ public final class CCnv {
 
 			final String mark;
 			if (cContent.publishAllNum > 0) {
-				mark = String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId);
+				mark = String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId);
 			} else {
 				mark = "<i class=\"far fa-clone\"></i>";
 			}

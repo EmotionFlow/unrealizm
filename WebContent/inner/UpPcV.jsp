@@ -17,8 +17,8 @@
 		DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
 	}
 
-	function anyoneCanViewFirstErrMsg() {
-		DispMsg("<%=_TEX.T("UploadFilePc.Option.AnyoneCanViewFirst.Error")%>");
+	function showAllFirstErrMsg() {
+		DispMsg("<%=_TEX.T("UploadFilePc.Option.ShowAllFirst.Error")%>");
 	}
 
 	function twtterListRateLimiteExceededMsg() {
