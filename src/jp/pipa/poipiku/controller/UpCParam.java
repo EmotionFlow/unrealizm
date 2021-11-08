@@ -38,7 +38,11 @@ public class UpCParam {
 		m_strDescription	= Util.deleteInvalidChar(Common.TrimAll(request.getParameter("DES")));
 		m_strTagList		= Util.deleteInvalidChar(Common.SubStrNum(Common.TrimAll(request.getParameter("TAG")), 100));
 		m_nPublishId		= Util.toIntN(request.getParameter("PID"), 0, Common.PUBLISH_ID_MAX);
-		m_nPublishAllNum = Util.toIntN(request.getParameter("PUBALL"), 0, 1);
+		if (m_nPublishId == Common.PUBLISH_ID_ALL || m_nPublishId == Common.PUBLISH_ID_HIDDEN) {
+			m_nPublishAllNum = 0;
+		} else {
+			m_nPublishAllNum    = Util.toIntN(request.getParameter("PUBALL"), 0, 1);
+		}
 		m_strPassword		= Util.deleteInvalidChar(Common.SubStrNum(Common.TrimAll(request.getParameter("PPW")), 16));
 		m_strListId			= Common.TrimAll(request.getParameter("PLD"));
 		m_bLimitedTimePublish=Util.toBoolean(request.getParameter("LTP"));

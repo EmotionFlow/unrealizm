@@ -1144,6 +1144,12 @@ function UploadPaste(user_id) {
 			return;
 		}
 	}
+	const nPublishAllNum = $('#OptionAnyoneCanViewFirst').prop('checked') ? 1 : 0;
+	if (nPublishAllNum > 0 && getPasteAreaImageNum() < 2) {
+		anyoneCanViewFirstErrMsg();
+		return;
+	}
+
 	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -1177,6 +1183,7 @@ function UploadPaste(user_id) {
 			"TWCT":getTwitterCardThumbnailSetting(),
 			"ED":1,
 			"CNG":nCheerNg,
+			"PUBALL":nPublishAllNum,
 		},
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -1397,6 +1404,10 @@ function onClickOptionItem() {
 
 function getPreviewAreaImageNum() {
 	return $('.qq-upload-list-selector.qq-upload-list').children('li').length;
+}
+
+function getPasteAreaImageNum() {
+	return $('.PasteZone').children('.InputFile').length;
 }
 
 

@@ -18,7 +18,7 @@
 	}
 
 	function anyoneCanViewFirstErrMsg() {
-		DispMsg("「最初の１枚目だけ公開する」オプションは複数枚投稿時のみ有効です");
+		DispMsg("<%=_TEX.T("UploadFilePc.Option.AnyoneCanViewFirst.Error")%>");
 	}
 
 	function twtterListRateLimiteExceededMsg() {
