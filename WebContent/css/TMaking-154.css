@@ -795,10 +795,13 @@ Decoration
 .PublishIcoBlue10{ background-position: center; background-size: cover; background-image: url(/img/ico_list_blue.png);}
 .PublishIcoBlue12{ background-position: center; background-size: cover; background-image: url(/img/ico_rt_blue.png);}
 
-
-.IllustItemExpandBtn > .Publish{
+.IllustItemExpandBtn > .Publish {
 	padding: 3px 16px;
 	margin-right: 4px;
+}
+
+.IllustItemExpandBtn:hover > .Publish {
+	filter: brightness(400);
 }
 
 .IllustThumb .PublishLimitedPublished{
@@ -812,6 +815,7 @@ Decoration
 	background-position: 50% 50%;
 	opacity: 0.75;
 }
+
 .IllustThumb .PublishLimitedNotPublished{
 	width: 40px;
 	height: 40px;
@@ -1399,8 +1403,9 @@ Decoration
 	font-size: 13px;
 	line-height: 20px;
 	height: 20px;
-	padding: 3 12px;
+	padding: 3px 12px;
 	border-radius: 20px;
+	background: rgba(255,255,255,0.87);
 }
 
 .IllustItem .IllustItemCmd {
@@ -2667,7 +2672,7 @@ Decoration
 }
 
 .RequestBtn:hover .SendRequestIcon {
-	background-position: -130px 0px;
+	background-position: -130px 0;
 }
 
 /**********IllustView InfoForm **********/
