@@ -375,7 +375,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						</div>
 					</div>
 
-					<%if(nEditorId!=Common.EDITOR_TEXT){%>
+					<%if(checkLogin.isStaff() && nEditorId!=Common.EDITOR_TEXT){%>
 					<div id="ItemShowAllFirst" class="OptionItem"
 						 style="<%=(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_ALL||cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN) ? "display: none" : ""%>">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
