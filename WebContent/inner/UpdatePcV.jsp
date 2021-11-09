@@ -45,8 +45,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-44.js" type="text/javascript"></script>
-		<script src="/js/update-17.js" type="text/javascript"></script>
+		<script src="/js/upload-45.js" type="text/javascript"></script>
+		<script src="/js/update-18.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -102,7 +102,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			function UpdateFileCheck(user_id, content_id) {
 				if(!multiFileUploader) return;
-				if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) {
+				if(getPreviewAreaImageNum()<=0) {
 					DispMsg('<%=_TEX.T("UploadFilePc.Image.NeedImage")%>');
 					return;
 				}
@@ -374,6 +374,24 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 							<%}%>
 						</div>
 					</div>
+
+					<%if(checkLogin.isStaff() && nEditorId!=Common.EDITOR_TEXT){%>
+					<div id="ItemShowAllFirst" class="OptionItem"
+						 style="<%=(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_ALL||cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN) ? "display: none" : ""%>">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox"
+								   name="OptionShowAllFirst" id="OptionShowAllFirst"
+								   value="0" <%if(cResults.m_cContent.publishAllNum>0){%>checked<%}%>
+							/>
+							<label class="onoffswitch-label" for="OptionShowAllFirst">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<%}%>
+
 					<div id="ItemTimeLimitedFlg" class="OptionItem"
 						<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){%>style="display: none;"<%}%>
 						>

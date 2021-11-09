@@ -38,7 +38,7 @@ if (requestId > 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-44.js" type="text/javascript"></script>
+		<script src="/js/upload-45.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -304,6 +304,20 @@ if (requestId > 0) {
 							</div>
 						</div>
 					</div>
+
+					<%if(checkLogin.isStaff() && nEditorId!=Common.EDITOR_TEXT){%>
+					<div id="ItemShowAllFirst" class="OptionItem" style="display: none">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
+						<div class="onoffswitch OnOff">
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionShowAllFirst" id="OptionShowAllFirst" value="0" />
+							<label class="onoffswitch-label" for="OptionShowAllFirst">
+								<span class="onoffswitch-inner"></span>
+								<span class="onoffswitch-switch"></span>
+							</label>
+						</div>
+					</div>
+					<%}%>
+
 					<div id="ItemTimeLimitedFlg" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></div>
 						<div class="onoffswitch OnOff">

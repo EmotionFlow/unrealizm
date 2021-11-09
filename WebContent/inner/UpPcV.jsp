@@ -17,6 +17,10 @@
 		DispMsg('<%=_TEX.T("EditIllustVCommon.EditTimeLimited.ReverseError")%>');
 	}
 
+	function showAllFirstErrMsg() {
+		DispMsg("<%=_TEX.T("UploadFilePc.Option.ShowAllFirst.Error")%>");
+	}
+
 	function twtterListRateLimiteExceededMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
 	}

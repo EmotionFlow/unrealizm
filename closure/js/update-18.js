@@ -197,6 +197,13 @@ function UpdateFile(user_id, content_id) {
 			return;
 		}
 	}
+
+	const nPublishAllNum = $('#OptionShowAllFirst').prop('checked') ? 1 : 0;
+	if (nPublishAllNum > 0 && getPreviewAreaImageNum() < 2) {
+		showAllFirstErrMsg();
+		return;
+	}
+
 	if(!($('#TagInputItemData').length)) genre=1;
 
 	setTweetSetting($('#OptionTweet').prop('checked'));
@@ -243,6 +250,7 @@ function UpdateFile(user_id, content_id) {
 			"DELTW":nDeleteTweet,
 			"ED":0,
 			"CNG":nCheerNg,
+			"PUBALL":nPublishAllNum,
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -428,6 +436,12 @@ function createUpdatePaste(){
 				return;
 			}
 		}
+		const nPublishAllNum = $('#OptionShowAllFirst').prop('checked') ? 1 : 0;
+		if (nPublishAllNum > 0 && getPasteAreaImageNum() < 2) {
+			showAllFirstErrMsg();
+			return;
+		}
+
 		if(!($('#TagInputItemData').length)) genre=1;
 
 		setTweetSetting($('#OptionTweet').prop('checked'));
@@ -471,6 +485,7 @@ function createUpdatePaste(){
 			"DELTW":nDeleteTweet,
 			"ED":1,
 			"CNG":nCheerNg,
+			"PUBALL":nPublishAllNum,
 		};
 		let fUpdateFile = UpdateFileRefTwitterFAjax(data);
 

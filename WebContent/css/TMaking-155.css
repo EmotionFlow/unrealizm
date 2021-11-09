@@ -783,6 +783,27 @@ Decoration
 .PublishIco12{ background-position: center; background-size: contain; background-image: url(/img/ico_rt.png);}
 .PublishIco99{ background-position: center; background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
 
+.PublishIcoBlue01{ background-position: center; background-size: cover; background-image: url(/img/ico_warning_blue.png);}
+.PublishIcoBlue02{ background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
+.PublishIcoBlue03{ background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
+.PublishIcoBlue04{ background-position: center; background-size: cover; background-image: url(/img/ico_pass_blue.png);}
+.PublishIcoBlue05{ background-position: center; background-size: cover; background-image: url(/img/ico_signin_blue.png);}
+.PublishIcoBlue06{ background-position: center; background-size: cover; background-image: url(/img/ico_favorite_blue.png);}
+.PublishIcoBlue07{ background-position: center; background-size: cover; background-image: url(/img/ico_follower_blue.png);}
+.PublishIcoBlue08{ background-position: center; background-size: cover; background-image: url(/img/ico_follow_blue.png);}
+.PublishIcoBlue09{ background-position: center; background-size: cover; background-image: url(/img/ico_ff_blue.png);}
+.PublishIcoBlue10{ background-position: center; background-size: cover; background-image: url(/img/ico_list_blue.png);}
+.PublishIcoBlue12{ background-position: center; background-size: cover; background-image: url(/img/ico_rt_blue.png);}
+
+.IllustItemExpandBtn > .Publish {
+	padding: 3px 16px;
+	margin-right: 4px;
+}
+
+.IllustItemExpandBtn:hover > .Publish {
+	filter: brightness(400);
+}
+
 .IllustThumb .PublishLimitedPublished{
 	width: 40px;
 	height: 40px;
@@ -794,6 +815,7 @@ Decoration
 	background-position: 50% 50%;
 	opacity: 0.75;
 }
+
 .IllustThumb .PublishLimitedNotPublished{
 	width: 40px;
 	height: 40px;
@@ -1378,11 +1400,12 @@ Decoration
 .IllustItem .IllustItemExpand .IllustItemExpandBtn {
 	display: inline-block;
 	margin: 0;
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 20px;
 	height: 20px;
-	padding: 0 12px;
+	padding: 3px 12px;
 	border-radius: 20px;
+	opacity: 0.87;
 }
 
 .IllustItem .IllustItemCmd {
@@ -2657,7 +2680,7 @@ Decoration
 }
 
 .RequestBtn:hover .SendRequestIcon {
-	background-position: -130px 0px;
+	background-position: -130px 0;
 }
 
 /**********IllustView InfoForm **********/

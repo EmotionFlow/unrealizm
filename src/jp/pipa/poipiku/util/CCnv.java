@@ -224,21 +224,15 @@ public final class CCnv {
 	}
 
 	private static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
-		String strFileUrl = "";
-
-		switch(cContent.m_nPublishId) {
-		case Common.PUBLISH_ID_R15:
-		case Common.PUBLISH_ID_R18:
-		case Common.PUBLISH_ID_R18G:
-		case Common.PUBLISH_ID_PASS:
-		case Common.PUBLISH_ID_LOGIN:
-		case Common.PUBLISH_ID_FOLLOWER:
-		case Common.PUBLISH_ID_T_FOLLOWER:
-		case Common.PUBLISH_ID_T_FOLLOWEE:
-		case Common.PUBLISH_ID_T_EACH:
-		case Common.PUBLISH_ID_T_LIST:
-		case Common.PUBLISH_ID_T_RT:
-			// 1枚目にWarningを出すのでずらす
+		final String strFileUrl;
+		final int publishId = cContent.m_nPublishId;
+		if (publishId == Common.PUBLISH_ID_ALL || publishId == Common.PUBLISH_ID_HIDDEN || cContent.publishAllNum == 1) {
+			if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
+				_appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+			} else {
+				_appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+			}
+		} else {
 			cContent.m_nFileNum++;
 			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
 			if(nViewMode==VIEW_DETAIL) {
@@ -250,16 +244,6 @@ public final class CCnv {
 				strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
 				strRtn.append("</a>");
 			}
-			break;
-		case Common.PUBLISH_ID_ALL:
-		case Common.PUBLISH_ID_HIDDEN:
-		default:
-			if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
-				_appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-			} else {
-				_appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-			}
-			break;
 		}
 	}
 
@@ -548,10 +532,19 @@ public final class CCnv {
 		strRtn.append("<div class=\"IllustItemExpand\">");
 		if(cContent.m_nFileNum>1) {
 			appendIllustItemExpandPassFrame(_TEX, strRtn);
-			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\"><i class=\"far fa-clone\"></i> %s</a>",
+
+			final String mark;
+			if (cContent.publishAllNum > 0) {
+				mark = String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId);
+			} else {
+				mark = "<i class=\"far fa-clone\"></i>";
+			}
+
+			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
 				nSpMode,
+				mark,
 				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
 			appendIllustItemExpandPassFrame(_TEX, strRtn);

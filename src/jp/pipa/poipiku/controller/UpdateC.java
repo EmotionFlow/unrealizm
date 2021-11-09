@@ -65,7 +65,7 @@ public final class UpdateC extends UpC {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			strSql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+			strSql = "SELECT open_id, publish_id, publish_all_num, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cParam.m_nUserId);
 			statement.setInt(2, cParam.m_nContentId);
@@ -103,12 +103,11 @@ public final class UpdateC extends UpC {
 				tsUploadDatePresent,
 				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
-			ArrayList<String> lColumns = new ArrayList<>();
-				lColumns.addAll(Arrays.asList(
+			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(
 					"genre_id=?", "category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?",
-					"password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
+					"publish_all_num=?", "password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?", "updated_at=now()"
-					));
+			));
 
 			if(!cParam.m_bLimitedTimePublish){
 				// これまで非公開で、今後公開したい。
@@ -144,6 +143,11 @@ public final class UpdateC extends UpC {
 				statement.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
 				statement.setString(idx++, cParam.m_strTagList);
 				statement.setInt(idx++, cParam.m_nPublishId);
+				if (cParam.m_nPublishAllNum == 0) {
+					statement.setNull(idx++, Types.INTEGER);
+				} else {
+					statement.setInt(idx++, cParam.m_nPublishAllNum);
+				}
 				statement.setString(idx++, cParam.m_strPassword);
 				statement.setString(idx++, cParam.m_strListId);
 				statement.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));

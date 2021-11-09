@@ -36,6 +36,7 @@ public final class CContent {
 	public int m_nFileHeight = 0;
 	public String m_strTagList = "";
 	public int m_nPublishId = 0;
+	public int publishAllNum = 0;
 	public String m_strPassword = "";
 	public CUser m_cUser = new CUser();
 	public String m_strListId = "";
@@ -111,6 +112,7 @@ public final class CContent {
 		m_nFileHeight		= resultSet.getInt("file_height");
 		m_strTagList		= Util.toString(resultSet.getString("tag_list"));
 		m_nPublishId		= resultSet.getInt("publish_id");
+		publishAllNum       = resultSet.getInt("publish_all_num");
 		m_strListId			= Util.toString(resultSet.getString("list_id"));
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 		m_nEditorId			= resultSet.getInt("editor_id");
