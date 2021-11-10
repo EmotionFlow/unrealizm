@@ -14,7 +14,7 @@ public final class UploadTextCParam extends UpCParam {
 	public int GetParam(HttpServletRequest request) {
 		try {
 			super.GetParams(request);
-			m_strTextBody = Util.deleteInvalidChar(Common.TrimBlankLines(request.getParameter("BDY")));
+			m_strTextBody = Util.deleteInvalidChar(Common.TrimHeadBlankLines(request.getParameter("BDY")));
 			m_bNotRecently = Util.toBoolean(request.getParameter("REC"));
 			title = Util.deleteInvalidChar(Util.subStrNum(request.getParameter("TIT"), 100));
 			novelDirection = Util.toIntN(request.getParameter("DIR"), 0, 1);

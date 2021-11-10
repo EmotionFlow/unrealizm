@@ -277,26 +277,28 @@ public final class Common {
 		return strSrc.replaceAll("^[\\s　]*", "").replaceAll("[\\s　]*$", "");
 	}
 
-	public static String TrimBlankLines(final String str){
+	public static String TrimHeadBlankLines(final String str){
 		if(str == null || str.isEmpty()){
 			return "";
 		}
 		String[] lines = str.split("\n");
 
+		String l = null;
 		int i=0;
 		for (String line : lines) {
 			if (line.replaceAll("^[\\s　]*$", "").isEmpty()) {
 				i++;
 			} else {
+				l = line;
 				break;
 			}
 		}
 
-		StringBuilder sb = new StringBuilder();
-		for (; i<lines.length; i++) {
-			sb.append(lines[i]).append("\n");
+		if (l != null) {
+			return str.substring(str.indexOf(l));
+		} else {
+			return str;
 		}
-		return sb.toString().replaceAll("[\\s　]*$", "");
 	}
 
 	public static String GetUrl(final String strFileName) {
