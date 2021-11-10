@@ -705,31 +705,21 @@ public final class CCnv {
 		// サムネイル
 		String strFileUrl = "";
 		boolean bHidden = false;	// テキストモード用カバー画像表示フラグ
-		if(checkLogin != null && cContent.m_nUserId == checkLogin.m_nUserId){
+
+
+
+		final int publishId = cContent.m_nPublishId;
+		if (publishId == Common.PUBLISH_ID_ALL
+				|| publishId == Common.PUBLISH_ID_HIDDEN
+				|| cContent.publishAllNum == 1
+				|| checkLogin != null && cContent.m_nUserId == checkLogin.m_nUserId
+		) {
 			strFileUrl = Common.GetUrl(cContent.m_strFileName);
 		} else {
-			switch(cContent.m_nPublishId) {
-				case Common.PUBLISH_ID_R15:
-				case Common.PUBLISH_ID_R18:
-				case Common.PUBLISH_ID_R18G:
-				case Common.PUBLISH_ID_PASS:
-				case Common.PUBLISH_ID_LOGIN:
-				case Common.PUBLISH_ID_FOLLOWER:
-				case Common.PUBLISH_ID_T_FOLLOWER:
-				case Common.PUBLISH_ID_T_FOLLOWEE:
-				case Common.PUBLISH_ID_T_EACH:
-				case Common.PUBLISH_ID_T_LIST:
-				case Common.PUBLISH_ID_T_RT:
-					strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-					bHidden = true;
-					break;
-				case Common.PUBLISH_ID_ALL:
-				case Common.PUBLISH_ID_HIDDEN:
-			default:
-				strFileUrl = Common.GetUrl(cContent.m_strFileName);
-				break;
-			}
+			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+			bHidden = true;
 		}
+
 		strRtn.append("</a>");	// IllustInfo
 
 		if(cContent.m_nEditorId!=Common.EDITOR_TEXT || bHidden) { // イラスト表示もしくはテキストだけど限定画像を表示
@@ -761,8 +751,8 @@ public final class CCnv {
 
 		// 公開種別マーク
 		strRtn.append("<span class=\"IllustInfoBottom\">");
-		if(checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId){
-			if(cContent.m_nPublishId>=1 && cContent.m_nPublishId<=12) {
+		if(cContent.publishAllNum == 1 || checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId){
+			if(!(cContent.m_nPublishId == Common.PUBLISH_ID_ALL || cContent.m_nPublishId == Common.PUBLISH_ID_HIDDEN)) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 		}
