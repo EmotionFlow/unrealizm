@@ -41,6 +41,8 @@ public class UpdatePassportMember extends Batch{
 		final String sqlExpiredUsers = "SELECT user_id FROM passports WHERE (status = 1 OR status = 2) AND expired_at < DATE_TRUNC('month', NOW())";
 
 		try {
+			List<Integer> changeAmountUserIds = new ArrayList<>();
+
 			// CONNECT DB
 			connection = dataSource.getConnection();
 
@@ -181,7 +183,6 @@ public class UpdatePassportMember extends Batch{
 
 			// 今月はチケット払い
 			// -> 金額を0円にする
-			List<Integer> changeAmountUserIds = new ArrayList<>();
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, PassportPayment.By.Ticket.getCode());
 			resultSet = statement.executeQuery();
@@ -205,7 +206,7 @@ public class UpdatePassportMember extends Batch{
 						String.format(urlChangeRegularlyAmountF, userId, 0)
 				).build();
 				try (Response response = client.newCall(request).execute()) {
-					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string());
+					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string().replaceAll("\n", ""));
 				}
 			}
 			changeAmountUserIds.clear();
@@ -245,9 +246,48 @@ public class UpdatePassportMember extends Batch{
 			for (Integer userId: ignoredUserIds){
 				Request request = new Request.Builder().url(urlClearUserCacheF + userId.toString()).build();
 				try (Response response = client.newCall(request).execute()) {
-					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string());
+					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string().replaceAll("\n", ""));
 				} catch(NullPointerException ignored) {}
 			}
+
+			///////////////////////////////////////////////////////////////////////
+			// 25日以降に解約された場合、イプシロン上では翌月解約扱いとなり、解約月の翌月に課金が発生してしまうため、課金額を0円に変更する。
+			// 25日ピッタリにすると嫌な予感(ポイピクサーバとイプシロンサーバの時刻のずれによって不具合が生じるかも)がするので１分間余裕を持たせている
+			LocalDate lastMonth = now.minusMonths(1);
+			sql = String.format(
+					"SELECT user_id FROM passport_subscriptions WHERE (cancel_datetime BETWEEN '%d-%02d-24 23:59:00' AND '%d-%02d-01')",
+					lastMonth.getYear(),lastMonth.getMonthValue(),
+					now.getYear(), now.getMonthValue()
+			);
+			System.out.println(sql);
+
+			connection = dataSource.getConnection();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				changeAmountUserIds.add(resultSet.getInt(1));
+			}
+			resultSet.close();
+			statement.close();
+			connection.close();
+
+			System.out.println(
+					"25日以降に解約されたため、定期課金の金額を0円にするユーザー：" +
+							changeAmountUserIds.stream().map(i -> i.toString()).collect(Collectors.joining(","))
+			);
+
+			// epsilon api
+			for (Integer userId: changeAmountUserIds) {
+				Request request = new Request.Builder().url(
+						String.format(urlChangeRegularlyAmountF, userId, 0)
+				).build();
+				try (Response response = client.newCall(request).execute()) {
+					System.out.println(userId.toString() + " " + Objects.requireNonNull(response.body()).string().replaceAll("\n", ""));
+				} catch(NullPointerException ignored) {}
+			}
+			changeAmountUserIds.clear();
+
 		} catch (Exception e) {
 			System.out.println(sql);
 			e.printStackTrace();
