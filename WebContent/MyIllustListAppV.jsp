@@ -227,7 +227,7 @@ if(!cResults.getResults(checkLogin) || !cResults.m_bOwner) {
 				<%if(cResults.m_vContentList.size()>0){%>
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+					<%=CCnv.toMyBoxThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 					<%}%>
 				<%}else{%>
 					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>
