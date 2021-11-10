@@ -305,7 +305,7 @@ if (requestId > 0) {
 						</div>
 					</div>
 
-					<%if(checkLogin.isStaff() && nEditorId!=Common.EDITOR_TEXT){%>
+					<%if(nEditorId!=Common.EDITOR_TEXT){%>
 					<div id="ItemShowAllFirst" class="OptionItem" style="display: none">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
 						<div class="onoffswitch OnOff">
