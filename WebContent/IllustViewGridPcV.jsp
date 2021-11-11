@@ -48,8 +48,13 @@ switch(cResults.m_cContent.m_nPublishId) {
 	case Common.PUBLISH_ID_T_FOLLOWEE:
 	case Common.PUBLISH_ID_T_EACH:
 	case Common.PUBLISH_ID_T_LIST:
-		strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
-		bHidden = true;
+		if (cResults.m_cContent.publishAllNum == 0) {
+			strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
+			bHidden = true;
+		} else {
+			strFileUrl = cResults.m_cContent.m_strFileName + "_640.jpg";
+			bHidden = false;
+		}
 		break;
 	case Common.PUBLISH_ID_HIDDEN:
 		strFileUrl="/img/poipiku_icon_512x512_2.png";
