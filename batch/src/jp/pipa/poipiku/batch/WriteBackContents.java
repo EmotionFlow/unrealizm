@@ -7,6 +7,7 @@ import jp.pipa.poipiku.util.SlackNotifier;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -87,8 +88,11 @@ public class WriteBackContents extends Batch {
 				Path src = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path + f);
 				try {
 					Files.copy(src, destDir.resolve(src.getFileName()));
+				} catch (NoSuchFileException noSuchFileException) {
+					notifyError("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
+					isSuccess = false;
 				} catch (IOException e) {
-					notifyError("(WriteBackContentsError)HDDへのコピーに失敗:" + src);
+					notifyError("(WriteBackContentsError)Files.copy, IOException:" + src);
 					e.printStackTrace();
 					isSuccess = false;
 				}
