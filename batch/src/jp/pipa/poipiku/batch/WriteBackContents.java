@@ -3,6 +3,7 @@ package jp.pipa.poipiku.batch;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.WriteBackFile;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.SlackNotifier;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,11 +40,19 @@ public class WriteBackContents extends Batch {
 		TGT_FILE_NAMES.add("_640.jpg");
 	}
 
+	private static final String WEBHOOK_URL = "https://hooks.slack.com/services/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";
+	private static final SlackNotifier slackNotifier = new SlackNotifier(WEBHOOK_URL);
+
+	private static void notifyError(String msg) {
+		Log.d(msg);
+		slackNotifier.notify(msg);
+	}
+
 	public static void main(String[] args) {
 		Log.d("WriteBackContents batch start");
 
 		if (!WriteBackFile.deleteByStatus(WriteBackFile.Status.Moved, HOLD_AFTER_RECORD_MOVED_HOURS)){
-			Log.d("DBから「ステータス：移動済み」レコード削除に失敗");
+			notifyError("(WriteBackContentsError)DB上の「ステータス：移動済み」レコードの削除に失敗");
 		}
 
 		Connection connection = null;
@@ -59,7 +68,6 @@ public class WriteBackContents extends Batch {
 
 		int cnt = 1;
 		for (WriteBackFile writeBackFile: moveTargets) {
-			Log.d(String.format("writeBackFile move start: %d/%d", cnt++, moveTargets.size()));
 			writeBackFile.updateStatus(WriteBackFile.Status.Moving);
 
 			Path destDir = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path.replace(Common.CONTENTS_CACHE_DIR, Common.CONTENTS_STORAGE_DIR)).getParent();
@@ -67,7 +75,7 @@ public class WriteBackContents extends Batch {
 			// 移動先にディレクトリがなかったら作る
 			if (!Files.exists(destDir)) {
 				if (!destDir.toFile().mkdir()) {
-					Log.d("failed to mkdir: " + destDir.toString());
+					notifyError("(WriteBackContentsError)failed to mkdir: " + destDir);
 					writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
 					continue;
 				}
@@ -80,13 +88,13 @@ public class WriteBackContents extends Batch {
 				try {
 					Files.copy(src, destDir.resolve(src.getFileName()));
 				} catch (IOException e) {
+					notifyError("(WriteBackContentsError)HDDへのコピーに失敗:" + src);
 					e.printStackTrace();
 					isSuccess = false;
 				}
 			}
 
 			if (!isSuccess) {
-				Log.d("HDDへのコピーに失敗");
 				writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
 				continue;
 			}
@@ -99,7 +107,7 @@ public class WriteBackContents extends Batch {
 				} else if (writeBackFile.tableCode == WriteBackFile.TableCode.ContentsAppends) {
 					statement = connection.prepareStatement(SQL_UPDATE_CONTENT_APPEND_FILENAME);
 				} else {
-					Log.d("想定外のtable_code: " + writeBackFile.tableCode.getCode());
+					notifyError("(WriteBackContentsError)想定外のtable_code: " + writeBackFile.tableCode.getCode());
 					isSuccess = false;
 				}
 				if (isSuccess){
@@ -116,7 +124,7 @@ public class WriteBackContents extends Batch {
 			}
 
 			if (!isSuccess) {
-				Log.d("DB更新に失敗");
+				notifyError("(WriteBackContentsError)DB更新に失敗");
 				writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
 				continue;
 			}
@@ -127,13 +135,13 @@ public class WriteBackContents extends Batch {
 				try {
 					Files.delete(src);
 				} catch (IOException e) {
+					notifyError("(WriteBackContentsError)SSD上のファイル削除に失敗:" + src);
 					e.printStackTrace();
 					isSuccess = false;
 				}
 			}
 
 			if (!isSuccess) {
-				Log.d("SSD上のファイル削除に失敗");
 				writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
 				continue;
 			}
