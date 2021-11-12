@@ -63,9 +63,19 @@ public class RetweetContentC extends Controller {
 			resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
-				retweetId = Long.parseLong(resultSet.getString(1));
-				if (retweetId <= 0) {
+				final String strRetweetId = resultSet.getString(1);
+				if (strRetweetId == null || strRetweetId.isEmpty()) {
+					Log.d("TweetIdNotFound: " + contentId);
 					errorDetail = ErrorDetail.TweetIdNotFound;
+ 				} else {
+					try {
+						retweetId = Long.parseLong(strRetweetId);
+					} catch (NumberFormatException e) {
+						Log.d("NumberFormatException: " + contentId + ", " + strRetweetId);
+					}
+					if (retweetId <= 0) {
+						errorDetail = ErrorDetail.TweetIdNotFound;
+					}
 				}
 			} else {
 				errorDetail = ErrorDetail.RecordNotFound;
