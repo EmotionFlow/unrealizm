@@ -2,6 +2,7 @@ package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.SlackNotifier;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -82,11 +83,19 @@ public final class WriteBackFile extends Model{
 			statement.setInt(3, rowId);
 			statement.setString(4, path);
 			statement.executeUpdate();
-		} catch(Exception e) {
+
+			if (path.contains("user_img01")) {
+				throw new Exception("write file to user_img01");
+			}
+		} catch (SQLException e) {
 			Log.d(sql);
 			e.printStackTrace();
 			errorKind = ErrorKind.DbError;
 			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			SlackNotifier notifier = new SlackNotifier("https://hooks.slack.com/services/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");
+			notifier.notify("write file to user_img01");
 		} finally {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
