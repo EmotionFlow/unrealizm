@@ -40,6 +40,7 @@ cResults.getResults(checkLogin);
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 		<%@ include file="/inner/TRetweetContent.jsp"%>
+		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 
 		<script>
 			let lastContentId = -1;

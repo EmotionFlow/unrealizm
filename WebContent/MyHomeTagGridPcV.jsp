@@ -29,6 +29,8 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 		<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
+		<%@ include file="/inner/TRetweetContent.jsp"%>
+		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 
 		<script>
 		function UpdateFollow(nUserId, nFollowUserId) {

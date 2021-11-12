@@ -482,7 +482,9 @@ function generateShowAppendFile(){
 					if (!getLocalStrage('not_show_retweet_confirm')) {
 						showRetweetContentDlg().then(
 							formValues => {
-								if (formValues.dismiss) {return;}
+								if (formValues.dismiss) {
+									return;
+								}
 								setLocalStrage('not_show_retweet_confirm', formValues.value.NotDisplayFeature);
 								_retweetContentF(user_id, content_id, mode, elm);
 							}
@@ -491,6 +493,8 @@ function generateShowAppendFile(){
 						_retweetContentF(user_id, content_id, mode, elm);
 					}
 					return;
+				} else if(data.result_num === -5) {
+					showTwitterFollowerLimitInfoDlg();
 				} else {
 					DispMsg(data.html, 5000);
 				}
