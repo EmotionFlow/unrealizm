@@ -1731,6 +1731,14 @@ Decoration
 	border-color: #7F460A;
 	color: #fff;
 }
+.Category.C32 {
+	background-color: #ff66aa;
+	color: #fff;
+}
+.CategoryBtn.C32 {
+	border-color: #ff66aa;
+	color: #fff;
+}
 
 
 .IllustItemList .CategoryMore {
