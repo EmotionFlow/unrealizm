@@ -1,46 +1,77 @@
 package jp.pipa.poipiku.controller;
 
-import java.awt.*;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
 
-import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class UpdateFileOrderC {
-	public int m_nUserId = -1;
-	public int m_nContentId = 0;
-	public int[] m_vNewIdList = null;
+class EditedContent {
+	public int appendId = 0;
+	public int fileWidth = 0;
+	public int fileHeight = 0;
+	public long filesSize = 0;
+	public long fileComplex = 0;
+	public String fileName = "";
+	public Integer writeBackStatus = null;
 
-	private ServletContext m_cServletContext = null;
+	EditedContent(){}
+
+	public void set(ResultSet resultSet) throws SQLException{
+		appendId = resultSet.getInt("append_id");
+		fileName = Util.toString(resultSet.getString("file_name"));
+		fileWidth = resultSet.getInt("file_width");
+		fileHeight = resultSet.getInt("file_height");
+		filesSize = resultSet.getLong("file_size");
+		fileComplex = resultSet.getLong("file_complex");
+		writeBackStatus = resultSet.getInt("write_back_status");
+		if (resultSet.wasNull()) {
+			writeBackStatus = null;
+		}
+	}
+
+	public int getAppendId() {
+		return appendId;
+	}
+
+	public String toString(){
+		return String.format("%d, %d, %d, %d, %d, %s, %d",
+				appendId, fileWidth, fileHeight, filesSize, fileComplex, fileName, writeBackStatus);
+	}
+}
+
+public class UpdateFileOrderC extends Controller {
+	public int userId = -1;
+	public int contentId = 0;
+	public int[] newIdList = null;
+
+	private ServletContext servletContext = null;
 
 	public UpdateFileOrderC(ServletContext context){
-		m_cServletContext = context;
+		servletContext = context;
 	}
 
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
 		try {
-			m_nUserId		= Util.toInt(request.getParameter("UID"));
-			m_nContentId	= Util.toInt(request.getParameter("IID"));
+			userId = Util.toInt(request.getParameter("UID"));
+			contentId = Util.toInt(request.getParameter("IID"));
 			String strJson	= Common.TrimAll(request.getParameter("AID"));
 
 			//並び換え、削除後のappend_idリスト
 			ObjectMapper mapper = new ObjectMapper();
-			m_vNewIdList = mapper.readValue(strJson, int[].class);
+			newIdList = mapper.readValue(strJson, int[].class);
 			//Log.d("m_nUserId:" + m_nUserId);
 			//Log.d("m_nContentId:" + m_nContentId);
 			//Log.d(strJson);
 
-			if(m_vNewIdList.length > 0) {
+			if(newIdList.length > 0) {
 				nRtn = 0;
 			} else {
 				Log.d("New filelist is empty.");
@@ -48,7 +79,7 @@ public class UpdateFileOrderC {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-			m_nUserId = -1;
+			userId = -1;
 			nRtn = -99;
 		}
 		return nRtn;
@@ -56,68 +87,81 @@ public class UpdateFileOrderC {
 
 	public int GetResults(CheckLogin checkLogin) {
 		int nRtn = -1;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
-
-		class CEditedContent {
-			public int append_id = 0;
-			public int file_width = 0;
-			public int file_height = 0;
-			public long files_size = 0;
-			public long file_complex = 0;
-			public String name = "";
-		}
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 
 		try {
 			// regist to DB
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			//元のファイルリストを取得
-			strSql = "(SELECT 0 as append_id,file_name,file_width,file_height,file_size,file_complex FROM contents_0000 WHERE user_id=? AND content_id=?) UNION (SELECT append_id,file_name,file_width,file_height,file_size,file_complex FROM contents_appends_0000 WHERE content_id=?) ORDER BY append_id";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, m_nUserId);
-			cState.setInt(2, m_nContentId);
-			cState.setInt(3, m_nContentId);
-			cResSet = cState.executeQuery();
+			sql = "SELECT 0 as append_id, file_name, file_width, file_height, file_size, file_complex, wbf.status write_back_status" +
+					" FROM contents_0000 c" +
+					" LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=0) wbf ON c.content_id = wbf.row_id" +
+					" WHERE c.user_id=? AND content_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			statement.setInt(2, contentId);
+			resultSet = statement.executeQuery();
 
 			//元の画像情報をファイルリストにセット
-			List<CEditedContent> vOldFileList = new ArrayList<CEditedContent>(m_vNewIdList.length);
-			while (cResSet.next()) {
-				CEditedContent cOld = new CEditedContent();
-				cOld.append_id = cResSet.getInt("append_id");
-				cOld.name = Util.toString(cResSet.getString("file_name"));
-				cOld.file_width = cResSet.getInt("file_width");
-				cOld.file_height = cResSet.getInt("file_height");
-				cOld.files_size = cResSet.getLong("file_size");
-				cOld.file_complex = cResSet.getLong("file_complex");
-				vOldFileList.add(cOld);
-				//Log.d("Old (" + cOld.append_id + "):" + cOld.name);
+			List<EditedContent> oldContentList = new ArrayList<>(newIdList.length);
+			if (resultSet.next()) {
+				EditedContent c = new EditedContent();
+				c.set(resultSet);
+				oldContentList.add(c);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+
+			sql = "SELECT append_id, file_name, file_width, file_height, file_size, file_complex, wbf.status write_back_status" +
+					" FROM contents_appends_0000 c" +
+					"   LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=1) wbf ON c.append_id = wbf.row_id" +
+					" WHERE c.content_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, contentId);
+			resultSet = statement.executeQuery();
+
+			//元の画像情報をファイルリストにセット
+			while (resultSet.next()) {
+				EditedContent c = new EditedContent();
+				c.set(resultSet);
+				oldContentList.add(c);
+			}
+
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+//			printContentList("---oldList---", oldContentList);
+
+			//write_back_status = 1 (作業中)が見つかったら、少々待って、最初からやり直し。
+			if (oldContentList
+					.stream()
+					.filter(e -> e.writeBackStatus != null)
+					.anyMatch(e -> e.writeBackStatus == WriteBackFile.Status.Moving.getCode())
+			){
+				Log.d("write_back_status = 1 (作業中)が見つかった");
+				errorKind = ErrorKind.DoRetry;
+				return -1;
+			}
 
 			//画像情報を新ファイルリストにコピー
 			boolean bExists = false;
-			List<CEditedContent> vNewFileList = new ArrayList<CEditedContent>(m_vNewIdList.length);
-			for (int append_id: m_vNewIdList) {
-				for (CEditedContent cOld: vOldFileList) {
-					if (append_id == cOld.append_id) {
-						bExists = true;
-						CEditedContent cNew = new CEditedContent();
-						cNew.append_id = cOld.append_id;
-						cNew.name = cOld.name;
-						cNew.file_width = cOld.file_width;
-						cNew.file_height = cOld.file_height;
-						cNew.files_size = cOld.files_size;
-						cNew.file_complex = cOld.file_complex;
-						vNewFileList.add(cNew);
-						//Log.d("New (" + cNew.append_id + "):" + cNew.name);
-						break;
-					}
+			List<EditedContent> newContentList = new ArrayList<>(newIdList.length);
+			for (int append_id: newIdList) {
+				Optional<EditedContent> cntnt = oldContentList.stream().filter(e -> e.appendId == append_id).findFirst();
+				if (cntnt.isPresent()) {
+					bExists = true;
+					EditedContent foundContent = cntnt.get();
+					EditedContent c = new EditedContent();
+					c.appendId = foundContent.appendId;
+					c.fileName = foundContent.fileName;
+					c.fileWidth = foundContent.fileWidth;
+					c.fileHeight = foundContent.fileHeight;
+					c.filesSize = foundContent.filesSize;
+					c.fileComplex = foundContent.fileComplex;
+					c.writeBackStatus = foundContent.writeBackStatus;
+					newContentList.add(c);
 				}
 			}
 
@@ -128,11 +172,11 @@ public class UpdateFileOrderC {
 			}
 
 			//元リストにあって新リストにないファイルを抽出（削除候補）
-			List<CEditedContent> cDiff = new ArrayList<>();
-			for (CEditedContent cOld: vOldFileList) {
+			List<EditedContent> cDiff = new ArrayList<>();
+			for (EditedContent cOld: oldContentList) {
 				boolean bExist = false;
-				for (int append_id: m_vNewIdList) {
-					if (cOld.append_id==append_id) {
+				for (int append_id: newIdList) {
+					if (cOld.appendId ==append_id) {
 						bExist = true;
 						break;
 					}
@@ -142,141 +186,151 @@ public class UpdateFileOrderC {
 				}
 			}
 
+//			printContentList("---delList---", cDiff);
+
 			//不要ファイルの削除
-			boolean bHead = false;
+			boolean removeHeadFile = false;
 			if (!cDiff.isEmpty()) {
 				String[] strDelList = new String[cDiff.size()];
 				for(int i=0; i<cDiff.size(); i++) {
-					CEditedContent content = cDiff.get(i);
-					int append_id = content.append_id;
+					EditedContent content = cDiff.get(i);
+					int append_id = content.appendId;
 					strDelList[i] = Integer.toString(append_id);
 
-					if(content.name!=null && !content.name.isEmpty()) {
-						String strPath = m_cServletContext.getRealPath(content.name);
+					if(servletContext != null && content.fileName !=null && !content.fileName.isEmpty()) {
+						String strPath = servletContext.getRealPath(content.fileName);
 						ImageUtil.deleteFiles(strPath);
 					}
 
-					//元リストからも削除
-					vOldFileList.removeIf(cEditedContent -> cEditedContent.append_id == append_id && append_id != 0);
+					// 元リストからも削除
+					oldContentList.removeIf(c -> c.appendId == append_id && append_id != 0);
 
-					//先頭画像の削除有無
-					if (append_id == 0) bHead = true;
+					// 先頭画像の削除有無
+					if (append_id == 0) removeHeadFile = true;
+
+					// write_back_filesにレコードがあったら削除
+					if (content.writeBackStatus != null) {
+						sql = "DELETE FROM write_back_files WHERE table_code=? AND path=?";
+						statement = connection.prepareStatement(sql);
+						statement.setInt(1,
+								append_id == 0 ? WriteBackFile.TableCode.Contents.getCode() : WriteBackFile.TableCode.ContentsAppends.getCode());
+						statement.setString(2, content.fileName);
+						statement.executeUpdate();
+						statement.close();statement=null;
+					}
 				}
 
 				//不要レコード削除
-				if (strDelList.length > 0) {
-					strSql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id IN (" + String.join(",", strDelList) + ");";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, m_nContentId);
-					cState.executeUpdate();
-					cState.close();cState=null;
-
-					strSql = "DELETE FROM write_back_files WHERE table_code=? AND row_id IN (" + String.join(",", strDelList) + ");";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
-					cState.executeUpdate();
-					cState.close();cState=null;
-				}
+				sql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id IN (" + String.join(",", strDelList) + ");";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, contentId);
+				statement.executeUpdate();
+				statement.close();statement=null;
 
 				//先頭が削除されて1個ずつズレるケース
-				if (bHead) {
+				if (removeHeadFile) {
 					//余る要素の削除
-					strSql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id=?;";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, m_nContentId);
-					cState.setInt(2, vOldFileList.get(vOldFileList.size() - 1).append_id);
-					cState.executeUpdate();
-					cState.close();cState=null;
-
-					strSql = "DELETE FROM write_back_files WHERE table_code=? AND row_id=?;";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
-					cState.setInt(2, vOldFileList.get(vOldFileList.size() - 1).append_id);
-					cState.executeUpdate();
-					cState.close();cState=null;
+					sql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id=?;";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(1, contentId);
+					statement.setInt(2, oldContentList.get(oldContentList.size() - 1).appendId);
+					statement.executeUpdate();
+					statement.close();statement=null;
 				}
 			}
 
 			//append_idの振り直し
 			int p = 0;
-			for (int i=0; i<vNewFileList.size(); i++) {
-				CEditedContent cTmp = vNewFileList.get(i);
-				if (i==0 && vOldFileList.get(i).append_id != 0) {
+			for (int i=0; i<newContentList.size(); i++) {
+				EditedContent cTmp = newContentList.get(i);
+				if (i==0 && oldContentList.get(i).appendId != 0) {
 					p = 1;	//先頭削除によりcontents_appendsのファイルを繰り上げるためのオフセット
 				}
-				if((i+p) < vOldFileList.size()) {
-					cTmp.append_id = vOldFileList.get(i+p).append_id;
-					vNewFileList.set(i, cTmp);
+				if((i+p) < oldContentList.size()) {
+					cTmp.appendId = oldContentList.get(i+p).appendId;
+					newContentList.set(i, cTmp);
 					//Log.d("New appendId:" + cTmp.append_id);
 				}
 			}
 
+//			printContentList("---newList---", newContentList);
+
+			////// update transaction ///////
+			connection.setAutoCommit(false);
+
 			//並び替え
 			//先頭画像はcontents_0000にセット
-			strSql = "UPDATE contents_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=?;";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, vNewFileList.get(0).name);
-			cState.setInt(2, vNewFileList.get(0).file_width);
-			cState.setInt(3, vNewFileList.get(0).file_height);
-			cState.setLong(4, vNewFileList.get(0).files_size);
-			cState.setLong(5, vNewFileList.get(0).file_complex);
-			cState.setInt(6, m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
-
-			strSql = "UPDATE write_back_files SET path=? WHERE table_code=? AND row_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, vNewFileList.get(0).name);
-			cState.setInt(2, WriteBackFile.TableCode.Contents.getCode());
-			cState.setInt(3, m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			sql = "UPDATE contents_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=?;";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, newContentList.get(0).fileName);
+			statement.setInt(2, newContentList.get(0).fileWidth);
+			statement.setInt(3, newContentList.get(0).fileHeight);
+			statement.setLong(4, newContentList.get(0).filesSize);
+			statement.setLong(5, newContentList.get(0).fileComplex);
+			statement.setInt(6, contentId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 
 			//2枚目以降はcontents_appends_0000にセット
-			strSql = "UPDATE contents_appends_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=? AND append_id=?";
-			cState = cConn.prepareStatement(strSql);
-			for (int i=1; i<vNewFileList.size(); i++) {
-				cState.setString(1, vNewFileList.get(i).name);
-				cState.setInt(2, vNewFileList.get(i).file_width);
-				cState.setInt(3, vNewFileList.get(i).file_height);
-				cState.setLong(4, vNewFileList.get(i).files_size);
-				cState.setLong(5, vNewFileList.get(i).file_complex);
-				cState.setInt(6, m_nContentId);
-				cState.setInt(7, vNewFileList.get(i).append_id);
-				cState.executeUpdate();
+			sql = "UPDATE contents_appends_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=? AND append_id=?";
+			statement = connection.prepareStatement(sql);
+			for (int i=1; i<newContentList.size(); i++) {
+				statement.setString(1, newContentList.get(i).fileName);
+				statement.setInt(2, newContentList.get(i).fileWidth);
+				statement.setInt(3, newContentList.get(i).fileHeight);
+				statement.setLong(4, newContentList.get(i).filesSize);
+				statement.setLong(5, newContentList.get(i).fileComplex);
+				statement.setInt(6, contentId);
+				statement.setInt(7, newContentList.get(i).appendId);
+				statement.executeUpdate();
 			}
-			cState.close();cState=null;
+			statement.close();statement=null;
 
-			strSql = "UPDATE write_back_files SET path=? WHERE table_code=? AND row_id=?";
-			cState = cConn.prepareStatement(strSql);
-			for (int i=1; i<vNewFileList.size(); i++) {
-				cState.setString(1, vNewFileList.get(i).name);
-				cState.setInt(2, WriteBackFile.TableCode.ContentsAppends.getCode());
-				cState.setInt(3, vNewFileList.get(i).append_id);
-				cState.executeUpdate();
+			sql = "UPDATE write_back_files SET table_code=?, row_id=?, updated_at=now() WHERE path=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, WriteBackFile.TableCode.Contents.getCode());
+			statement.setInt(2, contentId);
+			statement.setString(3, newContentList.get(0).fileName);
+			statement.executeUpdate();
 
+			sql = "UPDATE write_back_files SET table_code=?, row_id=?, updated_at=now() WHERE path=?";
+			statement = connection.prepareStatement(sql);
+			for (int i=1; i<newContentList.size(); i++) {
+				statement.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
+				statement.setInt(2, newContentList.get(i).appendId);
+				statement.setString(3, newContentList.get(i).fileName);
+				statement.executeUpdate();
 			}
-			cState.close();cState=null;
+			statement.close();statement=null;
 
 			//画像枚数の更新
-			strSql = "UPDATE contents_0000 SET file_num=(SELECT COUNT(*) FROM contents_appends_0000 WHERE content_id=?)+1 WHERE content_id=?;";
-			cState = cConn.prepareStatement(strSql);
-			cState.setLong(1, m_nContentId);
-			cState.setInt(2, m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			sql = "UPDATE contents_0000 SET file_num=(SELECT COUNT(*) FROM contents_appends_0000 WHERE content_id=?)+1 WHERE content_id=?;";
+			statement = connection.prepareStatement(sql);
+			statement.setLong(1, contentId);
+			statement.setInt(2, contentId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
+			connection.commit();
+			connection.setAutoCommit(true);
+			////// update transaction ///////
 
 			nRtn = 0;
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return nRtn;
 	}
 
-
+	private void printContentList(String title, List<EditedContent> newContentList) {
+		System.out.println(title);
+		newContentList.stream()
+				.sorted(Comparator.comparingInt(EditedContent::getAppendId))
+				.forEach(System.out::println);
+	}
 }
