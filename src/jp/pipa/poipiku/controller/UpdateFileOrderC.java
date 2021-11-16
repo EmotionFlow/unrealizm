@@ -117,7 +117,7 @@ public class UpdateFileOrderC extends Controller {
 			sql = "SELECT append_id, file_name, file_width, file_height, file_size, file_complex, wbf.status write_back_status" +
 					" FROM contents_appends_0000 c" +
 					"   LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=1) wbf ON c.append_id = wbf.row_id" +
-					" WHERE c.content_id=?";
+					" WHERE c.content_id=? ORDER BY append_id";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, contentId);
 			resultSet = statement.executeQuery();
