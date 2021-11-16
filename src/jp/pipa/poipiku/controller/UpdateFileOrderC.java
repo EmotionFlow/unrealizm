@@ -132,7 +132,9 @@ public class UpdateFileOrderC extends Controller {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-//			printContentList("---oldList---", oldContentList);
+			if (checkLogin != null && checkLogin.isStaff()) {
+				printContentList("---oldList---", oldContentList);
+			}
 
 			//write_back_status = 1 (作業中)が見つかったら、少々待って、最初からやり直し。
 			if (oldContentList
@@ -186,7 +188,10 @@ public class UpdateFileOrderC extends Controller {
 				}
 			}
 
-//			printContentList("---delList---", cDiff);
+			if (checkLogin != null && checkLogin.isStaff()) {
+				printContentList("---delList---", cDiff);
+			}
+
 
 			//不要ファイルの削除
 			boolean removeHeadFile = false;
@@ -253,7 +258,9 @@ public class UpdateFileOrderC extends Controller {
 				}
 			}
 
-//			printContentList("---newList---", newContentList);
+			if (checkLogin != null && checkLogin.isStaff()) {
+				printContentList("---newList---", newContentList);
+			}
 
 			////// update transaction ///////
 			connection.setAutoCommit(false);
