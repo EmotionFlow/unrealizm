@@ -5,7 +5,7 @@
 <%@page import="jp.pipa.poipiku.controller.*"%>
 <%@page import="jp.pipa.poipiku.*"%>
 <%
-String[] LANGS = {"ja", "en", "ko", "zh-Hans", "zh-CN", "zh-Hant", "zh-TW", "th"};
+String[] LANGS = {"ja", "en", "ko", "zh-Hans", "zh-CN", "zh-Hant", "zh-TW", "th", "ru"};
 String NOW = (new SimpleDateFormat("YYYY-MM-dd")).format(new java.util.Date());
 CheckLogin checkLogin = new CheckLogin();
 PopularTagListC cResults = new PopularTagListC();
