@@ -50,7 +50,7 @@ if(!cResults.getResults(checkLogin)) {
 		<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72_2.png" />
 		<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon_2.png" />
 		<script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-		<script type="text/javascript" src="/js/common-71.js"></script>
+		<script type="text/javascript" src="/js/common-72.js"></script>
 		<script type="text/javascript" src="/js/commonPc-03.js"></script>
 		<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 		<%@ include file="/inner/TGoogleAnalytics.jsp"%>
