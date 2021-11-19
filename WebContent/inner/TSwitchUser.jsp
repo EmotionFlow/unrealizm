@@ -58,61 +58,35 @@
 </style>
 <div class="SwitchUserDlg">
 
-<%if(_TEX.getLocale() == java.util.Locale.JAPANESE){%>
-<h2 class="SwitchUserDlgTitle">きりかえ(β)</h2>
+<h2 class="SwitchUserDlgTitle"><%=_TEX.T("SwitchAccountDlg.Title")%></h2>
 
 <div class="SwitchUserDlgInfo" style="margin: 6px 0 16px 0;">
-登録済みの２つのポイピクアカウントをグループ化し、簡単に切り替えることができます。
+<%=_TEX.T("SwitchAccountDlg.Info01")%>
 </div>
 
 <div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
-対象アカウントの認証
+<%=_TEX.T("SwitchAccountDlg.Info02")%>
 </div>
 <div class="SwitchUserInputInfo">
 <div style="margin: 0 0 18px 0;">
-このアカウントと組み合わせたい他のアカウントで設定している、メールアドレスとパスワードを入力してください。
 </div>
-<label for="SwitchUserEmail">メールアドレス</label>
+<label for="SwitchUserEmail"><%=_TEX.T("SwitchAccountDlg.Info03")%></label>
 <input id="SwitchUserEmail" type="email" class="swal2-input">
-<label for="SwitchUserPassword">パスワード</label>
+<label for="SwitchUserPassword"><%=_TEX.T("SwitchAccountDlg.Info04")%></label>
 <input id="SwitchUserPassword" type="password" class="swal2-input">
-<a href="/ForgetPasswordPcV.jsp" class="SwitchUserForgetPassword">パスワードを忘れた</a>
+<a href="/ForgetPasswordPcV.jsp" class="SwitchUserForgetPassword"><%=_TEX.T("SwitchAccountDlg.Info05")%></a>
 </div>
-<%}else{%>
-<h2 class="SwitchUserDlgTitle">Account switch</h2>
-
-<div class="SwitchUserDlgInfo" style="font-size: 15px; font-weight: 500;">
-POIPIKU account to be grouped
-</div>
-<div class="SwitchUserInputInfo">
-<label for="SwitchUserEmail">Email address</label>
-<input id="SwitchUserEmail" type="email" class="swal2-input">
-<label for="SwitchUserPassword">Password</label>
-<input id="SwitchUserPassword" type="password" class="swal2-input">
-<a href="/ForgetPasswordPcV.jsp" class="SwitchUserForgetPassword">Forgot my password?</a>
-</div>
-<%}%>
-
 </div>
 `;
 	}
 
 	function _getAddSwitchUserFooterHtml(){
-		<%if(_TEX.getLocale() == java.util.Locale.JAPANESE){%>
 		return `<ul>
-	<li>アカウントごとに別のTwitterアカウントと連携しておけば、投稿・閲覧・ジャンルなどで使い分けることができます。</li>
-	<li>１つのアカウントは１つのグループにのみ所属できます、別のアカウントと組み合わせたい場合は、一度グループから外す必要があります。</li>
+	<li><%=_TEX.T("SwitchAccountDlg.Footer01")%></li>
+	<li><%=_TEX.T("SwitchAccountDlg.Footer02")%></li>
+	<li><%=_TEX.T("SwitchAccountDlg.Footer03")%></li>
 </ul>
 `;
-		<%}else{%>
-		return `<ul>
-	<li>You can now group two POIPIKU accounts together and switch between them easily.</li>
-	<li>If you link each account with a different Twitter account, you can use them separately for posting, browsing, genres, etc.</li>
-	<li>You will need to register your email address and password in order to create a group.</li>
-	<li>An account can only belong to one group, if you want to combine it with another account, you need to remove it from the group once.</li>
-</ul>
-`;
-		<%}%>
 	}
 
 	function _verifyAddSwitchUserDlgInput(){
