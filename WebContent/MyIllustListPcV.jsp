@@ -151,8 +151,8 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			$("#MenuSwitchUser").show();
 		})</script>
 
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<%@ include file="/inner/MyIllustListSwitchUserList.jsp"%>
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
