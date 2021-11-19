@@ -25,9 +25,8 @@ public final class NewArrivalC {
 		}
 	}
 
-
-	public int SELECT_MAX_GALLERY = 15;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public int selectMaxGallery = 15;
+	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public int m_nEndId = -1;
 	public int m_nContentsNum = 0;
 
@@ -79,7 +78,7 @@ public final class NewArrivalC {
 			}
 
 			strSql = "SELECT * FROM contents_0000 "
-					+ "WHERE open_id=0 AND publish_id NOT IN (7,8,9,10) "
+					+ "WHERE open_id=0 AND publish_id NOT IN (4,7,8,9,10) "
 					+ "AND safe_filter<=? "
 					+ strCondBlockUser
 					+ strCondBlocedkUser
@@ -101,8 +100,8 @@ public final class NewArrivalC {
 			if(!strCondMute.isEmpty()){
 				statement.setString(idx++, strMuteKeyword);
 			}
-			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
-			statement.setInt(idx++, SELECT_MAX_GALLERY);
+			statement.setInt(idx++, m_nPage * selectMaxGallery);
+			statement.setInt(idx++, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);

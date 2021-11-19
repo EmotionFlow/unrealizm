@@ -6,7 +6,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 48;
+cResults.selectMaxGallery = 48;
 boolean bRtn = cResults.getResults(checkLogin);
 
 String description = _TEX.T("THeader.Title.Desc");
@@ -82,7 +82,7 @@ if(cResults.m_nCategoryId >= 0) {
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/NewArrivalPcV.jsp", String.format("&CD=%d", cResults.m_nCategoryId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/NewArrivalPcV.jsp", String.format("&CD=%d", cResults.m_nCategoryId), cResults.m_nPage, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 
