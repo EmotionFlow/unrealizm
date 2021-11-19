@@ -2887,6 +2887,23 @@ Decoration
 	cursor: pointer;
 }
 
+.SettingListItem .LoginFormInfoMsg {
+	margin-bottom: 37px;
+	border: solid 1px;
+	padding: 0 9px 0 9px;
+	border-radius: 11px;
+}
+
+.LoginFormSeparator {
+	display: flex; line-height: 15px; margin: 30px 0;
+}
+.LoginFormSeparator > .SeparatorLine{
+	flex: 1 0; height: 1px; background-color: #fff; margin: 7px 0;
+}
+.LoginFormSeparator > .SeparatorLabel{
+	flex: 0 0; padding: 0 12px;
+}
+
 /********** SEARCH ALL **********/
 .SearchKeyword {
 	display: block;

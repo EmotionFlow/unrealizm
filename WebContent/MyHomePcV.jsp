@@ -16,7 +16,7 @@ if(!checkLogin.m_bLogin) {
 	if(cResults.n_nUserId>0) {
 		response.sendRedirect("/"+cResults.n_nUserId+"/");
 	} else {
-		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp?MSG=MyHome").forward(request,response);
 	}
 	return;
 }

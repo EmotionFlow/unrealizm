@@ -13,7 +13,6 @@ String strRequestQuery = Util.toString((String)request.getAttribute("javax.servl
 String strRegistUserFToken = RandomStringUtils.randomAlphanumeric(64);
 session.setAttribute("RegistUserFToken", strRegistUserFToken);
 
-String strMessage = "";
 session.removeAttribute("LoginUri");
 if(!strRequestUri.isEmpty()) {
 	if(!strRequestQuery.isEmpty()) {
@@ -21,7 +20,6 @@ if(!strRequestUri.isEmpty()) {
 	}
 	session.setAttribute("LoginUri", strRequestUri);
 }
-
 
 String strNextUrl = "";
 String strReturnUrl = "";
@@ -37,6 +35,18 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 } else {
 	strNextUrl = "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
 }
+
+String infoMsgKey = null;
+if (strRequestUri.indexOf("/MyHome") == 0) {
+	infoMsgKey = "MyHome";
+} else if(strRequestUri.indexOf("/ActivityList") == 0){
+	infoMsgKey = "ActivityList";
+} else if(strRequestUri.indexOf("/MyIllustList") == 0){
+	infoMsgKey = "MyIllustList";
+} else if(strRequestUri.indexOf("/IllustDetail") == 0){
+	infoMsgKey = "IllustDetail";
+}
+
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -150,7 +160,11 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 30px;">
 				<div class="SettingListItem">
+					<%if(infoMsgKey != null){%>
+					<div class="LoginFormInfoMsg"><%=_TEX.T("LoginFormV.Info." + infoMsgKey)%></div>
+					<%}%>
 					<div style="text-align: center;">
+						<div style="margin-bottom: 10px;"><%=_TEX.T("LoginFormV.Label.RegisterByTwitter")%></div>
 						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
 							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strNextUrl%>"/>
 							<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
@@ -159,17 +173,13 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 						</form>
 					</div>
 
-					<div style="display: flex; line-height: 15px; margin: 30px 0;">
-						<div style="flex: 1 0; height: 1px; background-color: #fff; margin: 7px 0;"></div>
-						<div style="flex: 0 0; padding: 0px 12px;">or</div>
-						<div style="flex: 1 0; height: 1px; background-color: #fff; margin: 7px 0;"></div>
+					<div class="LoginFormSeparator">
+						<div class="SeparatorLine"></div>
+						<div class="SeparatorLabel">or</div>
+						<div class="SeparatorLine"></div>
 					</div>
 
 					<form id="RegistForm" onsubmit="return RegistUser()">
-						<div class="RegistItem">
-							<div class="SettingListTitle" style="margin-top: 0"><%=_TEX.T("LoginFormV.Label.Regist")%></div>
-						</div>
-
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
 								<%=_TEX.T("LoginFormV.Label.Email")%>
