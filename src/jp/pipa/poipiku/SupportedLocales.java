@@ -15,6 +15,7 @@ public final class SupportedLocales {
 		l.add(new UserLocale(3, Locale.SIMPLIFIED_CHINESE));
 		l.add(new UserLocale(4, Locale.TRADITIONAL_CHINESE));
 		l.add(new UserLocale(5, new Locale("th")));
+		l.add(new UserLocale(6, new Locale("ru")));
 		list = Collections.unmodifiableList(l);
 	}
 
