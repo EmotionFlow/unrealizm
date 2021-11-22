@@ -850,6 +850,7 @@ function deleteOldVersionCache() {
 		);
 	});
 }
+/******** Cache API ********/
 
 /******** 無限スクロール *******/
 function createIntersectionObserver(callback) {
@@ -861,4 +862,58 @@ function createIntersectionObserver(callback) {
 		});
 	});
 }
+/******** 無限スクロール *******/
 
+/******** DetailV オーバーレイ表示*******/
+function _showIllustDetail(ownerUserId, contentId, appendId) {
+	$.ajax({
+		"type": "post",
+		"data": {"ID":ownerUserId, "TD":contentId, "AD":appendId},
+		"url": "/f/ShowIllustDetailF.jsp",
+		"dataType": "json",
+	}).then(
+		data => {
+			console.log(data);
+			if (data.result === 1) {
+				$("#DetailOverlayInner").html(data.html);
+				document.addEventListener('touchmove', _DetailVHandleTouchMove, { passive: false });
+				document.addEventListener('mousewheel', _DetailVHandleTouchMove, { passive: false });
+				document.getElementById('DetailOverlay').classList.add('overlay-on')	;
+			} else {
+				switch (data.errorCode) {
+					case -1:
+						location.href = 'StartPoipikuPcV.jsp';
+						break;
+					case -2:
+						DispNeedLoginMsg();
+						break;
+					default:
+						DispUnknownErrorMsg();
+				}
+			}
+		},err => {
+			DispUnknownErrorMsg();
+		}
+	);
+}
+
+function _DetailVHandleTouchMove(event) {
+	event.preventDefault();
+}
+
+function showIllustDetail(ownerUserId, contentId) {
+	_showIllustDetail(ownerUserId, contentId, -1);
+}
+
+function closeDetailContent() {
+	document.getElementById('DetailOverlay').classList.remove('overlay-on');
+	document.removeEventListener('touchmove', _DetailVHandleTouchMove);
+	document.removeEventListener('mousewheel', _DetailVHandleTouchMove);
+}
+
+function initDetailOverlay() {
+	document.getElementById('DetailOverlayClose').addEventListener('click', closeDetailContent, false);
+	const overlayInner = document.getElementById('DetailOverlayInner');
+	overlayInner.addEventListener('click', (ev)=>{ev.stopPropagation()}, false);
+}
+/******** DetailV オーバーレイ表示*******/

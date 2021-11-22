@@ -142,6 +142,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
 				<%}%>
 			</section>
+			<%@ include file="/inner/TShowDetail.jsp"%>
 
 			<nav class="PageBar">
 				<%=CPageBar.CreatePageBarSp("/MyHomeTagPcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>

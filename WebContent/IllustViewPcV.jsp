@@ -258,15 +258,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>
 			</span>
 			<%}%>
-<!--
-			<nav class="PageBar">
-				<%//if(bSmartPhone) {%>
-				<%//=CPageBar.CreatePageBarSp("/IllustViewPcV.jsp", String.format("&ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-				<%//}else{%>
-				<%//=CPageBar.CreatePageBarPc("/IllustViewPcV.jsp", String.format("&ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nContentId), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-				<%//}%>
-			</nav>
--->
+
 			<section id="IllustItemListRelatedUser" class="IllustItemList Related User">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
 					<div class="IllustItem" style="background: rgba(255,255,255,0.90); margin: 0; width: 100%; border: none; border-radius: 0; min-height: auto;">
@@ -309,6 +301,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		</article>
 		<%}%>
 
+		<%@ include file="/inner/TShowDetail.jsp"%>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

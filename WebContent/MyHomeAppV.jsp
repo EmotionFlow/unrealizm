@@ -154,5 +154,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 			</section>
 		</article>
+		<%@ include file="/inner/TShowDetail.jsp"%>
 	</body>
 </html>

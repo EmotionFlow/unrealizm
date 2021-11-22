@@ -8,18 +8,22 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public final class IllustDetailC {
-	public int m_nUserId = -1;
-	public int m_nContentId = -1;
-	public int m_nAppendId = -1;
+	public int ownerUserId = -1;
+	public int contentId = -1;
+	public int appendId = -1;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
-			m_nContentId	= Util.toInt(cRequest.getParameter("TD"));
-			m_nAppendId		= Util.toInt(cRequest.getParameter("AD"));
+			ownerUserId = Util.toInt(cRequest.getParameter("ID"));
+			contentId = Util.toInt(cRequest.getParameter("TD"));
+			appendId = Util.toInt(cRequest.getParameter("AD"));
 		} catch(Exception e) {
-			m_nContentId = -1;
+			contentId = -1;
 		}
+	}
+
+	private String paramToString() {
+		return String.format("ID:%d, TD:%d ,AD:%d", ownerUserId, contentId, appendId);
 	}
 
 	public CContent m_cContent = new CContent();
@@ -40,7 +44,7 @@ public final class IllustDetailC {
 			// author profile
 			strSql = "SELECT ng_download FROM users_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_nUserId);
+			statement.setInt(1, ownerUserId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				m_nDownload = resultSet.getInt("ng_download");
@@ -49,19 +53,21 @@ public final class IllustDetailC {
 			statement.close();statement=null;
 
 			Request poipikuRequest = new Request();
-			poipikuRequest.selectByContentId(m_nContentId, connection);
+			poipikuRequest.selectByContentId(contentId, connection);
 			isRequestClient = poipikuRequest.isClient(checkLogin.m_nUserId);
 
 			// content main
-			String strOpenCnd = (m_nUserId!=checkLogin.m_nUserId && !isRequestClient) ? " AND open_id<>2" : "";
+			String strOpenCnd = (ownerUserId !=checkLogin.m_nUserId && !isRequestClient) ? " AND open_id<>2" : "";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_nUserId);
-			statement.setInt(2, m_nContentId);
+			statement.setInt(1, ownerUserId);
+			statement.setInt(2, contentId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()){
 				m_cContent = new CContent(resultSet);
 				bRtn = true;
+			} else {
+				Log.d("record not found");
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -92,19 +98,24 @@ public final class IllustDetailC {
 							bRtn = false;
 					}
 				}
-				if(!bRtn) return false;
+				if(!bRtn) {
+					Log.d("Tw限定のチェックができなかった");
+					return false;
+				}
 			}
 
-			if(m_nAppendId>0 && bRtn) {
+			if(appendId >0 && bRtn) {
 				bRtn = false;
 				strSql = "SELECT file_name FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
 				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, m_nContentId);
-				statement.setInt(2, m_nAppendId);
+				statement.setInt(1, contentId);
+				statement.setInt(2, appendId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
 					m_cContent.m_strFileName = Util.toString(resultSet.getString("file_name"));
 					bRtn = true;
+				} else {
+					Log.d("file_name was not found");
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -123,9 +134,9 @@ public final class IllustDetailC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
 		return bRtn;
 	}

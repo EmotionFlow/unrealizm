@@ -157,6 +157,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<%=CPageBar.CreatePageBarSp("/MyHomePcV.jsp", "", cResults.m_nPage, cResults.m_nContentsNum, MyHomePcC.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
+		<%@ include file="/inner/TShowDetail.jsp"%>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

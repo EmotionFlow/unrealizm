@@ -4,8 +4,8 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 if (!Util.isIOS(request) && !Util.isSmartPhone(request)) {
-	response.sendRedirect("/NotFoundV.jsp");
-	return;
+//	response.sendRedirect("/NotFoundV.jsp");
+//	return;
 }
 
 if(Util.isBot(request)) {
@@ -145,7 +145,7 @@ if(!cResults.getResults(checkLogin)) {
 			<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
-				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+				<a href="/DownloadImageFile?TD=<%=cResults.contentId%>&AD=<%=cResults.appendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 				<%if (cResults.isOwner) {%>
 				<br><span>
 				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>
@@ -162,7 +162,7 @@ if(!cResults.getResults(checkLogin)) {
 			</div>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
-				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+				<a href="/DownloadImageFile?TD=<%=cResults.contentId%>&AD=<%=cResults.appendId%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 				<%if (cResults.isOwner) {%>
 				<br><span>
 				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>

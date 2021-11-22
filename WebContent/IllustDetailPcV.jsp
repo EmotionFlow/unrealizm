@@ -147,7 +147,7 @@ if(cResults.isDownloadable) {
 			<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
-				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+				<a href="/DownloadImageFile?TD=<%=cResults.contentId%>&AD=<%=cResults.appendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 				<%if (cResults.isOwner) {%>
 				<br><span>
 				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>
@@ -164,7 +164,7 @@ if(cResults.isDownloadable) {
 			</div>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
-				<a href="/DownloadImageFile?TD=<%=cResults.m_nContentId%>&AD=<%=cResults.m_nAppendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
+				<a href="/DownloadImageFile?TD=<%=cResults.contentId%>&AD=<%=cResults.appendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 				<%if (cResults.isOwner) {%>
 				<br><span>
 				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>

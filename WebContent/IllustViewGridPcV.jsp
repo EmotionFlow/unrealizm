@@ -347,6 +347,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			</section>
 		</article>
 
+		<%@ include file="/inner/TShowDetail.jsp"%>
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>
 	</body>
 </html>

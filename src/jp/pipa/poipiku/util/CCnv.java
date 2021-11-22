@@ -223,39 +223,33 @@ public final class CCnv {
 		strRtn.append("</a>");
 	}
 
-	private static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
+	private static void appendContentItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
 		final String strFileUrl;
 		final int publishId = cContent.m_nPublishId;
 		if (publishId == Common.PUBLISH_ID_ALL || publishId == Common.PUBLISH_ID_HIDDEN || cContent.publishAllNum == 1) {
 			if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
-				_appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+				appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
 			} else {
-				_appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+				appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 			}
 		} else {
 			cContent.m_nFileNum++;
 			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-			if(nViewMode==VIEW_DETAIL) {
-				strRtn.append("<span class=\"IllustItemThumb\">");
-				strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
-				strRtn.append("</span>");
-			} else {
-				strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
-				strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
-				strRtn.append("</a>");
-			}
+			appendIllustItemThumb(strRtn, null, nViewMode, ILLUST_VIEW, strFileUrl);
 		}
 	}
 
-
-	private static void _appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
-		_appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+	private static void appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW){
+		appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
 	}
 
-	private static void _appendIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
-		String strFileUrl = Common.GetUrl(cContent.m_strFileName);
+	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
 		if(nViewMode==VIEW_DETAIL) {
-			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
+			strRtn.append("<a class=\"IllustItemThumb\" href=\"javascript:void(0)\"");
+			if (cContent != null) {
+				strRtn.append(String.format(" onclick=\"showIllustDetail(%d, %d)\"", cContent.m_nUserId, cContent.m_nContentId));
+			}
+			strRtn.append(">");
 			strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
 			strRtn.append("</a>");
 		} else {
@@ -265,8 +259,7 @@ public final class CCnv {
 		}
 	}
 
-
-	private static void _appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
+	private static void appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
 		//String strTextBody = Util.toStringHtml(cContent.m_strTextBody);
 		String className = "IllustItemThumbText";
 		if(cContent.novelDirection==1) {
@@ -283,7 +276,7 @@ public final class CCnv {
 		}
 	}
 
-	private static void _appendIllustItemResList(
+	private static void appendIllustItemResList(
 			StringBuilder strRtn, CContent cContent, int nLoginUserId,
 			ArrayList<String> vResult, int nSpMode,
 			ResourceBundleControl _TEX){
@@ -452,7 +445,7 @@ public final class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			_appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, SP_MODE_WVIEW, _TEX);
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, SP_MODE_WVIEW, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -523,7 +516,7 @@ public final class CCnv {
 
 
 		// 画像
-		appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+		appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 2枚目以降用の場所
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
@@ -567,7 +560,7 @@ public final class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			_appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -629,7 +622,7 @@ public final class CCnv {
 		}
 
 		// 画像
-		_appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+		appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW);
 
 		// 2枚目以降用の場所
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
@@ -648,17 +641,17 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustItemExpand
 
 		// 転載禁止表示
-		String strSizeAppendex = "";
+		String strSizeAppendix = "";
 		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
-			strSizeAppendex = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
+			strSizeAppendix = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
 		}
 		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
-				(nViewMode==VIEW_DETAIL)?String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendex):strSizeAppendex,
+				(nViewMode==VIEW_DETAIL)?String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendix):strSizeAppendix,
 				_TEX.T("IllustView.ProhibitMsg")));
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			_appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem

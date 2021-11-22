@@ -256,6 +256,8 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		</article>
 		<%}%>
 
+		<%@ include file="/inner/TShowDetail.jsp"%>
+
 		<aside class="Wrapper GridList">
 			<%@ include file="/inner/ad/TAdSingleAdSpFooter.jsp"%>
 		</aside>

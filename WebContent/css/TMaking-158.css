@@ -2942,6 +2942,7 @@ Decoration
 .EventItemList .EventItem.Start:after {display: block; content: '開催中'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #ff0000; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
 .EventItemList .EventItem.End {position: relative;}
 .EventItemList .EventItem.End:after {display: block; content: '終了'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #333; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
+/********** EVENT LIST **********/
 
 /********** SYSTEM INFO **********/
 .SystemInfo {display: flex; width: 100%; flex-flow: row nowrap; align-items: center; justify-content: center; background: #fdf2c2; box-sizing: border-box; padding: 2px;}
@@ -2951,6 +2952,7 @@ Decoration
 .SystemInfo .SystemInfoDate {display: block; flex: 0 0 48px; height: 36px; line-height: 18px;text-align: center;font-size: 12px; }
 .SystemInfo .SystemInfoDesc {display: block; flex: 1 1; height: 36px; line-height: 18px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-decoration: underline;font-size: 12px;max-height: 36px;}
 .SystemInfo .SystemInfoClose {display: block; flex: 0 0 30px; height: 36px; line-height: 36px; text-align: center;font-size: 12px;}
+/********** SYSTEM INFO **********/
 
 /*********** Loading Spinner ************/
 .loadingSpinner {
@@ -3007,3 +3009,53 @@ Decoration
 			-webkit-transform: scaleY(1.0);
 		}
 }
+/*********** Loading Spinner ************/
+
+/*********** DetailV ********************/
+.IllustItemImage {max-width: 100%; height: auto;}
+
+.IllustItemTextDetail {
+	color: #333333;
+	display: block;
+	float: left;
+	box-sizing: border-box;
+	text-align: left;
+	font-size: 1.3em;
+	line-height: 1.8;
+	margin: 0 4px;
+}
+
+.IllustItemTextDetail.Vertical{
+	writing-mode: vertical-rl;
+	overflow-x: scroll;
+	height: 500px;
+	width: 100%;
+}
+
+#DetailOverlay{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 99999;
+	width: 100vw;
+	height: 100vh;
+	visibility: hidden;
+	opacity: 0;
+	background: rgba(0,0,0,0.75);
+	transition: all 0.3s ease-out;
+}
+#DetailOverlay.overlay-on{
+	visibility: visible;
+	opacity: 1;
+}
+#DetailOverlay > .DetailOverlayHeader{
+	display: block;
+	height: 30px;
+}
+.DetailOverlayHeader > .DetailOverlayClose {
+	padding: 5px 0 0 10px;
+	font-size: 2em;
+	color: #d3d3d3;
+}
+
+/*********** DetailV ********************/

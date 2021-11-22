@@ -112,17 +112,13 @@ if(nRtn<ShowAppendFileC.OK) {
 		} else {
 			// 2枚目の場所に1枚目を表示する
 			nRtn++;
-			strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d\">", illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
-			strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cResults.m_cContent.m_strFileName)));
-			strHtml.append("</a>");
+			CCnv.appendIllustItemThumb(strHtml, cResults.m_cContent, CCnv.VIEW_DETAIL, null, Common.GetUrl(cResults.m_cContent.m_strFileName));
 		}
 	}
 
-	// 以降の画像・文章を表示
+	// 以降の画像を表示
 	for(CContentAppend cContentAppend : cResults.m_cContent.m_vContentAppend) {
-		strHtml.append(String.format("<a class=\"IllustItemThumb\" href=\"%s?ID=%d&TD=%d&AD=%d\">", illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId, cContentAppend.m_nAppendId));
-		strHtml.append(String.format("<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" />", Common.GetUrl(cContentAppend.m_strFileName)));
-		strHtml.append("</a>");
+		CCnv.appendIllustItemThumb(strHtml, cResults.m_cContent, CCnv.VIEW_DETAIL, null, Common.GetUrl(cResults.m_cContent.m_strFileName));
 	}
 }
 %>{"result_num":<%=nRtn%>,"html":"<%=CEnc.E(strHtml.toString())%>","tw_friendship":"<%=cResults.m_nTwFriendship%>"}
