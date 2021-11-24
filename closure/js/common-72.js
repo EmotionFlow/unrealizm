@@ -865,6 +865,28 @@ function createIntersectionObserver(callback) {
 /******** 無限スクロール *******/
 
 /******** DetailV オーバーレイ表示*******/
+function createDetailToucheMoveHandler(detailOverlay) {
+	return (event) => {
+		if (event.target === document.getElementById('DetailIllustItemImage') && detailOverlay.scrollTop !== 0 && detailOverlay.scrollTop + detailOverlay.clientHeight !== detailOverlay.scrollHeight) {
+			event.stopPropagation();
+		}
+		else {
+			event.preventDefault();
+		}
+	}
+}
+
+function createDetailScrollHandler(detailOverlay) {
+	return () => {
+		if (detailOverlay.scrollTop === 0) {
+			detailOverlay.scrollTop = 1;
+		}
+		else if (detailOverlay.scrollTop + detailOverlay.clientHeight === detailOverlay.scrollHeight) {
+			detailOverlay.scrollTop = detailOverlay.scrollTop - 1;
+		}
+	}
+}
+
 function _showIllustDetail(ownerUserId, contentId, appendId) {
 	$.ajax({
 		"type": "post",
@@ -876,9 +898,13 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 			console.log(data);
 			if (data.result === 1) {
 				$("#DetailOverlayInner").html(data.html);
-				document.addEventListener('touchmove', _DetailVHandleTouchMove, { passive: false });
-				document.addEventListener('mousewheel', _DetailVHandleTouchMove, { passive: false });
-				document.getElementById('DetailOverlay').classList.add('overlay-on')	;
+				detailOverlay.classList.add('overlay-on');
+
+				document.getElementById('DetailOverlayInner').style.height = (detailOverlay.clientHeight + 1) + "px";
+				detailOverlay.scrollTop = 1;
+				document.addEventListener('touchmove', detailToucheMoveHandler, { passive: false });
+				document.addEventListener('mousewheel', detailToucheMoveHandler, { passive: false });
+				detailOverlay.addEventListener('scroll', detailScrollHandler, { passive: false });
 			} else {
 				switch (data.errorCode) {
 					case -1:
@@ -897,18 +923,15 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 	);
 }
 
-function _DetailVHandleTouchMove(event) {
-	event.preventDefault();
-}
-
 function showIllustDetail(ownerUserId, contentId) {
 	_showIllustDetail(ownerUserId, contentId, -1);
 }
 
 function closeDetailContent() {
 	document.getElementById('DetailOverlay').classList.remove('overlay-on');
-	document.removeEventListener('touchmove', _DetailVHandleTouchMove);
-	document.removeEventListener('mousewheel', _DetailVHandleTouchMove);
+	document.removeEventListener('touchmove', detailToucheMoveHandler);
+	document.removeEventListener('mousewheel', detailToucheMoveHandler);
+	detailOverlay.removeEventListener('scroll', detailScrollHandler);
 }
 
 function initDetailOverlay() {

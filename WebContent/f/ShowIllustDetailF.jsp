@@ -36,7 +36,14 @@
 		if(!cResults.m_cContent.m_strFileName.isEmpty()) {
 			String downloadAreaDiv = "";
 			if(cResults.isDownloadable) {
-				downloadAreaDiv += "<div class=\"IllustItemTProhibit\">";
+			}
+
+			html += "      <div class=\"IllustItemLink\" style=\"display: block;\">\n" +
+					"        <img id=\"DetailIllustItemImage\" class=\"DetailIllustItemImage\" src=\"" + Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName) + "\" />\n" +
+					"      </div>\n";
+
+			if(cResults.isDownloadable) {
+				downloadAreaDiv += "<div class=\"DetailIllustItemDownload\">";
 				downloadAreaDiv += "        <a href=\"/DownloadImageFile?TD=" + cResults.contentId + "&AD=" + cResults.appendId + "\"><i class=\"fas fa-download\"></i> " + _TEX.T("IllustView.Download") + "</a>\n";
 				if (cResults.isOwner) {
 					downloadAreaDiv += "<br><span>";
@@ -51,15 +58,7 @@
 				html += downloadAreaDiv;
 			}
 
-			html += "      <div class=\"IllustItemLink\" style=\"display: block;\">\n" +
-					"        <img class=\"IllustItemImage\" src=\"" + Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName) + "\" />\n" +
-					"      </div>\n";
-
-			if(cResults.isDownloadable) {
-				html += downloadAreaDiv;
-			}
-
-			html += "      <div class=\"IllustItemTProhibit\">\n" + _TEX.T("IllustView.ProhibitMsg.Long") + "      </div>\n";
+			html += "      <div class=\"DetailIllustItemProhibit \">\n" + _TEX.T("IllustView.ProhibitMsg.Long") + "      </div>\n";
 
 		} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
 			html += "<div class=\"IllustItemLink\">";
