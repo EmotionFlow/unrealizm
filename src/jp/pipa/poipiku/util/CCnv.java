@@ -4,12 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CTag;
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.ResourceBundleControl;
+import jp.pipa.poipiku.*;
 
 public final class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
@@ -243,20 +238,23 @@ public final class CCnv {
 		appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
 	}
 
-	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
+
+	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
 		if(nViewMode==VIEW_DETAIL) {
 			strRtn.append("<a class=\"IllustItemThumb\" href=\"javascript:void(0)\"");
 			if (cContent != null) {
-				strRtn.append(String.format(" onclick=\"showIllustDetail(%d, %d)\"", cContent.m_nUserId, cContent.m_nContentId));
+				strRtn.append(String.format(" onclick=\"showIllustDetail(%d, %d, %d)\"", cContent.m_nUserId, cContent.m_nContentId, contentAppend==null ? -1 : contentAppend.m_nAppendId));
 			}
 			strRtn.append(">");
-			strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
-			strRtn.append("</a>");
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
-			strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
-			strRtn.append("</a>");
 		}
+		strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
+		strRtn.append("</a>");
+	}
+
+	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
+		appendIllustItemThumb(strRtn, cContent, null, nViewMode, ILLUST_VIEW, strFileUrl);
 	}
 
 	private static void appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {

@@ -117,8 +117,8 @@ if(nRtn<ShowAppendFileC.OK) {
 	}
 
 	// 以降の画像を表示
-	for(CContentAppend cContentAppend : cResults.m_cContent.m_vContentAppend) {
-		CCnv.appendIllustItemThumb(strHtml, cResults.m_cContent, CCnv.VIEW_DETAIL, null, Common.GetUrl(cResults.m_cContent.m_strFileName));
+	for(CContentAppend contentAppend : cResults.m_cContent.m_vContentAppend) {
+		CCnv.appendIllustItemThumb(strHtml, cResults.m_cContent, contentAppend, CCnv.VIEW_DETAIL, null, Common.GetUrl(contentAppend.m_strFileName));
 	}
 }
 %>{"result_num":<%=nRtn%>,"html":"<%=CEnc.E(strHtml.toString())%>","tw_friendship":"<%=cResults.m_nTwFriendship%>"}

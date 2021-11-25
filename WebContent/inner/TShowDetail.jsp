@@ -7,6 +7,7 @@
 		</svg>
 	</div></div>
 	<div id="DetailOverlayInner"></div>
+	<div class="DetailIllustItemProhibit"><%=_TEX.T("IllustView.ProhibitMsg.Long")%></div>
 </div>
 
 <script type="text/javascript">

@@ -887,6 +887,12 @@ function createDetailScrollHandler(detailOverlay) {
 	}
 }
 
+function detailIllustItemImageOnload(el) {
+	const newHeight = el.clientHeight + 100;
+	document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
+	detailOverlay.scrollTop = 1;
+}
+
 function _showIllustDetail(ownerUserId, contentId, appendId) {
 	$.ajax({
 		"type": "post",
@@ -895,13 +901,9 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 		"dataType": "json",
 	}).then(
 		data => {
-			console.log(data);
 			if (data.result === 1) {
 				$("#DetailOverlayInner").html(data.html);
 				detailOverlay.classList.add('overlay-on');
-
-				document.getElementById('DetailOverlayInner').style.height = (detailOverlay.clientHeight + 1) + "px";
-				detailOverlay.scrollTop = 1;
 				document.addEventListener('touchmove', detailToucheMoveHandler, { passive: false });
 				document.addEventListener('mousewheel', detailToucheMoveHandler, { passive: false });
 				detailOverlay.addEventListener('scroll', detailScrollHandler, { passive: false });
@@ -923,19 +925,20 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 	);
 }
 
-function showIllustDetail(ownerUserId, contentId) {
-	_showIllustDetail(ownerUserId, contentId, -1);
+function showIllustDetail(ownerUserId, contentId, appendId) {
+	_showIllustDetail(ownerUserId, contentId, appendId);
 }
 
-function closeDetailContent() {
+function closeDetailOverlay() {
 	document.getElementById('DetailOverlay').classList.remove('overlay-on');
 	document.removeEventListener('touchmove', detailToucheMoveHandler);
 	document.removeEventListener('mousewheel', detailToucheMoveHandler);
 	detailOverlay.removeEventListener('scroll', detailScrollHandler);
+	document.getElementById('DetailOverlayInner').style.height = 16 + "px";
 }
 
 function initDetailOverlay() {
-	document.getElementById('DetailOverlayClose').addEventListener('click', closeDetailContent, false);
+	document.getElementById('DetailOverlayClose').addEventListener('click', closeDetailOverlay, false);
 	const overlayInner = document.getElementById('DetailOverlayInner');
 	overlayInner.addEventListener('click', (ev)=>{ev.stopPropagation()}, false);
 }

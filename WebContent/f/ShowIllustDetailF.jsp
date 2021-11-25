@@ -1,4 +1,3 @@
-<%@ page import="sun.util.resources.cldr.te.CurrencyNames_te" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
@@ -28,8 +27,6 @@
 		html += "<style>.IllustItemLink {\n";
 		if (cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==0) {
 			html += "margin: 0 auto;width: 25em;\n";
-		} else {
-			html += "padding: 4px;text-align: center;";
 		}
 		html += "} </style>";
 
@@ -38,8 +35,8 @@
 			if(cResults.isDownloadable) {
 			}
 
-			html += "      <div class=\"IllustItemLink\" style=\"display: block;\">\n" +
-					"        <img id=\"DetailIllustItemImage\" class=\"DetailIllustItemImage\" src=\"" + Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName) + "\" />\n" +
+			html += "      <div class=\"DetailIllustItemLink\">\n" +
+					"        <img id=\"DetailIllustItemImage\" class=\"DetailIllustItemImage\" src=\"" + Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName) + "\" onload=\"detailIllustItemImageOnload(this)\" />\n" +
 					"      </div>\n";
 
 			if(cResults.isDownloadable) {
@@ -57,9 +54,6 @@
 				downloadAreaDiv += "</div>";
 				html += downloadAreaDiv;
 			}
-
-			html += "      <div class=\"DetailIllustItemProhibit \">\n" + _TEX.T("IllustView.ProhibitMsg.Long") + "      </div>\n";
-
 		} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
 			html += "<div class=\"IllustItemLink\">";
 			html += "        <div class=\"IllustItemTextDetail " + (cResults.m_cContent.novelDirection==1 ? "Vertical" : "") + "\">\n" +
