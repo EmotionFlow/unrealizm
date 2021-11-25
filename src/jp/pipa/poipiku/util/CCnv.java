@@ -393,7 +393,7 @@ public final class CCnv {
 				strRtn.append("<div class=\"ResEmojiBtnList Cheer Browser\" style=\"display: none;\"></div>");
 			}
 		}
-		strRtn.append("</div>");	// IllustItemResList
+		strRtn.append("</div>");	// IllustItemResBtnList
 	}
 
 	public static String toMyThumbHtmlPc(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult) throws UnsupportedEncodingException {

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="DetailOverlay">
+	<%// バツ印アイコン%>
 	<div class="DetailOverlayHeader"><div id="DetailOverlayClose" class="DetailOverlayClose">
 		<svg x="0px" y="0px" viewBox="0 0 512 512" style="width: 15px; height: 15px; opacity: 1;" xml:space="preserve">
 		<style type="text/css">.st0{fill:#4B4B4B;}</style>
@@ -20,8 +21,5 @@
 	const detailOverlay = document.getElementById('DetailOverlay');
 	const detailToucheMoveHandler = createDetailToucheMoveHandler(detailOverlay);
 	const detailScrollHandler = createDetailScrollHandler(detailOverlay);
-	$(function(){
-		initDetailOverlay();
-	});
+	$(function(){initDetailOverlay();});
 </script>
-

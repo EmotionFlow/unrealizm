@@ -867,16 +867,20 @@ function createIntersectionObserver(callback) {
 /******** DetailV オーバーレイ表示*******/
 function createDetailToucheMoveHandler(detailOverlay) {
 	return (event) => {
-		if (event.target === document.getElementById('DetailIllustItemImage') && detailOverlay.scrollTop !== 0 && detailOverlay.scrollTop + detailOverlay.clientHeight !== detailOverlay.scrollHeight) {
+		// 画像のみをスクロールさせ、ページ全体がスクロールされないようにする。
+		// 画像部分のスクロールが上端or下端であったら、どの要素もスクロールさせない。
+		if (event.target === document.getElementById('DetailIllustItemImage')
+			&& detailOverlay.scrollTop !== 0
+			&& detailOverlay.scrollTop + detailOverlay.clientHeight !== detailOverlay.scrollHeight) {
 			event.stopPropagation();
-		}
-		else {
+		} else {
 			event.preventDefault();
 		}
 	}
 }
 
 function createDetailScrollHandler(detailOverlay) {
+	// 表示画像が一番上OR一番下にスクロールされたら、1pxだけ戻す。
 	return () => {
 		if (detailOverlay.scrollTop === 0) {
 			detailOverlay.scrollTop = 1;

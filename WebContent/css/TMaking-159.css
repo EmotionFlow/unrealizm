@@ -2925,6 +2925,7 @@ Decoration
 	font-family: sans-serif;
 	border-radius: 5px;
 }
+/********** SEARCH ALL **********/
 
 /********** EVENT LIST **********/
 .EventItemList {display: block; float: left; width: 360px; height: 94px; list-style: none; padding: 0; margin: 10px 0 15px 0; opacity: 0;}
