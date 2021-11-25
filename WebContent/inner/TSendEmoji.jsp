@@ -21,7 +21,7 @@
 		}).then( data => {
 				cardInfo = null;
 				if (data.result_num > 0) {
-					var $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
+					const $objResEmoji = $("<span/>").addClass("ResEmoji").html(data.result);
 					$("#ResEmojiAdd_" + emojiInfo.contentId).before($objResEmoji);
 					if (vg) vg.vgrefresh();
 					if(nCheerAmount>0) {
@@ -30,6 +30,7 @@
 							elCheerNowPayment.hide();
 						}
 					}
+					$("#EncourageFollowUp_" + emojiInfo.contentId).show(500);
 				} else {
 					switch (data.error_code) {
 						case -10:

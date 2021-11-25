@@ -394,6 +394,17 @@ public final class CCnv {
 			}
 		}
 		strRtn.append("</div>");	// IllustItemResBtnList
+
+		strRtn.append(String.format("<div id=\"EncourageFollowUp_%d\" class=\"EncourageFollowUp\" style=\"display:none\">", cContent.m_nContentId));
+		strRtn.append("<span>気になる人をどんどんフォローしよう！</span>");
+		strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollow(%d,%d)\">%s</span>",
+				cContent.m_nUserId,
+				(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
+				nLoginUserId,
+				cContent.m_nUserId,
+				(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
+		strRtn.append("</div>");
+
 	}
 
 	public static String toMyThumbHtmlPc(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult) throws UnsupportedEncodingException {

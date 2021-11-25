@@ -3122,3 +3122,18 @@ Decoration
 	overflow: scroll;
 }
 /*********** DetailV ********************/
+
+.EncourageFollowUp {
+	border-top: solid 1px #eee;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	height: 39px;
+	line-height: 20px;
+	padding: 9px;
+	padding-top: 9px;
+	font-size: 9px;
+}
+.EncourageFollowUp > .UserInfoCmdFollow {
+	float: right;
+}
