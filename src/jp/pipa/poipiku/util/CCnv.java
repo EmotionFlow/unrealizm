@@ -396,7 +396,7 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustItemResBtnList
 
 		strRtn.append(String.format("<div id=\"EncourageFollowUp_%d\" class=\"EncourageFollowUp\" style=\"display:none\">", cContent.m_nContentId));
-		strRtn.append("<span>気になる人をこっそりどんどんフォローしよう！</span>");
+		strRtn.append("<span>").append(_TEX.T("EncourageFollowUp")).append("</span>");
 		strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d,%d)\">%s</span>",
 				cContent.m_nUserId,
 				(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
@@ -404,7 +404,6 @@ public final class CCnv {
 				cContent.m_nUserId,
 				(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
 		strRtn.append("</div>");
-
 	}
 
 	public static String toMyThumbHtmlPc(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult) throws UnsupportedEncodingException {
@@ -425,7 +424,7 @@ public final class CCnv {
 		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, Common.GetUrl(cContent.m_cUser.m_strFileName)));
 		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Util.toStringHtml(cContent.m_cUser.m_strNickName)));
 		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
-			strRtn.append(String.format("<span id=\"UserInfoCmdFollow\" class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d, %d)\">%s</span>",
+			strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d, %d)\">%s</span>",
 					cContent.m_nUserId,
 					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
 					nLoginUserId,

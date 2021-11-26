@@ -3123,6 +3123,7 @@ Decoration
 }
 /*********** DetailV ********************/
 
+/*********** フォロー促し *************/
 .EncourageFollowUp {
 	border-top: solid 1px #eee;
 	float: left;
@@ -3137,3 +3138,4 @@ Decoration
 .EncourageFollowUp > .UserInfoCmdFollow {
 	float: right;
 }
+/*********** フォロー促し *************/
