@@ -30,7 +30,12 @@
 							elCheerNowPayment.hide();
 						}
 					}
-					$("#EncourageFollowUp_" + emojiInfo.contentId).show(500);
+
+					const $UserInfoCmdFollow = $("#IllustItem_" + emojiInfo.contentId + " > .IllustItemUser .UserInfoCmdFollow");
+					if ($UserInfoCmdFollow.length > 0 && !$UserInfoCmdFollow.hasClass("Selected")) {
+						$("#EncourageFollowUp_" + emojiInfo.contentId).show(500);
+					}
+
 				} else {
 					switch (data.error_code) {
 						case -10:

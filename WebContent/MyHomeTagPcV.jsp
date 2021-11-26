@@ -38,29 +38,6 @@ cResults.getResults(checkLogin);
 		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 
 		<script>
-			function UpdateFollow(nUserId, nFollowUserId) {
-				$.ajaxSingle({
-					"type": "post",
-					"data": { "UID": nUserId, "IID": nFollowUserId },
-					"url": "/f/UpdateFollowF.jsp",
-					"dataType": "json",
-					"success": function(data) {
-						if(data.result===1) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).addClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Following")%>");
-						} else if(data.result===2) {
-							$('.UserInfoCmdFollow_'+nFollowUserId).removeClass('Selected');
-							$('.UserInfoCmdFollow_'+nFollowUserId).html("<%=_TEX.T("IllustV.Follow")%>");
-						} else {
-							DispMsg('フォローできませんでした');
-						}
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
-
 			let lastContentId = -1;
 			let page = 0;
 
@@ -134,7 +111,6 @@ cResults.getResults(checkLogin);
 
 				htmlCache.pull(restoreContents, initContents);
 			});
-
 		</script>
 
 		<style>

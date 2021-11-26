@@ -319,6 +319,29 @@ function UpdateDesc(nUserId, content_id, mode) {
 	});
 }
 
+function UpdateFollowUser(userId, followUserId) {
+	$.ajaxSingle({
+		"type": "post",
+		"data": { "UID": userId, "IID": followUserId },
+		"url": "/f/UpdateFollowUserF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			const $UserInfoCmdFollow = $('.UserInfoCmdFollow_'+followUserId);
+			if(data.result===1) {
+				$UserInfoCmdFollow.addClass('Selected');
+			} else if(data.result===2) {
+				$UserInfoCmdFollow.removeClass('Selected');
+			} else {
+				DispMsg(data.err_msg);
+			}
+			$UserInfoCmdFollow.html(data.btn_label);
+		},
+		"error": function(req, stat, ex){
+			DispMsg('Connection error');
+		}
+	});
+}
+
 function UpdateFollowGenre(userId, genreId) {
 	$.ajaxSingle({
 		"type": "post",
