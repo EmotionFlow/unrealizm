@@ -935,7 +935,7 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 				document.addEventListener('mousewheel', detailToucheMoveHandler, { passive: false });
 				detailOverlay.addEventListener('scroll', detailScrollHandler, { passive: false });
 			} else {
-				switch (data.errorCode) {
+				switch (data.error_code) {
 					case -1:
 						location.href = 'StartPoipikuPcV.jsp';
 						break;
