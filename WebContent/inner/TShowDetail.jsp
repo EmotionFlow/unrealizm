@@ -13,7 +13,7 @@
 
 <script type="text/javascript">
 	function DispNeedLoginMsg() {
-		DispMsg("<%=_TEX.T("Common.NeedLogin")%>");
+		DispMsg("<%=_TEX.T("ShowDetail.NeedLogin")%>", 3000);
 	}
 	function DispUnknownErrorMsg() {
 		DispMsg("<%=_TEX.T("Common.Error.ERR_UNKNOWN")%>");
