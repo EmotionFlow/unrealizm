@@ -327,9 +327,9 @@ function UpdateFollowUser(userId, followUserId) {
 		"dataType": "json",
 		"success": function(data) {
 			const $UserInfoCmdFollow = $('.UserInfoCmdFollow_'+followUserId);
-			if(data.result===1) {
+			if (data.result === 1) {
 				$UserInfoCmdFollow.addClass('Selected');
-			} else if(data.result===2) {
+			} else if (data.result === 2) {
 				$UserInfoCmdFollow.removeClass('Selected');
 			} else {
 				DispMsg(data.err_msg);
@@ -395,13 +395,13 @@ function UpdateBookmark(user_id, content_id) {
 		"url": "/api/UpdateBookmarkF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			if(data.result==0) {
-				$('#IllustItemBookmarkBtn_'+content_id).removeClass('Selected');
-			} else if(data.result==1) {
-				$('#IllustItemBookmarkBtn_'+content_id).addClass('Selected');
-			} else if(data.result==2) { // UpdateBookmarkC.BOOKMARK_LIMIT
+			if (data.result === 0) {
+				$('#IllustItemBookmarkBtn_' + content_id).removeClass('Selected');
+			} else if (data.result === 1) {
+				$('#IllustItemBookmarkBtn_' + content_id).addClass('Selected');
+			} else if (data.result === 2) { // UpdateBookmarkC.BOOKMARK_LIMIT
 				DispMsg(data.msg);
-			} else if(data.result==-2) { // UpdateBookmarkC.USER_INVALID
+			} else if (data.result === -2) { // UpdateBookmarkC.USER_INVALID
 				DispMsg(data.msg);
 			}
 		},
