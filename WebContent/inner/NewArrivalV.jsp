@@ -94,18 +94,16 @@ if(cResults.categoryId >= 0) {
 
 
 		</script>
-		<style>
-			body {padding-top: 79px !important;}
-		</style>
+		<%if (!isApp) {%>
+		<style>body {padding-top: 79px !important;}</style>
+		<%} else {%>
+		<style>body {padding-top: 0 !important;}</style>
+		<%}%>
 	</head>
 
 	<body>
 		<%if (!isApp) {%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
-		<%} else {%>
-		<%@ include file="/inner/TMenuApp.jsp"%>
-		<%}%>
-
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
 				<li><a class="TabMenuItem Selected" href="/NewArrivalPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Recent")%></a></li>
@@ -114,6 +112,7 @@ if(cResults.categoryId >= 0) {
 				<li><a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
 			</ul>
 		</nav>
+		<%}%>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
