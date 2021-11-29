@@ -14,16 +14,23 @@ cResults.getParam(request);
 cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 
-String description = _TEX.T("THeader.Title.Desc");
-String categoryName = _TEX.T("Category.All");
-String categoryInfo = "";
-if(cResults.m_nCategoryId >= 0) {
-	categoryName = _TEX.T(String.format("Category.C%d", cResults.m_nCategoryId));
-	categoryInfo = _TEX.T(String.format("Category.C%d.Info", cResults.m_nCategoryId)).trim();
+final String description;
+final String categoryName;
+final String categoryInfo;
+if(cResults.categoryId >= 0) {
+	categoryName = _TEX.T(String.format("Category.C%d", cResults.categoryId));
+	categoryInfo = _TEX.T(String.format("Category.C%d.Info", cResults.categoryId)).trim();
 	if(!categoryInfo.isEmpty()) {
 		description = categoryInfo;
+	} else {
+		description = _TEX.T("THeader.Title.Desc");
 	}
+} else {
+	categoryName = _TEX.T("Category.All");
+	categoryInfo = "";
+	description = _TEX.T("THeader.Title.Desc");
 }
+
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -71,21 +78,21 @@ if(cResults.m_nCategoryId >= 0) {
 			<%}%>
 
 			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_nCategoryId<0){%> Selected<%}%>" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
+				<a class="BtnBase CategoryBtn <%if(cResults.categoryId<0){%> Selected<%}%>" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.m_nCategoryId){%> Selected<%}%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
+				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.categoryId){%> Selected<%}%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>
 				<%}%>
 			</nav>
 
-			<%if(!categoryInfo.isEmpty() && cResults.m_nPage<=0) {%>
+			<%if(!categoryInfo.isEmpty() && cResults.page <=0) {%>
 			<header class="CategoryInfo">
 				<%=categoryInfo%>
 			</header>
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
+					CContent cContent = cResults.contentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
@@ -93,7 +100,7 @@ if(cResults.m_nCategoryId >= 0) {
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/NewArrivalPcV.jsp", String.format("&CD=%d", cResults.m_nCategoryId), cResults.m_nPage, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
+				<%=CPageBar.CreatePageBarSp("/NewArrivalPcV.jsp", String.format("&CD=%d", cResults.categoryId), cResults.page, cResults.contentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 
