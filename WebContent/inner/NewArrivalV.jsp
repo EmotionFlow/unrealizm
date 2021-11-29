@@ -34,7 +34,12 @@ if(cResults.categoryId >= 0) {
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
+		<%if(!isApp){%>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%}else{%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%}%>
+
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<meta name="description" content="<%=Util.toStringHtml(Util.deleteCrLf(description))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%>(<%=categoryName%>)</title>
