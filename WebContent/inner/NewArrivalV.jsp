@@ -112,6 +112,8 @@ if(cResults.categoryId >= 0) {
 				<li><a class="TabMenuItem" href="/PopularIllustListPcV.jsp"><%=_TEX.T("THeader.Menu.Home.Popular")%></a></li>
 			</ul>
 		</nav>
+		<%} else {%>
+		<%@ include file="/inner/TMenuApp.jsp"%>
 		<%}%>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
