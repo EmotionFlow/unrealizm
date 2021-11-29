@@ -35,9 +35,7 @@ public class MyHomeC {
 					lastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
 				}
 			}
-		} catch(Exception ignored) {
-			;
-		}
+		} catch(Exception ignored) {}
 	}
 
 

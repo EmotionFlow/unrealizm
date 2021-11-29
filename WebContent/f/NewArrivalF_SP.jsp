@@ -116,8 +116,8 @@ NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
 boolean bRtn = cResults.getResults(checkLogin, true);
 %>
-<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CContent cContent = cResults.m_vContentList.get(nCnt);%>
+<%for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
+	CContent cContent = cResults.contentList.get(nCnt);%>
 	<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 <%}%>
 <%@ include file="/inner/TAd336x280_mid.jsp"%>

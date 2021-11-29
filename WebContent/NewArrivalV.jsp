@@ -2,5 +2,4 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 getServletContext().getRequestDispatcher("/NewArrivalAppV.jsp").forward(request,response);
-return;
 %>
