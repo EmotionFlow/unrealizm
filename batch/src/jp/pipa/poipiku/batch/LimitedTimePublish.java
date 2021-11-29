@@ -177,7 +177,7 @@ public class LimitedTimePublish extends Batch {
 				sb.append("SELECT u.nickname, a.fldaccesstoken, a.fldsecrettoken, c.*")
 						.append(" FROM (tbloauth a JOIN contents_0000 c ON c.user_id=a.flduserid) JOIN users_0000 u ON c.user_id=u.user_id")
 						.append(" WHERE c.content_id IN(").append(strPublishContentIds).append(")")
-						.append(" AND mod(c.tweet_when_published, 2)==1 AND a.fldproviderid=1 AND a.fldaccesstoken IS NOT NULL AND a.fldsecrettoken IS NOT NULL AND a.del_flg=false");
+						.append(" AND mod(c.tweet_when_published, 2)=1 AND a.fldproviderid=1 AND a.fldaccesstoken IS NOT NULL AND a.fldsecrettoken IS NOT NULL AND a.del_flg=false");
 				strSql = new String(sb);
 				cState = cConn.prepareStatement(strSql);
 				cResSet = cState.executeQuery();
