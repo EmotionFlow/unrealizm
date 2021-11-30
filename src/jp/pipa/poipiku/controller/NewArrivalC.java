@@ -101,7 +101,7 @@ public final class NewArrivalC {
 			if (!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);
 			if (!strCondCat.isEmpty()) statement.setInt(idx++, categoryId);
 			if (!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
-			statement.setInt(idx++, page * selectMaxGallery);
+			statement.setInt(idx++, startId > 0 ? 0 :page * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {

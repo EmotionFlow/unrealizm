@@ -59,7 +59,6 @@ if(cResults.categoryId >= 0) {
 			appendTo: "#IllustItemList",
 			className: "loadingSpinner",
 		}
-		const htmlCache = new CacheApiHtmlCache(CURRENT_CACHES_INFO.MyHomeContents, <%=checkLogin.m_nUserId%>);
 		const observer = createIntersectionObserver(addContents);
 
 		function addContents(){
@@ -71,10 +70,8 @@ if(cResults.categoryId >= 0) {
 				"url": "/<%=isApp?"api":"f"%>/NewArrivalF.jsp",
 			}).then((data) => {
 				page++;
-				htmlCache.header.page = page;
 				if (data.end_id > 0) {
 					lastContentId = data.end_id;
-					htmlCache.header.lastContentId = lastContentId;
 					const contents = document.getElementById('IllustItemList');
 					$(contents).append(data.html);
 					observer.observe(contents.lastElementChild);
@@ -86,8 +83,6 @@ if(cResults.categoryId >= 0) {
 		}
 
 		function initContents(){
-			$(window).scrollTop(0);
-			$(".ThumbListHeader").show();
 			addContents();
 		}
 
