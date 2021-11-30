@@ -6,6 +6,7 @@ if(!checkLogin.m_bLogin) return;
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 NewArrivalC cResults = new NewArrivalC();
+cResults.selectMaxGallery = 30;
 cResults.getParam(request);
 cResults.getResults(checkLogin);
 
@@ -19,17 +20,8 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	CContent cContent = cResults.contentList.get(nCnt);
 	sbHtml.append(CCnv.Content2Html(cContent, checkLogin.m_nUserId, cResults.mode, _TEX, vResult, cResults.viewMode, nSpMode));
 
-	if (cResults.page == 1) {
-		if (nCnt == 5 && bSmartPhone){
-			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
-		}
-	} else {
-		if ((nCnt == 2 || nCnt == 7) && bSmartPhone){
-			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
-		}
+	if ((nCnt == 2 || nCnt == 7 || nCnt == 12 || nCnt == 17 || nCnt == 22 || nCnt == 27) && bSmartPhone){
+		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
 	}
-}
-if (nCnt < 7 && bSmartPhone){
-	sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
 }
 %>{"end_id":<%=cResults.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}

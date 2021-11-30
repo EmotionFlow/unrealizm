@@ -11,7 +11,6 @@ if(!bSmartPhone) {
 
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
-cResults.selectMaxGallery = 45;
 
 final String description;
 final String categoryName;
