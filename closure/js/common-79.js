@@ -915,15 +915,14 @@ function createDetailScrollHandler(detailOverlay) {
 }
 
 function detailIllustItemImageOnload(el) {
-	if (el.height < screen.height) {
-		const newHeight = screen.height - el.height + 100;
-		document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
-		detailOverlay.scrollTop = 50;
-	} else {
-		const newHeight = el.height + 100;
-		document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
-		detailOverlay.scrollTop = 1;
+	let isHorizontal = false;
+	let newHeight = el.height + 100;
+	if (newHeight < screen.height) {
+		isHorizontal = true;
+		newHeight = screen.height + 100;
 	}
+	document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
+	detailOverlay.scrollTop = isHorizontal ? 50 : 1;
 }
 
 function _showIllustDetail(ownerUserId, contentId, appendId) {
