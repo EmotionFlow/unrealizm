@@ -915,9 +915,9 @@ function createDetailScrollHandler(detailOverlay) {
 }
 
 function detailIllustItemImageOnload(el) {
-	const newHeight = el.clientHeight + 100;
+	const newHeight = screen.height - el.height + 110;
 	document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
-	detailOverlay.scrollTop = 1;
+	detailOverlay.scrollTop = 55;
 }
 
 function _showIllustDetail(ownerUserId, contentId, appendId) {
