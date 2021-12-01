@@ -90,7 +90,9 @@ if(cResults.categoryId >= 0) {
 			updateCategoryMenuPos(0);
 			initContents();
 		});
-
+		$(document).ready(function(){
+			$('html,body').animate({ scrollTop: 0 }, 500);
+		});
 
 		</script>
 		<%if (!isApp) {%>
