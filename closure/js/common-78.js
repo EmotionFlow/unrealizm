@@ -915,9 +915,15 @@ function createDetailScrollHandler(detailOverlay) {
 }
 
 function detailIllustItemImageOnload(el) {
-	const newHeight = screen.height - el.height + 110;
-	document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
-	detailOverlay.scrollTop = 55;
+	if (el.height < screen.height) {
+		const newHeight = screen.height - el.height + 100;
+		document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
+		detailOverlay.scrollTop = 50;
+	} else {
+		const newHeight = el.height + 100;
+		document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
+		detailOverlay.scrollTop = 1;
+	}
 }
 
 function _showIllustDetail(ownerUserId, contentId, appendId) {
