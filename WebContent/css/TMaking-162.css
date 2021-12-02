@@ -2383,6 +2383,29 @@ Decoration
 	margin-top: 6px;
 }
 
+#IllustViewGoLatestBtn {
+	width: 240px;
+	height: 22px;
+	display: block;
+	position: fixed;
+	top: 0;
+	left: calc(50% - 240px/2);
+	background: rgba(52,152,218,0.9);
+	padding: 4px;
+	text-align: center;
+	border: solid 1px #fff;
+	border-radius: 20px;
+	z-index: 100;
+}
+
+hr.IllustItemListSeparator {
+	border: 0;
+	height: 2px;
+	background-image: -webkit-linear-gradient(left, #3498da, #ecf5fb, #3498da);                    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+	background-image: -ms-linear-gradient(left, #3498da, #ecf5fb, #3498da);
+	background-image: -o-linear-gradient(left, #3498da, #ecf5fb, #3498da);
+}
+
 /*********** IllustView UserInfo **********/
 .UserInfo {
 	display: block;

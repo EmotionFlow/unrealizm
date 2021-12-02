@@ -233,22 +233,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
-		<style>
-			#IllustViewGoLatestBtn {
-                width: 240px;
-                height: 22px;
-                display: block;
-                position: fixed;
-                top: 0;
-                left: calc(50% - 240px/2);
-                background: rgba(52,152,218,0.9);
-                padding: 4px;
-                text-align: center;
-                border: solid 1px #fff;
-                border-radius: 20px;
-				z-index: 100;
-			}
-		</style>
 		<div id="IllustViewGoLatestBtn" style="display: none;">
 			<a href="/<%=cResults.ownerUserId%>/latest.html">
 				<i class="fas fa-arrow-up"></i> <%=_TEX.T("IllustView.GoLatestBtn")%>
@@ -303,21 +287,12 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 			<section id="IllustItemList" class="IllustItemList">
 				<%= CCnv.Content2Html(cResults.m_cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL)%>
-				<style>
-				hr.style14 {
-                    border: 0;
-                    height: 2px;
-                    background-image: -webkit-linear-gradient(left, #3498da, #ecf5fb, #3498da);                    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
-                    background-image: -ms-linear-gradient(left, #3498da, #ecf5fb, #3498da);
-                    background-image: -o-linear-gradient(left, #3498da, #ecf5fb, #3498da);
-                }
-				</style>
 				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin-bottom: 17px;">
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>
 				</span>
 				<%}%>
-				<hr class="style14">
+				<hr class="IllustItemListSeparator">
 			</section>
 
 			<%//@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
