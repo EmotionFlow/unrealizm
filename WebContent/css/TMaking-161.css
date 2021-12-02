@@ -3116,9 +3116,7 @@ Decoration
 }
 
 #DetailOverlayInner{
-	padding-top: 50px;
-	padding-bottom: 100px;
-	height: auto;
+	height: 100px;
 	overflow: scroll;
 }
 /*********** DetailV ********************/

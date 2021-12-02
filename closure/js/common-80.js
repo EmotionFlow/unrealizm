@@ -897,7 +897,9 @@ function createDetailToucheMoveHandler(detailOverlay) {
 			&& detailOverlay.scrollTop + detailOverlay.clientHeight !== detailOverlay.scrollHeight) {
 			event.stopPropagation();
 		} else {
-			event.preventDefault();
+			if(event.cancelable){
+				event.preventDefault();
+			}
 		}
 	}
 }
@@ -915,14 +917,21 @@ function createDetailScrollHandler(detailOverlay) {
 }
 
 function detailIllustItemImageOnload(el) {
-	let isHorizontal = false;
-	let newHeight = el.height + 100;
+	let newHeight = el.height + 150;
 	if (newHeight < screen.height) {
-		isHorizontal = true;
-		newHeight = screen.height + 100;
+		newHeight = screen.height + 150;
 	}
+
+	const marginTop = (newHeight - el.height) / 2;
+
 	document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
-	detailOverlay.scrollTop = isHorizontal ? 50 : 1;
+
+	if (el.height < screen.height - 100) {
+		// 画像がヘッダを除く表示部分に収まるなら中央に配置する
+		detailOverlay.scrollTop = 100;
+	} else {
+		detailOverlay.scrollTop = 25;
+	}
 }
 
 function _showIllustDetail(ownerUserId, contentId, appendId) {
