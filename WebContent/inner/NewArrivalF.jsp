@@ -2,7 +2,6 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-if(!checkLogin.m_bLogin) return;
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 NewArrivalC cResults = new NewArrivalC();

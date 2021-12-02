@@ -81,7 +81,9 @@ public final class NewArrivalC {
 				contentsNum = 9999;
 			}
 
-			sql = "SELECT contents_0000.*, follows_0000.follow_user_id FROM contents_0000 "
+			sql = "SELECT contents_0000.* "
+					+ (checkLogin.m_bLogin ? ",follows_0000.follow_user_id " : "")
+					+ "FROM contents_0000 "
 					+ (checkLogin.m_bLogin ?  "LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " : "")
 					+ "WHERE open_id=0 AND publish_id NOT IN (4,7,8,9,10) "
 					+ "AND safe_filter<=? "
@@ -111,7 +113,11 @@ public final class NewArrivalC {
 				content.m_cUser.m_nReaction	= user.reaction;
 				content.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
 				content.m_cUser.m_strFileName = Util.toString(user.fileName);
-				content.m_cUser.m_nFollowing = (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				if (checkLogin.m_bLogin) {
+					content.m_cUser.m_nFollowing = (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				} else {
+					content.m_cUser.m_nFollowing = CUser.FOLLOW_NONE;
+				}
 				lastContentId = content.m_nContentId;
 				contentList.add(content);
 			}
