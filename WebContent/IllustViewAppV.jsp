@@ -13,11 +13,11 @@ IllustViewPcC cResults = new IllustViewPcC();
 cResults.getParam(request);
 if(!cResults.getResults(checkLogin)) {
 	if (cResults.m_bBlocked || cResults.m_bBlocking) {
-		response.sendRedirect(String.format("/IllustListAppV.jsp?ID=%d", cResults.m_nUserId));
-	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.m_nContentId) {
+		response.sendRedirect(String.format("/IllustListAppV.jsp?ID=%d", cResults.ownerUserId));
+	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.contentId) {
 		response.sendRedirect("/NotFoundV.jsp");
 	} else {
-		response.sendRedirect(Common.GetPoipikuUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.m_nUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(Common.GetPoipikuUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.ownerUserId, cResults.m_nNewContentId)));
 	}
 	return;
 }
@@ -188,19 +188,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper GridList">
 			<section id="IllustItemList" class="IllustItemList Related">
-				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
-					<div class="IllustItem ">
-						<div class="IllustItemUser">
-							<a class="IllustItemUserThumb" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
-							<h2 class="IllustItemUserName">
-								<a href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%=Util.toStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
-							</h2>
-							<span id="UserInfoCmdFollow"
-								class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> <%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?" Selected":""%>"
-								onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=(cResults.m_cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")%></span>
-						</div>
-					</div>
-				</header>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>

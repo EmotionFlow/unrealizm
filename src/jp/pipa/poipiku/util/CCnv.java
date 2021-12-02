@@ -31,8 +31,6 @@ public final class CCnv {
 		String s = "";
 		if(nSpMode==SP_MODE_APP){
 			s = "/IllustDetailV.jsp";
-		}else if(nMode==MODE_SP){
-			s = "/IllustDetailPcV.jsp";
 		}else{
 			s = "/IllustDetailPcV.jsp";
 		}
@@ -43,8 +41,6 @@ public final class CCnv {
 		String s = "";
 		if(nSpMode==SP_MODE_APP){
 			s = "/NewArrivalAppV.jsp";
-		}else if(nMode==MODE_SP){
-			s = "/NewArrivalPcV.jsp";
 		}else{
 			s = "/NewArrivalPcV.jsp";
 		}
@@ -54,8 +50,6 @@ public final class CCnv {
 		String s = "";
 		if(nSpMode==SP_MODE_APP){
 			s = String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId);
-		}else if(nMode==MODE_SP){
-			s = String.format("/IllustViewPcV.jsp?ID=%d&TD=%d", cContent.m_nUserId, cContent.m_nContentId);
 		}else{
 			s = String.format("/%d/%d.html", cContent.m_nUserId, cContent.m_nContentId);
 		}

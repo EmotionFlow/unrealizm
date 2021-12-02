@@ -10,17 +10,17 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public final class IllustViewPcC {
-	public int m_nUserId = -1;
-	public int m_nContentId = -1;
+	public int ownerUserId = -1;
+	public int contentId = -1;
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
-			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
-			m_nContentId	= Util.toInt(cRequest.getParameter("TD"));
 			m_bIsBot        = Util.isBot(cRequest);
+			ownerUserId = Util.toInt(cRequest.getParameter("ID"));
+			contentId = Util.toInt(cRequest.getParameter("TD"));
 		} catch(Exception e) {
-			m_nContentId = -1;
+			contentId = -1;
 		}
 	}
 
@@ -58,6 +58,7 @@ public final class IllustViewPcC {
 	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<>();
 	public ArrayList<CContent> m_vRecommendedList = new ArrayList<>();
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
+	public int latestContentId = -1;
 	public CUser m_cUser = new CUser();
 	public CContent m_cContent = new CContent();
 	public boolean m_bOwner = false;
@@ -75,32 +76,43 @@ public final class IllustViewPcC {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		String strSql = "";
+		String sql = "";
 		int idx = 1;
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			// owner
-			if(m_nUserId == checkLogin.m_nUserId) {
-				m_bOwner = true;
-			} else {
+			m_bOwner = (ownerUserId == checkLogin.m_nUserId);
+
+			sql = "SELECT max(content_id) FROM contents_0000 WHERE user_id=?"
+					+ (!m_bOwner ? " AND open_id<>2" : "");
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, ownerUserId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				latestContentId = resultSet.getInt(1);
+			}
+
+			if (contentId <= 0) contentId = latestContentId;
+
+			if (!m_bOwner) {
 				Request poipikuRequest = new Request();
-				poipikuRequest.selectByContentId(m_nContentId, connection);
+				poipikuRequest.selectByContentId(contentId, connection);
 				m_bRequestClient = (poipikuRequest.clientUserId == checkLogin.m_nUserId);
 			}
 
 			// content main
 			final String strOpenCnd = (!m_bOwner && !m_bRequestClient)?" AND open_id<>2":"";
 
-			strSql = "SELECT c.*, r.id request_id FROM contents_0000 c" +
+			sql = "SELECT c.*, r.id request_id FROM contents_0000 c" +
 					 " LEFT JOIN requests r ON r.content_id=c.content_id " +
 					 " WHERE c.user_id=? AND c.content_id=? " + strOpenCnd;
 
-			statement = connection.prepareStatement(strSql);
+			statement = connection.prepareStatement(sql);
 			idx = 1;
-			statement.setInt(idx++, m_nUserId);
-			statement.setInt(idx++, m_nContentId);
+			statement.setInt(idx++, ownerUserId);
+			statement.setInt(idx++, contentId);
 			resultSet = statement.executeQuery();
 			boolean bContentExist = false;
 			if(resultSet.next()) {
@@ -113,15 +125,15 @@ public final class IllustViewPcC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 			if(!bContentExist){
-				m_nNewContentId = searchContentIdHistory(connection, m_nContentId);
+				m_nNewContentId = searchContentIdHistory(connection, contentId);
 				return false;
 			}
 
 			// author profile
-			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
-			statement = connection.prepareStatement(strSql);
+			sql = "SELECT * FROM users_0000 WHERE user_id=?";
+			statement = connection.prepareStatement(sql);
 			idx = 1;
-			statement.setInt(idx++, m_nUserId);
+			statement.setInt(idx++, ownerUserId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				m_cUser.m_nUserId			= resultSet.getInt("user_id");
@@ -143,10 +155,10 @@ public final class IllustViewPcC {
 			statement.close();statement=null;
 
 			if(m_cUser.m_strHeaderFileName.isEmpty()) {
-				strSql = "SELECT file_name FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
-				statement = connection.prepareStatement(strSql);
+				sql = "SELECT file_name FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
+				statement = connection.prepareStatement(sql);
 				idx = 1;
-				statement.setInt(idx++, m_nUserId);
+				statement.setInt(idx++, ownerUserId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
 					m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("file_name")) + "_640.jpg";
@@ -157,22 +169,22 @@ public final class IllustViewPcC {
 				m_cUser.m_strHeaderFileName += "_640.jpg";
 			}
 
-			if(!m_bOwner) {
+			if(checkLogin.m_bLogin &&  !m_bOwner) {
 				// blocking
-				strSql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
-				statement = connection.prepareStatement(strSql);
+				sql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
-				statement.setInt(2, m_nUserId);
+				statement.setInt(2, ownerUserId);
 				resultSet = statement.executeQuery();
 				m_bBlocking = resultSet.next();
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 
 				// blocked
-				strSql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
-				statement = connection.prepareStatement(strSql);
+				sql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
+				statement = connection.prepareStatement(sql);
 				idx = 1;
-				statement.setInt(1, m_nUserId);
+				statement.setInt(1, ownerUserId);
 				statement.setInt(2, checkLogin.m_nUserId);
 				resultSet = statement.executeQuery();
 				m_bBlocked = resultSet.next();
@@ -181,9 +193,9 @@ public final class IllustViewPcC {
 			}
 
 			// User contents total number
-			strSql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=? " + strOpenCnd;
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_nUserId);
+			sql = "SELECT COUNT(*) FROM contents_0000 WHERE user_id=? " + strOpenCnd;
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, ownerUserId);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				m_nContentsNumTotal = resultSet.getInt(1);
@@ -197,12 +209,12 @@ public final class IllustViewPcC {
 
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
-			if(m_nUserId != checkLogin.m_nUserId) {
-				strSql = "SELECT 1 FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
-				statement = connection.prepareStatement(strSql);
+			if(ownerUserId != checkLogin.m_nUserId) {
+				sql = "SELECT 1 FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
+				statement = connection.prepareStatement(sql);
 				idx = 1;
 				statement.setInt(idx++, checkLogin.m_nUserId);
-				statement.setInt(idx++, m_nUserId);
+				statement.setInt(idx++, ownerUserId);
 				resultSet = statement.executeQuery();
 				m_bFollow = resultSet.next();
 				m_nFollow = (m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
@@ -216,17 +228,6 @@ public final class IllustViewPcC {
 			}
 			m_cContent.m_cUser.m_nFollowing = m_nFollow;
 
-			// Each append image
-			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id LIMIT 1000";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_cContent.m_nContentId);
-			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				m_cContent.m_vContentAppend.add(new CContentAppend(resultSet));
-			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-
 			// Emoji
 			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
 				m_cContent.m_strCommentsListsCache = GridUtil.getComment(connection, m_cContent);
@@ -234,8 +235,8 @@ public final class IllustViewPcC {
 
 			// Bookmark
 			if(checkLogin.m_bLogin) {
-				strSql = "SELECT 1 FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
-				statement = connection.prepareStatement(strSql);
+				sql = "SELECT 1 FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
+				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
 				statement.setInt(2, m_cContent.m_nContentId);
 				resultSet = statement.executeQuery();
@@ -249,7 +250,7 @@ public final class IllustViewPcC {
 			if(!m_bIsBot) {
 				// Owner Contents
 				if(SELECT_MAX_GALLERY>0) {
-					m_vContentList = RelatedContents.getUserContentList(m_nUserId, SELECT_MAX_GALLERY, checkLogin, connection);
+					m_vContentList = RelatedContents.getUserContentList(ownerUserId, SELECT_MAX_GALLERY, checkLogin, connection);
 				}
 
 				// Related Contents
@@ -268,7 +269,7 @@ public final class IllustViewPcC {
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
