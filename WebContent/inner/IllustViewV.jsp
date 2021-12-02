@@ -297,49 +297,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 			<%//@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 
-			<section id="IllustItemListRelatedUser" class="IllustItemList Related User">
-				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0; float: none;">
-					<div class="IllustItem" style="background: rgba(255,255,255,0.90); margin: 0; width: 100%; border: none; border-radius: 0; min-height: auto;">
-						<div class="IllustItemUser" style="padding: 6px 8px 6px 8px;">
-							<a class="IllustItemUserThumb" href="/<%=cResults.m_cUser.m_nUserId%>/" style="background-image: url('<%=Common.GetUrl(cResults.m_cContent.m_cUser.m_strFileName)%>_120.jpg')"></a>
-							<h2 class="IllustItemUserName">
-								<a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=Util.toStringHtml(cResults.m_cContent.m_cUser.m_strNickName)%></a>
-							</h2>
-							<%@ include file="TFollowButton.jsp"%>
-						</div>
-					</div>
-				</header>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-				<%}%>
-			</section>
 		</article>
-
-		<%if(!cResults.m_vRelatedContentList.isEmpty()) {%>
-		<%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%>
-		<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Related")%></h2>
-		<article class="Wrapper GridList">
-			<section class="IllustItemList Related Tag">
-				<%for(CContent cContent: cResults.m_vRelatedContentList) {%>
-				<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-				<%}%>
-			</section>
-		</article>
-		<%}%>
-
-		<%if (cResults.m_vRecommendedList.size() > 0) {%>
-		<h2 class="IllustItemListRelatedTitle"><%=_TEX.T("IllustV.Recommended")%></h2>
-		<article class="Wrapper GridList">
-			<section class="IllustItemList Related Tag">
-				<%for(CContent cContent: cResults.m_vRecommendedList) {%>
-				<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-				<%}%>
-			</section>
-		</article>
-		<%}%>
 
 		<%@ include file="/inner/TShowDetail.jsp"%>
-		<%@ include file="/inner/TFooterSingleAd.jsp"%>
+		<%@ include file="/inner/TFooterBase.jsp"%>
 	</body>
 </html>
