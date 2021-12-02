@@ -917,6 +917,8 @@ function createDetailScrollHandler(detailOverlay) {
 }
 
 function detailIllustItemImageOnload(el) {
+	$("#DetailOverlayLoading").hide();
+
 	let newHeight = el.height + 150;
 	if (newHeight < screen.height) {
 		newHeight = screen.height + 150;
@@ -945,6 +947,7 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 			if (data.result === 1) {
 				$("#DetailOverlayInner").html(data.html);
 				detailOverlay.classList.add('overlay-on');
+				$("#DetailOverlayLoading").show();
 				document.addEventListener('touchmove', detailToucheMoveHandler, { passive: false });
 				document.addEventListener('mousewheel', detailToucheMoveHandler, { passive: false });
 				detailOverlay.addEventListener('scroll', detailScrollHandler, { passive: false });

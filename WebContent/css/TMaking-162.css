@@ -2996,6 +2996,48 @@ Decoration
 	animation-delay: -0.8s;
 }
 
+/** for ShowDetail **/
+.loadingSpinner2 {
+	display: block;
+	float: left;
+	margin: 100px auto;
+	width: 100%;
+	height: 40px;
+	text-align: center;
+	font-size: 10px;
+}
+
+.loadingSpinner2 > div {
+	background-color: #cafaff96;
+	height: 100%;
+	width: 7px;
+	display: inline-block;
+	margin: 0 1px;
+	-webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+	animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.loadingSpinner2 .rect2 {
+	-webkit-animation-delay: -1.1s;
+	animation-delay: -1.1s;
+}
+
+.loadingSpinner2 .rect3 {
+	-webkit-animation-delay: -1.0s;
+	animation-delay: -1.0s;
+}
+
+.loadingSpinner2 .rect4 {
+	-webkit-animation-delay: -0.9s;
+	animation-delay: -0.9s;
+}
+
+.loadingSpinner2 .rect5 {
+	-webkit-animation-delay: -0.8s;
+	animation-delay: -0.8s;
+}
+
+
 @-webkit-keyframes sk-stretchdelay {
 	0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
 	20% { -webkit-transform: scaleY(1.0) }
@@ -3010,6 +3052,11 @@ Decoration
 			-webkit-transform: scaleY(1.0);
 		}
 }
+
+.ImageLoadingSpinner {
+	background-image: url("/img/loading.gif");
+}
+
 /*********** Loading Spinner ************/
 
 /*********** DetailV ********************/

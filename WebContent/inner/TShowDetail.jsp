@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="DetailOverlay">
+	<div id="DetailOverlayLoading" class="loadingSpinner2"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>
 	<%// バツ印アイコン%>
 	<div class="DetailOverlayHeader"><div id="DetailOverlayClose" class="DetailOverlayClose">
 		<svg x="0px" y="0px" viewBox="0 0 512 512" style="width: 15px; height: 15px; opacity: 1;" xml:space="preserve">
