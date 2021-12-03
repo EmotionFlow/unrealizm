@@ -10,7 +10,13 @@ if(!bSmartPhone) {
 }
 
 NewArrivalC cResults = new NewArrivalC();
+cResults.selectMaxGallery = 10;
 cResults.getParam(request);
+cResults.getResults(checkLogin);
+
+ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+
+final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 final String description;
 final String categoryName;
@@ -83,7 +89,8 @@ if(cResults.categoryId >= 0) {
 		}
 
 		function initContents(){
-			addContents();
+			const contents = document.getElementById('IllustItemList');
+			observer.observe(contents.lastElementChild);
 		}
 
 		$(function(){
@@ -140,7 +147,14 @@ if(cResults.categoryId >= 0) {
 			</header>
 			<%}%>
 
-			<section id="IllustItemList" class="IllustItemList"></section>
+			<section id="IllustItemList" class="IllustItemList">
+				<% for (int cnt=0; cnt<cResults.contentList.size(); cnt++) { %>
+					<%=CCnv.Content2Html(cResults.contentList.get(cnt), checkLogin.m_nUserId, cResults.mode, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
+					<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
+						<%=Util.poipiku_336x280_sp_mid(checkLogin)%>
+					<%}%>
+				<%}%>
+			</section>
 		</article>
 
 		<%@ include file="/inner/TShowDetail.jsp"%>
