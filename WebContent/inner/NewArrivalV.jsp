@@ -58,7 +58,7 @@ if(cResults.categoryId >= 0) {
 			$('#MenuRecent').addClass('Selected');
 		});
 
-		let lastContentId = -1;
+		let lastContentId = <%=cResults.contentList.size()>0 ? cResults.contentList.get(cResults.contentList.size()-1).m_nContentId : -1%>;
 		let page = 0;
 
 		const loadingSpinner = {
