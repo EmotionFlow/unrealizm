@@ -10,8 +10,10 @@ if(!bSmartPhone) {
 }
 
 IllustViewPcC cResults = new IllustViewPcC();
-cResults.SELECT_MAX_GALLERY = 6;
 cResults.getParam(request);
+cResults.selectMaxGallery = 0;
+cResults.selectMaxRelatedGallery = 0;
+cResults.selectMaxRecommendedGallery = 0;
 
 if(!cResults.getResults(checkLogin)) {
 	if (cResults.m_bBlocked || cResults.m_bBlocking) {
@@ -141,7 +143,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				appendTo: "#IllustItemList",
 				className: "loadingSpinner",
 			}
-			const observer = createIntersectionObserver(addContents);
+			const observer = createIntersectionObserver(addContents, {threshold: 0.5});
 
 			function addContents(){
 				appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);

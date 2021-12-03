@@ -51,9 +51,9 @@ public final class IllustViewPcC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 9;
-	public int SELECT_MAX_RELATED_GALLERY = 9;
-	public int SELECT_MAX_RECOMMENDED_GALLERY = 9;
+	public int selectMaxGallery = 9;
+	public int selectMaxRelatedGallery = 9;
+	public int selectMaxRecommendedGallery = 9;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public ArrayList<CContent> m_vRelatedContentList = new ArrayList<>();
 	public ArrayList<CContent> m_vRecommendedList = new ArrayList<>();
@@ -249,20 +249,20 @@ public final class IllustViewPcC {
 
 			if(!m_bIsBot) {
 				// Owner Contents
-				if(SELECT_MAX_GALLERY>0) {
-					m_vContentList = RelatedContents.getUserContentList(ownerUserId, SELECT_MAX_GALLERY, checkLogin, connection);
+				if(selectMaxGallery >0) {
+					m_vContentList = RelatedContents.getUserContentList(ownerUserId, selectMaxGallery, checkLogin, connection);
 				}
 
 				// Related Contents
-				if(SELECT_MAX_RELATED_GALLERY>0) {
-					m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, SELECT_MAX_RELATED_GALLERY, checkLogin, connection);
+				if(selectMaxRelatedGallery >0) {
+					m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, selectMaxRelatedGallery, checkLogin, connection);
 				}
 
 				final int h = LocalDateTime.now().getHour();
 				if (h != 22 && h != 23 && h != 0){
 					// Recommended Contents
-					if(SELECT_MAX_RECOMMENDED_GALLERY>0) {
-						m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, SELECT_MAX_RECOMMENDED_GALLERY, checkLogin, connection);
+					if(selectMaxRecommendedGallery >0) {
+						m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, selectMaxRecommendedGallery, checkLogin, connection);
 					}
 				}
 			}

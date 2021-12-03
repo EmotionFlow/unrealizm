@@ -3,7 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 IllustViewPcC cResults = new IllustViewPcC();
-cResults.SELECT_MAX_GALLERY = 6;
+cResults.selectMaxGallery = 6;
 cResults.getParam(request);
 
 if(!cResults.getResults(checkLogin)) {
