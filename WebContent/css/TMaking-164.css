@@ -2401,9 +2401,10 @@ Decoration
 hr.IllustItemListSeparator {
 	border: 0;
 	height: 2px;
-	background-image: -webkit-linear-gradient(left, #3498da, #ecf5fb, #3498da);                    background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
-	background-image: -ms-linear-gradient(left, #3498da, #ecf5fb, #3498da);
-	background-image: -o-linear-gradient(left, #3498da, #ecf5fb, #3498da);
+	background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(236,245,251,0.9), rgba(0,0,0,0));
+	background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(236,245,251,0.9), rgba(0,0,0,0));
+	background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(236,245,251,0.9), rgba(0,0,0,0));
+	background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(236,245,251,0.9), rgba(0,0,0,0));
 }
 
 /*********** IllustView UserInfo **********/
