@@ -3198,13 +3198,13 @@ hr.IllustItemListSeparator {
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	height: 39px;
-	line-height: 20px;
-	padding: 9px;
-	padding-top: 9px;
-	font-size: 9px;
+	height: 43px;
+	line-height: 27px;
+	padding: 10px 9px 0 9px;
+	font-size: 10px;
 }
 .EncourageFollowUp > .UserInfoCmdFollow {
+	font-size: 11px;
 	float: right;
 }
 /*********** フォロー促し *************/
