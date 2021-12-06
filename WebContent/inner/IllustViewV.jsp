@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
-
-if(!bSmartPhone) {
+if(!Util.isSmartPhone(request)) {
 	getServletContext().getRequestDispatcher("/IllustViewGridPcV.jsp").forward(request,response);
 	return;
 }
+
+final String referer = Util.toString(request.getHeader("Referer"));
+final boolean fromIllustList = referer.matches("^https://poipiku\\.com/[0-9]+/$");
 
 IllustViewPcC cResults = new IllustViewPcC();
 cResults.getParam(request);
@@ -15,6 +15,7 @@ cResults.selectMaxGallery = 0;
 cResults.selectMaxRelatedGallery = 0;
 cResults.selectMaxRecommendedGallery = 0;
 
+final CheckLogin checkLogin = new CheckLogin(request, response);
 if(!cResults.getResults(checkLogin)) {
 	if (cResults.m_bBlocked || cResults.m_bBlocking) {
 		response.sendRedirect(String.format("/%d/", cResults.ownerUserId));
@@ -175,12 +176,18 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 			$(function(){
 				initContents();
-				<%if(cResults.contentId < cResults.latestContentId){%>
+				<%if(!fromIllustList && cResults.contentId < cResults.latestContentId){%>
+				const moveDist = 57;
+				const $IllustViewGoLatestBtn = $("#IllustViewGoLatestBtn");
 				setTimeout(()=>{
-					const $IllustViewGoLatestBtn = $("#IllustViewGoLatestBtn");
 					$IllustViewGoLatestBtn.show();
-					$IllustViewGoLatestBtn.animate({top: "+=57px"}, 1000);
+					$IllustViewGoLatestBtn.animate({top: "+=" + moveDist + "px"}, 1000);
 				}, 9000);
+				setTimeout(()=>{
+					$IllustViewGoLatestBtn.animate({top: "-=" + moveDist + "px"}, 500, 'linear', ()=>{
+						$IllustViewGoLatestBtn.hide();
+					});
+				}, 14000);
 				<%}%>
 			});
 			$(document).ready(function(){
