@@ -177,17 +177,17 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			$(function(){
 				initContents();
 				<%if(!fromIllustList && cResults.contentId < cResults.latestContentId){%>
-				const moveDist = 57;
+				const moveDist = 55;
 				const $IllustViewGoLatestBtn = $("#IllustViewGoLatestBtn");
 				setTimeout(()=>{
 					$IllustViewGoLatestBtn.show();
 					$IllustViewGoLatestBtn.animate({top: "+=" + moveDist + "px"}, 1000);
-				}, 9000);
+				}, 15000);
 				setTimeout(()=>{
 					$IllustViewGoLatestBtn.animate({top: "-=" + moveDist + "px"}, 500, 'linear', ()=>{
 						$IllustViewGoLatestBtn.hide();
 					});
-				}, 14000);
+				}, 20000);
 				<%}%>
 			});
 			$(document).ready(function(){
