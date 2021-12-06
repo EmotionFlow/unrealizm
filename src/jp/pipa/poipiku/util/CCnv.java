@@ -130,7 +130,7 @@ public final class CCnv {
 			}
 			// ブクマボタン
 			strRtn.append("<div class=\"IllustItemCmd\">");
-			strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"BtnBase IllustItemBookmarkBtn %s\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"fas fa-star\"></i> %s</a>",
+			strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"BtnBase IllustItemBookmarkBtn %s\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"far fa-bookmark\"></i> %s</a>",
 					cContent.m_nContentId,
 					(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"Selected":"",
 					nLoginUserId,
