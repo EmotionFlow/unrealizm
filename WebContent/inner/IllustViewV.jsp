@@ -135,6 +135,12 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<script type="text/javascript">
 			$(function(){
 				$('#MenuNew').addClass('Selected');
+				$(document).on('click', '.PrivateIcon', (ev) => {
+					DispMsg("<%=_TEX.T("IllustView.IconMsg.Private")%>");
+				})
+				$(document).on('click', '.OutOfPeriodIcon', (ev) => {
+					DispMsg("<%=_TEX.T("IllustView.IconMsg.OutOfPeriod")%>");
+				})
 			});
 
 			let lastContentId = <%=cResults.contentId%>;

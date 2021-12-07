@@ -234,8 +234,19 @@ public final class CCnv {
 
 
 	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
+		final boolean isPrivateContent = cContent != null && cContent.m_nOpenId == 2;
 		if(nViewMode==VIEW_DETAIL) {
-			strRtn.append("<a class=\"IllustItemThumb\" href=\"javascript:void(0)\"");
+			if (isPrivateContent) {
+				strRtn.append("<div class=\"IllustInfo\">");
+				if (cContent.m_nPublishId == Common.PUBLISH_ID_HIDDEN) {
+					strRtn.append("<div class=\"PrivateIcon\"></div>");
+				} else {
+					strRtn.append("<div class=\"OutOfPeriodIcon\"></div>");
+				}
+				strRtn.append("</div>");
+			}
+			strRtn.append("<a class=\"IllustItemThumb");
+			strRtn.append("\" href=\"javascript:void(0)\"");
 			if (cContent != null) {
 				strRtn.append(String.format(" onclick=\"showIllustDetail(%d, %d, %d)\"", cContent.m_nUserId, cContent.m_nContentId, contentAppend==null ? -1 : contentAppend.m_nAppendId));
 			}

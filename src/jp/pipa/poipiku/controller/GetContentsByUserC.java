@@ -30,6 +30,7 @@ public class GetContentsByUserC {
 		}
 	}
 
+
 	public int selectMaxGallery = 10;
 	public final int SELECT_MAX_RELATED_GALLERY = 9;
 	public final int SELECT_MAX_RECOMMENDED_GALLERY = 9;
@@ -46,6 +47,7 @@ public class GetContentsByUserC {
 		ResultSet resultSet = null;
 		String sql = "";
 
+
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
@@ -60,7 +62,10 @@ public class GetContentsByUserC {
 				return false;
 			}
 
-			if (checkLogin.m_bLogin) {
+			// owner
+			final boolean isOwner = (checkLogin.m_bLogin && ownerUserId == checkLogin.m_nUserId);
+
+			if (!checkLogin.m_bLogin || !isOwner) {
 				// blocking
 				sql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(sql);
@@ -90,7 +95,7 @@ public class GetContentsByUserC {
 
 			// follow
 			int followCode = CUser.FOLLOW_HIDE;
-			if(ownerUserId != checkLogin.m_nUserId) {
+			if(!isOwner) {
 				sql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
@@ -112,8 +117,9 @@ public class GetContentsByUserC {
 			if (owner == null) return false;
 
 			// NEW ARRIVAL
-			String strOpenCnd = (ownerUserId !=checkLogin.m_nUserId)?" AND open_id<>2":"";
-			sql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id<? AND safe_filter<=? %s ORDER BY content_id DESC LIMIT ?", strOpenCnd);
+			sql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id<? AND safe_filter<=?" +
+					(!isOwner ? " AND open_id<>2" : "") +
+					" ORDER BY content_id DESC LIMIT ?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, ownerUserId);
 			statement.setInt(2, startId);
