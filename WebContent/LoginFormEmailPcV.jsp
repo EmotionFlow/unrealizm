@@ -200,6 +200,19 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 						<div class="SeparatorLine"></div>
 					</div>
 
+					<script>
+						function toggleEmailForm() {
+							if ($('#RegistForm').css('display') === 'block') {
+								$('#RegistForm').slideUp();
+								$('#LoginForm').slideDown();
+								if(!$('#LoginEmail').val())$('#LoginEmail').val($('#RegistEmail').val());
+								if(!$('#LoginPassword').val())$('#LoginPassword').val($('#RegistPassword').val());
+							} else {
+								$('#LoginForm').slideUp();
+								$('#RegistForm').slideDown();
+							}
+						}
+					</script>
 					<form id="RegistForm" onsubmit="return RegistUser()">
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
@@ -222,7 +235,10 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 								</div>
 								<div style="margin-top: 10px; text-align: center;">
 									<div class="RegistMessage"></div>
-									<a href="javascript:void(0);" onclick="$('#RegistForm').slideUp();$('#LoginForm').slideDown();"><i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%></a>
+									<a href="javascript:void(0);"
+									   onclick="toggleEmailForm();">
+										<i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -247,7 +263,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 									<div id="UserNameMessage" class="RegistMessage" style="color: red;">&nbsp;</div>
 								</div>
 								<div style="margin-top: 15px; text-align: center;">
-									<a href="javascript:void(0);" onclick="$('#LoginForm').slideUp();$('#RegistForm').slideDown();"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
+									<a href="javascript:void(0);" onclick="toggleEmailForm()"><i class="fas fa-user-plus"></i> <%=_TEX.T("LoginFormV.Label.Regist")%></a>
 									<div class="RegistMessage"></div>
 								</div>
 								<div style="margin-top: 10px; text-align: center;">
