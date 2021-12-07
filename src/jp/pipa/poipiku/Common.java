@@ -29,10 +29,14 @@ public final class Common {
 	// ページバー設定
 	public static final int PAGE_BAR_NUM = 2;
 
-	public static int TWITTER_PROVIDER_ID = 1;
-	public static String TWITTER_CONSUMER_KEY = "Wh6tHeINW6IQbSd1nJP9i1yUN";
-	public static String TWITTER_CONSUMER_SECRET = "kXYW0KkWlfDszfGn0m8lj3aEz6vB3iWzY5M1SO9T8DNM9rXJY0";
-	public static String TWITTER_CALLBAK_DOMAIN = "https://poipiku.com";
+	public static final int TWITTER_PROVIDER_ID = 1;
+	public static final String TWITTER_CONSUMER_KEY = "Wh6tHeINW6IQbSd1nJP9i1yUN";
+	public static final String TWITTER_CONSUMER_SECRET = "kXYW0KkWlfDszfGn0m8lj3aEz6vB3iWzY5M1SO9T8DNM9rXJY0";
+	public static final String TWITTER_CALLBAK_DOMAIN = "https://poipiku.com";
+	public static final String TWITTER_API_REQUEST_TOKEN = "https://api.twitter.com/oauth/request_token";
+	public static final String TWITTER_API_ACCESS_TOKEN = "https://api.twitter.com/oauth/access_token";
+	public static final String TWITTER_API_AUTHORIZE = "https://api.twitter.com/oauth/authorize";
+	public static final String TWITTER_API_AUTHENTICATE = "https://api.twitter.com/oauth/authenticate";
 	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
 	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
 

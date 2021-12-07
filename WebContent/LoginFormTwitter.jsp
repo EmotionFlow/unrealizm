@@ -12,17 +12,29 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 //Twitter
 String authUrl="";
 try{
-	OAuthConsumer consumer = new DefaultOAuthConsumer(
+	final OAuthConsumer consumer = new DefaultOAuthConsumer(
 			Common.TWITTER_CONSUMER_KEY, Common.TWITTER_CONSUMER_SECRET
 			);
-	OAuthProvider provider = new DefaultOAuthProvider(
-			"https://api.twitter.com/oauth/request_token",
-			"https://api.twitter.com/oauth/access_token",
-			//"https://api.twitter.com/oauth/authorize");
-			"https://api.twitter.com/oauth/authenticate");
+
+	final String authMethod = Util.toString(request.getParameter("AUTH"));
+
+	final OAuthProvider provider;
+	if (authMethod.equals("authorize")) {
+		provider = new DefaultOAuthProvider(
+				Common.TWITTER_API_REQUEST_TOKEN,
+				Common.TWITTER_API_ACCESS_TOKEN,
+				Common.TWITTER_API_AUTHORIZE);
+	} else {
+		provider = new DefaultOAuthProvider(
+				Common.TWITTER_API_REQUEST_TOKEN,
+				Common.TWITTER_API_ACCESS_TOKEN,
+				Common.TWITTER_API_AUTHENTICATE);
+	}
+
 	provider.setOAuth10a(true);
 	session.setAttribute("consumer", consumer);
 	session.setAttribute("provider", provider);
+
 	String callbackUri = Util.toString(request.getParameter("CBPATH"));
 	boolean isApp = callbackUri.equals("app");
 

@@ -167,9 +167,30 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 						<div style="margin-bottom: 10px;"><%=_TEX.T("LoginFormV.Label.RegisterByTwitter")%></div>
 						<form method="post" name="login_from_twitter_loginfromemailpcv_00" action="/LoginFormTwitter.jsp">
 							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strNextUrl%>"/>
-							<a class="BtnBase Rev AnalogicoInfoRegistBtn" href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
+
+							<a class="BtnBase Rev AnalogicoInfoRegistBtn"
+							   style="margin: 10px 0 10px 0"
+							   href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
 								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 							</a>
+
+							<div style="font-size: 9px;">
+								<a  style="text-decoration: underline;"
+									href="javascript:void(0)"
+									onclick="$('#twitter_authorize_info').show(); $('#login_from_twitter_loginfromemailpcv_callback_00_auth').prop('checked',true);">
+									<i class="fas fa-info-circle"></i> <%=_TEX.T("LoginFormV.TwitterAuthInfo01")%>
+								</a>
+								<div id="twitter_authorize_info" style="display: none; margin-top: 10px;">
+									<div>
+										<input id="login_from_twitter_loginfromemailpcv_callback_00_auth" type="checkbox" name="AUTH" value="authorize"/>
+										<label for="login_from_twitter_loginfromemailpcv_callback_00_auth"><%=_TEX.T("LoginFormV.TwitterAuthInfo02")%></label>
+									</div>
+									<div style="text-align: left;">
+										<p><%=_TEX.T("LoginFormV.TwitterAuthInfo03")%></p>
+										<p><%=_TEX.T("LoginFormV.TwitterAuthInfo04")%></p>
+									</div>
+								</div>
+							</div>
 						</form>
 					</div>
 
