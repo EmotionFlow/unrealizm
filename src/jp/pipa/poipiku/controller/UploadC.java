@@ -53,7 +53,12 @@ public final class UploadC extends UpC {
 
 			ArrayList<String> lVals = new ArrayList<>();
 			lColumns.forEach(c -> lVals.add("?"));
-			strSql = String.format("INSERT INTO contents_0000(%s, created_at, updated_at) VALUES(%s, now(), now()) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
+			strSql = String.format(
+					"INSERT INTO contents_0000(%s, created_at, updated_at) VALUES(%s, %s) RETURNING content_id",
+					String.join(",", lColumns),
+					String.join(",", lVals),
+					checkLogin.m_nPassportId==Common.PASSPORT_OFF ? "null, null" : "now(), now()"
+			);
 
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;

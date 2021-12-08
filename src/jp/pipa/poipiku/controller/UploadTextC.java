@@ -70,7 +70,12 @@ public final class UploadTextC extends UpC {
 			String textBody = Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]);
 			ArrayList<String> lVals = new ArrayList<>();
 			lColumns.forEach(c -> lVals.add("?"));
-			sql = String.format("INSERT INTO contents_0000(%s, created_at, updated_at) VALUES(%s, now(), now()) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
+			sql = String.format(
+					"INSERT INTO contents_0000(%s, created_at, updated_at) VALUES(%s, %s) RETURNING content_id",
+					String.join(",", lColumns),
+					String.join(",", lVals),
+					checkLogin.m_nPassportId==Common.PASSPORT_OFF ? "null, null" : "now(), now()"
+			);
 
 			statement = connection.prepareStatement(sql);
 			idx = 1;

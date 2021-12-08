@@ -451,7 +451,24 @@
 	overflow-x: scroll;
 	word-break: break-all;
 	overflow-wrap: break-word;
-	height: 110px;
+}
+
+.IllustThumbList .IllustThumbMyBoxSp {
+	height: 156px;
+}
+
+.IllustThumbList .IllustThumbMyBoxPc {
+	height: 236px;
+	margin-bottom: 56px;
+}
+
+.IllustThumbList .ShowTimestampSp {
+	height: 172px;
+}
+
+.IllustThumbList .ShowTimestampPc {
+	height: 257px;
+	margin-bottom: 6px;
 }
 
 
@@ -464,8 +481,8 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	position: relative;
-	align-items: center;
-	justify-content: center;
+	align-items: flex-start;
+	justify-content: left;
 	background: #fff;
 	color: #6d6965;
 	display: flex;
@@ -524,7 +541,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 	box-sizing: border-box;
-	padding: 0;
+	padding: 2px;
 }
 
 .IllustThumb .Category {
@@ -582,13 +599,17 @@
 
 
 .IllustThumb .IllustThumbImg {
-	display: block;
+	display: flex;
 	width: 100%;
 	height: 110px;
 	background-position: 50% 50%;
 	background-size: cover;
 	background-repeat: no-repeat;
 	position: relative;
+}
+
+.IllustThumb .ShowTimestamp{
+	bottom: 8px;
 }
 
 .IllustThumb .IllustThumbText {
@@ -679,18 +700,16 @@ Decoration
 .IllustThumb .IllustInfo {
 	display: flex;
 	flex-flow: column;
-	flex: 1 1;
 	width: 100%;
 	box-sizing: border-box;
 	padding: 2px 2px 0 2px;
-	top: 0;
 	overflow: hidden;
 }
 .IllustThumb .IllustInfo .IllustInfoDesc {
 	display: block;
 	width: 100%;
 	font-size: 11px;
-	height: 30px;
+	height: 15px;
 	line-height: 15px;
 	overflow: hidden;
 	color: #6d6965;

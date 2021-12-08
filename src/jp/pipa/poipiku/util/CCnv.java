@@ -19,8 +19,7 @@ public final class CCnv {
 
 	private static final String ILLUST_ITEM_THUMB_IMG = "<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" onload=\"setImgHeightStyle(this)\"/>";
 
-	private static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("yyyy.MM.dd");
-	private static final SimpleDateFormat DATE_FORMAT_LONG = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+	private static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
 	private static String getIllustListContext(int nSpMode, int nUserId){
 		if(nSpMode==SP_MODE_APP){
@@ -690,7 +689,14 @@ public final class CCnv {
 
 		StringBuilder strRtn = new StringBuilder();
 
-		strRtn.append("<div class=\"IllustThumb\">");
+		strRtn.append("<div class=\"IllustThumb");
+		if (isMyBox) {
+			strRtn.append((nMode==MODE_SP ? " IllustThumbMyBoxSp" : " IllustThumbMyBoxPc"));
+			if (checkLogin.m_nPassportId==Common.PASSPORT_ON) {
+				strRtn.append((nMode==MODE_SP ? " ShowTimestampSp" : " ShowTimestampPc"));
+			}
+		}
+		strRtn.append("\">");
 
 		if (!isMyBox) {
 			// ユーザ情報
@@ -787,9 +793,9 @@ public final class CCnv {
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText
-		if (isMyBox) {
+		if (isMyBox && checkLogin!=null && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
 			// created_at
-			final String createdAt = cContent.createdAt == null ? "----.--.--" :  DATE_FORMAT_SHORT.format(cContent.createdAt);
+			final String createdAt = cContent.createdAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.createdAt);
 			strRtn.append(String.format("<div class=\"IllustUser\" style=\"font-size:9px; justify-content: right; display: block;\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
 		}
 		strRtn.append("</div>");	// IllustThumb
