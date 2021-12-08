@@ -232,19 +232,22 @@ public final class CCnv {
 		appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
 	}
 
+	private static void appendIllustInfoIcon(StringBuilder strRtn,  CContent content) {
+		final boolean isPrivateContent = content != null && content.m_nOpenId == 2;
+		if (isPrivateContent) {
+			strRtn.append("<div class=\"IllustInfo\">");
+			if (content.m_nPublishId == Common.PUBLISH_ID_HIDDEN) {
+				strRtn.append("<div class=\"PrivateIcon\"></div>");
+			} else {
+				strRtn.append("<div class=\"OutOfPeriodIcon\"></div>");
+			}
+			strRtn.append("</div>");
+		}
+	}
 
 	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
-		final boolean isPrivateContent = cContent != null && cContent.m_nOpenId == 2;
 		if(nViewMode==VIEW_DETAIL) {
-			if (isPrivateContent) {
-				strRtn.append("<div class=\"IllustInfo\">");
-				if (cContent.m_nPublishId == Common.PUBLISH_ID_HIDDEN) {
-					strRtn.append("<div class=\"PrivateIcon\"></div>");
-				} else {
-					strRtn.append("<div class=\"OutOfPeriodIcon\"></div>");
-				}
-				strRtn.append("</div>");
-			}
+			appendIllustInfoIcon(strRtn, cContent);
 			strRtn.append("<a class=\"IllustItemThumb");
 			strRtn.append("\" href=\"javascript:void(0)\"");
 			if (cContent != null) {
@@ -263,12 +266,13 @@ public final class CCnv {
 	}
 
 	private static void appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
-		//String strTextBody = Util.toStringHtml(cContent.m_strTextBody);
 		String className = "IllustItemThumbText";
 		if(cContent.novelDirection==1) {
 			className += " Vertical";
 		}
+
 		if(nViewMode==VIEW_DETAIL) {
+			appendIllustInfoIcon(strRtn, cContent);
 			strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s?ID=%d&TD=%d\">", cContent.m_nContentId, ILLUST_DETAIL, cContent.m_nUserId, cContent.m_nContentId));
 			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, Util.replaceForGenEiFont(cContent.novelHtml)));
 			strRtn.append("</a>");
@@ -745,7 +749,10 @@ public final class CCnv {
 				&& checkLogin!=null
 				&& checkLogin.m_nUserId==cContent.m_nUserId
 				&& (cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN || cContent.m_bLimitedTimePublish)){
-			strRtn.append("<span class=\"IllustInfoCenter\">");
+			strRtn.append("<span class=\"IllustInfoCenter\"" +
+							(cContent.novelDirection==1 ? "style=\"right:70px\"" : "") +
+					">");
+
 			if(cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){
 				strRtn.append("<span class=\"Publish Private\"></span>");
 			} else if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){

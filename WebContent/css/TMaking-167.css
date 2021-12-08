@@ -446,6 +446,15 @@
 	padding-bottom: 0;
 }
 
+.IllustThumbList .IllustThumb .IllustThumbText.Vertical {
+	writing-mode: vertical-rl;
+	overflow-x: scroll;
+	word-break: break-all;
+	overflow-wrap: break-word;
+	height: 110px;
+}
+
+
 /********** ILLUST LIST **********/
 .IllustThumb {
 	float: left;
@@ -636,8 +645,7 @@
 
 .NovelSection .TextEmphasis {-webkit-text-emphasis: dot; text-emphasis: dot;}
 
-.IllustThumb .IllustThumbText.Vertical,
-.IllustItem.Text .IllustItemText .IllustItemThumbText.Vertical {
+.IllustItemList .IllustItem .IllustItemText .IllustItemThumbText.Vertical {
 	writing-mode: vertical-rl;
 	overflow-x: scroll;
 	word-break: break-all;
