@@ -75,6 +75,13 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<script type="text/javascript">
 			$(function(){
+				$(document).on('click', '.PrivateIcon', (ev) => {
+					DispMsg("<%=_TEX.T("IllustView.IconMsg.Private")%>");
+				})
+				$(document).on('click', '.OutOfPeriodIcon', (ev) => {
+					DispMsg("<%=_TEX.T("IllustView.IconMsg.OutOfPeriod")%>");
+				})
+
 				$('body, .Wrapper').each(function(index, element){
 					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
 				});
