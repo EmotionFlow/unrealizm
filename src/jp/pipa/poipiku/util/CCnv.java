@@ -750,7 +750,7 @@ public final class CCnv {
 				&& checkLogin.m_nUserId==cContent.m_nUserId
 				&& (cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN || cContent.m_bLimitedTimePublish)){
 			strRtn.append("<span class=\"IllustInfoCenter\"" +
-							(cContent.novelDirection==1 ? "style=\"right:70px\"" : "") +
+							(cContent.novelDirection==1 ? "style=\"tom:0px;left:0px\"" : "") +
 					">");
 
 			if(cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){
