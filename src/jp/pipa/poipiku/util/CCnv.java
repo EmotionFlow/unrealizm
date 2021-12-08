@@ -2,6 +2,8 @@ package jp.pipa.poipiku.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import jp.pipa.poipiku.*;
@@ -16,6 +18,9 @@ public final class CCnv {
 	public static final int SP_MODE_APP = 1;
 
 	private static final String ILLUST_ITEM_THUMB_IMG = "<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" onload=\"setImgHeightStyle(this)\"/>";
+
+	private static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("yyyy.MM.dd");
+	private static final SimpleDateFormat DATE_FORMAT_LONG = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
 	private static String getIllustListContext(int nSpMode, int nUserId){
 		if(nSpMode==SP_MODE_APP){
@@ -687,13 +692,15 @@ public final class CCnv {
 
 		strRtn.append("<div class=\"IllustThumb\">");
 
-		// ユーザ情報
-		strRtn.append(String.format("<a class=\"IllustUser\" href=\"%s\">", ILLUST_LIST));
-		// 画像
-		strRtn.append(String.format("<span class=\"IllustUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cContent.m_cUser.m_strFileName)));
-		// 名前
-		strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Util.toStringHtml(cContent.m_cUser.m_strNickName)));
-		strRtn.append("</a>");	// IllustItemUser
+		if (!isMyBox) {
+			// ユーザ情報
+			strRtn.append(String.format("<a class=\"IllustUser\" href=\"%s\">", ILLUST_LIST));
+			// 画像
+			strRtn.append(String.format("<span class=\"IllustUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cContent.m_cUser.m_strFileName)));
+			// 名前
+			strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Util.toStringHtml(cContent.m_cUser.m_strNickName)));
+			strRtn.append("</a>");	// IllustItemUser
+		}
 
 		// カテゴリ系情報
 		strRtn.append("<span class=\"IllustInfo IllustMeta\">");
@@ -780,8 +787,12 @@ public final class CCnv {
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText
+		if (isMyBox) {
+			// created_at
+			final String createdAt = cContent.createdAt == null ? "----.--.--" :  DATE_FORMAT_SHORT.format(cContent.createdAt);
+			strRtn.append(String.format("<div class=\"IllustUser\" style=\"font-size:9px; justify-content: right; display: block;\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
+		}
 		strRtn.append("</div>");	// IllustThumb
-
 		return strRtn.toString();
 	}
 

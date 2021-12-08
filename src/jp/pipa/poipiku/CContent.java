@@ -53,6 +53,7 @@ public final class CContent {
 	public String novelHtml = "";
 	public String novelHtmlShort = "";
 	public int novelDirection = 0;
+	public Timestamp createdAt = null;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
@@ -92,8 +93,7 @@ public final class CContent {
 		return (m_nTweetWhenPublished & TWITTER_CARD_THUMBNAIL) != 0;
 	}
 
-	public CContent() {}
-	public CContent(ResultSet resultSet) throws SQLException {
+	public void set(ResultSet resultSet) throws SQLException {
 		m_nContentId		= resultSet.getInt("content_id");
 		m_nCategoryId		= resultSet.getInt("category_id");
 		m_strDescription	= Util.toString(resultSet.getString("description"));
@@ -126,6 +126,7 @@ public final class CContent {
 		novelHtml			= Util.toString(resultSet.getString("novel_html"));
 		novelHtmlShort		= Util.toString(resultSet.getString("novel_html_short"));
 		novelDirection		= Util.toIntN(resultSet.getInt("novel_direction"), 0, 1);
+		createdAt           = resultSet.getTimestamp("created_at");
 
 		// 後方互換
 		if (novelHtml.isEmpty()) {
@@ -137,17 +138,31 @@ public final class CContent {
 
 		if(m_nPublishId==0 && m_nSafeFilter>0) {
 			switch(m_nSafeFilter) {
-			case Common.SAFE_FILTER_R15:
-				m_nPublishId = Common.PUBLISH_ID_R15;
-				break;
-			case Common.SAFE_FILTER_R18:
-				m_nPublishId = Common.PUBLISH_ID_R18;
-				break;
-			case Common.SAFE_FILTER_R18G:
-			default:
-				m_nPublishId = Common.PUBLISH_ID_R18G;
-				break;
+				case Common.SAFE_FILTER_R15:
+					m_nPublishId = Common.PUBLISH_ID_R15;
+					break;
+				case Common.SAFE_FILTER_R18:
+					m_nPublishId = Common.PUBLISH_ID_R18;
+					break;
+				case Common.SAFE_FILTER_R18G:
+				default:
+					m_nPublishId = Common.PUBLISH_ID_R18G;
+					break;
 			}
+		}
+	}
+
+	public CContent() {}
+	public CContent(ResultSet resultSet) throws SQLException {
+		set(resultSet);
+	}
+	public CContent(ResultSet resultSet, float timeZoneOffset) throws SQLException {
+		set(resultSet);
+		if (createdAt != null) {
+			long jst, offsetTime;
+			jst = createdAt.getTime();
+			offsetTime = jst + (long)((9 + timeZoneOffset) * 60 * 60 * 1000);
+			createdAt = new Timestamp(offsetTime);
 		}
 	}
 }

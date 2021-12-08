@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyIllustListC extends IllustListC{
+
 	public static class SwitchUser {
 		public CUser user;
 		public boolean signInIt;
@@ -26,11 +28,14 @@ public class MyIllustListC extends IllustListC{
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			super.getParam(cRequest);
+			final String tz = Util.getCookie(cRequest, Common.CLIENT_TIMEZONE_OFFSET);
+			if (tz != null && !tz.isEmpty()) {
+				clientTimezoneOffset = Float.parseFloat(tz);
+			}
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
 	}
-
 
 	private SwitchUser getLinkedUser(int userId, final CheckLogin checkLogin) {
 		if (userId<1 || checkLogin==null) return null;

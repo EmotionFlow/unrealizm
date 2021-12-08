@@ -52,6 +52,9 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+
+		<script>setTimeZoneOffsetCookie();</script>
+
 		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>

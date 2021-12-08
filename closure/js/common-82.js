@@ -42,7 +42,7 @@ function setCookieOneTime(key, val, tmp) {
 }
 
 function setCookieWeek(key, val, tmp) {
-	dateExp = new Date();
+	let dateExp = new Date();
 	dateExp.setTime(dateExp.getTime()+(7*1000*60*60*24));
 	tmp = key + "=" + encodeURIComponent(val) + "; ";
 	tmp += "path=/; ";
@@ -51,7 +51,7 @@ function setCookieWeek(key, val, tmp) {
 }
 
 function setCookieOneDay(key, val, tmp) {
-	dateExp = new Date();
+	let dateExp = new Date();
 	dateExp.setTime(dateExp.getTime()+(1000*60*60*24));
 	tmp = key + "=" + encodeURIComponent(val) + "; ";
 	tmp += "path=/; ";
@@ -60,26 +60,39 @@ function setCookieOneDay(key, val, tmp) {
 }
 
 function getCookie(key) {
-	var cookieName = key + '=';
-	var allcookies = document.cookie;
-	var position = allcookies.indexOf(cookieName);
+	const cookieName = key + '=';
+	const allcookies = document.cookie;
+	const position = allcookies.indexOf(cookieName);
 
 	if(position<0) return null;
 
-	var startIndex = position + cookieName.length;
-	var endIndex = allcookies.indexOf(';', startIndex);
-	if( endIndex == -1 ) endIndex = allcookies.length;
+	const startIndex = position + cookieName.length;
+	let endIndex = allcookies.indexOf(';', startIndex);
+	if( endIndex === -1 ) endIndex = allcookies.length;
 
 	return decodeURIComponent(allcookies.substring(startIndex, endIndex));
 }
 
 function deleteCookie(key, tmp) {
-	dTime = new Date();
+	let dTime = new Date();
 	dTime.setTime(0);
 	tmp = key + "=" + encodeURIComponent("0") + "; ";
 	tmp += "path=/; ";
 	tmp += "expires=" + dTime.toGMTString() + "; ";
 	document.cookie = tmp;
+}
+
+function setTimeZoneOffsetCookie() {
+	const key = "TZ_OFFSET"; // Common.CLIENT_TIMEZONE_OFFSET
+	const cookieOffset = getCookie(key);
+	const d = new Date();
+	const nowOffset = String(d.getTimezoneOffset() / 60) ;
+	if (!cookieOffset || cookieOffset !== nowOffset) {
+		setCookie(key, nowOffset);
+		if (getCookie(key) === nowOffset) {
+			location.reload();
+		}
+	}
 }
 
 function ChLang(l,isLogin){

@@ -53,7 +53,7 @@ public final class UploadC extends UpC {
 
 			ArrayList<String> lVals = new ArrayList<>();
 			lColumns.forEach(c -> lVals.add("?"));
-			strSql = String.format("INSERT INTO contents_0000(%s, updated_at) VALUES(%s, now()) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
+			strSql = String.format("INSERT INTO contents_0000(%s, created_at, updated_at) VALUES(%s, now(), now()) RETURNING content_id", String.join(",", lColumns), String.join(",", lVals));
 
 			cState = cConn.prepareStatement(strSql);
 			idx = 1;
