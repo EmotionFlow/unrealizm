@@ -14,7 +14,7 @@
 <link rel="icon" href="/favicon_2.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-40.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-168.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-169.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-71.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
@@ -24,7 +24,7 @@
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/jquery.creditCardValidator.js"></script>
 <script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
-<script type="text/javascript" src="/js/common-82.js"></script>
+<script type="text/javascript" src="/js/common-83.js"></script>
 <script type="text/javascript" src="/js/commonPc-03.js"></script>
 <%@ include file="/inner/TSweetAlert.jsp"%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
@@ -36,7 +36,7 @@
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-74.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-75.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
