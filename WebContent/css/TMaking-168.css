@@ -453,6 +453,24 @@
 	overflow-wrap: break-word;
 }
 
+.IllustThumbList .IllustThumbMyBoxSp {
+	height: 156px;
+}
+
+.IllustThumbList .IllustThumbMyBoxPc {
+	height: 236px;
+	margin-bottom: 56px;
+}
+
+.IllustThumbList .ShowTimestampSp {
+	height: 172px;
+}
+
+.IllustThumbList .ShowTimestampPc {
+	height: 257px;
+	margin-bottom: 6px;
+}
+
 
 /********** ILLUST LIST **********/
 .IllustThumb {

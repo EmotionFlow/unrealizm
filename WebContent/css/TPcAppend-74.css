@@ -54,7 +54,7 @@ body {padding: 51px 0 0 0 !important;}
 /* for user list */
 
 .IllustThumbList {margin: 0 0;}
-.IllustThumb {margin: 31px 12px 17px 12px !important; width: 166px; height: 274px;}
+.IllustThumb {margin: 31px 12px 17px 12px; width: 166px; height: 274px;}
 .IllustThumb .IllustUser {padding: 4px 2px;}
 .IllustThumb .IllustUser .IllustUserThumb {flex: 0 0 29px; height: 29px; border-radius: 29px;}
 .IllustThumb .IllustUser .IllustUserName {flex: 1 1 119px; margin: 0 0 0 4px; font-size: 14px;}

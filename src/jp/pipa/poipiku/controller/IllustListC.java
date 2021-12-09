@@ -19,6 +19,9 @@ public class IllustListC {
 	public String m_strAccessIp = "";
 	public boolean m_bDispUnPublished = false;
 
+	public static final int TIMEZONE_OFFSET_DEFAULT = -9;
+	public float clientTimezoneOffset = TIMEZONE_OFFSET_DEFAULT;
+
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
@@ -236,7 +239,13 @@ public class IllustListC {
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				CContent cContent = new CContent(resultSet);
+				CContent cContent;
+				if (clientTimezoneOffset == TIMEZONE_OFFSET_DEFAULT) {
+					cContent = new CContent(resultSet);
+				} else {
+					cContent = new CContent(resultSet, clientTimezoneOffset);
+				}
+
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
