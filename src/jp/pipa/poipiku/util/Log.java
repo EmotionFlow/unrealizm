@@ -1,35 +1,30 @@
 package jp.pipa.poipiku.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class Log {
+public final class Log {
+	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss, ");
 	static String calledFrom() {
-		String strRtn = "";
 		try {
-			StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
+			final StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
 			if (steArray.length > 3) {
 				StackTraceElement ste = steArray[3];
-				StringBuilder sb = new StringBuilder();
-				sb.append(ste.getMethodName())	// メソッド名取得
-					.append("(")
-					.append(ste.getFileName())	// ファイル名取得
-					.append(":")
-					.append(ste.getLineNumber())	// 行番号取得
-					.append(")");
-				strRtn =  sb.toString();
+				return ste.getMethodName() +    // メソッド名取得
+						"(" +
+						ste.getFileName() +    // ファイル名取得
+						":" +
+						ste.getLineNumber() +    // 行番号取得
+						")";
 			}
-		} catch(Exception e) {
-			;
+		} catch(Exception ignored) {
 		}
-		return strRtn;
+		return "";
 	}
 
 	public static void d(String... args) {
 		System.out.print("Log : ");
-		DateFormat cDateFromat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss, ");
-		System.out.print(cDateFromat.format(new Date()));
+		System.out.print(LocalDateTime.now().format(formatter));
 		System.out.print(calledFrom());
 		for (String s : args) {
 			System.out.print(", "+s);
@@ -39,10 +34,9 @@ public class Log {
 
 	public static void d(String arg1, int arg2) {
 		System.out.print("Log : ");
-		DateFormat cDateFromat = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss, ");
-		System.out.print(cDateFromat.format(new Date()));
+		System.out.print(LocalDateTime.now().format(formatter));
 		System.out.print(calledFrom());
-		System.out.print(String.format("%s:%d", arg1, arg2));
+		System.out.printf("%s:%d", arg1, arg2);
 		System.out.print("\n");
 	}
 }
