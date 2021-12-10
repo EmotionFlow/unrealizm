@@ -44,10 +44,14 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(cResults.m_vContentList.size()<=0) {%>
-				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center; background-color: #fff;">
-					タグやキーワードを<br />
-					お気に入り登録すると<br />
-					ここに表示されます<br />
+				<div style="margin-top:15px; text-align: center;">
+					<h3><%=_TEX.T("FollowingTag.Info02")%></h3>
+					<div style="text-decoration: underline; margin-top: 15px;">
+						<a class="FooterLink" href="https://poipiku.com/SearchTagByKeywordPcV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
+					</div>
+					<div style="text-decoration: underline; margin-top: 15px;">
+						<a class="FooterLink" href="https://poipiku.com/PopularTagListPcV.jsp"><%=_TEX.T("FollowingTag.Link02")%></a>
+					</div>
 				</div>
 				<%}%>
 

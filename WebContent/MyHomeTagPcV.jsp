@@ -148,6 +148,18 @@ cResults.getResults(checkLogin);
 			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
+				<%if(cResults.m_vContentList.size()<=0) {%>
+				<div style="margin-top:30px; text-align: center;">
+					<h3><%=_TEX.T("FollowingTag.Info01zz")%></h3>
+					<div style="text-decoration: underline; margin-top: 15px;">
+						<a class="FooterLink" href="https://poipiku.com/SearchTagByKeywordPcV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
+					</div>
+					<div style="text-decoration: underline; margin-top: 15px;">
+						<a class="FooterLink" href="https://poipiku.com/PopularTagListPcV.jsp"><%=_TEX.T("FollowingTag.Link02")%></a>
+					</div>
+				</div>
+				<%}%>
+
 				<%if(cResults.m_nContentsNumTotal<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 					<%=_TEX.T("MyHomeTag.FirstMsg")%>
