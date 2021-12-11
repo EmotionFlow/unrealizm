@@ -9,10 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import jp.pipa.poipiku.controller.UpdateC;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import jp.pipa.poipiku.util.Log;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,8 +23,6 @@ import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
-
-	private static Logger logger = LogManager.getLogger(LimitedTimePublish.class);
 	static final boolean _DEBUG = false;
 	static final String DB_NAME			= (_DEBUG)?"jdbc:postgresql://localhost:58321/poipiku":"jdbc:postgresql://localhost:5432/poipiku";
 	static final String DB_PORT   		= "5432";
@@ -96,15 +91,7 @@ public class LimitedTimePublish extends Batch {
 	public static void main(String args[]) {
 		ResourceBundleControl _TEX = new ResourceBundleControl();
 
-		//Logger.getLogger(PushNotification.class).setLevel(Level.OFF);
-		System.setProperty("log4j.rootLogger","INFO");
-		//System.setProperty("org.apache.log4j.Level","OFF");
-		System.setProperty("org.slf4j.simpleLogger.defaultLogLevel","OFF");
-
-		BasicConfigurator.configure();
-		logger.setLevel(Level.INFO);
-
-		logger.info("start");
+		Log.d("start");
 		LocalDateTime dtStart = LocalDateTime.now();
 
 		Connection  cConn = null;
@@ -294,7 +281,7 @@ public class LimitedTimePublish extends Batch {
 
 			for(Integer key : lLogsByOldId.keySet()){
 				LimitedTimePublishLog l = lLogsByOldId.get(key);
-				logger.info(l.toString());
+				Log.d(l.toString());
 			}
 
 		} catch (Exception e) {
@@ -305,6 +292,6 @@ public class LimitedTimePublish extends Batch {
 			try {if(cState!=null)cState.close();cState=null;}catch(Exception e){}
 			try {if(cConn!=null)cConn.close();cConn=null;}catch(Exception e){}
 		}
-		logger.info("end");
+		Log.d("end");
 	}
 }
