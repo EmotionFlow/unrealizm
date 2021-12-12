@@ -11,7 +11,7 @@ if(!bSmartPhone) {
 
 MyIllustListC cResults = new MyIllustListC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 45;
+cResults.SELECT_MAX_GALLERY = 15;
 
 // ログインせずにUIDを指定した場合、間違ってマイボックスのURLを聞いてアクセスしている可能性がある
 if(!checkLogin.m_bLogin && cResults.m_nUserId>=1) {
@@ -237,7 +237,11 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarPc("/MyIllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%if(!isApp){%>
+				<%=CPageBar.CreatePageBarSp("/MyIllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%}else{%>
+				<%=CPageBar.CreatePageBarSp("/MyIllustListAppV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%}%>
 			</nav>
 		</article>
 
