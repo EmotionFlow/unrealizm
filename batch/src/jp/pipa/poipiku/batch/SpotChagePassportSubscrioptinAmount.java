@@ -1,5 +1,6 @@
 package jp.pipa.poipiku.batch;
 
+/*
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,3 +133,4 @@ public class SpotChagePassportSubscrioptinAmount extends Batch{
 		}
 	}
 }
+*/
