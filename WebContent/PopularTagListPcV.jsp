@@ -66,14 +66,17 @@ boolean bRtn = cResults.getResults(checkLogin);
                 position: absolute;
                 top: 0;
                 left: 0;
-                background-image: linear-gradient(to right, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32));
+                background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
             }
             .IllustInfoTag {
                 position: absolute;
                 top: 61px;
                 left: 5px;
                 color: #ffffff;
-            }
+                background: rgba(0,0,0,0.2);
+                padding: 2px;
+                border-radius: 7px;
+			}
 			.IllustThumbBookmarkButton {
                 position: absolute;
                 top: 3px;
