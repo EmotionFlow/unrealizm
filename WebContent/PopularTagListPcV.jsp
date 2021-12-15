@@ -11,9 +11,9 @@ if(!bSmartPhone) {
 
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-cResults.selectMaxGallery = 15;
-cResults.selectMaxSampleGallery = 15;
-cResults.selectSampleGallery = 3;
+cResults.selectMaxGallery = 45;
+cResults.selectMaxSampleGallery = 45;
+cResults.selectSampleGallery = 1;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -51,29 +51,59 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
+		<style>
+			.IllustThumb {
+                margin: 3px 0 3px 6px;
+			}
+            .IllustThumbImg{
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .IllustThumbImgMask {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-image: linear-gradient(to right, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.32));
+            }
+            .IllustInfoTag {
+                position: absolute;
+                top: 61px;
+                left: 5px;
+                color: #ffffff;
+            }
+			.IllustThumbBookmarkButton {
+                position: absolute;
+                top: 3px;
+                right: 5px;
+				font-size: 19px;
+			}
+		</style>
+
 		<article class="Wrapper ThumbList">
-			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
-				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
-				String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
 			<section class="CategoryListItem">
-				<header class="SearchResultTitle">
-					<a class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
-						#<%=strKeyWord%>
-					</a>
-				</header>
 				<div class="IllustThumbList">
-					<%for(CContent cContent : m_vContentList) {%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
+					<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
+						ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
+						String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
+					<%for(CContent content : m_vContentList) {%>
+
+					<div class="IllustThumb" style="height: 112px;" >
+						<div class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(content.m_strFileName)%>')">
+						</div>
+						<a class="IllustThumbImgMask" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>"></a>
+						<a class="IllustInfoTag" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>">#<%=strKeyWord%></a>
+						<%-- <div class="IllustThumbBookmarkButton" onclick="alert('favo')"><i class="far fa-star"></i></div> --%>
+					</div>
+					<%}%>
+					<%if(nCnt==8 || nCnt==17 || nCnt==26 || nCnt==35 ) {%>
+					<%@ include file="/inner/TAd728x90_mid.jsp"%>
+					<%}%>
 					<%}%>
 				</div>
-				<a class="CategoryMore" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
-					<%=_TEX.T("TopV.ContentsTitle.More")%>&nbsp;<i class="fas fa-angle-right"></i>
-				</a>
 			</section>
-			<%if(nCnt==4 || nCnt==9 || nCnt==14 || nCnt==19 || nCnt==24 || nCnt==29 || nCnt==34 || nCnt==39 || nCnt==44) {%>
-			<%@ include file="/inner/TAd728x90_mid.jsp"%>
-			<%}%>
-			<%}%>
 		</article>
 
 		<%if(cResults.selectMaxSampleGallery -cResults.selectMaxGallery >0) {%>

@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,9 +26,9 @@ public class PopularTagListC {
 	public int selectMaxSampleGallery = 10;
 	public int selectSampleGallery = 3;
 	//public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
-	public ArrayList<CTag> m_vContentListWeekly = new ArrayList<CTag>();
+	public ArrayList<CTag> m_vContentListWeekly = new ArrayList<>();
 	//public ArrayList<ArrayList<CContent>> m_vContentSamplpeList = new ArrayList<ArrayList<CContent>>();
-	public ArrayList<ArrayList<CContent>> m_vContentSamplpeListWeekly = new ArrayList<ArrayList<CContent>>();
+	public ArrayList<ArrayList<CContent>> m_vContentSamplpeListWeekly = new ArrayList<>();
 
 
 	public boolean getResults(CheckLogin checkLogin) {
@@ -67,6 +68,8 @@ public class PopularTagListC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			Collections.shuffle(m_vContentListWeekly);
+
 			// BLOCK USER
 			String strCondBlockUser = "";
 			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
@@ -92,7 +95,7 @@ public class PopularTagListC {
 			// WEEKLY SAMPLE
 			// "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */"
 			strSql = "SELECT * FROM contents_0000 "
-					+ "WHERE open_id<>2 AND publish_id NOT IN (7,8,9,10) "
+					+ "WHERE open_id<>2 AND publish_id=0 "
 					+ "AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) "
 					+ "AND safe_filter<=? "
 					+ strCondBlockUser
