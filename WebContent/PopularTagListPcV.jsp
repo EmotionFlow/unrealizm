@@ -94,7 +94,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 					<%for(CContent content : m_vContentList) {%>
 
 					<div class="IllustThumb" style="height: 112px;" >
-						<div class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(content.m_strFileName)%>')">
+						<div class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(content.m_strFileName)%>_360.jpg')">
 						</div>
 						<a class="IllustThumbImgMask" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>"></a>
 						<a class="IllustInfoTag" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>">#<%=strKeyWord%></a>
