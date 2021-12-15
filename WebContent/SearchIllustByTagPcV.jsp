@@ -77,17 +77,17 @@ String strFileUrl = results.m_strRepFileName;
 				<div class="SearchGenreMeta">
 					<div class="SearchGenreTitle">
 						<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(results.genre.genreImage)%>');" ></span>
-						<h2 class="GenreTitle"><%=Util.toStringHtml(results.genre.genreName)%></h2>
+						<h2 class="GenreTitle">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
 					</div>
 					<div class="SearchGenreDesc"><%=Util.toStringHtml(results.genre.genreDesc)%></div>
 				</div>
 				<div class="SearchGenreCmd">
 					<%if(!checkLogin.m_bLogin) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-tag"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
 					<%} else if(!results.following) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.m_strKeyword)%>')"><i class="fas fa-tag"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
 					<%} else {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.m_strKeyword)%>')"><i class="fa fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase Rev TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.m_strKeyword)%>')"><i class="fa fa-tag"></i> <%=_TEX.T("IllustV.Tag.UnFollow")%></a>
 					<%}%>
 				</div>
 			</div>
