@@ -91,10 +91,21 @@ boolean bRtn = cResults.getResults(checkLogin);
 					<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 						ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
 						String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
-					<%for(CContent content : m_vContentList) {%>
+					<%
+					String backgroundImageUrl;
+					for(CContent content : m_vContentList) {
+						if (strKeyWord.toLowerCase().contains("r18")
+								|| strKeyWord.toLowerCase().contains("r-18")
+								|| strKeyWord.toLowerCase().contains("18禁")
+								|| strKeyWord.toLowerCase().contains("nsfw")) {
+							backgroundImageUrl = "/img/R-18.png_360.jpg";
+						} else {
+							backgroundImageUrl = Common.GetUrl(content.m_strFileName) + "_360.jpg";
+						}
+					%>
 
 					<div class="IllustThumb" style="height: 112px;" >
-						<div class="IllustThumbImg" style="background-image:url('<%=Common.GetUrl(content.m_strFileName)%>_360.jpg')">
+						<div class="IllustThumbImg" style="background-image:url('<%=backgroundImageUrl%>')">
 						</div>
 						<a class="IllustThumbImgMask" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>"></a>
 						<a class="IllustInfoTag" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>">#<%=strKeyWord%></a>
