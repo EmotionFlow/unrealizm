@@ -39,7 +39,7 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		<article class="Wrapper">
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
-				String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
+				String strKeyWord = cResults.m_vTagListWeekly.get(nCnt).m_strTagTxt;%>
 			<section class="CategoryListItem">
 				<header class="SearchResultTitle">
 					<a class="Keyword" href="/SearchIllustByTag<%=isApp?"App":""%>V.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
@@ -64,8 +64,8 @@ int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		<%if(cResults.selectMaxSampleGallery -cResults.selectMaxGallery >0) {%>
 		<article class="Wrapper ItemList">
 			<section id="IllustThumbList" class="IllustItemList">
-			<%for(int nCnt = cResults.selectMaxSampleGallery; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
-				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
+			<%for(int nCnt = cResults.selectMaxSampleGallery; nCnt<cResults.m_vTagListWeekly.size(); nCnt++) {
+				CTag cTag = cResults.m_vTagListWeekly.get(nCnt);%>
 				<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%>
 				<%if((nCnt+1)%15==0) {%>
 				<%@ include file="/inner/TAd728x90_mid.jsp"%>

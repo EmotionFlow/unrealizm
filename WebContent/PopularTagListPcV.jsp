@@ -84,13 +84,41 @@ boolean bRtn = cResults.getResults(checkLogin);
 				font-size: 19px;
 			}
 		</style>
+		<script>
+			function UpdateFollowTagFromTagList(nUserId, strTagTxt, thisElement) {
+				$.ajaxSingle({
+					"type": "post",
+					"data": {"UID": nUserId, "TXT": strTagTxt},
+					"url": "/api/UpdateFollowTagF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						if(data.result<0) {
+							DispMsg(data.message);
+						} else if(data.result===1) {
+							$(thisElement).children("i").removeClass('far');
+							$(thisElement).children("i").addClass('fas');
+						} else if(data.result===0) {
+							$(thisElement).children("i").removeClass('fas');
+							$(thisElement).children("i").addClass('far');
+						} else {
+							DispMsg('<%=_TEX.T("UpdateFollowTagC.ERR_NOT_LOGIN")%>>');
+						}
+					},
+					"error": function(req, stat, ex){
+						DispMsg('Connection error');
+					}
+				});
+			}
+		</script>
 
 		<article class="Wrapper ThumbList">
 			<section class="CategoryListItem">
 				<div class="IllustThumbList">
 					<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 						ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
-						String strKeyWord = cResults.m_vContentListWeekly.get(nCnt).m_strTagTxt;%>
+						String strKeyWord = cResults.m_vTagListWeekly.get(nCnt).m_strTagTxt;
+						boolean isFollowTag = cResults.m_vTagListWeekly.get(nCnt).isFollow;
+					%>
 					<%
 					String backgroundImageUrl;
 					for(CContent content : m_vContentList) {
@@ -105,11 +133,10 @@ boolean bRtn = cResults.getResults(checkLogin);
 					%>
 
 					<div class="IllustThumb" style="height: 112px;" >
-						<div class="IllustThumbImg" style="background-image:url('<%=backgroundImageUrl%>')">
-						</div>
+						<div class="IllustThumbImg" style="background-image:url('<%=backgroundImageUrl%>')"></div>
 						<a class="IllustThumbImgMask" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>"></a>
-						<a class="IllustInfoTag" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>">#<%=strKeyWord%></a>
-						<%-- <div class="IllustThumbBookmarkButton" onclick="alert('favo')"><i class="far fa-star"></i></div> --%>
+						<a class="IllustInfoTag" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>">#<%=Util.toStringHtml(strKeyWord)%></a>
+						<div class="IllustThumbBookmarkButton" onclick="UpdateFollowTagFromTagList(<%=checkLogin.m_nUserId%>, '<%=strKeyWord%>', this)"><i class="<%=isFollowTag?"fas":"far"%> fa-star"></i></div>
 					</div>
 					<%}%>
 					<%if(nCnt==8 || nCnt==17 || nCnt==26 || nCnt==35 ) {%>
@@ -123,8 +150,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%if(cResults.selectMaxSampleGallery -cResults.selectMaxGallery >0) {%>
 		<article class="Wrapper ItemList">
 			<section id="IllustThumbList" class="IllustThumbList" style="padding: 0;">
-			<%for(int nCnt = cResults.selectMaxSampleGallery; nCnt<cResults.m_vContentListWeekly.size(); nCnt++) {
-				CTag cTag = cResults.m_vContentListWeekly.get(nCnt);%>
+			<%for(int nCnt = cResults.selectMaxSampleGallery; nCnt<cResults.m_vTagListWeekly.size(); nCnt++) {
+				CTag cTag = cResults.m_vTagListWeekly.get(nCnt);%>
 				<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
 				<%if((nCnt+1)%15==0) {%>
 				<%@ include file="/inner/TAd728x90_mid.jsp"%>

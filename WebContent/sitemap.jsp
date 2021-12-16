@@ -30,7 +30,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<changefreq>daily</changefreq>
 		<priority>0.5</priority>
 	</url>
-	<%for(CTag tag : cResults.m_vContentListWeekly) {%>
+	<%for(CTag tag : cResults.m_vTagListWeekly) {%>
 	<url>
 		<loc>https://poipiku.com/SearchIllustByTagPcV.jsp?hl=<%=lang%>&amp;KWD=<%=URLEncoder.encode(tag.m_strTagTxt, "UTF-8")%></loc>
 		<lastmod><%=NOW%></lastmod>
