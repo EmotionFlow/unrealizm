@@ -48,14 +48,15 @@
 						} else if(info_type === <%=Common.NOTIFICATION_TYPE_GIFT%>) {
 							swal.fire({
 								html: `
-								<h2 style="color: #3498db;">他のユーザーからあなた宛に<br>ポイパスチケットが届きました。</h2>
+								<h2 style="color: #3498db;">他のユーザーからあなた宛に<br>ポイパスチケットのおふせが届きました。</h2>
 								<ul style="font-size: 14px;
 											text-align: left;
 											margin-block-start: 0.5em;
 											padding-inline-start: 20px;">
-								<li>ポイパス未加入の方は、今月末までポイパスがONになります</li>
-								<li>ポイパス定期購入中の方は、来月以降１ヶ月分、課金が0円になります</li>
-								<li>ポイパスの設定は設定画面から確認できます</li>
+								<li>ポイパス未加入の方は、今月末までポイパスがONになります。翌月チケットのストックがなければ、自動でポイパスがOFFになります。</li>
+								<li>おふせを受け取ったことにより請求や課金が発生することはありません。</li>
+								<li>ポイパス定期購入中の方は、来月以降１ヶ月分、課金が0円になります。</li>
+								<li>ポイパスの設定は設定画面から確認できます。</li>
 								</ul>
 								`,
 								showCloseButton: true,
