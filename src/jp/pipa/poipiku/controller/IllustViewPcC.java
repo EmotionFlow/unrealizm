@@ -85,13 +85,18 @@ public final class IllustViewPcC {
 			// owner
 			m_bOwner = (ownerUserId == checkLogin.m_nUserId);
 
-			sql = "SELECT max(content_id) FROM contents_0000 WHERE user_id=?"
+			// max(content_id)としていないのは、
+			// 特定のuser_idでは、非常に遅い最適化がされてしまうため。
+			latestContentId = -1;
+			sql = "SELECT content_id FROM contents_0000 WHERE user_id=?"
 					+ (!m_bOwner ? " AND open_id<>2" : "");
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, ownerUserId);
 			resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				latestContentId = resultSet.getInt(1);
+			while (resultSet.next()) {
+				if (resultSet.getInt(1) > latestContentId) {
+					latestContentId = resultSet.getInt(1);
+				}
 			}
 
 			if (contentId <= 0) contentId = latestContentId;
