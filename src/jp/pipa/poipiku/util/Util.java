@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -391,53 +390,44 @@ public final class Util {
 		return strSrc.substring(0, nNum);
 	}
 
-	public static String poipiku_336x280_sp_mid(CheckLogin checkLogin) {
+	// 無限スクロール可能広告枠
+	public static String poipiku_336x280_sp_mid(CheckLogin checkLogin, int adId) {
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 
 		sbRtn.append("<div class=\"SideBarMid\">");
-		int nRand = (int)(Math.random()*10000);
+//		int nRand = (int)(Math.random()*10000);
 
 		// SB Ad
-//		if(checkLogin.m_nLangId==1) {	// 国内
-//			if(Math.random()>0.8) {	// 男性
-//				sbRtn.append(String.format("<div data-cptid=\"1508582-%d\">", nRand));
-//				sbRtn.append("<script>");
-//				sbRtn.append("gnshbrequest.cmd.push(function() {");
-//				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508582\", \"[data-cptid='1508582-%d']\");", nRand));
-//				sbRtn.append("});");
-//				sbRtn.append("</script>");
-//				sbRtn.append("</div>");
-//			} else {	// 女性
-//				sbRtn.append(String.format("<div data-cptid=\"1508583-%d\">", nRand));
-//				sbRtn.append("<script>");
-//				sbRtn.append("gnshbrequest.cmd.push(function() {");
-//				sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508583\", \"[data-cptid='1508583-%d']\");", nRand));
-//				sbRtn.append("});");
-//				sbRtn.append("</script>");
-//				sbRtn.append("</div>");
-//			}
-//		} else {	// 海外
-//			sbRtn.append(String.format("<div data-cptid=\"1508574-%d\">", nRand));
-//			sbRtn.append("<script>");
-//			sbRtn.append("gnshbrequest.cmd.push(function() {");
-//			sbRtn.append(String.format("gnshbrequest.applyPassback(\"1508574\", \"[data-cptid='1508574-%d']\");", nRand));
-//			sbRtn.append("});");
-//			sbRtn.append("</script>");
-//			sbRtn.append("</div>");
-//		}
+		if(adId==Common.AD_ID_ALL) {	// 一般
+			if(checkLogin.m_nLangId==1) {	// 国内
+				if(Math.random()>0.8) {	// 男性
+					sbRtn.append("<iframe scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" src=\"/ad/g_d_m.html\"></iframe>");
+				} else {	// 女性
+					sbRtn.append("<iframe scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" src=\"/ad/g_d_f.html\"></iframe>");
+				}
+			} else {	// 海外
+				sbRtn.append("<iframe scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" src=\"/ad/g_f.html\"></iframe>");
+			}
+		} else {	// R18
+			if(Math.random()>0.8) {	// 男性
+				sbRtn.append("<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/587/a1508587.js\"></script>");
+			} else {	// 女性
+				sbRtn.append("<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/588/a1508588.js\"></script>");
+			}
+		}
 
 		// AdManager
-		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
-		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
-		sbRtn.append("<script>");
-		sbRtn.append("googletag.cmd.push(function() {");
-		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
-		sbRtn.append("googletag.enableServices();");
-		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
-		sbRtn.append("});");
-		sbRtn.append("</script>");
-		sbRtn.append("</div>");
+//		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
+//		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
+//		sbRtn.append("<script>");
+//		sbRtn.append("googletag.cmd.push(function() {");
+//		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
+//		sbRtn.append("googletag.enableServices();");
+//		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
+//		sbRtn.append("});");
+//		sbRtn.append("</script>");
+//		sbRtn.append("</div>");
 
 		sbRtn.append("</div>");
 		return sbRtn.toString();

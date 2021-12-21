@@ -16,7 +16,7 @@ for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
 	CContent cContent = cResults.contentList.get(nCnt);
 	sbHtml.append(CCnv.Content2Html(cContent, checkLogin.m_nUserId, cResults.mode, _TEX, vResult, cResults.viewMode, CCnv.SP_MODE_APP));
 	if(nCnt==5 && bSmartPhone) {
-		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
+		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 	}
 }
 %>{
