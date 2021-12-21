@@ -5,6 +5,7 @@ import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.SlackNotifier;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -80,18 +81,17 @@ public final class PassportSubscription {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			sql = "SELECT * FROM passport_subscriptions WHERE user_id=? ORDER BY subscription_datetime DESC LIMIT 1";
+			sql = "SELECT * FROM passport_subscriptions WHERE user_id=? AND order_id>0 ORDER BY subscription_datetime DESC LIMIT 1";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, checkLogin.m_nUserId);
 			resultSet = statement.executeQuery();
 
-			if(resultSet.next()){
+			if (resultSet.next()){
 				orderId = resultSet.getInt("order_id");
 				subscriptionAt = resultSet.getTimestamp("subscription_datetime");
 				cancelAt = resultSet.getTimestamp("cancel_datetime");
 				exists = true;
 			}
-
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
