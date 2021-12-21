@@ -292,6 +292,7 @@ public final class PassportSubscription {
 	}
 
 	public boolean cancel() {
+		Log.d("サブスク解除開始");
 		if(cancelAt != null){
 			Log.d("解約済み");
 			errorKind = ErrorKind.DoRetry;
@@ -304,6 +305,7 @@ public final class PassportSubscription {
 
 		try {
 			// 定期課金キャンセル
+			Log.d("EpsilonAPI");
 			CardSettlement cardSettlement = new CardSettlementEpsilon(userId);
 			boolean authorizeResult = cardSettlement.cancelSubscription(orderId);
 			if (!authorizeResult) {
@@ -313,6 +315,7 @@ public final class PassportSubscription {
 			}
 
 			// update passport_subscriptions
+			Log.d("update passport_subscriptions");
 			cConn = DatabaseUtil.dataSource.getConnection();
 			strSql = "UPDATE passport_subscriptions SET cancel_datetime=current_timestamp WHERE user_id=? AND order_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -323,6 +326,7 @@ public final class PassportSubscription {
 			cConn.close();cConn=null;
 
 			errorKind = ErrorKind.None;
+			Log.d("サブスク解除完了");
 
 		} catch(Exception e) {
 			Log.d(strSql);
