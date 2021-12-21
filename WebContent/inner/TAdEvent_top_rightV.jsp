@@ -25,7 +25,7 @@ $(function(){
 </script>
 <ul class="EventItemList">
 	<li class="EventItem">
-		<a class="EventBanner NoBgBlue" style="padding: 5px; overflow: hidden;" href="/NewArrivalAppV.jsp?ID=19">
+		<a class="EventBanner" style="padding: 5px; overflow: hidden; background-color: #ff0000;" href="/NewArrivalAppV.jsp?ID=19">
 			<div style="text-align: center; font-size: 20px; line-height: 30px;"><%=_TEX.T("Category.LimitedTime")%></div>
 			<div style="text-align: center; font-size: 30px; font-weight: bold; line-height: 52px"><%=_TEX.T("Category.C19")%></div>
 		</a>
