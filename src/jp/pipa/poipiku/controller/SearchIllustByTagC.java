@@ -10,28 +10,35 @@ import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 public final class SearchIllustByTagC {
-	public String m_strKeyword = "";
-	public int m_nPage = 0;
-	public int m_nGenreId = -1;
+	public String keyword = "";
+	public int genreId = -1;
+	public int page = 0;
+	public int mode = CCnv.MODE_PC;
+	public int startId = -1;
+	public int viewMode = CCnv.VIEW_LIST;
 
-	public void getParam(HttpServletRequest cRequest) {
+	public void getParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_strKeyword	= Common.TrimAll(cRequest.getParameter("KWD"));
-			m_nGenreId		= Util.toInt(cRequest.getParameter("GD"));
-			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
+			request.setCharacterEncoding("UTF-8");
+			keyword = Common.TrimAll(request.getParameter("KWD"));
+			genreId = Util.toInt(request.getParameter("GD"));
+			page = Math.max(Util.toInt(request.getParameter("PG")), 0);
+			mode = Util.toInt(request.getParameter("MD"));
+			startId = Util.toInt(request.getParameter("SD"));
+			viewMode = Util.toInt(request.getParameter("VD"));
 		} catch(Exception e) {
-			m_strKeyword = "";
-			m_nPage = 0;
+			keyword = "";
+			page = 0;
 		}
 	}
 
-	public ArrayList<CContent> contentList = new ArrayList<CContent>();
-	public int SELECT_MAX_GALLERY =15;
+	public ArrayList<CContent> contentList = new ArrayList<>();
+	public int selectMaxGallery =15;
 	public int contentsNum = 0;
 	public boolean following = false;
 	public String m_strRepFileName = "";
 	public Genre genre = new Genre();
+	public int lastContentId = -1;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -45,18 +52,20 @@ public final class SearchIllustByTagC {
 		String strSql = "";
 		int idx = 1;
 
-		if(m_strKeyword.isEmpty() && m_nGenreId<1) return false;
+		Log.d(String.format("kw: %s, sid:%d",keyword, startId));
+
+		if(keyword.isEmpty() && genreId <1) return false;
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			// Check Following
-			strSql = "SELECT * FROM follow_tags_0000 WHERE user_id=? AND tag_txt=?";
+			strSql = "SELECT 1 FROM follow_tags_0000 WHERE user_id=? AND tag_txt=?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId);
-			statement.setString(idx++, m_strKeyword);
+			statement.setString(idx++, keyword);
 			resultSet = statement.executeQuery();
 			following = (resultSet.next());
 			resultSet.close();resultSet=null;
@@ -84,26 +93,29 @@ public final class SearchIllustByTagC {
 				}
 			}
 
-			if(m_nGenreId<1) {
+			if(genreId <1) {
 				// genre id
 				strSql = "SELECT genre_id FROM genres WHERE genre_name=?";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setString(idx++, m_strKeyword);
+				statement.setString(idx++, keyword);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
-					m_nGenreId = resultSet.getInt("genre_id");
+					genreId = resultSet.getInt("genre_id");
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}
 
-			String strSqlFromWhere;
+			final String strCondStart = (startId >0)?"AND c.content_id<? ":"";
+
+			final String strSqlFromWhere;
 			strSqlFromWhere = "FROM contents_0000 c "
 					+ "INNER JOIN tags_0000 t ON c.content_id=t.content_id "
 					+ "WHERE open_id<>2 "
 					+ "AND t.genre_id=? AND tag_type=1 "
 					+ "AND safe_filter<=? "
+					+ strCondStart
 					+ strCondBlockUser
 					+ strCondBlocedkUser
 					+ strCondMute;
@@ -113,24 +125,19 @@ public final class SearchIllustByTagC {
 				strSql = "SELECT COUNT(*) " + strSqlFromWhere;
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setInt(idx++, m_nGenreId);
+				statement.setInt(idx++, genreId);
 				statement.setInt(idx++, checkLogin.m_nSafeFilter);
-				if(!strCondBlockUser.isEmpty()) {
-					statement.setInt(idx++, checkLogin.m_nUserId);
-				}
-				if(!strCondBlocedkUser.isEmpty()) {
-					statement.setInt(idx++, checkLogin.m_nUserId);
-				}
-				if(!strCondMute.isEmpty()) {
-					statement.setString(idx++, strMuteKeyword);
-				}
+				if (!strCondStart.isEmpty()) statement.setInt(idx++, startId);
+				if (!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);
+				if (!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);
+				if (!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					contentsNum = resultSet.getInt(1);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				genre = Util.getGenre(m_nGenreId);
+				genre = Util.getGenre(genreId);
 			}
 
 			// contents
@@ -138,29 +145,25 @@ public final class SearchIllustByTagC {
 					+ "ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, m_nGenreId);
+			statement.setInt(idx++, genreId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
-			if(!strCondBlockUser.isEmpty()) {
-				statement.setInt(idx++, checkLogin.m_nUserId);
-			}
-			if(!strCondBlocedkUser.isEmpty()) {
-				statement.setInt(idx++, checkLogin.m_nUserId);
-			}
-			if(!strCondMute.isEmpty()) {
-				statement.setString(idx++, strMuteKeyword);
-			}
-			statement.setInt(idx++, SELECT_MAX_GALLERY*m_nPage);
-			statement.setInt(idx++, SELECT_MAX_GALLERY);
+			if (!strCondStart.isEmpty()) statement.setInt(idx++, startId);
+			if (!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);
+			if (!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);
+			if (!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
+			statement.setInt(idx++, startId > 0 ? 0 :page * selectMaxGallery);
+			statement.setInt(idx++, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				CContent cContent = new CContent(resultSet);
-				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
-				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
-				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
-					m_strRepFileName = cContent.m_strFileName;
+				CContent content = new CContent(resultSet);
+				CacheUsers0000.User user = users.getUser(content.m_nUserId);
+				content.m_cUser.m_strNickName = Util.toString(user.nickName);
+				content.m_cUser.m_strFileName = Util.toString(user.fileName);
+				if (!bContentOnly && m_strRepFileName.isEmpty() && content.m_nPublishId == Common.PUBLISH_ID_ALL) {
+					m_strRepFileName = content.m_strFileName;
 				}
-				contentList.add(cContent);
+				lastContentId = content.m_nContentId;
+				contentList.add(content);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -170,9 +173,9 @@ public final class SearchIllustByTagC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
 		return bResult;
 	}

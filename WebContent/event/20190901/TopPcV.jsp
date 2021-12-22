@@ -11,12 +11,12 @@ if(!bSmartPhone) {
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
-cResults.m_strKeyword = "お題ルーレット";
-cResults.SELECT_MAX_GALLERY = 45;
+cResults.keyword = "お題ルーレット";
+cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
-String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.contentsNum);
+String strEncodedKeyword = URLEncoder.encode(cResults.keyword, "UTF-8");
+String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.keyword) + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.keyword, cResults.contentsNum);
 String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 %>
 <!DOCTYPE html>
@@ -131,13 +131,13 @@ String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 
 		<article class="Wrapper ThumbList">
 			<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px;">
-				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.keyword)%></h2>
 				<%if(!checkLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.following) {%>
-				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else {%>
-				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%}%>
 			</header>
 
@@ -153,7 +153,7 @@ String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchIllustByTagPcV.jsp", String.format("&KWD=%s", strEncodedKeyword) , cResults.m_nPage, cResults.contentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/SearchIllustByTagPcV.jsp", String.format("&KWD=%s", strEncodedKeyword) , cResults.page, cResults.contentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 

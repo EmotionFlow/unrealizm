@@ -5,17 +5,17 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
-cResults.m_strKeyword = "お題ルーレット";
+cResults.keyword = "お題ルーレット";
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(checkLogin);
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
-String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_strKeyword) + " | " + _TEX.T("THeader.Title");
+String strEncodedKeyword = URLEncoder.encode(cResults.keyword, "UTF-8");
+String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.keyword) + " | " + _TEX.T("THeader.Title");
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(cResults.m_strKeyword)%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=Util.toDescString(cResults.keyword)%></title>
 
 		<script>
 			var g_nPage = 1;
@@ -27,7 +27,7 @@ String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_st
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.keyword, "UTF-8")%>")},
 					"url": "/f/SearchIllustByTagF.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -151,13 +151,13 @@ String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), cResults.m_st
 
 		<article class="Wrapper">
 			<header class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
-				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.keyword)%></h2>
 				<%if(!checkLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.following) {%>
-				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else {%>
-				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%}%>
 			</header>
 

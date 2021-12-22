@@ -9,6 +9,8 @@ if(!bSmartPhone) {
 	return;
 }
 
+if (isApp) checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+
 NewArrivalC cResults = new NewArrivalC();
 cResults.selectMaxGallery = 10;
 cResults.getParam(request);
@@ -53,10 +55,12 @@ if(cResults.categoryId >= 0) {
 		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 
 		<script type="text/javascript">
+		<%if(!isApp){%>
 		$(function(){
 			$('#MenuNew').addClass('Selected');
 			$('#MenuRecent').addClass('Selected');
 		});
+		<%}%>
 
 		let lastContentId = <%=cResults.contentList.size()>0 ? cResults.contentList.get(cResults.contentList.size()-1).m_nContentId : -1%>;
 		let page = 0;
@@ -156,7 +160,6 @@ if(cResults.categoryId >= 0) {
 				<%}%>
 			</section>
 		</article>
-
 		<%@ include file="/inner/TShowDetail.jsp"%>
 	</body>
 	<%@include file="/inner/PolyfillIntersectionObserver.jsp"%>

@@ -2,10 +2,16 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
+
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/SearchIllustByTagGridPcV.jsp").forward(request,response);
+	return;
+}
 
 SearchIllustByTagC results = new SearchIllustByTagC();
 results.getParam(request);
-results.selectMaxGallery = 48;
+results.selectMaxGallery = 45;
 boolean bRtn = results.getResults(checkLogin);
 String strEncodedKeyword = URLEncoder.encode(results.keyword, "UTF-8");
 String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), results.keyword) + " | " + _TEX.T("THeader.Title");
@@ -17,7 +23,7 @@ String strFileUrl = results.m_strRepFileName;
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
+		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<meta name="twitter:site" content="@pipajp" />
 		<meta property="og:url" content="<%=strUrl%>" />
@@ -71,33 +77,38 @@ String strFileUrl = results.m_strRepFileName;
 				<div class="SearchGenreMeta">
 					<div class="SearchGenreTitle">
 						<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(results.genre.genreImage)%>');" ></span>
-						<h2 class="GenreTitle"><%=Util.toStringHtml(results.genre.genreName)%></h2>
+						<h2 class="GenreTitle">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
 					</div>
 					<div class="SearchGenreDesc"><%=Util.toStringHtml(results.genre.genreDesc)%></div>
 				</div>
 				<div class="SearchGenreCmd">
 					<%if(!checkLogin.m_bLogin) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-tag"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
 					<%} else if(!results.following) {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="far fa-star"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
 					<%} else {%>
-					<a class="CmdBtn BtnBase Rev TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+					<a class="CmdBtn BtnBase Rev TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(results.keyword)%>')"><i class="far fa-star"></i> <%=_TEX.T("IllustV.Tag.UnFollow")%></a>
 					<%}%>
 				</div>
 			</div>
 			<div class="SearchGenreDetail showmore"><%=Common.AutoLinkHtml(Util.toStringHtml(results.genre.genreDetail), CCnv.SP_MODE_WVIEW)%></div>
 		</header>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper ThumbList">
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+			<%}%>
+
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%
 					for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
 							CContent cContent = results.contentList.get(nCnt);
 				%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-					<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-					<%if(nCnt==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 				<%}%>
 			</section>
 

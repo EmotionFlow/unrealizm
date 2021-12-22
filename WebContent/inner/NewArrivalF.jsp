@@ -4,6 +4,8 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
+if (isApp) checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+
 NewArrivalC cResults = new NewArrivalC();
 cResults.selectMaxGallery = 30;
 cResults.getParam(request);

@@ -6,7 +6,7 @@ checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
-cResults.m_strKeyword = "私の漫画を動画にしたい";
+cResults.keyword = "私の漫画を動画にしたい";
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
@@ -25,7 +25,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.keyword, "UTF-8")%>")},
 					"url": "/f/SearchIllustByTagF.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -225,13 +225,13 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<article class="Wrapper">
 			<header class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
-				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.keyword)%></h2>
 				<%if(!checkLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.following) {%>
-				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else {%>
-				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%}%>
 			</header>
 

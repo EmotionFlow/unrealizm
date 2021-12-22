@@ -6,10 +6,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 SearchIllustByTagC cResults = new SearchIllustByTagC();
 cResults.getParam(request);
-cResults.m_strKeyword = "お題ルーレット";
-cResults.SELECT_MAX_GALLERY = 36;
+cResults.keyword = "お題ルーレット";
+cResults.selectMaxGallery = 36;
 boolean bRtn = cResults.getResults(checkLogin);
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+String strEncodedKeyword = URLEncoder.encode(cResults.keyword, "UTF-8");
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" : decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"), "MD" : <%=CCnv.MODE_PC%>},
+					"data": {"PG" : g_nPage, "KWD" : decodeURIComponent("<%=URLEncoder.encode(cResults.keyword, "UTF-8")%>"), "MD" : <%=CCnv.MODE_PC%>},
 					"dataType": "json",
 					"url": "/f/SearchIllustByTagGridF.jsp",
 					"success": function(data) {
@@ -285,13 +285,13 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 		<article class="Wrapper GridList">
 			<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
-				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.keyword)%></h2>
 				<%if(!checkLogin.m_bLogin) {%>
 				<a class="BtnBase TitleCmdFollow" href="/"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else if(!cResults.following) {%>
-				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%} else {%>
-				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.m_strKeyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
+				<a class="BtnBase TitleCmdFollow Selected" href="javascript:void(0)" onclick="UpdateFollowTag(<%=checkLogin.m_nUserId%>, '<%=Util.toStringHtml(cResults.keyword)%>')"><i class="fas fa-star"></i> <%=_TEX.T("IllustV.Favo")%></a>
 				<%}%>
 			</header>
 
