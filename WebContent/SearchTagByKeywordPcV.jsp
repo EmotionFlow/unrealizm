@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
+boolean isApp = false;
+
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
@@ -39,40 +41,6 @@ g_strSearchWord = results.m_strKeyword;
 			#HeaderSearchWrapper {display: block;}
 			<%}%>
 		</style>
-		<style>
-            .IllustThumb {
-                margin: 3px 0 3px <%=bSmartPhone ? 6 : 14%>px ;
-            }
-            .IllustThumbImg{
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-            .IllustThumbImgMask {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: 0;
-                background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15));
-            }
-            .IllustInfoTag {
-                position: absolute;
-                top: 64px;
-                left: 1px;
-                color: #ffffff;
-                background: rgba(0,0,0,0.4);
-                padding: 2px 4px 2px 4px;
-                border-radius: 7px;
-            }
-            .IllustThumbBookmarkButton {
-                position: absolute;
-                top: 3px;
-                right: 5px;
-                font-size: 19px;
-            }
-		</style>
-
 	</head>
 
 	<body>
@@ -92,6 +60,7 @@ g_strSearchWord = results.m_strKeyword;
 			<section id="IllustThumbList" class="IllustItemList">
 				<%
 				String backgroundImageUrl;
+				String thumbnailFileName;
 				CTag tag;
 				String strKeyWord;
 				boolean isFollowTag;
@@ -99,32 +68,9 @@ g_strSearchWord = results.m_strKeyword;
 					tag = results.tagList.get(nCnt);
 					strKeyWord = tag.m_strTagTxt;
 					isFollowTag = tag.isFollow;
-					if (strKeyWord.toLowerCase().contains("r18")
-							|| strKeyWord.toLowerCase().contains("r-18")
-							|| strKeyWord.toLowerCase().contains("18禁")
-							|| strKeyWord.toLowerCase().contains("nsfw")) {
-						backgroundImageUrl = "/img/R-18.png_360.jpg";
-					} else {
-						backgroundImageUrl = Common.GetUrl(results.sampleContentFile.get(nCnt)) + "_360.jpg";
-					}
-
+					thumbnailFileName = results.sampleContentFile.get(nCnt);
 				%>
-				<div class="IllustThumb" style="height: <%=bSmartPhone ? 112 : 142%>px;" >
-					<div class="IllustThumbImg" style="background-image:url('<%=backgroundImageUrl%>')"></div>
-					<a class="IllustThumbImgMask" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>"></a>
-					<a class="IllustInfoTag" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>">#<%=Util.toStringHtml(strKeyWord)%></a>
-					<div class="IllustThumbBookmarkButton" onclick="UpdateFollowTagFromTagList(<%=checkLogin.m_nUserId%>, '<%=strKeyWord%>', this)"><i class="<%=isFollowTag?"fas":"far"%> fa-star"></i></div>
-				</div>
-
-				<%if(bSmartPhone){%>
-				<%if(nCnt==8 || nCnt==17 || nCnt==26 || nCnt==35) {%>
-				<%@ include file="/inner/TAd728x90_mid.jsp"%>
-				<%}%>
-				<%}else{%>
-				<%if(nCnt==7 || nCnt==15) {%>
-				<%@ include file="/inner/TAd728x90_mid.jsp"%>
-				<%}%>
-				<%}%>
+				<%@include file="inner/TTagThumb.jsp"%>
 
 				<%}%>
 			</section>
