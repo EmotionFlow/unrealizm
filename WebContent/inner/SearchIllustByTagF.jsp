@@ -22,7 +22,7 @@ for (nCnt = 0; nCnt < results.contentList.size(); nCnt++) {
 	sbHtml.append(CCnv.Content2Html(content, checkLogin.m_nUserId, results.mode, _TEX, emojiList, results.viewMode, nSpMode));
 
 	if ((nCnt == 2 || nCnt == 7 || nCnt == 12 || nCnt == 17 || nCnt == 22 || nCnt == 27) && bSmartPhone){
-		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
+		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 	}
 }
 %>{"end_id":<%=results.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
