@@ -52,8 +52,6 @@ public final class SearchIllustByTagC {
 		String strSql = "";
 		int idx = 1;
 
-		Log.d(String.format("kw: %s, sid:%d",keyword, startId));
-
 		if(keyword.isEmpty() && genreId <1) return false;
 
 		try {
