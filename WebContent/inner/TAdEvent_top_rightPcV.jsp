@@ -50,9 +50,17 @@ $(function(){
 -->
 
 	<li class="EventItem">
-		<a class="EventBanner NoBgBlue" style="padding: 5px;" href="/NewArrivalPcV.jsp?CD=32">
-			<div style="text-align: center; font-size: 20px; line-height: 30px;"><%=_TEX.T("Category.New")%></div>
-			<div style="text-align: center; font-size: 40px; font-weight: bold; line-height: 52px">「<%=_TEX.T("Category.C32")%>」</div>
+		<a class="EventBanner" style="padding: 5px; overflow: hidden; background-color: #ff0000;" href="/NewArrivalPcV.jsp?CD=19">
+			<div style="text-align: center; font-size: 20px; line-height: 30px;"><%=_TEX.T("Category.LimitedTime")%></div>
+			<div style="text-align: center; font-size: 30px; font-weight: bold; line-height: 52px"><%=_TEX.T("Category.C19")%></div>
+		</a>
+	</li>
+
+	<li class="EventItem">
+		<a class="EventBanner" style="padding: 5px; overflow: hidden; background-color: #18a926;" href="https://kakenee.com/">
+			<div style="text-align: center; font-size: 15px; line-height: 18px;">小説執筆応援プラットフォーム</div>
+			<div style="text-align: center; font-size: 35px; font-weight: bold; line-height: 42px">Kakenee</div>
+			<div style="text-align: center; font-size: 20px; line-height: 22px;">公開中</div>
 		</a>
 	</li>
 

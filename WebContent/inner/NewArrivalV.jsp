@@ -155,7 +155,7 @@ if(cResults.categoryId >= 0) {
 				<% for (int cnt=0; cnt<cResults.contentList.size(); cnt++) { %>
 					<%=CCnv.Content2Html(cResults.contentList.get(cnt), checkLogin.m_nUserId, cResults.mode, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 					<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
-						<%=Util.poipiku_336x280_sp_mid(checkLogin)%>
+						<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 					<%}%>
 				<%}%>
 			</section>

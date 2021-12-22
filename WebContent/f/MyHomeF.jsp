@@ -29,7 +29,7 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 				sbHtml.append(CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW));
 			}
 		} else if (nCnt == 5 && bSmartPhone){
-			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
+			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 		} else if (nCnt == 6) {
 			sbHtml.append("<h2 class=\"IllustItemListRecommendedTitle\">").append(_TEX.T("MyHome.Recommended.RequestCreators")).append("</h2>");
 			for (CUser recommendedUser: cResults.recommendedRequestCreatorList) {
@@ -38,12 +38,12 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 		}
 	} else {
 		if ((nCnt == 2 || nCnt == 7) && bSmartPhone){
-			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
+			sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 		}
 	}
 }
 if (nCnt < 7 && bSmartPhone){
-	sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
+	sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 }
 
 %>{"end_id":<%=cResults.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}

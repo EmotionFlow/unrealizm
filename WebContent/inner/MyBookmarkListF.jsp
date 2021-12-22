@@ -20,7 +20,7 @@ for (int nCnt = 0; nCnt < cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);
 	sbHtml.append(CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX));
 	if(nCnt==8) {
-		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin));
+		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 	}
 }
 
