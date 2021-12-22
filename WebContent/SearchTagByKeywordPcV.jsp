@@ -2,25 +2,20 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
-SearchTagByKeywordC cResults = new SearchTagByKeywordC();
-cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 45;
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = "/";
-	response.sendRedirect("/" + strKeywordHan + "/");
-	return;
-}
-boolean bRtn = cResults.getResults(checkLogin);
-g_strSearchWord = cResults.m_strKeyword;
+SearchTagByKeywordC results = new SearchTagByKeywordC();
+results.getParam(request);
+results.selectMaxGallery = 45;
+results.getResults(checkLogin);
+g_strSearchWord = results.m_strKeyword;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/ad/TAdSearchUserPcHeader.jsp"%>
-		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchTagByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
+		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchTagByKeyword.Title.Desc"), results.m_strKeyword))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchTagByKeyword.Title")%></title>
 
 		<script type="text/javascript">
@@ -44,6 +39,40 @@ g_strSearchWord = cResults.m_strKeyword;
 			#HeaderSearchWrapper {display: block;}
 			<%}%>
 		</style>
+		<style>
+            .IllustThumb {
+                margin: 3px 0 3px <%=bSmartPhone ? 6 : 14%>px ;
+            }
+            .IllustThumbImg{
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .IllustThumbImgMask {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-image: linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15));
+            }
+            .IllustInfoTag {
+                position: absolute;
+                top: 64px;
+                left: 1px;
+                color: #ffffff;
+                background: rgba(0,0,0,0.4);
+                padding: 2px 4px 2px 4px;
+                border-radius: 7px;
+            }
+            .IllustThumbBookmarkButton {
+                position: absolute;
+                top: 3px;
+                right: 5px;
+                font-size: 19px;
+            }
+		</style>
+
 	</head>
 
 	<body>
@@ -51,9 +80,9 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-				<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(results.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(results.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(results.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
 
@@ -61,21 +90,47 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<article class="Wrapper ItemList">
 			<section id="IllustThumbList" class="IllustItemList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CTag cTag = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
-					<%if(Util.isSmartPhone(request)) {%>
-						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
-					<%} else {%>
-						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_1.jsp"%><%}%>
-						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdSearchUserPc728x90_mid_2.jsp"%><%}%>
-					<%}%>
+				<%
+				String backgroundImageUrl;
+				CTag tag;
+				String strKeyWord;
+				boolean isFollowTag;
+				for(int nCnt = 0; nCnt< results.tagList.size(); nCnt++) {
+					tag = results.tagList.get(nCnt);
+					strKeyWord = tag.m_strTagTxt;
+					isFollowTag = tag.isFollow;
+					if (strKeyWord.toLowerCase().contains("r18")
+							|| strKeyWord.toLowerCase().contains("r-18")
+							|| strKeyWord.toLowerCase().contains("18禁")
+							|| strKeyWord.toLowerCase().contains("nsfw")) {
+						backgroundImageUrl = "/img/R-18.png_360.jpg";
+					} else {
+						backgroundImageUrl = Common.GetUrl(results.sampleContentFile.get(nCnt)) + "_360.jpg";
+					}
+
+				%>
+				<div class="IllustThumb" style="height: <%=bSmartPhone ? 112 : 142%>px;" >
+					<div class="IllustThumbImg" style="background-image:url('<%=backgroundImageUrl%>')"></div>
+					<a class="IllustThumbImgMask" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>"></a>
+					<a class="IllustInfoTag" href="/SearchIllustByTagPcV.jsp?KWD=<%=strKeyWord%>">#<%=Util.toStringHtml(strKeyWord)%></a>
+					<div class="IllustThumbBookmarkButton" onclick="UpdateFollowTagFromTagList(<%=checkLogin.m_nUserId%>, '<%=strKeyWord%>', this)"><i class="<%=isFollowTag?"fas":"far"%> fa-star"></i></div>
+				</div>
+
+				<%if(bSmartPhone){%>
+				<%if(nCnt==8 || nCnt==17 || nCnt==26 || nCnt==35) {%>
+				<%@ include file="/inner/TAd728x90_mid.jsp"%>
+				<%}%>
+				<%}else{%>
+				<%if(nCnt==7 || nCnt==15) {%>
+				<%@ include file="/inner/TAd728x90_mid.jsp"%>
+				<%}%>
+				<%}%>
+
 				<%}%>
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchTagByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/SearchTagByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(results.m_strKeyword, "UTF-8"), results.m_nPage, results.contentsNum, results.selectMaxGallery)%>
 			</nav>
 		</article>
 

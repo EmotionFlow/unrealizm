@@ -74,8 +74,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<article class="Wrapper">
 			<section id="IllustThumbList" class="IllustItemList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CTag cTag = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.tagList.size(); nCnt++) {
+					CTag cTag = cResults.tagList.get(nCnt);%>
 					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>

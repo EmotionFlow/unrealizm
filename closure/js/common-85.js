@@ -401,6 +401,31 @@ function UpdateFollowTag(nUserId, strTagTxt) {
 	});
 }
 
+function UpdateFollowTagFromTagList(nUserId, strTagTxt, thisElement) {
+	$.ajaxSingle({
+		"type": "post",
+		"data": {"UID": nUserId, "TXT": strTagTxt},
+		"url": "/api/UpdateFollowTagF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			if(data.result<0) {
+				DispMsg(data.message);
+			} else if(data.result===1) {
+				$(thisElement).children("i").removeClass('far');
+				$(thisElement).children("i").addClass('fas');
+			} else if(data.result===0) {
+				$(thisElement).children("i").removeClass('fas');
+				$(thisElement).children("i").addClass('far');
+			} else {
+				DispMsg('<%=_TEX.T("UpdateFollowTagC.ERR_NOT_LOGIN")%>>');
+			}
+		},
+		"error": function(req, stat, ex){
+			DispMsg('Connection error');
+		}
+	});
+}
+
 function UpdateBookmark(user_id, content_id) {
 	$.ajaxSingle({
 		"type": "post",

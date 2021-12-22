@@ -3,14 +3,12 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class SearchTagByKeywordC {
+public final class SearchTagByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
 	public void getParam(HttpServletRequest cRequest) {
@@ -25,9 +23,10 @@ public class SearchTagByKeywordC {
 	}
 
 
-	public int SELECT_MAX_GALLERY = 36;
-	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
-	public int m_nContentsNum = 0;
+	public int selectMaxGallery = 36;
+	public ArrayList<CTag> tagList = new ArrayList<>();
+	public ArrayList<String> sampleContentFile = new ArrayList<>();
+	public int contentsNum = 0;
 	private static final String PG_HINT = "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */";
 
 
@@ -37,55 +36,65 @@ public class SearchTagByKeywordC {
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 
 		if(m_strKeyword.isEmpty()) return bResult;
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
-			final String strSqlFromWhere = PG_HINT + " SELECT tag_txt "
+			sql = PG_HINT + " SELECT tag_txt, genre_id "
 					+ "FROM tags_0000 "
-					+ "WHERE tag_txt &@~ ? GROUP BY tag_txt ";
-			// NEW ARRIVAL
-			if(!bContentOnly) {
-				strSql = "SELECT COUNT(tag_txt) FROM (" + strSqlFromWhere + ") as T";
-				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, m_strKeyword);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-			}
-
-			strSql = strSqlFromWhere
+					+ "WHERE genre_id>0 AND tag_txt &@~ ? GROUP BY genre_id, tag_txt "
 					+ "ORDER BY COUNT(tag_txt) DESC OFFSET ? LIMIT ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, m_strKeyword);
-			cState.setInt(2, m_nPage*SELECT_MAX_GALLERY);
-			cState.setInt(3, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CTag tag = new CTag(cResSet);
-				m_vContentList.add(tag);
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, m_strKeyword);
+			statement.setInt(2, m_nPage * selectMaxGallery);
+			statement.setInt(3, selectMaxGallery);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				CTag tag = new CTag();
+				tag.m_strTagTxt = resultSet.getString(1);
+				tag.m_nGenreId = resultSet.getInt(2);
+				tagList.add(tag);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+			
+			// sample contents filenames
+			sql = "WITH a AS (" +
+					"    SELECT content_id FROM tags_0000 WHERE genre_id = ? ORDER BY tag_id DESC LIMIT 100" +
+					" )" +
+					" SELECT file_name" +
+					" FROM contents_0000 c" +
+					"         INNER JOIN a ON a.content_id = c.content_id" +
+					" WHERE open_id <> 2" +
+					"  AND publish_id = 0" +
+					"  AND safe_filter<=?" +
+					" ORDER BY c.content_id DESC" +
+					" LIMIT 1;";
+			statement = connection.prepareStatement(sql);
+			for (CTag tag: tagList) {
+				statement.setInt(1, tag.m_nGenreId);
+				statement.setInt(2, checkLogin.m_nSafeFilter);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					sampleContentFile.add(resultSet.getString(1));
+				} else {
+					sampleContentFile.add("");
+				}
+			}
 
 			bResult = true;
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bResult;
 	}

@@ -9,6 +9,7 @@ public class CTag {
 	public int m_nTagId = -1;
 	public String m_strTagTxt = "";
 	public int m_nTypeId = -1;
+	public int m_nGenreId = -1;
 	public boolean isFollow = false;
 
 	public CTag() {}
