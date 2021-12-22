@@ -158,7 +158,7 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<% for (int cnt=0; cnt<results.contentList.size(); cnt++) { %>
 				<%=CCnv.Content2Html(results.contentList.get(cnt), checkLogin.m_nUserId, results.mode, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 				<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
-				<%=Util.poipiku_336x280_sp_mid(checkLogin)%>
+				<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 				<%}%>
 				<%}%>
 			</section>
