@@ -212,7 +212,7 @@ function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
 	strDeleteTweetMsg, strDeleteTweetYesMsg, strDeleteTweetNoMsg) {
 	Swal.fire({
 		title: '',
-		text: strCheckDeleteMsg,
+		html: strCheckDeleteMsg,
 		type: 'question',
 		showCancelButton: true,
 		confirmButtonText: strCheckDeleteYesMsg,
