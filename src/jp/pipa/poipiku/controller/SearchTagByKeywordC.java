@@ -45,19 +45,22 @@ public final class SearchTagByKeywordC {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			sql = PG_HINT + " SELECT tag_txt, genre_id "
-					+ "FROM tags_0000 "
-					+ "WHERE genre_id>0 AND tag_txt &@~ ? GROUP BY genre_id, tag_txt "
-					+ "ORDER BY COUNT(tag_txt) DESC OFFSET ? LIMIT ?";
+			sql = PG_HINT + " SELECT t.tag_txt, genre_id, f.tag_txt AS following "
+					+ "FROM tags_0000 t "
+					+ "LEFT JOIN (SELECT tag_txt FROM follow_tags_0000 WHERE user_id = ?) f ON t.tag_txt = f.tag_txt "
+					+ "WHERE genre_id>0 AND t.tag_txt &@~ ? GROUP BY genre_id, t.tag_txt, f.tag_txt "
+					+ "ORDER BY COUNT(t.tag_txt) DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(sql);
-			statement.setString(1, m_strKeyword);
-			statement.setInt(2, m_nPage * selectMaxGallery);
-			statement.setInt(3, selectMaxGallery);
+			statement.setInt(1, checkLogin.m_nUserId);
+			statement.setString(2, m_strKeyword);
+			statement.setInt(3, m_nPage * selectMaxGallery);
+			statement.setInt(4, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CTag tag = new CTag();
 				tag.m_strTagTxt = resultSet.getString(1);
 				tag.m_nGenreId = resultSet.getInt(2);
+				tag.isFollow = resultSet.getString(3) != null;
 				tagList.add(tag);
 			}
 			resultSet.close();resultSet=null;
