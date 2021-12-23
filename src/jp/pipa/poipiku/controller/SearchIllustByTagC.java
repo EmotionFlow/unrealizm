@@ -72,13 +72,13 @@ public final class SearchIllustByTagC {
 			// BLOCK USER
 			String strCondBlockUser = "";
 			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
-				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 b WHERE b.user_id=?) ";
+				strCondBlockUser = "AND c.user_id NOT IN(SELECT block_user_id FROM blocks_0000 b WHERE b.user_id=?) ";
 			}
 
 			// BLOCKED USER
 			String strCondBlocedkUser = "";
 			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
-				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 b2 WHERE b2.block_user_id=?) ";
+				strCondBlocedkUser = "AND c.user_id NOT IN(SELECT user_id FROM blocks_0000 b2 WHERE b2.block_user_id=?) ";
 			}
 
 			// MUTE KEYWORD
