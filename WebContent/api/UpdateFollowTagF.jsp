@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!class UpdateFollowTagC {
-	public static final int FAVO_MAX = 10;
+	public static final int FAVO_MAX = 15;
 	public static final int OK_INSERT = 1;
 	public static final int OK_DELETE = 0;
 	public static final int ERR_NOT_LOGIN = -1;
