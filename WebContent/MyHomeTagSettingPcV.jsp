@@ -71,8 +71,8 @@ results.getResults(checkLogin);
 						genreId = tag.m_nGenreId;
 				%>
 				<%@include file="inner/TTagThumb.jsp"%>
-
 				<%}%>
+
 			</div>
 		</article>
 

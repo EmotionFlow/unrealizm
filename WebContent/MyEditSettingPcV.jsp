@@ -49,6 +49,7 @@ HashMap<String, String> MENU = new HashMap<>();
 MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
 MENU.put("MYPAGE", _TEX.T("EditSettingV.MyPage"));
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
+MENU.put("FOLLOWTAG", _TEX.T("EditSettingV.FollowTagList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
@@ -66,6 +67,7 @@ String[][] menuOrder = {
 		"PROFILE",
 		"MYPAGE",
 		"FOLLOW",
+		"FOLLOWTAG",
 		"BLOCK",
 		"MUTEKEYWORD",
 		"TWITTER",
@@ -74,7 +76,8 @@ String[][] menuOrder = {
 		"POIPASS",
 		"CHEER",
 		"ACCOUNT",
-		"INFO"
+		"INFO",
+		"REQUEST"
 		}
 };
 %>
@@ -228,7 +231,6 @@ String[][] menuOrder = {
 							<%=getSettingMenuItem(m, MENU.get(m))%>
 						<%}%>
 					<%}%>
-					<%=getSettingMenuItem("REQUEST", MENU.get("REQUEST"))%>
 				</div>
 			</div>
 
@@ -236,113 +238,150 @@ String[][] menuOrder = {
 			<div id="SettingContent">
 			<%}%>
 
-			<%String strPageId = "";%>
+			<%
+				String strPageId = "";
+				final String selectedMenuId = cResults.m_strSelectedMenuId;
+			%>
 
 			<%strPageId = "PROFILE";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingProfileV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "MYPAGE";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMyPageV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "FOLLOW";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingFollowV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
-			<%
-			strPageId = "BLOCK";
-			%>
+			<%strPageId = "FOLLOWTAG";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingFollowTagV.jsp"%>
+				</div>
+			</div>
+			<%}%>
+
+			<%strPageId = "BLOCK";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingBlockV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "MUTEKEYWORD";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMuteKeywordV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "TWITTER";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingTwitterV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "MAIL";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMailV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "POIPASS";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingPassportV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "PAYMENT";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingPaymentV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "CHEER";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingCheerV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "ACCOUNT";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingAccountV.jsp"%>
 				</div>
 			</div>
+				<%}%>
 
 			<%strPageId = "INFO";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingInfoV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%strPageId = "REQUEST";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingRequestV.jsp"%>
 				</div>
 			</div>
+			<%}%>
 
 			<%if(!bSmartPhone){%>
 			</div>
