@@ -226,20 +226,25 @@ public class CardSettlementEpsilon extends CardSettlement {
 							return false;
 						}
 					} else {
-						creditCardIdToPay = creditCard.id;
-						if (creditCard.select()) {
-							if (!creditCard.isExist) {
-								Log.d("クレジットカード情報が見つからない");
-							} else {
-								if (!creditCard.updateLastAgentOrderId(ssi.orderNumber)) {
-									Log.d("updateLastAgentOrderId() error");
-								}
-							}
+						if (!creditCard.selectByUserIdAgentId()) {
+							Log.d("決済は成功したがクレジットカード情報のSELECTに失敗");
+							notifyErrorToSlack("決済は成功したがクレジットカード情報のSELECTに失敗");
 						}
+						if (!creditCard.isExist) {
+							Log.d("決済は成功したがクレジットカード情報が見つからない");
+							notifyErrorToSlack("決済は成功したがクレジットカード情報が見つからない");
+						}
+						if (!creditCard.updateLastAgentOrderId(ssi.orderNumber)) {
+							Log.d("決済は成功したがupdateLastAgentOrderId() error");
+							notifyErrorToSlack("決済は成功したがupdateLastAgentOrderId() error");
+						}
+						creditCardIdToPay = creditCard.id;
+						Log.d("creditcardIdToPay: " + creditCardIdToPay);
 					}
 					errorKind = ErrorKind.None;
 					return true;
 				} else {
+					notifyErrorToSlack("決済処理中にEpsilonからNGが返却された");
 					if("0".equals(settlementResultCode)) {
 						Log.d(String.format("決済NG userId=%d, contentId=%d", poipikuUserId, contentId));
 						Log.d("Code: " + settlementResultInfo.errCode);
@@ -258,7 +263,6 @@ public class CardSettlementEpsilon extends CardSettlement {
 					}
 					return false;
 				}
-
 			} else {
 				Log.d(String.format("settlementResultInfo == null, userId=%d, contentId=%d", poipikuUserId, contentId));
 				errorKind = ErrorKind.Unknown;
@@ -267,6 +271,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 		} catch (Exception e) {
 			e.printStackTrace();
 			errorKind = ErrorKind.Exception;
+			notifyErrorToSlack("決済処理中に不明な例外が発生した");
 			return false;
 		} finally {
 			if(cResSet!=null){try{cResSet.close();cResSet=null;}catch(Exception ignored){}}

@@ -20,7 +20,7 @@ public class CheckCreditCardC {
 	private int verify(int nUserId) throws SQLException {
 		int nResult = -1;
 		CreditCard creditCard = new CreditCard(nUserId, Agent.EPSILON);
-		creditCard.select();
+		creditCard.selectByUserIdAgentId();
 
 		if (!creditCard.isExist) {
 			nResult = 0;

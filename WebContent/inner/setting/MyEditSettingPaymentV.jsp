@@ -7,7 +7,7 @@
     CreditCard creditCard = null;
     if (cResults.m_bCardInfoExist) {
         creditCard = new CreditCard(checkLogin.m_nUserId, Agent.EPSILON);
-        creditCard.select();
+        creditCard.selectByUserIdAgentId();
     }
 %>
 

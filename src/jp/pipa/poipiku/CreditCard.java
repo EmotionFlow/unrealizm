@@ -49,7 +49,7 @@ public class CreditCard {
 		return dtCardExpire.plusMonths(-nMarginMonth).compareTo(LocalDateTime.now()) < 0;
 	}
 
-	public boolean select() {
+	public boolean selectByUserIdAgentId() {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;

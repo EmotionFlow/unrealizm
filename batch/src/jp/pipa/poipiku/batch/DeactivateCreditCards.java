@@ -110,7 +110,7 @@ public class DeactivateCreditCards extends Batch {
 				Log.d(String.format("card: %d, %b, %b", cardId, cardDelFlg, cardInvalidFlg));
 				if (!cardDelFlg && !cardInvalidFlg) {
 					CreditCard creditCard = new CreditCard(poipikuUserId, Agent.EPSILON);
-					creditCard.select();
+					creditCard.selectByUserIdAgentId();
 					if (creditCard.invalidate()) {
 						Log.d("クレジットカードを無効化した");
 					} else {

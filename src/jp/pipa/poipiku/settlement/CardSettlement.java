@@ -1,6 +1,8 @@
 package jp.pipa.poipiku.settlement;
 
+import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.SlackNotifier;
 
 public abstract class CardSettlement {
 	protected Agent agent = new Agent();
@@ -102,4 +104,10 @@ public abstract class CardSettlement {
 	public abstract boolean cancelSubscription(int poipikuOrderId);
 	public abstract boolean changeRegularlyAmount(int amount);
 	public abstract String changeCreditCardInfo();
+
+	protected void notifyErrorToSlack(String message) {
+		SlackNotifier slackNotifier = new SlackNotifier(Common.SLACK_WEBHOOK_ERROR);
+		slackNotifier.notify(message);
+	}
+
 }

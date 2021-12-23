@@ -5,7 +5,6 @@ import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
-import jp.pipa.poipiku.util.SlackNotifier;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -355,7 +354,7 @@ public final class PassportSubscription {
 		// 前のカード情報を削除する（削除フラグを立てる）
 		CreditCard oldCard = new CreditCard(userId, Agent.EPSILON);
 		boolean disableResult = false;
-		if (oldCard.select()) {
+		if (oldCard.selectByUserIdAgentId()) {
 			if (oldCard.isExist) disableResult = oldCard.delete();
 		}
 		if (!disableResult) {
