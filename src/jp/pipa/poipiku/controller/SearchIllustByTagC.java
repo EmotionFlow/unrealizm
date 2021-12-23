@@ -72,13 +72,13 @@ public final class SearchIllustByTagC {
 			// BLOCK USER
 			String strCondBlockUser = "";
 			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
-				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+				strCondBlockUser = "AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 b WHERE b.user_id=?) ";
 			}
 
 			// BLOCKED USER
 			String strCondBlocedkUser = "";
 			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
-				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 b2 WHERE b2.block_user_id=?) ";
 			}
 
 			// MUTE KEYWORD
@@ -87,7 +87,7 @@ public final class SearchIllustByTagC {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
 				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = "AND c.content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
+					strCondMute = "AND c.content_id NOT IN(SELECT content_id FROM contents_0000 c2 WHERE c2.description &@~ ?) ";
 				}
 			}
 
