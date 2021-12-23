@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public final class UpdateFollowTagC {
-	public static final int FAVO_MAX = 15;
+	public static final int FAVO_MAX = 10;
 	public static final int OK_INSERT = 1;
 	public static final int OK_DELETE = 0;
 	public static final int ERR_NOT_LOGIN = -1;
