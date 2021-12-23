@@ -107,7 +107,7 @@ public final class SearchIllustByTagC {
 
 			final String strCondStart = (startId >0)?"AND c.content_id<? ":"";
 
-			final String strSqlFromWhere;
+			String strSqlFromWhere;
 			strSqlFromWhere = "FROM contents_0000 c "
 					+ "INNER JOIN tags_0000 t ON c.content_id=t.content_id "
 					+ "WHERE open_id<>2 "
@@ -139,10 +139,23 @@ public final class SearchIllustByTagC {
 			}
 
 			// contents
-			strSql = "SELECT c.* " + strSqlFromWhere
+			strSql = "SELECT c.* "
+					+ (checkLogin.m_bLogin ? ",f.follow_user_id " : "")
+					+ "FROM contents_0000 c "
+					+ "INNER JOIN tags_0000 t ON c.content_id=t.content_id "
+					+ (checkLogin.m_bLogin ?  "LEFT JOIN follows_0000 f ON c.user_id=f.follow_user_id AND f.user_id=? " : "")
+					+ "WHERE open_id<>2 "
+					+ "AND t.genre_id=? AND tag_type=1 "
+					+ "AND safe_filter<=? "
+					+ strCondStart
+					+ strCondBlockUser
+					+ strCondBlocedkUser
+					+ strCondMute
 					+ "ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
+
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
+			if (checkLogin.m_bLogin) statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, genreId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if (!strCondStart.isEmpty()) statement.setInt(idx++, startId);
@@ -155,10 +168,14 @@ public final class SearchIllustByTagC {
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(content.m_nUserId);
-				content.m_cUser.m_strNickName = Util.toString(user.nickName);
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_nReaction	= user.reaction;
+				content.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
 				content.m_cUser.m_strFileName = Util.toString(user.fileName);
-				if (!bContentOnly && m_strRepFileName.isEmpty() && content.m_nPublishId == Common.PUBLISH_ID_ALL) {
-					m_strRepFileName = content.m_strFileName;
+				if (checkLogin.m_bLogin) {
+					content.m_cUser.m_nFollowing = (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				} else {
+					content.m_cUser.m_nFollowing = CUser.FOLLOW_NONE;
 				}
 				lastContentId = content.m_nContentId;
 				contentList.add(content);
@@ -167,6 +184,13 @@ public final class SearchIllustByTagC {
 			statement.close();statement=null;
 
 			bResult = true;
+
+			// Each Comment
+			GridUtil.getEachComment(connection, contentList);
+
+			// Bookmark
+			GridUtil.getEachBookmark(connection, contentList, checkLogin);
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
