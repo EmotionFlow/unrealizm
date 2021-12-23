@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
+boolean isApp = false;
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
 
-MyHomeTagSettingC cResults = new MyHomeTagSettingC();
-cResults.getParam(request);
-boolean bRtn = cResults.getResults(checkLogin);
+MyHomeTagSettingC results = new MyHomeTagSettingC();
+results.getParam(request);
+results.getResults(checkLogin);
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -43,7 +45,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
-				<%if(cResults.m_vContentList.size()<=0) {%>
+				<%if(results.tagList.size()<=0) {%>
 				<div style="margin-top:15px; text-align: center;">
 					<h3><%=_TEX.T("FollowingTag.Info02")%></h3>
 					<div style="text-decoration: underline; margin-top: 15px;">
@@ -55,12 +57,21 @@ boolean bRtn = cResults.getResults(checkLogin);
 				</div>
 				<%}%>
 
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CTag cTag = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toHtml(cTag, CCnv.MODE_PC, _TEX)%>
-					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAd728x90_mid.jsp"%>
-					<%}%>
+				<%
+					String backgroundImageUrl;
+					String thumbnailFileName;
+					CTag tag;
+					String strKeyWord;
+					boolean isFollowTag = true;
+					int genreId;
+					for(int nCnt = 0; nCnt< results.tagList.size(); nCnt++) {
+						tag = results.tagList.get(nCnt);
+						strKeyWord = tag.m_strTagTxt;
+						thumbnailFileName = results.sampleContentFile.get(nCnt);
+						genreId = tag.m_nGenreId;
+				%>
+				<%@include file="inner/TTagThumb.jsp"%>
+
 				<%}%>
 			</div>
 		</article>

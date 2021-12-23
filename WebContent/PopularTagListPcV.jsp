@@ -63,6 +63,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 						ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
 						String strKeyWord = cResults.m_vTagListWeekly.get(nCnt).m_strTagTxt;
 						boolean isFollowTag = cResults.m_vTagListWeekly.get(nCnt).isFollow;
+						int genreId = cResults.m_vTagListWeekly.get(nCnt).m_nGenreId;
 					%>
 					<%
 					String backgroundImageUrl;

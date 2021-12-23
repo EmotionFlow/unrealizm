@@ -10,7 +10,7 @@ import javax.sql.*;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-public class MyHomeTagSettingC {
+public final class MyHomeTagSettingC {
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
@@ -22,10 +22,9 @@ public class MyHomeTagSettingC {
 		}
 	}
 
-
-	public int SELECT_MAX_GALLERY = 100;
-	public ArrayList<CTag> m_vContentList = new ArrayList<CTag>();
-	public int m_nContentsNum = 0;
+	public int selectMaxGallery = 100;
+	public ArrayList<CTag> tagList = new ArrayList<>();
+	public ArrayList<String> sampleContentFile = new ArrayList<>();
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -33,55 +32,65 @@ public class MyHomeTagSettingC {
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dsPostgres = null;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 		int idx = 1;
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
-			// NEW ARRIVAL
-			if(!bContentOnly) {
-				strSql = "SELECT count(*) FROM follow_tags_0000 WHERE user_id=?";
-				cState = cConn.prepareStatement(strSql);
-				idx = 1;
-				cState.setInt(idx++, checkLogin.m_nUserId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-			}
-
-
-			strSql = "select * FROM follow_tags_0000 WHERE user_id=? order by upload_date desc offset ? limit ?";
-			cState = cConn.prepareStatement(strSql);
+			sql = "select * FROM follow_tags_0000 WHERE user_id=? order by upload_date desc offset ? limit ?";
+			statement = connection.prepareStatement(sql);
 			idx = 1;
-			cState.setInt(idx++, checkLogin.m_nUserId);
-			cState.setInt(idx++, m_nPage*SELECT_MAX_GALLERY);
-			cState.setInt(idx++, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CTag cTag = new CTag(cResSet);
-				cTag.m_nTypeId = cResSet.getInt("type_id");
-				m_vContentList.add(cTag);
+			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(idx++, m_nPage* selectMaxGallery);
+			statement.setInt(idx++, selectMaxGallery);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				CTag cTag = new CTag(resultSet);
+				cTag.m_nTypeId = resultSet.getInt("type_id");
+				cTag.m_strTagTxt = resultSet.getString("tag_txt");
+				cTag.m_nGenreId = resultSet.getInt("genre_id");
+				tagList.add(cTag);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			// sample contents filenames
+			sql = "WITH a AS (" +
+					"    SELECT content_id FROM tags_0000 WHERE genre_id = ? ORDER BY tag_id DESC LIMIT 100" +
+					" )" +
+					" SELECT file_name" +
+					" FROM contents_0000 c" +
+					"         INNER JOIN a ON a.content_id = c.content_id" +
+					" WHERE open_id <> 2" +
+					"  AND publish_id = 0" +
+					"  AND safe_filter<=?" +
+					" ORDER BY c.content_id DESC" +
+					" LIMIT 1;";
+			statement = connection.prepareStatement(sql);
+			for (CTag tag: tagList) {
+				statement.setInt(1, tag.m_nGenreId);
+				statement.setInt(2, checkLogin.m_nSafeFilter);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					sampleContentFile.add(resultSet.getString(1));
+				} else {
+					sampleContentFile.add("");
+				}
+			}
 
 			bResult = true;
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return bResult;
 	}

@@ -64,11 +64,13 @@ g_strSearchWord = results.m_strKeyword;
 				CTag tag;
 				String strKeyWord;
 				boolean isFollowTag;
+				int genreId;
 				for(int nCnt = 0; nCnt< results.tagList.size(); nCnt++) {
 					tag = results.tagList.get(nCnt);
 					strKeyWord = tag.m_strTagTxt;
 					isFollowTag = tag.isFollow;
 					thumbnailFileName = results.sampleContentFile.get(nCnt);
+					genreId = tag.m_nGenreId;
 				%>
 				<%@include file="inner/TTagThumb.jsp"%>
 

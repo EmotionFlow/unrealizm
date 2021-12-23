@@ -6,7 +6,19 @@
 			|| strKeyWord.toLowerCase().contains("nsfw")) {
 		backgroundImageUrl = "/img/R-18.png_360.jpg";
 	} else {
-		backgroundImageUrl = Common.GetUrl(thumbnailFileName) + "_360.jpg";
+		if (!thumbnailFileName.isEmpty()) {
+			backgroundImageUrl = Common.GetUrl(thumbnailFileName) + "_360.jpg";
+		} else {
+			String genreImage = "";
+			if (genreId > 0) {
+				genreImage = Util.getGenre(genreId).genreImage;
+			}
+			if (genreImage.isEmpty()) {
+				backgroundImageUrl = Common.GetUrl("/img/default_genre.png");
+			} else {
+				backgroundImageUrl = Common.GetUrl(genreImage);
+			}
+		}
 	}
 %>
 <div class="TagThumb<%=bSmartPhone?"":"Pc"%>">
