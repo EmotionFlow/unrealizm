@@ -106,7 +106,7 @@ public final class UpdateC extends UpC {
 			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(
 					"genre_id=?", "category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?",
 					"publish_all_num=?", "password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
-					"not_recently=?", "limited_time_publish=?", "updated_at=now()"
+					"not_recently=?", "limited_time_publish=?", "updated_at=NULL"
 			));
 
 			if(!cParam.m_bLimitedTimePublish){

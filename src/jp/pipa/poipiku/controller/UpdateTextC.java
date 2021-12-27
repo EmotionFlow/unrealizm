@@ -72,7 +72,7 @@ public final class UpdateTextC extends UpC {
 					"text_body=?", "tag_list=?", "publish_id=?", "password=?",
 					"list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?", "title=?", "novel_html=?",
-					"novel_html_short=?", "novel_direction=?", "updated_at=now()"
+					"novel_html_short=?", "novel_direction=?", "updated_at=NULL"
 					));
 
 			if(!cParam.m_bLimitedTimePublish){
