@@ -1,3 +1,4 @@
+<%@page import="jp.pipa.poipiku.util.Util"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div id="DetailOverlay">
 	<div id="DetailOverlayLoading" class="loadingSpinner2"><div class="rect1"></div><div class="rect2"></div><div class="rect3"></div><div class="rect4"></div><div class="rect5"></div></div>
@@ -11,7 +12,7 @@
 	<div id="DetailOverlayInner"></div>
 	<div class="DetailIllustItemAd">
 		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
-		<%--	TODO Add AD		--%>
+		<%=(bSmartPhone)?Util.poipiku_336x280_sp_overlay(checkLogin, g_nSafeFilter):Util.poipiku_336x280_pc_overlay(checkLogin, g_nSafeFilter)%>
 		<%}%>
 	</div>
 </div>
