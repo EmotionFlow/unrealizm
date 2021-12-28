@@ -92,6 +92,51 @@ String[][] menuOrder = {
 				cache: false,
 			});
 
+			function updateFile(url, objTarg){
+				if (objTarg.files.length>0 && objTarg.files[0].type.match('image.*')) {
+					DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
+					var fileReader = new FileReader();
+					fileReader.onloadend = function() {
+						var strEncodeImg = fileReader.result;
+						var mime_pos = strEncodeImg.substring(0, 100).indexOf(",");
+						if(mime_pos==-1) return;
+						strEncodeImg = strEncodeImg.substring(mime_pos+1);
+						$.ajaxSingle({
+							"type": "post",
+							"data": {"UID":<%=checkLogin.m_nUserId%>, "DATA":strEncodeImg},
+							"url": url,
+							"dataType": "json",
+							"success": function(res) {
+								switch(res.result) {
+									case 0:
+										// complete
+										DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
+										sendObjectMessage("reloadParent");
+										location.reload(true);
+										break;
+									case -1:
+										// file size error
+										DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error.FileSize")%>");
+										break;
+									case -2:
+										// file type error
+										DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>");
+										break;
+									default:
+										DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + res.result);
+										break;
+								}
+							},
+							"error": function(req, stat, ex){
+								DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+							}
+						});
+					}
+					fileReader.readAsDataURL(objTarg.files[0]);
+				}
+				return false;
+			}
+
 			$(function(){
 				<%if(cResults.m_strMessage.length()>0) {%>
 					DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");

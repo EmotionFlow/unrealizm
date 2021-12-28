@@ -33,6 +33,23 @@
 		updateFile("/f/UpdateProfileFileF.jsp", objTarg);
 	}
 
+	function ResetProfileFile(nMode){
+		$.ajaxSingle({
+			"type": "post",
+			"data": { "ID":<%=checkLogin.m_nUserId%>, "MD":nMode},
+			"url": "/f/ResetProfileFileF.jsp",
+			"dataType": "json",
+			"success": function(data) {
+				sendObjectMessage("reloadParent");
+				location.reload(true);
+			},
+			"error": function(req, stat, ex){
+				DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+			}
+		});
+		return false;
+	}
+
 	function UpdateProfileTxt() {
 		var strProfileTxt = $.trim($("#EditBio").val());
 		$.ajaxSingle({
