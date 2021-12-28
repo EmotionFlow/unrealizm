@@ -132,8 +132,8 @@ public final class IllustDetailC {
 					CContentAppend contentAppend = new CContentAppend();
 					contentAppend.m_strFileName = Util.toString(resultSet.getString("file_name"));
 					contentAppendList.add(contentAppend);
-					bRtn = true;
 				}
+				bRtn = true;
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}
