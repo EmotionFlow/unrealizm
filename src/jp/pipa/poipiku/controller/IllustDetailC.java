@@ -1,6 +1,8 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +13,10 @@ public final class IllustDetailC {
 	public int ownerUserId = -1;
 	public int contentId = -1;
 	public int appendId = -1;
+
+	// -1: 未定義(=0), 0: 指定された１枚だけ, 1: 指定画像以降全部
+	public int showMode = -1;
+
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
@@ -27,6 +33,7 @@ public final class IllustDetailC {
 	}
 
 	public CContent m_cContent = new CContent();
+	public List<CContentAppend> contentAppendList = new ArrayList<>();
 	public boolean isOwner = false;
 	public int m_nDownload = CUser.DOWNLOAD_OFF;
 	public boolean isDownloadable = false;
@@ -104,19 +111,29 @@ public final class IllustDetailC {
 				}
 			}
 
-			if(appendId >0 && bRtn) {
+			if(bRtn && (appendId > 0 || showMode == 1)) {
 				bRtn = false;
-				strSql = "SELECT file_name FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
-				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, contentId);
-				statement.setInt(2, appendId);
-				resultSet = statement.executeQuery();
-				if(resultSet.next()) {
-					m_cContent.m_strFileName = Util.toString(resultSet.getString("file_name"));
-					bRtn = true;
+				strSql = "SELECT file_name FROM contents_appends_0000 WHERE content_id=?";
+				if (showMode <= 0) {
+					strSql += " AND append_id=?";
 				} else {
-					Log.d("file_name was not found");
+					if (appendId > 0) {
+						strSql += " AND append_id >= ?";
+					}
+					strSql += " ORDER BY append_id";
 				}
+				statement = connection.prepareStatement(strSql);
+
+				int idx = 1;
+				statement.setInt(idx++, contentId);
+				if (appendId > 0) statement.setInt(idx++, appendId);
+				resultSet = statement.executeQuery();
+				while(resultSet.next()) {
+					CContentAppend contentAppend = new CContentAppend();
+					contentAppend.m_strFileName = Util.toString(resultSet.getString("file_name"));
+					contentAppendList.add(contentAppend);
+				}
+				bRtn = true;
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}

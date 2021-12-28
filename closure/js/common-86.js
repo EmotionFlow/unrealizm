@@ -930,7 +930,7 @@ function createDetailToucheMoveHandler(detailOverlay) {
 	return (event) => {
 		// 画像のみをスクロールさせ、ページ全体がスクロールされないようにする。
 		// 画像部分のスクロールが上端or下端であったら、どの要素もスクロールさせない。
-		if (event.target === document.getElementById('DetailIllustItemImage')
+		if ($(event.target).hasClass('DetailIllustItemImage')
 			&& detailOverlay.scrollTop !== 0
 			&& detailOverlay.scrollTop + detailOverlay.clientHeight !== detailOverlay.scrollHeight) {
 			event.stopPropagation();
@@ -956,22 +956,6 @@ function createDetailScrollHandler(detailOverlay) {
 
 function detailIllustItemImageOnload(el) {
 	$("#DetailOverlayLoading").hide();
-
-	let newHeight = el.height + 150;
-	if (newHeight < screen.height) {
-		newHeight = screen.height + 150;
-	}
-
-	const marginTop = (newHeight - el.height) / 2;
-
-	document.getElementById('DetailOverlayInner').style.height = newHeight + "px";
-
-	if (el.height < screen.height - 100) {
-		// 画像がヘッダを除く表示部分に収まるなら中央に配置する
-		detailOverlay.scrollTop = 100;
-	} else {
-		detailOverlay.scrollTop = 25;
-	}
 }
 
 function _showIllustDetail(ownerUserId, contentId, appendId) {
@@ -983,6 +967,7 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 	}).then(
 		data => {
 			if (data.result === 1) {
+				document.getElementById('DetailOverlay').scrollTop = 1;
 				$("#DetailOverlayInner").html(data.html);
 				detailOverlay.classList.add('overlay-on');
 				$("#DetailOverlayLoading").show();
@@ -1023,5 +1008,6 @@ function initDetailOverlay() {
 	document.getElementById('DetailOverlayClose').addEventListener('click', closeDetailOverlay, false);
 	const overlayInner = document.getElementById('DetailOverlayInner');
 	overlayInner.addEventListener('click', (ev)=>{ev.stopPropagation()}, false);
+	overlayInner.style.minHeight = (screen.height + 100) + "px";
 }
 /******** DetailV オーバーレイ表示*******/

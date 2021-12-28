@@ -9,7 +9,11 @@
 		</svg>
 	</div></div>
 	<div id="DetailOverlayInner"></div>
-	<div class="DetailIllustItemProhibit"><%=_TEX.T("IllustView.ProhibitMsg.Long")%></div>
+	<div class="DetailIllustItemAd">
+		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+		<%--	TODO Add AD		--%>
+		<%}%>
+	</div>
 </div>
 
 <script type="text/javascript">

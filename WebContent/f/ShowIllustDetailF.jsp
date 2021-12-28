@@ -1,43 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
+	String getImgTag(final String fileName) {
+		return "        <img class=\"DetailIllustItemImage\" src=\"" + Common.GetOrgImgUrl(fileName) + "\" onload=\"detailIllustItemImageOnload(this)\" />\n";
+	}
 	String createDetailVHtml(final IllustDetailC cResults, final ResourceBundleControl _TEX){
-		String html = "";
+		StringBuilder html = new StringBuilder();
 
 		if (cResults.m_cContent.m_nEditorId == Common.EDITOR_TEXT) {
-			html += "    <script>\n" +
-					"      $(function () {\n";
+			html.append("    <script>\n" + "      $(function () {\n");
 			if (cResults.m_cContent.novelDirection == 0) {
-				html += "if (window.innerWidth< $(\".NovelSection\").width()){\n" +
-						"          $(\".IllustItemLink\").css(\"width\", String(window.innerWidth - 10) +\"px\");\n" +
-						"        }";
+				html.append("if (window.innerWidth< $(\".NovelSection\").width()){\n" + "          $(\".IllustItemLink\").css(\"width\", String(window.innerWidth - 10) +\"px\");\n" + "        }");
 			} else {
-				html += "        $(\".IllustItemTextDetail\").css(\"width\", (window.innerWidth - 10) + \"px\");\n" +
-						"        $(\".IllustItemTextDetail\").scrollLeft(100000);\n" +
-						"        const h = $(\"body\").height();\n" +
-						"        if (h < $(\".IllustItemTextDetail.Vertical\").height()){\n" +
-						"          $(\".IllustItemLink\").css(\"height\", String(h - 10) +\"px\");\n" +
-						"          $(\".IllustItemLink\").css(\"padding\", 0);\n" +
-						"          $(\".IllustItemTextDetail.Vertical\").css(\"height\", String(h - 10) +\"px\");\n" +
-						"        }\n";
+				html.append("        $(\".IllustItemTextDetail\").css(\"width\", (window.innerWidth - 10) + \"px\");\n" + "        $(\".IllustItemTextDetail\").scrollLeft(100000);\n" + "        const h = $(\"body\").height();\n" + "        if (h < $(\".IllustItemTextDetail.Vertical\").height()){\n" + "          $(\".IllustItemLink\").css(\"height\", String(h - 10) +\"px\");\n" + "          $(\".IllustItemLink\").css(\"padding\", 0);\n" + "          $(\".IllustItemTextDetail.Vertical\").css(\"height\", String(h - 10) +\"px\");\n" + "        }\n");
 			}
-			html += "</script>";
+			html.append("</script>");
 		}
 
-		html += "<style>.IllustItemLink {\n";
+		html.append("<style>.IllustItemLink {\n");
 		if (cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==0) {
-			html += "margin: 0 auto;width: 25em;\n";
+			html.append("margin: 0 auto;width: 25em;\n");
 		}
-		html += "} </style>";
+		html.append("} </style>");
 
 		if(!cResults.m_cContent.m_strFileName.isEmpty()) {
 			String downloadAreaDiv = "";
-			if(cResults.isDownloadable) {
-			}
 
-			html += "      <div class=\"DetailIllustItemLink\">\n" +
-					"        <img id=\"DetailIllustItemImage\" class=\"DetailIllustItemImage\" src=\"" + Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName) + "\" onload=\"detailIllustItemImageOnload(this)\" />\n" +
-					"      </div>\n";
+			html.append("      <div class=\"DetailIllustItemLink\">\n");
 
 			if(cResults.isDownloadable) {
 				downloadAreaDiv += "<div class=\"DetailIllustItemDownload\">";
@@ -52,18 +41,28 @@
 					downloadAreaDiv += "</span>";
 				}
 				downloadAreaDiv += "</div>";
-				html += downloadAreaDiv;
+				html.append(downloadAreaDiv);
 			}
+
+			if (cResults.appendId < 0) {
+				html.append(getImgTag(cResults.m_cContent.m_strFileName));
+			}
+
+			for (CContentAppend contentAppend : cResults.contentAppendList) {
+				html.append(getImgTag(contentAppend.m_strFileName));
+			}
+
+			html.append("\t<div class=\"DetailIllustItemProhibit\">").append(_TEX.T("IllustView.ProhibitMsg.Long")).append("</div>\n");
+
+			html.append("      </div>\n");
 		} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
-			html += "<div class=\"IllustItemLink\">";
-			html += "        <div class=\"IllustItemTextDetail " + (cResults.m_cContent.novelDirection==1 ? "Vertical" : "") + "\">\n" +
-					"          " + Util.replaceForGenEiFont(cResults.m_cContent.novelHtml) +
-					"        </div>\n";
-			html += "</div>";
+			html.append("<div class=\"IllustItemLink\">");
+			html.append("        <div class=\"IllustItemTextDetail ").append(cResults.m_cContent.novelDirection == 1 ? "Vertical" : "").append("\">\n").append("          ").append(Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)).append("        </div>\n");
+			html.append("</div>");
 		} else {
-			html += "Not found";
+			html.append("Not found");
 		}
-		return html;
+		return html.toString();
 	}
 %>
 <%
@@ -89,6 +88,7 @@ if(!checkLogin.m_bLogin) {
 
 IllustDetailC cResults = new IllustDetailC();
 cResults.getParam(request);
+cResults.showMode = 1;
 if(!cResults.getResults(checkLogin)) {
 	errorCode = -3;
 }
