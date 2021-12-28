@@ -29,6 +29,10 @@
 		$("#ProfileTextMessage").html(nCharNum);
 	}
 
+	function UpdateProfileFile(objTarg){
+		updateFile("/f/UpdateProfileFileF.jsp", objTarg);
+	}
+
 	function UpdateProfileTxt() {
 		var strProfileTxt = $.trim($("#EditBio").val());
 		$.ajaxSingle({

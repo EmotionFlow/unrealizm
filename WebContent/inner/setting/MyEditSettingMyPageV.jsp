@@ -46,10 +46,6 @@
 		return false;
 	}
 
-	function UpdateProfileFile(objTarg){
-		updateFile("/f/UpdateProfileFileF.jsp", objTarg);
-	}
-
 	function UpdateProfileHeaderFile(objTarg){
 		updateFile("/f/UpdateProfileHeaderFileF.jsp", objTarg);
 	}
