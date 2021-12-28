@@ -83,6 +83,7 @@ String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.gene
 String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 %>
 <!DOCTYPE html>

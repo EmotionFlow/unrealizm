@@ -2,6 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 MyHomePcC cResults = new MyHomePcC();
 cResults.getParam(request);

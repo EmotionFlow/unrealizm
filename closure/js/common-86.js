@@ -974,6 +974,9 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 				document.addEventListener('touchmove', detailToucheMoveHandler, { passive: false });
 				document.addEventListener('mousewheel', detailToucheMoveHandler, { passive: false });
 				detailOverlay.addEventListener('scroll', detailScrollHandler, { passive: false });
+				$("#DetailIllustAd").html(adHtml);
+				$("#"+AD_INS_TAGS[0]).show();
+				$("#"+AD_INS_TAGS[1]).show();
 			} else {
 				switch (data.error_code) {
 					case -1:
@@ -1002,6 +1005,11 @@ function closeDetailOverlay() {
 	document.removeEventListener('mousewheel', detailToucheMoveHandler);
 	detailOverlay.removeEventListener('scroll', detailScrollHandler);
 	document.getElementById('DetailOverlayInner').style.height = 16 + "px";
+	if (adHtml) {
+		$("#DetailIllustAd").html('');
+		$("#"+AD_INS_TAGS[0]).hide();
+		$("#"+AD_INS_TAGS[1]).hide();
+	}
 }
 
 function initDetailOverlay() {

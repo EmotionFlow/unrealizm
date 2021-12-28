@@ -10,10 +10,10 @@
 		</svg>
 	</div></div>
 	<div id="DetailOverlayInner"></div>
-	<div class="DetailIllustItemAd">
-		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
-		<%=(bSmartPhone)?Util.poipiku_336x280_sp_overlay(checkLogin, g_nSafeFilter):Util.poipiku_336x280_pc_overlay(checkLogin, g_nSafeFilter)%>
-		<%}%>
+	<div id="DetailIllustAd" class="DetailIllustItemAd">
+		<%//if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+		<%//=(bSmartPhone)?Util.poipiku_336x280_sp_overlay(checkLogin, g_nSafeFilter):Util.poipiku_336x280_pc_overlay(checkLogin, g_nSafeFilter)%>
+		<%//}%>
 	</div>
 </div>
 
@@ -27,5 +27,24 @@
 	const detailOverlay = document.getElementById('DetailOverlay');
 	const detailToucheMoveHandler = createDetailToucheMoveHandler(detailOverlay);
 	const detailScrollHandler = createDetailScrollHandler(detailOverlay);
+
+	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+	const AD_INS_TAGS = ['geniee_overlay_outer', 'geniee_overlay_boot'];
+
+	<%
+	String adHtml;
+	if (bSmartPhone) {
+		adHtml = Util.poipiku_336x280_sp_overlay(checkLogin, g_nSafeFilter);
+	} else {
+		adHtml = Util.poipiku_336x280_pc_overlay(checkLogin, g_nSafeFilter);
+	}
+	adHtml = adHtml.replaceAll("\n","").replaceAll("'","\\\\'").replaceAll("</script>","<\\\\/script>");
+	%>
+	const adHtml = '<%=adHtml%>';
+
+	<%}else{%>
+	const adHtml = '';
+	<%}%>
+
 	$(function(){initDetailOverlay();});
 </script>
