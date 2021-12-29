@@ -2,6 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!checkLogin.m_bLogin) {
 	if(isApp){
@@ -100,5 +101,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<%}%>
 			</div>
 		</article>
+		<%@ include file="/inner/TShowDetail.jsp"%>
 	</body>
 </html>
