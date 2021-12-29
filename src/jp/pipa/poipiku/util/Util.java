@@ -431,7 +431,7 @@ public final class Util {
 		return sbRtn.toString();
 	}
 
-	public static String poipiku_336x280_pc_mid(CheckLogin checkLogin) {
+	public static String poipiku_336x280_pc_mid(CheckLogin checkLogin, int adId) {
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
@@ -451,7 +451,7 @@ public final class Util {
 	}
 
 	// スマホオーバレイ広告枠
-	public static String poipiku_336x280_sp_overlay(CheckLogin checkLogin, int adId) {
+	public static String poipiku_sp_overlay(CheckLogin checkLogin, int adId) {
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		// SB Ad
@@ -502,7 +502,7 @@ public final class Util {
 	}
 
 	// PCオーバレイ広告枠
-	public static String poipiku_336x280_pc_overlay(CheckLogin checkLogin, int adId) {
+	public static String poipiku_pc_overlay(CheckLogin checkLogin, int adId) {
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		// SB Ad
