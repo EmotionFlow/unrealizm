@@ -27,24 +27,25 @@
 	const detailOverlay = document.getElementById('DetailOverlay');
 	const detailToucheMoveHandler = createDetailToucheMoveHandler(detailOverlay);
 	const detailScrollHandler = createDetailScrollHandler(detailOverlay);
-
-	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 	const AD_INS_TAGS = ['geniee_overlay_outer', 'geniee_overlay_boot'];
-
 	<%
-	String adHtml;
-	if (bSmartPhone) {
-		adHtml = Util.poipiku_336x280_sp_overlay(checkLogin, g_nSafeFilter);
-	} else {
-		adHtml = Util.poipiku_336x280_pc_overlay(checkLogin, g_nSafeFilter);
-	}
-	adHtml = adHtml.replaceAll("\n","").replaceAll("'","\\\\'").replaceAll("</script>","<\\\\/script>");
+		String adHtml;
+		if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {
+			if (g_nSafeFilter == Common.AD_ID_ALL) {
+				if (bSmartPhone) {
+					adHtml = Util.poipiku_336x280_sp_overlay(checkLogin, g_nSafeFilter);
+				} else {
+					adHtml = Util.poipiku_336x280_pc_overlay(checkLogin, g_nSafeFilter);
+				}
+			} else {
+				adHtml = "";
+			}
+			adHtml = adHtml.replaceAll("\n","").replaceAll("'","\\\\'").replaceAll("</script>","<\\\\/script>");
+		} else {
+			adHtml = "";
+		}
 	%>
 	const adHtml = '<%=adHtml%>';
-
-	<%}else{%>
-	const adHtml = '';
-	<%}%>
 
 	$(function(){initDetailOverlay();});
 </script>
