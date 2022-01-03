@@ -159,7 +159,7 @@ public final class WriteBackFile extends Model{
 		List<WriteBackFile> list = new ArrayList<>();
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = String.format("SELECT * FROM write_back_files WHERE status=? AND created_at < now() - INTERVAL '%d hours'", hoursBefore);
+			sql = String.format("SELECT * FROM write_back_files WHERE status=? AND created_at < now() - INTERVAL '%d hours' order by created_at limit 15", hoursBefore);
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, _status.getCode());
 			resultSet = statement.executeQuery();
