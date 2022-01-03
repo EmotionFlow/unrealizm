@@ -19,7 +19,7 @@ import java.util.List;
 
 public class WriteBackContents extends Batch {
 	// SSD上にファイルを保持する時間
-	static final int HOLD_IN_CACHE_HOURS = 36 + 48;
+	static final int HOLD_IN_CACHE_HOURS = 36 + 48 + 24;
 
 	// HDDへの移動後も、DBにレコードを保持しておく時間
 	static final int HOLD_AFTER_RECORD_MOVED_HOURS = 180;
