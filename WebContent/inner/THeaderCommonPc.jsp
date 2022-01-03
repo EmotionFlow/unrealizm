@@ -13,9 +13,9 @@
 <meta name="pinterest" content="nopin" />
 <link rel="icon" href="/favicon_2.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
-<link href="/css/TBase-40.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-173.css" type="text/css" rel="stylesheet" />
-<link href="/css/TBasePc-71.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBase-41.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-174.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBasePc-72.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114_2.png" />
@@ -24,8 +24,8 @@
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/jquery.creditCardValidator.js"></script>
 <script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
-<script type="text/javascript" src="/js/common-87.js"></script>
-<script type="text/javascript" src="/js/commonPc-03.js"></script>
+<script type="text/javascript" src="/js/common-88.js"></script>
+<script type="text/javascript" src="/js/commonPc-04.js"></script>
 <%@ include file="/inner/TSweetAlert.jsp"%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
@@ -36,7 +36,7 @@
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-75.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-76.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
