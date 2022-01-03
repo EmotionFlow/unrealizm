@@ -258,15 +258,17 @@ public final class IllustViewPcC {
 					m_vContentList = RelatedContents.getUserContentList(ownerUserId, selectMaxGallery, checkLogin, connection);
 				}
 
-				final int h = LocalDateTime.now().getHour();
-				if (h != 23 && h != 0 && h != 1) {
+//				final int h = LocalDateTime.now().getHour();
+//				if (h != 23 && h != 0 && h != 1) {
+				if (false) {
 					// Related Contents
 					if (selectMaxRelatedGallery > 0) {
 						m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, selectMaxRelatedGallery, checkLogin, connection);
 					}
 				}
 
-				if (h != 21 && h != 22 && h != 23 && h != 0 && h != 1){
+				if (false) {
+//				if (h != 21 && h != 22 && h != 23 && h != 0 && h != 1){
 					// Recommended Contents
 					if(selectMaxRecommendedGallery >0) {
 						m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, selectMaxRecommendedGallery, checkLogin, connection);
