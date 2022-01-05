@@ -958,10 +958,10 @@ function detailIllustItemImageOnload(el) {
 	$("#DetailOverlayLoading").hide();
 }
 
-function _showIllustDetail(ownerUserId, contentId, appendId) {
+function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 	$.ajax({
 		"type": "post",
-		"data": {"ID":ownerUserId, "TD":contentId, "AD":appendId},
+		"data": {"ID":ownerUserId, "TD":contentId, "AD":appendId, "PAS":password},
 		"url": "/f/ShowIllustDetailF.jsp",
 		"dataType": "json",
 	}).then(
@@ -1001,7 +1001,10 @@ function _showIllustDetail(ownerUserId, contentId, appendId) {
 }
 
 function showIllustDetail(ownerUserId, contentId, appendId) {
-	_showIllustDetail(ownerUserId, contentId, appendId);
+	const $IllustItem = $("#IllustItem_" + contentId);
+	let password = $IllustItem.find(".IllustItemExpandPass").val();
+	if (!password) password = "";
+	_showIllustDetail(ownerUserId, contentId, appendId, password.trim());
 }
 
 function closeDetailOverlay() {

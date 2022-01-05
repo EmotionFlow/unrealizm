@@ -13,6 +13,7 @@ public final class IllustDetailC {
 	public int ownerUserId = -1;
 	public int contentId = -1;
 	public int appendId = -1;
+	public String password = "";
 
 	// -1: 未定義(=0), 0: 指定された１枚だけ, 1: 指定画像以降全部
 	public int showMode = -1;
@@ -23,6 +24,7 @@ public final class IllustDetailC {
 			ownerUserId = Util.toInt(cRequest.getParameter("ID"));
 			contentId = Util.toInt(cRequest.getParameter("TD"));
 			appendId = Util.toInt(cRequest.getParameter("AD"));
+			password = Util.toString(cRequest.getParameter("PAS"));
 		} catch(Exception e) {
 			contentId = -1;
 		}
@@ -79,35 +81,42 @@ public final class IllustDetailC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			if(checkLogin.m_nUserId != m_cContent.m_nUserId && (
-				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWER ||
-				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWEE||
-				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_EACH ||
-				m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST )
-			){
-				CTweet tweet = new CTweet();
-				tweet.GetResults(checkLogin.m_nUserId);
-				if(m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST){
-					bRtn = (tweet.LookupListMember(m_cContent) == CTweet.OK);
-				}else{
-					final int friendshipResult = tweet.LookupFriendship(m_cContent.m_nUserId, m_cContent.m_nPublishId);
-					switch (m_cContent.m_nPublishId){
-						case Common.PUBLISH_ID_T_FOLLOWER:
-							bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWEE || friendshipResult == CTweet.FRIENDSHIP_EACH);
-							break;
-						case Common.PUBLISH_ID_T_FOLLOWEE:
-							bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWER || friendshipResult == CTweet.FRIENDSHIP_EACH);
-							break;
-						case Common.PUBLISH_ID_T_EACH:
-							bRtn = (friendshipResult == CTweet.FRIENDSHIP_EACH);
-							break;
-						default:
-							bRtn = false;
+			isOwner = m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId;
+
+			if(!isOwner) {
+				if (m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWER ||
+						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWEE ||
+						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_EACH ||
+						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST) {
+					CTweet tweet = new CTweet();
+					tweet.GetResults(checkLogin.m_nUserId);
+					if (m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST) {
+						bRtn = (tweet.LookupListMember(m_cContent) == CTweet.OK);
+					} else {
+						final int friendshipResult = tweet.LookupFriendship(m_cContent.m_nUserId, m_cContent.m_nPublishId);
+						switch (m_cContent.m_nPublishId) {
+							case Common.PUBLISH_ID_T_FOLLOWER:
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWEE || friendshipResult == CTweet.FRIENDSHIP_EACH);
+								break;
+							case Common.PUBLISH_ID_T_FOLLOWEE:
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWER || friendshipResult == CTweet.FRIENDSHIP_EACH);
+								break;
+							case Common.PUBLISH_ID_T_EACH:
+								bRtn = (friendshipResult == CTweet.FRIENDSHIP_EACH);
+								break;
+							default:
+								bRtn = false;
+						}
 					}
-				}
-				if(!bRtn) {
-					Log.d("Tw限定のチェックができなかった");
-					return false;
+					if (!bRtn) {
+						Log.d("Tw限定のチェックができなかった");
+						return false;
+					}
+				} else if (showMode == 1 && m_cContent.m_nPublishId == Common.PUBLISH_ID_PASS) {
+					if (!m_cContent.m_strPassword.equals(password)) {
+						Log.d(String.format("Pw認証に失敗した(%s, %s)",m_cContent.m_strPassword, password));
+						return false;
+					}
 				}
 			}
 
@@ -138,7 +147,6 @@ public final class IllustDetailC {
 				statement.close();statement=null;
 			}
 
-			isOwner = m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId;
 
 			isDownloadable = m_cContent.m_nEditorId!=Common.EDITOR_TEXT && (isOwner || m_nDownload==CUser.DOWNLOAD_ON);
 
