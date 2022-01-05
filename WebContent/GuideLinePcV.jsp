@@ -89,6 +89,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 <li>イラストやデジタルアートの画面を撮影した写真</li>
 <li>彫刻、手芸、工芸等の立体アートを撮影した写真</li>
 <li>デザインを施した物品のスクリーンキャプチャもしくは写真</li>
+<li>コスプレ写真(他者の肖像権を侵害していない)</li>
+<li>ぬいぐるみを主体とした写真</li>
 </ul>
 					</div>
 				</div>
@@ -239,6 +241,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
+						(2022/1/5 投稿できる作品の形態の項目を追加)<br />
 						(2021/5/24 公開方法の名称変更)<br />
 						(2019/1/12 公開方法追加に合わせて倫理基準を修正)<br />
 						(2018/10/19 R18分離に合わせて変更)<br />
