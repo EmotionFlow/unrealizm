@@ -5,17 +5,18 @@ import java.util.*;
 public final class SupportedLocales {
 	static public final int ID_DEFAULT = 0;
 	static public final Locale LOCALE_DEFAULT = Locale.ENGLISH;
-	static private final List<UserLocale> list;
+	static public final List<UserLocale> list;
 
 	static {
 		List<UserLocale> l = new ArrayList<>();
-		l.add(new UserLocale(0, Locale.ENGLISH));
-		l.add(new UserLocale(1, Locale.JAPANESE));
-		l.add(new UserLocale(2, Locale.KOREAN));
-		l.add(new UserLocale(3, Locale.SIMPLIFIED_CHINESE));
-		l.add(new UserLocale(4, Locale.TRADITIONAL_CHINESE));
-		l.add(new UserLocale(5, new Locale("th")));
-		l.add(new UserLocale(6, new Locale("ru")));
+		l.add(new UserLocale(0, Locale.ENGLISH, "English"));
+		l.add(new UserLocale(1, Locale.JAPANESE, "日本語"));
+		l.add(new UserLocale(2, Locale.KOREAN, "한국"));
+		l.add(new UserLocale(3, Locale.SIMPLIFIED_CHINESE, "简体中文"));
+		l.add(new UserLocale(4, Locale.TRADITIONAL_CHINESE, "繁體中文"));
+		l.add(new UserLocale(5, new Locale("th"), "ไทย"));
+		l.add(new UserLocale(6, new Locale("ru"), "русский"));
+		l.add(new UserLocale(7, new Locale("vi"), "Tiếng Việt"));
 		list = Collections.unmodifiableList(l);
 	}
 

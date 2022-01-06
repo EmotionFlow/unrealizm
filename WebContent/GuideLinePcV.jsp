@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/inner/Common.jsp" %>
+<%
+	CheckLogin checkLogin = new CheckLogin(request, response);
+%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -20,8 +23,6 @@
         table th {
             text-align: center;
         }
-	</style>
-	<style>
         .AnalogicoInfo {
             display: none;
         }
@@ -29,6 +30,17 @@
         .SettingList .SettingListItem {
             color: #fff;
         }
+
+        .Language {
+			padding: 5px 10px;
+			border: solid 2px #eefaff;
+			border-radius: 5px;
+		}
+
+        .Language > a {
+			text-decoration: underline;
+			margin-right: 10px;
+		}
 	</style>
 </head>
 
@@ -39,7 +51,15 @@
 	<div class="SettingList">
 		<div class="SettingListItem">
 			<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」ガイドライン</div>
-			<div class="SettingBody">
+			<div class="SettingBody Language">
+				<span style="position: relative; top: -4px; left: -5px;">
+				<i class="fas fa-external-link-alt"></i>
+				</span>
+				<%for(UserLocale userLocale: SupportedLocales.list){
+				if (userLocale.id != 1) {
+				%>
+				<%=Common.getGoogleTransformLinkHtml("GuideLinePcV.jsp", "_poipiku_guideline", userLocale.locale.getLanguage(), userLocale.label)%>
+				<%}};%>
 			</div>
 		</div>
 
@@ -243,9 +263,17 @@
 			</div>
 		</div>
 
+		<div class="SettingListItem">
+			<div class="SettingListTitle">9.言語</div>
+			<div class="SettingBody">
+				本ガイドラインは、日本語で作成し、他言語への機械翻訳へのリンクを提示しています。
+				言語の間に矛盾抵触がある場合、日本語版が優先されます。
+			</div>
+		</div>
+
 		<div class="SettingListItem Additional">
 			<div class="SettingBody">
-				(2022/1/6 投稿できる作品の形態の項目を追加)<br/>
+				(2022/1/6 投稿できる作品の形態の項目を追加・9.言語を追加・翻訳リンク追加)<br/>
 				(2021/5/24 公開方法の名称変更)<br/>
 				(2019/1/12 公開方法追加に合わせて倫理基準を修正)<br/>
 				(2018/10/19 R18分離に合わせて変更)<br/>
