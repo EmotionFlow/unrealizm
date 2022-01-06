@@ -52,13 +52,10 @@
 		<div class="SettingListItem">
 			<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」ガイドライン</div>
 			<div class="SettingBody Language">
-				<span style="position: relative; top: -4px; left: -5px;">
-				<i class="fas fa-external-link-alt"></i>
-				</span>
 				<%for(UserLocale userLocale: SupportedLocales.list){
-				if (userLocale.id != 1) {
+					if (userLocale.id != 1) {
 				%>
-				<%=Common.getGoogleTransformLinkHtml("GuideLinePcV.jsp", "_poipiku_guideline", userLocale.locale.getLanguage(), userLocale.label)%>
+				<%=Common.getGoogleTransformLinkHtml("GuideLinePcV.jsp", "_self", userLocale.locale.toLanguageTag(), userLocale.label)%>
 				<%}};%>
 			</div>
 		</div>
@@ -266,7 +263,7 @@
 		<div class="SettingListItem">
 			<div class="SettingListTitle">9.言語</div>
 			<div class="SettingBody">
-				本ガイドラインは、日本語で作成し、他言語への機械翻訳へのリンクを提示しています。
+				本ガイドラインは、日本語で作成し、他言語への機械翻訳ページへのリンクを提示しています。
 				言語の間に矛盾抵触がある場合、日本語版が優先されます。
 			</div>
 		</div>
