@@ -35,7 +35,7 @@
 					for (UserLocale userLocale : SupportedLocales.list) {
 						if (userLocale.id != 1) {
 				%>
-				<%=Common.getGoogleTransformLinkHtml("RulePcS.jsp", "_self", userLocale.locale.toLanguageTag(), userLocale.label)%>
+				<%=Common.getGoogleTransformLinkHtml("RuleS.jsp", "_self", userLocale.locale.toLanguageTag(), userLocale.label)%>
 				<%
 						}
 					}
