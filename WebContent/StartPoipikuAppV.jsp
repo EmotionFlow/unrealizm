@@ -77,7 +77,7 @@ if(strRequestUri != null) {
 				<div class="AnalogicoLang">
 					<a style="text-decoration: underline; color: #fff;" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a>
 					&nbsp
-					<a style="text-decoration: underline; color: #fff;" hreflang="ru" onclick="ChLang('ru', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">русский</a>
+					<a style="text-decoration: underline; color: #fff;" hreflang="vi" onclick="ChLang('vi', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">Tiếng Việt</a>
 					&nbsp
 					<a style="text-decoration: underline; color: #fff;" hreflang="ko" onclick="ChLang('ko', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">한국</a>
 					&nbsp
@@ -88,6 +88,8 @@ if(strRequestUri != null) {
 					<a style="text-decoration: underline; color: #fff;" hreflang="th" onclick="ChLang('th', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">ไทย</a>
 					&nbsp
 					<a style="text-decoration: underline; color: #fff;" hreflang="ja" onclick="ChLang('ja', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">日本語</a>
+					&nbsp
+					<a style="text-decoration: underline; color: #fff;" hreflang="ru" onclick="ChLang('ru', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">русский</a>
 				</div>
 			</section>
 		</article><!--Wrapper-->
