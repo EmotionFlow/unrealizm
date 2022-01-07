@@ -1,0 +1,7 @@
+#parse("zh_CN/header.vm")
+
+$reactions_total 表情符号反应已发送至您的 $contents_total 作品。
+检查通知屏幕的反应。
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("zh_CN/footer.vm")

@@ -1,0 +1,7 @@
+#parse("vi/header.vm")
+
+Các phản ứng của biểu tượng cảm xúc $reaction_total đã được gửi đến các tác phẩm $content_total của bạn.
+Kiểm tra màn hình Thông báo để biết các phản ứng.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("vi/footer.vm")

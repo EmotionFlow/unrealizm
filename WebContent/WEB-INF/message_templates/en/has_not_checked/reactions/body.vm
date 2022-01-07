@@ -1,0 +1,7 @@
+#parse("en/header.vm")
+
+$reactions_total emoji reactions have been sent to your $contents_total works.
+Check the Notification screen for the reactions.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("en/footer.vm")
