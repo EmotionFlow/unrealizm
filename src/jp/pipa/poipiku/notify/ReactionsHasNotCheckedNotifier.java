@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.notify;
 
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -11,11 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public final class ReactionsHasNotCheckedNotifier extends Notifier {
-	private static final int MAX_SEND_USERS = 500;
+	private static final int MAX_SEND_USERS = 10;
 
 	public ReactionsHasNotCheckedNotifier() {
 		CATEGORY = "has_not_checked";
@@ -30,15 +28,13 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 		boolean result = false;
 		try {
 			connection = dataSource.getConnection();
-			// １ヶ月以上アクセスしていないユーザーのうち、４週間以上DMしていないユーザー
-			// かつ、DM許可しているユーザー。今までDMしていない人を優先。
 			sql = "SELECT i.user_id, u.email, u.nickname, u.lang_id" +
 					" FROM info_lists i" +
 					"         INNER JOIN users_0000 u ON i.user_id = u.user_id" +
 					" WHERE i.info_type = 1" +
 					"  AND i.had_read = FALSE" +
-//					"  AND i.info_date < (now() - INTERVAL '14 days')" +
-					"  AND i.info_date < (timestamp '2022-01-06 00:00:00' - INTERVAL '14 days')" +
+					"  AND i.info_date < (now() - INTERVAL '14 days')" +
+//					"  AND i.info_date < (timestamp '2022-01-06 00:00:00' - INTERVAL '14 days')" +
 					"  AND u.email LIKE '%@%'" +
 					"  AND u.hash_password NOT LIKE '%BAN'" +
 					"  AND u.email NOT LIKE '%BAN'" +
@@ -79,7 +75,7 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					" FROM a;";
 			statement = connection.prepareStatement(sql);
 			for (User targetUser : deliveryTargets) {
-				// 未読通知のコンテンツ数をリアクション数の合計を求める
+				// 未読通知のコンテンツ数とリアクション数の合計を求める
 				statement.setInt(1, targetUser.id);
 				resultSet = statement.executeQuery();
 
@@ -102,12 +98,12 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					// 配信
 					notifyByEmail(targetUser, mailSubject, mailBody);
 
-					// 配信日時設定
-//				sql = "UPDATE info_lists SET sent_unread_mail_at=now() WHERE user_id=?";
-//				statement = connection.prepareStatement(sql);
-//				statement.setInt(1, targetUser.id);
-//				statement.executeUpdate();
-//				statement.close();
+					// 配信済み設定
+					sql = "UPDATE info_lists SET sent_unread_mail_at=now() WHERE user_id=?";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(1, targetUser.id);
+					statement.executeUpdate();
+					statement.close();
 
 					// Amazon SES Maximum send rate is
 					// 14 emails per second
@@ -116,6 +112,7 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					resultSet.close();
 				}
 			}
+			result = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			Log.d(sql);
