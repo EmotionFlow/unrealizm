@@ -244,23 +244,26 @@ public class CardSettlementEpsilon extends CardSettlement {
 					errorKind = ErrorKind.None;
 					return true;
 				} else {
-					notifyErrorToSlack("決済処理中にEpsilonからNGが返却された");
+					final String messageFormat = "%s userId=%d, contentId=%d, errCode=%s, errDetail=%s";
+					String message;
 					if("0".equals(settlementResultCode)) {
-						Log.d(String.format("決済NG userId=%d, contentId=%d", poipikuUserId, contentId));
-						Log.d("Code: " + settlementResultInfo.errCode);
-						Log.d("Detail: " + settlementResultInfo.errDetail);
+						message = String.format(messageFormat,
+								"決済NG",
+								poipikuUserId, contentId, settlementResultInfo.errCode, settlementResultInfo.errDetail);
 						errorKind = ErrorKind.CardAuth;
 					} else if("9".equals(settlementResultCode)) {
-						Log.d(String.format("イプシロンからシステムエラー返却された userId=%d, contentId=%d", poipikuUserId, contentId));
-						Log.d("Code: " + settlementResultInfo.errCode);
-						Log.d("Detail: " + settlementResultInfo.errDetail);
+						message = String.format(messageFormat,
+								"イプシロンからシステムエラー返却された",
+								poipikuUserId, contentId, settlementResultInfo.errCode, settlementResultInfo.errDetail);
 						errorKind = ErrorKind.NeedInquiry;
 					} else {
-						Log.d(String.format("settlementResultCodeが想定外の値 userId=%d, contentId=%d", poipikuUserId, contentId));
-						Log.d("Code: " + settlementResultInfo.errCode);
-						Log.d("Detail: " + settlementResultInfo.errDetail);
+						message = String.format(messageFormat,
+								"settlementResultCodeが想定外の値",
+								poipikuUserId, contentId, settlementResultInfo.errCode, settlementResultInfo.errDetail);
 						errorKind = ErrorKind.Unknown;
 					}
+					Log.d(message);
+					notifyErrorToSlack("決済処理中にEpsilonからNGが返却された - " + message);
 					return false;
 				}
 			} else {
