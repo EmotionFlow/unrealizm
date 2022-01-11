@@ -111,7 +111,7 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 
 					// Amazon SES Maximum send rate is
 					// 14 emails per second
-					Thread.sleep(1000);
+					Thread.sleep(500);
 				} else {
 					resultSet.close();
 				}
