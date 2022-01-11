@@ -1,0 +1,16 @@
+#parse("ko/header.vm")
+
+트위터에서 팔로우하는 사용자가 POIPIKU를 시작했습니다.
+
+#foreach($u in $recommend_users)
+[$u.nickname]
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+포이피쿠에 의한 팔로우는 타인에게 통지되지 않습니다. 자유롭게 팔로우하세요.
+
+#parse("ko/footer.vm")

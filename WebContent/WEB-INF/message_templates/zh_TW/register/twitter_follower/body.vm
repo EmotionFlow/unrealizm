@@ -1,0 +1,16 @@
+#parse("zh_TW/header.vm")
+
+您在 Twitter 上關注的用戶已啟動 POIPIKU。
+
+#foreach($u in $recommend_users)
+[$u.nickname]
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+跟隨 POIPIKU 不會通知其他人。隨時關注他們。
+
+#parse("zh_TW/footer.vm")

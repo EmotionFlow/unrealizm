@@ -1,0 +1,16 @@
+#parse("ru/header.vm")
+
+Пользователь, на которого вы подписаны в Твиттере, создал POIPIKU.
+
+#foreach($u in $recommend_users)
+[$u.nickname]
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+Следование POIPIKU не является уведомлением другого лица. Не стесняйтесь следовать им.
+
+#parse("ru/footer.vm")

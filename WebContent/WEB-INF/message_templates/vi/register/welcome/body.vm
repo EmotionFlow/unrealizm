@@ -1,27 +1,27 @@
-Dear $to_name
+Gửi $to_name
 
-Welcome to POIPIKU!
-Our staff will show you how to use POIPIKU and how to set up your email.
+Chào mừng đến với POIPIKU!
+Nhân viên của chúng tôi sẽ hướng dẫn bạn cách sử dụng POIPIKU và cách thiết lập email của bạn.
 
-[Post and enjoy]
-You can post images (photos are acceptable) and novels (text).
-POIPIKU is a site where you can casually post scribbles or content you are working on. Feel free to post your own work.
+[Đăng và thưởng thức]
+Bạn có thể đăng hình ảnh (ảnh có thể chấp nhận được) và tiểu thuyết (văn bản).
+POIPIKU là một trang web nơi bạn có thể tình cờ đăng những nét vẽ nguệch ngoạc hoặc nội dung mà bạn đang làm việc. Hãy đăng tác phẩm của riêng bạn.
 
-+ Files +
-You can upload PNGs, JPEGs, and GIFs (including animated GIFs). Multiple images can be uploaded at the same time, and the order can be changed or replaced after submission.
++ Tệp +
+Bạn có thể tải lên PNG, JPEG và GIF (bao gồm cả GIF động). Nhiều hình ảnh có thể được tải lên cùng một lúc và thứ tự có thể được thay đổi hoặc thay thế sau khi gửi.
 
-+ Novels +
-You can submit up to 100,000 characters. You can switch between vertical and horizontal writing styles, as well as use Aozora Bunko notation to write ruby.
++ Tiểu thuyết +
+Bạn có thể gửi tối đa 100.000 ký tự. Bạn có thể chuyển đổi giữa các kiểu viết dọc và ngang, cũng như sử dụng ký hiệu Aozora Bunko để viết ruby.
 
-+ Paste +
-You can copy and paste screen shots and other images and post them. You can do things like capture the screen of a painting software and post the progress of your work.
++ Dán +
+Bạn có thể sao chép và dán ảnh chụp màn hình và các hình ảnh khác và đăng chúng. Bạn có thể làm những việc như chụp màn hình phần mềm vẽ tranh và đăng tiến trình công việc của mình.
 
 
-[Enjoy watching and reading]
-When you follow a user on POIPIKU, you can check the new posts of the user you are following on the [quiet follow] page.
-Followers on POIPIKU will not be notified. Let's follow them right away.
+[Thích xem và đọc]
+Khi theo dõi một người dùng trên POIPIKU, bạn có thể kiểm tra các bài đăng mới của người dùng mà bạn đang theo dõi trên trang [lặng lẽ theo dõi].
+Những người theo dõi trên POIPIKU sẽ không được thông báo. Hãy cùng theo dõi chúng ngay sau đây.
 
-+ Recommended Users +
++ Người dùng được đề xuất +
 
 #foreach($u in $recommend_users)
 $u.nickname
@@ -33,28 +33,28 @@ https://poipiku.com/$u.userId
 #end
 
 
-+ Reactions +
-For each content, you can send your feelings as Emoji (reactions). You can also have multiple reactions to a single content.
-Reactions, do not tell the other person who sent them. If you feel like it, you can send emoji as often as you like.
++ Phản ứng +
+Đối với mỗi nội dung, bạn có thể gửi cảm xúc của mình dưới dạng Emoji (phản ứng). Bạn cũng có thể có nhiều phản ứng với một nội dung.
+Các phản ứng, đừng nói cho người khác biết người đã gửi chúng. Nếu cảm thấy thích, bạn có thể gửi biểu tượng cảm xúc bao nhiêu lần tùy thích.
 
 
-[Email settings]
-You can also log in to POIPIKU with your email address and password, in case Twitter integration doesn't work or you've deleted your Twitter account.
+[Cài đặt email]
+Bạn cũng có thể đăng nhập vào POIPIKU bằng địa chỉ email và mật khẩu của mình, trong trường hợp tích hợp Twitter không hoạt động hoặc bạn đã xóa tài khoản Twitter của mình.
 
-Email : $login_email
-Password : $login_password
+Email: $login_email
+Mật khẩu: $login_password
 
-- The email address registered on Twitter.
-- You can change your email address and password in the settings page.
-
-
-[Email Delivery]
-You will receive occasional email notifications, such as those introducing recommended users or notifying you when a user you follow on Twitter starts using POIPIKU.
-- You can change the delivery ON/OFF in the settings screen.
+- Địa chỉ email đã đăng ký trên Twitter.
+- Bạn có thể thay đổi địa chỉ email và mật khẩu của mình trong trang cài đặt.
 
 
-[Official Accounts]
-This is the official account for POIPIKU and Twitter. We will post updates and campaign information as needed, so please follow us if you like.
+[Gửi email]
+Bạn sẽ nhận được thông báo qua email không thường xuyên, chẳng hạn như thông báo giới thiệu người dùng được đề xuất hoặc thông báo cho bạn khi người dùng mà bạn theo dõi trên Twitter bắt đầu sử dụng POIPIKU.
+- Bạn có thể thay đổi giao hàng BẬT / TẮT trong màn hình cài đặt.
+
+
+[Tài khoản chính thức]
+Đây là tài khoản chính thức cho POIPIKU và Twitter. Chúng tôi sẽ đăng thông tin cập nhật và chiến dịch khi cần thiết, vì vậy hãy theo dõi chúng tôi nếu bạn thích.
 
 POIPIKU
 https://poipiku.com/2
@@ -63,6 +63,6 @@ Twitter
 https://twitter.com/pipajp
 
 
-So, enjoy POIPIKU!
+Vì vậy, hãy tận hưởng POIPIKU!
 
-#parse("en/footer.vm")
+#parse("vi/footer.vm")
