@@ -74,6 +74,11 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					" SELECT COUNT(*) contents_total, SUM(badge_sum) badge_total" +
 					" FROM a;";
 			statement = connection.prepareStatement(sql);
+
+			PreparedStatement updateStatement = connection.prepareStatement(
+					"UPDATE info_lists SET sent_unread_mail_at=now() WHERE user_id=?"
+			);
+
 			for (User targetUser : deliveryTargets) {
 				// 未読通知のコンテンツ数とリアクション数の合計を求める
 				statement.setInt(1, targetUser.id);
@@ -98,12 +103,11 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					// 配信
 					notifyByEmail(targetUser, mailSubject, mailBody);
 
+					Log.d(String.format("send to: %s(%d)", targetUser.email, targetUser.id));
+
 					// 配信済み設定
-					sql = "UPDATE info_lists SET sent_unread_mail_at=now() WHERE user_id=?";
-					statement = connection.prepareStatement(sql);
-					statement.setInt(1, targetUser.id);
-					statement.executeUpdate();
-					statement.close();
+					updateStatement.setInt(1, targetUser.id);
+					updateStatement.executeUpdate();
 
 					// Amazon SES Maximum send rate is
 					// 14 emails per second
