@@ -1,9 +1,9 @@
-#parse("ja/header.vm")
+#parse("en/header.vm")
 
-他のユーザーからポイパスのチケットのおふせがありました
+Another user has given you a ticket to POIPASS.
 
-・ポイパスOFFの方は、チケットが使われ、自動でポイパスがONになります。
-・現在のチケット枚数は設定画面から確認できます。
-・ポイパス購入中の方は、翌月の課金が0円になります。
+- If your POIPASS is OFF, your ticket will be used and your POIPASS will automatically be turned ON.
+- You can check your current number of tickets from the settings page.
+- If you are currently purchasing a POIPASS, you will not be charged for the following month.
 
-#parse("ja/footer.vm")
+#parse("en/footer.vm")

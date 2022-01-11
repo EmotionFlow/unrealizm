@@ -1,0 +1,9 @@
+#parse("zh_TW/header.vm")
+
+另一個用戶給了你一張 POIPASS 的票。
+
+- 如果您的 POIPASS 關閉，您的票將被使用並且您的 POIPASS 將自動開啟。
+- 您可以從設置頁面查看您當前的門票數量。
+- 如果您目前正在購買 POIPASS，您將不會在下個月支付費用。
+
+#parse("zh_TW/footer.vm")

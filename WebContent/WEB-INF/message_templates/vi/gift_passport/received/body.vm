@@ -1,9 +1,9 @@
-#parse("ja/header.vm")
+#parse("vi/header.vm")
 
-他のユーザーからポイパスのチケットのおふせがありました
+Một người dùng khác đã cấp cho bạn một vé đến POIPASS.
 
-・ポイパスOFFの方は、チケットが使われ、自動でポイパスがONになります。
-・現在のチケット枚数は設定画面から確認できます。
-・ポイパス購入中の方は、翌月の課金が0円になります。
+- Nếu POIPASS của bạn đang TẮT, vé của bạn sẽ được sử dụng và POIPASS của bạn sẽ tự động được BẬT.
+- Bạn có thể kiểm tra số lượng vé hiện tại của mình từ trang cài đặt.
+- Nếu bạn hiện đang mua POIPASS, bạn sẽ không bị tính phí cho tháng tiếp theo.
 
-#parse("ja/footer.vm")
+#parse("vi/footer.vm")

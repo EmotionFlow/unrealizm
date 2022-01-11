@@ -1,1 +1,1 @@
-#parse("ja/mail_subject_header.vm") #parse("ja/gift_passport/received/title.vm")
+#parse("vi/mail_subject_header.vm") #parse("vi/gift_passport/received/title.vm")

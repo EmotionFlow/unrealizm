@@ -1,4 +1,4 @@
-# 既存のpropertiesファイルを走査して、新たに別の言語のpropertiesファイルを生成するスクリプト
+# 既存のmessage templateファイルを走査して、新たに別の言語のmessage templateファイルを生成するスクリプト
 
 import requests
 import json
@@ -11,8 +11,12 @@ import translate
 SOURCE_LOCALE = 'en'
 
 # ターゲットとする言語
-#TARGET_LOCALES = ['ko', 'zh_CN', 'zh_TW', 'th', 'ru', 'vi']
-#TARGET_LOCALES = ['ko']
+#TARGET_LOCALES = ["ko", "zh_CN", "zh_TW", "th", "ru", "vi"]
+#TARGET_LOCALES = ["ko"]
+
+# clear
+## rm -rf ../../WebContent/WEB-INF/message_templates/{ko,zh_CN,zh_TW,th,ru,vi}/register/twitter_follower
+
 
 TEMPLATE_ROOT = '../../WebContent/WEB-INF/message_templates/'
 TEMPLATE_PATH = sys.argv[1]
@@ -35,12 +39,12 @@ for target_locale in translate.TARGET_LOCALES:
         trans_lines = []
         for line in lines:
             line = line.replace(f'#parse("{SOURCE_LOCALE}', f'#parse("{target_locale}')
-            if line[0] == "#" or line[0] == '':
+            if line[0] == "#" or line[0] == '' or line == "\n":
                 trans_lines.append(line)
             else:
                 try:
                     word = line.encode('ascii').decode('unicode-escape')
-                    print(word)
+                    #print(word)
                     response = requests.post(f"{translate.SCRIPT_URI}", data={'text': word, 'source': SOURCE_LOCALE, 'target': translate.GOOGLE_TRANSLATE_LOCALES[target_locale]})
                     resp = json.loads(response.text)
                     trans_word = resp['text']

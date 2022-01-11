@@ -1,0 +1,9 @@
+#parse("ko/header.vm")
+
+다른 사용자가 귀하에게 POIPASS 티켓을 주었습니다.
+
+- POIPASS가 꺼져 있으면 티켓이 사용되며 POIPASS가 자동으로 켜집니다.
+- 설정 페이지에서 현재 티켓 수를 확인할 수 있습니다.
+- 현재 POIPASS를 구매하고 계시다면, 다음 달에는 요금이 청구되지 않습니다.
+
+#parse("ko/footer.vm")

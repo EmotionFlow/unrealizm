@@ -1,1 +1,1 @@
-#parse("ja/mail_subject_header.vm") #parse("ja/recommended/users/title.vm")
+#parse("vi/mail_subject_header.vm") #parse("vi/recommended/users/title.vm")
