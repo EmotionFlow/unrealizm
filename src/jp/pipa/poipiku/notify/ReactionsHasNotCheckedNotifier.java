@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ReactionsHasNotCheckedNotifier extends Notifier {
-	private static final int MAX_SEND_USERS = 10;
+	private static final int MAX_SEND_USERS = 500;
 
 	public ReactionsHasNotCheckedNotifier() {
 		CATEGORY = "has_not_checked";
@@ -103,7 +103,7 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					// 配信
 					notifyByEmail(targetUser, mailSubject, mailBody);
 
-					Log.d(String.format("send to: %s(%d)", targetUser.email, targetUser.id));
+					//Log.d(String.format("send to: %s(%d)", targetUser.email, targetUser.id));
 
 					// 配信済み設定
 					updateStatement.setInt(1, targetUser.id);
@@ -116,6 +116,7 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					resultSet.close();
 				}
 			}
+			Log.d("配信数 " + deliveryTargets.size());
 			result = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
