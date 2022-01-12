@@ -16,6 +16,7 @@ public final class MyHomePcC {
 	public int m_nPage = 0;
 	public boolean m_bNoContents = false;
 	private int m_nLastSystemInfoId = -1;
+	public int cookieLangId = -1;
 
 	public void getParam(final HttpServletRequest request) {
 		try {
@@ -28,7 +29,7 @@ public final class MyHomePcC {
 					m_nLastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
 				}
 			}
-		} catch(Exception e) {
+		} catch(Exception ignored) {
 			;
 		}
 	}
@@ -56,6 +57,18 @@ public final class MyHomePcC {
 		try {
 			CacheUsers0000 users = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
+
+			if(checkLogin.m_bLogin && cookieLangId >= 0 && checkLogin.m_nLangId != cookieLangId){
+				Log.d(String.format("updateLangId %d to %d", checkLogin.m_nLangId, cookieLangId));
+				strSql = "UPDATE users_0000 SET lang_id=? WHERE user_id=?";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, cookieLangId);
+				statement.setInt(2, checkLogin.m_nUserId);
+				statement.executeUpdate();
+				statement.close();
+				users.clearUser(checkLogin.m_nUserId);
+				checkLogin.m_nLangId = cookieLangId;
+			}
 
 			// POIPIKU INFO
 			if(m_nPage<=0) {

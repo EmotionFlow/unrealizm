@@ -70,7 +70,7 @@ public final class CacheUsers0000 {
 		final long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.lastLogin>=timeNow-UPDATE_INTERVAL) {
-			//Log.d("From Hash Cache");
+			Log.d("From Hash Cache");
 			return user;
 		}
 
@@ -92,7 +92,7 @@ public final class CacheUsers0000 {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				//Log.d("From Hash DB");
+				Log.d("From Hash DB");
 			}
 			if(user!=null) {
 				if(user.lastLogin<timeNow-UPDATE_INTERVAL) {
@@ -126,7 +126,7 @@ public final class CacheUsers0000 {
 		final long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.lastLogin>=timeNow-UPDATE_INTERVAL) {
-			//Log.d("From ID Cache");
+			Log.d("From ID Cache");
 			return user;
 		}
 
@@ -148,7 +148,7 @@ public final class CacheUsers0000 {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				//Log.d("From ID DB");
+				Log.d("From ID DB");
 			}
 			if(user!=null) {
 				if(user.lastLogin<timeNow-UPDATE_INTERVAL) {
@@ -181,7 +181,7 @@ public final class CacheUsers0000 {
 	}
 
 	public void clearUser(final int userId) {
-		//Log.d("Clear Cache By UserId");
+		Log.d("Clear Cache By UserId");
 		User user = mapUserId.remove(userId);
 		if(user==null) return;
 		mapHashPass.remove(user.hashPass);
@@ -208,7 +208,7 @@ public final class CacheUsers0000 {
 			hashPass		= Util.toString(resultSet.getString("hash_password"));
 			nickName		= Util.toString(resultSet.getString("nickname"));
 			profile			= Util.toString(resultSet.getString("profile"));
-			langId			= Math.min(Math.max(resultSet.getInt("lang_id"), Common.LANG_ID_OTHER), Common.LANG_ID_JP);
+			langId			= resultSet.getInt("lang_id");
 			lastLogin		= resultSet.getTimestamp("last_login_date").getTime();
 			fileName		= Util.toString(resultSet.getString("file_name"));
 			if(fileName.isEmpty()) fileName = "/img/default_user.jpg";

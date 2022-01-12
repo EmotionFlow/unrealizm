@@ -6,6 +6,12 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 MyHomePcC cResults = new MyHomePcC();
 cResults.getParam(request);
+String cookieLang = Util.getCookie(request, "LANG");
+if (cookieLang == null) {
+	cookieLang = "ja";
+	Util.setCookie(response, "LANG", "ja", Integer.MAX_VALUE);
+}
+cResults.cookieLangId = SupportedLocales.findId(cookieLang);
 
 if(!checkLogin.m_bLogin) {
 	if(cResults.n_nUserId>0) {
