@@ -1,3 +1,18 @@
+
+#ASL
+#GG
+#Imp
+#Inheritance
+#MW
+#SM
+#STL/banner
+#STL/vdo
+#SpotX
+#TV
+#VLI
+#VZM
+#Video
+#XM
 152media.info, 152M4, DIRECT
 33across.com, 0010b00001rrmDAAAY, RESELLER, bbea06d9c4d2853c
 33across.com, 0013300001kQj2HAAS, RESELLER, bbea06d9c4d2853c
@@ -37,7 +52,6 @@ adingo.jp,14347,RESELLER
 adingo.jp,20070,RESELLER
 adingo.jp,240,RESELLER
 adm.shinobi.jp,105476,RESELLER
-adm.shinobi.jp,169883,RESELLER
 adm.shinobi.jp,21957,DIRECT
 adm.shinobi.jp,36156,DIRECT
 admanmedia.com, 43, RESELLER
@@ -523,6 +537,7 @@ indexexchange.com, 192277, RESELLER, 50b1c356f2c5c8fc
 indexexchange.com, 192700, RESELLER, 50b1c356f2c5c8fc
 indexexchange.com, 192922, RESELLER, 50b1c356f2c5c8fc
 indexexchange.com, 193369, DIRECT, 50b1c356f2c5c8fc
+indexexchange.com, 193760, RESELLER, 50b1c356f2c5c8fc
 indexexchange.com,175407,RESELLER,50b1c356f2c5c8fc
 indexexchange.com,184110,RESELLER,50b1c356f2c5c8fc
 indexexchange.com,184311,RESELLER
@@ -772,7 +787,7 @@ pubnative.net, 1006576, RESELLER, d641df8625486a7b
 pubnative.net, 1006951, RESELLER, d641df8625486a7b
 pubnative.net, 1007194, RESELLER, d641df8625486a7b
 pubnative.net,1007243,RESELLER,d641df8625486a7b
-quantumdex.io, 16942, DIRECT
+quantumdex.io, 16942, DIRECTadm.shinobi.jp,169883,RESELLER
 revcontent.com, 87963, RESELLER
 revcontent.com,86011,RESELLER
 rhythmone.com, 1059622079, RESELLER, a670c89d4a324e47
