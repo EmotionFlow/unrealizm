@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
@@ -29,14 +30,12 @@ public final class CacheUsers0000 {
 	}
 
 	public void init(){
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 		try{
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			strSql = "SELECT * FROM users_0000 ORDER BY user_id DESC OFFSET ? LIMIT 10000";
 			statement = connection.prepareStatement(strSql);
 			for(int offset=0; offset<10; offset++) {
@@ -50,7 +49,7 @@ public final class CacheUsers0000 {
 				resultSet.close();resultSet=null;
 			}
 			statement.close();statement=null;
-			//Log.d("Load all user data");
+			// Log.d("Load all user data");
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -70,18 +69,16 @@ public final class CacheUsers0000 {
 		final long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.lastLogin>=timeNow-UPDATE_INTERVAL) {
-			Log.d("From Hash Cache");
+			// Log.d("From Hash Cache");
 			return user;
 		}
 
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 		try{
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			if(user==null) {
 				strSql = "SELECT * FROM users_0000 WHERE hash_password=?";
 				statement = connection.prepareStatement(strSql);
@@ -92,7 +89,7 @@ public final class CacheUsers0000 {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				Log.d("From Hash DB");
+				// Log.d("From Hash DB");
 			}
 			if(user!=null) {
 				if(user.lastLogin<timeNow-UPDATE_INTERVAL) {
@@ -126,7 +123,7 @@ public final class CacheUsers0000 {
 		final long timeNow = System.currentTimeMillis();
 
 		if(user!=null && user.lastLogin>=timeNow-UPDATE_INTERVAL) {
-			Log.d("From ID Cache");
+			// Log.d("From ID Cache");
 			return user;
 		}
 
@@ -148,7 +145,7 @@ public final class CacheUsers0000 {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				Log.d("From ID DB");
+				// Log.d("From ID DB");
 			}
 			if(user!=null) {
 				if(user.lastLogin<timeNow-UPDATE_INTERVAL) {
@@ -181,7 +178,7 @@ public final class CacheUsers0000 {
 	}
 
 	public void clearUser(final int userId) {
-		Log.d("Clear Cache By UserId");
+		// Log.d("Clear Cache By UserId");
 		User user = mapUserId.remove(userId);
 		if(user==null) return;
 		mapHashPass.remove(user.hashPass);
