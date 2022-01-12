@@ -70,7 +70,7 @@
 							URLEncoder.encode(String.format("%s%s #%s",
 									checkLogin.m_strNickName,
 									_TEX.T("Twitter.UserAddition"),
-									_TEX.T("Common.Title")), "UTF-8"),
+									_TEX.T("Common.HashTag")), "UTF-8"),
 							URLEncoder.encode("https://poipiku.com/"+checkLogin.m_nUserId+"/", "UTF-8"));
 
 				%>

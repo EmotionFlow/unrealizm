@@ -36,7 +36,7 @@ public final class CTweet {
 	public int m_nUserId = -1;
 	public long m_lnTwitterUserId = -1;
 	public ResponseList<UserList> m_listOpenList = null;
-	public static final int MAX_LENGTH = 140;
+	public static final int MAX_LENGTH = 130;
 	public static final String ELLIPSE = "...";
 
 	public static final int FRIENDSHIP_UNDEF = -1;		// 未定義
@@ -909,11 +909,11 @@ public final class CTweet {
 	static public String generateAfterTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
-			String strUrl = String.format("https://poipiku.com/%d/%d.html",
+			final String strUrl = String.format("https://poipiku.com/%d/%d.html",
 					cContent.m_nUserId,
 					cContent.m_nContentId);
 
-			String strFooter = "\n" + strUrl;
+			final String strFooter = "\n" + strUrl;
 
 			int nMessageLength = CTweet.MAX_LENGTH - strFooter.length();
 
@@ -923,9 +923,9 @@ public final class CTweet {
 			}
 
 			strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-					URLEncoder.encode(strDesc, "UTF-8"),
+					URLEncoder.encode(strDesc + " " + "#" + _TEX.T("Common.HashTag"), "UTF-8"),
 					URLEncoder.encode(strUrl, "UTF-8"));
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 			;
 		}
 		return strTwitterUrl;
