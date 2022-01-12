@@ -796,7 +796,7 @@ public final class CCnv {
 		if (isMyBox && checkLogin!=null && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
 			// created_at
 			final String createdAt = cContent.createdAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.createdAt);
-			strRtn.append(String.format("<div class=\"IllustUser\" style=\"font-size:9px; justify-content: right; display: block;\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
+			strRtn.append(String.format("<div class=\"IllustUser\" style=\"background-color:#fff; font-size:9px; justify-content: right; display: block;\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
 		}
 		strRtn.append("</div>");	// IllustThumb
 		return strRtn.toString();
