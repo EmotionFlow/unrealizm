@@ -1296,6 +1296,11 @@ Decoration
 	color: #3498db;
 }
 
+.IllustItem .NonFrameBtnBase {
+	background: #fff;
+	color: #3498db;
+}
+
 .IllustItem .BtnBase.Selected,
 .IllustItem .BtnBase:hover {
 	border: 1px solid #fff;
@@ -1412,15 +1417,34 @@ Decoration
 	float: right;
 }
 
-.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandTweet,
-	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandInfo,
-	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete,
-	.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandEdit
-	{
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandDelete,
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandEdit {
 	display: inline-block;
 	color: #aaa;
 	margin:  4px 10px;
 }
+
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandTweet {
+	display: inline-block;
+	color: #aaa;
+	margin:  4px 10px;
+}
+
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandShareTweet,
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandShareCopyUrl {
+	display: inline-block;
+	color: #aaa;
+	margin:  4px 7px;
+}
+
+
+.IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandInfo {
+	float: right;
+	display: inline-block;
+	color: #aaa;
+	margin: 4px 0 4px 20px;
+}
+
 
 .IllustItem .IllustItemCommand .IllustItemCategoryEdit {display: none; float: left; margin: 0 0 8px 0;}
 
@@ -1509,19 +1533,28 @@ Decoration
 .IllustItem .IllustItemCmd {
 	display: block;
 	float: right;
-	padding: 0 0 0 5px;
+	padding: 0 0 0 7px;
 	box-sizing: border-box;
 	text-align: right;
 	margin: 0;
 }
 
 .IllustItem .IllustItemCmd .IllustItemBookmarkBtn {
-	display: inline-block;
-	margin: 0 0 0 0;
-	font-size: 12px;
-	border-radius: 30px;
-	padding: 3px 10px;
+	padding: 0;
+	font-size: 19px;
+	border: none;
 }
+
+.IllustItem .IllustItemCmd .IllustItemShareButton {
+	display: inline-block;
+	padding: 0;
+	margin: 3px 0 0 13px;
+	width: 18px;
+	height: 18px;
+	border: none;
+	background-image: url("/img/share_sp.svg");
+}
+
 
 .IllustItem .Request {
 	display: block;

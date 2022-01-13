@@ -110,6 +110,8 @@ public final class CCnv {
 	}
 	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
+
+
 		if(cContent.m_nUserId==nLoginUserId) {
 			String strTwitterUrl = CTweet.generateAfterTweetMsg(cContent, _TEX);
 			strRtn.append(String.format("<a class=\"IllustItemCommandTweet fab fa-twitter\" href=\"%s\" target=\"_blank\"></a>", strTwitterUrl));
@@ -128,18 +130,29 @@ public final class CCnv {
 			}
 			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d, %b)\"></a>", nLoginUserId, cContent.m_nContentId, !cContent.m_strTweetId.isEmpty()));
 		} else {
+			// 通報ボタン
 			strRtn.append(String.format("<a class=\"IllustItemCommandInfo fas fa-info-circle\" href=\"%s?ID=%d&TD=%d\"></a>", REPORT_FORM, cContent.m_nUserId, cContent.m_nContentId));
 			if(nLoginUserId==1) {
 				strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d, %b)\"></a>", nLoginUserId, cContent.m_nContentId, cContent.m_nUserId==1?true:false));
 			}
+
+			if (CheckLogin.isStaff(nLoginUserId)) {
+				// シェアボタン
+				strRtn.append("<div class=\"IllustItemCmd\">");
+				strRtn.append(String.format("<a class=\"NonFrameBtnBase IllustItemShareButton\" href=\"javascript:void(0)\" onclick=\"shareContent(%d, %d);\"></a>",
+						cContent.m_nUserId,
+						cContent.m_nContentId));
+				strRtn.append("</div>");    // IllustItemCmd
+			}
+
 			// ブクマボタン
 			strRtn.append("<div class=\"IllustItemCmd\">");
-			strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"BtnBase IllustItemBookmarkBtn %s\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"far fa-bookmark\"></i> %s</a>",
+			strRtn.append(String.format("<a id=\"IllustItemBookmarkBtn_%d\" class=\"NonFrameBtnBase IllustItemBookmarkBtn\" href=\"javascript:void(0)\" onclick=\"UpdateBookmark(%d, %d);\"><i class=\"%s fa-bookmark\"></i></a>",
 					cContent.m_nContentId,
-					(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"Selected":"",
 					nLoginUserId,
 					cContent.m_nContentId,
-					_TEX.T("IllustV.Favo")));
+					(cContent.m_nBookmarkState==CContent.BOOKMARK_BOOKMARKING)?"fas":"far"
+					));
 			strRtn.append("</div>");	// IllustItemCmd
 		}
 		strRtn.append("</div>");	// IllustItemCommandSub

@@ -433,10 +433,14 @@ function UpdateBookmark(user_id, content_id) {
 		"url": "/api/UpdateBookmarkF.jsp",
 		"dataType": "json",
 		"success": function(data) {
+			const selector = '#IllustItemBookmarkBtn_' + content_id + '> .fa-bookmark';
+			const el = $(selector);
 			if (data.result === 0) {
-				$('#IllustItemBookmarkBtn_' + content_id).removeClass('Selected');
+				el.removeClass('fas');
+				el.addClass('far');
 			} else if (data.result === 1) {
-				$('#IllustItemBookmarkBtn_' + content_id).addClass('Selected');
+				el.removeClass('far');
+				el.addClass('fas');
 			} else if (data.result === 2) { // UpdateBookmarkC.BOOKMARK_LIMIT
 				DispMsg(data.msg);
 			} else if (data.result === -2) { // UpdateBookmarkC.USER_INVALID
@@ -447,6 +451,7 @@ function UpdateBookmark(user_id, content_id) {
 			DispMsg('Connection error');
 		}
 	});
+	return false;
 }
 
 function fixedEncodeURIComponent (str) {
@@ -1027,3 +1032,39 @@ function initDetailOverlay() {
 	overlayInner.style.minHeight = (screen.height + 100) + "px";
 }
 /******** DetailV オーバーレイ表示*******/
+
+/******** シェアボタン *********/
+function shareContent(contentUserId, contentId) {
+	let tweetTxt = $("#IllustItemDesc_" + contentId).html();
+	if (tweetTxt) tweetTxt = tweetTxt.trim();
+	if (!tweetTxt || tweetTxt.length === 0) {
+		tweetTxt = "(no title)";
+	} else {
+		tweetTxt = tweetTxt.replaceAll("<br>", "\n");
+	}
+	tweetTxt += " - " + $("#IllustItem_" + contentId + " .IllustItemUserName > a").text()
+	if (tweetTxt.length > 100) {
+		tweetTxt = tweetTxt.substring(0, 100);
+		tweetTxt += '...';
+	}
+	if (typeof navigator.share === 'undefined') {
+		const $IllustItemCmd = $("#IllustItem_" + contentId + " .IllustItemShareButton").parent();
+		if ($IllustItemCmd.children(".IllustItemShareSub").length === 0) {
+			tweetTxt = encodeURI(tweetTxt);
+			const tweetUrl = "https://twitter.com/intent/tweet?text=" + tweetTxt + " %23poipiku&url=https%3A%2F%2Fpoipiku.com%2F" + contentUserId + "%2F" + contentId + ".html";
+			$IllustItemCmd.append(
+				'<span class="IllustItemShareSub">' +
+				'<a class="IllustItemCommandShareTweet fab fa-twitter" href="' + tweetUrl + '"></a>' +
+				'</span>'
+			);
+		}
+	} else {
+		const shareData = {
+			title: 'POIPIKU',
+			text: tweetTxt,
+			url: 'https://poipiku.com/' + contentUserId + '/' + contentId + '.html',
+		}
+		navigator.share(shareData);
+	}
+}
+/******** シェアボタン *********/
