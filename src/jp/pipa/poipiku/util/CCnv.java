@@ -135,16 +135,14 @@ public final class CCnv {
 				strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d, %b)\"></a>", nLoginUserId, cContent.m_nContentId, cContent.m_nUserId==1?true:false));
 			}
 
-			if (CheckLogin.isStaff(nLoginUserId)) {
-				// シェアボタン
-				strRtn.append("<div class=\"IllustItemCmd\">");
-				strRtn.append(String.format("<a class=\"NonFrameBtnBase IllustItemShareButton\" href=\"javascript:void(0)\" onclick=\"shareContent(%d, %d, %b);\"></a>",
-						cContent.m_nUserId,
-						cContent.m_nContentId,
-						nMode == MODE_SP
-						));
-				strRtn.append("</div>");    // IllustItemCmd
-			}
+			// シェアボタン
+			strRtn.append("<div class=\"IllustItemCmd\">");
+			strRtn.append(String.format("<a class=\"NonFrameBtnBase IllustItemShareButton\" href=\"javascript:void(0)\" onclick=\"shareContent(%d, %d, %b);\"></a>",
+					cContent.m_nUserId,
+					cContent.m_nContentId,
+					nMode == MODE_SP
+					));
+			strRtn.append("</div>");    // IllustItemCmd
 
 			// ブクマボタン
 			strRtn.append("<div class=\"IllustItemCmd\">");

@@ -153,7 +153,7 @@ if(cResults.categoryId >= 0) {
 
 			<section id="IllustItemList" class="IllustItemList">
 				<% for (int cnt=0; cnt<cResults.contentList.size(); cnt++) { %>
-					<%=CCnv.Content2Html(cResults.contentList.get(cnt), checkLogin.m_nUserId, cResults.mode, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
+					<%=CCnv.Content2Html(cResults.contentList.get(cnt), checkLogin.m_nUserId, bSmartPhone ? CCnv.MODE_SP : CCnv.MODE_SP, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 					<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
 						<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 					<%}%>
