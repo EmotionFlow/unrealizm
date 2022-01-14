@@ -9,6 +9,12 @@ cResults.getParam(request);
 int result = cResults.getResults(checkLogin);
 String msg = "";
 switch(result) {
+case UpdateBookmarkC.BOOKMARK_BOOKMARKING:
+	msg = _TEX.T("Bookmark.Added");
+	break;
+case UpdateBookmarkC.BOOKMARK_NONE:
+	msg = _TEX.T("Bookmark.Deleted");
+	break;
 case UpdateBookmarkC.BOOKMARK_LIMIT:
 	msg = String.format(_TEX.T("Bookmark.Limit"), Common.BOOKMARK_NUM[checkLogin.m_nPassportId]);
 	break;

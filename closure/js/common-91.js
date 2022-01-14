@@ -441,11 +441,8 @@ function UpdateBookmark(user_id, content_id) {
 			} else if (data.result === 1) {
 				el.removeClass('far');
 				el.addClass('fas');
-			} else if (data.result === 2) { // UpdateBookmarkC.BOOKMARK_LIMIT
-				DispMsg(data.msg);
-			} else if (data.result === -2) { // UpdateBookmarkC.USER_INVALID
-				DispMsg(data.msg);
 			}
+			DispMsg(data.msg);
 		},
 		"error": function(req, stat, ex){
 			DispMsg('Connection error');
@@ -1034,7 +1031,7 @@ function initDetailOverlay() {
 /******** DetailV オーバーレイ表示*******/
 
 /******** シェアボタン *********/
-function shareContent(contentUserId, contentId) {
+function shareContent(contentUserId, contentId, isSmartPhone) {
 	let tweetTxt = $("#IllustItemDesc_" + contentId).html();
 	if (tweetTxt) tweetTxt = tweetTxt.trim();
 	if (!tweetTxt || tweetTxt.length === 0) {
@@ -1047,7 +1044,14 @@ function shareContent(contentUserId, contentId) {
 		tweetTxt = tweetTxt.substring(0, 100);
 		tweetTxt += '...';
 	}
-	if (typeof navigator.share === 'undefined') {
+	if (isSmartPhone && typeof navigator.share !== 'undefined') {
+		const shareData = {
+			title: 'POIPIKU',
+			text: tweetTxt,
+			url: 'https://poipiku.com/' + contentUserId + '/' + contentId + '.html',
+		}
+		navigator.share(shareData);
+	} else {
 		const $IllustItemCmd = $("#IllustItem_" + contentId + " .IllustItemShareButton").parent();
 		if ($IllustItemCmd.children(".IllustItemShareSub").length === 0) {
 			tweetTxt = encodeURI(tweetTxt);
@@ -1058,13 +1062,6 @@ function shareContent(contentUserId, contentId) {
 				'</span>'
 			);
 		}
-	} else {
-		const shareData = {
-			title: 'POIPIKU',
-			text: tweetTxt,
-			url: 'https://poipiku.com/' + contentUserId + '/' + contentId + '.html',
-		}
-		navigator.share(shareData);
 	}
 }
 /******** シェアボタン *********/

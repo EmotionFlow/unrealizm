@@ -3,7 +3,6 @@ package jp.pipa.poipiku.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import jp.pipa.poipiku.*;
@@ -108,7 +107,7 @@ public final class CCnv {
 			strRtn.append("</h2>");
 		}
 	}
-	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
+	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nMode, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
 
 
@@ -139,9 +138,11 @@ public final class CCnv {
 			if (CheckLogin.isStaff(nLoginUserId)) {
 				// シェアボタン
 				strRtn.append("<div class=\"IllustItemCmd\">");
-				strRtn.append(String.format("<a class=\"NonFrameBtnBase IllustItemShareButton\" href=\"javascript:void(0)\" onclick=\"shareContent(%d, %d);\"></a>",
+				strRtn.append(String.format("<a class=\"NonFrameBtnBase IllustItemShareButton\" href=\"javascript:void(0)\" onclick=\"shareContent(%d, %d, %b);\"></a>",
 						cContent.m_nUserId,
-						cContent.m_nContentId));
+						cContent.m_nContentId,
+						nMode == MODE_SP
+						));
 				strRtn.append("</div>");    // IllustItemCmd
 			}
 
@@ -465,7 +466,7 @@ public final class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, MODE_PC, REPORT_FORM, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, MODE_PC, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -528,7 +529,7 @@ public final class CCnv {
 		// カテゴリー
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -635,7 +636,7 @@ public final class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nSpMode, REPORT_FORM, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
