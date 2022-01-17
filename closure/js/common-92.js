@@ -1054,14 +1054,36 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 	} else {
 		const $IllustItemCmd = $("#IllustItem_" + contentId + " .IllustItemShareButton").parent();
 		if ($IllustItemCmd.children(".IllustItemShareSub").length === 0) {
-			tweetTxt = encodeURI(tweetTxt);
-			const tweetUrl = "https://twitter.com/intent/tweet?text=" + tweetTxt + " %23poipiku&url=https%3A%2F%2Fpoipiku.com%2F" + contentUserId + "%2F" + contentId + ".html";
+			const uri = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetTxt + " #poipiku")
+				+ "&url=" + encodeURIComponent("https://poipiku.com/" + contentUserId + "/" + contentId + ".html");
 			$IllustItemCmd.append(
 				'<span class="IllustItemShareSub">' +
-				'<a class="IllustItemCommandShareTweet fab fa-twitter" href="' + tweetUrl + '"></a>' +
+				'<a class="IllustItemCommandShareTweet fab fa-twitter" href="' + uri + '"></a>' +
 				'</span>'
 			);
 		}
 	}
+}
+
+function shareUser(message, uri, isSmartPhone) {
+	if (isSmartPhone && typeof navigator.share !== 'undefined') {
+		const shareData = {
+			title: 'POIPIKU',
+			text: message,
+			url: uri,
+		}
+		navigator.share(shareData);
+	} else {
+		const $UserShareCmd = $("#UserShareCmd");
+		if ($UserShareCmd.children(".UserShareSub").length === 0) {
+			const tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(message) + "&url=" + encodeURIComponent(uri);
+			$UserShareCmd.append(
+				'<span class="UserShareSub">' +
+				'<a class="UserShareTweet fab fa-twitter" href="' + tweetUrl + '"></a>' +
+				'</span>'
+			);
+		}
+	}
+	return false;
 }
 /******** シェアボタン *********/

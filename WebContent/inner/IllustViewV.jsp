@@ -269,22 +269,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<%}%>
 					<span class="UserInfoCmd">
-						<%
-						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-								URLEncoder.encode(String.format("%s%s %s #%s",
-										cResults.m_cUser.m_strNickName,
-										_TEX.T("Twitter.UserAddition"),
-										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
-										_TEX.T("Common.HashTag")), "UTF-8"),
-								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
-						%>
 
 						<%@ include file="TFollowButton.jsp"%>
 						<%@ include file="IllustBrowserVRequestButton.jsp"%>
-
-						<span class="IllustItemCommandSub">
-							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
-						</span>
+						<%@ include file="TUserShareCmd.jsp"%>
 					</span>
 				</section>
 				<section class="UserInfoState">

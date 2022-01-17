@@ -1438,6 +1438,25 @@ Decoration
 }
 
 
+#UserShareCmd {
+	margin-left: 5px;
+}
+
+#UserShareCmd .UserShareButton {
+	display: inline-block;
+	position: relative;
+	top: 4px;
+	width: 18px;
+	height: 18px;
+}
+
+#UserShareCmd .UserShareTweet {
+	display: inline-block;
+	color: #aaa;
+	margin:  4px 7px;
+	font-size: 17px;
+}
+
 .IllustItem .IllustItemCommand .IllustItemCommandSub .IllustItemCommandInfo {
 	float: right;
 	display: inline-block;
@@ -1445,9 +1464,7 @@ Decoration
 	margin: 4px 0 4px 20px;
 }
 
-
 .IllustItem .IllustItemCommand .IllustItemCategoryEdit {display: none; float: left; margin: 0 0 8px 0;}
-
 
 .IllustItemTProhibit{
 	display: block;

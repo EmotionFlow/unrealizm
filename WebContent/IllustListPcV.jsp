@@ -108,15 +108,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
-						<%
-						String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-								URLEncoder.encode(String.format("%s%s %s #%s",
-										cResults.m_cUser.m_strNickName,
-										_TEX.T("Twitter.UserAddition"),
-										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
-										_TEX.T("Common.HashTag")), "UTF-8"),
-								URLEncoder.encode("https://poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
-						%>
 						<%if(!checkLogin.m_bLogin) {%>
 							<a class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
 						<%} else if(cResults.m_bOwner){
@@ -138,12 +129,8 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<%}%>
 
 						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
+						<%@ include file="/inner/TUserShareCmd.jsp"%>
 
-						<%if(!cResults.m_bOwner) {%>
-						<span class="IllustItemCommandSub">
-							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
-						</span>
-						<%}%>
 					</span>
 				</section>
 				<section class="UserInfoState">

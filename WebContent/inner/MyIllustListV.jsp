@@ -196,6 +196,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 							</a>
 							<%}%>
 						</span>
+						<%@ include file="/inner/TUserShareCmd.jsp"%>
 					</span>
 				</section>
 				<section class="UserInfoState">
