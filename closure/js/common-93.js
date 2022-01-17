@@ -1050,7 +1050,9 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 			text: tweetTxt,
 			url: 'https://poipiku.com/' + contentUserId + '/' + contentId + '.html',
 		}
-		navigator.share(shareData);
+		navigator.share(shareData)
+			.then( () => {DispSharedMsg()})
+			.catch( err => {console.log(err)});
 	} else {
 		const $IllustItemCmd = $("#IllustItem_" + contentId + " .IllustItemShareButton").parent();
 		if ($IllustItemCmd.children(".IllustItemShareSub").length === 0) {
@@ -1072,7 +1074,9 @@ function shareUser(message, uri, isSmartPhone) {
 			text: message,
 			url: uri,
 		}
-		navigator.share(shareData);
+		navigator.share(shareData)
+			.then( () => {DispSharedMsg()})
+			.catch( err => {console.log(err)});
 	} else {
 		const $UserShareCmd = $("#UserShareCmd");
 		if ($UserShareCmd.children(".UserShareSub").length === 0) {
