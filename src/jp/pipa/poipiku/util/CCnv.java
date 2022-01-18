@@ -123,18 +123,32 @@ public final class CCnv {
 			));
 			strRtn.append("</div>");    // IllustItemCmd
 
+			// ポイピク内でのピン留め
+			strRtn.append("<div class=\"IllustItemCmd\" style=\"float:none;display:inline-block;margin-right:14px\">");
+			strRtn.append(String.format("<a class=\"NonFrameBtnBase IllustItemPinButton fas fa-thumbtack\" style=\"float:none;margin-bottom:-2px\" href=\"javascript:void(0)\" onclick=\"shareContent(%d, %d, %b);\"></a>",
+					cContent.m_nUserId,
+					cContent.m_nContentId,
+					nMode == MODE_SP
+			));
+			strRtn.append("</div>");    // IllustItemCmd
+
+
 			if(nSpMode == SP_MODE_APP) {
 				if(cContent.m_nEditorId != Common.EDITOR_TEXT) {
 					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"myurlscheme://reEdit?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
 				}
 			} else {
+				final String updateJsp;
 				if(cContent.m_nEditorId == Common.EDITOR_PASTE) {
-					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdatePastePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+					updateJsp = "UpdatePastePcV";
 				} else if(cContent.m_nEditorId == Common.EDITOR_TEXT) {
-					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdateTextPcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+					updateJsp = "UpdateTextPcV";
 				} else {
-					strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/UpdateFilePcV.jsp?ID=%d&TD=%d\"></a>", cContent.m_nUserId, cContent.m_nContentId));
+					updateJsp = "UpdateFilePcV";
 				}
+				strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/%s.jsp?ID=%d&TD=%d\"></a>",
+						updateJsp, cContent.m_nUserId, cContent.m_nContentId));
+
 			}
 			strRtn.append(String.format("<a class=\"IllustItemCommandDelete far fa-trash-alt\" href=\"javascript:void(0)\" onclick=\"DeleteContent(%d, %d, %b)\"></a>", nLoginUserId, cContent.m_nContentId, !cContent.m_strTweetId.isEmpty()));
 		} else {
