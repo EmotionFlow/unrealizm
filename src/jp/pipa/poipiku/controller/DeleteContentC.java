@@ -126,6 +126,14 @@ public class DeleteContentC {
 			statement.setInt(1, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+			// delete pins
+			strSql ="DELETE FROM pins WHERE content_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nContentId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
 			connection.close();connection=null;
 			//////
 

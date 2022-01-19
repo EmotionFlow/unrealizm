@@ -186,6 +186,14 @@ public class DeleteUserC {
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+			// delete pins
+			connection = dataSource.getConnection();
+			strSql = "DELETE FROM pins WHERE user_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nUserId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 			connection.close();connection=null;
 
 			// delete credit card

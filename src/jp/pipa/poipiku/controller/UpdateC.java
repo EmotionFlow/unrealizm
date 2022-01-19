@@ -17,7 +17,7 @@ public final class UpdateC extends UpC {
 		try{
 			// transaction
 			connection.setAutoCommit(false);
-			String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "comments_desc_cache", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests"};
+			String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "comments_desc_cache", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests", "pins"};
 			for(String t : lUpdateTable){
 				strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
 				statement = connection.prepareStatement(strSql);
