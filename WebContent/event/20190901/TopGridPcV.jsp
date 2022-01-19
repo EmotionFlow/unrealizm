@@ -135,21 +135,21 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%if(nCnt==6){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+						<%=CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_LIST, CCnv.SP_MODE_WVIEW)%>
 					<%}%>
 				</div>
 				<div class="IllustThumbPane">
 					<%for(int nCnt=1; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%if(nCnt==16){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+						<%=CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_LIST, CCnv.SP_MODE_WVIEW)%>
 					<%}%>
 				</div>
 				<div class="IllustThumbPane">
 					<%for(int nCnt=2; nCnt<cResults.m_vContentList.size(); nCnt+=3) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%if(nCnt==23){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
-						<%=CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult)%>
+						<%=CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_LIST, CCnv.SP_MODE_WVIEW)%>
 					<%}%>
 				</div>
 			</section>

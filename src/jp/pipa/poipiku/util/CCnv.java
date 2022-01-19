@@ -16,6 +16,10 @@ public final class CCnv {
 	public static final int SP_MODE_WVIEW = 0;
 	public static final int SP_MODE_APP = 1;
 
+	private enum PageCategory {
+		MY_BOX, MY_ILLUST_LIST, OTHER
+	}
+
 	private static final String ILLUST_ITEM_THUMB_IMG = "<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" onload=\"setImgHeightStyle(this)\"/>";
 
 	private static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("yyyy.MM.dd HH:mm");
@@ -510,16 +514,11 @@ public final class CCnv {
 		return strRtn.toString();
 	}
 
-	public static String Content2Html(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult) throws UnsupportedEncodingException {
-		return Content2Html(cContent,  nLoginUserId, nMode, _TEX, vResult, VIEW_LIST, SP_MODE_WVIEW);
-	}
+	public static String Content2Html(
+			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 
-	public static String Content2Html(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode) throws UnsupportedEncodingException {
-		return Content2Html(cContent,  nLoginUserId, nMode, _TEX, vResult, nViewMode, SP_MODE_WVIEW);
-	}
-
-	public static String Content2Html(final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
-		if(cContent.m_nContentId<=0) return "";
+		if (cContent.m_nContentId <= 0) return "";
 
 		String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		String REPORT_FORM = getReportFormContext(nMode);
@@ -618,7 +617,7 @@ public final class CCnv {
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, nSpMode, _TEX);
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vEmoji, nSpMode, _TEX);
 		}
 
 		strRtn.append("</div>");	// IllustItem
@@ -718,7 +717,7 @@ public final class CCnv {
 	}
 
 
-	private static String _toThumbHtml(final CContent cContent, final CheckLogin checkLogin, int nMode, int nSpMode, final ResourceBundleControl _TEX, boolean isMyBox) {
+	private static String _toThumbHtml(final CContent cContent, final CheckLogin checkLogin, int nMode, int nSpMode, final ResourceBundleControl _TEX, PageCategory pageCategory) {
 		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
@@ -729,7 +728,7 @@ public final class CCnv {
 		if (cContent.pinOrder > 0) {
 			strRtn.append(" Pined");
 		}
-		if (isMyBox) {
+		if (pageCategory == PageCategory.MY_BOX) {
 			strRtn.append((nMode==MODE_SP ? " IllustThumbMyBoxSp" : " IllustThumbMyBoxPc"));
 			if (checkLogin.m_nPassportId==Common.PASSPORT_ON) {
 				strRtn.append((nMode==MODE_SP ? " ShowTimestampSp" : " ShowTimestampPc"));
@@ -737,7 +736,7 @@ public final class CCnv {
 		}
 		strRtn.append("\">");
 
-		if (!isMyBox) {
+		if (pageCategory != PageCategory.MY_BOX) {
 			// ユーザ情報
 			strRtn.append(String.format("<a class=\"IllustUser\" href=\"%s\">", ILLUST_LIST));
 			// 画像
@@ -763,7 +762,7 @@ public final class CCnv {
 				)
 		);
 		// Pin
-		if (isMyBox && cContent.pinOrder > 0) {
+		if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
 			strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
 		}
 		strRtn.append("</span>");	// カテゴリ系情報(IllustInfo)
@@ -780,7 +779,7 @@ public final class CCnv {
 		if (publishId == Common.PUBLISH_ID_ALL
 				|| publishId == Common.PUBLISH_ID_HIDDEN
 				|| cContent.publishAllNum == 1
-				|| isMyBox && checkLogin != null && cContent.m_nUserId == checkLogin.m_nUserId
+				|| pageCategory == PageCategory.MY_BOX && checkLogin != null && cContent.m_nUserId == checkLogin.m_nUserId
 		) {
 			strFileUrl = Common.GetUrl(cContent.m_strFileName);
 		} else {
@@ -805,7 +804,7 @@ public final class CCnv {
 		}
 
 		// 公開非公開マーク
-		if(isMyBox
+		if(pageCategory == PageCategory.MY_BOX
 				&& checkLogin!=null
 				&& checkLogin.m_nUserId==cContent.m_nUserId
 				&& (cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN || cContent.m_bLimitedTimePublish)){
@@ -826,7 +825,7 @@ public final class CCnv {
 		// 公開種別マーク
 		strRtn.append("<span class=\"IllustInfoBottom\">");
 		if(cContent.publishAllNum == 1
-				|| isMyBox && checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId){
+				|| pageCategory == PageCategory.MY_BOX && checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId){
 			if(!(cContent.m_nPublishId == Common.PUBLISH_ID_ALL || cContent.m_nPublishId == Common.PUBLISH_ID_HIDDEN)) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
@@ -840,7 +839,7 @@ public final class CCnv {
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText
-		if (isMyBox && checkLogin!=null && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
+		if (pageCategory == PageCategory.MY_BOX && checkLogin!=null && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
 			// created_at
 			final String createdAt = cContent.createdAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.createdAt);
 			strRtn.append(String.format("<div class=\"IllustUser\" style=\"background-color:#fff; font-size:9px; justify-content: right; display: block;\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
@@ -850,11 +849,11 @@ public final class CCnv {
 	}
 
 	public static String toMyBoxThumbHtml(final CContent cContent, final CheckLogin checkLogin, int nMode, int nSpMode, final ResourceBundleControl _TEX) {
-		return _toThumbHtml(cContent, checkLogin, nMode, nSpMode, _TEX, true);
+		return _toThumbHtml(cContent, checkLogin, nMode, nSpMode, _TEX, PageCategory.MY_BOX);
 	}
 
 	public static String toThumbHtml(final CContent cContent, final CheckLogin checkLogin, int nMode, int nSpMode, final ResourceBundleControl _TEX) {
-		return _toThumbHtml(cContent, checkLogin, nMode, nSpMode, _TEX, false);
+		return _toThumbHtml(cContent, checkLogin, nMode, nSpMode, _TEX, PageCategory.OTHER);
 	}
 
 	private static void appendIllustThumbText(StringBuilder sb, CContent cContent, String ILLUST_VIEW) {
