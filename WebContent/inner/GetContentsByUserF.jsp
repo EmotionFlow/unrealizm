@@ -31,7 +31,10 @@ boolean relatedAppended = false;
 boolean recommendedAppended = false;
 for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	CContent cContent = cResults.contentList.get(nCnt);
-	sbHtml.append(CCnv.Content2Html(cContent, checkLogin.m_nUserId, cResults.mode, _TEX, vResult, CCnv.VIEW_DETAIL, nSpMode));
+	sbHtml.append(CCnv.Content2Html(
+			cContent, checkLogin.m_nUserId, cResults.mode,
+			_TEX, vResult, CCnv.VIEW_DETAIL, nSpMode,
+			cResults.isOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT));
 
 	if (nCnt % 3 == 0 && bSmartPhone){
 		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));

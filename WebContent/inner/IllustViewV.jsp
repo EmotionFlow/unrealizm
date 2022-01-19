@@ -290,7 +290,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			<%}%>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%= CCnv.Content2Html(cResults.m_cContent, checkLogin.m_nUserId, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
+				<%= CCnv.Content2Html(
+						cResults.m_cContent, checkLogin.m_nUserId, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC,
+						_TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW,
+						cResults.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
 				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin-bottom: 17px;">
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>

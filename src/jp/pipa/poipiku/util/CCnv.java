@@ -16,8 +16,8 @@ public final class CCnv {
 	public static final int SP_MODE_WVIEW = 0;
 	public static final int SP_MODE_APP = 1;
 
-	private enum PageCategory {
-		MY_BOX, MY_ILLUST_LIST, OTHER
+	public enum PageCategory {
+		MY_BOX, MY_ILLUST_LIST, DEFAULT
 	}
 
 	private static final String ILLUST_ITEM_THUMB_IMG = "<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" onload=\"setImgHeightStyle(this)\"/>";
@@ -111,12 +111,11 @@ public final class CCnv {
 			strRtn.append("</h2>");
 		}
 	}
-	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nMode, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX){
+
+	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nMode, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX, PageCategory pageCategory){
 		strRtn.append("<div class=\"IllustItemCommandSub\">");
-
-
-		if(cContent.m_nUserId==nLoginUserId) {
-			String strTwitterUrl = CTweet.generateAfterTweetMsg(cContent, _TEX);
+		if(cContent.m_nUserId==nLoginUserId
+				&& (pageCategory == PageCategory.MY_ILLUST_LIST || pageCategory == PageCategory.MY_BOX)) {
 
 			// シェアボタン
 			strRtn.append("<div class=\"IllustItemCmd\" style=\"float:none;display:inline-block;margin-right:14px\">");
@@ -459,64 +458,21 @@ public final class CCnv {
 		strRtn.append("</div>");
 	}
 
-	public static String toMyThumbHtmlPc(final CContent cContent,  int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult) throws UnsupportedEncodingException {
-		if(cContent.m_nContentId<=0) return "";
-
-		String ILLUST_LIST = getIllustListContext(SP_MODE_WVIEW, cContent.m_nUserId);
-		String REPORT_FORM = getReportFormContext(nMode);
-		String ILLUST_DETAIL = getIllustFromContext(nMode, SP_MODE_WVIEW);
-		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, SP_MODE_WVIEW);
-		String ILLUST_VIEW = getMyIllustViewContext(nMode, SP_MODE_WVIEW, cContent);
-
-		String strThumbClass = getThumbClass(cContent);
-
-		StringBuilder strRtn = new StringBuilder();
-		// ユーザ名とフォローボタン
-		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbClass, cContent.m_nContentId));
-		strRtn.append("<div class=\"IllustItemUser\">");
-		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, Common.GetUrl(cContent.m_cUser.m_strFileName)));
-		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Util.toStringHtml(cContent.m_cUser.m_strNickName)));
-		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
-			strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d, %d)\">%s</span>",
-					cContent.m_nUserId,
-					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
-					nLoginUserId,
-					cContent.m_nUserId,
-					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
-		}
-		strRtn.append("</div>");	// IllustItemUser
-
-		// カテゴリーとコマンド
-		strRtn.append("<div class=\"IllustItemCommand\">");
-
-		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
-
-		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, MODE_PC, REPORT_FORM, _TEX);
-		strRtn.append("</div>");	// IllustItemCommand
-
-		// キャプション
-		appendIllustItemDesc(strRtn, cContent, nMode);
-
-		// タグ
-		appendTag(strRtn, cContent, nMode, SP_MODE_WVIEW);
-
-		// 画像
-		appendMyIllustListItemThumb(strRtn, cContent, VIEW_LIST, ILLUST_VIEW, ILLUST_DETAIL);
-
-		// 絵文字
-		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vResult, SP_MODE_WVIEW, _TEX);
-		}
-
-		strRtn.append("</div>");	// IllustItem
-
-		return strRtn.toString();
+	public static String Content2Html(
+			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
+		return _Content2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, PageCategory.DEFAULT);
 	}
 
 	public static String Content2Html(
 			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
-			final ArrayList<String> vEmoji, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) throws UnsupportedEncodingException {
+		return _Content2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, pageCategory);
+	}
+
+	private static String _Content2Html(
+			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) throws UnsupportedEncodingException {
 
 		if (cContent.m_nContentId <= 0) return "";
 
@@ -547,10 +503,12 @@ public final class CCnv {
 
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
+
 		// カテゴリー
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
+
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, pageCategory);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -657,7 +615,7 @@ public final class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 
 		// コマンド
-		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, PageCategory.MY_BOX);
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// キャプション
@@ -853,7 +811,7 @@ public final class CCnv {
 	}
 
 	public static String toThumbHtml(final CContent cContent, final CheckLogin checkLogin, int nMode, int nSpMode, final ResourceBundleControl _TEX) {
-		return _toThumbHtml(cContent, checkLogin, nMode, nSpMode, _TEX, PageCategory.OTHER);
+		return _toThumbHtml(cContent, checkLogin, nMode, nSpMode, _TEX, PageCategory.DEFAULT);
 	}
 
 	private static void appendIllustThumbText(StringBuilder sb, CContent cContent, String ILLUST_VIEW) {

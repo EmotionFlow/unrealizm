@@ -30,6 +30,7 @@ public class GetContentsByUserC {
 
 
 	public int selectMaxGallery = 10;
+	public boolean isOwner = false;
 	public final int SELECT_MAX_RELATED_GALLERY = 9;
 	public final int SELECT_MAX_RECOMMENDED_GALLERY = 9;
 
@@ -61,7 +62,7 @@ public class GetContentsByUserC {
 			}
 
 			// owner
-			final boolean isOwner = (checkLogin.m_bLogin && ownerUserId == checkLogin.m_nUserId);
+			isOwner = (checkLogin.m_bLogin && ownerUserId == checkLogin.m_nUserId);
 			Pin pin = null;
 			if (isOwner) {
 				List<Pin> pins;
