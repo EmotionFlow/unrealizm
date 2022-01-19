@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,6 +85,14 @@ public final class IllustViewPcC {
 
 			// owner
 			m_bOwner = (ownerUserId == checkLogin.m_nUserId);
+			Pin pin = null;
+			if (m_bOwner) {
+				List<Pin> pins;
+				pins = Pin.selectByUserId(checkLogin.m_nUserId);
+				if (!pins.isEmpty()) {
+					pin = pins.get(0);
+				}
+			}
 
 			// max(content_id)としていないのは、
 			// 特定のuser_idでは、非常に遅い最適化がされてしまうため。
@@ -123,7 +132,8 @@ public final class IllustViewPcC {
 			if(resultSet.next()) {
 				m_cContent = new CContent(resultSet);
 				final int requestId = resultSet.getInt("request_id");
-				if(requestId>0) m_cContent.m_nRequestId=requestId;
+				if (requestId > 0) m_cContent.m_nRequestId = requestId;
+				if (pin != null && m_cContent.m_nContentId == pin.contentId) m_cContent.pinOrder = pin.dispOrder;
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 				bContentExist = true;
 			}

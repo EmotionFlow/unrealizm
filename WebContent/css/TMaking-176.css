@@ -491,6 +491,9 @@
 	border: solid 1px #eee;
 }
 
+.IllustThumb.Pined {
+	border-radius: 2px;
+}
 
 .IllustThumb .IllustUser {
 	display: flex;
@@ -527,12 +530,23 @@
 	overflow: hidden;
 }
 
+.IllustThumb .IllustUser .IllustUserPin {
+	display: block;
+	flex: 0 0 15px;
+	color: #3498db;
+}
+
 .IllustThumb .IllustInfo.IllustMeta {
 	flex-flow: row nowrap;
+	justify-content: space-between;
 	height: 26px;
 	max-height: 26px;
 	min-height: 26px;
 	align-items: center;
+}
+
+.IllustThumb .IllustInfo .IllustInfoPin {
+	color: #3498db;
 }
 
 .IllustThumb .CategoryInfo {
@@ -1572,6 +1586,13 @@ Decoration
 	background-image: url("/img/share_sp.svg");
 }
 
+.IllustItem .IllustItemCmd .IllustItemPinButton {
+	color: #aaa;
+}
+
+.IllustItem .IllustItemCmd .IllustItemPinButton.Selected {
+	color: #3498db;
+}
 
 .IllustItem .Request {
 	display: block;

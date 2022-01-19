@@ -125,10 +125,11 @@ public final class CCnv {
 
 			// ポイピク内でのピン留め
 			strRtn.append("<div class=\"IllustItemCmd\" style=\"float:none;display:inline-block;margin-right:14px\">");
-			strRtn.append(String.format("<a class=\"NonFrameBtnBase IllustItemPinButton fas fa-thumbtack\" style=\"float:none;margin-bottom:-2px\" href=\"javascript:void(0)\" onclick=\"shareContent(%d, %d, %b);\"></a>",
-					cContent.m_nUserId,
+			strRtn.append(String.format("<a id=\"IllustItemPinBtn_%d\" class=\"NonFrameBtnBase IllustItemPinButton fas fa-thumbtack %s\" style=\"float:none;margin-bottom:-2px\" href=\"javascript:void(0)\" onclick=\"UpdatePin(%d, %d);\"></a>",
 					cContent.m_nContentId,
-					nMode == MODE_SP
+					cContent.pinOrder>0?"Selected":"",
+					cContent.m_nUserId,
+					cContent.m_nContentId
 			));
 			strRtn.append("</div>");    // IllustItemCmd
 
@@ -725,6 +726,9 @@ public final class CCnv {
 		StringBuilder strRtn = new StringBuilder();
 
 		strRtn.append("<div class=\"IllustThumb");
+		if (cContent.pinOrder > 0) {
+			strRtn.append(" Pined");
+		}
 		if (isMyBox) {
 			strRtn.append((nMode==MODE_SP ? " IllustThumbMyBoxSp" : " IllustThumbMyBoxPc"));
 			if (checkLogin.m_nPassportId==Common.PASSPORT_ON) {
@@ -740,7 +744,11 @@ public final class CCnv {
 			strRtn.append(String.format("<span class=\"IllustUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>", Common.GetUrl(cContent.m_cUser.m_strFileName)));
 			// 名前
 			strRtn.append(String.format("<h2 class=\"IllustUserName\">%s</h2>", Util.toStringHtml(cContent.m_cUser.m_strNickName)));
-			strRtn.append("</a>");	// IllustItemUser
+			// Pin
+			if (cContent.pinOrder > 0) {
+				strRtn.append("<span class=\"IllustUserPin fas fa-thumbtack\"></span>");
+			}
+			strRtn.append("</a>");    // IllustItemUser
 		}
 
 		// カテゴリ系情報
@@ -754,6 +762,10 @@ public final class CCnv {
 						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
 				)
 		);
+		// Pin
+		if (isMyBox && cContent.pinOrder > 0) {
+			strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
+		}
 		strRtn.append("</span>");	// カテゴリ系情報(IllustInfo)
 
 		// イラスト情報

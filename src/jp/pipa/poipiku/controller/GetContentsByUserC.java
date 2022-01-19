@@ -1,9 +1,6 @@
 package jp.pipa.poipiku.controller;
 
-import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.CUser;
-import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
@@ -13,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GetContentsByUserC {
 	public int startId = -1;
@@ -64,6 +62,14 @@ public class GetContentsByUserC {
 
 			// owner
 			final boolean isOwner = (checkLogin.m_bLogin && ownerUserId == checkLogin.m_nUserId);
+			Pin pin = null;
+			if (isOwner) {
+				List<Pin> pins;
+				pins = Pin.selectByUserId(checkLogin.m_nUserId);
+				if (!pins.isEmpty()) {
+					pin = pins.get(0);
+				}
+			}
 
 			if (!checkLogin.m_bLogin || !isOwner) {
 				// blocking
@@ -132,6 +138,7 @@ public class GetContentsByUserC {
 				c.m_cUser.m_strFileName	= owner.fileName;
 				c.m_cUser.m_nFollowing	= followCode;
 				c.m_cUser.m_nReaction	= owner.reaction;
+				if (pin != null && pin.contentId == c.m_nContentId) c.pinOrder = pin.dispOrder;
 				lastContentId = c.m_nContentId;
 				contentList.add(c);
 			}

@@ -53,6 +53,7 @@ public final class CContent {
 	public String novelHtml = "";
 	public String novelHtmlShort = "";
 	public int novelDirection = 0;
+	public int pinOrder = -1;
 	public Timestamp createdAt = null;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ

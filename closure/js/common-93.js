@@ -451,6 +451,32 @@ function UpdateBookmark(user_id, content_id) {
 	return false;
 }
 
+function UpdatePin(user_id, content_id) {
+	$.ajaxSingle({
+		"type": "post",
+		"data": { "UID": user_id, "IID": content_id},
+		"url": "/api/UpdatePinF.jsp",
+		"dataType": "json",
+		"success": function(data) {
+			const selector = '#IllustItemPinBtn_' + content_id;
+			const el = $(selector);
+			const result = data.result;
+			if (result === 0) {
+				el.removeClass('Selected');
+				DispMsg(data.msg);
+			} else if (result === 1 || result === 2) {
+				$(".IllustItemPinButton").removeClass('Selected');
+				el.addClass('Selected');
+				DispMsg(data.msg, result===1 ? 5000 : 3000);
+			}
+		},
+		"error": function(req, stat, ex){
+			DispMsg('Connection error');
+		}
+	});
+	return false;
+}
+
 function fixedEncodeURIComponent (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
 		return '%' + c.charCodeAt(0).toString(16);

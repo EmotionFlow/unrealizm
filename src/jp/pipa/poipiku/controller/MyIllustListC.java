@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyIllustListC extends IllustListC{
+public class MyIllustListC extends IllustListC {
 
 	public static class SwitchUser {
 		public CUser user;

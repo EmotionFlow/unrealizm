@@ -63,6 +63,9 @@ public class IllustListC {
 			m_bOwner = true;
 		}
 
+		Pin pin = null;
+		List<Pin> pins = Pin.selectByUserId(m_nUserId);
+
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
@@ -210,6 +213,38 @@ public class IllustListC {
 					+ strCond
 					+ strOpenCnd;
 
+			List<CContent> pinContents = new ArrayList<>();
+			if (!pins.isEmpty()) {
+				strSql = "SELECT * " + strSqlFromWhere + " AND content_id=?";
+				statement = connection.prepareStatement(strSql);
+				idx = 1;
+				statement.setInt(idx++, m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nSafeFilter);
+				if(!strCond.isEmpty()) {
+					statement.setString(idx++, m_strKeyword);
+				}
+				statement.setInt(idx++, pins.get(0).contentId);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					CContent cContent;
+					if (m_nPage == 0) {
+						if (clientTimezoneOffset == TIMEZONE_OFFSET_DEFAULT) {
+							cContent = new CContent(resultSet);
+						} else {
+							cContent = new CContent(resultSet, clientTimezoneOffset);
+						}
+
+						final CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+						cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
+						cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+						cContent.pinOrder = 1;
+					} else {
+						cContent = new CContent();
+					}
+					pinContents.add(cContent);
+				}
+			}
+
 			// gallery
 			strSql = "SELECT COUNT(*) " + strSqlFromWhere;
 			statement = connection.prepareStatement(strSql);
@@ -235,8 +270,20 @@ public class IllustListC {
 			if(!strCond.isEmpty()) {
 				statement.setString(idx++, m_strKeyword);
 			}
-			statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
-			statement.setInt(idx++, SELECT_MAX_GALLERY);
+
+			final int offset;
+			final int limit;
+			if (m_nPage == 0 && !pinContents.isEmpty()) {
+				offset = 0;
+				limit = SELECT_MAX_GALLERY - pinContents.size();
+				m_vContentList.add(pinContents.get(0));
+			} else {
+				offset = m_nPage * SELECT_MAX_GALLERY - pinContents.size();
+				limit = SELECT_MAX_GALLERY;
+			}
+
+			statement.setInt(idx++, offset);
+			statement.setInt(idx++, limit);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent cContent;
@@ -245,14 +292,17 @@ public class IllustListC {
 				} else {
 					cContent = new CContent(resultSet, clientTimezoneOffset);
 				}
-
-				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				if (!pins.isEmpty() && cContent.m_nContentId == pins.get(0).contentId) {
+					continue;
+				}
+				final CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				m_vContentList.add(cContent);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+
 
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
