@@ -399,6 +399,7 @@ function UpdateFollowTag(nUserId, strTagTxt) {
 			DispMsg('Connection error');
 		}
 	});
+	return false;
 }
 
 function UpdateFollowTagFromTagList(nUserId, strTagTxt, thisElement) {
