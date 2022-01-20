@@ -1008,10 +1008,12 @@ Decoration
 }
 
 .TagThumbBookmarkButton {
+	color: #3498db;
 	position: absolute;
 	top: 3px;
 	right: 5px;
-	font-size: 19px;
+	font-size: 20px;
+	padding: 6px;
 }
 
 

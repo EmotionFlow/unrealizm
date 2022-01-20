@@ -32,8 +32,4 @@
 <%if(nCnt==8 || nCnt==17 || nCnt==26 || nCnt==35) {%>
 <%@ include file="/inner/TAd336x280_mid.jsp"%>
 <%}%>
-<%}else{%>
-<%if(nCnt==7 || nCnt==15) {%>
-<%@ include file="/inner/TAd728x90_mid.jsp"%>
-<%}%>
 <%}%>
