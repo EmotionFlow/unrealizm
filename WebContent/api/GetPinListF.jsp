@@ -32,7 +32,7 @@ ObjectMapper mapper = null;
 try {
 	root = new HashMap<String, Object>();
 	root.put("result", result?Common.API_OK:Common.API_NG);
-	root.put("confirm_msg", "すでに他の作品をピン留め済みですが、こちらの作品に変更しますか？");
+	root.put("confirm_msg", _TEX.T("Pin.Confirm"));
 	root.put("pins", jsonPins);
 	// JSONに変換して出力
 	mapper = new ObjectMapper();

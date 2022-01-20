@@ -12,13 +12,13 @@ int result = cResults.getResults(checkLogin);
 String msg = "";
 switch(result) {
 	case UpdatePinC.PIN_ADDED:
-		msg = "この作品をピン留めしました。ピン留め作品は常に作品リストの最初に表示されます。";
+		msg = _TEX.T("Pin.Added");
 		break;
 	case UpdatePinC.PIN_UPDATED:
-		msg = "ピン留め作品を変更しました";
+		msg = _TEX.T("Pin.Updated");
 		break;
 	case UpdatePinC.PIN_REMOVED:
-		msg = "作品のピン留めを外しました";
+		msg = _TEX.T("Pin.Removed");
 		break;
 	case UpdatePinC.USER_INVALID:
 		msg = _TEX.T("Common.NeedLogin");
