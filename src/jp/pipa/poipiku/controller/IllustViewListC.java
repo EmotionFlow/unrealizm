@@ -30,21 +30,18 @@ public class IllustViewListC {
 		}
 	}
 
-
 	public int SELECT_MAX_GALLERY = 10;
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
-	public ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
 
 		try {
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
@@ -124,11 +121,11 @@ public class IllustViewListC {
 
 			// Each Comment
 			if(cUser.m_nReaction==CUser.REACTION_SHOW) {
-				m_vContentList = GridUtil.getEachComment(cConn, m_vContentList);
+				GridUtil.getEachComment(cConn, m_vContentList);
 			}
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

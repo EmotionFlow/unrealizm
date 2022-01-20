@@ -182,7 +182,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			<%}%>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%=CCnv.Content2Html(cResults.m_cContent, checkLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+				<%=CCnv.Content2Html(cResults.m_cContent, checkLogin.m_nUserId, CCnv.MODE_SP,
+						_TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP,
+						cResults.m_bOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT)%>
 			</section>
 
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
@@ -218,7 +220,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				</header>
 				<%
 					for(int nCnt=0; nCnt<cResults.m_vRelatedContentList.size(); nCnt++) {
-									CContent cContent = cResults.m_vRelatedContentList.get(nCnt);
+						CContent cContent = cResults.m_vRelatedContentList.get(nCnt);
 				%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%}%>
