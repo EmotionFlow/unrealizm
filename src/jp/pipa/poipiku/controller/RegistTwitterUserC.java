@@ -388,15 +388,13 @@ public final class RegistTwitterUserC {
 			return false;
 		}
 
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 		// table update or insert
 		try {
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// check user
 			/*

@@ -27,8 +27,8 @@ CheckLogin checkLogin = new CheckLogin();
 			.TopTitleInfo {font-size: 15px; margin: 10px 0 0 0;}
 			.TopTitleInfoSub {font-size: 14px; margin: 10px 0 0 0;}
 			.AnalogicoLogin {margin: 0 0 10px 0;}
-			.AnalogicoTerm {display: block;width: 100%; padding: 0; box-sizing: border-box; text-align: center; font-size: 13px; line-height: 28px; color: #fff; font-weight: normal; text-decoration: underline;}
-			.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 0 0 10px 0;}
+			.AnalogicoTerm {box-sizing: border-box; text-align: center; font-size: 11px; color: #fff; font-weight: normal;}
+			.AnalogicoStart {text-align: center; margin: 30px 0 0 0; padding: 20px 0 10px 0;}
 			.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 			.AnalogicoInfo {display: none;}
 
@@ -106,10 +106,27 @@ CheckLogin checkLogin = new CheckLogin();
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<form method="post" name="login_from_twitter_startpoipikupcv_00" action="/LoginFormTwitter.jsp">
-						<input id="login_from_twitter_startpoipikupcv_callback_00" type="hidden" name="CBPATH" value="" />
+						<input id="login_from_twitter_startpoipikupcv_callback_00" type="hidden" name="CBPATH" value="/" />
 						<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="javascript:login_from_twitter_startpoipikupcv_00.submit()">
 							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
 						</a>
+						<div style="font-size: 9px;margin: 10px 0 15px 0;">
+							<a  style="text-decoration: underline; color: #d6e5f7;"
+								href="javascript:void(0)"
+								onclick="$('#twitter_authorize_info').show(); $('#login_from_twitter_startpoipikupcv_callback_00_auth').prop('checked',true);">
+								<i class="fas fa-info-circle"></i> <%=_TEX.T("LoginFormV.TwitterAuthInfo01")%>
+							</a>
+							<div id="twitter_authorize_info" style="display: none; margin: 10px auto; max-width: 300px">
+								<div>
+									<input id="login_from_twitter_startpoipikupcv_callback_00_auth" type="checkbox" name="AUTH" value="authorize"/>
+									<label for="login_from_twitter_startpoipikupcv_callback_00_auth"><%=_TEX.T("LoginFormV.TwitterAuthInfo02")%></label>
+								</div>
+								<div style="text-align: left;">
+									<p><%=_TEX.T("LoginFormV.TwitterAuthInfo03")%></p>
+									<p><%=_TEX.T("LoginFormV.TwitterAuthInfo04")%></p>
+								</div>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="AnalogicoInfoRegist">
@@ -119,7 +136,7 @@ CheckLogin checkLogin = new CheckLogin();
 				</div>
 				<div class="AnalogicoStart" style="margin-top: 0;">
 					<a class="AnalogicoTerm" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a>
-					<a class="AnalogicoTerm" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
+					<a class="AnalogicoTerm" style="margin-left: 14px;" href="/PrivacyPolicyPcS.jsp"><%=_TEX.T("Footer.PrivacyPolicy")%></a>
 				</div>
 			</section>
 		</article>

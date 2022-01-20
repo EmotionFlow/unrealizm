@@ -20,6 +20,10 @@ if (controllerResults == null) { // 初回アクセス
 	result = controller.getResults(request, session);
 	session.removeAttribute("consumer");
 	session.removeAttribute("provider");
+	if (!result) {
+		response.sendRedirect("/");
+		return;
+	}
 	if (controller.results.size() == 1) {
 		selectedUserId = NEW_USER;
 	} else {
