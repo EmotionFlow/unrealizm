@@ -1,37 +1,39 @@
 <%@page import="org.codehaus.jackson.JsonGenerationException"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
+<%@ page import="java.util.stream.Collectors" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
+<%!
+	static class JsonPin {
+		public int order;
+		public int content_id;
+		JsonPin(int _order, int _content_id) {
+			order = _order;
+			content_id = _content_id;
+		}
+	}
+%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 if (!checkLogin.m_bLogin) return;
 
-UpdatePinC cResults = new UpdatePinC();
+GetPinListC cResults = new GetPinListC();
 cResults.getParam(request);
-int result = cResults.getResults(checkLogin);
-String msg = "";
-switch(result) {
-	case UpdatePinC.PIN_ADDED:
-		msg = "この作品をピン留めしました。ピン留め作品は常に作品リストの最初に表示されます。";
-		break;
-	case UpdatePinC.PIN_UPDATED:
-		msg = "ピン留め作品を変更しました";
-		break;
-	case UpdatePinC.PIN_REMOVED:
-		msg = "作品のピン留めを外しました";
-		break;
-	case UpdatePinC.USER_INVALID:
-		msg = _TEX.T("Common.NeedLogin");
-		break;
-}
+
+boolean result = cResults.getResults(checkLogin);
+
+List<JsonPin> jsonPins = cResults.pins.stream()
+		.map( e -> new JsonPin(e.dispOrder, e.contentId))
+		.collect(Collectors.toList());
 
 //JSONデータ作成
 Map<String, Object> root = null;
 ObjectMapper mapper = null;
 try {
 	root = new HashMap<String, Object>();
-	root.put("result", result);
-	root.put("msg", msg);
+	root.put("result", result?Common.API_OK:Common.API_NG);
+	root.put("confirm_msg", "すでに他の作品をピン留め済みですが、こちらの作品に変更しますか？");
+	root.put("pins", jsonPins);
 	// JSONに変換して出力
 	mapper = new ObjectMapper();
 	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));

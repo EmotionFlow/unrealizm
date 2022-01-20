@@ -34,43 +34,31 @@ public class UpdatePinC {
 		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!= userId) return USER_INVALID;
 
 		int result = UNKNOWN_ERROR;
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		String strSql = "";
 
-		try {
-			connection = DatabaseUtil.dataSource.getConnection();
-			// now pinning check
-			List<Pin> pins = Pin.selectByUserId(userId);
+		// now pinning check
+		List<Pin> pins = Pin.selectByUserId(userId);
 
-			if (pins.isEmpty()) {
-				Pin.insert(userId, contentId);
-				result = PIN_ADDED;
-			} else {
-				if (pins.size() == 1) {
-					Pin pin = pins.get(0);
-					if (pin.contentId == contentId) {
-						pin.delete();
-						result = PIN_REMOVED;
-					} else {
-						pin.updateContentId(contentId);
-						result = PIN_UPDATED;
-					}
+		if (pins.isEmpty()) {
+			Pin.insert(userId, contentId);
+			result = PIN_ADDED;
+		} else {
+			if (pins.size() == 1) {
+				Pin pin = pins.get(0);
+				if (pin.contentId == contentId) {
+					pin.delete();
+					result = PIN_REMOVED;
 				} else {
-					// １ユーザあたり複数pinは通常ありえないので、いちどまっさらにする。
-					pins.forEach(Pin::delete);
-					Pin.insert(userId, contentId);
+					pin.updateContentId(contentId);
 					result = PIN_UPDATED;
 				}
+			} else {
+				// １ユーザあたり複数pinは通常ありえないので、いちどまっさらにする。
+				pins.forEach(Pin::delete);
+				Pin.insert(userId, contentId);
+				result = PIN_UPDATED;
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
+
 		return result;
 	}
 }
