@@ -1075,7 +1075,8 @@ function initDetailOverlay() {
 
 /******** シェアボタン *********/
 function shareContent(contentUserId, contentId, isSmartPhone) {
-	let tweetTxt = $("#IllustItemDesc_" + contentId).html();
+	let tweetTxt = $("#IllustItemDesc_" + contentId).text();
+
 	if (tweetTxt) tweetTxt = tweetTxt.trim();
 	if (!tweetTxt || tweetTxt.length === 0) {
 		tweetTxt = "(no title)";
@@ -1087,6 +1088,16 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 		tweetTxt = tweetTxt.substring(0, 100);
 		tweetTxt += '...';
 	}
+
+	const tags = $("#IllustItemTag_" + contentId).text().trim().split(/\s+/);
+	for (const tag of tags) {
+		if (tag.indexOf("##") === 0) continue;
+		const catTxt = tweetTxt + ' ' + tag;
+		if (catTxt.length > 130) break;
+		tweetTxt = catTxt;
+	}
+	tweetTxt += " #poipiku";
+
 	if (isSmartPhone && typeof navigator.share !== 'undefined') {
 		const shareData = {
 			title: 'POIPIKU',
@@ -1099,7 +1110,7 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 	} else {
 		const $IllustItemCmd = $("#IllustItem_" + contentId + " .IllustItemShareButton").parent();
 		if ($IllustItemCmd.children(".IllustItemShareSub").length === 0) {
-			const uri = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetTxt + " #poipiku")
+			const uri = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetTxt)
 				+ "&url=" + encodeURIComponent("https://poipiku.com/" + contentUserId + "/" + contentId + ".html");
 			$IllustItemCmd.append(
 				'<span class="IllustItemShareSub">' +
