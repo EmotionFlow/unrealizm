@@ -13,7 +13,10 @@
             color: #fff;
         }
 		.LogoArea {
-			text-align: center;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+			text-decoration: underline;
 		}
 		.LogoAreaLogo img{
 			padding: 10px;
@@ -51,14 +54,14 @@
 			<div class="SettingListTitle"><%=_TEX.T("LogoUsageGuideLine.Logo.Title")%></div>
 			<div class="SettingBody">
 				<div class="LogoArea">
-					<div class="LogoAreaLogo Small">
+					<a class="LogoAreaLogo Small" href="https://img.poipiku.com/img/pc_top_title-03.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Small")%><br>
 						<img src="https://img.poipiku.com/img/pc_top_title-03.png" alt="poipiku logo small"/>
-					</div>
-					<div class="LogoAreaLogo Large">
+					</a>
+					<a class="LogoAreaLogo Large" href="https://img.poipiku.com/img/poipiku_icon_512x512_2.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Large")%><br>
 						<img width="256px" height="256px" src="https://img.poipiku.com/img/poipiku_icon_512x512_2.png" alt="poipiku logo large"/>
-					</div>
+					</a>
 				</div>
 			</div>
 			<ul>
