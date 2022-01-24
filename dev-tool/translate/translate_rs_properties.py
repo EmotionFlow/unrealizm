@@ -57,8 +57,8 @@ for target_locale in translate.TARGET_LOCALES:
                     response = requests.post(translate.SCRIPT_URI, data={'text': word, 'source': SOURCE_LOCALE, 'target': translate.GOOGLE_TRANSLATE_LOCALES[target_locale]})
                     print(response)
                     resp = json.loads(response.text)
-                    trans_word = resp['text']
-                    new_file.write(f"{splitted[0]}= {trans_word.encode('unicode-escape').decode('ascii')}\n")
+                    trans_word = resp['text'].encode('unicode-escape').decode('ascii').replace('\\x', '\\u00')
+                    new_file.write(f"{splitted[0]}= {trans_word}\n")
                 except UnicodeDecodeError:
                     new_file.write(line)
         line = target_file.readline()

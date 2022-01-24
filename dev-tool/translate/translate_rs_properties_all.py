@@ -38,8 +38,8 @@ for target_locale in TARGET_LOCALES:
                 print(word)
                 response = requests.post(f"{translate.SCRIPT_URI}", data={'text': word, 'source': SOURCE_LOCALE, 'target': target_locale})
                 resp = json.loads(response.text)
-                trans_word = resp['text']
-                target_file.write(f"{splitted[0]}= {trans_word.encode('unicode-escape').decode('ascii')}\n")
+                trans_word = resp['text'].encode('unicode-escape').decode('ascii').replace('\\x', '\\u00')
+                target_file.write(f"{splitted[0]}= {trans_word}\n")
             except UnicodeDecodeError:
                 target_file.write(line)
         line = source_file.readline()
