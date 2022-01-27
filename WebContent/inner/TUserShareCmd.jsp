@@ -1,4 +1,3 @@
-<%@ page import="sun.nio.cs.ext.EUC_TW" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	final String shareMessage =
