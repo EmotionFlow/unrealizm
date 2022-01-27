@@ -49,7 +49,7 @@
 }
 
 class UploadFileAppendC {
-	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
+	public int GetResults(CheckLogin checkLogin, UploadFileAppendCParam cParam) {
 		// リクエスト納品済みかつ納期後（おそらく不正アクセス）
 		Request poipikuRequest = new Request();
 		poipikuRequest.selectByContentId(cParam.m_nContentId, null);
@@ -188,6 +188,13 @@ class UploadFileAppendC {
 				return Common.UPLOAD_FILE_TOTAL_ERROR;
 			}
 
+			if (checkLogin.m_nPassportId == Common.PASSPORT_ON) {
+				cState = cConn.prepareStatement("UPDATE contents_0000 SET updated_at=now() WHERE content_id=?");
+				cState.setInt(1, cParam.m_nContentId);
+				cState.executeUpdate();
+				Log.d("update updated_at");
+			}
+
 			nRtn = nAppendId;
 		} catch(Exception e) {
 			Log.d(strSql);
@@ -210,7 +217,7 @@ nRtn = cParam.GetParam(request);
 
 if( checkLogin.m_bLogin && cParam.m_nUserId==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadFileAppendC cResults = new UploadFileAppendC();
-	nRtn = cResults.GetResults(cParam, _TEX);
+	nRtn = cResults.GetResults(checkLogin, cParam);
 }
 %>
 {"append_id":<%=nRtn%>,"success":true,"reset":false}

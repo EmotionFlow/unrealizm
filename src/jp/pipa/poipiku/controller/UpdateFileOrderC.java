@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -132,8 +133,27 @@ public class UpdateFileOrderC extends Controller {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+
+			boolean isListUpdated = false;
+			final List<Integer> oldIdList =
+			oldContentList.stream()
+					.map(EditedContent::getAppendId)
+					.collect(Collectors.toList());
+			Log.d("-------");
+
+			if (oldIdList.size() != newIdList.length) {
+				isListUpdated = true;
+			} else {
+				for (int i=0; i < oldIdList.size(); i++) {
+					if (newIdList[i] != oldIdList.get(i)) {
+						isListUpdated = true;
+						break;
+					}
+				}
+			}
+
 			if (checkLogin != null && checkLogin.isStaff()) {
-				printContentList("---oldList---", oldContentList);
+				printContentList(userId,"---oldList---", oldContentList);
 			}
 
 			//write_back_status = 1 (作業中)が見つかったら、少々待って、最初からやり直し。
@@ -189,9 +209,8 @@ public class UpdateFileOrderC extends Controller {
 			}
 
 			if (checkLogin != null && checkLogin.isStaff()) {
-				printContentList("---delList---", cDiff);
+				printContentList(userId,"---delList---", cDiff);
 			}
-
 
 			//不要ファイルの削除
 			boolean removeHeadFile = false;
@@ -259,7 +278,7 @@ public class UpdateFileOrderC extends Controller {
 			}
 
 			if (checkLogin != null && checkLogin.isStaff()) {
-				printContentList("---newList---", newContentList);
+				printContentList(userId,"---newList---", newContentList);
 			}
 
 			////// update transaction ///////
@@ -311,7 +330,15 @@ public class UpdateFileOrderC extends Controller {
 			statement.close();statement=null;
 
 			//画像枚数の更新
-			sql = "UPDATE contents_0000 SET file_num=(SELECT COUNT(*) FROM contents_appends_0000 WHERE content_id=?)+1 WHERE content_id=?;";
+			sql = "UPDATE contents_0000 SET file_num=(SELECT COUNT(*) FROM contents_appends_0000 WHERE content_id=?)+1";
+
+			// ポイパスに加入していて、画像になんらかの変更があったら、updated_atも更新する
+			if (checkLogin != null && checkLogin.m_nPassportId == Common.PASSPORT_ON && isListUpdated) {
+				Log.d("update updated_at");
+				sql += ", updated_at=now()";
+			}
+
+			sql += " WHERE content_id=?;";
 			statement = connection.prepareStatement(sql);
 			statement.setLong(1, contentId);
 			statement.setInt(2, contentId);
@@ -334,10 +361,10 @@ public class UpdateFileOrderC extends Controller {
 		return nRtn;
 	}
 
-	private void printContentList(String title, List<EditedContent> newContentList) {
-		System.out.println(title);
-		newContentList.stream()
-				.sorted(Comparator.comparingInt(EditedContent::getAppendId))
-				.forEach(System.out::println);
+	private void printContentList(int userId, String title, List<EditedContent> contentList) {
+		Log.d(title + userId);
+		contentList.stream()
+				//.sorted(Comparator.comparingInt(EditedContent::getAppendId))
+				.forEach(el -> Log.d(el.toString()));
 	}
 }
