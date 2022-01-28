@@ -803,7 +803,7 @@ public final class CCnv {
 			strRtn.append(String.format("<div class=\"IllustUser DateTime\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
 			// updated_at
 			final String updatedAt = cContent.updatedAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.updatedAt);
-			strRtn.append(String.format("<div class=\"IllustUser DateTime\"><i class=\"far fa-edit\"></i> %s</div>",updatedAt));
+			strRtn.append(String.format("<div class=\"IllustUser DateTime\" style=\"border-bottom:none\"><i class=\"fas fa-pen\"></i> %s</div>",updatedAt));
 		}
 		strRtn.append("</div>");	// IllustThumb
 		return strRtn.toString();
