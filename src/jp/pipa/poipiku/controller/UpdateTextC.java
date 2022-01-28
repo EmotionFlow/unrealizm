@@ -25,11 +25,13 @@ public final class UpdateTextC extends UpC {
 		boolean bLimitedTimePublishPresent = false;
 		Integer nNewContentId = null;
 		int nEditorId = Common.EDITOR_UPLOAD;
+		String strTextTitle = "";
+		String strTextBody = "";
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			sql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+			sql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id, text_body, title FROM contents_0000 WHERE user_id=? AND content_id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, cParam.m_nUserId);
 			statement.setInt(2, cParam.m_nContentId);
@@ -42,6 +44,8 @@ public final class UpdateTextC extends UpC {
 				tsUploadDatePresent = resultSet.getTimestamp("upload_date");
 				tsEndDatePresent = resultSet.getTimestamp("end_date");
 				nEditorId = Math.max(resultSet.getInt("editor_id"), Common.EDITOR_UPLOAD);
+				strTextTitle = resultSet.getString("title");
+				strTextBody = resultSet.getString("text_body");
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -72,8 +76,14 @@ public final class UpdateTextC extends UpC {
 					"text_body=?", "tag_list=?", "publish_id=?", "password=?",
 					"list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?", "title=?", "novel_html=?",
-					"novel_html_short=?", "novel_direction=?", "updated_at=NULL"
+					"novel_html_short=?", "novel_direction=?"
 					));
+
+			if (checkLogin.m_nPassportId == Common.PASSPORT_ON
+					&& (!strTextBody.equals(cParam.m_strTextBody) || !strTextTitle.equals(cParam.title))
+			) {
+				lColumns.add("updated_at=now()");
+			}
 
 			if(!cParam.m_bLimitedTimePublish){
 				// これまで非公開で、今後公開したい。

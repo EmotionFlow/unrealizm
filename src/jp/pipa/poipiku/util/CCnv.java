@@ -797,10 +797,13 @@ public final class CCnv {
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText
-		if (pageCategory == PageCategory.MY_BOX && checkLogin!=null && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
+		if (pageCategory == PageCategory.MY_BOX && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
 			// created_at
 			final String createdAt = cContent.createdAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.createdAt);
-			strRtn.append(String.format("<div class=\"IllustUser\" style=\"background-color:#fff; font-size:9px; justify-content: right; display: block;\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
+			strRtn.append(String.format("<div class=\"IllustUser DateTime\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
+			// updated_at
+			final String updatedAt = cContent.updatedAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.updatedAt);
+			strRtn.append(String.format("<div class=\"IllustUser DateTime\"><i class=\"far fa-edit\"></i> %s</div>",updatedAt));
 		}
 		strRtn.append("</div>");	// IllustThumb
 		return strRtn.toString();

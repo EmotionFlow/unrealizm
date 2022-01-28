@@ -78,7 +78,7 @@ public class UpFileAppendC extends UpC{
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
-				fileTotalSize += cResSet.getInt(1);
+				fileTotalSize += cResSet.getInt("file_size");
 				bExist = true;
 			}
 			cResSet.close();cResSet=null;
@@ -116,7 +116,15 @@ public class UpFileAppendC extends UpC{
 				ImageIO.write(cImage, "png", new File(strRealFileName));
 			}
 			ImageUtil.createThumbIllust(strRealFileName);
-			//Log.d("UploadFileAppendC:"+strRealFileName);
+
+			WriteBackFile writeBackFile = new WriteBackFile();
+			writeBackFile.userId = cParam.m_nUserId;
+			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
+			writeBackFile.rowId = nAppendId;
+			writeBackFile.path = strFileName;
+			if (!writeBackFile.insert()) {
+				Log.d("writeBackFile.insert() error: " + nAppendId);
+			}
 
 			// ファイルサイズ系情報
 			int nWidth = 0;
@@ -154,6 +162,8 @@ public class UpFileAppendC extends UpC{
 			// ファイルサイズチェック
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
+
+			// 1枚目は存在チェック時に加算済み
 			// 2枚目以降
 			strSql ="SELECT SUM(file_size) FROM contents_appends_0000 WHERE content_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -183,13 +193,11 @@ public class UpFileAppendC extends UpC{
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			WriteBackFile writeBackFile = new WriteBackFile();
-			writeBackFile.userId = cParam.m_nUserId;
-			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
-			writeBackFile.rowId = nAppendId;
-			writeBackFile.path = strFileName;
-			if (!writeBackFile.insert()) {
-				Log.d("writeBackFile.insert() error: " + cParam.m_nContentId);
+			if (user.passportId == Common.PASSPORT_ON) {
+				cState = cConn.prepareStatement("UPDATE contents_0000 SET updated_at=now() WHERE content_id=?");
+				cState.setInt(1, cParam.m_nContentId);
+				cState.executeUpdate();
+				Log.d("update updated_at");
 			}
 
 			nRtn = nAppendId;

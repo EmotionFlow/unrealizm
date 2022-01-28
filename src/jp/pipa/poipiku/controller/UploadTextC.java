@@ -74,7 +74,7 @@ public final class UploadTextC extends UpC {
 					"INSERT INTO contents_0000(%s, created_at, updated_at) VALUES(%s, %s) RETURNING content_id",
 					String.join(",", lColumns),
 					String.join(",", lVals),
-					checkLogin.m_nPassportId==Common.PASSPORT_OFF ? "null, null" : "now(), NULL"
+					checkLogin.m_nPassportId==Common.PASSPORT_OFF ? "null, null" : "now(), now()"
 			);
 
 			statement = connection.prepareStatement(sql);

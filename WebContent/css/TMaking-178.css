@@ -463,14 +463,13 @@
 }
 
 .IllustThumbList .ShowTimestampSp {
-	height: 172px;
+	height: 200px;
 }
 
 .IllustThumbList .ShowTimestampPc {
-	height: 257px;
-	margin-bottom: 6px;
+	height: 267px;
+	margin-bottom: 0;
 }
-
 
 /********** ILLUST LIST **********/
 .IllustThumb {
@@ -534,6 +533,15 @@
 	display: block;
 	flex: 0 0 15px;
 	color: #3498db;
+}
+
+.IllustThumb .IllustUser.DateTime {
+	background-color: #fff;
+	font-size: 10px;
+	justify-content: right;
+	display: block;
+	padding: 0;
+	overflow: hidden;
 }
 
 .IllustThumb .IllustInfo.IllustMeta {

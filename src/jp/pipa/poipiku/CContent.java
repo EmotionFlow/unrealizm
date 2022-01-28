@@ -55,6 +55,7 @@ public final class CContent {
 	public int novelDirection = 0;
 	public int pinOrder = -1;
 	public Timestamp createdAt = null;
+	public Timestamp updatedAt = null;
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
@@ -128,6 +129,7 @@ public final class CContent {
 		novelHtmlShort		= Util.toString(resultSet.getString("novel_html_short"));
 		novelDirection		= Util.toIntN(resultSet.getInt("novel_direction"), 0, 1);
 		createdAt           = resultSet.getTimestamp("created_at");
+		updatedAt           = resultSet.getTimestamp("updated_at");
 
 		// 後方互換
 		if (novelHtml.isEmpty()) {
@@ -159,11 +161,17 @@ public final class CContent {
 	}
 	public CContent(ResultSet resultSet, float timeZoneOffset) throws SQLException {
 		set(resultSet);
-		if (createdAt != null) {
+		updateDateTimeWithTimeZoneOffset(createdAt, timeZoneOffset);
+		updateDateTimeWithTimeZoneOffset(updatedAt, timeZoneOffset);
+	}
+
+	private void updateDateTimeWithTimeZoneOffset(Timestamp timestamp, float timeZoneOffset){
+		if (timestamp != null) {
 			long jst, offsetTime;
-			jst = createdAt.getTime();
+			jst = timestamp.getTime();
 			offsetTime = jst + (long)((9 + timeZoneOffset) * 60 * 60 * 1000);
-			createdAt = new Timestamp(offsetTime);
+			timestamp = new Timestamp(offsetTime);
 		}
 	}
+
 }

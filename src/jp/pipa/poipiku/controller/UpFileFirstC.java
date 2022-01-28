@@ -137,7 +137,7 @@ public class UpFileFirstC extends UpC{
 			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
 
 			cConn = DatabaseUtil.dataSource.getConnection();
-			if(nFileSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
+			if(nFileSize> (long) Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId] *1024*1024) {
 				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
 				strSql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
 				cState = cConn.prepareStatement(strSql);
