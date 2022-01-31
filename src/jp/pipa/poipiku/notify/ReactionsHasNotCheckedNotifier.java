@@ -33,7 +33,7 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 					"         INNER JOIN users_0000 u ON i.user_id = u.user_id" +
 					" WHERE i.info_type = 1" +
 					"  AND i.had_read = FALSE" +
-					"  AND i.info_date < (now() - INTERVAL '10 days')" +
+					"  AND i.info_date < (now() - INTERVAL '7 days')" +
 //					"  AND i.info_date < (timestamp '2022-01-06 00:00:00' - INTERVAL '14 days')" +
 					"  AND u.email LIKE '%@%'" +
 					"  AND u.hash_password NOT LIKE '%BAN'" +
