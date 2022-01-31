@@ -1,5 +1,6 @@
 #parse("en/header.vm")
 
+あなたがポイピクでフォローしていないおすすめユーザーを紹介します。
 Here are some recommended users that you are not following on POIPIKU.
 
 #foreach($u in $recommend_users)
@@ -11,6 +12,7 @@ https://poipiku.com/$u.userId
 
 #end
 
+ポイピクのフォローは相手に伝わりません。気軽にフォローしてみましょう。
 Following by POIPIKU is not notify to the other person. Feel free to follow them.
 
 #parse("en/footer.vm")
