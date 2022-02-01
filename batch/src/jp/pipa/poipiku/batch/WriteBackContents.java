@@ -22,7 +22,7 @@ public class WriteBackContents extends Batch {
 	static final int HOLD_IN_CACHE_HOURS = 36 + 24;
 
 	// 一度のバッチ実行でselectするファイルの最大数
-	static final int SELECT_LIMIT = 25;
+	static final int SELECT_LIMIT = 20;
 
 	// HDDへの移動後も、DBにレコードを保持しておく時間
 	static final int HOLD_AFTER_RECORD_MOVED_HOURS = 180;
