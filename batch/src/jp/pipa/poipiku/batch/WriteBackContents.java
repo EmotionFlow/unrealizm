@@ -19,7 +19,7 @@ import java.util.List;
 
 public class WriteBackContents extends Batch {
 	// SSD上にファイルを保持する時間
-	static final int HOLD_IN_CACHE_HOURS = 36 + 24;
+	static final int HOLD_IN_CACHE_HOURS = 36 + 36;
 
 	// 一度のバッチ実行でselectするファイルの最大数
 	static final int SELECT_LIMIT = 30;
