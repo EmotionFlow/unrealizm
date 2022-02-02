@@ -215,11 +215,79 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			</span>
 			<%}%>
 
+			<style>
+				.SortFilterMenu{
+                    display: flex;
+                    flex-direction: row;
+					justify-content: space-around;
+                    padding: 20px 5px 7px 5px;
+                    font-size: 18px;
+				}
+				.SortFilterMenu > .CategoryFilter,
+				.CategoryFilterMenu > .Category
+				{
+                    font-size: 10px;
+                    text-align: center;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    box-sizing: border-box;
+                    border-radius: 10px;
+                    min-width: 50px;
+                    max-width: 100%;
+                    height: 22px;
+                    line-height: 20px;
+                    border: 1px solid;
+				}
+                .CategoryFilterMenu > .Category{
+					margin:	7px;
+					border: 1px solid #f5f5f5;
+				}
+
+				.SortFilterSubMenu > div {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-around;
+                    padding: 10px 5px 7px 5px;
+                    font-size: 18px;
+                    flex-wrap: wrap;
+                    align-content: space-around;
+				}
+			</style>
+			<script>
+				function showMyBoxSortFilterSubMenu(subMenuId) {
+					const $target = $("#"+subMenuId);
+					if ($target.css('display') !== 'none') {
+						$target.hide();
+						return false;
+					}
+					$("#SortFilterSubMenu > div").hide();
+					$target.animate({height: 'show'});
+				}
+			</script>
+			<nav id="SortFilterMenu" class="SortFilterMenu">
+				<span onclick="showMyBoxSortFilterSubMenu('SortMenu');" style="color: #ffffff"><i class="fas fa-sort-amount-down"></i></span>
+				<span onclick="showMyBoxSortFilterSubMenu('CategoryFilterMenu');" class="CategoryFilter">すべて</span>
+				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+			</nav>
+			<nav id="SortFilterSubMenu" class="SortFilterSubMenu">
+				<div id="SortMenu" style="display: none;">
+					<i class="fas fa-sort-alpha-down"></i>
+					<i class="far fa-calendar"></i>
+					<i class="fas fa-pen"></i>
+				</div>
+				<div id="CategoryFilterMenu" class="CategoryFilterMenu" style="display: none;">
+					<%for(int categoryId: Common.CATEGORY_ID) {%>
+						<span class="Category C<%=categoryId%>"><%=_TEX.T(String.format("Category.C%d", categoryId))%></span>
+					<%}%>
+				</div>
+				<div id="KeywordFilterMenu" style="display: none;"></div>
+			</nav>
 			<%if(cResults.m_vCategoryList.size()>0) {%>
-			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustList<%=isApp?"App":"Pc"%>V.jsp"><%=_TEX.T("Category.All")%></a>
-				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+			<nav id="TagMenu" class="TagMenu">
+				<a class="BtnBase TagBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustList<%=isApp?"App":"Pc"%>V.jsp">
+					<i style="font-size: 10px;vertical-align: center;" class="fas fa-tag"></i><%=_TEX.T("Category.All")%></a>
+				<%for(final CTag cTag : cResults.m_vCategoryList) {%>
+				<a class="BtnBase TagBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
 				<%}%>
 			</nav>
 			<%}%>
