@@ -151,10 +151,11 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			<%}%>
 
 			<%if(cResults.m_vCategoryList.size()>0) {%>
-			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
+			<nav id="TagMenu" class="TagMenu">
+				<a class="BtnBase TagBtn <%if(cResults.m_strTagKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/">
+					<i class="fas fa-tag TagIcon"></i><%=_TEX.T("Category.All")%></a>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+				<a class="BtnBase TagBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strTagKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
 				<%}%>
 			</nav>
 			<%}%>
@@ -169,7 +170,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			</section>
 
 			<nav class="PageBar" style="margin-bottom: 4px;">
-				<%=CPageBar.CreatePageBarSp("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/IllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, URLEncoder.encode(cResults.m_strTagKeyword, "UTF-8")), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 
 			<section id="IllustItemListRelatedUser" class="IllustItemList Related User" style="height: auto">

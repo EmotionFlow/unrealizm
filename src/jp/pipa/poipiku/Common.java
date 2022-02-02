@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,6 +13,8 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.util.CCnv;
+
+import static java.util.stream.Collectors.joining;
 
 public final class Common {
 	private Common(){}
@@ -491,6 +494,13 @@ public final class Common {
 				String.format(translateUrlFormat, jspPage, langCode),
 				langName
 				);
+	}
+
+	public static String getCgiParamStr(Map<String, String> keyValues) {
+		return keyValues.entrySet()
+				.stream()
+				.map(e -> e.getKey() + "=" + e.getValue())
+				.collect(joining("&"));
 	}
 
 	enum AppEnv {

@@ -53,7 +53,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<script>
 			var g_nPage = 1; // start 1
-			var g_strKeyword = '<%=cResults.m_strKeyword%>';
+			var g_strKeyword = '<%=cResults.m_strTagKeyword%>';
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -202,9 +202,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<article class="Wrapper">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
-				<span class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" onclick="changeCategory(this, '')"><%=_TEX.T("Category.All")%></span>
+				<span class="BtnBase CategoryBtn <%if(cResults.m_strTagKeyword.isEmpty()){%> Selected<%}%>" onclick="changeCategory(this, '')"><%=_TEX.T("Category.All")%></span>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<span class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" onclick="changeCategory(this, '<%=cTag.m_strTagTxt%>')"><%=Util.toDescString(cTag.m_strTagTxt)%></span>
+				<span class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strTagKeyword)){%> Selected<%}%>" onclick="changeCategory(this, '<%=cTag.m_strTagTxt%>')"><%=Util.toDescString(cTag.m_strTagTxt)%></span>
 				<%}%>
 			</nav>
 			<%}%>

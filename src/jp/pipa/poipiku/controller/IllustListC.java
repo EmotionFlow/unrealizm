@@ -2,11 +2,12 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
@@ -14,7 +15,7 @@ import jp.pipa.poipiku.util.*;
 
 public class IllustListC {
 	public int m_nUserId = -1;
-	public String m_strKeyword = "";
+	public String m_strTagKeyword = "";
 	public int m_nPage = 0;
 	public String m_strAccessIp = "";
 	public boolean m_bDispUnPublished = false;
@@ -22,17 +23,61 @@ public class IllustListC {
 	public static final int TIMEZONE_OFFSET_DEFAULT = -9;
 	public float clientTimezoneOffset = TIMEZONE_OFFSET_DEFAULT;
 
+	public enum SortBy implements CodeEnum<SortBy> {
+		None(0),
+		Description(1),
+		CreatedAt(2),
+		UpdatedAt(3);
+
+		static public SortBy byCode(int _code) {
+			return CodeEnum.getEnum(SortBy.class, _code);
+		}
+		@Override
+		public int getCode() {
+			return code;
+		}
+
+		private final int code;
+
+		private SortBy(int code) {
+			this.code = code;
+		}
+	}
+	public SortBy sortBy = SortBy.None;
+	public boolean sortOrderAsc = false;
+	public int categoryFilterId = -1;
+
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nUserId		= Util.toInt(cRequest.getParameter("ID"));
-			m_strKeyword	= Common.TrimAll(Common.CrLfInjection(cRequest.getParameter("KWD")));
+			m_strTagKeyword = Common.TrimAll(Common.CrLfInjection(cRequest.getParameter("KWD")));
 			m_nPage			= Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 			m_strAccessIp	= cRequest.getRemoteAddr();
+			sortBy          = SortBy.byCode(Util.toInt(cRequest.getParameter("SBY")));
+			if (sortBy == null) sortBy = SortBy.None;
+			sortOrderAsc    = Util.toBoolean(cRequest.getParameter("SASC"));
+			categoryFilterId = Util.toInt(cRequest.getParameter("CAT"));
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
 	}
+
+	public Map<String, String> getParamKeyValueMap() {
+		Map<String, String> keyValues = new HashMap<>();
+		if (m_nUserId > 0) keyValues.put("ID", Integer.toString(m_nUserId));
+		if (!m_strTagKeyword.isEmpty()) keyValues.put("KWD", m_strTagKeyword);
+		if (m_nPage > 0) keyValues.put("PG", Integer.toString(m_nPage));
+		if (sortBy != SortBy.None) keyValues.put("SBY", Integer.toString(sortBy.getCode()));
+		if (sortOrderAsc) keyValues.put("SASC", "1");
+		if (categoryFilterId>=0) keyValues.put("CAT", Integer.toString(categoryFilterId));
+		return keyValues;
+	}
+
+	public String getSortAscParam(SortBy _sortBy) {
+		return this.sortBy == _sortBy && !this.sortOrderAsc ? "&SASC=1" : "";
+	}
+
 
 	public CUser m_cUser = new CUser();
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
@@ -187,7 +232,7 @@ public class IllustListC {
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 
-				// category
+				// tag
 				strSql = String.format("SELECT tag_txt FROM tags_0000 WHERE tag_type=3 AND content_id IN(SELECT content_id FROM contents_0000 WHERE user_id=? %s) GROUP BY tag_txt ORDER BY max(upload_date) DESC", strOpenCnd);
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, m_nUserId);
@@ -201,8 +246,17 @@ public class IllustListC {
 
 			if(m_bBlocking || m_bBlocked) return true;
 
-			// condition
-			String strCond = (m_strKeyword.isEmpty())?"":"AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3) ";
+			// tag
+			final String strTagCond = (
+					m_strTagKeyword.isEmpty()) ?
+					"" : "AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3) ";
+
+			//TODO category
+			final String strCategoryCond =
+					categoryFilterId < 0 ?
+							"" : "AND category_id = ?";
+
+			//TODO free-word
 
 			// full open for owner
 			String strOpenCnd = (!m_bOwner || (m_bOwner&&!m_bDispUnPublished))?"AND open_id<>2 ":"";
@@ -210,7 +264,8 @@ public class IllustListC {
 			String strSqlFromWhere = "FROM contents_0000 "
 					+ "WHERE user_id=? "
 					+ "AND safe_filter<=? "
-					+ strCond
+					+ strTagCond
+					+ strCategoryCond
 					+ strOpenCnd;
 
 			List<CContent> pinContents = new ArrayList<>();
@@ -220,8 +275,11 @@ public class IllustListC {
 				idx = 1;
 				statement.setInt(idx++, m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nSafeFilter);
-				if(!strCond.isEmpty()) {
-					statement.setString(idx++, m_strKeyword);
+				if(!strTagCond.isEmpty()) {
+					statement.setString(idx++, m_strTagKeyword);
+				}
+				if(!strCategoryCond.isEmpty()) {
+					statement.setInt(idx++, categoryFilterId);
 				}
 				statement.setInt(idx++, pins.get(0).contentId);
 				resultSet = statement.executeQuery();
@@ -245,14 +303,34 @@ public class IllustListC {
 				}
 			}
 
+			//TODO order by
+			final String strOrderBy;
+			if (sortBy == SortBy.None) {
+				strOrderBy = "ORDER BY content_id DESC ";
+			} else {
+				final String orderDesc = sortOrderAsc ? "" : "DESC ";
+				if (sortBy == SortBy.Description) {
+					strOrderBy = "ORDER BY description " + orderDesc;
+				} else if(sortBy == SortBy.CreatedAt) {
+					strOrderBy = "ORDER BY created_at " + orderDesc + "NULLS LAST, content_id " + orderDesc;
+				} else if(sortBy == SortBy.UpdatedAt) {
+					strOrderBy = "ORDER BY updated_at " + orderDesc + "NULLS LAST, content_id " + orderDesc;
+				} else {
+					strOrderBy = "ORDER BY content_id DESC ";
+				}
+			}
+
 			// gallery
 			strSql = "SELECT COUNT(*) " + strSqlFromWhere;
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
-			if(!strCond.isEmpty()) {
-				statement.setString(idx++, m_strKeyword);
+			if(!strTagCond.isEmpty()) {
+				statement.setString(idx++, m_strTagKeyword);
+			}
+			if(!strCategoryCond.isEmpty()) {
+				statement.setInt(idx++, categoryFilterId);
 			}
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -262,13 +340,17 @@ public class IllustListC {
 			statement.close();statement=null;
 
 			strSql = "SELECT * " + strSqlFromWhere
-					+ "ORDER BY content_id DESC OFFSET ? LIMIT ?";
+					+ strOrderBy
+					+ "OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
 			statement.setInt(idx++, m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
-			if(!strCond.isEmpty()) {
-				statement.setString(idx++, m_strKeyword);
+			if(!strTagCond.isEmpty()) {
+				statement.setString(idx++, m_strTagKeyword);
+			}
+			if(!strCategoryCond.isEmpty()) {
+				statement.setInt(idx++, categoryFilterId);
 			}
 
 			final int offset;

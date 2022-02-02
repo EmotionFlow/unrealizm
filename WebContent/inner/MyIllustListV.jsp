@@ -51,7 +51,11 @@ String strTitle = Util.toStringHtml(String.format(_TEX.T("IllustListPc.Title"), 
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
 if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strTagKeyword, "UTF-8");
+
+Map<String, String> keyValues;
+String strCgiParam = "";
+final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 
 %>
 <!DOCTYPE html>
@@ -76,7 +80,10 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuMe').addClass('Selected');
-			updateCategoryMenuPos(100);
+			updateTagMenuPos(100);
+			<%if (Util.toString(request.getHeader("Referer")).indexOf("MyIllustList") > 0) { %>
+			$(window).scrollTop($("#SortFilterMenu").offset().top - 80);
+			<%}%>
 		});
 		</script>
 
@@ -99,63 +106,6 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			}
 		</style>
 		<%}%>
-
-		<style>
-			#SwitchUserList{
-				float: left;
-				width: 100%;
-				box-sizing: border-box;
-				overflow: hidden;
-				position: fixed;
-				align-items: center;
-				justify-content: center;
-				background: #fff;
-				color: #6d6965;
-				flex-flow: column;
-				z-index: 999;
-			}
-			.SwitchUserItem {
-				display: flex;
-				flex-flow: row nowrap;
-				width: 100%;
-				height: 55px;
-				box-sizing: border-box;
-				position: relative;
-				text-align: center;
-				padding: 2px 2px 2px 2px;
-				border-bottom: solid 1px #eee;
-				align-items: center;
-				color: #6d6965;
-			}
-			.SwitchUserThumb {
-				display: block;
-				flex: 0 0 40px;
-				height: 40px;
-				overflow: hidden;
-				border-radius: 40px;
-				background-size: cover;
-				background-position: 50% 50%;
-			}
-			.SwitchUserNickname {
-				display: block;
-				flex: 1 1 80px;
-				padding: 0;
-				margin: 0 0 0 3px;
-				text-align: left;
-				font-size: 16px;
-				white-space: nowrap;
-				overflow: hidden;
-			}
-			.SwitchUserStatus {
-				width: 19px;
-				border-left: solid 1px #eee;
-				padding: 10px 13px;
-				font-size: 16px;
-			}
-			.SwitchUserStatus > .Selected {
-				color: #3498da;
-			}
-		</style>
 	</head>
 
 	<body>
@@ -215,80 +165,25 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			</span>
 			<%}%>
 
-			<style>
-				.SortFilterMenu{
-                    display: flex;
-                    flex-direction: row;
-					justify-content: space-around;
-                    padding: 20px 5px 7px 5px;
-                    font-size: 18px;
-				}
-				.SortFilterMenu > .CategoryFilter,
-				.CategoryFilterMenu > .Category
-				{
-                    font-size: 10px;
-                    text-align: center;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    box-sizing: border-box;
-                    border-radius: 10px;
-                    min-width: 50px;
-                    max-width: 100%;
-                    height: 22px;
-                    line-height: 20px;
-                    border: 1px solid;
-				}
-                .CategoryFilterMenu > .Category{
-					margin:	7px;
-					border: 1px solid #f5f5f5;
-				}
+			<%if(checkLogin.isStaff()){%>
+			<% boolean isGridPc = false; %>
+			<%@include file="TSortFilterNavigation.jsp"%>
+			<%}%>
 
-				.SortFilterSubMenu > div {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-around;
-                    padding: 10px 5px 7px 5px;
-                    font-size: 18px;
-                    flex-wrap: wrap;
-                    align-content: space-around;
-				}
-			</style>
-			<script>
-				function showMyBoxSortFilterSubMenu(subMenuId) {
-					const $target = $("#"+subMenuId);
-					if ($target.css('display') !== 'none') {
-						$target.hide();
-						return false;
-					}
-					$("#SortFilterSubMenu > div").hide();
-					$target.animate({height: 'show'});
-				}
-			</script>
-			<nav id="SortFilterMenu" class="SortFilterMenu">
-				<span onclick="showMyBoxSortFilterSubMenu('SortMenu');" style="color: #ffffff"><i class="fas fa-sort-amount-down"></i></span>
-				<span onclick="showMyBoxSortFilterSubMenu('CategoryFilterMenu');" class="CategoryFilter">すべて</span>
-				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
-			</nav>
-			<nav id="SortFilterSubMenu" class="SortFilterSubMenu">
-				<div id="SortMenu" style="display: none;">
-					<i class="fas fa-sort-alpha-down"></i>
-					<i class="far fa-calendar"></i>
-					<i class="fas fa-pen"></i>
-				</div>
-				<div id="CategoryFilterMenu" class="CategoryFilterMenu" style="display: none;">
-					<%for(int categoryId: Common.CATEGORY_ID) {%>
-						<span class="Category C<%=categoryId%>"><%=_TEX.T(String.format("Category.C%d", categoryId))%></span>
-					<%}%>
-				</div>
-				<div id="KeywordFilterMenu" style="display: none;"></div>
-			</nav>
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="TagMenu" class="TagMenu">
-				<a class="BtnBase TagBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustList<%=isApp?"App":"Pc"%>V.jsp">
-					<i style="font-size: 10px;vertical-align: center;" class="fas fa-tag"></i><%=_TEX.T("Category.All")%></a>
-				<%for(final CTag cTag : cResults.m_vCategoryList) {%>
-				<a class="BtnBase TagBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
-				<%}%>
+				<a class="BtnBase TagBtn <%if(cResults.m_strTagKeyword.isEmpty()){%> Selected<%}%>" href="<%=thisPagePath%>">
+					<i class="fas fa-tag TagIcon"></i><%=_TEX.T("Category.All")%></a>
+				<%
+					keyValues = cResults.getParamKeyValueMap();
+					keyValues.remove("KWD");
+					keyValues.remove("PG");
+					strCgiParam = Common.getCgiParamStr(keyValues);
+					for(final CTag cTag : cResults.m_vCategoryList) {%>
+				<a class="BtnBase TagBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strTagKeyword)){%> Selected<%}%>" href="<%=thisPagePath%>?<%=strCgiParam%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+				<%
+					}
+				%>
 			</nav>
 			<%}%>
 
@@ -306,11 +201,15 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 			</section>
 
 			<nav class="PageBar">
-				<%if(!isApp){%>
-				<%=CPageBar.CreatePageBarSp("/MyIllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-				<%}else{%>
-				<%=CPageBar.CreatePageBarSp("/MyIllustListAppV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
-				<%}%>
+				<%
+					keyValues = cResults.getParamKeyValueMap();
+					keyValues.remove("PG");
+					strCgiParam = "&" + Common.getCgiParamStr(keyValues);
+				%>
+				<%=CPageBar.CreatePageBarSp(thisPagePath, strCgiParam, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%
+					keyValues.clear();
+				%>
 			</nav>
 		</article>
 

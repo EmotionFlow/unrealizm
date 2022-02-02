@@ -39,8 +39,12 @@ String strTitle = Util.toStringHtml(String.format(_TEX.T("IllustListPc.Title"), 
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal);
 String strFileUrl = cResults.m_cUser.m_strFileName;
 if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
+String strEncodedKeyword = URLEncoder.encode(cResults.m_strTagKeyword, "UTF-8");
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
+
+Map<String, String> keyValues;
+String strCgiParam = "";
+final String thisPagePath = "/MyIllustListGridPcV.jsp";
 
 %>
 <!DOCTYPE html>
@@ -55,7 +59,10 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<script type="text/javascript">
 		$(function(){
 			$('#MenuMe').addClass('Selected');
-			updateCategoryMenuPos(100);
+			updateTagMenuPos(100);
+			<%if (Util.toString(request.getHeader("Referer")).indexOf("MyIllustList") > 0) { %>
+			$(window).scrollTop($("#SortFilterMenu").offset().top - 80);
+			<%}%>
 		});
 		</script>
 
@@ -170,14 +177,14 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
-						<div class="TweetMyBox">
+						<span class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i><%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
 							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
 								<%=_TEX.T("Request.MyRequests")%>
 							</a>
-						</div>
+						</span>
 					</span>
 				</section>
 				<section class="UserInfoState">
@@ -190,11 +197,15 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		</article>
 
 		<article class="Wrapper GridList">
+
+			<% boolean isGridPc = true; %>
+			<%@include file="/inner/TSortFilterNavigation.jsp"%>
+
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_strKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp"><%=_TEX.T("Category.All")%></a>
+				<a class="BtnBase CategoryBtn <%if(cResults.m_strTagKeyword.isEmpty()){%> Selected<%}%>" href="/MyIllustListPcV.jsp"><%=_TEX.T("Category.All")%></a>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
-				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strKeyword)){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
+				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strTagKeyword)){%> Selected<%}%>" href="/MyIllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>
 				<%}%>
 			</nav>
 			<%}%>
