@@ -198,8 +198,10 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 
 		<article class="Wrapper GridList">
 
+			<%if(checkLogin.isStaff()){%>
 			<% boolean isGridPc = true; %>
 			<%@include file="/inner/TSortFilterNavigation.jsp"%>
+			<%}%>
 
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="CategoryMenu" class="CategoryMenu">
