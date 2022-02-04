@@ -60,8 +60,11 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateTagMenuPos(100);
+
+			<%if(checkLogin.isStaff()){%>
 			<%if (Util.toString(request.getHeader("Referer")).indexOf("MyIllustList") > 0) { %>
 			$(window).scrollTop($("#SortFilterMenu").offset().top - 80);
+			<%}%>
 			<%}%>
 		});
 		</script>
