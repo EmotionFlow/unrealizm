@@ -30,7 +30,7 @@
 </script>
 <%}%>
 <nav id="SortFilterMenu" class="SortFilterMenu" <%=isGridPc ? "style=\"width:400px;margin:0 auto;\"" : ""%>>
-	<span onclick="showMyBoxSortFilterSubMenu('SortMenu');" style="color: #ffffff">
+	<span class="SortMenuIcon" onclick="showMyBoxSortFilterSubMenu('SortMenu');">
 		<%
 			String sortMenuIconClass = "";
 			String sortMenuDirectionIcon = null;
@@ -50,14 +50,14 @@
 		<i class="<%=sortMenuIconClass%>"></i>
 	</span>
 	<span onclick="showMyBoxSortFilterSubMenu('CategoryFilterMenu');"
-		  class="CategoryFilter <%=cResults.categoryFilterId<0?"":"Category C"+cResults.categoryFilterId%>"
+		  class="CategoryFilter <%="Category C"+cResults.categoryFilterId%>"
 		  style="border-color: #ffffff">
 					<%=cResults.categoryFilterId<0?_TEX.T("Category.All"):_TEX.T(String.format("Category.C%d", cResults.categoryFilterId))%>
 				</span>
 <%--	<a class="fas fa-search" href="javascript:void(0);"></a>--%>
 </nav>
 <nav id="SortFilterSubMenu" class="SortFilterSubMenu" <%=isGridPc ? "style=\"width:500px;margin:0 auto;\"" : ""%>>
-	<div id="SortMenu" style="display: none;">
+	<div id="SortMenu" class="SortMenu" style="display: none;">
 		<%
 			keyValues = cResults.getParamKeyValueMap();
 			keyValues.remove("PG");
@@ -98,7 +98,7 @@
 		></a>
 	</div>
 	<div id="CategoryFilterMenu" class="CategoryFilterMenu" style="display: none;">
-		<a class="Category" href="<%=String.format("%s?PG=%d", thisPagePath, cResults.m_nPage)%>">
+		<a class="Category C-1" href="<%=String.format("%s?PG=%d", thisPagePath, cResults.m_nPage)%>">
 			<%=_TEX.T("Category.All")%>
 		</a>
 		<%

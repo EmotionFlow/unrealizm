@@ -1715,6 +1715,15 @@ Decoration
 	min-width: 70px;
 }
 
+.Category.C-1 {
+	background-color: #3498da;
+	color: #ffffff;
+}
+.CategoryBtn.C-1 {
+	border-color: #3498da;
+	color: #ffffff;
+}
+
 .Category.C0 {
 	background-color: #ecec01;
 	color: #555;
@@ -1897,6 +1906,15 @@ Decoration
 .CategoryBtn.C19 {
 	background-color: #dd0000;
 	color: #fff;
+}
+
+.Category.C20 {
+	background-color: #3498da;
+	color: #ffffff;
+}
+.CategoryBtn.C20 {
+	border-color: #3498da;
+	color: #ffffff;
 }
 
 .Category.C22 {
@@ -3517,6 +3535,11 @@ hr.IllustItemListSeparator {
 	font-size: 18px;
 }
 
+.SortFilterMenu .SortMenuIcon {
+	color: #ffffff;
+	text-shadow: 0 0 5px #787878;
+}
+
 .SortFilterMenu .SortDirection {
 	margin-right: -4px;
 	font-size: 13px;
@@ -3527,8 +3550,7 @@ hr.IllustItemListSeparator {
 }
 
 .SortFilterMenu > .CategoryFilter,
-.CategoryFilterMenu > .Category
-{
+.CategoryFilterMenu > .Category {
 	font-size: 10px;
 	text-align: center;
 	overflow: hidden;
@@ -3545,7 +3567,12 @@ hr.IllustItemListSeparator {
 	margin: 7px 11px;
 	border: 1px solid #f5f5f5;
 	font-size: 11px;
-	min-width: 58px;				}
+	min-width: 58px;
+}
+
+.SortFilterSubMenu > .SortMenu {
+	text-shadow: 0 0 5px #787878;
+}
 
 .SortFilterSubMenu > div {
 	display: flex;
