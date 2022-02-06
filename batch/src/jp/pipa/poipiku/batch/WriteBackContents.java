@@ -60,6 +60,7 @@ public class WriteBackContents extends Batch {
 		if (h == 21 || h == 22 || h == 23 || h == 0 || h == 1){
 			Log.d("処理時間外");
 			Log.d("WriteBackContents batch end");
+			return;
 		}
 
 		if (!WriteBackFile.deleteByStatus(WriteBackFile.Status.Moved, HOLD_AFTER_RECORD_MOVED_HOURS)){
