@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,12 @@ public class WriteBackContents extends Batch {
 
 	public static void main(String[] args) {
 		Log.d("WriteBackContents batch start");
+
+		final int h = LocalDateTime.now().getHour();
+		if (h == 21 || h == 22 || h == 23 || h == 0 || h == 1){
+			Log.d("処理時間外");
+			Log.d("WriteBackContents batch end");
+		}
 
 		if (!WriteBackFile.deleteByStatus(WriteBackFile.Status.Moved, HOLD_AFTER_RECORD_MOVED_HOURS)){
 			notifyError("(WriteBackContentsError)DB上の「ステータス：移動済み」レコードの削除に失敗");
