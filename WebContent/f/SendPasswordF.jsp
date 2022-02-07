@@ -40,7 +40,7 @@ class SendPasswordC {
 			cConn = dsPostgres.getConnection();
 
 			if(!m_strEmail.isEmpty()) {
-				strSql = "SELECT user_id, email, password FROM users_0000 WHERE email ILIKE ?";
+				strSql = "SELECT user_id, email, password FROM users_0000 WHERE email = ?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, m_strEmail);
 				cResSet = cState.executeQuery();
