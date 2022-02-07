@@ -707,21 +707,21 @@ public final class CTweet {
 			}
 
 			// 既存レコードに自分のTwitterIDがあったらUPDATE
-			sql = "UPDATE twitter_friends" +
-					" SET follow_user_id = ?" +
-					" WHERE twitter_follow_user_id = (" +
-					"    SELECT CAST(tbloauth.twitter_user_id AS bigint)" +
-					"    FROM tbloauth" +
-					"    WHERE flduserid = ?" +
-					"      AND del_flg = FALSE" +
-					"    ORDER BY id DESC" +
-					"    LIMIT 1" +
-					")";
-			statement = connection.prepareStatement(sql);
-			statement.setInt(1, userId);
-			statement.setInt(2, userId);
-			statement.executeUpdate();
-			statement.close();statement=null;
+//			sql = "UPDATE twitter_friends" +
+//					" SET follow_user_id = ?" +
+//					" WHERE twitter_follow_user_id = (" +
+//					"    SELECT CAST(tbloauth.twitter_user_id AS bigint)" +
+//					"    FROM tbloauth" +
+//					"    WHERE flduserid = ?" +
+//					"      AND del_flg = FALSE" +
+//					"    ORDER BY id DESC" +
+//					"    LIMIT 1" +
+//					")";
+//			statement = connection.prepareStatement(sql);
+//			statement.setInt(1, userId);
+//			statement.setInt(2, userId);
+//			statement.executeUpdate();
+//			statement.close();statement=null;
 
 		} catch (Exception e) {
 			e.printStackTrace();
