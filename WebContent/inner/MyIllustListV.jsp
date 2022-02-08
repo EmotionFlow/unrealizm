@@ -81,10 +81,8 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateTagMenuPos(100);
-			<%if(checkLogin.isStaff()){%>
 			<%if (Util.toString(request.getHeader("Referer")).indexOf("MyIllustList") > 0) { %>
 			$(window).scrollTop($("#SortFilterMenu").offset().top - 80);
-			<%}%>
 			<%}%>
 		});
 		</script>
@@ -167,10 +165,8 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 			</span>
 			<%}%>
 
-			<%if(checkLogin.isStaff()){%>
 			<% boolean isGridPc = false; %>
 			<%@include file="TSortFilterNavigation.jsp"%>
-			<%}%>
 
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="TagMenu" class="TagMenu">
