@@ -104,8 +104,12 @@
 			<%}%>
 			<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
 				<div class="HeaderSearch">
-					<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
-					<div id="HeaderSearchBtn" class="HeaderSearchBtn">
+					<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text"
+						   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>"
+					/>
+					<div id="HeaderSearchBtn" class="HeaderSearchBtn"
+						 <%if(!checkLogin.m_bLogin){%> onclick="DispMsg('<%=_TEX.T("Common.NeedLogin")%>')"<%}%>
+					>
 						<i class="fas fa-search"></i>
 					</div>
 				</div>
@@ -123,8 +127,10 @@
 		<%}%>
 
 		<script>
+			<%if(checkLogin.m_bLogin){%>
 			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
 			$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+			<%}%>
 		</script>
 
 	</div>
