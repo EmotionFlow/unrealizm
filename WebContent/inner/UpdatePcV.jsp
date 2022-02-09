@@ -249,7 +249,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 				<%}%>
 
-				<div class="CategorDesc">
+				<div class="CategoryDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>

@@ -214,7 +214,7 @@ if (requestId > 0) {
 				</div>
 				<%}%>
 
-				<div class="CategorDesc">
+				<div class="CategoryDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
@@ -222,11 +222,24 @@ if (requestId > 0) {
 					</select>
 					<%if(requestId>0){%>
 					<script>
-						$(()=>{
-							$('.CategorDesc option[value="6"]').prop('selected', true);
-						})
+						$(()=>{$('.CategoryDesc option[value="6"]').prop('selected', true);})
 					</script>
 					<%}%>
+
+					<style>
+                        .CategoryDesc > .PrivateNote {
+                            font-size: 14px;
+                            margin-right: 3px;
+                        }
+					</style>
+					<span class="PrivateNote" onclick="privateNote.showEditDlg()">
+						<i class="far fa-sticky-note"></i>
+						<span id="PrivateNoteSummary">Memo</span>
+					</span>
+					<script>
+						privateNote.setSummaryElement($("#PrivateNoteSummary"));
+						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
+					</script>
 				</div>
 
 				<div class="Description">

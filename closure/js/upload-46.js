@@ -439,6 +439,38 @@ $.ajaxSetup({
 	})();
 }).call(this);
 
+let privateNote = (()=>{
+	let text = '';
+	let placeholder = '';
+	let $summaryElement = null;
+	let summaryLength = 10;
+	function _getSummary() {
+		const trimText = text.replace("\n"," ").trim();
+		return trimText.length < summaryLength ? trimText : trimText.substr(0, summaryLength) + '...';
+	}
+
+	return {
+		showEditDlg: () => {
+			Swal.fire({
+				input: 'textarea',
+				inputPlaceholder: placeholder,
+				inputAttributes: {maxlength: 50},
+				inputValue: text,
+				showCancelButton: true
+			}).then((result) => {
+				if (result.dismiss) return;
+				text = result.value;
+				if ($summaryElement) $summaryElement.text(_getSummary());
+			})
+		},
+		setPlaceholder: (txt) => {placeholder = txt},
+		setText: (_text) => {text = _text},
+		setSummaryElement: (_$element) => {$summaryElement = _$element},
+		getText: () => {return text;},
+	}
+})();
+
+
 function DispTagListCharNum() {
 	var nCharNum = 100 - $("#EditTagList").val().length;
 	$("#EditTagListCharNum").html(nCharNum);
@@ -1409,5 +1441,4 @@ function getPreviewAreaImageNum() {
 function getPasteAreaImageNum() {
 	return $('.PasteZone').children('.InputFile').length;
 }
-
 
