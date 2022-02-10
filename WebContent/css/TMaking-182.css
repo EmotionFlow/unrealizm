@@ -568,6 +568,26 @@
 	border-radius: 2px;
 }
 
+.IllustThumb > .PrivateNote {
+	position: absolute;
+	background: rgba(255,255,255,0.9);
+	height: 125px;
+	width: 100%;
+	font-size: 12px;
+	border-top: 1px solid #d9d9d9;
+	overflow: scroll;
+}
+
+.IllustThumb > .PrivateNote.slide-up
+{
+	bottom: 0 !important;
+}
+
+.IllustThumb > .PrivateNote.slide-down
+{
+	bottom: -475px !important;
+}
+
 .IllustThumb .IllustUser {
 	display: flex;
 	flex-flow: row nowrap;

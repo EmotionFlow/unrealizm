@@ -207,6 +207,21 @@ function HideMsgStatic(timeout=1000) {
 	}
 }
 
+function TogglePrivateNote($element, message) {
+	const cls = 'PrivateNote';
+	if($element.children('.' + cls).length <= 0) {
+		$element.append($("<div/>").attr("class", cls));
+	}
+	const $note = $($element.children('.' + cls)[0]);
+	$note.html(message.replaceAll('\n', '<br>'));
+	if ($note.hasClass('slide-up')) {
+		$note.addClass('slide-down', 2000, 'swing');
+		$note.removeClass('slide-up');
+	} else {
+		$note.removeClass('slide-down');
+		$note.addClass('slide-up', 2000, 'swing');
+	}
+}
 
 function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
 	strCheckDeleteMsg, strCheckDeleteYesMsg, strCheckDeleteNoMsg,
