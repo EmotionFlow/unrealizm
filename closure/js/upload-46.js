@@ -448,23 +448,26 @@ let privateNote = (()=>{
 		const trimText = text.replace("\n"," ").trim();
 		return trimText.length < summaryLength ? trimText : trimText.substr(0, summaryLength) + '...';
 	}
+	function _updateSummaryElement() {
+		if ($summaryElement) $summaryElement.text(_getSummary());
+	}
 
 	return {
 		showEditDlg: () => {
 			Swal.fire({
 				input: 'textarea',
 				inputPlaceholder: placeholder,
-				inputAttributes: {maxlength: 50},
+				inputAttributes: {maxlength: 100},
 				inputValue: text,
 				showCancelButton: true
 			}).then((result) => {
 				if (result.dismiss) return;
 				text = result.value;
-				if ($summaryElement) $summaryElement.text(_getSummary());
+				_updateSummaryElement();
 			})
 		},
 		setPlaceholder: (txt) => {placeholder = txt},
-		setText: (_text) => {text = _text},
+		setText: (_text) => {text = _text; _updateSummaryElement();},
 		setSummaryElement: (_$element) => {$summaryElement = _$element},
 		getText: () => {return text;},
 	}
@@ -1047,6 +1050,7 @@ function UploadFile(user_id, request_id) {
 			"CNG":nCheerNg,
 			"RID":request_id,
 			"PUBALL":nPublishAllNum,
+			"NOTE":privateNote.getText(),
 		},
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -1216,6 +1220,7 @@ function UploadPaste(user_id) {
 			"ED":1,
 			"CNG":nCheerNg,
 			"PUBALL":nPublishAllNum,
+			"NOTE":privateNote.getText(),
 		},
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -1360,6 +1365,7 @@ function UploadText(user_id, request_id) {
 			"RID":request_id,
 			"TIT":title,
 			"DIR":direction,
+			"NOTE":privateNote.getText(),
 		},
 		"url": "/f/UploadTextRefTwitterF.jsp",
 		"dataType": "json",

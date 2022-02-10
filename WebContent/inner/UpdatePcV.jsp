@@ -255,6 +255,20 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
 						<%}%>
 					</select>
+
+					<span class="PrivateNote" onclick="privateNote.showEditDlg()">
+						<i class="far fa-sticky-note"></i>
+						<span id="PrivateNoteSummary"></span>
+					</span>
+					<script>
+						privateNote.setSummaryElement($("#PrivateNoteSummary"));
+						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
+						<%if(cResults.m_cContent.privateNote.isEmpty()){%>
+						$("#PrivateNoteSummary").text('<%=_TEX.T("PrivateNote")%>');
+						<%}else{%>
+						privateNote.setText('<%=Util.toQuotedString(cResults.m_cContent.privateNote, "'")%>');
+						<%}%>
+					</script>
 				</div>
 
 				<div class="Description">

@@ -719,10 +719,16 @@ public final class CCnv {
 						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
 				)
 		);
-		// Pin
+
+		// Pin, Note
 		if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
 			strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
+		} else if (!cContent.privateNote.isEmpty()) {
+			strRtn.append("<span class=\"IllustInfoPin far fa-sticky-note\" onclick=\"TogglePrivateNote($(this).parent().parent(),'" +
+					Util.toQuotedString(cContent.privateNote, "'") +
+					"')\"></span>");
 		}
+
 		strRtn.append("</span>");	// カテゴリ系情報(IllustInfo)
 
 		// イラスト情報

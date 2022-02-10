@@ -226,15 +226,9 @@ if (requestId > 0) {
 					</script>
 					<%}%>
 
-					<style>
-                        .CategoryDesc > .PrivateNote {
-                            font-size: 14px;
-                            margin-right: 3px;
-                        }
-					</style>
 					<span class="PrivateNote" onclick="privateNote.showEditDlg()">
 						<i class="far fa-sticky-note"></i>
-						<span id="PrivateNoteSummary">Memo</span>
+						<span id="PrivateNoteSummary"><%=_TEX.T("PrivateNote")%></span>
 					</span>
 					<script>
 						privateNote.setSummaryElement($("#PrivateNoteSummary"));
