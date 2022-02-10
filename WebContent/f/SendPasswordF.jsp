@@ -40,7 +40,7 @@ class SendPasswordC {
 			cConn = dsPostgres.getConnection();
 
 			if(!m_strEmail.isEmpty()) {
-				strSql = "SELECT user_id, email, password FROM users_0000 WHERE email ILIKE ?";
+				strSql = "SELECT user_id, email, password FROM users_0000 WHERE email = ?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, m_strEmail);
 				cResSet = cState.executeQuery();
@@ -55,7 +55,7 @@ class SendPasswordC {
 				cState.close();
 			}
 			if(!m_strTwScreenName.isEmpty()) {
-				strSql = "SELECT u.user_id, u.email, u.password FROM users_0000 AS u INNER JOIN tbloauth AS a ON u.user_id = a.flduserid WHERE a.twitter_screen_name ILIKE ? AND a.del_flg=false ORDER BY user_id DESC LIMIT 1";
+				strSql = "SELECT u.user_id, u.email, u.password FROM users_0000 AS u INNER JOIN tbloauth AS a ON u.user_id = a.flduserid WHERE lower(a.twitter_screen_name) = ? AND a.del_flg=false ORDER BY user_id DESC LIMIT 1";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, m_strTwScreenName);
 				cResSet = cState.executeQuery();

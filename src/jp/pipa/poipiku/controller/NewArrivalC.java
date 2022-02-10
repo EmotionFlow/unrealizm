@@ -50,7 +50,7 @@ public final class NewArrivalC {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			String strCondStart = (startId >0)?"AND content_id<? ":"";
-			String strCondCat = (categoryId >=0)?" AND category_id=?":"";
+			String strCondCat = (categoryId >=0)?" AND category_id=? ":"";
 
 			String strCondBlockUser = "";
 			String strCondBlocedkUser = "";
@@ -92,7 +92,7 @@ public final class NewArrivalC {
 					+ strCondBlocedkUser
 					+ strCondCat
 					+ strCondMute
-					+ "ORDER BY content_id DESC OFFSET ? LIMIT ? ";
+					+ " ORDER BY content_id DESC OFFSET ? LIMIT ? ";
 			statement = connection.prepareStatement(sql);
 			idx = 1;
 

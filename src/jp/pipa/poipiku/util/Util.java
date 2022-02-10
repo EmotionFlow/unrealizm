@@ -212,11 +212,17 @@ public final class Util {
 		if(strSrc == null) return "";
 
 		strSrc = strSrc.replace("&", "&amp;")
-						.replace("<", "&lt;")
-						.replaceAll(">", "&gt;")
-						.replaceAll("'", "&apos;")
-						.replaceAll("\"", "&quot;");
+				.replace("<", "&lt;")
+				.replaceAll(">", "&gt;")
+				.replaceAll("'", "&apos;")
+				.replaceAll("\"", "&quot;");
 
+		return strSrc;
+	}
+
+	public static String toQuotedString(String strSrc, String quote) {
+		if(strSrc == null) return "";
+		strSrc = strSrc.replaceAll("\n", "\\\\n").replaceAll(quote, "\\\\" + quote);
 		return strSrc;
 	}
 

@@ -54,6 +54,7 @@ public final class CContent {
 	public String novelHtmlShort = "";
 	public int novelDirection = 0;
 	public int pinOrder = -1;
+	public String privateNote = "";
 	public Timestamp createdAt = null;
 	public Timestamp updatedAt = null;
 
@@ -128,6 +129,7 @@ public final class CContent {
 		novelHtml			= Util.toString(resultSet.getString("novel_html"));
 		novelHtmlShort		= Util.toString(resultSet.getString("novel_html_short"));
 		novelDirection		= Util.toIntN(resultSet.getInt("novel_direction"), 0, 1);
+		privateNote         = Util.toString(resultSet.getString("private_note"));
 		createdAt           = resultSet.getTimestamp("created_at");
 		updatedAt           = resultSet.getTimestamp("updated_at");
 
@@ -173,5 +175,4 @@ public final class CContent {
 			timestamp = new Timestamp(offsetTime);
 		}
 	}
-
 }

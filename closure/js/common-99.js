@@ -207,6 +207,7 @@ function HideMsgStatic(timeout=1000) {
 	}
 }
 
+
 function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
 	strCheckDeleteMsg, strCheckDeleteYesMsg, strCheckDeleteNoMsg,
 	strDeleteTweetMsg, strDeleteTweetYesMsg, strDeleteTweetNoMsg) {

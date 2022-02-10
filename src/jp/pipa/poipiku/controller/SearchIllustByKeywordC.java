@@ -39,6 +39,8 @@ public final class SearchIllustByKeywordC {
 	}
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
+		if (!checkLogin.m_bLogin) return false;
+
 		boolean bResult = false;
 		Connection connection = null;
 		PreparedStatement statement = null;

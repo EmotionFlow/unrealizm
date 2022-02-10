@@ -81,13 +81,48 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateTagMenuPos(100);
-			<%if(checkLogin.isStaff()){%>
 			<%if (Util.toString(request.getHeader("Referer")).indexOf("MyIllustList") > 0) { %>
 			$(window).scrollTop($("#SortFilterMenu").offset().top - 80);
 			<%}%>
-			<%}%>
 		});
+
+		function TogglePrivateNote($element, message) {
+			const cls = 'PrivateNote';
+			if($element.children('.' + cls).length <= 0) {
+				$element.append($("<div/>").attr("class", cls));
+			}
+			const $note = $($element.children('.' + cls)[0]);
+			$note.text(message);
+			if ($note.hasClass('slide-up')) {
+				$note.addClass('slide-down', 2000, 'swing');
+				$note.removeClass('slide-up');
+			} else {
+				$note.removeClass('slide-down');
+				$note.addClass('slide-up', 2000, 'swing');
+			}
+		}
 		</script>
+		<style>
+            .IllustThumb > .PrivateNote {
+                position: absolute;
+                background: rgba(255,255,255,0.9);
+                height: 125px;
+                width: 100%;
+				font-size: 12px;
+                border-top: 1px solid #d9d9d9;
+			}
+
+            .PrivateNote.slide-up
+            {
+                bottom: 0 !important;
+            }
+
+            .PrivateNote.slide-down
+            {
+                bottom: -475px !important;
+            }
+
+		</style>
 
 		<style>
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
@@ -167,10 +202,8 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 			</span>
 			<%}%>
 
-			<%if(checkLogin.isStaff()){%>
 			<% boolean isGridPc = false; %>
 			<%@include file="TSortFilterNavigation.jsp"%>
-			<%}%>
 
 			<%if(cResults.m_vCategoryList.size()>0) {%>
 			<nav id="TagMenu" class="TagMenu">

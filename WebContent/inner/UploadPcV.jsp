@@ -38,7 +38,7 @@ if (requestId > 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-46.js" type="text/javascript"></script>
+		<script src="/js/upload-47.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -214,7 +214,7 @@ if (requestId > 0) {
 				</div>
 				<%}%>
 
-				<div class="CategorDesc">
+				<div class="CategoryDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
@@ -222,11 +222,18 @@ if (requestId > 0) {
 					</select>
 					<%if(requestId>0){%>
 					<script>
-						$(()=>{
-							$('.CategorDesc option[value="6"]').prop('selected', true);
-						})
+						$(()=>{$('.CategoryDesc option[value="6"]').prop('selected', true);})
 					</script>
 					<%}%>
+
+					<span class="PrivateNote" onclick="privateNote.showEditDlg()">
+						<i class="far fa-sticky-note"></i>
+						<span id="PrivateNoteSummary"><%=_TEX.T("PrivateNote")%></span>
+					</span>
+					<script>
+						privateNote.setSummaryElement($("#PrivateNoteSummary"));
+						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
+					</script>
 				</div>
 
 				<div class="Description">
