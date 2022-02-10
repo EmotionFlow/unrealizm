@@ -117,6 +117,12 @@ public final class IllustDetailC {
 						Log.d(String.format("Pw認証に失敗した(%s, %s)",m_cContent.m_strPassword, password));
 						return false;
 					}
+				} else if (showMode == 1
+						&& m_cContent.m_nPublishId == Common.PUBLISH_ID_T_RT
+						&& m_cContent.publishAllNum > 0
+						&& appendId < 0) {
+					// RT限定かつ最初の一枚だけ公開で１枚目がタップされた時は、続きを表示しない。
+					showMode = 0;
 				}
 			}
 
