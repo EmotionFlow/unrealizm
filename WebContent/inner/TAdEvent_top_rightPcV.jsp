@@ -50,9 +50,9 @@ $(function(){
 -->
 
 	<li class="EventItem">
-		<a class="EventBanner" style="padding: 5px; overflow: hidden; color: #fff; background-color: #ff0000;" href="/NewArrivalPcV.jsp?CD=20">
+		<a class="EventBanner" style="padding: 5px; overflow: hidden; color: #fff; background-color: #612c16;" href="/NewArrivalPcV.jsp?CD=24">
 			<div style="text-align: center; font-size: 20px; line-height: 30px;"><%=_TEX.T("Category.LimitedTime")%></div>
-			<div style="text-align: center; font-size: 30px; font-weight: bold; line-height: 52px"><%=_TEX.T("Category.C20")%></div>
+			<div style="text-align: center; font-size: 30px; font-weight: bold; line-height: 52px"><%=_TEX.T("Category.C24")%></div>
 		</a>
 	</li>
 
