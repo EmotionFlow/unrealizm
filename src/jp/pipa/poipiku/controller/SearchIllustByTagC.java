@@ -142,19 +142,44 @@ public final class SearchIllustByTagC {
 			}
 
 			// contents
-			strSql = "SELECT c.* "
-					+ (checkLogin.m_bLogin ? ",f.follow_user_id " : "")
-					+ "FROM contents_0000 c "
-					+ "INNER JOIN tags_0000 t ON c.content_id=t.content_id "
-					+ (checkLogin.m_bLogin ?  "LEFT JOIN follows_0000 f ON c.user_id=f.follow_user_id AND f.user_id=? " : "")
-					+ "WHERE open_id<>2 "
-					+ "AND t.genre_id=? AND tag_type=1 "
-					+ "AND safe_filter<=? "
-					+ strCondStart
-					+ strCondBlockUser
-					+ strCondBlocedkUser
-					+ strCondMute
-					+ "ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
+			strSql = "WITH a AS ( " +
+					" SELECT c.* " + (checkLogin.m_bLogin ? ",f.follow_user_id " : "") +
+					" FROM contents_0000 c " +
+					" INNER JOIN tags_0000 t ON c.content_id = t.content_id " +
+					(checkLogin.m_bLogin ?
+							" LEFT JOIN follows_0000 f ON c.user_id=f.follow_user_id AND f.user_id=? " : "") +
+					" WHERE open_id <> 2 " +
+					" AND t.genre_id = ? AND tag_type = 1 " +
+					" AND safe_filter <= ? " +
+					strCondStart +
+					" )";
+
+			boolean withBlk = false;
+			if (!strCondBlockUser.isEmpty() || !strCondBlocedkUser.isEmpty()) {
+				strSql += " ,b AS (" +
+						" SELECT block_user_id AS user_id FROM blocks_0000 WHERE user_id = ?" +
+						" UNION DISTINCT" +
+						" SELECT user_id FROM blocks_0000 WHERE block_user_id = ?" +
+						")";
+				withBlk = true;
+			}
+
+			boolean withKw = false;
+			if (!strCondMute.isEmpty()) {
+				strSql += " ,kw AS (" +
+						" SELECT content_id FROM contents_0000 WHERE description &@~ ?" +
+						")";
+				withKw = true;
+			}
+
+			strSql += "SELECT * FROM a" +
+					(withBlk ? " LEFT JOIN b ON a.user_id = b.user_id" : "") +
+					(withKw  ? " LEFT JOIN kw ON a.content_id = kw.content_id" : "") +
+					(withBlk || withKw ? " WHERE" : "") +
+					(withBlk ? " b.user_id IS NULL" : "") +
+					(withBlk && withKw ? " AND" : "") +
+					(withKw  ? " kw.content_id IS NULL" : "") +
+					" ORDER BY a.content_id DESC OFFSET ? LIMIT ?";
 
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
@@ -162,9 +187,11 @@ public final class SearchIllustByTagC {
 			statement.setInt(idx++, genreId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if (!strCondStart.isEmpty()) statement.setInt(idx++, startId);
-			if (!strCondBlockUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);
-			if (!strCondBlocedkUser.isEmpty()) statement.setInt(idx++, checkLogin.m_nUserId);
-			if (!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
+			if (withBlk) {
+				statement.setInt(idx++, checkLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
+			}
+			if (withKw) statement.setString(idx++, strMuteKeyword);
 			statement.setInt(idx++, startId > 0 ? 0 :page * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
 			resultSet = statement.executeQuery();
