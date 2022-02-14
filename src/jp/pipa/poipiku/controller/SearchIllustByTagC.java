@@ -135,6 +135,9 @@ public final class SearchIllustByTagC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
+			}
+
+			if (page <= 0 || startId < 0) {
 				genre = Util.getGenre(genreId);
 			}
 

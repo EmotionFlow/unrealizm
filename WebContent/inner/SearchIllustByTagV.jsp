@@ -14,13 +14,13 @@ if (isApp) checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 SearchIllustByTagC results = new SearchIllustByTagC();
 results.getParam(request);
 results.selectMaxGallery = 10;
-results.getResults(checkLogin);
+results.getResults(checkLogin, true);
 
 final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 URLEncoder.encode(results.keyword, "UTF-8");
 final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), results.keyword) + " | " + _TEX.T("THeader.Title");
-final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), results.keyword, results.contentsNum);
+final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc.Short"), results.keyword);
 final String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
