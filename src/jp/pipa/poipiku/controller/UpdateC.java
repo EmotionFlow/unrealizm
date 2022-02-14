@@ -65,7 +65,8 @@ public final class UpdateC extends UpC {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			strSql = "SELECT open_id, publish_id, publish_all_num, tweet_id, limited_time_publish, upload_date, end_date, editor_id FROM contents_0000 WHERE user_id=? AND content_id=?";
+			strSql = "SELECT open_id, publish_id, publish_all_num, tweet_id, limited_time_publish, upload_date, end_date, editor_id" +
+					" FROM contents_0000 WHERE user_id=? AND content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, cParam.m_nUserId);
 			statement.setInt(2, cParam.m_nContentId);
@@ -104,7 +105,8 @@ public final class UpdateC extends UpC {
 				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(
-					"genre_id=?", "category_id=?", "open_id=?", "description=?", "tag_list=?", "publish_id=?",
+					"genre_id=?", "category_id=?", "open_id=?", "description=?", "private_note=?",
+					"tag_list=?", "publish_id=?",
 					"publish_all_num=?", "password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?", "updated_at=NULL"
 			));
@@ -141,6 +143,7 @@ public final class UpdateC extends UpC {
 				statement.setInt(idx++, cParam.m_nCategoryId);
 				statement.setInt(idx++, nOpenId);
 				statement.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
+				statement.setString(idx++, cParam.privateNote);
 				statement.setString(idx++, cParam.m_strTagList);
 				statement.setInt(idx++, cParam.m_nPublishId);
 				if (cParam.m_nPublishAllNum == 0) {

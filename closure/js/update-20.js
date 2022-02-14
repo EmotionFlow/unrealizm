@@ -251,6 +251,7 @@ function UpdateFile(user_id, content_id) {
 			"ED":0,
 			"CNG":nCheerNg,
 			"PUBALL":nPublishAllNum,
+			"NOTE":privateNote.getText(),
 		},
 		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
@@ -486,6 +487,7 @@ function createUpdatePaste(){
 			"ED":1,
 			"CNG":nCheerNg,
 			"PUBALL":nPublishAllNum,
+			"NOTE":privateNote.getText(),
 		};
 		let fUpdateFile = UpdateFileRefTwitterFAjax(data);
 
@@ -638,6 +640,7 @@ function createUpdateText(){
 			"CNG":nCheerNg,
 			"TIT":title,
 			"DIR":direction,
+			"NOTE":privateNote.getText(),
 		};
 		let fUpdateFile = UploadTextRefTwitterFAjax(data);
 		let aryFunc = [];

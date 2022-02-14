@@ -30,6 +30,7 @@ public class UpCParam {
 	public boolean m_bCheerNg = true;
 	public int genre = -1;
 	public int requestId = -1;
+	public String privateNote = "";
 
 	protected void GetParams(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("UTF-8");
@@ -60,6 +61,7 @@ public class UpCParam {
 		m_bCheerNg			= Util.toInt(request.getParameter("CNG"))!=0;
 		genre				= Util.toInt(request.getParameter("GD"));
 		requestId           = Util.toInt(request.getParameter("RID"));
+		privateNote         = Util.deleteInvalidChar(Common.TrimAll(request.getParameter("NOTE")));
 
 		// format tag list
 		if(!m_strTagList.isEmpty()) {

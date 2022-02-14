@@ -568,6 +568,26 @@
 	border-radius: 2px;
 }
 
+.IllustThumb > .PrivateNote {
+	position: absolute;
+	background: rgba(255,255,255,0.9);
+	height: 125px;
+	width: 100%;
+	font-size: 12px;
+	border-top: 1px solid #d9d9d9;
+	overflow: scroll;
+}
+
+.IllustThumb > .PrivateNote.slide-up
+{
+	bottom: 0 !important;
+}
+
+.IllustThumb > .PrivateNote.slide-down
+{
+	bottom: -475px !important;
+}
+
 .IllustThumb .IllustUser {
 	display: flex;
 	flex-flow: row nowrap;
@@ -1103,6 +1123,11 @@ Decoration
 /********** UPLOAD **********/
 .PasteZone {display: block;float: left;width: 100%; font-size: 0;min-height: 113px;background: #fff;border-radius: 4px;}
 
+.CategoryDesc > .PrivateNote {
+	font-size: 14px;
+	margin-right: 3px;
+}
+
 .UploadFile {
 	display: block;
 	float: left;
@@ -1174,13 +1199,14 @@ Decoration
 .UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
 .UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;-webkit-user-select: text;user-select: text;}
 
-.UploadFile .CategorDesc {
-	display: block;
+.UploadFile .CategoryDesc {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	margin: 10px 0 0 0;
-	font-size: 0;
 }
 
 .UploadFile .Description {

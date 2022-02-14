@@ -35,7 +35,7 @@ public final class UploadC extends UpC {
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<>(
 					Arrays.asList(
-							"user_id", "genre_id", "category_id", "description",
+							"user_id", "genre_id", "category_id", "description", "private_note",
 							"tag_list", "publish_id", "publish_all_num", "password", "list_id", "safe_filter",
 							"editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
 
@@ -66,6 +66,7 @@ public final class UploadC extends UpC {
 			cState.setInt(idx++, cParam.genre);
 			cState.setInt(idx++, cParam.m_nCategoryId);
 			cState.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
+			cState.setString(idx++, cParam.privateNote);
 			cState.setString(idx++, cParam.m_strTagList);
 			cState.setInt(idx++, cParam.m_nPublishId);
 			if (cParam.m_nPublishAllNum <= 0) {

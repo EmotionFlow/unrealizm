@@ -45,8 +45,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-46.js" type="text/javascript"></script>
-		<script src="/js/update-19.js" type="text/javascript"></script>
+		<script src="/js/upload-47.js" type="text/javascript"></script>
+		<script src="/js/update-20.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -249,12 +249,26 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 				<%}%>
 
-				<div class="CategorDesc">
+				<div class="CategoryDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
 						<%}%>
 					</select>
+
+					<span class="PrivateNote" onclick="privateNote.showEditDlg()">
+						<i class="far fa-sticky-note"></i>
+						<span id="PrivateNoteSummary"></span>
+					</span>
+					<script>
+						privateNote.setSummaryElement($("#PrivateNoteSummary"));
+						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
+						<%if(cResults.m_cContent.privateNote.isEmpty()){%>
+						$("#PrivateNoteSummary").text('<%=_TEX.T("PrivateNote")%>');
+						<%}else{%>
+						privateNote.setText('<%=Util.toQuotedString(cResults.m_cContent.privateNote, "'")%>');
+						<%}%>
+					</script>
 				</div>
 
 				<div class="Description">
