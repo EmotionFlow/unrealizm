@@ -57,7 +57,7 @@ public class WriteBackContents extends Batch {
 		Log.d("WriteBackContents batch start");
 
 		final int h = LocalDateTime.now().getHour();
-		if (h == 22 || h == 23 || h == 0 || h == 1){
+		if (h == 23 || h == 0 || h == 1){
 			Log.d("処理時間外");
 			Log.d("WriteBackContents batch end");
 			return;
