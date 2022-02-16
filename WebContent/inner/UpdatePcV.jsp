@@ -263,6 +263,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<script>
 						privateNote.setSummaryElement($("#PrivateNoteSummary"));
 						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
+						privateNote.setFooter('<%=_TEX.T("PrivateNote.Footer")%>');
 						<%if(cResults.m_cContent.privateNote.isEmpty()){%>
 						$("#PrivateNoteSummary").text('<%=_TEX.T("PrivateNote")%>');
 						<%}else{%>

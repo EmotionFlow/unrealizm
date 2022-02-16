@@ -233,6 +233,7 @@ if (requestId > 0) {
 					<script>
 						privateNote.setSummaryElement($("#PrivateNoteSummary"));
 						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
+						privateNote.setFooter('<%=_TEX.T("PrivateNote.Footer")%>');
 					</script>
 				</div>
 
