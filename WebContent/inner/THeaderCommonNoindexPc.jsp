@@ -14,7 +14,7 @@
 <link rel="icon" href="/favicon_2.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-41.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-182.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-183.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-73.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
@@ -38,7 +38,7 @@
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-76.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-77.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
