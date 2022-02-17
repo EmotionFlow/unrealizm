@@ -47,7 +47,6 @@ $(function(){
 			<div style="text-align: center; font-size: 12px; line-height: 20px;">ポイパス1ヶ月分をプレゼント！</div>
 		</a>
 	</li>
--->
 
 	<li class="EventItem">
 		<a class="EventBanner" style="padding: 5px; overflow: hidden; color: #fff; background-color: #612c16;" href="/NewArrivalPcV.jsp?CD=24">
@@ -55,6 +54,7 @@ $(function(){
 			<div style="text-align: center; font-size: 30px; font-weight: bold; line-height: 52px"><%=_TEX.T("Category.C24")%></div>
 		</a>
 	</li>
+-->
 
 	<li class="EventItem">
 		<a class="EventBanner" style="padding: 5px; overflow: hidden; background-color: #18a926;" href="https://kakenee.com/">
