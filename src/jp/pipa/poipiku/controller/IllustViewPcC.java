@@ -148,8 +148,8 @@ public final class IllustViewPcC {
 			// author profile
 			sql = "SELECT u.*, oa.twitter_screen_name" +
 					" FROM users_0000 u" +
-					" LEFT JOIN tbloauth oa on user_id=flduserid" +
-					" WHERE user_id=? AND del_flg = FALSE";
+					" LEFT JOIN (SELECT flduserid, twitter_screen_name FROM tbloauth WHERE del_flg=FALSE) oa on user_id=flduserid" +
+					" WHERE user_id=?";
 			statement = connection.prepareStatement(sql);
 			idx = 1;
 			statement.setInt(idx++, ownerUserId);
