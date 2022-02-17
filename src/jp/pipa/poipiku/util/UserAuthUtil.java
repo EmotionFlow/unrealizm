@@ -26,7 +26,6 @@ import oauth.signpost.exception.OAuthNotAuthorizedException;
 import oauth.signpost.http.HttpParameters;
 
 public class UserAuthUtil {
-
 	public static final int OK = 1;
 	public static final int NG = -1;
 
@@ -128,6 +127,16 @@ public class UserAuthUtil {
 		//login check
 		CheckLogin checkLogin = new CheckLogin(request, response);
 
+		// Lang Id
+		int nLangId = 1;
+		String strLang = Util.toString(request.getParameter(Common.LANG_ID));
+		if (strLang.isEmpty()) {
+			strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
+		}
+		if (!strLang.isEmpty()) {
+			nLangId = SupportedLocales.findId(strLang);
+		}
+
 		//パラメータの取得
 		String strEmail	= "";
 		String strPassword	= "";
@@ -197,13 +206,17 @@ public class UserAuthUtil {
 			strHashPass = sb.toString();
 
 			// regist user
-			strSql = "INSERT INTO users_0000(nickname, password, hash_password, lang_id, email) VALUES(?, ?, ?, ?, ?) RETURNING user_id";
+			Log.d("Register02");
+			strSql = "INSERT INTO users_0000(nickname, password, hash_password, lang_id, email, twitter_account_public_mode)" +
+					" VALUES(?, ?, ?, ?, ?, ?)" +
+					" RETURNING user_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strNickName);
 			cState.setString(2, strPassword);
 			cState.setString(3, strHashPass);
-			cState.setInt(4, checkLogin.m_nLangId);
+			cState.setInt(4, nLangId);
 			cState.setString(5, strEmail.toLowerCase(Locale.ROOT));
+			cState.setInt(6, CUser.TW_PUBLIC_ON);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				nUserId = cResSet.getInt("user_id");
@@ -620,12 +633,11 @@ public class UserAuthUtil {
 				//Log.d("USERAUTH Login : " + nUserId);
 				String strPassword = "";
 				String strEmail = "";
-				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+				strSql = "SELECT hash_password, password, email FROM users_0000 WHERE user_id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, nUserId);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
-					nUserId		= cResSet.getInt("user_id");
 					strHashPass = Util.toString(cResSet.getString("hash_password"));
 					strPassword = Util.toString(cResSet.getString("password"));
 					strEmail = Util.toString((cResSet.getString("email")));
@@ -670,10 +682,13 @@ public class UserAuthUtil {
 						if(!bChecking){
 							CTweet tweet = new CTweet();
 							String strTwEmail = tweet.GetEmailAddress();
+							if (strTwEmail != null) {
+								strTwEmail = strTwEmail.toLowerCase(Locale.ROOT);
+							}
 							if(tweet.GetResults(nUserId) && strTwEmail != null && !strTwEmail.isEmpty()){
 								strSql = "SELECT user_id FROM users_0000 WHERE email=?";
 								cState = cConn.prepareStatement(strSql);
-								cState.setString(1, strTwEmail.toLowerCase(Locale.ROOT));
+								cState.setString(1, strTwEmail);
 								cResSet = cState.executeQuery();
 								boolean bEmailRegistered = cResSet.next();
 								cResSet.close();cResSet=null;
@@ -684,7 +699,7 @@ public class UserAuthUtil {
 								if(!bEmailRegistered){
 									strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 									cState = cConn.prepareStatement(strSql);
-									cState.setString(1, strTwEmail.toLowerCase(Locale.ROOT));
+									cState.setString(1, strTwEmail);
 									cState.setInt(2, nUserId);
 									cState.executeUpdate();
 									cState.close();cState=null;
@@ -709,7 +724,7 @@ public class UserAuthUtil {
 				String strEmail = RandomStringUtils.randomAlphanumeric(16);
 
 				// Lang Id
-				int nLangId=1;
+				int nLangId = 1;
 				String strLang = Util.toString(request.getParameter(Common.LANG_ID));
 				if(strLang.isEmpty()) {
 					strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
@@ -739,25 +754,23 @@ public class UserAuthUtil {
 				*/
 
 				// User作成
-				strSql = "INSERT INTO users_0000(nickname, password, hash_password, email, profile, lang_id) VALUES(?, ?, ?, ?, ?, ?)";
+				Log.d("Register03");
+				strSql = "INSERT INTO users_0000(nickname, password, hash_password, email, profile, lang_id, twitter_account_public_mode)" +
+						" VALUES(?, ?, ?, ?, ?, ?)" +
+						" RETURNING user_id";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, strUserName);
 				cState.setString(2, strPassword);
 				cState.setString(3, strHashPass);
 				cState.setString(4, strEmail.toLowerCase(Locale.ROOT));
-				cState.setString(5, "@"+screen_name);
+				cState.setString(5, "");
 				cState.setInt(6, nLangId);
-				cState.executeUpdate();
-				cState.close();cState=null;
-
-				// User ID 取得
-				strSql = "SELECT * FROM users_0000 WHERE email=? AND password=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, strEmail.toLowerCase(Locale.ROOT));
-				cState.setString(2, strPassword);
+				cState.setInt(7, CUser.TW_PUBLIC_ON);
 				cResSet = cState.executeQuery();
 				if(cResSet.next()) {
 					nUserId = cResSet.getInt("user_id");
+				} else {
+					nUserId = -1;
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
@@ -775,7 +788,6 @@ public class UserAuthUtil {
 					cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", nUserId));
 					cState.executeUpdate();
 					cState.close();cState=null;
-
 
 					CTweet tweet = new CTweet();
 					String strTwEmail = null;

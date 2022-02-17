@@ -858,7 +858,7 @@ public final class CCnv {
 					"<section class=\"UserInfoUser\">" +
 					"<span class=\"UserInfoUserThumb\" style=\"background-image:url('%s_120.jpg')\"></span>" +
 					"<span class=\"UserInfoUserName\">%s</span>" +
-					"<span class=\"UserInfoProgile\">%s</span>" +
+					"<span class=\"UserInfoProfile\">%s</span>" +
 					"</section></a>",
 				ILLUST_LIST,
 				headerFileName,
@@ -887,7 +887,7 @@ public final class CCnv {
 						"<section class=\"UserInfoUser \">" +
 						"<span class=\"UserInfoUserThumb \" style=\"background-image:url('%s_120.jpg')\"></span>" +
 						"<span class=\"UserInfoUserName \">%s</span>" +
-						"<span class=\"UserInfoProgile \">%s</span>" +
+						"<span class=\"UserInfoProfile \">%s</span>" +
 						"</section></a>",
 				ILLUST_LIST,
 				headerFileName,

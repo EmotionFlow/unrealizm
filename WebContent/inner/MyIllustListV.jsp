@@ -131,7 +131,10 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+					<%if(cResults.twitterScreenName != null && !cResults.twitterScreenName.isEmpty()) {%>
+					<h3 class="UserInfoProfile"><a class="fab fa-twitter" href="https://twitter.com/<%=cResults.twitterScreenName%>">@<%=cResults.twitterScreenName%></a></h3>
+					<%}%>
+					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
 						<span class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">

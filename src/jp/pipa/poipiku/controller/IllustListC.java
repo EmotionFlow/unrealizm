@@ -80,6 +80,7 @@ public class IllustListC {
 
 
 	public CUser m_cUser = new CUser();
+	public String twitterScreenName;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public ArrayList<CTag> m_vCategoryList = new ArrayList<>();
 	public int SELECT_MAX_GALLERY = 15;
@@ -117,7 +118,10 @@ public class IllustListC {
 
 			if(!bContentOnly) {
 				// author profile
-				strSql = "SELECT * FROM users_0000 WHERE user_id=?";
+				strSql = "SELECT u.*, oa.twitter_screen_name" +
+						" FROM users_0000 u" +
+						" LEFT JOIN tbloauth oa on user_id=flduserid" +
+						" WHERE user_id=? AND del_flg = FALSE";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, m_nUserId);
 				resultSet = statement.executeQuery();
@@ -129,6 +133,10 @@ public class IllustListC {
 					m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("header_file_name"));
 					m_cUser.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
 					m_cUser.m_nMailComment		= resultSet.getInt("mail_comment");
+					m_cUser.m_nTwitterAccountPublicMode = resultSet.getInt("twitter_account_public_mode");
+					if (m_cUser.m_nTwitterAccountPublicMode == CUser.TW_PUBLIC_ON) {
+						twitterScreenName = resultSet.getString("twitter_screen_name");
+					}
 					//if(m_cUser.m_strProfile.isEmpty())  m_cUser.m_strProfile = "";
 					if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
 					m_cUser.m_bDispFollower		= ((m_cUser.m_nMailComment>>>0 & 0x01) == 0x01);

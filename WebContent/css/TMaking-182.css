@@ -2822,7 +2822,7 @@ hr.IllustItemListSeparator {
 	font-size: 18px;
 }
 
-.UserInfo .UserInfoUser .UserInfoProgile {
+.UserInfo .UserInfoUser .UserInfoProfile {
 	display: block;
 	float: left;
 	width: 100%;
@@ -2967,7 +2967,7 @@ hr.IllustItemListSeparator {
 	height: 26px;
 	line-height: 26px;
 }
-.UserInfo.Thumb .UserInfoUser .UserInfoProgile {
+.UserInfo.Thumb .UserInfoUser .UserInfoProfile {
 	padding: 0;
 	height: 36px;
 	line-height: 18px;
@@ -2996,7 +2996,7 @@ hr.IllustItemListSeparator {
 	line-height: 17px;
 	font-size: 11px;
 }
-.UserInfo.ThumbSmall .UserInfoUser .UserInfoProgile {
+.UserInfo.ThumbSmall .UserInfoUser .UserInfoProfile {
 	padding: 0;
 	height: 24px;
 	line-height: 12px;

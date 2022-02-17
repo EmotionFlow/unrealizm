@@ -217,22 +217,18 @@ public final class RegistTwitterUserC {
 
 			// User作成
 			connection = DatabaseUtil.dataSource.getConnection();
-			strSql = "INSERT INTO users_0000(nickname, password, hash_password, email, profile, lang_id) VALUES(?, ?, ?, ?, ?, ?)";
+			Log.d("Register01");
+			strSql = "INSERT INTO users_0000(nickname, password, hash_password, email, profile, lang_id, twitter_account_public_mode)" +
+					" VALUES(?, ?, ?, ?, ?, ?, ?)" +
+					" RETURNING user_id";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, strUserName);
 			statement.setString(2, strPassword);
 			statement.setString(3, strHashPass);
 			statement.setString(4, strEmail.toLowerCase(Locale.ROOT));
-			statement.setString(5, "@" + oauth.twitterScreenName);
+			statement.setString(5, "");
 			statement.setInt(6, nLangId);
-			statement.executeUpdate();
-			statement.close(); statement = null;
-
-			// User ID 取得
-			strSql = "SELECT user_id FROM users_0000 WHERE hash_password=? AND email=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setString(1, strHashPass);
-			statement.setString(2, strEmail.toLowerCase(Locale.ROOT));
+			statement.setInt(7, CUser.TW_PUBLIC_ON);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				userId = resultSet.getInt("user_id");
