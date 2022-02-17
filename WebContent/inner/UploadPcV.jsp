@@ -38,7 +38,7 @@ if (requestId > 0) {
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-47.js" type="text/javascript"></script>
+		<script src="/js/upload-48.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -233,6 +233,7 @@ if (requestId > 0) {
 					<script>
 						privateNote.setSummaryElement($("#PrivateNoteSummary"));
 						privateNote.setPlaceholder('<%=_TEX.T("PrivateNote.Placeholder")%>');
+						privateNote.setFooter('<%=_TEX.T("PrivateNote.Footer")%>');
 					</script>
 				</div>
 

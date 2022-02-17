@@ -61,6 +61,7 @@ public final class IllustViewPcC {
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public int latestContentId = -1;
 	public CUser m_cUser = new CUser();
+	public String twitterScreenName;
 	public CContent m_cContent = new CContent();
 	public boolean m_bOwner = false;
 	public boolean m_bRequestClient = false;
@@ -145,7 +146,10 @@ public final class IllustViewPcC {
 			}
 
 			// author profile
-			sql = "SELECT * FROM users_0000 WHERE user_id=?";
+			sql = "SELECT u.*, oa.twitter_screen_name" +
+					" FROM users_0000 u" +
+					" LEFT JOIN (SELECT flduserid, twitter_screen_name FROM tbloauth WHERE del_flg=FALSE) oa on user_id=flduserid" +
+					" WHERE user_id=?";
 			statement = connection.prepareStatement(sql);
 			idx = 1;
 			statement.setInt(idx++, ownerUserId);
@@ -160,6 +164,10 @@ public final class IllustViewPcC {
 				m_cUser.m_nReaction			= resultSet.getInt("ng_reaction");
 				m_cUser.m_nPassportId	= resultSet.getInt("passport_id");
 				m_cUser.m_nAdMode		= resultSet.getInt("ng_ad_mode");
+				m_cUser.m_nTwitterAccountPublicMode = resultSet.getInt("twitter_account_public_mode");
+				if (m_cUser.m_nTwitterAccountPublicMode == CUser.TW_PUBLIC_ON) {
+					twitterScreenName = resultSet.getString("twitter_screen_name");
+				}
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
 				m_cContent.m_cUser.m_strNickName	= m_cUser.m_strNickName;
 				m_cContent.m_cUser.m_strFileName	= m_cUser.m_strFileName;

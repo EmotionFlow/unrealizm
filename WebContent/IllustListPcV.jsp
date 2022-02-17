@@ -100,45 +100,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
-				<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
-				<%@ include file="inner/IllustVBlockButton.jsp"%>
-				<div class="UserInfoBg"></div>
-				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
-					<span class="UserInfoCmd">
-						<%if(!checkLogin.m_bLogin) {%>
-							<a class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>
-						<%} else if(cResults.m_bOwner){
-							// 何も表示しない
-						} else if(cResults.m_bBlocking){ // ブロックしている %>
-							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>"
-									style="display: none;" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)">
-								<%=_TEX.T("IllustV.Follow")%>
-							</span>
-						<%} else if(cResults.m_bBlocked){%>
-						<%} else if(cResults.m_bFollow){%>
-							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%> Selected"
-									onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Following")%>
-							</span>
-						<%} else {%>
-							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=cResults.m_cUser.m_nUserId%>"
-									onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=cResults.m_cUser.m_nUserId%>)"><%=_TEX.T("IllustV.Follow")%>
-							</span>
-						<%}%>
-
-						<%@ include file="inner/IllustBrowserVRequestButton.jsp"%>
-						<%@ include file="/inner/TUserShareCmd.jsp"%>
-
-					</span>
-				</section>
-				<section class="UserInfoState">
-					<%@include file="inner/IllustBrowserVUserInfoState.jsp"%>
-					<%if(cResults.m_bBlocking){%>
-					<%=_TEX.T("IllustV.Blocking")%>
-					<%}%>
-				</section>
+				<%@ include file="/inner/TUserInfo.jsp"%>
 			</div>
 		</article>
 

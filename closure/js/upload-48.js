@@ -442,6 +442,7 @@ $.ajaxSetup({
 let privateNote = (()=>{
 	let text = '';
 	let placeholder = '';
+	let footer = '';
 	let $summaryElement = null;
 	let summaryLength = 10;
 	function _getSummary() {
@@ -459,6 +460,7 @@ let privateNote = (()=>{
 				inputPlaceholder: placeholder,
 				inputAttributes: {maxlength: 100},
 				inputValue: text,
+				footer: '<span style="font-size: 12px">'+footer+'</span>',
 				showCancelButton: true
 			}).then((result) => {
 				if (result.dismiss) return;
@@ -466,7 +468,8 @@ let privateNote = (()=>{
 				_updateSummaryElement();
 			})
 		},
-		setPlaceholder: (txt) => {placeholder = txt},
+		setPlaceholder: (txt) => {placeholder = txt;},
+		setFooter: (_footer) => {footer = _footer;},
 		setText: (_text) => {text = _text; _updateSummaryElement();},
 		setSummaryElement: (_$element) => {$summaryElement = _$element},
 		getText: () => {return text;},

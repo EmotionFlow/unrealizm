@@ -154,6 +154,22 @@ String[][] menuOrder = {
 				return false;
 			}
 
+			function UpdateTwitterPublishAccount() {
+				const bPublishAccount = $('#PublishAccount').prop('checked');
+				$.ajaxSingle({
+					"type": "post",
+					"data": {"ID":<%=checkLogin.m_nUserId%>, "MD": bPublishAccount?1:0},
+					"url": "/f/UpdateTwitterPublishAccountF.jsp",
+					"dataType": "json",
+					"success": function(data) {
+						DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>', 1000);
+					},
+					"error": function(req, stat, ex){
+						DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
+					}
+				});
+			}
+
 			$(function(){
 				<%if(cResults.m_strMessage.length()>0) {%>
 					DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");

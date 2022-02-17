@@ -80,6 +80,7 @@ public class MyEditSettingC {
 				m_cUser.m_nAdMode			= resultSet.getInt("ng_ad_mode");
 				m_cUser.m_nDownload			= resultSet.getInt("ng_download");
 				m_cUser.m_nSendEmailMode    = resultSet.getInt("send_email_mode");
+				m_cUser.m_nTwitterAccountPublicMode = resultSet.getInt("twitter_account_public_mode");
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

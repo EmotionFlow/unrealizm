@@ -259,25 +259,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<%{%>
 		<article class="Wrapper" style="width: 100%;">
 			<div class="UserInfo Float">
-				<%@ include file="IllustBrowserVGiftButton.jsp"%>
-				<%@ include file="IllustVBlockButton.jsp"%>
-				<div class="UserInfoBg"></div>
-				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<%if(!cResults.m_cUser.m_strProfile.isEmpty()) {%>
-					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
-					<%}%>
-					<span class="UserInfoCmd">
-
-						<%@ include file="TFollowButton.jsp"%>
-						<%@ include file="IllustBrowserVRequestButton.jsp"%>
-						<%@ include file="TUserShareCmd.jsp"%>
-					</span>
-				</section>
-				<section class="UserInfoState">
-					<%@include file="IllustBrowserVUserInfoState.jsp"%>
-				</section>
+				<%@ include file="TUserInfo.jsp"%>
 			</div>
 		</article>
 		<%}%>

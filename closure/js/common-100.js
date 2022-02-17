@@ -207,6 +207,21 @@ function HideMsgStatic(timeout=1000) {
 	}
 }
 
+function TogglePrivateNote($element, message) {
+	const cls = 'PrivateNote';
+	if($element.children('.' + cls).length <= 0) {
+		$element.append($("<div/>").attr("class", cls));
+	}
+	const $note = $($element.children('.' + cls)[0]);
+	$note.html(message.replaceAll('\n', '<br>'));
+	if ($note.hasClass('slide-up')) {
+		$note.addClass('slide-down', 2000, 'swing');
+		$note.removeClass('slide-up');
+	} else {
+		$note.removeClass('slide-down');
+		$note.addClass('slide-up', 2000, 'swing');
+	}
+}
 
 function DeleteContentInteractive(nUserId, nContentId, bPreviousTweetExist,
 	strCheckDeleteMsg, strCheckDeleteYesMsg, strCheckDeleteNoMsg,
@@ -1016,6 +1031,12 @@ function detailIllustItemImageOnload(el) {
 	$("#DetailOverlayLoading").hide();
 }
 
+function illustDetailOnPopstate() {
+	closeDetailOverlay();
+	window.removeEventListener('popstate', illustDetailOnPopstate);
+	return false;
+}
+
 function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 	$.ajax({
 		"type": "post",
@@ -1040,6 +1061,8 @@ function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 					$("#"+AD_INS_TAGS[0]).show();
 					$("#"+AD_INS_TAGS[1]).show();
 				}
+				window.history.pushState(null, null, location.href);
+				window.addEventListener('popstate', illustDetailOnPopstate);
 			} else {
 				switch (data.error_code) {
 					case -1:
@@ -1078,7 +1101,7 @@ function closeDetailOverlay() {
 }
 
 function initDetailOverlay() {
-	document.getElementById('DetailOverlayClose').addEventListener('click', closeDetailOverlay, false);
+	document.getElementById('DetailOverlayClose').addEventListener('click', ()=>{history.back();}, false);
 	const overlayInner = document.getElementById('DetailOverlayInner');
 	overlayInner.addEventListener('click', (ev)=>{ev.stopPropagation()}, false);
 	overlayInner.style.minHeight = (screen.height + 100) + "px";

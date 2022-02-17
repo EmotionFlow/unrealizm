@@ -568,6 +568,26 @@
 	border-radius: 2px;
 }
 
+.IllustThumb > .PrivateNote {
+	position: absolute;
+	background: rgba(255,255,255,0.9);
+	height: 125px;
+	width: 100%;
+	font-size: 12px;
+	border-top: 1px solid #d9d9d9;
+	overflow: scroll;
+}
+
+.IllustThumb > .PrivateNote.slide-up
+{
+	bottom: 0 !important;
+}
+
+.IllustThumb > .PrivateNote.slide-down
+{
+	bottom: -475px !important;
+}
+
 .IllustThumb .IllustUser {
 	display: flex;
 	flex-flow: row nowrap;
@@ -2802,7 +2822,7 @@ hr.IllustItemListSeparator {
 	font-size: 18px;
 }
 
-.UserInfo .UserInfoUser .UserInfoProgile {
+.UserInfo .UserInfoUser .UserInfoProfile {
 	display: block;
 	float: left;
 	width: 100%;
@@ -2947,7 +2967,7 @@ hr.IllustItemListSeparator {
 	height: 26px;
 	line-height: 26px;
 }
-.UserInfo.Thumb .UserInfoUser .UserInfoProgile {
+.UserInfo.Thumb .UserInfoUser .UserInfoProfile {
 	padding: 0;
 	height: 36px;
 	line-height: 18px;
@@ -2976,7 +2996,7 @@ hr.IllustItemListSeparator {
 	line-height: 17px;
 	font-size: 11px;
 }
-.UserInfo.ThumbSmall .UserInfoUser .UserInfoProgile {
+.UserInfo.ThumbSmall .UserInfoUser .UserInfoProfile {
 	padding: 0;
 	height: 24px;
 	line-height: 12px;

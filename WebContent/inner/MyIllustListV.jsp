@@ -85,44 +85,7 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 			$(window).scrollTop($("#SortFilterMenu").offset().top - 80);
 			<%}%>
 		});
-
-		function TogglePrivateNote($element, message) {
-			const cls = 'PrivateNote';
-			if($element.children('.' + cls).length <= 0) {
-				$element.append($("<div/>").attr("class", cls));
-			}
-			const $note = $($element.children('.' + cls)[0]);
-			$note.text(message);
-			if ($note.hasClass('slide-up')) {
-				$note.addClass('slide-down', 2000, 'swing');
-				$note.removeClass('slide-up');
-			} else {
-				$note.removeClass('slide-down');
-				$note.addClass('slide-up', 2000, 'swing');
-			}
-		}
 		</script>
-		<style>
-            .IllustThumb > .PrivateNote {
-                position: absolute;
-                background: rgba(255,255,255,0.9);
-                height: 125px;
-                width: 100%;
-				font-size: 12px;
-                border-top: 1px solid #d9d9d9;
-			}
-
-            .PrivateNote.slide-up
-            {
-                bottom: 0 !important;
-            }
-
-            .PrivateNote.slide-down
-            {
-                bottom: -475px !important;
-            }
-
-		</style>
 
 		<style>
 		<%if(!cResults.m_cUser.m_strHeaderFileName.isEmpty()){%>
@@ -168,7 +131,10 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 				<section class="UserInfoUser">
 					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
 					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
-					<h3 class="UserInfoProgile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
+					<%if(cResults.twitterScreenName != null && !cResults.twitterScreenName.isEmpty()) {%>
+					<h3 class="UserInfoProfile"><a class="fab fa-twitter" href="https://twitter.com/<%=cResults.twitterScreenName%>">@<%=cResults.twitterScreenName%></a></h3>
+					<%}%>
+					<h3 class="UserInfoProfile"><%=Common.AutoLink(Util.toStringHtml(cResults.m_cUser.m_strProfile), cResults.m_cUser.m_nUserId, CCnv.MODE_PC)%></h3>
 					<span class="UserInfoCmd">
 						<span class="TweetMyBox">
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">

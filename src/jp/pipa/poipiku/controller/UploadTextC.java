@@ -37,7 +37,7 @@ public final class UploadTextC extends UpC {
 			// get content id
 			ArrayList<String> lColumns = new ArrayList<>(
 					Arrays.asList(
-							"user_id", "genre_id", "category_id", "description",
+							"user_id", "genre_id", "category_id", "description","private_note",
 							"text_body", "tag_list", "publish_id", "password",
 							"list_id", "safe_filter", "editor_id", "cheer_ng",
 							"open_id", "tweet_when_published", "limited_time_publish",
@@ -83,6 +83,7 @@ public final class UploadTextC extends UpC {
 			statement.setInt(idx++, cParam.genre);
 			statement.setInt(idx++, cParam.m_nCategoryId);
 			statement.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]));
+			statement.setString(idx++, cParam.privateNote);
 			statement.setString(idx++, textBody);
 			statement.setString(idx++, cParam.m_strTagList);
 			statement.setInt(idx++, cParam.m_nPublishId);

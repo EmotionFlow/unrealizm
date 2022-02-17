@@ -119,7 +119,79 @@ public final class RegisteredNotifier extends Notifier {
 		return result;
 	}
 
-	// Twitterで自分をフォローしているユーザーに、自分がポイピクを始めたことをメールする。
+	public boolean welcomeFromEmail(DataSource dataSource, int userId) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+
+		boolean result = false;
+		try {
+			User user;
+			String loginPassword = "";
+
+			connection = dataSource.getConnection();
+			sql = "SELECT user_id, nickname, email, lang_id, password FROM users_0000 WHERE user_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				user = new User();
+				user.id = resultSet.getInt(1);
+				user.nickname = resultSet.getString(2);
+				user.email = resultSet.getString(3);
+				user.langId = resultSet.getInt(4);
+				user.setLangLabel();
+				loginPassword = resultSet.getString(5);
+			} else {
+				return false;
+			}
+			resultSet.close();
+			statement.close();
+
+			final int MAX_RECOMMENDED_USERS = 15;
+			List<RecommendedUser> recommendedUsers = new ArrayList<>();
+			List<RecommendedUser> popularUsers = RecommendedUser.getPopularUsers(
+					userId, connection, statement, resultSet);
+			Iterator<RecommendedUser> it = popularUsers.iterator();
+			int count = 0;
+			while (count<MAX_RECOMMENDED_USERS && it.hasNext()) {
+				recommendedUsers.add(it.next());
+				count++;
+			}
+
+			// メール本文生成
+			String mailSubject = getSubject("welcome", user.langLabel);
+
+			VelocityContext context = new VelocityContext();
+			context.put("to_name", user.nickname);
+			context.put("login_email", user.email);
+			context.put("login_password", loginPassword);
+			context.put("recommend_users", recommendedUsers);
+
+			Template template = getBodyTemplate("welcome", user.langLabel);
+			String mailBody = merge(template, context);
+
+			// 配信
+			notifyByEmail(user, mailSubject, mailBody);
+
+			Log.d("sent welcome mail: " + user.email);
+
+			result = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			Log.d(sql);
+			result = false;
+		} finally {
+			if(resultSet!=null){try{resultSet.close();}catch(SQLException ignored){}};
+			if(statement!=null){try{statement.close();}catch(SQLException ignored){}};
+			if(connection!=null){try{connection.close();}catch(SQLException ignored){}};
+		}
+
+		return result;
+	}
+
+		// Twitterで自分をフォローしているユーザーに、自分がポイピクを始めたことをメールする。
 	public boolean notifyToMyTwitterFollower(DataSource dataSource, int newUserIdFrom, int newUserIdTo) {
 		Connection connection = null;
 		PreparedStatement statement = null;
