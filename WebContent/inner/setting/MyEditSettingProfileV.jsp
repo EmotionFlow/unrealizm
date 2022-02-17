@@ -121,4 +121,23 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="SettingListItem" style="border: none;">
+		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.PublishAccount")%></div>
+		<div class="SettingBody">
+			<p><%=_TEX.T("EditSettingV.Twitter.PublishAccount.Info1")%></p>
+			<div class="SettingBodyCmd">
+				<div class="RegistMessage" >
+					<div class="onoffswitch OnOff">
+						<input type="checkbox" name="AutoTweet" class="onoffswitch-checkbox" id="PublishAccount" value="1" <%if(cResults.m_cUser.m_nTwitterAccountPublicMode==CUser.TW_PUBLIC_ON){%>checked="checked"<%}%> />
+						<label class="onoffswitch-label" for="PublishAccount">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateTwitterPublishAccount()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+			</div>
+		</div>
+	</div>
 </div>

@@ -42,22 +42,6 @@
 		});
 	}
 
-	function UpdateTwitterPublishAccount() {
-		const bPublishAccount = $('#PublishAccount').prop('checked');
-		$.ajaxSingle({
-			"type": "post",
-			"data": {"ID":<%=checkLogin.m_nUserId%>, "MD": bPublishAccount?1:0},
-			"url": "/f/UpdateTwitterPublishAccountF.jsp",
-			"dataType": "json",
-			"success": function(data) {
-				DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>', 1000);
-			},
-			"error": function(req, stat, ex){
-				DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
-			}
-		});
-	}
-
 	function UpdateAutoTweet() {
 		const bAutoTweet = $('#AutoTweet').prop('checked');
 		let nAutoTweetWeekDay = parseInt($('#AutoTweetWeekDay').val(), 10);
@@ -180,7 +164,6 @@
 		</div>
 	</div>
 	<%}%>
-
 
 	<%if(cResults.m_cUser.m_bTweet){%>
 	<div class="SettingListItem" style="border: none;">
