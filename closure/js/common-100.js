@@ -1031,6 +1031,12 @@ function detailIllustItemImageOnload(el) {
 	$("#DetailOverlayLoading").hide();
 }
 
+function illustDetailOnPopstate() {
+	closeDetailOverlay();
+	window.removeEventListener('popstate', illustDetailOnPopstate);
+	return false;
+}
+
 function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 	$.ajax({
 		"type": "post",
@@ -1055,6 +1061,8 @@ function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 					$("#"+AD_INS_TAGS[0]).show();
 					$("#"+AD_INS_TAGS[1]).show();
 				}
+				window.history.pushState(null, null, location.href);
+				window.addEventListener('popstate', illustDetailOnPopstate);
 			} else {
 				switch (data.error_code) {
 					case -1:
@@ -1093,7 +1101,7 @@ function closeDetailOverlay() {
 }
 
 function initDetailOverlay() {
-	document.getElementById('DetailOverlayClose').addEventListener('click', closeDetailOverlay, false);
+	document.getElementById('DetailOverlayClose').addEventListener('click', ()=>{history.back();}, false);
 	const overlayInner = document.getElementById('DetailOverlayInner');
 	overlayInner.addEventListener('click', (ev)=>{ev.stopPropagation()}, false);
 	overlayInner.style.minHeight = (screen.height + 100) + "px";
