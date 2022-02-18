@@ -3667,3 +3667,16 @@ hr.IllustItemListSeparator {
 	color: #3498da;
 }
 /*********** Switch user ************/
+
+/********** クリップボードにURLをコピー ************/
+#tempCopyText {
+	width: 308px;
+	text-align: center;
+	margin-top: 10px;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+#tempCopyText::selection {
+	color: #b9b9b9;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+/********** クリップボードにURLをコピー ************/

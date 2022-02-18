@@ -42,7 +42,7 @@ if(!cResults.getResults(checkLogin)) {
 		<link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 		<link href="/css/TBase-41.css" type="text/css" rel="stylesheet" />
-		<link href="/css/TMaking-183.css" type="text/css" rel="stylesheet" />
+		<link href="/css/TMaking-184.css" type="text/css" rel="stylesheet" />
 		<link href="/css/TBasePc-73.css" type="text/css" rel="stylesheet" />
 		<link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 		<link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
@@ -50,7 +50,7 @@ if(!cResults.getResults(checkLogin)) {
 		<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72_2.png" />
 		<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon_2.png" />
 		<script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
-		<script type="text/javascript" src="/js/common-100.js"></script>
+		<script type="text/javascript" src="/js/common-101.js"></script>
 		<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 		<%@ include file="/inner/TGoogleAnalytics.jsp"%>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">

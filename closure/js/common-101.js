@@ -1150,13 +1150,35 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 			$IllustItemCmd.append(
 				'<span class="IllustItemShareSub">' +
 				'<a class="IllustItemCommandShareTweet fab fa-twitter" href="' + uri + '"></a>' +
+				'<a class="IllustItemCommandShareTweet fas fa-link" href="javascript: void(0)" onclick="contentPageToClipboard('+contentUserId+','+contentId+')"></a>' +
 				'</span>'
 			);
 		}
 	}
 }
 
-function shareUser(message, uri, isSmartPhone) {
+function contentPageToClipboard(ownerUserId, contentId) {
+	let url = 'https://poipiku.com/' + ownerUserId + '/';
+	if (contentId != null) {
+		url = url + contentId + '.html';
+	}
+	const html = '<i class="fas fa-clipboard"></i> Copied<br>' +
+		'<input id="tempCopyText" type="text" value="' + url + '" readonly="readonly"/>';
+
+	if($('#DispMsg').length<=0) {
+		$('body').append($("<div/>").attr("id", "DispMsg"));
+	}
+	$("#DispMsg").html(html);
+	$("#DispMsg").slideDown(200, function() {
+		document.getElementById("tempCopyText").select();
+		document.execCommand("copy");
+		setTimeout(function() {
+			$("#DispMsg").slideUp(200);
+		}, 1500);
+	});
+}
+
+function shareUser(userId, message, uri, isSmartPhone) {
 	if (isSmartPhone && typeof navigator.share !== 'undefined') {
 		const shareData = {
 			title: 'POIPIKU',
@@ -1173,6 +1195,7 @@ function shareUser(message, uri, isSmartPhone) {
 			$UserShareCmd.append(
 				'<span class="UserShareSub">' +
 				'<a class="UserShareTweet fab fa-twitter" href="' + tweetUrl + '"></a>' +
+				'<a class="UserShareTweet fas fa-link" href="javascript: void(0)" onclick="contentPageToClipboard('+userId+', null)"></a>' +
 				'</span>'
 			);
 		}
