@@ -168,6 +168,7 @@ public class IllustListC {
 
 				// flags
 				if(m_bOwner) {
+					m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
 					strSql = "SELECT COUNT(user_id) as content_num FROM follows_0000 WHERE user_id=?";
 					statement = connection.prepareStatement(strSql);
 					statement.setInt(1, m_nUserId);
@@ -199,6 +200,7 @@ public class IllustListC {
 						m_bFollow = true;
 						checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
 					}
+					m_cUser.m_nFollowing = m_bFollow ? CUser.FOLLOW_FOLLOWING : CUser.FOLLOW_NONE;
 					resultSet.close();resultSet=null;
 					statement.close();statement=null;
 
@@ -259,7 +261,6 @@ public class IllustListC {
 					m_strTagKeyword.isEmpty()) ?
 					"" : "AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3) ";
 
-			//TODO category
 			final String strCategoryCond =
 					categoryFilterId < 0 ?
 							"" : "AND category_id = ?";
@@ -303,15 +304,33 @@ public class IllustListC {
 						final CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 						cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 						cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+						cContent.m_cUser.m_nFollowing = m_cUser.m_nFollowing;
 						cContent.pinOrder = 1;
 					} else {
 						cContent = new CContent();
 					}
+					// Emoji
+					if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
+						GridUtil.getComment(connection, cContent);
+					}
 					pinContents.add(cContent);
+				}
+
+				if (pinContents.size() > 0 && checkLogin.m_bLogin) {
+					// Bookmark
+					strSql = "SELECT 1 FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
+					statement = connection.prepareStatement(strSql);
+					statement.setInt(1, checkLogin.m_nUserId);
+					statement.setInt(2, pinContents.get(0).m_nContentId);
+					resultSet = statement.executeQuery();
+					if (resultSet.next()) {
+						pinContents.get(0).m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
+					}
+					resultSet.close();resultSet=null;
+					statement.close();statement=null;
 				}
 			}
 
-			//TODO order by
 			final String strOrderBy;
 			if (sortBy == SortBy.None) {
 				strOrderBy = "ORDER BY content_id DESC ";

@@ -213,7 +213,15 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 				<%if(checkLogin.m_nUserId != cResults.m_nUserId){%>
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
-						<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+				<%if(cContent.pinOrder == 1){%>
+				<%= CCnv.Content2Html(
+						cContent, checkLogin.m_nUserId, CCnv.MODE_SP,
+						_TEX, Emoji.getDefaultEmoji(checkLogin.m_nUserId), CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW,
+						cResults.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
+				<%}else{%>
+
+				<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+				<%}%>
 					<%}%>
 				<%}else{%>
 					<%if(cResults.m_vContentList.size()>0){%>
