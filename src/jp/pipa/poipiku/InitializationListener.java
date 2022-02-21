@@ -21,6 +21,13 @@ public class InitializationListener implements ServletContextListener {
 
 		Locale.setDefault(Locale.ENGLISH);
 
+		try {
+			Class.forName("jp.pipa.poipiku.util.DatabaseUtil");
+			Class.forName("jp.pipa.poipiku.util.RecommendedContents");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		Emoji emoji = Emoji.getInstance();
 		emoji.init();
 
@@ -29,14 +36,6 @@ public class InitializationListener implements ServletContextListener {
 		Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, event.getServletContext().getRealPath("WEB-INF/message_templates"));
 		Velocity.setProperty(Velocity.FILE_RESOURCE_LOADER_CACHE, true);
 		Velocity.init();
-
-		try {
-			Class.forName("jp.pipa.poipiku.util.RecommendedContents");
-			Class.forName("jp.pipa.poipiku.util.DatabaseUtil");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		//AccessUnique accessUnique = AccessUnique.getInstance();
 		//accessUnique.init();
