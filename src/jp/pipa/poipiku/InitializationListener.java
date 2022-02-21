@@ -32,6 +32,8 @@ public class InitializationListener implements ServletContextListener {
 
 		try {
 			Class.forName("jp.pipa.poipiku.util.RecommendedContents");
+			Class.forName("jp.pipa.poipiku.util.DatabaseUtil");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
