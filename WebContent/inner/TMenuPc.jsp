@@ -56,7 +56,7 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
-			<a id="MenuRequest" class="FooterMenuItem" href="/NewArrivalRequestCreatorPcV.jsp">
+			<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
 			</a>
@@ -147,7 +147,7 @@
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
-		<a id="MenuRequest" class="FooterMenuItem" href="/NewArrivalRequestCreatorPcV.jsp">
+		<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
 		</a>

@@ -2,14 +2,13 @@
 <%@ include file="/inner/Common.jsp"%>
 <%!
 	static String getSettingMenuItem(String id, String title){
-		StringBuilder sb = new StringBuilder();
-		sb.append("<a data-to=\"").append(id).append("\" class=\"SettingMenuItemLink SettingChangePageLink\" >")
-				.append("<span class=\"SettingMenuItemTitle\">")
-				.append(title)
-				.append("</span>")
-				.append("<i class=\"SettingMenuItemArrow fas fa-angle-right\"></i>")
-				.append("</a>");
-		return sb.toString();
+		String sb = "<a data-to=\"" + id + "\" class=\"SettingMenuItemLink SettingChangePageLink\" >" +
+				"<span class=\"SettingMenuItemTitle\">" +
+				title +
+				"</span>" +
+				"<i class=\"SettingMenuItemArrow fas fa-angle-right\"></i>" +
+				"</a>";
+		return sb;
 	}
 	static String getSettingMenuHeader(String title, boolean bSmartPhone){
 		StringBuilder sb = new StringBuilder();
@@ -43,8 +42,8 @@ cResults.getParam(request);
 cResults.getResults(checkLogin);
 
 HashMap<String, String> MENU = new HashMap<>();
-MENU.put("RECEIVED", "受信したリクエスト");
-MENU.put("SENT", "送信済みリクエスト");
+MENU.put("RECEIVED", "いただいた依頼");
+MENU.put("SENT", "お願いした依頼");
 
 String[][] menuOrder = {
 		{
@@ -120,7 +119,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 					<%}%>
 				<%}else{%>
 					$("#MENUROOT").show();
-					const menuId = "<%=cResults.m_strSelectedMenuId%>";
+					let menuId = "<%=cResults.m_strSelectedMenuId%>";
 					if(menuId===""){
 						menuId = "RECEIVED";
 					}
@@ -261,7 +260,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 				<div class="SettingMenu">
 					<div class="RequestCreatorStatus">
 						<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="color:#6d6965;">
-						<%=requestCreator.status== RequestCreator.Status.Enabled ? "リクエスト募集：受付中" : "リクエスト募集：停止中"%>
+						<%=requestCreator.status== RequestCreator.Status.Enabled ? "エアスケブ依頼受付中" : "依頼の受け付け：停止中"%>
 						</a>
 					</div>
 					<%for(String m : menuOrder[0]){%>
@@ -272,7 +271,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 					<div class="WhatIsRequest">
 						<i class="fas fa-info-circle" style="font-size: 14px"></i>
 						<a href="javascript: void(0);" style="color:#6d6965; text-decoration: underline" onclick="dispRequestIntroduction()">
-							リクエストとは？
+							エアスケブとは？
 						</a>
 					</div>
 				</div>
