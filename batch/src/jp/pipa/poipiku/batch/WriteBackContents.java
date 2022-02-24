@@ -99,7 +99,8 @@ public class WriteBackContents extends Batch {
 				try {
 					Files.copy(src, destDir.resolve(src.getFileName()));
 				} catch (NoSuchFileException noSuchFileException) {
-					notifyError("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
+					// notifyError("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
+					Log.d("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
 					isSuccess = false;
 				} catch (IOException e) {
 					notifyError("(WriteBackContentsError)Files.copy, IOException:" + src);
