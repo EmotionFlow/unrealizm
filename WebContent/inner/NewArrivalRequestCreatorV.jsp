@@ -34,8 +34,8 @@
 	<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
 	<%}%>
 	<%@ include file="/inner/TRequestIntroduction.jsp"%>
-	<meta name="description" content="新着クリエイター"/>
-	<title><%=_TEX.T("THeader.Title")%> - 新着クリエイター</title>
+	<meta name="description" content="最近エアスケブを始めたクリエイター"/>
+	<title><%=_TEX.T("THeader.Title")%> - 最近エアスケブを始めたクリエイター</title>
 	<style>
 	<%if(!isApp){%>
 				body {padding-top: 79px !important;}
@@ -70,7 +70,7 @@
 			for (int nCnt = 0; nCnt < cResults.m_vContentList.size(); nCnt++) {
 				CUser cUser = cResults.m_vContentList.get(nCnt);
 		%>
-			<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
+			<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
 			<%if (isApp || Util.isSmartPhone(request)) {%>
 				<%if(nCnt==13) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
 				<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>

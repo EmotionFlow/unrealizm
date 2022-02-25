@@ -125,6 +125,16 @@ public final class UpdateRequestSettingC extends Controller{
 					    paramValue.equals("1")
 			    );
 			    break;
+		    case "AllowFreeRequest":
+			    updateResult = requestCreator.updateAllowFreeRequest(
+					    paramValue.equals("1")
+			    );
+			    break;
+		    case "AllowPaidRequest":
+			    updateResult = requestCreator.updateAllowPaidRequest(
+					    paramValue.equals("1")
+			    );
+			    break;
 		    case "ReturnPeriod":
 			    updateResult = requestCreator.updateReturnPeriod(
 		    			Integer.parseInt(paramValue, 10)

@@ -57,7 +57,7 @@ if (!results.getResults(checkLogin)) {
 	<script>
 		function _validate() {
 			if ($("#EditRequestText").val().length <= 10) {
-				DispMsg("リクエスト本文が短すぎます");
+				DispMsg("依頼本文が短すぎます");
 				return false;
 			}
 			const amount = parseInt($("#EditAmount").val(), 10);
@@ -67,7 +67,7 @@ if (!results.getResults(checkLogin)) {
 			}
 			if (amount < <%=results.requestCreator.amountMinimum%> ||
 				amount > <%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>){
-				DispMsg("リクエスト金額が範囲外です");
+				DispMsg("依頼金額が範囲外です");
 				return false;
 			}
 			return true;
@@ -94,7 +94,7 @@ if (!results.getResults(checkLogin)) {
 					HideMsgStatic();
 					if (data.result === <%=Common.API_OK%>) {
 						if(requestInfo.AMOUNT>0) {
-							DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
+							DispMsg("依頼を送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
 							window.setTimeout(() => {
 								<%if(isApp){%>
 								location.href = "/IllustListAppV.jsp?ID=" + parseInt(requestInfo.CREATOR, 10);
@@ -138,8 +138,8 @@ if (!results.getResults(checkLogin)) {
 		};
 
 		function epsilonPayment(_requestInfo, _cardInfo){
-			$('#SendRequestBtn').addClass('Disabled').html('リクエスト送信中');
-			DispMsgStatic('リクエスト送信中');
+			$('#SendRequestBtn').addClass('Disabled').html('依頼送信中');
+			DispMsgStatic('依頼送信中');
 
 			if(_cardInfo == null){ // カード登録済
 				SendRequestAjax(_requestInfo, createAgentInfo(AGENT.EPSILON, null, null), null);
@@ -171,7 +171,7 @@ if (!results.getResults(checkLogin)) {
 			}
 
 			if( response.resultCode !== '000' ){
-				window.alert("リクエスト送信処理中にエラーが発生しました");
+				window.alert("依頼送信処理中にエラーが発生しました");
 				console.log(response.resultCode);
 				g_epsilonInfo.elPassportNowPayment.hide();
 			}else{
@@ -207,7 +207,7 @@ if (!results.getResults(checkLogin)) {
 				"PAYMENT_METHOD": 1,
 			}
 			if (requestInfo.CLIENT === requestInfo.CREATOR) {
-				alert('自分宛にはリクエストできません');
+				alert('自分宛には依頼できません');
 				return false;
 			}
 
@@ -221,15 +221,15 @@ if (!results.getResults(checkLogin)) {
 					return false;
 				} else if (result === 1) {
 					console.log("epsilonPayment");
-					if (confirm("クリエイターがリクエストを承認すると、登録済みのクレジットカードに"
+					if (confirm("クリエイターが依頼を承認すると、登録済みのクレジットカードに"
 						+ (requestInfo.AMOUNT + requestInfo.COMMISSION).toLocaleString() + "円が課金されます。" +
 						"よろしいですか？")) {
 						epsilonPayment(requestInfo, null);
 					}
 				} else if (result === 0) {
-					const title = "リクエスト送信";
+					const title = "依頼送信";
 					const description = "クレジットカード情報を入力してください。" +
-						"クリエイターがリクエストを承認すると、入力されたカードに対し、" +
+						"クリエイターが依頼を承認すると、入力されたカードに対し、" +
 						"<b>" + (requestInfo.AMOUNT + requestInfo.COMMISSION) + "円</b>(税込)が課金されます。";
 					<%// クレジットカード情報入力ダイアログを表示、%>
 					<%// 入力内容を代理店に送信し、Tokenを取得する。%>
@@ -243,7 +243,7 @@ if (!results.getResults(checkLogin)) {
 						<%// キャンセルボタンがクリックされた%>
 						if (formValues.dismiss) {
 							HideMsgStatic(0);
-							$('#SendRequestBtn').removeClass('Disabled').html('リクエストを送信する');
+							$('#SendRequestBtn').removeClass('Disabled').html('依頼を送信する');
 							return false;
 						}
 
@@ -298,8 +298,8 @@ if (!results.getResults(checkLogin)) {
 			Swal.fire({
 				html: `
 				<div style="text-align: left; font-size: 0.9em">
-					<p style="text-align: center; font-weight: 400;">リクエスト金額で指定した額が、そのままクリエイターの報酬になります。</p>
-					<p>リクエスト手数料：リクエストの仕組みを支えるための手数料です。</p>
+					<p style="text-align: center; font-weight: 400;">依頼金額で指定した額が、そのままクリエイターの報酬になります。</p>
+					<p>依頼手数料：依頼の仕組みを支えるための手数料です。</p>
 					<p>トランザクション手数料：トランザクションを実行するための手数料です。</p>
 				</div>
 				`,
@@ -382,7 +382,7 @@ if (!results.getResults(checkLogin)) {
 			  class="BtnBase UserInfoCmdBlock Selected"
 			  style="text-shadow: none;"
 			  onclick="dispRequestIntroduction()">
-			<i class="fas fa-info-circle" style="font-size: 15px; margin-right: 4px;"></i><span id="UserInfoCmdBlockLabel" style="top:-1px">リクエストとは</span>
+			<i class="fas fa-info-circle" style="font-size: 15px; margin-right: 4px;"></i><span id="UserInfoCmdBlockLabel" style="top:-1px">エアスケブとは</span>
 		</span>
 
 		<div class="UserInfoBg"></div>
@@ -403,20 +403,20 @@ if (!results.getResults(checkLogin)) {
 			<%=results.isBlocking ? "ブロック中です。" : "ブロックされています。"%>
 			<%}else{%>
 				<%if(results.user.m_bRequestEnabled){%>
-				<%=results.user.m_strNickName%>さんへのリクエスト(β)
+				<%=results.user.m_strNickName%>さんへのエアスケブ依頼
 					<%if(!checkLogin.m_bLogin){%>
-					<div style="text-align: center; font-size: 12px; font-weight: normal">ログインするとリクエストを送信できます</div>
+					<div style="text-align: center; font-size: 12px; font-weight: normal">ログインすると依頼を送信できます</div>
 					<%}%>
 				<%}else{%>
-				現在、リクエストを受け付けていません
+				現在、依頼を受け付けていません
 				<div>
 					<%if(checkLogin.m_bLogin){%>
-					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">このクリエイターにリクエスト募集してほしい気持ちを通知できます(匿名)</div>
+					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">このクリエイターにエアスケブ受付を始めてほしい気持ちを通知できます(匿名)</div>
 					<a class="BtnBase" style="" href="javascript: void(0);" onclick="requestToStartRequesting()">
 						<span class="RequestEnabled">お願いする</span>
 					</a>
 					<%}else{%>
-					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ログインすると、このクリエイターにリクエスト募集してほしい気持ちを通知できます。</div>
+					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ログインすると、このクリエイターにエアスケブ受付を始めてほしい気持ちを通知できます。</div>
 					<%}%>
 				</div>
 				<%}%>
@@ -440,7 +440,7 @@ if (!results.getResults(checkLogin)) {
 			</div>
 		</div>
 		<div class="TextBody">
-			リクエストメッセージ
+			依頼メッセージ
 			<textarea id="EditRequestText" class="EditTextBody"
 					  maxlength="1000" placeholder="改行含め1000字まで"
 					  onkeyup="dispRequestTextCharNum()"></textarea>
@@ -449,7 +449,7 @@ if (!results.getResults(checkLogin)) {
 
 		<div class="UoloadCmdOption">
 			<div class="OptionItem">
-				<div class="OptionLabel">ワンクッション・R18相当リクエスト</div>
+				<div class="OptionLabel">NSFW（ワンクッション・R18相当）</div>
 				<div class="onoffswitch OnOff <%=results.requestCreator.allowSensitive() ? "" : "disabled"%> ">
 					<input type="checkbox" class="onoffswitch-checkbox"
 						   name="OptionRecent"
@@ -465,14 +465,14 @@ if (!results.getResults(checkLogin)) {
 			</div>
 			<div class="OptionNotify">
 				<%if (results.requestCreator.allowSensitive()) {%>
-				センシティブなリクエストは必ずON
+				依頼内容がセンシティブなときは必ずON
 				<%}else{%>
 				このクリエイターはセンシティブな内容を受け付けません
 				<%}%>
 			</div>
 
 			<div class="OptionItem">
-				<div class="OptionLabel">匿名でリクエスト</div>
+				<div class="OptionLabel">匿名で依頼</div>
 				<div class="onoffswitch OnOff <%=results.requestCreator.allowAnonymous() ? "" : "disabled"%> ">
 					<input type="checkbox" class="onoffswitch-checkbox"
 						   name="OptionRecent"
@@ -488,7 +488,7 @@ if (!results.getResults(checkLogin)) {
 			</div>
 			<div class="OptionNotify" style="margin-bottom: 30px">
 				<%if (!results.requestCreator.allowAnonymous()) {%>
-				このクリエイターは匿名リクエストを受け付けません
+				このクリエイターは匿名依頼を受け付けません
 				<%}%>
 			</div>
 
@@ -514,12 +514,33 @@ if (!results.getResults(checkLogin)) {
 				</div>
 			</div>
 
+			<%if(results.requestCreator.allowPaidRequest &&  results.requestCreator.allowFreeRequest){%>
+			<div class="OptionItem">
+				<div class="OptionLabel">有償で依頼する</div>
+				<div class="onoffswitch OnOff ">
+					<input type="checkbox" class="onoffswitch-checkbox"
+						   name="OptionPaidRequest"
+						   id="OptionPaidRequest"
+						   value="0"
+						   checked="checked"
+						   onclick="$('#AmountArea').toggle()"
+					/>
+					<label class="onoffswitch-label" for="OptionPaidRequest">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label>
+				</div>
+			</div>
+			<%}%>
+
+			<%if(results.requestCreator.allowPaidRequest){%>
+			<div id="AmountArea" class="UoloadCmdOption">
 			<div id="ItemAmount" class="OptionItem">
-				<div class="OptionLabel">リクエスト金額</div>
+				<div class="OptionLabel">依頼金額</div>
 				<div class="OptionPublish">
 					<span class="RequestAmountUnit">¥</span><input id="EditAmount" class="EditPassword" type="number" maxlength="6"
 						    value="<%=results.requestCreator.amountLeftToMe%>"
-						    placeholder="おまかせ金額<%=results.requestCreator.amountLeftToMe%>円"
+						    placeholder="おまかせ<%=results.requestCreator.amountLeftToMe%>円"
 							onkeyup="dispCommission()"/>
 				</div>
 			</div>
@@ -534,7 +555,7 @@ if (!results.getResults(checkLogin)) {
 				</div>
 			</div>
 			<div class="OptionNotify" style="margin-bottom: 8px; text-align: right;">
-				リクエスト手数料<span id="CommissionRateSystem"></span>%
+				依頼手数料<span id="CommissionRateSystem"></span>%
 				+トランザクション手数料<span id="CommissionRateAgency"></span>%<br>
 				詳しくは<a style="text-decoration: underline;" href="javascript:void(0);" onclick="dispCommissionDetailDlg()">こちら</a>
 			</div>
@@ -545,14 +566,16 @@ if (!results.getResults(checkLogin)) {
 					¥<span id="AmountTotal"></span>
 				</div>
 			</div>
+			</div>
+			<%}%>
 
 			<div class="OptionItem">
-				<div class="OptionLabel">承認期限</div>
-				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.returnPeriod%>日後</div>
+				<div class="OptionLabel">返答期限</div>
+				<div class="OptionPublish">依頼から<%=results.requestCreator.returnPeriod%>日後</div>
 			</div>
 			<div class="OptionItem">
-				<div class="OptionLabel">納品期限</div>
-				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.deliveryPeriod%>日後</div>
+				<div class="OptionLabel">お渡し期限</div>
+				<div class="OptionPublish">依頼から<%=results.requestCreator.deliveryPeriod%>日後</div>
 			</div>
 			<div class="OptionNotify">期限を過ぎると自動でキャンセルされます</div>
 
@@ -566,23 +589,29 @@ if (!results.getResults(checkLogin)) {
 			ルール
 			<div class="RequestRule">
 				<ol style="padding-inline-start: 25px;">
-					<li>リクエスト本文以外での連絡はできません。</li>
-					<li>金額の見積もり・打ち合わせ・リテイクはできません。</li>
-					<li>リクエスト送信時点で与信確保されます。</li>
-					<li>リクエスト承認時点で決済されます。</li>
-					<li>納品期限内に納品されなかった場合は、カード会社を通して返金されます。</li>
-					<li>個人間の送金手段としては使用できません。</li>
+					<li>依頼本文以外での連絡はできません。</li>
+					<li>打ち合わせ・リテイクはできません。</li>
 					<li>現在β版のため、ルールや機能が変更されることがあります。</li>
 				</ol>
+				<%if(results.requestCreator.allowPaidRequest){%>
+				(有償依頼の場合)
+				<ol style="padding-inline-start: 25px;">
+					<li>金額の見積もりはできません。</li>
+					<li>依頼送信時点で与信確保されます。</li>
+					<li>依頼承認時点で決済されます。</li>
+					<li>納品期限内に納品されなかった場合は、カード会社を通して返金されます。</li>
+					<li>個人間の送金手段としては使用できません。</li>
+				</ol>
+				<%}%>
 			</div>
 		</div>
 
 		<%if(checkLogin.m_bLogin){%>
 		<div class="UoloadCmd">
-			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して送信する</a>
+			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して依頼する</a>
 		</div>
 		<%}else{%>
-		<div style="text-align: center;">ログインするとリクエストを送信できます</div>
+		<div style="text-align: center;">ログインすると依頼できます</div>
 		<%}%>
 
 		<%} // if(results.user.m_bRequestEnabled)%>

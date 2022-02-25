@@ -6,6 +6,7 @@
 <nav class="TabMenuWrapper">
 	<ul class="TabMenu">
 		<%if(false){%><li><a class="TabMenuItem <%=path.indexOf("NewArrivalRequestAppV.jsp")>0?"Selected":""%>" href="/NewArrivalRequestAppV.jsp">新着</a></li> <%}%>
+		<li><a class="TabMenuItem <%=path.indexOf("MySketchbookAppV.jsp")>0?"Selected":""%>" href="/MySketchbookAppV.jsp">マイスケブ</a></li>
 		<li><a class="TabMenuItem <%=path.indexOf("NewArrivalRequestCreatorAppV.jsp")>0?"Selected":""%>" href="/NewArrivalRequestCreatorAppV.jsp">新着クリエイター</a></li>
 		<%if(false){%><li><a class="TabMenuItem <%=path.indexOf("PopularRequestCreatorAppV.jsp")>0?"Selected":""%>" href="/PopularRequestCreatorAppV.jsp">人気クリエイター</a></li><%}%>
 	</ul>
@@ -14,6 +15,7 @@
 <nav class="TabMenuWrapper">
 	<ul class="TabMenu">
 		<%if(false){%><li><a class="TabMenuItem <%=path.indexOf("NewArrivalRequestPcV.jsp")>0?"Selected":""%>" href="/NewArrivalRequestPcV.jsp">新着</a></li><%}%>
+		<li><a class="TabMenuItem <%=path.indexOf("MySketchbookPcV.jsp")>0?"Selected":""%>" href="/MySketchbookPcV.jsp">マイスケブ</a></li>
 		<li><a class="TabMenuItem <%=path.indexOf("NewArrivalRequestCreatorPcV.jsp")>0?"Selected":""%>" href="/NewArrivalRequestCreatorPcV.jsp">新着クリエイター</a></li>
 		<%if(false){%><li><a class="TabMenuItem <%=path.indexOf("PopularRequestCreatorPcV.jsp")>0?"Selected":""%>" href="/PopularRequestCreatorPcV.jsp">人気クリエイター</a></li><%}%>
 	</ul>

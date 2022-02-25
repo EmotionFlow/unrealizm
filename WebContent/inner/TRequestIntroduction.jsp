@@ -11,37 +11,43 @@ function _getRequestIntroductionHtml(){
 </style>
 <div class="RequestIntroDlg">
 
-<h2 class="RequestIntroDlgTitle">リクエスト(β)とは？</h2>
+<h2 class="RequestIntroDlgTitle">エアスケブ(β)とは？</h2>
 <div class="RequestIntroDlgInfo" style="margin-top: 11px;">
-	<p>ポイピクユーザー（クライアント）が投げ銭つきでお題を送り、受け取ったポイピクユーザー（クリエイター）がイラストやテキストを創作すると、投げ銭として報酬をもらうことができる仕組みです。</p>
+	<p>ポイピクユーザー（依頼主）がお題を依頼し、受け取ったポイピクユーザー（クリエイター）がイラストやテキストを創作する仕組みです。</p>
+	<p style="text-align: center"><span style="color:#ff0000">new!</span> 無償依頼にも対応しました！
 </div>
 <h2 class="RequestIntroDlgTitle">特徴</h2>
 <div class="RequestIntroDlgInfo">
 <ul style="font-weight:bold">
-	<li>クリエイターには、リクエストにかかる手数料が一切発生しません。</li>
-	<li>クライアントは、リクエスト時に創作物の用途範囲を明確に選択できます。</li>
-	<li>クリエイターは、受け取ったリクエストから気に入ったもののみ承認できます。</li>
-	<li>クライアントからの要求はリクエスト時のみ。それ以外はポイピク内外問わず、コミュニケーション禁止です。</li>
-	<li>創作物の内容は、リクエスト内容・用途・金額から、クリエイターが判断します。</li>
+	<li>依頼主は、依頼時に創作物の用途範囲を明確に選択します。</li>
+	<li>クリエイターは、受け取ったリクエストから気に入ったもののみ、自分のペースに合わせて承認できます。</li>
+	<li>依頼主からの要求は依頼時のみ。それ以外はポイピク内外問わず、コミュニケーション禁止です。</li>
+	<li>創作物の内容は、依頼内容・用途・金額から、クリエイターが判断します。</li>
+	<li>(有償依頼の場合)クリエイター側にはリクエストにかかる手数料が一切発生しません。</li>
 </ul>
 </div>
 <h2 class="RequestIntroDlgTitle">利用の流れ</h2>
 <div class="RequestIntroDlgInfo">
 <ol>
-	<li>クリエイターはリクエスト募集を開始します。</li>
-	<li>クライアントはクリエイターのリクエストページから、リクエストを送信します。</li>
-	<li>クリエイターは気に入ったリクエストを承認して、創作を始めます。この時点でクライアント側の支払いが決済されます。</li>
-	<li>クリエイターは納期内に創作物を作成し、納品します。</li>
-	<li>納品のタイミングで、報酬がポチ袋ポイントに加算されます。</li>
-	<li>クライアントは納品物を非公開やXX限定設定でも閲覧でき、原寸画像をDLできます。</li>
-	<li>ポチ袋ポイントは日本国内の銀行口座に入金できます。</li>
+	<li>クリエイターはエアスケブ受付を開始します。</li>
+	<li>依頼主はクリエイターのエアスケブ受付ページから、依頼を送信します。</li>
+	<li>クリエイターは気に入った依頼を承認して、創作を始めます。</li>
+	<li>クリエイターは期限内に創作物を作成し、依頼主に渡します。</li>
+	<li>創作物はお渡し後もクリエイターのマイボックスにあり、公開設定を変更できます。</li>
+	<li>依頼者は、創作物が非公開やXX限定設定でも閲覧できます。また原寸画像をDLできます。</li>
+</ol>
+(有償リクエストの場合)
+<ol>
+	<li>クリエイターによる依頼承認の時点で依頼主側の支払いが決済されます。</li>
+	<li>納品のタイミングで、報酬がポイピクのポイントに加算されます。</li>
+	<li>ポイピクのポイントは日本国内の銀行口座に入金できます。</li>
 </ol>
 </div>
 <h2 class="RequestIntroDlgTitle">禁止・制限事項</h2>
 <div class="RequestIntroDlgInfo">
 <ul>
-	<li>募集開始にはいくつか条件があります。条件に合致しない場合、リクエストの募集をお断りさせていただくことがあります。</li>
-	<li>リクエスト機能を個人間の送金手段として使うことはできません。</li>
+	<li>開始にはいくつか条件があります。条件に合致しない場合、エアスケブ受付の開始をお断りさせていただくことがあります。</li>
+	<li>(有償リクエストの場合)エアスケブ機能を個人間の送金手段として使うことはできません。</li>
 </ul>
 </div>
 <div class="RequestIntroDlgInfo" style="text-align: center;">
@@ -50,11 +56,11 @@ function _getRequestIntroductionHtml(){
 
 <%if(isApp){%>
 <div class="RequestIntroDlgInfo" style="text-align: center;margin-top: 20px; padding: 2px;border: solid 2px;border-radius: 4px;">
-リクエストの募集はブラウザ版のポイピク設定画面からはじめられます
+エアスケブはブラウザ版のポイピク設定画面からはじめられます
 </div>
 <%}else{%>
 <div class="RequestIntroDlgTitle" style="text-align: center;">
-<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST">リクエスト募集を設定する</a>
+<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST">エアスケブの受付をはじめる</a>
 </div>
 <%}%>
 

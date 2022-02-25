@@ -5,15 +5,15 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 <script type="text/javascript">
 	function _getJudgeOkHtml() {
 		return `
-		<h1>募集を開始しました</h1>
-		<p style="text-align: left">募集開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。必ずご確認ください。</p>
+		<h1>エアスケブ受付を開始しました</h1>
+		<p style="text-align: left">エアスケブ受付開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。必ずご確認ください。</p>
 		`;
 	}
 
 	function _getJudgeFailureHtml() {
 		return `
-		<h1>募集を開始できませんでした</h1>
-		<p style="text-align: left">リクエスト募集を開始するには、以下の条件が必須です。</p>
+		<h1>エアスケブ受付を開始できませんでした</h1>
+		<p style="text-align: left">エアスケブ受付を開始するには、以下の条件が必須です。</p>
 		<ul style="text-align: left">
 		<li>Twitterアカウントと連携していること(Twitter設定)</li>
 		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
@@ -40,7 +40,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 								html: _getJudgeOkHtml(),
 							});
 						} else {
-							DispMsg("リクエスト募集を停止しました");
+							DispMsg("エアスケブ受付を停止しました");
 						}
 					} else {
 						DispMsg("保存しました");
@@ -81,6 +81,15 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 	function updateAllowAnonymous(){
 		_updateRequestSetting("AllowAnonymous", $("#AllowAnonymous").prop("checked") ? 1 : 0);
 	}
+	function updateAllowFreeRequest(){
+		_updateRequestSetting("AllowFreeRequest", $("#AllowFreeRequest").prop("checked") ? 1 : 0);
+	}
+	function updateAllowPaidRequest(){
+		const isChecked = $("#AllowPaidRequest").prop("checked");
+		_updateRequestSetting("AllowPaidRequest", isChecked ? 1 : 0);
+		const $SettingAmountItems = $('#SettingAmountItems');
+		isChecked ? $SettingAmountItems.show() : $SettingAmountItems.hide();
+	}
 
 	function _validateRange(min, max, value) {
 		if (value < min || value > max) {
@@ -103,7 +112,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			return;
 		}
 		if (returnPeriod > parseInt($("#DeliveryPeriod").val(), 10)) {
-			DispMsg("納品締切日数以下の日数を指定してください");
+			DispMsg("お渡し期限以下の日数を指定してください");
 			return;
 		}
 		if (_validateRange(
@@ -120,7 +129,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			return;
 		}
 		if (deliveryPeriod < parseInt($("#ReturnPeriod").val(), 10)) {
-			DispMsg("返答締切日数以上の日数を指定してください");
+			DispMsg("返答期限以上の日数を指定してください");
 			return;
 		}
 		if (_validateRange(
@@ -200,20 +209,19 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 <div class="SettingList">
 	<div class="SettingListItem">
 		<div class="RequestWhatIs">
-			<i class="fas fa-info-circle" style="font-size: 18px"></i>
+			<i class="fas fa-info-circle" style="font-size: 16px; line-height: 21px; margin-right: 2px;"></i>
 			<a href="javascript: void(0);"
-			   style="text-decoration: underline"
 			   onclick="dispRequestIntroduction()">
-				リクエストとは？
+				エアスケブとは？
 			</a>
 		</div>
 
-		<div class="SettingListTitle">リクエストを募集する</div>
+		<div class="SettingListTitle">エアスケブの依頼を受け付ける</div>
 		<div class="SettingBody">
 			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
-			クリエイターとしてポイピクユーザーからのリクエストを受け付けます。
+			クリエイターとしてポイピクユーザーからエアスケブの依頼を受け付けます。
 			<%}else{%>
-			募集を停止していても、現在受信しているリクエストは承認したり、納品したりできます。
+			受け付けを停止していても、現在受信している依頼は承認したり、創作物をお渡ししたりできます。
 			<%}%>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >
@@ -236,7 +244,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 
 		<div id="RequestSettingItems" <%if(requestCreator.status!=RequestCreator.Status.Enabled){%>style="opacity: 0.5;"<%}%> >
 			<div class="SettingListItem">
-				<div class="SettingListTitle">リクエストページURL</div>
+				<div class="SettingListTitle">受付ページURL</div>
 				<div class="SettingBody">
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage" style="margin: 0; width:100%;">
@@ -249,7 +257,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			</div>
 			<div class="SettingListItem">
 				<div class="SettingListTitle">クリエイタープロフィール</div>
-				得意なジャンルなど、リクエストする方に向けてのメッセージを設定できます。リクエストページの上部に表示されます。
+				得意なジャンルなど、依頼する方に向けてのメッセージを設定できます。受付ページの上部に表示されます。
 				<div class="SettingBody">
 					<textarea id="CreatorProfile" class="SettingBodyTxt" rows="12" maxlength="5000"><%=Util.toStringHtmlTextarea(requestCreator.profile)%></textarea>
 					<div class="SettingBodyCmd">
@@ -260,7 +268,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			</div>
 			<div class="SettingListItem">
 				<div class="SettingListTitle">メディア</div>
-				リクエストを受け付けるメディアを設定します。
+				依頼を受け付けるメディアを設定します。
 				<div class="SettingBody">
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage">
@@ -276,9 +284,9 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				</div>
 			</div>
 			<div class="SettingListItem">
-				<div class="SettingListTitle">ワンクッション・R18リクエスト</div>
+				<div class="SettingListTitle">NSFW許可</div>
 				<div class="SettingBody">
-					センシティブな内容のリクエストを許可します。
+					ワンクッション・R18に相当するセンシティブな内容の依頼を許可します。
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage">
 							<div class="onoffswitch OnOff">
@@ -294,9 +302,9 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				</div>
 			</div>
 			<div class="SettingListItem">
-				<div class="SettingListTitle">匿名リクエスト許可</div>
+				<div class="SettingListTitle">匿名許可</div>
 				<div class="SettingBody">
-					匿名でのリクエストを許可します。
+					匿名クライアントからの依頼を許可します。
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage">
 							<div class="onoffswitch OnOff">
@@ -312,31 +320,80 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				</div>
 			</div>
 			<div class="SettingListItem">
-				<div class="SettingListTitle">返答締切日数</div>
+				<div class="SettingListTitle">返答期限</div>
 				<div class="SettingBody">
 					<div>
 						<input id="ReturnPeriod" type="number" placeholder="<%=RequestCreator.RETURN_PERIOD_DEFAULT%>" value="<%=requestCreator.returnPeriod%>" maxlength="3" />
 						<span class="RequestVarUnit">日</span>
 					</div>
-					<div class="RegistMessage" >リクエストの返答期限を設定します。<%=RequestCreator.RETURN_PERIOD_MIN%>日から<%=RequestCreator.RETURN_PERIOD_MAX%>日の間で設定できます。</div>
+					<div class="RegistMessage">
+						依頼の返答期限を設定します。<%=RequestCreator.RETURN_PERIOD_MIN%>日から<%=RequestCreator.RETURN_PERIOD_MAX%>日の間で設定できます。
+						返答期限を過ぎた依頼はキャンセル扱いとなります。
+					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateReturnPeriod()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 					</div>
 				</div>
 			</div>
 			<div class="SettingListItem">
-				<div class="SettingListTitle">納品締切日数</div>
+				<div class="SettingListTitle">お渡し期限</div>
 				<div class="SettingBody">
 					<div>
 						<input id="DeliveryPeriod" type="number" placeholder="<%=RequestCreator.DELIVERY_PERIOD_DEFAULT%>" value="<%=requestCreator.deliveryPeriod%>" maxlength="3" />
 						<span class="RequestVarUnit">日</span>
 					</div>
-					<div class="RegistMessage">リクエスト受信日からの納品期限を設定します。<%=RequestCreator.DELIVERY_PERIOD_MIN%>日から<%=RequestCreator.DELIVERY_PERIOD_MAX%>日の間で設定できます。返答締切日数より短くすることはできません。</div>
+					<div class="RegistMessage">
+						依頼日からのお渡し(納品)期限を設定します。<%=RequestCreator.DELIVERY_PERIOD_MIN%>日から<%=RequestCreator.DELIVERY_PERIOD_MAX%>日の間で設定できます。返答締切日数より短くすることはできません。
+						お渡し期限を過ぎた依頼はキャンセル扱いとなります。
+					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateDeliveryPeriod()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 					</div>
 				</div>
 			</div>
+
+			<div class="SettingListItem">
+				<div class="SettingListTitle">無償依頼を受ける</div>
+				<div class="SettingBody">
+					金銭のやりとりがない、無償の依頼を受け付けます。
+					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
+						<div class="RegistMessage">
+							<div class="onoffswitch OnOff">
+								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AllowFreeRequest" value="0" <%if(requestCreator.allowFreeRequest){%>checked="checked"<%}%> />
+								<label class="onoffswitch-label" for="AllowFreeRequest">
+									<span class="onoffswitch-inner"></span>
+									<span class="onoffswitch-switch"></span>
+								</label>
+							</div>
+						</div>
+						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowFreeRequest()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+					</div>
+				</div>
+			</div>
+
+			<div class="SettingListItem">
+				<div class="SettingListTitle">有償依頼を受ける</div>
+				<div class="SettingBody">
+					有償の依頼を受け付けます。
+					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
+						<div class="RegistMessage">
+							<div class="onoffswitch OnOff">
+								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+									   id="AllowPaidRequest"
+									   value="0" <%if(requestCreator.allowPaidRequest){%>checked="checked"<%}%>
+								/>
+								<label class="onoffswitch-label" for="AllowPaidRequest">
+									<span class="onoffswitch-inner"></span>
+									<span class="onoffswitch-switch"></span>
+								</label>
+							</div>
+						</div>
+						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowPaidRequest()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+					</div>
+				</div>
+			</div>
+
+			<div id="SettingAmountItems" style="display: <%=requestCreator.allowPaidRequest?"block":"none"%>">
 			<div class="SettingListItem">
 				<div class="SettingListTitle">おまかせ金額</div>
 				<div class="SettingBody">
@@ -345,7 +402,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 						<input id="AmountLeftToMe" type="number" placeholder="<%=RequestCreator.AMOUNT_LEFT_TO_ME_DEFAULT%>" value="<%=requestCreator.amountLeftToMe%>" maxlength="5" />
 					</div>
 					<div class="RegistMessage">
-						リクエスト画面で初期表示する金額を設定します。
+						依頼画面で初期表示する金額を設定します。
 						¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MAX)%>の間で設定できます。
 					</div>
 					<div class="SettingBodyCmd">
@@ -361,7 +418,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 						<input id="AmountMinimum" type="number" placeholder="<%=RequestCreator.AMOUNT_MINIMUM_DEFAULT%>" value="<%=requestCreator.amountMinimum%>" maxlength="16" />
 					</div>
 					<div class="RegistMessage">
-						リクエスト最低金額を設定します。
+						最低金額を設定します。
 						¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>の間で設定できます。
 					</div>
 					<div class="SettingBodyCmd">
@@ -369,6 +426,8 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 					</div>
 				</div>
 			</div>
+			</div>
+
 			<%if(false){ // まだなくても良い気がするので、非表示にしておく。%>
 			<div class="SettingListItem">
 				<div class="SettingListTitle">特定商取引法に基づく表記</div>
