@@ -38,19 +38,28 @@ for(MyRequestListC.Result r : results.requests) {
 %>
 <div id="RequestPane-<%=r.request.id%>" class="RequestPane">
 	<div class="RequestHeader">
+		<%if(r.request.amount > 0){%>
 		<span class="RequestAmount">¥<%=String.format("%,d",r.request.amount)%></span>
+		<%}else{%>
+		<span>
+			<img class="Twemoji" draggable="false" width="18" height="18" alt="🆓" src="https://twemoji.maxcdn.com/2/72x72/1f193.png">
+		</span>
+		<%}%>
+
+		<%if(r.request.amount > 0 || r.request.creatorUserId == checkLogin.m_nUserId){%>
 		<span class="RequestLimits">
 			<%if(r.request.status == Request.Status.WaitingApproval){%>
 			<span class="RequestTimeStamp">
-				<span class="RequestTimeStampLabel">返答期限</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.returnLimit)%></span>
+				<span class="RequestTimeStampLabel">返答〆</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.returnLimit)%></span>
 			</span>
 			<%}%>
 			<%if(r.request.status == Request.Status.WaitingApproval || r.request.status == Request.Status.InProgress){%>
 			<span class="RequestTimeStamp">
-				<span class="RequestTimeStampLabel">納品期限</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.deliveryLimit)%></span>
+				<span class="RequestTimeStampLabel">お渡し期限</span><span class="RequestTimeStampValue"><%=dateFormat.format(r.request.deliveryLimit)%></span>
 			</span>
 			<%}%>
 		</span>
+		<%}%>
 	</div>
 	<div class="RequestHeader">
 		<div class="RequestLicense">
@@ -75,7 +84,7 @@ for(MyRequestListC.Result r : results.requests) {
 		</a>
 		<%}%>
 		<%}%>
-		<p><%=Util.toStringHtml(r.request.requestText)%></p>
+		<p style="word-break: break-word;"><%=Util.toStringHtml(r.request.requestText)%></p>
 	</div>
 	<div class="RequestFooter">
 		<div class="RequestUser">
@@ -90,13 +99,15 @@ for(MyRequestListC.Result r : results.requests) {
 		</div>
 		<div class="RequestCmd">
 			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.WaitingApproval){%>
-			<a class="BtnBase RequestAgreeBtn" onclick="acceptRequest(<%=r.request.id%>)" href="javascript:void(0)">承認</a>
+			<a class="BtnBase RequestAgreeBtn" onclick="acceptRequest(<%=r.request.id%>)" href="javascript:void(0)">依頼を受ける</a>
 			<%}%>
 			<%if(r.request.status == Request.Status.WaitingApproval){%>
-			<a class="BtnBase RequestCancelBtn" onclick="cancelRequest(<%=r.request.id%>)" href="javascript:void(0)">キャンセル</a>
+			<a class="BtnBase RequestCancelBtn" onclick="cancelRequest(<%=r.request.id%>)" href="javascript:void(0)">
+				<%=r.request.clientUserId == checkLogin.m_nUserId ? "キャンセルする" : "見送る"%>
+			</a>
 			<%}%>
 			<%if(results.category.equals("RECEIVED") && r.request.status == Request.Status.InProgress){%>
-			<a class="BtnBase RequestDeliveryBtn" onclick="deliveryRequest('<%=uploadJsp%>?ID=<%=checkLogin.m_nUserId%>&RID=<%=r.request.id%>')" href="javascript:void(0);" >納品</a>
+			<a class="BtnBase RequestDeliveryBtn" onclick="deliveryRequest('<%=uploadJsp%>?ID=<%=checkLogin.m_nUserId%>&RID=<%=r.request.id%>')" href="javascript:void(0);" >お渡しする</a>
 			<%}%>
 		</div>
 	</div>

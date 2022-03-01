@@ -10,7 +10,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public final class ActivityListC {
-	public static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("M/dd HH:mm");
+	public static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("M/d HH:mm");
 	public int userId = -1;
 	public int infoType;
 

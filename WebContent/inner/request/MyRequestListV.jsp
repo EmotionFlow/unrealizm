@@ -147,21 +147,23 @@
 	.RequestCmd{
         display: flex;
         width: 100%;
-        justify-content: flex-end;
+        margin-top: 17px;
+        justify-content: space-evenly;
+        align-content: center;
 	}
     .RequestCmd > .RequestAgreeBtn{
-
+        font-size: 12px;
 	}
     .RequestCmd > .RequestCancelBtn{
-        margin-left: 20px;
+		font-size: 12px;
+        margin-left: 3px;
         color: #f09090;
-        border-color: #f09090;
+        border: none;
     }
     .RequestCmd > .RequestCancelBtn:hover{
-        margin-left: 20px;
         color: #ffffff;
 		background: #f09090;
-        border-color: #f09090;
+        border: none;
     }
 	.RequestUser {
         display: flex;
@@ -225,7 +227,7 @@
 		<li><a id="TabMenuItem-<%=Request.Status.InProgress.getCode()%>"
 			   class="TabMenuItem"
 			   onclick="onClickMenuItem(this,<%=Request.Status.InProgress.getCode()%>,0,null)"
-			   href="#">作業中</a></li>
+			   href="#">作成中</a></li>
 		<li><a id="TabMenuItem-<%=Request.Status.Done.getCode()%>"
 			   class="TabMenuItem"
 			   onclick="onClickMenuItem(this,<%=Request.Status.Done.getCode()%>,0,null)"

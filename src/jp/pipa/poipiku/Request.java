@@ -5,6 +5,7 @@ import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -218,14 +219,12 @@ public final class Request extends Model{
 			mediaId < 0 ||
 			requestText.isEmpty() ||
 			requestCategory < 0 ||
-			!LICENSE_IDS.contains(licenseId) ||
-			amount < RequestCreator.AMOUNT_MINIMUM_MIN
+			!LICENSE_IDS.contains(licenseId)
 		) {
 			errorKind = ErrorKind.OtherError;
 			return false;
 		}
 
-		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -234,9 +233,7 @@ public final class Request extends Model{
 		try {
 			RequestCreator requestCreator = new RequestCreator(creatorUserId);
 			if (requestCreator.status == RequestCreator.Status.Enabled) {
-				Class.forName("org.postgresql.Driver");
-				dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				connection = dataSource.getConnection();
+				connection = DatabaseUtil.dataSource.getConnection();
 				sql = "INSERT INTO public.requests(" +
 						" status, client_user_id, client_anonymous, creator_user_id, media_id, request_text," +
 						" request_category, license_id, amount, return_limit, delivery_limit)" +
@@ -282,14 +279,11 @@ public final class Request extends Model{
 
 	public boolean updateStatus(Status newStatus) {
 		boolean result;
-		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String sql = "";
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			sql = "UPDATE requests SET status=?, updated_at=CURRENT_TIMESTAMP WHERE id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, newStatus.getCode());
@@ -308,6 +302,13 @@ public final class Request extends Model{
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return result;
+	}
+
+	public boolean send() {
+		// 有償の場合はsend(final int _orderId)が呼ばれるべき
+		if (amount != 0) return false;
+		updateStatus(Request.Status.WaitingApproval);
+		return true;
 	}
 
 	public boolean send(final int _orderId) {

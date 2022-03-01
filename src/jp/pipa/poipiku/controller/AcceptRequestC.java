@@ -13,16 +13,18 @@ public class AcceptRequestC extends Controller{
 		Request poipikuRequest = new Request(param.requestId);
 		if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) return false;
 
-		CardSettlement settlement = new CardSettlementEpsilon(poipikuRequest.clientUserId);
-		boolean captureResult = settlement.capture(poipikuRequest.orderId);
-		if (!captureResult) {
-			if (settlement.errorKind == CardSettlement.ErrorKind.CardAuth) {
-				errorKind = ErrorKind.CardAuth;
-				poipikuRequest.updateStatus(Request.Status.SettlementError);
-			} else {
-				errorKind = ErrorKind.DoRetry;
+		if (poipikuRequest.amount > 0) {
+			CardSettlement settlement = new CardSettlementEpsilon(poipikuRequest.clientUserId);
+			boolean captureResult = settlement.capture(poipikuRequest.orderId);
+			if (!captureResult) {
+				if (settlement.errorKind == CardSettlement.ErrorKind.CardAuth) {
+					errorKind = ErrorKind.CardAuth;
+					poipikuRequest.updateStatus(Request.Status.SettlementError);
+				} else {
+					errorKind = ErrorKind.DoRetry;
+				}
+				return false;
 			}
-			return false;
 		}
 
 		if (!poipikuRequest.accept()) {
@@ -30,11 +32,13 @@ public class AcceptRequestC extends Controller{
 			return false;
 		}
 
-		Order order = new Order();
-		order.selectById(poipikuRequest.orderId);
-		if (!order.capture()) {
-			errorKind = ErrorKind.NeedInquiry;
-			return false;
+		if (poipikuRequest.amount > 0) {
+			Order order = new Order();
+			order.selectById(poipikuRequest.orderId);
+			if (!order.capture()) {
+				errorKind = ErrorKind.NeedInquiry;
+				return false;
+			}
 		}
 
 		RequestNotifier notifier = new RequestNotifier();

@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.Request;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
@@ -54,7 +55,6 @@ public class MyRequestListC {
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean bResult = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -62,14 +62,18 @@ public class MyRequestListC {
 		int idx = 1;
 
 		try {
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			sql = "SELECT r.*, u.nickname, u.file_name profile_file_name, c.file_name content_file_name, LEFT(c.text_body, 150) text_summary FROM requests r" +
 					" INNER JOIN users_0000 u ON(" + (category.equals("SENT") ? "r.creator_user_id" : "r.client_user_id") + "=u.user_id)" +
 					" LEFT JOIN contents_0000 c ON(r.content_id=c.content_id)" +
 					" WHERE " + (category.equals("SENT") ? "r.client_user_id" : "r.creator_user_id") + "=?" +
-					" AND r.status = ?" +
-					" ORDER BY updated_at DESC OFFSET ? LIMIT ?";
+					" AND r.status = ?";
+
+			if (statusCode == Request.Status.Canceled.getCode() || statusCode == Request.Status.SettlementError.getCode()) {
+				sql += " AND r.updated_at > now() - interval '30 days'";
+			}
+
+			sql += " ORDER BY updated_at DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(sql);
 			idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId);

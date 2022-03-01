@@ -56,29 +56,38 @@ if (!results.getResults(checkLogin)) {
 	<%if(results.user.m_bRequestEnabled){%>
 	<script>
 		function _validate() {
+			const isPaidRequest = $("#OptionPaidRequest").prop("checked");
+
 			if ($("#EditRequestText").val().length <= 10) {
 				DispMsg("依頼本文が短すぎます");
 				return false;
 			}
-			const amount = parseInt($("#EditAmount").val(), 10);
-			if (!amount) {
-				DispMsg("金額を入力してください");
-				return false;
-			}
-			if (amount < <%=results.requestCreator.amountMinimum%> ||
-				amount > <%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>){
-				DispMsg("依頼金額が範囲外です");
-				return false;
+
+			if (isPaidRequest) {
+				const amount = parseInt($("#EditAmount").val(), 10);
+				if (!amount) {
+					DispMsg("金額を入力してください");
+					return false;
+				}
+				if (amount < <%=results.requestCreator.amountMinimum%> ||
+					amount > <%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>){
+					DispMsg("依頼金額が範囲外です");
+					return false;
+				}
 			}
 			return true;
 		}
 
 		function SendRequestAjax(requestInfo, agentInfo, cardInfo) {
 			let postInfo = requestInfo;
-			postInfo["AID"] = agentInfo.agentId;
-			if (agentInfo.token) {
-				postInfo["TKN"] = agentInfo.token;
+
+			if (agentInfo) {
+				postInfo["AID"] = agentInfo.agentId;
+				if (agentInfo.token) {
+					postInfo["TKN"] = agentInfo.token;
+				}
 			}
+
 			if (cardInfo) {
 				postInfo["EXP"] = cardInfo.expire;
 				postInfo["SEC"] = cardInfo.securityCode;
@@ -93,16 +102,18 @@ if (!results.getResults(checkLogin)) {
 					cardInfo = null;
 					HideMsgStatic();
 					if (data.result === <%=Common.API_OK%>) {
-						if(requestInfo.AMOUNT>0) {
-							DispMsg("依頼を送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
-							window.setTimeout(() => {
-								<%if(isApp){%>
-								location.href = "/IllustListAppV.jsp?ID=" + parseInt(requestInfo.CREATOR, 10);
-								<%}else{%>
-								location.href = "/" + parseInt(requestInfo.CREATOR, 10);
-								<%}%>
-							}, 5000);
+						if (requestInfo.PAID_REQUEST>0) {
+							DispMsg("依頼を送信しました！クリエイターが承認した時点で、指定した金額が決済されます。", 5000);
+						} else {
+							DispMsg("依頼を送信しました！", 5000);
 						}
+						window.setTimeout(() => {
+							<%if(isApp){%>
+							location.href = "/IllustListAppV.jsp?ID=" + parseInt(requestInfo.CREATOR, 10);
+							<%}else{%>
+							location.href = "/" + parseInt(requestInfo.CREATOR, 10);
+							<%}%>
+						}, 5000);
 					} else {
 						switch (data.error_code) {
 							case <%=Controller.ErrorKind.CardAuth.getCode()%>:
@@ -192,7 +203,9 @@ if (!results.getResults(checkLogin)) {
 				"holderName": null,
 			};
 
-			const amount = parseInt($("#EditAmount").val(), 10);
+			const isPaidRequest = $("#OptionPaidRequest").prop("checked");
+			const amount = isPaidRequest ? parseInt($("#EditAmount").val(), 10) : 0;
+			const commission = isPaidRequest ? _calcCommission(amount, paymentMethod) : 0;
 			const paymentMethod = "CREDITCARD";
 			const requestInfo = {
 				"CLIENT": <%=checkLogin.m_nUserId%>,
@@ -202,12 +215,18 @@ if (!results.getResults(checkLogin)) {
 				"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
 				"ANONYMOUS": $("#OptionAnonymousRequest").prop("checked") ? 1 : 0,
 				"LICENSE": $("#OptionLicense").val(),
+				"PAID_REQUEST": isPaidRequest ? 1 : 0,
 				"AMOUNT": amount,
-				"COMMISSION": _calcCommission(amount, paymentMethod),
+				"COMMISSION": commission,
 				"PAYMENT_METHOD": 1,
 			}
 			if (requestInfo.CLIENT === requestInfo.CREATOR) {
 				alert('自分宛には依頼できません');
+				return false;
+			}
+
+			if (requestInfo.PAID_REQUEST === 0) {
+				SendRequestAjax(requestInfo, null, null);
 				return false;
 			}
 
@@ -258,7 +277,6 @@ if (!results.getResults(checkLogin)) {
 
 						epsilonPayment(requestInfo, cardInfo);
 					});
-
 				}
 			});
 
@@ -523,7 +541,7 @@ if (!results.getResults(checkLogin)) {
 						   id="OptionPaidRequest"
 						   value="0"
 						   checked="checked"
-						   onclick="$('#AmountArea').toggle()"
+						   onclick="$('#PaidOptionArea').toggle()"
 					/>
 					<label class="onoffswitch-label" for="OptionPaidRequest">
 						<span class="onoffswitch-inner"></span>
@@ -531,53 +549,58 @@ if (!results.getResults(checkLogin)) {
 					</label>
 				</div>
 			</div>
+			<%}else{%>
+				<input
+					type="hidden"
+					id="OptionPaidRequest"
+					<%=results.requestCreator.allowPaidRequest ? "checked=\"checked\"" : ""%>
+				/>
 			<%}%>
 
 			<%if(results.requestCreator.allowPaidRequest){%>
-			<div id="AmountArea" class="UoloadCmdOption">
-			<div id="ItemAmount" class="OptionItem">
-				<div class="OptionLabel">依頼金額</div>
-				<div class="OptionPublish">
-					<span class="RequestAmountUnit">¥</span><input id="EditAmount" class="EditPassword" type="number" maxlength="6"
-						    value="<%=results.requestCreator.amountLeftToMe%>"
-						    placeholder="おまかせ<%=results.requestCreator.amountLeftToMe%>円"
-							onkeyup="dispCommission()"/>
+			<div id="PaidOptionArea" class="UoloadCmdOption">
+				<div id="ItemAmount" class="OptionItem">
+					<div class="OptionLabel">依頼金額</div>
+					<div class="OptionPublish">
+						<span class="RequestAmountUnit">¥</span><input id="EditAmount" class="EditPassword" type="number" maxlength="6"
+								value="<%=results.requestCreator.amountLeftToMe%>"
+								placeholder="おまかせ<%=results.requestCreator.amountLeftToMe%>円"
+								onkeyup="dispCommission()"/>
+					</div>
 				</div>
-			</div>
-			<div class="OptionNotify" style="margin-bottom: 8px;">
-				¥<%=String.format("%,d", results.requestCreator.amountMinimum)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>
-			</div>
+				<div class="OptionNotify" style="margin-bottom: 8px;">
+					¥<%=String.format("%,d", results.requestCreator.amountMinimum)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>
+				</div>
 
-			<div id="ItemCommission" class="OptionItem">
-				<div class="OptionLabel">手数料</div>
-				<div class="OptionPublish" style="font-size: 13px">
-					¥<span id="Commission"></span>
+				<div id="ItemCommission" class="OptionItem">
+					<div class="OptionLabel">手数料</div>
+					<div class="OptionPublish" style="font-size: 13px">
+						¥<span id="Commission"></span>
+					</div>
 				</div>
-			</div>
-			<div class="OptionNotify" style="margin-bottom: 8px; text-align: right;">
-				依頼手数料<span id="CommissionRateSystem"></span>%
-				+トランザクション手数料<span id="CommissionRateAgency"></span>%<br>
-				詳しくは<a style="text-decoration: underline;" href="javascript:void(0);" onclick="dispCommissionDetailDlg()">こちら</a>
-			</div>
+				<div class="OptionNotify" style="margin-bottom: 8px; text-align: right;">
+					依頼手数料<span id="CommissionRateSystem"></span>%
+					+トランザクション手数料<span id="CommissionRateAgency"></span>%<br>
+					詳しくは<a style="text-decoration: underline;" href="javascript:void(0);" onclick="dispCommissionDetailDlg()">こちら</a>
+				</div>
 
-			<div id="ItemAmountTotal" class="OptionItem" style="margin-bottom: 40px;">
-				<div class="OptionLabel">支払総額</div>
-				<div class="OptionPublish">
-					¥<span id="AmountTotal"></span>
+				<div id="ItemAmountTotal" class="OptionItem" style="margin-bottom: 40px;">
+					<div class="OptionLabel">支払総額</div>
+					<div class="OptionPublish">
+						¥<span id="AmountTotal"></span>
+					</div>
 				</div>
-			</div>
+				<div class="OptionItem">
+					<div class="OptionLabel">返答期限</div>
+					<div class="OptionPublish">依頼から<%=results.requestCreator.returnPeriod%>日後</div>
+				</div>
+				<div class="OptionItem">
+					<div class="OptionLabel">お渡し期限</div>
+					<div class="OptionPublish">依頼から<%=results.requestCreator.deliveryPeriod%>日後</div>
+				</div>
+				<div class="OptionNotify">期限を過ぎると自動でキャンセルされます</div>
 			</div>
 			<%}%>
-
-			<div class="OptionItem">
-				<div class="OptionLabel">返答期限</div>
-				<div class="OptionPublish">依頼から<%=results.requestCreator.returnPeriod%>日後</div>
-			</div>
-			<div class="OptionItem">
-				<div class="OptionLabel">お渡し期限</div>
-				<div class="OptionPublish">依頼から<%=results.requestCreator.deliveryPeriod%>日後</div>
-			</div>
-			<div class="OptionNotify">期限を過ぎると自動でキャンセルされます</div>
 
 		</div>
 
