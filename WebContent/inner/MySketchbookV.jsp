@@ -112,15 +112,15 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			</span>
 			<%}%>
 			<section id="IllustItemList" class="IllustItemList" style="padding-bottom: 100px;">
-				<% for (int cnt=1; cnt<cResults.contentList.size(); cnt++) { %>
+				<% for (int cnt=0; cnt<cResults.contentList.size(); cnt++) { %>
 					<%=CCnv.Content2Html(cResults.contentList.get(cnt), checkLogin.m_nUserId, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 					<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
 						<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 					<%}%>
 				<%}%>
-				<%if(!cResults.contentList.isEmpty()){%>
+				<%if(cResults.contentList.isEmpty()){%>
 				<div style="margin: 50px 30px;">
-					ここには、エアスケブ(β)でいただいた作品が表示されます。
+					ここには、エアスケブ(β)でクリエイターからいただいた作品が表示されます。
 				</div>
 				<div style="margin: 0 30px;">
 					<p>エアスケブ(β)とは、ポイピクユーザー（依頼主）がお題を依頼し、受け取ったポイピクユーザー（クリエイター）がイラストやテキストを創作してお渡しする仕組みです。</p>

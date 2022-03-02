@@ -67,6 +67,13 @@ public class SendRequestC extends Controller {
 			return false;
 		}
 
+		// 送信数リミットにかかっていたらエラー
+		if (Request.isReachedSendLimit(clientUserId)) {
+			Log.d("エアスケブ依頼の送信リミットにかかった:" + clientUserId);
+			errorKind = ErrorKind.Unknown;
+			return false;
+		}
+
 		// 手数料検証
 		if (commission != calcCommission()) {
 			Log.d("クライアントに提示している手数料とサーバ側で計算した手数料が異なる");
@@ -79,12 +86,12 @@ public class SendRequestC extends Controller {
 		// 想定外の依頼がされたかチェック
 		RequestCreator requestCreator = new RequestCreator(creatorUserId);
 		if (requestCreator.status != RequestCreator.Status.Enabled) {
-			Log.d("受付していないユーザーへのエアスケブ依頼");
+			Log.d("受付していないユーザーへのエアスケブ依頼:" + clientUserId);
 			errorKind = ErrorKind.Unknown;
 			return false;
 		}
 		if (!requestCreator.allowFreeRequest && paidRequest == 0 || !requestCreator.allowPaidRequest && paidRequest == 1) {
-			Log.d("受付していない形式（有償・無償）のエアスケブ依頼");
+			Log.d("受付していない形式（有償・無償）のエアスケブ依頼:" + clientUserId);
 			errorKind = ErrorKind.Unknown;
 			return false;
 		}

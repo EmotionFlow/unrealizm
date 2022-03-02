@@ -103,7 +103,7 @@ if (!results.getResults(checkLogin)) {
 					HideMsgStatic();
 					if (data.result === <%=Common.API_OK%>) {
 						if (requestInfo.PAID_REQUEST>0) {
-							DispMsg("依頼を送信しました！クリエイターが承認した時点で、指定した金額が決済されます。", 5000);
+							DispMsg("依頼を送信しました！クリエイターがこの依頼を承認すると、指定した金額が決済されます。", 5000);
 						} else {
 							DispMsg("依頼を送りました！", 5000);
 						}
@@ -235,7 +235,7 @@ if (!results.getResults(checkLogin)) {
 					return false;
 				} else if (result === 1) {
 					console.log("epsilonPayment");
-					if (confirm("クリエイターが依頼を承認すると、登録済みのクレジットカードに"
+					if (confirm("クリエイターがこの依頼を承認すると、登録済みのクレジットカードに"
 						+ (requestInfo.AMOUNT + requestInfo.COMMISSION).toLocaleString() + "円が課金されます。" +
 						"よろしいですか？")) {
 						epsilonPayment(requestInfo, null);
@@ -243,7 +243,7 @@ if (!results.getResults(checkLogin)) {
 				} else if (result === 0) {
 					const title = "依頼送信";
 					const description = "クレジットカード情報を入力してください。" +
-						"クリエイターが依頼を承認すると、入力されたカードに対し、" +
+						"クリエイターがこの依頼を承認すると、入力されたカードに対し、" +
 						"<b>" + (requestInfo.AMOUNT + requestInfo.COMMISSION) + "円</b>(税込)が課金されます。";
 					<%// クレジットカード情報入力ダイアログを表示、%>
 					<%// 入力内容を代理店に送信し、Tokenを取得する。%>
@@ -416,6 +416,15 @@ if (!results.getResults(checkLogin)) {
 			<%=results.isBlocking ? "ブロック中です。" : "ブロックされています。"%>
 			<%}else{%>
 				<%if(results.user.m_bRequestEnabled){%>
+
+				<%if(results.isReachedLimit){%>
+				<div style="color: #fff8db; font-size: 12px; margin: 20px auto;">
+					送信できる依頼数の制限に達しているため、<br>
+					ただいまエアスケブの依頼を送ることができません。<br>
+					しばらく間をあけてからご依頼ください。
+				</div>
+				<%}%>
+
 				<%=results.user.m_strNickName%>さんへのエアスケブ依頼
 					<%if(!checkLogin.m_bLogin){%>
 					<div style="text-align: center; font-size: 12px; font-weight: normal">ログインすると依頼を送信できます</div>
@@ -625,9 +634,17 @@ if (!results.getResults(checkLogin)) {
 		</div>
 
 		<%if(checkLogin.m_bLogin){%>
-		<div class="UoloadCmd">
-			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して依頼する</a>
-		</div>
+			<%if(results.isReachedLimit){%>
+			<div style="color: #fff8db; font-size: 12px; margin: 20px auto; text-align: center">
+				送信できる依頼数の制限に達しているため、<br>
+				ただいまエアスケブの依頼を送ることができません。<br>
+				しばらく間をあけてからご依頼ください。
+			</div>
+			<%}else{%>
+			<div class="UoloadCmd">
+				<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して依頼する</a>
+			</div>
+			<%}%>
 		<%}else{%>
 		<div style="text-align: center;">ログインすると依頼できます</div>
 		<%}%>

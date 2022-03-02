@@ -5,7 +5,6 @@ import jp.pipa.poipiku.util.Log;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -18,6 +17,9 @@ public final class Request extends Model{
 	public static final int SYSTEM_COMMISSION_RATE_PER_MIL = 100;
 	// 取引手数料率（‰）
 	public static final int AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL = 36;
+
+	public static final int SEND_LIMIT_PER_24H = 5;
+	public static final int SEND_LIMIT_PER_7D = 10;
 
 	public int id = -1;
 	public int clientUserId = -1;
@@ -406,5 +408,48 @@ public final class Request extends Model{
 			return false;
 		}
 		return updateStatus(Status.Canceled);
+	}
+
+	public static boolean isReachedSendLimit(int _clientUserId) {
+		boolean result = false;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "SELECT count(*) FROM requests WHERE client_user_id=? AND created_at > now() - INTERVAL '24 hours'";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, _clientUserId);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			if (resultSet.getInt(1) >= SEND_LIMIT_PER_24H) {
+				result = true;
+			}
+			resultSet.close();
+			statement.close();
+
+			if (!result) {
+				sql = "SELECT count(*) FROM requests WHERE client_user_id=? AND created_at > now() - INTERVAL '7 days'";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, _clientUserId);
+				resultSet = statement.executeQuery();
+				resultSet.next();
+				if (resultSet.getInt(1) >= SEND_LIMIT_PER_7D) {
+					result = true;
+				}
+				resultSet.close();
+				statement.close();
+			}
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			result = false;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		return result;
 	}
 }
