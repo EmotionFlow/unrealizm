@@ -2,4 +2,4 @@
 <%
 	boolean isApp = false;
 %>
-<%@ include file="/inner/MySketchbookV.jsp"%>
+<%@ include file="/inner/MySketchbookF.jsp"%>
