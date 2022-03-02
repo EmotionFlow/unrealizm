@@ -3,7 +3,7 @@
 <%
 final CheckLogin checkLogin = new CheckLogin(request, response);
 
-final boolean bSmartPhone = isApp ? true : Util.isSmartPhone(request);
+final boolean bSmartPhone = isApp || Util.isSmartPhone(request);
 final RequestNewC results = new RequestNewC();
 results.getParam(request);
 
@@ -105,7 +105,7 @@ if (!results.getResults(checkLogin)) {
 						if (requestInfo.PAID_REQUEST>0) {
 							DispMsg("依頼を送信しました！クリエイターが承認した時点で、指定した金額が決済されます。", 5000);
 						} else {
-							DispMsg("依頼を送信しました！", 5000);
+							DispMsg("依頼を送りました！", 5000);
 						}
 						window.setTimeout(() => {
 							<%if(isApp){%>
@@ -142,7 +142,6 @@ if (!results.getResults(checkLogin)) {
 			);
 		}
 
-		// epsilonPayment - epsilonTrade間で受け渡しする変数。
 		let g_epsilonInfo = {
 			"requestInfo": null,
 			"cardInfo": null,
@@ -159,7 +158,6 @@ if (!results.getResults(checkLogin)) {
 				g_epsilonInfo.cardInfo = _cardInfo;
 
 				const contructCode = "68968190";
-				//let cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "POI PASS"};
 				let cardObj = {
 					"cardno": String(_cardInfo.number),
 					"expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
@@ -169,14 +167,11 @@ if (!results.getResults(checkLogin)) {
 
 				EpsilonToken.init(contructCode);
 
-				// epsilonTradeを無名関数で定義するとコールバックしてくれない。
-				// global領域に関数を定義し、関数名を引数指定しないとダメ。
 				EpsilonToken.getToken(cardObj , epsilonTrade);
 			}
 		}
 
 		function epsilonTrade(response){
-			// もう使うことはないので、カード番号を初期化する。
 			if(g_epsilonInfo.cardInfo.number){
 				g_epsilonInfo.cardInfo.number = null;
 			}

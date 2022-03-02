@@ -72,6 +72,8 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%}%>
 		<%@ include file="/inner/TRequestIntroduction.jsp"%>
+		<%@ include file="/inner/TCreditCard.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
@@ -243,6 +245,12 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
             color: #6d6965;
             text-align: center;
         }
+
+        .RequestUser > .GiftBtn {
+            padding: 1px 6px;
+            font-size: 12px;
+            margin-left: 10px;
+		}
 		</style>
 	</head>
 
