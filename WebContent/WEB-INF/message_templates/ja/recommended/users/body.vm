@@ -3,7 +3,7 @@
 あなたがポイピクでフォローしていないおすすめユーザーを紹介します。
 
 #foreach($u in $recommend_users)
-【$u.nickname】 #if($u.requestCreatorStatus==2) ☆リクエスト募集中 #end
+【$u.nickname】 #if($u.requestCreatorStatus==2) ☆エアスケブ募集中 #end
 #if($u.profile.length()>0)
 $u.profile
 #end

@@ -81,14 +81,19 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 	function updateAllowAnonymous(){
 		_updateRequestSetting("AllowAnonymous", $("#AllowAnonymous").prop("checked") ? 1 : 0);
 	}
-	function updateAllowFreeRequest(){
-		_updateRequestSetting("AllowFreeRequest", $("#AllowFreeRequest").prop("checked") ? 1 : 0);
-	}
-	function updateAllowPaidRequest(){
-		const isChecked = $("#AllowPaidRequest").prop("checked");
-		_updateRequestSetting("AllowPaidRequest", isChecked ? 1 : 0);
+
+	function updateSelectPaidRequest(){
+		const selected = $("#SelectPaidRequest").val();
 		const $SettingAmountItems = $('#SettingAmountItems');
-		isChecked ? $SettingAmountItems.show() : $SettingAmountItems.hide();
+		if (selected === 'FREE') {
+			_updateRequestSetting("AllowFreeRequest", 1);
+			_updateRequestSetting("AllowPaidRequest", 0);
+			$SettingAmountItems.hide();
+		} else {
+			_updateRequestSetting("AllowFreeRequest", 0);
+			_updateRequestSetting("AllowPaidRequest", 1);
+			$SettingAmountItems.show();
+		}
 	}
 
 	function _validateRange(min, max, value) {
@@ -328,7 +333,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 					</div>
 					<div class="RegistMessage">
 						依頼の返答期限を設定します。<%=RequestCreator.RETURN_PERIOD_MIN%>日から<%=RequestCreator.RETURN_PERIOD_MAX%>日の間で設定できます。
-						返答期限を過ぎた依頼はキャンセル扱いとなります。
+						返答期限を過ぎた依頼はキャンセル扱いとなります。無償依頼の際は依頼主には表示されません。
 					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateReturnPeriod()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -344,7 +349,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 					</div>
 					<div class="RegistMessage">
 						依頼日からのお渡し(納品)期限を設定します。<%=RequestCreator.DELIVERY_PERIOD_MIN%>日から<%=RequestCreator.DELIVERY_PERIOD_MAX%>日の間で設定できます。返答締切日数より短くすることはできません。
-						お渡し期限を過ぎた依頼はキャンセル扱いとなります。
+						お渡し期限を過ぎた依頼はキャンセル扱いとなります。無償依頼の際は依頼主には表示されません。
 					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateDeliveryPeriod()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -353,42 +358,17 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			</div>
 
 			<div class="SettingListItem">
-				<div class="SettingListTitle">無償依頼を受ける</div>
+				<div class="SettingListTitle">無償 / 有償</div>
 				<div class="SettingBody">
-					金銭のやりとりがない、無償の依頼を受け付けます。
+					依頼を無償とするか、有償依頼にするかを選択します。有償依頼では、クリエイターが設定した範囲内で、依頼主が金額を指定します。
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
-						<div class="RegistMessage">
-							<div class="onoffswitch OnOff">
-								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AllowFreeRequest" value="0" <%if(requestCreator.allowFreeRequest){%>checked="checked"<%}%> />
-								<label class="onoffswitch-label" for="AllowFreeRequest">
-									<span class="onoffswitch-inner"></span>
-									<span class="onoffswitch-switch"></span>
-								</label>
-							</div>
+						<div class="RegistMessage" style="margin: 0">
+							<select id="SelectPaidRequest">
+								<option value="FREE" <%=requestCreator.allowFreeRequest ? "selected": ""%>>無償にする</option>
+								<option value="PAID" <%=requestCreator.allowPaidRequest ? "selected": ""%>>有償の依頼を受け付ける</option>
+							</select>
 						</div>
-						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowFreeRequest()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-					</div>
-				</div>
-			</div>
-
-			<div class="SettingListItem">
-				<div class="SettingListTitle">有償依頼を受ける</div>
-				<div class="SettingBody">
-					有償の依頼を受け付けます。
-					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
-						<div class="RegistMessage">
-							<div class="onoffswitch OnOff">
-								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
-									   id="AllowPaidRequest"
-									   value="0" <%if(requestCreator.allowPaidRequest){%>checked="checked"<%}%>
-								/>
-								<label class="onoffswitch-label" for="AllowPaidRequest">
-									<span class="onoffswitch-inner"></span>
-									<span class="onoffswitch-switch"></span>
-								</label>
-							</div>
-						</div>
-						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowPaidRequest()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateSelectPaidRequest()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 					</div>
 				</div>
 			</div>

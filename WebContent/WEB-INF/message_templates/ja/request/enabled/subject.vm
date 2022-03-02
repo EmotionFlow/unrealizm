@@ -1,1 +1,1 @@
-#parse("ja/mail_subject_header.vm") リクエスト募集を開始しました
+#parse("ja/mail_subject_header.vm") エアスケブ受付を開始しました
