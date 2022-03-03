@@ -43,7 +43,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 #MenuUpload .FooterMenuItemIcon {background-position: -56px 0;}
 #MenuAct .FooterMenuItemIcon {background-position: -84px 0;}
 #MenuMe .FooterMenuItemIcon {background-position: -112px 0;}
-#MenuMyRequests .FooterMenuItemIcon {background-position: -112px 0;}
+#MenuMyRequests .FooterMenuItemIcon {background: url(/img/table_optimized.svg) no-repeat;}
 #MenuSettings .FooterMenuItemIcon {background-position: -140px 0;}
 #MenuGenre .FooterMenuItemIcon {background-position: -168px 0;}
 #MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: 0 -28px;}

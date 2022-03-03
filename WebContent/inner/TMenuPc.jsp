@@ -56,19 +56,19 @@
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
-			<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">
-				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
-			</a>
-			<a id="MenuAct" style="<%=Util.isSmartPhone(request)?"":"margin-right: 25px;"%>" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+			<a id="MenuAct" style="<%=Util.isSmartPhone(request)?"":"margin-right: 18px;"%>" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon">
 					<div id="InfoNumAct" class="InfoNum">0</div>
 				</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			</a>
-			<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+			<a id="MenuMe" style="<%=Util.isSmartPhone(request)?"":"margin-right: 20px;"%>" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
+			</a>
+			<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">
+				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
 			</a>
 			<a id="MenuMyRequests" class="FooterMenuItem" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
 				<span class="FooterMenuItemIcon"></span>

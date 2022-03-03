@@ -47,7 +47,7 @@ public final class MySketchbookC {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			String strCondStart = (startId >0) ? " AND content_id<? " : "";
+			String strCondStart = (startId >0) ? " AND contents_0000.content_id<? " : "";
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
@@ -62,7 +62,7 @@ public final class MySketchbookC {
 					"  AND r.status = ?" +
 					"  AND safe_filter<=? " +
 					strCondStart +
-					" ORDER BY content_id DESC OFFSET ? LIMIT ? ";
+					" ORDER BY contents_0000.content_id DESC OFFSET ? LIMIT ? ";
 
 			statement = connection.prepareStatement(sql);
 			idx = 1;
