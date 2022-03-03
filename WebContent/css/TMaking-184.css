@@ -2593,7 +2593,7 @@ Decoration
 	height: 60px;
 	box-sizing: border-box;
 	border: solid 1px #eee;
-	background: url(/img/menu_pc-11.png) no-repeat;
+	background: url(/img/menu_pc-12.png) no-repeat;
 	background-size: 567%;
 	position: relative;
 	background-position: -284px -35px;
@@ -3038,7 +3038,7 @@ hr.IllustItemListSeparator {
 	display: inline-block;
 	width: 17px;
 	height: 17px;
-	background: url(/img/menu_pc-11.png) no-repeat;
+	background: url(/img/menu_pc-12.png) no-repeat;
 	background-size: 860%;
 	position: relative;
 	background-position: -130px -16px;

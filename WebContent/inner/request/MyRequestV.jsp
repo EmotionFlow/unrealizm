@@ -94,9 +94,9 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			$(function(){
 				<%if(bSmartPhone){%>
 				$('#MenuRequest').addClass('Selected');
-				<%}else{%>
-				$('#MenuMyRequests').addClass('Selected');
+				$('#MenuMyRequests').show();
 				<%}%>
+				$('#MenuMyRequests').addClass('Selected');
 				$('#MenuSearch').hide();
 
 				<%if(cResults.m_strMessage.length()>0) {%>
