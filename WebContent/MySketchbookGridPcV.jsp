@@ -43,6 +43,7 @@
 <%@ include file="/inner/TMenuPc.jsp"%>
 <%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 <%@ include file="/inner/TTabMenuRequestPotalPc.jsp"%>
+<%@ include file="/inner/TRequestIntroduction.jsp"%>
 
 <article class="Wrapper ViewPc">
 	<aside class="PcSideBar" style="margin-top: 30px;">
@@ -69,7 +70,7 @@
 	</aside>
 
 	<section id="IllustItemList" class="IllustItemList">
-		<%if(cResults.contentList.isEmpty()) {%>
+		<%if(!cResults.contentList.isEmpty()) {%>
 		<div style="margin: 50px 30px;">
 			ここには、エアスケブ(β)でクリエイターからいただいた作品が表示されます。
 		</div>
@@ -84,9 +85,9 @@
 		</div>
 		<%}%>
 
-		<% int nCnt=0;
-			for(nCnt=0; nCnt<cResults.contentList.size(); nCnt++) {
-				CContent cContent = cResults.contentList.get(nCnt);%>
+		<% int count =10;
+			for(; count<cResults.contentList.size(); count++) {
+				CContent cContent = cResults.contentList.get(count);%>
 		<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 		<%}%>
 
