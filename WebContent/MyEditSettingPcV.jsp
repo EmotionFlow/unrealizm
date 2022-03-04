@@ -1,8 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="oauth.signpost.OAuthConsumer"%>
-<%@page import="oauth.signpost.OAuthProvider"%>
-<%@page import="oauth.signpost.basic.DefaultOAuthProvider"%>
-<%@page import="oauth.signpost.basic.DefaultOAuthConsumer"%>
 <%@include file="/inner/Common.jsp"%>
 <%!
 	static String getSettingMenuItem(String id, String title){
@@ -59,7 +55,7 @@ MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
-MENU.put("REQUEST", _TEX.T("Request"));
+MENU.put("REQUEST", "<span class=\"RequestIcon\"></span>" + _TEX.T("Request"));
 
 
 String[][] menuOrder = {
@@ -73,11 +69,11 @@ String[][] menuOrder = {
 		"TWITTER",
 		"MAIL",
 		"PAYMENT",
+		"REQUEST",
 		"POIPASS",
 		"CHEER",
 		"ACCOUNT",
 		"INFO",
-		"REQUEST"
 		}
 };
 %>
@@ -112,7 +108,7 @@ String[][] menuOrder = {
 										// complete
 										DispMsg("<%=_TEX.T("EditIllustVCommon.Uploaded")%>");
 										sendObjectMessage("reloadParent");
-										location.reload(true);
+										location.reload();
 										break;
 									case -1:
 										// file size error
@@ -293,7 +289,20 @@ String[][] menuOrder = {
 			color: #000;
 			background-color: #f3f3f3;
 		}
+
 		<%}%>
+
+        .RequestIcon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
+            background: url(/img/menu_pc-12.png) no-repeat;
+            background-size: 1054%;
+            position: relative;
+            background-position: -160px -21px;
+            top: 2px;
+		}
 		</style>
 	</head>
 

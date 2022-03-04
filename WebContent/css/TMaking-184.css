@@ -3039,13 +3039,13 @@ hr.IllustItemListSeparator {
 	width: 17px;
 	height: 17px;
 	background: url(/img/menu_pc-12.png) no-repeat;
-	background-size: 860%;
+	background-size: 925%;
 	position: relative;
-	background-position: -130px -16px;
+	background-position: -119px -14px;
 }
 
 .RequestBtn:hover .SendRequestIcon {
-	background-position: -130px 0;
+	background-position: -119px 3px;
 }
 
 /**********IllustView InfoForm **********/

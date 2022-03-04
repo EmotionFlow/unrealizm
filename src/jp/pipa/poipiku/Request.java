@@ -18,7 +18,7 @@ public final class Request extends Model{
 	// 取引手数料率（‰）
 	public static final int AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL = 36;
 
-	public static final int SEND_LIMIT_PER_24H = 5;
+	public static final int SEND_LIMIT_PER_24H = 3;
 	public static final int SEND_LIMIT_PER_7D = 10;
 
 	public int id = -1;

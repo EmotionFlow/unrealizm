@@ -2,7 +2,6 @@
 <%@include file="/inner/Common.jsp" %>
 <%
 	CheckLogin checkLogin = new CheckLogin(request, response);
-	if (!checkLogin.m_bLogin) return;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">

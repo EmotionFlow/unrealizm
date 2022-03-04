@@ -13,46 +13,29 @@ function _getRequestIntroductionHtml(){
 
 <h2 class="RequestIntroDlgTitle">エアスケブ(β)とは？</h2>
 <div class="RequestIntroDlgInfo" style="margin-top: 11px;">
+	<p style="text-align: center; color:#ff6b00"><i class="fas fa-bullhorn"></i><br> リクエスト(β)→エアスケブ(β)<br>無償依頼にも対応しました！</p>
 	<p>ポイピクユーザー（依頼主）がお題を依頼し、受け取ったポイピクユーザー（クリエイター）がイラストやテキストを創作してお渡しする仕組みです。</p>
-	<p style="text-align: center"><span style="color:#ff0000">new!</span> 無償依頼にも対応しました！
 </div>
 <h2 class="RequestIntroDlgTitle">特徴</h2>
 <div class="RequestIntroDlgInfo">
-<ul style="font-weight:bold">
-	<li>依頼主は、依頼時に創作物の用途範囲を明確に選択します。</li>
-	<li>クリエイターは、受け取ったリクエストから気に入ったもののみ、自分のペースに合わせて承認できます。</li>
-	<li>依頼主からの要求は依頼時のみ。それ以外はポイピク内外問わず、コミュニケーション禁止です。</li>
-	<li>創作物の内容は、依頼内容・用途・金額から、クリエイターが判断します。</li>
-	<li>(有償依頼の場合)クリエイター側にはリクエストにかかる手数料が一切発生しません。</li>
+<ul style="font-weight:400; color:#707070">
+	<li>創作物の用途範囲を選択して依頼します。</li>
+	<li>クリエイターは受け取った依頼から気に入ったもののみ、自分のペースに合わせて承認できます。</li>
+	<li>創作の内容は、依頼内容・用途・有償の場合は金額から、クリエイターが判断します。</li>
+	<li>無償依頼：手数料は不要です。</li>
+	<li>有償依頼：クリエイター側には依頼にかかる手数料は発生しません。</li>
 </ul>
 </div>
 <h2 class="RequestIntroDlgTitle">利用の流れ</h2>
 <div class="RequestIntroDlgInfo">
 <ol>
-	<li>クリエイターはエアスケブ受付を開始します。</li>
-	<li>依頼主はクリエイターのエアスケブ受付ページから、依頼を送信します。</li>
-	<li>クリエイターは自分の都合や内容を検討して、受けられそうな依頼を承認します。</li>
-	<li>クリエイターは創作を始めます。</li>
-	<li>クリエイターは期限内に創作物を作成し、依頼主にお渡します。</li>
-	<li>創作物はお渡し後もクリエイターのマイボックスにあり、公開設定を変更できます。</li>
-	<li>依頼者は、創作物の公開範囲を限定されていても閲覧できます。また原寸画像をDLできます。</li>
+	<li>クリエイター：エアスケブ受付を開始します。</li>
+	<li>依頼主：エアスケブ受付ページから依頼を送信します。</li>
+	<li>クリエイター：受けられそうな依頼を承認し、創作を始めます。</li>
+	<li>クリエイター：できあがったら依頼主にお渡します。</li>
+	<li>作品はお渡し後もクリエイターのマイボックスにあります。（更新や削除は不可）</li>
+	<li>依頼者はマイスケブ画面にて、いただいた作品を閲覧できます。また原寸画像をDLできます。</li>
 </ol>
-(有償依頼の場合)
-<ol>
-	<li>クリエイターが依頼を承認した時点で、依頼主側の支払いが決済されます。</li>
-	<li>納品のタイミングで、報酬がポイピクのポイントに加算されます。</li>
-	<li>ポイピクのポイントは日本国内の銀行口座に入金できます。</li>
-</ol>
-</div>
-<h2 class="RequestIntroDlgTitle">禁止・制限事項</h2>
-<div class="RequestIntroDlgInfo">
-<ul>
-	<li>エアスケブ受付開始にはいくつか条件があります。条件に合致しない場合、開始をお断りさせていただくことがあります。</li>
-	<li>(有償依頼の場合)エアスケブ機能を個人間の送金手段として使うことはできません。</li>
-</ul>
-</div>
-<div class="RequestIntroDlgInfo" style="text-align: center;">
-<a href="/GuideLineRequest<%=isApp?"App":"Pc"%>V.jsp">より詳しいガイドラインはこちら</a>
 </div>
 
 <%if(isApp){%>
@@ -60,10 +43,14 @@ function _getRequestIntroductionHtml(){
 エアスケブはブラウザ版のポイピク設定画面からはじめられます
 </div>
 <%}else{%>
-<div class="RequestIntroDlgTitle" style="text-align: center;">
-<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST">エアスケブの受付をはじめる</a>
+<div class="RequestIntroDlgTitle" style="color: #ff6b00; text-align: center;">
+<a style="color: #ff6b00;" href="/MyEditSettingPcV.jsp?MENUID=REQUEST">エアスケブの受付をはじめる</a>
 </div>
 <%}%>
+
+<div class="RequestIntroDlgInfo" style="margin-top: 22px; text-align: center;">
+<a style="text-decoration: none;" href="/GuideLineRequest<%=isApp?"App":"Pc"%>V.jsp">より詳しいガイドラインはこちら</a>
+</div>
 
 </div>
 `;

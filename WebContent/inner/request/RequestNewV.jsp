@@ -463,8 +463,9 @@ if (!results.getResults(checkLogin)) {
 		</div>
 		<div class="TextBody">
 			依頼メッセージ
+			<div class="TextBodyCharNum" style="text-align: left;">クリエイターの意向を尊重してお伝えください</div>
 			<textarea id="EditRequestText" class="EditTextBody"
-					  maxlength="1000" placeholder="改行含め1000字まで"
+					  maxlength="1000"
 					  onkeyup="dispRequestTextCharNum()"></textarea>
 			<div id="RequestTextCharNum" class="TextBodyCharNum">1</div>
 		</div>
@@ -489,7 +490,7 @@ if (!results.getResults(checkLogin)) {
 				<%if (results.requestCreator.allowSensitive()) {%>
 				依頼内容がセンシティブなときは必ずON
 				<%}else{%>
-				このクリエイターはセンシティブな内容を受け付けません
+				センシティブな内容を受け付けません
 				<%}%>
 			</div>
 
@@ -510,7 +511,7 @@ if (!results.getResults(checkLogin)) {
 			</div>
 			<div class="OptionNotify" style="margin-bottom: 30px">
 				<%if (!results.requestCreator.allowAnonymous()) {%>
-				このクリエイターは匿名依頼を受け付けません
+				匿名依頼を受け付けません
 				<%}%>
 			</div>
 
@@ -613,12 +614,11 @@ if (!results.getResults(checkLogin)) {
 		</div>
 
 		<div class="TextBody" style="margin-bottom: 10px">
-			ルール
 			<div class="RequestRule">
 				<ol style="padding-inline-start: 25px;">
 					<li>依頼本文以外での連絡はできません。</li>
 					<li>打ち合わせ・リテイクはできません。</li>
-					<li>現在β版のため、ルールや機能が変更されることがあります。</li>
+					<li>クリエイターへの嫌がらせや中傷など、依頼と無関係なメッセージは不正行為とみなします。</li>
 				</ol>
 				<%if(results.requestCreator.allowPaidRequest){%>
 				(有償依頼の場合)

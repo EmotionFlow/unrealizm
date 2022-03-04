@@ -38,9 +38,10 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 							Swal.fire({
 								type: "info",
 								html: _getJudgeOkHtml(),
-							});
+							}).then(()=>{location.reload();});
 						} else {
-							DispMsg("エアスケブ受付を停止しました");
+							alert("エアスケブの受付を停止しました");
+							location.reload();
 						}
 					} else {
 						DispMsg("保存しました");
@@ -48,9 +49,9 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				} else if (data.error_code === <%=Controller.ErrorKind.JudgeFailure.getCode()%>) {
 					$("#RequestEnabled").removeAttr("checked");
 					Swal.fire({
-						type: "warning",
+						type: "info",
 						html: _getJudgeFailureHtml(),
-					});
+					}).then(()=>{location.reload();});
 				} else {
 					DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 				}
@@ -261,10 +262,10 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				</div>
 			</div>
 			<div class="SettingListItem">
-				<div class="SettingListTitle">クリエイタープロフィール</div>
-				得意なジャンルなど、依頼する方に向けてのメッセージを設定できます。受付ページの上部に表示されます。
+				<div class="SettingListTitle">クリエイターメッセージ</div>
+				得意なジャンルなど、依頼する方に向けてのメッセージを設定できます。受付ページの上部に表示されます。<br>
 				<div class="SettingBody">
-					<textarea id="CreatorProfile" class="SettingBodyTxt" rows="12" maxlength="5000"><%=Util.toStringHtmlTextarea(requestCreator.profile)%></textarea>
+					<textarea id="CreatorProfile" class="SettingBodyTxt" rows="12" maxlength="5000" placeholder="空欄にするとプロフィールの自己紹介が表示されます"><%=Util.toStringHtmlTextarea(requestCreator.profile)%></textarea>
 					<div class="SettingBodyCmd">
 						<div id="CreatorProfileMessage" class="RegistMessage">5000文字まで</div>
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateProfile()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -357,10 +358,10 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				</div>
 			</div>
 
-			<div class="SettingListItem">
+			<div id="PaidSetting" class="SettingListItem">
 				<div class="SettingListTitle">無償 / 有償</div>
 				<div class="SettingBody">
-					依頼を無償とするか、有償依頼にするかを選択します。有償依頼では、クリエイターが設定した範囲内で、依頼主が金額を指定します。
+					依頼を無償とするか、有償依頼にするかを選択します。有償依頼では、クリエイターが指定した範囲内で、依頼主が金額を提示します。
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage" style="margin: 0">
 							<select id="SelectPaidRequest">

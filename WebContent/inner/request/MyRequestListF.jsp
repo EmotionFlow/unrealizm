@@ -96,7 +96,7 @@ for(MyRequestListC.Result r : results.requests) {
 				<span class="RequestUserLabel"><%=results.category.equals("SENT")?"To":"From"%></span><span class="RequestUserNickname"><%=r.nickname%></span>
 				<%}%>
 			</a>
-			<%if(r.request.status == Request.Status.Done && r.request.amount == 0){%>
+			<%if(r.request.creatorUserId != checkLogin.m_nUserId && r.request.status == Request.Status.Done && r.request.amount == 0){%>
 				<a class="BtnBase GiftBtn" href="javascript: void(0);" onclick="SendGift(<%=r.request.creatorUserId%>, '<%=r.nickname%>')">
 					<i class="fas fa-gift"></i> <span class="RequestEnabled">おふせ</span>
 				</a>
