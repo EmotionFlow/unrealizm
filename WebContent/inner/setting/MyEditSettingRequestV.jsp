@@ -227,7 +227,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
 			クリエイターとしてポイピクユーザーからエアスケブの依頼を受け付けます。
 			<%}else{%>
-			受け付けを停止していても、現在受信している依頼は承認したり、創作物をお渡ししたりできます。
+			受け付けを停止していても、現在受信している依頼は承認したり、制作物をお渡ししたりできます。
 			<%}%>
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >

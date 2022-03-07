@@ -121,37 +121,38 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 				<%}%>
 				<%if(cResults.contentList.isEmpty()){%>
 				<div style="margin: 30px; text-align: center; color:#fffdb1;border: solid;border-radius: 5px;padding: 20px 0; font-size: 15px;">
-					<i class="fas fa-bullhorn" style="font-size: 30px; margin-bottom: 15px"></i><br> リクエスト(β) → エアスケブ(β)
+					<i class="fas fa-bullhorn" style="font-size: 30px; margin-bottom: 15px"></i><br> <%=_TEX.T("MySketchbookV.Info01")%>
 					<div style="margin-top: 10px;">
-					無償依頼に対応しました！<br>
+						<%=_TEX.T("MySketchbookV.Info02")%><br>
 					<span style="font-size: 11px">
-						すでにリクエスト受付中の方は<br>
+						<%=_TEX.T("MySketchbookV.Info03")%><br>
 						<%if(isApp){%>
-						ブラウザ版ポイピクの設定画面から変更できます
+						<%=_TEX.T("MySketchbookV.Info04")%>
 						<%}else{%>
 						<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="color:#fffdb1; text-decoration: underline;">
-							設定画面</a>にて変更できます
+						<%=_TEX.T("MySketchbookV.Info05")%>
+						</a>
 						<%}%>
 					</span>
 					</div>
 				</div>
 				<div style="margin: 50px 30px;">
-					ここには、エアスケブ(β)でクリエイターからいただいた作品が表示されます。
+					<%=_TEX.T("MySketchbookV.Info06")%>
 				</div>
 
 				<div style="text-align: center; color: #ffffff; text-decoration: underline;">
 					<div>
 						<%if(isApp){%>
-						エアスケブの受付設定はブラウザ版のポイピクからできます
+						<%=_TEX.T("MySketchbookV.Info07")%>
 						<%}else{%>
 						<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="font-weight: 600;">
-							エアスケブの受付を設定する
+							<%=_TEX.T("MySketchbookV.Info08")%>
 						</a>
 						<%}%>
 					</div>
 					<div style="margin-top: 20px">
 						<a href="javascript: void(0);" onclick="dispRequestIntroduction()">
-							詳細を見る
+							<%=_TEX.T("MySketchbookV.Info09")%>
 						</a>
 					</div>
 				</div>
