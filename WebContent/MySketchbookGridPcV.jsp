@@ -14,6 +14,8 @@
 <head>
 	<%@ include file="/inner/THeaderCommonPc.jsp"%>
 	<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
+	<%@ include file="/inner/TCreditCard.jsp"%>
+	<%@ include file="/inner/TSendGift.jsp"%>
 	<%@ include file="/inner/TSendEmoji.jsp"%>
 	<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
 
@@ -23,7 +25,6 @@
 		});
 	</script>
 
-	<%@ include file="/inner/TDeleteContent.jsp"%>
 	<%@ include file="/inner/TDispRequestTextDlg.jsp"%>
 	<%@ include file="/inner/TRetweetContent.jsp"%>
 	<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
@@ -54,7 +55,6 @@
 		<%}%>
 
 		<div class="PcSideBarItem">
-			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 		</div>
 
 		<div class="PcSideBarItem">
@@ -62,9 +62,6 @@
 
 		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 		<div class="FixFrame">
-			<div class="PcSideBarItem">
-				<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
-			</div>
 		</div>
 		<%}%>
 	</aside>
@@ -103,10 +100,10 @@
 		</div>
 		<%}%>
 
-		<% int count =10;
+		<% int count =0;
 			for(; count<cResults.contentList.size(); count++) {
 				CContent cContent = cResults.contentList.get(count);%>
-		<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
+		<%= CCnv.SketchbookContent2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 		<%}%>
 
 	</section>

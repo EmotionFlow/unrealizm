@@ -30,6 +30,8 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%}%>
 
+		<%@ include file="/inner/TCreditCard.jsp"%>
+		<%@ include file="/inner/TSendGift.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - My Sketchbook</title>
 
@@ -82,7 +84,6 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		}
 
 		$(function(){
-			updateCategoryMenuPos(0);
 			initContents();
 		});
 		$(document).ready(function(){
@@ -113,7 +114,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			<%}%>
 			<section id="IllustItemList" class="IllustItemList" style="padding-bottom: 100px;">
 				<% for (int cnt=0; cnt<cResults.contentList.size(); cnt++) { %>
-					<%=CCnv.Content2Html(cResults.contentList.get(cnt), checkLogin.m_nUserId, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
+					<%=CCnv.SketchbookContent2Html(cResults.contentList.get(cnt), checkLogin.m_nUserId, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 					<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
 						<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 					<%}%>
