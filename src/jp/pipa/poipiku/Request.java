@@ -18,6 +18,9 @@ public final class Request extends Model{
 	// 取引手数料率（‰）
 	public static final int AGENCY_COMMISSION_RATE_CREDITCARD_PER_MIL = 36;
 
+	public static final int SEND_LIMIT_PER_24H = 3;
+	public static final int SEND_LIMIT_PER_7D = 10;
+
 	public int id = -1;
 	public int clientUserId = -1;
 	public boolean isClientAnonymous = false;
@@ -218,14 +221,12 @@ public final class Request extends Model{
 			mediaId < 0 ||
 			requestText.isEmpty() ||
 			requestCategory < 0 ||
-			!LICENSE_IDS.contains(licenseId) ||
-			amount < RequestCreator.AMOUNT_MINIMUM_MIN
+			!LICENSE_IDS.contains(licenseId)
 		) {
 			errorKind = ErrorKind.OtherError;
 			return false;
 		}
 
-		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -234,9 +235,7 @@ public final class Request extends Model{
 		try {
 			RequestCreator requestCreator = new RequestCreator(creatorUserId);
 			if (requestCreator.status == RequestCreator.Status.Enabled) {
-				Class.forName("org.postgresql.Driver");
-				dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				connection = dataSource.getConnection();
+				connection = DatabaseUtil.dataSource.getConnection();
 				sql = "INSERT INTO public.requests(" +
 						" status, client_user_id, client_anonymous, creator_user_id, media_id, request_text," +
 						" request_category, license_id, amount, return_limit, delivery_limit)" +
@@ -282,14 +281,11 @@ public final class Request extends Model{
 
 	public boolean updateStatus(Status newStatus) {
 		boolean result;
-		DataSource dataSource;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String sql = "";
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			sql = "UPDATE requests SET status=?, updated_at=CURRENT_TIMESTAMP WHERE id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, newStatus.getCode());
@@ -308,6 +304,13 @@ public final class Request extends Model{
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return result;
+	}
+
+	public boolean send() {
+		// 有償の場合はsend(final int _orderId)が呼ばれるべき
+		if (amount != 0) return false;
+		updateStatus(Request.Status.WaitingApproval);
+		return true;
 	}
 
 	public boolean send(final int _orderId) {
@@ -405,5 +408,48 @@ public final class Request extends Model{
 			return false;
 		}
 		return updateStatus(Status.Canceled);
+	}
+
+	public static boolean isReachedSendLimit(int _clientUserId) {
+		boolean result = false;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "SELECT count(*) FROM requests WHERE client_user_id=? AND created_at > now() - INTERVAL '24 hours'";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, _clientUserId);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			if (resultSet.getInt(1) >= SEND_LIMIT_PER_24H) {
+				result = true;
+			}
+			resultSet.close();
+			statement.close();
+
+			if (!result) {
+				sql = "SELECT count(*) FROM requests WHERE client_user_id=? AND created_at > now() - INTERVAL '7 days'";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, _clientUserId);
+				resultSet = statement.executeQuery();
+				resultSet.next();
+				if (resultSet.getInt(1) >= SEND_LIMIT_PER_7D) {
+					result = true;
+				}
+				resultSet.close();
+				statement.close();
+			}
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			result = false;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		return result;
 	}
 }

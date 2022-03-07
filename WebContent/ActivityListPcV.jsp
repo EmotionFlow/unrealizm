@@ -37,10 +37,10 @@
 						if (info_type === <%=Common.NOTIFICATION_TYPE_REQUEST%> && request_id < 0){
 							swal.fire({
 								html: `
-								<p style="text-align: left">他のユーザーからあなた宛に「リクエストの受付を開始してほしい」という通知が来ました。
+								<p style="text-align: left">他のユーザーからあなた宛に「エアスケブの受付を開始してほしい」という通知が来ました。
 									<a style="color: #545454;text-decoration: underline;"
 										href="https://poipiku.com/MyEditSettingPcV.jsp?MENUID=REQUEST">
-										設定画面で「リクエストを募集する」をONにする</a>と、受付を開始できます。</p>
+										設定画面で「エアスケブの依頼を受け付ける」をONにする</a>と、受付を開始できます。</p>
 								`,
 								showCloseButton: true,
 								showConfirmButton: false,

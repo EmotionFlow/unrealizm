@@ -34,8 +34,8 @@
 	<%@ include file="/inner/ad/TAdGridPcHeader.jsp"%>
 	<%}%>
 	<%@ include file="/inner/TRequestIntroduction.jsp"%>
-	<meta name="description" content="新着クリエイター"/>
-	<title><%=_TEX.T("THeader.Title")%> - 新着クリエイター</title>
+	<meta name="description" content="最近エアスケブを始めたクリエイター"/>
+	<title><%=_TEX.T("THeader.Title")%> - 最近エアスケブを始めたクリエイター</title>
 	<style>
 	<%if(!isApp){%>
 				body {padding-top: 79px !important;}
@@ -67,17 +67,21 @@
 	<section id="IllustThumbList" class=IllustThumbList>
 		<%
 			final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
-			for (int nCnt = 0; nCnt < cResults.m_vContentList.size(); nCnt++) {
-				CUser cUser = cResults.m_vContentList.get(nCnt);
+			for (int count = 0; count < cResults.m_vContentList.size(); count++) {
+				CUser cUser = cResults.m_vContentList.get(count);
 		%>
+			<%if(bSmartPhone){%>
+			<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
+			<%}else{%>
 			<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
-			<%if (isApp || Util.isSmartPhone(request)) {%>
-				<%if(nCnt==13) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-				<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+			<%}%>
+			<%if (isApp || bSmartPhone) {%>
+				<%if(count==14) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+				<%if(count==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 			<%} else {%>
-				<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
-				<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
-				<%if(nCnt==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
+				<%if(count==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
+				<%if(count==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
+				<%if(count==35){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_3.jsp"%><%}%>
 			<%}%>
 		<%}%>
 	</section>

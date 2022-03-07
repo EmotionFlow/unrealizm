@@ -2,12 +2,11 @@ package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,10 +29,10 @@ public class RequestNewC {
 		}
 	}
 
+	public boolean isReachedLimit;
 	public boolean getResults(CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -44,9 +43,7 @@ public class RequestNewC {
 		}
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// creator profile
 			strSql = "SELECT * FROM users_0000 WHERE user_id=?";
@@ -104,6 +101,9 @@ public class RequestNewC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+
+			// check limit
+			isReachedLimit = Request.isReachedSendLimit(checkLogin.m_nUserId);
 
 			bRtn = true;
 		} catch(Exception e) {

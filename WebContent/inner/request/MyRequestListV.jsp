@@ -42,11 +42,11 @@
 		}).then((data)=>{
 			HideMsgStatic(0);
 			if(data.result === <%=Common.API_OK%>){
-				DispMsg("リクエストを承認しました");
+				DispMsg("依頼を承認しました");
 				$("#RequestPane-"+requestId).addClass("RequestPaneAccepting");
 				$("#RequestPane-"+requestId).toggle(800);
 			}else{
-				DispMsg("リクエスト承認時にエラーが発生しました(" + data.error_code + ")");
+				DispMsg("依頼承認時にエラーが発生しました(" + data.error_code + ")");
 			}
 			g_RequestProcessing = false;
 		});
@@ -62,11 +62,11 @@
 			"dataType": "json",
 		}).then((data)=>{
 			if(data.result === <%=Common.API_OK%>){
-				DispMsg("リクエストをキャンセルしました");
+				DispMsg("依頼をキャンセルしました");
 				$("#RequestPane-"+requestId).addClass("RequestPaneDeleting");
 				$("#RequestPane-"+requestId).toggle(800);
 			}else{
-				DispMsg("リクエストキャンセル時にエラーが発生しました(" + data.error_code + ")");
+				DispMsg("依頼キャンセル時にエラーが発生しました(" + data.error_code + ")");
 			}
 			g_RequestProcessing = false;
 		});
@@ -77,7 +77,7 @@
 		<%if(!isApp){%>
 		location.href = toUrl;
 		<%}else{%>
-		alert("お手数ですが、納品はブラウザ版(https://poipiku.com/)からお願いいたします。アプリからの納品は現在開発中です。");
+		alert("お手数ですが、お渡しはブラウザ版(https://poipiku.com/)からお願いいたします。アプリからのお渡しは現在開発中です。");
 		<%}%>
 	}
 
@@ -147,21 +147,23 @@
 	.RequestCmd{
         display: flex;
         width: 100%;
-        justify-content: flex-end;
+        margin-top: 17px;
+        justify-content: space-evenly;
+        align-content: center;
 	}
     .RequestCmd > .RequestAgreeBtn{
-
+        font-size: 12px;
 	}
     .RequestCmd > .RequestCancelBtn{
-        margin-left: 20px;
+		font-size: 12px;
+        margin-left: 3px;
         color: #f09090;
-        border-color: #f09090;
+        border: none;
     }
     .RequestCmd > .RequestCancelBtn:hover{
-        margin-left: 20px;
         color: #ffffff;
 		background: #f09090;
-        border-color: #f09090;
+        border: none;
     }
 	.RequestUser {
         display: flex;
@@ -219,12 +221,13 @@
 		<li><a id="TabMenuItem-<%=Request.Status.WaitingApproval.getCode()%>"
 			   class="TabMenuItem"
 			   onclick="onClickMenuItem(this,<%=Request.Status.WaitingApproval.getCode()%>,0,null)"
-			   href="#">承認待ち</a>
-		</li>
+			   href="#">
+			<%=category.equals("SENT") ? "依頼中" : "依頼受付"%>
+		</a></li>
 		<li><a id="TabMenuItem-<%=Request.Status.InProgress.getCode()%>"
 			   class="TabMenuItem"
 			   onclick="onClickMenuItem(this,<%=Request.Status.InProgress.getCode()%>,0,null)"
-			   href="#">作業中</a></li>
+			   href="#">作成中</a></li>
 		<li><a id="TabMenuItem-<%=Request.Status.Done.getCode()%>"
 			   class="TabMenuItem"
 			   onclick="onClickMenuItem(this,<%=Request.Status.Done.getCode()%>,0,null)"

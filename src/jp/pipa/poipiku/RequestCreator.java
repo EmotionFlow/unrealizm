@@ -63,6 +63,9 @@ public final class RequestCreator extends Model{
 	static public final int DELIVERY_PERIOD_DEFAULT = 60;
 	public Integer deliveryPeriod = DELIVERY_PERIOD_DEFAULT;
 
+	public boolean allowFreeRequest = true;
+	public boolean allowPaidRequest = false;
+
 	static public final int AMOUNT_LEFT_TO_ME_MIN = 3000;
 	static public final int AMOUNT_LEFT_TO_ME_MAX = 10000;
 	static public final int AMOUNT_LEFT_TO_ME_DEFAULT = 5000;
@@ -113,6 +116,8 @@ public final class RequestCreator extends Model{
 				allowSensitive = resultSet.getInt("allow_sensitive");
 				allowMedia = resultSet.getInt("allow_media");
 				allowClient = resultSet.getInt("allow_client");
+				allowFreeRequest = resultSet.getBoolean("allow_free_request");
+				allowPaidRequest = resultSet.getBoolean("allow_paid_request");
 				returnPeriod = resultSet.getInt("return_period");
 				deliveryPeriod = resultSet.getInt("delivery_period");
 				amountLeftToMe = resultSet.getInt("amount_left_to_me");
@@ -168,8 +173,8 @@ public final class RequestCreator extends Model{
 			cConn = DatabaseUtil.dataSource.getConnection();
 
 			strSql = "INSERT INTO request_creators" +
-					"(user_id, status, allow_media, allow_sensitive, allow_client, return_period, delivery_period, amount_left_to_me, amount_minimum, commercial_transaction_law, profile)" +
-					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (user_id) DO NOTHING RETURNING user_id";
+					"(user_id, status, allow_media, allow_sensitive, allow_client, allow_free_request, allow_paid_request, return_period, delivery_period, amount_left_to_me, amount_minimum, commercial_transaction_law, profile)" +
+					" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (user_id) DO NOTHING RETURNING user_id";
 			cState = cConn.prepareStatement(strSql);
 			int idx = 1;
 			cState.setInt(idx++, userId);
@@ -177,6 +182,8 @@ public final class RequestCreator extends Model{
 			cState.setInt(idx++, allowMedia);
 			cState.setInt(idx++, allowSensitive);
 			cState.setInt(idx++, allowClient);
+			cState.setBoolean(idx++, allowFreeRequest);
+			cState.setBoolean(idx++, allowPaidRequest);
 			cState.setInt(idx++, returnPeriod);
 			cState.setInt(idx++, deliveryPeriod);
 			cState.setInt(idx++, amountLeftToMe);
@@ -202,7 +209,7 @@ public final class RequestCreator extends Model{
 		return result;
 	}
 	
-	private boolean update(String column, Integer intValue, String strValue){
+	private boolean update(String column, Integer intValue, String strValue, Boolean boolValue){
 		if (userId < 0) return false;
 		if (!exists) tryInsert();
 
@@ -218,6 +225,8 @@ public final class RequestCreator extends Model{
 				cState.setInt(1, intValue);
 			} else if (strValue != null) {
 				cState.setString(1, strValue);
+			} else if (boolValue != null) {
+				cState.setBoolean(1, boolValue);
 			}
 			cState.setInt(2, userId);
 			cState.executeUpdate();
@@ -236,11 +245,15 @@ public final class RequestCreator extends Model{
 	}
 
 	private boolean update(final String column, final Integer intValue) {
-		return update(column, intValue, null);
+		return update(column, intValue, null, null);
 	}
 
 	private boolean update(final String column, final String strValue) {
-		return update(column, null, strValue);
+		return update(column, null, strValue, null);
+	}
+
+	private boolean update(final String column, final Boolean boolValue) {
+		return update(column, null, null, boolValue);
 	}
 
 	public void delete() {
@@ -313,6 +326,12 @@ public final class RequestCreator extends Model{
 	}
 	public boolean updateAllowAnonymous(boolean isOk) {
 		return update("allow_client", isOk ? ALLOW_CLIENT_ANONYMOUS : ALLOW_CLIENT_SIGNED);
+	}
+	public boolean updateAllowFreeRequest(boolean isOk) {
+		return update("allow_free_request", isOk);
+	}
+	public boolean updateAllowPaidRequest(boolean isOk) {
+		return update("allow_paid_request", isOk);
 	}
 	public boolean updateReturnPeriod(final int day) {
 		if (RETURN_PERIOD_MIN <= day && day <= RETURN_PERIOD_MAX) {

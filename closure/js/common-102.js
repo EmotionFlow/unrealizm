@@ -349,6 +349,14 @@ function UpdateDesc(nUserId, content_id, mode) {
 }
 
 function UpdateFollowUser(userId, followUserId) {
+	return _UpdateFollowUser(userId, followUserId, true);
+}
+
+function UpdateFollowUserNoLabel(userId, followUserId) {
+	return _UpdateFollowUser(userId, followUserId, false);
+}
+
+function _UpdateFollowUser(userId, followUserId, showLabel) {
 	$.ajaxSingle({
 		"type": "post",
 		"data": { "UID": userId, "IID": followUserId },
@@ -363,12 +371,18 @@ function UpdateFollowUser(userId, followUserId) {
 			} else {
 				DispMsg(data.err_msg);
 			}
-			$UserInfoCmdFollow.html(data.btn_label);
+
+			if (showLabel) {
+				$UserInfoCmdFollow.html(data.btn_label);
+			} else {
+				$UserInfoCmdFollow.html(data.btn_label.substring(0,1));
+			}
 		},
 		"error": function(req, stat, ex){
 			DispMsg('Connection error');
 		}
 	});
+	return true;
 }
 
 function UpdateFollowGenre(userId, genreId) {

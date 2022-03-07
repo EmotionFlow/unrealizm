@@ -60,18 +60,23 @@ public final class UpdateRequestSettingC extends Controller{
 		    resultSet.close();
 		    statement.close();
 
-		    // 連携しているTwitterアカウントの登録日が１４日以内
+		    // Twitter連携してない・Twitterアカウントの登録日が１４日以内
 		    CTweet cTweet = new CTweet();
 		    cTweet.GetResults(checkLogin.m_nUserId);
-		    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		    Date createdAt = cTweet.getCreatedAt();
-		    Date limitDate = new Date(System.currentTimeMillis() - 1000L * 60 * 60 * 24 * 14);
-		    Log.d(dateFormat.format(createdAt));
-		    Log.d(dateFormat.format(limitDate));
-		    if (createdAt.after(limitDate)) {
-		    	Log.d("連携しているTwitterアカウントの登録日が１４日以内");
-		    	return false;
-		    }
+			if (cTweet.m_bIsTweetEnable) {
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+				Date createdAt = cTweet.getCreatedAt();
+				Date limitDate = new Date(System.currentTimeMillis() - 1000L * 60 * 60 * 24 * 14);
+				Log.d(dateFormat.format(createdAt));
+				Log.d(dateFormat.format(limitDate));
+				if (createdAt.after(limitDate)) {
+					Log.d("連携しているTwitterアカウントの登録日が１４日以内");
+					return false;
+				}
+			} else {
+				Log.d("Twitter連携していない");
+				return false;
+			}
 	    } catch(Exception e) {
 		    Log.d(strSql);
 		    e.printStackTrace();
@@ -122,6 +127,16 @@ public final class UpdateRequestSettingC extends Controller{
 			    break;
 		    case "AllowAnonymous":
 			    updateResult = requestCreator.updateAllowAnonymous(
+					    paramValue.equals("1")
+			    );
+			    break;
+		    case "AllowFreeRequest":
+			    updateResult = requestCreator.updateAllowFreeRequest(
+					    paramValue.equals("1")
+			    );
+			    break;
+		    case "AllowPaidRequest":
+			    updateResult = requestCreator.updateAllowPaidRequest(
 					    paramValue.equals("1")
 			    );
 			    break;

@@ -2,13 +2,12 @@
 <%@include file="/inner/Common.jsp" %>
 <%
 	CheckLogin checkLogin = new CheckLogin(request, response);
-	if (!checkLogin.m_bLogin) return;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 <head>
 	<%@ include file="/inner/THeaderCommonPc.jsp" %>
-	<title>リクエスト(β) ガイドライン</title>
+	<title>エアスケブ(β) ガイドライン</title>
 	<style>
         table {
             width: 100%;

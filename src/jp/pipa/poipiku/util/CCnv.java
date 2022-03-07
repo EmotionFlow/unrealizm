@@ -103,13 +103,13 @@ public final class CCnv {
 				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
 				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
 		strRtn.append("</h2>");
-		if (cContent.m_nRequestId>0) {
-			strRtn.append("<h2 class=\"IllustItemCategory\">");
-			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
-					cContent.m_nRequestId, _TEX.T("Request")
-			));
-			strRtn.append("</h2>");
-		}
+//		if (cContent.m_nRequestId>0) {
+//			strRtn.append("<h2 class=\"IllustItemCategory\">");
+//			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
+//					cContent.m_nRequestId, _TEX.T("Request")
+//			));
+//			strRtn.append("</h2>");
+//		}
 	}
 
 	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nMode, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX, PageCategory pageCategory){
@@ -472,42 +472,28 @@ public final class CCnv {
 
 	private static String _Content2Html(
 			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
-			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) throws UnsupportedEncodingException {
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) {
 
 		if (cContent.m_nContentId <= 0) return "";
 
-		String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
-		String REPORT_FORM = getReportFormContext(nMode);
-		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
-		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
-		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
+		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
+		final String REPORT_FORM = getReportFormContext(nMode);
+		final String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
+		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
+		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
-		String strThumbClass = getThumbClass(cContent);
+		final String strThumbCssClass = getThumbClass(cContent);
 
 		StringBuilder strRtn = new StringBuilder();
 
+		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbCssClass, cContent.m_nContentId));
+
 		// ユーザ名とフォローボタン
-		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbClass, cContent.m_nContentId));
-		strRtn.append("<div class=\"IllustItemUser\">");
-		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, Common.GetUrl(cContent.m_cUser.m_strFileName)));
-		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Util.toStringHtml(cContent.m_cUser.m_strNickName)));
-		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
-			strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d, %d)\">%s</span>",
-					cContent.m_nUserId,
-					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
-					nLoginUserId,
-					cContent.m_nUserId,
-					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
-		}
-		strRtn.append("</div>");	// IllustItemUser
+		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, true, false);
 
 		// カテゴリーとコマンド
 		strRtn.append("<div class=\"IllustItemCommand\">");
-
-		// カテゴリー
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
-
-		// コマンド
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, pageCategory);
 		strRtn.append("</div>");	// IllustItemCommand
 
@@ -519,16 +505,8 @@ public final class CCnv {
 
 		// 編集
 		if(cContent.m_nUserId==nLoginUserId) {
-			// キャプション
-			strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
-			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Util.toStringHtmlTextarea(cContent.m_strDescription)));
-			strRtn.append(String.format("<input class=\"IllustItemTagEditTxt\" type=\"text\" maxlength=\"100\" value=\"%s\" />", Util.toDescString(cContent.m_strTagList)));
-			strRtn.append("<div class=\"IllustItemDescEditCmdList\">");
-			strRtn.append(String.format("<a class=\"BtnBase IllustItemDescEditCmd\" onclick=\"UpdateDesc(%d, %d, %d)\">OK</a>", cContent.m_nUserId, cContent.m_nContentId, nMode));
-			strRtn.append("</div>");	// IllustItemDescEditCmdList
-			strRtn.append("</div>");	// IllustItemDescEdit
+			appendIllustItemDescEdit(strRtn, cContent, nMode);
 		}
-
 
 		// 画像
 		appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
@@ -537,6 +515,106 @@ public final class CCnv {
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
 
 		// 全て表示ボタン
+		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
+
+		// サムネイルへの重畳表示
+		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
+
+		// 絵文字
+		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vEmoji, nSpMode, _TEX);
+		}
+
+		strRtn.append("</div>");	// IllustItem
+
+		return strRtn.toString();
+	}
+
+
+	public static String SketchbookContent2Html(
+			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
+		return _SketchbookContent2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, PageCategory.DEFAULT);
+	}
+
+	public static String SketchbookContent2Html(
+			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) throws UnsupportedEncodingException {
+		return _SketchbookContent2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, pageCategory);
+	}
+
+	private static String _SketchbookContent2Html(
+			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) {
+
+		if (cContent.m_nContentId <= 0) return "";
+
+		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
+		final String REPORT_FORM = getReportFormContext(nMode);
+		final String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
+		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
+		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
+
+		final String strThumbCssClass = getThumbClass(cContent);
+
+		StringBuilder strRtn = new StringBuilder();
+
+		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbCssClass, cContent.m_nContentId));
+
+		// ユーザ名とフォローボタン
+		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, true);
+
+		// カテゴリーとコマンド
+		strRtn.append("<div class=\"IllustItemCommand\">");
+		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
+		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, pageCategory);
+		strRtn.append("</div>");	// IllustItemCommand
+
+		// キャプション
+		appendIllustItemDesc(strRtn, cContent, nMode);
+
+		// タグ
+		appendTag(strRtn, cContent, nMode, nSpMode);
+
+		// 編集
+		if(cContent.m_nUserId==nLoginUserId) {
+			appendIllustItemDescEdit(strRtn, cContent, nMode);
+		}
+
+		// 画像
+		appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+
+		// 2枚目以降用の場所
+		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
+
+		// 全て表示ボタン
+		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
+
+		// サムネイルへの重畳表示
+		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
+
+		// 絵文字
+		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
+			appendIllustItemResList(strRtn, cContent, nLoginUserId, vEmoji, nSpMode, _TEX);
+		}
+
+		strRtn.append("</div>");	// IllustItem
+
+		return strRtn.toString();
+	}
+
+
+	private static void appendOverlayToThumbnail(StringBuilder strRtn, CContent cContent, ResourceBundleControl _TEX, int nViewMode) {
+		String strSizeAppendix = "";
+		if (cContent.m_nFileWidth > 0 && cContent.m_nFileHeight > 0) {
+			strSizeAppendix = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
+		}
+		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
+				(nViewMode == VIEW_DETAIL) ? String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendix) : strSizeAppendix,
+				_TEX.T("IllustView.ProhibitMsg")));
+	}
+
+	private static void appendIllustItemExpand( StringBuilder strRtn, CContent cContent, ResourceBundleControl _TEX, int nSpMode) {
 		strRtn.append("<div class=\"IllustItemExpand\">");
 		if(cContent.m_nFileNum>1) {
 			appendIllustItemExpandPassFrame(_TEX, strRtn);
@@ -551,7 +629,7 @@ public final class CCnv {
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
-				nSpMode,
+					nSpMode,
 				mark,
 				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
 		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
@@ -559,28 +637,48 @@ public final class CCnv {
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s</a>",
 				cContent.m_nUserId,
 				cContent.m_nContentId,
-				nSpMode,
+					nSpMode,
 				String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length())));
 		}
 		strRtn.append("</div>");	// IllustItemExpand
+	}
 
-		// 転載禁止表示
-		String strSizeAppendex = "";
-		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
-			strSizeAppendex = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
+	private static void appendIllustItemDescEdit(StringBuilder strRtn, CContent cContent, int nMode) {
+		strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
+		strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Util.toStringHtmlTextarea(cContent.m_strDescription)));
+		strRtn.append(String.format("<input class=\"IllustItemTagEditTxt\" type=\"text\" maxlength=\"100\" value=\"%s\" />", Util.toDescString(cContent.m_strTagList)));
+		strRtn.append("<div class=\"IllustItemDescEditCmdList\">");
+		strRtn.append(String.format("<a class=\"BtnBase IllustItemDescEditCmd\" onclick=\"UpdateDesc(%d, %d, %d)\">OK</a>", cContent.m_nUserId, cContent.m_nContentId, nMode));
+		strRtn.append("</div>");    // IllustItemDescEditCmdList
+		strRtn.append("</div>");    // IllustItemDescEdit
+	}
+
+	private static void appendIllustItemUser(StringBuilder strRtn, CContent cContent, int nLoginUserId, ResourceBundleControl _TEX, String ILLUST_LIST, boolean showFollowLabel, boolean showGiftBtn) {
+		strRtn.append("<div class=\"IllustItemUser\">");
+		strRtn.append(String.format("<a class=\"IllustItemUserThumb\" href=\"%s\" style=\"background-image:url('%s_120.jpg')\"></a>", ILLUST_LIST, Common.GetUrl(cContent.m_cUser.m_strFileName)));
+		strRtn.append(String.format("<h2 class=\"IllustItemUserName\"><a href=\"%s\">%s</a></h2>", ILLUST_LIST, Util.toStringHtml(cContent.m_cUser.m_strNickName)));
+
+		final boolean following = cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING;
+		String followLabel = following ? _TEX.T("IllustV.Following"): _TEX.T("IllustV.Follow");
+		if (!showFollowLabel) {
+			followLabel = followLabel.substring(0, 1);
 		}
-		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
-				(nViewMode==VIEW_DETAIL)?String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendex):strSizeAppendex,
-				_TEX.T("IllustView.ProhibitMsg")));
 
-		// 絵文字
-		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-			appendIllustItemResList(strRtn, cContent, nLoginUserId, vEmoji, nSpMode, _TEX);
+		if (showGiftBtn) {
+			strRtn.append(String.format("<span class=\"UserInfoCmdGift\" onclick=\"SendGift(%d, '%s')\"><i class=\"fas fa-gift\"></i></span>",
+					cContent.m_nUserId, cContent.m_cUser.m_strNickName));
 		}
-
-		strRtn.append("</div>");	// IllustItem
-
-		return strRtn.toString();
+		if(cContent.m_cUser.m_nFollowing != CUser.FOLLOW_HIDE) {
+			strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s %s\"  onclick=\"UpdateFollowUser%s(%d, %d)\">%s</span>",
+					cContent.m_nUserId,
+					(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?"Selected":"",
+					showFollowLabel ? "" : "NoLabel",
+					showFollowLabel ? "" : "NoLabel",
+					nLoginUserId,
+					cContent.m_nUserId,
+					followLabel));
+		}
+		strRtn.append("</div>");	// IllustItemUser
 	}
 
 	private static void appendIllustItemExpandPassFrame(ResourceBundleControl _TEX, StringBuilder strRtn) {
@@ -598,11 +696,9 @@ public final class CCnv {
 	public static String MyContent2Html(final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
-		//String ILLUST_LIST = getIllustListContext(nMode, nSpMode, cContent.m_nUserId);
-		String REPORT_FORM = getReportFormContext(nMode);
-		String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
-		String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
-		String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
+		final String REPORT_FORM = getReportFormContext(nMode);
+		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
+		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
 		String strThumbClass = getThumbClass(cContent);
 
@@ -627,13 +723,7 @@ public final class CCnv {
 		// 編集
 		if(cContent.m_nUserId==nLoginUserId) {
 			// キャプション
-			strRtn.append(String.format("<div id=\"IllustItemDescEdit_%d\" class=\"IllustItemDescEdit\">", cContent.m_nContentId));
-			strRtn.append(String.format("<textarea class=\"IllustItemDescEditTxt\" maxlength=\"200\">%s</textarea>", Util.toStringHtmlTextarea(cContent.m_strDescription)));
-			strRtn.append(String.format("<input class=\"IllustItemTagEditTxt\" type=\"text\" maxlength=\"100\" value=\"%s\" />", Util.toDescString(cContent.m_strTagList)));
-			strRtn.append("<div class=\"IllustItemDescEditCmdList\">");
-			strRtn.append(String.format("<a class=\"BtnBase IllustItemDescEditCmd\" onclick=\"UpdateDesc(%d, %d, %d)\">OK</a>", cContent.m_nUserId, cContent.m_nContentId, nMode));
-			strRtn.append("</div>");	// IllustItemDescEditCmdList
-			strRtn.append("</div>");	// IllustItemDescEdit
+			appendIllustItemDescEdit(strRtn, cContent, nMode);
 		}
 
 		// 画像
@@ -656,13 +746,7 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustItemExpand
 
 		// 転載禁止表示
-		String strSizeAppendix = "";
-		if(cContent.m_nFileWidth>0 && cContent.m_nFileHeight>0) {
-			strSizeAppendix = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
-		}
-		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
-				(nViewMode==VIEW_DETAIL)?String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendix):strSizeAppendix,
-				_TEX.T("IllustView.ProhibitMsg")));
+		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {

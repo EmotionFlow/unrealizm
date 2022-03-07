@@ -442,11 +442,7 @@ if (requestId > 0) {
 						onclick="UploadTextCheck(<%=checkLogin.m_nUserId%>)"
 					<%}%>
 					>
-						<%if(requestId < 0){%>
 						<%=_TEX.T("UploadFilePc.UploadBtn")%>
-						<%}else{%>
-						納品する
-						<%}%>
 					</a>
 				</div>
 			</div>

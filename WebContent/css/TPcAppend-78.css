@@ -94,7 +94,7 @@ body {padding: 51px 0 0 0 !important;}
 .Header .HeaderSearch {}
 .Header .HeaderSearch .HeaderSearchBox {width: 215px;}
 .Header .HeaderTitleSearch {display: none;}
-.FooterMenu .FooterMenuItem {width: 65px;}
+.FooterMenu .FooterMenuItem {width: 60px;}
 .FooterMenu {float: left; width: auto; justify-content: flex-end; margin: 0 10px;}
 .FooterMenu #MenuSearch {margin: 0 10px 0 0;}
 .FooterMenu .MenuSep {display: block; float: left; width: 1px; height: 20px; margin: 10px 9px 20px 0; background-color: #ccc;}

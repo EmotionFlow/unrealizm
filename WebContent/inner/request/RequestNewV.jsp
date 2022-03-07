@@ -3,7 +3,7 @@
 <%
 final CheckLogin checkLogin = new CheckLogin(request, response);
 
-final boolean bSmartPhone = isApp ? true : Util.isSmartPhone(request);
+final boolean bSmartPhone = isApp || Util.isSmartPhone(request);
 final RequestNewC results = new RequestNewC();
 results.getParam(request);
 
@@ -56,29 +56,38 @@ if (!results.getResults(checkLogin)) {
 	<%if(results.user.m_bRequestEnabled){%>
 	<script>
 		function _validate() {
+			const isPaidRequest = $("#OptionPaidRequest").prop("checked");
+
 			if ($("#EditRequestText").val().length <= 10) {
-				DispMsg("リクエスト本文が短すぎます");
+				DispMsg("依頼本文が短すぎます");
 				return false;
 			}
-			const amount = parseInt($("#EditAmount").val(), 10);
-			if (!amount) {
-				DispMsg("金額を入力してください");
-				return false;
-			}
-			if (amount < <%=results.requestCreator.amountMinimum%> ||
-				amount > <%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>){
-				DispMsg("リクエスト金額が範囲外です");
-				return false;
+
+			if (isPaidRequest) {
+				const amount = parseInt($("#EditAmount").val(), 10);
+				if (!amount) {
+					DispMsg("金額を入力してください");
+					return false;
+				}
+				if (amount < <%=results.requestCreator.amountMinimum%> ||
+					amount > <%=RequestCreator.AMOUNT_LEFT_TO_ME_MAX%>){
+					DispMsg("依頼金額が範囲外です");
+					return false;
+				}
 			}
 			return true;
 		}
 
 		function SendRequestAjax(requestInfo, agentInfo, cardInfo) {
 			let postInfo = requestInfo;
-			postInfo["AID"] = agentInfo.agentId;
-			if (agentInfo.token) {
-				postInfo["TKN"] = agentInfo.token;
+
+			if (agentInfo) {
+				postInfo["AID"] = agentInfo.agentId;
+				if (agentInfo.token) {
+					postInfo["TKN"] = agentInfo.token;
+				}
 			}
+
 			if (cardInfo) {
 				postInfo["EXP"] = cardInfo.expire;
 				postInfo["SEC"] = cardInfo.securityCode;
@@ -93,16 +102,18 @@ if (!results.getResults(checkLogin)) {
 					cardInfo = null;
 					HideMsgStatic();
 					if (data.result === <%=Common.API_OK%>) {
-						if(requestInfo.AMOUNT>0) {
-							DispMsg("リクエストを送信しました！クリエイターが承認した時点で、指定した金額が決済されます。");
-							window.setTimeout(() => {
-								<%if(isApp){%>
-								location.href = "/IllustListAppV.jsp?ID=" + parseInt(requestInfo.CREATOR, 10);
-								<%}else{%>
-								location.href = "/" + parseInt(requestInfo.CREATOR, 10);
-								<%}%>
-							}, 5000);
+						if (requestInfo.PAID_REQUEST>0) {
+							DispMsg("依頼を送信しました！クリエイターがこの依頼を承認すると、指定した金額が決済されます。", 5000);
+						} else {
+							DispMsg("依頼を送りました！", 5000);
 						}
+						window.setTimeout(() => {
+							<%if(isApp){%>
+							location.href = "/IllustListAppV.jsp?ID=" + parseInt(requestInfo.CREATOR, 10);
+							<%}else{%>
+							location.href = "/" + parseInt(requestInfo.CREATOR, 10);
+							<%}%>
+						}, 5000);
 					} else {
 						switch (data.error_code) {
 							case <%=Controller.ErrorKind.CardAuth.getCode()%>:
@@ -131,15 +142,14 @@ if (!results.getResults(checkLogin)) {
 			);
 		}
 
-		// epsilonPayment - epsilonTrade間で受け渡しする変数。
 		let g_epsilonInfo = {
 			"requestInfo": null,
 			"cardInfo": null,
 		};
 
 		function epsilonPayment(_requestInfo, _cardInfo){
-			$('#SendRequestBtn').addClass('Disabled').html('リクエスト送信中');
-			DispMsgStatic('リクエスト送信中');
+			$('#SendRequestBtn').addClass('Disabled').html('依頼送信中');
+			DispMsgStatic('依頼送信中');
 
 			if(_cardInfo == null){ // カード登録済
 				SendRequestAjax(_requestInfo, createAgentInfo(AGENT.EPSILON, null, null), null);
@@ -148,7 +158,6 @@ if (!results.getResults(checkLogin)) {
 				g_epsilonInfo.cardInfo = _cardInfo;
 
 				const contructCode = "68968190";
-				//let cardObj = {cardno: "411111111111111", expire: "202202", securitycode: "123", holdername: "POI PASS"};
 				let cardObj = {
 					"cardno": String(_cardInfo.number),
 					"expire": String('20' + _cardInfo.expire.split('/')[1] +  _cardInfo.expire.split('/')[0]),
@@ -158,20 +167,17 @@ if (!results.getResults(checkLogin)) {
 
 				EpsilonToken.init(contructCode);
 
-				// epsilonTradeを無名関数で定義するとコールバックしてくれない。
-				// global領域に関数を定義し、関数名を引数指定しないとダメ。
 				EpsilonToken.getToken(cardObj , epsilonTrade);
 			}
 		}
 
 		function epsilonTrade(response){
-			// もう使うことはないので、カード番号を初期化する。
 			if(g_epsilonInfo.cardInfo.number){
 				g_epsilonInfo.cardInfo.number = null;
 			}
 
 			if( response.resultCode !== '000' ){
-				window.alert("リクエスト送信処理中にエラーが発生しました");
+				window.alert("依頼送信処理中にエラーが発生しました");
 				console.log(response.resultCode);
 				g_epsilonInfo.elPassportNowPayment.hide();
 			}else{
@@ -192,7 +198,9 @@ if (!results.getResults(checkLogin)) {
 				"holderName": null,
 			};
 
-			const amount = parseInt($("#EditAmount").val(), 10);
+			const isPaidRequest = $("#OptionPaidRequest").prop("checked");
+			const amount = isPaidRequest ? parseInt($("#EditAmount").val(), 10) : 0;
+			const commission = isPaidRequest ? _calcCommission(amount, paymentMethod) : 0;
 			const paymentMethod = "CREDITCARD";
 			const requestInfo = {
 				"CLIENT": <%=checkLogin.m_nUserId%>,
@@ -202,12 +210,18 @@ if (!results.getResults(checkLogin)) {
 				"CATEGORY": $("#OptionRequestCategory").prop("checked") ? 1 : 0,
 				"ANONYMOUS": $("#OptionAnonymousRequest").prop("checked") ? 1 : 0,
 				"LICENSE": $("#OptionLicense").val(),
+				"PAID_REQUEST": isPaidRequest ? 1 : 0,
 				"AMOUNT": amount,
-				"COMMISSION": _calcCommission(amount, paymentMethod),
+				"COMMISSION": commission,
 				"PAYMENT_METHOD": 1,
 			}
 			if (requestInfo.CLIENT === requestInfo.CREATOR) {
-				alert('自分宛にはリクエストできません');
+				alert('自分宛には依頼できません');
+				return false;
+			}
+
+			if (requestInfo.PAID_REQUEST === 0) {
+				SendRequestAjax(requestInfo, null, null);
 				return false;
 			}
 
@@ -221,15 +235,15 @@ if (!results.getResults(checkLogin)) {
 					return false;
 				} else if (result === 1) {
 					console.log("epsilonPayment");
-					if (confirm("クリエイターがリクエストを承認すると、登録済みのクレジットカードに"
+					if (confirm("クリエイターがこの依頼を承認すると、登録済みのクレジットカードに"
 						+ (requestInfo.AMOUNT + requestInfo.COMMISSION).toLocaleString() + "円が課金されます。" +
 						"よろしいですか？")) {
 						epsilonPayment(requestInfo, null);
 					}
 				} else if (result === 0) {
-					const title = "リクエスト送信";
+					const title = "依頼送信";
 					const description = "クレジットカード情報を入力してください。" +
-						"クリエイターがリクエストを承認すると、入力されたカードに対し、" +
+						"クリエイターがこの依頼を承認すると、入力されたカードに対し、" +
 						"<b>" + (requestInfo.AMOUNT + requestInfo.COMMISSION) + "円</b>(税込)が課金されます。";
 					<%// クレジットカード情報入力ダイアログを表示、%>
 					<%// 入力内容を代理店に送信し、Tokenを取得する。%>
@@ -243,7 +257,7 @@ if (!results.getResults(checkLogin)) {
 						<%// キャンセルボタンがクリックされた%>
 						if (formValues.dismiss) {
 							HideMsgStatic(0);
-							$('#SendRequestBtn').removeClass('Disabled').html('リクエストを送信する');
+							$('#SendRequestBtn').removeClass('Disabled').html('依頼を送信する');
 							return false;
 						}
 
@@ -258,7 +272,6 @@ if (!results.getResults(checkLogin)) {
 
 						epsilonPayment(requestInfo, cardInfo);
 					});
-
 				}
 			});
 
@@ -298,8 +311,8 @@ if (!results.getResults(checkLogin)) {
 			Swal.fire({
 				html: `
 				<div style="text-align: left; font-size: 0.9em">
-					<p style="text-align: center; font-weight: 400;">リクエスト金額で指定した額が、そのままクリエイターの報酬になります。</p>
-					<p>リクエスト手数料：リクエストの仕組みを支えるための手数料です。</p>
+					<p style="text-align: center; font-weight: 400;">依頼金額で指定した額が、そのままクリエイターの報酬になります。</p>
+					<p>依頼手数料：依頼の仕組みを支えるための手数料です。</p>
 					<p>トランザクション手数料：トランザクションを実行するための手数料です。</p>
 				</div>
 				`,
@@ -382,7 +395,7 @@ if (!results.getResults(checkLogin)) {
 			  class="BtnBase UserInfoCmdBlock Selected"
 			  style="text-shadow: none;"
 			  onclick="dispRequestIntroduction()">
-			<i class="fas fa-info-circle" style="font-size: 15px; margin-right: 4px;"></i><span id="UserInfoCmdBlockLabel" style="top:-1px">リクエストとは</span>
+			<i class="fas fa-info-circle" style="font-size: 15px; margin-right: 4px;"></i><span id="UserInfoCmdBlockLabel" style="top:-1px">エアスケブとは</span>
 		</span>
 
 		<div class="UserInfoBg"></div>
@@ -403,20 +416,29 @@ if (!results.getResults(checkLogin)) {
 			<%=results.isBlocking ? "ブロック中です。" : "ブロックされています。"%>
 			<%}else{%>
 				<%if(results.user.m_bRequestEnabled){%>
-				<%=results.user.m_strNickName%>さんへのリクエスト(β)
+
+				<%if(results.isReachedLimit){%>
+				<div style="color: #fff8db; font-size: 12px; margin: 20px auto;">
+					送信できる依頼数の制限に達しているため、<br>
+					ただいまエアスケブの依頼を送ることができません。<br>
+					しばらく間をあけてからご依頼ください。
+				</div>
+				<%}%>
+
+				<%=results.user.m_strNickName%>さんへのエアスケブ依頼
 					<%if(!checkLogin.m_bLogin){%>
-					<div style="text-align: center; font-size: 12px; font-weight: normal">ログインするとリクエストを送信できます</div>
+					<div style="text-align: center; font-size: 12px; font-weight: normal">ログインすると依頼を送信できます</div>
 					<%}%>
 				<%}else{%>
-				現在、リクエストを受け付けていません
+				現在、依頼を受け付けていません
 				<div>
 					<%if(checkLogin.m_bLogin){%>
-					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">このクリエイターにリクエスト募集してほしい気持ちを通知できます(匿名)</div>
+					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">このクリエイターにエアスケブ受付を始めてほしい気持ちを通知できます(匿名)</div>
 					<a class="BtnBase" style="" href="javascript: void(0);" onclick="requestToStartRequesting()">
 						<span class="RequestEnabled">お願いする</span>
 					</a>
 					<%}else{%>
-					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ログインすると、このクリエイターにリクエスト募集してほしい気持ちを通知できます。</div>
+					<div style="margin: 13px 12px; font-size: 12px; font-weight: normal">ログインすると、このクリエイターにエアスケブ受付を始めてほしい気持ちを通知できます。</div>
 					<%}%>
 				</div>
 				<%}%>
@@ -440,16 +462,17 @@ if (!results.getResults(checkLogin)) {
 			</div>
 		</div>
 		<div class="TextBody">
-			リクエストメッセージ
+			依頼メッセージ
+			<div class="TextBodyCharNum" style="text-align: left;">クリエイターの意向を尊重してお伝えください</div>
 			<textarea id="EditRequestText" class="EditTextBody"
-					  maxlength="1000" placeholder="改行含め1000字まで"
+					  maxlength="1000"
 					  onkeyup="dispRequestTextCharNum()"></textarea>
 			<div id="RequestTextCharNum" class="TextBodyCharNum">1</div>
 		</div>
 
 		<div class="UoloadCmdOption">
 			<div class="OptionItem">
-				<div class="OptionLabel">ワンクッション・R18相当リクエスト</div>
+				<div class="OptionLabel">NSFW（ワンクッション・R18相当）</div>
 				<div class="onoffswitch OnOff <%=results.requestCreator.allowSensitive() ? "" : "disabled"%> ">
 					<input type="checkbox" class="onoffswitch-checkbox"
 						   name="OptionRecent"
@@ -465,14 +488,14 @@ if (!results.getResults(checkLogin)) {
 			</div>
 			<div class="OptionNotify">
 				<%if (results.requestCreator.allowSensitive()) {%>
-				センシティブなリクエストは必ずON
+				依頼内容がセンシティブなときは必ずON
 				<%}else{%>
-				このクリエイターはセンシティブな内容を受け付けません
+				センシティブな内容を受け付けません
 				<%}%>
 			</div>
 
 			<div class="OptionItem">
-				<div class="OptionLabel">匿名でリクエスト</div>
+				<div class="OptionLabel">匿名で依頼</div>
 				<div class="onoffswitch OnOff <%=results.requestCreator.allowAnonymous() ? "" : "disabled"%> ">
 					<input type="checkbox" class="onoffswitch-checkbox"
 						   name="OptionRecent"
@@ -488,7 +511,7 @@ if (!results.getResults(checkLogin)) {
 			</div>
 			<div class="OptionNotify" style="margin-bottom: 30px">
 				<%if (!results.requestCreator.allowAnonymous()) {%>
-				このクリエイターは匿名リクエストを受け付けません
+				匿名依頼を受け付けません
 				<%}%>
 			</div>
 
@@ -514,47 +537,75 @@ if (!results.getResults(checkLogin)) {
 				</div>
 			</div>
 
-			<div id="ItemAmount" class="OptionItem">
-				<div class="OptionLabel">リクエスト金額</div>
-				<div class="OptionPublish">
-					<span class="RequestAmountUnit">¥</span><input id="EditAmount" class="EditPassword" type="number" maxlength="6"
-						    value="<%=results.requestCreator.amountLeftToMe%>"
-						    placeholder="おまかせ金額<%=results.requestCreator.amountLeftToMe%>円"
-							onkeyup="dispCommission()"/>
-				</div>
-			</div>
-			<div class="OptionNotify" style="margin-bottom: 8px;">
-				¥<%=String.format("%,d", results.requestCreator.amountMinimum)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>
-			</div>
-
-			<div id="ItemCommission" class="OptionItem">
-				<div class="OptionLabel">手数料</div>
-				<div class="OptionPublish" style="font-size: 13px">
-					¥<span id="Commission"></span>
-				</div>
-			</div>
-			<div class="OptionNotify" style="margin-bottom: 8px; text-align: right;">
-				リクエスト手数料<span id="CommissionRateSystem"></span>%
-				+トランザクション手数料<span id="CommissionRateAgency"></span>%<br>
-				詳しくは<a style="text-decoration: underline;" href="javascript:void(0);" onclick="dispCommissionDetailDlg()">こちら</a>
-			</div>
-
-			<div id="ItemAmountTotal" class="OptionItem" style="margin-bottom: 40px;">
-				<div class="OptionLabel">支払総額</div>
-				<div class="OptionPublish">
-					¥<span id="AmountTotal"></span>
-				</div>
-			</div>
-
+			<%if(results.requestCreator.allowPaidRequest &&  results.requestCreator.allowFreeRequest){%>
 			<div class="OptionItem">
-				<div class="OptionLabel">承認期限</div>
-				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.returnPeriod%>日後</div>
+				<div class="OptionLabel">有償で依頼する</div>
+				<div class="onoffswitch OnOff ">
+					<input type="checkbox" class="onoffswitch-checkbox"
+						   name="OptionPaidRequest"
+						   id="OptionPaidRequest"
+						   value="0"
+						   checked="checked"
+						   onclick="$('#PaidOptionArea').toggle()"
+					/>
+					<label class="onoffswitch-label" for="OptionPaidRequest">
+						<span class="onoffswitch-inner"></span>
+						<span class="onoffswitch-switch"></span>
+					</label>
+				</div>
 			</div>
-			<div class="OptionItem">
-				<div class="OptionLabel">納品期限</div>
-				<div class="OptionPublish">リクエスト送信から<%=results.requestCreator.deliveryPeriod%>日後</div>
+			<%}else{%>
+				<input
+					type="hidden"
+					id="OptionPaidRequest"
+					<%=results.requestCreator.allowPaidRequest ? "checked=\"checked\"" : ""%>
+				/>
+			<%}%>
+
+			<%if(results.requestCreator.allowPaidRequest){%>
+			<div id="PaidOptionArea" class="UoloadCmdOption">
+				<div id="ItemAmount" class="OptionItem">
+					<div class="OptionLabel">依頼金額</div>
+					<div class="OptionPublish">
+						<span class="RequestAmountUnit">¥</span><input id="EditAmount" class="EditPassword" type="number" maxlength="6"
+								value="<%=results.requestCreator.amountLeftToMe%>"
+								placeholder="おまかせ<%=results.requestCreator.amountLeftToMe%>円"
+								onkeyup="dispCommission()"/>
+					</div>
+				</div>
+				<div class="OptionNotify" style="margin-bottom: 8px;">
+					¥<%=String.format("%,d", results.requestCreator.amountMinimum)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>
+				</div>
+
+				<div id="ItemCommission" class="OptionItem">
+					<div class="OptionLabel">手数料</div>
+					<div class="OptionPublish" style="font-size: 13px">
+						¥<span id="Commission"></span>
+					</div>
+				</div>
+				<div class="OptionNotify" style="margin-bottom: 8px; text-align: right;">
+					依頼手数料<span id="CommissionRateSystem"></span>%
+					+トランザクション手数料<span id="CommissionRateAgency"></span>%<br>
+					詳しくは<a style="text-decoration: underline;" href="javascript:void(0);" onclick="dispCommissionDetailDlg()">こちら</a>
+				</div>
+
+				<div id="ItemAmountTotal" class="OptionItem" style="margin-bottom: 40px;">
+					<div class="OptionLabel">支払総額</div>
+					<div class="OptionPublish">
+						¥<span id="AmountTotal"></span>
+					</div>
+				</div>
+				<div class="OptionItem">
+					<div class="OptionLabel">返答期限</div>
+					<div class="OptionPublish">依頼から<%=results.requestCreator.returnPeriod%>日後</div>
+				</div>
+				<div class="OptionItem">
+					<div class="OptionLabel">お渡し期限</div>
+					<div class="OptionPublish">依頼から<%=results.requestCreator.deliveryPeriod%>日後</div>
+				</div>
+				<div class="OptionNotify">期限を過ぎると自動でキャンセルされます</div>
 			</div>
-			<div class="OptionNotify">期限を過ぎると自動でキャンセルされます</div>
+			<%}%>
 
 		</div>
 
@@ -563,26 +614,39 @@ if (!results.getResults(checkLogin)) {
 		</div>
 
 		<div class="TextBody" style="margin-bottom: 10px">
-			ルール
 			<div class="RequestRule">
 				<ol style="padding-inline-start: 25px;">
-					<li>リクエスト本文以外での連絡はできません。</li>
-					<li>金額の見積もり・打ち合わせ・リテイクはできません。</li>
-					<li>リクエスト送信時点で与信確保されます。</li>
-					<li>リクエスト承認時点で決済されます。</li>
+					<li>依頼本文以外での連絡はできません。</li>
+					<li>打ち合わせ・リテイクはできません。</li>
+					<li>クリエイターへの嫌がらせや中傷など、依頼と無関係なメッセージは不正行為とみなします。</li>
+				</ol>
+				<%if(results.requestCreator.allowPaidRequest){%>
+				(有償依頼の場合)
+				<ol style="padding-inline-start: 25px;">
+					<li>金額の見積もりはできません。</li>
+					<li>依頼送信時点で与信確保されます。</li>
+					<li>依頼承認時点で決済されます。</li>
 					<li>納品期限内に納品されなかった場合は、カード会社を通して返金されます。</li>
 					<li>個人間の送金手段としては使用できません。</li>
-					<li>現在β版のため、ルールや機能が変更されることがあります。</li>
 				</ol>
+				<%}%>
 			</div>
 		</div>
 
 		<%if(checkLogin.m_bLogin){%>
-		<div class="UoloadCmd">
-			<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して送信する</a>
-		</div>
+			<%if(results.isReachedLimit){%>
+			<div style="color: #fff8db; font-size: 12px; margin: 20px auto; text-align: center">
+				送信できる依頼数の制限に達しているため、<br>
+				ただいまエアスケブの依頼を送ることができません。<br>
+				しばらく間をあけてからご依頼ください。
+			</div>
+			<%}else{%>
+			<div class="UoloadCmd">
+				<a id="SendRequestBtn" class="BtnBase UoloadCmdBtn" href="javascript:void(0)" onclick="sendRequest();">ガイドラインに同意して依頼する</a>
+			</div>
+			<%}%>
 		<%}else{%>
-		<div style="text-align: center;">ログインするとリクエストを送信できます</div>
+		<div style="text-align: center;">ログインすると依頼できます</div>
 		<%}%>
 
 		<%} // if(results.user.m_bRequestEnabled)%>

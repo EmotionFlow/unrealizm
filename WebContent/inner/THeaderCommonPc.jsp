@@ -14,8 +14,8 @@
 <link rel="icon" href="/favicon_2.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-41.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-184.css" type="text/css" rel="stylesheet" />
-<link href="/css/TBasePc-73.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-185.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBasePc-74.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114_2.png" />
@@ -24,7 +24,7 @@
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/jquery.creditCardValidator.js"></script>
 <script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
-<script type="text/javascript" src="/js/common-101.js"></script>
+<script type="text/javascript" src="/js/common-102.js"></script>
 <%@ include file="/inner/TSweetAlert.jsp"%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
@@ -35,7 +35,7 @@
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-77.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-78.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
