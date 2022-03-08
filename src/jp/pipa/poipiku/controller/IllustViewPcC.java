@@ -85,7 +85,7 @@ public final class IllustViewPcC {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			// owner
-			m_bOwner = (ownerUserId == checkLogin.m_nUserId);
+			m_bOwner = (checkLogin.m_bLogin && ownerUserId == checkLogin.m_nUserId);
 			Pin pin = null;
 			if (m_bOwner) {
 				List<Pin> pins;
@@ -111,14 +111,14 @@ public final class IllustViewPcC {
 
 			if (contentId <= 0) contentId = latestContentId;
 
-			if (!m_bOwner) {
+			if (checkLogin.m_bLogin && !m_bOwner) {
 				Request poipikuRequest = new Request();
 				poipikuRequest.selectByContentId(contentId, connection);
 				m_bRequestClient = (poipikuRequest.clientUserId == checkLogin.m_nUserId);
 			}
 
 			// content main
-			final String strOpenCnd = (!m_bOwner && !m_bRequestClient)?" AND open_id<>2":"";
+			final String strOpenCnd = (m_bOwner || m_bRequestClient) ? "" : " AND open_id<>2";
 
 			sql = "SELECT c.*, r.id request_id FROM contents_0000 c" +
 					 " LEFT JOIN requests r ON r.content_id=c.content_id " +
@@ -192,7 +192,7 @@ public final class IllustViewPcC {
 				m_cUser.m_strHeaderFileName += "_640.jpg";
 			}
 
-			if(checkLogin.m_bLogin &&  !m_bOwner) {
+			if(checkLogin.m_bLogin && !m_bOwner) {
 				// blocking
 				sql = "SELECT 1 FROM blocks_0000 WHERE user_id=? AND block_user_id=? LIMIT 1";
 				statement = connection.prepareStatement(sql);
