@@ -34,7 +34,7 @@ if(strRequestUri != null) {
 				const strEmail = $.trim($("#RegistEmail").val());
 				const strPassword = $.trim($("#RegistPassword").val());
 				const strNickname = $.trim($("#RegistNickname").val());
-				if(!strEmail.match(/.+@.+\..+/)) {
+				if(!isEmailValid(strEmail)) {
 					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
 					return false;
 				}

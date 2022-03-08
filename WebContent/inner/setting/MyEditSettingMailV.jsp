@@ -30,7 +30,7 @@ if (cResults.m_bUpdate) {
 <script type="text/javascript">
 	function getEmail() {
 		let strEmail = $("#EM").val();
-		if (!strEmail.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
+		if (!isEmailValid(strEmail)) {
 			DispMsg("<%=_TEX.T("EditSettingV.Email.Message.Empty")%>");
 			strEmail = null;
 		}
@@ -55,7 +55,7 @@ if (cResults.m_bUpdate) {
 
 	function UpdateEmailAddress() {
 		const strEmail = $("#EM").val();
-		if (!strEmail.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
+		if (!isEmailValid(strEmail)) {
 			DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
 			return false;
 		}

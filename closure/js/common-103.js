@@ -1229,3 +1229,9 @@ function showMyBoxSortFilterSubMenu(subMenuId) {
 	$target.animate({height: 'show'});
 }
 /******** ソート・フィルタオプション *********/
+
+/******** バリデーション *********/
+function isEmailValid(email) {
+	return email.match(/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/);
+}
+/******** バリデーション *********/

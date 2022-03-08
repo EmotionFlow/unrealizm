@@ -29,7 +29,7 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 					DispMsg("<%=_TEX.T("ForgetPassword.Err.Empty")%>");
 					return false;
 				}
-				if(strEmail.length>0 && !strEmail.match(/.+@.+\..+/)) {
+				if(strEmail.length>0 && !isEmailValid(strEmail)) {
 					DispMsg('<%=_TEX.T("ForgetPassword.Err.InvalidEmail")%>');
 					return false;
 				}

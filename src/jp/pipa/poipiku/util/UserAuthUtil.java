@@ -59,6 +59,8 @@ public class UserAuthUtil {
 	public static final int LENGTH_NICKNAME_MIN = 3;
 	public static final int LENGTH_NICKNAME_MAX = 16;
 
+	private static final String EMAIL_REGEX = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+";
+
 	public static int checkLogin(HttpServletRequest request, HttpServletResponse response) {
 		int nRtn = ERROR_UNKOWN;
 		//login check
@@ -164,7 +166,7 @@ public class UserAuthUtil {
 		//Log.d("6:"+strNickName);
 		if(strNickName.length()<LENGTH_NICKNAME_MIN || strNickName.length()>LENGTH_NICKNAME_MAX) return ERROR_NICKNAME_LENGTH;
 		//Log.d("7:"+strEmail);
-		if(!strEmail.matches(".+@.+\\..+")) return ERROR_EMAIL_INVALID;
+		if(!strEmail.matches(EMAIL_REGEX)) return ERROR_EMAIL_INVALID;
 		//Log.d("8:done");
 		int nUserId = 0;
 		String strHashPass = "";
@@ -456,7 +458,7 @@ public class UserAuthUtil {
 			e.printStackTrace();
 		}
 		if(checkLogin.m_nUserId != nUserId) return ERROR_NOT_LOGIN;
-		if(!strEmail.matches("^([a-zA-Z0-9])+([a-zA-Z0-9\\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\\._-]+)+$")) return ERROR_EMAIL_INVALID;
+		if(!strEmail.matches(EMAIL_REGEX)) return ERROR_EMAIL_INVALID;
 
 		DataSource dsPostgres = null;
 		Connection cConn = null;

@@ -264,7 +264,7 @@ if(cResults.m_bUpdate) {
 
 			function UpdateEmailAddress(){
 				var strEmail = $("#EM").val();
-				if(!strEmail.match(/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/)) {
+				if(!isEmailValid(strEmail)) {
 					DispMsg('<%=_TEX.T("EditSettingV.Email.Message.Empty")%>');
 					return false;
 				}
