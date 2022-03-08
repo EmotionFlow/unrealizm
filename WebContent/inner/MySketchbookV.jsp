@@ -120,20 +120,20 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 					<%}%>
 				<%}%>
 				<%if(cResults.contentList.isEmpty()){%>
-				<div style="margin: 30px; text-align: center; color:#fffdb1;border: solid;border-radius: 5px;padding: 20px 0; font-size: 15px;">
-					<i class="fas fa-bullhorn" style="font-size: 30px; margin-bottom: 15px"></i><br> <%=_TEX.T("MySketchbookV.Info01")%>
+				<div style="margin: 30px; text-align: center; color:#fffdb1;border: solid;border-radius: 5px;padding: 20px 35px; font-size: 15px;">
+					<i class="fas fa-bullhorn" style="font-size: 30px; margin-bottom: 15px"></i><br> <%=_TEX.T("MySketchbookV.Info01")%><br/>
 					<div style="margin-top: 10px;">
 						<%=_TEX.T("MySketchbookV.Info02")%><br>
-					<span style="font-size: 11px">
-						<%=_TEX.T("MySketchbookV.Info03")%><br>
-						<%if(isApp){%>
-						<%=_TEX.T("MySketchbookV.Info04")%>
-						<%}else{%>
-						<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="color:#fffdb1; text-decoration: underline;">
-						<%=_TEX.T("MySketchbookV.Info05")%>
-						</a>
-						<%}%>
-					</span>
+						<span style="font-size: 11px">
+							<%if(isApp){%>
+							<%=_TEX.T("MySketchbookV.Info04")%>
+							<%}else{%>
+							<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="color:#fffdb1; text-decoration: underline;">
+							<%=_TEX.T("MySketchbookV.Info05")%>
+							</a>
+							<%}%>
+							<br><%=_TEX.T("MySketchbookV.Info03")%>
+						</span>
 					</div>
 				</div>
 				<div style="margin: 50px 30px;">

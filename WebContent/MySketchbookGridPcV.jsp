@@ -73,8 +73,8 @@
 			<i class="fas fa-bullhorn" style="font-size: 30px; margin-bottom: 15px"></i><br> <%=_TEX.T("MySketchbookV.Info01")%><br><%=_TEX.T("MySketchbookV.Info02")%>
 			<div style="margin-top: 10px;">
 			<span style="font-size: 11px">
-				<%=_TEX.T("MySketchbookV.Info03")%><br>
-				<%=_TEX.T("MySketchbookV.Info05")%>
+				<%=_TEX.T("MySketchbookV.Info05")%><br>
+				<%=_TEX.T("MySketchbookV.Info03")%>
 			</span>
 			</div>
 		</div>
