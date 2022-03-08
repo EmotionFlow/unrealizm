@@ -105,26 +105,45 @@ public class PopularTagListC {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
 				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
+					strCondMute = "SELECT content_id as mute_content_id FROM contents_0000 WHERE description &@~ ?";
 				}
+			}
+
+			final String strSqlWith;
+			if (strMuteKeyword.isEmpty()) {
+				strSqlWith = "";
+			} else {
+				strSqlWith = "WITH mute_contents AS (" + strCondMute + ")";
 			}
 
 			// WEEKLY SAMPLE
 			// "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */"
-			strSql = "SELECT * FROM contents_0000 "
-					+ "WHERE open_id<>2 AND publish_id=0 "
-					+ "AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=1) "
-					+ "AND safe_filter<=? "
+			strSql = strSqlWith + " SELECT * FROM contents_0000 ";
+
+			if(!strCondMute.isEmpty()){
+				strSql += (" LEFT JOIN mute_contents ON mute_contents.mute_content_id=contents_0000.content_id");
+			}
+
+			strSql += " WHERE open_id<>2 AND publish_id=0 "
+					+ " AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt LIKE ? AND tag_type=1) "
+					+ " AND safe_filter<=? "
 					+ strCondBlockUser
-					+ strCondBlocedkUser
-					+ strCondMute
-					+ "ORDER BY content_id DESC LIMIT ? ";
+					+ strCondBlocedkUser;
+
+			if(!strCondMute.isEmpty()){
+				strSql += " AND mute_content_id IS NULL";
+			}
+
+			strSql += " ORDER BY content_id DESC LIMIT ? ";
 
 			statement = connection.prepareStatement(strSql);
 			for(int nCnt = 0; nCnt< m_vTagListWeekly.size() && nCnt< selectMaxSampleGallery; nCnt++) {
 				CTag cTag = m_vTagListWeekly.get(nCnt);
-				ArrayList<CContent> m_vContentList = new ArrayList<CContent>();
+				ArrayList<CContent> m_vContentList = new ArrayList<>();
 				idx = 1;
+				if(!strCondMute.isEmpty()){
+					statement.setString(idx++, strMuteKeyword);
+				}
 				statement.setString(idx++, cTag.m_strTagTxt);
 				statement.setInt(idx++, checkLogin.m_nSafeFilter);
 				if(!strCondBlockUser.isEmpty()) {
@@ -132,9 +151,6 @@ public class PopularTagListC {
 				}
 				if(!strCondBlocedkUser.isEmpty()) {
 					statement.setInt(idx++, checkLogin.m_nUserId);
-				}
-				if(!strCondMute.isEmpty()){
-					statement.setString(idx++, strMuteKeyword);
 				}
 				statement.setInt(idx++, selectSampleGallery);
 				resultSet = statement.executeQuery();
