@@ -94,30 +94,44 @@ public final class MyHomePcC {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
 				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = "AND contents_0000.content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
+					strCondMute = "SELECT content_id as mute_content_id FROM contents_0000 WHERE description &@~ ?";
 				}
+			}
+
+			final String strSqlWith;
+			if (strMuteKeyword.isEmpty()) {
+				strSqlWith = "";
+			} else {
+				strSqlWith = "WITH mute_contents AS (" + strCondMute + ")";
 			}
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("FROM contents_0000 ")
-			.append(" LEFT JOIN requests ON requests.content_id=contents_0000.content_id")
-			.append(" WHERE open_id<>2 ")
-			.append(" AND user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=? UNION SELECT ?) ");
+			.append(" LEFT JOIN requests ON requests.content_id=contents_0000.content_id");
+
 			if(!strCondMute.isEmpty()){
-				sb.append(strCondMute);
+				sb.append(" LEFT JOIN mute_contents ON mute_contents.mute_content_id=contents_0000.content_id");
 			}
-			sb.append("AND safe_filter<=? ");
+
+			sb.append(" WHERE open_id<>2 ")
+			.append(" AND user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=? UNION SELECT ?) ")
+			.append(" AND safe_filter<=? ");
+
+			if(!strCondMute.isEmpty()){
+				sb.append(" AND mute_content_id IS NULL");
+			}
+
 			final String strSqlFromWhere = new String(sb);
 
 			// NEW ARRIVAL COUNT
-			strSql = "SELECT count(*) " + strSqlFromWhere;
+			strSql = strSqlWith + "SELECT count(*) " + strSqlFromWhere;
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId);
-			statement.setInt(idx++, checkLogin.m_nUserId);
 			if(!strCondMute.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);
 			}
+			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
@@ -139,15 +153,15 @@ public final class MyHomePcC {
 
 			if (!m_bNoContents) {
 				// NEW ARRIVAL
-				strSql = "SELECT contents_0000.*, requests.id request_id " + strSqlFromWhere;
-				strSql += " ORDER BY content_id DESC OFFSET ? LIMIT ?";
+				strSql = strSqlWith + "SELECT contents_0000.*, requests.id request_id " + strSqlFromWhere;
+				strSql += " ORDER BY contents_0000.content_id DESC OFFSET ? LIMIT ?";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setInt(idx++, checkLogin.m_nUserId);
-				statement.setInt(idx++, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
 					statement.setString(idx++, strMuteKeyword);
 				}
+				statement.setInt(idx++, checkLogin.m_nUserId);
+				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nSafeFilter);
 				statement.setInt(idx++, m_nPage * SELECT_MAX_GALLERY);
 				statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
