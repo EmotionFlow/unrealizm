@@ -2586,14 +2586,14 @@ Decoration
 .IllustItemList .ActivityList .ActivityListItem .ActivityListRequestThumb {
 	display: block;
 	margin: 0 5px 0 0;
-	width: 60px;
-	height: 60px;
+	width: 50px;
+	height: 50px;
 	box-sizing: border-box;
 	border: solid 1px #eee;
 	background: url(/img/menu_pc-12.png) no-repeat;
-	background-size: 567%;
+	background-size: 847%;
 	position: relative;
-	background-position: -284px -35px;
+	background-position: -303px -39px;
 }
 
 .IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbImg {
