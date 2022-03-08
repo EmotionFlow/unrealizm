@@ -2669,7 +2669,8 @@ Decoration
 	margin: 0 5px 0 0;
 }
 
-.IllustItemList .ActivityList .ActivityListItem .ActivityListBadge {
+.IllustItemList .ActivityList .ActivityListItem .ActivityListBadge,
+.TabMenu .ActivityListBadge {
 	display: block;
 	position: absolute;
 	min-width: 9px;
@@ -2678,11 +2679,21 @@ Decoration
 	text-align: center;
 	top: 5px;
 	right: 5px;
-	border-radius: 100px;
+	border-radius: 10px;
 	font-size: 9px;
-	background: #ff0000;
+	background: rgba(255,0,0,0.5);
 	color: #fff;
-	padding: 0 3px
+	padding: 0 3px;
+}
+
+.TabMenu .ActivityListBadge {
+	display: inline-block;
+	position: relative;
+	top: 0;
+	right: 2px;
+	min-width: 2px;
+	height: 8px;
+	margin-left: 2px;
 }
 
 .IllustItemList .ActivityList .ActivityListItem.HadRead .ActivityListBadge {

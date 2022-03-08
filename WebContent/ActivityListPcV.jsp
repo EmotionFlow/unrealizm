@@ -1,15 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/inner/Common.jsp" %>
 <%
-	//login check
-	CheckLogin checkLogin = new CheckLogin(request, response);
-	if (!checkLogin.m_bLogin) {
-		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request, response);
-		return;
-	}
+//login check
+CheckLogin checkLogin = new CheckLogin(request, response);
+if (!checkLogin.m_bLogin) {
+	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request, response);
+	return;
+}
 
-	int infoType = Util.toInt(request.getParameter("TY"));
-	if (infoType==-1) infoType = 1;
+ActivityListC summaryResults = new ActivityListC();
+summaryResults.getSummaryResults(checkLogin);
+boolean existUnreadReactionInfo = false;
+boolean existUnreadRequestInfo = false;
+
+if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Emoji)) {
+	existUnreadReactionInfo = true;
+} else if(summaryResults.activityCounts.containsKey(InfoList.InfoType.Gift)) {
+	existUnreadReactionInfo = true;
+}
+if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
+	existUnreadRequestInfo = true;
+}
+
+
+int infoType = Util.toInt(request.getParameter("TY"));
+if (infoType==-1) infoType = 1;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -99,10 +114,10 @@
 
 <nav class="TabMenuWrapper">
 	<ul class="TabMenu">
-		<li><a class="TabMenuItem <%if(infoType==1){%>Selected<%}%>" href="/ActivityListPcV.jsp?TY=1"><%=_TEX.T("THeader.Menu.Act.Reaction")%>
+		<li><a class="TabMenuItem <%if(infoType==1){%>Selected<%}%>" href="/ActivityListPcV.jsp?TY=1"><%=existUnreadReactionInfo?"<span class=\"ActivityListBadge\"></span>":""%><%=_TEX.T("THeader.Menu.Act.Reaction")%>
 		</a></li>
-		<li><a class="TabMenuItem <%if(infoType==3){%>Selected<%}%>" href="/ActivityListPcV.jsp?TY=3"><%=_TEX.T("THeader.Menu.Act.Request")%>
-		</a></li>
+		<li><a class="TabMenuItem <%if(infoType==3){%>Selected<%}%>" href="/ActivityListPcV.jsp?TY=3"><%=existUnreadRequestInfo?"<span class=\"ActivityListBadge\"></span>":""%><%=_TEX.T("THeader.Menu.Act.Request")%>
+			</a></li>
 		<li><a class="TabMenuItem" href="/ActivityAnalyzePcV.jsp"><%=_TEX.T("THeader.Menu.Act.Analyze")%>
 		</a></li>
 	</ul>

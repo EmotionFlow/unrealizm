@@ -3,6 +3,7 @@ package jp.pipa.poipiku;
 import jp.pipa.poipiku.util.DatabaseUtil;
 
 import java.sql.*;
+import java.util.HashMap;
 
 public final class InfoList extends Model{
 	public int userId;
@@ -15,6 +16,47 @@ public final class InfoList extends Model{
 	public int badgeNum;
 	public boolean hadRead;
 	public int requestId = -1;
+
+	public enum ContentType implements CodeEnum<ContentType> {
+		Undefined(0),
+		Image(1),
+		Text(2);
+
+		static public ContentType byCode(int _code) {
+			return CodeEnum.getEnum(ContentType.class, _code);
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+
+		private final int code;
+		private ContentType(int code) {
+			this.code = code;
+		}
+	}
+
+	public enum InfoType implements CodeEnum<InfoType> {
+		Emoji(1),
+		Request(3),
+		Gift(4);
+
+		static public InfoType byCode(int _code) {
+			return CodeEnum.getEnum(InfoType.class, _code);
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+
+		private final int code;
+		private InfoType(int code) {
+			this.code = code;
+		}
+	}
+
 
 	private static String INSERT_SQL =
 			"INSERT INTO info_lists(" +
@@ -171,5 +213,31 @@ public final class InfoList extends Model{
 			if (_connection == null && connection != null) {try{connection.close();connection=null;}catch (Exception e){}}
 		}
 		return badgeNum;
+	}
+
+	static public HashMap<InfoType, Integer> selectUnreadNumByInfoType(int userId){
+		HashMap<InfoType, Integer> hashMap = new HashMap<>();
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		int badgeNum = -1;
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			final String sql = "select info_type, count(info_type) info_num from info_lists where user_id=? and had_read=false group by info_type";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, userId);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				final InfoType infoType = InfoType.byCode(resultSet.getInt("info_type"));
+				hashMap.put(infoType, resultSet.getInt("info_num"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (resultSet != null) {try{resultSet.close();resultSet=null;}catch (Exception e){}}
+			if (statement != null) {try{statement.close();statement=null;}catch (Exception e){}}
+			if (connection != null) {try{connection.close();connection=null;}catch (Exception e){}}
+		}
+		return hashMap;
 	}
 }

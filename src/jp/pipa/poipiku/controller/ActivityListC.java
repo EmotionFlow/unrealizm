@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,13 +24,15 @@ public final class ActivityListC {
 		}
 	}
 
-	public ArrayList<InfoList> activities = new ArrayList<>();
+	public ArrayList<InfoList> activities;
 	public boolean getResults(final CheckLogin checkLogin) {
 		String strSql = "";
 		boolean bRtn = false;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
+
+		activities = new ArrayList<>();
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
@@ -66,4 +69,10 @@ public final class ActivityListC {
 		}
 		return bRtn;
 	}
+
+	public HashMap<InfoList.InfoType, Integer> activityCounts;
+	public void getSummaryResults(final CheckLogin checkLogin) {
+		activityCounts = InfoList.selectUnreadNumByInfoType(checkLogin.m_nUserId);
+	}
 }
+

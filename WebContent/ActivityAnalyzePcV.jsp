@@ -7,6 +7,21 @@ if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
 }
+
+ActivityListC summaryResults = new ActivityListC();
+summaryResults.getSummaryResults(checkLogin);
+boolean existUnreadReactionInfo = false;
+boolean existUnreadRequestInfo = false;
+
+if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Emoji)) {
+	existUnreadReactionInfo = true;
+} else if(summaryResults.activityCounts.containsKey(InfoList.InfoType.Gift)) {
+	existUnreadReactionInfo = true;
+}
+if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
+	existUnreadRequestInfo = true;
+}
+
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -107,9 +122,9 @@ if(!checkLogin.m_bLogin) {
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=1"><%=_TEX.T("THeader.Menu.Act.Reaction")%>
+				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=1"><%=existUnreadReactionInfo?"<span class=\"ActivityListBadge\"></span>":""%><%=_TEX.T("THeader.Menu.Act.Reaction")%>
 				</a></li>
-				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=3"><%=_TEX.T("THeader.Menu.Act.Request")%>
+				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=3"><%=existUnreadRequestInfo?"<span class=\"ActivityListBadge\"></span>":""%><%=_TEX.T("THeader.Menu.Act.Request")%>
 				</a></li>
 				<li><a class="TabMenuItem Selected" href="/ActivityAnalyzePcV.jsp"><%=_TEX.T("THeader.Menu.Act.Analyze")%>
 				</a></li>
