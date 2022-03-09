@@ -1,5 +1,25 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%if(!checkLogin.m_bLogin){%>
+<script>
+function dispTwLoginUnsuccessfulInfo(callbackPath){
+	Swal.fire({
+		html: '<h2><%=_TEX.T("TMenu.TwLoginUnsuccessfulInfo.Title")%></h2>' +
+			'<div style="text-align: left; font-size: 13px"><p><%=_TEX.T("TMenu.TwLoginUnsuccessfulInfo.Info01")%><p>' +
+			'<p style="text-align: left; font-size: 13px"><%=_TEX.T("TMenu.TwLoginUnsuccessfulInfo.Info02")%><p></div>',
+		showCancelButton: false,
+		showCloseButton: true,
+		confirmButtonText: '<i class="typcn typcn-social-twitter"></i> <%=_TEX.T("TMenu.TwLoginUnsuccessfulInfo.Button")%>',
+	}).then((result) => {
+		if (result.value) {
+			location.href = "/LoginFormTwitter.jsp?AUTH=authorize&CBPATH=" + callbackPath;
+		}
+	});
+}
+</script>
+<%}%>
+
 <header class="Header">
 	<div id="HeaderSlider"></div>
 	<div class="HeaderWrapper">
@@ -18,10 +38,13 @@
 						for(let i=0; i<3; i++){s.shift();}
 						$('#login_from_twitter_tmenupc_callback_00').val("/" + s.join("/"));
 					}</script>
-					<a class="BtnBase Rev HeaderLoginBtn LoginButton" style="right: 35px" href="javascript:login_from_twitter_tmenupc_00.submit()">
+					<a class="BtnBase Rev HeaderLoginBtn LoginButton" style="right: 126px; width: 96px;" href="javascript:login_from_twitter_tmenupc_00.submit()">
 						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 					</a>
 				</form>
+				<div class="TwLoginUnsuccessfulIcon" onclick="dispTwLoginUnsuccessfulInfo($('#login_from_twitter_tmenupc_callback_00').val())">
+					<i class="fas fa-info-circle" style="font-size: 19px; padding: 5px;"></i>
+				</div>
 				<div class="HeaderSelectLang" onclick="showSelectLangDlg(false);">
 					<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
 				</div>
@@ -88,6 +111,10 @@
 					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
 				</a>
 			</form>
+			<div class="TwLoginUnsuccessfulIcon" onclick="dispTwLoginUnsuccessfulInfo($('#login_from_twitter_tmenupc_callback_01').val())">
+				<i class="fas fa-info-circle" style="font-size: 19px; padding: 5px;"></i>
+			</div>
+
 			<%} else {%>
 			<a id="MenuSwitchUser" class="FooterMenuItem" style="display: none;" href="javascript: void(0);" onclick="toggleSwitchUserList();">
 				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>
