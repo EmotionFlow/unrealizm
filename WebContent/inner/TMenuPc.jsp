@@ -112,7 +112,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</a>
 			</form>
 			<div class="TwLoginUnsuccessfulIcon" onclick="dispTwLoginUnsuccessfulInfo($('#login_from_twitter_tmenupc_callback_01').val())">
-				<i class="fas fa-info-circle" style="font-size: 19px; padding: 5px;"></i>
+				<i class="fas fa-info-circle" style="padding: 2px"></i>
 			</div>
 
 			<%} else {%>
