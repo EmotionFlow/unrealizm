@@ -54,12 +54,12 @@ public final class RequestCreator extends Model{
 	private Integer allowClient = ALLOW_CLIENT_SIGNED;
 
 	static public final int RETURN_PERIOD_MIN = 3;
-	static public final int RETURN_PERIOD_MAX = 30;
+	static public final int RETURN_PERIOD_MAX = 180;
 	static public final int RETURN_PERIOD_DEFAULT = 7;
 	public Integer returnPeriod = RETURN_PERIOD_DEFAULT;
 
 	static public final int DELIVERY_PERIOD_MIN = 7;
-	static public final int DELIVERY_PERIOD_MAX = 120;
+	static public final int DELIVERY_PERIOD_MAX = 200;
 	static public final int DELIVERY_PERIOD_DEFAULT = 60;
 	public Integer deliveryPeriod = DELIVERY_PERIOD_DEFAULT;
 

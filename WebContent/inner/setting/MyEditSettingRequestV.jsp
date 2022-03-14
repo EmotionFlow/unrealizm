@@ -198,6 +198,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 
 <style>
 	.RequestVarUnit {font-size: 18px;line-height: 28px;}
+	.RequestVarLimit {margin-left: 3px;font-size: 12px;}
 	.RequestListLink {
 		width: 100%;
 		display: block;
@@ -330,11 +331,10 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				<div class="SettingBody">
 					<div>
 						<input id="ReturnPeriod" type="number" placeholder="<%=RequestCreator.RETURN_PERIOD_DEFAULT%>" value="<%=requestCreator.returnPeriod%>" maxlength="3" />
-						<span class="RequestVarUnit">日</span>
+						<span class="RequestVarUnit">日</span><span class="RequestVarLimit">(<%=RequestCreator.RETURN_PERIOD_MIN%> - <%=RequestCreator.RETURN_PERIOD_MAX%>)</span>
 					</div>
 					<div class="RegistMessage">
-						依頼の返答期限を設定します。<%=RequestCreator.RETURN_PERIOD_MIN%>日から<%=RequestCreator.RETURN_PERIOD_MAX%>日の間で設定できます。
-						返答期限を過ぎた依頼はキャンセル扱いとなります。無償依頼の際は依頼主には表示されません。
+						依頼の返答期限を設定します。 返答期限を過ぎた依頼はキャンセル扱いとなります。無償依頼の際は依頼主には表示されません。
 					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateReturnPeriod()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -346,11 +346,10 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				<div class="SettingBody">
 					<div>
 						<input id="DeliveryPeriod" type="number" placeholder="<%=RequestCreator.DELIVERY_PERIOD_DEFAULT%>" value="<%=requestCreator.deliveryPeriod%>" maxlength="3" />
-						<span class="RequestVarUnit">日</span>
+						<span class="RequestVarUnit">日</span><span class="RequestVarLimit">(<%=RequestCreator.DELIVERY_PERIOD_MIN%> - <%=RequestCreator.DELIVERY_PERIOD_MAX%>)</span>
 					</div>
 					<div class="RegistMessage">
-						依頼日からのお渡し(納品)期限を設定します。<%=RequestCreator.DELIVERY_PERIOD_MIN%>日から<%=RequestCreator.DELIVERY_PERIOD_MAX%>日の間で設定できます。返答締切日数より短くすることはできません。
-						お渡し期限を過ぎた依頼はキャンセル扱いとなります。無償依頼の際は依頼主には表示されません。
+						依頼日からのお渡し(納品)期限を設定します。お渡し期限を過ぎた依頼はキャンセル扱いとなります。無償依頼の際は依頼主には表示されません。
 					</div>
 					<div class="SettingBodyCmd">
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateDeliveryPeriod()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
@@ -361,7 +360,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			<div id="PaidSetting" class="SettingListItem">
 				<div class="SettingListTitle">無償 / 有償</div>
 				<div class="SettingBody">
-					依頼を無償とするか、有償依頼にするかを選択します。有償依頼では、クリエイターが指定した範囲内で、依頼主が金額を提示します。
+					依頼を無償とするか、有償にするかを選択します。有償依頼では、クリエイターが指定した範囲内で、依頼主が金額を提示します。
 					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 						<div class="RegistMessage" style="margin: 0">
 							<select id="SelectPaidRequest">

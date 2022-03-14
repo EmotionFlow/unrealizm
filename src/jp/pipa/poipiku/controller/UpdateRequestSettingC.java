@@ -60,17 +60,17 @@ public final class UpdateRequestSettingC extends Controller{
 		    resultSet.close();
 		    statement.close();
 
-		    // Twitter連携してない・Twitterアカウントの登録日が１４日以内
+		    // Twitter連携してない・Twitterアカウントの登録日が10分以内
 		    CTweet cTweet = new CTweet();
 		    cTweet.GetResults(checkLogin.m_nUserId);
 			if (cTweet.m_bIsTweetEnable) {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 				Date createdAt = cTweet.getCreatedAt();
-				Date limitDate = new Date(System.currentTimeMillis() - 1000L * 60 * 60 * 24 * 14);
+				Date limitDate = new Date(System.currentTimeMillis() - 1000L * 60 * 10);
 				Log.d(dateFormat.format(createdAt));
 				Log.d(dateFormat.format(limitDate));
 				if (createdAt.after(limitDate)) {
-					Log.d("連携しているTwitterアカウントの登録日が１４日以内");
+					Log.d("連携しているTwitterアカウントの登録日時が10分以内");
 					return false;
 				}
 			} else {
