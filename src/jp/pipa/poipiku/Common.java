@@ -81,6 +81,11 @@ public final class Common {
 	public static final int AD_ID_ALL	= 1;	// ALL
 	public static final int AD_ID_R18	= 2;	// R18
 
+	// Open ID
+	public static final int OPEN_ID_PUBLISH = 0;
+	public static final int OPEN_ID_NG_RECENT = 1;
+	public static final int OPEN_ID_HIDDEN = 2;
+
 	// Publish ID
 	public static final int PUBLISH_ID_ALL			= 0;	// ALL
 	public static final int PUBLISH_ID_R15			= 1;	// R15
