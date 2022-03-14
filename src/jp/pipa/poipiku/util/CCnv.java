@@ -384,6 +384,7 @@ public final class CCnv {
 		} else {
 			strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
 		}
+		strRtn.append(String.format("<a class=\"ReplyBtn fas fa-reply onclick=\"switchEmojiKeyboard(this, %d, 4)\"></a>", cContent.m_nContentId));
 		strRtn.append("</div>");	// IllustItemResListTitle
 		strRtn.append("<div class=\"ResBtnSetList\">");
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
