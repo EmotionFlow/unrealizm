@@ -3460,7 +3460,7 @@ hr.IllustItemListSeparator {
 	top: 0;
 	left: 0;
 	z-index: 99999;
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 	overflow: scroll;
 	visibility: hidden;
@@ -3468,6 +3468,15 @@ hr.IllustItemListSeparator {
 	background: rgba(0,0,0,0.90);
 	transition: all 0.3s ease-out;
 }
+
+/* Avoid Chrome to see Safari hack */
+@supports (-webkit-touch-callout: none) {
+	#DetailOverlay {
+		/* The hack for Safari */
+		height: -webkit-fill-available;
+	}
+}
+
 #DetailOverlay.overlay-on{
 	visibility: visible;
 	opacity: 1;
@@ -3690,3 +3699,5 @@ hr.IllustItemListSeparator {
 	background-color: rgba(0, 0, 0, 0.8);
 }
 /********** クリップボードにURLをコピー ************/
+
+

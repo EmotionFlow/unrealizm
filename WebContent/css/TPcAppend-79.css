@@ -126,7 +126,7 @@ body {padding: 51px 0 0 0 !important;}
 
 
 /********** GRID ***********/
-.Wrapper.GridList {width: 1140px;}
+.Wrapper.GridList {width-max: 1140px;}
 .Wrapper.GridList .PcSideBarAd {display: flex; flex-flow: column; position: relative; width: 336px; height: 280px; float: right; margin: 31px 12px 12px 12px; background-color: #fff; align-items: center; justify-content: center;}
 .Wrapper.GridList .PcSideBarAd .PassAd {display: block; position: absolute; top: -19px; left: 0; width: 100%; height: 19px; max-height: 19px; line-height: 19px; font-size: 13px; color: #fff; text-align: right;}
 
