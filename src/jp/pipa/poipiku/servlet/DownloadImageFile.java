@@ -8,14 +8,13 @@ import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Objects;
 
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 import org.apache.commons.io.IOUtils;
 
@@ -28,7 +27,7 @@ import jp.pipa.poipiku.util.*;
 //@WebServlet("/DownloadImageFile")
 //@WebServlet(urlPatterns = { "/DownloadImageFile" })
 @WebServlet(name="DownloadImageFile",urlPatterns={"/DownloadImageFile"})
-public class DownloadImageFile extends HttpServlet {
+public final class DownloadImageFile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public DownloadImageFile() {
@@ -50,115 +49,136 @@ public class DownloadImageFile extends HttpServlet {
 		if(!cResults.getParam(request)) return;
 		if(!cResults.getResults(checkLogin)) return;
 
-		String file_name_full = getServletContext().getRealPath(cResults.m_strFileName);
+		String file_name_full = getServletContext().getRealPath(cResults.fileName);
 		File file = new File(file_name_full);
 		if(!file.exists()) return;
 		String ext = ImageUtil.getExt(file_name_full);
 		switch (ext) {
-		case "gif":
-			response.setContentType("image/gif");
-			break;
-		case "jpeg":
-			response.setContentType("image/jpeg");
-			break;
-		case "png":
-			response.setContentType("image/png");
-			break;
-		default:
-			response.setContentType("application/octet-stream");
-			response.setHeader("Content-Transfer-Encoding", "binary");
-			break;
+			case "gif" -> response.setContentType("image/gif");
+			case "jpeg" -> response.setContentType("image/jpeg");
+			case "png" -> response.setContentType("image/png");
+			default -> {
+				response.setContentType("application/octet-stream");
+				response.setHeader("Content-Transfer-Encoding", "binary");
+			}
 		}
 		response.setHeader("Content-Disposition", String.format("attachment;filename=\"%s\"", Util.changeExtension(file.getName(), ext)));
 		//response.setStatus(HttpServletResponse.SC_OK);
 
+		OutputStream outStream = null;
+		InputStream inStream = null;
 		try {
-			OutputStream outStream = response.getOutputStream();
-			InputStream inStream = new FileInputStream(file);
+			outStream = response.getOutputStream();
+			inStream = new FileInputStream(file);
 			IOUtils.copy(inStream, response.getOutputStream());
 			outStream.flush();
-			inStream.close();
-			outStream.close();
-		} catch (Exception e) {
+		} catch (Exception ignored) {
 			;
+		} finally {
+			Objects.requireNonNull(inStream).close();
+			Objects.requireNonNull(outStream).close();
 		}
 	}
 
-	class CDownloadImageFile {
-		public int m_nContentId = 0;
-		public int m_nAppendId = 0;
+	static class CDownloadImageFile {
+		public int contentId = 0;
+		public int appendId = 0;
 		public boolean getParam(HttpServletRequest request) {
 			boolean bRtn = false;
 			try {
 				request.setCharacterEncoding("UTF-8");
-				m_nContentId	= Util.toInt(request.getParameter("TD"));
+				contentId = Util.toInt(request.getParameter("TD"));
 				bRtn = true;
-				m_nAppendId		= Util.toInt(request.getParameter("AD"));
+				appendId = Util.toInt(request.getParameter("AD"));
 			}
-			catch(Exception e) {
+			catch(Exception ignored) {
 				;
 			}
 			return bRtn;
 		}
 
-		public String m_strFileName = "";
+		public String fileName = "";
 		public boolean getResults(CheckLogin checkLogin) {
-			boolean bResult = false;
-			DataSource dsPostgres = null;
-			Connection cConn = null;
-			PreparedStatement cState = null;
-			ResultSet cResSet = null;
-			String strSql = "";
+			if (contentId < 0) return false;
+
+			boolean result = false;
+			Connection connection = null;
+			PreparedStatement statement = null;
+			ResultSet resultSet = null;
+			String sql = "";
 
 			try {
-				dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				cConn = dsPostgres.getConnection();
+				boolean isOwner = false;
+				boolean isRequestClient = false;
+				boolean okDownloadOthers = false;
+				int publishId = -1;
+				int openId = -1;
+
+				connection = DatabaseUtil.dataSource.getConnection();
 
 				// content main
-				strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, checkLogin.m_nUserId);
-				cState.setInt(2, m_nContentId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					String file_name = Util.toString(cResSet.getString("file_name"));
-					if(!file_name.isEmpty()) {
-						m_strFileName = file_name;
+				sql = """
+						SELECT c.user_id, c.open_id, c.publish_id, c.file_name, u.ng_download, r.id request_id, r.client_user_id
+						FROM contents_0000 c
+							INNER JOIN users_0000 u ON u.user_id = c.user_id
+							LEFT JOIN requests r ON c.content_id = r.content_id
+						WHERE c.content_id = ?
+						""";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, contentId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					fileName = resultSet.getString("file_name");
+					publishId = resultSet.getInt("publish_id");
+					openId = resultSet.getInt("open_id");
+					isOwner = checkLogin.m_nUserId == resultSet.getInt("user_id");
+					isRequestClient = resultSet.getInt("request_id") > 0 && checkLogin.m_nUserId == resultSet.getInt("client_user_id");
+					okDownloadOthers = resultSet.getInt("ng_download") == 1;
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
+
+//				Log.d(String.format("isOwner: %b, isRequestClient: %b, okDownloadOthers: %b", isOwner, isRequestClient, okDownloadOthers));
+
+				if (!(isOwner || isRequestClient)){
+					if (!okDownloadOthers) {
+						return false;
+					} else {
+						if (openId == Common.OPEN_ID_HIDDEN || publishId == Common.PUBLISH_ID_HIDDEN) return false;
 					}
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
-				// 存在確認
-				if(m_strFileName.isEmpty()) return false;
 
-				if(m_nAppendId>0) {
-					m_strFileName = "";
-					strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, m_nContentId);
-					cState.setInt(2, m_nAppendId);
-					cResSet = cState.executeQuery();
-					if(cResSet.next()) {
-						String file_name = Util.toString(cResSet.getString("file_name"));
+				// 存在確認
+				if(fileName == null || fileName.isEmpty()) return false;
+
+				if(appendId>0) {
+					fileName = "";
+					sql = "SELECT file_name FROM contents_appends_0000 WHERE content_id=? AND append_id=?";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(1, contentId);
+					statement.setInt(2, appendId);
+					resultSet = statement.executeQuery();
+					if(resultSet.next()) {
+						String file_name = Util.toString(resultSet.getString("file_name"));
 						if(!file_name.isEmpty()) {
-							m_strFileName = file_name;
+							fileName = file_name;
 						}
 					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
+					resultSet.close();resultSet=null;
+					statement.close();statement=null;
 					// 存在確認
-					if(m_strFileName.isEmpty()) return false;
+					if(fileName.isEmpty()) return false;
 				}
-				bResult = true;
+				result = true;
 			} catch(Exception e) {
-				Log.d(strSql);
+				Log.d(sql);
 				e.printStackTrace();
 			} finally {
-				try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+				try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+				try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+				try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 			}
-			return bResult;
+			return result;
 		}
 	}
 }
