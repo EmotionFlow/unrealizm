@@ -327,9 +327,9 @@ public final class CCnv {
 	}
 
 	private static void appendIllustItemResList(
-			StringBuilder strRtn, CContent cContent, int nLoginUserId,
-			ArrayList<String> vResult, int nSpMode,
-			ResourceBundleControl _TEX){
+			StringBuilder strRtn, final CContent cContent, int nLoginUserId,
+			final ArrayList<String> vEmoji, int nSpMode,
+			final ResourceBundleControl _TEX){
 		final boolean isOwnerAndHidden = cContent.m_nUserId==nLoginUserId && cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN;
 		strRtn.append(
 			String.format(
@@ -354,11 +354,16 @@ public final class CCnv {
 		for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
 			strRtn.append(
 				String.format(
-					"<span class=\"ResEmoji\">%s</span>",
+					"<a class=\"ResEmoji\" href=\"javascript:void(0)\" onclick=\"replyEmoji(this)\">%s</a>",
 					CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))
 				)
 			);
 		}
+		// lastCommentId
+		strRtn.append("""
+                <data class="LastCommentId" value="%d"></data>
+				""".formatted(cContent.m_nCommentsListsCacheLastId));
+
 		/*
 		for(CComment comment : cContent.m_vComment) {
 			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
@@ -418,7 +423,7 @@ public final class CCnv {
 
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
-			for(String emoji : vResult) {
+			for(String emoji : vEmoji) {
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
@@ -429,7 +434,7 @@ public final class CCnv {
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\" style=\"display: none;\"></div>");
 			// 人気の絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
-			for(String emoji : vResult) {
+			for(String emoji : vEmoji) {
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList

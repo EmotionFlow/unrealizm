@@ -35,4 +35,18 @@ function switchEmojiReply(_this) {
 	}
 }
 
+function replyEmoji(_this) {
+	const $IllustItems = $(_this).parents(".IllustItem");
+	const $IllustItemResBtnList = $IllustItems.children(".IllustItemResBtnList");
+	if ($IllustItemResBtnList.css("display") !== "none") {
+		return false;
+	}
+	const contentId = parseInt($IllustItems[0].id.split("_")[1], 10);
+	const lastCommentId = parseInt($IllustItems.find(".LastCommentId").attr("value"), 10);
+	const len = parseInt($(_this).parent().children(".ResEmoji").length, 10);
+	const commentIdOffset = len - $(_this).parent().children(".ResEmoji").index($(_this)) - 1;
+	console.log(contentId, lastCommentId, commentIdOffset);
+}
+
+
 </script>
