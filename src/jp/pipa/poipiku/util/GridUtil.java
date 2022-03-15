@@ -49,42 +49,44 @@ public class GridUtil {
 	public static void updateCommentsLists(Connection connection, int contentId, int toUserId) throws SQLException {
 		// comments_0000から絵文字取得
 		StringBuilder sbDescription = new StringBuilder();
-		String sql = "SELECT description FROM comments_0000 WHERE content_id=? AND to_user_id=? ORDER BY comment_id DESC LIMIT ?";
+		String sql = "SELECT comment_id, description FROM comments_0000 WHERE content_id=? AND to_user_id=? ORDER BY comment_id DESC LIMIT ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setInt(1, contentId);
 		statement.setInt(2, toUserId);
 		statement.setInt(3, SELECT_MAX_EMOJI);
 		ResultSet resultSet = statement.executeQuery();
+		int lastCommentId = -1;
 		while (resultSet.next()) {
-			sbDescription.insert(0, Util.toString(resultSet.getString(1)));
+			if (lastCommentId < 0) lastCommentId = resultSet.getInt(1);
+			sbDescription.insert(0, Util.toString(resultSet.getString(2)));
 		}
 		resultSet.close();resultSet=null;
 		statement.close();statement=null;
 
 		// 参照用に結合してcomments_desc_cache格納
-		sql = "INSERT INTO comments_desc_cache(content_id, description) VALUES (?, ?) "
+		sql = "INSERT INTO comments_desc_cache(content_id, description, last_comment_id) VALUES (?, ?, ?) "
 				+ "ON CONFLICT (content_id) DO "
-				+ "UPDATE SET description=?";
+				+ "UPDATE SET description=?, last_comment_id=?";
 		statement = connection.prepareStatement(sql);
 		statement.setInt(1, contentId);
 		statement.setString(2, sbDescription.toString());
-		statement.setString(3, sbDescription.toString());
+		statement.setInt(3, lastCommentId);
+		statement.setString(4, sbDescription.toString());
+		statement.setInt(5, lastCommentId);
 		statement.executeUpdate();
 		statement.close();statement=null;
 	}
 
-	public static String getComment(Connection connection, CContent content) throws SQLException {
-		String strSql = "SELECT description FROM comments_desc_cache WHERE content_id=?";
+	public static void getComment(Connection connection, CContent content) throws SQLException {
+		String strSql = "SELECT description, last_comment_id FROM comments_desc_cache WHERE content_id=?";
 		PreparedStatement statement = connection.prepareStatement(strSql);
 		statement.setInt(1, content.m_nContentId);
 		ResultSet resultSet = statement.executeQuery();
 		if (resultSet.next()) {
 			content.m_strCommentsListsCache = Util.toString(resultSet.getString("description"));
+			content.m_nCommentsListsCacheLastId = resultSet.getInt("last_comment_id");
 		}
 		resultSet.close();resultSet=null;
 		statement.close();statement=null;
-
-		return content.m_strCommentsListsCache;
 	}
-
 }

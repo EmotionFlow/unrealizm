@@ -253,7 +253,7 @@ public final class IllustViewPcC {
 
 			// Emoji
 			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-				m_cContent.m_strCommentsListsCache = GridUtil.getComment(connection, m_cContent);
+				GridUtil.getComment(connection, m_cContent);
 			}
 
 			// Bookmark
