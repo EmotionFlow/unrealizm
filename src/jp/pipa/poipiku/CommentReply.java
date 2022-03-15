@@ -56,33 +56,6 @@ public final class CommentReply extends Model {
 		return true;
 	}
 
-	static public int find(int userId, int contentId){
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		final String sql = "SELECT 1 FROM pins WHERE user_id=? AND content_id=?";
-		final boolean isFound;
-		try {
-			connection = DatabaseUtil.dataSource.getConnection();
-			statement = connection.prepareStatement(sql);
-			statement.setInt(1, userId);
-			statement.setInt(2, contentId);
-			resultSet = statement.executeQuery();
-			isFound = resultSet.next();
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-		} catch(Exception e) {
-			Log.d(sql);
-			e.printStackTrace();
-			return -1;
-		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
-		}
-		return isFound ? 1 : 0;
-	}
-
 	static public boolean insert(int comment_id, int contentId, int toUserId, String description){
 		if (comment_id < 0 || contentId < 0 || toUserId < 0 || description==null || description.isEmpty()) {
 			return false;

@@ -2487,13 +2487,41 @@ Decoration
 	-webkit-overflow-scrolling: touch;
 }
 
+/*********** 絵文字に返信 *************/
 .ReplyBtn {
-	color: #3498db;
+	color: rgba(52, 152, 219, 0.60);
 	display: block;
-	font-size: 15px;
-	border: solid 1px;
+	font-size: 19px;
 	padding: 1px 3px;
-	border-radius: 5px;}
+}
+
+.IllustItemReplyList .ReplyBtn {
+	color: #3498db;
+	position: relative;
+	float: right;
+	right: 6px;
+	top: -6px;
+}
+
+.IllustItemReplyList{
+	display: none;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	margin: 10px auto;
+}
+
+.IllustItemReplyList >.IllustItemReplyListTitle{
+	margin: 10px 0 19px 0;
+}
+.IllustItemReplyList i {
+	color: #6d6965;
+	font-size: 16px;
+	line-height: 21px;
+	margin-right: 2px;
+}
+/*********** 絵文字に返信 *************/
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList .NeedLogin {
 	display: block;
@@ -3561,6 +3589,10 @@ hr.IllustItemListSeparator {
 	overflow: scroll;
 }
 /*********** DetailV ********************/
+
+
+
+
 
 /*********** フォロー促し *************/
 .EncourageFollowUp {
