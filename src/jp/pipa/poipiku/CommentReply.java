@@ -2,6 +2,7 @@ package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
+import org.apache.http.ConnectionReuseStrategy;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -56,8 +57,8 @@ public final class CommentReply extends Model {
 		return true;
 	}
 
-	static public boolean insert(int comment_id, int contentId, int toUserId, String description){
-		if (comment_id < 0 || contentId < 0 || toUserId < 0 || description==null || description.isEmpty()) {
+	static public boolean insert(int commentId, int contentId, int toUserId, String description){
+		if (commentId < 0 || contentId < 0 || toUserId < 0 || description==null || description.isEmpty()) {
 			return false;
 		}
 
@@ -67,7 +68,7 @@ public final class CommentReply extends Model {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, comment_id);
+			statement.setInt(1, commentId);
 			statement.setInt(2, contentId);
 			statement.setInt(3, toUserId);
 			statement.setString(4, description);
@@ -82,6 +83,33 @@ public final class CommentReply extends Model {
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
 		return true;
+	}
+
+	static public boolean exists(int commentId) {
+		if (commentId < 0) return false;
+
+		boolean isExist = false;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		final String sql = "SELECT 1 FROM comment_replies WHERE comment_id=?";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, commentId);
+			resultSet = statement.executeQuery();
+			isExist = resultSet.next();
+			statement.close();statement=null;
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			return false;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+		return isExist;
 	}
 
 	static public boolean deleteByUserId(int userId){

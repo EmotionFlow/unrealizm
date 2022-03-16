@@ -351,11 +351,18 @@ public final class CCnv {
 			strRtn.append("</div>");	// IllustItemResListTitle
 		}
 		// もらった絵文字
+		final String resEmojiFormat;
+		final String resEmojiTagEnd;
+		if (cContent.m_cUser.m_nUserId != nLoginUserId) {
+			resEmojiFormat = "<span class=\"ResEmoji\">%s</span>";
+		} else {
+			resEmojiFormat = "<a class=\"ResEmoji\" href=\"javascript:void(0)\" onclick=\"replyEmoji(this)\">%s</a>";
+		}
 		for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
 			strRtn.append(
 				String.format(
-					"<a class=\"ResEmoji\" href=\"javascript:void(0)\" onclick=\"replyEmoji(this)\">%s</a>",
-					CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))
+						resEmojiFormat,
+						CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))
 				)
 			);
 		}

@@ -2521,6 +2521,14 @@ Decoration
 	line-height: 21px;
 	margin-right: 2px;
 }
+
+.IllustItem .IllustItemResList .ResEmoji.Replied {
+	margin-top: 3px;
+	opacity: 0.6;
+}
+.IllustItem .IllustItemResList .ResEmoji.Already {
+	opacity: 0.6;
+}
 /*********** 絵文字に返信 *************/
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList .NeedLogin {
