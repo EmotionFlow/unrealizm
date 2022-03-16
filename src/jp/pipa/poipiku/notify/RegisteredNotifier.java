@@ -15,7 +15,7 @@ import java.util.List;
 
 public final class RegisteredNotifier extends Notifier {
 	public RegisteredNotifier() {
-		CATEGORY = "register";
+		vmTemplateCategory = "register";
 	}
 
 	private static class NewUserFollower {

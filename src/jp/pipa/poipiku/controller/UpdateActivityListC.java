@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.InfoList;
 import jp.pipa.poipiku.Request;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-public class UpdateActivityListC extends Controller{
+public class UpdateActivityListC extends Controller {
 	// in
 	public int userId = -1;
 	public int contentId = -1;
@@ -69,38 +70,28 @@ public class UpdateActivityListC extends Controller{
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 
-		switch (infoType) {
-			case Common.NOTIFICATION_TYPE_REACTION:
-			case Common.NOTIFICATION_TYPE_GIFT:
-			case Common.NOTIFICATION_TYPE_REQUEST_STARTED:
-				break;
-			case Common.NOTIFICATION_TYPE_REQUEST:
-				Request poipikuRequest = new Request(requestId);
-				requestListSt = poipikuRequest.status.getCode();
-				switch (poipikuRequest.status) {
-					case WaitingApproval:
+		if (infoType == InfoList.InfoType.Request.getCode()) {
+			Request poipikuRequest = new Request(requestId);
+			requestListSt = poipikuRequest.status.getCode();
+			switch (poipikuRequest.status) {
+				case InProgress:
+				case Done:
+					requestListMenuId = "SENT";
+					break;
+				case Canceled:
+					if (poipikuRequest.creatorUserId == checkLogin.m_nUserId) {
 						requestListMenuId = "RECEIVED";
-						break;
-					case InProgress:
-					case Done:
+					} else {
 						requestListMenuId = "SENT";
-						break;
-					case Canceled:
-						if (poipikuRequest.creatorUserId == checkLogin.m_nUserId) {
-							requestListMenuId = "RECEIVED";
-						} else {
-							requestListMenuId = "SENT";
-						}
-						break;
-					default:
-						requestListMenuId = "RECEIVED";
-						break;
-				}
-				break;
-			default:
-				errorKind = ErrorKind.Unknown;
-				return false;
+					}
+					break;
+				case WaitingApproval:
+				default:
+					requestListMenuId = "RECEIVED";
+					break;
+			}
 		}
+
 		errorKind = ErrorKind.None;
 		return true;
 	}

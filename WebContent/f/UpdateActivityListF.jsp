@@ -8,13 +8,15 @@
 
 	String toUrl = "";
 	if (rtn) {
-		if (cResults.infoType == Common.NOTIFICATION_TYPE_REACTION) {
+		if (cResults.infoType == InfoList.InfoType.Emoji.getCode()
+				|| cResults.infoType == InfoList.InfoType.EmojiReply.getCode()
+		) {
 			toUrl = String.format("/%d/%d.html", cResults.userId, cResults.contentId);
-		} else if (cResults.infoType == Common.NOTIFICATION_TYPE_REQUEST) {
+		} else if (cResults.infoType == InfoList.InfoType.Request.getCode()) {
 			toUrl = String.format("/MyRequestListPcV.jsp?MENUID=%s&ST=%d", cResults.requestListMenuId, cResults.requestListSt);
-		} else if (cResults.infoType == Common.NOTIFICATION_TYPE_GIFT) {
+		} else if (cResults.infoType == InfoList.InfoType.Gift.getCode()) {
 			toUrl = "";
-		} else if (cResults.infoType == Common.NOTIFICATION_TYPE_REQUEST_STARTED) {
+		} else if (cResults.infoType == InfoList.InfoType.RequestStarted.getCode()) {
 			// requestIdにクリエイターのuserIdを格納している
 			toUrl = "/RequestNewPcV.jsp?ID=" + cResults.requestId;
 		}

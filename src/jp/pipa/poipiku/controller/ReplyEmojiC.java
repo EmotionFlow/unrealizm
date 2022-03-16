@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
+import jp.pipa.poipiku.notify.EmojiNotifier;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -56,21 +57,20 @@ public final class ReplyEmojiC extends Controller {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 
 			// 投稿存在確認(不正アクセス対策) & 対象コンテンツ情報取得
-			CContent cTargContent = null;
-			int contentOwnerId = -1;
+			CContent targetContent = null;
 
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "SELECT user_id FROM contents_0000 WHERE content_id=?";
+			sql = "SELECT * FROM contents_0000 WHERE content_id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, contentId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
-				contentOwnerId = resultSet.getInt(1);
+				targetContent = new CContent(resultSet);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			if (contentOwnerId != checkLogin.m_nUserId) return false;
+			if (targetContent.m_nUserId != checkLogin.m_nUserId) return false;
 
 			// リアクション対象を検索
 			int toUserId = -1;
@@ -135,10 +135,36 @@ public final class ReplyEmojiC extends Controller {
 
 			result = true; // 以下実行されなくてもOKを返す
 
+			// サムネイルタイプの判定
+			final int contentType;
+			final String infoThumb;
+			switch(targetContent.m_nEditorId) {
+				case Common.EDITOR_TEXT:
+					contentType = Common.CONTENT_TYPE_TEXT;
+					infoThumb = targetContent.m_strDescription;
+					break;
+				case Common.EDITOR_UPLOAD:
+				case Common.EDITOR_PASTE:
+				case Common.EDITOR_BASIC_PAINT:
+				default:
+					contentType = Common.CONTENT_TYPE_IMAGE;
+					infoThumb = targetContent.m_strFileName;
+					break;
+			}
+
+			EmojiNotifier notifier = new EmojiNotifier();
+			notifier.notifyReplyReceived(
+					toUserId,
+					contentId,
+					contentType,
+					myReplyEmoji,
+					infoThumb
+			);
 
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
+			result = false;
 		} finally {
 			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}

@@ -25,14 +25,17 @@ cResults.getResults(checkLogin);
 	<%for(int nCnt = 0; nCnt<cResults.activities.size(); nCnt++) {
 		InfoList activityInfo = cResults.activities.get(nCnt);%>
 		<%
-			if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REACTION
-					|| activityInfo.infoType == Common.NOTIFICATION_TYPE_GIFT) {%>
+			if(activityInfo.infoType == InfoList.InfoType.Emoji.getCode()
+					|| activityInfo.infoType ==  InfoList.InfoType.Gift.getCode()
+					|| activityInfo.infoType ==  InfoList.InfoType.EmojiReply.getCode()
+			) {
+		%>
 
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
 		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 
 		<span class="ActivityListThumb">
-			<%if(activityInfo.infoType == Common.NOTIFICATION_TYPE_GIFT){%>
+			<%if(activityInfo.infoType == InfoList.InfoType.Gift.getCode()){%>
 				<span class="ActivityListThumbIcon"><i class="fas fa-gift GiftIcon"></i></span>
 			<%}else{%>
 				<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE) {%>
@@ -48,7 +51,11 @@ cResults.getResults(checkLogin);
 				<span class="Date"><%=TIMESTAMP_FORMAT.format(activityInfo.infoDate)%></span>
 				<span class="Title">
 					<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
-					<%=_TEX.T("ActivityList.Message.Comment")%>
+						<%if(activityInfo.infoType == InfoList.InfoType.Emoji.getCode()){%>
+						<%=_TEX.T("ActivityList.Message.Comment")%>
+						<%}else{%>
+						<%=_TEX.T("ActivityList.Message.CommentReply")%>
+						<%}%>
 					<%}else{%>
 					<%=Util.toStringHtml(activityInfo.infoDesc)%>
 					<%}%>
@@ -64,7 +71,8 @@ cResults.getResults(checkLogin);
 		</span>
 		<span class="ActivityListBadge"><%=activityInfo.badgeNum%></span>
 		</a>
-		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST || activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST_STARTED) {
+		<%} else if(activityInfo.infoType == InfoList.InfoType.Request.getCode()
+				|| activityInfo.infoType == InfoList.InfoType.RequestStarted.getCode()) {
 				String[] infoDescLines = activityInfo.infoDesc.split("\n");
 		%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"

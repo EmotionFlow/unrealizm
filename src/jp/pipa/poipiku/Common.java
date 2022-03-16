@@ -57,6 +57,7 @@ public final class Common {
 	public static final int NOTIFICATION_TYPE_REQUEST = 3;
 	public static final int NOTIFICATION_TYPE_GIFT = 4;
 	public static final int NOTIFICATION_TYPE_REQUEST_STARTED = 5;
+	public static final int NOTIFICATION_TYPE_REPLY_REACTION = 6;
 	// お知らせ一覧サムネ種別
 	public static final int CONTENT_TYPE_IMAGE = 1;
 	public static final int CONTENT_TYPE_TEXT = 2;

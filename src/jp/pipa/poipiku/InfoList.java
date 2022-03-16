@@ -1,7 +1,9 @@
 package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.util.DatabaseUtil;
+import jp.pipa.poipiku.util.Log;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -40,7 +42,9 @@ public final class InfoList extends Model{
 	public enum InfoType implements CodeEnum<InfoType> {
 		Emoji(1),
 		Request(3),
-		Gift(4);
+		Gift(4),
+		RequestStarted(5),
+		EmojiReply(6);
 
 		static public InfoType byCode(int _code) {
 			return CodeEnum.getEnum(InfoType.class, _code);
@@ -179,6 +183,64 @@ public final class InfoList extends Model{
 		} finally {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+		return true;
+	}
+
+	public boolean insertBeforeResetTransaction() {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String strSql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			// 確認済みお知らせだった場合、通知絵文字一覧をリセット
+			connection.setAutoCommit(false);
+			strSql = "DELETE FROM info_lists WHERE user_id=? AND content_id=? AND info_type=? AND had_read=true;";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, userId);
+			statement.setInt(2, contentId);
+			statement.setInt(3, infoType);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
+			// お知らせ一覧に追加
+			strSql = "INSERT INTO info_lists(user_id, content_id, content_type, info_type, info_thumb, info_desc) "
+					+ "VALUES(?, ?, ?, ?, ?, ?) "
+					+ "ON CONFLICT ON CONSTRAINT info_lists_pkey "
+					+ "DO UPDATE SET "
+					+ "info_desc=(COALESCE(info_lists.info_desc, '') || ?), "
+					+ "info_date=CURRENT_TIMESTAMP, "
+					+ "badge_num=(info_lists.badge_num+1), "
+					+ "had_read=false;";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, userId);
+			statement.setInt(2, contentId);
+			statement.setInt(3, contentType);
+			statement.setInt(4, infoType);
+			statement.setString(5, infoThumb);
+			statement.setString(6, infoDesc);
+			statement.setString(7, infoDesc);
+			statement.executeUpdate();
+			connection.commit();
+			connection.setAutoCommit(true);
+			statement.close();statement=null;
+		} catch (SQLException sqlException) {
+			Log.d("transaction fail");
+			Log.d(strSql);
+			sqlException.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
+		} finally {
+			try {
+				connection.setAutoCommit(true);
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return true;
 	}

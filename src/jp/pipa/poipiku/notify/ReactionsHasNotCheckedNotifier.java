@@ -16,7 +16,7 @@ public final class ReactionsHasNotCheckedNotifier extends Notifier {
 	private static final int MAX_SEND_USERS = 500;
 
 	public ReactionsHasNotCheckedNotifier() {
-		CATEGORY = "has_not_checked";
+		vmTemplateCategory = "has_not_checked";
 	}
 
 	public boolean notifyToReactionHasNotCheckedUser(DataSource dataSource) {

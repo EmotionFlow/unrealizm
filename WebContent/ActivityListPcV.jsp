@@ -49,7 +49,7 @@ if (infoType==-1) infoType = 1;
 				(data) => {
 					if (data.result === <%=Common.API_OK%>) {
 						$(elm).addClass("HadRead");
-						if (info_type === <%=Common.NOTIFICATION_TYPE_REQUEST%> && request_id < 0){
+						if (info_type === <%=InfoList.InfoType.Request.getCode()%> && request_id < 0){
 							swal.fire({
 								html: `
 								<p style="text-align: left">他のユーザーからあなた宛に「エアスケブの受付を開始してほしい」という通知が来ました。
@@ -60,7 +60,7 @@ if (infoType==-1) infoType = 1;
 								showCloseButton: true,
 								showConfirmButton: false,
 							});
-						} else if(info_type === <%=Common.NOTIFICATION_TYPE_GIFT%>) {
+						} else if(info_type === <%=InfoList.InfoType.Gift.getCode()%>) {
 							swal.fire({
 								html: `
 								<h2 style="color: #3498db;">他のユーザーからあなた宛に<br>ポイパスチケットのおふせが届きました。</h2>

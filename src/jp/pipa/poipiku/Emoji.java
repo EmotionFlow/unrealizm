@@ -93,7 +93,7 @@ public class Emoji {
 			EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,EMOJI_EVENT_CHAR,
 	};
 
-	public static final String REPLY_EMOJI_DEFAULT = "❤️";
+	public static final String REPLY_EMOJI_DEFAULT = "❤";
 
 	// 絵文字
 	public static final String[] EMOJI_ALL = {

@@ -11,12 +11,12 @@ public final class RequestNotifier extends Notifier {
 	private static final String REQUEST_BOARD_URL = "https://poipiku.com/MyRequestListPcV.jsp";
 
 	public RequestNotifier(){
-		CATEGORY = "request";
-		NOTIFICATION_INFO_TYPE = Common.NOTIFICATION_TYPE_REQUEST;
+		vmTemplateCategory = "request";
+		infoType = Common.NOTIFICATION_TYPE_REQUEST;
 	}
 
 	private boolean notifyByWeb(User to, Request request, String description){
-		return super.notifyByWeb(to, request.id, -1, request.requestCategory, description, InsertMode.Upsert);
+		return super.notifyByWeb(to, request.id, -1, request.requestCategory, description, "", InsertMode.Upsert);
 	}
 
 	private void notifyByEmail(User toUser, String menuId, Request.Status requestStatus, int requestId, String statusName) {
