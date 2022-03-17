@@ -11,7 +11,7 @@ if (!checkLogin.m_bLogin) {
 ActivityListC summaryResults = new ActivityListC();
 summaryResults.getSummaryResults(checkLogin);
 
-var counts = summaryResults.activityCounts;
+final var counts = summaryResults.activityCounts;
 final boolean unreadReactionInfo =
 	counts.containsKey(InfoList.InfoType.Emoji) ||
 	counts.containsKey(InfoList.InfoType.EmojiReply);

@@ -50,19 +50,18 @@ cResults.getResults(checkLogin);
 			<span class="ActivityListTitle">
 				<span class="Date"><%=TIMESTAMP_FORMAT.format(activityInfo.infoDate)%></span>
 				<span class="Title">
-					<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
-						<%if(activityInfo.infoType == InfoList.InfoType.Emoji.getCode()){%>
+					<%if(activityInfo.infoType == InfoList.InfoType.Emoji.getCode()){%>
 						<%=_TEX.T("ActivityList.Message.Comment")%>
-						<%}else{%>
+					<%}else if(activityInfo.infoType == InfoList.InfoType.EmojiReply.getCode()){%>
 						<%=_TEX.T("ActivityList.Message.CommentReply")%>
-						<%}%>
 					<%}else{%>
-					<%=Util.toStringHtml(activityInfo.infoDesc)%>
+						<%=Util.toStringHtml(activityInfo.infoDesc)%>
 					<%}%>
 				</span>
 			</span>
 			<span class="ActivityListDesc">
-				<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
+				<%if(activityInfo.infoType == InfoList.InfoType.Emoji.getCode()
+				|| activityInfo.infoType == InfoList.InfoType.EmojiReply.getCode()){%>
 					<%for (int i = 0; i < activityInfo.infoDesc.length(); i = activityInfo.infoDesc.offsetByCodePoints(i, 1)) {%>
 					<%=CEmoji.parse(String.valueOf(Character.toChars(activityInfo.infoDesc.codePointAt(i))))%>
 					<%}%>
