@@ -11,7 +11,7 @@
 		if (cResults.infoType == InfoList.InfoType.Emoji.getCode()
 				|| cResults.infoType == InfoList.InfoType.EmojiReply.getCode()
 		) {
-			toUrl = String.format("/%d/%d.html", cResults.userId, cResults.contentId);
+			toUrl = String.format("/%d/%d.html", cResults.contentUserId, cResults.contentId);
 		} else if (cResults.infoType == InfoList.InfoType.Request.getCode()) {
 			toUrl = String.format("/MyRequestListPcV.jsp?MENUID=%s&ST=%d", cResults.requestListMenuId, cResults.requestListSt);
 		} else if (cResults.infoType == InfoList.InfoType.Gift.getCode()) {

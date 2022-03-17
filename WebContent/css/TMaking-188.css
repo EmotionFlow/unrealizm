@@ -2495,6 +2495,11 @@ Decoration
 	padding: 1px 3px;
 }
 
+.ReplyInfoBtn {
+	color: #b5b5b5;
+}
+
+.IllustItemReplyInfo .ReplyBtn,
 .IllustItemReplyList .ReplyBtn {
 	color: #3498db;
 	position: relative;
@@ -2503,7 +2508,7 @@ Decoration
 	top: -6px;
 }
 
-.IllustItemReplyList{
+.IllustItemReplyInfo, .IllustItemReplyList{
 	display: none;
 	float: left;
 	width: 100%;
@@ -2512,10 +2517,10 @@ Decoration
 	margin: 10px auto;
 }
 
-.IllustItemReplyList >.IllustItemReplyListTitle{
+.IllustItemReplyInfo >.IllustItemReplyInfoTitle{
 	margin: 10px 0 19px 0;
 }
-.IllustItemReplyList i {
+.IllustItemReplyInfo i {
 	color: #6d6965;
 	font-size: 16px;
 	line-height: 21px;

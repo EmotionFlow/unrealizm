@@ -24,6 +24,7 @@ public class UpdateActivityListC extends Controller {
 	// out
 	public String requestListMenuId = "";
 	public int requestListSt = -1;
+	public int contentUserId = -1;
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -59,6 +60,21 @@ public class UpdateActivityListC extends Controller {
 			statement.setInt(4, requestId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+			if (infoType == InfoList.InfoType.EmojiReply.getCode()) {
+				sql = "SELECT user_id FROM contents_0000 WHERE content_id = ?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, contentId);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					contentUserId = resultSet.getInt(1);
+				}
+				resultSet.close();resultSet = null;
+				statement.close();statement = null;
+			} else {
+				contentUserId = userId;
+			}
+
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();

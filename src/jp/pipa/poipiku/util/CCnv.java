@@ -352,7 +352,6 @@ public final class CCnv {
 		}
 		// もらった絵文字
 		final String resEmojiFormat;
-		final String resEmojiTagEnd;
 		if (cContent.m_cUser.m_nUserId != nLoginUserId) {
 			resEmojiFormat = "<span class=\"ResEmoji\">%s</span>";
 		} else {
@@ -397,7 +396,12 @@ public final class CCnv {
 		} else {
 			strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
 		}
-		strRtn.append("<a class=\"ReplyBtn fas fa-reply\" onclick=\"switchEmojiReply(this)\"></a>");
+
+		// リプライボタン
+		strRtn.append("""
+        <a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, %d, %d)"></a>
+        """.formatted(cContent.m_nContentId, nLoginUserId, nLoginUserId==cContent.m_nUserId ? 1 : 2));
+
 		strRtn.append("</div>");	// IllustItemResListTitle
 		strRtn.append("<div class=\"ResBtnSetList\">");
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
@@ -471,20 +475,32 @@ public final class CCnv {
 				(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
 		strRtn.append("</div>");
 
-		strRtn.append("""
-				<div id="IllustItemReplyList%d" class="IllustItemReplyList">
-					<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(this)"></a>
-					<div class="IllustItemReplyListTitle">
-					リアクションをタップして<br><span>❤️</span>でお礼を伝えよう
-					<a href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
-					<i class="fas fa-info-circle"></i>
-					</a>
+		if (nLoginUserId == cContent.m_nUserId) {
+			strRtn.append("""
+					<div class="IllustItemReplyInfo">
+						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
+						<div class="IllustItemReplyInfoTitle">
+						リアクションをタップして<br><span>❤️</span>でお礼を伝えよう
+						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
+						<i class="fas fa-info-circle"></i>
+						</a>
+						</div>
 					</div>
-					<div class="BtnBase IllustItemReplyAllBtn">
-					まとめて返信
+					""".formatted(cContent.m_nContentId));
+		} else {
+			strRtn.append("""
+					<div class="IllustItemReplyList">
+						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
+						<div class="IllustItemReplyListTitle">
+						作者からのリプライ
+						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
+						<i class="fas fa-info-circle"></i>
+						</a>
+						</div>
+						<div id="ReplyEmojiList_%d" class="IllustItemResList"></div>
 					</div>
-				</div>
-				""");
+					""".formatted(cContent.m_nContentId, cContent.m_nContentId));
+		}
 	}
 
 	public static String Content2Html(

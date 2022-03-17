@@ -2,11 +2,11 @@
 <script>
 	function getReplyEmojiInfoHtml() {
 		return `
-	<h3><i class="fas fa-reply" style="margin-right: 10px;"></i>リプライ(β)</h3>
+	<h3><i class="fas fa-reply" style="color: #3498db; margin-right: 10px;"></i>リプライ(β)</h3>
 	<div style="text-align: left; font-size: 14px;">
-	<p>もらったリアクションをタップすると、送ってくれた相手に作者からの絵文字として通知されます。</p>
-	<p>返信絵文字は１文字固定です。使いたい絵文字を設定画面で変更できます。</p>
-	<p>まとめて返信ボタンをタップすると、まだ返信していないリアクションにまとめて返信できます。</p>
+	<p>もらったリアクションをタップすると、リアクションを送ってくれたユーザーに絵文字を返信できます。</p>
+	<p>返信に使う絵文字は予め設定しておきます。（設定画面→絵文字）</p>
+	<p>１リアクション１リプライです。連打しても複数送信されません。</p>
 	</div>
 	`;
 	}
@@ -20,25 +20,49 @@
 		});
 	}
 
-	function switchEmojiReply(_this) {
-		let $IllustItemResBtnList = $(_this).parent().parent();
-		let $ResEmojiAdd = $IllustItemResBtnList.parent().find(".ResEmojiAdd");
-		let $IllustItemReplyList = $IllustItemResBtnList.parent().children(".IllustItemReplyList");
-		if ($IllustItemReplyList.css("display") === "none") {
-			$IllustItemResBtnList = $(_this).parent().parent();
-			$ResEmojiAdd = $IllustItemResBtnList.parent().find(".ResEmojiAdd");
-			$IllustItemReplyList = $IllustItemResBtnList.parent().children(".IllustItemReplyList");
+	function switchEmojiReply(contentId, loginUserId, code) {
+		const $IllustItem = $("#IllustItem_" + contentId);
+		const $IllustItemResBtnList = $IllustItem.children(".IllustItemResBtnList");
+		const $ResEmojiAdd = $IllustItem.find(".ResEmojiAdd");
+		const $IllustItemReplyList = $IllustItem.children(".IllustItemReplyList");
+		const $IllustItemReplyInfo = $IllustItem.children(".IllustItemReplyInfo");
+		if (code === 1) {
+			$IllustItemResBtnList.hide();
+			$ResEmojiAdd.hide();
+			$IllustItemReplyInfo.show();
+		} else if(code === 2) {
 			$IllustItemResBtnList.hide();
 			$ResEmojiAdd.hide();
 			$IllustItemReplyList.show();
-		} else {
-			$IllustItemReplyList = $(_this).parent();
-			$IllustItemResBtnList = $(_this).parent().parent().children(".IllustItemResBtnList");
-			$ResEmojiAdd = $IllustItemResBtnList.parent().find(".ResEmojiAdd");
+			_getReplyEmojiHtml(contentId, loginUserId);
+		} else if(code === 0) {
 			$IllustItemReplyList.hide();
+			$IllustItemReplyInfo.hide();
 			$IllustItemResBtnList.show();
 			$ResEmojiAdd.show();
 		}
+	}
+
+	function _getReplyEmojiHtml(contentId, loginUserId) {
+		if (contentId < 1 || loginUserId < 1) return false;
+
+		const $ReplyEmojiList = $("#ReplyEmojiList_" + contentId);
+		if ($ReplyEmojiList.children("span").length>0) return false;
+
+		$.ajax({
+			"type": "post",
+			"data": {"ID": loginUserId, "TD": contentId},
+			"url": "/f/GetReplyEmojiListF.jsp",
+			"dataType": "json",
+		}).then(
+			(data) => {
+				$ReplyEmojiList.html(data.html);
+			},
+			(jqXHR, textStatus, errorThrown) => {
+				DispMsg('Connection error');
+			}
+		)
+		return true;
 	}
 
 	function replyEmoji(_this) {
@@ -82,6 +106,4 @@
 			}
 		)
 	}
-
-
 </script>

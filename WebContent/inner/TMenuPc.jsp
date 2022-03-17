@@ -194,9 +194,15 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <%if(checkLogin.m_bLogin) {%>
 <script>
 	function UpdateNotify() {
-		$.getJSON("/f/CheckNotifyF.jsp", {}, function(data){
-			const ntfy_num = Math.min(data.check_comment + data.check_follow + data.check_heart + data.check_request + data.check_gift, 99);
-			//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;
+		$.getJSON("/f/CheckNotifyF.jsp", {}, data =>{
+			const ntfy_num = Math.min(
+				data.check_comment +
+				data.check_comment_reply +
+				data.check_follow +
+				data.check_heart +
+				data.check_request +
+				data.check_gift, 99);
+			<%//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;%>
 			$('#InfoNumAct').html(ntfy_num);
 			if(ntfy_num>0) {
 				$('#InfoNumAct').show();

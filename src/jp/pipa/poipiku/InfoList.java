@@ -51,7 +51,7 @@ public final class InfoList extends Model{
 		}
 
 		@Override
-		public int getCode() {
+		public final int getCode() {
 			return code;
 		}
 
