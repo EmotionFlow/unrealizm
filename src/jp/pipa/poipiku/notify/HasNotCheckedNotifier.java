@@ -48,6 +48,8 @@ class HasNotCheckedNotifier extends Notifier {
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, infoType.getCode());
 			statement.setInt(2, MAX_SEND_USERS);
+
+			Log.d(statement.toString());
 			resultSet = statement.executeQuery();
 			List<User> deliveryTargets = new ArrayList<>();
 			while (resultSet.next()) {
@@ -78,7 +80,6 @@ class HasNotCheckedNotifier extends Notifier {
 					" SELECT COUNT(*) contents_total, SUM(badge_sum) badge_total" +
 					" FROM a;";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, infoType.getCode());
 
 			PreparedStatement updateStatement = connection.prepareStatement(
 					"UPDATE info_lists SET sent_unread_mail_at=now() WHERE user_id=?"
@@ -86,7 +87,8 @@ class HasNotCheckedNotifier extends Notifier {
 
 			for (User targetUser : deliveryTargets) {
 				// 未読通知のコンテンツ数とリアクション数の合計を求める
-				statement.setInt(1, targetUser.id);
+				statement.setInt(1, infoType.getCode());
+				statement.setInt(2, targetUser.id);
 				resultSet = statement.executeQuery();
 
 				if (resultSet.next()) {

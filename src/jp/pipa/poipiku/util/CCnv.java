@@ -395,6 +395,7 @@ public final class CCnv {
 
 		// 絵文字ボタン
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
+
 		// リアクション促し文言
 		strRtn.append("<div class=\"IllustItemResListTitle\">");
 		if(cContent.m_vComment.size()<=0) {
@@ -486,7 +487,7 @@ public final class CCnv {
 					<div class="IllustItemReplyInfo">
 						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
 						<div class="IllustItemReplyInfoTitle">
-						リアクションをタップして<br><span>❤️</span>でお礼を伝えよう
+						リアクションをタップして<br><span class="MyReplyEmoji">️</span>でお礼を伝えよう
 						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
 						<i class="fas fa-info-circle"></i>
 						</a>

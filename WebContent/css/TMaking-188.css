@@ -2520,6 +2520,15 @@ Decoration
 .IllustItemReplyInfo >.IllustItemReplyInfoTitle{
 	margin: 10px 0 19px 0;
 }
+
+.IllustItemReplyInfoTitle > .MyReplyEmoji {
+	vertical-align: bottom;
+}
+.IllustItemReplyInfoTitle > .MyReplyEmoji img {
+	width: 18px;
+	height: 18px;
+}
+
 .IllustItemReplyInfo i {
 	color: #6d6965;
 	font-size: 16px;
@@ -2535,6 +2544,16 @@ Decoration
 .IllustItem .IllustItemResList .ResEmoji.Already {
 	opacity: 0.6;
 }
+
+.ReplyEmojiInfoDlgTitle > i {
+	color: #3498db;
+	margin-right: 10px;
+}
+
+.ReplyEmojiInfoDlgBody {
+	text-align: left; font-size: 14px;
+}
+
 /*********** 絵文字に返信 *************/
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList .NeedLogin {
