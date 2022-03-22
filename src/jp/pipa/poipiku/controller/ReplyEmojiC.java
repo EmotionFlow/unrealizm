@@ -70,7 +70,7 @@ public final class ReplyEmojiC extends Controller {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			if (targetContent.m_nUserId != checkLogin.m_nUserId) return false;
+			if (targetContent == null || targetContent.m_nUserId != checkLogin.m_nUserId) return false;
 
 			// リアクション対象を検索
 			int toUserId = -1;
@@ -97,9 +97,6 @@ public final class ReplyEmojiC extends Controller {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			// 非ログインユーザー、もしくは退会済みユーザ
-			if (toUserId < 1 || users.getUser(toUserId) == null) return true;
-
 			// 返信済み
 			if (CommentReply.exists(targetCommentId)) {
 				errorCode = ERR_ALREADY_REPLIED;
@@ -110,11 +107,10 @@ public final class ReplyEmojiC extends Controller {
 			// マイリプライ絵文字
 			String myReplyEmoji = Emoji.REPLY_EMOJI_DEFAULT;
 			sql = """
-                SELECT comment_reply_char
-				FROM users_0000
+                SELECT chars
+				FROM comment_templates
 				WHERE user_id = ?
-				AND comment_reply_char IS NOT NULL
-				AND comment_reply_char <> ''
+				AND disp_order = 0
 				""";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, checkLogin.m_nUserId);
@@ -133,7 +129,8 @@ public final class ReplyEmojiC extends Controller {
 				return false;
 			}
 
-			result = true; // 以下実行されなくてもOKを返す
+			// 非ログインユーザー、もしくは退会済みユーザは通知しないのでここまで。
+			if (toUserId < 1 || users.getUser(toUserId) == null) return true;
 
 			// サムネイルタイプの判定
 			final int contentType;
@@ -152,6 +149,7 @@ public final class ReplyEmojiC extends Controller {
 					break;
 			}
 
+			// 通知
 			EmojiNotifier notifier = new EmojiNotifier();
 			notifier.notifyReplyReceived(
 					toUserId,

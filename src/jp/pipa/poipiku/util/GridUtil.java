@@ -5,13 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.pipa.poipiku.*;
 
 public class GridUtil {
 	public static int SELECT_MAX_EMOJI = 59;
 
-	public static ArrayList<CContent> getEachComment(Connection connection, ArrayList<CContent> contents) throws SQLException {
+	public static void getEachComment(Connection connection, List<CContent> contents) throws SQLException {
 		String sql = "SELECT description FROM comments_desc_cache WHERE content_id=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		for(CContent content : contents) {
@@ -24,7 +25,6 @@ public class GridUtil {
 			resultSet.close();resultSet=null;
 		}
 		statement.close();statement=null;
-		return contents;
 	}
 
 	public static ArrayList<CContent> getEachBookmark(Connection connection, ArrayList<CContent> contents, CheckLogin checkLogin) throws SQLException {

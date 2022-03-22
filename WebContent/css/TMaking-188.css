@@ -2529,6 +2529,7 @@ Decoration
 
 .IllustItem .IllustItemResList .ResEmoji.Replied {
 	margin-top: 3px;
+	margin-bottom: -3px;
 	opacity: 0.6;
 }
 .IllustItem .IllustItemResList .ResEmoji.Already {

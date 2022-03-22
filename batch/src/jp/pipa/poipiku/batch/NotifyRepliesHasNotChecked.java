@@ -1,11 +1,11 @@
 package jp.pipa.poipiku.batch;
 
-import jp.pipa.poipiku.notify.ReactionsHasNotCheckedNotifier;
+import jp.pipa.poipiku.notify.RepliesHasNotCheckedNotifier;
 import jp.pipa.poipiku.util.Log;
 
 import java.time.LocalDateTime;
 
-public class NotifyReactionsHasNotChecked extends Batch {
+public class NotifyRepliesHasNotChecked extends Batch {
 	// 配信時間帯
 	private static final int[] DELIVERY_TIME = {7, 23};
 
@@ -17,7 +17,7 @@ public class NotifyReactionsHasNotChecked extends Batch {
 			return;
 		}
 
-		ReactionsHasNotCheckedNotifier notifier = new ReactionsHasNotCheckedNotifier();
+		RepliesHasNotCheckedNotifier notifier = new RepliesHasNotCheckedNotifier();
 		notifier.notifyToUsers(dataSource);
 	}
 }

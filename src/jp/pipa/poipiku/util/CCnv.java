@@ -326,6 +326,33 @@ public final class CCnv {
 		}
 	}
 
+	public static void appendResEmoji(
+			StringBuilder sb,
+			final int contentUserId,
+			final String comments,
+			final int lastCommentId,
+			final int loginUserId
+	) {
+		final String resEmojiFormat;
+		if (contentUserId != loginUserId) {
+			resEmojiFormat = "<span class=\"ResEmoji\">%s</span>";
+		} else {
+			resEmojiFormat = "<a class=\"ResEmoji\" href=\"javascript:void(0)\" onclick=\"replyEmoji(this)\">%s</a>";
+		}
+		for (int i = 0; i < comments.length(); i = comments.offsetByCodePoints(i, 1)) {
+			sb.append(
+					String.format(
+							resEmojiFormat,
+							CEmoji.parse(String.valueOf(Character.toChars(comments.codePointAt(i))))
+					)
+			);
+		}
+		// lastCommentId
+		sb.append("""
+                <data class="LastCommentId" value="%d"></data>
+				""".formatted(lastCommentId));
+	}
+
 	private static void appendIllustItemResList(
 			StringBuilder strRtn, final CContent cContent, int nLoginUserId,
 			final ArrayList<String> vEmoji, int nSpMode,
@@ -350,31 +377,10 @@ public final class CCnv {
 			strRtn.append(String.format("<span class=\"TitleShowAll\" onclick=\"ShowAllReaction(%d, this)\">%s</span>", cContent.m_nContentId ,_TEX.T("Common.IllustItemRes.Title.ShowAll")));
 			strRtn.append("</div>");	// IllustItemResListTitle
 		}
-		// もらった絵文字
-		final String resEmojiFormat;
-		if (cContent.m_cUser.m_nUserId != nLoginUserId) {
-			resEmojiFormat = "<span class=\"ResEmoji\">%s</span>";
-		} else {
-			resEmojiFormat = "<a class=\"ResEmoji\" href=\"javascript:void(0)\" onclick=\"replyEmoji(this)\">%s</a>";
-		}
-		for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
-			strRtn.append(
-				String.format(
-						resEmojiFormat,
-						CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))
-				)
-			);
-		}
-		// lastCommentId
-		strRtn.append("""
-                <data class="LastCommentId" value="%d"></data>
-				""".formatted(cContent.m_nCommentsListsCacheLastId));
 
-		/*
-		for(CComment comment : cContent.m_vComment) {
-			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
-		}
-		*/
+		// もらった絵文字
+		appendResEmoji(strRtn, cContent.m_nUserId,
+				cContent.m_strCommentsListsCache, cContent.m_nCommentsListsCacheLastId, nLoginUserId);
 
 		// 絵文字追加マーク
 		strRtn.append(

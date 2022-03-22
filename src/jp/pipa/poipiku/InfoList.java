@@ -40,6 +40,7 @@ public final class InfoList extends Model{
 	}
 
 	public enum InfoType implements CodeEnum<InfoType> {
+		Undefined(-1),
 		Emoji(1),
 		Request(3),
 		Gift(4),

@@ -563,10 +563,10 @@ function ShowAllReaction(content_id, elm) {
 		"url": "/f/ShowAllReactionF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			console.log(data);
 			if(data.result_num>0) {
 				$(elm).hide();
 				$('#IllustItemResList_'+content_id + " .ResEmoji").remove();
+				$('#IllustItemResList_'+content_id + " .LastCommentId").remove();
 				$("#ResEmojiAdd_"+content_id).before(data.html);
 				if(vg)vg.vgrefresh();
 			} else {

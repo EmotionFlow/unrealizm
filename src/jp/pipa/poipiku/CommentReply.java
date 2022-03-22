@@ -58,7 +58,7 @@ public final class CommentReply extends Model {
 	}
 
 	static public boolean insert(int commentId, int contentId, int toUserId, String description){
-		if (commentId < 0 || contentId < 0 || toUserId < 0 || description==null || description.isEmpty()) {
+		if (commentId < 0 || contentId < 0 || toUserId < -1 || description==null || description.isEmpty()) {
 			return false;
 		}
 
