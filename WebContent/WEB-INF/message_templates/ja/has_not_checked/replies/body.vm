@@ -1,0 +1,7 @@
+#parse("ja/header.vm")
+
+あなたがリアクションした${contents_total}作品に、作者から${reactions_total}のリプライが送られています。
+お知らせ画面で絵文字リプライの通知をチェックしてみましょう。
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("ja/footer.vm")
