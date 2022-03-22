@@ -11,7 +11,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
 public final class ActivityListC {
-	public static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("M/d HH:mm");
+	private static final String TIMESTAMP_FORMAT  = "M/d HH:mm";
 	public int userId = -1;
 	public int infoType;
 
@@ -24,6 +24,7 @@ public final class ActivityListC {
 		}
 	}
 
+	public SimpleDateFormat timestampFormat = null;
 	public ArrayList<InfoList> activities;
 	public boolean getResults(final CheckLogin checkLogin) {
 		String strSql = "";
@@ -33,6 +34,7 @@ public final class ActivityListC {
 		ResultSet resultSet = null;
 
 		activities = new ArrayList<>();
+		timestampFormat = new SimpleDateFormat(TIMESTAMP_FORMAT);
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();

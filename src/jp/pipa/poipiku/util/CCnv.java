@@ -22,7 +22,7 @@ public final class CCnv {
 
 	private static final String ILLUST_ITEM_THUMB_IMG = "<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" onload=\"setImgHeightStyle(this)\"/>";
 
-	private static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+	private static final String DATE_FORMAT_SHORT = "yyyy.MM.dd HH:mm";
 
 	private static String getIllustListContext(int nSpMode, int nUserId){
 		if(nSpMode==SP_MODE_APP){
@@ -888,11 +888,13 @@ public final class CCnv {
 		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText
 		if (pageCategory == PageCategory.MY_BOX && checkLogin.m_nPassportId==Common.PASSPORT_ON) {
+			final SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_SHORT);
+
 			// created_at
-			final String createdAt = cContent.createdAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.createdAt);
+			final String createdAt = cContent.createdAt == null ? "----.--.--" : dateFormat.format(cContent.createdAt);
 			strRtn.append(String.format("<div class=\"IllustUser DateTime\"><i class=\"far fa-calendar\"></i> %s</div>",createdAt));
 			// updated_at
-			final String updatedAt = cContent.updatedAt == null ? "----.--.--" : DATE_FORMAT_SHORT.format(cContent.updatedAt);
+			final String updatedAt = cContent.updatedAt == null ? "----.--.--" : dateFormat.format(cContent.updatedAt);
 			strRtn.append(String.format("<div class=\"IllustUser DateTime\" style=\"border-bottom:none\"><i class=\"fas fa-pen\"></i> %s</div>",updatedAt));
 		}
 		strRtn.append("</div>");	// IllustThumb
