@@ -1239,7 +1239,8 @@ function isEmailValid(email) {
 /******** リプライ *********/
 function dispReplyEmojiInfo() {
 	Swal.fire({
-		html: getReplyEmojiInfoHtml(),
+		html: _getReplyEmojiInfoHtml(),
+		footer: '<span style="font-size: 11px; color: #545454">' + _getReplyEmojiInfoFooter() + '</span>',
 		focusConfirm: false,
 		showCloseButton: true,
 		showCancelButton: false,
@@ -1258,10 +1259,13 @@ function switchEmojiReply(contentId, loginUserId, code) {
 		$IllustItemReplyInfo.show();
 		_getMyReplyEmojiHtml(loginUserId);
 	} else if(code === 2) {
+		if (!_getReplyEmojiHtml(contentId, loginUserId)) {
+			DispNeedLogin();
+			return false;
+		}
 		$IllustItemResBtnList.hide();
 		$ResEmojiAdd.hide();
 		$IllustItemReplyList.show();
-		_getReplyEmojiHtml(contentId, loginUserId);
 	} else if(code === 0) {
 		$IllustItemReplyList.hide();
 		$IllustItemReplyInfo.hide();
@@ -1293,7 +1297,7 @@ function _getReplyEmojiHtml(contentId, loginUserId) {
 	if (contentId < 1 || loginUserId < 1) return false;
 
 	const $ReplyEmojiList = $("#ReplyEmojiList_" + contentId);
-	if ($ReplyEmojiList.children("span").length>0) return false;
+	if ($ReplyEmojiList.children("span").length>0) return true;
 
 	$.ajax({
 		"type": "post",

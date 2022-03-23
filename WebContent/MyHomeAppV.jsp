@@ -21,6 +21,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<title>home</title>
 
 		<%@ include file="/inner/TDeleteContent.jsp"%>

@@ -7,7 +7,7 @@ StringBuilder sb = new StringBuilder();
 if (Util.isBot(request)) return;
 
 if (!checkLogin.m_bLogin) {
-	sb.append("<span class=\"IllustItemReplyListTitle\">ログインしてください</span>");
+	sb.append("<span class=\"ReplyListMsg\">").append(_TEX.T("Common.NeedLogin")).append("</span>");
 } else {
 	var cResults = new GetReplyEmojiListC();
 	cResults.getParam(request);
@@ -20,6 +20,8 @@ if (!checkLogin.m_bLogin) {
 				String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(emoji))
 			);
 		}
+	} else {
+		sb.append("<span class=\"ReplyListMsg\">").append(_TEX.T("ReplyEmoji.NoReplies")).append("</span>");
 	}
 }
 

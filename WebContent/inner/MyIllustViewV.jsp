@@ -74,6 +74,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 	<%@ include file="/inner/TCreditCard.jsp"%>
 	<%@ include file="/inner/TSendEmoji.jsp"%>
+	<%@ include file="/inner/TReplyEmoji.jsp"%>
 	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="@pipajp" />

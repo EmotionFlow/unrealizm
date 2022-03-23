@@ -1,0 +1,8 @@
+#parse("th/header.vm")
+
+คุณได้รับคำตอบจากผู้เขียนงาน ${contents_total} ที่คุณตอบกลับ
+ตรวจสอบการแจ้งเตือนการตอบกลับอีโมจิในหน้าการแจ้งเตือน
+
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("th/footer.vm")

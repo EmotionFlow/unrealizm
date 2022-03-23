@@ -2487,16 +2487,25 @@ Decoration
 	-webkit-overflow-scrolling: touch;
 }
 
-/*********** 絵文字に返信 *************/
+/*********** リプライ *************/
 .ReplyBtn {
 	color: rgba(52, 152, 219, 0.60);
 	display: block;
 	font-size: 19px;
 	padding: 1px 3px;
+	cursor: pointer;
+}
+
+.ReplyBtn:hover{
+	color: rgba(52, 152, 219, 1);
 }
 
 .ReplyInfoBtn {
 	color: #b5b5b5;
+}
+
+.ReplyInfoBtn:hover {
+	color: #a6a5a5;
 }
 
 .IllustItemReplyInfo .ReplyBtn,
@@ -2530,7 +2539,6 @@ Decoration
 }
 
 .IllustItemReplyInfo i {
-	color: #6d6965;
 	font-size: 16px;
 	line-height: 21px;
 	margin-right: 2px;
@@ -2554,7 +2562,13 @@ Decoration
 	text-align: left; font-size: 14px;
 }
 
-/*********** 絵文字に返信 *************/
+.IllustItemResList .ReplyListMsg {
+	display: block;
+	text-align: center;
+	font-size: 12px;
+}
+
+/*********** リプライ *************/
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList .NeedLogin {
 	display: block;

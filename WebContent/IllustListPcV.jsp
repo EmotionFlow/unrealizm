@@ -38,6 +38,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<%@ include file="/inner/TDeleteContent.jsp"%>
 
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />

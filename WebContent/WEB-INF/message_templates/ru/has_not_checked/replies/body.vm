@@ -1,0 +1,8 @@
+#parse("ru/header.vm")
+
+Вы получили ответы от авторов на ${contents_total} работ, на которые вы отреагировали.
+Проверьте уведомление об ответах смайликов на странице уведомлений.
+
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("ru/footer.vm")

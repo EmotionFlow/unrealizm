@@ -33,6 +33,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - My Sketchbook</title>
 
 		<%@ include file="/inner/TRequestIntroduction.jsp"%>

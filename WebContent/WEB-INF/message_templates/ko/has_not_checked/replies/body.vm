@@ -1,0 +1,8 @@
+#parse("ko/header.vm")
+
+귀하가 반응한 ${contents_total} 작품에 대해 작가로부터 답변을 받았습니다.
+알림 페이지에서 이모티콘 답장 알림을 확인하세요.
+
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("ko/footer.vm")

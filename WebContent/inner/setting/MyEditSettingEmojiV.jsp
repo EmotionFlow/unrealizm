@@ -87,7 +87,7 @@ myEditSettingEmojiC.getResults(checkLogin);
 </style>
 <div class="SettingList">
 	<div class="SettingListItem">
-		<div class="SettingListTitle">こっそリプライ絵文字</div>
+		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingEmojiV.Title")%></div>
 		<div class="SettingBody">
 			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
 				<div class="RegistMessage" >

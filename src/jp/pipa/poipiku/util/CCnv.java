@@ -357,6 +357,7 @@ public final class CCnv {
 			StringBuilder strRtn, final CContent cContent, int nLoginUserId,
 			final ArrayList<String> vEmoji, int nSpMode,
 			final ResourceBundleControl _TEX){
+
 		final boolean isOwnerAndHidden = cContent.m_nUserId==nLoginUserId && cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN;
 		strRtn.append(
 			String.format(
@@ -472,6 +473,35 @@ public final class CCnv {
 		}
 		strRtn.append("</div>");	// IllustItemResBtnList
 
+		// リプライ
+		if (nLoginUserId == cContent.m_nUserId) {
+			strRtn.append("""
+					<div class="IllustItemReplyInfo">
+						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
+						<div class="IllustItemReplyInfoTitle">
+						%s
+						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
+						<i class="fas fa-info-circle"></i>
+						</a>
+						</div>
+					</div>
+					""".formatted(cContent.m_nContentId, _TEX.T("IllustView.Reply.ForMyContent")));
+		} else {
+			strRtn.append("""
+					<div class="IllustItemReplyList">
+						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
+						<div class="IllustItemReplyListTitle">
+						%s
+						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
+						<i class="fas fa-info-circle"></i>
+						</a>
+						</div>
+						<div id="ReplyEmojiList_%d" class="IllustItemResList"></div>
+					</div>
+					""".formatted(cContent.m_nContentId, _TEX.T("IllustView.Reply.FromCreator"), cContent.m_nContentId));
+		}
+
+		// こそフォロ促し
 		strRtn.append(String.format("<div id=\"EncourageFollowUp_%d\" class=\"EncourageFollowUp\" style=\"display:none\">", cContent.m_nContentId));
 		strRtn.append("<span>").append(_TEX.T("EncourageFollowUp")).append("</span>");
 		strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d,%d)\">%s</span>",
@@ -481,33 +511,6 @@ public final class CCnv {
 				cContent.m_nUserId,
 				(cContent.m_cUser.m_nFollowing==CUser.FOLLOW_FOLLOWING)?_TEX.T("IllustV.Following"):_TEX.T("IllustV.Follow")));
 		strRtn.append("</div>");
-
-		if (nLoginUserId == cContent.m_nUserId) {
-			strRtn.append("""
-					<div class="IllustItemReplyInfo">
-						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
-						<div class="IllustItemReplyInfoTitle">
-						リアクションをタップして<br><span class="MyReplyEmoji">️</span>でお礼を伝えよう
-						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
-						<i class="fas fa-info-circle"></i>
-						</a>
-						</div>
-					</div>
-					""".formatted(cContent.m_nContentId));
-		} else {
-			strRtn.append("""
-					<div class="IllustItemReplyList">
-						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
-						<div class="IllustItemReplyListTitle">
-						作者からのリプライ
-						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
-						<i class="fas fa-info-circle"></i>
-						</a>
-						</div>
-						<div id="ReplyEmojiList_%d" class="IllustItemResList"></div>
-					</div>
-					""".formatted(cContent.m_nContentId, cContent.m_nContentId));
-		}
 	}
 
 	public static String Content2Html(
