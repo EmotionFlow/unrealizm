@@ -576,11 +576,6 @@ public final class CCnv {
 		// タグ
 		appendTag(strRtn, cContent, nMode, nSpMode);
 
-		// 編集
-		if(cContent.m_nUserId==nLoginUserId) {
-			appendIllustItemDescEdit(strRtn, cContent, nMode);
-		}
-
 		// 画像
 		appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 

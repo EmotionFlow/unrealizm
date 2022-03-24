@@ -1346,6 +1346,12 @@ Decoration
 	text-align: right;
 }
 
+.OptionPublish > .OptionPublishInfo{
+	width: 100%;
+	text-align: right;
+}
+
+
 .UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPublish,
 .UploadFile .UoloadCmdOption .OptionItem .OptionPublish .EditPassword {
 	width: 180px;

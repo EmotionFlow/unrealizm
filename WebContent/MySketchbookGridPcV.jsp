@@ -37,6 +37,10 @@
         .Wrapper.ViewPc {flex-flow: row-reverse wrap;}
         .Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
         .Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
+
+		<%// CCnvで実装するのがしんどかったのでCSSでごまかす%>
+        .IllustItem>.IllustInfo>.PrivateIcon  {display: none;}
+        .IllustItem>.IllustInfo>.OutOfPeriodIcon  {display: none;}
 	</style>
 </head>
 

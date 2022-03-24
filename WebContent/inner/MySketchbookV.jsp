@@ -91,11 +91,18 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		});
 
 		</script>
-		<%if (!isApp) {%>
-		<style>body {padding-top: 79px !important;}</style>
-		<%} else {%>
-		<style>body {padding-top: 0 !important;}</style>
-		<%}%>
+
+		<style>
+			<%if (!isApp) {%>
+			body {padding-top: 79px !important;}
+			<%} else {%>
+			body {padding-top: 0 !important;}
+			<%}%>
+
+			<%// CCnvで実装するのがしんどかったのでCSSでごまかす%>
+            .IllustItem>.IllustInfo>.PrivateIcon  {display: none;}
+            .IllustItem>.IllustInfo>.OutOfPeriodIcon  {display: none;}
+		</style>
 	</head>
 
 	<body>
@@ -106,6 +113,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 		<%}%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<%@ include file="/inner/TTabMenuRequestPotalPc.jsp"%>
+
 		<article class="Wrapper ThumbList">
 			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">

@@ -280,17 +280,19 @@ if (requestId > 0) {
 					<div id="PublishInfo">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish" style="font-size: 11px;">
-							<span id="PublishHiddenInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.HiddenInfo")%></span>
-							<span id="PublishFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.FollowerInfo")%></span>
-							<span id="PublishTwitterFollowerInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowerInfo")%></span>
-							<span id="PublishTwitterFollowingInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowingInfo")%></span>
-							<span id="PublishTwitterFollowEachInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowEachInfo")%></span>
-							<span id="PublishTwitterRTInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterRTInfo")%></span>
-							<span id="PublishLoginInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%></span>
+							<span id="PublishHiddenInfo" class="OptionPublishInfo" style="display: none">
+								<%=requestId>0?"依頼者のみ閲覧できます":_TEX.T("UploadFilePc.Option.Publish.HiddenInfo")%>
+							</span>
+							<span id="PublishFollowerInfo" class="OptionPublishInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.FollowerInfo")%></span>
+							<span id="PublishTwitterFollowerInfo" class="OptionPublishInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowerInfo")%></span>
+							<span id="PublishTwitterFollowingInfo" class="OptionPublishInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowingInfo")%></span>
+							<span id="PublishTwitterFollowEachInfo" class="OptionPublishInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterFollowEachInfo")%></span>
+							<span id="PublishTwitterRTInfo" class="OptionPublishInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.TwitterRTInfo")%></span>
+							<span id="PublishLoginInfo" class="OptionPublishInfo" style="display: none"><%=_TEX.T("UploadFilePc.Option.Publish.LoginInfo")%></span>
+							<%if(requestId>0){%><span class="OptionPublishInfo" style="display: inline-block">依頼者はどの公開方法でも制限なく閲覧できます</span><%}%>
 						</div>
 					</div>
 
-					<%if(requestId>0){%><div style="display: none;"><%}%>
 					<div id="ItemPassword" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
@@ -428,7 +430,6 @@ if (requestId > 0) {
 						</div>
 					</div>
 				</div>
-				<%if(requestId>0){%></div><%}%>
 
 				<div class="UoloadCmd">
 					<a id="UoloadCmdBtn"
