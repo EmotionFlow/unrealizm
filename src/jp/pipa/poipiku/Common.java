@@ -245,9 +245,7 @@ public final class Common {
 	public static final String CLIENT_TIMEZONE_OFFSET = "TZ_OFFSET";
 
 	// lang_id
-	public static int LANG_ID_OTHER = 0;
-	public static int LANG_ID_JP = 1;
-	public static int LANG_ID_EN = 0;
+	// SupportedLocalesに移行した
 
 	public static String CrLfInjection(String strSrc) {
 		if(strSrc == null) {

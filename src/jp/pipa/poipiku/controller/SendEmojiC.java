@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -284,9 +285,10 @@ public class SendEmojiC {
 			final int nBadgeNum = InfoList.selectUnreadBadgeSum(cTargUser.m_nUserId, null);
 
 			// 送信文字列
-			final String strTitle = ResourceBundleControl.T(CUser.LANG_MAP.get(cTargUser.m_nLangId),"Notification.Reaction.Title");
+			final Locale myLocale = SupportedLocales.findLocale(cTargUser.m_nLangId);
+			final String strTitle = ResourceBundleControl.T(myLocale, "Notification.Reaction.Title");
 			final String strSubTitle = "";
-			final String strBody = ResourceBundleControl.T(CUser.LANG_MAP.get(cTargUser.m_nLangId),"ActivityList.Message.Comment");
+			final String strBody = ResourceBundleControl.T(myLocale,"ActivityList.Message.Comment");
 
 			// 通知DB登録
 			// 連射しないように同じタイプの未送信の通知を削除

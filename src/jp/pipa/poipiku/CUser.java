@@ -8,8 +8,6 @@ import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.Util;
 
 public class CUser {
-	public static Map<Integer, Locale> LANG_MAP;
-
 	public static final int FOLLOW_NONE = 0;
 	public static final int FOLLOW_FOLLOWING = 1;
 	public static final int FOLLOW_HIDE = -1;
@@ -63,13 +61,6 @@ public class CUser {
 	public int m_nFollowing = FOLLOW_NONE; // アクセスユーザがこのユーザをフォローしてるかのフラグ
 
 	public boolean m_bRequestEnabled = false;
-
-	static {
-		Map<Integer, Locale> m = new HashMap<>();
-		m.put(Common.LANG_ID_EN, Locale.ENGLISH);
-		m.put(Common.LANG_ID_JP, Locale.JAPANESE);
-		LANG_MAP = Collections.unmodifiableMap(m);
-	}
 
 	public CUser() {}
 	public CUser(final ResultSet resultSet) throws SQLException {

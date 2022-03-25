@@ -25,7 +25,7 @@ public class Notifier {
 		public int id = -1;
 		public String nickname;
 		public String email;
-		public int langId = Common.LANG_ID_JP;
+		public int langId = SupportedLocales.ID_DEFAULT;
 		public String langLabel;
 		public User(){};
 		protected User(int userId){
