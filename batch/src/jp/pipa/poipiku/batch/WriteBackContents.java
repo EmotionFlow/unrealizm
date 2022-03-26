@@ -23,6 +23,8 @@ public class WriteBackContents extends Batch {
 	// SSD上にファイルを保持する時間
 	static final int HOLD_IN_CACHE_HOURS = 36;
 
+	static final int SELECT_LIMIT = 15;
+
 	// 一度のバッチ実行でselectするファイルの最大数
 	private static int getSelectLimit() {
 		int selectLimit = 35;
@@ -81,7 +83,7 @@ public class WriteBackContents extends Batch {
 		String sql = "";
 
 		// HDDへの移動対象を抽出
-		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS, getSelectLimit());
+		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS, SELECT_LIMIT);
 		if (moveTargets == null) {
 			moveTargets = new ArrayList<>();
 		}
