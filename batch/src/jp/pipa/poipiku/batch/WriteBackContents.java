@@ -14,24 +14,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class WriteBackContents extends Batch {
 	// SSD上にファイルを保持する時間
 	static final int HOLD_IN_CACHE_HOURS = 36;
 
-	static final int SELECT_LIMIT = 15;
-
 	// 一度のバッチ実行でselectするファイルの最大数
 	private static int getSelectLimit() {
 		int selectLimit = 35;
 		Calendar calendar = Calendar.getInstance();
 		final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+		LocalTime time = LocalTime.now();
+		final int hour = time.getHour();
 		if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
-			selectLimit = 10;
+			selectLimit = 15;
+		} else if (4 <= hour && hour <= 8){
+			selectLimit = 45;
 		}
 		return selectLimit;
 	}
@@ -83,7 +87,7 @@ public class WriteBackContents extends Batch {
 		String sql = "";
 
 		// HDDへの移動対象を抽出
-		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS, SELECT_LIMIT);
+		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS, getSelectLimit());
 		if (moveTargets == null) {
 			moveTargets = new ArrayList<>();
 		}
