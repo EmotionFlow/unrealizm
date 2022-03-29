@@ -103,7 +103,7 @@ public final class CTweet {
 	}
 
 	private static int GetErrorCode(int twitterErrorCode, int statusCode) {
-		Log.d(String.format("err: %d, st:%d", twitterErrorCode, statusCode));
+//		Log.d(String.format("err: %d, st:%d", twitterErrorCode, statusCode));
 		int nErrCode = ERR_OTHER;
 		if(twitterErrorCode==89){
 			nErrCode = ERR_INVALID_OR_EXPIRED_TOKEN;
@@ -114,7 +114,7 @@ public final class CTweet {
 		} else if(statusCode==404) {
 			nErrCode = ERR_NOT_FOUND;
 		}
-		Log.d("nErrCode: " + nErrCode);
+//		Log.d("nErrCode: " + nErrCode);
 		return nErrCode;
 	}
 
