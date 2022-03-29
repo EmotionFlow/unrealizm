@@ -11,7 +11,7 @@ boolean result = false;
 if (!checkLogin.m_bLogin) {
 	sb.append("<span>>ログインしてください</span>");
 } else {
-	var cResults = new GetMyReplyEmojiC();
+	GetMyReplyEmojiC cResults = new GetMyReplyEmojiC();
 	cResults.getParam(request);
 
 	if (cResults.getResults(checkLogin)) {

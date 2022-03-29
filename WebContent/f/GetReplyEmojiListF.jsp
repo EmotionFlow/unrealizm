@@ -9,7 +9,7 @@ if (Util.isBot(request)) return;
 if (!checkLogin.m_bLogin) {
 	sb.append("<span class=\"ReplyListMsg\">").append(_TEX.T("Common.NeedLogin")).append("</span>");
 } else {
-	var cResults = new GetReplyEmojiListC();
+	GetReplyEmojiListC cResults = new GetReplyEmojiListC();
 	cResults.getParam(request);
 
 	List<String> replies = cResults.getResults(checkLogin);
