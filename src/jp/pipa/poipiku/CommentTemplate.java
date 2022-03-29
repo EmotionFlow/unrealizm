@@ -29,7 +29,7 @@ public final class CommentTemplate extends Model {
 
 	public boolean select(int userId, int dispOrder) {
 		boolean result = false;
-		final var sql = """
+		final String sql = """
 			SELECT *
 			FROM comment_templates
 			WHERE user_id=? AND disp_order=?
@@ -61,7 +61,7 @@ public final class CommentTemplate extends Model {
 			return false;
 		}
 
-		final var sql = """
+		final String sql = """
 			INSERT INTO comment_templates(user_id, disp_order, chars) VALUES (?,?,?)
 			ON CONFLICT ON CONSTRAINT comment_templates_pkey
 			DO UPDATE SET chars=?, updated_at=now()
@@ -85,7 +85,7 @@ public final class CommentTemplate extends Model {
 	static public boolean deleteByUserId(int userId){
 		if (userId < 0) return false;
 
-		final var sql = """
+		final String sql = """
 			DELETE FROM comment_templates
 			WHERE user_id=?
 			""";

@@ -34,7 +34,7 @@ public class GetReplyEmojiListC extends Controller{
 		}
 
 		List<String> replies = new ArrayList<>();
-		final var sql = """
+		final String sql = """
 			SELECT description
 			FROM comment_replies
 			WHERE content_id=? AND to_user_id=? ORDER BY id DESC

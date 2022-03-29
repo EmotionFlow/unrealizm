@@ -34,7 +34,7 @@ public final class GetMyReplyEmojiC extends Controller{
 		}
 
 		boolean result = false;
-		final var sql = """
+		final String sql = """
 			SELECT chars
 			FROM comment_templates
 			WHERE user_id=? AND disp_order=0
