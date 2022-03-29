@@ -44,6 +44,7 @@ cResults.getResults(checkLogin);
 HashMap<String, String> MENU = new HashMap<>();
 MENU.put("PROFILE", _TEX.T("EditSettingV.Profile"));
 MENU.put("MYPAGE", _TEX.T("EditSettingV.MyPage"));
+MENU.put("EMOJI", _TEX.T("EditSettingV.Emoji"));
 MENU.put("FOLLOW", _TEX.T("EditSettingV.FavoList"));
 MENU.put("FOLLOWTAG", _TEX.T("EditSettingV.FollowTagList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
@@ -62,6 +63,7 @@ String[][] menuOrder = {
 		{
 		"PROFILE",
 		"MYPAGE",
+		"EMOJI",
 		"FOLLOW",
 		"FOLLOWTAG",
 		"BLOCK",
@@ -346,6 +348,16 @@ String[][] menuOrder = {
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMyPageV.jsp"%>
+				</div>
+			</div>
+			<%}%>
+
+			<%strPageId = "EMOJI";%>
+			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
+			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<div class="SettingBody">
+					<%@include file="/inner/setting/MyEditSettingEmojiV.jsp"%>
 				</div>
 			</div>
 			<%}%>

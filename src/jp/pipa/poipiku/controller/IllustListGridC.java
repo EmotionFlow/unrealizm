@@ -244,7 +244,7 @@ public class IllustListGridC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			m_vContentList = GridUtil.getEachComment(connection, m_vContentList);
+			GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
 			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);

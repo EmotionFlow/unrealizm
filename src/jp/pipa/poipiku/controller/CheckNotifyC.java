@@ -4,7 +4,7 @@ import java.sql.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.InfoList;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
@@ -20,6 +20,7 @@ public final class CheckNotifyC {
 	}
 
 	public int m_nCheckComment = 0;
+	public int m_nCheckCommentReply = 0;
 //	public int m_nCheckFollow = 0;
 //	public int m_nCheckHeart = 0;
 	public int m_nCheckRequest = 0;
@@ -79,12 +80,17 @@ public final class CheckNotifyC {
 			cState.setTimestamp(2, lastCheckDate);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				if (cResSet.getInt(1) == Common.NOTIFICATION_TYPE_REACTION) {
-					m_nCheckComment = cResSet.getInt(2);
-				} else if (cResSet.getInt(1) == Common.NOTIFICATION_TYPE_REQUEST) {
-					m_nCheckRequest = cResSet.getInt(2);
-				} else if (cResSet.getInt(1) == Common.NOTIFICATION_TYPE_GIFT) {
-					m_nCheckGift = cResSet.getInt(2);
+				final int infoType = cResSet.getInt(1);
+				final int sumNum = cResSet.getInt(2);
+
+				if (infoType == InfoList.InfoType.Emoji.getCode() ) {
+					m_nCheckComment = sumNum;
+				} else if (infoType == InfoList.InfoType.Request.getCode()) {
+					m_nCheckRequest = sumNum;
+				} else if (infoType == InfoList.InfoType.Gift.getCode()) {
+					m_nCheckGift = sumNum;
+				} else if (infoType == InfoList.InfoType.EmojiReply.getCode()) {
+					m_nCheckCommentReply = sumNum;
 				}
 			}
 			cResSet.close();cResSet=null;

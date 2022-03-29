@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
+import jp.pipa.poipiku.notify.EmojiNotifier;
 import jp.pipa.poipiku.settlement.CardSettlement;
 import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.DatabaseUtil;
@@ -228,45 +229,14 @@ public class SendEmojiC {
 				break;
 			}
 
-			try {
-				// 確認済みお知らせだった場合、通知絵文字一覧をリセット
-				connection.setAutoCommit(false);
-				strSql = "DELETE FROM info_lists WHERE user_id=? AND content_id=? AND info_type=? AND had_read=true;";
-				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, cTargContent.m_nUserId);
-				statement.setInt(2, cTargContent.m_nContentId);
-				statement.setInt(3, Common.NOTIFICATION_TYPE_REACTION);
-				statement.executeUpdate();
-				statement.close();statement=null;
-
-				// お知らせ一覧に追加
-				strSql = "INSERT INTO info_lists(user_id, content_id, content_type, info_type, info_thumb, info_desc) "
-						+ "VALUES(?, ?, ?, ?, ?, ?) "
-						+ "ON CONFLICT ON CONSTRAINT info_lists_pkey "
-						+ "DO UPDATE SET "
-						+ "info_desc=(COALESCE(info_lists.info_desc, '') || ?), "
-						+ "info_date=CURRENT_TIMESTAMP, "
-						+ "badge_num=(info_lists.badge_num+1), "
-						+ "had_read=false;";
-				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, cTargContent.m_nUserId);
-				statement.setInt(2, cTargContent.m_nContentId);
-				statement.setInt(3, contentType);
-				statement.setInt(4, Common.NOTIFICATION_TYPE_REACTION);
-				statement.setString(5, infoThumb);
-				statement.setString(6, m_strEmoji);
-				statement.setString(7, m_strEmoji);
-				statement.executeUpdate();
-				connection.commit();
-				statement.close();statement=null;
-			} catch (SQLException sqlException) {
-				Log.d("transaction fail");
-				Log.d(strSql);
-				sqlException.printStackTrace();
-				connection.rollback();
-			} finally {
-				connection.setAutoCommit(true);
-			}
+			EmojiNotifier notifier = new EmojiNotifier();
+			notifier.notifyReactionReceived(
+					cTargContent.m_nUserId,
+					cTargContent.m_nContentId,
+					contentType,
+					m_strEmoji,
+					infoThumb
+					);
 
 			// 通知先デバイストークンの取得
 			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<>();

@@ -563,10 +563,10 @@ function ShowAllReaction(content_id, elm) {
 		"url": "/f/ShowAllReactionF.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			console.log(data);
 			if(data.result_num>0) {
 				$(elm).hide();
 				$('#IllustItemResList_'+content_id + " .ResEmoji").remove();
+				$('#IllustItemResList_'+content_id + " .LastCommentId").remove();
 				$("#ResEmojiAdd_"+content_id).before(data.html);
 				if(vg)vg.vgrefresh();
 			} else {
@@ -1235,3 +1235,117 @@ function isEmailValid(email) {
 	return email.match(/^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/);
 }
 /******** バリデーション *********/
+
+/******** リプライ *********/
+function dispReplyEmojiInfo() {
+	Swal.fire({
+		html: _getReplyEmojiInfoHtml(),
+		footer: '<span style="font-size: 11px; color: #545454">' + _getReplyEmojiInfoFooter() + '</span>',
+		focusConfirm: false,
+		showCloseButton: true,
+		showCancelButton: false,
+	});
+}
+
+function switchEmojiReply(contentId, loginUserId, code) {
+	const $IllustItem = $("#IllustItem_" + contentId);
+	const $IllustItemResBtnList = $IllustItem.children(".IllustItemResBtnList");
+	const $ResEmojiAdd = $IllustItem.find(".ResEmojiAdd");
+	const $IllustItemReplyList = $IllustItem.children(".IllustItemReplyList");
+	const $IllustItemReplyInfo = $IllustItem.children(".IllustItemReplyInfo");
+	if (code === 1) {
+		$IllustItemResBtnList.hide();
+		$ResEmojiAdd.hide();
+		$IllustItemReplyInfo.show();
+		_getMyReplyEmojiHtml(loginUserId);
+	} else if(code === 2) {
+		if (!_getReplyEmojiHtml(contentId, loginUserId)) {
+			DispNeedLogin();
+			return false;
+		}
+		$IllustItemResBtnList.hide();
+		$ResEmojiAdd.hide();
+		$IllustItemReplyList.show();
+	} else if(code === 0) {
+		$IllustItemReplyList.hide();
+		$IllustItemReplyInfo.hide();
+		$IllustItemResBtnList.show();
+		$ResEmojiAdd.show();
+	}
+}
+
+function _getMyReplyEmojiHtml(loginUserId) {
+	if (loginUserId < 1) return false;
+	$.ajax({
+		"type": "post",
+		"data": {"ID": loginUserId},
+		"url": "/f/GetMyReplyEmojiF.jsp",
+		"dataType": "json",
+	}).then(
+		(data) => {
+			$(".MyReplyEmoji").html(data.html);
+		},
+		(jqXHR, textStatus, errorThrown) => {
+			DispMsg('Connection error 4');
+		}
+	)
+	return true;
+
+}
+
+function _getReplyEmojiHtml(contentId, loginUserId) {
+	if (contentId < 1 || loginUserId < 1) return false;
+
+	const $ReplyEmojiList = $("#ReplyEmojiList_" + contentId);
+	if ($ReplyEmojiList.children("span").length>0) return true;
+
+	$.ajax({
+		"type": "post",
+		"data": {"ID": loginUserId, "TD": contentId},
+		"url": "/f/GetReplyEmojiListF.jsp",
+		"dataType": "json",
+	}).then(
+		(data) => {
+			$ReplyEmojiList.html(data.html);
+		},
+		(jqXHR, textStatus, errorThrown) => {
+			DispMsg('Connection error 3');
+		}
+	)
+	return true;
+}
+
+function _replyEmoji(_this, loginUserId) {
+	const $IllustItems = $(_this).parents(".IllustItem");
+	const $IllustItemResBtnList = $IllustItems.children(".IllustItemResBtnList");
+	if ($IllustItemResBtnList.css("display") !== "none") {
+		return false;
+	}
+	const contentId = parseInt($IllustItems[0].id.split("_")[1], 10);
+	const commentIdLast = parseInt($IllustItems.find(".LastCommentId").attr("value"), 10);
+	const len = parseInt($(_this).parent().children("a.ResEmoji").length, 10);
+	const commentIdOffset = len - $(_this).parent().children("a.ResEmoji").index($(_this)) - 1;
+
+	$.ajax({
+		"type": "post",
+		"data": {"IID": contentId, "UID": loginUserId, "CMTLST": commentIdLast, "CMTOFST": commentIdOffset},
+		"url": "/f/ReplyEmojiF.jsp",
+		"dataType": "json",
+	}).then(
+		(data) => {
+			if (data.result === 1 /*Common.API_OK*/) {
+				DispReplyDone();
+				$(_this).addClass("Replied");
+			} else if (data.error_code === -1 /*ReplyEmojiC.ERR_ALREADY_REPLIED*/) {
+				DispAlreadyReplied();
+				$(_this).addClass("Already");
+			} else {
+				DispMsg('Connection error 1');
+			}
+		},
+		(jqXHR, textStatus, errorThrown) => {
+			DispMsg('Connection error 2');
+		}
+	)
+}
+/******** リプライ *********/

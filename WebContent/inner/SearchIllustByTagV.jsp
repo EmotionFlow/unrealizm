@@ -36,6 +36,7 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<%}%>
 
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<%@ include file="/inner/TRetweetContent.jsp"%>
 		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 

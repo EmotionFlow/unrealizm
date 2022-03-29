@@ -18,8 +18,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class Notifier {
-	protected String CATEGORY = "";
-	protected int NOTIFICATION_INFO_TYPE = -1;
+	protected String vmTemplateCategory = "";
+	protected int infoType = -1;
 
 	public static class User {
 		public int id = -1;
@@ -78,11 +78,11 @@ public class Notifier {
 
 	protected String getVmPath(final String path, final String langLabel){
 		// 指定の言語にファイルがなかったら、英語のテンプレートをつかう
-		Path vmPath = Paths.get(langLabel, CATEGORY, path);
+		Path vmPath = Paths.get(langLabel, vmTemplateCategory, path);
 		try {
 			Velocity.getTemplate(vmPath.toString());
 		} catch (ResourceNotFoundException ignore) {
-			vmPath = Paths.get("en", CATEGORY, path);
+			vmPath = Paths.get("en", vmTemplateCategory, path);
 		}
 		return vmPath.toString();
 	}
@@ -140,7 +140,7 @@ public class Notifier {
 
 			// 送信用に登録
 			NotificationBuffer notificationBuffer = new NotificationBuffer();
-			notificationBuffer.notificationType = NOTIFICATION_INFO_TYPE;
+			notificationBuffer.notificationType = infoType;
 			notificationBuffer.badgeNum = nBadgeNum;
 			notificationBuffer.title = title;
 			notificationBuffer.subTitle = "";
@@ -165,30 +165,27 @@ public class Notifier {
 	protected enum InsertMode {
 		Insert,
 		Upsert,
-		TryInsert  // on conflict do nothing
+		TryInsert,  // on conflict do nothing
+		InsertBeforeReset,
 	}
 
-	protected boolean notifyByWeb(User to, int requestId, int contentId, int contentType, String description, InsertMode insertMode) {
+	protected boolean notifyByWeb(User to, int requestId, int contentId, int contentType, String description, String infoThumb, InsertMode insertMode) {
 		InfoList infoList = new InfoList();
 		infoList.userId = to.id;
 		infoList.requestId = requestId;
 		infoList.contentId = contentId;
 		infoList.contentType = contentType;
-		infoList.infoType = NOTIFICATION_INFO_TYPE;
+		infoList.infoType = infoType;
 		infoList.infoDesc = description;
+		infoList.infoThumb = infoThumb;
 		infoList.badgeNum = 1;
 		switch (insertMode) {
-			case Insert:
-				infoList.insert();
-				break;
-			case Upsert:
-				infoList.upsert();
-				break;
-			case TryInsert:
-				infoList.tryInsert();
-				break;
-			default:
-				break;
+			case Insert -> infoList.insert();
+			case Upsert -> infoList.upsert();
+			case TryInsert -> infoList.tryInsert();
+			case InsertBeforeReset -> infoList.insertBeforeResetTransaction();
+			default -> {
+			}
 		}
 		return true;
 	}

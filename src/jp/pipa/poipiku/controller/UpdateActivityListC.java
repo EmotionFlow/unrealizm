@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.InfoList;
 import jp.pipa.poipiku.Request;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-public class UpdateActivityListC extends Controller{
+public class UpdateActivityListC extends Controller {
 	// in
 	public int userId = -1;
 	public int contentId = -1;
@@ -23,6 +24,7 @@ public class UpdateActivityListC extends Controller{
 	// out
 	public String requestListMenuId = "";
 	public int requestListSt = -1;
+	public int contentUserId = -1;
 
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -58,6 +60,21 @@ public class UpdateActivityListC extends Controller{
 			statement.setInt(4, requestId);
 			statement.executeUpdate();
 			statement.close();statement=null;
+
+			if (infoType == InfoList.InfoType.EmojiReply.getCode()) {
+				sql = "SELECT user_id FROM contents_0000 WHERE content_id = ?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, contentId);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					contentUserId = resultSet.getInt(1);
+				}
+				resultSet.close();resultSet = null;
+				statement.close();statement = null;
+			} else {
+				contentUserId = userId;
+			}
+
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
@@ -69,38 +86,28 @@ public class UpdateActivityListC extends Controller{
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 
-		switch (infoType) {
-			case Common.NOTIFICATION_TYPE_REACTION:
-			case Common.NOTIFICATION_TYPE_GIFT:
-			case Common.NOTIFICATION_TYPE_REQUEST_STARTED:
-				break;
-			case Common.NOTIFICATION_TYPE_REQUEST:
-				Request poipikuRequest = new Request(requestId);
-				requestListSt = poipikuRequest.status.getCode();
-				switch (poipikuRequest.status) {
-					case WaitingApproval:
+		if (infoType == InfoList.InfoType.Request.getCode()) {
+			Request poipikuRequest = new Request(requestId);
+			requestListSt = poipikuRequest.status.getCode();
+			switch (poipikuRequest.status) {
+				case InProgress:
+				case Done:
+					requestListMenuId = "SENT";
+					break;
+				case Canceled:
+					if (poipikuRequest.creatorUserId == checkLogin.m_nUserId) {
 						requestListMenuId = "RECEIVED";
-						break;
-					case InProgress:
-					case Done:
+					} else {
 						requestListMenuId = "SENT";
-						break;
-					case Canceled:
-						if (poipikuRequest.creatorUserId == checkLogin.m_nUserId) {
-							requestListMenuId = "RECEIVED";
-						} else {
-							requestListMenuId = "SENT";
-						}
-						break;
-					default:
-						requestListMenuId = "RECEIVED";
-						break;
-				}
-				break;
-			default:
-				errorKind = ErrorKind.Unknown;
-				return false;
+					}
+					break;
+				case WaitingApproval:
+				default:
+					requestListMenuId = "RECEIVED";
+					break;
+			}
 		}
+
 		errorKind = ErrorKind.None;
 		return true;
 	}

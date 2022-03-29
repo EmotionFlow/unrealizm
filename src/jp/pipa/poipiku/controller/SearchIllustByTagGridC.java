@@ -140,7 +140,7 @@ public class SearchIllustByTagGridC {
 			bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 
 			// Each Comment
-			m_vContentList = GridUtil.getEachComment(cConn, m_vContentList);
+			GridUtil.getEachComment(cConn, m_vContentList);
 			// Bookmark
 			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
 		} catch(Exception e) {

@@ -86,6 +86,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>

@@ -18,8 +18,8 @@ public final class RecommendedUsersNotifier extends Notifier {
 	private static final int MAX_RECOMMENDED_USERS = 10;
 
 	public RecommendedUsersNotifier() {
-		CATEGORY = "recommended";
-		NOTIFICATION_INFO_TYPE = Common.NOTIFICATION_TYPE_REQUEST_STARTED;
+		vmTemplateCategory = "recommended";
+		infoType = Common.NOTIFICATION_TYPE_REQUEST_STARTED;
 	}
 
 	public boolean notifyToLongSilenceUser(DataSource dataSource) {

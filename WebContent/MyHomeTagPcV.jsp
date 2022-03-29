@@ -24,6 +24,7 @@ cResults.getResults(checkLogin);
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript">

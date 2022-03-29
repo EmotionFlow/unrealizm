@@ -20,7 +20,6 @@ SOURCE_LOCALE = 'en'
 
 TEMPLATE_ROOT = '../../WebContent/WEB-INF/message_templates/'
 TEMPLATE_PATH = sys.argv[1]
-PROP_EXT = '.properties'
 
 source_path = f"{TEMPLATE_ROOT}{SOURCE_LOCALE}/{TEMPLATE_PATH}/"
 

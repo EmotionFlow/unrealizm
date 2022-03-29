@@ -155,7 +155,7 @@ public class PopularIllustListGridC {
 			bResult = true;
 
 			// Each Comment
-			m_vContentList = GridUtil.getEachComment(cConn, m_vContentList);
+			GridUtil.getEachComment(cConn, m_vContentList);
 			// Bookmark
 			m_vContentList = GridUtil.getEachBookmark(cConn, m_vContentList, checkLogin);
 		} catch(Exception e) {

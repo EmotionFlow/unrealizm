@@ -4,8 +4,8 @@ import jp.pipa.poipiku.Common;
 
 public final class GiftNotifier extends Notifier {
 	public GiftNotifier(){
-		CATEGORY = "gift_passport";
-		NOTIFICATION_INFO_TYPE = Common.NOTIFICATION_TYPE_GIFT;
+		vmTemplateCategory = "gift_passport";
+		infoType = Common.NOTIFICATION_TYPE_GIFT;
 	}
 
 	public void notifyGiftReceived(int toUserId){
@@ -13,7 +13,8 @@ public final class GiftNotifier extends Notifier {
 		final String statusName = "received";
 		if (user.id > 0) {
 			final String title = getTitle(statusName, user.langLabel);
-			notifyByWeb(user, -1, (int)Math.ceil(Math.random() * -10000000), Common.CONTENT_TYPE_TEXT, title, InsertMode.Upsert);
+			notifyByWeb(user, -1, (int) Math.ceil(Math.random() * -10000000),
+					Common.CONTENT_TYPE_TEXT, title, "", InsertMode.Upsert);
 			notifyByApp(user, title);
 		}
 	}

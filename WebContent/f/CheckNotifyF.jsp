@@ -10,6 +10,7 @@ cResults.m_nUserId = checkLogin.m_nUserId;
 cResults.GetResults();
 %>{
 "check_comment":<%=cResults.m_nCheckComment%>,
+"check_comment_reply":<%=cResults.m_nCheckCommentReply%>,
 "check_follow":0,
 "check_heart":0,
 "check_request":<%=cResults.m_nCheckRequest%>,

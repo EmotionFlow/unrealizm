@@ -97,6 +97,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
+		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />

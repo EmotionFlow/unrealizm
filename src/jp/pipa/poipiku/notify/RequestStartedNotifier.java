@@ -11,8 +11,8 @@ import java.util.List;
 
 public final class RequestStartedNotifier extends Notifier {
 	public RequestStartedNotifier(){
-		CATEGORY = "request";
-		NOTIFICATION_INFO_TYPE = Common.NOTIFICATION_TYPE_REQUEST_STARTED;
+		vmTemplateCategory = "request";
+		infoType = Common.NOTIFICATION_TYPE_REQUEST_STARTED;
 	}
 
 	// リクエストを開始したことを周囲にお知らせする
@@ -38,7 +38,7 @@ public final class RequestStartedNotifier extends Notifier {
 			List<Integer> followeeList = FollowUser.selectFollowToMeList(fromUser.id);
 			for (int userId : followeeList) {
 				User toUser = new User(userId);
-				notifyByWeb(toUser, creatorUserId, -1, Common.CONTENT_TYPE_TEXT, msg, InsertMode.TryInsert);
+				notifyByWeb(toUser, creatorUserId, -1, Common.CONTENT_TYPE_TEXT, msg, "", InsertMode.TryInsert);
 			}
 			result = true;
 

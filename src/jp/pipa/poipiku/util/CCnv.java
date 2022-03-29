@@ -326,10 +326,38 @@ public final class CCnv {
 		}
 	}
 
+	public static void appendResEmoji(
+			StringBuilder sb,
+			final int contentUserId,
+			final String comments,
+			final int lastCommentId,
+			final int loginUserId
+	) {
+		final String resEmojiFormat;
+		if (contentUserId != loginUserId) {
+			resEmojiFormat = "<span class=\"ResEmoji\">%s</span>";
+		} else {
+			resEmojiFormat = "<a class=\"ResEmoji\" href=\"javascript:void(0)\" onclick=\"replyEmoji(this)\">%s</a>";
+		}
+		for (int i = 0; i < comments.length(); i = comments.offsetByCodePoints(i, 1)) {
+			sb.append(
+					String.format(
+							resEmojiFormat,
+							CEmoji.parse(String.valueOf(Character.toChars(comments.codePointAt(i))))
+					)
+			);
+		}
+		// lastCommentId
+		sb.append("""
+                <data class="LastCommentId" value="%d"></data>
+				""".formatted(lastCommentId));
+	}
+
 	private static void appendIllustItemResList(
-			StringBuilder strRtn, CContent cContent, int nLoginUserId,
-			ArrayList<String> vResult, int nSpMode,
-			ResourceBundleControl _TEX){
+			StringBuilder strRtn, final CContent cContent, int nLoginUserId,
+			final ArrayList<String> vEmoji, int nSpMode,
+			final ResourceBundleControl _TEX){
+
 		final boolean isOwnerAndHidden = cContent.m_nUserId==nLoginUserId && cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN;
 		strRtn.append(
 			String.format(
@@ -350,20 +378,10 @@ public final class CCnv {
 			strRtn.append(String.format("<span class=\"TitleShowAll\" onclick=\"ShowAllReaction(%d, this)\">%s</span>", cContent.m_nContentId ,_TEX.T("Common.IllustItemRes.Title.ShowAll")));
 			strRtn.append("</div>");	// IllustItemResListTitle
 		}
+
 		// もらった絵文字
-		for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
-			strRtn.append(
-				String.format(
-					"<span class=\"ResEmoji\">%s</span>",
-					CEmoji.parse(String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i))))
-				)
-			);
-		}
-		/*
-		for(CComment comment : cContent.m_vComment) {
-			strRtn.append(String.format("<span class=\"ResEmoji\">%s</span>", CEmoji.parse(comment.m_strDescription)));
-		}
-		*/
+		appendResEmoji(strRtn, cContent.m_nUserId,
+				cContent.m_strCommentsListsCache, cContent.m_nCommentsListsCacheLastId, nLoginUserId);
 
 		// 絵文字追加マーク
 		strRtn.append(
@@ -375,8 +393,10 @@ public final class CCnv {
 		);
 
 		strRtn.append("</div>");	// IllustItemResList
+
 		// 絵文字ボタン
 		strRtn.append("<div class=\"IllustItemResBtnList\">");
+
 		// リアクション促し文言
 		strRtn.append("<div class=\"IllustItemResListTitle\">");
 		if(cContent.m_vComment.size()<=0) {
@@ -384,6 +404,12 @@ public final class CCnv {
 		} else {
 			strRtn.append(_TEX.T("Common.IllustItemRes.Title"));
 		}
+
+		// リプライボタン
+		strRtn.append("""
+        <a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, %d, %d)"></a>
+        """.formatted(cContent.m_nContentId, nLoginUserId, nLoginUserId==cContent.m_nUserId ? 1 : 2));
+
 		strRtn.append("</div>");	// IllustItemResListTitle
 		strRtn.append("<div class=\"ResBtnSetList\">");
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
@@ -416,7 +442,7 @@ public final class CCnv {
 
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
-			for(String emoji : vResult) {
+			for(String emoji : vEmoji) {
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
@@ -427,7 +453,7 @@ public final class CCnv {
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\" style=\"display: none;\"></div>");
 			// 人気の絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
-			for(String emoji : vResult) {
+			for(String emoji : vEmoji) {
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
@@ -447,6 +473,35 @@ public final class CCnv {
 		}
 		strRtn.append("</div>");	// IllustItemResBtnList
 
+		// リプライ
+		if (nLoginUserId == cContent.m_nUserId) {
+			strRtn.append("""
+					<div class="IllustItemReplyInfo">
+						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
+						<div class="IllustItemReplyInfoTitle">
+						%s
+						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
+						<i class="fas fa-info-circle"></i>
+						</a>
+						</div>
+					</div>
+					""".formatted(cContent.m_nContentId, _TEX.T("IllustView.Reply.ForMyContent")));
+		} else {
+			strRtn.append("""
+					<div class="IllustItemReplyList">
+						<a class="ReplyBtn fas fa-reply" onclick="switchEmojiReply(%d, null, 0)"></a>
+						<div class="IllustItemReplyListTitle">
+						%s
+						<a class="ReplyInfoBtn" href="javascript:void(0)" onclick="dispReplyEmojiInfo();">
+						<i class="fas fa-info-circle"></i>
+						</a>
+						</div>
+						<div id="ReplyEmojiList_%d" class="IllustItemResList"></div>
+					</div>
+					""".formatted(cContent.m_nContentId, _TEX.T("IllustView.Reply.FromCreator"), cContent.m_nContentId));
+		}
+
+		// こそフォロ促し
 		strRtn.append(String.format("<div id=\"EncourageFollowUp_%d\" class=\"EncourageFollowUp\" style=\"display:none\">", cContent.m_nContentId));
 		strRtn.append("<span>").append(_TEX.T("EncourageFollowUp")).append("</span>");
 		strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d,%d)\">%s</span>",

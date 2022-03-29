@@ -22,21 +22,27 @@ cResults.getResults(checkLogin);
 	<%@ include file="/inner/TAd728x90_mid.jsp"%>
 <%} else {%>
 	<%for(int nCnt = 0; nCnt<cResults.activities.size(); nCnt++) {
-		InfoList activityInfo = cResults.activities.get(nCnt);%>
+		final InfoList activityInfo = cResults.activities.get(nCnt);
+		final InfoList.InfoType infoType = InfoList.InfoType.byCode(activityInfo.infoType);
+		final InfoList.ContentType contentType = InfoList.ContentType.byCode(activityInfo.contentType);
+	%>
 		<%
-			if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REACTION
-					|| activityInfo.infoType == Common.NOTIFICATION_TYPE_GIFT) {%>
+			if(infoType == InfoList.InfoType.Emoji
+					|| infoType ==  InfoList.InfoType.Gift
+					|| infoType ==  InfoList.InfoType.EmojiReply
+			) {
+		%>
 
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
-		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
+		   onclick="UpdateActivityList(this, <%=infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 
 		<span class="ActivityListThumb">
-			<%if(activityInfo.infoType == Common.NOTIFICATION_TYPE_GIFT){%>
+			<%if(infoType == InfoList.InfoType.Gift){%>
 				<span class="ActivityListThumbIcon"><i class="fas fa-gift GiftIcon"></i></span>
 			<%}else{%>
-				<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE) {%>
+				<%if(contentType == InfoList.ContentType.Image) {%>
 				<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(activityInfo.infoThumb)%>_360.jpg')"></span>
-				<%} else if(activityInfo.contentType==Common.CONTENT_TYPE_TEXT) {%>
+				<%} else if(contentType == InfoList.ContentType.Text) {%>
 				<span class="ActivityListThumbTxt"><%=Util.toStringHtml(activityInfo.infoThumb)%></span>
 				<%}%>
 			<%}%>
@@ -46,15 +52,18 @@ cResults.getResults(checkLogin);
 			<span class="ActivityListTitle">
 				<span class="Date"><%=cResults.timestampFormat.format(activityInfo.infoDate)%></span>
 				<span class="Title">
-					<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
-					<%=_TEX.T("ActivityList.Message.Comment")%>
+					<%if(infoType == InfoList.InfoType.Emoji){%>
+						<%=_TEX.T("ActivityList.Message.Comment")%>
+					<%}else if(infoType == InfoList.InfoType.EmojiReply){%>
+						<%=_TEX.T("ActivityList.Message.CommentReply")%>
 					<%}else{%>
-					<%=Util.toStringHtml(activityInfo.infoDesc)%>
+						<%=Util.toStringHtml(activityInfo.infoDesc)%>
 					<%}%>
 				</span>
 			</span>
 			<span class="ActivityListDesc">
-				<%if(activityInfo.contentType==Common.CONTENT_TYPE_IMAGE){%>
+				<%if(infoType == InfoList.InfoType.Emoji
+				|| infoType == InfoList.InfoType.EmojiReply){%>
 					<%for (int i = 0; i < activityInfo.infoDesc.length(); i = activityInfo.infoDesc.offsetByCodePoints(i, 1)) {%>
 					<%=CEmoji.parse(String.valueOf(Character.toChars(activityInfo.infoDesc.codePointAt(i))))%>
 					<%}%>
@@ -63,11 +72,12 @@ cResults.getResults(checkLogin);
 		</span>
 		<span class="ActivityListBadge"><%=activityInfo.badgeNum%></span>
 		</a>
-		<%} else if(activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST || activityInfo.infoType == Common.NOTIFICATION_TYPE_REQUEST_STARTED) {
+		<%} else if(infoType == InfoList.InfoType.Request
+				|| infoType == InfoList.InfoType.RequestStarted) {
 				String[] infoDescLines = activityInfo.infoDesc.split("\n");
 		%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
-		   onclick="UpdateActivityList(this, <%=activityInfo.infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
+		   onclick="UpdateActivityList(this, <%=infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 				<span class="ActivityListRequestThumb">
 				</span>
 			<span class="ActivityListBody">
