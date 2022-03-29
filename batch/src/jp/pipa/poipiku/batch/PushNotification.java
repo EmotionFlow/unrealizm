@@ -35,7 +35,7 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class PushNotification extends Batch{
-	static final boolean _DEBUG = true;
+	static final boolean _DEBUG = false;
 	static final String SERVER_KEY		= "AAAAvJqJMJQ:APA91bGvkdXW4FX33NZJirqQ4wf_tCnZtQ5bAEE-yD75233I09rDrlpUa3SmDxsklB6_bKqGImnAqlut9E1IbWeDRclK1wJefT4YPzfjQjSCbUr0mpDv3ts3JWQ2pQjqwTeeEnq8uKzx";
 	static final String URL_GOOGLE_FCM	= "https://fcm.googleapis.com/fcm/send";
 
