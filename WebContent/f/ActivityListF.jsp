@@ -34,7 +34,7 @@ cResults.getResults(checkLogin);
 		%>
 
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
-		   onclick="UpdateActivityList(this, <%=infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
+		   onclick="UpdateActivityList(this, <%=infoType.getCode()%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 
 		<span class="ActivityListThumb">
 			<%if(infoType == InfoList.InfoType.Gift){%>
@@ -77,7 +77,7 @@ cResults.getResults(checkLogin);
 				String[] infoDescLines = activityInfo.infoDesc.split("\n");
 		%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
-		   onclick="UpdateActivityList(this, <%=infoType%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
+		   onclick="UpdateActivityList(this, <%=infoType.getCode()%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 				<span class="ActivityListRequestThumb">
 				</span>
 			<span class="ActivityListBody">
