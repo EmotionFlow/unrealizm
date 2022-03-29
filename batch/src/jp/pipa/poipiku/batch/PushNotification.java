@@ -61,16 +61,16 @@ public class PushNotification extends Batch{
 			cConn = dataSource.getConnection();
 
 			// 10分以上処理が行われていないものをリセット
-//			strSql = (_DEBUG)?
-//					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL":
-//					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL AND regist_date<current_timestamp - interval'10 minutes'";
-//			cState = cConn.prepareStatement(strSql);
-//			cState.executeUpdate();
-//			cState.close();cState=null;
+			strSql = (_DEBUG)?
+					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL":
+					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL AND regist_date<current_timestamp - interval'10 minutes'";
+			cState = cConn.prepareStatement(strSql);
+			cState.executeUpdate();
+			cState.close();cState=null;
 
 			// 100件予約
-//			strSql = "UPDATE notification_buffers_0000 SET agent_uuid=? WHERE notification_id IN (SELECT notification_id FROM notification_buffers_0000 WHERE agent_uuid IS NULL LIMIT 100)";
-			strSql = "UPDATE notification_buffers_0000 SET agent_uuid=? WHERE notification_id = -12345";
+			strSql = "UPDATE notification_buffers_0000 SET agent_uuid=? WHERE notification_id IN (SELECT notification_id FROM notification_buffers_0000 WHERE agent_uuid IS NULL LIMIT 100)";
+//			strSql = "UPDATE notification_buffers_0000 SET agent_uuid=? WHERE notification_id = -12345";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, AGENT_UUID);
 			cState.executeUpdate();
