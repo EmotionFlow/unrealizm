@@ -10,7 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Duration;
@@ -36,11 +35,11 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public class PushNotification extends Batch{
-	static final boolean _DEBUG = false;
+	static final boolean _DEBUG = true;
 	static final String SERVER_KEY		= "AAAAvJqJMJQ:APA91bGvkdXW4FX33NZJirqQ4wf_tCnZtQ5bAEE-yD75233I09rDrlpUa3SmDxsklB6_bKqGImnAqlut9E1IbWeDRclK1wJefT4YPzfjQjSCbUr0mpDv3ts3JWQ2pQjqwTeeEnq8uKzx";
 	static final String URL_GOOGLE_FCM	= "https://fcm.googleapis.com/fcm/send";
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		//Logger.getLogger(PushNotification.class).setLevel(Level.OFF);
 		System.setProperty("log4j.rootLogger","OFF");
 		//System.setProperty("org.apache.log4j.Level","OFF");
@@ -62,15 +61,16 @@ public class PushNotification extends Batch{
 			cConn = dataSource.getConnection();
 
 			// 10分以上処理が行われていないものをリセット
-			strSql = (_DEBUG)?
-					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL":
-					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL AND regist_date<current_timestamp - interval'10 minutes'";
-			cState = cConn.prepareStatement(strSql);
-			cState.executeUpdate();
-			cState.close();cState=null;
+//			strSql = (_DEBUG)?
+//					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL":
+//					"UPDATE notification_buffers_0000 SET agent_uuid=NULL WHERE agent_uuid IS NOT NULL AND regist_date<current_timestamp - interval'10 minutes'";
+//			cState = cConn.prepareStatement(strSql);
+//			cState.executeUpdate();
+//			cState.close();cState=null;
 
 			// 100件予約
-			strSql = "UPDATE notification_buffers_0000 SET agent_uuid=? WHERE notification_id IN (SELECT notification_id FROM notification_buffers_0000 WHERE agent_uuid IS NULL LIMIT 100)";
+//			strSql = "UPDATE notification_buffers_0000 SET agent_uuid=? WHERE notification_id IN (SELECT notification_id FROM notification_buffers_0000 WHERE agent_uuid IS NULL LIMIT 100)";
+			strSql = "UPDATE notification_buffers_0000 SET agent_uuid=? WHERE notification_id = -12345";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, AGENT_UUID);
 			cState.executeUpdate();
@@ -139,7 +139,7 @@ public class PushNotification extends Batch{
 
 	static class Notification {
 		static final String PUSH_HOST = (_DEBUG)?ApnsClientBuilder.DEVELOPMENT_APNS_HOST:ApnsClientBuilder.PRODUCTION_APNS_HOST;
-		static final String KEY_FILE = (_DEBUG)?"/Users/kawai/git/poipiku_script/lib/AuthKey_LX9QA98LL7.p8":"/root/poipiku_script/lib/AuthKey_LX9QA98LL7.p8";
+		static final String KEY_FILE = (_DEBUG)?"/Users/nino/poipiku_script/lib/AuthKey_LX9QA98LL7.p8":"/root/poipiku_script/lib/AuthKey_LX9QA98LL7.p8";
 		static final String TEAM_ID = "EGZY7K38QW";
 		static final String KEY_ID = "LX9QA98LL7";
 		static final String APP_ID = "jp.pipa.poipiku";
@@ -227,7 +227,7 @@ public class PushNotification extends Batch{
 
 
 		boolean sendNotificationAndroid(int nBadgeNum, String strTitle, String strSubTitle, String strBody) {
-			if(tokenString.isEmpty()) return false;
+			if(_DEBUG || tokenString.isEmpty()) return false;
 
 			OutputStream os = null;
 			InputStream inputStream = null;
