@@ -27,7 +27,7 @@ public class WriteBackContents extends Batch {
 
 	// 一度のバッチ実行でselectするファイルの最大数
 	private static int getSelectLimit() {
-		int selectLimit = 35;
+		int selectLimit = 28;
 		Calendar calendar = Calendar.getInstance();
 		final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 		LocalTime time = LocalTime.now();
