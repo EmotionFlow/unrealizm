@@ -79,8 +79,12 @@ if(cResults.m_bUpdate) {
 					fileReader.onloadend = function() {
 						var strEncodeImg = fileReader.result;
 						var mime_pos = strEncodeImg.substring(0, 100).indexOf(",");
-						if(mime_pos==-1) return;
+						if(mime_pos===-1) return;
 						strEncodeImg = strEncodeImg.substring(mime_pos+1);
+						if (strEncodeImg.length > limitMiByte * 1e6 * 1.3) {
+							DispMsg("<%=_TEX.T("EditSettingV.Image.TooLarge")%>");
+							return;
+						}
 						$.ajaxSingle({
 							"type": "post",
 							"data": {"UID":<%=checkLogin.m_nUserId%>, "DATA":strEncodeImg},
@@ -118,15 +122,15 @@ if(cResults.m_bUpdate) {
 			}
 
 			function UpdateProfileFile(objTarg){
-				updateFile("/f/UpdateProfileFileF.jsp", objTarg);
+				updateFile("/f/UpdateProfileFileF.jsp", objTarg, 1.0);
 			}
 
 			function UpdateProfileHeaderFile(objTarg){
-				updateFile("/f/UpdateProfileHeaderFileF.jsp", objTarg);
+				updateFile("/f/UpdateProfileHeaderFileF.jsp", objTarg, 2.0);
 			}
 
 			function UpdateProfileBgFile(objTarg){
-				updateFile("/f/UpdateProfileBgFileF.jsp", objTarg);
+				updateFile("/f/UpdateProfileBgFileF.jsp", objTarg, 2.0);
 			}
 
 			function ResetProfileFile(nMode){

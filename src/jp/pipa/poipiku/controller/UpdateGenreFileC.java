@@ -61,7 +61,10 @@ public class UpdateGenreFileC {
 	}
 
 	public int getResults(CheckLogin checkLogin, ServletContext context) {
-		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!= userId) return ERR_NOT_LOGIN;
+		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!= userId) {
+			Log.d("%d, %d".formatted(checkLogin.m_nUserId, userId));
+			return ERR_NOT_LOGIN;
+		}
 		//if(checkLogin.m_nPassportId<=Common.PASSPORT_OFF) return ERR_NOT_PASSPORT;
 		if(type<0 || type>=COLUMN.length) return ERR_UNKNOWN;
 

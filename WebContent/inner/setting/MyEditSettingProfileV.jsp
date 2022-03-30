@@ -30,7 +30,7 @@
 	}
 
 	function UpdateProfileFile(objTarg){
-		updateFile("/f/UpdateProfileFileF.jsp", objTarg);
+		updateFile("/f/UpdateProfileFileF.jsp", objTarg, 1.0);
 	}
 
 	function UpdateProfileTxt() {

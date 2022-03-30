@@ -44,14 +44,18 @@ String disable = (editable)?"":"Disabled";
 		</script>
 
 		<script>
-			function updateFile(url, objTarg){
+			function updateFile(url, objTarg, limitMiByte){
 				if (objTarg.files.length>0 && objTarg.files[0].type.match('image.*')) {
 					DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 					var fileReader = new FileReader();
 					fileReader.onloadend = function() {
 						var strEncodeImg = fileReader.result;
 						var mime_pos = strEncodeImg.substring(0, 100).indexOf(",");
-						if(mime_pos==-1) return;
+						if (mime_pos === -1) return;
+						if (strEncodeImg.length > limitMiByte * 1e6 * 1.3) {
+							DispMsg("<%=_TEX.T("EditSettingV.Image.TooLarge")%>");
+							return;
+						}
 						strEncodeImg = strEncodeImg.substring(mime_pos+1);
 						$.ajaxSingle({
 							"type": "post",
@@ -65,10 +69,10 @@ String disable = (editable)?"":"Disabled";
 									case 0:
 										// complete
 										sendObjectMessage("reloadParent");
-										if(<%=genreId%>==-1) {
-											location.href="/EditGenreInfoPcV.jsp?ID="+<%=checkLogin.m_nUserId%>+"&GD="+res.genre_id;
+										if(<%=genreId%> === -1) {
+											location.href = "/EditGenreInfoPcV.jsp?ID=" + <%=checkLogin.m_nUserId%> + "&GD=" + res.genre_id;
 										} else {
-											location.reload(true);
+											location.reload();
 										}
 										break;
 									default:
@@ -98,10 +102,10 @@ String disable = (editable)?"":"Disabled";
 							case 0:
 								// complete
 								sendObjectMessage("reloadParent");
-								if(<%=genreId%>==-1) {
-									location.href="/EditGenreInfoPcV.jsp?ID="+<%=checkLogin.m_nUserId%>+"&GD="+res.genre_id;
+								if (<%=genreId%> === -1) {
+									location.href="/EditGenreInfoPcV.jsp?ID=" + <%=checkLogin.m_nUserId%> + "&GD=" + res.genre_id;
 								} else {
-									location.reload(true);
+									location.reload();
 								}
 								break;
 							default:
@@ -116,11 +120,11 @@ String disable = (editable)?"":"Disabled";
 			}
 
 			function UpdateGenreFile(objTarg){
-				updateFile("/api/UpdateGenreFileF.jsp?TY=0", objTarg);
+				updateFile("/api/UpdateGenreFileF.jsp?TY=0", objTarg, 1.0);
 			}
 
 			function UpdateGenreFileBg(objTarg){
-				updateFile("/api/UpdateGenreFileF.jsp?TY=1", objTarg);
+				updateFile("/api/UpdateGenreFileF.jsp?TY=1", objTarg, 2.0);
 			}
 
 			function UpdateGenreName(id){
@@ -141,7 +145,6 @@ String disable = (editable)?"":"Disabled";
 			}
 
 			$(function() {
-				DispCharNum('EditName', 'EditNameNum', 16);
 				DispCharNum('EditDesc', 'EditDescNum', 64);
 				DispCharNum('EditDetail', 'EditDetailNum', 1000);
 			})

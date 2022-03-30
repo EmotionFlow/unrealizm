@@ -2,11 +2,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	function UpdateProfileHeaderFile(objTarg){
-		updateFile("/f/UpdateProfileHeaderFileF.jsp", objTarg);
+		updateFile("/f/UpdateProfileHeaderFileF.jsp", objTarg, 2.0);
 	}
 
 	function UpdateProfileBgFile(objTarg){
-		updateFile("/f/UpdateProfileBgFileF.jsp", objTarg);
+		updateFile("/f/UpdateProfileBgFileF.jsp", objTarg, 2.0);
 	}
 
 	function UpdateNgAdMode() {

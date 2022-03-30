@@ -90,14 +90,18 @@ String[][] menuOrder = {
 				cache: false,
 			});
 
-			function updateFile(url, objTarg){
+			function updateFile(url, objTarg, limitMiByte){
 				if (objTarg.files.length>0 && objTarg.files[0].type.match('image.*')) {
 					DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
 					let fileReader = new FileReader();
 					fileReader.onloadend = function() {
 						let strEncodeImg = fileReader.result;
 						const mime_pos = strEncodeImg.substring(0, 100).indexOf(",");
-						if(mime_pos===-1) return;
+						if (mime_pos === -1) return;
+						if (strEncodeImg.length > limitMiByte * 1e6 * 1.3) {
+							DispMsg("<%=_TEX.T("EditSettingV.Image.TooLarge")%>");
+							return;
+						}
 						strEncodeImg = strEncodeImg.substring(mime_pos+1);
 						$.ajaxSingle({
 							"type": "post",
