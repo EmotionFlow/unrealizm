@@ -1043,6 +1043,7 @@ function createDetailScrollHandler(detailOverlay) {
 
 function detailIllustItemImageOnload(el) {
 	$("#DetailOverlayLoading").hide();
+	document.getElementById('DetailOverlay').scrollTop = 1;
 }
 
 function illustDetailOnPopstate() {
