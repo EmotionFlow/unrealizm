@@ -49,7 +49,7 @@ class HasNotCheckedNotifier extends Notifier {
 			statement.setInt(1, infoType.getCode());
 			statement.setInt(2, MAX_SEND_USERS);
 
-			Log.d(statement.toString());
+//			Log.d(statement.toString());
 			resultSet = statement.executeQuery();
 			List<User> deliveryTargets = new ArrayList<>();
 			while (resultSet.next()) {
