@@ -64,7 +64,7 @@ public final class RecommendedUsersNotifier extends Notifier {
 
 			for (User targetUser : deliveryTargets) {
 				// Twitterでフォローしているが、こそフォロしていないユーザー
-				// Twitterでフォローしているが、こそフォロしていないユーザーのうち、リクエスト募集しているユーザー
+				// Twitterでフォローしているが、こそフォロしていないユーザーのうち、エアスケブ募集しているユーザー
 				sql = "WITH" +
 						" poipiku_followers AS (" +
 						"    SELECT follow_user_id" +
