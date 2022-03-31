@@ -30,12 +30,11 @@ public class WriteBackContents extends Batch {
 		int selectLimit = 28;
 		Calendar calendar = Calendar.getInstance();
 		final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-		LocalTime time = LocalTime.now();
-		final int hour = time.getHour();
+		final int hour = LocalTime.now().getHour();
 		if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
 			selectLimit = 15;
 		} else if (4 <= hour && hour <= 8){
-			selectLimit = 45;
+			selectLimit = 40;
 		}
 		return selectLimit;
 	}
