@@ -76,9 +76,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%if(nEditorId==Common.EDITOR_PASTE){%>
 		<!-- 画像並び替え用 -->
 		<script src="/js/jquery-ui-1.12.1.min.js"></script>
+		<script src="/js/jquery.ui.touch-punch.min.js"></script>
 		<script type="text/javascript">
 		$(function(){
-			$(".qq-upload-list-selector.qq-upload-list")({
+			$(".qq-upload-list-selector.qq-upload-list").sortable({
 				placeholder: 'placeholder',
 				opacity: 0.6,
 				update: function(event, ui) {
@@ -222,7 +223,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				<%if(noContentModification){%>
 				<div class="OptionItem">
 					<div class="OptionLabel">
-						リクエスト納品期限後、タイトル・タグ・公開範囲等は変更はできますが、アップロードした画像は変更できません。
+						エアスケブお渡し期限後、タイトル・タグ・公開範囲等は変更はできますが、アップロードした画像は変更できません。
 					</div>
 				</div>
 				<%}%>
@@ -280,7 +281,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				<%if(noContentModification){%>
 				<div class="OptionItem">
 					<div class="OptionLabel">
-						リクエスト納品期限後、タイトル・タグ・公開範囲等は変更はできますが、アップロードした小説本文は変更できません。
+						エアスケブお渡し期限後、タイトル・タグ・公開範囲等は変更はできますが、本文は変更できません。
 					</div>
 				</div>
 				<%}%>
