@@ -3,6 +3,12 @@
 <%
 if (Util.isBot(request)) return;
 
+final String referer = Util.toString(request.getHeader("Referer"));
+if (!referer.contains("poipiku.com")) {
+	Log.d("ShowIllustDetailFへの不正アクセス(referer不一致):" + referer);
+	return;
+}
+
 CheckLogin checkLogin = new CheckLogin(request, response);
 int nRtn = 0;
 StringBuilder strHtml = new StringBuilder();
