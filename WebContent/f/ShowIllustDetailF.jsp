@@ -34,11 +34,13 @@
 				if (cResults.isOwner) {
 					downloadAreaDiv += "<br><span>";
 					if (cResults.m_nDownload == CUser.DOWNLOAD_OFF) {
-						downloadAreaDiv += "" + _TEX.T("IllustView.DownloadInfo.Disallow") + "";
+						downloadAreaDiv += _TEX.T("IllustView.DownloadInfo.Disallow");
 					} else {
-						downloadAreaDiv += "" + _TEX.T("IllustView.DownloadInfo.Allow") + "";
+						downloadAreaDiv += _TEX.T("IllustView.DownloadInfo.Allow");
 					}
 					downloadAreaDiv += "</span>";
+				} else {
+					downloadAreaDiv += "<br><span>" + _TEX.T("IllustView.DownloadInfo.Allow") + "</span>";
 				}
 				downloadAreaDiv += "</div>";
 				html.append(downloadAreaDiv);
