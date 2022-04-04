@@ -3,6 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+boolean isApp = false;
 
 if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);

@@ -5,7 +5,7 @@
 	<h3 class="ReplyEmojiInfoDlgTitle"><i class="fas fa-reply"></i><%=_TEX.T("ReplyEmoji")%></h3>
 	<div class="ReplyEmojiInfoDlgBody">
 	<p><%=_TEX.T("ReplyEmoji.Dlg.Info01")%></p>
-	<p><%=_TEX.T("ReplyEmoji.Dlg.Info02")%></p>
+	<p><%=_TEX.T("ReplyEmoji.Dlg.Info02." + (isApp ? "App" : "Browser"))%></p>
 	<p><%=_TEX.T("ReplyEmoji.Dlg.Info03")%></p>
 	</div>
 	`;

@@ -3,6 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+boolean isApp = false;
 
 if(!bSmartPhone) {
 	getServletContext().getRequestDispatcher("/MyHomeGridPcV.jsp").forward(request,response);

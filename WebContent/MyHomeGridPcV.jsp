@@ -3,6 +3,7 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
+boolean isApp = false;
 
 MyHomePcC cResults = new MyHomePcC();
 cResults.getParam(request);
