@@ -51,12 +51,14 @@ public final class IllustDetailC {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			// author profile
-			strSql = "SELECT ng_download FROM users_0000 WHERE user_id=?";
+			strSql = "SELECT passport_id, ng_download FROM users_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, ownerUserId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
-				m_nDownload = resultSet.getInt("ng_download");
+				if (resultSet.getInt("passport_id") == 1) {
+					m_nDownload = resultSet.getInt("ng_download");
+				}
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -153,12 +155,13 @@ public final class IllustDetailC {
 				statement.close();statement=null;
 			}
 
-
-			isDownloadable = m_cContent.m_nEditorId!=Common.EDITOR_TEXT && (isOwner || m_nDownload==CUser.DOWNLOAD_ON);
-
-			// リクエストしたユーザは必ずダウンロードできる
-			if(poipikuRequest.isClient(checkLogin.m_nUserId)){
+			isDownloadable = false;
+			if(isOwner || poipikuRequest.isClient(checkLogin.m_nUserId)){
+				// 自分のコンテンツ or エアスケブを依頼したユーザは必ずダウンロードできる
 				isDownloadable = true;
+			} else {
+				// コンテンツ保有者がポイパス特典でダウンロードOKとしているケース
+				isDownloadable = (m_cContent.m_nEditorId != Common.EDITOR_TEXT) && (m_nDownload == CUser.DOWNLOAD_ON);
 			}
 
 		} catch(Exception e) {
