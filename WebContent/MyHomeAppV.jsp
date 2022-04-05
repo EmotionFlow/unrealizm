@@ -124,14 +124,14 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 						<%if(nCnt==7 && cResults.recommendedRequestCreatorList !=null && !cResults.recommendedRequestCreatorList.isEmpty()) {%>
 						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
 						<%for (CUser recommendedUser: cResults.recommendedRequestCreatorList){%>
-						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
+						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 						<%}%>
 						<%}%>
 
 						<%if(nCnt==6 && cResults.recommendedUserList !=null && !cResults.recommendedUserList.isEmpty()) {%>
 						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
 						<%for (CUser recommendedUser: cResults.recommendedUserList){%>
-						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
+						<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 						<%}%>
 						<%}%>
 
@@ -143,14 +143,14 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<%if(nCnt<=7 && cResults.recommendedRequestCreatorList !=null && !cResults.recommendedRequestCreatorList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
 				<%for (CUser recommendedUser: cResults.recommendedRequestCreatorList){%>
-				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
+				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 				<%}%>
 				<%}%>
 
 				<%if(nCnt<=6 && cResults.recommendedUserList !=null && !cResults.recommendedUserList.isEmpty()) {%>
 				<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.Users")%></h2>
 				<%for (CUser recommendedUser: cResults.recommendedUserList){%>
-				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_WVIEW)%>
+				<%=CCnv.toHtmlUserMini(recommendedUser, 1, _TEX, CCnv.SP_MODE_APP)%>
 				<%}%>
 				<%}%>
 
