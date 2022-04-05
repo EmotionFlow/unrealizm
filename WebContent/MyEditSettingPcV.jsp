@@ -51,13 +51,13 @@ MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("TWITTER", _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", _TEX.T("EditSettingV.Email"));
+MENU.put("REQUEST", "<span class=\"RequestIcon\"></span>" + _TEX.T("Request"));
 MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo3_60.png\" />" + _TEX.T("EditSettingV.Passport"));
 MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", _TEX.T("EditSettingV.Usage"));
-MENU.put("REQUEST", "<span class=\"RequestIcon\"></span>" + _TEX.T("Request"));
-
+MENU.put("LANGUAGE","<i class=\"fas fa-globe\"></i> " + _TEX.T("EditSettingV.Language"));
 
 String[][] menuOrder = {
 		{
@@ -76,6 +76,7 @@ String[][] menuOrder = {
 		"CHEER",
 		"ACCOUNT",
 		"INFO",
+		"LANGUAGE",
 		}
 };
 %>
@@ -434,6 +435,16 @@ String[][] menuOrder = {
 					<%@include file="/inner/setting/MyEditSettingPassportV.jsp"%>
 				</div>
 			</div>
+
+			<%}%>
+				<%strPageId = "REQUEST";%>
+				<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
+				<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
+					<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+					<div class="SettingBody">
+						<%@include file="/inner/setting/MyEditSettingRequestV.jsp"%>
+					</div>
+				</div>
 			<%}%>
 
 			<%strPageId = "PAYMENT";%>
@@ -464,7 +475,7 @@ String[][] menuOrder = {
 					<%@include file="/inner/setting/MyEditSettingAccountV.jsp"%>
 				</div>
 			</div>
-				<%}%>
+			<%}%>
 
 			<%strPageId = "INFO";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
@@ -476,17 +487,18 @@ String[][] menuOrder = {
 			</div>
 			<%}%>
 
-			<%strPageId = "REQUEST";%>
+			<%strPageId = "LANGUAGE";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
 				<div class="SettingBody">
-					<%@include file="/inner/setting/MyEditSettingRequestV.jsp"%>
+					<%@include file="/inner/setting/MyEditSettingLanguageV.jsp"%>
 				</div>
 			</div>
 			<%}%>
 
-			<%if(!bSmartPhone){%>
+
+				<%if(!bSmartPhone){%>
 			</div>
 			<%}%>
 		</article><!--Wrapper-->
