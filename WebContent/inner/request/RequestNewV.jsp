@@ -198,10 +198,10 @@ if (!results.getResults(checkLogin)) {
 				"holderName": null,
 			};
 
+			const paymentMethod = "CREDITCARD";
 			const isPaidRequest = $("#OptionPaidRequest").prop("checked");
 			const amount = isPaidRequest ? parseInt($("#EditAmount").val(), 10) : 0;
 			const commission = isPaidRequest ? _calcCommission(amount, paymentMethod) : 0;
-			const paymentMethod = "CREDITCARD";
 			const requestInfo = {
 				"CLIENT": <%=checkLogin.m_nUserId%>,
 				"CREATOR": <%=results.creatorUserId%>,
