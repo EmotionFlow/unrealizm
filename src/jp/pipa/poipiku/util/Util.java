@@ -646,12 +646,12 @@ public final class Util {
 		if(oDelFile.exists()) oDelFile.delete();
 	}
 
-	public static void setCookie(HttpServletResponse response, String name, String value, int expiry) {
+	public static void setCookie(HttpServletResponse response, String name, String value, int expire) {
 		try {
-			Cookie cLK = new Cookie(name , value);
-			cLK.setMaxAge(expiry);
-			cLK.setPath("/");
-			response.addCookie(cLK);
+			Cookie cookie = new Cookie(name , value);
+			cookie.setMaxAge(expire);
+			cookie.setPath("/");
+			response.addCookie(cookie);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -660,11 +660,11 @@ public final class Util {
 	public static String getCookie(HttpServletRequest request, String name) {
 		String value = null;
 		try {
-			Cookie cookies[] = request.getCookies();
+			Cookie[] cookies = request.getCookies();
 			if(cookies == null) return null;
 			for(Cookie cookie : cookies) {
 				if(cookie.getName().equals(name)) {
-					value = Common.EscapeInjection(URLDecoder.decode(cookie.getValue(), "UTF-8"));
+					value = Common.EscapeInjection(URLDecoder.decode(cookie.getValue(), StandardCharsets.UTF_8));
 					break;
 				}
 			}

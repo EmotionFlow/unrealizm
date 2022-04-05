@@ -96,6 +96,11 @@ if (selectedUserId == NEW_USER || selectedUserId > 0) {
 			}
 			Log.d(String.format("USERAUTH RetistTwitterUser BROWSER1 : user_id:%d, twitter_result:%d, url:%s", selectedUserId, loginResult, nextUrl));
 			status = loginResult > 0 ? Status.LoginSucceed : Status.Error;
+
+//			if (status == Status.LoginSucceed) {
+//				Log.d("set cookie: %s".formatted(SupportedLocales.findLocale(r.user.m_nLangId).toString()));
+//				Util.setCookie(response, Common.LANG_ID, SupportedLocales.findLocale(r.user.m_nLangId).toString(), Integer.MAX_VALUE);
+//			}
 		} else {
 			status = Status.Error;
 		}
@@ -128,7 +133,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 				<%
 				CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(selectedUserId);
 				%>
-				sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.LANG_ID_POST%>=<%=(user.langId==0)?"en":"ja"%>");
+				sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.LANG_ID_POST%>=<%=SupportedLocales.findLocale(user.langId).toString()%>");
 			});
 		</script>
 

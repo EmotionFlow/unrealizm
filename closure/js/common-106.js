@@ -107,7 +107,7 @@ function ChLang(l,isLogin){
 	if(isLogin){
 		$.ajaxSingle({
 			"type": "post",
-			"data": { "LD":l },
+			"data": { "LANGID":l },
 			"url": "/f/UpdateLanguageF.jsp",
 			"success": function(data) {
 				location.reload();

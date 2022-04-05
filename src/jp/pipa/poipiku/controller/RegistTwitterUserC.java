@@ -409,7 +409,7 @@ public final class RegistTwitterUserC {
 
 			// 再登録も可能な認証
 			//Log.d("USERAUTH twitter userid : ", user_id);
-			strSql = "SELECT o.*, user_id, nickname, file_name, passport_id, hash_password FROM tbloauth o INNER JOIN users_0000 u ON flduserid=user_id WHERE twitter_user_id=? ORDER BY fldUserId";
+			strSql = "SELECT o.*, user_id, nickname, file_name, passport_id, hash_password, lang_id FROM tbloauth o INNER JOIN users_0000 u ON flduserid=user_id WHERE twitter_user_id=? ORDER BY fldUserId";
 			statement = connection.prepareStatement(strSql);
 			statement.setString(1, twitterUserId);
 			resultSet = statement.executeQuery();
@@ -421,6 +421,7 @@ public final class RegistTwitterUserC {
 				o.tokenSecret = tokenSecret;
 
 				CUser u = new CUser(resultSet);
+				u.m_nLangId = resultSet.getInt("lang_id");
 				Result r = new Result();
 				r.user = u;
 				r.oauth = o;
