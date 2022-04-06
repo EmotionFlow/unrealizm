@@ -95,7 +95,7 @@ public class UpdateGenreFileC {
 			connection = dataSource.getConnection();
 
 			// get|generate genre id
-			Genre genre = Util.getGenre(genreId);
+			Genre genre = Genre.select(genreId);
 			if(genre.genreId<1) {
 				strSql = "INSERT INTO genres(create_user_id, genre_name) VALUES(?, ?) RETURNING genre_id ";
 				statement = connection.prepareStatement(strSql);
@@ -108,7 +108,7 @@ public class UpdateGenreFileC {
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 				if(genreId<1) return ERR_UNKNOWN;
-				genre = Util.getGenre(genreId);
+				genre = Genre.select(genreId);
 			}
 
 			// save file

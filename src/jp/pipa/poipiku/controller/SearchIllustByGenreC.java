@@ -114,7 +114,7 @@ public class SearchIllustByGenreC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
-				genre = Util.getGenre(genreId);
+				genre = Genre.select(genreId);
 			}
 
 			strSql = "SELECT * " + strSqlFromWhere

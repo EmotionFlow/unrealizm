@@ -21,7 +21,7 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 */
 
 
-Genre genre = Util.getGenre(genreId);
+Genre genre = Genre.select(genreId);
 
 String strTitle = String.format(_TEX.T("EditGenreInfo.Title"), genre.genreName) + " | " + _TEX.T("THeader.Title");
 String strUrl = "https://poipiku.com/EditGenreInfoPcV.jsp?GD="+genre.genreId;

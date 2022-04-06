@@ -138,7 +138,7 @@ public final class SearchIllustByTagC {
 			}
 
 			if (page <= 0 || startId < 0) {
-				genre = Util.getGenre(genreId);
+				genre = Genre.select(genreId);
 			}
 
 			// contents

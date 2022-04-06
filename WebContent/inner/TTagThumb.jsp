@@ -11,7 +11,7 @@
 		} else {
 			String genreImage = "";
 			if (genreId > 0) {
-				genreImage = Util.getGenre(genreId).genreImage;
+				genreImage = Genre.select(genreId).genreImage;
 			}
 			if (genreImage.isEmpty()) {
 				backgroundImageUrl = Common.GetUrl("/img/default_genre.png");

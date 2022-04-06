@@ -20,8 +20,13 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 }
 */
 
-
-Genre genre = Util.getGenre(genreId);
+EditGenreInfoC results = new EditGenreInfoC();
+results.getParam(request);
+if (!results.getResults(checkLogin)) {
+	return;
+}
+final Genre genre = results.genre;
+final List<GenreTranslation> translationList = results.translationList;
 
 String strTitle = String.format(_TEX.T("EditGenreInfo.Title"), genre.genreName) + " | " + _TEX.T("THeader.Title");
 String strUrl = "https://poipiku.com/EditGenreInfoPcV.jsp?GD="+genre.genreId;
@@ -40,10 +45,35 @@ String disable = (editable)?"":"Disabled";
 		<script type="text/javascript">
 			$(function(){
 				$('#MenuGenre').addClass('Selected');
+				switchTransTxt('Name', <%=checkLogin.m_nLangId%>);
 			});
 		</script>
 
 		<script>
+			let transList = {
+				'Name' : {
+					<% for (GenreTranslation t : translationList) { %>
+					<%="%d: '%s'".formatted(t.langId, t.transName)%>
+					<%}%>
+				},
+				'Desc' : {
+					<% for (GenreTranslation t : translationList) { %>
+					<%="%d: '%s'".formatted(t.langId, t.transDesc)%>
+					<%}%>
+				},
+				'Detail' : {
+					<% for (GenreTranslation t : translationList) { %>
+					<%="%d: '%s'".formatted(t.langId, t.transDetail)%>
+					<%}%>
+				}
+			};
+
+			function switchTransTxt(name, elThis) {
+				const langId = $(elThis).val();
+				let txt = transList[name][langId];
+				$("#EditTrans"+name).val(txt ?  transList[name][langId] : "");
+			}
+
 			function updateFile(url, objTarg, limitMiByte){
 				if (objTarg.files.length>0 && objTarg.files[0].type.match('image.*')) {
 					DispMsgStatic("<%=_TEX.T("EditIllustVCommon.Uploading")%>");
@@ -89,12 +119,12 @@ String disable = (editable)?"":"Disabled";
 				return false;
 			}
 
-			function UpdateText(url, id) {
-				var data = $.trim($("#"+id).val());
+			function UpdateGenreInfo(typeId, langId, txt) {
+				const data = $.trim(txt);
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "UID":<%=checkLogin.m_nUserId%>, "GID":<%=genre.genreId%>, "DATA":data},
-					"url": url,
+					"data": { "TY":typeId, "LANGID": langId, "UID":<%=checkLogin.m_nUserId%>, "GID":<%=genre.genreId%>, "DATA":data},
+					"url": '/api/UpdateGenreInfoF.jsp',
 					"dataType": "json",
 					"success": function(res) {
 						DispMsg(res.message);
@@ -127,18 +157,6 @@ String disable = (editable)?"":"Disabled";
 				updateFile("/api/UpdateGenreFileF.jsp?TY=1", objTarg, 2.0);
 			}
 
-			function UpdateGenreName(id){
-				UpdateText("/api/UpdateGenreInfoF.jsp?TY=0", id);
-			}
-
-			function UpdateGenreDesc(id){
-				UpdateText("/api/UpdateGenreInfoF.jsp?TY=1", id);
-			}
-
-			function UpdateGenreDetail(id){
-				UpdateText("/api/UpdateGenreInfoF.jsp?TY=2", id);
-			}
-
 			function DispCharNum(inId, outId, maxLength) {
 				var nCharNum = maxLength - $("#"+inId).val().length;
 				$("#"+outId).html(nCharNum);
@@ -161,6 +179,9 @@ String disable = (editable)?"":"Disabled";
 			.SettingListItem {color: #6d6965;}
 			.SettingListItem a {color: #6d6965;}
 			.SettingListItem.Disabled , .SettingList .SettingListItem.Disabled .SettingBody .SettingBodyTxt, .SettingList .SettingListItem.Disabled .SettingBody {background: #eee;}
+			.SelectTransLang {    margin-left: 10px;
+                height: 30px;
+                margin-bottom: 2px;}
 		</style>
 	</head>
 
@@ -174,14 +195,26 @@ String disable = (editable)?"":"Disabled";
 					<div class="SettingListTitle"><%=_TEX.T("EditGenreInfo.Name")%></div>
 					<div class="SettingBody">
 						<div class="SettingBodyTxt"><%=Util.toStringHtml(genre.genreName)%></div>
-						<!--
-						<input id="EditName" class="SettingBodyTxt" type="text" value="<%=Util.toStringHtml(genre.genreName)%>" onkeyup="DispCharNum('EditName', 'EditNameNum', 16)" maxlength="16" />
+
+						<div class="SettingListItem">
+						<div class="SettingListTitle">
+							<label for="EditTransNameLang">翻訳</label><select id="EditTransNameLang" class="SelectTransLang" onchange="switchTransTxt('Name', this)">
+								<%for(UserLocale userLocale: SupportedLocales.list) {%>
+								<option value="<%=userLocale.id%>" <%=userLocale.id==checkLogin.m_nLangId?"selected":""%>><%=userLocale.label%></option>
+								<%}%>
+							</select>
+						</div>
+
+						<input id="EditTransName" class="SettingBodyTxt" type="text" value="" onkeyup="DispCharNum('EditName', 'EditNameNum', 16)" maxlength="16" />
 						<div class="RegistMessage" ><%=_TEX.T("EditGenreInfo.Name.Info")%></div>
 						<div class="SettingBodyCmd">
 							<div id="EditNameNum" class="RegistMessage"></div>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateGenreName('EditName')"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
+							   onclick="UpdateGenreInfo(<%=UpdateGenreInfoC.Type.Name%>, $('#EditTransNameLang').val(), $('#EditTransName').val())">
+								<%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
-						-->
+
+						</div>
 					</div>
 				</div>
 

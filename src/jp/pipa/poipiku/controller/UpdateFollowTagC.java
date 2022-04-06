@@ -34,7 +34,7 @@ public final class UpdateFollowTagC {
 	public int m_nContentsNum = 0;
 	public int getResults(CheckLogin checkLogin) {
 		if(m_strTagTxt.isEmpty()) return ERR_UNKNOWN;
-		Genre genre = Util.getGenre(m_strTagTxt);
+		Genre genre = Genre.select(m_strTagTxt);
 		if(genre.genreId<0) return ERR_UNKNOWN;
 
 		int nRtn = ERR_UNKNOWN;
