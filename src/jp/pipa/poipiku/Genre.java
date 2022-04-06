@@ -6,7 +6,7 @@ import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-public class Genre {
+public class Genre extends Model{
 	public int genreId = -1;
 	public String genreImage = "/img/default_genre.png";
 	public String genreImageBg = "";
@@ -19,6 +19,26 @@ public class Genre {
 	public int contentNumWeek = -1;
 	public int contentNumDay = -1;
 	public int favoNum = -1;
+
+	public enum Type implements CodeEnum<Type> {
+		Undefined(-1),
+		Name(0),
+		Description(1),
+		Detail(2);
+		private final int code;
+		private Type(int code) {
+			this.code = code;
+		}
+
+		static public Type byCode(int _code) {
+			return CodeEnum.getEnum(Type.class, _code);
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+	}
 
 	public Genre() {}
 	public Genre(ResultSet resultSet) throws SQLException {
@@ -97,25 +117,32 @@ public class Genre {
 		return genre;
 	}
 
-	private void update(String column, String value) {
-		final String sql = "UPDATE genres SET %s=?, update_date=now() WHERE genre_id=?".formatted(column);
+	public void update(Type type, String value) {
+		final String columnName;
+		if (type == Type.Description) {
+			columnName = "genre_desc";
+		} else if (type == Type.Detail) {
+			columnName = "genre_detail";
+		} else {
+			return;
+		}
+
+		final String sql = "UPDATE genres SET %s=?, update_date=now() WHERE genre_id=?".formatted(columnName);
 		try (
-				Connection connection = DatabaseUtil.dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(sql)
-				){
+			Connection connection = DatabaseUtil.dataSource.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql)
+			){
 			statement.setString(1, value);
 			statement.setInt(2, genreId);
 			statement.executeUpdate();
+			if (type == Type.Description) {
+				genreDesc = value;
+			} else if (type == Type.Detail) {
+				genreDetail = value;
+			}
 		}catch (SQLException e) {
 			Log.d(sql);
 			e.printStackTrace();
 		}
 	}
-	public void updateDesc() {
-		update("genre_desc", genreDesc);
-	}
-	public void updateDetail() {
-		update("genre_detail", genreDetail);
-	}
-
 }

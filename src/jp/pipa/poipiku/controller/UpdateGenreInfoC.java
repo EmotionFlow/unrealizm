@@ -26,34 +26,14 @@ public class UpdateGenreInfoC {
 	private final int[] TEXT_MIN = {1, 0, 0};
 	private final int[] TEXT_MAX = {16, 64, 1000};
 	private final String[] COLUMN = {"genre_name", "genre_desc", "genre_detail"};
-	private final String[] TRANS_COLUMN = {"trans_name", "trans_desc", "trans_detail"};
 
 	public int userId = -1;
 	public int genreId = -1;
 	public int langId= -1; // -1：デフォルト、0以上はSupportedLocalesで定義している言語ID。
 	public String data = "";
 
-	public enum Type implements CodeEnum<Type> {
-		Undefined(-1),
-		Name(0),
-		Description(1),
-		Detail(2);
-		private final int code;
-		private Type(int code) {
-			this.code = code;
-		}
-
-		static public Type byCode(int _code) {
-			return CodeEnum.getEnum(Type.class, _code);
-		}
-
-		@Override
-		public int getCode() {
-			return code;
-		}
-	}
-	public Type type = Type.Undefined;
-
+	public Genre.Type type = Genre.Type.Undefined;
+	
 	public int getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
@@ -61,12 +41,12 @@ public class UpdateGenreInfoC {
 			genreId = Util.toInt(request.getParameter("GID"));
 			data = Common.TrimAll(Common.CrLfInjection(Common.EscapeInjection(request.getParameter("DATA"))));
 			final int ty = Util.toInt(request.getParameter("TY"));
-			type = Type.byCode(ty);
+			type = Genre.Type.byCode(ty);
 			langId = Util.toInt(request.getParameter("LANGID"));
 		} catch (Exception e) {
 			userId = -1;
 			genreId = -1;
-			type = Type.Undefined;
+			type = Genre.Type.Undefined;
 			return ERR_UNKNOWN;
 		}
 		return OK_PARAM;
@@ -76,13 +56,12 @@ public class UpdateGenreInfoC {
 		if(!checkLogin.m_bLogin || checkLogin.m_nUserId!= userId) return ERR_NOT_LOGIN;
 		//if(checkLogin.m_nPassportId<=Common.PASSPORT_OFF) return ERR_NOT_PASSPORT;
 		if (genreId < 0) return ERR_UNKNOWN;
-		if (type.code < 0 || type.code >= COLUMN.length) return ERR_UNKNOWN;
-		if (type.code == 0 && data.isEmpty()) return ERR_NEED_GENRE_NAME;
-		if (data.length() > TEXT_MAX[type.code]) return ERR_TEXT_SIZE_MAX;
-		if (data.length() < TEXT_MIN[type.code]) return ERR_TEXT_SIZE_MIN;
+		if (type.getCode() < 0 || type.getCode() >= COLUMN.length) return ERR_UNKNOWN;
+		if (type.getCode() == 0 && data.isEmpty()) return ERR_NEED_GENRE_NAME;
+		if (data.length() > TEXT_MAX[type.getCode()]) return ERR_TEXT_SIZE_MAX;
+		if (data.length() < TEXT_MIN[type.getCode()]) return ERR_TEXT_SIZE_MIN;
 
-		// タグ名の更新は認めない
-		if (type == Type.Name && langId < 0) {
+		if (type == Genre.Type.Name && langId < 0) {
 			Log.d("ジャンル名の更新は認めない");
 			return ERR_UNKNOWN;
 		}
@@ -97,15 +76,12 @@ public class UpdateGenreInfoC {
 				return ERR_UNKNOWN;
 			}
 
-			if (type == Type.Description) {
-				genre.genreDesc = data;
-				genre.updateDesc();
-			} else if (type == Type.Detail) {
-				genre.genreDetail = data;
-				genre.updateDetail();
-			}
+			genre.update(type, data);
+
 		} else {
-			//TODO update genre_translations
+			if (!GenreTranslation.upsert(genreId, langId, type, data, userId)) {
+				return ERR_UNKNOWN;
+			}
 		}
 
 		nRtn = OK_EDIT;

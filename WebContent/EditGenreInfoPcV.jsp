@@ -1,3 +1,4 @@
+<%@ page import="java.util.stream.Collectors" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -52,24 +53,26 @@ String disable = (editable)?"":"Disabled";
 		<script>
 			let transList = {
 				'Name' : {
-					<% for (GenreTranslation t : translationList) { %>
-					<%="%d: '%s'".formatted(t.langId, t.transName)%>
-					<%}%>
+					<%=translationList.stream()
+						.filter(e->e.type==Genre.Type.Name)
+						.map(e->String.format("%d: '%s'", e.langId, e.transTxt))
+						.collect(Collectors.joining(","))%>
 				},
 				'Desc' : {
-					<% for (GenreTranslation t : translationList) { %>
-					<%="%d: '%s'".formatted(t.langId, t.transDesc)%>
-					<%}%>
+					<%=translationList.stream()
+						.filter(e->e.type==Genre.Type.Description)
+						.map(e->String.format("%d: '%s'", e.langId, e.transTxt))
+						.collect(Collectors.joining(","))%>
 				},
 				'Detail' : {
-					<% for (GenreTranslation t : translationList) { %>
-					<%="%d: '%s'".formatted(t.langId, t.transDetail)%>
-					<%}%>
+					<%=translationList.stream()
+						.filter(e->e.type==Genre.Type.Detail)
+						.map(e->String.format("%d: '%s'", e.langId, e.transTxt))
+						.collect(Collectors.joining(","))%>
 				}
 			};
 
-			function switchTransTxt(name, elThis) {
-				const langId = $(elThis).val();
+			function switchTransTxt(name, langId) {
 				let txt = transList[name][langId];
 				$("#EditTrans"+name).val(txt ?  transList[name][langId] : "");
 			}
@@ -132,11 +135,9 @@ String disable = (editable)?"":"Disabled";
 							case 0:
 								// complete
 								sendObjectMessage("reloadParent");
-								if (<%=genreId%> === -1) {
-									location.href="/EditGenreInfoPcV.jsp?ID=" + <%=checkLogin.m_nUserId%> + "&GD=" + res.genre_id;
-								} else {
+								setTimeout(()=>{
 									location.reload();
-								}
+								}, 1000);
 								break;
 							default:
 								break;
@@ -198,19 +199,19 @@ String disable = (editable)?"":"Disabled";
 
 						<div class="SettingListItem">
 						<div class="SettingListTitle">
-							<label for="EditTransNameLang">翻訳</label><select id="EditTransNameLang" class="SelectTransLang" onchange="switchTransTxt('Name', this)">
+							<label for="EditTransNameLang">翻訳</label><select id="EditTransNameLang" class="SelectTransLang" onchange="switchTransTxt('Name', $(this).val())">
 								<%for(UserLocale userLocale: SupportedLocales.list) {%>
 								<option value="<%=userLocale.id%>" <%=userLocale.id==checkLogin.m_nLangId?"selected":""%>><%=userLocale.label%></option>
 								<%}%>
 							</select>
 						</div>
 
-						<input id="EditTransName" class="SettingBodyTxt" type="text" value="" onkeyup="DispCharNum('EditName', 'EditNameNum', 16)" maxlength="16" />
+						<input id="EditTransName" class="SettingBodyTxt" type="text" value="" maxlength="16" />
 						<div class="RegistMessage" ><%=_TEX.T("EditGenreInfo.Name.Info")%></div>
 						<div class="SettingBodyCmd">
 							<div id="EditNameNum" class="RegistMessage"></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
-							   onclick="UpdateGenreInfo(<%=UpdateGenreInfoC.Type.Name%>, $('#EditTransNameLang').val(), $('#EditTransName').val())">
+							   onclick="UpdateGenreInfo(<%=Genre.Type.Name.getCode()%>, $('#EditTransNameLang').val(), $('#EditTransName').val())">
 								<%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
 
