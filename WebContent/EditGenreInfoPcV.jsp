@@ -46,7 +46,9 @@ String disable = (editable)?"":"Disabled";
 		<script type="text/javascript">
 			$(function(){
 				$('#MenuGenre').addClass('Selected');
-				switchTransTxt('Name', <%=checkLogin.m_nLangId%>);
+				switchTransTxt('Name', '<%=checkLogin.m_nLangId%>');
+				switchTransTxt('Desc', 'default');
+				switchTransTxt('Detail', 'default');
 			});
 		</script>
 
@@ -55,26 +57,27 @@ String disable = (editable)?"":"Disabled";
 				'Name' : {
 					<%=translationList.stream()
 						.filter(e->e.type==Genre.Type.Name)
-						.map(e->String.format("%d: '%s'", e.langId, e.transTxt))
+						.map(e->String.format("'%d': '%s'", e.langId, e.transTxt))
 						.collect(Collectors.joining(","))%>
 				},
 				'Desc' : {
+					'default': '<%=genre.genreDesc%>',
 					<%=translationList.stream()
 						.filter(e->e.type==Genre.Type.Description)
-						.map(e->String.format("%d: '%s'", e.langId, e.transTxt))
+						.map(e->String.format("'%d': '%s'", e.langId, e.transTxt))
 						.collect(Collectors.joining(","))%>
 				},
 				'Detail' : {
 					<%=translationList.stream()
 						.filter(e->e.type==Genre.Type.Detail)
-						.map(e->String.format("%d: '%s'", e.langId, e.transTxt))
+						.map(e->String.format("'%d': '%s'", e.langId, e.transTxt))
 						.collect(Collectors.joining(","))%>
 				}
 			};
 
 			function switchTransTxt(name, langId) {
 				let txt = transList[name][langId];
-				$("#EditTrans"+name).val(txt ?  transList[name][langId] : "");
+				$("#Edit"+name).val(txt ?  txt : "");
 			}
 
 			function updateFile(url, objTarg, limitMiByte){
@@ -123,10 +126,11 @@ String disable = (editable)?"":"Disabled";
 			}
 
 			function UpdateGenreInfo(typeId, langId, txt) {
+				let postLangId = langId === 'default' ? -1 : parseInt(langId, 10);
 				const data = $.trim(txt);
 				$.ajaxSingle({
 					"type": "post",
-					"data": { "TY":typeId, "LANGID": langId, "UID":<%=checkLogin.m_nUserId%>, "GID":<%=genre.genreId%>, "DATA":data},
+					"data": { "TY":typeId, "LANGID": postLangId, "UID":<%=checkLogin.m_nUserId%>, "GID":<%=genre.genreId%>, "DATA":data},
 					"url": '/api/UpdateGenreInfoF.jsp',
 					"dataType": "json",
 					"success": function(res) {
@@ -180,9 +184,20 @@ String disable = (editable)?"":"Disabled";
 			.SettingListItem {color: #6d6965;}
 			.SettingListItem a {color: #6d6965;}
 			.SettingListItem.Disabled , .SettingList .SettingListItem.Disabled .SettingBody .SettingBodyTxt, .SettingList .SettingListItem.Disabled .SettingBody {background: #eee;}
-			.SelectTransLang {    margin-left: 10px;
+			.SelectTransLang > select {
                 height: 30px;
-                margin-bottom: 2px;}
+                margin-bottom: 3px;}
+            .SettingList .SettingListItem .SettingListTitle.WithLangSelector {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            .SettingList .SettingListItem .SettingListTitle.WithLangSelector i {
+				font-size: 13px;
+                position: relative;
+                top: -6px;
+                left: 3px;
+			}
 		</style>
 	</head>
 
@@ -191,30 +206,87 @@ String disable = (editable)?"":"Disabled";
 
 		<article class="Wrapper ViewPc">
 			<div class="SettingList">
-
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditGenreInfo.Name")%></div>
 					<div class="SettingBody">
 						<div class="SettingBodyTxt"><%=Util.toStringHtml(genre.genreName)%></div>
-
-						<div class="SettingListItem">
-						<div class="SettingListTitle">
-							<label for="EditTransNameLang">翻訳</label><select id="EditTransNameLang" class="SelectTransLang" onchange="switchTransTxt('Name', $(this).val())">
+						<div class="SettingListItem" style="padding-bottom: 0">
+						<div class="SettingListTitle WithLangSelector">
+							<span>翻訳</span>
+							<span class="SelectTransLang">
+							<i class="fas fa-globe"></i>
+							<select id="EditTransNameLang" onchange="switchTransTxt('Name', $(this).val())">
 								<%for(UserLocale userLocale: SupportedLocales.list) {%>
 								<option value="<%=userLocale.id%>" <%=userLocale.id==checkLogin.m_nLangId?"selected":""%>><%=userLocale.label%></option>
 								<%}%>
 							</select>
+							</span>
 						</div>
-
-						<input id="EditTransName" class="SettingBodyTxt" type="text" value="" maxlength="16" />
-						<div class="RegistMessage" ><%=_TEX.T("EditGenreInfo.Name.Info")%></div>
+						<input id="EditName" class="SettingBodyTxt" type="text" value="" maxlength="16" />
 						<div class="SettingBodyCmd">
 							<div id="EditNameNum" class="RegistMessage"></div>
 							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
-							   onclick="UpdateGenreInfo(<%=Genre.Type.Name.getCode()%>, $('#EditTransNameLang').val(), $('#EditTransName').val())">
+							   onclick="UpdateGenreInfo(<%=Genre.Type.Name.getCode()%>, $('#EditTransNameLang').val(), $('#EditName').val())">
 								<%=_TEX.T("EditSettingV.Button.Update")%></a>
 						</div>
+						</div>
+					</div>
+				</div>
 
+				<div class="SettingListItem <%=disable%>">
+					<div class="SettingListTitle WithLangSelector">
+						<span><%=_TEX.T("EditGenreInfo.Desc")%></span>
+						<span class="SelectTransLang">
+						<i class="fas fa-globe"></i>
+						<select id="EditTransDescLang" onchange="switchTransTxt('Desc', $(this).val())">
+							<option value="default" selected>default</option>
+							<%for(UserLocale userLocale: SupportedLocales.list) {%>
+							<option value="<%=userLocale.id%>"><%=userLocale.label%></option>
+							<%}%>
+						</select>
+						</span>
+					</div>
+					<div class="SettingBody">
+						<textarea id="EditDesc" class="SettingBodyTxt" rows="6" onkeyup="DispCharNum('EditDesc', 'EditDescNum', 64)" maxlength="64"></textarea>
+						<div class="SettingBodyCmd">
+							<%if(editable) {%>
+							<div id="EditDescNum" class="RegistMessage"></div>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
+							   onclick="UpdateGenreInfo(<%=Genre.Type.Description.getCode()%>, $('#EditTransDescLang').val(), $('#EditDesc').val())">
+								<%=_TEX.T("EditSettingV.Button.Update")%>
+							</a>
+							<%} else {%>
+							<span class="BtnBase SettingBodyCmdRegist <%=disable%>"><%=_TEX.T("EditSettingV.Button.Update")%></span>
+							<%}%>
+						</div>
+					</div>
+				</div>
+
+				<div class="SettingListItem <%=disable%>">
+					<div class="SettingListTitle WithLangSelector">
+						<span><%=_TEX.T("EditGenreInfo.Detail")%></span>
+						<span class="SelectTransLang">
+						<i class="fas fa-globe"></i>
+						<select id="EditTransDetailLang" onchange="switchTransTxt('Detail', $(this).val())">
+							<option value="default" selected>default</option>
+							<%for(UserLocale userLocale: SupportedLocales.list) {%>
+							<option value="<%=userLocale.id%>"><%=userLocale.label%></option>
+							<%}%>
+						</select>
+						</span>
+					</div>
+					<div class="SettingBody">
+
+						<textarea id="EditDetail" class="SettingBodyTxt" rows="12" onkeyup="DispCharNum('EditDetail', 'EditDetailNum', 1000)" maxlength="1000"><%=Util.toStringHtmlTextarea(genre.genreDetail)%></textarea>
+						<div class="SettingBodyCmd">
+							<div id="EditDetailNum" class="RegistMessage"></div>
+							<%if(editable) {%>
+							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
+							   onclick="UpdateGenreInfo(<%=Genre.Type.Detail.getCode()%>, $('#EditTransDetailLang').val(), $('#EditDetail').val())">
+								<%=_TEX.T("EditSettingV.Button.Update")%></a>
+							<%} else {%>
+							<span class="BtnBase SettingBodyCmdRegist <%=disable%>"><%=_TEX.T("EditSettingV.Button.Update")%></span>
+							<%}%>
 						</div>
 					</div>
 				</div>
@@ -263,35 +335,6 @@ String disable = (editable)?"":"Disabled";
 					</div>
 				</div>
 
-				<div class="SettingListItem <%=disable%>">
-					<div class="SettingListTitle"><%=_TEX.T("EditGenreInfo.Desc")%></div>
-					<div class="SettingBody">
-						<textarea id="EditDesc" class="SettingBodyTxt" rows="6" onkeyup="DispCharNum('EditDesc', 'EditDescNum', 64)" maxlength="64"><%=Util.toStringHtmlTextarea(genre.genreDesc)%></textarea>
-						<div class="SettingBodyCmd">
-							<%if(editable) {%>
-							<div id="EditDescNum" class="RegistMessage"></div>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateGenreDesc('EditDesc')"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-							<%} else {%>
-							<span class="BtnBase SettingBodyCmdRegist <%=disable%>"><%=_TEX.T("EditSettingV.Button.Update")%></span>
-							<%}%>
-						</div>
-					</div>
-				</div>
-
-				<div class="SettingListItem <%=disable%>">
-					<div class="SettingListTitle"><%=_TEX.T("EditGenreInfo.Detail")%></div>
-					<div class="SettingBody">
-						<textarea id="EditDetail" class="SettingBodyTxt" rows="12" onkeyup="DispCharNum('EditDetail', 'EditDetailNum', 1000)" maxlength="1000"><%=Util.toStringHtmlTextarea(genre.genreDetail)%></textarea>
-						<div class="SettingBodyCmd">
-							<div id="EditDetailNum" class="RegistMessage"></div>
-							<%if(editable) {%>
-							<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateGenreDetail('EditDetail')"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-							<%} else {%>
-							<span class="BtnBase SettingBodyCmdRegist <%=disable%>"><%=_TEX.T("EditSettingV.Button.Update")%></span>
-							<%}%>
-						</div>
-					</div>
-				</div>
 			</div>
 		</article>
 
