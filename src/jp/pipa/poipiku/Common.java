@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.util.CCnv;
+import jp.pipa.poipiku.util.Log;
 
 import static java.util.stream.Collectors.joining;
 
@@ -410,6 +411,8 @@ public final class Common {
 	}
 
 	private static String _AutoLink(String strSrc, int nUserId, int nMode, int nSpMode) {
+		Log.d(strSrc);
+
 		String ILLUST_LIST = "";
 		String MY_ILLUST_LIST = "";
 		if(nSpMode==CCnv.SP_MODE_APP){
@@ -422,13 +425,23 @@ public final class Common {
 			ILLUST_LIST = "/SearchIllustByTagPcV.jsp?KWD=";
 			MY_ILLUST_LIST = String.format("/IllustListPcV.jsp?ID=%d&KWD=", nUserId);
 		}
-		return strSrc
-				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+","<a class='AutoLink' href='$0' target='_blank'>$0</a>")
-				//.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("$1<a class=\"AutoLink\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$3')\">$2$3</a>", ILLUST_LIST))
-				.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("$1<a class=\"AutoLink\" href=\"%s$3\">$2$3</a>", ILLUST_LIST))
-				//.replaceAll("(##)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("<a class=\"AutoLinkMyTag\" href=\"javascript:void(0)\" onclick=\"moveTagSearch('%s', '$2')\">$0</a>", MY_ILLUST_LIST))
-				.replaceAll("(##)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)", String.format("<a class=\"AutoLinkMyTag\" href=\"%s$2\">$0</a>", MY_ILLUST_LIST))
-				.replaceAll("@([0-9a-zA-Z_]{3,15})","<a class='AutoLink' href='https://twitter.com/$1' target='_blank'>$0</a>");
+
+		final String result = strSrc
+				.replaceAll("(http://|https://){1}[\\w\\.\\-/:;&?,=#!~]+",
+						"<a class='AutoLink' href='$0' target='_blank'>$0</a>")
+				.replaceAll("([^#])(#)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)",
+						String.format(
+								"$1<a class=\"AutoLink\" href=\"%s$3\">$2$3</a>",
+								ILLUST_LIST)
+				)
+				.replaceAll("(##)([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)",
+						String.format(
+								"<a class=\"AutoLinkMyTag\" href=\"%s$2\">$0</a>",
+								MY_ILLUST_LIST)
+				)
+				.replaceAll("@([0-9a-zA-Z_]{3,15})",
+						"<a class='AutoLink' href='https://twitter.com/$1' target='_blank'>$0</a>");
+		return result;
 
 	}
 

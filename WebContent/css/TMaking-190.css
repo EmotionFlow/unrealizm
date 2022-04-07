@@ -7,7 +7,7 @@
 .IllustItem .IllustItemTag .AutoLinkMyTag {
 	position: relative;
 	display: inline-block;
-	height: 24px;
+	height: 35px;
 	line-height: 24px;
 	padding: 0 5px 0 10px;
 	background-color: #3498db;
@@ -15,20 +15,20 @@
 	color: #fff !important;
 	font-size: 13px;
 	text-decoration: none;
-	margin: 5px 0 0 10px;
+	margin: 5px 0 0 14px;
 }
 
 .IllustItem .IllustItemTag .AutoLink::before,
 .IllustItem .IllustItemTag .AutoLinkMyTag::before {
 	position: absolute;
 	top: 0;
-	left: -8px;
+	left: -10px;
 	content: '';
 	width: 0;
 	height: 0;
 	border-color: transparent #3498db transparent transparent;
 	border-style: solid;
-	border-width: 12px 8px 12px 0;
+	border-width: 17px 10px 17px 0;
 }
 
 .IllustItem .IllustItemTag .AutoLink::after,
@@ -2080,6 +2080,9 @@ Decoration
 	text-align: left;
 	margin: 0 0 5px 0;
 	font-size: 14px;
+	overflow-x: scroll;
+	white-space: nowrap;
+	height: 50px;
 }
 
 .IllustItem .IllustItemDesc .IllustItemDescCmd {

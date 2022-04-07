@@ -211,14 +211,24 @@ public final class CCnv {
 				)
 		);
 	}
+
 	private static void appendTag(StringBuilder strRtn, CContent cContent, int nMode, int nSpMode){
-		strRtn.append(
-			String.format("<h2 id=\"IllustItemTag_%d\" class=\"IllustItemTag\" %s>%s</h2>",
-				cContent.m_nContentId,
-				(cContent.m_strTagList.isEmpty())?"style=\"display: none;\"":"",
-				Common.AutoLink(Util.toStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode, nSpMode)
-			)
-		);
+		Log.d(cContent.m_strTagList);
+		if (cContent.m_strTagList.isEmpty()) {
+			strRtn.append("""
+                    <h2 id="IllustItemTag_%d" style="display: none;"></h2>
+					""".formatted(cContent.m_nContentId));
+		} else {
+			//TODO public tagの
+			strRtn.append(
+					"""
+					<h2 id="IllustItemTag_%d" class="IllustItemTag">%s</h2>
+					""".formatted(
+							cContent.m_nContentId,
+							Common.AutoLink(Util.toStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode, nSpMode)
+					)
+			);
+		}
 	}
 
 	private static void appendMyIllustListItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
