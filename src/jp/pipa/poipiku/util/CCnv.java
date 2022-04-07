@@ -212,14 +212,18 @@ public final class CCnv {
 		);
 	}
 
-	private static void appendTag(StringBuilder strRtn, CContent cContent, int nMode, int nSpMode){
+	private static void appendTag(StringBuilder strRtn, CheckLogin checkLogin, CContent cContent, int nMode, int nSpMode){
 		Log.d(cContent.m_strTagList);
 		if (cContent.m_strTagList.isEmpty()) {
 			strRtn.append("""
                     <h2 id="IllustItemTag_%d" style="display: none;"></h2>
 					""".formatted(cContent.m_nContentId));
 		} else {
-			//TODO public tagの
+			//TODO public tagの訳を取得する
+
+			//TODO タグのhtmlを生成する
+
+
 			strRtn.append(
 					"""
 					<h2 id="IllustItemTag_%d" class="IllustItemTag">%s</h2>
@@ -524,21 +528,22 @@ public final class CCnv {
 	}
 
 	public static String Content2Html(
-			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final CContent cContent,  CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX,
 			final ArrayList<String> vEmoji, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
-		return _Content2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, PageCategory.DEFAULT);
+		return _Content2Html(cContent, checkLogin, nMode, _TEX, vEmoji, nViewMode, nSpMode, PageCategory.DEFAULT);
 	}
 
 	public static String Content2Html(
-			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final CContent cContent, CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX,
 			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) throws UnsupportedEncodingException {
-		return _Content2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, pageCategory);
+		return _Content2Html(cContent, checkLogin, nMode, _TEX, vEmoji, nViewMode, nSpMode, pageCategory);
 	}
 
 	private static String _Content2Html(
-			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final CContent cContent, CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX,
 			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) {
 
+		final int nLoginUserId = checkLogin.m_nUserId;
 		if (cContent.m_nContentId <= 0) return "";
 
 		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
@@ -566,7 +571,7 @@ public final class CCnv {
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// タグ
-		appendTag(strRtn, cContent, nMode, nSpMode);
+		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
 
 		// 編集
 		if(cContent.m_nUserId==nLoginUserId) {
@@ -597,22 +602,24 @@ public final class CCnv {
 
 
 	public static String SketchbookContent2Html(
-			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final CContent cContent, CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX,
 			final ArrayList<String> vEmoji, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
-		return _SketchbookContent2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, PageCategory.DEFAULT);
+		return _SketchbookContent2Html(cContent, checkLogin, nMode, _TEX, vEmoji, nViewMode, nSpMode, PageCategory.DEFAULT);
 	}
 
 	public static String SketchbookContent2Html(
-			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final CContent cContent, CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX,
 			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) throws UnsupportedEncodingException {
-		return _SketchbookContent2Html(cContent, nLoginUserId, nMode, _TEX, vEmoji, nViewMode, nSpMode, pageCategory);
+		return _SketchbookContent2Html(cContent, checkLogin, nMode, _TEX, vEmoji, nViewMode, nSpMode, pageCategory);
 	}
 
 	private static String _SketchbookContent2Html(
-			final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX,
+			final CContent cContent, CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX,
 			final ArrayList<String> vEmoji, int nViewMode, int nSpMode, PageCategory pageCategory) {
 
 		if (cContent.m_nContentId <= 0) return "";
+
+		final int nLoginUserId = checkLogin.m_nUserId;
 
 		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		final String REPORT_FORM = getReportFormContext(nMode);
@@ -639,7 +646,7 @@ public final class CCnv {
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// タグ
-		appendTag(strRtn, cContent, nMode, nSpMode);
+		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
 
 		// 画像
 		appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
@@ -753,9 +760,10 @@ public final class CCnv {
 				));
 	}
 
-	public static String MyContent2Html(final CContent cContent, int nLoginUserId, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
+	public static String MyContent2Html(final CContent cContent, CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {
 		if(cContent.m_nContentId<=0) return "";
 
+		final int nLoginUserId = checkLogin.m_nUserId;
 		final String REPORT_FORM = getReportFormContext(nMode);
 		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
@@ -778,7 +786,7 @@ public final class CCnv {
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// タグ
-		appendTag(strRtn, cContent, nMode, nSpMode);
+		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
 
 		// 編集
 		if(cContent.m_nUserId==nLoginUserId) {
