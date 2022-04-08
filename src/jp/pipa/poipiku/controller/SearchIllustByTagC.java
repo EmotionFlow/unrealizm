@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +40,7 @@ public final class SearchIllustByTagC {
 	public String m_strRepFileName = "";
 	public Genre genre = new Genre();
 	public int lastContentId = -1;
+	public List<String> nameTranslationList = null;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -52,7 +54,7 @@ public final class SearchIllustByTagC {
 		String strSql = "";
 		int idx = 1;
 
-		if(keyword.isEmpty() && genreId <1) return false;
+		if(keyword.isEmpty() && genreId < 1) return false;
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
@@ -91,8 +93,8 @@ public final class SearchIllustByTagC {
 				}
 			}
 
-			if(genreId <1) {
-				// genre id
+			if(genreId < 1) {
+				// select genre id
 				strSql = "SELECT genre_id FROM genres WHERE genre_name=?";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
@@ -220,6 +222,21 @@ public final class SearchIllustByTagC {
 
 			// Bookmark
 			GridUtil.getEachBookmark(connection, contentList, checkLogin);
+
+			// name translations
+			strSql = "SELECT trans_text FROM genre_translations WHERE genre_id=? AND type_id=0 ORDER BY lang_id";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, genreId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				nameTranslationList = new ArrayList<>();
+				nameTranslationList.add(resultSet.getString(1));
+			}
+			while (resultSet.next()) {
+				nameTranslationList.add(resultSet.getString(1));
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 		} catch(Exception e) {
 			Log.d(strSql);

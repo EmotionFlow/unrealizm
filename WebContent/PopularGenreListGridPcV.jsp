@@ -46,7 +46,7 @@ boolean bRtn = results.getResults(checkLogin);
 			<a class="GenreItem" href="SearchIllustByTagPcV.jsp?GD=<%=genre.genreId%>">
 				<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(genre.genreImage)%>');" ></span>
 				<span class="GenreInfo">
-					<h2 class="GenreTitle"><%=Util.toStringHtml(genre.genreName)%></h2>
+					<h2 class="GenreNameOrg"><%=Util.toStringHtml(genre.genreName)%></h2>
 					<span class="GenreDesc"><%=Util.toStringHtml(genre.genreDesc)%></span>
 					<span class="GenreData">
 						<span class="DataItem"><i class="far fa-image"></i> <%=genre.rank%></span>

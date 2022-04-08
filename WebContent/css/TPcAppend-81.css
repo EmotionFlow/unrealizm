@@ -150,7 +150,7 @@ body {padding: 51px 0 0 0 !important;}
 .SearchGenre .SearchGenreCmd .CmdBtn {margin: 0 0 10px 0;padding: 5px 12px;}
 .SearchGenre .SearchGenreMeta .SearchGenreTitle {}
 .SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreImage {}
-.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreTitle {}
+.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreNameOrg {}
 .SearchGenre .SearchGenreMeta .SearchGenreDesc {font-size: 21px;margin: 5px 0;}
 .SearchGenreDetail {padding: 0 15px 15px 15px;}
 .SearchGenreDetail a {}

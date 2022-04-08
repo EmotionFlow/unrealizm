@@ -77,7 +77,7 @@ String strFileUrl = results.m_strRepFileName;
 				<div class="SearchGenreMeta">
 					<div class="SearchGenreTitle">
 						<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(results.genre.genreImage)%>');" ></span>
-						<h2 class="GenreTitle">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
+						<h2 class="GenreNameOrg">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
 					</div>
 					<div class="SearchGenreDesc"><%=Util.toStringHtml(results.genre.genreDesc)%></div>
 				</div>

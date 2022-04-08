@@ -1,3 +1,4 @@
+<%@ page import="java.util.stream.Collectors" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -108,6 +109,7 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			});
 
 		</script>
+
 		<%if (!isApp) {%>
 		<style>body {padding-top: 79px !important;}</style>
 		<%} else {%>
@@ -131,10 +133,19 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<div class="SearchGenreMeta">
 					<div class="SearchGenreTitle">
 						<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(results.genre.genreImage)%>');" ></span>
-						<h2 class="GenreTitle">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
+						<div class="GenreName">
+							<h2 class="GenreNameOrg">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
+							<div class="GenreNameTranslate" translate="no">
+								<i class="fas fa-language"></i>
+								<%=results.nameTranslationList.stream().map(e->String.format("<span>%s</span>", e)).collect(Collectors.joining(""))%>
+							</div>
+						</div>
 					</div>
 					<div class="SearchGenreDesc"><%=Util.toStringHtml(results.genre.genreDesc)%></div>
 				</div>
+				<%if (!results.genre.genreDetail.isEmpty()){ %>
+				<div id="GenreDetail" class="SearchGenreDetail"><%=Common.AutoLinkHtml(Util.toStringHtml(results.genre.genreDetail), CCnv.SP_MODE_WVIEW)%></div>
+				<%}%>
 				<div class="SearchGenreCmd">
 					<%if(!checkLogin.m_bLogin) {%>
 					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-tag"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
@@ -145,7 +156,6 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					<%}%>
 				</div>
 			</div>
-			<div class="SearchGenreDetail showmore"><%=Common.AutoLinkHtml(Util.toStringHtml(results.genre.genreDetail), CCnv.SP_MODE_WVIEW)%></div>
 		</header>
 
 		<article class="Wrapper ThumbList">

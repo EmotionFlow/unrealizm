@@ -57,20 +57,21 @@ String disable = (editable)?"":"Disabled";
 				'Name' : {
 					<%=translationList.stream()
 						.filter(e->e.type==Genre.Type.Name)
-						.map(e->String.format("'%d': '%s'", e.langId, e.transTxt))
+						.map(e->String.format("'%d': `%s`", e.langId, e.transTxt))
 						.collect(Collectors.joining(","))%>
 				},
 				'Desc' : {
-					'default': '<%=genre.genreDesc%>',
+					'default': `<%=genre.genreDesc%>`,
 					<%=translationList.stream()
 						.filter(e->e.type==Genre.Type.Description)
-						.map(e->String.format("'%d': '%s'", e.langId, e.transTxt))
+						.map(e->String.format("'%d': `%s`", e.langId, e.transTxt))
 						.collect(Collectors.joining(","))%>
 				},
 				'Detail' : {
+					'default': `<%=genre.genreDetail%>`,
 					<%=translationList.stream()
 						.filter(e->e.type==Genre.Type.Detail)
-						.map(e->String.format("'%d': '%s'", e.langId, e.transTxt))
+						.map(e->String.format("'%d': `%s`", e.langId, e.transTxt))
 						.collect(Collectors.joining(","))%>
 				}
 			};
@@ -214,7 +215,7 @@ String disable = (editable)?"":"Disabled";
 						<div class="SettingListTitle WithLangSelector">
 							<span>翻訳</span>
 							<span class="SelectTransLang">
-							<i class="fas fa-globe"></i>
+							<i class="fas fa-language"></i>
 							<select id="EditTransNameLang" onchange="switchTransTxt('Name', $(this).val())">
 								<%for(UserLocale userLocale: SupportedLocales.list) {%>
 								<option value="<%=userLocale.id%>" <%=userLocale.id==checkLogin.m_nLangId?"selected":""%>><%=userLocale.label%></option>
@@ -237,7 +238,7 @@ String disable = (editable)?"":"Disabled";
 					<div class="SettingListTitle WithLangSelector">
 						<span><%=_TEX.T("EditGenreInfo.Desc")%></span>
 						<span class="SelectTransLang">
-						<i class="fas fa-globe"></i>
+						<i class="fas fa-language"></i>
 						<select id="EditTransDescLang" onchange="switchTransTxt('Desc', $(this).val())">
 							<option value="default" selected>default</option>
 							<%for(UserLocale userLocale: SupportedLocales.list) {%>
@@ -247,7 +248,7 @@ String disable = (editable)?"":"Disabled";
 						</span>
 					</div>
 					<div class="SettingBody">
-						<textarea id="EditDesc" class="SettingBodyTxt" rows="6" onkeyup="DispCharNum('EditDesc', 'EditDescNum', 64)" maxlength="64"></textarea>
+						<textarea id="EditDesc" class="SettingBodyTxt" rows="3" onkeyup="DispCharNum('EditDesc', 'EditDescNum', 64)" maxlength="64"></textarea>
 						<div class="SettingBodyCmd">
 							<%if(editable) {%>
 							<div id="EditDescNum" class="RegistMessage"></div>
@@ -266,7 +267,7 @@ String disable = (editable)?"":"Disabled";
 					<div class="SettingListTitle WithLangSelector">
 						<span><%=_TEX.T("EditGenreInfo.Detail")%></span>
 						<span class="SelectTransLang">
-						<i class="fas fa-globe"></i>
+						<i class="fas fa-language"></i>
 						<select id="EditTransDetailLang" onchange="switchTransTxt('Detail', $(this).val())">
 							<option value="default" selected>default</option>
 							<%for(UserLocale userLocale: SupportedLocales.list) {%>
@@ -277,7 +278,7 @@ String disable = (editable)?"":"Disabled";
 					</div>
 					<div class="SettingBody">
 
-						<textarea id="EditDetail" class="SettingBodyTxt" rows="12" onkeyup="DispCharNum('EditDetail', 'EditDetailNum', 1000)" maxlength="1000"><%=Util.toStringHtmlTextarea(genre.genreDetail)%></textarea>
+						<textarea id="EditDetail" class="SettingBodyTxt" rows="6" onkeyup="DispCharNum('EditDetail', 'EditDetailNum', 1000)" maxlength="1000"><%=Util.toStringHtmlTextarea(genre.genreDetail)%></textarea>
 						<div class="SettingBodyCmd">
 							<div id="EditDetailNum" class="RegistMessage"></div>
 							<%if(editable) {%>
