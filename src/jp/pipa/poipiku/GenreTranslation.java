@@ -67,6 +67,27 @@ public class GenreTranslation {
 		return list;
 	}
 
+	public static List<GenreTranslation> select(int genreId, Genre.Type type) {
+		List<GenreTranslation> list = new ArrayList<>();
+		final String strSql = "SELECT * FROM genre_translations WHERE genre_id=? AND type_id=? ORDER BY lang_id";
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(strSql);
+		) {
+			statement.setInt(1, genreId);
+			statement.setInt(2, type.getCode());
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				list.add(new GenreTranslation(resultSet));
+			}
+			resultSet.close();
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	static public boolean upsert(int genreId, int lang_id, Genre.Type type, String transTxt, int userId){
 		if (userId < 0 || type == null || type == Genre.Type.Undefined) {
 			return false;

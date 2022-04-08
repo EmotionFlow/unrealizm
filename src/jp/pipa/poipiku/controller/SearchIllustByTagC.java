@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -223,21 +224,6 @@ public final class SearchIllustByTagC {
 			// Bookmark
 			GridUtil.getEachBookmark(connection, contentList, checkLogin);
 
-			// name translations
-			strSql = "SELECT trans_text FROM genre_translations WHERE genre_id=? AND type_id=0 ORDER BY lang_id";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, genreId);
-			resultSet = statement.executeQuery();
-			if (resultSet.next()) {
-				nameTranslationList = new ArrayList<>();
-				nameTranslationList.add(resultSet.getString(1));
-			}
-			while (resultSet.next()) {
-				nameTranslationList.add(resultSet.getString(1));
-			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -246,6 +232,23 @@ public final class SearchIllustByTagC {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
+
+		// translations
+		nameTranslationList = GenreTranslation.select(genreId, Genre.Type.Name)
+				.stream()
+				.map(e->e.transTxt)
+				.collect(Collectors.toList());
+
+		GenreTranslation translation = null;
+		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.Type.Description);
+		if (translation != null) {
+			genre.genreDesc = translation.transTxt;
+		}
+		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.Type.Detail);
+		if (translation != null) {
+			genre.genreDetail = translation.transTxt;
+		}
+
 		return bResult;
 	}
 }
