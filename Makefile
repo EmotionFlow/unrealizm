@@ -39,3 +39,8 @@ translation:
 	pushd dev-tool/translate &&\
 	python3 translate_rs_properties.py &&\
 	popd
+
+precompile-jsp:
+	pushd closure && \
+	./precompile_jsp.sh && \
+	popd
