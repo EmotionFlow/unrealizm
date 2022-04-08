@@ -11,7 +11,7 @@
 	line-height: 24px;
 	padding: 0 5px 0 10px;
 	background-color: #3498db;
-	border-radius: 0 3px 3px 0;
+	border-radius: 3px;
 	color: #fff !important;
 	font-size: 13px;
 	text-decoration: none;
@@ -22,7 +22,7 @@
 .IllustItem .IllustItemTag .AutoLinkMyTag::before {
 	position: absolute;
 	top: 0;
-	left: -10px;
+	left: -9px;
 	content: '';
 	width: 0;
 	height: 0;
@@ -51,6 +51,21 @@
 }
 .IllustItem .IllustItemTag .AutoLinkMyTag::before {
 	border-color: transparent #f09090 transparent transparent;
+}
+
+.IllustItemTag .TagLabel{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+.IllustItemTag .TagName {
+	line-height: 16px;
+}
+.IllustItemTag .TagTrans {
+	font-size: 10px;
+	line-height: 11px;
 }
 
 .Waiting {
@@ -2072,8 +2087,7 @@ Decoration
 }
 
 .IllustItem .IllustItemTag {
-	display: block;
-	float: left;
+	display: flex;
 	width: 100%;
 	box-sizing: border-box;
 	padding: 0 8px;

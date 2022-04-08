@@ -5,7 +5,6 @@ import jp.pipa.poipiku.util.Log;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class GenreTranslation {
@@ -40,6 +39,7 @@ public class GenreTranslation {
 			if (resultSet.next()) {
 				translation = new GenreTranslation(resultSet);
 			}
+			resultSet.close();
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -55,11 +55,11 @@ public class GenreTranslation {
 				PreparedStatement statement = connection.prepareStatement(strSql);
 		) {
 			statement.setInt(1, genreId);
-			Log.d(statement.toString());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				list.add(new GenreTranslation(resultSet));
 			}
+			resultSet.close();
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

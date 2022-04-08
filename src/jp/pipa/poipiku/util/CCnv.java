@@ -2,10 +2,18 @@ package jp.pipa.poipiku.util;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import jp.pipa.poipiku.*;
+
+import javax.xml.crypto.Data;
 
 public final class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
@@ -212,6 +220,36 @@ public final class CCnv {
 		);
 	}
 
+	private static HashMap<String, String> getTagNameTranslations(CheckLogin checkLogin, CContent content, List<String> tagNameList) {
+		HashMap<String, String> translationMap = new HashMap<>();
+
+		final String sql = """
+						SELECT t.tag_txt, gt.trans_text
+						FROM tags_0000 t
+						         LEFT JOIN genre_translations gt ON t.genre_id = gt.genre_id
+						WHERE t.content_id = ?
+						  AND t.tag_type = 1
+						  AND gt.type_id = 0
+						  AND gt.lang_id = ?
+						""";
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
+				) {
+			statement.setInt(1, content.m_nContentId);
+			statement.setInt(2, checkLogin.m_nLangId);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				translationMap.put(resultSet.getString(1), resultSet.getString(2));
+			}
+			resultSet.close();
+		} catch (SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+		return translationMap;
+	}
+
 	private static void appendTag(StringBuilder strRtn, CheckLogin checkLogin, CContent cContent, int nMode, int nSpMode){
 		Log.d(cContent.m_strTagList);
 		if (cContent.m_strTagList.isEmpty()) {
@@ -219,17 +257,55 @@ public final class CCnv {
                     <h2 id="IllustItemTag_%d" style="display: none;"></h2>
 					""".formatted(cContent.m_nContentId));
 		} else {
-			//TODO public tagの訳を取得する
+			List<String> tagNameList = List.of(cContent.m_strTagList.split(" "));
+			HashMap<String, String> translationMap = getTagNameTranslations(checkLogin, cContent, tagNameList);
+
+			Log.d(translationMap.toString());
 
 			//TODO タグのhtmlを生成する
+			StringBuilder sb = new StringBuilder();
+			String appOrPc = nSpMode==SP_MODE_APP?"App":"Pc";
+			String withoutHashMark;
+			String href = "";
+			boolean isMyTag;
+			for (String tagName: tagNameList) {
+				if (tagName.isEmpty()) continue;
 
+				isMyTag = (tagName.indexOf("##") == 0);
+				if (isMyTag) {
+					href = "/IllustList%sV.jsp?ID=%d&KWD=%s".formatted(
+							appOrPc,
+							checkLogin.m_nUserId,
+							tagName.substring(2)
+					);
+				} else {
+					href = "/SearchIllustByTag%sV.jsp?KWD=%s".formatted(
+						appOrPc, tagName.substring(1)
+					);
+				}
+
+				withoutHashMark = tagName.substring(1);
+				sb.append("""
+                        <a class="AutoLink%s" href="%s">
+                        <div class="TagLabel">
+							<div class="TagName">%s</div>
+						""".formatted(isMyTag?"MyTag":"", href, tagName));
+
+				if (translationMap.get(withoutHashMark) != null) {
+					sb.append("""
+							<div class="TagTrans">%s</div>
+							""".formatted(translationMap.get(withoutHashMark)));
+				}
+				sb.append("</div></a>");
+			}
 
 			strRtn.append(
 					"""
 					<h2 id="IllustItemTag_%d" class="IllustItemTag">%s</h2>
 					""".formatted(
 							cContent.m_nContentId,
-							Common.AutoLink(Util.toStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode, nSpMode)
+							sb.toString()
+//							Common.AutoLink(Util.toStringHtml(cContent.m_strTagList), cContent.m_nUserId, nMode, nSpMode)
 					)
 			);
 		}
