@@ -1,14 +1,9 @@
 package jp.pipa.poipiku.controller;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.*;
-import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
@@ -39,7 +34,7 @@ public class UpdateGenreInfoC {
 			request.setCharacterEncoding("UTF-8");
 			userId = Util.toInt(request.getParameter("UID"));
 			genreId = Util.toInt(request.getParameter("GID"));
-			data = Common.TrimAll(Common.CrLfInjection(Common.EscapeInjection(request.getParameter("DATA"))));
+			data = Common.TrimAll(Common.EscapeInjection(request.getParameter("DATA")));
 			final int ty = Util.toInt(request.getParameter("TY"));
 			type = Genre.Type.byCode(ty);
 			langId = Util.toInt(request.getParameter("LANGID"));
