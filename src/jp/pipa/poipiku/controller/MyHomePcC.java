@@ -195,7 +195,8 @@ public final class MyHomePcC {
 				m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
 
 				// Recommended Users
-				if (m_nContentsNum <= SELECT_MAX_GALLERY || m_nPage == 1) {
+//				if (m_nContentsNum <= SELECT_MAX_GALLERY || m_nPage == 1) {
+				if (false) {
 					m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
 				}
 			}
