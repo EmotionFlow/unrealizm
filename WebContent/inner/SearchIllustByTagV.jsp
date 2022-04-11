@@ -128,7 +128,9 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<header class="SearchGenreFrame">
 			<div class="SearchGenre">
 				<div class="SearchEdit">
-					<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfoPcV.jsp?ID=<%=checkLogin.m_nUserId%>&GD=<%=results.genre.genreId%>"><i class="fas fa-pencil-alt"></i> <%=_TEX.T("SearchIllustByGenre.Edit")%></a>
+					<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfoPcV.jsp?ID=<%=checkLogin.m_nUserId%>&GD=<%=results.genre.genreId%>">
+						<span class="AnyoneOK"><%=_TEX.T("SearchIllustByGenre.Edit.AnyoneOK")%></span><span style="font-size: 12px"><i class="far fa-edit"></i><%=_TEX.T("SearchIllustByGenre.Edit")%></span>
+					</a>
 				</div>
 				<div class="SearchGenreMeta">
 					<div class="SearchGenreTitle">
