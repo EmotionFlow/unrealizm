@@ -207,13 +207,19 @@ String disable = (editable)?"":"Disabled";
 
 		<article class="Wrapper ViewPc">
 			<div class="SettingList">
+				<div class="SettingListItem" style="padding-bottom: 0">
+					<div class="SettingListTitle" style="text-align: center"><%=_TEX.T("EditGenreInfo.Info.Title")%></div>
+					<div class="SettingBody">
+						<div class="SettingBodyTxt"><%=_TEX.T("EditGenreInfo.Info.Info")%></div>
+					</div>
+				</div>
 				<div class="SettingListItem">
 					<div class="SettingListTitle"><%=_TEX.T("EditGenreInfo.Name")%></div>
 					<div class="SettingBody">
 						<div class="SettingBodyTxt"><%=Util.toStringHtml(genre.genreName)%></div>
 						<div class="SettingListItem" style="padding-bottom: 0">
 						<div class="SettingListTitle WithLangSelector">
-							<span>翻訳</span>
+							<span><%=_TEX.T("EditGenreInfo.Translation")%>></span>
 							<span class="SelectTransLang">
 							<i class="fas fa-language"></i>
 							<select id="EditTransNameLang" onchange="switchTransTxt('Name', $(this).val())">
@@ -240,7 +246,7 @@ String disable = (editable)?"":"Disabled";
 						<span class="SelectTransLang">
 						<i class="fas fa-language"></i>
 						<select id="EditTransDescLang" onchange="switchTransTxt('Desc', $(this).val())">
-							<option value="default" selected>default</option>
+							<option value="default" selected><%=_TEX.T("EditGenreInfo.Translation.Default")%></option>
 							<%for(UserLocale userLocale: SupportedLocales.list) {%>
 							<option value="<%=userLocale.id%>"><%=userLocale.label%></option>
 							<%}%>
@@ -269,7 +275,7 @@ String disable = (editable)?"":"Disabled";
 						<span class="SelectTransLang">
 						<i class="fas fa-language"></i>
 						<select id="EditTransDetailLang" onchange="switchTransTxt('Detail', $(this).val())">
-							<option value="default" selected>default</option>
+							<option value="default" selected><%=_TEX.T("EditGenreInfo.Translation.Default")%></option>
 							<%for(UserLocale userLocale: SupportedLocales.list) {%>
 							<option value="<%=userLocale.id%>"><%=userLocale.label%></option>
 							<%}%>
