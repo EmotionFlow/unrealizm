@@ -16,7 +16,55 @@ import java.util.Date;
 public final class UpdateRequestSettingC extends Controller{
     public UpdateRequestSettingC(){}
 
-    private boolean judgementRequestEnabled(final CheckLogin checkLogin) {
+	private boolean judgementStartRequest(final CheckLogin checkLogin) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String strSql = "";
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+
+			// メアド認証がされていない
+			strSql = "SELECT user_id FROM users_0000 WHERE user_id=? AND email LIKE '%@%'";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1,checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(!resultSet.next()){
+				return false;
+			}
+			resultSet.close();
+			statement.close();
+
+			// 登録が最近すぎる
+			strSql = "SELECT MAX(user_id) FROM users_0000";
+			statement = connection.prepareStatement(strSql);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()){
+				if ( resultSet.getInt(1) - checkLogin.m_nUserId < 10){
+					return false;
+				}
+			} else {
+				return false;
+			}
+			resultSet.close();
+			statement.close();
+
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+			return false;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
+
+		return true;
+
+	}
+
+
+	private boolean judgementPaidRequest(final CheckLogin checkLogin) {
 	    Connection connection = null;
 	    PreparedStatement statement = null;
 	    ResultSet resultSet = null;
@@ -30,31 +78,6 @@ public final class UpdateRequestSettingC extends Controller{
 		    statement.setInt(1,checkLogin.m_nUserId);
 		    resultSet = statement.executeQuery();
 		    if(!resultSet.next()){
-		    	return false;
-		    }
-		    resultSet.close();
-		    statement.close();
-
-		    // メアド認証がされていない
-		    strSql = "SELECT user_id FROM users_0000 WHERE user_id=? AND email LIKE '%@%'";
-		    statement = connection.prepareStatement(strSql);
-		    statement.setInt(1,checkLogin.m_nUserId);
-		    resultSet = statement.executeQuery();
-		    if(!resultSet.next()){
-			    return false;
-		    }
-		    resultSet.close();
-		    statement.close();
-
-		    // 登録が最近すぎる
-		    strSql = "SELECT MAX(user_id) FROM users_0000";
-		    statement = connection.prepareStatement(strSql);
-		    resultSet = statement.executeQuery();
-		    if(resultSet.next()){
-			    if ( resultSet.getInt(1) - checkLogin.m_nUserId < 10){
-			    	return false;
-			    }
-		    } else {
 		    	return false;
 		    }
 		    resultSet.close();
@@ -100,7 +123,7 @@ public final class UpdateRequestSettingC extends Controller{
     	boolean updateResult;
     	switch (param.attribute) {
 		    case "RequestEnabled":
-		    	if (paramValue.equals("1") && !judgementRequestEnabled(checkLogin)) {
+		    	if (paramValue.equals("1") && !judgementStartRequest(checkLogin)) {
 				    errorKind = ErrorKind.JudgeFailure;
 				    return false;
 			    }
@@ -136,6 +159,10 @@ public final class UpdateRequestSettingC extends Controller{
 			    );
 			    break;
 		    case "AllowPaidRequest":
+			    if (paramValue.equals("1") && !judgementPaidRequest(checkLogin)) {
+				    errorKind = ErrorKind.JudgeFailure;
+				    return false;
+			    }
 			    updateResult = requestCreator.updateAllowPaidRequest(
 					    paramValue.equals("1")
 			    );

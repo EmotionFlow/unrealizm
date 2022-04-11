@@ -6,14 +6,25 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 	function _getJudgeOkHtml() {
 		return `
 		<h1>エアスケブ受付を開始しました</h1>
-		<p style="text-align: left">エアスケブ受付開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。必ずご確認ください。</p>
+		<p style="text-align: left">エアスケブ受付開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。</p>
 		`;
 	}
 
 	function _getJudgeFailureHtml() {
 		return `
 		<h1>エアスケブ受付を開始できませんでした</h1>
-		<p style="text-align: left">エアスケブ受付を開始するには、以下の条件が必須です。</p>
+		<p style="text-align: left">有償によるエアスケブ受付を開始するには、以下の条件が必須です。</p>
+		<ul style="text-align: left">
+		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
+		</ul>
+		<p style="text-align: left">加えて、ポイピクの利用歴から総合的に判定させていただいております。</p>
+		`;
+	}
+
+	function _getPaidRequestJudgeFailureHtml() {
+		return `
+		<h1>有償の受付を開始できませんでした</h1>
+		<p style="text-align: left">有償によるエアスケブ受付を開始するには、以下の条件が必須です。</p>
 		<ul style="text-align: left">
 		<li>Twitterアカウントと連携していること(Twitter設定)</li>
 		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
@@ -23,7 +34,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 		`;
 	}
 
-	function _updateRequestSetting(attribute, variable){
+	function _updateRequestSetting(attribute, variable, apiOkCallback, judgeFailureCallback){
 		$.ajax({
 			"type": "post",
 			"data": {"ID":<%=checkLogin.m_nUserId%>, "ATTR":attribute, "VAL":variable},
@@ -33,25 +44,9 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 		.then(
 			(data) => {
 				if (data.result === <%=Common.API_OK%>) {
-					if (attribute === "RequestEnabled") {
-						if (variable === 1) {
-							Swal.fire({
-								type: "info",
-								html: _getJudgeOkHtml(),
-							}).then(()=>{location.reload();});
-						} else {
-							alert("エアスケブの受付を停止しました");
-							location.reload();
-						}
-					} else {
-						DispMsg("保存しました");
-					}
+					apiOkCallback ? apiOkCallback() : DispMsg("保存しました");
 				} else if (data.error_code === <%=Controller.ErrorKind.JudgeFailure.getCode()%>) {
-					$("#RequestEnabled").removeAttr("checked");
-					Swal.fire({
-						type: "info",
-						html: _getJudgeFailureHtml(),
-					}).then(()=>{location.reload();});
+					if (judgeFailureCallback) judgeFailureCallback();
 				} else {
 					DispMsg("<%=_TEX.T("EditIllustVCommon.Upload.Error")%>");
 				}
@@ -64,7 +59,23 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 
 	function updateRequestEnabled(){
 		const checked = $("#RequestEnabled").prop("checked") ? 1 : 0;
-		_updateRequestSetting("RequestEnabled", checked);
+		_updateRequestSetting("RequestEnabled", checked, () => {
+			if (checked === 1) {
+				Swal.fire({
+					type: "info",
+					html: _getJudgeOkHtml(),
+				}).then(()=>{location.reload();});
+			} else {
+				alert("エアスケブの受付を停止しました");
+				location.reload();
+			}
+		}, () => {
+			$("#RequestEnabled").removeAttr("checked");
+			Swal.fire({
+				'type': "info",
+				'html': _getJudgeFailureHtml(),
+			}).then(()=>{location.reload();});
+		});
 		$("#RequestSettingItems").css('opacity', checked ? 1.0 : 0.5);
 	}
 	function updateRequestMedia(){
@@ -91,9 +102,16 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			_updateRequestSetting("AllowPaidRequest", 0);
 			$SettingAmountItems.hide();
 		} else {
-			_updateRequestSetting("AllowFreeRequest", 0);
-			_updateRequestSetting("AllowPaidRequest", 1);
-			$SettingAmountItems.show();
+			_updateRequestSetting("AllowPaidRequest", 1, () => {
+				_updateRequestSetting("AllowFreeRequest", 0);
+				$SettingAmountItems.show();
+			}, () => {
+				$("#SelectPaidRequest").val('FREE');
+				Swal.fire({
+					'type': "info",
+					'html': _getPaidRequestJudgeFailureHtml(),
+				}).then(()=>{location.reload();});
+			});
 		}
 	}
 
@@ -223,8 +241,13 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 			</a>
 		</div>
 
+
 		<div class="SettingListTitle">エアスケブの依頼を受け付ける</div>
 		<div class="SettingBody">
+			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
+			<div style="border: solid 2px lightgrey;border-radius: 5px; font-size: 12px; text-align: center; padding: 5px 0; margin: 0 16px 7px 16px;">
+				<span style="color: coral; font-weight: bold">NEW!</span><br>Twitter連携なし(メアド登録のみ)でも<br>はじめられるようになりました</div>
+			<%}%>
 			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
 			クリエイターとしてポイピクユーザーからエアスケブの依頼を受け付けます。
 			<%}else{%>
