@@ -6,7 +6,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/SearchIllustByTagGridPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/SearchIllustByTagGrid%sV.jsp".formatted(isApp?"App":"Pc")).forward(request,response);
 	return;
 }
 
@@ -22,7 +22,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 URLEncoder.encode(results.keyword, "UTF-8");
 final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), results.keyword) + " | " + _TEX.T("THeader.Title");
 final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc.Short"), results.keyword);
-final String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
+final String strUrl = "https://poipiku.com/SearchIllustByTag" + (isApp?"App":"Pc") + "V.jsp?GD="+results.genreId;
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
@@ -128,7 +128,7 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<header class="SearchGenreFrame">
 			<div class="SearchGenre">
 				<div class="SearchEdit">
-					<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfoPcV.jsp?ID=<%=checkLogin.m_nUserId%>&GD=<%=results.genre.genreId%>">
+					<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfo<%=isApp?"App":"Pc"%>V.jsp?ID=<%=checkLogin.m_nUserId%>&GD=<%=results.genre.genreId%>">
 						<span class="AnyoneOK"><%=_TEX.T("SearchIllustByGenre.Edit.AnyoneOK")%></span><span style="font-size: 12px"><i class="far fa-edit"></i><%=_TEX.T("SearchIllustByGenre.Edit")%></span>
 					</a>
 				</div>
