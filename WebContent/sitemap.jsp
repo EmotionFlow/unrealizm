@@ -4,20 +4,23 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="jp.pipa.poipiku.controller.*"%>
 <%@page import="jp.pipa.poipiku.*"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%
-String[] LANGS = {"ja", "en", "ko", "zh-Hans", "zh-CN", "zh-Hant", "zh-TW", "th", "ru"};
-String NOW = (new SimpleDateFormat("YYYY-MM-dd")).format(new java.util.Date());
+List<String> langTags = SupportedLocales.list.stream().map(e->e.locale.toLanguageTag()).collect(Collectors.toList());
+String NOW = (new SimpleDateFormat("yyyy-MM-dd")).format(new java.util.Date());
 CheckLogin checkLogin = new CheckLogin();
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
 cResults.selectMaxGallery = 1000;
 cResults.selectMaxSampleGallery = 0;
 cResults.selectSampleGallery = 0;
-boolean bRtn = cResults.getResults(checkLogin);
+cResults.getResults(checkLogin);
 %>
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<%for (String lang : LANGS) {%>
+	<%for (String lang : langTags) {%>
 	<url>
 		<loc>https://poipiku.com/?hl=<%=lang%></loc>
 		<lastmod><%=NOW%></lastmod>
@@ -32,7 +35,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 	</url>
 	<%for(CTag tag : cResults.m_vTagListWeekly) {%>
 	<url>
-		<loc>https://poipiku.com/SearchIllustByTagPcV.jsp?hl=<%=lang%>&amp;KWD=<%=URLEncoder.encode(tag.m_strTagTxt, "UTF-8")%></loc>
+		<loc>https://poipiku.com/SearchIllustByTagPcV.jsp?hl=<%=lang%>&amp;KWD=<%=URLEncoder.encode(tag.m_strTagTxt, StandardCharsets.UTF_8)%></loc>
 		<lastmod><%=NOW%></lastmod>
 		<changefreq>always</changefreq>
 		<priority>0.5</priority>
