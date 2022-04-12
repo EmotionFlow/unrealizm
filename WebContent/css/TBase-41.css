@@ -438,7 +438,7 @@ form, button {
 	height: 20px;
 	line-height: 20px;
 	padding: 0 0 0 49px;
-	background: transparent 0 0 no-repeat url('/img/poipiku_passport_logo_short3_60.png');
+	/*background: transparent 0 0 no-repeat url('/img/poipiku_passport_logo_short3_60.png');*/
 	background-size: 47px 20px;
 }
 
@@ -446,8 +446,15 @@ form, button {
 	height: 20px;
 	line-height: 20px;
 	padding: 0 0 0 50px;
-	background: transparent 0 50% no-repeat url('/img/poipiku_passport_logo_free_60.png');
 	background-size: 49px 15px;
+}
+
+.SearchEditCmd.PoiPassInline > .AnyoneOK {
+	background: #ff8000;
+	color: white;
+	padding: 2px 4px;
+	margin-right: 3px;
+	border-radius: 7px;
 }
 
 .TabMenuWrapper {display: block; width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 900; top: 51px;}

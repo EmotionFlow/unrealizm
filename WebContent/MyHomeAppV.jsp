@@ -119,7 +119,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<%	int nCnt;
 					for(nCnt=0; nCnt<cResults.contentList.size(); nCnt++) {
 						CContent cContent = cResults.contentList.get(nCnt);%>
-						<%= CCnv.Content2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+						<%=CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 
 						<%if(nCnt==7 && cResults.recommendedRequestCreatorList !=null && !cResults.recommendedRequestCreatorList.isEmpty()) {%>
 						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>

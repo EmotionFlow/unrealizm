@@ -20,7 +20,7 @@ StringBuilder sbHtml = new StringBuilder();
 int nCnt;
 for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	CContent cContent = cResults.contentList.get(nCnt);
-	sbHtml.append(CCnv.Content2Html(cContent, checkLogin.m_nUserId, cResults.mode, _TEX, vResult, cResults.viewMode, CCnv.SP_MODE_WVIEW));
+	sbHtml.append(CCnv.Content2Html(cContent, checkLogin, cResults.mode, _TEX, vResult, cResults.viewMode, CCnv.SP_MODE_WVIEW));
 
 	if (cResults.page == 1) {
 		if (nCnt == 2 && cResults.recommendedUserList != null && !cResults.recommendedUserList.isEmpty()) {

@@ -33,18 +33,13 @@ default:
 	break;
 }
 
-//JSON元データを格納する連想配列
 Map<String, Object> root = null;
 ObjectMapper mapper = null;
-
 try {
-	//ユーザの情報
 	root = new HashMap<String, Object>();
 	root.put("result", nRtn);
 	root.put("genre_id", cResults.genreId);
 	root.put("message", strMessage);
-
-	//JSONに変換して出力
 	mapper = new ObjectMapper();
 	out.print(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(root));
 } catch (JsonGenerationException e) {

@@ -104,7 +104,7 @@
 		<% int count =0;
 			for(; count<cResults.contentList.size(); count++) {
 				CContent cContent = cResults.contentList.get(count);%>
-		<%= CCnv.SketchbookContent2Html(cContent, checkLogin.m_nUserId, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
+		<%= CCnv.SketchbookContent2Html(cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 		<%}%>
 
 	</section>

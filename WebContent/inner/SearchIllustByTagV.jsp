@@ -1,3 +1,4 @@
+<%@ page import="java.util.stream.Collectors" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -5,7 +6,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/SearchIllustByTagGridPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/SearchIllustByTagGrid%sV.jsp".formatted(isApp?"App":"Pc")).forward(request,response);
 	return;
 }
 
@@ -21,7 +22,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 URLEncoder.encode(results.keyword, "UTF-8");
 final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), results.keyword) + " | " + _TEX.T("THeader.Title");
 final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc.Short"), results.keyword);
-final String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
+final String strUrl = "https://poipiku.com/SearchIllustByTag" + (isApp?"App":"Pc") + "V.jsp?GD="+results.genreId;
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
@@ -108,6 +109,7 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			});
 
 		</script>
+
 		<%if (!isApp) {%>
 		<style>body {padding-top: 79px !important;}</style>
 		<%} else {%>
@@ -126,15 +128,26 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<header class="SearchGenreFrame">
 			<div class="SearchGenre">
 				<div class="SearchEdit">
-					<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfoPcV.jsp?ID=<%=checkLogin.m_nUserId%>&GD=<%=results.genre.genreId%>"><i class="fas fa-pencil-alt"></i> <%=_TEX.T("SearchIllustByGenre.Edit")%></a>
+					<a class="SearchEditCmd PoiPassInline" href="/EditGenreInfo<%=isApp?"App":"Pc"%>V.jsp?ID=<%=checkLogin.m_nUserId%>&GD=<%=results.genre.genreId%>">
+						<span class="AnyoneOK"><%=_TEX.T("SearchIllustByGenre.Edit.AnyoneOK")%></span><span style="font-size: 12px"><i class="far fa-edit"></i><%=_TEX.T("SearchIllustByGenre.Edit")%></span>
+					</a>
 				</div>
 				<div class="SearchGenreMeta">
 					<div class="SearchGenreTitle">
 						<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(results.genre.genreImage)%>');" ></span>
-						<h2 class="GenreTitle">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
+						<div class="GenreName">
+							<h2 class="GenreNameOrg">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
+							<div class="GenreNameTranslate" translate="no">
+								<i class="fas fa-language"></i>
+								<%=results.nameTranslationList.stream().map(e->String.format("<span>%s</span>", Util.toStringHtml(e))).collect(Collectors.joining(""))%>
+							</div>
+						</div>
 					</div>
 					<div class="SearchGenreDesc"><%=Util.toStringHtml(results.genre.genreDesc)%></div>
 				</div>
+				<%if (!results.genre.genreDetail.isEmpty()){ %>
+				<div id="GenreDetail" class="SearchGenreDetail"><%=Common.AutoLinkHtml(Util.toStringHtml(results.genre.genreDetail), CCnv.SP_MODE_WVIEW)%></div>
+				<%}%>
 				<div class="SearchGenreCmd">
 					<%if(!checkLogin.m_bLogin) {%>
 					<a class="CmdBtn BtnBase Rev TitleCmdFollow" href="/"><i class="fas fa-tag"></i> <%=_TEX.T("IllustV.Tag.Follow")%></a>
@@ -145,7 +158,6 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					<%}%>
 				</div>
 			</div>
-			<div class="SearchGenreDetail showmore"><%=Common.AutoLinkHtml(Util.toStringHtml(results.genre.genreDetail), CCnv.SP_MODE_WVIEW)%></div>
 		</header>
 
 		<article class="Wrapper ThumbList">
@@ -157,7 +169,7 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 			<section id="IllustItemList" class="IllustItemList">
 				<% for (int cnt=0; cnt<results.contentList.size(); cnt++) { %>
-				<%=CCnv.Content2Html(results.contentList.get(cnt), checkLogin.m_nUserId, bSmartPhone ? CCnv.MODE_SP : CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
+				<%=CCnv.Content2Html(results.contentList.get(cnt), checkLogin, bSmartPhone ? CCnv.MODE_SP : CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 				<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
 				<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 				<%}%>

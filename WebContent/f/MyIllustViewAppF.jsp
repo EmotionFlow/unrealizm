@@ -17,7 +17,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 	CContent cContent = cResults.m_vContentList.get(nCnt);%>
-	<%= CCnv.MyContent2Html(cContent, checkLogin.m_nUserId, cResults.m_nMode, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+	<%= CCnv.MyContent2Html(cContent, checkLogin, cResults.m_nMode, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 	<%if(!cResults.m_bAdFilter && (nCnt+1)%10==0) {%>
 	<%@ include file="/inner/TAd468x60_mid.jsp"%>
 	<%}%>

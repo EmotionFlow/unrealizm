@@ -2,6 +2,8 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +41,7 @@ public final class SearchIllustByTagC {
 	public String m_strRepFileName = "";
 	public Genre genre = new Genre();
 	public int lastContentId = -1;
+	public List<String> nameTranslationList = null;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -52,7 +55,7 @@ public final class SearchIllustByTagC {
 		String strSql = "";
 		int idx = 1;
 
-		if(keyword.isEmpty() && genreId <1) return false;
+		if(keyword.isEmpty() && genreId < 1) return false;
 
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
@@ -91,8 +94,8 @@ public final class SearchIllustByTagC {
 				}
 			}
 
-			if(genreId <1) {
-				// genre id
+			if(genreId < 1) {
+				// select genre id
 				strSql = "SELECT genre_id FROM genres WHERE genre_name=?";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
@@ -138,7 +141,7 @@ public final class SearchIllustByTagC {
 			}
 
 			if (page <= 0 || startId < 0) {
-				genre = Util.getGenre(genreId);
+				genre = Genre.select(genreId);
 			}
 
 			// contents
@@ -229,6 +232,23 @@ public final class SearchIllustByTagC {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
+
+		// translations
+		nameTranslationList = GenreTranslation.select(genreId, Genre.Type.Name)
+				.stream()
+				.map(e->e.transTxt)
+				.collect(Collectors.toList());
+
+		GenreTranslation translation = null;
+		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.Type.Description);
+		if (translation != null) {
+			genre.genreDesc = translation.transTxt;
+		}
+		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.Type.Detail);
+		if (translation != null) {
+			genre.genreDetail = translation.transTxt;
+		}
+
 		return bResult;
 	}
 }
