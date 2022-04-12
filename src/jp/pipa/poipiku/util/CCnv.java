@@ -251,7 +251,6 @@ public final class CCnv {
 	}
 
 	private static void appendTag(StringBuilder strRtn, CheckLogin checkLogin, CContent cContent, int nMode, int nSpMode){
-		Log.d(cContent.m_strTagList);
 		if (cContent.m_strTagList.isEmpty()) {
 			strRtn.append("""
                     <h2 id="IllustItemTag_%d" style="display: none;"></h2>
@@ -260,9 +259,6 @@ public final class CCnv {
 			List<String> tagNameList = List.of(cContent.m_strTagList.split(" "));
 			HashMap<String, String> translationMap = getTagNameTranslations(checkLogin, cContent, tagNameList);
 
-			Log.d(translationMap.toString());
-
-			//TODO タグのhtmlを生成する
 			StringBuilder sb = new StringBuilder();
 			String appOrPc = nSpMode==SP_MODE_APP?"App":"Pc";
 			String withoutHashMark;

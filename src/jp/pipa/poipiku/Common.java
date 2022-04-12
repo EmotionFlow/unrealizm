@@ -411,8 +411,6 @@ public final class Common {
 	}
 
 	private static String _AutoLink(String strSrc, int nUserId, int nMode, int nSpMode) {
-		Log.d(strSrc);
-
 		String ILLUST_LIST = "";
 		String MY_ILLUST_LIST = "";
 		if(nSpMode==CCnv.SP_MODE_APP){
