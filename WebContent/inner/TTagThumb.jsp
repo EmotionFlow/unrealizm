@@ -24,7 +24,12 @@
 <div class="TagThumb<%=bSmartPhone?"":"Pc"%>">
 	<div class="TagThumbImg" style="background-image:url('<%=backgroundImageUrl%>')"></div>
 	<a class="TagThumbImgMask" href="/SearchIllustByTag<%=isApp?"App":"Pc"%>V.jsp?KWD=<%=strKeyWord%>"></a>
-	<a class="TagInfoTagName" href="/SearchIllustByTag<%=isApp?"App":"Pc"%>V.jsp?KWD=<%=strKeyWord%>">#<%=Util.toStringHtml(strKeyWord)%></a>
+	<a class="TagInfoTagName" href="/SearchIllustByTag<%=isApp?"App":"Pc"%>V.jsp?KWD=<%=strKeyWord%>">
+		#<%=Util.toStringHtml(strKeyWord)%>
+		<%if(transTxt != null &&  !transTxt.isEmpty()){%>
+		<br/><span class="TagInfoTagTransName"><%=Util.toStringHtml(transTxt)%></span>
+		<%}%>
+	</a>
 	<div class="TagThumbBookmarkButton" onclick="UpdateFollowTagFromTagList(<%=checkLogin.m_nUserId%>, '<%=strKeyWord%>', this)"><i class="<%=isFollowTag?"fas":"far"%> fa-star"></i></div>
 </div>
 

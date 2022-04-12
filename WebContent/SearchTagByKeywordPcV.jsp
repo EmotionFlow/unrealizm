@@ -63,6 +63,7 @@ g_strSearchWord = results.m_strKeyword;
 				String thumbnailFileName;
 				CTag tag;
 				String strKeyWord;
+				String transTxt;
 				boolean isFollowTag;
 				int genreId;
 				for(int nCnt = 0; nCnt< results.tagList.size(); nCnt++) {
@@ -71,6 +72,7 @@ g_strSearchWord = results.m_strKeyword;
 					isFollowTag = tag.isFollow;
 					thumbnailFileName = results.sampleContentFile.get(nCnt);
 					genreId = tag.m_nGenreId;
+					transTxt = tag.m_strTagTransTxt;
 				%>
 				<%@include file="inner/TTagThumb.jsp"%>
 

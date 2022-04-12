@@ -1119,19 +1119,27 @@ Decoration
 
 .TagInfoTagName {
 	position: absolute;
-	top: 64px;
+	bottom: 2px;
 	left: 1px;
-	color: #ffffff;
-	background: rgba(0,0,0,0.4);
-	padding: 2px 4px 2px 4px;
-	border-radius: 7px;
+	color: #fff;
+	background: rgba(0,0,0,.5);
+	padding: 2px 3px 2px 1px;
+	border-radius: 4px;
+	overflow: hidden;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+.TagInfoTagTransName {
+	font-size: 10px;
+	margin-left: 10px;
 }
 
 .TagThumbBookmarkButton {
 	color: #3498db;
 	position: absolute;
-	top: 3px;
-	right: 5px;
+	top: 0;
+	right: 2px;
 	font-size: 20px;
 	padding: 6px;
 }

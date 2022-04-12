@@ -22,7 +22,6 @@ public final class SearchTagByKeywordC {
 		}
 	}
 
-
 	public int selectMaxGallery = 36;
 	public ArrayList<CTag> tagList = new ArrayList<>();
 	public ArrayList<String> sampleContentFile = new ArrayList<>();
@@ -45,22 +44,30 @@ public final class SearchTagByKeywordC {
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			sql = PG_HINT + " SELECT t.tag_txt, genre_id, f.tag_txt AS following "
-					+ "FROM tags_0000 t "
-					+ "LEFT JOIN (SELECT tag_txt FROM follow_tags_0000 WHERE user_id = ?) f ON t.tag_txt = f.tag_txt "
-					+ "WHERE genre_id>0 AND t.tag_txt &@~ ? GROUP BY genre_id, t.tag_txt, f.tag_txt "
-					+ "ORDER BY COUNT(t.tag_txt) DESC OFFSET ? LIMIT ?";
+			sql = PG_HINT + """
+				SELECT t.tag_txt, t.genre_id, f.tag_txt, gt.trans_text AS following
+				FROM tags_0000 t
+				LEFT JOIN (SELECT tag_txt FROM follow_tags_0000 WHERE user_id = ?) f ON t.tag_txt = f.tag_txt
+				LEFT JOIN (SELECT genre_id, trans_text FROM genre_translations WHERE type_id=? AND lang_id=?) gt ON t.genre_id = gt.genre_id
+				WHERE t.genre_id>0 AND t.tag_txt &@~ ?
+				GROUP BY t.genre_id, t.tag_txt, f.tag_txt, gt.trans_text
+				ORDER BY COUNT(t.tag_txt) DESC OFFSET ? LIMIT ?
+				""";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, checkLogin.m_nUserId);
-			statement.setString(2, m_strKeyword);
-			statement.setInt(3, m_nPage * selectMaxGallery);
-			statement.setInt(4, selectMaxGallery);
+			int idx = 1;
+			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(idx++, Genre.Type.Name.getCode());
+			statement.setInt(idx++, checkLogin.m_nLangId);
+			statement.setString(idx++, m_strKeyword);
+			statement.setInt(idx++, m_nPage * selectMaxGallery);
+			statement.setInt(idx++, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CTag tag = new CTag();
 				tag.m_strTagTxt = resultSet.getString(1);
 				tag.m_nGenreId = resultSet.getInt(2);
 				tag.isFollow = resultSet.getString(3) != null;
+				tag.m_strTagTransTxt = resultSet.getString(4);
 				tagList.add(tag);
 			}
 			resultSet.close();resultSet=null;

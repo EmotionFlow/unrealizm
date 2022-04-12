@@ -14,13 +14,13 @@
 
 <div class="SettingList">
 	<div id="FollowList" class="IllustThumbList"
-		 style="margin-left: <%=bSmartPhone?0:28%>px;margin-top: 7px;margin-bottom: 10px;"
-	>
+		 style="margin-left: <%=bSmartPhone?0:28%>px;margin-top: 7px;margin-bottom: 10px;">
 		<%
 			String backgroundImageUrl;
 			String thumbnailFileName;
 			CTag tag;
 			String strKeyWord;
+			String transTxt;
 			boolean isFollowTag = true;
 			int genreId;
 			for(int nCnt = 0; nCnt< results.tagList.size(); nCnt++) {
@@ -28,6 +28,7 @@
 				strKeyWord = tag.m_strTagTxt;
 				thumbnailFileName = results.sampleContentFile.get(nCnt);
 				genreId = tag.m_nGenreId;
+				transTxt = tag.m_strTagTransTxt;
 		%>
 		<%@include file="/inner/TTagThumb.jsp"%>
 		<%}%>

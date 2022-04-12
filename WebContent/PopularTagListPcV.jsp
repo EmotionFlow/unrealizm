@@ -64,9 +64,11 @@ boolean bRtn = cResults.getResults(checkLogin);
 				<div class="IllustThumbList">
 					<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 						ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
-						String strKeyWord = cResults.m_vTagListWeekly.get(nCnt).m_strTagTxt;
-						boolean isFollowTag = cResults.m_vTagListWeekly.get(nCnt).isFollow;
-						int genreId = cResults.m_vTagListWeekly.get(nCnt).m_nGenreId;
+						CTag tag = cResults.m_vTagListWeekly.get(nCnt);
+						String strKeyWord =tag.m_strTagTxt;
+						String transTxt = tag.m_strTagTransTxt;
+						boolean isFollowTag = tag.isFollow;
+						int genreId = tag.m_nGenreId;
 					%>
 					<%
 					String backgroundImageUrl;
