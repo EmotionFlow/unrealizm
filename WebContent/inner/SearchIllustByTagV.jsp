@@ -139,7 +139,9 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 							<h2 class="GenreNameOrg">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
 							<div class="GenreNameTranslate" translate="no">
 								<i class="fas fa-language"></i>
+								<%if(results.nameTranslationList!=null){%>
 								<%=results.nameTranslationList.stream().map(e->String.format("<span>%s</span>", Util.toStringHtml(e))).collect(Collectors.joining(""))%>
+								<%}%>
 							</div>
 						</div>
 					</div>
