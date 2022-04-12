@@ -14,10 +14,10 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 int result = UpdateGenreFileC.ERR_UNKNOWN;
 UpdateGenreInfoC results = new UpdateGenreInfoC();
 result = results.getParam(request);
-Log.d("userId:"+results.userId);
-Log.d("genreId:"+results.genreId);
-Log.d("type:"+results.type);
-Log.d("data:"+results.data);
+//Log.d("userId:"+results.userId);
+//Log.d("genreId:"+results.genreId);
+//Log.d("type:"+results.type);
+//Log.d("data:"+results.data);
 if(result==UpdateGenreFileC.OK_PARAM) {
 	result = results.getResults(checkLogin, getServletContext());
 }
