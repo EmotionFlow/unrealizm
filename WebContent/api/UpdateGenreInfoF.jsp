@@ -1,12 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="org.codehaus.jackson.JsonGenerationException"%>
 <%@page import="org.codehaus.jackson.map.ObjectMapper"%>
-<%@page import="javax.imageio.ImageIO"%>
-<%@page import="java.awt.image.BufferedImage"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.*"%>
-<%@page import="java.sql.*"%>
-<%@page import="java.io.*"%>
-<%@page import="org.apache.commons.codec.binary.Base64"%>
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
