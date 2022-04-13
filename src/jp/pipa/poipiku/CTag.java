@@ -12,6 +12,7 @@ public class CTag {
 	public int m_nTypeId = -1;
 	public int m_nGenreId = -1;
 	public boolean isFollow = false;
+	public String m_strImageUrl;
 
 	public CTag() {}
 	public CTag(ResultSet resultSet) throws SQLException {

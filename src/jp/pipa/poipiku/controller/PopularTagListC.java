@@ -74,8 +74,9 @@ public final class PopularTagListC {
 					FROM genre_translations
 					WHERE type_id=0 AND lang_id=?
 				)
-				SELECT a.tag_txt AS tag_name, b.tag_txt AS following, trans_text
+				SELECT a.tag_txt AS tag_name, b.tag_txt AS following, trans_text, genre_image
 				FROM a
+					INNER JOIN genres g ON a.genre_id = g.genre_id
 				    LEFT JOIN b ON a.tag_txt = b.tag_txt
 				    LEFT JOIN c ON a.genre_id = c.genre_id
 				""";
@@ -90,6 +91,7 @@ public final class PopularTagListC {
 				tag.m_strTagTxt = resultSet.getString(1);
 				tag.isFollow = resultSet.getString(2) != null;
 				tag.m_strTagTransTxt = resultSet.getString(3);
+				tag.m_strImageUrl = resultSet.getString(4);
 				m_vTagListWeekly.add(tag);
 			}
 			resultSet.close();resultSet=null;

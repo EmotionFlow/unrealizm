@@ -3834,4 +3834,43 @@ hr.IllustItemListSeparator {
 }
 /********** クリップボードにURLをコピー ************/
 
+/********** HOTタグ ************/
+.CategoryListItem .SearchGenreTitle {
+	display: flex;
+	flex-flow: row nowrap;
+	overflow: hidden;
+	justify-content: flex-start;
+	margin: 10px 0 0 12px;
+}
+.CategoryListItem .SearchGenreTitle .GenreImage {
+	display: block;
+	flex: 0 0 60px;
+	width: 60px;
+	height: 60px;
+	border: solid 1px #ccc;
+	background: #fff 50% 50% no-repeat;
+	background-size: cover;
+}
+.CategoryListItem .SearchGenreTitle .GenreName {
+	display: flex;
+	flex-direction: column;
+	margin: 0 0 0 5px;
+}
+.CategoryListItem .SearchGenreTitle .GenreName .GenreNameOrg {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 3px 0 7px 0;
+}
+
+.CategoryListItem .SearchGenreTitle .GenreName .GenreNameTranslate > i{
+	font-size: 14px;
+	line-height: 12px;
+	margin-right: -3px;
+}
+
+.CategoryListItem .SearchGenreTitle .GenreName .GenreNameTranslate > span {
+	font-size: 11px;
+	margin-right: 7px;
+}
+/********** HOTタグ ************/
 

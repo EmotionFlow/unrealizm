@@ -50,12 +50,20 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<article class="Wrapper GridList">
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
-				String strKeyWord = cResults.m_vTagListWeekly.get(nCnt).m_strTagTxt;%>
+				CTag tag = cResults.m_vTagListWeekly.get(nCnt);
+				String strKeyWord = tag.m_strTagTxt;%>
 			<section class="CategoryListItem">
-				<header class="SearchResultTitle">
-					<a class="Keyword" href="/SearchIllustByTagPcV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, "UTF-8")%>">
-						#<%=strKeyWord%>
-					</a>
+				<header class="SearchGenreTitle">
+					<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(tag.m_strImageUrl)%>');"></span>
+					<div class="GenreName">
+						<h2 class="GenreNameOrg">#<%=tag.m_strTagTxt%></h2>
+						<div class="GenreNameTranslate" translate="no">
+							<i class="fas fa-language"></i>
+							<%if(tag.m_strTagTransTxt!=null){%>
+							<%=tag.m_strTagTransTxt%>
+							<%}%>
+						</div>
+					</div>
 				</header>
 				<div class="IllustThumbList">
 					<%for(CContent cContent : m_vContentList) {%>
