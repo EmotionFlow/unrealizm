@@ -12,8 +12,8 @@ source ${ENV_FILE}
 
 JAVAC=${JAVA_HOME}/bin/javac
 SOURCE_PATH="../src"
-DEPLOY_PATH="../WebContent/WEB-INF/classes"
-CLASSES_WEB_INF="../WebContent/WEB-INF/lib/*"
+DEPLOY_PATH="${WEB_CONTENT}WEB-INF/classes"
+CLASSES_WEB_INF="${WEB_CONTENT}WEB-INF/lib/*"
 JAVA_FILE_ROOT="../src/jp/pipa/poipiku"
 JAVA_FILE_DIRS=("/controller" "/servlet" "/util" "/settlement/epsilon" "/settlement" "/notify")
 
