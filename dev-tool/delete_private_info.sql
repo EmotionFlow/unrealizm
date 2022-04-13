@@ -3,6 +3,7 @@
 -- dropdb poipiku
 -- createdb poipiku
 -- gunzip -c poipiku.sql-20220312.gz | psql -d poipiku
+set statement_timeout to  1000000;
 update tbloauth set fldsecrettoken='', fldaccesstoken='';
 update users_0000 set password='will3in', email=user_id || '@will3in';
 delete from temp_emails_0000;
