@@ -1,10 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
 ENV_FILE=.env
 if [ ! -f ${ENV_FILE} ]; then
  echo ${ENV_FILE} is not found.
  exit
 fi
 
+# shellcheck disable=SC1090
 source ${ENV_FILE}
+
+if [ -z "$WEB_CONTENT" ]; then
+  echo WEB_CONTENT is empty.
+  exit
+fi
 
 /bin/rm -f ${WEB_CONTENT}js/common-*.js
 #/bin/rm -f ${WEB_CONTENT}js/commonPc-*.js
