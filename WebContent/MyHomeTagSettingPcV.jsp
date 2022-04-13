@@ -62,6 +62,7 @@ results.getResults(checkLogin);
 					String thumbnailFileName;
 					CTag tag;
 					String strKeyWord;
+					String transTxt = "";
 					boolean isFollowTag = true;
 					int genreId;
 					for(int nCnt = 0; nCnt< results.tagList.size(); nCnt++) {
