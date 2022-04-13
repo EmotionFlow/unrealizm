@@ -152,9 +152,11 @@ body {padding: 51px 0 0 0 !important;}
 .SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreNameOrg {}
 .SearchGenre .SearchGenreMeta .SearchGenreDesc {font-size: 21px;margin: 5px 0;}
 .SearchGenreDetail a {}
-
+.SearchGenreFrame{max-width: 1140px; margin: 0 auto;}
+.SearchGenre .SearchGenreCmd {flex-direction: column; justify-content: flex-end;}
 /********** genre list **********/
 .GenreItem {width: 380px;padding: 22px 31px;float: left;}
+
 
 
 
