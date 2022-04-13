@@ -10,14 +10,14 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
-public class PopularTagListC {
+public final class PopularTagListC {
 	public int m_nPage = 0;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 		}
-		catch(Exception e) {
+		catch(Exception ignored) {
 			;
 		}
 	}
@@ -57,29 +57,39 @@ public class PopularTagListC {
 
 			//strSql = "select tag_txt FROM vw_rank_tag_weekly WHERE tag_txt NOT IN('カラパレコスメ', 'お題ルーレット') order by rank desc offset ? limit ?";
 			//strSql = "select tag_txt FROM vw_rank_tag_weekly order by rank desc offset ? limit ?";
-			strSql = "WITH a AS (" +
-					"    SELECT tag_txt" +
-					"    FROM vw_rank_tag_daily" +
-					"    ORDER BY rank DESC" +
-					"    OFFSET ? LIMIT ?" +
-					")," +
-					"     b AS (" +
-					"         SELECT tag_txt" +
-					"         FROM follow_tags_0000" +
-					"         WHERE user_id = ?" +
-					"     )" +
-					" SELECT a.tag_txt AS tag_name, b.tag_txt AS following" +
-					" FROM a" +
-					"         LEFT JOIN b ON a.tag_txt = b.tag_txt;";
+			strSql = """
+				WITH a AS (
+				    SELECT tag_txt, genre_id
+				    FROM vw_rank_tag_daily
+				    ORDER BY rank DESC
+				    OFFSET ? LIMIT ?
+				),
+				b AS (
+					SELECT tag_txt
+					FROM follow_tags_0000
+					WHERE user_id = ?
+				),
+				c AS (
+					SELECT genre_id, trans_text
+					FROM genre_translations
+					WHERE type_id=0 AND lang_id=?
+				)
+				SELECT a.tag_txt AS tag_name, b.tag_txt AS following, trans_text
+				FROM a
+				    LEFT JOIN b ON a.tag_txt = b.tag_txt
+				    LEFT JOIN c ON a.genre_id = c.genre_id
+				""";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nPage* selectMaxGallery);
 			statement.setInt(2, selectMaxGallery);
 			statement.setInt(3, checkLogin.m_nUserId);
+			statement.setInt(4, checkLogin.m_nLangId);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CTag tag = new CTag();
 				tag.m_strTagTxt = resultSet.getString(1);
 				tag.isFollow = resultSet.getString(2) != null;
+				tag.m_strTagTransTxt = resultSet.getString(3);
 				m_vTagListWeekly.add(tag);
 			}
 			resultSet.close();resultSet=null;
