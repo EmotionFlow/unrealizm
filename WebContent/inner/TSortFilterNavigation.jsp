@@ -54,6 +54,9 @@
 		  style="border-color: #ffffff">
 					<%=cResults.categoryFilterId<0?_TEX.T("Category.All"):_TEX.T(String.format("Category.C%d", cResults.categoryFilterId))%>
 				</span>
+	<span onclick="showMyBoxSortFilterSubMenu('KeywordFilterMenu');">
+		<i class="fas fa-search"></i>
+	</span>
 <%--	<a class="fas fa-search" href="javascript:void(0);"></a>--%>
 </nav>
 <nav id="SortFilterSubMenu" class="SortFilterSubMenu" <%=isGridPc ? "style=\"width:500px;margin:0 auto;\"" : ""%>>
@@ -116,5 +119,20 @@
 			keyValues.clear();
 		%>
 	</div>
-	<div id="KeywordFilterMenu" style="display: none;"></div>
+	<div id="KeywordFilterMenu" class="KeywordFilterMenu" style="display: none;">
+		<%
+			keyValues = cResults.getParamKeyValueMap();
+			keyValues.remove("KWD");
+			keyValues.remove("PG");
+			strCgiParam = Common.getCgiParamStr(keyValues);
+		%>
+		<form id="MyBoxSearchWrapper" class="MyBoxSearchWrapper" method="get">
+			<div class="MyBoxSearch">
+				<input name="KWD" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
+				<div id="MyBoxSearchBtn" class="MyBoxSearchBtn">
+					<i class="fas fa-search"></i>
+				</div>
+			</div>
+		</form>
+	</div>
 </nav>
