@@ -131,8 +131,7 @@
 				<% for(Map.Entry<String, String> entry: keyValues.entrySet()) { %>
 					<input name="<%=entry.getKey()%>" type="hidden" value="<%=Util.toStringHtml(entry.getValue())%>">
 				<% } %>
-				<!--TODO: ↓検索実行後は現在の検索ワードを初期値へ-->
-				<input name="TXT" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("MyIllustListV.SearchKeyword.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
+				<input name="TXT" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("MyIllustListV.SearchKeyword.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.searchKeyword)%>" />
 				<div id="MyBoxSearchBtn" class="MyBoxSearchBtn"><%=_TEX.T("MyIllustListV.SearchKeyword.Search")%></div>
 			</div>
 		</form>
