@@ -45,7 +45,7 @@ public final class SearchTagByKeywordC {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			sql = PG_HINT + """
-				SELECT t.tag_txt, t.genre_id, f.tag_txt, gt.trans_text AS following
+				SELECT t.tag_txt, t.genre_id, gt.trans_text, f.tag_txt AS following
 				FROM tags_0000 t
 				LEFT JOIN (SELECT tag_txt FROM follow_tags_0000 WHERE user_id = ?) f ON t.tag_txt = f.tag_txt
 				LEFT JOIN (SELECT genre_id, trans_text FROM genre_translations WHERE type_id=? AND lang_id=?) gt ON t.genre_id = gt.genre_id
