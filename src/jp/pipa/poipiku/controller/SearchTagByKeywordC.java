@@ -66,8 +66,8 @@ public final class SearchTagByKeywordC {
 				CTag tag = new CTag();
 				tag.m_strTagTxt = resultSet.getString(1);
 				tag.m_nGenreId = resultSet.getInt(2);
-				tag.isFollow = resultSet.getString(3) != null;
-				tag.m_strTagTransTxt = resultSet.getString(4);
+				tag.m_strTagTransTxt = resultSet.getString(3);
+				tag.isFollow = resultSet.getString(4) != null;
 				tagList.add(tag);
 			}
 			resultSet.close();resultSet=null;
