@@ -122,17 +122,22 @@
 	<div id="KeywordFilterMenu" class="KeywordFilterMenu" style="display: none;">
 		<%
 			keyValues = cResults.getParamKeyValueMap();
-			keyValues.remove("KWD");
+			keyValues.remove("TXT");
 			keyValues.remove("PG");
 			strCgiParam = Common.getCgiParamStr(keyValues);
 		%>
-		<form id="MyBoxSearchWrapper" class="MyBoxSearchWrapper" method="get">
+		<form id="MyBoxSearchWrapper" class="MyBoxSearchWrapper" method="get" action="<%=thisPagePath%>">
 			<div class="MyBoxSearch">
-				<input name="KWD" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
-				<div id="MyBoxSearchBtn" class="MyBoxSearchBtn">
-					<i class="fas fa-search"></i>
-				</div>
+				<% for(Map.Entry<String, String> entry: keyValues.entrySet()) { %>
+					<input name="<%=entry.getKey()%>" type="hidden" value="<%=Util.toStringHtml(entry.getValue())%>">
+				<% } %>
+				<!--TODO: ↓検索実行後は現在の検索ワードを初期値へ-->
+				<input name="TXT" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("MyIllustListV.SearchKeyword.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
+				<div id="MyBoxSearchBtn" class="MyBoxSearchBtn"><%=_TEX.T("MyIllustListV.SearchKeyword.Search")%></div>
 			</div>
 		</form>
 	</div>
 </nav>
+<script>
+	$("#MyBoxSearchBtn").on('click', () => $("#MyBoxSearchWrapper").submit());
+</script>
