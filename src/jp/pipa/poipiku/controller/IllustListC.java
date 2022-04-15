@@ -148,6 +148,7 @@ public class IllustListC {
 					m_cUser.m_nPassportId		= resultSet.getInt("passport_id");
 					m_cUser.m_nAdMode			= resultSet.getInt("ng_ad_mode");
 					m_cUser.setRequestEnabled(resultSet);
+					m_cUser.m_nReaction         = resultSet.getInt("ng_reaction");
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -305,6 +306,7 @@ public class IllustListC {
 						cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 						cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 						cContent.m_cUser.m_nFollowing = m_cUser.m_nFollowing;
+						cContent.m_cUser.m_nReaction = m_cUser.m_nReaction;
 						cContent.pinOrder = 1;
 					} else {
 						cContent = new CContent();
