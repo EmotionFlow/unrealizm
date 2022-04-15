@@ -45,29 +45,39 @@ public final class SearchTagByKeywordC {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			sql = PG_HINT + """
-				SELECT t.tag_txt, t.genre_id, gt.trans_text, f.tag_txt AS following
+				WITH g_matched AS (
+				    SELECT genre_id
+				    FROM genres
+				    WHERE genre_id>0 AND genre_name &@~ ?
+				    UNION
+				    DISTINCT
+				    SELECT genre_id
+				    FROM genre_translations
+				    WHERE genre_id>0 AND trans_text &@~ ?
+				)
+				SELECT t.genre_id, t.tag_txt, COUNT(t.tag_txt) count_contents, gt.trans_text, f.genre_id AS following
 				FROM tags_0000 t
-				LEFT JOIN (SELECT tag_txt FROM follow_tags_0000 WHERE user_id = ?) f ON t.tag_txt = f.tag_txt
-				LEFT JOIN (SELECT genre_id, trans_text FROM genre_translations WHERE type_id=? AND lang_id=?) gt ON t.genre_id = gt.genre_id
-				WHERE t.genre_id>0 AND t.tag_txt &@~ ?
-				GROUP BY t.genre_id, t.tag_txt, f.tag_txt, gt.trans_text
-				ORDER BY COUNT(t.tag_txt) DESC OFFSET ? LIMIT ?
+				    INNER JOIN g_matched ON t.genre_id=g_matched.genre_id
+				    LEFT JOIN (SELECT genre_id FROM follow_tags_0000 WHERE user_id = ?) f ON t.genre_id = f.genre_id
+				    LEFT JOIN (SELECT genre_id, trans_text FROM genre_translations WHERE type_id=1 AND lang_id=?) gt ON t.genre_id = gt.genre_id
+				GROUP BY t.genre_id, t.tag_txt, gt.trans_text, f.genre_id
+				ORDER BY COUNT(t.tag_txt) DESC OFFSET ? LIMIT ?;
 				""";
 			statement = connection.prepareStatement(sql);
 			int idx = 1;
-			statement.setInt(idx++, checkLogin.m_nUserId);
-			statement.setInt(idx++, Genre.Type.Name.getCode());
-			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setString(idx++, m_strKeyword);
+			statement.setString(idx++, m_strKeyword);
+			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, m_nPage * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CTag tag = new CTag();
-				tag.m_strTagTxt = resultSet.getString(1);
-				tag.m_nGenreId = resultSet.getInt(2);
-				tag.m_strTagTransTxt = resultSet.getString(3);
-				tag.isFollow = resultSet.getString(4) != null;
+				tag.m_nGenreId = resultSet.getInt(1);
+				tag.m_strTagTxt = resultSet.getString(2);
+				tag.m_strTagTransTxt = resultSet.getString(4);
+				tag.isFollow = resultSet.getInt(5) > 0;
 				tagList.add(tag);
 			}
 			resultSet.close();resultSet=null;
