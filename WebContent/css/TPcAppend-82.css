@@ -105,11 +105,6 @@ body {padding: 51px 0 0 0 !important;}
 .TabMenu {max-width: 990px; overflow-x: auto;}
 .TabMenu .TabMenuItem {flex: 0 1 120px; font-size: 13px;}
 
-.MyBoxSearch {display: flex; flex-flow: row nowrap; text-align: center; width: 300px;}
-.MyBoxSearch .MyBoxSearchBox {display: block; flex: 1 1; height: 26px; width: 152px; padding: 0 5px; box-sizing: border-box; border: solid 1px #3498db; border-radius: 15px 0 0 15px;}
-.MyBoxSearch .MyBoxSearchBtn {display: block; height: 26px; box-sizing: border-box; margin: 0; background-color: #fff; color: #3498db; border: solid 1px #3498db; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0; font-size: 14px; padding: 0px 6px 0px 4px;}
-.MyBoxSearch .MyBoxSearchBtn:hover {border: solid 1px #fff; background-color: #3498db; color: #fff;}
-
 .Wrapper.ThumbList .PcSideBarAd {display: block; float: right; width: 300px !important; height: 250px !important; margin: 16px 8px 0px 8px !important; background-color: #eee !important;}
 .Wrapper.ViewPc .PcSideBar {display: block; width: 300px; float: none; margin: 0 0 0 30px; position: relative;; float: none; flex: 0 0 300px; min-height: 1000px;}
 .Wrapper.ViewPc .PcSideBar .FixFrame {display: flex; flex-flow: column; width: 300px; /*position: sticky; top: 81px;*/}
