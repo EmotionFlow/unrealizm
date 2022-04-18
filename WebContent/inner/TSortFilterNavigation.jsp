@@ -139,4 +139,7 @@
 </nav>
 <script>
 	$("#MyBoxSearchBtn").on('click', () => $("#MyBoxSearchWrapper").submit());
+	$("#MyBoxSearchWrapper").on('submit', () => {
+		if (!$("#MyBoxSearchBox").val()) return false;
+	});
 </script>
