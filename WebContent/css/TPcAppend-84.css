@@ -74,6 +74,8 @@ body {padding: 51px 0 0 0 !important;}
 
 .IllustItem .IllustItemCommand .GenreInfo {margin: 4px 4px 0 4px;}
 .IllustItem .IllustItemCommand .GenreInfo .GenreImage {flex: 0 40px;width: 40px;height: 40px;}
+.IllustItem .IllustItemTag {-ms-overflow-style: none;}
+.IllustItem .IllustItemTag::-webkit-scrollbar {display:none;}
 
 .Wrapper.ViewPc .IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
 .Wrapper.ViewPc .IllustItem .IllustItemDesc {padding: 0 10px;}
