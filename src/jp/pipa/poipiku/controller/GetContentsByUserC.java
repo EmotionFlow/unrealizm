@@ -34,6 +34,7 @@ public class GetContentsByUserC {
 	public final int SELECT_MAX_RELATED_GALLERY = 9;
 	public final int SELECT_MAX_RECOMMENDED_GALLERY = 9;
 
+	public CacheUsers0000.User owner;
 	public ArrayList<CContent> contentList = new ArrayList<>();
 	public ArrayList<CContent> relatedContentList = new ArrayList<>();
 	public ArrayList<CContent> recommendedContentList = new ArrayList<>();
@@ -120,7 +121,7 @@ public class GetContentsByUserC {
 			}
 
 			// author profile
-			CacheUsers0000.User owner = CacheUsers0000.getInstance().getUser(ownerUserId);
+			owner = CacheUsers0000.getInstance().getUser(ownerUserId);
 			if (owner == null) return false;
 
 			// NEW ARRIVAL

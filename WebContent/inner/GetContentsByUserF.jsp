@@ -24,6 +24,8 @@ cResults.getResults(checkLogin, needRelated, needRecommended);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 StringBuilder sbHtml = new StringBuilder();
+g_bShowAd = (cResults.owner.passportId==Common.PASSPORT_OFF || cResults.owner.adMode==CUser.AD_MODE_SHOW);
+Log.d("%d, %d, %b".formatted(cResults.owner.passportId, cResults.owner.adMode, g_bShowAd));
 int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 int nCnt;
@@ -36,7 +38,7 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 			_TEX, vResult, CCnv.VIEW_DETAIL, nSpMode,
 			cResults.isOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT));
 
-	if (nCnt % 3 == 0 && bSmartPhone){
+	if ((nCnt % 3 == 0) && bSmartPhone && g_bShowAd){
 		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 	}
 
