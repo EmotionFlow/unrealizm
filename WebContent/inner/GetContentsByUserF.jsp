@@ -25,7 +25,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 StringBuilder sbHtml = new StringBuilder();
 g_bShowAd = (cResults.owner.passportId==Common.PASSPORT_OFF || cResults.owner.adMode==CUser.AD_MODE_SHOW);
-Log.d("%d, %d, %b".formatted(cResults.owner.passportId, cResults.owner.adMode, g_bShowAd));
 int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 int nCnt;
