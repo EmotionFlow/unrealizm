@@ -32,7 +32,8 @@
 	nav#SortFilterMenu > div {
 		display: inline-flex;
 		justify-content: center;
-		width: 30%;
+		width: calc(100% / 3);
+		padding: 0px 4px;
 		overflow-x: hidden;
 	}
 	span.CategoryFilter {
