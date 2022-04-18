@@ -79,7 +79,15 @@
 		</span>
 	</div>
 	<div>
-		<span onclick="showMyBoxSortFilterSubMenu('KeywordFilterMenu');" class="KeywordFilter">
+		<%
+			String onClickKeyword = "";
+			if(checkLogin.m_nPassportId==Common.PASSPORT_OFF){
+				onClickKeyword = "showRecommendPoipassDlg('" + _TEX.T("RecommendPoipass.MyBoxKeywordSearch") + "');";
+			} else {
+				onClickKeyword = "showMyBoxSortFilterSubMenu('KeywordFilterMenu');";
+			}
+		%>
+		<span onclick="<%=onClickKeyword%>" class="KeywordFilter">
 			<i class="fas fa-search"></i>
 			<span class="currentKeyword"><%=myBoxKeyword%></span>
 		</span>
@@ -146,23 +154,25 @@
 			keyValues.clear();
 		%>
 	</div>
-	<div id="KeywordFilterMenu" class="KeywordFilterMenu" style="display: none;">
-		<%
-			keyValues = cResults.getParamKeyValueMap();
-			keyValues.remove("TXT");
-			keyValues.remove("PG");
-			strCgiParam = Common.getCgiParamStr(keyValues);
-		%>
-		<form id="MyBoxSearchWrapper" class="MyBoxSearchWrapper" method="get" action="<%=thisPagePath%>">
-			<div class="MyBoxSearch">
-				<% for(Map.Entry<String, String> entry: keyValues.entrySet()) { %>
-					<input name="<%=entry.getKey()%>" type="hidden" value="<%=Util.toStringHtml(entry.getValue())%>">
-				<% } %>
-				<input name="TXT" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("MyIllustListV.SearchKeyword.PlaceHolder")%>" value="<%=myBoxKeyword%>" />
-				<div id="MyBoxSearchBtn" class="MyBoxSearchBtn"><%=_TEX.T("MyIllustListV.SearchKeyword.Search")%></div>
-			</div>
-		</form>
-	</div>
+	<% if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) { %>
+		<div id="KeywordFilterMenu" class="KeywordFilterMenu" style="display: none;">
+			<%
+				keyValues = cResults.getParamKeyValueMap();
+				keyValues.remove("TXT");
+				keyValues.remove("PG");
+				strCgiParam = Common.getCgiParamStr(keyValues);
+			%>
+			<form id="MyBoxSearchWrapper" class="MyBoxSearchWrapper" method="get" action="<%=thisPagePath%>">
+				<div class="MyBoxSearch">
+					<% for(Map.Entry<String, String> entry: keyValues.entrySet()) { %>
+						<input name="<%=entry.getKey()%>" type="hidden" value="<%=Util.toStringHtml(entry.getValue())%>">
+					<% } %>
+					<input name="TXT" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("MyIllustListV.SearchKeyword.PlaceHolder")%>" value="<%=myBoxKeyword%>" />
+					<div id="MyBoxSearchBtn" class="MyBoxSearchBtn"><%=_TEX.T("MyIllustListV.SearchKeyword.Search")%></div>
+				</div>
+			</form>
+		</div>
+	<% } %>
 </nav>
 <script>
 	$("#MyBoxSearchBtn").on('click', () => $("#MyBoxSearchWrapper").submit());
