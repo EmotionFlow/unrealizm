@@ -28,6 +28,7 @@
 	});
 }
 </script>
+<%}%>
 <style>
 	nav#SortFilterMenu > div {
 		display: inline-flex;
@@ -47,7 +48,6 @@
 		font-size: 11px;
 	}
 </style>
-<%}%>
 <% String myBoxKeyword = Util.toStringHtml(cResults.searchKeyword); %>
 <nav id="SortFilterMenu" class="SortFilterMenu" <%=isGridPc ? "style=\"width:400px;margin:0 auto;\"" : ""%>>
 	<div>
