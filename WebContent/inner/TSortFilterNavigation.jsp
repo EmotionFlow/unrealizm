@@ -28,35 +28,61 @@
 	});
 }
 </script>
+<style>
+	nav#SortFilterMenu > div {
+		display: inline-flex;
+		justify-content: center;
+		width: 30%;
+		overflow-x: hidden;
+	}
+	span.CategoryFilter {
+		display: block;
+	}
+	span.KeywordFilter {
+		max-width: 100%;
+		white-space: nowrap;
+	}
+	span.currentKeyword {
+		font-size: 11px;
+	}
+</style>
 <%}%>
+<% String myBoxKeyword = Util.toStringHtml(cResults.searchKeyword); %>
 <nav id="SortFilterMenu" class="SortFilterMenu" <%=isGridPc ? "style=\"width:400px;margin:0 auto;\"" : ""%>>
-	<span class="SortMenuIcon" onclick="showMyBoxSortFilterSubMenu('SortMenu');">
-		<%
-			String sortMenuIconClass = "";
-			String sortMenuDirectionIcon = null;
-			if (cResults.sortBy == IllustListC.SortBy.None) {
-				sortMenuIconClass = "fas fa-sort-amount-down";
-			} else if (cResults.sortBy == IllustListC.SortBy.Description) {
-				sortMenuIconClass = cResults.sortOrderAsc ? "fas fa-sort-alpha-down" : "fas fa-sort-alpha-up";
-			} else if (cResults.sortBy == IllustListC.SortBy.CreatedAt) {
-				sortMenuIconClass = "far fa-calendar WithDirection";
-				sortMenuDirectionIcon = cResults.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
-			} else if (cResults.sortBy == IllustListC.SortBy.UpdatedAt) {
-				sortMenuIconClass = "fas fa-pen WithDirection";
-				sortMenuDirectionIcon = cResults.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
-			}
-		%>
-		<%if(sortMenuDirectionIcon!=null){%><i class="SortDirection <%=sortMenuDirectionIcon%>"></i><%}%>
-		<i class="<%=sortMenuIconClass%>"></i>
-	</span>
-	<span onclick="showMyBoxSortFilterSubMenu('CategoryFilterMenu');"
-		  class="CategoryFilter <%="Category C"+cResults.categoryFilterId%>"
-		  style="border-color: #ffffff">
+	<div>
+		<span class="SortMenuIcon" onclick="showMyBoxSortFilterSubMenu('SortMenu');">
+			<%
+				String sortMenuIconClass = "";
+				String sortMenuDirectionIcon = null;
+				if (cResults.sortBy == IllustListC.SortBy.None) {
+					sortMenuIconClass = "fas fa-sort-amount-down";
+				} else if (cResults.sortBy == IllustListC.SortBy.Description) {
+					sortMenuIconClass = cResults.sortOrderAsc ? "fas fa-sort-alpha-down" : "fas fa-sort-alpha-up";
+				} else if (cResults.sortBy == IllustListC.SortBy.CreatedAt) {
+					sortMenuIconClass = "far fa-calendar WithDirection";
+					sortMenuDirectionIcon = cResults.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
+				} else if (cResults.sortBy == IllustListC.SortBy.UpdatedAt) {
+					sortMenuIconClass = "fas fa-pen WithDirection";
+					sortMenuDirectionIcon = cResults.sortOrderAsc ? "fas fa-sort-up" : "fas fa-sort-down";
+				}
+			%>
+			<%if(sortMenuDirectionIcon!=null){%><i class="SortDirection <%=sortMenuDirectionIcon%>"></i><%}%>
+			<i class="<%=sortMenuIconClass%>"></i>
+		</span>
+	</div>
+	<div>
+		<span onclick="showMyBoxSortFilterSubMenu('CategoryFilterMenu');"
+				class="CategoryFilter <%="Category C"+cResults.categoryFilterId%>"
+				style="border-color: #ffffff">
 					<%=cResults.categoryFilterId<0?_TEX.T("Category.All"):_TEX.T(String.format("Category.C%d", cResults.categoryFilterId))%>
-				</span>
-	<span onclick="showMyBoxSortFilterSubMenu('KeywordFilterMenu');">
-		<i class="fas fa-search"></i>
-	</span>
+		</span>
+	</div>
+	<div>
+		<span onclick="showMyBoxSortFilterSubMenu('KeywordFilterMenu');" class="KeywordFilter">
+			<i class="fas fa-search"></i>
+			<span class="currentKeyword"><%=myBoxKeyword%></span>
+		</span>
+	</div>
 <%--	<a class="fas fa-search" href="javascript:void(0);"></a>--%>
 </nav>
 <nav id="SortFilterSubMenu" class="SortFilterSubMenu" <%=isGridPc ? "style=\"width:500px;margin:0 auto;\"" : ""%>>
@@ -131,7 +157,7 @@
 				<% for(Map.Entry<String, String> entry: keyValues.entrySet()) { %>
 					<input name="<%=entry.getKey()%>" type="hidden" value="<%=Util.toStringHtml(entry.getValue())%>">
 				<% } %>
-				<input name="TXT" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("MyIllustListV.SearchKeyword.PlaceHolder")%>" value="<%=Util.toStringHtml(cResults.searchKeyword)%>" />
+				<input name="TXT" id="MyBoxSearchBox" class="MyBoxSearchBox" type="text" placeholder="<%=_TEX.T("MyIllustListV.SearchKeyword.PlaceHolder")%>" value="<%=myBoxKeyword%>" />
 				<div id="MyBoxSearchBtn" class="MyBoxSearchBtn"><%=_TEX.T("MyIllustListV.SearchKeyword.Search")%></div>
 			</div>
 		</form>

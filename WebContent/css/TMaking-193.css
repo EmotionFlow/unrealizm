@@ -3728,7 +3728,7 @@ hr.IllustItemListSeparator {
 	margin-right: -13px;
 }
 
-.SortFilterMenu > .CategoryFilter,
+.SortFilterMenu .CategoryFilter,
 .CategoryFilterMenu > .Category {
 	font-size: 10px;
 	text-align: center;
