@@ -269,7 +269,10 @@ public class IllustListC {
 					categoryFilterId < 0 ?
 							"" : "AND category_id = ? ";
 
-			//TODO free-word
+			// free-word
+			if (checkLogin.m_nPassportId == Common.PASSPORT_OFF) {
+				searchKeyword = "";
+			}
 			String[] searchTargetColumns = { "description", "text_body", "private_note", "tag_list" };
 			final String strSearchCond =
 					searchKeyword.isEmpty() ?
