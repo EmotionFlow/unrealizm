@@ -19,7 +19,12 @@ if (pageNum == 0) {
 	needRelated = false;
 	needRecommended = false;
 }
-cResults.getResults(checkLogin, needRelated, needRecommended);
+
+boolean result = cResults.getResults(checkLogin, needRelated, needRecommended);
+if (!result) {
+	Log.d("存在しないユーザーへのアクセス");
+	return;
+}
 
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
