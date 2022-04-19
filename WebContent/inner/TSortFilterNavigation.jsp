@@ -118,7 +118,7 @@
 		   href="<%=String.format("%s?%s", thisPagePath,
 					   			strCgiParam +
 					   			"&SBY=" + IllustListC.SortBy.CreatedAt.getCode() +
-					   			cResults.getSortAscParam(IllustListC.SortBy.Description))
+					   			cResults.getSortAscParam(IllustListC.SortBy.CreatedAt))
 					   			%>"
 			<%}%>
 		></a>
@@ -129,7 +129,7 @@
 		   href="<%=String.format("%s?%s", thisPagePath,
 					   			strCgiParam +
 					   			"&SBY=" + IllustListC.SortBy.UpdatedAt.getCode() +
-					   			cResults.getSortAscParam(IllustListC.SortBy.Description))
+					   			cResults.getSortAscParam(IllustListC.SortBy.UpdatedAt))
 					   			%>"
 
 			<%}%>
