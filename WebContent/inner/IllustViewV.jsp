@@ -83,7 +83,7 @@ strDesc = (strDesc.isEmpty())?Util.deleteCrLf(cResults.m_cContent.m_strDescripti
 final String strTitle = CTweet.generateState(cResults.m_cContent, _TEX)
 		+ CTweet.generateFileNum(cResults.m_cContent, _TEX)
 		+ " " + Util.subStrNum(strDesc, 15)
-		+ " " + cResults.m_cContent.m_strTagList + cResults.m_cContent.
+		+ " " + cResults.m_cContent.m_strTagList
 		+ " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");
 
 String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
