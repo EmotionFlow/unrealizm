@@ -233,7 +233,15 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarPc("/MyIllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%
+					keyValues = cResults.getParamKeyValueMap();
+					keyValues.remove("PG");
+					strCgiParam = "&" + Common.getCgiParamStr(keyValues);
+				%>
+				<%=CPageBar.CreatePageBarSp(thisPagePath, strCgiParam, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%
+					keyValues.clear();
+				%>
 			</nav>
 		</article>
 
