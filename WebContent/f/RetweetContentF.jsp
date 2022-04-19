@@ -7,6 +7,13 @@ int result;
 int errorCode;
 int errorDetailCode;
 
+if (Util.isBot(request)) return;
+final String referer = Util.toString(request.getHeader("Referer"));
+if (!referer.contains("poipiku.com")) {
+	Log.d("RetweetContentFへの不正アクセス(referer不一致):" + referer);
+	return;
+}
+
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) {
 	result = Common.API_NG;
