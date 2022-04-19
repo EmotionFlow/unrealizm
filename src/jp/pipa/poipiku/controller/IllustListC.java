@@ -49,6 +49,9 @@ public class IllustListC {
 	public int categoryFilterId = -1;
 	public String searchKeyword = "";
 
+	private static final String[] searchTargetColumns = { "description", "text_body", "private_note", "tag_list" };
+
+
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
@@ -270,14 +273,16 @@ public class IllustListC {
 							"" : "AND category_id = ? ";
 
 			// free-word
+			final String strSearchCond;
 			if (checkLogin.m_nPassportId == Common.PASSPORT_OFF) {
 				searchKeyword = "";
-			}
-			String[] searchTargetColumns = { "description", "text_body", "private_note", "tag_list" };
-			final String strSearchCond =
+				strSearchCond = "";
+			} else {
+				strSearchCond =
 					searchKeyword.isEmpty() ?
-					"" :
-					"AND (" + Arrays.stream(searchTargetColumns).map(col -> col + " &@~ ?").collect(Collectors.joining(" OR ")) + ") ";
+						"" :
+						"AND (" + Arrays.stream(searchTargetColumns).map(col -> col + " &@~ ?").collect(Collectors.joining(" OR ")) + ") ";
+			}
 
 			// full open for owner
 			String strOpenCnd = (!m_bOwner || (m_bOwner&&!m_bDispUnPublished))?"AND open_id<>2 ":"";
