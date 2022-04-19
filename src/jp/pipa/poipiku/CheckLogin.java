@@ -65,7 +65,7 @@ public final class CheckLogin {
 			m_nUserId		= -1;
 			m_strNickName	= "guest";
 			m_strHashPass	= "";
-			m_bLogin = false;
+			m_bLogin        = false;
 			Util.setCookie(response, Common.POIPIKU_LK , m_strHashPass, Integer.MAX_VALUE);
 		} else {
 			m_nUserId		= cacheUser.userId;
@@ -83,8 +83,21 @@ public final class CheckLogin {
 		try {
 			// ハッシュパスワードが保存されているcookie情報を取得
 			getCookie(request);
+
 			// ユーザ認証・情報取得
-			validateUser(response);
+			if (!validateUser(response)) {
+				// 非ログインユーザーの言語設定を取得する。hlパラメータ優先。なければcookie。
+				String langStr;
+				langStr = request.getParameter(Common.LANG_ID_POST);
+				if (langStr != null && !langStr.isEmpty()) {
+					m_nLangId = SupportedLocales.findId(langStr);
+				} else {
+					langStr = Util.getCookie(request, Common.LANG_ID);
+					if (langStr != null && !langStr.isEmpty()) {
+						m_nLangId = SupportedLocales.findId(langStr);
+					}
+				}
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

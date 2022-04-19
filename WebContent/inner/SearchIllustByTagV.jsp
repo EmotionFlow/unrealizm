@@ -1,4 +1,5 @@
 <%@ page import="java.util.stream.Collectors" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -19,9 +20,9 @@ results.getResults(checkLogin, true);
 
 final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
-URLEncoder.encode(results.keyword, "UTF-8");
-final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), results.keyword) + " | " + _TEX.T("THeader.Title");
-final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc.Short"), results.keyword);
+final String tagName = (results.transTagName != null && !results.transTagName.isEmpty()) ? results.transTagName : results.keyword;
+final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), tagName);
+final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc.Short"), tagName);
 final String strUrl = "https://poipiku.com/SearchIllustByTag" + (isApp?"App":"Pc") + "V.jsp?GD="+results.genreId;
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);

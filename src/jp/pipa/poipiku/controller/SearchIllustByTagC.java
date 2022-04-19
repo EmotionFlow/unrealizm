@@ -42,6 +42,7 @@ public final class SearchIllustByTagC {
 	public Genre genre = new Genre();
 	public int lastContentId = -1;
 	public List<String> nameTranslationList = null;
+	public String transTagName = null; // 閲覧言語に一致したタグ名
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -234,7 +235,15 @@ public final class SearchIllustByTagC {
 		}
 
 		// translations
-		nameTranslationList = GenreTranslation.select(genreId, Genre.Type.Name)
+		List<GenreTranslation> transList = GenreTranslation.select(genreId, Genre.Type.Name);
+		for (GenreTranslation g : transList) {
+			if (g.langId == checkLogin.m_nLangId) {
+				transTagName = g.transTxt;
+				break;
+			}
+		}
+
+		nameTranslationList = transList
 				.stream()
 				.map(e->e.transTxt)
 				.collect(Collectors.toList());
