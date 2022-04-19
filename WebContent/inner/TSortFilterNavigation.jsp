@@ -43,6 +43,7 @@
 	span.KeywordFilter {
 		max-width: 100%;
 		white-space: nowrap;
+        overflow: hidden;
 	}
 	span.currentKeyword {
 		font-size: 11px;
@@ -88,8 +89,7 @@
 			}
 		%>
 		<span onclick="<%=onClickKeyword%>" class="KeywordFilter">
-			<i class="fas fa-search"></i>
-			<span class="currentKeyword"><%=myBoxKeyword%></span>
+			<i class="fas fa-search" <%=myBoxKeyword.isEmpty()?"":"style=\"font-size:13px;margin-right:2px;\""%>></i><span class="currentKeyword"><%=myBoxKeyword%></span>
 		</span>
 	</div>
 <%--	<a class="fas fa-search" href="javascript:void(0);"></a>--%>
