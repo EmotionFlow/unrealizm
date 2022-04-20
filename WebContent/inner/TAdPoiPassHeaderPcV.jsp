@@ -1,33 +1,49 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jp.pipa.poipiku.Common"%>
-<%if((checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) && checkLogin.m_nUserId!=315) {%>
+<%
+final String poipassHeaderBenefitMessage;
+final int poipassHeaderBenefitMessageRnd = (int)(Math.random()*5.0);
+%>
+<%if(!checkLogin.m_bLogin){%>
 <div class="HeaderPoiPassAd" style="width: 100%;">
-	<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS" style="display: flex; flex-flow: row; padding: 3px 0 ; justify-content: center;background-image: linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%);">
-		<img style="height: 25px; margin: 0 10px 0 0;" src="/img/poipiku_passport_logo3_60.png"  alt="POIPASS"/>
+	<div class="CreateAccountInfo">
+		<div class="CreateAccountBenefit">
+			<%
+				poipassHeaderBenefitMessage = switch (poipassHeaderBenefitMessageRnd) {
+					case 0 -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit01");
+					case 1 -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit02");
+					case 2 -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit03");
+					default -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit04");
+				};
+			%>
+			<%=poipassHeaderBenefitMessage%>
+		</div>
+		<div class="CreateAccountButtons">
+			<a class="BtnBase LoginButton" href="javascript:login_from_twitter_tmenupc_00.submit()">
+				<span class="typcn typcn-social-twitter"></span>
+			</a>
+			- or -
+			<a class="BtnBase LoginButton" href="/LoginFormEmailPcV.jsp">
+				<span class="typcn typcn-mail"></span>
+			</a>
+		</div>
+	</div>
+</div>
+<%}else if((checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) && checkLogin.m_nUserId!=315) {%>
+<div class="HeaderPoiPassAd" style="width: 100%;">
+	<a class="HeaderPoiPassAdBanner" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">
+		<img src="/img/poipiku_passport_logo3_60.png" alt="POIPASS"/>
 		<%
-		final String message;
-		int nRnd = (int)(Math.random()*5.0);
-		switch(nRnd) {
-		case 0:
-			message = _TEX.T("TAdPoiPassHeader.Message02");
-			break;
-		case 1:
-			message = _TEX.T("TAdPoiPassHeader.Message03");
-			break;
-		case 2:
-			message = _TEX.T("TAdPoiPassHeader.Message04");
-			break;
-		case 3:
-			message = _TEX.T("TAdPoiPassHeader.Message05");
-			break;
-		case 4:
-			message = _TEX.T("TAdPoiPassHeader.Message06");
-			break;
-		default:
-			message = _TEX.T("TAdPoiPassHeader.Message01");
-		}
+			poipassHeaderBenefitMessage = switch (poipassHeaderBenefitMessageRnd) {
+				case 0 -> _TEX.T("TAdPoiPassHeader.Message02");
+				case 1 -> _TEX.T("TAdPoiPassHeader.Message03");
+				case 2 -> _TEX.T("TAdPoiPassHeader.Message04");
+				case 3 -> _TEX.T("TAdPoiPassHeader.Message05");
+				case 4 -> _TEX.T("TAdPoiPassHeader.Message06");
+				default -> _TEX.T("TAdPoiPassHeader.Message01");
+			};
 		%>
-		<span style="font-weight: bold; font-size: 13px; line-height: 25px; text-decoration: underline;"><%=message%></span>
+		<span><%=poipassHeaderBenefitMessage%></span>
 	</a>
 </div>
 <%}%>

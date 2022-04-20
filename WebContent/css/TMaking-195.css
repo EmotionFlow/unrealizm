@@ -3874,3 +3874,47 @@ hr.IllustItemListSeparator {
 }
 /********** HOTタグ ************/
 
+/********** ログイン・ポイパス促し  ************/
+.HeaderPoiPassAd .CreateAccountInfo {
+	padding: 15px 0;
+	width: 100%;
+	background-color: #f8f8f8;
+	color: #6d6965;
+}
+.HeaderPoiPassAd .CreateAccountInfo .CreateAccountBenefit {
+	font-size: 11px;
+	margin: 0 10px;
+	text-align: center;
+}
+.HeaderPoiPassAd .CreateAccountInfo .CreateAccountButtons {
+	text-align: center;
+	margin-top: 10px;
+}
+.HeaderPoiPassAd .CreateAccountInfo .CreateAccountButtons .LoginButton  {
+	opacity: 0.9;
+	font-size: 12px;
+	border-radius: 20px;
+}
+.HeaderPoiPassAd .CreateAccountInfo .CreateAccountButtons .LoginButton .typcn-mail {
+	position: relative;
+	top: -2px;
+}
+
+.HeaderPoiPassAd .HeaderPoiPassAdBanner {
+	display: flex;
+	flex-flow: row;
+	padding: 3px 0;
+	justify-content: center;
+	background-image: linear-gradient(135deg, #5EFCE8 10%, #736EFE 100%);
+}
+.HeaderPoiPassAd .HeaderPoiPassAdBanner > img {
+	height: 25px;
+	margin: 0 10px 0 0;
+}
+.HeaderPoiPassAd .HeaderPoiPassAdBanner > span {
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 25px;
+	text-decoration: underline;
+}
+/********** ログイン・ポイパス促し  ************/

@@ -36,6 +36,15 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 	strNextUrl = "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
 }
 
+if (strNextUrl.isEmpty()) {
+	String referer = Util.toString(request.getHeader("Referer"));
+	if (referer.contains("poipiku.com")) {
+		strNextUrl = referer.replace("https://poipiku.com", "");
+	} else {
+		strNextUrl = "/";
+	}
+}
+
 String infoMsgKey = null;
 if (strRequestUri.indexOf("/MyHome") == 0) {
 	infoMsgKey = "MyHome";
@@ -216,15 +225,18 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 					<form id="RegistForm" onsubmit="return RegistUser()">
 						<div class="SettingBody">
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
+								<span class="typcn typcn-mail"></span>
 								<%=_TEX.T("LoginFormV.Label.Email")%>
 							</div>
 							<input id="RegistEmail" class="SettingBodyTxt" type="email" />
 							<div class="SettingBodyTxt" style="margin-top: 10px;">
+								<i class="fas fa-key"></i>
 								<%=_TEX.T("LoginFormV.Label.Password")%>
 							</div>
 							<input id="RegistPassword" class="SettingBodyTxt" type="password" />
 							<div class="RegistItem">
 								<div class="SettingBodyTxt" style="margin-top: 10px;">
+									<i class="fas fa-user"></i>
 									<%=_TEX.T("LoginFormV.Label.Nickname")%>
 									<span style="font-size: 9px;"> (<%=_TEX.T("LoginFormV.Label.Nickname.Info")%>)</span>
 								</div>

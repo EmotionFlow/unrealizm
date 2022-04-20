@@ -42,7 +42,7 @@ if(!cResults.getResults(checkLogin)) {
 		<link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 		<link href="/css/TBase-42.css" type="text/css" rel="stylesheet" />
-		<link href="/css/TMaking-194.css" type="text/css" rel="stylesheet" />
+		<link href="/css/TMaking-195.css" type="text/css" rel="stylesheet" />
 		<link href="/css/TBasePc-75.css" type="text/css" rel="stylesheet" />
 		<link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 		<link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
