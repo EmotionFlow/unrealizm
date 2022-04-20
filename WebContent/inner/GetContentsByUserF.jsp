@@ -22,7 +22,7 @@ if (pageNum == 0) {
 
 boolean result = cResults.getResults(checkLogin, needRelated, needRecommended);
 if (!result) {
-	Log.d("存在しないユーザーへのアクセス");
+	Log.d("コンテンツが取得できなかった");
 	return;
 }
 

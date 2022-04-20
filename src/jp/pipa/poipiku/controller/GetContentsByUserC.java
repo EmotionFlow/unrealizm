@@ -57,8 +57,11 @@ public class GetContentsByUserC {
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				ownerUserId = resultSet.getInt(1);
-			} else {
-				Log.d("record not found");
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+			if (ownerUserId <= 0) {
+				Log.d("content not found %d".formatted(startId));
 				return false;
 			}
 
