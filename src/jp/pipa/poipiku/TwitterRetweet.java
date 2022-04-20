@@ -37,7 +37,10 @@ public final class TwitterRetweet extends Model {
 	static public boolean insert(int userId, long twitter_user_id, int contentId){
 		Connection connection = null;
 		PreparedStatement statement = null;
-		final String sql = "INSERT INTO twitter_retweets(user_id, twitter_user_id, content_id) VALUES (?,?,?)";
+		final String sql = """
+                INSERT INTO twitter_retweets(user_id, twitter_user_id, content_id) VALUES (?,?,?)
+                ON CONFLICT DO NOTHING
+                """;
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 			statement = connection.prepareStatement(sql);

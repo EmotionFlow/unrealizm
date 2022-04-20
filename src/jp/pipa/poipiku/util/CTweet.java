@@ -400,7 +400,7 @@ public final class CTweet {
 			IDs ids;
 			boolean isFound = false;
 			while (loops++ < 20) {
-				ids = twitter.getRetweeterIds(tweetId, cursor++);
+				ids = twitter.getRetweeterIds(tweetId, cursor);
 				long[] idAry = ids.getIDs();
 
 //				Long[] idLst = Arrays.stream(idAry).boxed().toArray(Long[]::new);
