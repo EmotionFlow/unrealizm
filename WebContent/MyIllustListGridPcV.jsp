@@ -74,6 +74,10 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 		.HeaderSetting {text-align: center; position: absolute; top: 12px; right: 10px;}
 		.NoContents {display: block; padding: 250px 0; width: 100%; text-align: center;}
 		.TweetMyBox {padding-top: 5px; text-align: center;}
+		.MyBoxSearch {display: flex; flex-flow: row nowrap; text-align: center; width: 300px;}
+		.MyBoxSearch .MyBoxSearchBox {display: block; flex: 1 1; height: 26px; width: 152px; padding: 0 5px; box-sizing: border-box; border: solid 1px #3498db; border-radius: 15px 0 0 15px;}
+		.MyBoxSearch .MyBoxSearchBtn {display: block; height: 26px; box-sizing: border-box; margin: 0; background-color: #fff; color: #3498db; border: solid 1px #3498db; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0; font-size: 14px; padding: 0px 6px 0px 4px;}
+		.MyBoxSearch .MyBoxSearchBtn:hover {border: solid 1px #fff; background-color: #3498db; color: #fff;}
 		</style>
 
 		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
@@ -229,7 +233,15 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarPc("/MyIllustListPcV.jsp", String.format("&ID=%d&KWD=%s", cResults.m_nUserId, strEncodedKeyword), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%
+					keyValues = cResults.getParamKeyValueMap();
+					keyValues.remove("PG");
+					strCgiParam = "&" + Common.getCgiParamStr(keyValues);
+				%>
+				<%=CPageBar.CreatePageBarSp(thisPagePath, strCgiParam, cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%
+					keyValues.clear();
+				%>
 			</nav>
 		</article>
 

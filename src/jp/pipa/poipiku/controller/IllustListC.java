@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,10 @@ public class IllustListC {
 	public SortBy sortBy = SortBy.None;
 	public boolean sortOrderAsc = false;
 	public int categoryFilterId = -1;
+	public String searchKeyword = "";
+
+	private static final String[] searchTargetColumns = { "description", "text_body", "private_note", "tag_list" };
+
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
@@ -58,6 +63,7 @@ public class IllustListC {
 			if (sortBy == null) sortBy = SortBy.None;
 			sortOrderAsc    = Util.toBoolean(cRequest.getParameter("SASC"));
 			categoryFilterId = Util.toInt(cRequest.getParameter("CAT"));
+			searchKeyword = Common.TrimAll(Common.CrLfInjection(cRequest.getParameter("TXT")));
 		} catch(Exception e) {
 			m_nUserId = -1;
 		}
@@ -71,6 +77,7 @@ public class IllustListC {
 		if (sortBy != SortBy.None) keyValues.put("SBY", Integer.toString(sortBy.getCode()));
 		if (sortOrderAsc) keyValues.put("SASC", "1");
 		if (categoryFilterId>=0) keyValues.put("CAT", Integer.toString(categoryFilterId));
+		if (!searchKeyword.isEmpty()) keyValues.put("TXT", searchKeyword);
 		return keyValues;
 	}
 
@@ -264,9 +271,19 @@ public class IllustListC {
 
 			final String strCategoryCond =
 					categoryFilterId < 0 ?
-							"" : "AND category_id = ?";
+							"" : "AND category_id = ? ";
 
-			//TODO free-word
+			// free-word
+			final String strSearchCond;
+			if (checkLogin.m_nPassportId == Common.PASSPORT_OFF) {
+				searchKeyword = "";
+				strSearchCond = "";
+			} else {
+				strSearchCond =
+					searchKeyword.isEmpty() ?
+						"" :
+						"AND (" + Arrays.stream(searchTargetColumns).map(col -> col + " &@~ ?").collect(Collectors.joining(" OR ")) + ") ";
+			}
 
 			// full open for owner
 			String strOpenCnd = (!m_bOwner || (m_bOwner&&!m_bDispUnPublished))?"AND open_id<>2 ":"";
@@ -276,6 +293,7 @@ public class IllustListC {
 					+ "AND safe_filter<=? "
 					+ strTagCond
 					+ strCategoryCond
+					+ strSearchCond
 					+ strOpenCnd;
 
 			List<CContent> pinContents = new ArrayList<>();
@@ -290,6 +308,11 @@ public class IllustListC {
 				}
 				if(!strCategoryCond.isEmpty()) {
 					statement.setInt(idx++, categoryFilterId);
+				}
+				if(!strSearchCond.isEmpty()) {
+					for(int i = 0; i < searchTargetColumns.length; i++) {
+						statement.setString(idx++, searchKeyword);
+					}
 				}
 				statement.setInt(idx++, pins.get(0).contentId);
 				resultSet = statement.executeQuery();
@@ -361,6 +384,11 @@ public class IllustListC {
 			if(!strCategoryCond.isEmpty()) {
 				statement.setInt(idx++, categoryFilterId);
 			}
+			if(!strSearchCond.isEmpty()) {
+				for(int i = 0; i < searchTargetColumns.length; i++) {
+					statement.setString(idx++, searchKeyword);
+				}
+			}
 			resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				m_nContentsNum = resultSet.getInt(1);
@@ -380,6 +408,11 @@ public class IllustListC {
 			}
 			if(!strCategoryCond.isEmpty()) {
 				statement.setInt(idx++, categoryFilterId);
+			}
+			if(!strSearchCond.isEmpty()) {
+				for(int i = 0; i < searchTargetColumns.length; i++) {
+					statement.setString(idx++, searchKeyword);
+				}
 			}
 
 			final int offset;
