@@ -18,12 +18,10 @@ public final class SearchIllustByKeywordC {
 			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
 		}
-		catch(Exception e) {
-			;
-		}
+		catch(Exception ignored) {}
 	}
 
-	private static final String PG_HINT = "/*+ BitmapScan(contents_0000 contents_0000_description_pgidx) */";
+	private static final String PG_HINT = "/*+ BitmapIndexScan(contents_0000_description_pgidx) */";
 
 	public int selectMaxGallery = 15;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
@@ -45,10 +43,24 @@ public final class SearchIllustByKeywordC {
 		String strSql = "";
 		int idx = 1;
 
-		if(m_strKeyword.isEmpty()) return bResult;
+		if(m_strKeyword.isEmpty()) return false;
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
+
+			String sqlWith = """
+					WITH kwd_contents AS (
+					SELECT * FROM contents_0000 WHERE description &@~ ?
+					)
+					""";
+
+			StringBuilder keyWords = new StringBuilder(m_strKeyword);
+			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
+				String[] muteKeywords = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId).trim().split("\\s+");
+				for (String kw : muteKeywords) {
+					keyWords.append(" -").append(kw);
+				}
+			}
 
 			// BLOCK USER
 			String strCondBlockUser = "";
@@ -62,39 +74,24 @@ public final class SearchIllustByKeywordC {
 				strCondBlocedkUser = "AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
 			}
 
-			// MUTE KEYWORD
-			String strMuteKeyword = "";
-			String strCondMute = "";
-			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
-				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
-				}
-			}
-
-			final String strSqlFromWhere = "FROM contents_0000 "
+			final String strSqlFromWhere = "FROM kwd_contents "
 					+ "WHERE open_id<>2 "
-					+ "AND description &@~ ? "
 					+ "AND safe_filter<=? "
 					+ strCondBlockUser
-					+ strCondBlocedkUser
-					+ strCondMute;
+					+ strCondBlocedkUser;
 
 			// NEW ARRIVAL
 			if(!bContentOnly) {
-				strSql = PG_HINT + " SELECT count(*) " + strSqlFromWhere;
+				strSql = PG_HINT + sqlWith + " SELECT count(*) " + strSqlFromWhere;
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
-				statement.setString(idx++, m_strKeyword);
+				statement.setString(idx++, keyWords.toString());
 				statement.setInt(idx++, checkLogin.m_nSafeFilter);
 				if(!strCondBlockUser.isEmpty()) {
 					statement.setInt(idx++, checkLogin.m_nUserId);
 				}
 				if(!strCondBlocedkUser.isEmpty()) {
 					statement.setInt(idx++, checkLogin.m_nUserId);
-				}
-				if(!strCondMute.isEmpty()) {
-					statement.setString(idx++, strMuteKeyword);
 				}
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
@@ -104,11 +101,11 @@ public final class SearchIllustByKeywordC {
 				statement.close();statement=null;
 			}
 
-			strSql = PG_HINT + " SELECT * " + strSqlFromWhere
+			strSql = PG_HINT + sqlWith + " SELECT * " + strSqlFromWhere
 					+ "ORDER BY content_id DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
-			statement.setString(idx++, m_strKeyword);
+			statement.setString(idx++, keyWords.toString());
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!strCondBlockUser.isEmpty()) {
 				statement.setInt(idx++, checkLogin.m_nUserId);
@@ -116,11 +113,11 @@ public final class SearchIllustByKeywordC {
 			if(!strCondBlocedkUser.isEmpty()) {
 				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
-			if(!strCondMute.isEmpty()) {
-				statement.setString(idx++, strMuteKeyword);
-			}
 			statement.setInt(idx++, m_nPage * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
+
+			Log.d(statement.toString());
+
 			resultSet = statement.executeQuery();
 
 			int cnt = 0;
@@ -143,9 +140,9 @@ public final class SearchIllustByKeywordC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
 		return bResult;
 	}
