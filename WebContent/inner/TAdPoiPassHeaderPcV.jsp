@@ -9,12 +9,12 @@ final int poipassHeaderBenefitMessageRnd = (int)(Math.random()*5.0);
 	<div class="CreateAccountInfo">
 		<div class="CreateAccountBenefit">
 			<%
-				poipassHeaderBenefitMessage = switch (poipassHeaderBenefitMessageRnd) {
-					case 0 -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit01");
-					case 1 -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit02");
-					case 2 -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit03");
-					default -> _TEX.T("TAdPoiPassHeader.CreateAccountBenefit04");
-				};
+				switch (poipassHeaderBenefitMessageRnd) {
+					case 0 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.CreateAccountBenefit01"); break;
+					case 1 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.CreateAccountBenefit02"); break;
+					case 2 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.CreateAccountBenefit03"); break;
+					default : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.CreateAccountBenefit04");
+				}
 			%>
 			<%=poipassHeaderBenefitMessage%>
 		</div>
@@ -34,13 +34,13 @@ final int poipassHeaderBenefitMessageRnd = (int)(Math.random()*5.0);
 	<a class="HeaderPoiPassAdBanner" href="/MyEditSettingPcV.jsp?MENUID=POIPASS">
 		<img src="/img/poipiku_passport_logo3_60.png" alt="POIPASS"/>
 		<%
-			poipassHeaderBenefitMessage = switch (poipassHeaderBenefitMessageRnd) {
-				case 0 -> _TEX.T("TAdPoiPassHeader.Message02");
-				case 1 -> _TEX.T("TAdPoiPassHeader.Message03");
-				case 2 -> _TEX.T("TAdPoiPassHeader.Message04");
-				case 3 -> _TEX.T("TAdPoiPassHeader.Message05");
-				case 4 -> _TEX.T("TAdPoiPassHeader.Message06");
-				default -> _TEX.T("TAdPoiPassHeader.Message01");
+			switch (poipassHeaderBenefitMessageRnd) {
+				case 0 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.Message02"); break;
+				case 1 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.Message03"); break;
+				case 2 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.Message04"); break;
+				case 3 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.Message05"); break;
+				case 4 : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.Message06"); break;
+				default : poipassHeaderBenefitMessage = _TEX.T("TAdPoiPassHeader.Message01");
 			};
 		%>
 		<span><%=poipassHeaderBenefitMessage%></span>
