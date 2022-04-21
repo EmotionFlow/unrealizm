@@ -16,7 +16,11 @@ build-closure:
 	./closure.sh && \
 	popd
 
-clean:
+clean-precompile:
+	rm -rf closure/jsp-precompile/jspc
+	rm -rf closure/jsp-precompile/compile
+
+clean-all: clean-precompile
 	rm -rf WebContent/WEB-INF/classes/jp
 
 release:
