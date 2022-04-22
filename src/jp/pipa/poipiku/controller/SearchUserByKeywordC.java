@@ -67,7 +67,6 @@ public class SearchUserByKeywordC {
 			List<Integer> subList = userIds.subList(offset, Math.min(m_nContentsNum - 1, SELECT_MAX_GALLERY));
 
 			for (int userId : subList) {
-				Log.d(""+userId);
 				CacheUsers0000.User cashUser = users.getUser(userId);
 				if(cashUser==null) continue;
 				CUser user = new CUser(cashUser);
