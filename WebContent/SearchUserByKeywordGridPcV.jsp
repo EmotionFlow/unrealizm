@@ -5,10 +5,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 48;
-if (Util.isSmartPhone(request)){
-	cResults.SELECT_MAX_GALLERY = 42;
-}
+cResults.SELECT_MAX_GALLERY = 45;
+
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = "/";
@@ -34,7 +32,7 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<script>
 			$(function(){
-				$('#HeaderSearchWrapper').attr("action","/SearchUserByKeywordPcV.jsp");
+				$('#HeaderSearchWrapper').attr("action","/SearchUserByKeywordGridPcV.jsp");
 				$('#HeaderSearchBtn').on('click', SearchUserByKeyword);
 			});
 		</script>
@@ -56,7 +54,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			<ul class="TabMenu">
 				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
 				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordGridPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
 
@@ -79,7 +77,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchUserByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/SearchUserByKeywordGridPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 

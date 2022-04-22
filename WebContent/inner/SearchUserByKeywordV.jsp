@@ -12,6 +12,11 @@ if(SP_REVIEW && !checkLogin.m_bLogin) {
 	return;
 }
 
+if(!Util.isSmartPhone(request)) {
+	getServletContext().getRequestDispatcher("/SearchUserByKeywordGridPcV.jsp").forward(request,response);
+	return;
+}
+
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
@@ -25,8 +30,36 @@ boolean bRtn = cResults.getResults(checkLogin);
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
+		<%if(isApp){%>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=Util.toStringHtml(cResults.m_strKeyword)%></title>
+		<%}else{%>
+		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/ad/TAdSearchUserPcHeader.jsp"%>
+		<script type="text/javascript">
+			$(function(){
+				$('#MenuNew').addClass('Selected');
+			});
+		</script>
+
+		<script>
+			$(function(){
+				$('#HeaderSearchWrapper').attr("action","/SearchUserByKeywordPcV.jsp");
+				$('#HeaderSearchBtn').on('click', SearchUserByKeyword);
+			});
+		</script>
+
+		<style>
+            body {padding-top: 79px !important;}
+
+			<%if(Util.isSmartPhone(request)) {%>
+            #HeaderTitleWrapper {display: none;}
+            #HeaderSearchWrapper {display: block;}
+			<%}%>
+		</style>
+		<%}%>
+
+		<meta name="description" content="<%=Util.toStringHtml(String.format(_TEX.T("SearchUserByKeyword.Title.Desc"), cResults.m_strKeyword))%>" />
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("SearchUserByKeyword.Title")%></title>
 		<script>
 			var g_nPage = 1;
 			var g_bAdding = false;
@@ -69,14 +102,26 @@ boolean bRtn = cResults.getResults(checkLogin);
 	</head>
 
 	<body>
+		<%if(isApp){%>
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+		<%}else{%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+		<nav class="TabMenuWrapper">
+			<ul class="TabMenu">
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+			</ul>
+		</nav>
+		<%}%>
 
 		<article class="Wrapper GridList">
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
+					<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
 					<%}%>

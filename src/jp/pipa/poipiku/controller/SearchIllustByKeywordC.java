@@ -22,6 +22,7 @@ public final class SearchIllustByKeywordC {
 	}
 
 	private static final String PG_HINT = "/*+ BitmapIndexScan(contents_0000_description_pgidx) */";
+	private static final String sqlWith = "WITH kwd_contents AS (SELECT * FROM contents_0000 WHERE description &@~ ?)";
 
 	public int selectMaxGallery = 15;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
@@ -47,12 +48,6 @@ public final class SearchIllustByKeywordC {
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
-
-			String sqlWith = """
-					WITH kwd_contents AS (
-					SELECT * FROM contents_0000 WHERE description &@~ ?
-					)
-					""";
 
 			StringBuilder keyWords = new StringBuilder(m_strKeyword);
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
@@ -115,9 +110,6 @@ public final class SearchIllustByKeywordC {
 			}
 			statement.setInt(idx++, m_nPage * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
-
-			Log.d(statement.toString());
-
 			resultSet = statement.executeQuery();
 
 			int cnt = 0;

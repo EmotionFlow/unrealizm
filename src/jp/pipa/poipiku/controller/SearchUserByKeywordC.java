@@ -2,6 +2,9 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -20,70 +23,68 @@ public class SearchUserByKeywordC {
 			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
 			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
 		}
-		catch(Exception e) {
+		catch(Exception ignored) {
 			;
 		}
 	}
 
-
 	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
-	private static final String PG_HINT = "/*+ BitmapScan(users_0000 users_0000_nickname_pgidx) */";
+	private static final String PG_HINT = "/*+ BitmapIndexScan(users_0000_nickname_pgidx) */";
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
 	}
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
-		boolean bResult = false;
+		boolean result = false;
 		CacheUsers0000 users  = CacheUsers0000.getInstance();
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 
-		if(m_strKeyword.isEmpty()) return bResult;
+		if(m_strKeyword.isEmpty()) return result;
 		try {
-			cConn = DatabaseUtil.dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
-			// NEW ARRIVAL
-			if(!bContentOnly) {
-				strSql = PG_HINT + " SELECT count(*) FROM users_0000 WHERE nickname &@~ ?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, m_strKeyword);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
-					m_nContentsNum = cResSet.getInt(1);
-				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+			sql = PG_HINT + " SELECT user_id FROM users_0000 WHERE nickname &@~ ? LIMIT 10000";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, m_strKeyword);
+			resultSet = statement.executeQuery();
+
+			List<Integer> userIds = new ArrayList<>();
+			while (resultSet.next()) {
+				userIds.add(resultSet.getInt(1));
 			}
+			if(!bContentOnly) {
+				m_nContentsNum = userIds.size();
+			}
+			Collections.sort(userIds);
+			Collections.reverse(userIds);
+			int offset = m_nPage * SELECT_MAX_GALLERY;
+			List<Integer> subList = userIds.subList(offset, SELECT_MAX_GALLERY);
 
-			strSql = PG_HINT + " SELECT user_id FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, m_strKeyword);
-			cState.setInt(2, m_nPage * SELECT_MAX_GALLERY);
-			cState.setInt(3, SELECT_MAX_GALLERY);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				CacheUsers0000.User cashUser = users.getUser(cResSet.getInt("user_id"));
+			for (int userId : subList) {
+				Log.d(""+userId);
+				CacheUsers0000.User cashUser = users.getUser(userId);
 				if(cashUser==null) continue;
 				CUser user = new CUser(cashUser);
 				m_vContentList.add(user);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
-			bResult = true;
+			result = true;
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
-		return bResult;
+		return result;
 	}
 }
