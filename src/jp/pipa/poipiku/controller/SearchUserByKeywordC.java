@@ -64,7 +64,7 @@ public class SearchUserByKeywordC {
 			Collections.sort(userIds);
 			Collections.reverse(userIds);
 			int offset = m_nPage * SELECT_MAX_GALLERY;
-			List<Integer> subList = userIds.subList(offset, Math.min(m_nContentsNum - 1, SELECT_MAX_GALLERY));
+			List<Integer> subList = userIds.subList(offset, Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY));
 
 			for (int userId : subList) {
 				CacheUsers0000.User cashUser = users.getUser(userId);
