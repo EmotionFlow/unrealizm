@@ -980,7 +980,6 @@ function UploadFile(user_id, request_id) {
 	if(multiFileUploader.getSubmittedNum()<=0) return;
 	let genre = $('#TagInputItemData').val();
 	const nCategory = parseInt($('#EditCategory').val(), 10);
-	const strDescription = $.trim($("#EditDescription").val());
 	let strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
 	const nPublishId = parseInt($('#EditPublish').val(), 10);
@@ -1032,29 +1031,45 @@ function UploadFile(user_id, request_id) {
 	let nTweetNow = nTweet;
 	if(nLimitedTime === 1) nTweetNow = 0;
 
+	let postData = {
+		"UID":user_id,
+		"GD" :genre,
+		"CAT":nCategory,
+		"TAG":strTagList,
+		"PID":nPublishId,
+		"PPW":strPassword,
+		"PLD":nTwListId,
+		"LTP":nLimitedTime,
+		"PST":strPublishStart,
+		"PED":strPublishEnd,
+		"TWT":getTweetSetting(),
+		"TWI":getTweetImageSetting(),
+		"TWCT":getTwitterCardThumbnailSetting(),
+		"ED":0,
+		"CNG":nCheerNg,
+		"RID":request_id,
+		"PUBALL":nPublishAllNum,
+		"NOTE":privateNote.getText(),
+	};
+
+	if (!transList) {
+		// 下位互換
+		postData["DES"] = $.trim($("#EditDescription").val());
+	} else {
+		const descList = transList.Description;
+		descList[selected['Description']] = $("#EditDescription").val();
+		for (let key in descList) {
+			if (key === 'default') {
+				postData["DES"] = descList[key];
+			} else {
+				postData["DES" + key] = descList[key];
+			}
+		}
+	}
+
 	$.ajaxSingle({
 		"type": "post",
-		"data": {
-			"UID":user_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":getTweetSetting(),
-			"TWI":getTweetImageSetting(),
-			"TWCT":getTwitterCardThumbnailSetting(),
-			"ED":0,
-			"CNG":nCheerNg,
-			"RID":request_id,
-			"PUBALL":nPublishAllNum,
-			"NOTE":privateNote.getText(),
-		},
+		"data": postData,
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {

@@ -1313,13 +1313,12 @@ Decoration
 }
 
 .UploadFile .TagList .TagListCharNum {
-	display: block;
-	float: left;
+	display: flex;
 	width: 100%;
-	text-align: right;
 	font-size: 10px;
 	height: 10px;
 	line-height: 10px;
+	justify-content: space-between;
 }
 
 .UploadFile .UoloadCmdOption {

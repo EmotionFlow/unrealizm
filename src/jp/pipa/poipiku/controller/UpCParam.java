@@ -3,10 +3,13 @@ package jp.pipa.poipiku.controller;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.SupportedLocales;
+import jp.pipa.poipiku.UserLocale;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +34,7 @@ public class UpCParam {
 	public int genre = -1;
 	public int requestId = -1;
 	public String privateNote = "";
+	public HashMap<Integer, String> descriptionTranslations = new HashMap<>();
 
 	protected void GetParams(HttpServletRequest request) throws Exception{
 		request.setCharacterEncoding("UTF-8");
@@ -62,6 +66,13 @@ public class UpCParam {
 		genre				= Util.toInt(request.getParameter("GD"));
 		requestId           = Util.toInt(request.getParameter("RID"));
 		privateNote         = Util.deleteInvalidChar(Common.TrimAll(request.getParameter("NOTE")));
+
+		for (UserLocale userLocale: SupportedLocales.list) {
+			String s = Util.toString(request.getParameter("DES" + userLocale.id));
+			if (!s.isEmpty()) {
+				descriptionTranslations.put(userLocale.id, s);
+			}
+		}
 
 		// format tag list
 		if(!m_strTagList.isEmpty()) {

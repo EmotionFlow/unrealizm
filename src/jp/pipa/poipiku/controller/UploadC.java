@@ -100,6 +100,12 @@ public final class UploadC extends UpC {
 
 			AddTags(cParam.m_strDescription, cParam.m_strTagList, m_nContentId, cConn);
 
+			cParam.descriptionTranslations.forEach((key, value) -> {
+				if (!value.isEmpty()) {
+					ContentTranslation.upsert(m_nContentId, key, CContent.ColumnType.Description, value, cParam.m_nUserId);
+				}
+			});
+
 			if (deliverRequestC != null) {
 				deliverRequestResult = deliverRequestC.getResults(m_nContentId);
 			}
