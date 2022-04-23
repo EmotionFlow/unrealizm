@@ -20,18 +20,18 @@ public class Genre extends Model{
 	public int contentNumDay = -1;
 	public int favoNum = -1;
 
-	public enum Type implements CodeEnum<Type> {
+	public enum ColumnType implements CodeEnum<ColumnType> {
 		Undefined(-1),
 		Name(0),
 		Description(1),
 		Detail(2);
 		private final int code;
-		private Type(int code) {
+		private ColumnType(int code) {
 			this.code = code;
 		}
 
-		static public Type byCode(int _code) {
-			return CodeEnum.getEnum(Type.class, _code);
+		static public ColumnType byCode(int _code) {
+			return CodeEnum.getEnum(ColumnType.class, _code);
 		}
 
 		@Override
@@ -117,11 +117,11 @@ public class Genre extends Model{
 		return genre;
 	}
 
-	public void update(Type type, String value) {
+	public void update(ColumnType columnType, String value) {
 		final String columnName;
-		if (type == Type.Description) {
+		if (columnType == ColumnType.Description) {
 			columnName = "genre_desc";
-		} else if (type == Type.Detail) {
+		} else if (columnType == ColumnType.Detail) {
 			columnName = "genre_detail";
 		} else {
 			return;
@@ -135,9 +135,9 @@ public class Genre extends Model{
 			statement.setString(1, value);
 			statement.setInt(2, genreId);
 			statement.executeUpdate();
-			if (type == Type.Description) {
+			if (columnType == ColumnType.Description) {
 				genreDesc = value;
-			} else if (type == Type.Detail) {
+			} else if (columnType == ColumnType.Detail) {
 				genreDetail = value;
 			}
 		}catch (SQLException e) {

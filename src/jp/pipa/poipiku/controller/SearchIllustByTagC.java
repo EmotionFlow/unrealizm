@@ -235,7 +235,7 @@ public final class SearchIllustByTagC {
 		}
 
 		// translations
-		List<GenreTranslation> transList = GenreTranslation.select(genreId, Genre.Type.Name);
+		List<GenreTranslation> transList = GenreTranslation.select(genreId, Genre.ColumnType.Name);
 		for (GenreTranslation g : transList) {
 			if (g.langId == checkLogin.m_nLangId) {
 				transTagName = g.transTxt;
@@ -249,11 +249,11 @@ public final class SearchIllustByTagC {
 				.collect(Collectors.toList());
 
 		GenreTranslation translation = null;
-		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.Type.Description);
+		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.ColumnType.Description);
 		if (translation != null) {
 			genre.genreDesc = translation.transTxt;
 		}
-		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.Type.Detail);
+		translation = GenreTranslation.select(genreId, checkLogin.m_nLangId, Genre.ColumnType.Detail);
 		if (translation != null) {
 			genre.genreDetail = translation.transTxt;
 		}

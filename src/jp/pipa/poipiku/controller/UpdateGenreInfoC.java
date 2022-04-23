@@ -27,7 +27,7 @@ public class UpdateGenreInfoC {
 	public int langId= -1; // -1：デフォルト、0以上はSupportedLocalesで定義している言語ID。
 	public String data = "";
 
-	public Genre.Type type = Genre.Type.Undefined;
+	public Genre.ColumnType type = Genre.ColumnType.Undefined;
 	
 	public int getParam(HttpServletRequest request) {
 		try {
@@ -36,12 +36,12 @@ public class UpdateGenreInfoC {
 			genreId = Util.toInt(request.getParameter("GID"));
 			data = Common.TrimAll(Common.EscapeInjection(request.getParameter("DATA")));
 			final int ty = Util.toInt(request.getParameter("TY"));
-			type = Genre.Type.byCode(ty);
+			type = Genre.ColumnType.byCode(ty);
 			langId = Util.toInt(request.getParameter("LANGID"));
 		} catch (Exception e) {
 			userId = -1;
 			genreId = -1;
-			type = Genre.Type.Undefined;
+			type = Genre.ColumnType.Undefined;
 			return ERR_UNKNOWN;
 		}
 		return OK_PARAM;
@@ -56,7 +56,7 @@ public class UpdateGenreInfoC {
 		if (data.length() > TEXT_MAX[type.getCode()]) return ERR_TEXT_SIZE_MAX;
 		if (data.length() < TEXT_MIN[type.getCode()]) return ERR_TEXT_SIZE_MIN;
 
-		if (type == Genre.Type.Name && langId < 0) {
+		if (type == Genre.ColumnType.Name && langId < 0) {
 			Log.d("ジャンル名の更新は認めない");
 			return ERR_UNKNOWN;
 		}

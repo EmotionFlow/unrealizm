@@ -61,6 +61,25 @@ public final class CContent {
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
+	public enum ColumnType implements CodeEnum<CContent.ColumnType> {
+		Undefined(-1),
+		Description(0);
+		private final int code;
+		private ColumnType(int code) {
+			this.code = code;
+		}
+
+		static public CContent.ColumnType byCode(int _code) {
+			return CodeEnum.getEnum(CContent.ColumnType.class, _code);
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+	}
+
+
 	public static int getSafeFilterDB(int publishId){
 		int safe_filter = Common.SAFE_FILTER_ALL;
 		switch(publishId) {

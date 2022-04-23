@@ -13,7 +13,7 @@ public class GenreTranslation {
 	public static final int LANG_DEFAULT = -1;
 	public int langId = LANG_DEFAULT;
 
-	public Genre.Type type = Genre.Type.Undefined;
+	public Genre.ColumnType columnType = Genre.ColumnType.Undefined;
 
 	public String transTxt = "";
 
@@ -21,11 +21,11 @@ public class GenreTranslation {
 	public GenreTranslation(ResultSet resultSet) throws SQLException {
 		genreId	= resultSet.getInt("genre_id");
 		langId = resultSet.getInt("lang_id");
-		type = Genre.Type.byCode(resultSet.getInt("type_id"));
+		columnType = Genre.ColumnType.byCode(resultSet.getInt("type_id"));
 		transTxt = resultSet.getString("trans_text");
 	}
 
-	public static GenreTranslation select(int genreId, int langId, Genre.Type type) {
+	public static GenreTranslation select(int genreId, int langId, Genre.ColumnType columnType) {
 		GenreTranslation translation = null;
 		final String strSql = "SELECT * FROM genre_translations WHERE genre_id=? AND lang_id=? AND type_id=?";
 		try (
@@ -34,7 +34,7 @@ public class GenreTranslation {
 		) {
 			statement.setInt(1, genreId);
 			statement.setInt(2, langId);
-			statement.setInt(3, type.getCode());
+			statement.setInt(3, columnType.getCode());
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				translation = new GenreTranslation(resultSet);
@@ -67,7 +67,7 @@ public class GenreTranslation {
 		return list;
 	}
 
-	public static List<GenreTranslation> select(int genreId, Genre.Type type) {
+	public static List<GenreTranslation> select(int genreId, Genre.ColumnType columnType) {
 		List<GenreTranslation> list = new ArrayList<>();
 		final String strSql = "SELECT * FROM genre_translations WHERE genre_id=? AND type_id=? ORDER BY lang_id";
 		try (
@@ -75,7 +75,7 @@ public class GenreTranslation {
 				PreparedStatement statement = connection.prepareStatement(strSql);
 		) {
 			statement.setInt(1, genreId);
-			statement.setInt(2, type.getCode());
+			statement.setInt(2, columnType.getCode());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				list.add(new GenreTranslation(resultSet));
@@ -88,8 +88,8 @@ public class GenreTranslation {
 		return list;
 	}
 
-	static public boolean upsert(int genreId, int lang_id, Genre.Type type, String transTxt, int userId){
-		if (userId < 0 || type == null || type == Genre.Type.Undefined) {
+	static public boolean upsert(int genreId, int lang_id, Genre.ColumnType columnType, String transTxt, int userId){
+		if (userId < 0 || columnType == null || columnType == Genre.ColumnType.Undefined) {
 			return false;
 		}
 
@@ -104,7 +104,7 @@ public class GenreTranslation {
 		) {
 			int idx = 1;
 			statement.setInt(idx++, genreId);
-			statement.setInt(idx++, type.getCode());
+			statement.setInt(idx++, columnType.getCode());
 			statement.setInt(idx++, lang_id);
 			statement.setString(idx++, transTxt);
 			statement.setInt(idx++, userId);

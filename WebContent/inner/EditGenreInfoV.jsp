@@ -63,21 +63,21 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 		let transList = {
 			'Name' : {
 				<%=translationList.stream()
-					.filter(e->e.type==Genre.Type.Name)
+					.filter(e->e.columnType==Genre.ColumnType.Name)
 					.map(e->String.format("'%d': `%s`", e.langId, e.transTxt))
 					.collect(Collectors.joining(","))%>
 			},
 			'Desc' : {
 				'default': `<%=genre.genreDesc%>`,
 				<%=translationList.stream()
-					.filter(e->e.type==Genre.Type.Description)
+					.filter(e->e.columnType==Genre.ColumnType.Description)
 					.map(e->String.format("'%d': `%s`", e.langId, e.transTxt))
 					.collect(Collectors.joining(","))%>
 			},
 			'Detail' : {
 				'default': `<%=genre.genreDetail%>`,
 				<%=translationList.stream()
-					.filter(e->e.type==Genre.Type.Detail)
+					.filter(e->e.columnType==Genre.ColumnType.Detail)
 					.map(e->String.format("'%d': `%s`", e.langId, e.transTxt))
 					.collect(Collectors.joining(","))%>
 			}
@@ -242,7 +242,7 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 					<div class="SettingBodyCmd">
 						<div id="EditNameNum" class="RegistMessage"></div>
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
-						   onclick="UpdateGenreInfo(<%=Genre.Type.Name.getCode()%>, $('#EditTransNameLang').val(), $('#EditName').val())">
+						   onclick="UpdateGenreInfo(<%=Genre.ColumnType.Name.getCode()%>, $('#EditTransNameLang').val(), $('#EditName').val())">
 							<%=_TEX.T("EditSettingV.Button.Update")%></a>
 					</div>
 				</div>
@@ -268,7 +268,7 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 					<%if(editable) {%>
 					<div id="EditDescNum" class="RegistMessage"></div>
 					<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
-					   onclick="UpdateGenreInfo(<%=Genre.Type.Description.getCode()%>, $('#EditTransDescLang').val(), $('#EditDesc').val())">
+					   onclick="UpdateGenreInfo(<%=Genre.ColumnType.Description.getCode()%>, $('#EditTransDescLang').val(), $('#EditDesc').val())">
 						<%=_TEX.T("EditSettingV.Button.Update")%>
 					</a>
 					<%} else {%>
@@ -298,7 +298,7 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 					<div id="EditDetailNum" class="RegistMessage"></div>
 					<%if(editable) {%>
 					<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"
-					   onclick="UpdateGenreInfo(<%=Genre.Type.Detail.getCode()%>, $('#EditTransDetailLang').val(), $('#EditDetail').val())">
+					   onclick="UpdateGenreInfo(<%=Genre.ColumnType.Detail.getCode()%>, $('#EditTransDetailLang').val(), $('#EditDetail').val())">
 						<%=_TEX.T("EditSettingV.Button.Update")%></a>
 					<%} else {%>
 					<span class="BtnBase SettingBodyCmdRegist <%=disable%>"><%=_TEX.T("EditSettingV.Button.Update")%></span>
