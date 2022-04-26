@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -357,6 +358,15 @@ public final class Common {
 		return String.format("/user_img01/%09d", nUserId);
 	}
 
+	public static List<String> getUploadUsersPathList(int userId) {
+		List<String> list = new LinkedList<>();
+		for (String s : CONTENTS_STORAGE_DIR_ARY) {
+			list.add("/%s/%09d".formatted(s, userId));
+		}
+		return list;
+	}
+
+
 	public static String SubStrNum(String strSrc, int nNum) {
 		if(strSrc==null) return "";
 		if(strSrc.length()<=nNum) return strSrc;
@@ -486,17 +496,17 @@ public final class Common {
 	}
 
 	public static void rmDir(File f) {
-		if (!f.exists()) return;
+		if (f == null || !f.exists()) return;
 
 		if (f.isFile()) {
 			f.delete();
 		} else if (f.isDirectory()) {
 			File[] files = f.listFiles();
-
-			for (int i = 0; i < files.length; i++) {
-				rmDir(files[i]);
+			if (files != null) {
+				for (File file : files) {
+					rmDir(file);
+				}
 			}
-
 			f.delete();
 		}
 	}

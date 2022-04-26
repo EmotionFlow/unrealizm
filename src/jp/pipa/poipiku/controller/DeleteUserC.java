@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
@@ -213,10 +214,16 @@ public class DeleteUserC {
 
 			// delete files
 			File fileDel;
+			// cache (ssd)
 			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadUsersPath(m_nUserId)));
 			Common.rmDir(fileDel);
-			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(m_nUserId)));
-			Common.rmDir(fileDel);
+
+			// hdd
+			List<String> delList = Common.getUploadUsersPathList(m_nUserId);
+			for (String s : delList) {
+				fileDel= new File(m_cServletContext.getRealPath(s));
+				Common.rmDir(fileDel);
+			}
 
 			// キャッシュからもユーザを消す
 			CacheUsers0000 users0000 = CacheUsers0000.getInstance();
