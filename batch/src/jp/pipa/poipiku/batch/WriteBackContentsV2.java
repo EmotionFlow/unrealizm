@@ -35,6 +35,8 @@ public class WriteBackContentsV2 extends Batch {
 		} else if (3 <= hour && hour <= 8){
 			selectLimit = 40;
 		}
+
+		selectLimit = 10;
 		return selectLimit;
 	}
 
