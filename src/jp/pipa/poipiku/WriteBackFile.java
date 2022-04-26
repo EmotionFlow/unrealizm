@@ -179,6 +179,35 @@ public final class WriteBackFile extends Model{
 		return list;
 	}
 
+	// for test
+	static public List<WriteBackFile> selectStaffOnly(Status _status) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		List<WriteBackFile> list = new ArrayList<>();
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "SELECT * FROM write_back_files WHERE user_id=? AND status=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, 21808);
+			statement.setInt(2, _status.getCode());
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				list.add(new WriteBackFile(resultSet));
+			}
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+			return null;
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+		return list;
+	}
+
 	static public boolean deleteByStatus(Status _status, int hoursBefore) {
 		Connection connection = null;
 		PreparedStatement statement = null;
