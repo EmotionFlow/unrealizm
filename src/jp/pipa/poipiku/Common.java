@@ -358,7 +358,7 @@ public final class Common {
 		return String.format("/user_img01/%09d", nUserId);
 	}
 
-	public static String getUploadCashPath(int nUserId) {
+	public static String getUploadCachePath(int nUserId) {
 		return String.format("/user_img00/%09d", nUserId);
 	}
 
