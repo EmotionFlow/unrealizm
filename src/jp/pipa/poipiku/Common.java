@@ -358,7 +358,11 @@ public final class Common {
 		return String.format("/user_img01/%09d", nUserId);
 	}
 
-	public static List<String> getUploadUsersPathList(int userId) {
+	public static String getUploadCashPath(int nUserId) {
+		return String.format("/user_img00/%09d", nUserId);
+	}
+
+	public static List<String> getUploadContentsPathList(int userId) {
 		List<String> list = new LinkedList<>();
 		for (String s : CONTENTS_STORAGE_DIR_ARY) {
 			list.add("/%s/%09d".formatted(s, userId));
