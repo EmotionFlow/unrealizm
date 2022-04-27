@@ -180,7 +180,7 @@ public final class WriteBackFile extends Model{
 	}
 
 	// for test
-	static public List<WriteBackFile> selectStaffOnly(Status _status) {
+	static public List<WriteBackFile> selectStaffOnly(Status _status, int userId) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -190,7 +190,7 @@ public final class WriteBackFile extends Model{
 			connection = DatabaseUtil.dataSource.getConnection();
 			sql = "SELECT * FROM write_back_files WHERE user_id=? AND status=?";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, 21808);
+			statement.setInt(1, userId);
 			statement.setInt(2, _status.getCode());
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
