@@ -99,7 +99,7 @@ public final class RecommendedContents {
 			statement.close();statement=null;
 			Collections.shuffle(relatedByTagList);
 
-			for (int i=0; i<30; i++) {
+			for (int i=0; i<relatedByTagList.size() && i<30; i++) {
 				contentIds.add(relatedByTagList.get(i));
 			}
 
