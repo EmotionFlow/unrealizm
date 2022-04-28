@@ -95,7 +95,7 @@ public final class SearchIllustByTagC {
 				}
 			}
 
-			if(genreId < 1) {
+			if (genreId < 1) {
 				// select genre id
 				strSql = "SELECT genre_id FROM genres WHERE genre_name=?";
 				statement = connection.prepareStatement(strSql);
@@ -107,6 +107,10 @@ public final class SearchIllustByTagC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
+			}
+
+			if (genreId < 1) {
+				return false;
 			}
 
 			final String strCondStart = (startId >0)?"AND c.content_id<? ":"";
