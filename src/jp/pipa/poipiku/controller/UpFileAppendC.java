@@ -143,6 +143,7 @@ public class UpFileAppendC extends UpC{
 				nFileSize = 0;
 				nComplexSize=0;
 				Log.d("error getImageSize");
+				e.printStackTrace();
 			}
 			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
