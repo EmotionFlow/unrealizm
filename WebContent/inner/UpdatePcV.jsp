@@ -95,6 +95,25 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 
 		<%@ include file="UpPcV.jsp"%>
 		<script>
+			let transList = {
+				'Description' : {
+					'default': '',
+					<%
+					for(UserLocale userLocale: SupportedLocales.list) {
+						String transTxt = cResults.descTransList.get(userLocale.id);
+						if (transTxt == null) {
+							transTxt = "";
+						}
+					%>
+					'<%=userLocale.id%>': '<%=Util.escapeJavascriptString(transTxt, true)%>',
+					<%}%>
+				}
+			}
+
+			let selected = {
+				'Description' : 'default',
+			}
+
 			function completeAddFile() {
 				$('#UploadBtn').html('<%=_TEX.T("UploadFilePc.AddtImg")%>');
 			}
@@ -273,6 +292,17 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 				</div>
 
 				<div class="Description">
+					<div class="SettingListTitle WithLangSelector" style="text-align: right">
+						<span class="SelectTransLang">
+							<i class="fas fa-language" style="font-size: 20px;"></i>
+							<select id="EditTransDescLang" style="font-size: 12px;" onchange="switchTransTxt('Description', $(this).val())">
+								<option value="default" selected><%=_TEX.T("EditGenreInfo.Translation.Default")%></option>
+								<%for(UserLocale userLocale: SupportedLocales.list) {%>
+								<option value="<%=userLocale.id%>"><%=userLocale.label%></option>
+								<%}%>
+							</select>
+						</span>
+					</div>
 					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"><%=Util.toDescString(cResults.m_cContent.m_strDescription)%></textarea>
 					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>

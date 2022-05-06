@@ -723,6 +723,16 @@ public final class Util {
 		}
 	}
 
+	public static String escapeJavascriptString(String text, boolean isSingleQuoted) {
+		String result = text.replaceAll("\n", "\\\\n");
+		if (isSingleQuoted) {
+			result = result.replaceAll("'", "\\\\'");
+		} else {
+			result = result.replaceAll("\"", "\\\\\"");
+		}
+		return result;
+	}
+
 	private static String _replaceForGenEiFontDakuten(String text, final String target, final char replace) {
 		text = text.replaceAll(target + "゛", Character.toString(replace));
 		text = text.replaceAll(target + "ﾞ", Character.toString(replace));

@@ -1040,11 +1040,13 @@ function UploadFile(user_id, request_id) {
 		"PPW":strPassword,
 		"PLD":nTwListId,
 		"LTP":nLimitedTime,
+		"REC":nRecent,
 		"PST":strPublishStart,
 		"PED":strPublishEnd,
 		"TWT":getTweetSetting(),
 		"TWI":getTweetImageSetting(),
 		"TWCT":getTwitterCardThumbnailSetting(),
+		"DELTW":nDeleteTweet,
 		"ED":0,
 		"CNG":nCheerNg,
 		"RID":request_id,
@@ -1466,3 +1468,10 @@ function getPasteAreaImageNum() {
 	return $('.PasteZone').children('.InputFile').length;
 }
 
+function switchTransTxt(name, langId) {
+	const $Edit = $("#Edit"+name)
+	transList[name][selected[name]] = $Edit.val();
+	let txt = transList[name][langId];
+	$Edit.val(txt ?  txt : "");
+	selected[name] = langId;
+}

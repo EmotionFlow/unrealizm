@@ -17,7 +17,7 @@ public final class UpdateC extends UpC {
 		try{
 			// transaction
 			connection.setAutoCommit(false);
-			String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "comments_desc_cache", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests", "pins"};
+			String[] lUpdateTable = {"contents_0000", "bookmarks_0000", "comments_0000", "comments_desc_cache", "contents_appends_0000", "rank_contents_total", "tags_0000", "requests", "pins", "content_translations"};
 			for(String t : lUpdateTable){
 				strSql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
 				statement = connection.prepareStatement(strSql);
@@ -215,12 +215,14 @@ public final class UpdateC extends UpC {
 				}
 			}
 
+			final int contentId = nNewContentId==null ? cParam.m_nContentId : nNewContentId;
+
 			// Delete old tags
 			if (!cParam.m_strDescription.isEmpty() || !cParam.m_strTagList.isEmpty()) {
 				strSql = "DELETE FROM tags_0000 WHERE content_id=?;";
 				statement = connection.prepareStatement(strSql);
 				try {
-					statement.setInt(1, nNewContentId==null?cParam.m_nContentId:nNewContentId);
+					statement.setInt(1, contentId);
 					statement.executeUpdate();
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -230,7 +232,13 @@ public final class UpdateC extends UpC {
 			}
 
 			// Add tags
-			AddTags(cParam.m_strDescription, cParam.m_strTagList, nNewContentId==null?cParam.m_nContentId:nNewContentId, connection);
+			AddTags(cParam.m_strDescription, cParam.m_strTagList, contentId, connection);
+
+			cParam.descriptionTranslations.forEach((key, value) -> {
+				if (!value.isEmpty()) {
+					ContentTranslation.upsert(contentId, key, CContent.ColumnType.Description, value, cParam.m_nUserId);
+				}
+			});
 
 			// もし、(期間限定OFFからONに変更 || (期間限定 & (非公開中|公開中&期間変更あり))
 			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
@@ -252,7 +260,7 @@ public final class UpdateC extends UpC {
 					strSql = "UPDATE contents_0000 SET tweet_id=NULL WHERE content_id=?";
 					statement = connection.prepareStatement(strSql);
 					try {
-						statement.setInt(1,  nNewContentId==null?cParam.m_nContentId:nNewContentId);
+						statement.setInt(1,  contentId);
 						statement.executeUpdate();
 					} catch(Exception e) {
 						e.printStackTrace();
@@ -270,6 +278,6 @@ public final class UpdateC extends UpC {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
-		return  nNewContentId==null?cParam.m_nContentId:nNewContentId;
+		return nNewContentId==null?cParam.m_nContentId:nNewContentId;
 	}
 }

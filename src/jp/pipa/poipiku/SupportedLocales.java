@@ -20,6 +20,10 @@ public final class SupportedLocales {
 		list = Collections.unmodifiableList(l);
 	}
 
+	static public UserLocale getUserLocale(int id) {
+		return list.stream().filter(e -> e.id==id).findFirst().get();
+	}
+
 	static public Locale getLocale(String langStr) {
 		if (langStr==null || langStr.isEmpty()) {
 			return LOCALE_DEFAULT;

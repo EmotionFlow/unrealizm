@@ -69,13 +69,6 @@ if (requestId > 0) {
 				'Description' : 'default',
 			}
 
-			function switchTransTxt(name, langId) {
-				transList[name][selected[name]] = $("#Edit"+name).val();
-				let txt = transList[name][langId];
-				$("#Edit"+name).val(txt ?  txt : "");
-				selected[name] = langId;
-			}
-
 			function onCompleteUpload(){
 				<%if(requestId<0){%>
 				location.href = "/MyIllustListPcV.jsp";
@@ -270,7 +263,6 @@ if (requestId > 0) {
 							</select>
 						</span>
 					</div>
-
 					<textarea id="EditDescription" class="EditDescription" maxlength="<%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.Add")%>" onkeyup="DispDescCharNum()"></textarea>
 					<div id="DescriptionCharNum" class="DescriptionCharNum"><%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>

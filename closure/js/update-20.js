@@ -165,7 +165,6 @@ function UpdateFile(user_id, content_id) {
 	if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) return;
 	let genre = $('#TagInputItemData').val();
 	const nCategory = parseInt($('#EditCategory').val(), 10);
-	const strDescription = $.trim($("#EditDescription").val());
 	let strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
 	const nOpenId = parseInt($('#ContentOpenId').val(), 10);
@@ -228,31 +227,46 @@ function UpdateFile(user_id, content_id) {
 
 	startMsg();
 
+	let postData = {
+		"IID":content_id,
+		"UID":user_id,
+		"GD" :genre,
+		"CAT":nCategory,
+		"TAG":strTagList,
+		"PID":nPublishId,
+		"PPW":strPassword,
+		"PLD":nTwListId,
+		"LTP":nLimitedTime,
+		"PST":strPublishStart,
+		"PED":strPublishEnd,
+		"TWT":getTweetSetting(),
+		"TWI":getTweetImageSetting(),
+		"TWCT":getTwitterCardThumbnailSetting(),
+		"DELTW":nDeleteTweet,
+		"ED":0,
+		"CNG":nCheerNg,
+		"PUBALL":nPublishAllNum,
+		"NOTE":privateNote.getText(),
+	};
+
+	if (!transList) {
+		// 下位互換
+		postData["DES"] = $.trim($("#EditDescription").val());
+	} else {
+		const descList = transList.Description;
+		descList[selected['Description']] = $("#EditDescription").val();
+		for (let key in descList) {
+			if (key === 'default') {
+				postData["DES"] = descList[key];
+			} else {
+				postData["DES" + key] = descList[key];
+			}
+		}
+	}
+
 	$.ajaxSingle({
 		"type": "post",
-		"data": {
-			"IID":content_id,
-			"UID":user_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"REC":nRecent,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":getTweetSetting(),
-			"TWI":getTweetImageSetting(),
-			"TWCT":getTwitterCardThumbnailSetting(),
-			"DELTW":nDeleteTweet,
-			"ED":0,
-			"CNG":nCheerNg,
-			"PUBALL":nPublishAllNum,
-			"NOTE":privateNote.getText(),
-		},
+		"data": postData,
 		"url": "/f/UpdateFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {

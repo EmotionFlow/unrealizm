@@ -1,6 +1,8 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import jp.pipa.poipiku.util.*;
 public class IllustViewC {
 	public int m_nUserId = -1;
 	public int m_nContentId = -1;
+	public boolean needAllTransList = false;
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
@@ -52,9 +55,9 @@ public class IllustViewC {
 	public int m_nContentsNumTotal = 0;
 	public Integer m_nNewContentId = null;
 	public boolean m_bCheerNg = true;
+	public HashMap<Integer, String> descTransList = new HashMap<>();
 	public boolean getResults(CheckLogin checkLogin) {
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -62,9 +65,7 @@ public class IllustViewC {
 		int idx = 1;
 
 		try {
-			Class.forName("org.postgresql.Driver");
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// owner
 			if(m_nUserId == checkLogin.m_nUserId) {
@@ -214,7 +215,7 @@ public class IllustViewC {
 
 			// Bookmark
 			if(checkLogin.m_bLogin) {
-				strSql = "SELECT * FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
+				strSql = "SELECT 1 FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, checkLogin.m_nUserId);
 				statement.setInt(2, m_cContent.m_nContentId);
@@ -225,6 +226,13 @@ public class IllustViewC {
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}
+
+			// Translations
+			List<ContentTranslation> contentTranslationList = ContentTranslation.select(m_cContent.m_nContentId);
+			for (ContentTranslation contentTranslation: contentTranslationList) {
+				descTransList.put(contentTranslation.langId, contentTranslation.transTxt);
+			}
+
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
