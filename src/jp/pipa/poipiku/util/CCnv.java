@@ -947,7 +947,7 @@ public final class CCnv {
 		// Pin, Note
 		if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
 			strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
-		} else if (!cContent.privateNote.isEmpty()) {
+		} else if (cContent.m_nUserId==checkLogin.m_nUserId && !cContent.privateNote.isEmpty()) {
 			strRtn.append("<span class=\"IllustInfoPin far fa-sticky-note\" onclick=\"TogglePrivateNote($(this).parent().parent(),'" +
 					Util.toQuotedString(cContent.privateNote, "'") +
 					"')\"></span>");
