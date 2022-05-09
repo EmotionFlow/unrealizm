@@ -56,11 +56,12 @@ public final class MyHomeTagC {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			final String subTable = "WITH t as (" +
-					"SELECT contents_0000.*, follows_0000.follow_user_id FROM contents_0000 " +
-					" LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " +
+					"SELECT c.*, follows_0000.follow_user_id, ct.trans_text description_translated FROM contents_0000 c" +
+					" LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id" +
+					" LEFT JOIN follows_0000 ON c.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " +
 					" WHERE open_id<>2 " +
 					" AND safe_filter<=? AND (" +
-					"   content_id IN (" +
+					"   c.content_id IN (" +
 					"     SELECT content_id FROM tags_0000 WHERE genre_id IN(" +
 					"       SELECT genre_id FROM follow_tags_0000 WHERE user_id=?" +
 					"     ) AND tag_type=1 ORDER BY content_id DESC LIMIT 1000" +
@@ -117,6 +118,7 @@ public final class MyHomeTagC {
 
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, checkLogin.m_nUserId); // follows_0000.user_id=?
 			statement.setInt(idx++, checkLogin.m_nSafeFilter); // safe_filter<=?
 			statement.setInt(idx++, checkLogin.m_nUserId); // follow_tags_0000.user_id=?
@@ -133,6 +135,7 @@ public final class MyHomeTagC {
 				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				content.m_cUser.m_nReaction		= user.reaction;
 				content.m_cUser.m_nFollowing = (content.m_nUserId == checkLogin.m_nUserId)?CUser.FOLLOW_HIDE:(resultSet.getInt("follow_user_id")>0)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				m_nEndId = content.m_nContentId;
 				m_vContentList.add(content);
 			}

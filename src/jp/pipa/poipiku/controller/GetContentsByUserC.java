@@ -128,14 +128,17 @@ public class GetContentsByUserC {
 			if (owner == null) return false;
 
 			// NEW ARRIVAL
-			sql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id<? AND safe_filter<=?" +
+			sql = "SELECT c.*, ct.trans_text description_translated FROM contents_0000 c" +
+					" LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id" +
+					" WHERE user_id=? AND c.content_id<? AND safe_filter<=?" +
 					(!isOwner ? " AND open_id<>2" : "") +
-					" ORDER BY content_id DESC LIMIT ?";
+					" ORDER BY c.content_id DESC LIMIT ?";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, ownerUserId);
-			statement.setInt(2, startId);
-			statement.setInt(3, checkLogin.m_nSafeFilter);
-			statement.setInt(4, selectMaxGallery);
+			statement.setInt(1, checkLogin.m_nLangId);
+			statement.setInt(2, ownerUserId);
+			statement.setInt(3, startId);
+			statement.setInt(4, checkLogin.m_nSafeFilter);
+			statement.setInt(5, selectMaxGallery);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent c = new CContent(resultSet);
@@ -143,6 +146,7 @@ public class GetContentsByUserC {
 				c.m_cUser.m_strFileName	= owner.fileName;
 				c.m_cUser.m_nFollowing	= followCode;
 				c.m_cUser.m_nReaction	= owner.reaction;
+				c.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				if (pin != null && pin.contentId == c.m_nContentId) c.pinOrder = pin.dispOrder;
 				lastContentId = c.m_nContentId;
 				contentList.add(c);

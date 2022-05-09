@@ -1350,3 +1350,19 @@ function _replyEmoji(_this, loginUserId) {
 	)
 }
 /******** リプライ *********/
+
+/******** 翻訳表示 *********/
+function toggleIllustItemDesc(elThis) {
+	const $parent = $(elThis).parent();
+	const $IllustItemDescList = $parent.children(".IllustItemDesc");
+	for (let item of $IllustItemDescList) {
+		const $item = $(item);
+		if ($item.css('display') !== 'none') {
+			$item.hide();
+		} else {
+			$item.show();
+		}
+	}
+}
+/******** 翻訳表示 *********/
+

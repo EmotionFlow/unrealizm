@@ -71,7 +71,7 @@ public final class NewArrivalC {
 				if(checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
 					strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 					if(!strMuteKeyword.isEmpty()) {
-						strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
+						strCondMute = "AND contents_0000.content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 					}
 				}
 			}
@@ -80,13 +80,14 @@ public final class NewArrivalC {
 			if(!bContentOnly) {
 				contentsNum = 9999;
 			}
-
-			sql = "SELECT contents_0000.* "
+			
+			sql = "SELECT contents_0000.*, ct.trans_text description_translated"
 					+ (checkLogin.m_bLogin ? ",follows_0000.follow_user_id " : "")
-					+ "FROM contents_0000 "
-					+ (checkLogin.m_bLogin ?  "LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " : "")
-					+ "WHERE open_id=0 AND publish_id NOT IN (4,7,8,9,10) "
-					+ "AND safe_filter<=? "
+					+ " FROM contents_0000 "
+					+ " LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND contents_0000.content_id = ct.content_id"
+					+ (checkLogin.m_bLogin ?  " LEFT JOIN follows_0000 ON contents_0000.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " : "")
+					+ " WHERE open_id=0 AND publish_id NOT IN (4,7,8,9,10) "
+					+ " AND safe_filter<=? "
 					+ strCondStart
 					+ strCondBlockUser
 					+ strCondBlocedkUser
@@ -94,8 +95,11 @@ public final class NewArrivalC {
 					+ strCondMute
 					+ " ORDER BY content_id DESC OFFSET ? LIMIT ? ";
 			statement = connection.prepareStatement(sql);
+
+
 			idx = 1;
 
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			if (checkLogin.m_bLogin) statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if (!strCondStart.isEmpty()) statement.setInt(idx++, startId);
@@ -105,6 +109,7 @@ public final class NewArrivalC {
 			if (!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			statement.setInt(idx++, startId > 0 ? 0 :page * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
+
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
@@ -118,6 +123,7 @@ public final class NewArrivalC {
 				} else {
 					content.m_cUser.m_nFollowing = CUser.FOLLOW_NONE;
 				}
+				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				lastContentId = content.m_nContentId;
 				contentList.add(content);
 			}

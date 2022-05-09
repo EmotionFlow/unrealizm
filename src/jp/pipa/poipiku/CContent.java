@@ -20,6 +20,7 @@ public final class CContent {
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
 	public String m_strDescription = "";
+	public String m_strDescriptionTranslated = null; // 閲覧ユーザーのlangIdに一致する翻訳があったらここに格納する。
 	public boolean m_bLimitedTimePublish = false;
 	public Timestamp m_timeUploadDate = new Timestamp(0);
 	public Timestamp m_timeEndDate = new Timestamp(0);

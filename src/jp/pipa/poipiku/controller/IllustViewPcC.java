@@ -120,12 +120,14 @@ public final class IllustViewPcC {
 			// content main
 			final String strOpenCnd = (m_bOwner || m_bRequestClient) ? "" : " AND open_id<>2";
 
-			sql = "SELECT c.*, r.id request_id FROM contents_0000 c" +
-					 " LEFT JOIN requests r ON r.content_id=c.content_id " +
-					 " WHERE c.user_id=? AND c.content_id=? " + strOpenCnd;
+			sql = "SELECT c.*, r.id request_id, ct.trans_text description_translated FROM contents_0000 c" +
+					" LEFT JOIN requests r ON r.content_id=c.content_id " +
+					" LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id" +
+					" WHERE c.user_id=? AND c.content_id=? " + strOpenCnd;
 
 			statement = connection.prepareStatement(sql);
 			idx = 1;
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, ownerUserId);
 			statement.setInt(idx++, contentId);
 			resultSet = statement.executeQuery();
@@ -135,6 +137,7 @@ public final class IllustViewPcC {
 				final int requestId = resultSet.getInt("request_id");
 				if (requestId > 0) m_cContent.m_nRequestId = requestId;
 				if (pin != null && m_cContent.m_nContentId == pin.contentId) m_cContent.pinOrder = pin.dispOrder;
+				m_cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 				bContentExist = true;
 			}

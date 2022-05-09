@@ -193,31 +193,44 @@ public final class CCnv {
 
 	}
 	private static void appendIllustItemDesc(StringBuilder strRtn, CContent cContent, int nMode){
-		String description;
+		final String def = cContent.m_strDescription;
+		final String trs = cContent.m_strDescriptionTranslated;
+		final boolean trsExist = trs!=null && !trs.isEmpty();
+		final String descShowFirst = trsExist ? trs : def;
+
+		String desc;
 
 		final int firstDispLen = Common.EDITOR_DESC_MAX[0][0] + 300;
 		int moreIndex = -1;
-		if (cContent.m_strDescription.length() > firstDispLen) {
-			moreIndex = cContent.m_strDescription.indexOf("\n", firstDispLen);
+		if (descShowFirst.length() > firstDispLen) {
+			moreIndex = descShowFirst.indexOf("\n", firstDispLen);
 		}
 
 		if (moreIndex < 0) {
-			description = Common.AutoLink(Util.toStringHtml(cContent.m_strDescription), cContent.m_nUserId, nMode);
+			desc = Common.AutoLink(Util.toStringHtml(descShowFirst), cContent.m_nUserId, nMode);
 		} else {
-			description = Common.AutoLink(Util.toStringHtml(cContent.m_strDescription.substring(0, moreIndex)), cContent.m_nUserId, nMode);
-			description += "<a class=\"IllustItemDescMoreLink\" onclick=\"readMoreDescription(this);\">...more</a>";
-			description += String.format(
+			desc = Common.AutoLink(Util.toStringHtml(descShowFirst.substring(0, moreIndex)), cContent.m_nUserId, nMode);
+			desc += "<a class=\"IllustItemDescMoreLink\" onclick=\"readMoreDescription(this);\">...more</a>";
+			desc += String.format(
 					"<span class=\"IllustItemDescMore\" style=\"display:none;\">%s</span>",
-					Common.AutoLink(Util.toStringHtml(cContent.m_strDescription.substring(moreIndex)), cContent.m_nUserId, nMode)
+					Common.AutoLink(Util.toStringHtml(descShowFirst.substring(moreIndex)), cContent.m_nUserId, nMode)
 					);
 		}
-		strRtn.append(
-				String.format("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>%s</h1>",
-						cContent.m_nContentId,
-						(cContent.m_strDescription.isEmpty())?"style=\"display: none;\"":"",
-						description
-				)
-		);
+		if (trsExist) {
+			strRtn.append("<div class=\"fas fa-language IllustItemDescTranslation\" onclick=\"toggleIllustItemDesc(this)\"></div>");
+		}
+		strRtn.append("<h1 id=\"IllustItemDesc_%d\" class=\"IllustItemDesc\" %s>".formatted(
+				cContent.m_nContentId,
+				(descShowFirst.isEmpty())?"style=\"display: none;\"":""
+		));
+		strRtn.append(desc);
+		strRtn.append("</h1>");
+
+		if (trsExist) {
+			strRtn.append("<h1 class=\"IllustItemDesc\" style=\"display: none;\">");
+			strRtn.append(def);
+			strRtn.append("</h1>");
+		}
 	}
 
 	private static HashMap<String, String> getTagNameTranslations(CheckLogin checkLogin, CContent content, List<String> tagNameList) {
@@ -958,7 +971,15 @@ public final class CCnv {
 		// イラスト情報
 		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
 		// キャプション
-		strRtn.append(String.format("<span class=\"IllustInfoDesc\">%s</span>", Util.toStringHtml(cContent.m_strDescription)));
+		final String description =
+				(cContent.m_strDescriptionTranslated!=null&&!cContent.m_strDescriptionTranslated.isEmpty())
+				? cContent.m_strDescriptionTranslated : cContent.m_strDescription;
+
+		strRtn.append(String.format(
+				"<span class=\"IllustInfoDesc\">%s</span>",
+				Util.toStringHtml(description)
+				)
+		);
 		// サムネイル
 		String strFileUrl = "";
 		boolean bHidden = false;	// テキストモード用カバー画像表示フラグ

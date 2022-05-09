@@ -267,7 +267,7 @@ public class IllustListC {
 			// tag
 			final String strTagCond = (
 					m_strTagKeyword.isEmpty()) ?
-					"" : "AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3) ";
+					"" : "AND c.content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt=? AND tag_type=3) ";
 
 			final String strCategoryCond =
 					categoryFilterId < 0 ?
@@ -288,9 +288,10 @@ public class IllustListC {
 			// full open for owner
 			String strOpenCnd = (!m_bOwner || (m_bOwner&&!m_bDispUnPublished))?"AND open_id<>2 ":"";
 
-			String strSqlFromWhere = "FROM contents_0000 "
-					+ "WHERE user_id=? "
-					+ "AND safe_filter<=? "
+			String strSqlFromWhere = " FROM contents_0000 c "
+					+ " LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id "
+					+ " WHERE user_id=? "
+					+ " AND safe_filter<=? "
 					+ strTagCond
 					+ strCategoryCond
 					+ strSearchCond
@@ -298,9 +299,10 @@ public class IllustListC {
 
 			List<CContent> pinContents = new ArrayList<>();
 			if (!pins.isEmpty()) {
-				strSql = "SELECT * " + strSqlFromWhere + " AND content_id=?";
+				strSql = "SELECT c.*, ct.trans_text description_translated" + strSqlFromWhere + " AND c.content_id=?";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
+				statement.setInt(idx++, checkLogin.m_nLangId);
 				statement.setInt(idx++, m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nSafeFilter);
 				if(!strTagCond.isEmpty()) {
@@ -330,6 +332,7 @@ public class IllustListC {
 						cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 						cContent.m_cUser.m_nFollowing = m_cUser.m_nFollowing;
 						cContent.m_cUser.m_nReaction = m_cUser.m_nReaction;
+						cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
 						cContent.pinOrder = 1;
 					} else {
 						cContent = new CContent();
@@ -358,17 +361,17 @@ public class IllustListC {
 
 			final String strOrderBy;
 			if (sortBy == SortBy.None) {
-				strOrderBy = "ORDER BY content_id DESC ";
+				strOrderBy = "ORDER BY c.content_id DESC ";
 			} else {
 				final String orderDesc = sortOrderAsc ? "" : "DESC ";
 				if (sortBy == SortBy.Description) {
 					strOrderBy = "ORDER BY description " + orderDesc;
 				} else if(sortBy == SortBy.CreatedAt) {
-					strOrderBy = "ORDER BY created_at " + orderDesc + "NULLS LAST, content_id " + orderDesc;
+					strOrderBy = "ORDER BY created_at " + orderDesc + "NULLS LAST, c.content_id " + orderDesc;
 				} else if(sortBy == SortBy.UpdatedAt) {
-					strOrderBy = "ORDER BY updated_at " + orderDesc + "NULLS LAST, content_id " + orderDesc;
+					strOrderBy = "ORDER BY updated_at " + orderDesc + "NULLS LAST, c.content_id " + orderDesc;
 				} else {
-					strOrderBy = "ORDER BY content_id DESC ";
+					strOrderBy = "ORDER BY c.content_id DESC ";
 				}
 			}
 
@@ -376,6 +379,7 @@ public class IllustListC {
 			strSql = "SELECT COUNT(*) " + strSqlFromWhere;
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!strTagCond.isEmpty()) {
@@ -396,11 +400,12 @@ public class IllustListC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			strSql = "SELECT * " + strSqlFromWhere
+			strSql = "SELECT c.*, ct.trans_text description_translated " + strSqlFromWhere
 					+ strOrderBy
-					+ "OFFSET ? LIMIT ?";
+					+ " OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!strTagCond.isEmpty()) {
@@ -442,6 +447,7 @@ public class IllustListC {
 				final CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				m_vContentList.add(cContent);
 			}
 			resultSet.close();resultSet=null;

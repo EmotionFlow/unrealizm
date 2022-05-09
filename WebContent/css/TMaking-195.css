@@ -2104,6 +2104,11 @@ Decoration
 	color: #6d6965;
 }
 
+.IllustItem .IllustItemDescTranslation{
+	margin: 5px 0 0 10px;
+	font-size: 17px;
+}
+
 .IllustItem .IllustItemDescMoreLink {
 	text-decoration: underline;
 	color: #49a1ff;

@@ -147,9 +147,10 @@ public final class SearchIllustByTagC {
 
 			// contents
 			strSql = "WITH a AS ( " +
-					" SELECT c.* " + (checkLogin.m_bLogin ? ",f.follow_user_id " : "") +
+					" SELECT c.*, ct.trans_text description_translated" + (checkLogin.m_bLogin ? ",f.follow_user_id " : "") +
 					" FROM contents_0000 c " +
 					" INNER JOIN tags_0000 t ON c.content_id = t.content_id " +
+					" LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id" +
 					(checkLogin.m_bLogin ?
 							" LEFT JOIN follows_0000 f ON c.user_id=f.follow_user_id AND f.user_id=? " : "") +
 					" WHERE open_id <> 2 " +
@@ -187,6 +188,7 @@ public final class SearchIllustByTagC {
 
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			if (checkLogin.m_bLogin) statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, genreId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
@@ -211,6 +213,7 @@ public final class SearchIllustByTagC {
 				} else {
 					content.m_cUser.m_nFollowing = CUser.FOLLOW_NONE;
 				}
+				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				lastContentId = content.m_nContentId;
 				contentList.add(content);
 			}

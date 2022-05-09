@@ -90,28 +90,30 @@ public class MyHomeC {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
 				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = "AND content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
+					strCondMute = " AND c.content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
 			String strCondStart = (startId >0)?"AND content_id<? ":"";
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT * FROM contents_0000 ")
-			.append("WHERE open_id<>2 ")
-			.append("AND user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=? UNION SELECT ?) ");
+			sb.append("SELECT c.*, ct.trans_text description_translated FROM contents_0000 c ")
+			.append(" LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id")
+			.append(" WHERE open_id<>2 ")
+			.append(" AND user_id IN (SELECT follow_user_id FROM follows_0000 WHERE user_id=? UNION SELECT ?) ");
 			if(!strCondMute.isEmpty()) {
 				sb.append(strCondMute);
 			}
 			if(!strCondStart.isEmpty()) {
 				sb.append(strCondStart);
 			}
-			sb.append("AND safe_filter<=? ");
-			sb.append("ORDER BY content_id DESC LIMIT ?");
+			sb.append(" AND safe_filter<=? ");
+			sb.append(" ORDER BY c.content_id DESC LIMIT ?");
 			strSql = new String(sb);
 
 			// NEW ARRIVAL
 			statement = connection.prepareStatement(strSql);
 			idx = 1;
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			if(!strCondMute.isEmpty()) {
@@ -122,6 +124,10 @@ public class MyHomeC {
 			}
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
+
+			//TODO 削除する
+			Log.d(statement.toString());
+
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent cContent = new CContent(resultSet);
@@ -130,6 +136,7 @@ public class MyHomeC {
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				cContent.m_cUser.m_nReaction	= user.reaction;
 				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
+				cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				lastContentId = cContent.m_nContentId;
 				contentList.add(cContent);
 			}
