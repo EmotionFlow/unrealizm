@@ -30,7 +30,6 @@ public final class CContent {
 	public String m_strFileName = "";
 	public int m_nFileNum = 0;
 	public int m_nBookmarkNum = 0;
-	public int m_nCommentNum = 0;
 	public int m_nSafeFilter = 0;
 	public int m_nFileWidth = 0;
 	public int m_nFileHeight = 0;
@@ -129,7 +128,6 @@ public final class CContent {
 		m_strFileName		= Util.toString(resultSet.getString("file_name"));
 		m_nFileNum			= resultSet.getInt("file_num");
 		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
-		//m_nCommentNum		= resultSet.getInt("comment_num");
 		m_nSafeFilter		= resultSet.getInt("safe_filter");
 		m_nFileWidth		= resultSet.getInt("file_width");
 		m_nFileHeight		= resultSet.getInt("file_height");
