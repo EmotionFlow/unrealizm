@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -96,6 +97,7 @@ public class MyIllustListC extends IllustListC {
 		}
 
 		myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 60);
+		Collections.reverse(myWaves);
 
 		return true;
 	}
