@@ -112,12 +112,11 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			<section id="IllustItemList" class="IllustItemList">
 				<%if(cResults.m_vContentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
-					タグや検索キーワードを「お気に入り」登録するとここに最新情報が表示されるようになります。
+					タグをフォローするとここに最新情報が表示されるようになります。
 				</div>
 				<%}%>
 
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%for(CContent cContent : cResults.m_vContentList) { %>
 					<%= CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_PC, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 				<%}%>
 			</section>

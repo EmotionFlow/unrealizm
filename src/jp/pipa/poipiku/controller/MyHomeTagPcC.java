@@ -45,8 +45,8 @@ public final class MyHomeTagPcC {
 
 			final String subTable = "WITH t as (" +
 					"SELECT c.*, follows_0000.follow_user_id, ct.trans_text description_translated FROM contents_0000 c" +
-					" LEFT JOIN follows_0000 ON c.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " +
 					" LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id" +
+					" LEFT JOIN follows_0000 ON c.user_id=follows_0000.follow_user_id AND follows_0000.user_id=? " +
 					" WHERE open_id<>2 " +
 					" AND safe_filter<=? AND (" +
 					"   c.content_id IN (" +

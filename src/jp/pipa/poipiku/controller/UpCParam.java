@@ -69,9 +69,7 @@ public class UpCParam {
 
 		for (UserLocale userLocale: SupportedLocales.list) {
 			String s = Util.toString(request.getParameter("DES" + userLocale.id));
-			if (!s.isEmpty()) {
-				descriptionTranslations.put(userLocale.id, s);
-			}
+			descriptionTranslations.put(userLocale.id, s.trim());
 		}
 
 		// format tag list

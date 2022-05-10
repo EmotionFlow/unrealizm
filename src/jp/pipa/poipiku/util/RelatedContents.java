@@ -16,8 +16,9 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 
 public final class RelatedContents {
-	static final String SELECT_USER_CONTENTS = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name "
+	static final String SELECT_USER_CONTENTS = "SELECT contents_0000.*, nickname, users_0000.file_name as user_file_name, ct.trans_text description_translated "
 			+ "FROM contents_0000 "
+			+ "LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND contents_0000.content_id = ct.content_id "
 			+ "INNER JOIN users_0000 ON users_0000.user_id=contents_0000.user_id "
 			+ "WHERE contents_0000.user_id=? AND open_id<>2 AND safe_filter<=?";
 	static final String SELECT_USER_CONTENTS_BLOCK_COND =
@@ -46,6 +47,7 @@ public final class RelatedContents {
 			}
 
 			statement = connection.prepareStatement(strSql);
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, userId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(checkLogin.m_bLogin) {
@@ -60,6 +62,7 @@ public final class RelatedContents {
 				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
+				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				contents.add(content);
 			}
 			resultSet.close();resultSet=null;

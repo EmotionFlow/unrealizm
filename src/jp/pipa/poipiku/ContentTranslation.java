@@ -121,4 +121,28 @@ public class ContentTranslation {
 		return true;
 	}
 
+	static public boolean delete(int contentId, int lang_id, CContent.ColumnType columnType){
+		if (columnType == null || columnType == CContent.ColumnType.Undefined) {
+			return false;
+		}
+
+		final String sql = """
+			DELETE FROM content_translations WHERE content_id=? AND lang_id=? AND type_id=?
+			""";
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
+		) {
+			int idx = 1;
+			statement.setInt(idx++, contentId);
+			statement.setInt(idx++, lang_id);
+			statement.setInt(idx++, columnType.getCode());
+			statement.executeUpdate();
+		} catch(SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+		return true;
+	}
+
 }

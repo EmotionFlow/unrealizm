@@ -480,12 +480,11 @@ function createUpdatePaste(){
 
 		startMsg();
 
-		const data = {
+		const postData = {
 			"UID":user_id,
 			"IID":content_id,
 			"GD" :genre,
 			"CAT":nCategory,
-			"DES":strDescription,
 			"TAG":strTagList,
 			"PID":nPublishId,
 			"PPW":strPassword,
@@ -503,7 +502,23 @@ function createUpdatePaste(){
 			"PUBALL":nPublishAllNum,
 			"NOTE":privateNote.getText(),
 		};
-		let fUpdateFile = UpdateFileRefTwitterFAjax(data);
+
+		if (!transList) {
+			// 下位互換
+			postData["DES"] = $.trim($("#EditDescription").val());
+		} else {
+			const descList = transList.Description;
+			descList[selected['Description']] = $("#EditDescription").val();
+			for (let key in descList) {
+				if (key === 'default') {
+					postData["DES"] = descList[key];
+				} else {
+					postData["DES" + key] = descList[key];
+				}
+			}
+		}
+
+		let fUpdateFile = UpdateFileRefTwitterFAjax(postData);
 
 		let aryFunc = [];
 		let fTweet = null;

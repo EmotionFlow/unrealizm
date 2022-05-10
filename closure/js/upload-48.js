@@ -1220,28 +1220,44 @@ function UploadPaste(user_id) {
 	let nTweetNow = nTweet;
 	if(nLimitedTime === 1) nTweetNow = 0;
 
+	let postData = {
+		"UID":user_id,
+		"GD" :genre,
+		"CAT":nCategory,
+		"TAG":strTagList,
+		"PID":nPublishId,
+		"PPW":strPassword,
+		"PLD":nTwListId,
+		"LTP":nLimitedTime,
+		"PST":strPublishStart,
+		"PED":strPublishEnd,
+		"TWT":getTweetSetting(),
+		"TWI":getTweetImageSetting(),
+		"TWCT":getTwitterCardThumbnailSetting(),
+		"ED":1,
+		"CNG":nCheerNg,
+		"PUBALL":nPublishAllNum,
+		"NOTE":privateNote.getText(),
+	};
+
+	if (!transList) {
+		// 下位互換
+		postData["DES"] = $.trim($("#EditDescription").val());
+	} else {
+		const descList = transList.Description;
+		descList[selected['Description']] = $("#EditDescription").val();
+		for (let key in descList) {
+			if (key === 'default') {
+				postData["DES"] = descList[key];
+			} else {
+				postData["DES" + key] = descList[key];
+			}
+		}
+	}
+
 	$.ajaxSingle({
 		"type": "post",
-		"data": {
-			"UID":user_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":getTweetSetting(),
-			"TWI":getTweetImageSetting(),
-			"TWCT":getTwitterCardThumbnailSetting(),
-			"ED":1,
-			"CNG":nCheerNg,
-			"PUBALL":nPublishAllNum,
-			"NOTE":privateNote.getText(),
-		},
+		"data": postData,
 		"url": "/api/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {

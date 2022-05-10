@@ -36,22 +36,22 @@ if (requestId > 0) {
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<link href="/js/flatpickr/flatpickr.min.css" columnType="text/css" rel="stylesheet" />
-		<script columnType="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-48.js" columnType="text/javascript"></script>
+		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
+		<script src="/js/upload-48.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
-		<script columnType="text/javascript">
+		<script type="text/javascript">
 		$(function(){
 			$('#MenuUpload').addClass('Selected');
 		});
 		</script>
 
 		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-			<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" columnType="text/css" rel="stylesheet" />
+			<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
 			<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
-			<script columnType="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
+			<script type="text/javascript" src="/js/fine-uploader/fine-uploader.js"></script>
 		<%}%>
 
 		<%@ include file="UpPcV.jsp"%>
@@ -269,14 +269,14 @@ if (requestId > 0) {
 
 				<%if(nEditorId==Common.EDITOR_TEXT){%>
 				<div class="TextBody">
-					<input id="EditTextTitle" class="EditTextTitle" columnType="text" maxlength="50" placeholder="<%=_TEX.T("UploadFilePc.Text.Title")%>" />
+					<input id="EditTextTitle" class="EditTextTitle" type="text" maxlength="50" placeholder="<%=_TEX.T("UploadFilePc.Text.Title")%>" />
 					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" columnType="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> />
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> />
 					<div class="TagListCharNum"><span><%=_TEX.T("IllustV.Description.Tag.Info")%></span><span id="EditTagListCharNum">100</span></div>
 				</div>
 
@@ -284,8 +284,8 @@ if (requestId > 0) {
 					<div class="OptionItem" style="display: <%=nEditorId==Common.EDITOR_TEXT ? "block" : "none"%>">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Text.Direction")%></div>
 						<div class="OptionPublish">
-							<label><input columnType="radio" name="EditTextDirection" value="0" checked="checked" /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
-							<label><input columnType="radio" name="EditTextDirection" value="1" /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>
+							<label><input type="radio" name="EditTextDirection" value="0" checked="checked" /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
+							<label><input type="radio" name="EditTextDirection" value="1" /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>
 						</div>
 					</div>
 					<div class="OptionItem">
@@ -322,7 +322,7 @@ if (requestId > 0) {
 					<div id="ItemPassword" class="OptionItem" style="display: none;">
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
-							<input id="EditPassword" class="EditPassword" columnType="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
+							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>
 					<div id="ItemTwitterList" style="display: none;">
@@ -345,7 +345,7 @@ if (requestId > 0) {
 					<div id="ItemShowAllFirst" class="OptionItem" style="display: none">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
 						<div class="onoffswitch OnOff">
-							<input columnType="checkbox" class="onoffswitch-checkbox" name="OptionShowAllFirst" id="OptionShowAllFirst" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionShowAllFirst" id="OptionShowAllFirst" value="0" />
 							<label class="onoffswitch-label" for="OptionShowAllFirst">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -357,7 +357,7 @@ if (requestId > 0) {
 					<div id="ItemTimeLimitedFlg" class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Title")%></div>
 						<div class="onoffswitch OnOff">
-							<input columnType="checkbox" class="onoffswitch-checkbox" name="OptionLimitedTimePublish" id="OptionLimitedTimePublish" value="0" onchange="updateOptionLimitedTimePublish()"/>
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionLimitedTimePublish" id="OptionLimitedTimePublish" value="0" onchange="updateOptionLimitedTimePublish()"/>
 							<label class="onoffswitch-label" for="OptionLimitedTimePublish">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -370,16 +370,16 @@ if (requestId > 0) {
 							<%if(Util.isSmartPhone(request)) {%>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
-								<input id="EditTimeLimitedStart" class="EditTimeLimited" columnType="text" />
+								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" />
 							</div>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
-								<input id="EditTimeLimitedEnd" class="EditTimeLimited" columnType="text" />
+								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" />
 							</div>
 							<%}else{%>
-								<input id="EditTimeLimitedStart" class="EditTimeLimitedPc" columnType="text" maxlength="15" />
+								<input id="EditTimeLimitedStart" class="EditTimeLimitedPc" type="text" maxlength="15" />
 								<span class="EditTimeLimitedPcTo">〜</span>
-								<input id="EditTimeLimitedEnd" class="EditTimeLimitedPc" columnType="text" maxlength="15" />
+								<input id="EditTimeLimitedEnd" class="EditTimeLimitedPc" type="text" maxlength="15" />
 							<%}%>
 						</div>
 					</div>
@@ -387,7 +387,7 @@ if (requestId > 0) {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
-							<input columnType="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
 							<label class="onoffswitch-label" for="OptionRecent">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -397,7 +397,7 @@ if (requestId > 0) {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
-							<input columnType="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
 							<label class="onoffswitch-label" for="OptionTweet">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -412,7 +412,7 @@ if (requestId > 0) {
 					<div id="ImageSwitch" class="OptionItem" style="display: none;">
 						<div class="OptionLabelSub"><%=_TEX.T("UploadFilePc.Option.TweetImage")%></div>
 						<div class="onoffswitch OnOff">
-							<input columnType="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0"  onchange="updateTweetButton()"/>
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionImage" id="OptionImage" value="0"  onchange="updateTweetButton()"/>
 							<label class="onoffswitch-label" for="OptionImage">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>
@@ -428,7 +428,7 @@ if (requestId > 0) {
 							<%=_TEX.T("UploadFilePc.Option.TwitterCardThumbnail")%>
 						</div>
 						<div class="onoffswitch OnOff">
-							<input columnType="checkbox"
+							<input type="checkbox"
 								   class="onoffswitch-checkbox"
 								   name="OptionTwitterCardThumbnail"
 								   id="OptionTwitterCardThumbnail"
@@ -448,7 +448,7 @@ if (requestId > 0) {
 					<div class="OptionItem">
 						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
 						<div class="onoffswitch OnOff">
-							<input columnType="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" />
+							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" />
 							<label class="onoffswitch-label" for="OptionCheerNg">
 								<span class="onoffswitch-inner"></span>
 								<span class="onoffswitch-switch"></span>

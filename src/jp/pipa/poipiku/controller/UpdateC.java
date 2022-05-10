@@ -237,6 +237,8 @@ public final class UpdateC extends UpC {
 			cParam.descriptionTranslations.forEach((key, value) -> {
 				if (!value.isEmpty()) {
 					ContentTranslation.upsert(contentId, key, CContent.ColumnType.Description, value, cParam.m_nUserId);
+				} else {
+					ContentTranslation.delete(contentId, key, CContent.ColumnType.Description);
 				}
 			});
 

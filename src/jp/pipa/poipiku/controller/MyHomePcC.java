@@ -106,11 +106,12 @@ public final class MyHomePcC {
 			}
 
 			StringBuilder sb = new StringBuilder();
-			sb.append("FROM contents_0000 ")
-			.append(" LEFT JOIN requests ON requests.content_id=contents_0000.content_id");
+			sb.append("FROM contents_0000 c")
+			.append(" LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id")
+			.append(" LEFT JOIN requests ON requests.content_id=c.content_id");
 
 			if(!strCondMute.isEmpty()){
-				sb.append(" LEFT JOIN mute_contents ON mute_contents.mute_content_id=contents_0000.content_id");
+				sb.append(" LEFT JOIN mute_contents ON mute_contents.mute_content_id=c.content_id");
 			}
 
 			sb.append(" WHERE open_id<>2 ")
@@ -130,6 +131,7 @@ public final class MyHomePcC {
 			if(!strCondMute.isEmpty()) {
 				statement.setString(idx++, strMuteKeyword);
 			}
+			statement.setInt(idx++, checkLogin.m_nLangId);
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
@@ -153,13 +155,14 @@ public final class MyHomePcC {
 
 			if (!m_bNoContents) {
 				// NEW ARRIVAL
-				strSql = strSqlWith + "SELECT contents_0000.*, requests.id request_id " + strSqlFromWhere;
-				strSql += " ORDER BY contents_0000.content_id DESC OFFSET ? LIMIT ?";
+				strSql = strSqlWith + "SELECT c.*, requests.id request_id, ct.trans_text description_translated " + strSqlFromWhere;
+				strSql += " ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
 				statement = connection.prepareStatement(strSql);
 				idx = 1;
 				if(!strMuteKeyword.isEmpty()) {
 					statement.setString(idx++, strMuteKeyword);
 				}
+				statement.setInt(idx++, checkLogin.m_nLangId);
 				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nUserId);
 				statement.setInt(idx++, checkLogin.m_nSafeFilter);
@@ -174,6 +177,7 @@ public final class MyHomePcC {
 					cContent.m_cUser.m_nReaction	= user.reaction;
 					cContent.m_cUser.m_nFollowing	= CUser.FOLLOW_HIDE;
 					cContent.m_nRequestId = resultSet.getInt("request_id");
+					cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
 					m_nEndId = cContent.m_nContentId;
 					m_vContentList.add(cContent);
 				}
