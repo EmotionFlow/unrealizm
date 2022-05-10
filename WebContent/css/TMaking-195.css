@@ -2982,6 +2982,20 @@ hr.IllustItemListSeparator {
 	padding: 5px 0 15px 0;
 }
 
+.UserInfo .UserInfoCmd .WaveButton {
+	width: 32px;
+	height: 32px;
+	padding: 5px 5px 3px 6px;
+	background: #fff;
+	margin: 5px 10px;
+	box-shadow: 0 0.25rem 0.25rem rgb(24 24 24 / 8%);
+	border-radius: 23px;
+	display: inline-flex;}
+
+.UserInfo .UserInfoCmd .WaveButton > img{
+	width: 30px;
+}
+
 .UserInfo .UserInfoCmd .UserInfoCmdFollow {
 	display: inline-block;
 	height: 22px;

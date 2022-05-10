@@ -1350,3 +1350,21 @@ function _replyEmoji(_this, loginUserId) {
 	)
 }
 /******** リプライ *********/
+
+/******** ユーザー宛絵文字(wave) *********/
+function sendUserWave(fromUserId, toUserId, emoji, elThis) {
+	$.ajax({
+		"type": "post",
+		"data": {"FROMUID": fromUserId, "TOUID": toUserId, "EMOJI": emoji},
+		"url": "/f/SendUserWaveF.jsp",
+		"dataType": "json",
+	}).then(
+		(data) => {
+			DispMsg(data.message)
+		},
+		(jqXHR, textStatus, errorThrown) => {
+			DispMsg('Connection error');
+		}
+	)
+}
+/******** ユーザー宛絵文字(wave) *********/
