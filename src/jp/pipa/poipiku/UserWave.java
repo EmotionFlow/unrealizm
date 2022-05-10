@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class UserWave {
@@ -25,14 +26,17 @@ public class UserWave {
 	}
 
 
-	public static List<UserWave> selectByToUserId(int toUserId) {
-		List<UserWave> list = new ArrayList<>();
-		final String strSql = "SELECT * FROM user_waves WHERE to_user_id=?";
+	public static List<UserWave> selectByToUserId(int toUserId, int offset, int limit) {
+		List<UserWave> list = new LinkedList<>();
+		final String strSql = "SELECT * FROM user_waves WHERE to_user_id=? ORDER BY created_at DESC OFFSET ? LIMIT ?";
 		try (
 				Connection connection = DatabaseUtil.dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(strSql);
 		) {
 			statement.setInt(1, toUserId);
+			statement.setInt(2, offset);
+			statement.setInt(3, limit);
+			Log.d(statement.toString());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				list.add(new UserWave(resultSet));

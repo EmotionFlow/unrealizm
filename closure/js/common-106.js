@@ -1360,7 +1360,7 @@ function sendUserWave(fromUserId, toUserId, emoji, elThis) {
 		"dataType": "json",
 	}).then(
 		(data) => {
-			DispMsg(data.message)
+			DispMsg(data.message, 400);
 		},
 		(jqXHR, textStatus, errorThrown) => {
 			DispMsg('Connection error');

@@ -156,6 +156,17 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 						<%@ include file="/inner/TUserShareCmd.jsp"%>
 					</span>
 				</section>
+
+				<%if(!cResults.myWaves.isEmpty()){%>
+				<section class="WaveList">
+					<span class="WaveListTitle">
+						もらった応援
+					</span>
+					<% for (UserWave wave: cResults.myWaves) { %>
+					<%=CEmoji.parse(wave.emoji)%>
+					<%}%>
+				</section>
+				<%}%>
 				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>

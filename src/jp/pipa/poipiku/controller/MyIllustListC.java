@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MyIllustListC extends IllustListC {
@@ -23,6 +24,8 @@ public class MyIllustListC extends IllustListC {
 		}
 	}
 	public List<SwitchUser> switchUsers = new ArrayList<>();
+
+	public List<UserWave> myWaves = null;
 
 	public void getParam(HttpServletRequest cRequest) {
 		try {
@@ -91,6 +94,8 @@ public class MyIllustListC extends IllustListC {
 			switchUser = new SwitchUser(m_cUser, true);
 			switchUsers.add(switchUser);
 		}
+
+		myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 60);
 
 		return true;
 	}
