@@ -148,7 +148,7 @@ public final class MyHomeTagC {
 			GridUtil.getEachComment(connection, m_vContentList);
 
 			// Bookmark
-			m_vContentList = GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
+			GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
