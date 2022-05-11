@@ -36,7 +36,6 @@ public class UserWave {
 			statement.setInt(1, toUserId);
 			statement.setInt(2, offset);
 			statement.setInt(3, limit);
-			Log.d(statement.toString());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				list.add(new UserWave(resultSet));
