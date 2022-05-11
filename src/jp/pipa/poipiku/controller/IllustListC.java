@@ -165,6 +165,8 @@ public class IllustListC {
 					if (m_cUser.m_strWaveEmojiList == null) m_cUser.m_strWaveEmojiList = new LinkedList<>();
 					m_cUser.m_strWaveEmojiList.add(resultSet.getString(1));
 				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 
 				if(m_cUser.m_strHeaderFileName.isEmpty()) {
 					strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
