@@ -3070,12 +3070,15 @@ hr.IllustItemListSeparator {
 	flex-wrap: wrap;
 }
 
+.UserInfo .WaveList.Pc {
+	padding: 5px 15px 15px 15px;
+}
+
 .UserInfo .WaveList .WaveListTitle {
 	font-size: 11px;
 	width: 100%;
 	text-align: center;
 }
-
 
 .UserInfo .WaveList > img{
 	width: 22px;

@@ -156,7 +156,6 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 						<%@ include file="/inner/TUserShareCmd.jsp"%>
 					</span>
 				</section>
-
 				<%if(!cResults.myWaves.isEmpty()){%>
 				<section class="WaveList">
 					<span class="WaveListTitle">

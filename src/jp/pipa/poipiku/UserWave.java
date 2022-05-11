@@ -28,7 +28,7 @@ public class UserWave {
 
 	public static List<UserWave> selectByToUserId(int toUserId, int offset, int limit) {
 		List<UserWave> list = new LinkedList<>();
-		final String strSql = "SELECT * FROM user_waves WHERE to_user_id=? ORDER BY created_at DESC OFFSET ? LIMIT ?";
+		final String strSql = "SELECT * FROM user_waves WHERE to_user_id=? ORDER BY id DESC OFFSET ? LIMIT ?";
 		try (
 				Connection connection = DatabaseUtil.dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(strSql);

@@ -195,6 +195,16 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 						</span>
 					</span>
 				</section>
+				<%if(!cResults.myWaves.isEmpty()){%>
+				<section class="WaveList Pc">
+					<span class="WaveListTitle Pc">
+						もらった応援
+					</span>
+					<% for (UserWave wave: cResults.myWaves) { %>
+					<%=CEmoji.parse(wave.emoji)%>
+					<%}%>
+				</section>
+				<%}%>
 				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>

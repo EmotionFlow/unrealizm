@@ -67,6 +67,16 @@ public class DeleteUserC {
 			statement.close();statement=null;
 			connection.close();connection=null;
 
+			// もらったwaveだけ消す
+			// delete wave
+			connection = dataSource.getConnection();
+			strSql ="DELETE FROM user_waves WHERE to_user_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nUserId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+			connection.close();connection=null;
+
 			// delete info_lists
 			connection = dataSource.getConnection();
 			strSql ="DELETE FROM info_lists WHERE user_id=?";
