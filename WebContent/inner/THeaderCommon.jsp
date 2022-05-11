@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 */%>
 <link href="/css/TBase-42.css" type="text/css" rel="stylesheet" />
-<link href="/css/TMaking-195.css" type="text/css" rel="stylesheet" />
+<link href="/css/TMaking-196.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/jquery.creditCardValidator.js"></script>
 <script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
-<script type="text/javascript" src="/js/common-106.js"></script>
+<script type="text/javascript" src="/js/common-107.js"></script>
 <%@ include file="/inner/TSweetAlert.jsp"%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
