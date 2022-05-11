@@ -319,7 +319,7 @@ public class UserAuthUtil {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(nUserId<=0) return ERROR_HUSH_INVALID;
+			if(nUserId<=0 || !strEmail.contains("@")) return ERROR_HUSH_INVALID;
 
 			strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";
 			cState = cConn.prepareStatement(strSql);
