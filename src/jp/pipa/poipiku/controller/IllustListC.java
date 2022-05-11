@@ -1,11 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -159,6 +155,16 @@ public class IllustListC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
+
+				// author wave
+				strSql = "SELECT chars FROM user_wave_templates WHERE user_id=? ORDER BY disp_order";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_nUserId);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					if (m_cUser.m_strWaveEmojiList == null) m_cUser.m_strWaveEmojiList = new LinkedList<>();
+					m_cUser.m_strWaveEmojiList.add(resultSet.getString(1));
+				}
 
 				if(m_cUser.m_strHeaderFileName.isEmpty()) {
 					strSql = "SELECT * FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";

@@ -160,6 +160,11 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 				<section class="WaveList">
 					<span class="WaveListTitle">
 						もらった応援
+						<%if(isApp){%>
+						<br>応援絵文字はブラウザ版の設定画面でカスタマイズできます
+						<%}else{%>
+						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i>カスタマイズ</a>
+						<%}%>
 					</span>
 					<% for (UserWave wave: cResults.myWaves) { %>
 					<%=CEmoji.parse(wave.emoji)%>

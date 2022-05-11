@@ -199,6 +199,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 				<section class="WaveList Pc">
 					<span class="WaveListTitle Pc">
 						もらった応援
+						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i>カスタマイズ</a>
 					</span>
 					<% for (UserWave wave: cResults.myWaves) { %>
 					<%=CEmoji.parse(wave.emoji)%>
