@@ -96,8 +96,13 @@ public class MyIllustListC extends IllustListC {
 			switchUsers.add(switchUser);
 		}
 
-		myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 60);
-		Collections.reverse(myWaves);
+		UserWaveTemplate waveTemplate = UserWaveTemplate.select(checkLogin.m_nUserId, UserWaveTemplate.DISABLE_WAVE_ORDER);
+		if (waveTemplate != null && !waveTemplate.isEnabled()) {
+			myWaves = new LinkedList<>();
+		} else {
+			myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 60);
+			Collections.reverse(myWaves);
+		}
 
 		return true;
 	}

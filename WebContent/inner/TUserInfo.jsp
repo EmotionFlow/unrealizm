@@ -19,12 +19,9 @@
 		<%@ include file="IllustBrowserVRequestButton.jsp"%>
 		<%@ include file="TUserShareCmd.jsp"%>
 	</span>
-	<span class="UserInfoCmd" style="padding-bottom: 0">
-		絵文字で応援する
-	</span>
-	<span class="UserInfoCmd">
-		<%@ include file="TWaveButtons.jsp"%>
-	</span>
+
+	<%@ include file="TWaveButtons.jsp"%>
+
 </section>
 <section class="UserInfoState">
 	<%@include file="IllustBrowserVUserInfoState.jsp"%>

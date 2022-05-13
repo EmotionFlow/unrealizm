@@ -34,8 +34,9 @@ public class SendUserWaveC {
 		}
 	}
 
-	public String message = "エラーが発生しました";
-	public boolean getResults(final CheckLogin checkLogin) {
+	public String message = "";
+	public boolean getResults(final CheckLogin checkLogin, final ResourceBundleControl _TEX) {
+		message = _TEX.T("IllustV.Wave.SendNG");
 		if (toUserId < 0) {
 			return false;
 		}
@@ -64,7 +65,7 @@ public class SendUserWaveC {
 
 		boolean insertResult = UserWave.insert(fromUserId, toUserId, emoji, ipAddress);
 		if (insertResult) {
-			message = "絵文字を送りました！";
+			message = _TEX.T("IllustV.Wave.SendOK");
 		}
 		return insertResult;
 	}

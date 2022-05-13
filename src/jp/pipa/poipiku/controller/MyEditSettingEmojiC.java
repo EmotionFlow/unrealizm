@@ -14,12 +14,21 @@ import java.util.List;
 public class MyEditSettingEmojiC {
 	public CommentTemplate commentTemplate;
 	public List<UserWaveTemplate> userWaveTemplateList;
+	public boolean userWaveEnabled = false;
 	public boolean getResults(CheckLogin checkLogin) {
 		commentTemplate = new CommentTemplate();
 		if (!commentTemplate.select(checkLogin.m_nUserId, 0)) {
 			commentTemplate.chars = Emoji.REPLY_EMOJI_DEFAULT;
 		}
-		userWaveTemplateList = UserWaveTemplate.select(checkLogin.m_nUserId);
+		userWaveTemplateList = UserWaveTemplate.selectAll(checkLogin.m_nUserId);
+		if (!userWaveTemplateList.isEmpty()) {
+			userWaveEnabled = userWaveTemplateList.get(0).isEnabled();
+			if (!userWaveEnabled) {
+				userWaveTemplateList.remove(0);
+			}
+		} else {
+			userWaveEnabled = true;
+		}
 		return true;
 	}
 }

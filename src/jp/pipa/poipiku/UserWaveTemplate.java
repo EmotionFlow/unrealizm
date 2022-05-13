@@ -1,5 +1,6 @@
 package jp.pipa.poipiku;
 
+import jp.pipa.poipiku.settlement.epsilon.User;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
@@ -11,10 +12,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class UserWaveTemplate extends Model {
+	public static final String DISABLE_WAVE_CHAR = "disable";
+	public static final int DISABLE_WAVE_ORDER = -1;
+
 	public int id = -1;
 	public int userId = -1;
 	public String chars = "";
-	public int dispOrder = 0;
+	public int dispOrder = -99;
 
 	public UserWaveTemplate(){};
 
@@ -37,8 +41,33 @@ public final class UserWaveTemplate extends Model {
 			""";
 		List<UserWaveTemplate> list = new LinkedList<>();
 		try (
-			Connection connection = DatabaseUtil.dataSource.getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
+		) {
+			statement.setInt(1, userId);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				UserWaveTemplate waveTemplate = new UserWaveTemplate(resultSet);
+				list.add(waveTemplate);
+				if (!waveTemplate.isEnabled()) break;
+			}
+		} catch(SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	static public List<UserWaveTemplate> selectAll(int userId) {
+		final String sql = """
+			SELECT *
+			FROM user_wave_templates
+			WHERE user_id=? ORDER BY disp_order
+			""";
+		List<UserWaveTemplate> list = new LinkedList<>();
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, userId);
 			ResultSet resultSet = statement.executeQuery();
@@ -52,8 +81,32 @@ public final class UserWaveTemplate extends Model {
 		return list;
 	}
 
+	static public UserWaveTemplate select(int userId, int dispOrder) {
+		final String sql = """
+			SELECT *
+			FROM user_wave_templates
+			WHERE user_id=? AND disp_order=?
+			""";
+		UserWaveTemplate wave = null;
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
+		) {
+			statement.setInt(1, userId);
+			statement.setInt(2, dispOrder);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				wave = new UserWaveTemplate(resultSet);
+			}
+		} catch(SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+		return wave;
+	}
+
 	static public boolean upsert(int userId, int dispOrder, String chars){
-		if (userId < 0 || dispOrder < 0) {
+		if (userId < 0 || dispOrder < -1) {
 			return false;
 		}
 		if (chars==null || chars.isEmpty()) {
@@ -83,7 +136,7 @@ public final class UserWaveTemplate extends Model {
 	}
 
 	static public boolean delete(int userId, int dispOrder) {
-		if (userId < 0 || dispOrder < 0) return false;
+		if (userId < 0 || dispOrder < -1) return false;
 		final String sql = """
 			DELETE FROM user_wave_templates
 			WHERE user_id=? AND disp_order=?
@@ -121,4 +174,21 @@ public final class UserWaveTemplate extends Model {
 		}
 		return true;
 	}
- }
+
+	static public boolean disable(int userId) {
+		if (userId < 0) return false;
+		return upsert(userId, DISABLE_WAVE_ORDER, DISABLE_WAVE_CHAR);
+	}
+
+	static public boolean enable(int userId) {
+		if (userId < 0) return false;
+		return delete(userId, DISABLE_WAVE_ORDER);
+	}
+
+	public boolean isEnabled() {
+		if (dispOrder == DISABLE_WAVE_ORDER && chars.equals(DISABLE_WAVE_CHAR)) {
+			return false;
+		}
+		return true;
+	}
+}
