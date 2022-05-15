@@ -2994,6 +2994,7 @@ hr.IllustItemListSeparator {
 
 .UserInfo .UserInfoCmd .WaveButton > img{
 	width: 30px;
+	height: 30px;
 }
 
 .UserInfo .UserInfoCmd .UserInfoCmdFollow {
@@ -3082,6 +3083,7 @@ hr.IllustItemListSeparator {
 
 .UserInfo .WaveList > img{
 	width: 22px;
+	height: 22px;
 	margin: 4px;
 }
 
