@@ -41,7 +41,7 @@ public final class ActivityListC {
 
 			// Get info_list
 			strSql = "SELECT * FROM info_lists WHERE user_id=? AND info_type IN " +
-					(infoType==Common.NOTIFICATION_TYPE_REACTION ? "(1, 4, 6)" : "(3, 5)") +
+					(infoType==Common.NOTIFICATION_TYPE_REACTION ? "(1, 4, 6, 7)" : "(3, 5)") +
 					" ORDER BY had_read, info_date DESC LIMIT 50";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, userId);

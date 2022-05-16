@@ -19,6 +19,8 @@
 		} else if (cResults.infoType == InfoList.InfoType.RequestStarted.getCode()) {
 			// requestIdにクリエイターのuserIdを格納している
 			toUrl = "/RequestNewPcV.jsp?ID=" + cResults.requestId;
+		} else if (cResults.infoType == InfoList.InfoType.WaveEmoji.getCode()) {
+			toUrl = String.format("MyIllustListPcV.jsp?ID=%d", checkLogin.m_nUserId);
 		}
 	}
 %>

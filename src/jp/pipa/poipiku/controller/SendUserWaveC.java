@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.notify.UserWaveNotifier;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -59,13 +60,15 @@ public class SendUserWaveC {
 				Log.d("存在しないユーザへのwave");
 				return false;
 			}
-		} catch (SQLException throwables) {
-			throwables.printStackTrace();
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
 		}
 
 		boolean insertResult = UserWave.insert(fromUserId, toUserId, emoji, ipAddress);
 		if (insertResult) {
 			message = _TEX.T("IllustV.Wave.SendOK");
+			UserWaveNotifier notifier = new UserWaveNotifier();
+			notifier.notifyWaveReceived(toUserId, emoji);
 		}
 		return insertResult;
 	}
