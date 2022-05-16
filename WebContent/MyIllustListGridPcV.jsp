@@ -198,8 +198,8 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 				<%if(!cResults.myWaves.isEmpty()){%>
 				<section class="WaveList Pc">
 					<span class="WaveListTitle Pc">
-						もらった応援
-						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i>カスタマイズ</a>
+						<%=_TEX.T("MyIllustListV.Wave.Received")%>
+						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
 					</span>
 					<% for (UserWave wave: cResults.myWaves) { %>
 					<%=CEmoji.parse(wave.emoji)%>

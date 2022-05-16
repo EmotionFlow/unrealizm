@@ -159,11 +159,11 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 				<%if(!cResults.myWaves.isEmpty()){%>
 				<section class="WaveList">
 					<span class="WaveListTitle">
-						もらった応援
+						<%=_TEX.T("MyIllustListV.Wave.Received")%>
 						<%if(isApp){%>
-						<br>応援絵文字はブラウザ版の設定画面でカスタマイズできます
+						<br><%=_TEX.T("MyIllustListV.Wave.Customize.App")%>
 						<%}else{%>
-						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i>カスタマイズ</a>
+						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
 						<%}%>
 					</span>
 					<% for (UserWave wave: cResults.myWaves) { %>
