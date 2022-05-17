@@ -39,7 +39,7 @@ cResults.getResults(checkLogin);
 
 		<span class="ActivityListThumb">
 			<%if(infoType == InfoList.InfoType.WaveEmoji){%>
-				<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(checkLogin.cacheUser.fileName)%>_360.jpg')"></span>
+				<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(checkLogin.cacheUser.fileName)%>')"></span>
 			<%}else if(infoType == InfoList.InfoType.Gift){%>
 				<span class="ActivityListThumbIcon"><i class="fas fa-gift GiftIcon"></i></span>
 			<%}else{%>
