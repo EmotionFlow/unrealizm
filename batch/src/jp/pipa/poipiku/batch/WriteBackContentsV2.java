@@ -91,7 +91,7 @@ public class WriteBackContentsV2 extends Batch {
 
 		// HDDへの移動対象を抽出
 //		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS, getSelectLimit());
-		List<WriteBackFile> moveTargets = WriteBackFile.selectStaffOnly(WriteBackFile.Status.Created, 5183422);
+		List<WriteBackFile> moveTargets = WriteBackFile.selectStaffOnly(WriteBackFile.Status.Created, 21808);
 
 		if (moveTargets == null) {
 			moveTargets = new ArrayList<>();
