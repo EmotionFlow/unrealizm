@@ -202,7 +202,8 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				data.check_heart +
 				data.check_request +
 				data.check_gift +
-				data.check_wave_emoji, 99);
+				data.check_wave_emoji +
+				data.check_wave_emoji_message, 99);
 			<%//var strNotifyNum = (ntfy_num>99)?"9+":""+ntfy_num;%>
 			$('#InfoNumAct').html(ntfy_num);
 			if(ntfy_num>0) {

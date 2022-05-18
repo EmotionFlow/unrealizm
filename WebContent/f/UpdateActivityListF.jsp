@@ -9,7 +9,7 @@
 	String toUrl = "";
 	if (rtn) {
 		if (cResults.infoType == InfoList.InfoType.Emoji.getCode()
-				|| cResults.infoType == InfoList.InfoType.EmojiReply.getCode()
+		 || cResults.infoType == InfoList.InfoType.EmojiReply.getCode()
 		) {
 			toUrl = String.format("/%d/%d.html", cResults.contentUserId, cResults.contentId);
 		} else if (cResults.infoType == InfoList.InfoType.Request.getCode()) {
@@ -19,7 +19,8 @@
 		} else if (cResults.infoType == InfoList.InfoType.RequestStarted.getCode()) {
 			// requestIdにクリエイターのuserIdを格納している
 			toUrl = "/RequestNewPcV.jsp?ID=" + cResults.requestId;
-		} else if (cResults.infoType == InfoList.InfoType.WaveEmoji.getCode()) {
+		} else if (cResults.infoType == InfoList.InfoType.WaveEmoji.getCode()
+				|| cResults.infoType == InfoList.InfoType.WaveEmojiMessage.getCode()) {
 			toUrl = String.format("MyIllustListPcV.jsp?ID=%d", checkLogin.m_nUserId);
 		}
 	}

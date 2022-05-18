@@ -228,7 +228,6 @@ public final class UserWaveTemplate extends Model {
 	static public boolean isCommentEnabled(List<UserWaveTemplate> list) {
 		boolean result = false;
 		for (UserWaveTemplate t: list) {
-			Log.d("dispOrder %d".formatted(t.dispOrder));
 			if (t.isCommentEnabled()) {
 				result = true;
 				break;

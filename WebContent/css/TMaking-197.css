@@ -3067,9 +3067,9 @@ hr.IllustItemListSeparator {
 	width: 100%;
 	padding: 3px 0;
 	background: rgba(255, 255, 255, 0.85);
-	flex-direction: row;
+	flex-direction: column;
 	flex-wrap: wrap;
-}
+	align-items: center;}
 
 .UserInfo .WaveList.Pc {
 	padding: 5px 15px 15px 15px;
@@ -3081,27 +3081,34 @@ hr.IllustItemListSeparator {
 	text-align: center;
 }
 
-.UserInfo .WaveList > img{
-	width: 22px;
-	height: 22px;
-	margin: 4px;
+.UserInfo .WaveList.Pc .MyWaves {
+	width: 728px;
 }
 
-.UserInfo .WaveList .WaveWithComment {
+.UserInfo .WaveList .MyWaves > img{
 	width: 22px;
 	height: 22px;
-	margin: 4px;
+	padding: 4px;
 }
 
-.UserInfo .WaveList .WaveWithComment > img{
+.UserInfo .WaveList .MyWaves .WaveWithComment {
 	width: 22px;
 	height: 22px;
+	display: inline-table;
+	overflow: hidden;
+	margin-bottom: -20px;
 }
 
-.UserInfo .WaveList .WaveWithComment > i{
+.UserInfo .WaveList .MyWaves .WaveWithComment > img{
+	width: 22px;
+	height: 22px;
+	padding: 4px;
+}
+
+.UserInfo .WaveList .MyWaves .WaveWithComment > i{
 	position: relative;
-	top: -30px;
-	right: -11px;
+	top: -35px;
+	right: -15px;
 	font-size: 15px;
 	color: #fffffff7;
 }
@@ -3980,14 +3987,14 @@ hr.IllustItemListSeparator {
 }
 /********** ログイン・ポイパス促し  ************/
 
-
-.ShowWaveDlg {
+/********** メッセージ付きwave表示ダイアログ ************/
+.WaveMessageDlg {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-.ShowWaveDlg .WaveEmoji {
+.WaveMessageDlg .WaveEmoji {
 	width: 72px;
 	height: 72px;
 	border: solid 1px #dbdbdb;
@@ -3996,13 +4003,13 @@ hr.IllustItemListSeparator {
 	z-index: 1;
 }
 
-.ShowWaveDlg .WaveEmoji img {
+.WaveMessageDlg .WaveEmoji img {
 	padding: 12px;
 	width: 44px;
 	height: 44px;
 }
 
-.ShowWaveDlg .WaveMessage {
+.WaveMessageDlg .WaveMessage {
 	margin-top: -7px;
 	width: 20em;
 	text-align: left;
@@ -4012,3 +4019,4 @@ hr.IllustItemListSeparator {
 	border-radius: 3px;
 	background: #fffefb;
 }
+/********** メッセージ付きwave表示ダイアログ ************/

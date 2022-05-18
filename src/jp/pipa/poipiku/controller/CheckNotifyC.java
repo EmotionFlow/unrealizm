@@ -26,6 +26,7 @@ public final class CheckNotifyC {
 	public int m_nCheckRequest = 0;
 	public int m_nCheckGift = 0;
 	public int m_nCheckWaveEmoji = 0;
+	public int m_nCheckWaveEmojiMessage = 0;
 
 //	public int m_nNotifyComment = 0;
 //	public int m_nNotifyFollow = 0;
@@ -93,6 +94,8 @@ public final class CheckNotifyC {
 				} else if (infoType == InfoList.InfoType.EmojiReply.getCode()) {
 					m_nCheckCommentReply = sumNum;
 				} else if (infoType == InfoList.InfoType.WaveEmoji.getCode()) {
+					m_nCheckWaveEmoji = sumNum;
+				} else if (infoType == InfoList.InfoType.WaveEmojiMessage.getCode()) {
 					m_nCheckWaveEmoji = sumNum;
 				}
 			}

@@ -93,7 +93,7 @@ public class SendUserWaveC {
 		}
 
 		if (!message.isEmpty() && !waveCommentEnabled) {
-			Log.d("waveコメントを無効にしているユーザへのコメント付きwave");
+			Log.d("waveメッセージを無効にしているユーザへのメッセージ付きwave");
 			return false;
 		}
 
@@ -101,7 +101,11 @@ public class SendUserWaveC {
 		if (insertResult) {
 			resultMessage = _TEX.T("IllustV.Wave.SendOK");
 			UserWaveNotifier notifier = new UserWaveNotifier();
-			notifier.notifyWaveReceived(toUserId, emoji);
+			if (message.isEmpty()) {
+				notifier.notifyWaveReceived(toUserId, emoji);
+			} else {
+				notifier.notifyWaveMessageReceived(toUserId, emoji, message);
+			}
 		}
 		return insertResult;
 	}

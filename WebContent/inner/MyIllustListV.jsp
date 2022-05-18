@@ -76,32 +76,9 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 		<%@ include file="/inner/TSwitchUser.jsp"%>
+		<%@ include file="/inner/TWaveMessageDlg.jsp"%>
 
 		<script type="text/javascript">
-		const waveMessages = {
-			<%for (UserWave wave : cResults.myWaves) {%><%if (!wave.message.isEmpty()) {%>
-			'<%=wave.id%>': {
-				'emojiHtml': '<%=CEmoji.parse(wave.emoji)%>',
-				'messageHtml': '<%=Util.toStringHtml(wave.message).replaceAll("'", "\\\\'")%>'
-			},
-			<%}%><%}%>
-		};
-
-		function showWaveMessage(waveId) {
-			const waveMessage = waveMessages[waveId];
-			if (!waveMessage) return false;
-			Swal.fire({
-				html:
-				'<div class="ShowWaveDlg">' +
-				'<div class="WaveEmoji">' + waveMessage.emojiHtml + '</div>' +
-				'<div class="WaveMessage">' + waveMessage.messageHtml + '</div>' +
-				'</div>',
-				showConfirmButton: true,
-				showCancelButton: false,
-				showCloseButton: false,
-			})
-		}
-
 		$(function(){
 			$('#MenuMe').addClass('Selected');
 			updateTagMenuPos(100);
@@ -190,16 +167,9 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
 						<%}%>
 					</span>
-					<% for (UserWave wave: cResults.myWaves) { %>
-					<%if(wave.message.isEmpty()){%>
-					<%=CEmoji.parse(wave.emoji)%>
-					<%}else{%>
-					<span class="WaveWithComment" onclick="showWaveMessage(<%=wave.id%>)">
-						<%=CEmoji.parse(wave.emoji)%>
-						<i class="fas fa-comment-dots"></i>
-					</span>
-					<%}%>
-					<%}%>
+					<div class="MyWaves">
+					<%@ include file="TMyWaves.jsp"%>
+					</div>
 				</section>
 				<%}%>
 				<section class="UserInfoState">

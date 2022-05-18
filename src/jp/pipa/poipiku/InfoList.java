@@ -46,7 +46,8 @@ public final class InfoList extends Model{
 		Gift(4),
 		RequestStarted(5),
 		EmojiReply(6),
-		WaveEmoji(7);
+		WaveEmoji(7),
+		WaveEmojiMessage(8);
 
 		static public InfoType byCode(int _code) {
 			return CodeEnum.getEnum(InfoType.class, _code);
