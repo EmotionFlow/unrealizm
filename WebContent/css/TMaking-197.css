@@ -3081,24 +3081,31 @@ hr.IllustItemListSeparator {
 	text-align: center;
 }
 
+.UserInfo .WaveList > img{
+	width: 22px;
+	height: 22px;
+	margin: 4px;
+}
+
 .UserInfo .WaveList .WaveWithComment {
+	width: 22px;
+	height: 22px;
+	margin: 4px;
+}
+
+.UserInfo .WaveList .WaveWithComment > img{
 	width: 22px;
 	height: 22px;
 }
 
 .UserInfo .WaveList .WaveWithComment > i{
 	position: relative;
-	top: -34px;
-	right: -16px;
-	font-size: 14px;
-	color: #ff0000a6;
+	top: -30px;
+	right: -11px;
+	font-size: 15px;
+	color: #fffffff7;
 }
 
-.UserInfo .WaveList img{
-	width: 22px;
-	height: 22px;
-	margin: 4px;
-}
 
 .UserInfo .UserInfoState .UserInfoStateItem {
 	display: inline-block;
@@ -3977,16 +3984,31 @@ hr.IllustItemListSeparator {
 .ShowWaveDlg {
 	display: flex;
 	flex-direction: column;
-	align-items: center;}
+	align-items: center;
+}
 
 .ShowWaveDlg .WaveEmoji {
 	width: 72px;
 	height: 72px;
+	border: solid 1px #dbdbdb;
+	border-radius: 36px;
+	background: #ffffff;
+	z-index: 1;
+}
+
+.ShowWaveDlg .WaveEmoji img {
+	padding: 12px;
+	width: 44px;
+	height: 44px;
 }
 
 .ShowWaveDlg .WaveMessage {
-	margin-top: 27px;
+	margin-top: -7px;
 	width: 20em;
 	text-align: left;
 	font-size: 15px;
+	border: solid 1px #dbdbdb;
+	padding: 11px;
+	border-radius: 3px;
+	background: #fffefb;
 }

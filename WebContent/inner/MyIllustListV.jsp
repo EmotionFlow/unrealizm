@@ -98,7 +98,7 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 				'</div>',
 				showConfirmButton: true,
 				showCancelButton: false,
-				showCloseButton: true,
+				showCloseButton: false,
 			})
 		}
 
