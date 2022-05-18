@@ -16,6 +16,7 @@ public class UserWave {
 	public int fromUserId = -1;
 	public int toUserId = -1;
 	public String emoji = "";
+	public String message = "";
 
 	public UserWave() {}
 	public UserWave(ResultSet resultSet) throws SQLException {
@@ -23,6 +24,7 @@ public class UserWave {
 		fromUserId = resultSet.getInt("from_user_id");
 		toUserId = resultSet.getInt("to_user_id");
 		emoji = resultSet.getString("emoji");
+		message = resultSet.getString("message");
 	}
 
 
@@ -48,12 +50,12 @@ public class UserWave {
 		return list;
 	}
 
-	static public boolean insert(int fromUserId, int toUserId, String emoji, String ipAddress){
+	static public boolean insert(int fromUserId, int toUserId, String emoji, String message, String ipAddress){
 		if (toUserId < 0 || emoji==null || emoji.isEmpty()) {
 			return false;
 		}
 
-		final String sql = "INSERT INTO user_waves(from_user_id, to_user_id, emoji, ip_address) VALUES (?,?,?,?)";
+		final String sql = "INSERT INTO user_waves(from_user_id, to_user_id, emoji, message, ip_address) VALUES (?,?,?,?,?)";
 		try (
 			Connection connection = DatabaseUtil.dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -62,6 +64,7 @@ public class UserWave {
 			statement.setInt(idx++, fromUserId);
 			statement.setInt(idx++, toUserId);
 			statement.setString(idx++, emoji);
+			statement.setString(idx++, message);
 			statement.setString(idx++, ipAddress);
 			statement.executeUpdate();
 		} catch(SQLException e) {

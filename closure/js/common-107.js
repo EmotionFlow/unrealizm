@@ -1353,9 +1353,11 @@ function _replyEmoji(_this, loginUserId) {
 
 /******** ユーザー宛絵文字(wave) *********/
 function sendUserWave(fromUserId, toUserId, emoji, elThis) {
+	let message = $.trim($("#EditWaveMessage").val());
+	if (message.length > 400) message = message.substr(0, 400);
 	$.ajax({
 		"type": "post",
-		"data": {"FROMUID": fromUserId, "TOUID": toUserId, "EMOJI": emoji},
+		"data": {"FROMUID": fromUserId, "TOUID": toUserId, "EMOJI": emoji, "MSG": message},
 		"url": "/f/SendUserWaveF.jsp",
 		"dataType": "json",
 	}).then(

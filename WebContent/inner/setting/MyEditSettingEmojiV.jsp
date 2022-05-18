@@ -88,6 +88,30 @@ myEditSettingEmojiC.getResults(checkLogin);
 		return false;
 	}
 
+	function updateWaveCommentEnable() {
+		const enableComment = $('#EnableUserWaveComment').prop('checked');
+		const postData = {
+			"UID": <%=checkLogin.m_nUserId%>,
+			"CMTENABLE" : enableComment?1:0,
+		}
+		$.ajaxSingle({
+			"type": "post",
+			"data": postData,
+			"url": "/f/UpdateUserWaveEnableF.jsp",
+			"dataType": "json",
+			"success": function(data) {
+				if (data.result === 1)
+					DispMsg('<%=_TEX.T("EditSettingV.Upload.Updated")%>');
+				else
+					DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+			},
+			"error": function(req, stat, ex){
+				DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
+			}
+		});
+		return false;
+	}
+
 	function updateReplyEmoji(emoji) {
 		const postData = {
 			"UID": <%=checkLogin.m_nUserId%>,
@@ -193,7 +217,21 @@ myEditSettingEmojiC.getResults(checkLogin);
 				<%=allEmojiHtml%>
 			</div>
 
-			<p style="margin-bottom: 0">応援絵文字を表示する</p>
+			<p style="margin-bottom: 0">応援コメントも受け付ける</p>
+			<div class="SettingBodyCmd" style="margin-top: 0" >
+				<div class="RegistMessage" >
+					<div class="onoffswitch OnOff">
+						<input type="checkbox" name="AutoTweet" class="onoffswitch-checkbox" id="EnableUserWaveComment" value="1" <%if(myEditSettingEmojiC.userWaveCommentEnabled){%>checked="checked"<%}%> />
+						<label class="onoffswitch-label" for="EnableUserWaveComment">
+							<span class="onoffswitch-inner"></span>
+							<span class="onoffswitch-switch"></span>
+						</label>
+					</div>
+				</div>
+				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateWaveCommentEnable()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
+			</div>
+
+			<p style="margin-bottom: 0; margin-top: 10px; float:left">応援絵文字を表示する</p>
 			<div class="SettingBodyCmd" style="margin-top: 0" >
 				<div class="RegistMessage" >
 					<div class="onoffswitch OnOff">
