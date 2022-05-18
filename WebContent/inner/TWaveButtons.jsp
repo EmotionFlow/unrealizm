@@ -6,9 +6,9 @@
 		color: #3498db;
     }
 	.UserInfoCmd .WaveMessageText {
-        width: 300px;
-        height: 100px;
-		font-size: 12px;
+        width: 21em;
+        height: 8.5em;
+		font-size: 14px;
     }
 	.UserInfoCmd .WaveMessageInfo {
 		font-size: 12px;
