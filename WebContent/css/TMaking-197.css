@@ -3991,6 +3991,23 @@ hr.IllustItemListSeparator {
 }
 /********** ログイン・ポイパス促し  ************/
 
+
+/********** wave *********/
+.AddWaveComment > .fa-comment-dots {
+	font-size: 22px;
+	color: #3498db;
+}
+.UserInfoCmd .WaveMessageText {
+	width: 21em;
+	height: 8.5em;
+	font-size: 14px;
+}
+.UserInfoCmd .WaveMessageInfo {
+	font-size: 12px;
+}
+/********** wave *********/
+
+
 /********** メッセージ付きwave表示ダイアログ ************/
 .WaveMessageDlg {
 	display: flex;

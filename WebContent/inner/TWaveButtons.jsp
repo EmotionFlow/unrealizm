@@ -1,21 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<style>
-    .AddWaveComment > .fa-comment-dots {
-        font-size: 22px;
-		color: #3498db;
-    }
-	.UserInfoCmd .WaveMessageText {
-        width: 21em;
-        height: 8.5em;
-		font-size: 14px;
-    }
-	.UserInfoCmd .WaveMessageInfo {
-		font-size: 12px;
-	}
-</style>
-
-
 <%if(cResults.m_cUser.isWaveEnable){%>
 <span class="UserInfoCmd" style="padding-bottom: 0">
 	<%=_TEX.T("IllustV.Wave")%>
@@ -27,8 +11,8 @@
 <%if(cResults.m_cUser.isWaveCommentEnable){%>
 <span class="UserInfoCmd" style="padding-bottom: 0">
 <span id="WaveMessage" class="UserInfoCmd" style="padding-bottom: 0; display: none">
-	<textarea maxlength="1000" id="EditWaveMessage" class="WaveMessageText" placeholder="メッセージを添える(1000文字まで)"></textarea>
-	<br><span class="WaveMessageInfo">絵文字をタップすると送信します</span>
+	<textarea maxlength="1000" id="EditWaveMessage" class="WaveMessageText" placeholder="<%=_TEX.T("TWaveButtons.EditWaveMessage")%>"></textarea>
+	<br><span class="WaveMessageInfo"><%=_TEX.T("TWaveButtons.WaveMessageInfo")%></span>
 </span></span>
 <%}%>
 
