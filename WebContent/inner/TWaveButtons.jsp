@@ -27,7 +27,7 @@
 <%if(cResults.m_cUser.isWaveCommentEnable){%>
 <span class="UserInfoCmd" style="padding-bottom: 0">
 <span id="WaveMessage" class="UserInfoCmd" style="padding-bottom: 0; display: none">
-	<textarea maxlength="400" id="EditWaveMessage" class="WaveMessageText" placeholder="メッセージを添える(400文字まで)"></textarea>
+	<textarea maxlength="1000" id="EditWaveMessage" class="WaveMessageText" placeholder="メッセージを添える(1000文字まで)"></textarea>
 	<br><span class="WaveMessageInfo">絵文字をタップすると送信します</span>
 </span></span>
 <%}%>

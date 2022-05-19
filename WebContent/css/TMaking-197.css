@@ -3081,8 +3081,12 @@ hr.IllustItemListSeparator {
 	text-align: center;
 }
 
+.UserInfo .WaveList .MyWaves {
+	margin: 0 7px;
+}
+
 .UserInfo .WaveList.Pc .MyWaves {
-	width: 728px;
+	width: 694px;
 }
 
 .UserInfo .WaveList .MyWaves > img{

@@ -1353,8 +1353,14 @@ function _replyEmoji(_this, loginUserId) {
 
 /******** ユーザー宛絵文字(wave) *********/
 function sendUserWave(fromUserId, toUserId, emoji, elThis) {
-	let message = $.trim($("#EditWaveMessage").val());
-	if (message.length > 400) message = message.substr(0, 400);
+	let message = '';
+	const $EditWaveMessage = $("#EditWaveMessage");
+	if ($EditWaveMessage && $EditWaveMessage.css('display') !== 'none') {
+		message = $.trim($EditWaveMessage.val());
+		if (message.length > 1000) message = message.substr(0, 1000);
+		$EditWaveMessage.val('');
+	}
+
 	$.ajax({
 		"type": "post",
 		"data": {"FROMUID": fromUserId, "TOUID": toUserId, "EMOJI": emoji, "MSG": message},
@@ -1362,7 +1368,7 @@ function sendUserWave(fromUserId, toUserId, emoji, elThis) {
 		"dataType": "json",
 	}).then(
 		(data) => {
-			DispMsg(data.message, 400);
+			DispMsg(data.message, 700);
 		},
 		(jqXHR, textStatus, errorThrown) => {
 			DispMsg('Connection error');
