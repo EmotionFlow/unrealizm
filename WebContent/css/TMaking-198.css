@@ -3114,9 +3114,9 @@ hr.IllustItemListSeparator {
 	top: -35px;
 	right: -15px;
 	font-size: 15px;
-	color: #fffffff7;
+	color: #ffffff;
+	text-shadow: 0 0 1px #4f4f4f;
 }
-
 
 .UserInfo .UserInfoState .UserInfoStateItem {
 	display: inline-block;
