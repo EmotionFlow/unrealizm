@@ -28,7 +28,7 @@ public class UpdateUserWaveEnableC {
 			return false;
 		}
 
-		Log.d("uid, en, cm, %d, %d, %d".formatted(userId, enable, commentEnable));
+//		Log.d("uid, en, cm, %d, %d, %d".formatted(userId, enable, commentEnable));
 
 		if (enable >= 0) {
 			if (enable == 0) {
@@ -39,7 +39,6 @@ public class UpdateUserWaveEnableC {
 		}
 
 		if (commentEnable >= 0) {
-			Log.d("hoge");
 			if (commentEnable == 0) {
 				UserWaveTemplate.disableComment(userId);
 			} else {
