@@ -164,6 +164,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						</span>
 						<%}%>
 					</span>
+					<%@ include file="/inner/TWaveButtons.jsp"%>
 				</section>
 				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/IllustListAppV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>">

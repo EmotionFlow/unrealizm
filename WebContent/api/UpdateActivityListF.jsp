@@ -8,12 +8,20 @@
 
 	String toUrl = "";
 	if (rtn) {
-		if (cResults.infoType == Common.NOTIFICATION_TYPE_REACTION) {
-			toUrl = String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.userId, cResults.contentId);
-		} else if (cResults.infoType == Common.NOTIFICATION_TYPE_REQUEST) {
+		if (cResults.infoType == InfoList.InfoType.Emoji.getCode()
+		 || cResults.infoType == InfoList.InfoType.EmojiReply.getCode()
+		) {
+			toUrl = String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.contentUserId, cResults.contentId);
+		} else if (cResults.infoType == InfoList.InfoType.Request.getCode()) {
 			toUrl = String.format("/MyRequestListAppV.jsp?MENUID=%s&ST=%d", cResults.requestListMenuId, cResults.requestListSt);
-		} else if (cResults.infoType == Common.NOTIFICATION_TYPE_GIFT) {
+		} else if (cResults.infoType == InfoList.InfoType.Gift.getCode()) {
 			toUrl = "";
+		} else if (cResults.infoType == InfoList.InfoType.RequestStarted.getCode()) {
+			// requestIdにクリエイターのuserIdを格納している
+			toUrl = "/RequestNewAppV.jsp?ID=" + cResults.requestId;
+		} else if (cResults.infoType == InfoList.InfoType.WaveEmoji.getCode()
+				|| cResults.infoType == InfoList.InfoType.WaveEmojiMessage.getCode()) {
+			toUrl = String.format("MyIllustListAppV.jsp?ID=%d", checkLogin.m_nUserId);
 		}
 	}
 %>

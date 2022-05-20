@@ -25,7 +25,7 @@ public class SendUserWaveC {
 			request.setCharacterEncoding("UTF-8");
 			emoji = Util.toString(request.getParameter("EMOJI")).trim();
 			message = Util.toString(request.getParameter("MSG")).trim();
-			if (message.length() > 400) message = message.substring(0, 400);
+			if (message.length() > 550) message = message.substring(0, 550);
 			fromUserId = Util.toInt(request.getParameter("FROMUID"));
 			toUserId = Util.toInt(request.getParameter("TOUID"));
 			String remoteAddr = request.getRemoteAddr();

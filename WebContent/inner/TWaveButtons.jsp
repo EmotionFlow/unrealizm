@@ -4,14 +4,14 @@
 <span class="UserInfoCmd" style="padding-bottom: 0">
 	<%=_TEX.T("IllustV.Wave")%>
 	<%if(cResults.m_cUser.isWaveCommentEnable){%>
-	<span class="AddWaveComment" onclick="$('#WaveMessage').toggle(100)"><i class="far fa-comment-dots"></i></span>
+	<span class="AddWaveMessage" onclick="$('#WaveMessage').toggle(100)"><i class="far fa-comment-dots"></i></span>
 	<%}%>
 </span>
 
 <%if(cResults.m_cUser.isWaveCommentEnable){%>
 <span class="UserInfoCmd" style="padding-bottom: 0">
 <span id="WaveMessage" class="UserInfoCmd" style="padding-bottom: 0; display: none">
-	<textarea maxlength="1000" id="EditWaveMessage" class="WaveMessageText" placeholder="<%=_TEX.T("TWaveButtons.EditWaveMessage")%>"></textarea>
+	<textarea maxlength="500" id="EditWaveMessage" class="WaveMessageText" placeholder="<%=_TEX.T("TWaveButtons.EditWaveMessage")%>"></textarea>
 	<br><span class="WaveMessageInfo"><%=_TEX.T("TWaveButtons.WaveMessageInfo")%></span>
 </span></span>
 <%}%>

@@ -1357,7 +1357,7 @@ function sendUserWave(fromUserId, toUserId, emoji, elThis) {
 	const $EditWaveMessage = $("#EditWaveMessage");
 	if ($EditWaveMessage && $EditWaveMessage.css('display') !== 'none') {
 		message = $.trim($EditWaveMessage.val());
-		if (message.length > 1000) message = message.substr(0, 1000);
+		if (message.length > 500) message = message.substr(0, 500);
 		$EditWaveMessage.val('');
 	}
 

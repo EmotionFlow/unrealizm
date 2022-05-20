@@ -56,6 +56,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strTagKeyword, "UTF-8");
 Map<String, String> keyValues;
 String strCgiParam = "";
 final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
+final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUserId : "/" + checkLogin.m_nUserId + "/";
 
 %>
 <!DOCTYPE html>
@@ -134,8 +135,8 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="<%=myPagePath%>"></a>
+					<h2 class="UserInfoUserName"><a href="<%=myPagePath%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<%if(cResults.twitterScreenName != null && !cResults.twitterScreenName.isEmpty()) {%>
 					<h3 class="UserInfoProfile"><a class="fab fa-twitter" href="https://twitter.com/<%=cResults.twitterScreenName%>">@<%=cResults.twitterScreenName%></a></h3>
 					<%}%>
