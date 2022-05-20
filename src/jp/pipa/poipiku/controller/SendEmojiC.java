@@ -237,54 +237,7 @@ public class SendEmojiC {
 					m_strEmoji,
 					infoThumb
 					);
-
-			// 通知先デバイストークンの取得
-			ArrayList<CNotificationToken> cNotificationTokens = new ArrayList<>();
-			strSql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cTargUser.m_nUserId);
-			resultSet = statement.executeQuery();
-			while(resultSet.next()) {
-				cNotificationTokens.add(new CNotificationToken(resultSet));
-			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
-			if(cNotificationTokens.isEmpty()) return bRtn;
-
-			// バッジに表示する数を取得
-			final int nBadgeNum = InfoList.selectUnreadBadgeSum(cTargUser.m_nUserId, null);
-
-			// 送信文字列
-			final Locale myLocale = SupportedLocales.findLocale(cTargUser.m_nLangId);
-			final String strTitle = ResourceBundleControl.T(myLocale, "Notification.Reaction.Title");
-			final String strSubTitle = "";
-			final String strBody = ResourceBundleControl.T(myLocale,"ActivityList.Message.Comment");
-
-			// 通知DB登録
-			// 連射しないように同じタイプの未送信の通知を削除
-			strSql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=? AND token_type=?";
-			statement = connection.prepareStatement(strSql);
-			for(CNotificationToken cNotificationToken : cNotificationTokens) {
-				statement.setString(1, cNotificationToken.m_strNotificationToken);
-				statement.setInt(2, Common.NOTIFICATION_TYPE_REACTION);
-				statement.setInt(3, cNotificationToken.m_nTokenType);
-				statement.executeUpdate();
-			}
-			statement.close();statement=null;
-
-			// 送信用に登録
-			NotificationBuffer notificationBuffer = new NotificationBuffer();
-			notificationBuffer.notificationType = Common.NOTIFICATION_TYPE_REACTION;
-			notificationBuffer.badgeNum = nBadgeNum;
-			notificationBuffer.title = strTitle;
-			notificationBuffer.subTitle = strSubTitle;
-			notificationBuffer.body = strBody;
-			for(CNotificationToken cNotificationToken : cNotificationTokens) {
-				notificationBuffer.notificationToken = cNotificationToken.m_strNotificationToken;
-				notificationBuffer.tokenType = cNotificationToken.m_nTokenType;
-				notificationBuffer.insert(connection);
-			}
-
+			
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();

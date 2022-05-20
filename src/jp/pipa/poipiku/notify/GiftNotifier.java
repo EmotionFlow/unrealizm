@@ -15,7 +15,7 @@ public final class GiftNotifier extends Notifier {
 			final String title = getTitle(statusName, user.langLabel);
 			notifyByWeb(user, -1, (int) Math.ceil(Math.random() * -10000000),
 					Common.CONTENT_TYPE_TEXT, title, "", InsertMode.Upsert);
-			notifyByApp(user, title);
+			notifyByApp(user, title, false);
 		}
 	}
 }
