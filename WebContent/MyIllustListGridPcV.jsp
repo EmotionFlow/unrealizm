@@ -55,6 +55,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 		<%@ include file="/inner/TSwitchUser.jsp"%>
+		<%@ include file="/inner/TWaveMessageDlg.jsp"%>
 
 		<script type="text/javascript">
 		$(function(){
@@ -201,9 +202,9 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 						<%=_TEX.T("MyIllustListV.Wave.Received")%>
 						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
 					</span>
-					<% for (UserWave wave: cResults.myWaves) { %>
-					<%=CEmoji.parse(wave.emoji)%>
-					<%}%>
+					<div class="MyWaves">
+					<%@ include file="/inner/TMyWaves.jsp"%>
+					</div>
 				</section>
 				<%}%>
 				<section class="UserInfoState">

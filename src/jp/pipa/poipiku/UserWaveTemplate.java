@@ -12,8 +12,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public final class UserWaveTemplate extends Model {
+	public static final boolean WAVE_DEFAULT = true;
+	public static final boolean COMMENT_DEFAULT = false;
+
 	public static final String DISABLE_WAVE_CHAR = "disable";
 	public static final int DISABLE_WAVE_ORDER = -1;
+	public static final String ENABLE_WAVE_COMMENT_CHAR = "enableComment";
+	public static final int ENABLE_WAVE_COMMENT_ORDER = -2;
 
 	public int id = -1;
 	public int userId = -1;
@@ -106,7 +111,7 @@ public final class UserWaveTemplate extends Model {
 	}
 
 	static public boolean upsert(int userId, int dispOrder, String chars){
-		if (userId < 0 || dispOrder < -1) {
+		if (userId < 0 || dispOrder < -2) {
 			return false;
 		}
 		if (chars==null || chars.isEmpty()) {
@@ -136,7 +141,7 @@ public final class UserWaveTemplate extends Model {
 	}
 
 	static public boolean delete(int userId, int dispOrder) {
-		if (userId < 0 || dispOrder < -1) return false;
+		if (userId < 0 || dispOrder < -2) return false;
 		final String sql = """
 			DELETE FROM user_wave_templates
 			WHERE user_id=? AND disp_order=?
@@ -185,10 +190,50 @@ public final class UserWaveTemplate extends Model {
 		return delete(userId, DISABLE_WAVE_ORDER);
 	}
 
+	static public boolean disableComment(int userId) {
+		if (userId < 0) return false;
+		return delete(userId, ENABLE_WAVE_COMMENT_ORDER);
+	}
+
+	static public boolean enableComment(int userId) {
+		if (userId < 0) return false;
+		return upsert(userId, ENABLE_WAVE_COMMENT_ORDER, ENABLE_WAVE_COMMENT_CHAR);
+	}
+
 	public boolean isEnabled() {
-		if (dispOrder == DISABLE_WAVE_ORDER && chars.equals(DISABLE_WAVE_CHAR)) {
+		if (dispOrder == DISABLE_WAVE_ORDER) {
 			return false;
 		}
 		return true;
 	}
+
+	static public boolean isEnabled(List<UserWaveTemplate> list) {
+		boolean result = true;
+		for (UserWaveTemplate t: list) {
+			if (!t.isEnabled()) {
+				result = false;
+				break;
+			}
+		}
+		return result;
+	}
+
+	public boolean isCommentEnabled() {
+		if (dispOrder == ENABLE_WAVE_COMMENT_ORDER) {
+			return true;
+		}
+		return false;
+	}
+
+	static public boolean isCommentEnabled(List<UserWaveTemplate> list) {
+		boolean result = false;
+		for (UserWaveTemplate t: list) {
+			if (t.isCommentEnabled()) {
+				result = true;
+				break;
+			}
+		}
+		return result;
+	}
+
 }

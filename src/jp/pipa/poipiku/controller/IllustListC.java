@@ -157,13 +157,19 @@ public class IllustListC {
 				statement.close();statement=null;
 
 				// author wave
-				strSql = "SELECT chars FROM user_wave_templates WHERE user_id=? ORDER BY disp_order";
+				strSql = "SELECT chars, disp_order FROM user_wave_templates WHERE user_id=? ORDER BY disp_order";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, m_nUserId);
 				resultSet = statement.executeQuery();
 				while (resultSet.next()) {
-					if (m_cUser.m_strWaveEmojiList == null) m_cUser.m_strWaveEmojiList = new LinkedList<>();
-					m_cUser.m_strWaveEmojiList.add(resultSet.getString(1));
+					if (resultSet.getInt("disp_order") == UserWaveTemplate.DISABLE_WAVE_ORDER) {
+						m_cUser.isWaveEnable = false;
+					} else if (resultSet.getInt("disp_order") == UserWaveTemplate.ENABLE_WAVE_COMMENT_ORDER) {
+						m_cUser.isWaveCommentEnable = true;
+					} else {
+						if (m_cUser.m_strWaveEmojiList == null) m_cUser.m_strWaveEmojiList = new LinkedList<>();
+						m_cUser.m_strWaveEmojiList.add(resultSet.getString("chars"));
+					}
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;

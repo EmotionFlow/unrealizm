@@ -3067,9 +3067,9 @@ hr.IllustItemListSeparator {
 	width: 100%;
 	padding: 3px 0;
 	background: rgba(255, 255, 255, 0.85);
-	flex-direction: row;
+	flex-direction: column;
 	flex-wrap: wrap;
-}
+	align-items: center;}
 
 .UserInfo .WaveList.Pc {
 	padding: 5px 15px 15px 15px;
@@ -3081,11 +3081,42 @@ hr.IllustItemListSeparator {
 	text-align: center;
 }
 
-.UserInfo .WaveList > img{
+.UserInfo .WaveList .MyWaves {
+	margin: 0 7px;
+}
+
+.UserInfo .WaveList.Pc .MyWaves {
+	width: 694px;
+}
+
+.UserInfo .WaveList .MyWaves > img{
 	width: 22px;
 	height: 22px;
-	margin: 4px;
+	padding: 4px;
 }
+
+.UserInfo .WaveList .MyWaves .WaveWithComment {
+	width: 22px;
+	height: 22px;
+	display: inline-table;
+	overflow: hidden;
+	margin-bottom: -20px;
+}
+
+.UserInfo .WaveList .MyWaves .WaveWithComment > img{
+	width: 22px;
+	height: 22px;
+	padding: 4px;
+}
+
+.UserInfo .WaveList .MyWaves .WaveWithComment > i{
+	position: relative;
+	top: -35px;
+	right: -15px;
+	font-size: 15px;
+	color: #fffffff7;
+}
+
 
 .UserInfo .UserInfoState .UserInfoStateItem {
 	display: inline-block;
@@ -3959,3 +3990,54 @@ hr.IllustItemListSeparator {
 	text-decoration: underline;
 }
 /********** ログイン・ポイパス促し  ************/
+
+
+/********** wave *********/
+.AddWaveMessage > .fa-comment-dots {
+	font-size: 22px;
+	color: #3498db;
+}
+.UserInfoCmd .WaveMessageText {
+	width: 21em;
+	height: 8.5em;
+	font-size: 14px;
+}
+.UserInfoCmd .WaveMessageInfo {
+	font-size: 12px;
+}
+/********** wave *********/
+
+
+/********** メッセージ付きwave表示ダイアログ ************/
+.WaveMessageDlg {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.WaveMessageDlg .WaveEmoji {
+	width: 72px;
+	height: 72px;
+	border: solid 1px #dbdbdb;
+	border-radius: 36px;
+	background: #ffffff;
+	z-index: 1;
+}
+
+.WaveMessageDlg .WaveEmoji img {
+	padding: 12px;
+	width: 44px;
+	height: 44px;
+}
+
+.WaveMessageDlg .WaveMessage {
+	margin-top: -7px;
+	width: 20em;
+	text-align: left;
+	font-size: 15px;
+	border: solid 1px #dbdbdb;
+	padding: 11px;
+	border-radius: 3px;
+	background: #fffefb;
+}
+/********** メッセージ付きwave表示ダイアログ ************/

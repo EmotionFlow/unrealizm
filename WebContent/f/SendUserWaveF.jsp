@@ -5,4 +5,4 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 SendUserWaveC results = new SendUserWaveC();
 results.getParam(request);
 boolean bRtn = results.getResults(checkLogin, _TEX);
-%>{"result" : <%=(bRtn)?Common.API_OK:Common.API_NG%>, "message" : "<%=results.message%>"}
+%>{"result" : <%=(bRtn)?Common.API_OK:Common.API_NG%>, "message" : "<%=results.resultMessage%>"}
