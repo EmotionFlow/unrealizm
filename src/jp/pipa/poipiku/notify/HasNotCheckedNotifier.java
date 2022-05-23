@@ -82,7 +82,7 @@ class HasNotCheckedNotifier extends Notifier {
 			statement = connection.prepareStatement(sql);
 
 			PreparedStatement updateStatement = connection.prepareStatement(
-					"UPDATE info_lists SET sent_unread_mail_at=now() WHERE user_id=?"
+					"UPDATE info_lists SET sent_unread_mail_at=now() WHERE user_id=? AND info_type=?"
 			);
 
 			for (User targetUser : deliveryTargets) {
@@ -114,6 +114,7 @@ class HasNotCheckedNotifier extends Notifier {
 
 					// 配信済み設定
 					updateStatement.setInt(1, targetUser.id);
+					updateStatement.setInt(2, infoType.getCode());
 					updateStatement.executeUpdate();
 
 					// Amazon SES Maximum send rate is
