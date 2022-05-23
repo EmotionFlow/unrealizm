@@ -319,4 +319,8 @@ public class Emoji {
 		}
 		return vResult;
 	}
+
+	public static int getLength(String s) {
+		return s.codePointCount(0, s.length());
+	}
 }

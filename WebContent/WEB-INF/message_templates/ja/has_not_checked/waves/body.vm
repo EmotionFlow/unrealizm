@@ -1,0 +1,7 @@
+#parse("ja/header.vm")
+
+あなた宛に、${waves_total}個の応援絵文字が届いています。
+お知らせ画面で通知をチェックしてみましょう。
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("ja/footer.vm")
