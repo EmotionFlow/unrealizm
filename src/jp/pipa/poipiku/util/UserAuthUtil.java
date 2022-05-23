@@ -260,7 +260,7 @@ public class UserAuthUtil {
 			// email
 			final String EMAIL_TITLE = _TEX.T("RegistMailV.EmailVaid.Title");
 			final String EMAIL_TXT = String.format(_TEX.T("RegistMailV.EmailVaid.MessageFormat"), strNickName, strHashKey);
-			EmailUtil.sendByUTF8(strEmail, EMAIL_TITLE, EMAIL_TXT);
+			EmailUtil.send(strEmail, EMAIL_TITLE, EMAIL_TXT);
 		} catch(Exception e) {
 			Log.d(strSql);
 			e.printStackTrace();
@@ -546,7 +546,7 @@ public class UserAuthUtil {
 						strPassword);
 			}
 
-			EmailUtil.sendByUTF8(strEmail, EMAIL_TITLE, strEmailText);
+			EmailUtil.send(strEmail, EMAIL_TITLE, strEmailText);
 			nRtn = nUserId;
 		} catch(Exception e) {
 			Log.d(strSql);
