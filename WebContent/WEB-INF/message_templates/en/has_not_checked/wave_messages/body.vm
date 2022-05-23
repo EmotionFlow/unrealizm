@@ -1,0 +1,7 @@
+#parse("en/header.vm")
+
+You have received a Emoji with ${waves_total} messages of support addressed to you.
+Check your notifications on the Notifications page.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("en/footer.vm")
