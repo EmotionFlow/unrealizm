@@ -1,0 +1,7 @@
+#parse("th/header.vm")
+
+คุณได้รับ ${waves_total} ที่ให้กำลังใจ Emoji
+ตรวจสอบหน้าจอการแจ้งเตือนสำหรับการแจ้งเตือน
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("th/footer.vm")

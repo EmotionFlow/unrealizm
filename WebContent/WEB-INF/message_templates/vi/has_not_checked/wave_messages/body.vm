@@ -1,0 +1,7 @@
+#parse("vi/header.vm")
+
+Bạn đã nhận được một Biểu tượng cảm xúc với ${wave_total} thông báo hỗ trợ được gửi đến bạn.
+Kiểm tra thông báo của bạn trên trang Thông báo.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("vi/footer.vm")

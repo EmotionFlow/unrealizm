@@ -1,0 +1,7 @@
+#parse("th/header.vm")
+
+คุณได้รับอีโมจิพร้อมข้อความสนับสนุน ${waves_total} ฉบับที่ส่งถึงคุณ
+ตรวจสอบการแจ้งเตือนของคุณในหน้าการแจ้งเตือน
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("th/footer.vm")
