@@ -118,19 +118,32 @@ public class UpFileFirstC extends UpC{
 			long nFileSize = 0;
 			long nComplexSize = 0;
 			try {
-				int size[] = ImageUtil.getImageSize(strRealFileName);
+				int[] size = ImageUtil.getImageSize(strRealFileName);
 				nWidth = size[0];
 				nHeight = size[1];
-				nFileSize = (new File(strRealFileName)).length();
-				nComplexSize = ImageUtil.getConplex(strRealFileName);
 			} catch(Exception e) {
 				nWidth = 0;
 				nHeight = 0;
-				nFileSize = 0;
-				nComplexSize=0;
-				Log.d("error getImageSize");
+				System.out.println("getimagesize failed");
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
 			}
-			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
+			try {
+				nFileSize = (new File(strRealFileName)).length();
+			} catch(Exception e) {
+				nFileSize = 0;
+				System.out.println("getfilesize failed");
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
+			}
+			try {
+				nComplexSize = ImageUtil.getConplex(strRealFileName);
+			} catch(Exception e) {
+				nComplexSize=0;
+				System.out.println("getcomplex failed");
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
+			}
 
 			// ファイルサイズチェック
 			CacheUsers0000 users  = CacheUsers0000.getInstance();

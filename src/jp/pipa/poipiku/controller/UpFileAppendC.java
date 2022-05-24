@@ -135,17 +135,26 @@ public class UpFileAppendC extends UpC{
 				int[] size = ImageUtil.getImageSize(strRealFileName);
 				nWidth = size[0];
 				nHeight = size[1];
-				nFileSize = (new File(strRealFileName)).length();
-				nComplexSize = ImageUtil.getConplex(strRealFileName);
 			} catch(Exception e) {
 				nWidth = 0;
 				nHeight = 0;
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
+			}
+			try {
+				nFileSize = (new File(strRealFileName)).length();
+			} catch(Exception e) {
 				nFileSize = 0;
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
+			}
+			try {
+				nComplexSize = ImageUtil.getConplex(strRealFileName);
+			} catch(Exception e) {
 				nComplexSize=0;
 				Log.d("error getImageSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
-			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
 
 			// update file name
 			cConn = DatabaseUtil.dataSource.getConnection();
