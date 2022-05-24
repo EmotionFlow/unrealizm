@@ -124,7 +124,6 @@ public class UpFileFirstC extends UpC{
 			} catch(Exception e) {
 				nWidth = 0;
 				nHeight = 0;
-				System.out.println("getimagesize failed");
 				Log.d("error getImageSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
@@ -132,7 +131,6 @@ public class UpFileFirstC extends UpC{
 				nFileSize = (new File(strRealFileName)).length();
 			} catch(Exception e) {
 				nFileSize = 0;
-				System.out.println("getfilesize failed");
 				Log.d("error getImageSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
@@ -140,7 +138,6 @@ public class UpFileFirstC extends UpC{
 				nComplexSize = ImageUtil.getConplex(strRealFileName);
 			} catch(Exception e) {
 				nComplexSize=0;
-				System.out.println("getcomplex failed");
 				Log.d("error getImageSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
