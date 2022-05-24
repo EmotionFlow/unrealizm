@@ -48,7 +48,7 @@ class GetIllustFileListC {
 			cConn = dsPostgres.getConnection();
 
 			// append_id,ファイル名を取得
-			strSql = "(SELECT 0 as append_id,file_name FROM contents_0000 WHERE user_id=? AND content_id=?) UNION (SELECT append_id,file_name FROM contents_appends_0000 WHERE content_id=?) ORDER BY append_id";
+			strSql = "(SELECT 0 as append_id, file_name, file_size FROM contents_0000 WHERE user_id=? AND content_id=?) UNION (SELECT append_id, file_name, file_size FROM contents_appends_0000 WHERE content_id=?) ORDER BY append_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nUserId);
 			cState.setInt(2, cParam.m_nContentId);
@@ -60,6 +60,7 @@ class GetIllustFileListC {
 				image.put("name", cResSet.getString("file_name"));
 				image.put("thumbnailUrl", Common.GetPoipikuUrl(cResSet.getString("file_name")) + "_360.jpg");
 				image.put("uuid", UUID.randomUUID().toString());
+				image.put("size", cResSet.getInt("file_size"));
 				m_vContent.add(image);
 			}
 			cResSet.close();cResSet=null;
