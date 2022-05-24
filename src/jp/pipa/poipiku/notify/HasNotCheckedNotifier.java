@@ -178,7 +178,6 @@ class HasNotCheckedNotifier extends Notifier {
 			statement.setInt(1, infoType.getCode());
 			statement.setInt(2, MAX_SEND_USERS);
 
-			Log.d(statement.toString());
 			resultSet = statement.executeQuery();
 			List<NotifyWaveInfo> notifyInfoList = new LinkedList<>();
 			while (resultSet.next()) {
