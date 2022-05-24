@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +16,7 @@ public class UserWave {
 	public int toUserId = -1;
 	public String emoji = "";
 	public String message = "";
+	public String replyMessage = "";
 
 	public UserWave() {}
 	public UserWave(ResultSet resultSet) throws SQLException {
@@ -25,6 +25,27 @@ public class UserWave {
 		toUserId = resultSet.getInt("to_user_id");
 		emoji = resultSet.getString("emoji");
 		message = resultSet.getString("message");
+		replyMessage = resultSet.getString("reply_message");
+	}
+
+	public static UserWave selectById(int id) {
+		UserWave userWave = null;
+		final String strSql = "SELECT * FROM user_waves WHERE id=?";
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(strSql);
+		) {
+			statement.setInt(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				userWave = new UserWave(resultSet);
+			}
+			resultSet.close();
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+		}
+		return userWave;
 	}
 
 
@@ -67,6 +88,26 @@ public class UserWave {
 			statement.setString(idx++, message);
 			statement.setString(idx++, ipAddress);
 			statement.executeUpdate();
+		} catch(SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public boolean updateReply(String reply) {
+		if (id < 0 || reply == null || !reply.isEmpty()) return false;
+
+		final String sql = "UPDATE user_waves SET reply_message=? WHERE id=?";
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
+		) {
+			int idx = 1;
+			statement.setString(idx++, reply);
+			statement.setInt(idx++, id);
+			statement.executeUpdate();
+			replyMessage = reply;
 		} catch(SQLException e) {
 			Log.d(sql);
 			e.printStackTrace();

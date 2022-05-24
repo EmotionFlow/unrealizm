@@ -4016,16 +4016,16 @@ hr.IllustItemListSeparator {
 }
 
 .WaveMessageDlg .WaveEmoji {
-	width: 72px;
-	height: 72px;
+	width: 60px;
+	height: 60px;
 	border: solid 1px #dbdbdb;
 	border-radius: 36px;
-	background: #ffffff;
+	background: #fff;
 	z-index: 1;
 }
 
 .WaveMessageDlg .WaveEmoji img {
-	padding: 12px;
+	padding: 9px 0 0 0;
 	width: 44px;
 	height: 44px;
 }
