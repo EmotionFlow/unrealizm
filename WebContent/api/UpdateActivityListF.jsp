@@ -20,7 +20,9 @@
 			// requestIdにクリエイターのuserIdを格納している
 			toUrl = "/RequestNewAppV.jsp?ID=" + cResults.requestId;
 		} else if (cResults.infoType == InfoList.InfoType.WaveEmoji.getCode()
-				|| cResults.infoType == InfoList.InfoType.WaveEmojiMessage.getCode()) {
+				|| cResults.infoType == InfoList.InfoType.WaveEmojiMessage.getCode()
+				|| cResults.infoType == InfoList.InfoType.WaveEmojiMessageReply.getCode()
+		) {
 			toUrl = String.format("MyIllustListAppV.jsp?ID=%d", checkLogin.m_nUserId);
 		}
 	}

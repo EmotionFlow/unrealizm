@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.notify.UserWaveNotifier;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
@@ -38,6 +39,8 @@ public class SendUserWaveReplyC {
 		boolean updateResult = userWave.updateReply(replyMessage);
 		if (updateResult) {
 			resultMessage = _TEX.T("TWaveMessage.Reply.SendOK");
+			UserWaveNotifier notifier = new UserWaveNotifier();
+			notifier.notifyWaveMessageReplyReceived(userWave.fromUserId, userWave.emoji);
 		}
 		return updateResult;
 	}

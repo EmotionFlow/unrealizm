@@ -10,39 +10,39 @@
 		},
 		<%}%><%}%>
 	};
-
+	
 	function getWaveMessageDlgHtml(waveMessage) {
 		let html =  `
-<style>
-.WaveMessageReplyTitle {
-	margin-top: 10px;
-	font-size: 14px;
-}
-#EditWaveMessageReply {
-	width: 23em;
-	height: 7em;
-}
-.swal2-popup .swal2-styled.swal2-confirm {
-	font-size: 14px;
-}
-</style>
-` + '<div class="WaveMessageDlg">' +
-	'<div class="WaveEmoji">' + waveMessage.emojiHtml + '</div>' +
-	'<div class="WaveMessage">' + waveMessage.messageHtml + '</div>';
+			<style>
+			.WaveMessageReplyTitle {
+				margin-top: 10px;
+				font-size: 14px;
+			}
+			#EditWaveMessageReply {
+				width: 23em;
+				height: 7em;
+			}
+			.swal2-popup .swal2-styled.swal2-confirm {
+				font-size: 14px;
+			}
+			</style>
+		` + '<div class="WaveMessageDlg">' +
+		'<div class="WaveEmoji">' + waveMessage.emojiHtml + '</div>' +
+		'<div class="WaveMessage">' + waveMessage.messageHtml + '</div>';
 		if (!waveMessage.replied) {
 			html += `<div class="WaveMessageReply">
-<div class="WaveMessageReplyTitle"><i class="fas fa-reply"></i> <%=_TEX.T("TWaveMessage.Reply.Title")%></div>
-<div class="WaveMessageReplyText">
-<textarea id="EditWaveMessageReply" maxlength="500" placeholder="<%=_TEX.T("TWaveMessage.Reply.CharLimit")%>">`+ waveMessage.reply +`</textarea>
-</div>
-</div>`;
+					<div class="WaveMessageReplyTitle"><i class="fas fa-reply"></i> <%=_TEX.T("TWaveMessage.Reply.Title")%></div>
+					<div class="WaveMessageReplyText">
+					<textarea id="EditWaveMessageReply" maxlength="500" placeholder="<%=_TEX.T("TWaveMessage.Reply.CharLimit")%>">`+ waveMessage.reply +`</textarea>
+					</div>
+					</div>`;
 		} else {
 			html += `<div class="WaveMessageReply">
-<div class="WaveMessageReplyTitle"><i class="fas fa-reply"></i> <%=_TEX.T("TWaveMessage.Reply.Already")%></div>
-<div class="WaveMessageReplyText">
-<textarea id="EditWaveMessageReply" readonly="readonly" disabled="disabled">`+ waveMessage.reply +`</textarea>
-</div>
-</div>`;
+					<div class="WaveMessageReplyTitle"><i class="fas fa-reply"></i> <%=_TEX.T("TWaveMessage.Reply.Already")%></div>
+					<div class="WaveMessageReplyText">
+					<textarea id="EditWaveMessageReply" readonly="readonly" disabled="disabled">`+ waveMessage.reply +`</textarea>
+					</div>
+					</div>`;
 		}
 		html += '</div>';
 		return html;
@@ -55,7 +55,7 @@
 			html: getWaveMessageDlgHtml(waveMessage),
 			showConfirmButton: !waveMessage.replied,
 			focusConfirm: false,
-			confirmButtonText: '返信',
+			confirmButtonText: '<%=_TEX.T("TWaveMessage.Reply.Submit")%>',
 			showCancelButton: false,
 			showCloseButton: true,
 			preConfirm: () => {
@@ -89,4 +89,70 @@
 
 		});
 	}
+
+
+	const waveReplies = {
+		<%for (MyIllustListC.ReplyWave reply : cResults.replyWaves) {%>
+		'<%=reply.wave.id%>': {
+			'emojiHtml': '<%=CEmoji.parse(reply.wave.emoji)%>',
+			'messageHtml': '<%=Util.toStringHtml(reply.wave.message).replaceAll("'", "\\\\'")%>',
+			'reply': '<%=Util.toStringHtml(reply.wave.replyMessage).replaceAll("'", "\\\\'")%>',
+			'replied': true,
+			'user': {
+				'id': <%=reply.replyUserId%>,
+				'nickName': '<%=Util.toStringHtml(reply.replyUserNickname).replaceAll("'", "\\\\'")%>',
+				'profImgUrl': '<%=reply.replyUserProfImgUrl%>'
+			}
+		},
+		<%}%>
+	}
+
+
+	function getReplyWaveMessageDlgHtml(waveReply) {
+		let html =  `
+			<style>
+			.WaveReplyUser {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+			}
+			.WaveReplyUserThumb {
+				display: block;
+				width: 40px;
+				height: 40px;
+				margin: 10px 0;
+				overflow: hidden;
+				border: solid 1px #ccc;
+				border-radius:20px;
+				background-size: cover;
+				background-position: 50% 50%;
+				background-color: #fff;
+			}
+			.WaveReplyUserNickname{
+				margin-left: 5px;
+			}
+			</style>
+		` + '<div class="WaveMessageDlg">' +
+			'<div class="WaveReplyUser">' +
+			'<a class="WaveReplyUserThumb" style="background-image: url(\'' + waveReply.user.profImgUrl + '\')" href="/' + waveReply.user.id + '/"></a>' +
+			'<span class="WaveReplyUserNickname">' + waveReply.user.nickName + '</span>' +
+			'</div>' +
+			'<div class="WaveMessage">' + waveReply.reply + '</div>' +
+			'<div class="WaveEmoji" style="margin-top: 13px;">' + waveReply.emojiHtml + '</div>' +
+			'<div class="WaveMessage">' + waveReply.messageHtml + '</div>' +
+			'</div>';
+		return html;
+	}
+
+	function showReplyWaveMessage(waveId) {
+		const waveReply = waveReplies[waveId];
+		if (!waveReply) return false;
+		Swal.fire({
+			html: getReplyWaveMessageDlgHtml(waveReply),
+			showConfirmButton: false,
+			showCancelButton: false,
+			showCloseButton: true,
+		});
+	}
+
 </script>

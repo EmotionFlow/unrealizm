@@ -217,7 +217,7 @@ myEditSettingEmojiC.getResults(checkLogin);
 				<%=allEmojiHtml%>
 			</div>
 
-			<p style="margin-bottom: 0">応援コメントも受け付ける</p>
+			<p style="margin-bottom: 0"><%=_TEX.T("MyEditSettingEmojiV.Wave.EnableMessage")%></p>
 			<div class="SettingBodyCmd" style="margin-top: 0" >
 				<div class="RegistMessage" >
 					<div class="onoffswitch OnOff">
@@ -231,7 +231,7 @@ myEditSettingEmojiC.getResults(checkLogin);
 				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateWaveCommentEnable()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
 			</div>
 
-			<p style="margin-bottom: 0; margin-top: 10px; float:left">応援絵文字を表示する</p>
+			<p style="margin-bottom: 0; margin-top: 10px; float:left"><%=_TEX.T("MyEditSettingEmojiV.Wave.EnableWave")%></p>
 			<div class="SettingBodyCmd" style="margin-top: 0" >
 				<div class="RegistMessage" >
 					<div class="onoffswitch OnOff">

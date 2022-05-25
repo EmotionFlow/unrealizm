@@ -28,6 +28,21 @@ public class MyIllustListC extends IllustListC {
 
 	public List<UserWave> myWaves = null;
 
+	public static class ReplyWave {
+		public UserWave wave;
+		public int replyUserId;
+		public String replyUserNickname = "";
+		public String replyUserProfImgUrl = "";
+		public ReplyWave(UserWave _wave, int _replyUserId, String _replyUserNickname, String profImgPath) {
+			wave = _wave;
+			replyUserId = _replyUserId;
+			replyUserNickname = _replyUserNickname;
+			replyUserProfImgUrl = Common.GetUrl(profImgPath);
+		}
+
+	}
+	public List<ReplyWave> replyWaves = null;
+
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
@@ -100,8 +115,37 @@ public class MyIllustListC extends IllustListC {
 		if (waveTemplate != null && !waveTemplate.isEnabled()) {
 			myWaves = new LinkedList<>();
 		} else {
-			myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 60);
+			myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 30);
 			Collections.reverse(myWaves);
+
+			replyWaves = new LinkedList<>();
+			final String strSql = """
+                SELECT w.*, u.user_id, u.nickname, u.file_name FROM user_waves w
+                INNER JOIN users_0000 u ON w.to_user_id = u.user_id
+                WHERE from_user_id=? AND reply_message <> '' ORDER BY reply_at DESC OFFSET ? LIMIT ?
+                """;
+			try (
+					Connection connection = DatabaseUtil.dataSource.getConnection();
+					PreparedStatement statement = connection.prepareStatement(strSql);
+			) {
+				statement.setInt(1, checkLogin.m_nUserId);
+				statement.setInt(2, 0);
+				statement.setInt(3, 30);
+				ResultSet resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					replyWaves.add(new ReplyWave(
+							new UserWave(resultSet),
+							resultSet.getInt("user_id"),
+							resultSet.getString("nickname"),
+							resultSet.getString("file_name")
+					));
+				}
+				Collections.reverse(replyWaves);
+				resultSet.close();
+			} catch(Exception e) {
+				Log.d(strSql);
+				e.printStackTrace();
+			}
 		}
 
 		return true;

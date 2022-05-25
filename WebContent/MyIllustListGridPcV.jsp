@@ -203,7 +203,17 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
 					</span>
 					<div class="MyWaves">
-					<%@ include file="/inner/TMyWaves.jsp"%>
+						<%@ include file="/inner/TMyWaves.jsp"%>
+					</div>
+				</section>
+				<%}%>
+				<%if(!cResults.replyWaves.isEmpty()){%>
+				<section class="WaveList">
+					<span class="WaveListTitle">
+						<%=_TEX.T("MyIllustListV.Wave.Reply")%>
+					</span>
+					<div class="MyWaves">
+						<%@ include file="/inner/TMyReplyWaves.jsp"%>
 					</div>
 				</section>
 				<%}%>

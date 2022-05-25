@@ -32,6 +32,7 @@ cResults.getResults(checkLogin);
 					|| infoType ==  InfoList.InfoType.EmojiReply
 					|| infoType ==  InfoList.InfoType.WaveEmoji
 					|| infoType ==  InfoList.InfoType.WaveEmojiMessage
+					|| infoType ==  InfoList.InfoType.WaveEmojiMessageReply
 			) {
 		%>
 
@@ -41,6 +42,8 @@ cResults.getResults(checkLogin);
 		<span class="ActivityListThumb">
 			<%if(infoType == InfoList.InfoType.WaveEmoji || infoType == InfoList.InfoType.WaveEmojiMessage){%>
 				<span class="ActivityListThumbImg" style="background-image: url('<%=Common.GetUrl(checkLogin.cacheUser.fileName)%>')"></span>
+			<%}else if(infoType == InfoList.InfoType.WaveEmojiMessageReply){%>
+				<span class="ActivityListThumbIcon"><i class="fas fa-envelope WaveMessageReplyIcon"></i></span>
 			<%}else if(infoType == InfoList.InfoType.Gift){%>
 				<span class="ActivityListThumbIcon"><i class="fas fa-gift GiftIcon"></i></span>
 			<%}else{%>
@@ -64,6 +67,8 @@ cResults.getResults(checkLogin);
 						<%=_TEX.T("ActivityList.Message.WaveEmoji")%>
 					<%}else if(infoType == InfoList.InfoType.WaveEmojiMessage){%>
 						<i class="far fa-comment-dots"></i><%=_TEX.T("ActivityList.Message.WaveEmojiMessage")%>
+					<%}else if(infoType == InfoList.InfoType.WaveEmojiMessageReply){%>
+						<i class="far fa-comment-dots"></i><%=_TEX.T("ActivityList.Message.WaveEmojiMessageReply")%>
 					<%}else{%>
 						<%=Util.toStringHtml(activityInfo.infoDesc)%>
 					<%}%>
@@ -74,6 +79,7 @@ cResults.getResults(checkLogin);
 						|| infoType == InfoList.InfoType.EmojiReply
 						|| infoType == InfoList.InfoType.WaveEmoji
 						|| infoType == InfoList.InfoType.WaveEmojiMessage
+						|| infoType == InfoList.InfoType.WaveEmojiMessageReply
 				){%>
 					<%for (int i = 0; i < activityInfo.infoDesc.length(); i = activityInfo.infoDesc.offsetByCodePoints(i, 1)) {%>
 					<%=CEmoji.parse(String.valueOf(Character.toChars(activityInfo.infoDesc.codePointAt(i))))%>

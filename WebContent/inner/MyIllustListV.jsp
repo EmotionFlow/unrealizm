@@ -169,7 +169,17 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 						<%}%>
 					</span>
 					<div class="MyWaves">
-					<%@ include file="TMyWaves.jsp"%>
+						<%@ include file="TMyWaves.jsp"%>
+					</div>
+				</section>
+				<%}%>
+				<%if(!cResults.replyWaves.isEmpty()){%>
+				<section class="WaveList">
+					<span class="WaveListTitle">
+						<%=_TEX.T("MyIllustListV.Wave.Reply")%>
+					</span>
+					<div class="MyWaves">
+						<%@ include file="TMyReplyWaves.jsp"%>
 					</div>
 				</section>
 				<%}%>

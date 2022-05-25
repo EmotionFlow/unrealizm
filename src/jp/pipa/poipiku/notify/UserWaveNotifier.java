@@ -44,4 +44,21 @@ public final class UserWaveNotifier extends Notifier {
 		final String body = ResourceBundleControl.T(locale,"ActivityList.Message.WaveEmojiMessage");
 		notifyByApp(user, body, true);
 	}
+
+	public void notifyWaveMessageReplyReceived(int receivedUserId, String emoji){
+		final User user = new User(receivedUserId);
+		if (user.id > 0) {
+			infoType = InfoList.InfoType.WaveEmojiMessageReply.getCode();
+			notifyByWeb(user,
+					-1,
+					-1,
+					-1,
+					emoji,
+					"",
+					InsertMode.InsertBeforeReset);
+		}
+		final Locale locale = SupportedLocales.findLocale(user.langId);
+		final String body = ResourceBundleControl.T(locale,"ActivityList.Message.WaveEmojiMessageReply");
+		notifyByApp(user, body, true);
+	}
 }

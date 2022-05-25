@@ -1,0 +1,7 @@
+#parse("th/header.vm")
+
+คุณมี ${waves_total} ตอบกลับ
+ตรวจสอบการแจ้งเตือนของคุณในหน้าการแจ้งเตือน
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("th/footer.vm")

@@ -2736,6 +2736,14 @@ Decoration
 	background-size: cover;
 }
 
+.IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbIcon .WaveMessageReplyIcon {
+	position: relative;
+	font-size: 44px;
+	top: 7px;
+	left: 8px;
+	color: #3498DB;
+}
+
 .IllustItemList .ActivityList .ActivityListItem .ActivityListThumb .ActivityListThumbIcon .GiftIcon {
 	position: relative;
 	font-size: 44px;
@@ -3086,7 +3094,7 @@ hr.IllustItemListSeparator {
 }
 
 .UserInfo .WaveList.Pc .MyWaves {
-	width: 694px;
+	width: 520px;
 }
 
 .UserInfo .WaveList .MyWaves > img{
@@ -3095,23 +3103,22 @@ hr.IllustItemListSeparator {
 	padding: 4px;
 }
 
-.UserInfo .WaveList .MyWaves .WaveWithComment {
-	width: 22px;
-	height: 22px;
-	display: inline-table;
+.UserInfo .WaveList .MyWaves .WaveEmoji {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
 	overflow: hidden;
-	margin-bottom: -20px;
 }
 
-.UserInfo .WaveList .MyWaves .WaveWithComment > img{
+.UserInfo .WaveList .MyWaves .WaveEmoji > img{
 	width: 22px;
 	height: 22px;
 	padding: 4px;
 }
 
-.UserInfo .WaveList .MyWaves .WaveWithComment > i{
+.UserInfo .WaveList .MyWaves .WaveEmoji > i{
 	position: relative;
-	top: -35px;
+	top: -34px;
 	right: -15px;
 	font-size: 15px;
 	color: #ffffff;

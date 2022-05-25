@@ -98,7 +98,7 @@ public class UserWave {
 	public boolean updateReply(String reply) {
 		if (id < 0 || reply == null || reply.isEmpty()) return false;
 
-		final String sql = "UPDATE user_waves SET reply_message=? WHERE id=?";
+		final String sql = "UPDATE user_waves SET reply_message=?, reply_at=now() WHERE id=?";
 		try (
 				Connection connection = DatabaseUtil.dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql);

@@ -17,6 +17,7 @@ cResults.GetResults();
 "check_gift":<%=cResults.m_nCheckGift%>,
 "check_wave_emoji":<%=cResults.m_nCheckWaveEmoji%>,
 "check_wave_emoji_message":<%=cResults.m_nCheckWaveEmojiMessage%>,
+"check_wave_emoji_message_reply":<%=cResults.m_nCheckWaveEmojiMessageReply%>,
 "notify_comment":0,
 "notify_follow":0,
 "notify_heart":0,
