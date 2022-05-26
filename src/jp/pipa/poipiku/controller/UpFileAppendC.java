@@ -117,15 +117,6 @@ public class UpFileAppendC extends UpC{
 			}
 			ImageUtil.createThumbIllust(strRealFileName);
 
-			WriteBackFile writeBackFile = new WriteBackFile();
-			writeBackFile.userId = cParam.m_nUserId;
-			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
-			writeBackFile.rowId = nAppendId;
-			writeBackFile.path = strFileName;
-			if (!writeBackFile.insert()) {
-				Log.d("writeBackFile.insert() error: " + nAppendId);
-			}
-
 			// ファイルサイズ系情報
 			int nWidth = 0;
 			int nHeight = 0;
@@ -208,6 +199,15 @@ public class UpFileAppendC extends UpC{
 				cState.setInt(1, cParam.m_nContentId);
 				cState.executeUpdate();
 				Log.d("update updated_at");
+			}
+
+			WriteBackFile writeBackFile = new WriteBackFile();
+			writeBackFile.userId = cParam.m_nUserId;
+			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
+			writeBackFile.rowId = nAppendId;
+			writeBackFile.path = strFileName;
+			if (!writeBackFile.insert()) {
+				Log.d("writeBackFile.insert() error: " + nAppendId);
 			}
 
 			nRtn = nAppendId;
