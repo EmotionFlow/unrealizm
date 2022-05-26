@@ -158,7 +158,7 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 						<%@ include file="/inner/TUserShareCmd.jsp"%>
 					</span>
 				</section>
-				<%if(!cResults.myWaves.isEmpty()){%>
+				<%if(cResults.myWaves != null && !cResults.myWaves.isEmpty()){%>
 				<section class="WaveList">
 					<span class="WaveListTitle">
 						<%=_TEX.T("MyIllustListV.Wave.Received")%>
@@ -173,7 +173,7 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 					</div>
 				</section>
 				<%}%>
-				<%if(!cResults.replyWaves.isEmpty()){%>
+				<%if(cResults.replyWaves != null && !cResults.replyWaves.isEmpty()){%>
 				<section class="WaveList">
 					<span class="WaveListTitle">
 						<%=_TEX.T("MyIllustListV.Wave.Reply")%>

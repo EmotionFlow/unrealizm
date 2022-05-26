@@ -196,7 +196,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 						</span>
 					</span>
 				</section>
-				<%if(!cResults.myWaves.isEmpty()){%>
+				<%if(cResults.myWaves != null && !cResults.myWaves.isEmpty()){%>
 				<section class="WaveList Pc">
 					<span class="WaveListTitle Pc">
 						<%=_TEX.T("MyIllustListV.Wave.Received")%>
@@ -207,7 +207,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 					</div>
 				</section>
 				<%}%>
-				<%if(!cResults.replyWaves.isEmpty()){%>
+				<%if(cResults.replyWaves != null && !cResults.replyWaves.isEmpty()){%>
 				<section class="WaveList">
 					<span class="WaveListTitle">
 						<%=_TEX.T("MyIllustListV.Wave.Reply")%>
