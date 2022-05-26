@@ -114,6 +114,7 @@ public class MyIllustListC extends IllustListC {
 		UserWaveTemplate waveTemplate = UserWaveTemplate.select(checkLogin.m_nUserId, UserWaveTemplate.DISABLE_WAVE_ORDER);
 		if (waveTemplate != null && !waveTemplate.isEnabled()) {
 			myWaves = new LinkedList<>();
+			replyWaves = new LinkedList<>();
 		} else {
 			myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 30);
 			Collections.reverse(myWaves);
