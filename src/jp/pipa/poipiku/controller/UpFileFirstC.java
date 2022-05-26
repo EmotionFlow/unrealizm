@@ -122,23 +122,19 @@ public class UpFileFirstC extends UpC{
 				nWidth = size[0];
 				nHeight = size[1];
 			} catch(Exception e) {
-				nWidth = 0;
-				nHeight = 0;
 				Log.d("error getImageSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
 			try {
 				nFileSize = (new File(strRealFileName)).length();
 			} catch(Exception e) {
-				nFileSize = 0;
-				Log.d("error getImageSize %s".formatted(strRealFileName));
+				Log.d("error fileSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
 			try {
 				nComplexSize = ImageUtil.getConplex(strRealFileName);
 			} catch(Exception e) {
-				nComplexSize=0;
-				Log.d("error getImageSize %s".formatted(strRealFileName));
+				Log.d("error complexSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
 
