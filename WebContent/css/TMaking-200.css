@@ -3077,7 +3077,8 @@ hr.IllustItemListSeparator {
 	background: rgba(255, 255, 255, 0.85);
 	flex-direction: column;
 	flex-wrap: wrap;
-	align-items: center;}
+	align-items: center;
+}
 
 .UserInfo .WaveList.Pc {
 	padding: 5px 15px 15px 15px;
@@ -3086,7 +3087,16 @@ hr.IllustItemListSeparator {
 .UserInfo .WaveList .WaveListTitle {
 	font-size: 11px;
 	width: 100%;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+}
+
+.UserInfo .WaveList .WaveListTitle .ToWaveSetting {
+	text-decoration: underline;
+	position: absolute;
+	right: 9px;
 }
 
 .UserInfo .WaveList .MyWaves {
@@ -3101,6 +3111,12 @@ hr.IllustItemListSeparator {
 	width: 22px;
 	height: 22px;
 	padding: 4px;
+}
+
+.UserInfo .WaveList .MyWaves .ShowMoreWaves{
+	text-align: center;
+	padding: 4px 0 3px 0;
+	font-size: 11px;
 }
 
 .UserInfo .WaveList .MyWaves .WaveEmoji {

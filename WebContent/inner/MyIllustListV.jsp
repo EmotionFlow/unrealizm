@@ -161,11 +161,11 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 				<%if(cResults.myWaves != null && !cResults.myWaves.isEmpty()){%>
 				<section class="WaveList">
 					<span class="WaveListTitle">
-						<%=_TEX.T("MyIllustListV.Wave.Received")%>
+						<span><%=_TEX.T("MyIllustListV.Wave.Received")%>
 						<%if(isApp){%>
-						<br><%=_TEX.T("MyIllustListV.Wave.Customize.App")%>
+						<br><%=_TEX.T("MyIllustListV.Wave.Customize.App")%></span>
 						<%}else{%>
-						<a style="text-decoration: underline; margin-left: 20px" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
+						</span><a class="ToWaveSetting" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
 						<%}%>
 					</span>
 					<div class="MyWaves">

@@ -116,7 +116,7 @@ public class MyIllustListC extends IllustListC {
 			myWaves = new LinkedList<>();
 			replyWaves = new LinkedList<>();
 		} else {
-			myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 30);
+			myWaves = UserWave.selectByToUserId(checkLogin.m_nUserId, 0, 60);
 			Collections.reverse(myWaves);
 
 			replyWaves = new LinkedList<>();
