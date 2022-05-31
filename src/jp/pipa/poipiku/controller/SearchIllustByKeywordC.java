@@ -55,7 +55,6 @@ public final class SearchIllustByKeywordC {
 				}
 			}
 			statement.setString(1, keywords.toString());
-			Log.d(statement.toString());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				keywordMatchedIds.add(resultSet.getInt(1));
