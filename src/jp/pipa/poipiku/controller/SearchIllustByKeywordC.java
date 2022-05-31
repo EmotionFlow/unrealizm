@@ -49,12 +49,13 @@ public final class SearchIllustByKeywordC {
 			PreparedStatement statement = connection.prepareStatement(strSql);
 		) {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
-				String[] muteKeywords = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId).trim().split("\\s+");
-				for (String kw : muteKeywords) {
-					keywords.append(" -").append(kw);
+				String muteKeywords = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
+				if (muteKeywords != null && !muteKeywords.isEmpty()) {
+					keywords.append(" -(").append(muteKeywords).append(")");
 				}
 			}
 			statement.setString(1, keywords.toString());
+			Log.d(statement.toString());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				keywordMatchedIds.add(resultSet.getInt(1));
