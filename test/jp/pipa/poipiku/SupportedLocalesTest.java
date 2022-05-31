@@ -15,7 +15,7 @@ public class SupportedLocalesTest {
 		locale = SupportedLocales.findLocale(1);
 		assertEquals(locale, Locale.JAPANESE);
 		locale = SupportedLocales.findLocale(2);
-		assertEquals(locale, Locale.ENGLISH);
+		assertEquals(locale, Locale.KOREAN);
 
 		int id;
 		id = SupportedLocales.findId(Locale.ENGLISH);
