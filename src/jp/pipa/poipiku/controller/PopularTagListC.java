@@ -167,8 +167,6 @@ public final class PopularTagListC {
 				}
 				statement.setInt(idx++, selectSampleGallery);
 
-				Log.d(statement.toString());
-
 				resultSet = statement.executeQuery();
 				while (resultSet.next()) {
 					CContent cContent = new CContent(resultSet);
