@@ -26,7 +26,7 @@ public class WriteBackContentsV2 extends Batch {
 
 	// 一度のバッチ実行でselectするファイルの最大数
 	private static int getSelectLimit() {
-		int selectLimit = 80;
+		int selectLimit = 800;
 		Calendar calendar = Calendar.getInstance();
 		final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 		final int hour = LocalTime.now().getHour();
@@ -67,7 +67,7 @@ public class WriteBackContentsV2 extends Batch {
 
 	private static void notifyError(String msg) {
 		Log.d(msg);
-		slackNotifier.notify(msg);
+//		slackNotifier.notify(msg);
 	}
 
 	public static void main(String[] args) {
