@@ -7,6 +7,7 @@
 			'messageHtml': '<%=Util.toStringHtml(wave.message).replaceAll("'", "\\\\'")%>',
 			'reply': `<%=Util.toQuotedString(wave.replyMessage, "`") %>`,
 			'replied': <%=wave.replyMessage.isEmpty()?"false":"true"%>,
+			'isAnonymous' : <%=wave.fromUserId<0%>,
 		},
 		<%}%><%}%>
 	};
@@ -22,6 +23,11 @@
 				width: 23em;
 				height: 7em;
 			}
+			.WaveAnonymous {
+				display: block;
+				font-size: 12px;
+				margin-top: 18px;
+			}
 			.swal2-popup .swal2-styled.swal2-confirm {
 				font-size: 14px;
 			}
@@ -29,20 +35,25 @@
 		` + '<div class="WaveMessageDlg">' +
 		'<div class="WaveEmoji">' + waveMessage.emojiHtml + '</div>' +
 		'<div class="WaveMessage">' + waveMessage.messageHtml + '</div>';
-		if (!waveMessage.replied) {
-			html += `<div class="WaveMessageReply">
+
+		if (!waveMessage.isAnonymous) {
+			if (!waveMessage.replied) {
+				html += `<div class="WaveMessageReply">
 					<div class="WaveMessageReplyTitle"><i class="fas fa-reply"></i> <%=_TEX.T("TWaveMessage.Reply.Title")%></div>
 					<div class="WaveMessageReplyText">
 					<textarea id="EditWaveMessageReply" maxlength="500" placeholder="<%=_TEX.T("TWaveMessage.Reply.CharLimit")%>">`+ waveMessage.reply +`</textarea>
 					</div>
 					</div>`;
-		} else {
-			html += `<div class="WaveMessageReply">
+			} else {
+				html += `<div class="WaveMessageReply">
 					<div class="WaveMessageReplyTitle"><i class="fas fa-reply"></i> <%=_TEX.T("TWaveMessage.Reply.Already")%></div>
 					<div class="WaveMessageReplyText">
 					<textarea id="EditWaveMessageReply" readonly="readonly" disabled="disabled">`+ waveMessage.reply +`</textarea>
 					</div>
 					</div>`;
+			}
+		} else {
+			html += `<div class="WaveMessageReply"><span class="WaveAnonymous"><%=_TEX.T("TWaveMessage.Reply.Anonymous")%></span></div>`;
 		}
 		html += '</div>';
 		return html;
@@ -53,7 +64,7 @@
 		if (!waveMessage) return false;
 		Swal.fire({
 			html: getWaveMessageDlgHtml(waveMessage),
-			showConfirmButton: !waveMessage.replied,
+			showConfirmButton: !waveMessage.isAnonymous && !waveMessage.replied,
 			focusConfirm: false,
 			confirmButtonText: '<%=_TEX.T("TWaveMessage.Reply.Submit")%>',
 			showCancelButton: false,
