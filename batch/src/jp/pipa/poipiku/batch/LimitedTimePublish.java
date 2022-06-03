@@ -23,11 +23,6 @@ import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
-	static final boolean _DEBUG = false;
-	static final String DB_NAME			= (_DEBUG)?"jdbc:postgresql://localhost:58321/poipiku":"jdbc:postgresql://localhost:5432/poipiku";
-	static final String DB_PORT   		= "5432";
-	static final String DB_USER      	= "postgres";
-	static final String DB_PASSWORD  	= (_DEBUG)?"knniwis4it":"dbpass";
 	ResourceBundleControl _TEX = null;
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
@@ -105,8 +100,7 @@ public class LimitedTimePublish extends Batch {
 
 		try {
 			// CONNECT DB
-			Class.forName("org.postgresql.Driver");
-			cConn = DriverManager.getConnection(DB_NAME, DB_USER, DB_PASSWORD);
+			cConn = dataSource.getConnection();
 
 			// 公開状態に変更すべきコンテンツを抽出
 			strSql = "SELECT content_id FROM contents_0000 WHERE limited_time_publish=true AND open_id=2 AND upload_date <= CURRENT_TIMESTAMP AND end_date >= CURRENT_TIMESTAMP";
