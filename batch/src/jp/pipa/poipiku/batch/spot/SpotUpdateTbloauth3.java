@@ -1,5 +1,6 @@
-package jp.pipa.poipiku.batch;
+package jp.pipa.poipiku.batch.spot;
 
+import jp.pipa.poipiku.batch.Batch;
 import jp.pipa.poipiku.util.Log;
 
 import java.sql.Connection;

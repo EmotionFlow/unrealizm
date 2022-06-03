@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.batch;
+package jp.pipa.poipiku.batch.spot;
 
 /*
 import java.sql.*;
