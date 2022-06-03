@@ -25,7 +25,7 @@ public class UpFileAppendC extends UpC{
 		m_cServletContext = context;
 	}
 
-	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX) {
+	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX, boolean calcSize) {
 		//Log.d("START UploadFileAppendC");
 		int nRtn = -1;
 		Connection cConn = null;
@@ -157,53 +157,55 @@ public class UpFileAppendC extends UpC{
 			cState.close();cState=null;
 
 			// ファイルサイズチェック
-			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
+			if (calcSize) {
+				CacheUsers0000 users  = CacheUsers0000.getInstance();
+				CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
 
-			// 1枚目は存在チェック時に加算済み
-			// 2枚目以降
-			strSql ="SELECT SUM(file_size) FROM contents_appends_0000 WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				fileTotalSize += cResSet.getInt(1);
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-			if(fileTotalSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
-				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+fileTotalSize);
-				strSql ="DELETE FROM contents_appends_0000 WHERE append_id=?";
+				// 1枚目は存在チェック時に加算済み
+				// 2枚目以降
+				strSql ="SELECT SUM(file_size) FROM contents_appends_0000 WHERE content_id=?";
 				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, nAppendId);
-				cState.executeUpdate();
+				cState.setInt(1, cParam.m_nContentId);
+				cResSet = cState.executeQuery();
+				if(cResSet.next()) {
+					fileTotalSize += cResSet.getInt(1);
+				}
+				cResSet.close();cResSet=null;
 				cState.close();cState=null;
-				cConn.close();cConn=null;
-				Util.deleteFile(strRealFileName);
-				return Common.UPLOAD_FILE_TOTAL_ERROR;
-			}
+				if(fileTotalSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
+					Log.d("UPLOAD_FILE_TOTAL_ERROR:"+fileTotalSize);
+					strSql ="DELETE FROM contents_appends_0000 WHERE append_id=?";
+					cState = cConn.prepareStatement(strSql);
+					cState.setInt(1, nAppendId);
+					cState.executeUpdate();
+					cState.close();cState=null;
+					cConn.close();cConn=null;
+					Util.deleteFile(strRealFileName);
+					return Common.UPLOAD_FILE_TOTAL_ERROR;
+				}
 
-			// update file num
-			strSql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
-
-			if (user.passportId == Common.PASSPORT_ON) {
-				cState = cConn.prepareStatement("UPDATE contents_0000 SET updated_at=now() WHERE content_id=?");
+				// update file num
+				strSql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nContentId);
 				cState.executeUpdate();
-				Log.d("update updated_at");
-			}
+				cState.close();cState=null;
 
-			WriteBackFile writeBackFile = new WriteBackFile();
-			writeBackFile.userId = cParam.m_nUserId;
-			writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
-			writeBackFile.rowId = nAppendId;
-			writeBackFile.path = strFileName;
-			if (!writeBackFile.insert()) {
-				Log.d("writeBackFile.insert() error: " + nAppendId);
+				if (user.passportId == Common.PASSPORT_ON) {
+					cState = cConn.prepareStatement("UPDATE contents_0000 SET updated_at=now() WHERE content_id=?");
+					cState.setInt(1, cParam.m_nContentId);
+					cState.executeUpdate();
+					Log.d("update updated_at");
+				}
+
+				WriteBackFile writeBackFile = new WriteBackFile();
+				writeBackFile.userId = cParam.m_nUserId;
+				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
+				writeBackFile.rowId = nAppendId;
+				writeBackFile.path = strFileName;
+				if (!writeBackFile.insert()) {
+					Log.d("writeBackFile.insert() error: " + nAppendId);
+				}
 			}
 
 			nRtn = nAppendId;

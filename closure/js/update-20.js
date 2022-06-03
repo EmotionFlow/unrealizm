@@ -1,7 +1,8 @@
+const uploadListId = '.qq-upload-list-selector.qq-upload-list';
 //並べ替え情報の送信
 function UpdateFileOrderAjax(user_id, content_id) {
 	let json_array = [];
-	$.each($('.qq-upload-list-selector.qq-upload-list').sortable('toArray'), function(i, item) {
+	$.each($(uploadListId).sortable('toArray'), function(i, item) {
 		json_array.push(parseInt(item))
 	});
 
@@ -10,7 +11,8 @@ function UpdateFileOrderAjax(user_id, content_id) {
 		"data": {
 			UID: user_id,
 			IID: content_id,
-			AID: JSON.stringify(json_array)
+			AID: JSON.stringify(json_array),
+			FirstNewID: $(uploadListId).attr('data-first-new-id') || 0,
 		},
 		"url": "/f/UpdateFileOrderF.jsp",
 		"dataType": "json",
@@ -69,6 +71,7 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 			onComplete: function(id, name, response, xhr) {
 				//画像追加アップによって払い出されたappend_idをDOMに設定
 				$('.qq-file-id-' + id).attr('id', response.append_id);
+				if (!$(uploadListId).attr('data-first-new-id')) $(uploadListId).attr('data-first-new-id', response.append_id);
 			},
 			onAllComplete: function(succeeded, failed) {
 				console.log("onAllComplete", succeeded, failed, this.tweet);
@@ -173,7 +176,7 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 //画像ファイルの更新アップロード
 function UpdateFile(user_id, content_id) {
 	if(!multiFileUploader) return;
-	if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) return;
+	if($(uploadListId).children('li').length<=0) return;
 	let genre = $('#TagInputItemData').val();
 	const nCategory = parseInt($('#EditCategory').val(), 10);
 	const strDescription = $.trim($("#EditDescription").val());
