@@ -24,58 +24,46 @@ import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
 	ResourceBundleControl _TEX = null;
-	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
+	static final String SRC_IMG_PATH = "/var/www/html/poipiku";    // 最後の/はDBに入っている
 
 
-	private static Integer updateContentId(int nOldContentId){
-		Connection  cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
+	private static Integer updateContentId(int nOldContentId) {
 		String strSql = "";
 
-		Integer nNewContentId=null;
-		try{
-			cConn = dataSource.getConnection();
-
-			strSql = "INSERT INTO content_id_histories VALUES(?, nextval('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, nOldContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				nNewContentId = cResSet.getInt("new_id");
+		Integer nNewContentId = null;
+		strSql = "INSERT INTO content_id_histories VALUES(?, NEXTVAL('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
+		try (Connection connection = dataSource.getConnection();
+		     PreparedStatement statement = connection.prepareStatement(strSql);
+		) {
+			statement.setInt(1, nOldContentId);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				nNewContentId = resultSet.getInt("new_id");
 			} else {
 				throw new Exception("new content id is null.");
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally{
-			try{cResSet.close();cResSet=null;}catch(SQLException se){};
-			try{cState.close();cState=null;}catch(SQLException se){};
 		}
 
-		if(nNewContentId!=null){
+		if (nNewContentId != null) {
 			boolean bUpdateResult;
-			try {
-				bUpdateResult = UpdateC.doUpdateContentIdTransaction(cConn, nOldContentId, nNewContentId);
+			try (Connection connection = dataSource.getConnection()) {
+				bUpdateResult = UpdateC.doUpdateContentIdTransaction(connection, nOldContentId, nNewContentId);
 			} catch (SQLException e) {
 				e.printStackTrace();
 				bUpdateResult = false;
-			} finally {
-				try{cConn.close();cConn=null;}catch(SQLException se){};
 			}
 
-			if(!bUpdateResult){
-				try{
-					cConn = dataSource.getConnection();
-					nNewContentId=null;
-					strSql = "DELETE FROM content_id_histories WHERE old_id=?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, nOldContentId);
-					cState.executeUpdate();
-				}catch(Exception e){
+			if (!bUpdateResult) {
+				strSql = "DELETE FROM content_id_histories WHERE old_id=?";
+				try (Connection connection = dataSource.getConnection();
+				     PreparedStatement statement = connection.prepareStatement(strSql)) {
+
+					statement.setInt(1, nOldContentId);
+					statement.executeUpdate();
+				} catch (Exception e) {
 					e.printStackTrace();
-				}finally{
-					try{cState.close();cState=null;}catch(SQLException se){};
 				}
 			}
 		}
@@ -89,7 +77,7 @@ public class LimitedTimePublish extends Batch {
 		Log.d("start");
 		LocalDateTime dtStart = LocalDateTime.now();
 
-		Connection  cConn = null;
+		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
@@ -103,11 +91,11 @@ public class LimitedTimePublish extends Batch {
 			cConn = dataSource.getConnection();
 
 			// 公開状態に変更すべきコンテンツを抽出
-			strSql = "SELECT content_id FROM contents_0000 WHERE limited_time_publish=true AND open_id=2 AND upload_date <= CURRENT_TIMESTAMP AND end_date >= CURRENT_TIMESTAMP";
+			strSql = "SELECT content_id FROM contents_0000 WHERE limited_time_publish=TRUE AND open_id=2 AND upload_date <= CURRENT_TIMESTAMP AND end_date >= CURRENT_TIMESTAMP";
 			cState = cConn.prepareStatement(strSql);
 			cResSet = cState.executeQuery();
 
-			while(cResSet.next()) {
+			while (cResSet.next()) {
 				int cid = cResSet.getInt("content_id");
 				LimitedTimePublishLog log = new LimitedTimePublishLog();
 				log.m_datetime = dtStart;
@@ -115,10 +103,12 @@ public class LimitedTimePublish extends Batch {
 				lLogsByOldId.put(cid, log);
 				lOldContentId.add(cid);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			cResSet.close();
+			cResSet = null;
+			cState.close();
+			cState = null;
 
-			for(int oldId : lOldContentId){
+			for (int oldId : lOldContentId) {
 				Integer newId = updateContentId(oldId);
 				lNewContentId.add(newId);
 
@@ -129,25 +119,26 @@ public class LimitedTimePublish extends Batch {
 
 			StringBuilder sb = new StringBuilder();
 			String strPrefix = "";
-			for(Integer newId : lNewContentId){
+			for (Integer newId : lNewContentId) {
 				sb.append(strPrefix);
 				strPrefix = ",";
 				sb.append(newId.toString());
 			}
 
 			// 公開状態にUPDATE. 新着よけboolean(false, true)をopen_idのinteger(0, 1)にキャストしている
-			if(sb.length()>0){
+			if (sb.length() > 0) {
 				String strPublishContentIds = new String(sb);
 				strSql = "UPDATE contents_0000 SET open_id=not_recently::int WHERE content_id IN (" + strPublishContentIds + ")";
 				cState = cConn.prepareStatement(strSql);
 				cState.executeUpdate();
-				cState.close();cState=null;
+				cState.close();
+				cState = null;
 
 				// ログ格納のため,udpateの結果をselect
 				strSql = "SELECT content_id, user_id, open_id FROM contents_0000 WHERE content_id IN (" + strPublishContentIds + ")";
 				cState = cConn.prepareStatement(strSql);
 				cResSet = cState.executeQuery();
-				while(cResSet.next()) {
+				while (cResSet.next()) {
 					LimitedTimePublishLog l = lLogsByNewId.get(cResSet.getInt("content_id"));
 					l.m_nUserId = cResSet.getInt("user_id");
 					l.m_nOpenId = cResSet.getInt("open_id");
@@ -168,13 +159,13 @@ public class LimitedTimePublish extends Batch {
 				String strTwMsg;
 				ArrayList<String> vFileList = new ArrayList<String>();
 
-				while(cResSet.next()) {
+				while (cResSet.next()) {
 					CContent cContent = new CContent(cResSet);
 					cContent.m_cUser.m_nUserId = cResSet.getInt("user_id");
 					cContent.m_cUser.m_strNickName = cResSet.getString("nickname");
 					String strFileName = cContent.m_strFileName;
-					if(!strFileName.isEmpty()) {
-						switch(cContent.m_nPublishId) {
+					if (!strFileName.isEmpty()) {
+						switch (cContent.m_nPublishId) {
 							case Common.PUBLISH_ID_R15:
 							case Common.PUBLISH_ID_R18:
 							case Common.PUBLISH_ID_R18G:
@@ -194,7 +185,7 @@ public class LimitedTimePublish extends Batch {
 								break;
 						}
 
-						if(!strFileName.isEmpty()) {
+						if (!strFileName.isEmpty()) {
 							strFileName = String.format("%s%s_360.jpg", SRC_IMG_PATH, strFileName);
 							vFileList.add(strFileName);
 						}
@@ -214,14 +205,14 @@ public class LimitedTimePublish extends Batch {
 
 					// ツイート
 					int nTweetResult = CTweet.ERR_OTHER;
-					if(cContent.m_nTweetWhenPublished==1 || vFileList.size()<=0) {	// text only
+					if (cContent.m_nTweetWhenPublished == 1 || vFileList.size() <= 0) {    // text only
 						nTweetResult = cTweet.Tweet(strTwMsg);
 					} else { // with image
 						nTweetResult = cTweet.Tweet(strTwMsg, vFileList);
 					}
 					LimitedTimePublishLog l = lLogsByNewId.get(cContent.m_nContentId);
 					l.m_nTweetResult = nTweetResult;
-					if(nTweetResult == CTweet.OK){
+					if (nTweetResult == CTweet.OK) {
 						String strTweetId = Long.toString(cTweet.m_statusLastTweet.getId());
 						PreparedStatement cStateUpdateTwId = cConn.prepareStatement("UPDATE contents_0000 SET tweet_id=? WHERE content_id=? ");
 						cStateUpdateTwId.setString(1, strTweetId);
@@ -229,16 +220,18 @@ public class LimitedTimePublish extends Batch {
 						cStateUpdateTwId.executeUpdate();
 					}
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				cResSet.close();
+				cResSet = null;
+				cState.close();
+				cState = null;
 			}
 
 			// 非公開にすべきコンテンツを更新
-			strSql = "SELECT * FROM contents_0000 WHERE limited_time_publish=true AND (open_id=0 OR open_id=1) AND (upload_date > CURRENT_TIMESTAMP OR end_date < CURRENT_TIMESTAMP)";
+			strSql = "SELECT * FROM contents_0000 WHERE limited_time_publish=TRUE AND (open_id=0 OR open_id=1) AND (upload_date > CURRENT_TIMESTAMP OR end_date < CURRENT_TIMESTAMP)";
 			cState = cConn.prepareStatement(strSql);
 			cResSet = cState.executeQuery();
 			ArrayList<CContent> unpublishContents = new ArrayList<>();
-			while(cResSet.next()) {
+			while (cResSet.next()) {
 				CContent cContent = new CContent(cResSet);
 				unpublishContents.add(cContent);
 				LimitedTimePublishLog l = new LimitedTimePublishLog();
@@ -249,18 +242,21 @@ public class LimitedTimePublish extends Batch {
 				l.m_nOpenId = 2;
 				lLogsByOldId.put(cContent.m_nContentId, l);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			cResSet.close();
+			cResSet = null;
+			cState.close();
+			cState = null;
 
-			if(unpublishContents.size()>0){
+			if (unpublishContents.size() > 0) {
 				strSql = "UPDATE contents_0000 SET open_id=2 WHERE content_id IN (" +
 						unpublishContents.stream()
-								.map( e -> Integer.valueOf(e.m_nContentId).toString())
+								.map(e -> Integer.valueOf(e.m_nContentId).toString())
 								.collect(Collectors.joining(",")) +
 						" )";
 				cState = cConn.prepareStatement(strSql);
 				cState.executeUpdate();
-				cState.close();cState=null;
+				cState.close();
+				cState = null;
 			}
 
 			CTweet tweet = new CTweet();
@@ -273,7 +269,7 @@ public class LimitedTimePublish extends Batch {
 				}
 			}
 
-			for(Integer key : lLogsByOldId.keySet()){
+			for (Integer key : lLogsByOldId.keySet()) {
 				LimitedTimePublishLog l = lLogsByOldId.get(key);
 				Log.d(l.toString());
 			}
@@ -282,9 +278,21 @@ public class LimitedTimePublish extends Batch {
 			System.out.println(strSql);
 			e.printStackTrace();
 		} finally {
-			try {if(cResSet!=null)cResSet.close();cResSet=null;}catch(Exception e){}
-			try {if(cState!=null)cState.close();cState=null;}catch(Exception e){}
-			try {if(cConn!=null)cConn.close();cConn=null;}catch(Exception e){}
+			try {
+				if (cResSet != null) cResSet.close();
+				cResSet = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (cState != null) cState.close();
+				cState = null;
+			} catch (Exception e) {
+			}
+			try {
+				if (cConn != null) cConn.close();
+				cConn = null;
+			} catch (Exception e) {
+			}
 		}
 		Log.d("end");
 	}
