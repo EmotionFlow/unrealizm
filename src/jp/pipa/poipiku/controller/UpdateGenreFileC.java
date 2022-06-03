@@ -120,7 +120,7 @@ public class UpdateGenreFileC {
 					Util.getUploadGenrePath(),
 					genreId,
 					FILE_TYPE[type],
-					(new SimpleDateFormat("YYYYMMddHHmmss")).format(new java.util.Date()),
+					(new SimpleDateFormat("yyyyMMddHHmmss")).format(new java.util.Date()),
 					ext);
 			String strRealFileName = context.getRealPath(strFileName);
 

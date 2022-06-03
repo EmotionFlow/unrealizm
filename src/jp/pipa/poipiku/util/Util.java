@@ -679,7 +679,7 @@ public final class Util {
 	}
 
 	public static String getUploadGenrePath() {
-		String path = "/user_img01/genre_img";
+		String path = "/user_img02/genre_img";
 		return path;
 	}
 
