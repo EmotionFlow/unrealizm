@@ -64,14 +64,22 @@ public class SearchUserByKeywordC {
 			Collections.sort(userIds);
 			Collections.reverse(userIds);
 			int offset = m_nPage * SELECT_MAX_GALLERY;
-			List<Integer> subList = userIds.subList(offset, Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY));
-
-			for (int userId : subList) {
-				CacheUsers0000.User cashUser = users.getUser(userId);
-				if(cashUser==null) continue;
-				CUser user = new CUser(cashUser);
-				m_vContentList.add(user);
+			int toIndex = offset + Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY);
+			toIndex = Math.min(toIndex, m_nContentsNum-1);
+			List<Integer> subList = null;
+			if (offset < toIndex) {
+				subList = userIds.subList(offset, toIndex);
 			}
+
+			if (subList != null) {
+				for (int userId : subList) {
+					CacheUsers0000.User cashUser = users.getUser(userId);
+					if(cashUser==null) continue;
+					CUser user = new CUser(cashUser);
+					m_vContentList.add(user);
+				}
+			}
+
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
