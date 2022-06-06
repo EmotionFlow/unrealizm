@@ -282,8 +282,12 @@ public class UpdateFileOrderC extends Controller {
 					inPhrase += ")";
 
 					for (int i=0; i<diffNew.size(); i++) {
-						Util.deleteFile(diffNew.get(i).fileName);
+						EditedContent content = diffNew.get(i);
+						if(servletContext != null && content.fileName !=null && !content.fileName.isEmpty()) {
+							String strPath = servletContext.getRealPath(content.fileName);
+							ImageUtil.deleteFiles(strPath);
 						Log.d("Deleted " + diffNew.get(i).fileName + " (#" + diffNew.get(i).appendId + ")");
+						}
 					}
 					sql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id IN " + inPhrase;
 					statement = connection.prepareStatement(sql);

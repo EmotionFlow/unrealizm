@@ -39,6 +39,9 @@ public class UpdateFileOrderCTest {
 		sql = "DELETE FROM write_back_files WHERE user_id=" + uid;
 		statement = connection.prepareStatement(sql);
 		statement.executeUpdate();
+		sql = "DELETE FROM users_0000 WHERE user_id=" + uid;
+		statement = connection.prepareStatement(sql);
+		statement.executeUpdate();
 
 		statement.close();
 		connection.close();
@@ -50,12 +53,21 @@ public class UpdateFileOrderCTest {
 		PreparedStatement statement;
 		String sql;
 
-		sql = "INSERT INTO contents_0000(user_id, content_id, file_num, file_name) VALUES (?, ?, ?, ?)";
+		sql = "INSERT INTO users_0000(user_id, password, nickname, passport_id) VALUES (?, ?, ?, ?)";
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1, uid);
+		statement.setString(2, "pass");
+		statement.setString(3, "testuser");
+		statement.setInt(4, Common.PASSPORT_OFF);
+		statement.executeUpdate();
+
+		sql = "INSERT INTO contents_0000(user_id, content_id, file_num, file_name, file_size) VALUES (?, ?, ?, ?, ?)";
 		statement = connection.prepareStatement(sql);
 		statement.setInt(1, uid);
 		statement.setInt(2, cid);
 		statement.setInt(3, appendNum + 1);
 		statement.setString(4, "file-0");
+		statement.setInt(5, 1 * 1024 * 1024);
 		statement.executeUpdate();
 
 		sql = "INSERT INTO write_back_files(table_code, row_id, path, user_id) VALUES (?, ?, ?, ?)";
@@ -68,11 +80,12 @@ public class UpdateFileOrderCTest {
 
 
 		for (int i = 0; i< appendNum; i++) {
-			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name) VALUES (?, ?, ?)";
+			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, aidBase + i);
 			statement.setInt(2, cid);
 			statement.setString(3, "append-file-" + i);
+			statement.setInt(4, (i+1) * 1024 * 1024);
 			statement.executeUpdate();
 
 			sql = "INSERT INTO write_back_files(table_code, row_id, path, user_id) VALUES (?, ?, ?, ?)";
@@ -179,6 +192,7 @@ public class UpdateFileOrderCTest {
 	}
 
 	@Test
+	// HDDに一部移動済の状態で並べ替える
 	public void testChanged01() throws SQLException {
 		setUpTables();
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
@@ -229,6 +243,7 @@ public class UpdateFileOrderCTest {
 	}
 
 	@Test
+	// 並べ替える
 	public void testChanged02() throws SQLException {
 		setUpTables();
 		UpdateFileOrderC c = new UpdateFileOrderC(null);
@@ -255,6 +270,7 @@ public class UpdateFileOrderCTest {
 	}
 
 	@Test
+	// 一部画像を削除して並べ替える
 	public void testChanged03() throws SQLException {
 		setUpTables();
 		UpdateFileOrderC c = new UpdateFileOrderC(null);
@@ -280,6 +296,7 @@ public class UpdateFileOrderCTest {
 
 
 	@Test
+	// 画像を全部削除して新しい画像を登録する
 	public void testChanged04() throws SQLException {
 		setUpTables();
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
@@ -287,19 +304,12 @@ public class UpdateFileOrderCTest {
 		PreparedStatement statement;
 		String sql;
 		for (int i = appendNum; i< appendNum + 3; i++) {
-			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name) VALUES (?, ?, ?)";
+			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, aidBase + i);
 			statement.setInt(2, cid);
 			statement.setString(3, "append-file-" + i);
-			statement.executeUpdate();
-
-			sql = "INSERT INTO write_back_files(table_code, row_id, path, user_id) VALUES (?, ?, ?, ?)";
-			statement = connection.prepareStatement(sql);
-			statement.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
-			statement.setInt(2, aidBase + i);
-			statement.setString(3, "append-file-" + i);
-			statement.setInt(4, uid);
+			statement.setInt(4, 1 * 1024 * 1024);
 			statement.executeUpdate();
 		}
 		connection.close();
@@ -308,6 +318,7 @@ public class UpdateFileOrderCTest {
 		c.userId = uid;
 		c.contentId = cid;
 		c.newIdList = new int[]{aidBase + 3, aidBase + 4, aidBase + 5};
+		c.firstNewId = aidBase + 3;
 
 		assertEquals(0, c.GetResults(null));
 
@@ -328,6 +339,7 @@ public class UpdateFileOrderCTest {
 	}
 
 	@Test
+	// HDDに移動中
 	public void testChanged05() throws SQLException {
 		setUpTables();
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
