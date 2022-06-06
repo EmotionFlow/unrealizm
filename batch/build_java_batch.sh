@@ -21,6 +21,10 @@ echo /
 ${JAVAC} -Xlint:unchecked -Xlint:deprecation \
   -sourcepath ${SOURCE_PATH} -d ${BATCH_CLASSES} -cp ${CLASS_PATH} ${JAVA_FILE_ROOT}/batch/*.java
 
+echo /spot
+${JAVAC} -Xlint:unchecked -Xlint:deprecation \
+  -sourcepath ${SOURCE_PATH} -d ${BATCH_CLASSES} -cp ${CLASS_PATH}:${BATCH_CLASSES} ${JAVA_FILE_ROOT}/batch/spot/*.java
+
 echo build ok
 
 exit
