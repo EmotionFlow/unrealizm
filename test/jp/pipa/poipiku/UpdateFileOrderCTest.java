@@ -67,7 +67,7 @@ public class UpdateFileOrderCTest {
 		statement.setInt(2, cid);
 		statement.setInt(3, appendNum + 1);
 		statement.setString(4, "file-0");
-		statement.setInt(5, 1 * 1024 * 1024);
+		statement.setInt(5, 5 * 1024 * 1024);
 		statement.executeUpdate();
 
 		sql = "INSERT INTO write_back_files(table_code, row_id, path, user_id) VALUES (?, ?, ?, ?)";
@@ -85,7 +85,7 @@ public class UpdateFileOrderCTest {
 			statement.setInt(1, aidBase + i);
 			statement.setInt(2, cid);
 			statement.setString(3, "append-file-" + i);
-			statement.setInt(4, (i+1) * 1024 * 1024);
+			statement.setInt(4, 5 * 1024 * 1024);
 			statement.executeUpdate();
 
 			sql = "INSERT INTO write_back_files(table_code, row_id, path, user_id) VALUES (?, ?, ?, ?)";
@@ -364,4 +364,204 @@ public class UpdateFileOrderCTest {
 		assertEquals(Controller.ErrorKind.DoRetry, c.errorKind);
 	}
 
+	@Test
+	// 画像を追加してサイズオーバーする
+	public void testChanged06() throws SQLException {
+		setUpTables();
+		DataSource dataSource = (DataSource)DBConnection.getDataSource();
+		Connection connection = dataSource.getConnection();
+		PreparedStatement statement;
+		String sql;
+		for (int i = appendNum; i< appendNum + 3; i++) {
+			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, aidBase + i);
+			statement.setInt(2, cid);
+			statement.setString(3, "append-file-" + i);
+			statement.setInt(4, 10 * 1024 * 1024 + (i == appendNum ? 1 : 0)); // 合計50MB+1B
+			statement.executeUpdate();
+		}
+		connection.close();
+
+		UpdateFileOrderC c = new UpdateFileOrderC(null);
+		c.userId = uid;
+		c.contentId = cid;
+		c.newIdList = new int[]{aidBase + 3, aidBase + 4, aidBase + 5, 0, aidBase + 0, aidBase + 2, aidBase + 1};
+		c.firstNewId = aidBase + 3;
+
+		assertEquals(Common.UPLOAD_FILE_TOTAL_ERROR, c.GetResults(null));
+
+		assertEquals("file-0", selectContentFile(cid));
+
+		List<String> l;
+		l = selectContentAppendFiles(cid);
+		assertEquals(3, l.size());
+		assertEquals("append-file-0", l.get(0));
+		assertEquals("append-file-1", l.get(1));
+		assertEquals("append-file-2", l.get(2));
+
+		assertEquals("file-0", selectWriteBackFiles(uid, 0).get(0));
+
+		l = selectWriteBackFiles(uid, 1);
+		assertEquals(3, l.size());
+		assertEquals("append-file-0", l.get(0));
+		assertEquals("append-file-1", l.get(1));
+		assertEquals("append-file-2", l.get(2));
+	}
+
+	@Test
+	// ポイパス会員なら合計50MBを超えても保存できる
+	public void testChanged07() throws SQLException {
+		setUpTables();
+		DataSource dataSource = (DataSource)DBConnection.getDataSource();
+		Connection connection = dataSource.getConnection();
+		PreparedStatement statement;
+		String sql;
+		sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1, Common.PASSPORT_ON);
+		statement.setInt(2, uid);
+		statement.executeUpdate();
+
+		for (int i = appendNum; i< appendNum + 3; i++) {
+			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, aidBase + i);
+			statement.setInt(2, cid);
+			statement.setString(3, "append-file-" + i);
+			statement.setInt(4, 20 * 1024 * 1024); // 合計80MB
+			statement.executeUpdate();
+		}
+		connection.close();
+
+		UpdateFileOrderC c = new UpdateFileOrderC(null);
+		c.userId = uid;
+		c.contentId = cid;
+		c.newIdList = new int[]{aidBase + 3, aidBase + 4, 0, aidBase + 5, aidBase + 0, aidBase + 2, aidBase + 1};
+		c.firstNewId = aidBase + 3;
+
+		assertEquals(0, c.GetResults(null));
+
+		assertEquals("append-file-3", selectContentFile(cid));
+
+		List<String> l;
+		l = selectContentAppendFiles(cid);
+		assertEquals(6, l.size());
+		assertEquals("append-file-4", l.get(0));
+		assertEquals("file-0", l.get(1));
+		assertEquals("append-file-5", l.get(2));
+		assertEquals("append-file-0", l.get(3));
+		assertEquals("append-file-2", l.get(4));
+		assertEquals("append-file-1", l.get(5));
+
+		assertEquals("append-file-3", selectWriteBackFiles(uid, 0).get(0));
+
+		l = selectWriteBackFiles(uid, 1);
+		assertEquals(6, l.size());
+		assertEquals("append-file-4", l.get(0));
+		assertEquals("file-0", l.get(1));
+		assertEquals("append-file-5", l.get(2));
+		assertEquals("append-file-0", l.get(3));
+		assertEquals("append-file-2", l.get(4));
+		assertEquals("append-file-1", l.get(5));
+	}
+
+	@Test
+	// ポイパス会員でもサイズオーバー
+	public void testChanged08() throws SQLException {
+		setUpTables();
+		DataSource dataSource = (DataSource)DBConnection.getDataSource();
+		Connection connection = dataSource.getConnection();
+		PreparedStatement statement;
+		String sql;
+		sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
+		statement = connection.prepareStatement(sql);
+		statement.setInt(1, Common.PASSPORT_ON);
+		statement.setInt(2, uid);
+		statement.executeUpdate();
+
+		for (int i = appendNum; i< appendNum + 3; i++) {
+			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, aidBase + i);
+			statement.setInt(2, cid);
+			statement.setString(3, "append-file-" + i);
+			statement.setInt(4, 30 * 1024 * 1024); // 合計110MB
+			statement.executeUpdate();
+		}
+		connection.close();
+
+		UpdateFileOrderC c = new UpdateFileOrderC(null);
+		c.userId = uid;
+		c.contentId = cid;
+		c.newIdList = new int[]{aidBase + 3, aidBase + 4, 0, aidBase + 5, aidBase + 0, aidBase + 2, aidBase + 1};
+		c.firstNewId = aidBase + 3;
+
+		assertEquals(Common.UPLOAD_FILE_TOTAL_ERROR, c.GetResults(null));
+
+		assertEquals("file-0", selectContentFile(cid));
+
+		List<String> l;
+		l = selectContentAppendFiles(cid);
+		assertEquals(3, l.size());
+		assertEquals("append-file-0", l.get(0));
+		assertEquals("append-file-1", l.get(1));
+		assertEquals("append-file-2", l.get(2));
+
+		assertEquals("file-0", selectWriteBackFiles(uid, 0).get(0));
+
+		l = selectWriteBackFiles(uid, 1);
+		assertEquals(3, l.size());
+		assertEquals("append-file-0", l.get(0));
+		assertEquals("append-file-1", l.get(1));
+		assertEquals("append-file-2", l.get(2));
+	}
+
+	@Test
+	// 既存画像+追加画像の合計はサイズオーバーだが、同時に画像を削除することで制限サイズ内に収まるパターン
+	public void testChanged09() throws SQLException {
+		setUpTables();
+		DataSource dataSource = (DataSource)DBConnection.getDataSource();
+		Connection connection = dataSource.getConnection();
+		PreparedStatement statement;
+		String sql;
+		for (int i = appendNum; i< appendNum + 3; i++) {
+			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, aidBase + i);
+			statement.setInt(2, cid);
+			statement.setString(3, "append-file-" + i);
+			statement.setInt(4, 12 * 1024 * 1024); // 合計56MB
+			statement.executeUpdate();
+		}
+		connection.close();
+
+		UpdateFileOrderC c = new UpdateFileOrderC(null);
+		c.userId = uid;
+		c.contentId = cid;
+		// 5MBのファイルを2つ削除して合計46MB
+		c.newIdList = new int[]{aidBase + 3, aidBase + 1, aidBase + 4, aidBase + 5, aidBase + 2};
+		c.firstNewId = aidBase + 3;
+
+		assertEquals(0, c.GetResults(null));
+
+		assertEquals("append-file-3", selectContentFile(cid));
+
+		List<String> l;
+		l = selectContentAppendFiles(cid);
+		assertEquals(4, l.size());
+		assertEquals("append-file-1", l.get(0));
+		assertEquals("append-file-4", l.get(1));
+		assertEquals("append-file-5", l.get(2));
+		assertEquals("append-file-2", l.get(3));
+
+		assertEquals("append-file-3", selectWriteBackFiles(uid, 0).get(0));
+
+		l = selectWriteBackFiles(uid, 1);
+		assertEquals(4, l.size());
+		assertEquals("append-file-1", l.get(0));
+		assertEquals("append-file-4", l.get(1));
+		assertEquals("append-file-5", l.get(2));
+		assertEquals("append-file-2", l.get(3));
+	}
 }
