@@ -81,13 +81,13 @@ public class SpotMoveImages extends Batch {
 		OkHttpClient client = new OkHttpClient();
 
 		for (TmpUser user : tmpUsers) {
-			// 移動元にディレクトリがなかったら、移動対象が存在しないのでスキップする。
+			user.updateStatus(TmpUser.Status.Moving);
+
+			// img01側にuserIdのディレクトリがなかったら、コピー対象が存在しないのでスキップする。
 			if (Files.notExists(Paths.get(FROM_IMG_PATH_FMT.formatted(user.userId)))){
-				Log.d("UID %d skipped".formatted(user.userId));
+				user.updateStatus(TmpUser.Status.Skipped);
 				continue;
 			}
-
-			user.updateStatus(TmpUser.Status.Moving);
 
 			// rsyncコマンドを発行する
 			List<String> cmd = new ArrayList<>();

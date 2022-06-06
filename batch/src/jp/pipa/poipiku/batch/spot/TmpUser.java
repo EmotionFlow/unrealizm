@@ -17,6 +17,7 @@ public final class TmpUser extends Model {
 		Created(0),
 		Moving(1),
 		Moved(2),
+		Skipped(3),
 		ErrorOccurred(-99);
 		static public Status byCode(int _code) {
 			return CodeEnum.getEnum(Status.class, _code);
