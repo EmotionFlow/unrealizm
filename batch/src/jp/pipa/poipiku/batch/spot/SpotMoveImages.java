@@ -27,21 +27,18 @@ public class SpotMoveImages extends Batch {
 	static final String URL_SCHEME = (isDebug)?"http":"https";
 	static final String urlClearUserCacheF = URL_SCHEME + "://poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
 
-	// 一度のバッチ実行でselectするuserの最大数
-	private static int getSelectLimit() {
-		int selectLimit = 80;
+	private static String getBandWidthLimit() {
+		String bandWidthLimit = "1.0m"; // Byte per second
 		Calendar calendar = Calendar.getInstance();
 		final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 		final int hour = LocalTime.now().getHour();
 		if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
-			selectLimit = 60;
+			bandWidthLimit = "0.5m";
 		} else if (3 <= hour && hour <= 7){
-			selectLimit = 100;
+			bandWidthLimit = "3.0m";
 		}
 
-		selectLimit = 10;
-
-		return selectLimit;
+		return bandWidthLimit;
 	}
 
 	private static final String WEBHOOK_URL = "https://hooks.slack.com/services/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";
@@ -72,8 +69,8 @@ public class SpotMoveImages extends Batch {
 		String sql = "";
 
 		// HDDへの移動対象を抽出
-//		List<TmpUser> tmpUsers = TmpUser.selectByUserId(TmpUser.Status.Created, 1);
-		List<TmpUser> tmpUsers = TmpUser.select(TmpUser.Status.Created, getSelectLimit());
+//		List<TmpUser> tmpUsers = TmpUser.selectByUserId(TmpUser.Status.Created, 21808);
+		List<TmpUser> tmpUsers = TmpUser.select(TmpUser.Status.Created, 100);
 
 		if (tmpUsers == null) {
 			tmpUsers = new ArrayList<>();
@@ -100,13 +97,14 @@ public class SpotMoveImages extends Batch {
 
 			cmd.add(RSYNC_CMD_PATH.toString());
 			cmd.add("-av");
+			cmd.add("--bwlimit=" + getBandWidthLimit());
 			cmd.add(FROM_IMG_PATH_FMT.formatted(user.userId));
 			cmd.add(TO_IMG_PATH_FMT.formatted(userImageNumber));
 			int exitCode = runExternalCommand(cmd, null);
 
 			// エラー処理
 			if (exitCode != 0) {
-				notifyError("rsync error (uid, code): %d, %d".formatted(user.userId, exitCode));
+				notifyError("rsync error (uid, exitCode): %d, %d".formatted(user.userId, exitCode));
 				user.updateStatus(TmpUser.Status.ErrorOccurred);
 				break;
 			}
