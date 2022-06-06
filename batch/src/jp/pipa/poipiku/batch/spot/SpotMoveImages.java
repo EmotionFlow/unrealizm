@@ -39,6 +39,8 @@ public class SpotMoveImages extends Batch {
 			selectLimit = 100;
 		}
 
+		selectLimit = 10;
+
 		return selectLimit;
 	}
 
@@ -70,7 +72,8 @@ public class SpotMoveImages extends Batch {
 		String sql = "";
 
 		// HDDへの移動対象を抽出
-		List<TmpUser> tmpUsers = TmpUser.selectByUserId(TmpUser.Status.Created, 21808);
+//		List<TmpUser> tmpUsers = TmpUser.selectByUserId(TmpUser.Status.Created, 1);
+		List<TmpUser> tmpUsers = TmpUser.select(TmpUser.Status.Created, getSelectLimit());
 
 		if (tmpUsers == null) {
 			tmpUsers = new ArrayList<>();
