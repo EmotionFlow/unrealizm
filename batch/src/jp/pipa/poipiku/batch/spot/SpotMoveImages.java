@@ -28,14 +28,14 @@ public class SpotMoveImages extends Batch {
 	static final String urlClearUserCacheF = URL_SCHEME + "://poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
 
 	private static String getBandWidthLimit() {
-		String bandWidthLimit = "3.0m"; // Byte per second
+		String bandWidthLimit = "20.0m"; // Byte per second
 		Calendar calendar = Calendar.getInstance();
 		final int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 		final int hour = LocalTime.now().getHour();
 		if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
-			bandWidthLimit = "1.0m";
+			bandWidthLimit = "10.0m";
 		} else if (3 <= hour && hour <= 7){
-			bandWidthLimit = "6.0m";
+			bandWidthLimit = "40.0m";
 		}
 
 		return bandWidthLimit;
@@ -70,7 +70,7 @@ public class SpotMoveImages extends Batch {
 
 		// HDDへの移動対象を抽出
 //		List<TmpUser> tmpUsers = TmpUser.selectByUserId(TmpUser.Status.Created, 21808);
-		List<TmpUser> tmpUsers = TmpUser.select(TmpUser.Status.Created, 10);
+		List<TmpUser> tmpUsers = TmpUser.select(TmpUser.Status.Created, 50);
 
 		if (tmpUsers == null) {
 			tmpUsers = new ArrayList<>();
