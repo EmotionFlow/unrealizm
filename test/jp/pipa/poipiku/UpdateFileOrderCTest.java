@@ -1,5 +1,6 @@
 package jp.pipa.poipiku;
 
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.controller.Controller;
 import jp.pipa.poipiku.controller.UpdateFileOrderC;
 import org.junit.jupiter.api.BeforeEach;
@@ -422,6 +423,8 @@ public class UpdateFileOrderCTest {
 		statement.setInt(1, Common.PASSPORT_ON);
 		statement.setInt(2, uid);
 		statement.executeUpdate();
+
+		CacheUsers0000.getInstance().clearUser(uid);
 
 		for (int i = appendNum; i< appendNum + 3; i++) {
 			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
