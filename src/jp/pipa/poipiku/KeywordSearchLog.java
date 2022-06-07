@@ -81,10 +81,6 @@ public final class KeywordSearchLog extends Model {
 		return list;
 	}
 
-	public boolean insert() {
-		return KeywordSearchLog.insert(userId, keywords, muteWords, page, searchTarget, resultNum, ipAddress);
-	}
-
 	static public boolean insert(int _userId, String _keywords, String _muteWords, int _page, SearchTarget _searchTarget, int _resultNum, String _ipAddress) {
 		if (_keywords == null || _keywords.isEmpty() || _searchTarget == SearchTarget.Undefined) return false;
 		final String sql = """

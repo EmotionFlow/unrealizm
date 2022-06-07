@@ -48,13 +48,15 @@ public final class SearchIllustByKeywordC {
 
 		KeywordSearchLog searchLog = new KeywordSearchLog();
 
+		String muteKeywords = "";
+
 		try (
 			Connection connection = DatabaseUtil.dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(strSql);
 		) {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
-				String muteKeywords = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
-				if (muteKeywords != null && !muteKeywords.isEmpty()) {
+				muteKeywords = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
+				if (!muteKeywords.isEmpty()) {
 					keywords.append(" -(").append(muteKeywords).append(")");
 					searchLog.muteWords = muteKeywords;
 				}
@@ -71,12 +73,8 @@ public final class SearchIllustByKeywordC {
 		}
 
 		if (m_nPage < 4) {
-			searchLog.userId = checkLogin.m_nUserId;
-			searchLog.keywords = m_strKeyword;
-			searchLog.searchTarget = KeywordSearchLog.SearchTarget.Contents;
-			searchLog.page = m_nPage;
-			searchLog.resultNum = keywordMatchedIds.size();
-			searchLog.insert();
+			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, muteKeywords,
+					m_nPage, KeywordSearchLog.SearchTarget.Tags, keywordMatchedIds.size(), ipAddress);
 		}
 
 		if (keywordMatchedIds.isEmpty()) return true;

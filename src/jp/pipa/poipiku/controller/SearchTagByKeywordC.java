@@ -86,7 +86,8 @@ public final class SearchTagByKeywordC {
 			statement.close();statement=null;
 
 			if (m_nPage < 4) {
-				KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "", m_nPage, KeywordSearchLog.SearchTarget.Tags, tagList.size(), ipAddress);
+				KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "",
+						m_nPage, KeywordSearchLog.SearchTarget.Tags, tagList.size(), ipAddress);
 			}
 
 			// sample contents filenames
