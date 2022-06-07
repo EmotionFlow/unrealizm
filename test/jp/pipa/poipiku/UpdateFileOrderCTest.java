@@ -1,6 +1,5 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.controller.Controller;
 import jp.pipa.poipiku.controller.UpdateFileOrderC;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UpdateFileOrderCTest {
 	private final int uid = 9999999;
+	private final int uidPoipass = 9999998;
 	private final int cid = 10000000;
 	private final int aidBase = 20000000;
 	private final int appendNum = 3;
@@ -31,24 +31,30 @@ public class UpdateFileOrderCTest {
 		PreparedStatement statement;
 		String sql;
 
-		sql = "DELETE FROM contents_0000 WHERE user_id=" + uid;
+		sql = "DELETE FROM contents_0000 WHERE user_id IN (?, ?)";
 		statement = connection.prepareStatement(sql);
+		statement.setInt(1, uid);
+		statement.setInt(2, uidPoipass);
 		statement.executeUpdate();
 		sql = "DELETE FROM contents_appends_0000 WHERE content_id=" + cid;
 		statement = connection.prepareStatement(sql);
 		statement.executeUpdate();
-		sql = "DELETE FROM write_back_files WHERE user_id=" + uid;
+		sql = "DELETE FROM write_back_files WHERE user_id IN (?, ?)";
 		statement = connection.prepareStatement(sql);
+		statement.setInt(1, uid);
+		statement.setInt(2, uidPoipass);
 		statement.executeUpdate();
-		sql = "DELETE FROM users_0000 WHERE user_id=" + uid;
+		sql = "DELETE FROM users_0000 WHERE user_id IN (?, ?)";
 		statement = connection.prepareStatement(sql);
+		statement.setInt(1, uid);
+		statement.setInt(2, uidPoipass);
 		statement.executeUpdate();
 
 		statement.close();
 		connection.close();
 	}
 
-	private void setUpTables() throws SQLException {
+	private void setUpTables(int userId) throws SQLException {
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
@@ -56,15 +62,15 @@ public class UpdateFileOrderCTest {
 
 		sql = "INSERT INTO users_0000(user_id, password, nickname, passport_id) VALUES (?, ?, ?, ?)";
 		statement = connection.prepareStatement(sql);
-		statement.setInt(1, uid);
+		statement.setInt(1, userId);
 		statement.setString(2, "pass");
 		statement.setString(3, "testuser");
-		statement.setInt(4, Common.PASSPORT_OFF);
+		statement.setInt(4, userId == uidPoipass ? Common.PASSPORT_ON : Common.PASSPORT_OFF);
 		statement.executeUpdate();
 
 		sql = "INSERT INTO contents_0000(user_id, content_id, file_num, file_name, file_size) VALUES (?, ?, ?, ?, ?)";
 		statement = connection.prepareStatement(sql);
-		statement.setInt(1, uid);
+		statement.setInt(1, userId);
 		statement.setInt(2, cid);
 		statement.setInt(3, appendNum + 1);
 		statement.setString(4, "file-0");
@@ -76,7 +82,7 @@ public class UpdateFileOrderCTest {
 		statement.setInt(1, WriteBackFile.TableCode.Contents.getCode());
 		statement.setInt(2, cid);
 		statement.setString(3, "file-0");
-		statement.setInt(4, uid);
+		statement.setInt(4, userId);
 		statement.executeUpdate();
 
 
@@ -94,7 +100,7 @@ public class UpdateFileOrderCTest {
 			statement.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
 			statement.setInt(2, aidBase + i);
 			statement.setString(3, "append-file-" + i);
-			statement.setInt(4, uid);
+			statement.setInt(4, userId);
 			statement.executeUpdate();
 		}
 
@@ -182,7 +188,7 @@ public class UpdateFileOrderCTest {
 
 	//@Test
 	public void testNotChanged() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		UpdateFileOrderC c = new UpdateFileOrderC(null);
 		c.userId = uid;
 		c.contentId = cid;
@@ -195,7 +201,7 @@ public class UpdateFileOrderCTest {
 	@Test
 	// HDDに一部移動済の状態で並べ替える
 	public void testChanged01() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
@@ -246,7 +252,7 @@ public class UpdateFileOrderCTest {
 	@Test
 	// 並べ替える
 	public void testChanged02() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		UpdateFileOrderC c = new UpdateFileOrderC(null);
 		c.userId = uid;
 		c.contentId = cid;
@@ -273,7 +279,7 @@ public class UpdateFileOrderCTest {
 	@Test
 	// 一部画像を削除して並べ替える
 	public void testChanged03() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		UpdateFileOrderC c = new UpdateFileOrderC(null);
 		c.userId = uid;
 		c.contentId = cid;
@@ -299,7 +305,7 @@ public class UpdateFileOrderCTest {
 	@Test
 	// 画像を全部削除して新しい画像を登録する
 	public void testChanged04() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
@@ -342,7 +348,7 @@ public class UpdateFileOrderCTest {
 	@Test
 	// HDDに移動中
 	public void testChanged05() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
@@ -368,7 +374,7 @@ public class UpdateFileOrderCTest {
 	@Test
 	// 画像を追加してサイズオーバーする
 	public void testChanged06() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
@@ -413,19 +419,11 @@ public class UpdateFileOrderCTest {
 	@Test
 	// ポイパス会員なら合計50MBを超えても保存できる
 	public void testChanged07() throws SQLException {
-		setUpTables();
+		setUpTables(uidPoipass);
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
 		String sql;
-		sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
-		statement = connection.prepareStatement(sql);
-		statement.setInt(1, Common.PASSPORT_ON);
-		statement.setInt(2, uid);
-		statement.executeUpdate();
-
-		CacheUsers0000.getInstance().clearUser(uid);
-
 		for (int i = appendNum; i< appendNum + 3; i++) {
 			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
 			statement = connection.prepareStatement(sql);
@@ -438,7 +436,7 @@ public class UpdateFileOrderCTest {
 		connection.close();
 
 		UpdateFileOrderC c = new UpdateFileOrderC(null);
-		c.userId = uid;
+		c.userId = uidPoipass;
 		c.contentId = cid;
 		c.newIdList = new int[]{aidBase + 3, aidBase + 4, 0, aidBase + 5, aidBase + 0, aidBase + 2, aidBase + 1};
 		c.firstNewId = aidBase + 3;
@@ -457,9 +455,9 @@ public class UpdateFileOrderCTest {
 		assertEquals("append-file-2", l.get(4));
 		assertEquals("append-file-1", l.get(5));
 
-		assertEquals("append-file-3", selectWriteBackFiles(uid, 0).get(0));
+		assertEquals("append-file-3", selectWriteBackFiles(uidPoipass, 0).get(0));
 
-		l = selectWriteBackFiles(uid, 1);
+		l = selectWriteBackFiles(uidPoipass, 1);
 		assertEquals(6, l.size());
 		assertEquals("append-file-4", l.get(0));
 		assertEquals("file-0", l.get(1));
@@ -472,17 +470,11 @@ public class UpdateFileOrderCTest {
 	@Test
 	// ポイパス会員でもサイズオーバー
 	public void testChanged08() throws SQLException {
-		setUpTables();
+		setUpTables(uidPoipass);
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
 		String sql;
-		sql = "UPDATE users_0000 SET passport_id=? WHERE user_id=?";
-		statement = connection.prepareStatement(sql);
-		statement.setInt(1, Common.PASSPORT_ON);
-		statement.setInt(2, uid);
-		statement.executeUpdate();
-
 		for (int i = appendNum; i< appendNum + 3; i++) {
 			sql = "INSERT INTO contents_appends_0000(append_id, content_id, file_name, file_size) VALUES (?, ?, ?, ?)";
 			statement = connection.prepareStatement(sql);
@@ -495,7 +487,7 @@ public class UpdateFileOrderCTest {
 		connection.close();
 
 		UpdateFileOrderC c = new UpdateFileOrderC(null);
-		c.userId = uid;
+		c.userId = uidPoipass;
 		c.contentId = cid;
 		c.newIdList = new int[]{aidBase + 3, aidBase + 4, 0, aidBase + 5, aidBase + 0, aidBase + 2, aidBase + 1};
 		c.firstNewId = aidBase + 3;
@@ -511,9 +503,9 @@ public class UpdateFileOrderCTest {
 		assertEquals("append-file-1", l.get(1));
 		assertEquals("append-file-2", l.get(2));
 
-		assertEquals("file-0", selectWriteBackFiles(uid, 0).get(0));
+		assertEquals("file-0", selectWriteBackFiles(uidPoipass, 0).get(0));
 
-		l = selectWriteBackFiles(uid, 1);
+		l = selectWriteBackFiles(uidPoipass, 1);
 		assertEquals(3, l.size());
 		assertEquals("append-file-0", l.get(0));
 		assertEquals("append-file-1", l.get(1));
@@ -523,7 +515,7 @@ public class UpdateFileOrderCTest {
 	@Test
 	// 既存画像+追加画像の合計はサイズオーバーだが、同時に画像を削除することで制限サイズ内に収まるパターン
 	public void testChanged09() throws SQLException {
-		setUpTables();
+		setUpTables(uid);
 		DataSource dataSource = (DataSource)DBConnection.getDataSource();
 		Connection connection = dataSource.getConnection();
 		PreparedStatement statement;
