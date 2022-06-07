@@ -47,14 +47,8 @@ public class SendEmojiC {
 			m_strEmoji		= Util.toString(request.getParameter("EMJ")).trim();
 			m_nUserId		= Util.toInt(request.getParameter("UID"));
 			m_nAgentId		= Util.toInt(request.getParameter("AID"));
-			String remoteAddr = request.getRemoteAddr();
-			if (remoteAddr != null && !remoteAddr.isEmpty()) {
-				if (remoteAddr.length() > 16) {
-					m_strIpAddress	= remoteAddr.substring(0, 16);
-				} else {
-					m_strIpAddress	= remoteAddr;
-				}
-			}
+			m_strIpAddress = request.getRemoteAddr();
+			if (m_strIpAddress == null) m_strIpAddress = "";
 			m_nAmount		= Util.toIntN(request.getParameter("AMT"), -1, 10000);
 			m_strAgentToken = Util.toString(request.getParameter("TKN"));
 			m_strCardExpire	= Util.toString(request.getParameter("EXP"));
