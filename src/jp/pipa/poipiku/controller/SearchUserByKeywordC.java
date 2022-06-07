@@ -17,11 +17,13 @@ import jp.pipa.poipiku.util.*;
 public class SearchUserByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
-	public void getParam(HttpServletRequest cRequest) {
+	public String ipAddress = "";
+	public void getParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
-			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
+			request.setCharacterEncoding("UTF-8");
+			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
+			m_strKeyword = Common.TrimAll(request.getParameter("KWD"));
+			ipAddress = request.getRemoteAddr();
 		}
 		catch(Exception ignored) {
 			;
@@ -64,7 +66,10 @@ public class SearchUserByKeywordC {
 			Collections.sort(userIds);
 			Collections.reverse(userIds);
 
-			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "", m_nPage, KeywordSearchLog.SearchTarget.Users, userIds.size());
+			if (m_nPage < 4) {
+				KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "",
+						m_nPage, KeywordSearchLog.SearchTarget.Users, userIds.size(), ipAddress);
+			}
 
 			int offset = m_nPage * SELECT_MAX_GALLERY;
 			int toIndex = offset + Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY);

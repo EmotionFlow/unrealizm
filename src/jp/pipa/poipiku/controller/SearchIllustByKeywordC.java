@@ -15,11 +15,13 @@ import jp.pipa.poipiku.util.*;
 public final class SearchIllustByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
-	public void getParam(HttpServletRequest cRequest) {
+	public String ipAddress = "";
+	public void getParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
-			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
+			request.setCharacterEncoding("UTF-8");
+			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
+			m_strKeyword = Common.TrimAll(request.getParameter("KWD"));
+			ipAddress = request.getRemoteAddr();
 		}
 		catch(Exception ignored) {}
 	}
@@ -45,10 +47,6 @@ public final class SearchIllustByKeywordC {
 		List<Integer> keywordMatchedIds = new LinkedList<>();
 
 		KeywordSearchLog searchLog = new KeywordSearchLog();
-		searchLog.userId = checkLogin.m_nUserId;
-		searchLog.keywords = m_strKeyword;
-		searchLog.searchTarget = KeywordSearchLog.SearchTarget.Contents;
-		searchLog.page = m_nPage;
 
 		try (
 			Connection connection = DatabaseUtil.dataSource.getConnection();
@@ -72,8 +70,14 @@ public final class SearchIllustByKeywordC {
 			e.printStackTrace();
 		}
 
-		searchLog.resultNum = keywordMatchedIds.size();
-		searchLog.insert();
+		if (m_nPage < 4) {
+			searchLog.userId = checkLogin.m_nUserId;
+			searchLog.keywords = m_strKeyword;
+			searchLog.searchTarget = KeywordSearchLog.SearchTarget.Contents;
+			searchLog.page = m_nPage;
+			searchLog.resultNum = keywordMatchedIds.size();
+			searchLog.insert();
+		}
 
 		if (keywordMatchedIds.isEmpty()) return true;
 
