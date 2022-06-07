@@ -19,6 +19,7 @@ public final class KeywordSearchLog extends Model {
 	public int page = -1;
 	public boolean isHide = false;
 	public int resultNum = -1;
+	public String ipAddress = "";
 
 
 	public enum SearchTarget implements CodeEnum<SearchTarget> {
@@ -81,14 +82,14 @@ public final class KeywordSearchLog extends Model {
 	}
 
 	public boolean insert() {
-		return KeywordSearchLog.insert(userId, keywords, muteWords, page, searchTarget, resultNum);
+		return KeywordSearchLog.insert(userId, keywords, muteWords, page, searchTarget, resultNum, ipAddress);
 	}
 
-	static public boolean insert(int _userId, String _keywords, String _muteWords, int _page, SearchTarget _searchTarget, int _resultNum) {
+	static public boolean insert(int _userId, String _keywords, String _muteWords, int _page, SearchTarget _searchTarget, int _resultNum, String _ipAddress) {
 		if (_keywords == null || _keywords.isEmpty() || _searchTarget == SearchTarget.Undefined) return false;
 		final String sql = """
-			INSERT INTO keyword_search_logs(user_id, search_target_code, keywords, mute_words, page, result_num)
-			VALUES (?,?,?,?,?,?)
+			INSERT INTO keyword_search_logs(user_id, search_target_code, keywords, mute_words, page, result_num, ip_address)
+			VALUES (?,?,?,?,?,?,?)
 			""";
 		try (
 				Connection connection = DatabaseUtil.dataSource.getConnection();
@@ -101,6 +102,7 @@ public final class KeywordSearchLog extends Model {
 			statement.setString(idx++, _muteWords==null?"":_muteWords);
 			statement.setInt(idx++, _page);
 			statement.setInt(idx++, _resultNum);
+			statement.setString(idx++, _ipAddress);
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			Log.d(sql);
