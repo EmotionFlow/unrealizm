@@ -44,6 +44,12 @@ public final class SearchIllustByKeywordC {
 		StringBuilder keywords = new StringBuilder(m_strKeyword);
 		List<Integer> keywordMatchedIds = new LinkedList<>();
 
+		KeywordSearchLog searchLog = new KeywordSearchLog();
+		searchLog.userId = checkLogin.m_nUserId;
+		searchLog.keywords = m_strKeyword;
+		searchLog.searchTarget = KeywordSearchLog.SearchTarget.Contents;
+		searchLog.page = m_nPage;
+
 		try (
 			Connection connection = DatabaseUtil.dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(strSql);
@@ -52,6 +58,7 @@ public final class SearchIllustByKeywordC {
 				String muteKeywords = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if (muteKeywords != null && !muteKeywords.isEmpty()) {
 					keywords.append(" -(").append(muteKeywords).append(")");
+					searchLog.muteWords = muteKeywords;
 				}
 			}
 			statement.setString(1, keywords.toString());
@@ -64,6 +71,9 @@ public final class SearchIllustByKeywordC {
 			Log.d(strSql);
 			e.printStackTrace();
 		}
+
+		searchLog.resultNum = keywordMatchedIds.size();
+		searchLog.insert();
 
 		if (keywordMatchedIds.isEmpty()) return true;
 

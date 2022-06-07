@@ -82,6 +82,8 @@ public final class SearchTagByKeywordC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+
+			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "", m_nPage, KeywordSearchLog.SearchTarget.Tags, tagList.size());
 			
 			// sample contents filenames
 			sql = "WITH a AS (" +

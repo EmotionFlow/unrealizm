@@ -63,6 +63,9 @@ public class SearchUserByKeywordC {
 			}
 			Collections.sort(userIds);
 			Collections.reverse(userIds);
+
+			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "", m_nPage, KeywordSearchLog.SearchTarget.Users, userIds.size());
+
 			int offset = m_nPage * SELECT_MAX_GALLERY;
 			int toIndex = offset + Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY);
 			toIndex = Math.min(toIndex, m_nContentsNum-1);
