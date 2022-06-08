@@ -31,6 +31,10 @@
 			.swal2-popup .swal2-styled.swal2-confirm {
 				font-size: 14px;
 			}
+			.swal2-popup .swal2-footer {
+				font-size: 12px;
+				color: #7a7a7a;
+			}
 			</style>
 		` + '<div class="WaveMessageDlg">' +
 		'<div class="WaveEmoji">' + waveMessage.emojiHtml + '</div>' +
@@ -69,6 +73,7 @@
 			confirmButtonText: '<%=_TEX.T("TWaveMessage.Reply.Submit")%>',
 			showCancelButton: false,
 			showCloseButton: true,
+			footer: '<%=_TEX.T("TWaveMessage.Reply.Info")%>',
 			preConfirm: () => {
 				if ($("#EditWaveMessageReply").val().trim().length === 0) {
 					return Swal.showValidationMessage('<%=_TEX.T("TWaveMessage.Reply.Error.MessageEmpty")%>');
