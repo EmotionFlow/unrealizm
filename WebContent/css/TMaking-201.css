@@ -3004,6 +3004,7 @@ hr.IllustItemListSeparator {
 	border-radius: 23px;
 	display: inline-flex;
 	cursor: pointer;
+	position: relative;
 }
 
 .UserInfo .UserInfoCmd .WaveButton > img{

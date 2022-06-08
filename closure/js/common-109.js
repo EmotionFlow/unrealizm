@@ -1353,6 +1353,7 @@ function _replyEmoji(_this, loginUserId) {
 
 /******** ユーザー宛絵文字(wave) *********/
 function sendUserWave(fromUserId, toUserId, emoji, elThis) {
+	$(elThis).css('top','4px');
 	let message = '';
 	const $EditWaveMessage = $("#EditWaveMessage");
 	if ($EditWaveMessage && $EditWaveMessage.css('display') !== 'none') {
@@ -1368,10 +1369,12 @@ function sendUserWave(fromUserId, toUserId, emoji, elThis) {
 		"dataType": "json",
 	}).then(
 		(data) => {
-			DispMsg(data.message, 700);
+			DispMsg(data.message, 600);
+			$(elThis).css('top','0px');
 		},
 		(jqXHR, textStatus, errorThrown) => {
 			DispMsg('Connection error');
+			$(elThis).css('top','0px');
 		}
 	)
 }
