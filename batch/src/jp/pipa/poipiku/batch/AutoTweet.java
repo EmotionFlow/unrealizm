@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class AutoTweet extends Batch {
 	static final boolean _DEBUG = false;
-	static final String PROF_PATH = "/var/www/html/poipiku/user_img01/";
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
 	static final int TWITTER_PROVIDER_ID = 1;
@@ -120,6 +119,7 @@ public class AutoTweet extends Batch {
 				tweet.m_strUserAccessToken = cTweetUser.m_strAccessToken;
 				tweet.m_strSecretToken = cTweetUser.m_strSecretToken;
 
+				final String PROF_PATH = "/var/www/html/poipiku/user_img%02d/".formatted((cTweetUser.m_nUserId % 2) + 2);
 				String strDestFileName = String.format("%s%09d/tweet.png", PROF_PATH, cTweetUser.m_nUserId);
 				if(_DEBUG) Log.d("strDestFileName:"+strDestFileName);
 				Util.deleteFile(strDestFileName);

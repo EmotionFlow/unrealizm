@@ -62,6 +62,10 @@ public class CUser {
 
 	public boolean m_bRequestEnabled = false;
 
+	public List<String> m_strWaveEmojiList;
+	public boolean isWaveEnable = UserWaveTemplate.WAVE_DEFAULT;
+	public boolean isWaveCommentEnable = UserWaveTemplate.COMMENT_DEFAULT;
+
 	public CUser() {}
 	public CUser(final ResultSet resultSet) throws SQLException {
 		m_nUserId		= resultSet.getInt("user_id");

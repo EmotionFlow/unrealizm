@@ -232,6 +232,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 							<a class="IllustItemCommandTweet fab fa-twitter-square" href="<%=strTwitterUrl%>" target="_blank"></a>
 						</span>
 					</span>
+
+					<%@ include file="/inner/TWaveButtons.jsp"%>
+
 				</section>
 				<section class="UserInfoState">
 					<%@include file="inner/IllustBrowserVUserInfoState.jsp"%>

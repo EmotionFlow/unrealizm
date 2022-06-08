@@ -122,19 +122,29 @@ class UpdateFileFirstC {
 			long nComplexSize = 0;
 
 			try {
-				int size[] = ImageUtil.getImageSize(strRealFileName);
+				int[] size = ImageUtil.getImageSize(strRealFileName);
 				nWidth = size[0];
 				nHeight = size[1];
-				nFileSize = (new File(strRealFileName)).length();
-				nComplexSize = ImageUtil.getConplex(strRealFileName);
 			} catch(Exception e) {
 				nWidth = 0;
 				nHeight = 0;
-				nFileSize = 0;
-				nComplexSize=0;
-				Log.d("error getImageSize");
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
 			}
-			//Log.d(String.format("nWidth=%d, nHeight=%d, nFileSize=%d, nComplexSize=%d", nWidth, nHeight, nFileSize, nComplexSize));
+			try {
+				nFileSize = (new File(strRealFileName)).length();
+			} catch(Exception e) {
+				nFileSize = 0;
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
+			}
+			try {
+				nComplexSize = ImageUtil.getConplex(strRealFileName);
+			} catch(Exception e) {
+				nComplexSize=0;
+				Log.d("error getImageSize %s".formatted(strRealFileName));
+				e.printStackTrace();
+			}
 
 			// update making file_name
 			strSql ="UPDATE contents_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";

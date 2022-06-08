@@ -1,9 +1,9 @@
-resource.loader = file
+resources.loader = file
 
 #file.resource.loader.description = Velocity File Resource Loader
 #file.resource.loader.class = org.apache.velocity.runtime.resource.loader.FileResourceLoader
-file.resource.loader.path = ../WebContent/WEB-INF/message_templates
-file.resource.loader.cache = true
+resource.loader.file.path = ../WebContent/WEB-INF/message_templates
+resource.loader.file.cache = true
 #file.resource.loader.modificationCheckInterval = 60
 
 runtime.log.logsystem.class = org.apache.velocity.runtime.log.NullLogSystem

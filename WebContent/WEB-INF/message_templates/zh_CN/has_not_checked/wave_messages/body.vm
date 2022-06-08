@@ -1,0 +1,7 @@
+#parse("zh_CN/header.vm")
+
+您收到了一个表情符号，其中包含 ${waves_total} 发送给您的支持消息。
+在通知页面上查看您的通知。
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("zh_CN/footer.vm")

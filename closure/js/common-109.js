@@ -1366,3 +1366,32 @@ function toggleIllustItemDesc(elThis) {
 }
 /******** 翻訳表示 *********/
 
+
+/******** ユーザー宛絵文字(wave) *********/
+function sendUserWave(fromUserId, toUserId, emoji, elThis) {
+	$(elThis).css('top','4px');
+	let message = '';
+	const $EditWaveMessage = $("#EditWaveMessage");
+	if ($EditWaveMessage && $EditWaveMessage.css('display') !== 'none') {
+		message = $.trim($EditWaveMessage.val());
+		if (message.length > 500) message = message.substr(0, 500);
+		$EditWaveMessage.val('');
+	}
+
+	$.ajax({
+		"type": "post",
+		"data": {"FROMUID": fromUserId, "TOUID": toUserId, "EMOJI": emoji, "MSG": message},
+		"url": "/f/SendUserWaveF.jsp",
+		"dataType": "json",
+	}).then(
+		(data) => {
+			DispMsg(data.message, 600);
+			$(elThis).css('top','0px');
+		},
+		(jqXHR, textStatus, errorThrown) => {
+			DispMsg('Connection error');
+			$(elThis).css('top','0px');
+		}
+	)
+}
+/******** ユーザー宛絵文字(wave) *********/

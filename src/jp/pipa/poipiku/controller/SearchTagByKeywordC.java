@@ -11,11 +11,13 @@ import jp.pipa.poipiku.util.*;
 public final class SearchTagByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
-	public void getParam(HttpServletRequest cRequest) {
+	public String ipAddress = "";
+	public void getParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
-			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
+			request.setCharacterEncoding("UTF-8");
+			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
+			m_strKeyword = Common.TrimAll(request.getParameter("KWD"));
+			ipAddress = request.getRemoteAddr();
 		}
 		catch(Exception e) {
 			;
@@ -82,7 +84,12 @@ public final class SearchTagByKeywordC {
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
-			
+
+			if (m_nPage < 4) {
+				KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "",
+						m_nPage, KeywordSearchLog.SearchTarget.Tags, tagList.size(), ipAddress);
+			}
+
 			// sample contents filenames
 			sql = "WITH a AS (" +
 					"    SELECT content_id FROM tags_0000 WHERE genre_id = ? ORDER BY tag_id DESC LIMIT 100" +

@@ -19,6 +19,9 @@
 		<%@ include file="IllustBrowserVRequestButton.jsp"%>
 		<%@ include file="TUserShareCmd.jsp"%>
 	</span>
+
+	<%@ include file="TWaveButtons.jsp"%>
+
 </section>
 <section class="UserInfoState">
 	<%@include file="IllustBrowserVUserInfoState.jsp"%>

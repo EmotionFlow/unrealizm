@@ -1,0 +1,7 @@
+#parse("ru/header.vm")
+
+У вас есть ответов: ${waves_total}.
+Проверьте свои уведомления на странице уведомлений.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("ru/footer.vm")

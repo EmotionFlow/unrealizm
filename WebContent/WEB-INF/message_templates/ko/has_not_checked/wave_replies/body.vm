@@ -1,0 +1,7 @@
+#parse("ko/header.vm")
+
+${waves_total}개의 답글이 있습니다.
+알림 페이지에서 알림을 확인하세요.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("ko/footer.vm")

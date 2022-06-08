@@ -50,6 +50,15 @@ public class MyHomeC {
 	public List<CUser> recommendedUserList = null;
 	public List<CUser> recommendedRequestCreatorList = null;
 
+	static private final String POIPIKU_INFO_SQL = """
+				SELECT c.content_id, c.upload_date, c.description
+				FROM pins p
+				INNER JOIN contents_0000 c ON p.content_id = c.content_id
+				WHERE p.user_id = 2
+				AND p.disp_order = 1
+				AND p.content_id <> ?
+				""";
+
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, true, true);
 	}
@@ -68,10 +77,8 @@ public class MyHomeC {
 
 			// POIPIKU INFO
 			if(startId <=0) {
-				strSql = "SELECT content_id, upload_date, description FROM contents_0000 WHERE user_id=2 AND category_id=14 AND content_id>? ORDER BY content_id DESC LIMIT 1";
-				statement = connection.prepareStatement(strSql);
-				idx = 1;
-				statement.setInt(idx++, lastSystemInfoId);
+				statement = connection.prepareStatement(POIPIKU_INFO_SQL);
+				statement.setInt(1, lastSystemInfoId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					systemInfo = new CContent();

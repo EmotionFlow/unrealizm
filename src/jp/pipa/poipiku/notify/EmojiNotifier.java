@@ -1,6 +1,11 @@
 package jp.pipa.poipiku.notify;
 
 import jp.pipa.poipiku.InfoList;
+import jp.pipa.poipiku.ResourceBundleControl;
+import jp.pipa.poipiku.SupportedLocales;
+import jp.pipa.poipiku.cache.CacheUsers0000;
+
+import java.util.Locale;
 
 public final class EmojiNotifier extends Notifier {
 	public EmojiNotifier(){
@@ -18,7 +23,10 @@ public final class EmojiNotifier extends Notifier {
 					emoji,
 					infoThumb,
 					InsertMode.InsertBeforeReset);
-			// notifyByApp(user, title);
+
+			final Locale locale = SupportedLocales.findLocale(user.langId);
+			final String body = ResourceBundleControl.T(locale,"ActivityList.Message.Comment");
+			notifyByApp(user, body, true);
 		}
 	}
 	public void notifyReplyReceived(int toUserId, int contentId, int contentType, String emoji, String infoThumb){

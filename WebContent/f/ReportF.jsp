@@ -14,7 +14,7 @@ try {
 	String TO_ADDR		= "info@emotionflow.com";
 	String EMAIL_TITLE	= "POIPIKU_REPORT";
 	String EMAIL_TXT	= "Post UserId : https://poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://poipiku.com/IllustViewV.jsp?ID=%d&TD=%d \nReportDesc:%s \n\n";
-	EmailUtil.sendByUTF8(TO_ADDR, EMAIL_TITLE, String.format(EMAIL_TXT, checkLogin.m_nUserId, nUserId, nContentId, strReportDesc));
+	EmailUtil.send(TO_ADDR, EMAIL_TITLE, String.format(EMAIL_TXT, checkLogin.m_nUserId, nUserId, nContentId, strReportDesc));
 }catch(Exception e) {
 	e.printStackTrace();
 }

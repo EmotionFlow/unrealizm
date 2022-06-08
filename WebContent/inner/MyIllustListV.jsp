@@ -56,6 +56,7 @@ String strEncodedKeyword = URLEncoder.encode(cResults.m_strTagKeyword, "UTF-8");
 Map<String, String> keyValues;
 String strCgiParam = "";
 final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
+final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUserId : "/" + checkLogin.m_nUserId + "/";
 
 %>
 <!DOCTYPE html>
@@ -76,6 +77,7 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 		<title><%=cResults.m_cUser.m_strNickName%></title>
 		<%@ include file="/inner/TTweetMyBox.jsp"%>
 		<%@ include file="/inner/TSwitchUser.jsp"%>
+		<%@ include file="/inner/TWaveMessageDlg.jsp"%>
 
 		<script type="text/javascript">
 		$(function(){
@@ -133,8 +135,8 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 			<div class="UserInfo Float">
 				<div class="UserInfoBg"></div>
 				<section class="UserInfoUser">
-					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="/<%=cResults.m_cUser.m_nUserId%>/"></a>
-					<h2 class="UserInfoUserName"><a href="/<%=cResults.m_cUser.m_nUserId%>/"><%=cResults.m_cUser.m_strNickName%></a></h2>
+					<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(cResults.m_cUser.m_strFileName)%>')" href="<%=myPagePath%>"></a>
+					<h2 class="UserInfoUserName"><a href="<%=myPagePath%>"><%=cResults.m_cUser.m_strNickName%></a></h2>
 					<%if(cResults.twitterScreenName != null && !cResults.twitterScreenName.isEmpty()) {%>
 					<h3 class="UserInfoProfile"><a class="fab fa-twitter" href="https://twitter.com/<%=cResults.twitterScreenName%>">@<%=cResults.twitterScreenName%></a></h3>
 					<%}%>
@@ -156,6 +158,31 @@ final String thisPagePath = "/MyIllustList" + (isApp?"App":"Pc") + "V.jsp";
 						<%@ include file="/inner/TUserShareCmd.jsp"%>
 					</span>
 				</section>
+				<%if(cResults.myWaves != null && !cResults.myWaves.isEmpty()){%>
+				<section class="WaveList">
+					<span class="WaveListTitle">
+						<span><%=_TEX.T("MyIllustListV.Wave.Received")%>
+						<%if(isApp){%>
+						<br><%=_TEX.T("MyIllustListV.Wave.Customize.App")%></span>
+						<%}else{%>
+						</span><a class="ToWaveSetting" href="/MyEditSettingPcV.jsp?MENUID=EMOJI"><i class="fas fa-wrench"></i><%=_TEX.T("MyIllustListV.Wave.Customize")%></a>
+						<%}%>
+					</span>
+					<div class="MyWaves">
+						<%@ include file="TMyWaves.jsp"%>
+					</div>
+				</section>
+				<%}%>
+				<%if(cResults.replyWaves != null && !cResults.replyWaves.isEmpty()){%>
+				<section class="WaveList">
+					<span class="WaveListTitle">
+						<%=_TEX.T("MyIllustListV.Wave.Reply")%>
+					</span>
+					<div class="MyWaves">
+						<%@ include file="TMyReplyWaves.jsp"%>
+					</div>
+				</section>
+				<%}%>
 				<section class="UserInfoState">
 					<a class="UserInfoStateItem Selected" href="/<%=cResults.m_cUser.m_nUserId%>/">
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.ContentNum")%></span>

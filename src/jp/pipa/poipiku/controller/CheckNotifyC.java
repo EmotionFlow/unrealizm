@@ -25,12 +25,15 @@ public final class CheckNotifyC {
 //	public int m_nCheckHeart = 0;
 	public int m_nCheckRequest = 0;
 	public int m_nCheckGift = 0;
+	public int m_nCheckWaveEmoji = 0;
+	public int m_nCheckWaveEmojiMessage = 0;
+	public int m_nCheckWaveEmojiMessageReply = 0;
 
-	public int m_nNotifyComment = 0;
+//	public int m_nNotifyComment = 0;
 //	public int m_nNotifyFollow = 0;
 //	public int m_nNotifyHeart = 0;
-	public int m_nNotifyRequest = 0;
-	public int m_nNotifyGift = 0;
+//	public int m_nNotifyRequest = 0;
+//	public int m_nNotifyGift = 0;
 
 	public boolean GetResults() {
 		String strSql = "";
@@ -91,6 +94,12 @@ public final class CheckNotifyC {
 					m_nCheckGift = sumNum;
 				} else if (infoType == InfoList.InfoType.EmojiReply.getCode()) {
 					m_nCheckCommentReply = sumNum;
+				} else if (infoType == InfoList.InfoType.WaveEmoji.getCode()) {
+					m_nCheckWaveEmoji = sumNum;
+				} else if (infoType == InfoList.InfoType.WaveEmojiMessage.getCode()) {
+					m_nCheckWaveEmojiMessage = sumNum;
+				} else if (infoType == InfoList.InfoType.WaveEmojiMessageReply.getCode()) {
+					m_nCheckWaveEmojiMessageReply = sumNum;
 				}
 			}
 			cResSet.close();cResSet=null;

@@ -18,6 +18,6 @@ public class NotifyRepliesHasNotChecked extends Batch {
 		}
 
 		RepliesHasNotCheckedNotifier notifier = new RepliesHasNotCheckedNotifier();
-		notifier.notifyToUsers(dataSource);
+		notifier.notifyReaction(dataSource);
 	}
 }

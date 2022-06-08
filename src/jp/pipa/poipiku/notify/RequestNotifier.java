@@ -64,7 +64,7 @@ public final class RequestNotifier extends Notifier {
 			notifyByEmail(creator, "RECEIVED", Request.Status.WaitingApproval, request.id, statusName);
 			final String title = getTitle(statusName, creator.langLabel);
 			notifyByWeb(creator, request, title);
-			notifyByApp(creator, title);
+			notifyByApp(creator, title, false);
 		}
 	}
 
@@ -97,7 +97,7 @@ public final class RequestNotifier extends Notifier {
 
 			final String title = getTitle(statusName + "_client", client.langLabel);
 			notifyByWeb(client, request, title);
-			notifyByApp(client, title);
+			notifyByApp(client, title, false);
 		}
 	}
 
@@ -111,7 +111,7 @@ public final class RequestNotifier extends Notifier {
 
 			final String title = getTitle(statusName, client.langLabel);
 			notifyByWeb(client, request, title);
-			notifyByApp(client, title);
+			notifyByApp(client, title, false);
 		}
 	}
 
@@ -134,6 +134,6 @@ public final class RequestNotifier extends Notifier {
 		Request r = new Request();
 		r.id = total_count * -1;
 		notifyByWeb(creator, r, title);
-		notifyByApp(creator, title);
+		notifyByApp(creator, title, false);
 	}
 }

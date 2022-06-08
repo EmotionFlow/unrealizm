@@ -1,0 +1,7 @@
+#parse("ru/header.vm")
+
+Вы получили ${waves_total} приветствующих эмодзи.
+Проверьте экран уведомлений на наличие уведомлений.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("ru/footer.vm")

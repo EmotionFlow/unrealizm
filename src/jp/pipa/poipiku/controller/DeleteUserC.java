@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
@@ -60,6 +61,16 @@ public class DeleteUserC {
 
 			connection = dataSource.getConnection();
 			strSql ="DELETE FROM comments_desc_cache WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nUserId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+			connection.close();connection=null;
+
+			// もらったwaveだけ消す
+			// delete wave
+			connection = dataSource.getConnection();
+			strSql ="DELETE FROM user_waves WHERE to_user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
@@ -213,10 +224,16 @@ public class DeleteUserC {
 
 			// delete files
 			File fileDel;
-			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadUsersPath(m_nUserId)));
+			// cache (ssd)
+			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadCachePath(m_nUserId)));
 			Common.rmDir(fileDel);
-			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(m_nUserId)));
-			Common.rmDir(fileDel);
+
+			// hdd
+			List<String> delList = Common.getUploadContentsPathList(m_nUserId);
+			for (String s : delList) {
+				fileDel= new File(m_cServletContext.getRealPath(s));
+				Common.rmDir(fileDel);
+			}
 
 			// キャッシュからもユーザを消す
 			CacheUsers0000 users0000 = CacheUsers0000.getInstance();

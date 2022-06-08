@@ -29,7 +29,7 @@ public class DBConnection {
 			dataSource.setUser("postgres");
 			dataSource.setPassword(System.getProperty("dbPass"));
 			dataSource.setDatabaseName("poipiku");
-			String[] servers = {"localhost"};
+			String[] servers = {System.getProperty("dbHost")};
 			dataSource.setServerNames(servers);
 			int[] ports = {Integer.parseInt(System.getProperty("dbPort"))};
 			dataSource.setPortNumbers(ports);

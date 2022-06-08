@@ -15,19 +15,21 @@ public final class RecommendedContents {
 	static private final List<Integer> oldPopularContents;
 	static private final List<Integer> veryOldContents;
 
-	static private final String SQL_SELECT_RECOMMENDED_BY_TAG = "WITH recommended_tags AS (" +
-			"    SELECT t.genre_id" +
-			"    FROM tags_0000 t" +
-			"      LEFT JOIN contents_0000 c ON t.content_id = c.content_id" +
-			"    WHERE user_id = ?" +
-			"      AND t.genre_id > 0" +
-			"    LIMIT 10" +
-			")" +
-			"SELECT content_id" +
-			" FROM tags_0000 t" +
-			" WHERE genre_id IN (SELECT * FROM recommended_tags)" +
-			" ORDER BY RANDOM()" +
-			" LIMIT 30";
+	static private final String SQL_SELECT_RECOMMENDED_BY_TAG = """
+			WITH recommended_tags AS (
+			    SELECT t.genre_id
+			    FROM tags_0000 t
+			             LEFT JOIN contents_0000 c ON t.content_id = c.content_id
+			    WHERE user_id = ?
+			      AND t.genre_id > 0
+			    LIMIT 10
+			)
+			SELECT content_id
+			FROM tags_0000 t
+			WHERE
+			      genre_id IN (SELECT * FROM recommended_tags)
+			LIMIT 10000;
+			""";
 
 	static private final String SQL_SELECT_OLD_POPULARS = "SELECT content_id" +
 			" FROM rank_contents_total" +
@@ -86,14 +88,20 @@ public final class RecommendedContents {
 
 			// タグによるおすすめ
 			//// showUserIdが他に使っているタグ
+			List<Integer> relatedByTagList = new ArrayList<>();
 			statement = connection.prepareStatement(SQL_SELECT_RECOMMENDED_BY_TAG);
 			statement.setInt(1, showUserId);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				contentIds.add(resultSet.getInt(1));
+				relatedByTagList.add(resultSet.getInt(1));
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
+			Collections.shuffle(relatedByTagList);
+
+			for (int i=0; i<relatedByTagList.size() && i<30; i++) {
+				contentIds.add(relatedByTagList.get(i));
+			}
 
 			// 2〜3ヶ月前のPopular
 			List<Integer> oldPopulars = new ArrayList<>(oldPopularContents);

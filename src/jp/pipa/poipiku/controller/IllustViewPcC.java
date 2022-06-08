@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -194,6 +195,24 @@ public final class IllustViewPcC {
 			} else {
 				m_cUser.m_strHeaderFileName += "_640.jpg";
 			}
+
+			// author wave
+			sql = "SELECT chars, disp_order FROM user_wave_templates WHERE user_id=? ORDER BY disp_order";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, ownerUserId);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				if (resultSet.getInt("disp_order") == UserWaveTemplate.DISABLE_WAVE_ORDER) {
+					m_cUser.isWaveEnable = false;
+				} else if (resultSet.getInt("disp_order") == UserWaveTemplate.ENABLE_WAVE_COMMENT_ORDER) {
+					m_cUser.isWaveCommentEnable = true;
+				} else {
+					if (m_cUser.m_strWaveEmojiList == null) m_cUser.m_strWaveEmojiList = new LinkedList<>();
+					m_cUser.m_strWaveEmojiList.add(resultSet.getString("chars"));
+				}
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			if(checkLogin.m_bLogin && !m_bOwner) {
 				// blocking

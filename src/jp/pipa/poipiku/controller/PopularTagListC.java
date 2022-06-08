@@ -114,12 +114,13 @@ public final class PopularTagListC {
 			// MUTE KEYWORD
 			String strMuteKeyword = "";
 			String strCondMute = "";
-			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
-				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
-				if(!strMuteKeyword.isEmpty()) {
-					strCondMute = "SELECT content_id as mute_content_id FROM contents_0000 WHERE description &@~ ?";
-				}
-			}
+			// ミュートキーワードは一時無効にする。
+//			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
+//				strMuteKeyword = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
+//				if(!strMuteKeyword.isEmpty()) {
+//					strCondMute = "SELECT content_id as mute_content_id FROM contents_0000 WHERE description &@~ ?";
+//				}
+//			}
 
 			final String strSqlWith;
 			if (strMuteKeyword.isEmpty()) {
@@ -165,6 +166,7 @@ public final class PopularTagListC {
 					statement.setInt(idx++, checkLogin.m_nUserId);
 				}
 				statement.setInt(idx++, selectSampleGallery);
+
 				resultSet = statement.executeQuery();
 				while (resultSet.next()) {
 					CContent cContent = new CContent(resultSet);

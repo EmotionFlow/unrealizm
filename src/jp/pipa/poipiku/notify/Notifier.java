@@ -38,6 +38,7 @@ public class Notifier {
 
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, userId);
+
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					id = userId;
@@ -113,16 +114,17 @@ public class Notifier {
 		);
 	}
 
-	protected boolean notifyByApp(User to, String body) {
+	protected boolean notifyByApp(User to, String body, boolean deleteSameTypeNotify) {
 		final String title = getServiceName(to);
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String sql = "";
 		try {
-			final int nBadgeNum = InfoList.selectUnreadBadgeSum(to.id);
 			// 通知先デバイストークンの取得
 			connection = DatabaseUtil.dataSource.getConnection();
+
+			final int nBadgeNum = InfoList.selectUnreadBadgeSum(to.id, connection);
 			ArrayList<CNotificationToken> notificationTokens = new ArrayList<>();
 			sql = "SELECT * FROM notification_tokens_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(sql);
@@ -136,6 +138,18 @@ public class Notifier {
 
 			if(notificationTokens.isEmpty()){
 				return true;
+			}
+
+			if (deleteSameTypeNotify) {
+				sql = "DELETE FROM notification_buffers_0000 WHERE notification_token=? AND notification_type=? AND token_type=?";
+				statement = connection.prepareStatement(sql);
+				for(CNotificationToken token : notificationTokens) {
+					statement.setString(1, token.m_strNotificationToken);
+					statement.setInt(2, infoType);
+					statement.setInt(3, token.m_nTokenType);
+					statement.executeUpdate();
+				}
+				statement.close();statement=null;
 			}
 
 			// 送信用に登録

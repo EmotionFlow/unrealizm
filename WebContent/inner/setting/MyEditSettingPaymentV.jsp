@@ -11,6 +11,7 @@
     }
 %>
 
+<%@ include file="/inner/TCreditCard.jsp"%>
 <script type="text/javascript">
     <%if(checkLogin.m_nPassportId==0 && countOfRequests == 0){%>
     function DeleteCreditCardInfo() {

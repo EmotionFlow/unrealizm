@@ -95,6 +95,8 @@ public class Emoji {
 
 	public static final String REPLY_EMOJI_DEFAULT = "❤";
 
+	public static final String[] USER_WAVE_EMOJI_DEFAULT = {"💖", "👍", "🎉", "😍"};
+
 	// 絵文字
 	public static final String[] EMOJI_ALL = {
 			// Unicode Version 6.1 https://emojipedia.org/unicode-6.1/
@@ -316,5 +318,9 @@ public class Emoji {
 			}
 		}
 		return vResult;
+	}
+
+	public static int getLength(String s) {
+		return s.codePointCount(0, s.length());
 	}
 }

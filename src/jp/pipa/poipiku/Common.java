@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
@@ -23,8 +24,10 @@ public final class Common {
 	public static final String GLOBAL_IP_ADDRESS = "118.238.233.16";
 
 	public static final String CONTENTS_ROOT = "/var/www/html/poipiku_img";
+	public static final String CONTENTS_DIR_REGEX = "user_img[0-9][0-9]";
 	public static final String CONTENTS_CACHE_DIR = "user_img00";
 	public static final String CONTENTS_STORAGE_DIR = "user_img01";
+	public static final String[] CONTENTS_STORAGE_DIR_ARY = {"user_img01","user_img02","user_img03"};
 
 	// APIリターンコード
 	public static final int API_OK = 1;
@@ -352,8 +355,21 @@ public final class Common {
 
 	public static String getUploadUsersPath(int nUserId) {
 		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
-		return String.format("/user_img01/%09d", nUserId);
+		return String.format("/user_img%02d/%09d", (nUserId % 2) + 2, nUserId);
 	}
+
+	public static String getUploadCachePath(int nUserId) {
+		return String.format("/user_img00/%09d", nUserId);
+	}
+
+	public static List<String> getUploadContentsPathList(int userId) {
+		List<String> list = new LinkedList<>();
+		for (String s : CONTENTS_STORAGE_DIR_ARY) {
+			list.add("/%s/%09d".formatted(s, userId));
+		}
+		return list;
+	}
+
 
 	public static String SubStrNum(String strSrc, int nNum) {
 		if(strSrc==null) return "";
@@ -484,17 +500,17 @@ public final class Common {
 	}
 
 	public static void rmDir(File f) {
-		if (!f.exists()) return;
+		if (f == null || !f.exists()) return;
 
 		if (f.isFile()) {
 			f.delete();
 		} else if (f.isDirectory()) {
 			File[] files = f.listFiles();
-
-			for (int i = 0; i < files.length; i++) {
-				rmDir(files[i]);
+			if (files != null) {
+				for (File file : files) {
+					rmDir(file);
+				}
 			}
-
 			f.delete();
 		}
 	}

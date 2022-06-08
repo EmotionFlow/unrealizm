@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.*;
 
 class EditedContent {
@@ -51,6 +52,7 @@ public class UpdateFileOrderC extends Controller {
 	public int userId = -1;
 	public int contentId = 0;
 	public int[] newIdList = null;
+	public int firstNewId = 0;
 
 	private ServletContext servletContext = null;
 
@@ -64,6 +66,7 @@ public class UpdateFileOrderC extends Controller {
 			userId = Util.toInt(request.getParameter("UID"));
 			contentId = Util.toInt(request.getParameter("IID"));
 			String strJson	= Common.TrimAll(request.getParameter("AID"));
+			firstNewId = Util.toInt(request.getParameter("FirstNewID"));
 
 			//並び換え、削除後のappend_idリスト
 			ObjectMapper mapper = new ObjectMapper();
@@ -193,8 +196,14 @@ public class UpdateFileOrderC extends Controller {
 				return -3;
 			}
 
+			//新規にアップロードされたファイルを抽出
+			List<EditedContent> diffNew = newContentList.stream().filter(cNew -> firstNewId > 0 && cNew.appendId >= firstNewId).collect(Collectors.toList());
+			if (checkLogin != null && checkLogin.isStaff()) {
+				printContentList(userId,"---diffNewList---", diffNew);
+			}
+
 			//元リストにあって新リストにないファイルを抽出（削除候補）
-			List<EditedContent> cDiff = new ArrayList<>();
+			List<EditedContent> diffOld = new ArrayList<>();
 			for (EditedContent cOld: oldContentList) {
 				boolean bExist = false;
 				for (int append_id: newIdList) {
@@ -204,20 +213,111 @@ public class UpdateFileOrderC extends Controller {
 					}
 				}
 				if(!bExist) {
-					cDiff.add(cOld);
+					diffOld.add(cOld);
 				}
 			}
 
 			if (checkLogin != null && checkLogin.isStaff()) {
-				printContentList(userId,"---delList---", cDiff);
+				printContentList(userId,"---delList---", diffOld);
+			}
+
+			// 先頭画像が削除対象かチェック
+			boolean removeHeadFile = false;
+			for (int i=0; i<diffOld.size(); i++) {
+				if (diffOld.get(i).appendId == 0) {
+					removeHeadFile = true;
+					break;
+				}
+			}
+			// ファイルサイズチェック
+			if (diffNew.size() > 0) {
+				int fileTotalSize = 0;
+				if (!removeHeadFile) {
+					// 先頭画像が削除対象でない場合は合計サイズに含める
+					sql = "SELECT file_size FROM contents_0000 WHERE user_id=? AND content_id=?";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(1, userId);
+					statement.setInt(2, contentId);
+					resultSet = statement.executeQuery();
+					if (resultSet.next()) {
+						fileTotalSize += resultSet.getInt("file_size");
+					}
+					resultSet.close();resultSet=null;
+					statement.close();statement=null;
+				}
+
+				// appendsの合計サイズ計算 (削除対象のファイルは計算に含めない)
+				sql = "SELECT SUM(file_size) FROM contents_appends_0000 WHERE content_id=?";
+				for (int i=0; i<diffOld.size(); i++) {
+					if (i == 0) {
+						sql += " AND append_id NOT IN (";
+					} else {
+						sql += ",";
+					}
+					sql += "?";
+					if (i == diffOld.size()-1) sql += ")";
+				}
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, contentId);
+				for (int i=0; i<diffOld.size(); i++) {
+					statement.setInt(i+2, diffOld.get(i).appendId);
+				}
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					fileTotalSize += resultSet.getInt(1);
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
+
+				CacheUsers0000 users  = CacheUsers0000.getInstance();
+				CacheUsers0000.User user = users.getUser(userId);
+				if(fileTotalSize > Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
+					// サイズオーバーしていれば新規アップロードされた画像を削除
+					Log.d("UPLOAD_FILE_TOTAL_ERROR:" + fileTotalSize);
+					String inPhrase = "(";
+					for (int i=0; i<diffNew.size(); i++) {
+						if (i > 0) inPhrase += ",";
+						inPhrase += "?";
+					}
+					inPhrase += ")";
+
+					for (int i=0; i<diffNew.size(); i++) {
+						EditedContent content = diffNew.get(i);
+						if(servletContext != null && content.fileName !=null && !content.fileName.isEmpty()) {
+							String strPath = servletContext.getRealPath(content.fileName);
+							ImageUtil.deleteFiles(strPath);
+						Log.d("Deleted " + diffNew.get(i).fileName + " (#" + diffNew.get(i).appendId + ")");
+						}
+					}
+					sql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id IN " + inPhrase;
+					statement = connection.prepareStatement(sql);
+					statement.setInt(1, contentId);
+					for (int i=0; i<diffNew.size(); i++) {
+						statement.setInt(i+2, diffNew.get(i).appendId);
+					}
+					statement.executeUpdate();
+					statement.close();statement=null;
+					return Common.UPLOAD_FILE_TOTAL_ERROR;
+				} else {
+					// 上限サイズ内であればWriteBackFile書き込み
+					for (int i=0; i<diffNew.size(); i++) {
+						WriteBackFile writeBackFile = new WriteBackFile();
+						writeBackFile.userId = userId;
+						writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
+						writeBackFile.rowId = diffNew.get(i).appendId;
+						writeBackFile.path = diffNew.get(i).fileName;
+						if (!writeBackFile.insert()) {
+							Log.d("writeBackFile.insert() error: " + diffNew.get(i).appendId);
+						}
+					}
+				}
 			}
 
 			//不要ファイルの削除
-			boolean removeHeadFile = false;
-			if (!cDiff.isEmpty()) {
-				String[] strDelList = new String[cDiff.size()];
-				for(int i=0; i<cDiff.size(); i++) {
-					EditedContent content = cDiff.get(i);
+			if (!diffOld.isEmpty()) {
+				String[] strDelList = new String[diffOld.size()];
+				for(int i=0; i<diffOld.size(); i++) {
+					EditedContent content = diffOld.get(i);
 					int append_id = content.appendId;
 					strDelList[i] = Integer.toString(append_id);
 
@@ -228,9 +328,6 @@ public class UpdateFileOrderC extends Controller {
 
 					// 元リストからも削除
 					oldContentList.removeIf(c -> c.appendId == append_id && append_id != 0);
-
-					// 先頭画像の削除有無
-					if (append_id == 0) removeHeadFile = true;
 
 					// write_back_filesにレコードがあったら削除
 					if (content.writeBackStatus != null) {
@@ -278,7 +375,7 @@ public class UpdateFileOrderC extends Controller {
 			}
 
 			if (checkLogin != null && checkLogin.isStaff()) {
-				printContentList(userId,"---newList---", newContentList);
+				printContentList(userId,"---reSortedList---", newContentList);
 			}
 
 			////// update transaction ///////

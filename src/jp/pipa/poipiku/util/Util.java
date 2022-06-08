@@ -679,8 +679,7 @@ public final class Util {
 	}
 
 	public static String getUploadGenrePath() {
-		String path = "/user_img01/genre_img";
-		return path;
+		return "/user_img03/genre_img";
 	}
 
 	public static String escapeJsonString(CharSequence cs) {

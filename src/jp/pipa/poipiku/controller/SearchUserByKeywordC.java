@@ -17,11 +17,13 @@ import jp.pipa.poipiku.util.*;
 public class SearchUserByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
-	public void getParam(HttpServletRequest cRequest) {
+	public String ipAddress = "";
+	public void getParam(HttpServletRequest request) {
 		try {
-			cRequest.setCharacterEncoding("UTF-8");
-			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
-			m_strKeyword = Common.TrimAll(cRequest.getParameter("KWD"));
+			request.setCharacterEncoding("UTF-8");
+			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
+			m_strKeyword = Common.TrimAll(request.getParameter("KWD"));
+			ipAddress = request.getRemoteAddr();
 		}
 		catch(Exception ignored) {
 			;
@@ -63,15 +65,29 @@ public class SearchUserByKeywordC {
 			}
 			Collections.sort(userIds);
 			Collections.reverse(userIds);
-			int offset = m_nPage * SELECT_MAX_GALLERY;
-			List<Integer> subList = userIds.subList(offset, Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY));
 
-			for (int userId : subList) {
-				CacheUsers0000.User cashUser = users.getUser(userId);
-				if(cashUser==null) continue;
-				CUser user = new CUser(cashUser);
-				m_vContentList.add(user);
+			if (m_nPage < 4) {
+				KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "",
+						m_nPage, KeywordSearchLog.SearchTarget.Users, userIds.size(), ipAddress);
 			}
+
+			int offset = m_nPage * SELECT_MAX_GALLERY;
+			int toIndex = offset + Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY);
+			toIndex = Math.min(toIndex, m_nContentsNum-1);
+			List<Integer> subList = null;
+			if (offset < toIndex) {
+				subList = userIds.subList(offset, toIndex);
+			}
+
+			if (subList != null) {
+				for (int userId : subList) {
+					CacheUsers0000.User cashUser = users.getUser(userId);
+					if(cashUser==null) continue;
+					CUser user = new CUser(cashUser);
+					m_vContentList.add(user);
+				}
+			}
+
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
