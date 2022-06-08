@@ -17,7 +17,7 @@
 		<%if(wave.message.isEmpty()){%>
 			<span class="WaveEmoji"><%=CEmoji.parse(wave.emoji)%></span>
 		<%}else{%>
-			<span class="WaveEmoji" onclick="showWaveMessage(<%=wave.id%>)"><%=CEmoji.parse(wave.emoji)%><i class="fas fa-comment-dots"></i></span>
+			<span class="WaveEmoji WithMessage" onclick="showWaveMessage(<%=wave.id%>)"><%=CEmoji.parse(wave.emoji)%><i class="fas fa-comment-dots"></i></span>
 		<%}%>
 		<%if(showMoreWaves && i==showMoreEndIdx){%></div><%}%>
 <%}%>

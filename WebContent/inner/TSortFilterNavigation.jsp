@@ -44,6 +44,7 @@
 		max-width: 100%;
 		white-space: nowrap;
         overflow: hidden;
+        text-shadow: 0 0 5px #787878;
 	}
 	span.currentKeyword {
 		font-size: 11px;

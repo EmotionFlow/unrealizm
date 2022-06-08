@@ -4,7 +4,7 @@
 <span class="UserInfoCmd" style="padding-bottom: 0">
 	<%=_TEX.T("IllustV.Wave")%>
 	<%if(cResults.m_cUser.isWaveCommentEnable){%>
-	<span class="AddWaveMessage" onclick="$('#WaveMessage').toggle(100)"><i class="far fa-comment-dots"></i></span>
+	<span title="send message" class="AddWaveMessage" onclick="$('#WaveMessage').toggle(100)"><i class="far fa-comment-dots"></i></span>
 	<%}%>
 </span>
 
