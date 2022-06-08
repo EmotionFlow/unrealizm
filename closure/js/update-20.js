@@ -1,7 +1,8 @@
+const uploadListId = '.qq-upload-list-selector.qq-upload-list';
 //並べ替え情報の送信
 function UpdateFileOrderAjax(user_id, content_id) {
 	let json_array = [];
-	$.each($('.qq-upload-list-selector.qq-upload-list').sortable('toArray'), function(i, item) {
+	$.each($(uploadListId).sortable('toArray'), function(i, item) {
 		json_array.push(parseInt(item))
 	});
 
@@ -10,7 +11,8 @@ function UpdateFileOrderAjax(user_id, content_id) {
 		"data": {
 			UID: user_id,
 			IID: content_id,
-			AID: JSON.stringify(json_array)
+			AID: JSON.stringify(json_array),
+			FirstNewID: $(uploadListId).attr('data-first-new-id') || 0,
 		},
 		"url": "/f/UpdateFileOrderF.jsp",
 		"dataType": "json",
@@ -69,6 +71,7 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 			onComplete: function(id, name, response, xhr) {
 				//画像追加アップによって払い出されたappend_idをDOMに設定
 				$('.qq-file-id-' + id).attr('id', response.append_id);
+				if (!$(uploadListId).attr('data-first-new-id')) $(uploadListId).attr('data-first-new-id', response.append_id);
 			},
 			onAllComplete: function(succeeded, failed) {
 				console.log("onAllComplete", succeeded, failed, this.tweet);
@@ -91,23 +94,26 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 				}
 			},
 			onValidate: function(data) {
-				let total = this.getSubmittedSize();
-				const submit_num = this.getSubmittedNum();
-				this.showTotalSize(total, submit_num);
+				let total = this.getTotalSize();
+				const total_num = this.getTotalNum();
+				this.showTotalSize(total, total_num);
 				total += data.size;
 				if (total > this._options.validation.sizeLimit) {
 					showFineUploaderErrorDialog(FINE_UPLOADER_ERROR.totalSizeError);
 					return false;
 				}
-				this.showTotalSize(total, submit_num+1);
+				this.showTotalSize(total, total_num+1);
 			},
 			onStatusChange: function(id, oldStatus, newStatus) {
-				if (this.newfile_num && this.newfile_num > 0) {
-					this.showTotalSize(this.getSubmittedSize(), this.getSubmittedNum());
+				if (this.newfile_num && this.newfile_num > 0 || newStatus == 'canceled') {
+					this.showTotalSize();
 				}
 			},
 			onError: function(id, name, errorReason, xhrOrXdr) {
 				showFineUploaderErrorDialog(errorReason);
+			},
+			onSessionRequestComplete: function(response, success, xhrOrXdr) {
+				this.showTotalSize();
 			}
 		}
 	});
@@ -117,9 +123,15 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 		});
 		return uploads.length;
 	};
-	multiFileUploader.getSubmittedSize = function() {
+	multiFileUploader.getTotalNum = function() {
 		const uploads = this.getUploads({
-			status: qq.status.SUBMITTED
+			status: qq.status.UPLOAD_SUCCESSFUL
+		});
+		return this.getSubmittedNum() + uploads.length;
+	};
+	multiFileUploader.getTotalSize = function() {
+		const uploads = this.getUploads({
+			status: [qq.status.SUBMITTED, qq.status.UPLOAD_SUCCESSFUL]
 		});
 		let total = 0;
 		$.each(uploads,function(){
@@ -128,6 +140,8 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 		return total;
 	};
 	multiFileUploader.showTotalSize = function(total, submit_num) {
+		total = total || this.getTotalSize();
+		submit_num = submit_num || this.getTotalNum();
 		var strTotal = "(jpeg|png|gif, "+fileNumMax+"files, total "+fileSizeMax+"MByte)";
 		if(total>0) {
 			strTotal="("+ submit_num+"/"+fileNumMax + "files " + Math.ceil(total/1024.0/1024.0) + "/" + fileSizeMax + "MByte)";
@@ -162,7 +176,7 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 //画像ファイルの更新アップロード
 function UpdateFile(user_id, content_id) {
 	if(!multiFileUploader) return;
-	if($('.qq-upload-list-selector.qq-upload-list').children('li').length<=0) return;
+	if($(uploadListId).children('li').length<=0) return;
 	let genre = $('#TagInputItemData').val();
 	const nCategory = parseInt($('#EditCategory').val(), 10);
 	const strDescription = $.trim($("#EditDescription").val());
