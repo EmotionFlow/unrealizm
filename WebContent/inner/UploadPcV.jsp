@@ -252,7 +252,7 @@ if (requestId > 0) {
 				</div>
 
 				<div class="Description">
-					<div class="SettingListTitle WithLangSelector" style="text-align: right">
+					<div class="SettingListTitle WithLangSelector" style="text-align: right; display: <%=nEditorId==Common.EDITOR_TEXT?"none":""%>">
 						<span class="SelectTransLang">
 							<i class="fas fa-language" style="font-size: 20px;"></i>
 							<select id="EditTransDescLang" style="font-size: 12px;" onchange="switchTransTxt('Description', $(this).val())">
