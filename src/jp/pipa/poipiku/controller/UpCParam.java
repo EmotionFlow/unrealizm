@@ -10,6 +10,7 @@ import java.util.List;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.SupportedLocales;
 import jp.pipa.poipiku.UserLocale;
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,8 +69,10 @@ public class UpCParam {
 		privateNote         = Util.deleteInvalidChar(Common.TrimAll(request.getParameter("NOTE")));
 
 		for (UserLocale userLocale: SupportedLocales.list) {
-			String s = Util.toString(request.getParameter("DES" + userLocale.id));
-			descriptionTranslations.put(userLocale.id, s.trim());
+			String s = request.getParameter("DES" + userLocale.id);
+			if (s != null) {
+				descriptionTranslations.put(userLocale.id, s.trim());
+			}
 		}
 
 		// format tag list

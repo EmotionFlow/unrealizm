@@ -254,7 +254,7 @@ if (requestId > 0) {
 				<div class="Description">
 					<div class="SettingListTitle WithLangSelector" style="text-align: right; display: <%=nEditorId==Common.EDITOR_TEXT?"none":""%>">
 						<span class="SelectTransLang">
-							<i class="fas fa-language" style="font-size: 20px;"></i>
+							<i class="fas fa-language" style="font-size: 20px;" onclick="showTransDescMsg();"></i>
 							<select id="EditTransDescLang" style="font-size: 12px;" onchange="switchTransTxt('Description', $(this).val())">
 								<option value="default" selected><%=_TEX.T("EditGenreInfo.Translation.Default")%></option>
 								<%for(UserLocale userLocale: SupportedLocales.list) {%>
@@ -478,4 +478,5 @@ if (requestId > 0) {
 		<%@ include file="/inner/TFooter.jsp"%>
 		<%}%>
 	</body>
+	<%@ include file="TTranslateDescDlg.jsp"%>
 </html>

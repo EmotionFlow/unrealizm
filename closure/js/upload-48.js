@@ -1046,7 +1046,6 @@ function UploadFile(user_id, request_id) {
 		"TWT":getTweetSetting(),
 		"TWI":getTweetImageSetting(),
 		"TWCT":getTwitterCardThumbnailSetting(),
-		"DELTW":nDeleteTweet,
 		"ED":0,
 		"CNG":nCheerNg,
 		"RID":request_id,

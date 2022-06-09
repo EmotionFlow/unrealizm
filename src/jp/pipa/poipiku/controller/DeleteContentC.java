@@ -69,7 +69,7 @@ public class DeleteContentC {
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 
-				// リクエスト納品物でないことを確認
+				// エアスケブ納品物でないことを確認
 				strSql = "SELECT * FROM requests WHERE content_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, m_nContentId);
@@ -164,6 +164,13 @@ public class DeleteContentC {
 			connection = dataSource.getConnection();
 			// delete append data
 			strSql ="DELETE FROM contents_appends_0000 WHERE content_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nContentId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
+			// delete content_translations
+			strSql ="DELETE FROM content_translations WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
 			statement.executeUpdate();

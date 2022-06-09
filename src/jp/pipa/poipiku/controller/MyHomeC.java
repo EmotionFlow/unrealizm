@@ -132,9 +132,6 @@ public class MyHomeC {
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
 
-			//TODO 削除する
-			Log.d(statement.toString());
-
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent cContent = new CContent(resultSet);

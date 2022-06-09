@@ -131,14 +131,16 @@ public final class PopularTagListC {
 
 			// WEEKLY SAMPLE
 			// "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */"
-			strSql = strSqlWith + " SELECT * FROM contents_0000 ";
+			strSql = strSqlWith + " SELECT c.*, ct.trans_text FROM contents_0000 c"
+					+ " LEFT JOIN content_translations ct ON type_id=0 AND lang_id=? AND c.content_id = ct.content_id";
 
 			if(!strCondMute.isEmpty()){
-				strSql += (" LEFT JOIN mute_contents ON mute_contents.mute_content_id=contents_0000.content_id");
+				strSql += (" LEFT JOIN mute_contents ON mute_contents.mute_content_id=c.content_id");
 			}
 
+
 			strSql += " WHERE open_id<>2 AND publish_id=0 "
-					+ " AND content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt LIKE ? AND tag_type=1) "
+					+ " AND c.content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt LIKE ? AND tag_type=1) "
 					+ " AND safe_filter<=? "
 					+ strCondBlockUser
 					+ strCondBlocedkUser;
@@ -147,13 +149,14 @@ public final class PopularTagListC {
 				strSql += " AND mute_content_id IS NULL";
 			}
 
-			strSql += " ORDER BY content_id DESC LIMIT ? ";
+			strSql += " ORDER BY c.content_id DESC LIMIT ? ";
 
 			statement = connection.prepareStatement(strSql);
 			for(int nCnt = 0; nCnt< m_vTagListWeekly.size() && nCnt< selectMaxSampleGallery; nCnt++) {
 				CTag cTag = m_vTagListWeekly.get(nCnt);
 				ArrayList<CContent> m_vContentList = new ArrayList<>();
 				idx = 1;
+				statement.setInt(idx++, checkLogin.m_nLangId);
 				if(!strCondMute.isEmpty()){
 					statement.setString(idx++, strMuteKeyword);
 				}
@@ -173,6 +176,7 @@ public final class PopularTagListC {
 					CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 					cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 					cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
+					cContent.m_strDescriptionTranslated = resultSet.getString("trans_text");
 					m_vContentList.add(cContent);
 				}
 				resultSet.close();resultSet=null;
