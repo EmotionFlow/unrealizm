@@ -65,7 +65,7 @@
 			// file type error
 			DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error.FileType")%>');
 		} else {
-			DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + data.result);
+			DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%><br />error code:#' + result);
 		}
 	}
 
