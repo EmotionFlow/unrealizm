@@ -146,14 +146,23 @@ public class DeleteUserC {
 			statement.close();statement=null;
 			connection.close();connection=null;
 
-			// delete content data
+			///////
 			connection = dataSource.getConnection();
+			// content_translations
+			strSql = "DELETE FROM content_translations WHERE content_id IN (SELECT content_id FROM contents_0000 WHERE user_id=?)";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, m_nUserId);
+			statement.executeUpdate();
+			statement.close();statement=null;
+
+			// delete content data
 			strSql = "DELETE FROM contents_0000 WHERE user_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nUserId);
 			statement.executeUpdate();
 			statement.close();statement=null;
 			connection.close();connection=null;
+			///////
 
 			///////
 			connection = dataSource.getConnection();
