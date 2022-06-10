@@ -25,7 +25,9 @@ public final class ResourceBundleControl {
 
 		url paramにhlなし
 			CookieにLANGあり -> それ採用
-			CookieにLANGなし -> rs_jaを採用
+
+		url param, cookie どちらにも情報なし
+			http header の "Accept-Language" から決定
 		*/
 		String strLangParam = null;
 		String strLangCookie = null;
@@ -47,10 +49,14 @@ public final class ResourceBundleControl {
 
 		if (strLangParam == null) {
 			strLangCookie = Util.getCookie(request, Common.LANG_ID);
-			if (strLangCookie == null) {
-				objRb = CResourceBundleUtil.getJa();
-			} else {
+			if (strLangCookie != null && !strLangCookie.isEmpty()) {
 				objRb = CResourceBundleUtil.get(SupportedLocales.getLocale(strLangCookie));
+			} else {
+				objRb = CResourceBundleUtil.get(
+						SupportedLocales.getLocaleByRequestHeader(
+								request.getHeader("Accept-Language")).locale
+				);
+				Util.setCookie(response, Common.LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
 			}
 		}
 	}
