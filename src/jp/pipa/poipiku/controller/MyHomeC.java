@@ -100,7 +100,7 @@ public class MyHomeC {
 					strCondMute = " AND c.content_id NOT IN(SELECT content_id FROM contents_0000 WHERE description &@~ ?) ";
 				}
 			}
-			String strCondStart = (startId >0)?"AND content_id<? ":"";
+			String strCondStart = (startId >0)?"AND c.content_id<? ":"";
 
 			StringBuilder sb = new StringBuilder();
 			sb.append("SELECT c.*, ct.trans_text description_translated FROM contents_0000 c ")
