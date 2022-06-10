@@ -49,7 +49,7 @@ public final class NewArrivalC {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			String strCondStart = (startId >0)?"AND content_id<? ":"";
+			String strCondStart = (startId >0)?"AND contents_0000.content_id<? ":"";
 			String strCondCat = (categoryId >=0)?" AND category_id=? ":"";
 
 			String strCondBlockUser = "";
@@ -93,7 +93,7 @@ public final class NewArrivalC {
 					+ strCondBlocedkUser
 					+ strCondCat
 					+ strCondMute
-					+ " ORDER BY content_id DESC OFFSET ? LIMIT ? ";
+					+ " ORDER BY contents_0000.content_id DESC OFFSET ? LIMIT ? ";
 			statement = connection.prepareStatement(sql);
 
 
