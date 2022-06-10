@@ -20,16 +20,16 @@ fi
 /bin/rm -f ${WEB_CONTENT}js/upload-*.js
 /bin/rm -f ${WEB_CONTENT}js/update-*.js
 
-/bin/cp ./js/common-109.js ${WEB_CONTENT}js/
+/bin/cp ./js/common-110.js ${WEB_CONTENT}js/
 #/bin/cp ./js/commonPc-04.js ${WEB_CONTENT}js/
-/bin/cp ./js/upload-48.js ${WEB_CONTENT}js/
-/bin/cp ./js/update-21.js ${WEB_CONTENT}js/
+/bin/cp ./js/upload-49.js ${WEB_CONTENT}js/
+/bin/cp ./js/update-22.js ${WEB_CONTENT}js/
 
 CLOSURE_COMPILER_JAR="./closure-compiler-v20201006.jar"
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-109.js --js_output_file ${WEB_CONTENT}js/common-109.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-110.js --js_output_file ${WEB_CONTENT}js/common-110.js
 #java -jar ${CLOSURE_COMPILER_JAR} --js ./js/commonPc-04.js --js_output_file ${WEB_CONTENT}js/commonPc-04.js
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-48.js --js_output_file ${WEB_CONTENT}js/upload-48.js
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-21.js --js_output_file ${WEB_CONTENT}js/update-21.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-49.js --js_output_file ${WEB_CONTENT}js/upload-49.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-22.js --js_output_file ${WEB_CONTENT}js/update-22.js
 
 ##for file in $( ls ./js | grep .js$ ); do
 #echo "${file}"
