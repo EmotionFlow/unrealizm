@@ -173,13 +173,17 @@ public final class SearchIllustByTagC {
 				withBlk = true;
 			}
 
+			/*
+			 * description翻訳を組み込んだ状態でmute keyword ONにするとpgroongaがpostgresを道連れにして
+			 * クラッシュする。よって一時的にミュートキーワードをOFFにする。
+			 */
 			boolean withKw = false;
-			if (!strCondMute.isEmpty()) {
-				strSql += " ,kw AS (" +
-						" SELECT content_id FROM contents_0000 WHERE description &@~ ?" +
-						")";
-				withKw = true;
-			}
+//			if (!strCondMute.isEmpty()) {
+//				strSql += " ,kw AS (" +
+//						" SELECT content_id FROM contents_0000 WHERE description &@~ ?" +
+//						")";
+//				withKw = true;
+//			}
 
 			strSql += "SELECT * FROM a" +
 					(withBlk ? " LEFT JOIN b ON a.user_id = b.user_id" : "") +
