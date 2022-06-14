@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import javax.servlet.ServletContext;
 
 import jp.pipa.poipiku.*;
@@ -21,7 +19,6 @@ public class UploadFileTweetC {
 
 	public int GetResults(CheckLogin checkLogin, UploadFileTweetCParam cParam, ResourceBundleControl _TEX) {
 		int nRtn = -1;
-		DataSource dsPostgres = null;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
@@ -29,8 +26,7 @@ public class UploadFileTweetC {
 
 		try {
 			// regist to DB
-			dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			cConn = dsPostgres.getConnection();
+			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// 存在チェック & 本文 & 1枚目取得
 			CContent cContent = null;
@@ -155,9 +151,9 @@ public class UploadFileTweetC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception ignored){;}
+			try{if(cState!=null){cState.close();cState=null;}}catch(Exception ignored){;}
+			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception ignored){;}
 		}
 		return nRtn;
 	}
