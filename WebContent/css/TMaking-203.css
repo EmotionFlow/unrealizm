@@ -4070,12 +4070,13 @@ hr.IllustItemListSeparator {
 }
 
 .WaveMessageDlg .WaveMessage {
+	position: relative;
 	margin-top: -7px;
 	width: 20em;
 	text-align: left;
 	font-size: 15px;
 	border: solid 1px #dbdbdb;
-	padding: 11px;
+	padding: 13px 11px;
 	border-radius: 3px;
 	background: #fffefb;
 }

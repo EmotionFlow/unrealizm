@@ -78,8 +78,8 @@ public class UserWave {
 
 		final String sql = "INSERT INTO user_waves(from_user_id, to_user_id, emoji, message, ip_address) VALUES (?,?,?,?,?)";
 		try (
-			Connection connection = DatabaseUtil.dataSource.getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			int idx = 1;
 			statement.setInt(idx++, fromUserId);
@@ -87,6 +87,23 @@ public class UserWave {
 			statement.setString(idx++, emoji);
 			statement.setString(idx++, message);
 			statement.setString(idx++, ipAddress);
+			statement.executeUpdate();
+		} catch(SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	static public boolean delete(int id, int toUserId){
+		final String sql = "DELETE FROM user_waves WHERE id=? AND to_user_id=?";
+		try (
+				Connection connection = DatabaseUtil.dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(sql);
+		) {
+			int idx = 1;
+			statement.setInt(idx++, id);
+			statement.setInt(idx++, toUserId);
 			statement.executeUpdate();
 		} catch(SQLException e) {
 			Log.d(sql);

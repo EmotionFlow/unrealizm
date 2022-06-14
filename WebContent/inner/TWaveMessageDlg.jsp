@@ -12,7 +12,7 @@
 		<%}%><%}%>
 	};
 	
-	function getWaveMessageDlgHtml(waveMessage) {
+	function getWaveMessageDlgHtml(waveId, waveMessage) {
 		let html =  `
 			<style>
 			.WaveMessageReplyTitle {
@@ -28,6 +28,13 @@
 				font-size: 12px;
 				margin-top: 18px;
 			}
+			.WaveMessageDelete {
+				cursor: pointer;
+				position: absolute;
+				color: #9a9a9a;
+				bottom: 1px;
+				right: 3px;
+			}
 			.swal2-popup .swal2-styled.swal2-confirm {
 				font-size: 14px;
 			}
@@ -38,7 +45,7 @@
 			</style>
 		` + '<div class="WaveMessageDlg">' +
 		'<div class="WaveEmoji">' + waveMessage.emojiHtml + '</div>' +
-		'<div class="WaveMessage">' + waveMessage.messageHtml + '</div>';
+		'<div class="WaveMessage">' + waveMessage.messageHtml + '<span class="WaveMessageDelete" onclick="deleteWave('+ waveId +')"><i class="fas fa-trash-alt"></i></span></div>';
 
 		if (!waveMessage.isAnonymous) {
 			if (!waveMessage.replied) {
@@ -67,13 +74,13 @@
 		const waveMessage = waveMessages[waveId];
 		if (!waveMessage) return false;
 		Swal.fire({
-			html: getWaveMessageDlgHtml(waveMessage),
+			html: getWaveMessageDlgHtml(waveId, waveMessage),
 			showConfirmButton: !waveMessage.isAnonymous && !waveMessage.replied,
 			focusConfirm: false,
 			confirmButtonText: '<%=_TEX.T("TWaveMessage.Reply.Submit")%>',
 			showCancelButton: false,
 			showCloseButton: true,
-			footer: '<%=_TEX.T("TWaveMessage.Reply.Info")%>',
+			footer: waveMessage.isAnonymous?null:'<%=_TEX.T("TWaveMessage.Reply.Info")%>',
 			preConfirm: () => {
 				if ($("#EditWaveMessageReply").val().trim().length === 0) {
 					return Swal.showValidationMessage('<%=_TEX.T("TWaveMessage.Reply.Error.MessageEmpty")%>');
@@ -106,7 +113,6 @@
 		});
 	}
 
-
 	const waveReplies = {
 		<%for (MyIllustListC.ReplyWave reply : cResults.replyWaves) {%>
 		'<%=reply.wave.id%>': {
@@ -125,7 +131,7 @@
 
 
 	function getReplyWaveMessageDlgHtml(waveReply) {
-		let html =  `
+		return `
 			<style>
 			.WaveReplyUser {
 				display: flex;
@@ -157,7 +163,26 @@
 			'<div class="WaveEmoji" style="margin-top: 13px;">' + waveReply.emojiHtml + '</div>' +
 			'<div class="WaveMessage">' + waveReply.messageHtml + '</div>' +
 			'</div>';
-		return html;
+	}
+
+	function deleteWave(waveId) {
+		if (window.confirm('<%=_TEX.T("TWaveMessage.Delete.Confirm")%>')) {
+			$.ajax({
+				"type": "post",
+				"data": {
+					UID: <%=checkLogin.m_nUserId%>,
+					WID: waveId,
+				},
+				"url": "/f/DeleteUserWaveF.jsp",
+				"dataType": "json",
+			}).then((data)=>{
+				if (data.result === <%=Common.API_OK%>) {
+					setTimeout(()=>{location.reload();}, 800);
+				} else {
+					alert('<%=_TEX.T("TWaveMessage.Delete.Error")%>');
+				}
+			})
+		}
 	}
 
 	function showReplyWaveMessage(waveId) {
