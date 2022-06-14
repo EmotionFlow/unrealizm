@@ -60,11 +60,11 @@ public class SendPasswordC {
 				cState.close();
 			}
 			if(!m_strTwScreenName.isEmpty()) {
-				strSql = "SELECT u.user_id, u.email, u.password FROM users_0000 AS u INNER JOIN tbloauth AS a ON u.user_id = a.flduserid WHERE lower(a.twitter_screen_name) = ? AND a.del_flg=false ORDER BY user_id DESC LIMIT 1";
+				strSql = "SELECT u.user_id, u.email, u.password FROM users_0000 AS u INNER JOIN tbloauth AS a ON u.user_id = a.flduserid WHERE lower(a.twitter_screen_name) = ? AND a.del_flg=false ORDER BY user_id DESC";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, m_strTwScreenName);
 				cResSet = cState.executeQuery();
-				while (cResSet.next()) {
+				if (cResSet.next()) {
 					CUser user = new CUser();
 					user.m_strEmail = cResSet.getString("email");
 					if (user.m_strEmail.contains("@")) {
