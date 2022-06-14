@@ -56,7 +56,11 @@ public class UploadFileTweetC {
 					case Common.PUBLISH_ID_T_FOLLOWEE:
 					case Common.PUBLISH_ID_T_EACH:
 					case Common.PUBLISH_ID_T_LIST:
-						strFileName = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+						if (cContent.publishAllNum > 0) {
+							strFileName = cContent.m_strFileName;
+						} else {
+							strFileName = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+						}
 						break;
 					case Common.PUBLISH_ID_ALL:
 					case Common.PUBLISH_ID_HIDDEN:
