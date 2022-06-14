@@ -86,9 +86,8 @@ public final class CheckLogin {
 
 			// ユーザ認証・情報取得
 			if (!validateUser(response)) {
-				// 非ログインユーザーの言語設定を取得する。
-				// hlパラメータ優先。なければcookie。
-				// cookieもなければhttp headerのAccept-Language
+				// 以下の優先順位で、非ログインユーザーの言語設定を取得する。
+				// hlパラメータ -> cookie -> http headerのAccept-Language
 				final String hlParam = request.getParameter(Common.LANG_ID_POST);
 				if (hlParam != null && !hlParam.isEmpty()) {
 					m_nLangId = SupportedLocales.findId(hlParam);

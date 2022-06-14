@@ -22,12 +22,10 @@ public final class ResourceBundleControl {
 			サポートしている言語 -> rs_??を採用
 			サポートしていない言語 -> rs_enを採用
 			採用されたロケールでsetCookieする。
-
-		url paramにhlなし
-			CookieにLANGあり -> それ採用
-
-		url param, cookie どちらにも情報なし
-			http header の "Accept-Language" から決定
+		↓
+		CookieにLANGあり -> それ採用
+		↓
+		http header の "Accept-Language" で判定、採用されたロケールでsetCookieする。
 		*/
 		String strLangParam = null;
 		String strLangCookie = null;
