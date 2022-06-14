@@ -26,4 +26,49 @@ public class SupportedLocalesTest {
 		assertEquals(0, id);
 
 	}
+
+	@Test
+	public void testGetLocaleByRequestHeader() {
+		assertEquals(0, SupportedLocales.getLangIdByRequestHeader(
+				""));
+		assertEquals(0, SupportedLocales.getLangIdByRequestHeader(
+				"*"));
+
+		assertEquals(1, SupportedLocales.getLangIdByRequestHeader(
+				"ja"));
+		assertEquals(1, SupportedLocales.getLangIdByRequestHeader(
+				"ja,en-US;q=0.9,en;q=0.8"));
+		assertEquals(1, SupportedLocales.getLangIdByRequestHeader(
+				"ja-JP,en-US;q=0.9,en;q=0.8"));
+
+		assertEquals(0, SupportedLocales.getLangIdByRequestHeader(
+				"en"));
+		assertEquals(0, SupportedLocales.getLangIdByRequestHeader(
+				"en-UK,en-US;q=0.9,en;q=0.8"));
+		assertEquals(0, SupportedLocales.getLangIdByRequestHeader(
+				"en-US,ja-JP;q=0.9,en;q=0.8"));
+
+		assertEquals(2, SupportedLocales.getLangIdByRequestHeader(
+				"ko"));
+
+		assertEquals(3, SupportedLocales.getLangIdByRequestHeader(
+				"zh-CN"));
+		assertEquals(3, SupportedLocales.getLangIdByRequestHeader(
+				"zh-Hans"));
+		assertEquals(3, SupportedLocales.getLangIdByRequestHeader(
+				"zh-SG"));
+
+		assertEquals(4, SupportedLocales.getLangIdByRequestHeader(
+				"zh-TW"));
+		assertEquals(4, SupportedLocales.getLangIdByRequestHeader(
+				"zh-Hant"));
+
+		assertEquals(1, SupportedLocales.getLangIdByRequestHeader(
+				"es, ja-JP;q=0.9"));
+
+		assertEquals(0, SupportedLocales.getLangIdByRequestHeader(
+				"es, is;q=0.9,ay;q=0.7"));
+
+
+	}
 }

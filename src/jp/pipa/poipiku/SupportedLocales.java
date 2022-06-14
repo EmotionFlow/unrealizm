@@ -26,6 +26,32 @@ public final class SupportedLocales {
 		return list.stream().filter(e -> e.id==id).findFirst().get();
 	}
 
+	static public UserLocale getLocaleByRequestHeader(String headerAcceptLanguage) {
+		if (headerAcceptLanguage == null || headerAcceptLanguage.isEmpty() || headerAcceptLanguage.equals("*")) {
+			return list.get(0);
+		}
+		String[] langAry = headerAcceptLanguage.trim().split(",");
+		String s;
+		UserLocale foundLocale = null;
+		for (String langStr: langAry) {
+			s = langStr.split(";")[0].trim();
+			final Locale locale = getLocale(s);
+			try {
+				if (locale.getLanguage().equals("zh")) {
+					foundLocale = list.stream().filter(e -> e.locale.equals(locale)).findFirst().get();
+				} else {
+					foundLocale = list.stream().filter(e -> e.locale.getLanguage().equals(locale.getLanguage())).findFirst().get();
+				}
+				break;
+			} catch (NoSuchElementException ignored) {}
+		}
+		return foundLocale==null?list.get(0):foundLocale;
+	}
+
+	static public int getLangIdByRequestHeader(String headerAcceptLanguage) {
+		return getLocaleByRequestHeader(headerAcceptLanguage).id;
+	}
+
 	static public Locale getLocale(String langStr) {
 		if (langStr==null || langStr.isEmpty()) {
 			return LOCALE_DEFAULT;
@@ -54,19 +80,12 @@ public final class SupportedLocales {
 			}
 		}
 
-		switch (lcv.size()) {
-			case 1:
-				locale = new Locale(lcv.get(0));
-				break;
-			case 2:
-				locale = new Locale(lcv.get(0), lcv.get(1));
-				break;
-			case 3:
-				locale = new Locale(lcv.get(0), lcv.get(1), lcv.get(2));
-				break;
-			default:
-				locale = LOCALE_DEFAULT;
-		}
+		locale = switch (lcv.size()) {
+			case 1 -> new Locale(lcv.get(0));
+			case 2 -> new Locale(lcv.get(0), lcv.get(1));
+			case 3 -> new Locale(lcv.get(0), lcv.get(1), lcv.get(2));
+			default -> LOCALE_DEFAULT;
+		};
 		return locale;
 	}
 

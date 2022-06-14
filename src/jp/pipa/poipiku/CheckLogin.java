@@ -86,15 +86,19 @@ public final class CheckLogin {
 
 			// ユーザ認証・情報取得
 			if (!validateUser(response)) {
-				// 非ログインユーザーの言語設定を取得する。hlパラメータ優先。なければcookie。
-				String langStr;
-				langStr = request.getParameter(Common.LANG_ID_POST);
-				if (langStr != null && !langStr.isEmpty()) {
-					m_nLangId = SupportedLocales.findId(langStr);
+				// 以下の優先順位で、非ログインユーザーの言語設定を取得する。
+				// hlパラメータ -> cookie -> http headerのAccept-Language
+				final String hlParam = request.getParameter(Common.LANG_ID_POST);
+				if (hlParam != null && !hlParam.isEmpty()) {
+					m_nLangId = SupportedLocales.findId(hlParam);
 				} else {
-					langStr = Util.getCookie(request, Common.LANG_ID);
-					if (langStr != null && !langStr.isEmpty()) {
-						m_nLangId = SupportedLocales.findId(langStr);
+					final String cookieParam = Util.getCookie(request, Common.LANG_ID);
+					if (cookieParam != null && !cookieParam.isEmpty()) {
+						m_nLangId = SupportedLocales.findId(cookieParam);
+					} else {
+						m_nLangId = SupportedLocales
+								.getLangIdByRequestHeader(
+										request.getHeader("Accept-Language"));
 					}
 				}
 			}
