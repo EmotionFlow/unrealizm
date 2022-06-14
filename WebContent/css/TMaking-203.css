@@ -3790,7 +3790,8 @@ hr.IllustItemListSeparator {
 }
 
 #DetailOverlayInner{
-	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 /*********** DetailV ********************/
 
