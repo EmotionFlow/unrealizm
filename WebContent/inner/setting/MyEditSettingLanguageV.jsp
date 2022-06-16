@@ -16,12 +16,24 @@
 	.SettingListItem dt {
 		text-align: center;
         border-bottom: 1px solid #ccc;
-        min-height: calc(41.625px);
+        min-height: 40px;
         line-height: 40px;
+	}
+    .SettingListItem > .TranslationSuggestionLink {
+        width: 100%;
+        display: block;
+		margin-top: 12px;
+		text-align: right;
+		text-decoration: underline;
+		color: #3498da;
+	}
+    .TranslationSuggestionLink > i {
+		margin-right: 2px;
 	}
 </style>
 <div class="SettingList">
 	<div class="SettingListItem" style="margin-bottom: 15px; border-bottom: none;">
+		<a class="TranslationSuggestionLink" href="/TranslationSuggestionPcV.jsp"><i class="fas fa-language"></i><%=_TEX.T("TranslationSuggestionV.Title.Header")%></a>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Language")%></dt>
 			<dd><a hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a></dd>

@@ -58,12 +58,12 @@ final String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?GD="+results
 						<span class="GenreImage" style="background-image: url('<%=Common.GetUrl(results.genre.genreImage)%>');" ></span>
 						<div class="GenreName">
 							<h2 class="GenreNameOrg">#<%=Util.toStringHtml(results.genre.genreName)%></h2>
-							<div class="GenreNameTranslate" translate="no">
+							<a class="GenreNameTranslate" translate="no" href="/EditGenreInfoPcV.jsp?ID=<%=checkLogin.m_nUserId%>&GD=<%=results.genre.genreId%>">
 								<i class="fas fa-language"></i>
 								<%if(results.nameTranslationList!=null){%>
 								<%=results.nameTranslationList.stream().map(e->String.format("<span>%s</span>", Util.toStringHtml(e))).collect(Collectors.joining(""))%>
 								<%}%>
-							</div>
+							</a>
 						</div>
 					</div>
 					<div class="SearchGenreDesc"><%=Util.toStringHtml(results.genre.genreDesc)%></div>

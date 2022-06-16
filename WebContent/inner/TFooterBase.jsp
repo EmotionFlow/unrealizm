@@ -32,18 +32,16 @@
 	</article>
 	<%}%>
 
-	<!--
-	<nav class="LinkApp">
-		<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
-		<%if(!Util.isIOS(request)){%>
-		<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
-		<%}%>
-	</nav>
-	-->
+<%--	<nav class="LinkApp">--%>
+<%--		<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>--%>
+<%--		<%if(!Util.isIOS(request)){%>--%>
+<%--		<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>--%>
+<%--		<%}%>--%>
+<%--	</nav>--%>
 
 	<nav class="FooterLink">
 		<dl>
-			<dt><%=_TEX.T("Footer.Link.Language")%></dt>
+			<dt><i class="fas fa-globe"></i><%=_TEX.T("Footer.Link.Language")%> <a class="FooterHref" style="font-weight: normal" href="/TranslationSuggestionPcV.jsp"><%=_TEX.T("TranslationSuggestionV.Title.Header")%></a></dt>
 			<dd><a class="FooterHref" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a></dd>
 			<dd><a class="FooterHref" hreflang="vi" onclick="ChLang('vi', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">Tiếng Việt</a></dd>
 			<dd><a class="FooterHref" hreflang="ko" onclick="ChLang('ko', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">한국</a></dd>

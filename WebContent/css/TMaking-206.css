@@ -318,6 +318,10 @@
 	margin: 3px 0 7px 0;
 }
 
+.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreName .GenreNameTranslate {
+	color: #6d6965;
+}
+
 .SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreName .GenreNameTranslate > i{
 	font-size: 14px;
 	line-height: 12px;

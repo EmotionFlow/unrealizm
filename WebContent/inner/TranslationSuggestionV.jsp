@@ -25,7 +25,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		<%}else{%>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%}%>
-		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("TranslationSuggestionV.Title")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("TranslationSuggestionV.Title.Header")%></title>
 
 		<script type="text/javascript">
 			function sendTranslationSuggestion(){
