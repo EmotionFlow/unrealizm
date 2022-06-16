@@ -24,11 +24,11 @@ public class SendTranslationSuggestionC {
 			if (ipAddress == null) ipAddress = "";
 			userAgent = request.getHeader("user-agent");
 
-			originalTxt = Util.toString(request.getParameter("EditOriginalTxt"));
+			originalTxt = Util.toString(request.getParameter("EditOriginalTxt")).trim();
 			transLang = Util.toString(request.getParameter("EditTransLang"));
-			suggestionTxt = Util.toString(request.getParameter("EditSuggestionTxt"));
-			suggestionUsed = Util.toString(request.getParameter("EditSuggestionUsed"));
-			suggestionDesc = Util.toString(request.getParameter("EditSuggestionDesc"));
+			suggestionTxt = Util.toString(request.getParameter("EditSuggestionTxt")).trim();
+			suggestionUsed = Util.toString(request.getParameter("EditSuggestionUsed")).trim();
+			suggestionDesc = Util.toString(request.getParameter("EditSuggestionDesc")).trim();
 
 		} catch(Exception e) {
 			e.printStackTrace();

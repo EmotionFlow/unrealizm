@@ -29,6 +29,9 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 		<script type="text/javascript">
 			function sendTranslationSuggestion(){
+				if ($("#EditOriginalTxt").val().trim().length === 0 || $("#EditSuggestionTxt").val().trim().length === 0) {
+					return false;
+				}
 				$.ajax({
 					"type": "post",
 					"data": {
@@ -45,6 +48,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				.then(
 					data => {
 						DispMsg("<%=_TEX.T("TranslationSuggestionV.Thanks")%>");
+						$("#EditOriginalTxt").val('');
+						$("#EditSuggestionTxt").val('');
+						$("#EditSuggestionUsed").val('');
+						$("#EditSuggestionDesc").val('');
 						return false;
 					},
 					error => {
@@ -117,6 +124,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 									<p><%=_TEX.T("TranslationSuggestionV.Desc01")%></p>
 									<p><%=_TEX.T("TranslationSuggestionV.Desc02")%></p>
 									<p><%=_TEX.T("TranslationSuggestionV.Desc03")%></p>
+									<p style="font-size: 12px"><%=_TEX.T("TranslationSuggestionV.Desc04")%></p>
 								</div>
 							</div>
 						</div>
