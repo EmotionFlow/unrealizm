@@ -238,7 +238,7 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 							</select>
 							</span>
 					</div>
-					<input id="EditName" class="SettingBodyTxt" type="text" value="" maxlength="32" />
+					<input id="EditName" class="SettingBodyTxt" type="text" value="" maxlength="50" />
 					<div class="SettingBodyCmd">
 						<div id="EditNameNum" class="RegistMessage"></div>
 						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)"

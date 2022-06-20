@@ -19,7 +19,7 @@ public class UpdateGenreInfoC {
 	public static final int ERR_UNKNOWN = -99;
 
 	private final int[] TEXT_MIN = {1, 0, 0};
-	private final int[] TEXT_MAX = {16, 64, 1000};
+	private final int[] TEXT_MAX = {50, 64, 1000};
 	private final String[] COLUMN = {"genre_name", "genre_desc", "genre_detail"};
 
 	public int userId = -1;
