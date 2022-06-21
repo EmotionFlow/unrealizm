@@ -111,6 +111,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 							<div class="SettingListTitle" style="text-align: center"><i class="fas fa-language" style="font-size: 20px;"></i> <%=_TEX.T("TranslationSuggestionV.Title")%></div>
 							<div class="LangList">
 								<a hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a>
+								<a hreflang="es" onclick="ChLang('es', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">español</a>
 								<a hreflang="ko" onclick="ChLang('ko', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">한국</a>
 								<a hreflang="zh-cmn-Hans" onclick="ChLang('zh_CN', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">简体中文</a>
 								<a hreflang="zh-cmn-Hant" onclick="ChLang('zh_TW', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">繁體中文</a>

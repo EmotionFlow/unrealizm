@@ -11,8 +11,8 @@ import translate
 SOURCE_LOCALE = 'en'
 
 # ターゲットとする言語
-#TARGET_LOCALES = ["ko", "zh_CN", "zh_TW", "th", "ru", "vi"]
-#TARGET_LOCALES = ["ko"]
+#TARGET_LOCALES = ["ko", "zh_CN", "zh_TW", "th", "ru", "vi", "es"]
+TARGET_LOCALES = ["es"]
 
 # clear
 ## rm -rf ../../WebContent/WEB-INF/message_templates/{ko,zh_CN,zh_TW,th,ru,vi}/register/twitter_follower
@@ -23,7 +23,7 @@ TEMPLATE_PATH = sys.argv[1]
 
 source_path = f"{TEMPLATE_ROOT}{SOURCE_LOCALE}/{TEMPLATE_PATH}/"
 
-for target_locale in translate.TARGET_LOCALES:
+for target_locale in TARGET_LOCALES:
     dest_path = f"{TEMPLATE_ROOT}{target_locale}/{TEMPLATE_PATH}/"
     if os.path.exists(dest_path):
         print(f"{dest_path} is exist")

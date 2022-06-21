@@ -43,6 +43,7 @@
 		<dl>
 			<dt><i class="fas fa-globe"></i><%=_TEX.T("Footer.Link.Language")%> <a class="FooterHref" style="font-weight: normal" href="/TranslationSuggestionPcV.jsp"><%=_TEX.T("TranslationSuggestionV.Title.Header")%></a></dt>
 			<dd><a class="FooterHref" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a></dd>
+			<dd><a class="FooterHref" hreflang="es" onclick="ChLang('es', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">español</a></dd>
 			<dd><a class="FooterHref" hreflang="vi" onclick="ChLang('vi', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">Tiếng Việt</a></dd>
 			<dd><a class="FooterHref" hreflang="ko" onclick="ChLang('ko', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">한국</a></dd>
 			<dd><a class="FooterHref" hreflang="zh-cmn-Hans" onclick="ChLang('zh_CN', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">简体中文</a></dd>

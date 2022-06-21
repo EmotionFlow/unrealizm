@@ -1,0 +1,7 @@
+#parse("es/header.vm")
+
+Has recibido ${waves_total} Emoji de ánimo.
+Consulte la pantalla Notificaciones para ver las notificaciones.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("es/footer.vm")

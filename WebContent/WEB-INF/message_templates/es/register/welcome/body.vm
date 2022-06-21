@@ -1,0 +1,68 @@
+Estimado $to_name
+
+¡Bienvenido a POIPIKU!
+Nuestro personal le mostrará cómo usar POIPIKU y cómo configurar su correo electrónico.
+
+[Publicar y disfrutar]
+Puede publicar imágenes (se aceptan fotos) y novelas (texto).
+POIPIKU es un sitio en el que puedes publicar de forma casual garabatos o contenido en el que estás trabajando. Siéntete libre de publicar tu propio trabajo.
+
++ Archivos +
+Puede cargar archivos PNG, JPEG y GIF (incluidos los GIF animados). Se pueden cargar varias imágenes al mismo tiempo y el orden se puede cambiar o reemplazar después del envío.
+
++ Novelas +
+Puede enviar hasta 100.000 caracteres. Puede cambiar entre estilos de escritura verticales y horizontales, así como usar la notación Aozora Bunko para escribir ruby.
+
++ Pegar +
+Puede copiar y pegar capturas de pantalla y otras imágenes y publicarlas. Puede hacer cosas como capturar la pantalla de un software de pintura y publicar el progreso de su trabajo.
+
+
+[Disfruta viendo y leyendo]
+Cuando sigue a un usuario en POIPIKU, puede consultar las nuevas publicaciones del usuario que está siguiendo en la página [seguimiento silencioso].
+Los seguidores en POIPIKU no serán notificados. Sigámoslos de inmediato.
+
++ Usuarios Recomendados +
+
+#foreach($u in $recommend_users)
+$u.nickname
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+
++ Reacciones +
+Para cada contenido, puede enviar sus sentimientos como Emoji (reacciones). También puede tener múltiples reacciones a un solo contenido.
+Reacciones, no se lo digas a la otra persona que te las envió. Si lo desea, puede enviar emoji con la frecuencia que desee.
+
+
+[Ajustes del correo electrónico]
+También puede iniciar sesión en POIPIKU con su dirección de correo electrónico y contraseña, en caso de que la integración de Twitter no funcione o haya eliminado su cuenta de Twitter.
+
+Correo electrónico: $login_email
+Contraseña: $login_password
+
+- La dirección de correo electrónico registrada en Twitter.
+- Puede cambiar su dirección de correo electrónico y contraseña en la página de configuración.
+
+
+[Entrega de correo electrónico]
+Recibirá notificaciones por correo electrónico ocasionales, como las que le presentan a los usuarios recomendados o le notifican cuando un usuario al que sigue en Twitter comienza a usar POIPIKU.
+- Puede cambiar la entrega ON/OFF en la pantalla de configuración.
+
+
+[Cuentas oficiales]
+Esta es la cuenta oficial de POIPIKU y Twitter. Publicaremos actualizaciones e información de la campaña según sea necesario, así que síganos si lo desea.
+
+POIPIKU
+https://poipiku.com/2
+
+Gorjeo
+https://twitter.com/pipajp
+
+
+Entonces, ¡disfruta de POIPIKU!
+
+#parse("es/footer.vm")

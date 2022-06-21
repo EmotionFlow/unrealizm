@@ -19,6 +19,7 @@ public final class SupportedLocales {
 		l.add(new UserLocale(5, new Locale("th"), "ไทย"));
 		l.add(new UserLocale(6, new Locale("ru"), "русский"));
 		l.add(new UserLocale(7, new Locale("vi"), "Tiếng Việt"));
+		l.add(new UserLocale(8, new Locale("es"), "español"));
 		list = Collections.unmodifiableList(l);
 	}
 

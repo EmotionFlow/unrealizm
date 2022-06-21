@@ -1,0 +1,16 @@
+#parse("es/header.vm")
+
+Aquí tienes algunos usuarios recomendados que no sigues en POIPIKU.
+
+#foreach($u in $recommend_users)
+[$u.nickname]
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+Seguir por POIPIKU no es notificar a la otra persona. Siéntase libre de seguirlos.
+
+#parse("es/footer.vm")

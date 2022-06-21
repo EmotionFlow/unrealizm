@@ -77,6 +77,8 @@ if(strRequestUri != null) {
 				<div class="AnalogicoLang">
 					<a style="text-decoration: underline; color: #fff;" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a>
 					&nbsp
+					<a style="text-decoration: underline; color: #fff;" hreflang="es" onclick="ChLang('es', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">español</a>
+					&nbsp
 					<a style="text-decoration: underline; color: #fff;" hreflang="vi" onclick="ChLang('vi', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">Tiếng Việt</a>
 					&nbsp
 					<a style="text-decoration: underline; color: #fff;" hreflang="ko" onclick="ChLang('ko', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">한국</a>

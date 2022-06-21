@@ -605,6 +605,7 @@ if(cResults.m_bUpdate) {
 					<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Language")%></div>
 					<div class="SettingBody">
 						<a style="text-decoration: underline;" hreflang="en" onclick="ChLang('en', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">English</a>
+						<a style="text-decoration: underline;" hreflang="es" onclick="ChLang('es', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">español</a>
 						<a style="text-decoration: underline;" hreflang="vi" onclick="ChLang('vi', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">Tiếng Việt</a>
 						<a style="text-decoration: underline;" hreflang="ko" onclick="ChLang('ko', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">한국</a>
 						<a style="text-decoration: underline;" hreflang="zh-cmn-Hans" onclick="ChLang('zh_CN', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">简体中文</a>

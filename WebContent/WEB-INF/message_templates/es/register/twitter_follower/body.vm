@@ -1,0 +1,16 @@
+#parse("es/header.vm")
+
+Un usuario al que sigues en Twitter ha iniciado un POIPIKU.
+
+#foreach($u in $recommend_users)
+[$u.nickname]
+#if($u.profile.length()>0)
+$u.profile
+#end
+https://poipiku.com/$u.userId
+
+#end
+
+Seguir por POIPIKU no es notificar a la otra persona. Siéntete libre de seguirlos.
+
+#parse("es/footer.vm")

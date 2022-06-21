@@ -806,6 +806,7 @@ function showSelectLangDlg(isLogin) {
 		html: `
 		<dl class="HeaderSelectLangList">
 			<dd><a hreflang="en" onclick="ChLang('en', ` + isLogin + `)" href="javascript:void(0);">English</a></dd>
+			<dd><a hreflang="es" onclick="ChLang('es', \` + isLogin + \`)" href="javascript:void(0);">español</a></dd>
 			<dd><a hreflang="vi" onclick="ChLang('vi', ` + isLogin + `)" href="javascript:void(0);">Tiếng Việt</a></dd>
 			<dd><a hreflang="ko" onclick="ChLang('ko', ` + isLogin + `)" href="javascript:void(0);">한국</a></dd>
 			<dd><a hreflang="zh-cmn-Hans" onclick="ChLang('zh_CN', ` + isLogin + `)" href="javascript:void(0);">简体中文</a></dd>

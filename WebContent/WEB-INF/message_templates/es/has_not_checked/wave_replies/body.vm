@@ -1,0 +1,7 @@
+#parse("es/header.vm")
+
+Tienes ${waves_total} respuestas.
+Consulta tus notificaciones en la página Notificaciones.
+https://poipiku.com/ActivityListPcV.jsp
+
+#parse("es/footer.vm")

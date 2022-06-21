@@ -9,8 +9,8 @@ import translate
 SOURCE_LOCALE = 'en'
 
 # ターゲットとする言語
-#TARGET_LOCALES = ['ko', 'zh_Hans', 'zh_Hant', 'th', 'ru', 'vi']
-TARGET_LOCALES = ['vi']
+#TARGET_LOCALES = ['ko', 'zh_Hans', 'zh_Hant', 'th', 'ru', 'vi', 'es']
+TARGET_LOCALES = ['es']
 
 PROP_FILE_DIR = '../../WebContent/WEB-INF/classes/'
 BASE_NAME = 'rs'
