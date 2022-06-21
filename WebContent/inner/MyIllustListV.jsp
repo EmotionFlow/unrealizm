@@ -4,7 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 boolean bSmartPhone = Util.isSmartPhone(request);
 
-if(!bSmartPhone) {
+if(!isApp && !bSmartPhone) {
 	request.getRequestDispatcher("/MyIllustListGridPcV.jsp").forward(request,response);
 	return;
 }
