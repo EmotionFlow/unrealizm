@@ -47,9 +47,10 @@ public final class MyHomePcC {
 	public int followUserNum = -1;
 
 	static private final String POIPIKU_INFO_SQL = """
-				SELECT c.content_id, c.upload_date, c.description
+				SELECT c.content_id, c.upload_date, c.description, ct.trans_text
 				FROM pins p
 				INNER JOIN contents_0000 c ON p.content_id = c.content_id
+				LEFT JOIN (SELECT content_id, trans_text, lang_id FROM content_translations WHERE type_id = 0 AND lang_id = ?) ct ON p.content_id = ct.content_id
 				WHERE p.user_id = 2
 				AND p.disp_order = 1
 				AND p.content_id <> ?
@@ -82,7 +83,8 @@ public final class MyHomePcC {
 			// POIPIKU INFO
 			if(m_nPage<=0) {
 				statement = connection.prepareStatement(POIPIKU_INFO_SQL);
-				statement.setInt(1, m_nLastSystemInfoId);
+				statement.setInt(1, checkLogin.m_nLangId);
+				statement.setInt(2, m_nLastSystemInfoId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					m_cSystemInfo = new CContent();
@@ -90,6 +92,10 @@ public final class MyHomePcC {
 					m_cSystemInfo.m_nContentId		= resultSet.getInt("content_id");
 					m_cSystemInfo.m_timeUploadDate	= resultSet.getTimestamp("upload_date");
 					m_cSystemInfo.m_strDescription	= Util.toString(resultSet.getString("description"));
+					m_cSystemInfo.m_strDescriptionTranslated = Util.toString(resultSet.getString("trans_text"));
+					if (!m_cSystemInfo.m_strDescriptionTranslated.isEmpty()) {
+						m_cSystemInfo.m_strDescription = m_cSystemInfo.m_strDescriptionTranslated;
+					}
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
