@@ -252,8 +252,8 @@ if (requestId > 0) {
 				</div>
 
 				<div class="Description">
-<%--					<div class="SettingListTitle WithLangSelector" style="text-align: right; display: <%=nEditorId==Common.EDITOR_TEXT?"none":""%>">--%>
-					<div class="SettingListTitle WithLangSelector" style="text-align: right; <%=checkLogin.isStaff()?"":"display: none"%>">
+					<div class="SettingListTitle WithLangSelector" style="text-align: right; display: <%=nEditorId==Common.EDITOR_TEXT?"none":""%>">
+<%--					<div class="SettingListTitle WithLangSelector" style="text-align: right; <%=checkLogin.isStaff()?"":"display: none"%>">--%>
 						<span class="SelectTransLang">
 							<i class="fas fa-language" style="font-size: 20px;" onclick="showTransDescMsg();"></i>
 							<select id="EditTransDescLang" style="font-size: 12px;" onchange="switchTransTxt('Description', $(this).val())">
