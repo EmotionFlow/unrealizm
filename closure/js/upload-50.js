@@ -645,6 +645,36 @@ function updateOptionLimitedTimePublish(){
 	}
 }
 
+function updateOptionLimitedTimePublish2(){
+	const $ItemTimeLimitedVal = $('#ItemTimeLimitedVal');
+	const slideSpeed = 300;
+	if(!$('#OptionLimitedTimePublish').prop('checked')){
+		$ItemTimeLimitedVal.slideDown(slideSpeed, ()=>{
+			$.each(["#EditTimeLimitedStart", "#EditTimeLimitedEnd"], function(index, value){
+				if($(value)[0].classList.value.indexOf("flatpickr-input")<0){
+					let dateNow = new Date();
+					dateNow.setSeconds(0);
+					let minDate = new Date();
+					minDate.setMinutes(Math.floor((minDate.getMinutes()-30)/30)*30);
+					$(value).flatpickr({
+						enableTime: true,
+						dateFormat: "Z",
+						altInput: true,
+						altFormat: "Y/m/d H:i",
+						time_24hr: true,
+						minuteIncrement: 30,
+						minDate: minDate,
+						defaultDate: dateNow,
+					});
+				}
+			});
+		});
+	} else {
+		$ItemTimeLimitedVal.slideUp(slideSpeed);
+	}
+}
+
+
 function updateAreaLimitedTimePublish(publishId) {
 	var nSlideSpeed = 300;
 	var elFlg = $('#ItemTimeLimitedFlg');
