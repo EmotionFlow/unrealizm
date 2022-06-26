@@ -670,7 +670,27 @@ function updateOptionLimitedTimePublish2(){
 			});
 		});
 	} else {
-		$ItemTimeLimitedVal.slideUp(slideSpeed);
+		$ItemTimeLimitedVal.slideUp(0);
+	}
+}
+
+function updateOptionPublishOneCushion(){
+	const $ItemOneCushionVal = $("#ItemOneCushionVal");
+	const slideSpeed = 300;
+	if(!$('#OptionPublishOneCushion').prop('checked')){
+		$ItemOneCushionVal.slideDown(slideSpeed);
+	} else {
+		$ItemOneCushionVal.slideUp(0);
+	}
+}
+
+function updateOptionPublishShowLimit(){
+	const $ItemOneCushionVal = $("#ItemShowLimitVal");
+	const slideSpeed = 500;
+	if(!$('#OptionPublishShowLimit').prop('checked')){
+		$ItemOneCushionVal.slideDown(slideSpeed);
+	} else {
+		$ItemOneCushionVal.slideUp(0);
 	}
 }
 

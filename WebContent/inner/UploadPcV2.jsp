@@ -388,6 +388,92 @@ if (requestId > 0) {
                             background-color: #3498da;
                             color: #ffffff;
                         }
+						.OptionPublishOneCushionList {
+							display: flex;
+							margin:	0 12px;
+						}
+						.OptionPublishOneCushion {
+							display: flex;
+                            flex-direction: column;
+						}
+                        .OneCushionImage{
+                            display: block;
+                            width: 157px;
+                            height: 100px;
+							border-radius: 4px;
+							margin: 0 1px;
+                        }
+                        .OneCushionName{
+                            display: block;
+							width: 100%;
+                            text-align: center;
+						}
+                        .OneCushionImage.OneCushion {
+                            background-image: url("/img/warning.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                        .OneCushionImage.R18 {
+                            background-image: url("/img/R-18.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+
+
+                        .OptionPublishShowLimitList {
+                            display: flex;
+                            margin:	0 12px;
+                            flex-direction: row;
+                            flex-wrap: wrap;
+                        }
+                        .OptionPublishShowLimit {
+                            display: flex;
+                            flex-direction: column;
+							background: #fff;
+                            margin: 4px 4px;
+                            border-radius: 4px;
+                        }
+                        .ShowLimitImage {
+                            display: block;
+                            width: 150px;
+                            height: 70px;
+                            background-size: 90%;
+                        }
+                        .ShowLimitImage.PoipikuLogin {
+                            background-image: url("/img/publish_login.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                        .ShowLimitImage.PoipikuFollower {
+                            background-image: url("/img/publish_follower.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                        .ShowLimitImage.TwitterFollower {
+                            background-image: url("/img/publish_t_follower.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                        .ShowLimitImage.TwitterList {
+                            background-image: url("/img/publish_t_list.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                        .ShowLimitImage.TwitterFollowee {
+                            background-image: url("/img/publish_t_follow.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                        .ShowLimitImage.TwitterEach {
+                            background-image: url("/img/publish_t_each.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
+                        .ShowLimitName {
+                            display: block;
+                            width: 100%;
+                            text-align: center;
+                        }
 					</style>
 
 					<div class="OptionItem">
@@ -397,12 +483,11 @@ if (requestId > 0) {
 							<span class="switch-right">公開しない</span>
 						</label>
 					</div>
-
 					<div class="OptionItem">
 						<label class="rocker sub" onclick="updateOptionLimitedTimePublish2()">
 							<input id="OptionLimitedTimePublish" type="checkbox" checked>
-							<span class="switch-left">ずっと公開</span>
-							<span class="switch-right">期間限定</span>
+							<span class="switch-left">常時</span>
+							<span class="switch-right">期間指定</span>
 						</label>
 					</div>
 					<div class="OptionItem" id="ItemTimeLimitedVal" style="display: none;">
@@ -423,14 +508,60 @@ if (requestId > 0) {
 							<%}%>
 						</div>
 					</div>
-
-
 					<div class="OptionItem">
-						<label class="rocker sub">
-							<input type="checkbox" checked>
-							<span class="switch-left">配慮・年齢制限なし</span>
+						<label class="rocker sub" onclick="updateOptionPublishOneCushion()">
+							<input id="OptionPublishOneCushion" type="checkbox" checked>
+							<span class="switch-left">配慮・NSFW不要</span>
 							<span class="switch-right">指定する</span>
 						</label>
+					</div>
+					<div class="OptionItem" id="ItemOneCushionVal" style="display: none;">
+						<div class="OptionPublishOneCushionList">
+							<div class="OptionPublishOneCushion">
+								<div class="OneCushionImage OneCushion"></div>
+								<div class="OneCushionName">ワンクッション</div>
+							</div>
+							<div class="OptionPublishOneCushion">
+								<div class="OneCushionImage R18"></div>
+								<div class="OneCushionName">R18</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="OptionItem">
+						<label class="rocker sub" onclick="updateOptionPublishShowLimit()">
+							<input id="OptionPublishShowLimit" type="checkbox" checked>
+							<span class="switch-left">誰でも閲覧OK</span>
+							<span class="switch-right">制限する</span>
+						</label>
+					</div>
+					<div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
+						<div class="OptionPublishShowLimitList">
+							<div class="OptionPublishShowLimit">
+								<div class="ShowLimitImage PoipikuLogin"></div>
+								<div class="ShowLimitName">ログイン限定</div>
+							</div>
+							<div class="OptionPublishShowLimit">
+								<div class="ShowLimitImage PoipikuFollower"></div>
+								<div class="ShowLimitName">こそフォロ限定</div>
+							</div>
+							<div class="OptionPublishShowLimit">
+								<div class="ShowLimitImage TwitterFollower"></div>
+								<div class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</div>
+							</div>
+							<div class="OptionPublishShowLimit">
+								<div class="ShowLimitImage TwitterList"></div>
+								<div class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</div>
+							</div>
+							<div class="OptionPublishShowLimit">
+								<div class="ShowLimitImage TwitterFollowee"></div>
+								<div class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</div>
+							</div>
+							<div class="OptionPublishShowLimit">
+								<div class="ShowLimitImage TwitterEach"></div>
+								<div class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</div>
+							</div>
+						</div>
 					</div>
 
 
