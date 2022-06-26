@@ -369,6 +369,16 @@ if (requestId > 0) {
                             color: #888;
                         }
 
+                        .OptionItem input[type=radio] {
+                            display: none;
+                        }
+                        .OptionItem input[type=radio]:checked + label {
+                            border: 2px solid #00A0BA;
+                        }
+                        .OptionItem input[type=radio] + label {
+                            border: 2px solid rgba(0,0,0,0);
+                        }
+
                         .OptionToggle {
                             width: 100%;
                             height: 35px;
@@ -393,15 +403,18 @@ if (requestId > 0) {
 							margin:	0 12px;
 						}
 						.OptionPublishOneCushion {
-							display: flex;
+                            display: flex;
                             flex-direction: column;
+                            background: #fff;
+                            margin: 4px 2px;
+                            border-radius: 4px;
 						}
                         .OneCushionImage{
                             display: block;
-                            width: 157px;
-                            height: 100px;
+                            width: 148px;
+                            height: 70px;
 							border-radius: 4px;
-							margin: 0 1px;
+                            background-size: 90%;
                         }
                         .OneCushionName{
                             display: block;
@@ -419,7 +432,6 @@ if (requestId > 0) {
                             background-position: 50% 50%;
                         }
 
-
                         .OptionPublishShowLimitList {
                             display: flex;
                             margin:	0 12px;
@@ -430,12 +442,12 @@ if (requestId > 0) {
                             display: flex;
                             flex-direction: column;
 							background: #fff;
-                            margin: 4px 4px;
+                            margin: 2px 2px;
                             border-radius: 4px;
                         }
                         .ShowLimitImage {
                             display: block;
-                            width: 150px;
+                            width: 148px;
                             height: 70px;
                             background-size: 90%;
                         }
@@ -517,14 +529,16 @@ if (requestId > 0) {
 					</div>
 					<div class="OptionItem" id="ItemOneCushionVal" style="display: none;">
 						<div class="OptionPublishOneCushionList">
-							<div class="OptionPublishOneCushion">
+							<input type="radio" name="OneCushionVal" value="OneCushion" id="RadioOneCushion">
+							<label for="RadioOneCushion" class="OptionPublishOneCushion">
 								<div class="OneCushionImage OneCushion"></div>
 								<div class="OneCushionName">ワンクッション</div>
-							</div>
-							<div class="OptionPublishOneCushion">
+							</label>
+							<input type="radio" name="OneCushionVal" value="R18" id="RadioR18">
+							<label for="RadioR18" class="OptionPublishOneCushion">
 								<div class="OneCushionImage R18"></div>
 								<div class="OneCushionName">R18</div>
-							</div>
+							</label>
 						</div>
 					</div>
 
@@ -537,30 +551,36 @@ if (requestId > 0) {
 					</div>
 					<div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
 						<div class="OptionPublishShowLimitList">
-							<div class="OptionPublishShowLimit">
+							<input type="radio" name="ShowLimitVal" value="PoipikuLogin" id="RadioPoipikuLogin">
+							<label for="RadioPoipikuLogin" class="OptionPublishShowLimit">
 								<div class="ShowLimitImage PoipikuLogin"></div>
 								<div class="ShowLimitName">ログイン限定</div>
-							</div>
-							<div class="OptionPublishShowLimit">
+							</label>
+							<input type="radio" name="ShowLimitVal" value="PoipikuFollower" id="RadioPoipikuFollower">
+							<label for="RadioPoipikuFollower" class="OptionPublishShowLimit">
 								<div class="ShowLimitImage PoipikuFollower"></div>
 								<div class="ShowLimitName">こそフォロ限定</div>
-							</div>
-							<div class="OptionPublishShowLimit">
+							</label>
+							<input type="radio" name="ShowLimitVal" value="TwitterFollower" id="RadioTwitterFollower">
+							<label for="RadioTwitterFollower" class="OptionPublishShowLimit">
 								<div class="ShowLimitImage TwitterFollower"></div>
 								<div class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</div>
-							</div>
-							<div class="OptionPublishShowLimit">
+							</label>
+							<input type="radio" name="ShowLimitVal" value="TwitterList" id="RadioTwitterList">
+							<label for="RadioTwitterList" class="OptionPublishShowLimit">
 								<div class="ShowLimitImage TwitterList"></div>
 								<div class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</div>
-							</div>
-							<div class="OptionPublishShowLimit">
+							</label>
+							<input type="radio" name="ShowLimitVal" value="TwitterFollowee" id="RadioTwitterFollowee">
+							<label for="RadioTwitterFollowee" class="OptionPublishShowLimit">
 								<div class="ShowLimitImage TwitterFollowee"></div>
 								<div class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</div>
-							</div>
-							<div class="OptionPublishShowLimit">
+							</label>
+							<input type="radio" name="ShowLimitVal" value="TwitterEach" id="RadioTwitterEach">
+							<label for="RadioTwitterEach" class="OptionPublishShowLimit">
 								<div class="ShowLimitImage TwitterEach"></div>
 								<div class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</div>
-							</div>
+							</label>
 						</div>
 					</div>
 
