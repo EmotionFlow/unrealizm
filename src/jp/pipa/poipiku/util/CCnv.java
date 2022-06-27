@@ -228,7 +228,7 @@ public final class CCnv {
 
 		if (trsExist) {
 			strRtn.append("<h1 class=\"IllustItemDesc\" style=\"display: none;\">");
-			strRtn.append(Util.toStringHtml(def));
+			strRtn.append(Common.AutoLink(Util.toStringHtml(def), cContent.m_nUserId, nMode));
 			strRtn.append("</h1>");
 		}
 	}
