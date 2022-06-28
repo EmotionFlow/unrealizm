@@ -37,6 +37,7 @@ if (requestId > 0) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
+		<link href="/css/upload-206-1.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-50.js" type="text/javascript"></script>
 
@@ -133,7 +134,7 @@ if (requestId > 0) {
 		<style>
 			body {padding-top: 79px !important; background-color: #f5f5f5; color: #6d6965}
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; color: #6d6965; max-height: none;}
+			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; color: #6d6965; max-height: none; border: solid;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
 			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
@@ -156,12 +157,13 @@ if (requestId > 0) {
 			<%}%>
 			#TwitterListLoading {
 				display: block;
-				width: 15px;
+				width: 100%;
 				height: 15px;
 				margin-right: 3px;
 				background: url(/img/loading.gif);
 				background-size: contain;
 				background-repeat: no-repeat;
+				background-position: center;
 			}
 		</style>
 	</head>
@@ -398,9 +400,14 @@ if (requestId > 0) {
                             background-color: #3498da;
                             color: #ffffff;
                         }
+						#ItemOneCushionVal {
+							padding-top: 0;
+                            justify-content: center;
+						}
 						.OptionPublishOneCushionList {
 							display: flex;
-							margin:	0 12px;
+                            justify-content: center;
+                            margin:	0 12px;
 						}
 						.OptionPublishOneCushion {
                             display: flex;
@@ -412,13 +419,14 @@ if (requestId > 0) {
                         .OneCushionImage{
                             display: block;
                             width: 148px;
-                            height: 70px;
+                            height: 65px;
 							border-radius: 4px;
                             background-size: 90%;
                         }
                         .OneCushionName{
                             display: block;
 							width: 100%;
+							font-size: 12px;
                             text-align: center;
 						}
                         .OneCushionImage.OneCushion {
@@ -434,6 +442,7 @@ if (requestId > 0) {
 
                         .OptionPublishShowLimitList {
                             display: flex;
+							justify-content: center;
                             margin:	0 12px;
                             flex-direction: row;
                             flex-wrap: wrap;
@@ -442,13 +451,13 @@ if (requestId > 0) {
                             display: flex;
                             flex-direction: column;
 							background: #fff;
-                            margin: 2px 2px;
+                            margin: 2px 3px;
                             border-radius: 4px;
                         }
                         .ShowLimitImage {
                             display: block;
                             width: 148px;
-                            height: 70px;
+                            height: 65px;
                             background-size: 90%;
                         }
                         .ShowLimitImage.PoipikuLogin {
@@ -484,11 +493,30 @@ if (requestId > 0) {
                         .ShowLimitName {
                             display: block;
                             width: 100%;
+							font-size: 12px;
                             text-align: center;
                         }
+                        .UploadFile .UoloadCmdOption .OptionOther {
+                            border-top: 1px solid rgb(172, 172, 172);
+						}
+                        #TwitterList {
+							text-align: center;
+                        }
+                        #TwitterList select{
+                            width: 145px;
+                            margin: 2px auto;
+                            font-size: 12px;
+                            padding: 1px;
+						}
+						#TwitterListNotFound {
+                            display: block;
+                            width: 140px;
+                            font-size: 11px;
+                            text-align: left;
+						}
 					</style>
 
-					<div class="OptionItem">
+					<div class="OptionItem" style="font-weight: bold;">
 						<label class="rocker">
 							<input type="checkbox" checked>
 							<span class="switch-left">公開する</span>
@@ -502,7 +530,7 @@ if (requestId > 0) {
 							<span class="switch-right">期間指定</span>
 						</label>
 					</div>
-					<div class="OptionItem" id="ItemTimeLimitedVal" style="display: none;">
+					<div class="OptionItem" id="ItemTimeLimitedVal" style="padding-top: 0; display: none;">
 						<div class="OptionPublish">
 							<%if(Util.isSmartPhone(request)) {%>
 							<div style="display: block;">
@@ -531,13 +559,13 @@ if (requestId > 0) {
 						<div class="OptionPublishOneCushionList">
 							<input type="radio" name="OneCushionVal" value="OneCushion" id="RadioOneCushion">
 							<label for="RadioOneCushion" class="OptionPublishOneCushion">
-								<div class="OneCushionImage OneCushion"></div>
-								<div class="OneCushionName">ワンクッション</div>
+								<span class="OneCushionImage OneCushion"></span>
+								<span class="OneCushionName">ワンクッション</span>
 							</label>
 							<input type="radio" name="OneCushionVal" value="R18" id="RadioR18">
 							<label for="RadioR18" class="OptionPublishOneCushion">
-								<div class="OneCushionImage R18"></div>
-								<div class="OneCushionName">R18</div>
+								<span class="OneCushionImage R18"></span>
+								<span class="OneCushionName">R18</span>
 							</label>
 						</div>
 					</div>
@@ -546,44 +574,60 @@ if (requestId > 0) {
 						<label class="rocker sub" onclick="updateOptionPublishShowLimit()">
 							<input id="OptionPublishShowLimit" type="checkbox" checked>
 							<span class="switch-left">誰でも閲覧OK</span>
-							<span class="switch-right">制限する</span>
+							<span class="switch-right">限定する</span>
 						</label>
 					</div>
 					<div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
 						<div class="OptionPublishShowLimitList">
 							<input type="radio" name="ShowLimitVal" value="PoipikuLogin" id="RadioPoipikuLogin">
 							<label for="RadioPoipikuLogin" class="OptionPublishShowLimit">
-								<div class="ShowLimitImage PoipikuLogin"></div>
-								<div class="ShowLimitName">ログイン限定</div>
+								<span class="ShowLimitImage PoipikuLogin"></span>
+								<span class="ShowLimitName">ログイン限定</span>
 							</label>
 							<input type="radio" name="ShowLimitVal" value="PoipikuFollower" id="RadioPoipikuFollower">
 							<label for="RadioPoipikuFollower" class="OptionPublishShowLimit">
-								<div class="ShowLimitImage PoipikuFollower"></div>
-								<div class="ShowLimitName">こそフォロ限定</div>
+								<span class="ShowLimitImage PoipikuFollower"></span>
+								<span class="ShowLimitName">こそフォロ限定</span>
 							</label>
 							<input type="radio" name="ShowLimitVal" value="TwitterFollower" id="RadioTwitterFollower">
 							<label for="RadioTwitterFollower" class="OptionPublishShowLimit">
-								<div class="ShowLimitImage TwitterFollower"></div>
-								<div class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</div>
+								<span class="ShowLimitImage TwitterFollower"></span>
+								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</span>
 							</label>
 							<input type="radio" name="ShowLimitVal" value="TwitterList" id="RadioTwitterList">
-							<label for="RadioTwitterList" class="OptionPublishShowLimit">
-								<div class="ShowLimitImage TwitterList"></div>
-								<div class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</div>
+							<label for="RadioTwitterList" class="OptionPublishShowLimit" onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)">
+								<span class="ShowLimitImage TwitterList"></span>
+								<span class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</span>
+								<span class="ShowLimitName" id="TwitterList">
+									<span id="TwitterListLoading" style="display: none"></span>
+									<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
+									<select id="EditTwitterList" class="EditPublish" style="display: none;"></select>
+								</span>
 							</label>
 							<input type="radio" name="ShowLimitVal" value="TwitterFollowee" id="RadioTwitterFollowee">
 							<label for="RadioTwitterFollowee" class="OptionPublishShowLimit">
-								<div class="ShowLimitImage TwitterFollowee"></div>
-								<div class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</div>
+								<span class="ShowLimitImage TwitterFollowee"></span>
+								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</span>
 							</label>
 							<input type="radio" name="ShowLimitVal" value="TwitterEach" id="RadioTwitterEach">
 							<label for="RadioTwitterEach" class="OptionPublishShowLimit">
-								<div class="ShowLimitImage TwitterEach"></div>
-								<div class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</div>
+								<span class="ShowLimitImage TwitterEach"></span>
+								<span class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</span>
 							</label>
 						</div>
 					</div>
 
+					<div class="OptionItem">
+						<label class="rocker sub" onclick="updateOptionPublishPassword()">
+							<input id="OptionPublishPassword" type="checkbox" checked>
+							<span class="switch-left">パスワードなし</span>
+							<span class="switch-right">あり</span>
+						</label>
+					</div>
+					<div id="ItemPassword" class="OptionItem" style="padding-top: 0; display: none;">
+						<label for="EditPassword"><i class="fas fa-key" style="margin-right: 5px"></i></label>
+						<input id="EditPassword" class="EditPassword" type="text" maxlength="16" />
+					</div>
 
 					<div class="OptionItem" style="display: <%=nEditorId==Common.EDITOR_TEXT ? "block" : "none"%>">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Text.Direction")%></div>
@@ -592,7 +636,8 @@ if (requestId > 0) {
 							<label><input type="radio" name="EditTextDirection" value="1" /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>
 						</div>
 					</div>
-					<div class="OptionItem">
+
+					<div class="OptionItem" style="display: none;">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Publish")%></div>
 						<div class="OptionPublish">
 							<select id="EditPublish" class="EditPublish" onchange="updatePublish(<%=checkLogin.m_nUserId%>)">
@@ -623,21 +668,7 @@ if (requestId > 0) {
 						</div>
 					</div>
 
-					<div id="ItemPassword" class="OptionItem" style="display: none;">
-						<div class="OptionLabel"></div>
-						<div class="OptionPublish">
-							<input id="EditPassword" class="EditPassword" type="text" maxlength="16" placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
-						</div>
-					</div>
 					<div id="ItemTwitterList" style="display: none;">
-						<div class="OptionItem">
-							<div class="OptionPublish">
-								<span id="TwitterListLoading"></span>
-								<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
-								<select id="EditTwitterList" class="EditPublish" style="display: none;">
-								</select>
-							</div>
-						</div>
 						<div class="OptionItem">
 							<div class="OptionPublish" style="font-size: 11px;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.TwitterListInfo")%></span>
@@ -646,8 +677,8 @@ if (requestId > 0) {
 					</div>
 
 					<%if(nEditorId!=Common.EDITOR_TEXT){%>
-					<div id="ItemShowAllFirst" class="OptionItem" style="display: none">
-						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst")%></div>
+					<div id="ItemShowAllFirst" class="OptionItem" style="margin-top: 14px;">
+						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.ShowAllFirst2")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionShowAllFirst" id="OptionShowAllFirst" value="0" />
 							<label class="onoffswitch-label" for="OptionShowAllFirst">
@@ -658,8 +689,7 @@ if (requestId > 0) {
 					</div>
 					<%}%>
 
-
-					<div class="OptionItem">
+					<div class="OptionItem OptionOther" >
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Recent")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionRecent" id="OptionRecent" value="0" />
@@ -669,7 +699,8 @@ if (requestId > 0) {
 							</label>
 						</div>
 					</div>
-					<div class="OptionItem">
+
+					<div class="OptionItem OptionOther">
 						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.Tweet")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionTweet" id="OptionTweet" value="0" onchange="updateTweetButton()" />
@@ -698,7 +729,7 @@ if (requestId > 0) {
 						<%=_TEX.T("UploadFilePc.Option.TweetImage.Info")%>
 					</div>
 
-					<div id="TwitterCardThumbnailSwitch" class="OptionItem">
+					<div id="TwitterCardThumbnailSwitch" class="OptionItem OptionOther">
 						<div class="OptionLabel">
 							<%=_TEX.T("UploadFilePc.Option.TwitterCardThumbnail")%>
 						</div>
@@ -720,7 +751,8 @@ if (requestId > 0) {
 						<%=_TEX.T("UploadFilePc.Option.TwitterCardThumbnail.Info")%>
 					</div>
 					<%}%>
-					<div class="OptionItem">
+
+					<div class="OptionItem OptionOther">
 						<div class="OptionLabel"><%=_TEX.T("Cheer.Upload.Label")%></div>
 						<div class="onoffswitch OnOff">
 							<input type="checkbox" class="onoffswitch-checkbox" name="OptionCheerNg" id="OptionCheerNg" value="0" />
@@ -730,7 +762,6 @@ if (requestId > 0) {
 							</label>
 						</div>
 					</div>
-				</div>
 
 				<div class="UoloadCmd">
 					<a id="UoloadCmdBtn"
@@ -744,7 +775,7 @@ if (requestId > 0) {
 						onclick="UploadTextCheck(<%=checkLogin.m_nUserId%>)"
 					<%}%>
 					>
-						<%=_TEX.T("UploadFilePc.UploadBtn")%>
+						<i class="fas fa-upload"></i> <%=_TEX.T("UploadFilePc.UploadBtn")%>
 					</a>
 				</div>
 			</div>
