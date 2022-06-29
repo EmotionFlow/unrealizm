@@ -122,7 +122,7 @@ public class UpdateFileOrderC extends Controller {
 
 			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			statement = connection.prepareStatement(sql);
-			statement.setString(1, "UpFileAppendC");
+			statement.setString(1, "UpdateFileOrderC");
 			statement.setInt(2, userId);
 			statement.setInt(3, contentId);
 			statement.setString(4, "{firstNewId: " + firstNewId + ", newIdList: [" + newIdsJson + "]}");
