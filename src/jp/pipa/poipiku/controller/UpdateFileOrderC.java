@@ -53,6 +53,8 @@ public class UpdateFileOrderC extends Controller {
 	public int contentId = 0;
 	public int[] newIdList = null;
 	public int firstNewId = 0;
+	public String newIdsJson = null;
+	public String userAgent = null;
 
 	private ServletContext servletContext = null;
 
@@ -65,16 +67,14 @@ public class UpdateFileOrderC extends Controller {
 		try {
 			userId = Util.toInt(request.getParameter("UID"));
 			contentId = Util.toInt(request.getParameter("IID"));
-			String strJson	= Common.TrimAll(request.getParameter("AID"));
+			newIdsJson	= Common.TrimAll(request.getParameter("AID"));
 			firstNewId = Util.toInt(request.getParameter("FirstNewID"));
 
 			//並び換え、削除後のappend_idリスト
 			ObjectMapper mapper = new ObjectMapper();
-			newIdList = mapper.readValue(strJson, int[].class);
-			//Log.d("m_nUserId:" + m_nUserId);
-			//Log.d("m_nContentId:" + m_nContentId);
-			//Log.d(strJson);
+			newIdList = mapper.readValue(newIdsJson, int[].class);
 
+			userAgent =request.getHeader("user-agent");
 			if(newIdList.length > 0) {
 				nRtn = 0;
 			} else {
@@ -95,6 +95,40 @@ public class UpdateFileOrderC extends Controller {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String sql = "";
+		int historyId = -1;
+
+		// Insert Log
+		try {
+			List<Integer> appendIds = new ArrayList<>();
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql ="SELECT append_id FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, contentId);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				appendIds.add(resultSet.getInt("append_id"));
+			}
+
+			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends) VALUES(?, ?, ?, ?, ?, ?) RETURNING id";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, "UpFileAppendC");
+			statement.setInt(2, userId);
+			statement.setInt(3, contentId);
+			statement.setString(4, "{firstNewId: " + firstNewId + ", newIdList: [" + newIdsJson + "]}");
+			statement.setString(5, userAgent);
+			statement.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				historyId = resultSet.getInt("id");
+			}
+		} catch(Exception e) {
+			Log.d(sql);
+			e.printStackTrace();
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+		}
 
 		try {
 			// regist to DB
@@ -455,6 +489,35 @@ public class UpdateFileOrderC extends Controller {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception e){;}
 		}
+
+		// Update Log
+		if (historyId > -1) {
+			try {
+				List<Integer> appendIds = new ArrayList<>();
+				connection = DatabaseUtil.dataSource.getConnection();
+				sql ="SELECT append_id FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, contentId);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					appendIds.add(resultSet.getInt("append_id"));
+				}
+
+				sql = "UPDATE contents_update_histories SET after_appends=?, updated_at=now() WHERE id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+				statement.setInt(2, historyId);
+				statement.executeUpdate();
+			} catch(Exception e) {
+				Log.d(sql);
+				e.printStackTrace();
+			} finally {
+				try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+				try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+				try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			}
+		}
+
 		return nRtn;
 	}
 
