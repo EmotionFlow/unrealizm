@@ -92,7 +92,7 @@ public final class Common {
 	public static final int OPEN_ID_HIDDEN = 2;
 
 	// Publish ID
-	public static final int PUBLISH_ID_ALL			= 0;	// ALL 限定なし
+	public static final int PUBLISH_ID_ALL			= 0;	// XX限定なし
 	public static final int PUBLISH_ID_R15			= 1;	// R15 廃止予定。safe_filterに統合
 	public static final int PUBLISH_ID_R18			= 2;	// R18 廃止予定。safe_filterに統合
 	public static final int PUBLISH_ID_R18G			= 3;	// R18G 廃止予定。safe_filterに統合
@@ -105,7 +105,7 @@ public final class Common {
 	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト限定
 	//廃止：public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// 期間限定
 	public static final int PUBLISH_ID_T_RT		    = 12;	// ツイッターリツイート限定
-	public static final int PUBLISH_ID_HIDDEN		= 99;	// 非公開 廃止予定。passwordに統合
+	public static final int PUBLISH_ID_HIDDEN		= 99;	// 非公開 廃止予定。open_idに統合
 	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
 	public static final String[] PUBLISH_ID_FILE = {
 			"",								// 0
