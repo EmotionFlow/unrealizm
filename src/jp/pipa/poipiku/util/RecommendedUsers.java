@@ -54,7 +54,7 @@ public final class RecommendedUsers {
 			strSql = "SELECT user_id" +
 					" FROM contents_0000" +
 					" WHERE user_id IN (SELECT user_id FROM vw_hot_contents_hour)" +
-					"  AND publish_id BETWEEN 0 AND 3" +
+					"  AND publish_id = 0" +
 					" GROUP BY user_id" +
 					" HAVING COUNT(*)>2" +
 					" ORDER BY RANDOM()" +
