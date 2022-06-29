@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-	CheckLogin checkLogin = new CheckLogin(request, response);
+CheckLogin checkLogin = new CheckLogin(request, response);
 if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
@@ -33,29 +33,10 @@ switch(cResults.m_cContent.m_nPublishId) {
 		break;
 }
 
-String strFileUrl = "";
-boolean bHidden = false;	// テキスト用カバー画像表示フラグ
-switch(cResults.m_cContent.m_nPublishId) {
-	case Common.PUBLISH_ID_R15:
-	case Common.PUBLISH_ID_R18:
-	case Common.PUBLISH_ID_R18G:
-	case Common.PUBLISH_ID_PASS:
-	case Common.PUBLISH_ID_LOGIN:
-	case Common.PUBLISH_ID_FOLLOWER:
-	case Common.PUBLISH_ID_T_FOLLOWER:
-	case Common.PUBLISH_ID_T_FOLLOWEE:
-	case Common.PUBLISH_ID_T_EACH:
-	case Common.PUBLISH_ID_T_LIST:
-		strFileUrl = Common.PUBLISH_ID_FILE[cResults.m_cContent.m_nPublishId];
-		bHidden = true;
-		break;
-	case Common.PUBLISH_ID_ALL:
-	case Common.PUBLISH_ID_HIDDEN:
-	default:
-		strFileUrl = cResults.m_cContent.m_strFileName;
-		if(strFileUrl.isEmpty()) strFileUrl="/img/poipiku_icon_512x512_2.png";
-		break;
-}
+cResults.m_cContent.setThumb();
+final String strFileUrl = cResults.m_cContent.thumbImgUrl;
+final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
+
 String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);
 String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 10) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
 strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName);

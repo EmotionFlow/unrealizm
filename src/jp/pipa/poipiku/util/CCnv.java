@@ -357,7 +357,7 @@ public final class CCnv {
 	private static void appendContentItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
 		final String strFileUrl;
 		final int publishId = cContent.m_nPublishId;
-		if (publishId == Common.PUBLISH_ID_ALL || publishId == Common.PUBLISH_ID_HIDDEN || cContent.publishAllNum == 1) {
+		if (publishId == Common.PUBLISH_ID_ALL || !cContent.nowAvailable() || cContent.publishAllNum == 1) {
 			if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
 				appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
 			} else {
@@ -375,13 +375,13 @@ public final class CCnv {
 	}
 
 	private static void appendIllustInfoIcon(StringBuilder strRtn,  CContent content) {
-		final boolean isPrivateContent = content != null && content.m_nOpenId == 2;
-		if (isPrivateContent) {
+		if (content == null) return;
+		if (!content.nowAvailable()) {
 			strRtn.append("<div class=\"IllustInfo\">");
-			if (content.m_nPublishId == Common.PUBLISH_ID_HIDDEN) {
-				strRtn.append("<div class=\"PrivateIcon\"></div>");
-			} else {
+			if (content.m_bLimitedTimePublish) {
 				strRtn.append("<div class=\"OutOfPeriodIcon\"></div>");
+			} else {
+				strRtn.append("<div class=\"PrivateIcon\"></div>");
 			}
 			strRtn.append("</div>");
 		}
@@ -457,7 +457,7 @@ public final class CCnv {
 			final ArrayList<String> vEmoji, int nSpMode,
 			final ResourceBundleControl _TEX){
 
-		final boolean isOwnerAndHidden = cContent.m_nUserId==nLoginUserId && cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN;
+		final boolean isOwnerAndHidden = cContent.m_nUserId==nLoginUserId && !cContent.nowAvailable();
 		strRtn.append(
 			String.format(
 				"<div id=\"IllustItemResList_%d\" class=\"IllustItemResList\" %s>",
@@ -981,19 +981,15 @@ public final class CCnv {
 				)
 		);
 		// サムネイル
-		String strFileUrl = "";
-		boolean bHidden = false;	// テキストモード用カバー画像表示フラグ
-
-		final int publishId = cContent.m_nPublishId;
-		if (publishId == Common.PUBLISH_ID_ALL
-				|| publishId == Common.PUBLISH_ID_HIDDEN
-				|| cContent.publishAllNum == 1
-				|| pageCategory == PageCategory.MY_BOX && checkLogin != null && cContent.m_nUserId == checkLogin.m_nUserId
-		) {
+		final String strFileUrl;
+		final boolean bHidden;	// テキストモード用カバー画像表示フラグ
+		if (pageCategory == PageCategory.MY_BOX && cContent.m_nUserId == checkLogin.m_nUserId) {
 			strFileUrl = Common.GetUrl(cContent.m_strFileName);
+			bHidden = false;
 		} else {
-			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-			bHidden = true;
+			cContent.setThumb();
+			strFileUrl = cContent.thumbImgUrl;
+			bHidden = cContent.isHideThumbImg;
 		}
 
 		strRtn.append("</a>");	// IllustInfo
@@ -1014,28 +1010,28 @@ public final class CCnv {
 
 		// 公開非公開マーク
 		if(pageCategory == PageCategory.MY_BOX
-				&& checkLogin!=null
 				&& checkLogin.m_nUserId==cContent.m_nUserId
-				&& (cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN || cContent.m_bLimitedTimePublish)){
+				&& (!cContent.nowAvailable() || cContent.m_bLimitedTimePublish)){
 			strRtn.append("<span class=\"IllustInfoCenter\"" +
-							(cContent.novelDirection==1 ? "style=\"tom:0px;left:0px\"" : "") +
+							(cContent.novelDirection==1 ? "style=\"top:0px;left:0px\"" : "") +
 					">");
 
-			if(cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){
-				strRtn.append("<span class=\"Publish Private\"></span>");
-			} else if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
-				strRtn.append("<span class=\"Publish PublishLimitedPublished\"></span>");
+			if (cContent.m_bLimitedTimePublish) {
+				strRtn.append("<span class=\"Publish PublishLimited" + (cContent.nowAvailable()?"":"Not") + "Published\"></span>");
 			} else {
-				strRtn.append("<span class=\"Publish PublishLimitedNotPublished\"></span>");
+				strRtn.append("<span class=\"Publish Private\"></span>");
 			}
+
 			strRtn.append("</span>"); // IllustInfoCenter
 		}
 
 		// 公開種別マーク
 		strRtn.append("<span class=\"IllustInfoBottom\">");
 		if(cContent.publishAllNum == 1
-				|| pageCategory == PageCategory.MY_BOX && checkLogin!=null && checkLogin.m_nUserId==cContent.m_nUserId){
-			if(!(cContent.m_nPublishId == Common.PUBLISH_ID_ALL || cContent.m_nPublishId == Common.PUBLISH_ID_HIDDEN)) {
+				|| pageCategory == PageCategory.MY_BOX && checkLogin.m_nUserId==cContent.m_nUserId){
+
+			// TODO publish_idの運用方針変更。R18+フォロワー限定のような、複数掛け対応。
+			if(cContent.isValidPublishId() && cContent.m_nPublishId != Common.PUBLISH_ID_ALL) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
 			}
 		}
@@ -1076,7 +1072,7 @@ public final class CCnv {
 			className += " Vertical";
 		}
 		sb.append(String.format("<a class=\"%s\" href=\"%s\" ", className, ILLUST_VIEW));
-		if(!(cContent.m_nOpenId==0 || cContent.m_nOpenId==1)){
+		if(!(cContent.nowAvailable())){
 			sb.append("style=\"background: rgba(0,0,0,.5);\"");
 		}
 		sb.append(">").append(Util.replaceForGenEiFont(cContent.novelHtmlShort));

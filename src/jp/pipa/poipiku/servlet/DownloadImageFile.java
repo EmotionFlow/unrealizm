@@ -118,7 +118,7 @@ public final class DownloadImageFile extends HttpServlet {
 
 				// content main
 				sql = """
-						SELECT c.user_id, c.open_id, c.publish_id, c.file_name, u.ng_download, r.id request_id, r.client_user_id
+						SELECT c.*, u.ng_download, r.id request_id, r.client_user_id
 						FROM contents_0000 c
 							INNER JOIN users_0000 u ON u.user_id = c.user_id
 							LEFT JOIN requests r ON c.content_id = r.content_id
@@ -127,10 +127,10 @@ public final class DownloadImageFile extends HttpServlet {
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, contentId);
 				resultSet = statement.executeQuery();
+
+				CContent content = null;
 				if(resultSet.next()) {
-					fileName = resultSet.getString("file_name");
-					publishId = resultSet.getInt("publish_id");
-					openId = resultSet.getInt("open_id");
+					content = new CContent(resultSet);
 					isOwner = checkLogin.m_nUserId == resultSet.getInt("user_id");
 					isRequestClient = resultSet.getInt("request_id") > 0 && checkLogin.m_nUserId == resultSet.getInt("client_user_id");
 					okDownloadOthers = resultSet.getInt("ng_download") == 1;
@@ -144,7 +144,7 @@ public final class DownloadImageFile extends HttpServlet {
 					if (!okDownloadOthers) {
 						return false;
 					} else {
-						if (openId == Common.OPEN_ID_HIDDEN || publishId == Common.PUBLISH_ID_HIDDEN) return false;
+						if (!content.nowAvailable()) return false;
 					}
 				}
 

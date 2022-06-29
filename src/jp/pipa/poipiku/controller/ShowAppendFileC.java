@@ -115,7 +115,7 @@ public final class ShowAppendFileC {
 			cConn.close();cConn=null;
 
 			// hidden
-			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_HIDDEN){
+			if (!(bRequestClient || bOwner) && !m_cContent.nowAvailable()){
 				return ERR_HIDDEN;
 			}
 
