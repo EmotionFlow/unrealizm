@@ -39,17 +39,28 @@ public class UpFileAppendC extends UpC{
 
 		// Insert Log
 		try {
+			List<String> fileNames = new ArrayList<>();
 			List<Integer> appendIds = new ArrayList<>();
 			cConn = DatabaseUtil.dataSource.getConnection();
-			strSql ="SELECT append_id FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+			strSql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				appendIds.add(0);
+				fileNames.add(cResSet.getString("file_name"));
+			}
+
+			strSql = "SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setInt(1, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
 				appendIds.add(cResSet.getInt("append_id"));
+				fileNames.add(cResSet.getString("file_name"));
 			}
 
-			strSql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends) VALUES(?, ?, ?, ?, ?, ?) RETURNING id";
+			strSql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, "UpFileAppendC");
 			cState.setInt(2, cParam.m_nUserId);
@@ -57,6 +68,7 @@ public class UpFileAppendC extends UpC{
 			cState.setString(4, null);
 			cState.setString(5, cParam.userAgent);
 			cState.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+			cState.setString(7, fileNames.stream().collect(Collectors.joining(",")));
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				historyId = cResSet.getInt("id");
@@ -259,20 +271,33 @@ public class UpFileAppendC extends UpC{
 		// Update Log
 		if (historyId > -1) {
 			try {
+				List<String> fileNames = new ArrayList<>();
 				List<Integer> appendIds = new ArrayList<>();
 				cConn = DatabaseUtil.dataSource.getConnection();
-				strSql ="SELECT append_id FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+				strSql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					appendIds.add(0);
+					fileNames.add(cResSet.getString("file_name"));
+				}
+
+				strSql ="SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, cParam.m_nContentId);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
 					appendIds.add(cResSet.getInt("append_id"));
+					fileNames.add(cResSet.getString("file_name"));
 				}
 
-				strSql = "UPDATE contents_update_histories SET after_appends=?, updated_at=now() WHERE id=?";
+				strSql = "UPDATE contents_update_histories SET after_appends=?, after_files=?, duplicated=?, updated_at=now() WHERE id=?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setString(1, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
-				cState.setInt(2, historyId);
+				cState.setString(2, fileNames.stream().collect(Collectors.joining(",")));
+				cState.setBoolean(3, fileNames.size() != fileNames.stream().distinct().count());
+				cState.setInt(4, historyId);
 				cState.executeUpdate();
 			} catch(Exception e) {
 				Log.d(strSql);

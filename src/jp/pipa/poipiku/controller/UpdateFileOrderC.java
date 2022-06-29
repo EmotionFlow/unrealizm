@@ -99,17 +99,28 @@ public class UpdateFileOrderC extends Controller {
 
 		// Insert Log
 		try {
+			List<String> fileNames = new ArrayList<>();
 			List<Integer> appendIds = new ArrayList<>();
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql ="SELECT append_id FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+			sql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, contentId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				appendIds.add(0);
+				fileNames.add(resultSet.getString("file_name"));
+			}
+
+			sql ="SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, contentId);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				appendIds.add(resultSet.getInt("append_id"));
+				fileNames.add(resultSet.getString("file_name"));
 			}
 
-			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends) VALUES(?, ?, ?, ?, ?, ?) RETURNING id";
+			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			statement = connection.prepareStatement(sql);
 			statement.setString(1, "UpFileAppendC");
 			statement.setInt(2, userId);
@@ -117,6 +128,7 @@ public class UpdateFileOrderC extends Controller {
 			statement.setString(4, "{firstNewId: " + firstNewId + ", newIdList: [" + newIdsJson + "]}");
 			statement.setString(5, userAgent);
 			statement.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+			statement.setString(7, fileNames.stream().collect(Collectors.joining(",")));
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				historyId = resultSet.getInt("id");
@@ -493,20 +505,33 @@ public class UpdateFileOrderC extends Controller {
 		// Update Log
 		if (historyId > -1) {
 			try {
+				List<String> fileNames = new ArrayList<>();
 				List<Integer> appendIds = new ArrayList<>();
 				connection = DatabaseUtil.dataSource.getConnection();
-				sql ="SELECT append_id FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+				sql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, contentId);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					appendIds.add(0);
+					fileNames.add(resultSet.getString("file_name"));
+				}
+
+				sql ="SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, contentId);
 				resultSet = statement.executeQuery();
 				while (resultSet.next()) {
 					appendIds.add(resultSet.getInt("append_id"));
+					fileNames.add(resultSet.getString("file_name"));
 				}
 
-				sql = "UPDATE contents_update_histories SET after_appends=?, updated_at=now() WHERE id=?";
+				sql = "UPDATE contents_update_histories SET after_appends=?, after_files=?, duplicated=?, updated_at=now() WHERE id=?";
 				statement = connection.prepareStatement(sql);
 				statement.setString(1, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
-				statement.setInt(2, historyId);
+				statement.setString(2, fileNames.stream().collect(Collectors.joining(",")));
+				statement.setBoolean(3, fileNames.size() != fileNames.stream().distinct().count());
+				statement.setInt(4, historyId);
 				statement.executeUpdate();
 			} catch(Exception e) {
 				Log.d(sql);
