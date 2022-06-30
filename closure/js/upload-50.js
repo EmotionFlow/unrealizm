@@ -882,7 +882,7 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 					this.setEndpoint('/api/UploadFileFirstF.jsp', id);
 					console.log("UploadFileFirstF");
 				} else {
-					this.setEndpoint('/api/UploadFileAppendF.jsp', id);
+					this.setEndpoint('/f/UploadFileAppendF.jsp', id);
 					console.log("UploadFileAppendF");
 				}
 				this.setParams({
