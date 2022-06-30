@@ -89,7 +89,7 @@ public class UpdateFileOrderC extends Controller {
 		return nRtn;
 	}
 
-	public int GetResults(CheckLogin checkLogin) {
+	public int GetResults(CheckLogin checkLogin, boolean isApp) {
 		int nRtn = -1;
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -120,7 +120,7 @@ public class UpdateFileOrderC extends Controller {
 				fileNames.add(resultSet.getString("file_name"));
 			}
 
-			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING id";
+			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files, app) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			statement = connection.prepareStatement(sql);
 			statement.setString(1, "UpdateFileOrderC");
 			statement.setInt(2, userId);
@@ -129,6 +129,7 @@ public class UpdateFileOrderC extends Controller {
 			statement.setString(5, userAgent);
 			statement.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
 			statement.setString(7, fileNames.stream().collect(Collectors.joining(",")));
+			statement.setBoolean(8, isApp);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				historyId = resultSet.getInt("id");

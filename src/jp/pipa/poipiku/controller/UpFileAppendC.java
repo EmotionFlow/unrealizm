@@ -28,7 +28,7 @@ public class UpFileAppendC extends UpC{
 		m_cServletContext = context;
 	}
 
-	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX, boolean calcSize) {
+	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX, boolean calcSize, boolean isApp) {
 		//Log.d("START UploadFileAppendC");
 		int nRtn = -1;
 		Connection cConn = null;
@@ -60,7 +60,7 @@ public class UpFileAppendC extends UpC{
 				fileNames.add(cResSet.getString("file_name"));
 			}
 
-			strSql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING id";
+			strSql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files, app) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, "UpFileAppendC");
 			cState.setInt(2, cParam.m_nUserId);
@@ -69,6 +69,7 @@ public class UpFileAppendC extends UpC{
 			cState.setString(5, cParam.userAgent);
 			cState.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
 			cState.setString(7, fileNames.stream().collect(Collectors.joining(",")));
+			cState.setBoolean(8, isApp);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
 				historyId = cResSet.getInt("id");
