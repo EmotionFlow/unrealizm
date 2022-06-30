@@ -39,31 +39,10 @@ public class UploadFileTweetC {
 			if(cResSet.next()) {
 				cContent = new CContent(cResSet);
 				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				String strFileName = cContent.m_strFileName;
+				cContent.setThumb();
+				String strFileName = cContent.thumbImgUrl;
+				Log.d(strFileName);
 				if(!strFileName.isEmpty()) {
-					switch(cContent.m_nPublishId) {
-					case Common.PUBLISH_ID_R15:
-					case Common.PUBLISH_ID_R18:
-					case Common.PUBLISH_ID_R18G:
-					case Common.PUBLISH_ID_PASS:
-					case Common.PUBLISH_ID_LOGIN:
-					case Common.PUBLISH_ID_FOLLOWER:
-					case Common.PUBLISH_ID_T_FOLLOWER:
-					case Common.PUBLISH_ID_T_FOLLOWEE:
-					case Common.PUBLISH_ID_T_EACH:
-					case Common.PUBLISH_ID_T_LIST:
-						if (cContent.publishAllNum > 0) {
-							strFileName = cContent.m_strFileName;
-						} else {
-							strFileName = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-						}
-						break;
-					case Common.PUBLISH_ID_ALL:
-					case Common.PUBLISH_ID_HIDDEN:
-					default:
-						strFileName = cContent.m_strFileName;
-						break;
-					}
 					vFileList.add(m_cServletContext.getRealPath(strFileName));
 				}
 			}

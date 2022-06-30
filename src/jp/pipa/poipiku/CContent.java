@@ -239,8 +239,9 @@ public final class CContent {
 			case Common.PUBLISH_ID_T_FOLLOWEE:
 			case Common.PUBLISH_ID_T_EACH:
 			case Common.PUBLISH_ID_T_LIST:
+			case Common.PUBLISH_ID_T_RT:
 				if (publishAllNum == 0) {
-					thumbImgUrl = Common.PUBLISH_ID_FILE[m_nPublishId];
+					thumbImgUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
 					isHideThumbImg = true;
 				} else {
 					thumbImgUrl = m_strFileName + "_640.jpg";
@@ -275,7 +276,8 @@ public final class CContent {
 			case Common.PUBLISH_ID_T_FOLLOWEE:
 			case Common.PUBLISH_ID_T_EACH:
 			case Common.PUBLISH_ID_T_LIST:
-				s = Common.PUBLISH_ID_FILE[m_nPublishId];
+			case Common.PUBLISH_ID_T_RT:
+				s = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
 				break;
 			case Common.PUBLISH_ID_ALL:
 			case Common.PUBLISH_ID_HIDDEN:

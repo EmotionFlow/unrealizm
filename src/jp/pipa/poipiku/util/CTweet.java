@@ -861,6 +861,9 @@ public final class CTweet {
 		case Common.PUBLISH_ID_T_LIST:
 			strState += _TEX.T("UploadFilePc.Option.Publish.T_List");
 			break;
+		case Common.PUBLISH_ID_T_RT:
+			strState += _TEX.T("UploadFilePc.Option.Publish.T_RT");
+			break;
 		case Common.PUBLISH_ID_ALL:
 		case Common.PUBLISH_ID_R15:
 		case Common.PUBLISH_ID_R18:
