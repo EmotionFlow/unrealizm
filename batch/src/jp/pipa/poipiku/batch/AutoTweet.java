@@ -7,6 +7,9 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +44,7 @@ public class AutoTweet extends Batch {
 			cConn = dataSource.getConnection();
 			// SELECT TWITTER TOKEN & OLD TWEET_ID
 			if(_DEBUG) {
-				strSql = "SELECT * FROM tbloauth WHERE flduserid=1851512 AND fldproviderid=?";	// for test
+				strSql = "SELECT * FROM tbloauth WHERE flduserid=5510705 AND fldproviderid=?";	// for test
 			} else {
 				strSql = "SELECT tbloauth.* FROM tbloauth" +
 						" INNER JOIN users_0000 ON users_0000.user_id=tbloauth.flduserid" +
@@ -98,8 +101,16 @@ public class AutoTweet extends Batch {
 				tweet.m_strUserAccessToken = cTweetUser.m_strAccessToken;
 				tweet.m_strSecretToken = cTweetUser.m_strSecretToken;
 
-				final String PROF_PATH = "/var/www/html/poipiku/user_img%02d/".formatted((cTweetUser.m_nUserId % 2) + 2);
-				String strDestFileName = String.format("%s%09d/tweet.png", PROF_PATH, cTweetUser.m_nUserId);
+				final String PROF_PATH = "/var/www/html/poipiku/user_img%02d/%09d/".formatted((cTweetUser.m_nUserId % 2) + 2, cTweetUser.m_nUserId);
+				Path destDir = Paths.get(PROF_PATH);
+				if (!Files.exists(destDir)) {
+					if (!destDir.toFile().mkdir()) {
+						Log.d("mkdir failed " + PROF_PATH);
+						continue;
+					}
+				}
+
+				String strDestFileName = PROF_PATH + "tweet.png";
 				if(_DEBUG) Log.d("strDestFileName:"+strDestFileName);
 				Util.deleteFile(strDestFileName);
 
