@@ -21,6 +21,7 @@ public class UpFileAppendCParam {
 	public boolean m_bPasteUpload = false;
 	String m_strEncodeImg = "";
 	FileItem item_file = null;
+	String userAgent = null;
 
 	UpFileAppendCParam(ServletContext context){
 		m_cServletContext = context;
@@ -64,6 +65,7 @@ public class UpFileAppendCParam {
 
 				nRtn = 0;
 			}
+			userAgent =request.getHeader("user-agent");
 		} catch(FileUploadException e) {
 			e.printStackTrace();
 			nRtn = -1;

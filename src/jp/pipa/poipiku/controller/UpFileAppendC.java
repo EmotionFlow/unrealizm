@@ -17,6 +17,9 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UpFileAppendC extends UpC{
 	protected ServletContext m_cServletContext = null;
@@ -25,14 +28,60 @@ public class UpFileAppendC extends UpC{
 		m_cServletContext = context;
 	}
 
-	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX, boolean calcSize) {
+	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX, boolean calcSize, boolean isApp) {
 		//Log.d("START UploadFileAppendC");
 		int nRtn = -1;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
+		int historyId = -1;
 
+		// Insert Log
+		try {
+			List<String> fileNames = new ArrayList<>();
+			List<Integer> appendIds = new ArrayList<>();
+			cConn = DatabaseUtil.dataSource.getConnection();
+			strSql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			if (cResSet.next()) {
+				appendIds.add(0);
+				fileNames.add(cResSet.getString("file_name"));
+			}
+
+			strSql = "SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+			cState = cConn.prepareStatement(strSql);
+			cState.setInt(1, cParam.m_nContentId);
+			cResSet = cState.executeQuery();
+			while (cResSet.next()) {
+				appendIds.add(cResSet.getInt("append_id"));
+				fileNames.add(cResSet.getString("file_name"));
+			}
+
+			strSql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files, app) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
+			cState = cConn.prepareStatement(strSql);
+			cState.setString(1, "UpFileAppendC");
+			cState.setInt(2, cParam.m_nUserId);
+			cState.setInt(3, cParam.m_nContentId);
+			cState.setString(4, null);
+			cState.setString(5, cParam.userAgent);
+			cState.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+			cState.setString(7, fileNames.stream().collect(Collectors.joining(",")));
+			cState.setBoolean(8, isApp);
+			cResSet = cState.executeQuery();
+			if(cResSet.next()) {
+				historyId = cResSet.getInt("id");
+			}
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+		} finally {
+			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+		}
 
 		try {
 			byte[] imageBinary = null;
@@ -219,6 +268,48 @@ public class UpFileAppendC extends UpC{
 			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 			try{if(cParam.item_file!=null){cParam.item_file.delete();cParam.item_file=null;}}catch(Exception e){;}
 		}
+
+		// Update Log
+		if (historyId > -1) {
+			try {
+				List<String> fileNames = new ArrayList<>();
+				List<Integer> appendIds = new ArrayList<>();
+				cConn = DatabaseUtil.dataSource.getConnection();
+				strSql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cResSet = cState.executeQuery();
+				if (cResSet.next()) {
+					appendIds.add(0);
+					fileNames.add(cResSet.getString("file_name"));
+				}
+
+				strSql ="SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+				cState = cConn.prepareStatement(strSql);
+				cState.setInt(1, cParam.m_nContentId);
+				cResSet = cState.executeQuery();
+				while (cResSet.next()) {
+					appendIds.add(cResSet.getInt("append_id"));
+					fileNames.add(cResSet.getString("file_name"));
+				}
+
+				strSql = "UPDATE contents_update_histories SET after_appends=?, after_files=?, duplicated=?, updated_at=now() WHERE id=?";
+				cState = cConn.prepareStatement(strSql);
+				cState.setString(1, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+				cState.setString(2, fileNames.stream().collect(Collectors.joining(",")));
+				cState.setBoolean(3, fileNames.size() != fileNames.stream().distinct().count());
+				cState.setInt(4, historyId);
+				cState.executeUpdate();
+			} catch(Exception e) {
+				Log.d(strSql);
+				e.printStackTrace();
+			} finally {
+				try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
+				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
+				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			}
+		}
+
 		return nRtn;
 	}
 }
