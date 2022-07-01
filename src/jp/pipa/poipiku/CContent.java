@@ -64,6 +64,8 @@ public final class CContent {
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";    // 最後の/はDBに入っている
 	
 	public boolean isHideThumbImg = false;
+
+	//TODO R18+フォロワー限定のようなケースが出てくるので、リスト化しないといけない気がする。main - subみたいな
 	public String thumbImgUrl = null;
 
 	public enum OpenId implements CodeEnum<CContent.OpenId> {
@@ -228,6 +230,7 @@ public final class CContent {
 
 	public void setThumb() {
 		isHideThumbImg = false;
+		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
 		switch(m_nPublishId) {
 			case Common.PUBLISH_ID_R15:
 			case Common.PUBLISH_ID_R18:
@@ -265,6 +268,7 @@ public final class CContent {
 
 	public String getThumbnailFilePath() {
 		final String s;
+		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
 		switch (m_nPublishId) {
 			case Common.PUBLISH_ID_R15:
 			case Common.PUBLISH_ID_R18:
