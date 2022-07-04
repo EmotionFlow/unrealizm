@@ -67,6 +67,7 @@ public final class CContent {
 
 	//TODO R18+フォロワー限定のようなケースが出てくるので、リスト化しないといけない気がする。main - subみたいな
 	public String thumbImgUrl = null;
+	public String thumbImgSmallUrl = null;
 
 	public enum OpenId implements CodeEnum<CContent.OpenId> {
 		Undefined(-1),
@@ -245,9 +246,11 @@ public final class CContent {
 			case Common.PUBLISH_ID_T_RT:
 				if (publishAllNum == 0) {
 					thumbImgUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
+					thumbImgSmallUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg";
 					isHideThumbImg = true;
 				} else {
 					thumbImgUrl = m_strFileName + "_640.jpg";
+					thumbImgSmallUrl = m_strFileName + "_360.jpg";
 					isHideThumbImg = false;
 				}
 				break;
@@ -260,6 +263,7 @@ public final class CContent {
 					thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
 				} else {
 					thumbImgUrl = m_strFileName + "_640.jpg";
+					thumbImgSmallUrl = m_strFileName + "_360.jpg";
 				}
 				break;
 		}

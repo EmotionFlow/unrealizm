@@ -988,7 +988,7 @@ public final class CCnv {
 			bHidden = false;
 		} else {
 			cContent.setThumb();
-			strFileUrl = cContent.thumbImgUrl;
+			strFileUrl = cContent.thumbImgSmallUrl;
 			bHidden = cContent.isHideThumbImg;
 		}
 
@@ -998,9 +998,9 @@ public final class CCnv {
 			// 画像
 			strRtn.append(String.format("<a class=\"IllustThumbImg\" href=\"%s\" ", ILLUST_VIEW));
 			if(cContent.m_nOpenId==0 || cContent.m_nOpenId==1){
-				strRtn.append(String.format("style=\"background-image:url('%s_360.jpg')\">", strFileUrl));
+				strRtn.append(String.format("style=\"background-image:url('%s')\">", strFileUrl));
 			} else {
-				strRtn.append(String.format("style=\"background: rgba(0,0,0,.7) url('%s_360.jpg');", strFileUrl))
+				strRtn.append(String.format("style=\"background: rgba(0,0,0,.7) url('%s');", strFileUrl))
 						.append("background-blend-mode: darken;background-size: cover;background-position: 50% 50%;\">");
 			}
 		} else {
