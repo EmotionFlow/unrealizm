@@ -858,7 +858,8 @@ Decoration
 	box-sizing: border-box;
 	padding: 0;
 	position: absolute;
-	top: 0;
+	top: 3px;
+	left: 6px;
 }
 .IllustThumb .IllustInfoBottom, .IllustItemThumb .IllustInfoBottom{
 	display: block;
@@ -980,24 +981,19 @@ Decoration
 }
 
 .IllustThumb .PublishLimitedNotPublished{
-	width: 40px;
-	height: 40px;
 	border-radius: 20px;
-		background-size: contain;
-		background-image: url(/img/ico_clock.png);
-		background-color: #a0a0a0;
-		background-repeat: no-repeat;
+	background-size: contain;
+	background-image: url(/img/ico_clock.png);
+	background-color: #a0a0a0;
+	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	opacity: 0.75;
 }
 .IllustThumb .Private {
-	width: 40px;
-	height: 40px;
-	border-radius: 20px;
-		background-size: contain;
-		background-image: url(/img/ico_visible.png);
-		background-color: #a0a0a0;
-		background-repeat: no-repeat;
+	background-size: contain;
+	background-image: url(/img/ico_visible.png);
+	background-color: #a0a0a0;
+	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	opacity: 0.75;
 }

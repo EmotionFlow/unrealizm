@@ -1,13 +1,15 @@
 package jp.pipa.poipiku.batch;
 
 import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.ImageMagickUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,7 +44,7 @@ public class AutoTweet extends Batch {
 			cConn = dataSource.getConnection();
 			// SELECT TWITTER TOKEN & OLD TWEET_ID
 			if(_DEBUG) {
-				strSql = "SELECT * FROM tbloauth WHERE flduserid=1851512 AND fldproviderid=?";	// for test
+				strSql = "SELECT * FROM tbloauth WHERE flduserid=5510705 AND fldproviderid=?";	// for test
 			} else {
 				strSql = "SELECT tbloauth.* FROM tbloauth" +
 						" INNER JOIN users_0000 ON users_0000.user_id=tbloauth.flduserid" +
@@ -79,28 +81,8 @@ public class AutoTweet extends Batch {
 				cResSet = cState.executeQuery();
 				while(cResSet.next()) {
 					CContent cContent = new CContent(cResSet);
-					String strFileUrl = "";
-					switch(cContent.m_nPublishId) {
-						case Common.PUBLISH_ID_R15:
-						case Common.PUBLISH_ID_R18:
-						case Common.PUBLISH_ID_R18G:
-						case Common.PUBLISH_ID_PASS:
-						case Common.PUBLISH_ID_LOGIN:
-						case Common.PUBLISH_ID_FOLLOWER:
-						case Common.PUBLISH_ID_T_FOLLOWER:
-						case Common.PUBLISH_ID_T_FOLLOWEE:
-						case Common.PUBLISH_ID_T_EACH:
-						case Common.PUBLISH_ID_T_LIST:
-							strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-							break;
-						case Common.PUBLISH_ID_ALL:
-						case Common.PUBLISH_ID_HIDDEN:
-						default:
-							strFileUrl = cContent.m_strFileName;
-							break;
-					}
+					String strFileUrl = cContent.getThumbnailFilePath();
 					if(!strFileUrl.isEmpty()) {
-						strFileUrl = String.format("%s%s_360.jpg", SRC_IMG_PATH, strFileUrl);
 						if(_DEBUG) Log.d("m_nPublishId:"+cContent.m_nPublishId, "m strFileName:"+strFileUrl);
 						cTweetUser.m_vFileName.add(strFileUrl);
 					}
@@ -119,8 +101,16 @@ public class AutoTweet extends Batch {
 				tweet.m_strUserAccessToken = cTweetUser.m_strAccessToken;
 				tweet.m_strSecretToken = cTweetUser.m_strSecretToken;
 
-				final String PROF_PATH = "/var/www/html/poipiku/user_img%02d/".formatted((cTweetUser.m_nUserId % 2) + 2);
-				String strDestFileName = String.format("%s%09d/tweet.png", PROF_PATH, cTweetUser.m_nUserId);
+				final String PROF_PATH = "/var/www/html/poipiku/user_img%02d/%09d/".formatted((cTweetUser.m_nUserId % 2) + 2, cTweetUser.m_nUserId);
+				Path destDir = Paths.get(PROF_PATH);
+				if (!Files.exists(destDir)) {
+					if (!destDir.toFile().mkdir()) {
+						Log.d("mkdir failed " + PROF_PATH);
+						continue;
+					}
+				}
+
+				String strDestFileName = PROF_PATH + "tweet.png";
 				if(_DEBUG) Log.d("strDestFileName:"+strDestFileName);
 				Util.deleteFile(strDestFileName);
 

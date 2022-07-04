@@ -1,7 +1,6 @@
 package jp.pipa.poipiku.batch;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,13 +17,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 import jp.pipa.poipiku.CContent;
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
 	ResourceBundleControl _TEX = null;
-	static final String SRC_IMG_PATH = "/var/www/html/poipiku";    // 最後の/はDBに入っている
 
 
 	private static Integer updateContentId(int nOldContentId) {
@@ -165,28 +162,8 @@ public class LimitedTimePublish extends Batch {
 					cContent.m_cUser.m_strNickName = cResSet.getString("nickname");
 					String strFileName = cContent.m_strFileName;
 					if (!strFileName.isEmpty()) {
-						switch (cContent.m_nPublishId) {
-							case Common.PUBLISH_ID_R15:
-							case Common.PUBLISH_ID_R18:
-							case Common.PUBLISH_ID_R18G:
-							case Common.PUBLISH_ID_PASS:
-							case Common.PUBLISH_ID_LOGIN:
-							case Common.PUBLISH_ID_FOLLOWER:
-							case Common.PUBLISH_ID_T_FOLLOWER:
-							case Common.PUBLISH_ID_T_FOLLOWEE:
-							case Common.PUBLISH_ID_T_EACH:
-							case Common.PUBLISH_ID_T_LIST:
-								strFileName = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-								break;
-							case Common.PUBLISH_ID_ALL:
-							case Common.PUBLISH_ID_HIDDEN:
-							default:
-								strFileName = cContent.m_strFileName;
-								break;
-						}
-
+						strFileName = cContent.getThumbnailFilePath();
 						if (!strFileName.isEmpty()) {
-							strFileName = String.format("%s%s_360.jpg", SRC_IMG_PATH, strFileName);
 							vFileList.add(strFileName);
 						}
 					}

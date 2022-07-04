@@ -33,25 +33,9 @@ default:
 	break;
 }
 
-boolean bHidden = false;	// テキスト用カバー画像表示フラグ
-switch(cResults.m_cContent.m_nPublishId) {
-case Common.PUBLISH_ID_R15:
-case Common.PUBLISH_ID_R18:
-case Common.PUBLISH_ID_R18G:
-case Common.PUBLISH_ID_PASS:
-case Common.PUBLISH_ID_LOGIN:
-case Common.PUBLISH_ID_FOLLOWER:
-case Common.PUBLISH_ID_T_FOLLOWER:
-case Common.PUBLISH_ID_T_FOLLOWEE:
-case Common.PUBLISH_ID_T_EACH:
-case Common.PUBLISH_ID_T_LIST:
-	bHidden = true;
-	break;
-case Common.PUBLISH_ID_ALL:
-case Common.PUBLISH_ID_HIDDEN:
-default:
-	break;
-}
+cResults.m_cContent.setThumb();
+//final String strFileUrl = cResults.m_cContent.thumbImgUrl;
+final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
 
 String strTitle = CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);

@@ -61,6 +61,33 @@ public final class CContent {
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
+	static final String SRC_IMG_PATH = "/var/www/html/poipiku";    // 最後の/はDBに入っている
+	
+	public boolean isHideThumbImg = false;
+
+	//TODO R18+フォロワー限定のようなケースが出てくるので、リスト化しないといけない気がする。main - subみたいな
+	public String thumbImgUrl = null;
+
+	public enum OpenId implements CodeEnum<CContent.OpenId> {
+		Undefined(-1),
+		Open(0),
+		OpenAvoidNewArrivals(1),
+		Hide(2);
+		private final int code;
+		private OpenId(int code) {
+			this.code = code;
+		}
+
+		static public CContent.OpenId byCode(int _code) {
+			return CodeEnum.getEnum(CContent.OpenId.class, _code);
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+	}
+
 	public enum ColumnType implements CodeEnum<CContent.ColumnType> {
 		Undefined(-1),
 		Description(0);
@@ -184,6 +211,89 @@ public final class CContent {
 		set(resultSet);
 		updateDateTimeWithTimeZoneOffset(createdAt, timeZoneOffset);
 		updateDateTimeWithTimeZoneOffset(updatedAt, timeZoneOffset);
+	}
+
+	public boolean nowAvailable() {
+		return (m_nOpenId == OpenId.Open.getCode() ||m_nOpenId == OpenId.OpenAvoidNewArrivals.getCode());
+	}
+
+	public boolean isValidPublishId() {
+		return m_nPublishId==Common.PUBLISH_ID_ALL
+				|| m_nPublishId==Common.PUBLISH_ID_LOGIN
+				|| m_nPublishId==Common.PUBLISH_ID_FOLLOWER
+				|| m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER
+				|| m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE
+				|| m_nPublishId==Common.PUBLISH_ID_T_EACH
+				|| m_nPublishId==Common.PUBLISH_ID_T_LIST
+				|| m_nPublishId==Common.PUBLISH_ID_T_RT;
+	}
+
+	public void setThumb() {
+		isHideThumbImg = false;
+		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
+		switch(m_nPublishId) {
+			case Common.PUBLISH_ID_R15:
+			case Common.PUBLISH_ID_R18:
+			case Common.PUBLISH_ID_R18G:
+			case Common.PUBLISH_ID_PASS:
+			case Common.PUBLISH_ID_LOGIN:
+			case Common.PUBLISH_ID_FOLLOWER:
+			case Common.PUBLISH_ID_T_FOLLOWER:
+			case Common.PUBLISH_ID_T_FOLLOWEE:
+			case Common.PUBLISH_ID_T_EACH:
+			case Common.PUBLISH_ID_T_LIST:
+			case Common.PUBLISH_ID_T_RT:
+				if (publishAllNum == 0) {
+					thumbImgUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
+					isHideThumbImg = true;
+				} else {
+					thumbImgUrl = m_strFileName + "_640.jpg";
+					isHideThumbImg = false;
+				}
+				break;
+			case Common.PUBLISH_ID_HIDDEN:
+				thumbImgUrl="/img/poipiku_icon_512x512_2.png";
+				break;
+			case Common.PUBLISH_ID_ALL:
+			default:
+				if (m_strFileName.isEmpty()) {
+					thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
+				} else {
+					thumbImgUrl = m_strFileName + "_640.jpg";
+				}
+				break;
+		}
+	}
+
+
+	public String getThumbnailFilePath() {
+		final String s;
+		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
+		switch (m_nPublishId) {
+			case Common.PUBLISH_ID_R15:
+			case Common.PUBLISH_ID_R18:
+			case Common.PUBLISH_ID_R18G:
+			case Common.PUBLISH_ID_PASS:
+			case Common.PUBLISH_ID_LOGIN:
+			case Common.PUBLISH_ID_FOLLOWER:
+			case Common.PUBLISH_ID_T_FOLLOWER:
+			case Common.PUBLISH_ID_T_FOLLOWEE:
+			case Common.PUBLISH_ID_T_EACH:
+			case Common.PUBLISH_ID_T_LIST:
+			case Common.PUBLISH_ID_T_RT:
+				s = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
+				break;
+			case Common.PUBLISH_ID_ALL:
+			case Common.PUBLISH_ID_HIDDEN:
+			default:
+				s = m_strFileName;
+				break;
+		}
+		if (!s.isEmpty()) {
+			return String.format("%s%s_360.jpg", SRC_IMG_PATH, s);
+		} else {
+			return "";
+		}
 	}
 
 	private void updateDateTimeWithTimeZoneOffset(Timestamp timestamp, float timeZoneOffset){

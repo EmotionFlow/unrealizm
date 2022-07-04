@@ -92,20 +92,20 @@ public final class Common {
 	public static final int OPEN_ID_HIDDEN = 2;
 
 	// Publish ID
-	public static final int PUBLISH_ID_ALL			= 0;	// ALL
-	public static final int PUBLISH_ID_R15			= 1;	// R15
-	public static final int PUBLISH_ID_R18			= 2;	// R18
-	public static final int PUBLISH_ID_R18G			= 3;	// R18G
-	public static final int PUBLISH_ID_PASS			= 4;	// パスワード
-	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン
-	public static final int PUBLISH_ID_FOLLOWER		= 6;	// ふぁぼ限定
-	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー
-	public static final int PUBLISH_ID_T_FOLLOWEE	= 8;	// ツイッターフォロー
-	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー
-	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト
-	//廃止：public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// 期間限定
-	public static final int PUBLISH_ID_T_RT		    = 12;	// ツイッターリツイート
-	public static final int PUBLISH_ID_HIDDEN		= 99;	// 非公開
+	public static final int PUBLISH_ID_ALL			= 0;	// XX限定なし
+	public static final int PUBLISH_ID_R15			= 1;	// [廃止予定] R15。safe_filterに統合
+	public static final int PUBLISH_ID_R18			= 2;	// [廃止予定] R18。safe_filterに統合
+	public static final int PUBLISH_ID_R18G			= 3;	// [廃止予定] R18G。safe_filterに統合
+	public static final int PUBLISH_ID_PASS			= 4;	// [廃止予定] パスワード。passwordに統合
+	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン限定
+	public static final int PUBLISH_ID_FOLLOWER		= 6;	// こそフォロ限定
+	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー限定
+	public static final int PUBLISH_ID_T_FOLLOWEE	= 8;	// ツイッターフォロー限定
+	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー限定
+	public static final int PUBLISH_ID_T_LIST		= 10;	// ツイッターリスト限定
+	//廃止：public static final int PUBLISH_ID_LIMITED_TIME	= 11;	// [廃止済] 期間限定
+	public static final int PUBLISH_ID_T_RT		    = 12;	// ツイッターリツイート限定
+	public static final int PUBLISH_ID_HIDDEN		= 99;	// [廃止予定] 非公開。open_idに統合
 	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
 	public static final String[] PUBLISH_ID_FILE = {
 			"",								// 0

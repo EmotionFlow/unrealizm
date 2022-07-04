@@ -57,7 +57,7 @@ public class RetweetContentC extends Controller {
 		long retweetId = -1;
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "SELECT tweet_id FROM contents_0000 WHERE content_id=? AND open_id<>2 AND publish_id<>99";
+			sql = "SELECT tweet_id FROM contents_0000 WHERE content_id=? AND open_id<>2";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, contentId);
 			resultSet = statement.executeQuery();
