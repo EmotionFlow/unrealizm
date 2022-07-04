@@ -984,11 +984,11 @@ public final class CCnv {
 		final String strFileUrl;
 		final boolean bHidden;	// テキストモード用カバー画像表示フラグ
 		if (pageCategory == PageCategory.MY_BOX && cContent.m_nUserId == checkLogin.m_nUserId) {
-			strFileUrl = Common.GetUrl(cContent.m_strFileName);
+			strFileUrl = Common.GetUrl(cContent.m_strFileName + "_640.jpg");
 			bHidden = false;
 		} else {
 			cContent.setThumb();
-			strFileUrl = cContent.thumbImgSmallUrl;
+			strFileUrl = cContent.thumbImgUrl;
 			bHidden = cContent.isHideThumbImg;
 		}
 
