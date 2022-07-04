@@ -285,7 +285,7 @@ public final class CContent {
 			case Common.PUBLISH_ID_T_EACH:
 			case Common.PUBLISH_ID_T_LIST:
 			case Common.PUBLISH_ID_T_RT:
-				s = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
+				s = Common.PUBLISH_ID_FILE[m_nPublishId];
 				break;
 			case Common.PUBLISH_ID_ALL:
 			case Common.PUBLISH_ID_HIDDEN:
