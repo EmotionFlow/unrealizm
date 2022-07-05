@@ -682,6 +682,7 @@ function updateOptionPublishOneCushion(){
 	} else {
 		$ItemOneCushionVal.slideUp(0);
 	}
+	updateShowAllFirst();
 }
 
 function updateOptionPublishPassword(){
@@ -692,6 +693,7 @@ function updateOptionPublishPassword(){
 	} else {
 		$ItemPassword.slideUp(0);
 	}
+	updateShowAllFirst();
 }
 
 function updateOptionPublishShowLimit(){
@@ -701,6 +703,31 @@ function updateOptionPublishShowLimit(){
 		$ItemOneCushionVal.slideDown(slideSpeed);
 	} else {
 		$ItemOneCushionVal.slideUp(0);
+	}
+	updateShowAllFirst();
+}
+
+function updateOptionTweet(){
+	const $OptionItemTweetImage = $("#OptionItemTweetImage");
+	if (!$OptionItemTweetImage) return;
+	const slideSpeed = 500;
+	if($('#OptionTweet').prop('checked')){
+		$OptionItemTweetImage.slideDown(slideSpeed);
+	} else {
+		$OptionItemTweetImage.slideUp(0);
+	}
+}
+
+
+function updateShowAllFirst() {
+	if (
+		!$("#OptionPublishOneCushion").prop("checked") ||
+		!$("#OptionPublishShowLimit").prop("checked") ||
+		!$("#OptionPublishPassword").prop("checked")
+	) {
+		$("#OptionItemShowAllFirst").show();
+	} else {
+		$("#OptionItemShowAllFirst").hide();
 	}
 }
 
@@ -1551,3 +1578,66 @@ function switchTransTxt(name, langId) {
 	$Edit.val(txt ?  txt : "");
 	selected[name] = langId;
 }
+
+function updateCheckbox($checkbox, checked) {
+	if ($checkbox) {
+		if (checked) {
+			$checkbox.attr('checked', true).prop('checked', true).change();
+		} else {
+			$checkbox.removeAttr('checked').prop('checked', false).change();
+		}
+	}
+}
+
+function selectRadio(id) {
+	$("#"+id).attr("checked", true);
+}
+
+const UPLOAD_PARAMS_DEFAULT = {
+	"OptionPublish": {"type": "checkbox", "value": true},
+	"OptionLimitedTimePublish": {"type": "checkbox", "value": true},
+	"OptionPublishOneCushion": {"type": "checkbox", "value": true},
+	"OneCushionVal": {"type": "radio", "value": "RadioOneCushion"},
+	"OptionPublishShowLimit": {"type": "checkbox", "value": true},
+	"RadioShowLimitVal": {"type": "radio", "value": "RadioPoipikuLogin"},
+	"OptionPublishPassword": {"type": "checkbox", "value": true},
+	"EditPassword": {"type": "textbox", "value": ""},
+	"ItemShowAllFirst": {"type": "checkbox", "value": false},
+	"OptionTweet": {"type": "checkbox", "value": false},
+	"OptionTweetImage": {"type": "checkbox", "value": true},
+	"OptionTwitterCardThumbnail": {"type": "checkbox", "value": true},
+	"OptionCheerNg": {"type": "checkbox", "value": true},
+	"OptionRecent": {"type": "checkbox", "value": true},
+}
+
+const UPLOAD_PARAMS_KEY = 'UPLOAD_PARAMS';
+
+function setUploadParamsToLocalStorage() {
+	let obj = UPLOAD_PARAMS_DEFAULT;
+	const setjson = JSON.stringify(obj);
+	localStorage.setItem(UPLOAD_PARAMS_KEY, setjson);
+}
+
+function getUploadParamsFromLocalStorage() {
+	const getjson = localStorage.getItem(UPLOAD_PARAMS_KEY);
+	if (getjson) {
+		return JSON.parse(getjson);
+	} else {
+		return null;
+	}
+}
+
+function initUploadParams() {
+	for (let [key, val] of Object.entries(UPLOAD_PARAMS_DEFAULT)) {
+		const type = val.type;
+		if (type === 'checkbox') {
+			updateCheckbox($("#" + key), val.value);
+		} else if (type === 'textbox') {
+			$("#" + key).val(val.value);
+		} else if (type === 'radio') {
+			selectRadio(val.value);
+		}
+	}
+}
+
+
