@@ -108,8 +108,12 @@ public final class UpdateC extends UpC {
 					"genre_id=?", "category_id=?", "open_id=?", "description=?", "private_note=?",
 					"tag_list=?", "publish_id=?",
 					"publish_all_num=?", "password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
-					"not_recently=?", "limited_time_publish=?", "updated_at=NULL"
+					"not_recently=?", "limited_time_publish=?"
 			));
+
+			if (checkLogin.m_nPassportId==Common.PASSPORT_OFF) {
+				lColumns.add("updated_at=NULL");
+			}
 
 			if(!cParam.m_bLimitedTimePublish){
 				// これまで非公開で、今後公開したい。
