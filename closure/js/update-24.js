@@ -251,6 +251,7 @@ function UpdateFile(user_id, content_id) {
 		"PPW":strPassword,
 		"PLD":nTwListId,
 		"LTP":nLimitedTime,
+		"REC":nRecent,
 		"PST":strPublishStart,
 		"PED":strPublishEnd,
 		"TWT":getTweetSetting(),
