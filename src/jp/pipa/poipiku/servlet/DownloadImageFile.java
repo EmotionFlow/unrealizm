@@ -148,8 +148,12 @@ public final class DownloadImageFile extends HttpServlet {
 					}
 				}
 
+//				Log.d(content.m_strFileName);
+
 				// 存在確認
-				if(fileName == null || fileName.isEmpty()) return false;
+				if(content.m_strFileName == null || content.m_strFileName.isEmpty()) return false;
+
+				fileName = content.m_strFileName;
 
 				if(appendId>0) {
 					fileName = "";
