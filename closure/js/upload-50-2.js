@@ -1612,23 +1612,63 @@ const UPLOAD_PARAMS_DEFAULT = {
 
 const UPLOAD_PARAMS_KEY = 'UPLOAD_PARAMS';
 
-function setUploadParamsToLocalStorage() {
-	let obj = UPLOAD_PARAMS_DEFAULT;
-	const setjson = JSON.stringify(obj);
-	localStorage.setItem(UPLOAD_PARAMS_KEY, setjson);
+function saveUploadParamsToLocalStorage() {
+	let uploadParams = UPLOAD_PARAMS_DEFAULT;
+
+	for (let [key, val] of Object.entries(UPLOAD_PARAMS_DEFAULT)) {
+		const type = val.type;
+		const $el = $("#" + key)
+		let v;
+		if (type === 'checkbox') {
+			v = $el.prop('checked');
+		} else if (type === 'textbox') {
+			v = $el.val();
+		} else if (type === 'radio') {
+			let radioValue = $("input[name='" + key + "']:checked").val();
+			if (radioValue){
+				v = radioValue;
+			} else {
+				v = val.value;
+			}
+		}
+		uploadParams[key].value = v;
+	}
+
+
+	const json = JSON.stringify(uploadParams);
+	localStorage.setItem(UPLOAD_PARAMS_KEY, json);
 }
 
-function getUploadParamsFromLocalStorage() {
-	const getjson = localStorage.getItem(UPLOAD_PARAMS_KEY);
-	if (getjson) {
-		return JSON.parse(getjson);
+function loadUploadParamsFromLocalStorage() {
+	const json = localStorage.getItem(UPLOAD_PARAMS_KEY);
+	if (json) {
+		let result;
+		try {
+			result = JSON.parse(json);
+		} catch (e) {
+			console.log(e);
+			result = null;
+		}
+		return result;
 	} else {
 		return null;
 	}
 }
 
 function initUploadParams() {
-	for (let [key, val] of Object.entries(UPLOAD_PARAMS_DEFAULT)) {
+	let uploadParams = UPLOAD_PARAMS_DEFAULT;
+	const loadParams = loadUploadParamsFromLocalStorage();
+	try {
+		if (loadParams && loadParams !== 'undefined' && loadParams !== 'null') {
+			for (let [key, _] of Object.entries(loadParams)) {
+				uploadParams[key].value = loadParams[key].value;
+			}
+		}
+	} catch (e) {
+		console.log(e);
+	}
+	console.log(uploadParams);
+	for (let [key, val] of Object.entries(uploadParams)) {
 		const type = val.type;
 		if (type === 'checkbox') {
 			updateCheckbox($("#" + key), val.value);
@@ -1638,6 +1678,9 @@ function initUploadParams() {
 			selectRadio(val.value);
 		}
 	}
+	updateOptionPublishOneCushion();
+	updateOptionPublishShowLimit();
+	updateOptionPublishPassword();
 }
 
 
