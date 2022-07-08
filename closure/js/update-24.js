@@ -1,4 +1,5 @@
 const uploadListId = '.qq-upload-list-selector.qq-upload-list';
+const pasteListId = '#PasteZone';
 //並べ替え情報の送信
 function UpdateFileOrderAjax(user_id, content_id) {
 	let json_array = [];
@@ -19,13 +20,14 @@ function UpdateFileOrderAjax(user_id, content_id) {
 	});
 }
 
-function UpdatePasteOrderAjax(user_id, content_id, append_ids){
+function UpdatePasteOrderAjax(user_id, content_id, append_ids, firstNewID){
 	return $.ajax({
 		"type": "post",
 		"data": {
 			UID: user_id,
 			IID: content_id,
 			AID: JSON.stringify(append_ids),
+			FirstNewID: firstNewID || 0,
 		},
 		"url": "/f/UpdateFileOrderF.jsp",
 		"dataType": "json",
@@ -561,8 +563,9 @@ function createUpdatePaste(){
 				$.when.apply($, aryFunc)
 				.then(function(){
 					var json_array = [];
+					let firstNewID = null;
 					$.each($('#PasteZone').sortable('toArray'), function(i, item) {
-						json_array.push(parseInt(item))
+						json_array.push(parseInt(item));
 					});
 					for (let i = 0; i < arguments.length; i++) {
 						let aid;
@@ -573,12 +576,13 @@ function createUpdatePaste(){
 						}
 						if(aid >= 0){
 							json_array[i] = aid;
+							if (!firstNewID || firstNewID > aid) firstNewID = aid;
 						}
 						if(json_array.length === 1){
 							break;
 						}
 					}
-					return UpdatePasteOrderAjax(user_id, data.content_id, json_array);
+					return UpdatePasteOrderAjax(user_id, data.content_id, json_array, firstNewID);
 				},function(err){errorMsg(-10);})
 				.then(fTweet, function(err){errorMsg(-11)})
 				.then(
