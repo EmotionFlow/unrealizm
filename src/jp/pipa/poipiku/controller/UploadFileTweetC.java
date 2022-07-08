@@ -40,7 +40,7 @@ public class UploadFileTweetC {
 				cContent = new CContent(cResSet);
 				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
 				cContent.setThumb();
-				String strFileName = cContent.thumbImgUrl;
+				String strFileName = cContent.thumbImgUrlList.get(0);
 				Log.d(strFileName);
 				if(!strFileName.isEmpty()) {
 					vFileList.add(m_cServletContext.getRealPath(strFileName));

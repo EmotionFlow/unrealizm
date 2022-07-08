@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.pipa.poipiku.util.Util;
 
@@ -66,8 +67,8 @@ public final class CContent {
 	public boolean isHideThumbImg = false;
 
 	//TODO R18+フォロワー限定のようなケースが出てくるので、リスト化しないといけない気がする。main - subみたいな
-	public String thumbImgUrl = null;
-	public String thumbImgSmallUrl = null;
+	public List<String> thumbImgUrlList = null;
+	public List<String> thumbImgSmallUrlList = null;
 
 	public enum OpenId implements CodeEnum<CContent.OpenId> {
 		Undefined(-1),
@@ -230,13 +231,29 @@ public final class CContent {
 	}
 
 	public void setThumb() {
-		isHideThumbImg = false;
+
 		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
+
+		thumbImgUrlList = new ArrayList<>();
+		thumbImgSmallUrlList = new ArrayList<>();
+
+		// 非公開
+		if (m_nOpenId == Common.OPEN_ID_HIDDEN) {
+			thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
+			thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
+			isHideThumbImg = true;
+			return;
+		}
+
+		// 最初の１枚公開 or ワンクッションや閲覧制限無しの場合はコンテンツのサムネを表示する
+		if (publishAllNum > 0 || (m_nSafeFilter == Common.SAFE_FILTER_ALL && m_nPublishId == Common.PUBLISH_ID_ALL)) {
+			thumbImgUrlList.add(m_strFileName + "_640.jpg");
+			thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
+			isHideThumbImg = false;
+		}
+
+		// 閲覧制限サムネ
 		switch(m_nPublishId) {
-			case Common.PUBLISH_ID_R15:
-			case Common.PUBLISH_ID_R18:
-			case Common.PUBLISH_ID_R18G:
-			case Common.PUBLISH_ID_PASS:
 			case Common.PUBLISH_ID_LOGIN:
 			case Common.PUBLISH_ID_FOLLOWER:
 			case Common.PUBLISH_ID_T_FOLLOWER:
@@ -244,28 +261,37 @@ public final class CContent {
 			case Common.PUBLISH_ID_T_EACH:
 			case Common.PUBLISH_ID_T_LIST:
 			case Common.PUBLISH_ID_T_RT:
-				if (publishAllNum == 0) {
-					thumbImgUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
-					thumbImgSmallUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg";
-					isHideThumbImg = true;
-				} else {
-					thumbImgUrl = m_strFileName + "_640.jpg";
-					thumbImgSmallUrl = m_strFileName + "_360.jpg";
-					isHideThumbImg = false;
-				}
+				thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg");
+				thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg");
+				isHideThumbImg = true;
 				break;
-			case Common.PUBLISH_ID_HIDDEN:
-				thumbImgUrl="/img/poipiku_icon_512x512_2.png";
-				break;
-			case Common.PUBLISH_ID_ALL:
-			default:
-				if (m_strFileName.isEmpty()) {
-					thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
-				} else {
-					thumbImgUrl = m_strFileName + "_640.jpg";
-					thumbImgSmallUrl = m_strFileName + "_360.jpg";
-				}
-				break;
+		}
+
+		// ワンクッション・R18サムネ
+		if (m_nSafeFilter == Common.SAFE_FILTER_R15 || m_nSafeFilter == Common.SAFE_FILTER_R18 || m_nSafeFilter == Common.SAFE_FILTER_R18G) {
+			thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nSafeFilter] + "_640.jpg");
+			thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nSafeFilter] + "_360.jpg");
+			isHideThumbImg = true;
+		}
+
+		// 表示すべきサムネがない
+		if (thumbImgUrlList.isEmpty()) {
+			if (m_strPassword != null && !m_strPassword.isEmpty()) {
+				// パスワード指定あり
+				thumbImgUrlList.add(Common.PUBLISH_ID_FILE[Common.PUBLISH_ID_PASS] + "_640.jpg");
+				thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[Common.PUBLISH_ID_PASS] + "_360.jpg");
+				isHideThumbImg = true;
+			} else if (m_nOpenId == Common.OPEN_ID_PUBLISH || m_nOpenId == Common.OPEN_ID_NG_RECENT) {
+				// 普通の公開
+				thumbImgUrlList.add(m_strFileName + "_640.jpg");
+				thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
+				isHideThumbImg = false;
+			} else {
+				// 通常このパスには入らないはず
+				thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
+				thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
+				isHideThumbImg = true;
+			}
 		}
 	}
 
@@ -297,6 +323,14 @@ public final class CContent {
 			return String.format("%s%s_360.jpg", SRC_IMG_PATH, s);
 		} else {
 			return "";
+		}
+	}
+
+	public int getAdSwitchId() {
+		if (m_nSafeFilter == Common.SAFE_FILTER_R18 || m_nSafeFilter == Common.SAFE_FILTER_R18G) {
+			return Common.AD_ID_R18;
+		} else {
+			return Common.AD_ID_ALL;
 		}
 	}
 

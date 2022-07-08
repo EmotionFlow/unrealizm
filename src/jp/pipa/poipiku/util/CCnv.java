@@ -988,7 +988,7 @@ public final class CCnv {
 			bHidden = false;
 		} else {
 			cContent.setThumb();
-			strFileUrl = cContent.thumbImgUrl;
+			strFileUrl = cContent.thumbImgUrlList.get(0);
 			bHidden = cContent.isHideThumbImg;
 		}
 

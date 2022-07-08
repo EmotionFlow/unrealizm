@@ -23,18 +23,10 @@ if(!cResults.getResults(checkLogin)) {
 }
 
 //R18によるアドの切り替え
-switch(cResults.m_cContent.m_nPublishId) {
-case Common.PUBLISH_ID_R18:
-case Common.PUBLISH_ID_R18G:
-	g_nSafeFilter = Common.AD_ID_R18;
-	break;
-default:
-	g_nSafeFilter = Common.AD_ID_ALL;
-	break;
-}
+g_nSafeFilter = cResults.m_cContent.getAdSwitchId();
 
 cResults.m_cContent.setThumb();
-//final String strFileUrl = cResults.m_cContent.thumbImgUrl;
+final String strFileUrl = cResults.m_cContent.thumbImgUrlList.get(0);
 final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
 
 String strTitle = CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX);
