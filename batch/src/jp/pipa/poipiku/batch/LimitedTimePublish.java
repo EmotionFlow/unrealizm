@@ -21,8 +21,8 @@ import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
-	ResourceBundleControl _TEX = null;
-
+	static final boolean _DEBUG = true;
+	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
 	private static Integer updateContentId(int nOldContentId) {
 		String strSql = "";
@@ -68,7 +68,7 @@ public class LimitedTimePublish extends Batch {
 	}
 
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		ResourceBundleControl _TEX = new ResourceBundleControl();
 
 		Log.d("start");
@@ -164,10 +164,11 @@ public class LimitedTimePublish extends Batch {
 					if (!strFileName.isEmpty()) {
 						strFileName = cContent.getThumbnailFilePath();
 						if (!strFileName.isEmpty()) {
-							vFileList.add(strFileName);
+							vFileList.add(SRC_IMG_PATH + strFileName);
 						}
 					}
 
+					cTweet.m_nUserId = cResSet.getInt("user_id");
 					cTweet.m_strUserAccessToken = cResSet.getString("fldaccesstoken");
 					cTweet.m_strSecretToken = cResSet.getString("fldsecrettoken");
 					strTwMsg = CTweet.generateWithTweetMsg(cContent, _TEX);
@@ -183,9 +184,11 @@ public class LimitedTimePublish extends Batch {
 					// ツイート
 					int nTweetResult = CTweet.ERR_OTHER;
 					if (cContent.m_nTweetWhenPublished == 1 || vFileList.size() <= 0) {    // text only
-						nTweetResult = cTweet.Tweet(strTwMsg);
+						if (!_DEBUG) {
+							nTweetResult = cTweet.Tweet(strTwMsg);
+						}
 					} else { // with image
-						nTweetResult = cTweet.Tweet(strTwMsg, vFileList);
+						nTweetResult = cTweet.Tweet(strTwMsg, vFileList, _DEBUG);
 					}
 					LimitedTimePublishLog l = lLogsByNewId.get(cContent.m_nContentId);
 					l.m_nTweetResult = nTweetResult;
@@ -236,12 +239,14 @@ public class LimitedTimePublish extends Batch {
 				cState = null;
 			}
 
-			CTweet tweet = new CTweet();
-			for (CContent content : unpublishContents) {
-				if (!content.m_strTweetId.isEmpty()) {
-					tweet.GetResults(content.m_nUserId);
-					if (tweet.m_bIsTweetEnable) {
-						tweet.Delete(content.m_strTweetId);
+			if (!_DEBUG) {
+				CTweet tweet = new CTweet();
+				for (CContent content : unpublishContents) {
+					if (!content.m_strTweetId.isEmpty()) {
+						tweet.GetResults(content.m_nUserId);
+						if (tweet.m_bIsTweetEnable) {
+							tweet.Delete(content.m_strTweetId);
+						}
 					}
 				}
 			}

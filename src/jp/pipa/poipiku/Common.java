@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -109,9 +112,9 @@ public final class Common {
 	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
 	public static final String[] PUBLISH_ID_FILE = {
 			"",								// 0
-			"/img/warning.png",				// 1
-			"/img/R-18.png",				// 2
-			"/img/R-18.png",				// 3
+			"/img/warning.png",				// [廃止予定]1 SAFE_FILTER_FILEへ移行
+			"/img/R-18.png",				// [廃止予定]2 SAFE_FILTER_FILEへ移行
+			"/img/R-18.png",				// [廃止予定]3 SAFE_FILTER_FILEへ移行
 			"/img/publish_pass.png",		// 4
 			"/img/publish_login.png",		// 5
 			"/img/publish_follower.png",	// 6
@@ -121,6 +124,14 @@ public final class Common {
 			"/img/publish_t_list.png",		// 10
 			"",		// 11
 			"/img/publish_t_rt.png",		// 12
+	};
+
+	public static final String[] SAFE_FILTER_FILE = {
+			"",                             // 0
+			"/img/warning.png",				// 1
+			"/img/R-18.png",				// 2
+			"/img/R-18.png",				// 3
+			"/img/R-18+.png",				// 4
 	};
 
 	// 投稿・更新画面で選択可能な公開指定
@@ -144,6 +155,7 @@ public final class Common {
 	public static final int SAFE_FILTER_R15 = 2;
 	public static final int SAFE_FILTER_R18 = 4;
 	public static final int SAFE_FILTER_R18G = 6;
+	public static final int SAFE_FILTER_R18_PLUS = 8;
 
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 32;
@@ -356,6 +368,22 @@ public final class Common {
 	public static String getUploadUsersPath(int nUserId) {
 		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
 		return String.format("/user_img%02d/%09d", (nUserId % 2) + 2, nUserId);
+	}
+
+	public static String getUserProfRealPath(int userId) {
+		return CONTENTS_ROOT + Common.getUploadUsersPath(userId);
+	}
+
+	public static String makeUserProfDir(int userId) {
+		final String profPath = getUserProfRealPath(userId);
+		Path destDir = Paths.get(profPath);
+		if (!Files.exists(destDir)) {
+			if (!destDir.toFile().mkdir()) {
+				Log.d("mkdir failed " + profPath);
+				return null;
+			}
+		}
+		return profPath;
 	}
 
 	public static String getUploadCachePath(int nUserId) {

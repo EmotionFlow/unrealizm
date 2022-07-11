@@ -1,6 +1,7 @@
 package jp.pipa.poipiku.batch;
 
 import jp.pipa.poipiku.CContent;
+import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.ImageMagickUtil;
 import jp.pipa.poipiku.util.Log;
@@ -84,7 +85,7 @@ public class AutoTweet extends Batch {
 					String strFileUrl = cContent.getThumbnailFilePath();
 					if(!strFileUrl.isEmpty()) {
 						if(_DEBUG) Log.d("m_nPublishId:"+cContent.m_nPublishId, "m strFileName:"+strFileUrl);
-						cTweetUser.m_vFileName.add(strFileUrl);
+						cTweetUser.m_vFileName.add(SRC_IMG_PATH + strFileUrl);
 					}
 				}
 				cResSet.close();cResSet=null;
@@ -101,16 +102,10 @@ public class AutoTweet extends Batch {
 				tweet.m_strUserAccessToken = cTweetUser.m_strAccessToken;
 				tweet.m_strSecretToken = cTweetUser.m_strSecretToken;
 
-				final String PROF_PATH = "/var/www/html/poipiku/user_img%02d/%09d/".formatted((cTweetUser.m_nUserId % 2) + 2, cTweetUser.m_nUserId);
-				Path destDir = Paths.get(PROF_PATH);
-				if (!Files.exists(destDir)) {
-					if (!destDir.toFile().mkdir()) {
-						Log.d("mkdir failed " + PROF_PATH);
-						continue;
-					}
-				}
+				final String profPath = Common.makeUserProfDir(cTweetUser.m_nUserId);
+				if (profPath == null) continue;
 
-				String strDestFileName = PROF_PATH + "tweet.png";
+				String strDestFileName = profPath + "tweet.png";
 				if(_DEBUG) Log.d("strDestFileName:"+strDestFileName);
 				Util.deleteFile(strDestFileName);
 

@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public final class CContent {
@@ -269,8 +270,17 @@ public final class CContent {
 
 		// ワンクッション・R18サムネ
 		if (m_nSafeFilter == Common.SAFE_FILTER_R15 || m_nSafeFilter == Common.SAFE_FILTER_R18 || m_nSafeFilter == Common.SAFE_FILTER_R18G) {
-			thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nSafeFilter] + "_640.jpg");
-			thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nSafeFilter] + "_360.jpg");
+			Log.d("safe filter: " + m_nSafeFilter);
+			String thumbFile = "";
+			switch (m_nSafeFilter) {
+				case Common.SAFE_FILTER_R15 -> thumbFile = Common.SAFE_FILTER_FILE[1];
+				case Common.SAFE_FILTER_R18 -> thumbFile = Common.SAFE_FILTER_FILE[2];
+				case Common.SAFE_FILTER_R18G -> thumbFile = Common.SAFE_FILTER_FILE[3];
+				case Common.SAFE_FILTER_R18_PLUS -> thumbFile = Common.SAFE_FILTER_FILE[4];
+				default -> thumbFile = Common.SAFE_FILTER_FILE[0];
+			}
+			thumbImgUrlList.add(thumbFile + "_640.jpg");
+			thumbImgSmallUrlList.add(thumbFile + "_360.jpg");
 			isHideThumbImg = true;
 		}
 
@@ -288,6 +298,7 @@ public final class CContent {
 				isHideThumbImg = false;
 			} else {
 				// 通常このパスには入らないはず
+				Log.d("通常このパスには入らないはず");
 				thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
 				thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
 				isHideThumbImg = true;
@@ -295,32 +306,11 @@ public final class CContent {
 		}
 	}
 
-
 	public String getThumbnailFilePath() {
-		final String s;
-		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
-		switch (m_nPublishId) {
-			case Common.PUBLISH_ID_R15:
-			case Common.PUBLISH_ID_R18:
-			case Common.PUBLISH_ID_R18G:
-			case Common.PUBLISH_ID_PASS:
-			case Common.PUBLISH_ID_LOGIN:
-			case Common.PUBLISH_ID_FOLLOWER:
-			case Common.PUBLISH_ID_T_FOLLOWER:
-			case Common.PUBLISH_ID_T_FOLLOWEE:
-			case Common.PUBLISH_ID_T_EACH:
-			case Common.PUBLISH_ID_T_LIST:
-			case Common.PUBLISH_ID_T_RT:
-				s = Common.PUBLISH_ID_FILE[m_nPublishId];
-				break;
-			case Common.PUBLISH_ID_ALL:
-			case Common.PUBLISH_ID_HIDDEN:
-			default:
-				s = m_strFileName;
-				break;
-		}
-		if (!s.isEmpty()) {
-			return String.format("%s%s_360.jpg", SRC_IMG_PATH, s);
+		this.setThumb();
+		if (!thumbImgUrlList.isEmpty()) {
+			Log.d(thumbImgUrlList.get(0));
+			return thumbImgUrlList.get(0);
 		} else {
 			return "";
 		}

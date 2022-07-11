@@ -96,7 +96,7 @@ public class UploadFileTweetC {
 				if(cParam.m_nOptImage==0 || vFileList.size()<=0) {	// text only
 					nResultTweet = cTweet.Tweet(strTwitterMsg);
 				} else { // with image
-					nResultTweet = cTweet.Tweet(strTwitterMsg, vFileList);
+					nResultTweet = cTweet.Tweet(strTwitterMsg, vFileList, false);
 				}
 
 				if (nResultTweet!=CTweet.OK){

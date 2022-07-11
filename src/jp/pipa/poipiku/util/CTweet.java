@@ -237,7 +237,7 @@ public final class CTweet {
 		return nResult;
 	}
 
-	public int Tweet(String strTweet, ArrayList<String> vFileList) {
+	public int Tweet(String strTweet, ArrayList<String> vFileList, boolean isDebug) {
 		int FRAME_PADDING = 3;
 		int FRAME_SIZE_BASE = 800;
 
@@ -266,6 +266,15 @@ public final class CTweet {
 			g.setColor(Color.white);
 			g.fillRect(0, 0, FRAME_SIZE_X, FRAME_SIZE_Y);
 
+			String profPathStr = Common.makeUserProfDir(m_nUserId);
+			Path profPath;
+			if (profPathStr != null) {
+				profPath = Paths.get(profPathStr);
+			} else {
+				Log.d("prof path の生成に失敗した");
+				return -99;
+			}
+
 			// 1枚ずつ貼り付け
 			int fileIdx = 0;
 			for (int y=0; y<numY; y++) {
@@ -273,7 +282,8 @@ public final class CTweet {
 					Log.d("Tweet image:" + (fileIdx + 1) + "/" + vFileList.size());
 					if(fileIdx >= vFileList.size()) break;
 					String strSrcFileName = vFileList.get(fileIdx);
-					String strDstFileName = strSrcFileName+"_twitter_thumb.png";
+					Path srcPath = Paths.get(strSrcFileName);
+					String strDstFileName = profPath.resolve(srcPath.getFileName()) + "_twitter_thumb.png";
 					ImageUtil.createThumbNormalize(strSrcFileName, strDstFileName, thumn_size, false);
 					BufferedImage image = ImageUtil.read(strDstFileName);
 					g.drawImage(image, (x+1)*FRAME_PADDING+x*thumn_size, (y+1)*FRAME_PADDING+y*thumn_size, thumn_size, thumn_size, Color.white, null);
@@ -283,18 +293,23 @@ public final class CTweet {
 			}
 
 			// 集約画像を保存
-			String strDstFileName = vFileList.get(0)+"_twitter.png";
+			Path firstPath = Paths.get(vFileList.get(0));
+			String strDstFileName = profPath.resolve(firstPath.getFileName()) + "_twitter.png";
 			ImageUtil.savePng(frame, strDstFileName);
 			g.dispose();
 
+			Log.d("集約画像 " + strDstFileName);
+
 			// Twitterに投稿
-			UploadedMedia media = twitter.uploadMedia(new File(strDstFileName));
-			long[] vMediaList = new long[1];
-			vMediaList[0] = media.getMediaId();
-			StatusUpdate update = new StatusUpdate(strTweet);
-			update.setMediaIds(vMediaList);
-			m_statusLastTweet = twitter.updateStatus(update);
-			Util.deleteFile(strDstFileName);
+			if (!isDebug) {
+				UploadedMedia media = twitter.uploadMedia(new File(strDstFileName));
+				long[] vMediaList = new long[1];
+				vMediaList[0] = media.getMediaId();
+				StatusUpdate update = new StatusUpdate(strTweet);
+				update.setMediaIds(vMediaList);
+				m_statusLastTweet = twitter.updateStatus(update);
+				Util.deleteFile(strDstFileName);
+			}
 		} catch (TwitterException te) {
 			te.printStackTrace();
 			LoggingTwitterException(te, -1, -1);
