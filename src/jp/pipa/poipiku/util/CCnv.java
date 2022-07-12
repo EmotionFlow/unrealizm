@@ -1040,7 +1040,7 @@ public final class CCnv {
 		if(cContent.m_nFileNum>1){
 			strRtn.append("<span class=\"Num\">").append(getContentsFileNumHtml(cContent)).append("</span>");
 		} else if(cContent.m_nEditorId==Common.EDITOR_TEXT) {
-			strRtn.append(String.format("<span class=\"Num\">%d %s</span>", cContent.m_strTextBody.length(), _TEX.T("Common.Unit.Text")));
+			strRtn.append(String.format("<span class=\"Num Text\"><i class=\"fas fa-font\"></i> %d</span>", cContent.m_strTextBody.length()));
 		}
 		strRtn.append("</span>");	// IllustInfoBottom
 		strRtn.append("</a>");	// IllustThumbImg | IllustThumbText

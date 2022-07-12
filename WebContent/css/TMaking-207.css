@@ -909,6 +909,11 @@ Decoration
 	text-align: center;
 	z-index: 2;
 }
+
+.IllustThumb .Num.Text > i {
+	font-size: 12px;
+}
+
 .IllustThumb .Publish {
 	background-repeat: no-repeat;
 	min-width: 35px;
