@@ -854,10 +854,8 @@ public final class CTweet {
 
 	static public String generateState(CContent cContent, ResourceBundleControl _TEX) {
 		String strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
+
 		switch(cContent.m_nPublishId) {
-		case Common.PUBLISH_ID_PASS:
-			strState += _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
-			break;
 		case Common.PUBLISH_ID_LOGIN:
 			strState += _TEX.T("UploadFilePc.Option.Publish.Login");
 			break;
@@ -880,11 +878,10 @@ public final class CTweet {
 			strState += _TEX.T("UploadFilePc.Option.Publish.T_RT");
 			break;
 		case Common.PUBLISH_ID_ALL:
-		case Common.PUBLISH_ID_R15:
-		case Common.PUBLISH_ID_R18:
-		case Common.PUBLISH_ID_R18G:
 		default:
-			break;
+			if (cContent.m_strPassword != null && !cContent.m_strPassword.isEmpty()) {
+				strState += _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
+			}
 		}
 		return strState;
 	}

@@ -366,12 +366,12 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					</div>
 
 					<div id="ItemPassword" class="OptionItem"
-						<%if(cResults.m_cContent.m_nPublishId!=Common.PUBLISH_ID_PASS){%>style="display: none;"<%}%>
+						<%if(!cResults.m_cContent.isPasswordEnabled()){%>style="display: none;"<%}%>
 						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">
 							<input id="EditPassword" class="EditPassword" type="text" maxlength="16"
-								<%if(cResults.m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS){%>value="<%=cResults.m_cContent.m_strPassword%>"<%}%>
+								<%if(cResults.m_cContent.isPasswordEnabled()){%>value="<%=cResults.m_cContent.m_strPassword%>"<%}%>
 								placeholder="<%=_TEX.T("UploadFilePc.Option.Publish.Pass.Input")%>" />
 						</div>
 					</div>

@@ -220,6 +220,10 @@ public final class CContent {
 		return (m_nOpenId == OpenId.Open.getCode() ||m_nOpenId == OpenId.OpenAvoidNewArrivals.getCode());
 	}
 
+	public boolean isPasswordEnabled() {
+		return (m_strPassword != null && !m_strPassword.isEmpty());
+	}
+
 	public boolean isValidPublishId() {
 		return m_nPublishId==Common.PUBLISH_ID_ALL
 				|| m_nPublishId==Common.PUBLISH_ID_LOGIN
@@ -286,10 +290,10 @@ public final class CContent {
 
 		// 表示すべきサムネがない
 		if (thumbImgUrlList.isEmpty()) {
-			if (m_strPassword != null && !m_strPassword.isEmpty()) {
+			if (isPasswordEnabled()) {
 				// パスワード指定あり
-				thumbImgUrlList.add(Common.PUBLISH_ID_FILE[Common.PUBLISH_ID_PASS] + "_640.jpg");
-				thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[Common.PUBLISH_ID_PASS] + "_360.jpg");
+				thumbImgUrlList.add(Common.PASSWORD_FILE + "_640.jpg");
+				thumbImgSmallUrlList.add(Common.PASSWORD_FILE + "_360.jpg");
 				isHideThumbImg = true;
 			} else if (m_nOpenId == Common.OPEN_ID_PUBLISH || m_nOpenId == Common.OPEN_ID_NG_RECENT) {
 				// 普通の公開

@@ -88,7 +88,7 @@ public final class ShowAppendFileC {
 
 			boolean bOwner = m_cContent.m_nUserId==checkLogin.m_nUserId;
 
-			if (!bRequestClient && m_cContent.m_nPublishId==Common.PUBLISH_ID_PASS && !m_cContent.m_strPassword.equals(m_strPassword)) return ERR_PASS;
+			if (!bRequestClient && m_cContent.isPasswordEnabled() && !m_cContent.m_strPassword.equals(m_strPassword)) return ERR_PASS;
 
 			// login user
 			if (m_cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN && !checkLogin.m_bLogin) {

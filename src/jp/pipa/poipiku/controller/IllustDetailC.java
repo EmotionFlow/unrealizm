@@ -114,7 +114,7 @@ public final class IllustDetailC {
 						Log.d("Tw限定のチェックができなかった");
 						return false;
 					}
-				} else if (showMode == 1 && m_cContent.m_nPublishId == Common.PUBLISH_ID_PASS) {
+				} else if (showMode == 1 && m_cContent.isPasswordEnabled()) {
 					if (!m_cContent.m_strPassword.equals(password)) {
 						Log.d(String.format("Pw認証に失敗した(%s, %s)",m_cContent.m_strPassword, password));
 						return false;

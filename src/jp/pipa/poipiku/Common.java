@@ -115,7 +115,7 @@ public final class Common {
 			"/img/warning.png",				// [廃止予定]1 SAFE_FILTER_FILEへ移行
 			"/img/R-18.png",				// [廃止予定]2 SAFE_FILTER_FILEへ移行
 			"/img/R-18.png",				// [廃止予定]3 SAFE_FILTER_FILEへ移行
-			"/img/publish_pass.png",		// 4
+			"/img/publish_pass.png",		// [廃止予定]4 PASSWORD_FILEへ移行
 			"/img/publish_login.png",		// 5
 			"/img/publish_follower.png",	// 6
 			"/img/publish_t_follower.png",	// 7
@@ -133,6 +133,8 @@ public final class Common {
 			"/img/R-18.png",				// 3
 			"/img/R-18+.png",				// 4
 	};
+
+	public static final String PASSWORD_FILE = "/img/publish_pass.png";
 
 	// 投稿・更新画面で選択可能な公開指定
 	public static final int[] PUBLISH_ID = {
