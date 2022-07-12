@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import jp.pipa.poipiku.controller.UpdateC;
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
-	static final boolean _DEBUG = false;
+	static final boolean _DEBUG = true;
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
 	private static Integer updateContentId(int nOldContentId) {
@@ -165,6 +166,18 @@ public class LimitedTimePublish extends Batch {
 						strFileName = cContent.getThumbnailFilePath();
 						if (!strFileName.isEmpty()) {
 							vFileList.add(SRC_IMG_PATH + strFileName);
+						}
+					}
+					if (!cContent.isHideThumbImg) {
+						final String selectAppendFilesSql = "SELECT file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id DESC LIMIT 3";
+						try (Connection connection = DatabaseUtil.dataSource.getConnection();
+						     PreparedStatement statement = connection.prepareStatement(selectAppendFilesSql)
+						) {
+							statement.setInt(1, cContent.m_nContentId);
+							ResultSet resultSet = statement.executeQuery();
+							while (resultSet.next()) {
+								vFileList.add(SRC_IMG_PATH + resultSet.getString(1));
+							}
 						}
 					}
 
