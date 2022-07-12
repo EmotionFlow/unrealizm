@@ -21,7 +21,7 @@ import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
-	static final boolean _DEBUG = true;
+	static final boolean _DEBUG = false;
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
 	private static Integer updateContentId(int nOldContentId) {
