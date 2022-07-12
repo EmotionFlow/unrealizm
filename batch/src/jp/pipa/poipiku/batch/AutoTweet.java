@@ -8,9 +8,6 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -105,7 +102,7 @@ public class AutoTweet extends Batch {
 				final String profPath = Common.makeUserProfDir(cTweetUser.m_nUserId);
 				if (profPath == null) continue;
 
-				String strDestFileName = profPath + "tweet.png";
+				String strDestFileName = profPath + "/auto_tweet.png";
 				if(_DEBUG) Log.d("strDestFileName:"+strDestFileName);
 				Util.deleteFile(strDestFileName);
 
