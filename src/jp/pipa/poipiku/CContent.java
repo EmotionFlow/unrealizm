@@ -39,6 +39,7 @@ public final class CContent {
 	public String m_strTagList = "";
 	public int m_nPublishId = 0;
 	public int publishAllNum = 0;
+	public boolean passwordEnabled = false;
 	public String m_strPassword = "";
 	public CUser m_cUser = new CUser();
 	public String m_strListId = "";
@@ -168,6 +169,7 @@ public final class CContent {
 		m_strListId			= Util.toString(resultSet.getString("list_id"));
 		m_cUser.m_nUserId	= resultSet.getInt("user_id");
 		m_nEditorId			= resultSet.getInt("editor_id");
+		passwordEnabled     = resultSet.getBoolean("password_enabled");
 		m_strPassword		= Util.toString(resultSet.getString("password"));
 		m_strTweetId		= Util.toString(resultSet.getString("tweet_id"));
 		m_nTweetWhenPublished=resultSet.getInt("tweet_when_published");
@@ -221,7 +223,8 @@ public final class CContent {
 	}
 
 	public boolean isPasswordEnabled() {
-		return (m_strPassword != null && !m_strPassword.isEmpty());
+		return m_nPublishId == Common.PUBLISH_ID_PASS;
+//		return (m_strPassword != null && !m_strPassword.isEmpty());
 	}
 
 	public boolean isValidPublishId() {

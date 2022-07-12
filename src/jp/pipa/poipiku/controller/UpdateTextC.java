@@ -73,7 +73,7 @@ public final class UpdateTextC extends UpC {
 			ArrayList<String> lColumns = new ArrayList<>();
 				lColumns.addAll(Arrays.asList(
 					"genre_id=?", "category_id=?", "open_id=?", "description=?", "private_note=?",
-					"text_body=?", "tag_list=?", "publish_id=?", "password=?",
+					"text_body=?", "tag_list=?", "publish_id=?", "password_enabled=?", "password=?",
 					"list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?", "title=?", "novel_html=?",
 					"novel_html_short=?", "novel_direction=?"
@@ -122,6 +122,7 @@ public final class UpdateTextC extends UpC {
 				statement.setString(idx++, textBody);
 				statement.setString(idx++, cParam.m_strTagList);
 				statement.setInt(idx++, cParam.m_nPublishId);
+				statement.setBoolean(idx++, cParam.m_nPublishId == Common.PUBLISH_ID_PASS);
 				statement.setString(idx++, cParam.m_strPassword);
 				statement.setString(idx++, cParam.m_strListId);
 				statement.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));

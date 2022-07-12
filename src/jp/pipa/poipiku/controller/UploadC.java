@@ -36,7 +36,7 @@ public final class UploadC extends UpC {
 			ArrayList<String> lColumns = new ArrayList<>(
 					Arrays.asList(
 							"user_id", "genre_id", "category_id", "description", "private_note",
-							"tag_list", "publish_id", "publish_all_num", "password", "list_id", "safe_filter",
+							"tag_list", "publish_id", "publish_all_num", "password_enabled", "password", "list_id", "safe_filter",
 							"editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish"));
 
 			if(cParam.m_bLimitedTimePublish){
@@ -74,6 +74,7 @@ public final class UploadC extends UpC {
 			} else {
 				cState.setInt(idx++, cParam.m_nPublishAllNum);
 			}
+			cState.setBoolean(idx++, cParam.m_nPublishId == Common.PUBLISH_ID_PASS);
 			cState.setString(idx++, cParam.m_strPassword);
 			cState.setString(idx++, cParam.m_strListId);
 			cState.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));

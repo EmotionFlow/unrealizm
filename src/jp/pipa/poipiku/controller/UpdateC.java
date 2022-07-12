@@ -107,7 +107,7 @@ public final class UpdateC extends UpC {
 			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(
 					"genre_id=?", "category_id=?", "open_id=?", "description=?", "private_note=?",
 					"tag_list=?", "publish_id=?",
-					"publish_all_num=?", "password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
+					"publish_all_num=?", "password_enabled=?", "password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?"
 			));
 
@@ -155,6 +155,7 @@ public final class UpdateC extends UpC {
 				} else {
 					statement.setInt(idx++, cParam.m_nPublishAllNum);
 				}
+				statement.setBoolean(idx++, cParam.m_nPublishId==Common.PUBLISH_ID_PASS);
 				statement.setString(idx++, cParam.m_strPassword);
 				statement.setString(idx++, cParam.m_strListId);
 				statement.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));
@@ -173,6 +174,8 @@ public final class UpdateC extends UpC {
 				// set where params
 				statement.setInt(idx++, cParam.m_nUserId);
 				statement.setInt(idx++, cParam.m_nContentId);
+
+				Log.d(statement.toString());
 				statement.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();

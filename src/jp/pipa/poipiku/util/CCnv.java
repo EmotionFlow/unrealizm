@@ -86,7 +86,7 @@ public final class CCnv {
 		if(cContent.m_nSafeFilter==Common.SAFE_FILTER_R15) strThumbClass += " R15";
 		if(cContent.m_nSafeFilter==Common.SAFE_FILTER_R18) strThumbClass += " R18";
 		if(cContent.m_nSafeFilter==Common.SAFE_FILTER_R18G) strThumbClass += " R18G";
-		if(cContent.m_strPassword!=null && !cContent.m_strPassword.isEmpty()) strThumbClass += " Password";
+		if(cContent.m_nPublishId==Common.PUBLISH_ID_PASS) strThumbClass += " Password";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN) strThumbClass += " Login";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) strThumbClass += " Follower";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER) strThumbClass += " TFollower";
