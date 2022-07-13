@@ -404,16 +404,16 @@ if (requestId > 0) {
                             background-color: #3498da;
                             color: #ffffff;
                         }
-						#ItemOneCushionVal {
+						#ItemNsfwVal {
 							padding-top: 0;
                             justify-content: center;
 						}
-						.OptionPublishOneCushionList {
+						.OptionPublishNsfwList {
 							display: flex;
                             justify-content: center;
                             margin:	0 12px;
 						}
-						.OptionPublishOneCushion {
+						.OptionPublishNsfw {
                             display: flex;
                             flex-direction: column;
                             background: #fff;
@@ -451,7 +451,7 @@ if (requestId > 0) {
                             flex-direction: row;
                             flex-wrap: wrap;
                         }
-                        .OptionPublishShowLimit {
+                        .OptionShowLimit {
                             display: flex;
                             flex-direction: column;
 							background: #fff;
@@ -494,6 +494,11 @@ if (requestId > 0) {
                             background-repeat: no-repeat;
                             background-position: 50% 50%;
                         }
+                        .ShowLimitImage.TwitterRetweet {
+                            background-image: url("/img/publish_t_rt.png_360.jpg");
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                        }
                         .ShowLimitName {
                             display: block;
                             width: 100%;
@@ -522,14 +527,14 @@ if (requestId > 0) {
 
 					<div class="OptionItem" style="font-weight: bold;">
 						<label class="rocker">
-							<input id="OptionPublish" type="checkbox" checked>
+							<input id="OPTION_PUBLISH" type="checkbox">
 							<span class="switch-left">公開する</span>
 							<span class="switch-right">公開しない</span>
 						</label>
 					</div>
 					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionLimitedTimePublish2()">
-							<input id="OptionLimitedTimePublish" type="checkbox" checked>
+						<label class="rocker" onclick="updateOptionLimitedTimePublish()">
+							<input id="OPTION_TIME_LIMITED" type="checkbox">
 							<span class="switch-left">常時</span>
 							<span class="switch-right">期間指定</span>
 						</label>
@@ -539,35 +544,35 @@ if (requestId > 0) {
 							<%if(Util.isSmartPhone(request)) {%>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
-								<input id="EditTimeLimitedStart" class="EditTimeLimited" type="text" />
+								<input id="EDIT_TIME_LIMITED_START" class="EditTimeLimited" type="text" />
 							</div>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
-								<input id="EditTimeLimitedEnd" class="EditTimeLimited" type="text" />
+								<input id="EDIT_TIME_LIMITED_END" class="EditTimeLimited" type="text" />
 							</div>
 							<%}else{%>
-							<input id="EditTimeLimitedStart" class="EditTimeLimitedPc" type="text" maxlength="15" />
+							<input id="EDIT_TIME_LIMITED_START" class="EditTimeLimitedPc" type="text" maxlength="15" />
 							<span class="EditTimeLimitedPcTo">〜</span>
-							<input id="EditTimeLimitedEnd" class="EditTimeLimitedPc" type="text" maxlength="15" />
+							<input id="EDIT_TIME_LIMITED_END" class="EditTimeLimitedPc" type="text" maxlength="15" />
 							<%}%>
 						</div>
 					</div>
 					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionPublishOneCushion()">
-							<input id="OptionPublishOneCushion" type="checkbox" checked>
+						<label class="rocker" onclick="updateOptionPublishNsfw()">
+							<input id="OPTION_PUBLISH_NSFW" type="checkbox">
 							<span class="switch-left">配慮・NSFW不要</span>
 							<span class="switch-right">指定する</span>
 						</label>
 					</div>
-					<div class="OptionItem" id="ItemOneCushionVal" style="display: none;">
-						<div class="OptionPublishOneCushionList">
-							<input type="radio" name="RadioOneCushionVal" value="OneCushion" id="RadioOneCushion">
-							<label for="RadioOneCushion" class="OptionPublishOneCushion">
+					<div class="OptionItem" id="ItemNsfwVal" style="display: none;">
+						<div class="OptionPublishNsfwList">
+							<input type="radio" name="NSFW_VAL" value="OneCushion" id="RadioOneCushion">
+							<label for="RadioOneCushion" class="OptionPublishNsfw">
 								<span class="OneCushionImage OneCushion"></span>
 								<span class="OneCushionName">ワンクッション</span>
 							</label>
-							<input type="radio" name="RadioOneCushionVal" value="R18" id="RadioR18">
-							<label for="RadioR18" class="OptionPublishOneCushion">
+							<input type="radio" name="NSFW_VAL" value="R18" id="RadioR18">
+							<label for="RadioR18" class="OptionPublishNsfw">
 								<span class="OneCushionImage R18"></span>
 								<span class="OneCushionName">R18</span>
 							</label>
@@ -575,31 +580,31 @@ if (requestId > 0) {
 					</div>
 
 					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionPublishShowLimit()">
-							<input id="OptionPublishShowLimit" type="checkbox" checked>
+						<label class="rocker" onclick="updateOptionShowLimit()">
+							<input id="OPTION_SHOW_LIMIT" type="checkbox">
 							<span class="switch-left">誰でも閲覧OK</span>
 							<span class="switch-right">限定する</span>
 						</label>
 					</div>
 					<div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
 						<div class="OptionPublishShowLimitList">
-							<input type="radio" name="RadioShowLimitVal" value="PoipikuLogin" id="RadioPoipikuLogin">
-							<label for="RadioPoipikuLogin" class="OptionPublishShowLimit">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="PoipikuLogin" id="RadioPoipikuLogin">
+							<label for="RadioPoipikuLogin" class="OptionShowLimit">
 								<span class="ShowLimitImage PoipikuLogin"></span>
 								<span class="ShowLimitName">ログイン限定</span>
 							</label>
-							<input type="radio" name="RadioShowLimitVal" value="PoipikuFollower" id="RadioPoipikuFollower">
-							<label for="RadioPoipikuFollower" class="OptionPublishShowLimit">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="PoipikuFollower" id="RadioPoipikuFollower">
+							<label for="RadioPoipikuFollower" class="OptionShowLimit">
 								<span class="ShowLimitImage PoipikuFollower"></span>
 								<span class="ShowLimitName">こそフォロ限定</span>
 							</label>
-							<input type="radio" name="RadioShowLimitVal" value="TwitterFollower" id="RadioTwitterFollower">
-							<label for="RadioTwitterFollower" class="OptionPublishShowLimit">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterFollower" id="RadioTwitterFollower">
+							<label for="RadioTwitterFollower" class="OptionShowLimit">
 								<span class="ShowLimitImage TwitterFollower"></span>
 								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</span>
 							</label>
-							<input type="radio" name="RadioShowLimitVal" value="TwitterList" id="RadioTwitterList">
-							<label for="RadioTwitterList" class="OptionPublishShowLimit" onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterList" id="RadioTwitterList">
+							<label for="RadioTwitterList" class="OptionShowLimit" onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)">
 								<span class="ShowLimitImage TwitterList"></span>
 								<span class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</span>
 								<span class="ShowLimitName" id="TwitterList">
@@ -608,35 +613,40 @@ if (requestId > 0) {
 									<select id="EditTwitterList" class="EditPublish" style="display: none;"></select>
 								</span>
 							</label>
-							<input type="radio" name="RadioShowLimitVal" value="TwitterFollowee" id="RadioTwitterFollowee">
-							<label for="RadioTwitterFollowee" class="OptionPublishShowLimit">
-								<span class="ShowLimitImage TwitterFollowee"></span>
-								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</span>
-							</label>
-							<input type="radio" name="RadioShowLimitVal" value="TwitterEach" id="RadioTwitterEach">
-							<label for="RadioTwitterEach" class="OptionPublishShowLimit">
+<%--							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterFollowee" id="RadioTwitterFollowee">--%>
+<%--							<label for="RadioTwitterFollowee" class="OptionShowLimit">--%>
+<%--								<span class="ShowLimitImage TwitterFollowee"></span>--%>
+<%--								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</span>--%>
+<%--							</label>--%>
+							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterEach" id="RadioTwitterEach">
+							<label for="RadioTwitterEach" class="OptionShowLimit">
 								<span class="ShowLimitImage TwitterEach"></span>
 								<span class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</span>
+							</label>
+							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterEach" id="RadioTwitterRetweet">
+							<label for="RadioTwitterRetweet" class="OptionShowLimit">
+								<span class="ShowLimitImage TwitterRetweet"></span>
+								<span class="ShowLimitName"><i class="fab fa-twitter"></i>リツイート限定</span>
 							</label>
 						</div>
 					</div>
 
 					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionPublishPassword()">
-							<input id="OptionPublishPassword" type="checkbox" checked>
+						<label class="rocker" onclick="updateOptionPassword()">
+							<input id="OPTION_PASSWORD" type="checkbox">
 							<span class="switch-left">パスワードなし</span>
 							<span class="switch-right">あり</span>
 						</label>
 					</div>
 					<div id="ItemPassword" class="OptionItem" style="padding-top: 0; display: none;">
-						<label for="EditPassword"><i class="fas fa-key" style="margin-right: 5px"></i></label>
-						<input id="EditPassword" class="EditPassword" type="text" maxlength="16" />
+						<label for="PASSWORD_VAL"><i class="fas fa-key" style="margin-right: 5px"></i></label>
+						<input id="PASSWORD_VAL" class="EditPassword" type="text" maxlength="16" />
 					</div>
 
 					<%if(nEditorId!=Common.EDITOR_TEXT){%>
 					<div class="OptionItem" id="OptionItemShowAllFirst" style="display: none">
 						<label class="rocker">
-							<input id="ItemShowAllFirst" type="checkbox" checked>
+							<input id="OPTION_SHOW_FIRST" type="checkbox">
 							<span class="switch-left">最初の１枚見せる</span>
 							<span class="switch-right">見せない</span>
 						</label>
@@ -645,7 +655,7 @@ if (requestId > 0) {
 
 					<div class="OptionItem" style="margin-top: 13px">
 						<label class="rocker" onclick="updateOptionTweet()">
-							<input id="OptionTweet" type="checkbox" checked>
+							<input id="OPTION_TWEET" type="checkbox">
 							<span class="switch-left">同時にツイート</span>
 							<span class="switch-right">しない</span>
 						</label>
@@ -654,15 +664,15 @@ if (requestId > 0) {
 					<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
 					<div class="OptionItem Sub" id="OptionItemTweetImage" style="display: none">
 						<label class="rocker sub">
-							<input id="OptionTweetImage" type="checkbox" checked>
+							<input id="OPTION_TWEET_IMAGE" type="checkbox">
 							<span class="switch-left">画像もツイート</span>
 							<span class="switch-right">しない</span>
 						</label>
 					</div>
 
 					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionPublishPassword()">
-							<input id="OptionTwitterCardThumbnail" type="checkbox">
+						<label class="rocker" onclick="updateOptionPassword()">
+							<input id="OPTION_TWITTER_CARD_THUMBNAIL" type="checkbox">
 							<span class="switch-left" style="font-size:0.8em">Twitterカードにサムネ表示</span>
 							<span class="switch-right">表示しない</span>
 						</label>
@@ -670,8 +680,8 @@ if (requestId > 0) {
 					<%}%>
 
 					<div class="OptionItem" style="margin-top: 13px">
-						<label class="rocker" onclick="updateOptionPublishPassword()">
-							<input id="OptionCheerNg" type="checkbox" checked>
+						<label class="rocker" onclick="updateOptionPassword()">
+							<input id="OPTION_CHEER_NG" type="checkbox">
 							<span class="switch-left">ポチ袋OFF</span>
 							<span class="switch-right">ON</span>
 						</label>
@@ -679,7 +689,7 @@ if (requestId > 0) {
 
 					<div class="OptionItem" style="margin-top: 13px">
 						<label class="rocker">
-							<input id="OptionRecent" type="checkbox" checked>
+							<input id="OPTION_RECENT" type="checkbox">
 							<span class="switch-left">新着に載せる</span>
 							<span class="switch-right">避ける</span>
 						</label>

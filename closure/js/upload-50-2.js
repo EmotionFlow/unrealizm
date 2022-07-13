@@ -616,36 +616,8 @@ function initEndDatetime(datetime){
 	});
 }
 
-function updateOptionLimitedTimePublish(){
-	var elVal = $('#ItemTimeLimitedVal');
-	var nSlideSpeed = 300;
-	if($('#OptionLimitedTimePublish').prop('checked')){
-		elVal.slideDown(nSlideSpeed, function(){
-			$.each(["#EditTimeLimitedStart", "#EditTimeLimitedEnd"], function(index, value){
-				if($(value)[0].classList.value.indexOf("flatpickr-input")<0){
-					var dateNow = new Date();
-					dateNow.setSeconds(0);
-					var minDate = new Date();
-					minDate.setMinutes(Math.floor((minDate.getMinutes()-30)/30)*30);
-					$(value).flatpickr({
-						enableTime: true,
-						dateFormat: "Z",
-						altInput: true,
-						altFormat: "Y/m/d H:i",
-						time_24hr: true,
-						minuteIncrement: 30,
-						minDate: minDate,
-						defaultDate: dateNow,
-					});
-				}
-			});
-		});
-	} else {
-		elVal.slideUp(nSlideSpeed);
-	}
-}
 
-function updateOptionLimitedTimePublish2(){
+function updateOptionLimitedTimePublish(){
 	const $ItemTimeLimitedVal = $('#ItemTimeLimitedVal');
 	const slideSpeed = 300;
 	if(!$('#OptionLimitedTimePublish').prop('checked')){
@@ -674,35 +646,35 @@ function updateOptionLimitedTimePublish2(){
 	}
 }
 
-function updateOptionPublishOneCushion(){
-	const $ItemOneCushionVal = $("#ItemOneCushionVal");
+function updateOptionPublishNsfw(){
+	const $ItemNsfwVal = $("#ItemNsfwVal");
 	const slideSpeed = 300;
-	if(!$('#OptionPublishOneCushion').prop('checked')){
-		$ItemOneCushionVal.slideDown(slideSpeed);
+	if(!$('#OPTION_PUBLISH_NSFW').prop('checked')){
+		$ItemNsfwVal.slideDown(slideSpeed);
 	} else {
-		$ItemOneCushionVal.slideUp(0);
+		$ItemNsfwVal.slideUp(0);
 	}
 	updateShowAllFirst();
 }
 
-function updateOptionPublishPassword(){
+function updateOptionShowLimit(){
+	const $ItemShowLimitVal = $("#ItemShowLimitVal");
+	const slideSpeed = 500;
+	if(!$('#OPTION_SHOW_LIMIT').prop('checked')){
+		$ItemShowLimitVal.slideDown(slideSpeed);
+	} else {
+		$ItemShowLimitVal.slideUp(0);
+	}
+	updateShowAllFirst();
+}
+
+function updateOptionPassword(){
 	const $ItemPassword = $("#ItemPassword");
 	const slideSpeed = 500;
-	if(!$('#OptionPublishPassword').prop('checked')){
+	if(!$('#OPTION_PASSWORD').prop('checked')){
 		$ItemPassword.slideDown(slideSpeed);
 	} else {
 		$ItemPassword.slideUp(0);
-	}
-	updateShowAllFirst();
-}
-
-function updateOptionPublishShowLimit(){
-	const $ItemOneCushionVal = $("#ItemShowLimitVal");
-	const slideSpeed = 500;
-	if(!$('#OptionPublishShowLimit').prop('checked')){
-		$ItemOneCushionVal.slideDown(slideSpeed);
-	} else {
-		$ItemOneCushionVal.slideUp(0);
 	}
 	updateShowAllFirst();
 }
@@ -711,19 +683,18 @@ function updateOptionTweet(){
 	const $OptionItemTweetImage = $("#OptionItemTweetImage");
 	if (!$OptionItemTweetImage) return;
 	const slideSpeed = 500;
-	if($('#OptionTweet').prop('checked')){
+	if($('#OPTION_TWEET').prop('checked')){
 		$OptionItemTweetImage.slideDown(slideSpeed);
 	} else {
 		$OptionItemTweetImage.slideUp(0);
 	}
 }
 
-
 function updateShowAllFirst() {
 	if (
-		!$("#OptionPublishOneCushion").prop("checked") ||
-		!$("#OptionPublishShowLimit").prop("checked") ||
-		!$("#OptionPublishPassword").prop("checked")
+		!$("#OPTION_PUBLISH_NSFW").prop("checked") ||
+		!$("#OPTION_SHOW_LIMIT").prop("checked") ||
+		!$("#OPTION_PASSWORD").prop("checked")
 	) {
 		$("#OptionItemShowAllFirst").show();
 	} else {
@@ -1594,20 +1565,20 @@ function selectRadio(id) {
 }
 
 const UPLOAD_PARAMS_DEFAULT = {
-	"OptionPublish": {"type": "checkbox", "value": true},
-	"OptionLimitedTimePublish": {"type": "checkbox", "value": true},
-	"OptionPublishOneCushion": {"type": "checkbox", "value": true},
-	"OneCushionVal": {"type": "radio", "value": "RadioOneCushion"},
-	"OptionPublishShowLimit": {"type": "checkbox", "value": true},
-	"RadioShowLimitVal": {"type": "radio", "value": "RadioPoipikuLogin"},
-	"OptionPublishPassword": {"type": "checkbox", "value": true},
-	"EditPassword": {"type": "textbox", "value": ""},
-	"ItemShowAllFirst": {"type": "checkbox", "value": false},
-	"OptionTweet": {"type": "checkbox", "value": false},
-	"OptionTweetImage": {"type": "checkbox", "value": true},
-	"OptionTwitterCardThumbnail": {"type": "checkbox", "value": true},
-	"OptionCheerNg": {"type": "checkbox", "value": true},
-	"OptionRecent": {"type": "checkbox", "value": true},
+	"OPTION_PUBLISH": {"type": "checkbox", "value": true},
+	"OPTION_TIME_LIMITED": {"type": "checkbox", "value": true},
+	"OPTION_PUBLISH_NSFW": {"type": "checkbox", "value": true},
+	"NSFW_VAL": {"type": "radio", "value": "RadioOneCushion"},
+	"OPTION_SHOW_LIMIT": {"type": "checkbox", "value": true},
+	"SHOW_LIMIT_VAL": {"type": "radio", "value": "RadioPoipikuLogin"},
+	"OPTION_PASSWORD": {"type": "checkbox", "value": true},
+	"PASSWORD_VAL": {"type": "textbox", "value": ""},
+	"OPTION_SHOW_FIRST": {"type": "checkbox", "value": false},
+	"OPTION_TWEET": {"type": "checkbox", "value": false},
+	"OPTION_TWEET_IMAGE": {"type": "checkbox", "value": true},
+	"OPTION_TWITTER_CARD_THUMBNAIL": {"type": "checkbox", "value": true},
+	"OPTION_CHEER_NG": {"type": "checkbox", "value": true},
+	"OPTION_RECENT": {"type": "checkbox", "value": true},
 }
 
 const UPLOAD_PARAMS_KEY = 'UPLOAD_PARAMS';
@@ -1678,9 +1649,9 @@ function initUploadParams() {
 			selectRadio(val.value);
 		}
 	}
-	updateOptionPublishOneCushion();
-	updateOptionPublishShowLimit();
-	updateOptionPublishPassword();
+	updateOptionPublishNsfw();
+	updateOptionShowLimit();
+	updateOptionPassword();
 }
 
 
