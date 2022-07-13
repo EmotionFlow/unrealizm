@@ -100,10 +100,8 @@ if(nRtn<ShowAppendFileC.OK) {
 } else {
 	final String illustDetailUrl = (cResults.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 	final int publishId = cResults.m_cContent.m_nPublishId;
-	if (publishId == Common.PUBLISH_ID_ALL || publishId == Common.PUBLISH_ID_HIDDEN || cResults.m_cContent.publishAllNum == 1) {
-		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
-			nRtn=1;
-		}
+	if (cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && (cResults.m_cContent.m_nOpenId==Common.OPEN_ID_HIDDEN || !cResults.m_cContent.isHideThumbImg || cResults.m_cContent.publishAllNum == 1)) {
+		nRtn=1;
 	} else {
 		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
 			// 2枚目の場所に本文を表示する

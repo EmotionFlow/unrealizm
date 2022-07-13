@@ -74,6 +74,8 @@ public final class ShowAppendFileC {
 			cState.close();cState=null;
 			if(m_cContent==null) return ERR_NOT_FOUND;
 
+			m_cContent.setThumb();
+
 			boolean bRequestClient = false;
 			strSql = "SELECT id FROM requests WHERE content_id=? AND client_user_id=?";
 			cState = cConn.prepareStatement(strSql);
