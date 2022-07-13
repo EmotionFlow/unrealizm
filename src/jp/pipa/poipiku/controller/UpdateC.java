@@ -4,9 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
 import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 
@@ -174,8 +171,6 @@ public final class UpdateC extends UpC {
 				// set where params
 				statement.setInt(idx++, cParam.m_nUserId);
 				statement.setInt(idx++, cParam.m_nContentId);
-
-				Log.d(statement.toString());
 				statement.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
