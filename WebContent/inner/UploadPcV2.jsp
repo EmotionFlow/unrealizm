@@ -534,7 +534,7 @@ if (requestId > 0) {
 					</div>
 					<div class="OptionItem">
 						<label class="rocker" onclick="updateOptionLimitedTimePublish()">
-							<input id="OPTION_TIME_LIMITED" type="checkbox">
+							<input id="OPTION_NOT_TIME_LIMITED" type="checkbox">
 							<span class="switch-left">常時</span>
 							<span class="switch-right">期間指定</span>
 						</label>
@@ -544,22 +544,22 @@ if (requestId > 0) {
 							<%if(Util.isSmartPhone(request)) {%>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
-								<input id="EDIT_TIME_LIMITED_START" class="EditTimeLimited" type="text" />
+								<input id="TIME_LIMITED_START" class="EditTimeLimited" type="text" />
 							</div>
 							<div style="display: block;">
 								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
-								<input id="EDIT_TIME_LIMITED_END" class="EditTimeLimited" type="text" />
+								<input id="TIME_LIMITED_END" class="EditTimeLimited" type="text" />
 							</div>
 							<%}else{%>
-							<input id="EDIT_TIME_LIMITED_START" class="EditTimeLimitedPc" type="text" maxlength="15" />
+							<input id="TIME_LIMITED_START" class="EditTimeLimitedPc" type="text" maxlength="15" />
 							<span class="EditTimeLimitedPcTo">〜</span>
-							<input id="EDIT_TIME_LIMITED_END" class="EditTimeLimitedPc" type="text" maxlength="15" />
+							<input id="TIME_LIMITED_END" class="EditTimeLimitedPc" type="text" maxlength="15" />
 							<%}%>
 						</div>
 					</div>
 					<div class="OptionItem">
 						<label class="rocker" onclick="updateOptionPublishNsfw()">
-							<input id="OPTION_PUBLISH_NSFW" type="checkbox">
+							<input id="OPTION_NOT_PUBLISH_NSFW" type="checkbox">
 							<span class="switch-left">配慮・NSFW不要</span>
 							<span class="switch-right">指定する</span>
 						</label>
@@ -610,7 +610,7 @@ if (requestId > 0) {
 								<span class="ShowLimitName" id="TwitterList">
 									<span id="TwitterListLoading" style="display: none"></span>
 									<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
-									<select id="EditTwitterList" class="EditPublish" style="display: none;"></select>
+									<select id="TWITTER_LIST_ID" class="EditPublish" style="display: none;"></select>
 								</span>
 							</label>
 <%--							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterFollowee" id="RadioTwitterFollowee">--%>
@@ -633,7 +633,7 @@ if (requestId > 0) {
 
 					<div class="OptionItem">
 						<label class="rocker" onclick="updateOptionPassword()">
-							<input id="OPTION_PASSWORD" type="checkbox">
+							<input id="OPTION_NO_PASSWORD" type="checkbox">
 							<span class="switch-left">パスワードなし</span>
 							<span class="switch-right">あり</span>
 						</label>

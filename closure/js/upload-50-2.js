@@ -491,33 +491,6 @@ function OnChangeTab(nIndex) {
 	}
 }
 
-function setTweetSetting(val) {
-	setLocalStrage('upload_tweet', val);
-}
-
-function getTweetSetting() {
-	const upload_tweet = getLocalStrage('upload_tweet');
-	return !!upload_tweet;
-}
-
-function setTweetImageSetting(val) {
-	setLocalStrage('upload_tweet_image', val);
-}
-
-function getTweetImageSetting() {
-	const upload_tweet = getLocalStrage('upload_tweet_image');
-	return !!upload_tweet;
-}
-
-function setTwitterCardThumbnailSetting(val) {
-	setLocalStrage('upload_twitter_card_thumbnail', val);
-}
-
-function getTwitterCardThumbnailSetting() {
-	const upload_twitter_card_thumbnail = getLocalStrage('upload_twitter_card_thumbnail');
-	return !!upload_twitter_card_thumbnail;
-}
-
 function setLastCategorySetting(val) {
 	setLocalStrage('last_category', val);
 }
@@ -649,7 +622,7 @@ function updateOptionLimitedTimePublish(){
 function updateOptionPublishNsfw(){
 	const $ItemNsfwVal = $("#ItemNsfwVal");
 	const slideSpeed = 300;
-	if(!$('#OPTION_PUBLISH_NSFW').prop('checked')){
+	if(!$('#OPTION_NOT_PUBLISH_NSFW').prop('checked')){
 		$ItemNsfwVal.slideDown(slideSpeed);
 	} else {
 		$ItemNsfwVal.slideUp(0);
@@ -671,7 +644,7 @@ function updateOptionShowLimit(){
 function updateOptionPassword(){
 	const $ItemPassword = $("#ItemPassword");
 	const slideSpeed = 500;
-	if(!$('#OPTION_PASSWORD').prop('checked')){
+	if(!$('#OPTION_NO_PASSWORD').prop('checked')){
 		$ItemPassword.slideDown(slideSpeed);
 	} else {
 		$ItemPassword.slideUp(0);
@@ -692,9 +665,9 @@ function updateOptionTweet(){
 
 function updateShowAllFirst() {
 	if (
-		!$("#OPTION_PUBLISH_NSFW").prop("checked") ||
+		!$("#OPTION_NOT_PUBLISH_NSFW").prop("checked") ||
 		!$("#OPTION_SHOW_LIMIT").prop("checked") ||
-		!$("#OPTION_PASSWORD").prop("checked")
+		!$("#OPTION_NO_PASSWORD").prop("checked")
 	) {
 		$("#OptionItemShowAllFirst").show();
 	} else {
@@ -773,99 +746,6 @@ function udpateMyTwitterList() {
 
 var updateMyTwitterListF = udpateMyTwitterList();
 
-function updatePublish(nUserId) {
-	const val = parseInt($('#EditPublish').val(), 10);
-	updateAreaLimitedTimePublish(val);
-
-	const nSlideSpeed = 300;
-	const nChangeDelay = 150;
-	const elements = [
-		$('#ItemTwitterList'),
-		$('#ItemPassword'),
-		$('#PublishFollowerInfo'),
-		$('#PublishTwitterFollowerInfo'),
-		$('#PublishTwitterFollowingInfo'),
-		$('#PublishTwitterFollowEachInfo'),
-		$('#PublishTwitterRTInfo'),
-		$('#PublishLoginInfo'),
-		$('#PublishHiddenInfo')
-	];
-
-	if (val === 4 || val === 5 || val === 6 || val === 7 || val === 8 || val === 9 || val === 10 || val === 11 || val === 12 || val === 99) {
-		let elToHide = null;
-		let elToVisible = null;
-		switch (val) {
-			case 4:
-				elToVisible = $('#ItemPassword');
-				break;
-			case 5:
-				elToVisible = $('#PublishLoginInfo');
-				break;
-			case 6:
-				elToVisible = $('#PublishFollowerInfo');
-				break;
-			case 7:
-				elToVisible = $('#PublishTwitterFollowerInfo');
-				break;
-			case 8:
-				elToVisible = $('#PublishTwitterFollowingInfo');
-				break;
-			case 9:
-				elToVisible = $('#PublishTwitterFollowEachInfo');
-				break;
-			case 10:
-				elToVisible = $('#ItemTwitterList');
-				break;
-			case 12:
-				elToVisible = $('#PublishTwitterRTInfo');
-				$('#OptionTweet').prop("checked", true);
-				updateTweetButton();
-				break;
-			case 99:
-				elToVisible = $('#PublishHiddenInfo');
-				break;
-			default:
-				;
-		}
-
-		for (let i = 0; i < elements.length; i++) {
-			let el = elements[i];
-			if (el.is(':visible')) {
-				elToHide = el;
-				break;
-			}
-		}
-
-		if (elToHide == null) {
-			elToVisible.slideDown(nSlideSpeed);
-		} else {
-			elToHide.slideUp(nSlideSpeed,
-				function () {
-					elToVisible.delay(nChangeDelay).slideDown(nSlideSpeed);
-				});
-		}
-
-		if (val === 10) {
-			updateMyTwitterListF(nUserId);
-		}
-	} else {
-		for (let i = 0; i < elements.length; i++) {
-			let el = elements[i];
-			if (el.is(':visible')) {
-				el.slideUp(nSlideSpeed);
-			}
-		}
-	}
-
-	const $ItemShowAllFirst = $('#ItemShowAllFirst');
-	if ($ItemShowAllFirst) {
-		if (val === 0 || val === 99) {
-			$ItemShowAllFirst.slideUp();
-		} else {
-			$ItemShowAllFirst.slideDown();
-		}
-	}
-}
 
 function tweetSucceeded(data){
 	var toContext = "/MyIllustListPcV.jsp";
@@ -938,16 +818,15 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 			onUpload: function(id, name) {
 				if(this.first_file) {
 					this.first_file = false;
-					this.setEndpoint('/api/UploadFileFirstF.jsp', id);
+					this.setEndpoint('/f/UploadFileFirstF.jsp', id);
 					console.log("UploadFileFirstF");
 				} else {
-					this.setEndpoint('/api/UploadFileAppendF.jsp', id);
+					this.setEndpoint('/f/UploadFileAppendF.jsp', id);
 					console.log("UploadFileAppendF");
 				}
 				this.setParams({
 					UID: this.user_id,
 					IID: this.illust_id,
-					PID: this.publish_id,
 					REC: this.recent
 				}, id);
 			},
@@ -1041,96 +920,76 @@ function UploadFile(user_id, request_id) {
 	const nCategory = parseInt($('#EditCategory').val(), 10);
 	let strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
-	const nPublishId = parseInt($('#EditPublish').val(), 10);
-	const strPassword = $('#EditPassword').val();
-	const nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
-	const nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	let nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-	const nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
-	let nTwListId = null;
-	const nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
-	let strPublishStart = null;
-	let strPublishEnd = null;
-	if(nPublishId === 10){
+
+	let uploadParams = getUploadParams();
+
+	console.log(uploadParams);
+
+	uploadParams["TWITTER_LIST_ID"] = {"value": ""};
+	if (uploadParams.OPTION_SHOW_LIMIT.value === 10){
 		if($("#TwitterListNotFound").is(':visible')){
 			twitterListNotFoundMsg();
 			return;
 		}
-		nTwListId = $('#EditTwitterList').val();
-	} else if(nPublishId === 12) {
-		if (nTweet === 0) {
+		uploadParams.TWITTER_LIST_ID.value = $('#TWITTER_LIST_ID').val();
+	} else if(uploadParams.OPTION_SHOW_LIMIT.value === 12) {
+		if (!uploadParams.OPTION_TWEET.value) {
 			needTweetForRTLimitMsg();
 			return;
 		}
 	}
-	if(nLimitedTime === 1){
-		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
-		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
-		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
+	if(!uploadParams.OPTION_NOT_TIME_LIMITED.value){
+		if(!checkPublishDatetime(uploadParams.TIME_LIMITED_END.value, uploadParams.TIME_LIMITED_END.value, false)){
 			return;
 		}
 	}
-	const nPublishAllNum = $('#OptionShowAllFirst').prop('checked') ? 1 : 0;
-	if (nPublishAllNum > 0 && getPreviewAreaImageNum() < 2) {
+	if ((uploadParams.OPTION_SHOW_LIMIT.value ||
+		!uploadParams.OPTION_NOT_PUBLISH_NSFW ||
+		!uploadParams.OPTION_NO_PASSWORD) &&
+		uploadParams.OPTION_SHOW_FIRST.value && getPreviewAreaImageNum() < 2) {
 		showAllFirstErrMsg();
 		return;
 	}
 
 	if(!($('#TagInputItemData').length)) genre=1;
 
-	setTweetSetting($('#OptionTweet').prop('checked'));
-	setTweetImageSetting($('#OptionImage').prop('checked'));
-	setTwitterCardThumbnailSetting($('#OptionTwitterCardThumbnail').prop('checked'));
 	setLastCategorySetting(nCategory);
-	if(nPublishId === 99) {
-		nTweet = 0;
+	if(!uploadParams.OPTION_PUBLISH.value) {
+		uploadParams.OPTION_TWEET.value = false;
 	}
 	startMsg();
 
-	let nTweetNow = nTweet;
-	if(nLimitedTime === 1) nTweetNow = 0;
+	let isTweetNow = uploadParams.OPTION_TWEET.value;
+	if(uploadParams.OPTION_NOT_TIME_LIMITED.value) isTweetNow = false;
 
 	let postData = {
-		"UID":user_id,
-		"GD" :genre,
-		"CAT":nCategory,
-		"TAG":strTagList,
-		"PID":nPublishId,
-		"PPW":strPassword,
-		"PLD":nTwListId,
-		"LTP":nLimitedTime,
-		"REC":nRecent,
-		"PST":strPublishStart,
-		"PED":strPublishEnd,
-		"TWT":getTweetSetting(),
-		"TWI":getTweetImageSetting(),
-		"TWCT":getTwitterCardThumbnailSetting(),
-		"ED":0,
-		"CNG":nCheerNg,
-		"RID":request_id,
-		"PUBALL":nPublishAllNum,
-		"NOTE":privateNote.getText(),
+		"ED":	0,
+		"UID":	user_id,
+		"GD":	genre,
+		"CAT":	nCategory,
+		"TAG":	strTagList,
+		"RID":	request_id,
+		"NOTE":	privateNote.getText(),
+		...Object.fromEntries(Object.entries( uploadParams ).map( ( [ k, v ] ) => [ k, v.value ] )),
 	};
 
-	if (!transList) {
-		// 下位互換
-		postData["DES"] = $.trim($("#EditDescription").val());
-	} else {
-		const descList = transList.Description;
-		descList[selected['Description']] = $("#EditDescription").val();
-		for (let key in descList) {
-			if (key === 'default') {
-				postData["DES"] = descList[key];
-			} else {
-				postData["DES" + key] = descList[key];
-			}
+	console.log(postData);
+	return;
+
+	const descList = transList.Description;
+	descList[selected['Description']] = $("#EditDescription").val();
+	for (let key in descList) {
+		if (key === 'default') {
+			postData["DES"] = descList[key];
+		} else {
+			postData["DES" + key] = descList[key];
 		}
 	}
 
 	$.ajaxSingle({
 		"type": "post",
 		"data": postData,
-		"url": "/api/UploadFileRefTwitterF.jsp",
+		"url": "/f/UploadFileRefTwitterF.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadFileRefTwitterF");
@@ -1139,10 +998,9 @@ function UploadFile(user_id, request_id) {
 					multiFileUploader.first_file = true;
 					multiFileUploader.user_id = user_id;
 					multiFileUploader.illust_id = data.content_id;
-					multiFileUploader.recent = nRecent;
-					multiFileUploader.tweet = nTweetNow;
-					multiFileUploader.tweet_image = nTweetImage;
-					multiFileUploader.publish_id = nPublishId;
+					multiFileUploader.recent = uploadParams.OPTION_RECENT.value?1:0;
+					multiFileUploader.tweet = isTweetNow;
+					multiFileUploader.tweet_image = uploadParams.OPTION_TWEET_IMAGE.value?1:0;
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					errorMsg();
@@ -1391,15 +1249,11 @@ function UploadText(user_id, request_id) {
 	const strTextBody = $("#EditTextBody").val();
 	let strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
-	const nPublishId = parseInt($('#EditPublish').val(), 10);
-	const strPassword = $('#EditPassword').val();
-	const nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
-	const nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	let nTweet = ($('#OptionTweet').prop('checked'))?1:0;
 	const title = $("#EditTextTitle").val();
 	const direction = $('input:radio[name="EditTextDirection"]:checked').val();
 
-	const nTweetImage = 0;
+	let uploadParams = getUploadParams();
+
 	let nTwListId = null;
 	const nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
 	let strPublishStart = null;
@@ -1566,12 +1420,14 @@ function selectRadio(id) {
 
 const UPLOAD_PARAMS_DEFAULT = {
 	"OPTION_PUBLISH": {"type": "checkbox", "value": true},
-	"OPTION_TIME_LIMITED": {"type": "checkbox", "value": true},
-	"OPTION_PUBLISH_NSFW": {"type": "checkbox", "value": true},
+	"OPTION_NOT_TIME_LIMITED": {"type": "checkbox", "value": true},
+	"TIME_LIMITED_START": {"type": "datetime", "value": ""},
+	"TIME_LIMITED_END": {"type": "datetime", "value": ""},
+	"OPTION_NOT_PUBLISH_NSFW": {"type": "checkbox", "value": true},
 	"NSFW_VAL": {"type": "radio", "value": "RadioOneCushion"},
 	"OPTION_SHOW_LIMIT": {"type": "checkbox", "value": true},
 	"SHOW_LIMIT_VAL": {"type": "radio", "value": "RadioPoipikuLogin"},
-	"OPTION_PASSWORD": {"type": "checkbox", "value": true},
+	"OPTION_NO_PASSWORD": {"type": "checkbox", "value": true},
 	"PASSWORD_VAL": {"type": "textbox", "value": ""},
 	"OPTION_SHOW_FIRST": {"type": "checkbox", "value": false},
 	"OPTION_TWEET": {"type": "checkbox", "value": false},
@@ -1581,9 +1437,10 @@ const UPLOAD_PARAMS_DEFAULT = {
 	"OPTION_RECENT": {"type": "checkbox", "value": true},
 }
 
+// for local storage
 const UPLOAD_PARAMS_KEY = 'UPLOAD_PARAMS';
 
-function saveUploadParamsToLocalStorage() {
+function getUploadParams() {
 	let uploadParams = UPLOAD_PARAMS_DEFAULT;
 
 	for (let [key, val] of Object.entries(UPLOAD_PARAMS_DEFAULT)) {
@@ -1601,11 +1458,17 @@ function saveUploadParamsToLocalStorage() {
 			} else {
 				v = val.value;
 			}
+		} else if (type === 'datetime') {
+			v = getPublishDateTime($el.val());
 		}
 		uploadParams[key].value = v;
 	}
 
+	return uploadParams;
+}
 
+function saveUploadParamsToLocalStorage() {
+	let uploadParams = getUploadParams();
 	const json = JSON.stringify(uploadParams);
 	localStorage.setItem(UPLOAD_PARAMS_KEY, json);
 }
