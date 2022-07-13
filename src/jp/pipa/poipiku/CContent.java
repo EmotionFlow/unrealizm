@@ -277,7 +277,6 @@ public final class CContent {
 
 		// ワンクッション・R18サムネ
 		if (m_nSafeFilter == Common.SAFE_FILTER_R15 || m_nSafeFilter == Common.SAFE_FILTER_R18 || m_nSafeFilter == Common.SAFE_FILTER_R18G) {
-			Log.d("safe filter: " + m_nSafeFilter);
 			String thumbFile = "";
 			switch (m_nSafeFilter) {
 				case Common.SAFE_FILTER_R15 -> thumbFile = Common.SAFE_FILTER_FILE[1];
