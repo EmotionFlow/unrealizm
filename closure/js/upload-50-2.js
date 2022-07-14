@@ -973,9 +973,6 @@ function UploadFile(user_id, request_id) {
 		...Object.fromEntries(Object.entries( uploadParams ).map( ( [ k, v ] ) => [ k, v.value ] )),
 	};
 
-	console.log(postData);
-	return;
-
 	const descList = transList.Description;
 	descList[selected['Description']] = $("#EditDescription").val();
 	for (let key in descList) {
