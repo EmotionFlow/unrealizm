@@ -4,6 +4,7 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Log;
 
 import java.sql.*;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,32 +12,39 @@ public class UpC {
 	private static int _getOpenId(boolean bNotRecently){
 		return bNotRecently ? 1 : 0;
 	}
-	protected static int GetOpenId(int nOpenIdPresent, int nPublishId, boolean bNotRecently,
-		boolean bLimitedTimePublish, boolean bLimitedTimePublishPresent,
-		Timestamp tsPublishStart, Timestamp tsPublishEnd,
-		Timestamp tsPublishStartPresent, Timestamp tsPublishEndPresent){
 
-		int nOpenId = 2;
-		if(nPublishId == Common.PUBLISH_ID_HIDDEN){
-			nOpenId = 2;
+	protected static int GetOpenId(
+			int openIdPresent,
+			int publishId,
+			boolean bNotRecently,
+			boolean bLimitedTimePublish,
+			boolean bLimitedTimePublishPresent,
+			Timestamp tsPublishStart,
+			Timestamp tsPublishEnd,
+			Timestamp tsPublishStartPresent,
+			Timestamp tsPublishEndPresent){
+
+		int openId;
+		if(publishId == Common.PUBLISH_ID_HIDDEN){
+			openId = Common.OPEN_ID_HIDDEN;;
 		} else if(bLimitedTimePublish){
 			if(!bLimitedTimePublishPresent || tsPublishStartPresent==null || tsPublishEndPresent==null){
-				nOpenId = 2;
+				openId = Common.OPEN_ID_HIDDEN;;
 			} else {
 				if(tsPublishStart != null || tsPublishEnd != null){
-					if(tsPublishStart.equals(tsPublishStartPresent) && tsPublishEnd.equals(tsPublishEndPresent)){
-						nOpenId = nOpenIdPresent;   // 公開期間に変更がないのなら、今の公開状態を維持する。
+					if(Objects.requireNonNull(tsPublishStart).equals(tsPublishStartPresent) && tsPublishEnd.equals(tsPublishEndPresent)){
+						openId = openIdPresent;   // 公開期間に変更がないのなら、今の公開状態を維持する。
 					} else {
-						nOpenId = 2; // 1分毎のcronに処理を任せるので、ひとまず非公開にしておく。
+						openId = Common.OPEN_ID_HIDDEN;; // 1分毎のcronに処理を任せるので、ひとまず非公開にしておく。
 					}
 				} else {
-					nOpenId = _getOpenId(bNotRecently);
+					openId = _getOpenId(bNotRecently);
 				}
 			}
 		} else {
-			nOpenId = _getOpenId(bNotRecently);
+			openId = _getOpenId(bNotRecently);
 		}
-		return nOpenId;
+		return openId;
 	}
 
 	protected void AddTags(String strDescription, String strTagList, int nContentId, Connection connection) throws SQLException {

@@ -633,7 +633,7 @@ function updateOptionPublishNsfw(){
 function updateOptionShowLimit(){
 	const $ItemShowLimitVal = $("#ItemShowLimitVal");
 	const slideSpeed = 500;
-	if(!$('#OPTION_SHOW_LIMIT').prop('checked')){
+	if(!$('#OPTION_NO_CONDITIONAL_SHOW').prop('checked')){
 		$ItemShowLimitVal.slideDown(slideSpeed);
 	} else {
 		$ItemShowLimitVal.slideUp(0);
@@ -666,7 +666,7 @@ function updateOptionTweet(){
 function updateShowAllFirst() {
 	if (
 		!$("#OPTION_NOT_PUBLISH_NSFW").prop("checked") ||
-		!$("#OPTION_SHOW_LIMIT").prop("checked") ||
+		!$("#OPTION_NO_CONDITIONAL_SHOW").prop("checked") ||
 		!$("#OPTION_NO_PASSWORD").prop("checked")
 	) {
 		$("#OptionItemShowAllFirst").show();
@@ -926,13 +926,13 @@ function UploadFile(user_id, request_id) {
 	console.log(uploadParams);
 
 	uploadParams["TWITTER_LIST_ID"] = {"value": ""};
-	if (uploadParams.OPTION_SHOW_LIMIT.value === 10){
+	if (uploadParams.OPTION_NO_CONDITIONAL_SHOW.value === 10){
 		if($("#TwitterListNotFound").is(':visible')){
 			twitterListNotFoundMsg();
 			return;
 		}
 		uploadParams.TWITTER_LIST_ID.value = $('#TWITTER_LIST_ID').val();
-	} else if(uploadParams.OPTION_SHOW_LIMIT.value === 12) {
+	} else if(uploadParams.OPTION_NO_CONDITIONAL_SHOW.value === 12) {
 		if (!uploadParams.OPTION_TWEET.value) {
 			needTweetForRTLimitMsg();
 			return;
@@ -943,7 +943,7 @@ function UploadFile(user_id, request_id) {
 			return;
 		}
 	}
-	if ((uploadParams.OPTION_SHOW_LIMIT.value ||
+	if ((uploadParams.OPTION_NO_CONDITIONAL_SHOW.value ||
 		!uploadParams.OPTION_NOT_PUBLISH_NSFW ||
 		!uploadParams.OPTION_NO_PASSWORD) &&
 		uploadParams.OPTION_SHOW_FIRST.value && getPreviewAreaImageNum() < 2) {
@@ -1422,7 +1422,7 @@ const UPLOAD_PARAMS_DEFAULT = {
 	"TIME_LIMITED_END": {"type": "datetime", "value": ""},
 	"OPTION_NOT_PUBLISH_NSFW": {"type": "checkbox", "value": true},
 	"NSFW_VAL": {"type": "radio", "value": "RadioOneCushion"},
-	"OPTION_SHOW_LIMIT": {"type": "checkbox", "value": true},
+	"OPTION_NO_CONDITIONAL_SHOW": {"type": "checkbox", "value": true},
 	"SHOW_LIMIT_VAL": {"type": "radio", "value": "RadioPoipikuLogin"},
 	"OPTION_NO_PASSWORD": {"type": "checkbox", "value": true},
 	"PASSWORD_VAL": {"type": "textbox", "value": ""},

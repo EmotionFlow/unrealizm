@@ -7,7 +7,7 @@ public class UploadCParam extends UpCParam {
         try {
 			super.GetParams(request);
 		} catch(Exception e) {
-			return super.ErrorOccured(e);
+			return super.ErrorOccurred(e);
 		}
 		return 0;
     }

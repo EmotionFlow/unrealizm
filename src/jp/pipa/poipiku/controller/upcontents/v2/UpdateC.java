@@ -46,7 +46,7 @@ public final class UpdateC extends UpC {
 	}
 
 
-	public int GetResults(UpdateCParam cParam, CheckLogin checkLogin) {
+	public int GetResults(UpdateCParam upParam, CheckLogin checkLogin) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -67,8 +67,8 @@ public final class UpdateC extends UpC {
 			strSql = "SELECT open_id, publish_id, publish_all_num, tweet_id, limited_time_publish, upload_date, end_date, editor_id" +
 					" FROM contents_0000 WHERE user_id=? AND content_id=?";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, cParam.m_nUserId);
-			statement.setInt(2, cParam.m_nContentId);
+			statement.setInt(1, upParam.userId);
+			statement.setInt(2, upParam.contentId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				nOpenIdPresent = resultSet.getInt("open_id");
@@ -94,19 +94,23 @@ public final class UpdateC extends UpC {
 			boolean bToPublish = false;
 			int nOpenId = GetOpenId(
 				nOpenIdPresent,
-				cParam.m_nPublishId,
-				cParam.m_bNotRecently,
-				cParam.m_bLimitedTimePublish,
+				upParam.publishId,
+				upParam.isNotRecently,
+				upParam.isTimeLimited,
 				bLimitedTimePublishPresent,
-				cParam.m_tsPublishStart,
-				cParam.m_tsPublishEnd,
+				upParam.publishStart,
+				upParam.publishEnd,
 				tsUploadDatePresent,
 				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(
-					"genre_id=?", "category_id=?", "open_id=?", "description=?", "private_note=?",
+					"genre_id=?", "category_id=?", "open_id=?",
+					"description=?", "private_note=?",
 					"tag_list=?", "publish_id=?",
-					"publish_all_num=?", "password_enabled=?", "password=?", "list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
+					"publish_all_num=?",
+					"password_enabled=?", "password=?",
+					"list_id=?", "safe_filter=?", "cheer_ng=?",
+					"tweet_when_published=?",
 					"not_recently=?", "limited_time_publish=?"
 			));
 
@@ -114,21 +118,21 @@ public final class UpdateC extends UpC {
 				lColumns.add("updated_at=NULL");
 			}
 
-			if(!cParam.m_bLimitedTimePublish){
+			if(!upParam.isTimeLimited){
 				// これまで非公開で、今後公開したい。
-				if(nPublishIdPresent==Common.PUBLISH_ID_HIDDEN && cParam.m_nPublishId!=Common.PUBLISH_ID_HIDDEN){
+				if(nOpenIdPresent==Common.OPEN_ID_HIDDEN && upParam.isPublish){
 					bToPublish = true;
-					lColumns.add("upload_date=current_timestamp");
+					lColumns.add("upload_date=now()");
 				}
 			} else {
 				// 期間限定
-				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){
+				if(upParam.publishStart == null && upParam.publishEnd == null){
 					throw new Exception("m_nPublishId is 'limited time', but start and end is null.");
 				} else {
-					if(cParam.m_tsPublishStart != null ){
+					if(upParam.publishStart != null ){
 						lColumns.add("upload_date=?");
 					}
-					if(cParam.m_tsPublishEnd != null ){
+					if(upParam.publishEnd != null ){
 						lColumns.add("end_date=?");
 					}
 				}
@@ -142,37 +146,53 @@ public final class UpdateC extends UpC {
 			try {
 				idx = 1;
 				// set values
-				statement.setInt(idx++, cParam.genre);
-				statement.setInt(idx++, cParam.m_nCategoryId);
+				statement.setInt(idx++, upParam.genre);
+				statement.setInt(idx++, upParam.categoryId);
 				statement.setInt(idx++, nOpenId);
-				statement.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
-				statement.setString(idx++, cParam.privateNote);
-				statement.setString(idx++, cParam.m_strTagList);
-				statement.setInt(idx++, cParam.m_nPublishId);
-				if (cParam.m_nPublishAllNum == 0) {
+				statement.setString(idx++, Common.SubStrNum(upParam.description, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
+				statement.setString(idx++, upParam.privateNote);
+				statement.setString(idx++, upParam.tagList);
+
+				if (!upParam.isConditionalShow) {
+					statement.setInt(idx++, Common.PUBLISH_ID_ALL);
+				} else {
+					statement.setInt(idx++, upParam.publishId);
+				}
+
+				if (!upParam.isShowFirst) {
 					statement.setNull(idx++, Types.INTEGER);
 				} else {
-					statement.setInt(idx++, cParam.m_nPublishAllNum);
+					statement.setInt(idx++, 1);
 				}
-				statement.setBoolean(idx++, cParam.m_nPublishId==Common.PUBLISH_ID_PASS);
-				statement.setString(idx++, cParam.m_strPassword);
-				statement.setString(idx++, cParam.m_strListId);
-				statement.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));
-				statement.setBoolean(idx++, cParam.m_bCheerNg);
-				statement.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg, cParam.m_bTwitterCardThumbnail));
-				statement.setBoolean(idx++, cParam.m_bNotRecently);
-				statement.setBoolean(idx++, cParam.m_bLimitedTimePublish);
-				if(cParam.m_bLimitedTimePublish){
-					if(cParam.m_tsPublishStart != null ){
-						statement.setTimestamp(idx++, cParam.m_tsPublishStart);
+
+				statement.setBoolean(idx++, !upParam.isNoPassword);
+				statement.setString(idx++, upParam.password);
+
+				statement.setString(idx++, upParam.twitterListId);
+
+				if (upParam.isNsfw) {
+					statement.setInt(idx++, upParam.safeFilterId);
+				} else {
+					statement.setInt(idx++, Common.SAFE_FILTER_ALL);
+				}
+
+				statement.setBoolean(idx++, upParam.isCheerNg);
+				statement.setInt(idx++, CContent.getTweetWhenPublishedId(upParam.isTweet, upParam.isTweetWithImage, upParam.isTwitterCardThumbnail));
+				statement.setBoolean(idx++, !upParam.isNotRecently);
+
+				statement.setBoolean(idx++, upParam.isTimeLimited);
+				if (upParam.isTimeLimited) {
+					if (upParam.publishStart != null) {
+						statement.setTimestamp(idx++, upParam.publishStart);
 					}
-					if(cParam.m_tsPublishEnd != null ){
-						statement.setTimestamp(idx++, cParam.m_tsPublishEnd);
+					if (upParam.publishEnd != null) {
+						statement.setTimestamp(idx++, upParam.publishEnd);
 					}
 				}
+
 				// set where params
-				statement.setInt(idx++, cParam.m_nUserId);
-				statement.setInt(idx++, cParam.m_nContentId);
+				statement.setInt(idx++, upParam.userId);
+				statement.setInt(idx++, upParam.contentId);
 				statement.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -186,7 +206,7 @@ public final class UpdateC extends UpC {
 				try{
 					strSql = "INSERT INTO content_id_histories VALUES(?, nextval('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
 					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, cParam.m_nContentId);
+					statement.setInt(1, upParam.contentId);
 					resultSet = statement.executeQuery();
 					if(resultSet.next()) {
 						nNewContentId = resultSet.getInt("new_id");
@@ -202,12 +222,12 @@ public final class UpdateC extends UpC {
 					if(statement!=null){statement.close();};statement=null;
 				}
 
-				boolean bUpdateResult = doUpdateContentIdTransaction(connection,  cParam.m_nContentId, nNewContentId);
+				boolean bUpdateResult = doUpdateContentIdTransaction(connection,  upParam.contentId, nNewContentId);
 				if(!bUpdateResult){
 					try{
 						strSql = "DELETE FROM content_id_histories WHERE old_id=?";
 						statement = connection.prepareStatement(strSql);
-						statement.setInt(1, cParam.m_nContentId);
+						statement.setInt(1, upParam.contentId);
 						statement.executeUpdate();
 					}catch(Exception e){
 						Log.d(strSql);
@@ -219,10 +239,10 @@ public final class UpdateC extends UpC {
 				}
 			}
 
-			final int contentId = nNewContentId==null ? cParam.m_nContentId : nNewContentId;
+			final int contentId = nNewContentId==null ? upParam.contentId : nNewContentId;
 
 			// Delete old tags
-			if (!cParam.m_strDescription.isEmpty() || !cParam.m_strTagList.isEmpty()) {
+			if (!upParam.description.isEmpty() || !upParam.tagList.isEmpty()) {
 				strSql = "DELETE FROM tags_0000 WHERE content_id=?;";
 				statement = connection.prepareStatement(strSql);
 				try {
@@ -236,29 +256,30 @@ public final class UpdateC extends UpC {
 			}
 
 			// Add tags
-			AddTags(cParam.m_strDescription, cParam.m_strTagList, contentId, connection);
+			AddTags(upParam.description, upParam.tagList, contentId, connection);
 
-			cParam.descriptionTranslations.forEach((key, value) -> {
+			upParam.descriptionTranslations.forEach((key, value) -> {
 				if (!value.isEmpty()) {
-					ContentTranslation.upsert(contentId, key, CContent.ColumnType.Description, value, cParam.m_nUserId);
+					ContentTranslation.upsert(contentId, key, CContent.ColumnType.Description, value, upParam.userId);
 				} else {
 					ContentTranslation.delete(contentId, key, CContent.ColumnType.Description);
 				}
 			});
 
-			// もし、(期間限定OFFからONに変更 || (期間限定 & (非公開中|公開中&期間変更あり))
+			// もし、(期間限定OFFからONに変更
+			//      || (期間限定 & (非公開中|公開中&期間変更あり))
 			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
 			// だったら、ツイート削除→UPDATE tweet_id=NULL
 			if ((
-					(!bLimitedTimePublishPresent && cParam.m_bLimitedTimePublish)
-					|| (cParam.m_bLimitedTimePublish && (nOpenIdPresent==2 || nOpenIdPresent!=2 && (!tsUploadDatePresent.equals(cParam.m_tsPublishStart) || !tsEndDatePresent.equals(cParam.m_tsPublishEnd))))
+					(!bLimitedTimePublishPresent && upParam.isTimeLimited)
+					|| (upParam.isTimeLimited && (nOpenIdPresent==Common.OPEN_ID_HIDDEN || nOpenIdPresent!=Common.OPEN_ID_HIDDEN && (!tsUploadDatePresent.equals(upParam.publishStart) || !tsEndDatePresent.equals(upParam.publishEnd))))
 				)
-				&& (cParam.m_bTweetTxt || cParam.m_bTweetImg)
-				&& cParam.m_bDeleteTweet
+				&& (upParam.isTweet || upParam.isTweetWithImage)
+				&& upParam.isDeleteTweet
 				&& !strTweetId.isEmpty()
 				){
 				CTweet cTweet = new CTweet();
-				if(cTweet.GetResults(cParam.m_nUserId)){
+				if(cTweet.GetResults(upParam.userId)){
 					if(cTweet.Delete(strTweetId)!=CTweet.OK){
 						Log.d("Delete tweet failed.");
 						// 処理自体は続行する
@@ -280,10 +301,10 @@ public final class UpdateC extends UpC {
 			e.printStackTrace();
 			return -700;
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
-		return nNewContentId==null?cParam.m_nContentId:nNewContentId;
+		return nNewContentId==null?upParam.contentId :nNewContentId;
 	}
 }

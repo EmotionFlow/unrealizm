@@ -566,12 +566,12 @@ if (requestId > 0) {
 					</div>
 					<div class="OptionItem" id="ItemNsfwVal" style="display: none;">
 						<div class="OptionPublishNsfwList">
-							<input type="radio" name="NSFW_VAL" value="OneCushion" id="RadioOneCushion">
+							<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R15%>" id="RadioOneCushion">
 							<label for="RadioOneCushion" class="OptionPublishNsfw">
 								<span class="OneCushionImage OneCushion"></span>
 								<span class="OneCushionName">ワンクッション</span>
 							</label>
-							<input type="radio" name="NSFW_VAL" value="R18" id="RadioR18">
+							<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R18%>" id="RadioR18">
 							<label for="RadioR18" class="OptionPublishNsfw">
 								<span class="OneCushionImage R18"></span>
 								<span class="OneCushionName">R18</span>
@@ -581,29 +581,29 @@ if (requestId > 0) {
 
 					<div class="OptionItem">
 						<label class="rocker" onclick="updateOptionShowLimit()">
-							<input id="OPTION_SHOW_LIMIT" type="checkbox">
+							<input id="OPTION_NO_CONDITIONAL_SHOW" type="checkbox">
 							<span class="switch-left">誰でも閲覧OK</span>
 							<span class="switch-right">限定する</span>
 						</label>
 					</div>
 					<div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
 						<div class="OptionPublishShowLimitList">
-							<input type="radio" name="SHOW_LIMIT_VAL" value="PoipikuLogin" id="RadioPoipikuLogin">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_LOGIN%>" id="RadioPoipikuLogin">
 							<label for="RadioPoipikuLogin" class="OptionShowLimit">
 								<span class="ShowLimitImage PoipikuLogin"></span>
 								<span class="ShowLimitName">ログイン限定</span>
 							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="PoipikuFollower" id="RadioPoipikuFollower">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_FOLLOWER%>" id="RadioPoipikuFollower">
 							<label for="RadioPoipikuFollower" class="OptionShowLimit">
 								<span class="ShowLimitImage PoipikuFollower"></span>
 								<span class="ShowLimitName">こそフォロ限定</span>
 							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterFollower" id="RadioTwitterFollower">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_FOLLOWER%>" id="RadioTwitterFollower">
 							<label for="RadioTwitterFollower" class="OptionShowLimit">
 								<span class="ShowLimitImage TwitterFollower"></span>
 								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</span>
 							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterList" id="RadioTwitterList">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_LIST%>" id="RadioTwitterList">
 							<label for="RadioTwitterList" class="OptionShowLimit" onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)">
 								<span class="ShowLimitImage TwitterList"></span>
 								<span class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</span>
@@ -613,17 +613,17 @@ if (requestId > 0) {
 									<select id="TWITTER_LIST_ID" class="EditPublish" style="display: none;"></select>
 								</span>
 							</label>
-<%--							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterFollowee" id="RadioTwitterFollowee">--%>
+<%--							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_T_FOLLOWEE%>" id="RadioTwitterFollowee">--%>
 <%--							<label for="RadioTwitterFollowee" class="OptionShowLimit">--%>
 <%--								<span class="ShowLimitImage TwitterFollowee"></span>--%>
 <%--								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</span>--%>
 <%--							</label>--%>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterEach" id="RadioTwitterEach">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_EACH%>" id="RadioTwitterEach">
 							<label for="RadioTwitterEach" class="OptionShowLimit">
 								<span class="ShowLimitImage TwitterEach"></span>
 								<span class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</span>
 							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="TwitterEach" id="RadioTwitterRetweet">
+							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_RT%>" id="RadioTwitterRetweet">
 							<label for="RadioTwitterRetweet" class="OptionShowLimit">
 								<span class="ShowLimitImage TwitterRetweet"></span>
 								<span class="ShowLimitName"><i class="fab fa-twitter"></i>リツイート限定</span>

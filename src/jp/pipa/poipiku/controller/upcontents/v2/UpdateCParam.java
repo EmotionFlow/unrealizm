@@ -5,18 +5,18 @@ import jp.pipa.poipiku.util.Util;
 import javax.servlet.http.HttpServletRequest;
 
 public class UpdateCParam extends UpCParam {
-	public int m_nContentId = -1;
-	public boolean m_bNotRecently = false;
-	public boolean m_bDeleteTweet = false;
+	public int contentId = -1;
+	public boolean isNotRecently = false;
+	public boolean isDeleteTweet = false;
 
 	public int GetParam(HttpServletRequest request){
 		try {
 			super.GetParams(request);
-			m_nContentId	= Util.toInt(request.getParameter("IID"));
-			m_bNotRecently	= Util.toBoolean(request.getParameter("REC"));
-			m_bDeleteTweet	= Util.toBoolean(request.getParameter("DELTW"));
+			contentId = Util.toInt(request.getParameter("IID"));
+			isNotRecently = Util.toBoolean(request.getParameter("REC"));
+			isDeleteTweet = Util.toBoolean(request.getParameter("DELTW"));
 		} catch(Exception e) {
-			return super.ErrorOccured(e);
+			return super.ErrorOccurred(e);
 		}
 		return 0;
 	}

@@ -8,15 +8,12 @@ import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.NovelUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class UpdateTextC extends UpC {
-	public int GetResults(UpdateTextCParam cParam, CheckLogin checkLogin) {
+	public int GetResults(UpdateTextCParam upParam, CheckLogin checkLogin) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -38,8 +35,8 @@ public final class UpdateTextC extends UpC {
 
 			sql = "SELECT open_id, publish_id, tweet_id, limited_time_publish, upload_date, end_date, editor_id, text_body, title FROM contents_0000 WHERE user_id=? AND content_id=?";
 			statement = connection.prepareStatement(sql);
-			statement.setInt(1, cParam.m_nUserId);
-			statement.setInt(2, cParam.m_nContentId);
+			statement.setInt(1, upParam.userId);
+			statement.setInt(2, upParam.contentId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				nOpenIdPresent = resultSet.getInt("open_id");
@@ -66,92 +63,109 @@ public final class UpdateTextC extends UpC {
 			boolean bToPublish = false;
 			int nOpenId = GetOpenId(
 				nOpenIdPresent,
-				cParam.m_nPublishId,
-				cParam.m_bNotRecently,
-				cParam.m_bLimitedTimePublish,
+				upParam.publishId,
+				upParam.isNotRecently,
+				upParam.isTimeLimited,
 				bLimitedTimePublishPresent,
-				cParam.m_tsPublishStart,
-				cParam.m_tsPublishEnd,
+				upParam.publishStart,
+				upParam.publishEnd,
 				tsUploadDatePresent,
 				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
-			ArrayList<String> lColumns = new ArrayList<>();
-				lColumns.addAll(Arrays.asList(
-					"genre_id=?", "category_id=?", "open_id=?", "description=?", "private_note=?",
-					"text_body=?", "tag_list=?", "publish_id=?", "password_enabled=?", "password=?",
-					"list_id=?", "safe_filter=?", "cheer_ng=?", "tweet_when_published=?",
-					"not_recently=?", "limited_time_publish=?", "title=?", "novel_html=?",
+			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(						"genre_id=?", "category_id=?", "open_id=?",
+					"description=?", "private_note=?",
+					"tag_list=?", "publish_id=?",
+					"password_enabled=?", "password=?",
+					"list_id=?", "safe_filter=?", "cheer_ng=?",
+					"tweet_when_published=?",
+					"not_recently=?", "limited_time_publish=?",
+					"title=?", "text_body=?", "novel_html=?",
 					"novel_html_short=?", "novel_direction=?"
-					));
+			));
 
 			if (checkLogin.m_nPassportId == Common.PASSPORT_ON
-					&& (!strTextBody.equals(cParam.m_strTextBody) || !strTextTitle.equals(cParam.title))
+					&& (!strTextBody.equals(upParam.textBody) || !strTextTitle.equals(upParam.title))
 			) {
 				lColumns.add("updated_at=now()");
 			}
 
-			if(!cParam.m_bLimitedTimePublish){
+			if(!upParam.isTimeLimited){
 				// これまで非公開で、今後公開したい。
-				if(nPublishIdPresend==Common.PUBLISH_ID_HIDDEN && cParam.m_nPublishId!=Common.PUBLISH_ID_HIDDEN){
+				if(nOpenIdPresent==Common.OPEN_ID_HIDDEN && upParam.isPublish){
 					bToPublish = true;
-					lColumns.add("upload_date=current_timestamp");
+					lColumns.add("upload_date=now()");
 				}
 			} else {
 				// 期間限定
-				if(cParam.m_tsPublishStart == null && cParam.m_tsPublishEnd == null){
+				if(upParam.publishStart == null && upParam.publishEnd == null){
 					throw new Exception("m_nPublishId is 'limited time', but start and end is null.");
 				} else {
-					if(cParam.m_tsPublishStart != null ){
+					if(upParam.publishStart != null ){
 						lColumns.add("upload_date=?");
 					}
-					if(cParam.m_tsPublishEnd != null ){
+					if(upParam.publishEnd != null ){
 						lColumns.add("end_date=?");
 					}
 				}
 			}
 
+
 			String sqlSet = "SET " + String.join(",", lColumns);
 			String sqlWhere = "WHERE user_id=? AND content_id=?";
 
 			sql = String.join(" ", Arrays.asList(sqlUpdate, sqlSet, sqlWhere));
-			String textBody = Common.SubStrNum(cParam.m_strTextBody, Common.EDITOR_TEXT_MAX[cParam.m_nEditorId][checkLogin.m_nPassportId]);
+			String textBody = Common.SubStrNum(upParam.textBody, Common.EDITOR_TEXT_MAX[upParam.editorId][checkLogin.m_nPassportId]);
 			statement = connection.prepareStatement(sql);
 			try {
-				idx = 1;
 				// set values
-				statement.setInt(idx++, cParam.genre);
-				statement.setInt(idx++, cParam.m_nCategoryId);
+				idx = 1;
+				statement.setInt(idx++, upParam.genre);
+				statement.setInt(idx++, upParam.categoryId);
 				statement.setInt(idx++, nOpenId);
-				statement.setString(idx++, Common.SubStrNum(cParam.m_strDescription, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
-				statement.setString(idx++, cParam.privateNote);
-				statement.setString(idx++, textBody);
-				statement.setString(idx++, cParam.m_strTagList);
-				statement.setInt(idx++, cParam.m_nPublishId);
-				statement.setBoolean(idx++, cParam.m_nPublishId == Common.PUBLISH_ID_PASS);
-				statement.setString(idx++, cParam.m_strPassword);
-				statement.setString(idx++, cParam.m_strListId);
-				statement.setInt(idx++, CContent.getSafeFilterDB(cParam.m_nPublishId));
-				statement.setBoolean(idx++, cParam.m_bCheerNg);
-				statement.setInt(idx++, CContent.getTweetWhenPublishedId(cParam.m_bTweetTxt, cParam.m_bTweetImg, cParam.m_bTwitterCardThumbnail));
-				statement.setBoolean(idx++, cParam.m_bNotRecently);
-				statement.setBoolean(idx++, cParam.m_bLimitedTimePublish);
-				statement.setString(idx++, cParam.title);
-				statement.setString(idx++, NovelUtil.genarateHtml(cParam.title, textBody, ""));
-				statement.setString(idx++, NovelUtil.genarateHtmlShort(cParam.title, textBody, ""));
-				statement.setInt(idx++, cParam.novelDirection);
+				statement.setString(idx++, Common.SubStrNum(upParam.description, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
+				statement.setString(idx++, upParam.privateNote);
+				statement.setString(idx++, upParam.tagList);
 
-				if(cParam.m_bLimitedTimePublish){
-					if(cParam.m_tsPublishStart != null ){
-						statement.setTimestamp(idx++, cParam.m_tsPublishStart);
+				if (!upParam.isConditionalShow) {
+					statement.setInt(idx++, Common.PUBLISH_ID_ALL);
+				} else {
+					statement.setInt(idx++, upParam.publishId);
+				}
+
+				statement.setBoolean(idx++, !upParam.isNoPassword);
+				statement.setString(idx++, upParam.password);
+
+				statement.setString(idx++, upParam.twitterListId);
+
+				if (upParam.isNsfw) {
+					statement.setInt(idx++, upParam.safeFilterId);
+				} else {
+					statement.setInt(idx++, Common.SAFE_FILTER_ALL);
+				}
+
+				statement.setBoolean(idx++, upParam.isCheerNg);
+				statement.setInt(idx++, CContent.getTweetWhenPublishedId(upParam.isTweet, upParam.isTweetWithImage, upParam.isTwitterCardThumbnail));
+				statement.setBoolean(idx++, !upParam.isNotRecently);
+
+				statement.setBoolean(idx++, upParam.isTimeLimited);
+				if (upParam.isTimeLimited) {
+					if (upParam.publishStart != null) {
+						statement.setTimestamp(idx++, upParam.publishStart);
 					}
-					if(cParam.m_tsPublishEnd != null ){
-						statement.setTimestamp(idx++, cParam.m_tsPublishEnd);
+					if (upParam.publishEnd != null) {
+						statement.setTimestamp(idx++, upParam.publishEnd);
 					}
 				}
 
+				statement.setString(idx++, upParam.title);
+				statement.setString(idx++, textBody);
+				statement.setString(idx++, NovelUtil.genarateHtml(upParam.title, textBody, ""));
+				statement.setString(idx++, NovelUtil.genarateHtmlShort(upParam.title, textBody, ""));
+				statement.setInt(idx++, upParam.novelDirection);
+
 				// set where params
-				statement.setInt(idx++, cParam.m_nUserId);
-				statement.setInt(idx++, cParam.m_nContentId);
+				statement.setInt(idx++, upParam.userId);
+				statement.setInt(idx++, upParam.contentId);
 
 				statement.executeUpdate();
 			} catch(Exception e) {
@@ -166,7 +180,7 @@ public final class UpdateTextC extends UpC {
 				try{
 					sql = "INSERT INTO content_id_histories VALUES(?, nextval('contents_0000_content_id_seq'::regclass)) RETURNING new_id";
 					statement = connection.prepareStatement(sql);
-					statement.setInt(1, cParam.m_nContentId);
+					statement.setInt(1, upParam.contentId);
 					resultSet = statement.executeQuery();
 					if(resultSet.next()) {
 						nNewContentId = resultSet.getInt("new_id");
@@ -192,7 +206,7 @@ public final class UpdateTextC extends UpC {
 							sql = "UPDATE " + t + " SET content_id=? WHERE content_id=?";
 							statement = connection.prepareStatement(sql);
 							statement.setInt(1, nNewContentId);
-							statement.setInt(2, cParam.m_nContentId);
+							statement.setInt(2, upParam.contentId);
 							statement.executeUpdate();
 						}
 						connection.commit();
@@ -210,7 +224,7 @@ public final class UpdateTextC extends UpC {
 							nNewContentId=null;
 							sql = "DELETE FROM content_id_histories WHERE old_id=?";
 							statement = connection.prepareStatement(sql);
-							statement.setInt(1, cParam.m_nContentId);
+							statement.setInt(1, upParam.contentId);
 							statement.executeUpdate();
 						}catch(Exception e){
 							Log.d(sql);
@@ -224,11 +238,11 @@ public final class UpdateTextC extends UpC {
 			}
 
 			// Delete old tags
-			if (!cParam.m_strDescription.isEmpty() || !cParam.m_strTagList.isEmpty()) {
+			if (!upParam.description.isEmpty() || !upParam.tagList.isEmpty()) {
 				sql = "DELETE FROM tags_0000 WHERE content_id=?;";
 				statement = connection.prepareStatement(sql);
 				try {
-					statement.setInt(1, nNewContentId==null?cParam.m_nContentId:nNewContentId);
+					statement.setInt(1, nNewContentId==null?upParam.contentId :nNewContentId);
 					statement.executeUpdate();
 				} catch(Exception e) {
 					e.printStackTrace();
@@ -238,21 +252,21 @@ public final class UpdateTextC extends UpC {
 			}
 
 			// Add tags
-			AddTags(cParam.m_strDescription, cParam.m_strTagList, nNewContentId==null?cParam.m_nContentId:nNewContentId, connection);
+			AddTags(upParam.description, upParam.tagList, nNewContentId==null?upParam.contentId :nNewContentId, connection);
 
 			// もし、(期間限定OFFからONに変更 || (期間限定 & (非公開中|公開中&期間変更あり))
 			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
 			// だったら、ツイート削除→UPDATE tweet_id=NULL
 			if ((
-					(!bLimitedTimePublishPresent && cParam.m_bLimitedTimePublish)
-					|| (cParam.m_bLimitedTimePublish && (nOpenIdPresent==2 || nOpenIdPresent!=2 && (!tsUploadDatePresent.equals(cParam.m_tsPublishStart) || !tsEndDatePresent.equals(cParam.m_tsPublishEnd))))
+					(!bLimitedTimePublishPresent && upParam.isTimeLimited)
+					|| (upParam.isTimeLimited && (nOpenIdPresent==2 || nOpenIdPresent!=2 && (!tsUploadDatePresent.equals(upParam.publishStart) || !tsEndDatePresent.equals(upParam.publishEnd))))
 				)
-				&& (cParam.m_bTweetTxt || cParam.m_bTweetImg)
-				&& cParam.m_bDeleteTweet
+				&& (upParam.isTweet || upParam.isTweetWithImage)
+				&& upParam.isDeleteTweet
 				&& !strTweetId.isEmpty()
 				){
 				CTweet cTweet = new CTweet();
-				if(cTweet.GetResults(cParam.m_nUserId)){
+				if(cTweet.GetResults(upParam.userId)){
 					if(cTweet.Delete(strTweetId)!=CTweet.OK){
 						Log.d("Delete tweet failed.");
 						// 処理自体は続行する
@@ -260,7 +274,7 @@ public final class UpdateTextC extends UpC {
 					sql = "UPDATE contents_0000 SET tweet_id=NULL WHERE content_id=?";
 					statement = connection.prepareStatement(sql);
 					try {
-						statement.setInt(1,  nNewContentId==null?cParam.m_nContentId:nNewContentId);
+						statement.setInt(1,  nNewContentId==null?upParam.contentId :nNewContentId);
 						statement.executeUpdate();
 					} catch(Exception e) {
 						e.printStackTrace();
@@ -277,6 +291,6 @@ public final class UpdateTextC extends UpC {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
-		return  nNewContentId==null?cParam.m_nContentId:nNewContentId;
+		return  nNewContentId==null?upParam.contentId :nNewContentId;
 	}
 }
