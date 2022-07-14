@@ -1,11 +1,8 @@
-package jp.pipa.poipiku.controller;
+package jp.pipa.poipiku.controller.upcontents.v1;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import jp.pipa.poipiku.controller.UpdateC;
+import jp.pipa.poipiku.controller.upcontents.v1.UpdateC;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 

@@ -7,7 +7,7 @@ import jp.pipa.poipiku.util.Log;
 public class DeliverRequestC extends Controller{
 	private CheckLogin checkLogin;
 	private Request poipikuRequest;
-	DeliverRequestC(final CheckLogin _checkLogin, final int requestId) {
+	public DeliverRequestC(final CheckLogin _checkLogin, final int requestId) {
 		checkLogin = _checkLogin;
 		poipikuRequest = new Request(requestId);
 		if (poipikuRequest.creatorUserId != checkLogin.m_nUserId) {

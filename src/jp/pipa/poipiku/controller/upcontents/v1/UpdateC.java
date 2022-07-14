@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.controller;
+package jp.pipa.poipiku.controller.upcontents.v1;
 
 import java.sql.*;
 import java.util.ArrayList;

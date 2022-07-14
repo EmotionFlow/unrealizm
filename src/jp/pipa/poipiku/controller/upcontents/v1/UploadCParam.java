@@ -1,8 +1,8 @@
-package jp.pipa.poipiku.controller;
+package jp.pipa.poipiku.controller.upcontents.v1;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UploadCParam extends UpCParam{
+public class UploadCParam extends UpCParam {
     public int GetParam(HttpServletRequest request){
         try {
 			super.GetParams(request);

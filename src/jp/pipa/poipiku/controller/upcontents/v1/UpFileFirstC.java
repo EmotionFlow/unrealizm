@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.controller;
+package jp.pipa.poipiku.controller.upcontents.v1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.ByteArrayInputStream;
 
-import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.WriteBackFile;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -25,7 +24,7 @@ import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.ServletContext;
 
-public class UpFileFirstC extends UpC{
+public class UpFileFirstC extends UpC {
 	protected ServletContext m_cServletContext = null;
 
 	UpFileFirstC(ServletContext context){

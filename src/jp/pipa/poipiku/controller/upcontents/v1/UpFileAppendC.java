@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.controller;
+package jp.pipa.poipiku.controller.upcontents.v1;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UpFileAppendC extends UpC{
+public class UpFileAppendC extends UpC {
 	protected ServletContext m_cServletContext = null;
 
 	UpFileAppendC(ServletContext context){

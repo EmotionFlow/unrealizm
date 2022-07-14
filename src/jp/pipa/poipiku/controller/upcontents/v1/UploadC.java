@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.controller;
+package jp.pipa.poipiku.controller.upcontents.v1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +7,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import jp.pipa.poipiku.controller.Controller;
+import jp.pipa.poipiku.controller.DeliverRequestC;
 import jp.pipa.poipiku.util.*;
 import jp.pipa.poipiku.*;
 

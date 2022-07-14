@@ -1,4 +1,6 @@
 <%@page import="org.apache.commons.codec.binary.Base64"%>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v1.UploadFileFirstC" %>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v1.UploadFileFirstCParam" %>
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);

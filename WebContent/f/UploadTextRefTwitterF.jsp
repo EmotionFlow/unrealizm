@@ -2,6 +2,8 @@
 <%@ page import="org.apache.commons.fileupload.*"%>
 <%@ page import="org.apache.commons.fileupload.disk.*"%>
 <%@ page import="org.apache.commons.fileupload.servlet.*"%>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v1.UploadTextC" %>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v1.UploadTextCParam" %>
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);

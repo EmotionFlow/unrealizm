@@ -1,4 +1,4 @@
-package jp.pipa.poipiku.controller;
+package jp.pipa.poipiku.controller.upcontents.v1;
 
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.Util;
