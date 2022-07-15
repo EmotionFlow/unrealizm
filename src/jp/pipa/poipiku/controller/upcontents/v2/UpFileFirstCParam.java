@@ -18,6 +18,7 @@ public class UpFileFirstCParam {
 
 	public int m_nUserId = -1;
 	public int m_nContentId = 0;
+	public int m_nOpenId = -1;
 	public boolean m_bNotRecently = false;
 	public String m_strEncodeImg = "";
 	public boolean m_bPasteUpload = false;
@@ -50,6 +51,8 @@ public class UpFileFirstCParam {
 							m_nUserId = Util.toInt(item.getString());
 						} else if(strName.equals("IID")) {
 							m_nContentId = Util.toInt(item.getString());
+						} else if(strName.equals("OID")) {
+							m_nOpenId = Util.toInt(item.getString());
 						} else if(strName.equals("REC")) {
 							m_bNotRecently = Util.toBoolean(item.getString());
 						}

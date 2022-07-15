@@ -10,12 +10,12 @@ import java.util.regex.Pattern;
 
 public class UpC {
 	private static int _getOpenId(boolean bNotRecently){
-		return bNotRecently ? 1 : 0;
+		return bNotRecently ? Common.OPEN_ID_NG_RECENT : Common.OPEN_ID_PUBLISH;
 	}
 
 	protected static int GetOpenId(
 			int openIdPresent,
-			int publishId,
+			int openId,
 			boolean bNotRecently,
 			boolean bLimitedTimePublish,
 			boolean bLimitedTimePublishPresent,
@@ -24,27 +24,27 @@ public class UpC {
 			Timestamp tsPublishStartPresent,
 			Timestamp tsPublishEndPresent){
 
-		int openId;
-		if(publishId == Common.PUBLISH_ID_HIDDEN){
-			openId = Common.OPEN_ID_HIDDEN;;
-		} else if(bLimitedTimePublish){
-			if(!bLimitedTimePublishPresent || tsPublishStartPresent==null || tsPublishEndPresent==null){
-				openId = Common.OPEN_ID_HIDDEN;;
+		int result;
+		if (openId == Common.OPEN_ID_HIDDEN) {
+			result = Common.OPEN_ID_HIDDEN;
+		} else if (bLimitedTimePublish) {
+			if (!bLimitedTimePublishPresent || tsPublishStartPresent == null || tsPublishEndPresent == null) {
+				result = Common.OPEN_ID_HIDDEN;
 			} else {
-				if(tsPublishStart != null || tsPublishEnd != null){
-					if(Objects.requireNonNull(tsPublishStart).equals(tsPublishStartPresent) && tsPublishEnd.equals(tsPublishEndPresent)){
-						openId = openIdPresent;   // 公開期間に変更がないのなら、今の公開状態を維持する。
+				if (tsPublishStart != null || tsPublishEnd != null) {
+					if (Objects.requireNonNull(tsPublishStart).equals(tsPublishStartPresent) && tsPublishEnd.equals(tsPublishEndPresent)) {
+						result = openIdPresent;   // 公開期間に変更がないのなら、今の公開状態を維持する。
 					} else {
-						openId = Common.OPEN_ID_HIDDEN;; // 1分毎のcronに処理を任せるので、ひとまず非公開にしておく。
+						result = Common.OPEN_ID_HIDDEN; // 1分毎のcronに処理を任せるので、ひとまず非公開にしておく。
 					}
 				} else {
-					openId = _getOpenId(bNotRecently);
+					result = _getOpenId(bNotRecently);
 				}
 			}
 		} else {
-			openId = _getOpenId(bNotRecently);
+			result = _getOpenId(bNotRecently);
 		}
-		return openId;
+		return result;
 	}
 
 	protected void AddTags(String strDescription, String strTagList, int nContentId, Connection connection) throws SQLException {

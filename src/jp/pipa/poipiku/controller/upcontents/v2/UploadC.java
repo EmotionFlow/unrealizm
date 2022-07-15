@@ -18,6 +18,7 @@ import java.util.Arrays;
 
 public final class UploadC extends UpC {
 	private int m_nContentId = -99;
+	public int openId = -1;
 	public boolean deliverRequestResult;
 	public int GetResults(UploadCParam upParam, CheckLogin checkLogin) {
 		Connection connection = null;
@@ -132,6 +133,8 @@ public final class UploadC extends UpC {
 			if (deliverRequestC != null) {
 				deliverRequestResult = deliverRequestC.getResults(m_nContentId);
 			}
+
+			openId = upParam.isPublish ? Common.PUBLISH_ID_ALL : Common.OPEN_ID_HIDDEN;
 
 		} catch(Exception e) {
 			Log.d(sql);

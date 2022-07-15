@@ -154,7 +154,7 @@ public class UpFileFirstC extends UpC {
 			// open_id更新
 			int nOpenId = GetOpenId(
 				-1,
-				cContent.m_nPublishId,
+				cParam.m_nOpenId,
 				cParam.m_bNotRecently,
 				cContent.m_bLimitedTimePublish,
 				cContent.m_bLimitedTimePublish,
