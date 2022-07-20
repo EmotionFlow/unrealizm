@@ -19,6 +19,9 @@ public final class CContent {
 	public static final int TWEET_WITH_THUMBNAIL = 2;   // 0010
 	public static final int TWITTER_CARD_THUMBNAIL = 4; // 0100
 
+	public static final int NOVEL_DIRECTION_HORIZONTAL = 0;
+	public static final int NOVEL_DIRECTION_VERTICAL = 1;
+
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
 	public String m_strDescription = "";

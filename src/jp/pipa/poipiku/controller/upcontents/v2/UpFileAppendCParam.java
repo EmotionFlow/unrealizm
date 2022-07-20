@@ -16,11 +16,11 @@ import java.util.List;
 public class UpFileAppendCParam {
 	protected ServletContext m_cServletContext = null;
 
-	public int m_nUserId = -1;
-	public int m_nContentId = 0;
-	public boolean m_bPasteUpload = false;
-	String m_strEncodeImg = "";
-	FileItem item_file = null;
+	public int userId = -1;
+	public int contentId = 0;
+	public boolean isPasteUpload = false;
+	String encodedImage = "";
+	FileItem fileItem = null;
 	String userAgent = null;
 
 	UpFileAppendCParam(ServletContext context){
@@ -31,7 +31,7 @@ public class UpFileAppendCParam {
 		int nRtn = -1;
 		try {
 			if(request.getContentType().contains("multipart")){
-				m_bPasteUpload = false;
+				isPasteUpload = false;
 				String strRelativePath = Common.GetUploadTemporaryPath();
 				String strRealPath = m_cServletContext.getRealPath(strRelativePath);
 				// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
@@ -47,21 +47,21 @@ public class UpFileAppendCParam {
 					if (item.isFormField()) {
 						String strName = item.getFieldName();
 						if(strName.equals("UID")) {
-							m_nUserId = Util.toInt(item.getString());
+							userId = Util.toInt(item.getString());
 						} else if(strName.equals("IID")) {
-							m_nContentId = Util.toInt(item.getString());
+							contentId = Util.toInt(item.getString());
 						}
 						item.delete();
 					} else {
-						item_file = item;
+						fileItem = item;
 						nRtn = 0;
 					}
 				}
 			} else {
-				m_bPasteUpload = true;
-				m_nUserId		= Util.toInt(request.getParameter("UID"));
-				m_nContentId	= Util.toInt(request.getParameter("IID"));
-				m_strEncodeImg	= Util.toString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+				isPasteUpload = true;
+				userId = Util.toInt(request.getParameter("UID"));
+				contentId = Util.toInt(request.getParameter("IID"));
+				encodedImage = Util.toString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
 
 				nRtn = 0;
 			}
@@ -71,7 +71,7 @@ public class UpFileAppendCParam {
 			nRtn = -1;
 		} catch(Exception e) {
 			e.printStackTrace();
-			m_nUserId = -1;
+			userId = -1;
 			nRtn = -99;
 		}
 		return nRtn;
@@ -79,7 +79,7 @@ public class UpFileAppendCParam {
 
 	protected int ErrorOccured(Exception e, int errCode) {
 		e.printStackTrace();
-		m_nUserId = -1;
+		userId = -1;
 		return -99;
 	}
 

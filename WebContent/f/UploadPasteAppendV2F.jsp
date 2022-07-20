@@ -4,6 +4,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean isApp = false;
 
 int nRtn = 0;
 UploadFileAppendCParam cParam = new UploadFileAppendCParam(getServletContext());
@@ -14,7 +15,5 @@ if( checkLogin.m_bLogin && cParam.userId ==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadFileAppendC cResults = new UploadFileAppendC(getServletContext());
 	nRtn = cResults.GetResults(cParam, _TEX, true, isApp);
 }
-
-// success, resetはfine uploader側で必要なパラメータ
 %>
-{"append_id":<%=nRtn%>,"success":true,"reset":false}
+{"append_id":<%=nRtn%>}

@@ -28,80 +28,80 @@ public class UpFileFirstC extends UpC {
 	}
 
 	public int GetResults(UploadFileFirstCParam cParam) {
-		int nRtn = -1;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
-		CContent cContent = null;
+		int returnCode = -1;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
+		CContent content = null;
 
 		try {
 			byte[] imageBinary = null;
 			BufferedImage cImage = null;
-			if(cParam.m_bPasteUpload){
-				imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
-				if(imageBinary == null) return nRtn;
-				if(imageBinary.length>1024*1024*20) return nRtn;
+			if(cParam.isPasteUpload){
+				imageBinary = Base64.decodeBase64(cParam.encodedImage.getBytes());
+				if(imageBinary == null) return returnCode;
+				if(imageBinary.length>1024*1024*20) return returnCode;
 				cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
-				if(cImage == null) return nRtn;
+				if(cImage == null) return returnCode;
 			}
 
 			// regist to DB
-			cConn = DatabaseUtil.dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// check ext
-			if(!cParam.m_bPasteUpload && cParam.item_file==null){
+			if(!cParam.isPasteUpload && cParam.fileItem ==null){
 				//Log.d("multipart upload file item is null.");
-				return nRtn;
+				return returnCode;
 			}
 
 			String ext = null;
-			if(!cParam.m_bPasteUpload){
-				ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
+			if(!cParam.isPasteUpload){
+				ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.fileItem.getInputStream()));
 			} else {
 				ext = ImageUtil.getExt(ImageIO.createImageInputStream(new ByteArrayInputStream(imageBinary)));
 			}
 			//Log.d("ext: " + ext);
 			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
-				String strFileName = String.format("/error_file/%d_%d.error", cParam.m_nUserId, cParam.m_nContentId);
+				String strFileName = String.format("/error_file/%d_%d.error", cParam.userId, cParam.contentId);
 				String strRealFileName = m_cServletContext.getRealPath(strFileName);
-				cParam.item_file.write(new File(strRealFileName));
-				return nRtn;
+				cParam.fileItem.write(new File(strRealFileName));
+				return returnCode;
 			}
 
 			// 存在チェック
 			boolean bExist = false;
-			strSql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setInt(2, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()){
+			sql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, cParam.userId);
+			statement.setInt(2, cParam.contentId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()){
 				bExist = true;
-				cContent = new CContent(cResSet);
+				content = new CContent(resultSet);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			// この後の処理に時間がかかるので、一旦closeする。
-			cConn.close();cConn=null;
+			connection.close();connection=null;
 			if(!bExist) {
-				Log.d("content not exist error : cParam.m_nUserId="+ cParam.m_nUserId + ", cParam.m_nContentId="+cParam.m_nContentId);
-				return nRtn;
+				Log.d("content not exist error : cParam.m_nUserId="+ cParam.userId + ", cParam.m_nContentId="+cParam.contentId);
+				return returnCode;
 			}
 
 			// save file
-			File cDir = new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(cParam.m_nUserId)));
+			File cDir = new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(cParam.userId)));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
 			String strRandom = RandomStringUtils.randomAlphanumeric(9);
 			String strFileName = "";
-			strFileName = String.format("%s/%09d_%s.%s", Common.getUploadContentsPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
+			strFileName = String.format("%s/%09d_%s.%s", Common.getUploadContentsPath(cParam.userId), cParam.contentId, strRandom, ext);
 			String strRealFileName = m_cServletContext.getRealPath(strFileName);
 
-			if(!cParam.m_bPasteUpload){
-				cParam.item_file.write(new File(strRealFileName));
+			if(!cParam.isPasteUpload){
+				cParam.fileItem.write(new File(strRealFileName));
 			} else {
 				ImageIO.write(cImage, "png", new File(strRealFileName));
 			}
@@ -135,18 +135,18 @@ public class UpFileFirstC extends UpC {
 
 			// ファイルサイズチェック
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
+			CacheUsers0000.User user = users.getUser(cParam.userId);
 
-			cConn = DatabaseUtil.dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			if(nFileSize> (long) Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId] *1024*1024) {
 				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
-				strSql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nUserId);
-				cState.setInt(2, cParam.m_nContentId);
-				cState.executeUpdate();
-				cState.close();cState=null;
-				cConn.close();cConn=null;
+				sql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, cParam.userId);
+				statement.setInt(2, cParam.contentId);
+				statement.executeUpdate();
+				statement.close();statement=null;
+				connection.close();connection=null;
 				Util.deleteFile(strRealFileName);
 				return Common.UPLOAD_FILE_TOTAL_ERROR;
 			}
@@ -154,48 +154,48 @@ public class UpFileFirstC extends UpC {
 			// open_id更新
 			int nOpenId = GetOpenId(
 				-1,
-				cParam.m_nOpenId,
-				cParam.m_bNotRecently,
-				cContent.m_bLimitedTimePublish,
-				cContent.m_bLimitedTimePublish,
-				cContent.m_timeUploadDate,
-				cContent.m_timeEndDate,
+				cParam.openId,
+				cParam.isNotRecently,
+				content.m_bLimitedTimePublish,
+				content.m_bLimitedTimePublish,
+				content.m_timeUploadDate,
+				content.m_timeEndDate,
 				null,null);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
+			sql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
 			int idx=1;
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(idx++, strFileName);
-			cState.setInt(idx++, nOpenId);
-			cState.setBoolean(idx++, cParam.m_bNotRecently);
-			cState.setInt(idx++, nWidth);
-			cState.setInt(idx++, nHeight);
-			cState.setLong(idx++, nFileSize);
-			cState.setLong(idx++, nComplexSize);
-			cState.setInt(idx++, cParam.m_nContentId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			statement = connection.prepareStatement(sql);
+			statement.setString(idx++, strFileName);
+			statement.setInt(idx++, nOpenId);
+			statement.setBoolean(idx++, cParam.isNotRecently);
+			statement.setInt(idx++, nWidth);
+			statement.setInt(idx++, nHeight);
+			statement.setLong(idx++, nFileSize);
+			statement.setLong(idx++, nComplexSize);
+			statement.setInt(idx++, cParam.contentId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 
 			WriteBackFile writeBackFile = new WriteBackFile();
-			writeBackFile.userId = cParam.m_nUserId;
+			writeBackFile.userId = cParam.userId;
 			writeBackFile.tableCode = WriteBackFile.TableCode.Contents;
-			writeBackFile.rowId = cContent.m_nContentId;
+			writeBackFile.rowId = content.m_nContentId;
 			writeBackFile.path = strFileName;
 			if (!writeBackFile.insert()) {
-				Log.d("writeBackFile.insert() error: " + cParam.m_nContentId);
+				Log.d("writeBackFile.insert() error: " + cParam.contentId);
 			}
 
-			nRtn = cParam.m_nContentId;
+			returnCode = cParam.contentId;
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-			try{if(cParam.item_file!=null){cParam.item_file.delete();cParam.item_file=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(cParam.fileItem !=null){cParam.fileItem.delete();cParam.fileItem =null;}}catch(Exception e){;}
 		}
-		return nRtn;
+		return returnCode;
 	}
 }

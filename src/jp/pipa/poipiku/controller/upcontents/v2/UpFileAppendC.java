@@ -24,145 +24,145 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UpFileAppendC extends UpC {
-	protected ServletContext m_cServletContext = null;
+	protected ServletContext servletContext = null;
 
 	UpFileAppendC(ServletContext context){
-		m_cServletContext = context;
+		servletContext = context;
 	}
 
 	public int GetResults(UploadFileAppendCParam cParam, ResourceBundleControl _TEX, boolean calcSize, boolean isApp) {
 		//Log.d("START UploadFileAppendC");
-		int nRtn = -1;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
+		int returnCode = -1;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String sql = "";
 		int historyId = -1;
 
 		// Insert Log
 		try {
 			List<String> fileNames = new ArrayList<>();
 			List<Integer> appendIds = new ArrayList<>();
-			cConn = DatabaseUtil.dataSource.getConnection();
-			strSql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if (cResSet.next()) {
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, cParam.contentId);
+			resultSet = statement.executeQuery();
+			if (resultSet.next()) {
 				appendIds.add(0);
-				fileNames.add(cResSet.getString("file_name"));
+				fileNames.add(resultSet.getString("file_name"));
 			}
 
-			strSql = "SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				appendIds.add(cResSet.getInt("append_id"));
-				fileNames.add(cResSet.getString("file_name"));
+			sql = "SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, cParam.contentId);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				appendIds.add(resultSet.getInt("append_id"));
+				fileNames.add(resultSet.getString("file_name"));
 			}
 
-			strSql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files, app) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, "UpFileAppendC");
-			cState.setInt(2, cParam.m_nUserId);
-			cState.setInt(3, cParam.m_nContentId);
-			cState.setString(4, null);
-			cState.setString(5, cParam.userAgent);
-			cState.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
-			cState.setString(7, fileNames.stream().collect(Collectors.joining(",")));
-			cState.setBoolean(8, isApp);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				historyId = cResSet.getInt("id");
+			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files, app) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, "UpFileAppendC");
+			statement.setInt(2, cParam.userId);
+			statement.setInt(3, cParam.contentId);
+			statement.setString(4, null);
+			statement.setString(5, cParam.userAgent);
+			statement.setString(6, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+			statement.setString(7, fileNames.stream().collect(Collectors.joining(",")));
+			statement.setBoolean(8, isApp);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				historyId = resultSet.getInt("id");
 			}
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 
 		try {
 			byte[] imageBinary = null;
 			BufferedImage cImage = null;
-			if(cParam.m_bPasteUpload){
-				imageBinary = Base64.decodeBase64(cParam.m_strEncodeImg.getBytes());
-				if(imageBinary == null) return nRtn;
-				if(imageBinary.length>1024*1024*20) return nRtn;
+			if(cParam.isPasteUpload){
+				imageBinary = Base64.decodeBase64(cParam.encodedImage.getBytes());
+				if(imageBinary == null) return returnCode;
+				if(imageBinary.length>1024*1024*20) return returnCode;
 				cImage = ImageIO.read(new ByteArrayInputStream(imageBinary));
-				if(cImage == null) return nRtn;
+				if(cImage == null) return returnCode;
 			}
 
 			// regist to DB
-			cConn = DatabaseUtil.dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 
 			// check ext
-			if(!cParam.m_bPasteUpload && cParam.item_file==null){
+			if(!cParam.isPasteUpload && cParam.fileItem ==null){
 				//Log.d("multipart upload file item is null.");
-				return nRtn;
+				return returnCode;
 			}
 
 			String ext = null;
-			if(!cParam.m_bPasteUpload){
-				ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.item_file.getInputStream()));
+			if(!cParam.isPasteUpload){
+				ext = ImageUtil.getExt(ImageIO.createImageInputStream(cParam.fileItem.getInputStream()));
 			} else {
 				ext = ImageUtil.getExt(ImageIO.createImageInputStream(new ByteArrayInputStream(imageBinary)));
 			}
 			//Log.d("ext: " + ext);
 			if((!ext.equals("jpeg")) && (!ext.equals("jpg")) && (!ext.equals("gif")) && (!ext.equals("png"))) {
 				Log.d("main item type error");
-				String strFileName = String.format("/error_file/%d_%d.error", cParam.m_nUserId, cParam.m_nContentId);
-				String strRealFileName = m_cServletContext.getRealPath(strFileName);
-				cParam.item_file.write(new File(strRealFileName));
-				return nRtn;
+				String strFileName = String.format("/error_file/%d_%d.error", cParam.userId, cParam.contentId);
+				String strRealFileName = servletContext.getRealPath(strFileName);
+				cParam.fileItem.write(new File(strRealFileName));
+				return returnCode;
 			}
 
 			// 存在チェック
 			int fileTotalSize = 0;
 			boolean bExist = false;
-			strSql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nUserId);
-			cState.setInt(2, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				fileTotalSize += cResSet.getInt("file_size");
+			sql ="SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, cParam.userId);
+			statement.setInt(2, cParam.contentId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				fileTotalSize += resultSet.getInt("file_size");
 				bExist = true;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-			if(!bExist) return nRtn;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+			if(!bExist) return returnCode;
 
 			// get comment id
 			int nAppendId = -1;
-			strSql ="INSERT INTO contents_appends_0000(content_id) VALUES(?) RETURNING append_id";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, cParam.m_nContentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				nAppendId = cResSet.getInt("append_id");
+			sql ="INSERT INTO contents_appends_0000(content_id) VALUES(?) RETURNING append_id";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, cParam.contentId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				nAppendId = resultSet.getInt("append_id");
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 			// この後の処理に時間がかかるので、一旦closeする。
-			cConn.close();cConn=null;
+			connection.close();connection=null;
 
 			//Log.d("UploadFileAppendC:"+nAppendId);
 
 			// save file
-			File cDir = new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(cParam.m_nUserId)));
+			File cDir = new File(servletContext.getRealPath(Common.getUploadContentsPath(cParam.userId)));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
 			String strRandom = RandomStringUtils.randomAlphanumeric(9);
-			String strFileName = String.format("%s/%09d_%09d_%s.%s", Common.getUploadContentsPath(cParam.m_nUserId), cParam.m_nContentId, nAppendId, strRandom, ext);
-			String strRealFileName = m_cServletContext.getRealPath(strFileName);
+			String strFileName = String.format("%s/%09d_%09d_%s.%s", Common.getUploadContentsPath(cParam.userId), cParam.contentId, nAppendId, strRandom, ext);
+			String strRealFileName = servletContext.getRealPath(strFileName);
 
-			if(!cParam.m_bPasteUpload){
-				cParam.item_file.write(new File(strRealFileName));
+			if(!cParam.isPasteUpload){
+				cParam.fileItem.write(new File(strRealFileName));
 			} else {
 				ImageIO.write(cImage, "png", new File(strRealFileName));
 			}
@@ -195,62 +195,62 @@ public class UpFileAppendC extends UpC {
 			}
 
 			// update file name
-			cConn = DatabaseUtil.dataSource.getConnection();
-			strSql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setString(1, strFileName);
-			cState.setInt(2, nWidth);
-			cState.setInt(3, nHeight);
-			cState.setLong(4, nFileSize);
-			cState.setLong(5, nComplexSize);
-			cState.setInt(6, nAppendId);
-			cState.executeUpdate();
-			cState.close();cState=null;
+			connection = DatabaseUtil.dataSource.getConnection();
+			sql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, strFileName);
+			statement.setInt(2, nWidth);
+			statement.setInt(3, nHeight);
+			statement.setLong(4, nFileSize);
+			statement.setLong(5, nComplexSize);
+			statement.setInt(6, nAppendId);
+			statement.executeUpdate();
+			statement.close();statement=null;
 
 			// ファイルサイズチェック
 			if (calcSize) {
 				CacheUsers0000 users  = CacheUsers0000.getInstance();
-				CacheUsers0000.User user = users.getUser(cParam.m_nUserId);
+				CacheUsers0000.User user = users.getUser(cParam.userId);
 
 				// 1枚目は存在チェック時に加算済み
 				// 2枚目以降
-				strSql ="SELECT SUM(file_size) FROM contents_appends_0000 WHERE content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nContentId);
-				cResSet = cState.executeQuery();
-				if(cResSet.next()) {
-					fileTotalSize += cResSet.getInt(1);
+				sql ="SELECT SUM(file_size) FROM contents_appends_0000 WHERE content_id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, cParam.contentId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					fileTotalSize += resultSet.getInt(1);
 				}
-				cResSet.close();cResSet=null;
-				cState.close();cState=null;
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 				if(fileTotalSize>Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
 					Log.d("UPLOAD_FILE_TOTAL_ERROR:"+fileTotalSize);
-					strSql ="DELETE FROM contents_appends_0000 WHERE append_id=?";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, nAppendId);
-					cState.executeUpdate();
-					cState.close();cState=null;
-					cConn.close();cConn=null;
+					sql ="DELETE FROM contents_appends_0000 WHERE append_id=?";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(1, nAppendId);
+					statement.executeUpdate();
+					statement.close();statement=null;
+					connection.close();connection=null;
 					Util.deleteFile(strRealFileName);
 					return Common.UPLOAD_FILE_TOTAL_ERROR;
 				}
 
 				// update file num
-				strSql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nContentId);
-				cState.executeUpdate();
-				cState.close();cState=null;
+				sql ="UPDATE contents_0000 SET file_num=file_num+1 WHERE content_id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, cParam.contentId);
+				statement.executeUpdate();
+				statement.close();statement=null;
 
 				if (user.passportId == Common.PASSPORT_ON) {
-					cState = cConn.prepareStatement("UPDATE contents_0000 SET updated_at=now() WHERE content_id=?");
-					cState.setInt(1, cParam.m_nContentId);
-					cState.executeUpdate();
+					statement = connection.prepareStatement("UPDATE contents_0000 SET updated_at=now() WHERE content_id=?");
+					statement.setInt(1, cParam.contentId);
+					statement.executeUpdate();
 					Log.d("update updated_at");
 				}
 
 				WriteBackFile writeBackFile = new WriteBackFile();
-				writeBackFile.userId = cParam.m_nUserId;
+				writeBackFile.userId = cParam.userId;
 				writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
 				writeBackFile.rowId = nAppendId;
 				writeBackFile.path = strFileName;
@@ -259,16 +259,16 @@ public class UpFileAppendC extends UpC {
 				}
 			}
 
-			nRtn = nAppendId;
+			returnCode = nAppendId;
 			//Log.d("END UploadFileAppendC");
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(sql);
 			e.printStackTrace();
 		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
-			try{if(cParam.item_file!=null){cParam.item_file.delete();cParam.item_file=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(cParam.fileItem !=null){cParam.fileItem.delete();cParam.fileItem =null;}}catch(Exception e){;}
 		}
 
 		// Update Log
@@ -276,42 +276,42 @@ public class UpFileAppendC extends UpC {
 			try {
 				List<String> fileNames = new ArrayList<>();
 				List<Integer> appendIds = new ArrayList<>();
-				cConn = DatabaseUtil.dataSource.getConnection();
-				strSql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nContentId);
-				cResSet = cState.executeQuery();
-				if (cResSet.next()) {
+				connection = DatabaseUtil.dataSource.getConnection();
+				sql = "SELECT file_name FROM contents_0000 WHERE content_id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, cParam.contentId);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
 					appendIds.add(0);
-					fileNames.add(cResSet.getString("file_name"));
+					fileNames.add(resultSet.getString("file_name"));
 				}
 
-				strSql ="SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
-				cState = cConn.prepareStatement(strSql);
-				cState.setInt(1, cParam.m_nContentId);
-				cResSet = cState.executeQuery();
-				while (cResSet.next()) {
-					appendIds.add(cResSet.getInt("append_id"));
-					fileNames.add(cResSet.getString("file_name"));
+				sql ="SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, cParam.contentId);
+				resultSet = statement.executeQuery();
+				while (resultSet.next()) {
+					appendIds.add(resultSet.getInt("append_id"));
+					fileNames.add(resultSet.getString("file_name"));
 				}
 
-				strSql = "UPDATE contents_update_histories SET after_appends=?, after_files=?, duplicated=?, updated_at=now() WHERE id=?";
-				cState = cConn.prepareStatement(strSql);
-				cState.setString(1, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
-				cState.setString(2, fileNames.stream().collect(Collectors.joining(",")));
-				cState.setBoolean(3, fileNames.size() != fileNames.stream().distinct().count());
-				cState.setInt(4, historyId);
-				cState.executeUpdate();
+				sql = "UPDATE contents_update_histories SET after_appends=?, after_files=?, duplicated=?, updated_at=now() WHERE id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, appendIds.stream().map(id -> id.toString()).collect(Collectors.joining(",")));
+				statement.setString(2, fileNames.stream().collect(Collectors.joining(",")));
+				statement.setBoolean(3, fileNames.size() != fileNames.stream().distinct().count());
+				statement.setInt(4, historyId);
+				statement.executeUpdate();
 			} catch(Exception e) {
-				Log.d(strSql);
+				Log.d(sql);
 				e.printStackTrace();
 			} finally {
-				try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-				try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-				try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
+				try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
+				try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
+				try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 			}
 		}
 
-		return nRtn;
+		return returnCode;
 	}
 }

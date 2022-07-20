@@ -94,9 +94,9 @@ if (requestId > 0) {
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			function UploadPasteCheck(user_id) {
-				var nImageNum = 0;
+				let nImageNum = 0;
 				$('.imgView').each(function(){
-					var strSrc = $.trim($(this).attr('src'));
+					const strSrc = $.trim($(this).attr('src'));
 					if(strSrc.length>0) nImageNum++;
 				});
 				if(nImageNum<=0) {
@@ -111,7 +111,7 @@ if (requestId > 0) {
 			});
 			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
 			function UploadTextCheck(user_id) {
-				var strTextBody = $.trim($("#EditTextBody").val());
+				const strTextBody = $.trim($("#EditTextBody").val());
 				if(!strTextBody) {
 					DispMsg('<%=_TEX.T("UploadFilePc.Text.NeedBody")%>');
 					return;
@@ -137,7 +137,7 @@ if (requestId > 0) {
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
 			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
 			.qq-gallery .qq-file-info {display: none;}
-			.qq-upload-retry-selector qq-upload-retry {display: none;}
+			.qq-upload-retry-selector .qq-upload-retry {display: none;}
 			.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
 			.qq-gallery .qq-upload-retry {display: none;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
@@ -178,15 +178,15 @@ if (requestId > 0) {
 				}
 			%>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_UPLOAD ? "Selected" : ""%>"
-						href="/UploadFilePcV.jsp<%=cgiParams%>">
+						href="/UploadFilePcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.File")%>
 				</a></li>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_TEXT ? "Selected" : ""%>"
-						href="/UploadTextPcV.jsp<%=cgiParams%>">
+						href="/UploadTextPcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.Text")%>
 				</a></li>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_PASTE ? "Selected" : ""%>"
-						href="/UploadPastePcV.jsp<%=cgiParams%>">
+						href="/UploadPastePcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.Paste")%>
 				</a></li>
 			</ul>
@@ -274,6 +274,14 @@ if (requestId > 0) {
 					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
+
+				<div class="OptionItem" style="display: <%=nEditorId==Common.EDITOR_TEXT ? "block" : "none"%>">
+					<div class="OptionPublish">
+						<label><input type="radio" name="NOVEL_DIRECTION_VAL" value="<%=CContent.NOVEL_DIRECTION_HORIZONTAL%>" id="RadioHorizontal" /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
+						<label><input type="radio" name="NOVEL_DIRECTION_VAL" value="<%=CContent.NOVEL_DIRECTION_VERTICAL%>" id="RadioVertical" /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>
+					</div>
+				</div>
+
 				<%}%>
 
 				<div class="TagList">
@@ -283,247 +291,6 @@ if (requestId > 0) {
 
 
 				<div class="UoloadCmdOption">
-					<style>
-                        .UploadFile .UoloadCmdOption .OptionItem.Sub {
-							padding: 4px 0;
-                        }
-
-
-                        /* Switch starts here */
-                        .rocker {
-                            display: inline-block;
-                            position: relative;
-                            font-size: 1em;
-                            text-align: center;
-                            color: #888;
-                            width: 100%;
-                            height: 2.5em;
-                            padding: 4px 0;
-                            overflow: hidden;
-                            margin: 0 12px;
-                        }
-
-                        .rocker.sub {
-                            font-size: 0.9em;
-                            height: 2em;
-                            padding: 3px 0;
-                            margin: -5px 12px 0 12px;
-                        }
-
-                        .rocker::before {
-                            content: "";
-                            position: absolute;
-                            background-color: #999;
-                        }
-
-                        .rocker input {
-                            opacity: 0;
-                            width: 0;
-                            height: 0;
-                        }
-
-                        .switch-left,
-                        .switch-right {
-                            cursor: pointer;
-                            position: absolute;
-							top: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            width: 50%;
-							height: 100%;
-                            transition: 0.3s;
-                        }
-
-                        .switch-left {
-                            background-color: #ddd;
-							border-radius: 4px 0 0 4px;
-                        }
-
-                        .switch-right {
-                            right: 0;
-                            background-color: #3498da;
-                            color: #fff;
-                            border-radius: 0 4px 4px 0;
-                        }
-
-                        input:checked + .switch-left {
-                            background-color: #3498da;
-                            color: #fff;
-                        }
-
-                        input:checked + .switch-left + .switch-right {
-                            background-color: #ddd;
-                            color: #888;
-                            right: 0;
-                        }
-
-                        /* Keyboard Users */
-                        input:focus + .switch-left {
-                            color: #888;
-                        }
-
-                        input:checked:focus + .switch-left {
-                            color: #fff;
-                        }
-
-                        input:focus + .switch-left + .switch-right {
-                            color: #fff;
-                        }
-
-                        input:checked:focus + .switch-left + .switch-right {
-                            color: #888;
-                        }
-
-                        .OptionItem input[type=radio] {
-                            display: none;
-                        }
-                        .OptionItem input[type=radio]:checked + label {
-                            border: 2px solid #00A0BA;
-                        }
-                        .OptionItem input[type=radio] + label {
-                            border: 2px solid rgba(0,0,0,0);
-                        }
-
-                        .OptionToggle {
-                            width: 100%;
-                            height: 35px;
-                            margin: 7px;
-                            display: flex;
-                            border: solid 1px #3498da;
-                            border-radius: 4px;
-                            text-align: center;
-                            line-height: 35px;
-                            color: #a7a7a7;
-                        }
-                        .OptionToggle > div{
-                            width: 50%;
-                            text-align: center;
-                        }
-                        .OptionToggle .Selected {
-                            background-color: #3498da;
-                            color: #ffffff;
-                        }
-						#ItemNsfwVal {
-							padding-top: 0;
-                            justify-content: center;
-						}
-						.OptionPublishNsfwList {
-							display: flex;
-                            justify-content: center;
-                            margin:	0 12px;
-						}
-						.OptionPublishNsfw {
-                            display: flex;
-                            flex-direction: column;
-                            background: #fff;
-                            margin: 4px 2px;
-                            border-radius: 4px;
-						}
-                        .OneCushionImage{
-                            display: block;
-                            width: 148px;
-                            height: 65px;
-							border-radius: 4px;
-                            background-size: 90%;
-                        }
-                        .OneCushionName{
-                            display: block;
-							width: 100%;
-							font-size: 12px;
-                            text-align: center;
-						}
-                        .OneCushionImage.OneCushion {
-                            background-image: url("/img/warning.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .OneCushionImage.R18 {
-                            background-image: url("/img/R-18.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-
-                        .OptionPublishShowLimitList {
-                            display: flex;
-							justify-content: center;
-                            margin:	0 12px;
-                            flex-direction: row;
-                            flex-wrap: wrap;
-                        }
-                        .OptionShowLimit {
-                            display: flex;
-                            flex-direction: column;
-							background: #fff;
-                            margin: 2px 3px;
-                            border-radius: 4px;
-                        }
-                        .ShowLimitImage {
-                            display: block;
-                            width: 148px;
-                            height: 65px;
-                            background-size: 90%;
-                        }
-                        .ShowLimitImage.PoipikuLogin {
-                            background-image: url("/img/publish_login.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.PoipikuFollower {
-                            background-image: url("/img/publish_follower.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterFollower {
-                            background-image: url("/img/publish_t_follower.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterList {
-                            background-image: url("/img/publish_t_list.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterFollowee {
-                            background-image: url("/img/publish_t_follow.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterEach {
-                            background-image: url("/img/publish_t_each.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterRetweet {
-                            background-image: url("/img/publish_t_rt.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitName {
-                            display: block;
-                            width: 100%;
-							font-size: 12px;
-                            text-align: center;
-                        }
-                        .UploadFile .UoloadCmdOption .OptionOther {
-                            border-top: 1px solid rgb(172, 172, 172);
-						}
-                        #TwitterList {
-							text-align: center;
-                        }
-                        #TwitterList select{
-                            width: 145px;
-                            margin: 2px auto;
-                            font-size: 12px;
-                            padding: 1px;
-						}
-						#TwitterListNotFound {
-                            display: block;
-                            width: 140px;
-                            font-size: 11px;
-                            text-align: left;
-						}
-					</style>
 
 					<div class="OptionItem" style="font-weight: bold;">
 						<label class="rocker">

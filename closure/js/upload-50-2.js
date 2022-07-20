@@ -873,15 +873,12 @@ function getLimitedTimeFlg(strPublishElementId, strLimitedTimeElementId){
 	}
 }
 
-function UploadFile(user_id, request_id) {
-	if(!multiFileUploader) return;
-	if(multiFileUploader.getSubmittedNum()<=0) return;
-
+function _getBasePostData(userId, requestId, editorId) {
 	const $TagInputItemData = $('#TagInputItemData');
 	let genre = $TagInputItemData.val();
 	if(!($TagInputItemData.length)) genre = 1;
 
-	const nCategory = parseInt($('#EditCategory').val(), 10);
+	const categoryId = parseInt($('#EditCategory').val(), 10);
 	let strTagList = $.trim($("#EditTagList").val());
 	strTagList = strTagList.substr(0 , 100);
 
@@ -891,44 +888,39 @@ function UploadFile(user_id, request_id) {
 	if (uploadParams.SHOW_LIMIT_VAL.value === 10){
 		if($("#TwitterListNotFound").is(':visible')){
 			twitterListNotFoundMsg();
-			return;
+			return null;
 		}
 		uploadParams.TWITTER_LIST_ID.value = $('#TWITTER_LIST_ID').val();
 	} else if(uploadParams.SHOW_LIMIT_VAL.value === 12) {
 		if (!uploadParams.OPTION_TWEET.value) {
 			needTweetForRTLimitMsg();
-			return;
+			return null;
 		}
 	}
 	if(!uploadParams.OPTION_NOT_TIME_LIMITED.value){
 		if(!checkPublishDatetime(uploadParams.TIME_LIMITED_END.value, uploadParams.TIME_LIMITED_END.value, false)){
-			return;
+			return null;
 		}
 	}
 	if ((uploadParams.OPTION_NO_CONDITIONAL_SHOW.value ||
-		!uploadParams.OPTION_NOT_PUBLISH_NSFW ||
-		!uploadParams.OPTION_NO_PASSWORD) &&
+			!uploadParams.OPTION_NOT_PUBLISH_NSFW ||
+			!uploadParams.OPTION_NO_PASSWORD) &&
 		uploadParams.OPTION_SHOW_FIRST.value && getPreviewAreaImageNum() < 2) {
 		showAllFirstErrMsg();
-		return;
+		return null;
 	}
 
-	setLastCategorySetting(nCategory);
 	if(!uploadParams.OPTION_PUBLISH.value) {
 		uploadParams.OPTION_TWEET.value = false;
 	}
-	startMsg();
-
-	let isTweetNow = uploadParams.OPTION_TWEET.value;
-	if(uploadParams.OPTION_NOT_TIME_LIMITED.value) isTweetNow = false;
 
 	let postData = {
-		"ED":	0,
-		"UID":	user_id,
+		"ED":	editorId,
+		"UID":	userId,
 		"GD":	genre,
-		"CAT":	nCategory,
+		"CAT":	categoryId,
 		"TAG":	strTagList,
-		"RID":	request_id,
+		"RID":	requestId ? requestId : -1,
 		"NOTE":	privateNote.getText(),
 		...Object.fromEntries(Object.entries( uploadParams ).map( ( [ k, v ] ) => [ k, v.value ] )),
 	};
@@ -943,6 +935,27 @@ function UploadFile(user_id, request_id) {
 		}
 	}
 
+	return postData;
+}
+
+function isTweetNow(postData) {
+	let v = postData.OPTION_TWEET.value;
+	if(postData.OPTION_NOT_TIME_LIMITED.value) v = false;
+	return v;
+}
+
+function UploadFile(userId, requestId) {
+	if(!multiFileUploader) return;
+	if(multiFileUploader.getSubmittedNum()<=0) return;
+
+	const editorId = 0;
+
+	let postData = _getBasePostData(userId, requestId, editorId);
+	if (!postData) return;
+
+	setLastCategorySetting(postData.CAT);
+	startMsg();
+
 	$.ajaxSingle({
 		"type": "post",
 		"data": postData,
@@ -953,12 +966,12 @@ function UploadFile(user_id, request_id) {
 			if(data && data.content_id) {
 				if(data.content_id>0) {
 					multiFileUploader.first_file = true;
-					multiFileUploader.user_id = user_id;
+					multiFileUploader.user_id = userId;
 					multiFileUploader.illust_id = data.content_id;
 					multiFileUploader.open_id = data.open_id;
-					multiFileUploader.recent = uploadParams.OPTION_RECENT.value?0:1;
-					multiFileUploader.tweet = isTweetNow;
-					multiFileUploader.tweet_image = uploadParams.OPTION_TWEET_IMAGE.value?1:0;
+					multiFileUploader.recent = postData.OPTION_RECENT.value?0:1;
+					multiFileUploader.tweet = isTweetNow(postData);
+					multiFileUploader.tweet_image = postData.OPTION_TWEET_IMAGE.value?1:0;
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					errorMsg();
@@ -971,13 +984,14 @@ function UploadFile(user_id, request_id) {
 
 var g_strPasteMsg = '';
 function initUploadPaste() {
-	g_strPasteMsg = $('#TimeLineAddImage').html();
-	$('#TimeLineAddImage').pastableContenteditable();
-	$('#TimeLineAddImage').on('pasteImage', function(ev, data){
+	const $TimeLineAddImage = $('#TimeLineAddImage');
+	g_strPasteMsg = $TimeLineAddImage.html();
+	$TimeLineAddImage.pastableContenteditable();
+	$TimeLineAddImage.on('pasteImage', function(ev, data){
 		if($('.InputFile').length<10) {
 			var $elmPaste = createPasteElm(data.dataURL);
 			$('#PasteZone').append($elmPaste);
-			$('#TimeLineAddImage').html(g_strPasteMsg);
+			$TimeLineAddImage.html(g_strPasteMsg);
 		}
 		updatePasteNum();
 	}).on('pasteImageError', function(ev, data){
@@ -985,30 +999,28 @@ function initUploadPaste() {
 			alert('error data : ' + data.url)
 		}
 	}).on('pasteText', function(ev, data){
-		$('#TimeLineAddImage').html(g_strPasteMsg);
+		$TimeLineAddImage.html(g_strPasteMsg);
 	});
-//	var $elmPaste = createPasteElm();
-//	$('#PasteZone').append($elmPaste);
 }
 
 function createPasteElm(src) {
-	var $InputFile = $('<div />').addClass('InputFile');
-	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+	let $InputFile = $('<div />').addClass('InputFile');
+	let $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
 		$(this).parent().remove();
 		updatePasteNum();
 	});
-	var $imgView = $('<img />').addClass('imgView').attr('src', src);
+	const $imgView = $('<img />').addClass('imgView').attr('src', src);
 	$InputFile.append($DeletePaste).append($imgView);
 	return $InputFile
 }
 
 function createPasteListItem(src, append_id) {
-	var $InputFile = $('<li />').addClass('InputFile').attr('id', append_id);
-	var $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
+	let $InputFile = $('<li />').addClass('InputFile').attr('id', append_id);
+	let $DeletePaste = $('<div />').addClass('DeletePaste').html('<i class="fas fa-times"></i>').on('click', function(){
 		$(this).parent().remove();
 		updatePasteNum();
 	});
-	var $imgView = $('<img />').addClass('imgView').attr('src', src);
+	const $imgView = $('<img />').addClass('imgView').attr('src', src);
 	$InputFile.append($DeletePaste).append($imgView);
 	return $InputFile
 }
@@ -1021,9 +1033,7 @@ function initPasteElm($elmPaste) {
 		if(data.url){
 			alert('error data : ' + data.url)
 		}
-	}).on('pasteText', function(ev, data){
-		;
-	});
+	}).on('pasteText', function(ev, data){});
 }
 
 function updatePasteNum() {
@@ -1031,111 +1041,30 @@ function updatePasteNum() {
 	$('#TotalSize').html(strTotal);
 }
 
-function UploadPaste(user_id) {
+function UploadPaste(userId) {
+	const editorId = 1;
+
 	// check image
 	let nImageNum = 0;
-	$('.imgView').each(function(){
+	$('.imgView').each(function () {
 		const strSrc = $.trim($(this).attr('src'));
-		if(strSrc.length>0) nImageNum++;
+		if (strSrc.length > 0) nImageNum++;
 	});
-	if(nImageNum<=0) return;
-	let genre = $('#TagInputItemData').val();
-	const nCategory = parseInt($('#EditCategory').val(), 10);
-	const strDescription = $.trim($("#EditDescription").val());
-	let strTagList = $.trim($("#EditTagList").val());
-	strTagList = strTagList.substr(0 , 100);
-	const nPublishId = parseInt($('#EditPublish').val(), 10);
-	const strPassword = $('#EditPassword').val();
-	const nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
-	const nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-	let nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-	const nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
-	let nTwListId = null;
-	const nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
-	let strPublishStart = null;
-	let strPublishEnd = null;
-	if(nPublishId === 10){
-		if($("#TwitterListNotFound").is(':visible')){
-			twitterListNotFoundMsg();
-			return;
-		}
-		nTwListId = $('#EditTwitterList').val();
-	} else if(nPublishId === 12) {
-		if (nTweet === 0) {
-			needTweetForRTLimitMsg();
-			return;
-		}
-	}
+	if (nImageNum <= 0) return;
 
-	if(nLimitedTime === 1){
-		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
-		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
-		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
-			return;
-		}
-	}
-	const nPublishAllNum = $('#OptionShowAllFirst').prop('checked') ? 1 : 0;
-	if (nPublishAllNum > 0 && getPasteAreaImageNum() < 2) {
-		showAllFirstErrMsg();
-		return;
-	}
+	let postData = _getBasePostData(userId, null, editorId);
+	if (!postData) return;
 
-	if(!($('#TagInputItemData').length)) genre=1;
-
-	setTweetSetting($('#OptionTweet').prop('checked'));
-	setTweetImageSetting($('#OptionImage').prop('checked'));
-	setTwitterCardThumbnailSetting($('#OptionTwitterCardThumbnail').prop('checked'));
-	setLastCategorySetting(nCategory);
-	if(nPublishId === 99) {
-		nTweet = 0;
-	}
+	setLastCategorySetting(postData.CAT);
 	startMsg();
-
-	let nTweetNow = nTweet;
-	if(nLimitedTime === 1) nTweetNow = 0;
-
-	let postData = {
-		"UID":user_id,
-		"GD" :genre,
-		"CAT":nCategory,
-		"TAG":strTagList,
-		"PID":nPublishId,
-		"PPW":strPassword,
-		"PLD":nTwListId,
-		"LTP":nLimitedTime,
-		"PST":strPublishStart,
-		"PED":strPublishEnd,
-		"TWT":getTweetSetting(),
-		"TWI":getTweetImageSetting(),
-		"TWCT":getTwitterCardThumbnailSetting(),
-		"ED":1,
-		"CNG":nCheerNg,
-		"PUBALL":nPublishAllNum,
-		"NOTE":privateNote.getText(),
-	};
-
-	if (!transList) {
-		// 下位互換
-		postData["DES"] = $.trim($("#EditDescription").val());
-	} else {
-		const descList = transList.Description;
-		descList[selected['Description']] = $("#EditDescription").val();
-		for (let key in descList) {
-			if (key === 'default') {
-				postData["DES"] = descList[key];
-			} else {
-				postData["DES" + key] = descList[key];
-			}
-		}
-	}
 
 	$.ajaxSingle({
 		"type": "post",
 		"data": postData,
-		"url": "/api/UploadFileRefTwitterF.jsp",
+		"url": "/f/UploadFileRefTwitterV2F.jsp",
 		"dataType": "json",
 		"success": function(data) {
-			console.log("UploadFileReferenceF", data.content_id);
+			console.log("UploadFileReferenceV2F", data.content_id);
 			let first_file = true;
 			$('.imgView').each(function(){
 				$(this).parent().addClass('Done');
@@ -1147,36 +1076,36 @@ function UploadPaste(user_id) {
 					$.ajax({
 						"type": "post",
 						"data": {
-							"UID":user_id,
-							"IID":data.content_id,
-							"REC":nRecent,
-							"DATA":strEncodeImg,
+							"UID": userId,
+							"IID": data.content_id,
+							"REC": postData.OPTION_RECENT.value?0:1,
+							"DATA": strEncodeImg,
 						},
-						"url": "/f/UploadPasteFirstF.jsp",
+						"url": "/f/UploadPasteFirstV2F.jsp",
 						"dataType": "json",
 						"async": false,
-						"success": function(data) {
-							console.log("UploadPasteFirstF");
+						"success": function() {
+							console.log("UploadPasteFirstV2F");
 						}
 					});
 				} else {
 					$.ajax({
 						"type": "post",
 						"data": {
-							"UID":user_id,
+							"UID":userId,
 							"IID":data.content_id,
 							"DATA":strEncodeImg,
 						},
-						"url": "/f/UploadPasteAppendF.jsp",
+						"url": "/f/UploadPasteAppendV2F.jsp",
 						"dataType": "json",
 						"async": false,
-						"success": function(data) {
-							console.log("UploadPasteAppendF");
+						"success": function() {
+							console.log("UploadPasteAppendV2F");
 						}
 					});
 				}
 			});
-			if(nTweetNow===1) {
+			if(isTweetNow(postData)) {
 				$.ajax({
 					"type": "post",
 					"data": {
@@ -1184,7 +1113,7 @@ function UploadPaste(user_id) {
 						IID: data.content_id,
 						IMG: nTweetImage,
 					},
-					"url": "/api/UploadFileTweetF.jsp",
+					"url": "/f/UploadFileTweetF.jsp",
 					"dataType": "json",
 					"success": function(data) {
 						tweetSucceeded(data.result);
@@ -1200,86 +1129,28 @@ function UploadPaste(user_id) {
 	return false;
 }
 
-function UploadText(user_id, request_id) {
-	let genre = $('#TagInputItemData').val();
-	const nCategory = parseInt($('#EditCategory').val(), 10);
-	const strDescription = $.trim($("#EditDescription").val());
-	const strTextBody = $("#EditTextBody").val();
-	let strTagList = $.trim($("#EditTagList").val());
-	strTagList = strTagList.substr(0 , 100);
-	const title = $("#EditTextTitle").val();
-	const direction = $('input:radio[name="EditTextDirection"]:checked').val();
+function UploadText(userId, requestId) {
+	const editorId = 3;
 
-	let uploadParams = getUploadParams();
+	let postData = _getBasePostData(userId, requestId, editorId);
+	if (!postData) return;
 
-	let nTwListId = null;
-	const nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
-	let strPublishStart = null;
-	let strPublishEnd = null;
-	if(nPublishId === 10){
-		if($("#TwitterListNotFound").is(':visible')){
-			twitterListNotFoundMsg();
-			return;
-		}
-		nTwListId = $('#EditTwitterList').val();
-	} else if(nPublishId === 12) {
-		if (nTweet === 0) {
-			needTweetForRTLimitMsg();
-			return;
-		}
-	}
-	if(nLimitedTime === 1){
-		strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
-		strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
-		if(!checkPublishDatetime(strPublishStart, strPublishEnd, false)){
-			return;
-		}
-	}
-	if(!($('#TagInputItemData').length)) genre=1;
+	postData["TIT"] = $("#EditTextTitle").val();
+	postData["BDY"] = $("#EditTextBody").val();
 
-	setTweetSetting($('#OptionTweet').prop('checked'));
-	setTweetImageSetting($('#OptionImage').prop('checked'));
-	setLastCategorySetting(nCategory);
-	if(nPublishId === 99) {
-		nTweet = 0;
-	}
+	setLastCategorySetting(postData.CAT);
 	startMsg();
-
-	let nTweetNow = nTweet;
-	if(nLimitedTime === 1) nTweetNow = 0;
 
 	$.ajaxSingle({
 		"type": "post",
-		"data": {
-			"UID":user_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"BDY":strTextBody,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":getTweetSetting(),
-			"TWI":getTweetImageSetting(),
-			"ED":3,
-			"CNG":nCheerNg,
-			"REC":nRecent,
-			"RID":request_id,
-			"TIT":title,
-			"DIR":direction,
-			"NOTE":privateNote.getText(),
-		},
-		"url": "/f/UploadTextRefTwitterF.jsp",
+		"data": postData,
+		"url": "/f/UploadTextRefTwitterV2F.jsp",
 		"dataType": "json",
 		"success": function(data) {
 			console.log("UploadTextRefTwitterF");
 			if(data && data.content_id) {
 				if(data.content_id>0) {
-					if(nTweetNow==1) {
+					if(isTweetNow(postData)) {
 						$.ajax({
 							"type": "post",
 							"data": {
@@ -1287,7 +1158,7 @@ function UploadText(user_id, request_id) {
 								IID: data.content_id,
 								IMG: nTweetImage,
 							},
-							"url": "/api/UploadFileTweetF.jsp",
+							"url": "/f/UploadFileTweetF.jsp",
 							"dataType": "json",
 							"success": function(data) {
 								tweetSucceeded(data.result);
@@ -1305,16 +1176,12 @@ function UploadText(user_id, request_id) {
 }
 
 function initOption() {
-	$('#OptionTweet').prop('checked', getTweetSetting());
-	$('#OptionImage').prop('checked', getTweetImageSetting());
-	$('#OptionTwitterCardThumbnail').prop('checked', getTwitterCardThumbnailSetting());
 	const cCategory = getLastCategorySetting();
 	$('#EditCategory option').each(function(){
-		if($(this).val()==cCategory) {
+		if($(this).val()===cCategory) {
 			$('#EditCategory').val(cCategory);
 		}
 	});
-	updateTweetButton();
 }
 
 function onClickOptionItem() {
@@ -1393,6 +1260,7 @@ const UPLOAD_PARAMS_DEFAULT = {
 	"OPTION_TWITTER_CARD_THUMBNAIL": {"type": "checkbox", "value": true},
 	"OPTION_CHEER_NG": {"type": "checkbox", "value": true},
 	"OPTION_RECENT": {"type": "checkbox", "value": true},
+	"NOVEL_DIRECTION_VAL": {"type": "radio", "value": "RadioHorizontal"},
 }
 
 // for local storage

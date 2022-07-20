@@ -16,13 +16,13 @@ import java.util.List;
 public class UpFileFirstCParam {
 	protected ServletContext m_cServletContext = null;
 
-	public int m_nUserId = -1;
-	public int m_nContentId = 0;
-	public int m_nOpenId = -1;
-	public boolean m_bNotRecently = false;
-	public String m_strEncodeImg = "";
-	public boolean m_bPasteUpload = false;
-	FileItem item_file = null;
+	public int userId = -1;
+	public int contentId = 0;
+	public int openId = -1;
+	public boolean isNotRecently = false;
+	public String encodedImage = "";
+	public boolean isPasteUpload = false;
+	FileItem fileItem = null;
 
 	UpFileFirstCParam(ServletContext context){
 		m_cServletContext = context;
@@ -31,8 +31,8 @@ public class UpFileFirstCParam {
 	public int GetParam(HttpServletRequest request) {
 		int nRtn = -1;
 		try {
-			if(request.getContentType().indexOf("multipart")>=0){
-				m_bPasteUpload = false;
+			if(request.getContentType().contains("multipart")){
+				isPasteUpload = false;
 				String strRelativePath = Common.GetUploadTemporaryPath();
 				String strRealPath = m_cServletContext.getRealPath(strRelativePath);
 				// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
@@ -48,26 +48,26 @@ public class UpFileFirstCParam {
 					if (item.isFormField()) {
 						String strName = item.getFieldName();
 						if(strName.equals("UID")) {
-							m_nUserId = Util.toInt(item.getString());
+							userId = Util.toInt(item.getString());
 						} else if(strName.equals("IID")) {
-							m_nContentId = Util.toInt(item.getString());
+							contentId = Util.toInt(item.getString());
 						} else if(strName.equals("OID")) {
-							m_nOpenId = Util.toInt(item.getString());
+							openId = Util.toInt(item.getString());
 						} else if(strName.equals("REC")) {
-							m_bNotRecently = Util.toBoolean(item.getString());
+							isNotRecently = Util.toBoolean(item.getString());
 						}
 						item.delete();
 					} else {
-						item_file = item;
+						fileItem = item;
 						nRtn = 0;
 					}
 				}
 			} else {
-				m_bPasteUpload = true;
-				m_nUserId		= Util.toInt(request.getParameter("UID"));
-				m_nContentId	= Util.toInt(request.getParameter("IID"));
-				m_strEncodeImg	= Util.toString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
-				m_bNotRecently  = Util.toBoolean(request.getParameter("REC"));
+				isPasteUpload = true;
+				userId = Util.toInt(request.getParameter("UID"));
+				contentId = Util.toInt(request.getParameter("IID"));
+				encodedImage = Util.toString(request.getParameter("DATA"));	// 送信サイズの最大を変えた時は tomcatのmaxPostSizeとnginxのclient_max_body_size、client_body_buffer_sizeも変更すること
+				isNotRecently = Util.toBoolean(request.getParameter("REC"));
 
 				nRtn = 0;
 			}
@@ -81,7 +81,7 @@ public class UpFileFirstCParam {
 
 	protected int ErrorOccured(Exception e, int errCode) {
 		e.printStackTrace();
-		m_nUserId = -1;
+		userId = -1;
 		return -99;
 	}
 

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class UploadC extends UpC {
-	private int m_nContentId = -99;
+	private int contentId = -99;
 	public int openId = -1;
 	public boolean deliverRequestResult;
 	public int GetResults(UploadCParam upParam, CheckLogin checkLogin) {
@@ -31,7 +31,7 @@ public final class UploadC extends UpC {
 		if (upParam.requestId > 0) {
 			deliverRequestC = new DeliverRequestC(checkLogin, upParam.requestId);
 			if (deliverRequestC.errorKind != Controller.ErrorKind.None) {
-				return m_nContentId;
+				return contentId;
 			}
 		}
 
@@ -117,21 +117,21 @@ public final class UploadC extends UpC {
 
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
-				m_nContentId = resultSet.getInt("content_id");
+				contentId = resultSet.getInt("content_id");
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			AddTags(upParam.description, upParam.tagList, m_nContentId, connection);
+			AddTags(upParam.description, upParam.tagList, contentId, connection);
 
 			upParam.descriptionTranslations.forEach((key, value) -> {
 				if (!value.isEmpty()) {
-					ContentTranslation.upsert(m_nContentId, key, CContent.ColumnType.Description, value, upParam.userId);
+					ContentTranslation.upsert(contentId, key, CContent.ColumnType.Description, value, upParam.userId);
 				}
 			});
 
 			if (deliverRequestC != null) {
-				deliverRequestResult = deliverRequestC.getResults(m_nContentId);
+				deliverRequestResult = deliverRequestC.getResults(contentId);
 			}
 
 			openId = upParam.isPublish ? Common.PUBLISH_ID_ALL : Common.OPEN_ID_HIDDEN;
@@ -144,6 +144,6 @@ public final class UploadC extends UpC {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
-		return m_nContentId;
+		return contentId;
 	}
 }
