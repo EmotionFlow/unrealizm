@@ -49,7 +49,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
 				</div>
 			<%} else {%>
-				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#OverlaySearchWrapper').show();"></a>
 				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
 					<span class="MenuMyRequestsIcon"></span>
 					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>
@@ -142,8 +142,16 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</div>
 			</form>
 		</nav>
-		<%} else {%>
-		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
+		<%}%>
+	</div>
+</header>
+
+<%if(Util.isSmartPhone(request)) {%>
+	<div id="OverlaySearchWrapper" class="OverlaySearchWrapper">
+		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
+			<div id="OverlaySearchCloseBtn" class="OverlaySearchCloseBtn" onclick="$('#HeaderTitleWrapper').show();$('#OverlaySearchWrapper').hide();">
+				<i class="fas fa-arrow-left"></i>
+			</div>
 			<div class="HeaderSearch">
 				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
 				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
@@ -151,17 +159,25 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</div>
 			</div>
 		</form>
-		<%}%>
-
-		<script>
-			<%if(checkLogin.m_bLogin){%>
-			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
-			$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
-			<%}%>
-		</script>
-
+		<ul id="RecentSearchList" class="RecentSearchList">
+			<li>
+				<div class="RecentSearchRow">
+					<div class="RecentSearchItem">てすと</div>
+					<div class="RecentSearchDelBtn">
+						<i class="fas fa-times"></i>
+					</div>
+				</div>
+			</li>
+		</ul>
 	</div>
-</header>
+<%}%>
+
+<script>
+	<%if(checkLogin.m_bLogin){%>
+	$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
+	$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+	<%}%>
+</script>
 
 <%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
