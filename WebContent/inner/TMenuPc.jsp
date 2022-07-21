@@ -172,24 +172,33 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			}).then(function(history) {
 				const $ul = $('ul#RecentSearchList');
 				$ul.empty();
-				history.keywords.forEach(kw => {
+				if (history.keywords.length) {
+					history.keywords.forEach(kw => {
+						const $li = $('<li></li>', {class: 'RecentSearchItem'});
+						const $row = $('<div></div>', {class: 'RecentSearchRow'});
+						const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
+						const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+						const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
+						$close.append($closeIcon);
+						$row.append($item, $close);
+						$li.append($row);
+						$ul.append($li);
+					});
+				} else {
 					const $li = $('<li></li>');
 					const $row = $('<div></div>', {class: 'RecentSearchRow'});
-					const $item = $('<div></div>', {class: 'RecentSearchItem', text: kw});
-					const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
-					const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
-					$close.append($closeIcon);
-					$row.append($item, $close);
+					const $item = $('<div></div>', {class: 'RecentSearchKW', text: '<%=_TEX.T("SearchLog.NotFound")%>'});
+					$row.append($item);
 					$li.append($row);
 					$ul.append($li);
-				});
+				}
 			});
 		};
-		$(document).on('click', '.RecentSearchList li', ev => {
+		$(document).on('click', '.RecentSearchItem', ev => {
 			$('#HeaderTitleWrapper').show();
 			$('#OverlaySearchWrapper').hide();
 			$('ul#RecentSearchList').empty();
-			SearchIllustByKeyword($(ev.currentTarget).find('.RecentSearchItem').text());
+			SearchIllustByKeyword($(ev.currentTarget).find('.RecentSearchKW').text());
 		});
 	</script>
 <%}%>
