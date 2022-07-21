@@ -36,7 +36,8 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .OverlaySearchWrapper .HeaderSearch {flex-grow: 1;}
 
 .OverlaySearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0;}
-.OverlaySearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; padding: 0 2em; list-style-type: none;}
+.OverlaySearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; padding: 0 2em; list-style-type: none; transition: background-color .4s;}
+.OverlaySearchWrapper .RecentSearchList li:active {background-color: #ddd;}
 .OverlaySearchWrapper .RecentSearchList .RecentSearchRow {display: flex;}
 .OverlaySearchWrapper .RecentSearchList .RecentSearchItem {flex-grow: 1; padding: 1em 0;}
 .OverlaySearchWrapper .RecentSearchList .RecentSearchDelBtn {width: 1em; padding: 1em 0; color: #3498db; display: none;}

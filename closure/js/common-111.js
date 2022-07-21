@@ -132,8 +132,8 @@ function getLocalStrage(key) {
 	return obj.val;
 }
 
-function SearchIllustByKeyword() {
-	var keyword = $('#HeaderSearchBox').val();
+function SearchIllustByKeyword(kwd) {
+	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
 	location.href="/SearchIllustByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 

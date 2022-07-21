@@ -159,7 +159,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</div>
 			</div>
 		</form>
-		<ul id="RecentSearchList" class="RecentSearchList">
+		<ul id="RecentSearchList" class="RecentSearchList" ontouchstart>
 			<li>
 				<div class="RecentSearchRow">
 					<div class="RecentSearchItem">てすと</div>
@@ -170,6 +170,13 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			</li>
 		</ul>
 	</div>
+	<script>
+		$(document).on('click', '.RecentSearchList li', ev => {
+			$('#HeaderTitleWrapper').show();
+			$('#OverlaySearchWrapper').hide();
+			SearchIllustByKeyword($(ev.currentTarget).find('.RecentSearchItem').text());
+		});
+	</script>
 <%}%>
 
 <script>
