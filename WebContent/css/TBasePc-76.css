@@ -30,12 +30,12 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .HeaderSelectLangList > dd{margin: 10px 0;}
 .HeaderSelectLangList > dd > a {color: #3498db;}
 
-.OverlaySearchWrapper {display: none; width: 100vw; height: 100vh; position: fixed; left: 0; top: 0; background-color: #fff; z-index: 999; text-align: center;}
+.OverlaySearchWrapper {display: none; width: 100vw; height: calc(100vh - 50px); position: fixed; left: 0; top: 0; background-color: #fff; z-index: 999; text-align: center;}
 .OverlaySearchWrapper .OverlaySearchCloseBtn {color: #3498db; font-size: 16px; padding: 4px 12px;}
-.OverlaySearchWrapper .HeaderSearchWrapper {display: flex;}
+.OverlaySearchWrapper .HeaderSearchWrapper {display: flex; height: 50px;}
 .OverlaySearchWrapper .HeaderSearch {flex-grow: 1;}
 
-.OverlaySearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0;}
+.OverlaySearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 50px); margin: 0; overflow-y: auto;}
 .OverlaySearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; padding: 0 2em; list-style-type: none; transition: background-color .4s;}
 .OverlaySearchWrapper .RecentSearchList li:active {background-color: #ddd;}
 .OverlaySearchWrapper .RecentSearchList .RecentSearchRow {display: flex;}

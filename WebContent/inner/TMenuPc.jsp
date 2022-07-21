@@ -49,7 +49,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
 				</div>
 			<%} else {%>
-				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#OverlaySearchWrapper').show();"></a>
+				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="showSearch()"></a>
 				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
 					<span class="MenuMyRequestsIcon"></span>
 					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>
@@ -159,21 +159,36 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</div>
 			</div>
 		</form>
-		<ul id="RecentSearchList" class="RecentSearchList" ontouchstart>
-			<li>
-				<div class="RecentSearchRow">
-					<div class="RecentSearchItem">てすと</div>
-					<div class="RecentSearchDelBtn">
-						<i class="fas fa-times"></i>
-					</div>
-				</div>
-			</li>
-		</ul>
+		<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
 	</div>
 	<script>
+		function showSearch() {
+			$('#HeaderTitleWrapper').hide();
+			$('#OverlaySearchWrapper').show();
+			$.ajax({
+				"type": "get",
+				"url": "/f/GetSearchLogF.jsp",
+				"dataType": "json",
+			}).then(function(history) {
+				const $ul = $('ul#RecentSearchList');
+				$ul.empty();
+				history.keywords.forEach(kw => {
+					const $li = $('<li></li>');
+					const $row = $('<div></div>', {class: 'RecentSearchRow'});
+					const $item = $('<div></div>', {class: 'RecentSearchItem', text: kw});
+					const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+					const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
+					$close.append($closeIcon);
+					$row.append($item, $close);
+					$li.append($row);
+					$ul.append($li);
+				});
+			});
+		};
 		$(document).on('click', '.RecentSearchList li', ev => {
 			$('#HeaderTitleWrapper').show();
 			$('#OverlaySearchWrapper').hide();
+			$('ul#RecentSearchList').empty();
 			SearchIllustByKeyword($(ev.currentTarget).find('.RecentSearchItem').text());
 		});
 	</script>
