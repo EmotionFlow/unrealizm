@@ -194,21 +194,6 @@ public final class CContent {
 		if (novelHtmlShort.isEmpty()) {
 			novelHtmlShort = Util.toStringHtml(Util.subStrNum(m_strTextBody, 500));
 		}
-
-		if(m_nPublishId==0 && m_nSafeFilter>0) {
-			switch(m_nSafeFilter) {
-				case Common.SAFE_FILTER_R15:
-					m_nPublishId = Common.PUBLISH_ID_R15;
-					break;
-				case Common.SAFE_FILTER_R18:
-					m_nPublishId = Common.PUBLISH_ID_R18;
-					break;
-				case Common.SAFE_FILTER_R18G:
-				default:
-					m_nPublishId = Common.PUBLISH_ID_R18G;
-					break;
-			}
-		}
 	}
 
 	public CContent() {}
@@ -222,11 +207,11 @@ public final class CContent {
 	}
 
 	public boolean nowAvailable() {
-		return (m_nOpenId == OpenId.Open.getCode() ||m_nOpenId == OpenId.OpenAvoidNewArrivals.getCode());
+		return (m_nOpenId == OpenId.Open.getCode() || m_nOpenId == OpenId.OpenAvoidNewArrivals.getCode());
 	}
 
 	public boolean isPasswordEnabled() {
-		return m_nPublishId == Common.PUBLISH_ID_PASS;
+		return passwordEnabled;
 //		return (m_strPassword != null && !m_strPassword.isEmpty());
 	}
 

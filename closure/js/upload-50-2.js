@@ -543,7 +543,7 @@ function checkPublishDatetime(strPublishStart, strPublishEnd, isUpdate, strPubli
 
 
 function initStartDatetime(datetime){
-	$("#EditTimeLimitedStart").flatpickr({
+	$("#TIME_LIMITED_START").flatpickr({
 		enableTime: true,
 		dateFormat: "Z",
 		altInput: true,
@@ -555,7 +555,7 @@ function initStartDatetime(datetime){
 }
 
 function initEndDatetime(datetime){
-	$("#EditTimeLimitedEnd").flatpickr({
+	$("#TIME_LIMITED_END").flatpickr({
 		enableTime: true,
 		dateFormat: "Z",
 		altInput: true,
@@ -1239,8 +1239,8 @@ function updateCheckbox($checkbox, checked) {
 	}
 }
 
-function selectRadio(id) {
-	$("#"+id).attr("checked", true);
+function selectRadioButton(name, value) {
+	$("input[name=" + name + "][value=" + value + "]").prop('checked', true);
 }
 
 const UPLOAD_PARAMS_DEFAULT = {
@@ -1249,9 +1249,9 @@ const UPLOAD_PARAMS_DEFAULT = {
 	"TIME_LIMITED_START": {"type": "datetime", "value": ""},
 	"TIME_LIMITED_END": {"type": "datetime", "value": ""},
 	"OPTION_NOT_PUBLISH_NSFW": {"type": "checkbox", "value": true},
-	"NSFW_VAL": {"type": "radio", "value": "RadioOneCushion"},
+	"NSFW_VAL": {"type": "radio", "value": "2"},
 	"OPTION_NO_CONDITIONAL_SHOW": {"type": "checkbox", "value": true},
-	"SHOW_LIMIT_VAL": {"type": "radio", "value": "RadioPoipikuLogin"},
+	"SHOW_LIMIT_VAL": {"type": "radio", "value": "6"},
 	"OPTION_NO_PASSWORD": {"type": "checkbox", "value": true},
 	"PASSWORD_VAL": {"type": "textbox", "value": ""},
 	"OPTION_SHOW_FIRST": {"type": "checkbox", "value": false},
@@ -1260,7 +1260,7 @@ const UPLOAD_PARAMS_DEFAULT = {
 	"OPTION_TWITTER_CARD_THUMBNAIL": {"type": "checkbox", "value": true},
 	"OPTION_CHEER_NG": {"type": "checkbox", "value": true},
 	"OPTION_RECENT": {"type": "checkbox", "value": true},
-	"NOVEL_DIRECTION_VAL": {"type": "radio", "value": "RadioHorizontal"},
+	"NOVEL_DIRECTION_VAL": {"type": "radio", "value": "0"},
 }
 
 // for local storage
@@ -1320,6 +1320,22 @@ function loadUploadParamsFromLocalStorage() {
 	}
 }
 
+function setUploadParams(params) {
+	for (let [key, val] of Object.entries(params)) {
+		const type = val.type;
+		if (type === 'checkbox') {
+			updateCheckbox($("#" + key), val.value);
+		} else if (type === 'textbox') {
+			$("#" + key).val(val.value);
+		} else if (type === 'radio') {
+			selectRadioButton(key, val.value);
+		}
+	}
+	updateOptionPublishNsfw();
+	updateOptionShowLimit();
+	updateOptionPassword();
+}
+
 function initUploadParams() {
 	let uploadParams = UPLOAD_PARAMS_DEFAULT;
 	const loadParams = loadUploadParamsFromLocalStorage();
@@ -1333,19 +1349,8 @@ function initUploadParams() {
 		console.log(e);
 	}
 	console.log(uploadParams);
-	for (let [key, val] of Object.entries(uploadParams)) {
-		const type = val.type;
-		if (type === 'checkbox') {
-			updateCheckbox($("#" + key), val.value);
-		} else if (type === 'textbox') {
-			$("#" + key).val(val.value);
-		} else if (type === 'radio') {
-			selectRadio(val.value);
-		}
-	}
-	updateOptionPublishNsfw();
-	updateOptionShowLimit();
-	updateOptionPassword();
+
+	setUploadParams(uploadParams);
 }
 
 
