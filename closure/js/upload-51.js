@@ -894,7 +894,7 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 			},
 			onAllComplete: function(succeeded, failed) {
 				console.log("onAllComplete", succeeded, failed, this.tweet);
-				if(this.tweet==1) {
+				if(this.tweet) {
 					$.ajax({
 						"type": "post",
 						"data": {

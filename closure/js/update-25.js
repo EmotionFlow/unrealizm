@@ -81,7 +81,7 @@ function initUpdateFile(fileNumMax, fileSizeMax, userid, contentid) {
 					//並べ替え情報の送信
 					const deferred = UpdateFileOrderAjax(this.user_id, this.content_id);
 					deferred.done( () => {
-						if(this.tweet === 1) {
+						if(this.tweet) {
 							Tweet(this.user_id, this.content_id, this.tweet_image, this.delete_tweet);
 						} else {
 							completeMsg();

@@ -80,7 +80,7 @@ function initUpdateFile(fileNumMax, fileSizeMax, userId, contentId) {
 					//並べ替え情報の送信
 					const deferred = UpdateFileOrderAjax(this.user_id, this.content_id);
 					deferred.done( () => {
-						if(this.tweet === 1) {
+						if(this.tweet) {
 							Tweet(this.user_id, this.content_id, this.tweet_image, this.delete_tweet);
 						} else {
 							completeMsg();
@@ -166,7 +166,7 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 			IMG: nTweetImage,
 			DELTW: nDeleteTweet,
 		},
-		"url": "/api/UploadFileTweetF.jsp",
+		"url": "/f/UploadFileTweetF.jsp",
 		"dataType": "json",
 		"success": function (data) {
 			tweetSucceeded(data.result);
@@ -178,7 +178,7 @@ function _getUpdatePostData(userId, contentId, editorId) {
 	let postData = _getBasePostData(userId, null, editorId);
 	if (!postData) return null;
 
-	postData["DELTW"] = ($('#OptionDeleteTweet').prop('checked'))?1:0;
+	postData["DELTW"] = ($('#OPTION_DELETE_TWEET').prop('checked')) ? 1 : 0;
 	postData["IID"] = contentId;
 
 	return postData;
@@ -339,16 +339,16 @@ function UpdateTextRefTwitterFAjax(data){
 	});
 }
 
-function UploadFileTweetFAjax(user_id, content_id, nTweetImage, nDeleteTweet){
+function UploadFileTweetFAjax(user_id, content_id, isTweetWithImage, nDeleteTweet){
 	return $.ajax({
 		"type": "post",
 		"data": {
 			UID: user_id,
 			IID: content_id,
-			IMG: nTweetImage,
+			IMG: isTweetWithImage ? 1 : 0,
 			DELTW: nDeleteTweet,
 		},
-		"url": "/api/UploadFileTweetF.jsp",
+		"url": "/f/UploadFileTweetF.jsp",
 		"dataType": "json",
 	});
 }
@@ -409,7 +409,7 @@ function createUpdatePasteFunction(){
 
 				$.when.apply($, aryFunc)
 				.then(function(){
-					var json_array = [];
+					let json_array = [];
 					let firstNewID = null;
 					$.each($('#PasteZone').sortable('toArray'), function(i, item) {
 						json_array.push(parseInt(item));

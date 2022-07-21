@@ -566,6 +566,17 @@ function initEndDatetime(datetime){
 	});
 }
 
+function updateOptionPublish(){
+	const $ItemTimeLimited = $("#ItemTimeLimited");
+	const slideSpeed = 300;
+	if($('#OPTION_PUBLISH').prop('checked')){
+		$ItemTimeLimited.slideDown(slideSpeed);
+	} else {
+		updateCheckbox($("#OPTION_NOT_TIME_LIMITED"), true);
+		$ItemTimeLimited.slideUp(0);
+	}
+	updateOptionLimitedTimePublish();
+}
 
 function updateOptionLimitedTimePublish(){
 	const $ItemTimeLimitedVal = $('#ItemTimeLimitedVal');
@@ -705,43 +716,42 @@ function updateMyTwitterList() {
 
 var updateMyTwitterListF = updateMyTwitterList();
 
-
-function tweetSucceeded(data){
-	var toContext = "/MyIllustListPcV.jsp";
-	if(data!=null){
-		if(data>=0){ // 異常無し
+function tweetSucceeded(errCode){
+	const toContext = "/MyIllustListPcV.jsp";
+	const nTimeOut = 5000;
+	if (errCode != null) {
+		if (errCode >= 0) { // 異常無し
 			completeMsg();
-			setTimeout(function(){
-				location.href=toContext;
+			setTimeout(function () {
+				location.href = toContext;
 			}, 1000);
-		}else{
-			var nTimeOut = 5000;
-			if(data == -103 || data == -203){
+		} else {
+			if (errCode === -103 || errCode === -203) {
 				twtterTweetInvalidTokenMsg();
-				setTimeout(function(){
-					location.href=toContext;
+				setTimeout(function () {
+					location.href = toContext;
 				}, nTimeOut);
-			}else if(data == -102){
+			} else if (errCode === -102) {
 				twtterTweetRateLimitMsg();
-				setTimeout(function(){
-					location.href=toContext;
+				setTimeout(function () {
+					location.href = toContext;
 				}, nTimeOut);
-			}else if(data == -104){
+			} else if (errCode === -104) {
 				twtterTweetTooMuchMsg();
-				setTimeout(function(){
-					location.href=toContext;
+				setTimeout(function () {
+					location.href = toContext;
 				}, nTimeOut);
-			}else{
+			} else {
 				twtterTweetOtherErrMsg(data);
-				setTimeout(function(){
-					location.href=toContext;
+				setTimeout(function () {
+					location.href = toContext;
 				}, nTimeOut);
 			}
 		}
-	}else{
+	} else {
 		twtterTweetOtherErrMsg(data);
-		setTimeout(function(){
-			location.href=toContext;
+		setTimeout(function () {
+			location.href = toContext;
 		}, nTimeOut);
 	}
 }
@@ -792,7 +802,7 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 			},
 			onAllComplete: function(succeeded, failed) {
 				console.log("onAllComplete", succeeded, failed, this.tweet);
-				if(this.tweet===1) {
+				if(this.tweet) {
 					$.ajax({
 						"type": "post",
 						"data": {
@@ -800,7 +810,7 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 							IID: this.illust_id,
 							IMG: this.tweet_image
 						},
-						"url": "/api/UploadFileTweetF.jsp",
+						"url": "/f/UploadFileTweetF.jsp",
 						"dataType": "json",
 						"success": function(data) {
 							tweetSucceeded(data.result);
@@ -898,7 +908,7 @@ function _getBasePostData(userId, requestId, editorId) {
 		}
 	}
 	if(!uploadParams.OPTION_NOT_TIME_LIMITED.value){
-		if(!checkPublishDatetime(uploadParams.TIME_LIMITED_END.value, uploadParams.TIME_LIMITED_END.value, false)){
+		if(!checkPublishDatetime(uploadParams.TIME_LIMITED_START.value, uploadParams.TIME_LIMITED_END.value, false)){
 			return null;
 		}
 	}
@@ -944,9 +954,9 @@ function _getBasePostData(userId, requestId, editorId) {
 	return postData;
 }
 
-function isTweetNow(postData) {
-	let v = postData.OPTION_TWEET.value;
-	if(postData.OPTION_NOT_TIME_LIMITED.value) v = false;
+function isTweetNow(optionTweet, optionNotTimeLimited) {
+	let v = optionTweet;
+	if(!optionNotTimeLimited) v = false;
 	return v;
 }
 
@@ -975,9 +985,9 @@ function UploadFile(userId, requestId) {
 					multiFileUploader.user_id = userId;
 					multiFileUploader.illust_id = data.content_id;
 					multiFileUploader.open_id = data.open_id;
-					multiFileUploader.recent = postData.OPTION_RECENT.value?0:1;
-					multiFileUploader.tweet = isTweetNow(postData);
-					multiFileUploader.tweet_image = postData.OPTION_TWEET_IMAGE.value?1:0;
+					multiFileUploader.recent = postData.OPTION_RECENT?0:1;
+					multiFileUploader.tweet = isTweetNow(postData.OPTION_TWEET, postData.OPTION_NOT_TIME_LIMITED);
+					multiFileUploader.tweet_image = postData.OPTION_TWEET_IMAGE?1:0;
 					multiFileUploader.uploadStoredFiles();
 				} else {
 					errorMsg();
@@ -1084,7 +1094,7 @@ function UploadPaste(userId) {
 						"data": {
 							"UID": userId,
 							"IID": data.content_id,
-							"REC": postData.OPTION_RECENT.value?0:1,
+							"REC": postData.OPTION_RECENT?0:1,
 							"DATA": strEncodeImg,
 						},
 						"url": "/f/UploadPasteFirstV2F.jsp",
@@ -1111,13 +1121,13 @@ function UploadPaste(userId) {
 					});
 				}
 			});
-			if(isTweetNow(postData)) {
+			if(isTweetNow(postData.OPTION_TWEET, postData.OPTION_NOT_TIME_LIMITED)) {
 				$.ajax({
 					"type": "post",
 					"data": {
-						UID: user_id,
+						UID: userId,
 						IID: data.content_id,
-						IMG: nTweetImage,
+						IMG: postData.OPTION_TWEET_IMAGE,
 					},
 					"url": "/f/UploadFileTweetF.jsp",
 					"dataType": "json",
@@ -1153,13 +1163,13 @@ function UploadText(userId, requestId) {
 			console.log("UploadTextRefTwitterF");
 			if(data && data.content_id) {
 				if(data.content_id>0) {
-					if(isTweetNow(postData)) {
+					if(isTweetNow(postData.OPTION_TWEET, postData.OPTION_NOT_TIME_LIMITED)) {
 						$.ajax({
 							"type": "post",
 							"data": {
-								UID: user_id,
+								UID: userId,
 								IID: data.content_id,
-								IMG: nTweetImage,
+								IMG: postData.OPTION_TWEET_IMAGE ? 1 : 0,
 							},
 							"url": "/f/UploadFileTweetF.jsp",
 							"dataType": "json",
@@ -1334,9 +1344,11 @@ function setUploadParams(params) {
 			selectRadioButton(key, val.value);
 		}
 	}
+	updateOptionPublish();
 	updateOptionPublishNsfw();
 	updateOptionShowLimit();
 	updateOptionPassword();
+	updateOptionTweet();
 }
 
 function initUploadParams() {

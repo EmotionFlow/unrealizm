@@ -113,6 +113,12 @@ public final class UploadTextC extends UpC {
 			statement.setInt(idx++, CContent.getTweetWhenPublishedId(upParam.isTweet, upParam.isTweetWithImage, upParam.isTwitterCardThumbnail));
 
 			statement.setBoolean(idx++, upParam.isTimeLimited);
+			statement.setString(idx++, upParam.title);
+			statement.setString(idx++, textBody);
+			statement.setString(idx++, NovelUtil.genarateHtml(upParam.title, textBody, ""));
+			statement.setString(idx++, NovelUtil.genarateHtmlShort(upParam.title, textBody, ""));
+			statement.setInt(idx++, upParam.novelDirection);
+
 			if (upParam.isTimeLimited) {
 				if (upParam.publishStart != null) {
 					statement.setTimestamp(idx++, upParam.publishStart);
@@ -121,12 +127,6 @@ public final class UploadTextC extends UpC {
 					statement.setTimestamp(idx++, upParam.publishEnd);
 				}
 			}
-
-			statement.setString(idx++, upParam.title);
-			statement.setString(idx++, textBody);
-			statement.setString(idx++, NovelUtil.genarateHtml(upParam.title, textBody, ""));
-			statement.setString(idx++, NovelUtil.genarateHtmlShort(upParam.title, textBody, ""));
-			statement.setInt(idx++, upParam.novelDirection);
 
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {

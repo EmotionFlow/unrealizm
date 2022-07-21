@@ -150,34 +150,30 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			});
 			<%}%>
 
-			<%
-			Log.d("pid: " + content.m_nPublishId);
-			%>
-
-			let uploadParams = UPLOAD_PARAMS_DEFAULT;
-			uploadParams.OPTION_PUBLISH.value = <%=content.nowAvailable()%>;
-			uploadParams.OPTION_NOT_TIME_LIMITED.value = <%=!content.m_bLimitedTimePublish%>;
-			uploadParams.TIME_LIMITED_START.value = "<%=Util.toYMDHMString(content.m_timeUploadDate)%>";
-			uploadParams.TIME_LIMITED_END.value = "<%=Util.toYMDHMString(content.m_timeEndDate)%>";
-			uploadParams.OPTION_NOT_PUBLISH_NSFW.value = <%=content.m_nSafeFilter==Common.SAFE_FILTER_ALL%>;
-			uploadParams.NSFW_VAL.value = "<%=content.m_nSafeFilter%>";
-			uploadParams.OPTION_NO_CONDITIONAL_SHOW.value = <%=content.m_nPublishId==Common.PUBLISH_ID_ALL%>;
-			uploadParams.SHOW_LIMIT_VAL.value = "<%=content.m_nPublishId%>";
-			uploadParams.OPTION_NO_PASSWORD.value = <%=!content.passwordEnabled%>;
-			uploadParams.PASSWORD_VAL.value = "<%=content.m_strPassword%>";
-			uploadParams.OPTION_SHOW_FIRST.value = <%=content.publishAllNum>0%>;
-			uploadParams.OPTION_TWEET.value = <%=content.isTweetConcurrent()%>;
-			uploadParams.OPTION_TWEET_IMAGE.value = <%=content.isTweetWithThumbnail()%>;
-			uploadParams.OPTION_TWITTER_CARD_THUMBNAIL.value = <%=content.isTwitterCardThumbnail()%>;
-			uploadParams.OPTION_CHEER_NG.value = <%=content.m_bCheerNg%>;
-			uploadParams.OPTION_RECENT.value = <%=!content.m_bNotRecently%>;
+			let contentParams = UPLOAD_PARAMS_DEFAULT;
+			contentParams.OPTION_PUBLISH.value = <%=content.nowAvailable() || content.m_bLimitedTimePublish%>;
+			contentParams.OPTION_NOT_TIME_LIMITED.value = <%=!content.m_bLimitedTimePublish%>;
+			contentParams.TIME_LIMITED_START.value = "<%=Util.toYMDHMString(content.m_timeUploadDate)%>";
+			contentParams.TIME_LIMITED_END.value = "<%=Util.toYMDHMString(content.m_timeEndDate)%>";
+			contentParams.OPTION_NOT_PUBLISH_NSFW.value = <%=content.m_nSafeFilter==Common.SAFE_FILTER_ALL%>;
+			contentParams.NSFW_VAL.value = "<%=content.m_nSafeFilter%>";
+			contentParams.OPTION_NO_CONDITIONAL_SHOW.value = <%=content.m_nPublishId==Common.PUBLISH_ID_ALL%>;
+			contentParams.SHOW_LIMIT_VAL.value = "<%=content.m_nPublishId%>";
+			contentParams.OPTION_NO_PASSWORD.value = <%=!content.passwordEnabled%>;
+			contentParams.PASSWORD_VAL.value = "<%=content.m_strPassword%>";
+			contentParams.OPTION_SHOW_FIRST.value = <%=content.publishAllNum>0%>;
+			contentParams.OPTION_TWEET.value = <%=content.isTweetConcurrent()%>;
+			contentParams.OPTION_TWEET_IMAGE.value = <%=content.isTweetWithThumbnail()%>;
+			contentParams.OPTION_TWITTER_CARD_THUMBNAIL.value = <%=content.isTwitterCardThumbnail()%>;
+			contentParams.OPTION_CHEER_NG.value = <%=content.m_bCheerNg%>;
+			contentParams.OPTION_RECENT.value = <%=!content.m_bNotRecently%>;
 			<%if (nEditorId == Common.EDITOR_TEXT){ %>
-			uploadParams.NOVEL_DIRECTION_VAL.value = "<%=content.novelDirection%>";
+			contentParams.NOVEL_DIRECTION_VAL.value = "<%=content.novelDirection%>";
 			<%}%>
 
 			$(function() {
 				DispDescCharNum();
-				setUploadParams(uploadParams);
+				setUploadParams(contentParams);
 			});
 		</script>
 
@@ -361,19 +357,6 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					<input id="ContentOpenId" value="<%=cResults.m_cContent.m_nOpenId%>" type="hidden"/>
 
 					<%@include file="UpCmdOptions.jsp"%>
-
-					<div id="DeleteTweetSwitch" class="OptionItem"
-						<%if(cResults.m_cContent.m_strTweetId.isEmpty()){%>style="display: none;"<%}%>
-						>
-						<div class="OptionLabel"><%=_TEX.T("UploadFilePc.Option.DeleteTweet")%></div>
-						<div class="onoffswitch OnOff">
-							<input type="checkbox" class="onoffswitch-checkbox" name="OptionDeleteTweet" id="OptionDeleteTweet" value="0" />
-							<label class="onoffswitch-label" for="OptionDeleteTweet">
-								<span class="onoffswitch-inner"></span>
-								<span class="onoffswitch-switch"></span>
-							</label>
-						</div>
-					</div>
 
 					<div class="UoloadCmd">
 						<a id="UoloadCmdBtn"

@@ -1,13 +1,13 @@
 <%@ page import="twitter4j.UserList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="OptionItem" style="font-weight: bold;">
-	<label class="rocker">
+	<label class="rocker" onclick="updateOptionPublish()">
 		<input id="OPTION_PUBLISH" type="checkbox">
 		<span class="switch-left">公開する</span>
 		<span class="switch-right">公開しない</span>
 	</label>
 </div>
-<div class="OptionItem">
+<div class="OptionItem" id="ItemTimeLimited">
 	<label class="rocker" onclick="updateOptionLimitedTimePublish()">
 		<input id="OPTION_NOT_TIME_LIMITED" type="checkbox">
 		<span class="switch-left">常時</span>
@@ -44,7 +44,7 @@
 	<%}%>
 
 </div>
-<div class="OptionItem">
+<div class="OptionItem" style="margin-top: 13px">
 	<label class="rocker" onclick="updateOptionPublishNsfw()">
 		<input id="OPTION_NOT_PUBLISH_NSFW" type="checkbox">
 		<span class="switch-left">配慮・NSFW不要</span>
@@ -187,6 +187,16 @@
 	</label>
 </div>
 
+<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
+<div class="OptionItem Sub" id="OptionItemTweetImage" style="display: none">
+	<label class="rocker sub">
+		<input id="OPTION_TWEET_IMAGE" type="checkbox">
+		<span class="switch-left">画像もツイート</span>
+		<span class="switch-right">しない</span>
+	</label>
+</div>
+<%}%>
+
 <%if(!isCreateContent){%>
 <div class="OptionItem">
 	<label class="rocker">
@@ -198,14 +208,6 @@
 <%}%>
 
 <%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
-<div class="OptionItem Sub" id="OptionItemTweetImage" style="display: none">
-	<label class="rocker sub">
-		<input id="OPTION_TWEET_IMAGE" type="checkbox">
-		<span class="switch-left">画像もツイート</span>
-		<span class="switch-right">しない</span>
-	</label>
-</div>
-
 <div class="OptionItem">
 	<label class="rocker" onclick="updateOptionPassword()">
 		<input id="OPTION_TWITTER_CARD_THUMBNAIL" type="checkbox">
