@@ -64,7 +64,7 @@ public final class UpdateTextC extends UpC {
 			int nOpenId = GetOpenId(
 				nOpenIdPresent,
 				upParam.publishId,
-				upParam.isNotRecently,
+				!upParam.isShowRecently,
 				upParam.isTimeLimited,
 				bLimitedTimePublishPresent,
 				upParam.publishStart,
@@ -145,7 +145,7 @@ public final class UpdateTextC extends UpC {
 
 				statement.setBoolean(idx++, upParam.isCheerNg);
 				statement.setInt(idx++, CContent.getTweetWhenPublishedId(upParam.isTweet, upParam.isTweetWithImage, upParam.isTwitterCardThumbnail));
-				statement.setBoolean(idx++, !upParam.isNotRecently);
+				statement.setBoolean(idx++, upParam.isShowRecently);
 
 				statement.setBoolean(idx++, upParam.isTimeLimited);
 				if (upParam.isTimeLimited) {

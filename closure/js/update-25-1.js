@@ -174,32 +174,27 @@ function Tweet(nUserId, nContentId, nTweetImage, nDeleteTweet) {
 	});
 }
 
-//画像ファイルの更新アップロード
-function UpdateFile(userId, contentId) {
-	if(!multiFileUploader) return;
-	if($(uploadListId).children('li').length<=0) return;
-
-	const editorId = 0;
-
+function _getUpdatePostData(userId, contentId, editorId) {
 	let postData = _getBasePostData(userId, null, editorId);
-	if (!postData) return;
+	if (!postData) return null;
 
 	postData["DELTW"] = ($('#OptionDeleteTweet').prop('checked'))?1:0;
 	postData["IID"] = contentId;
 
-	let strPublishStartPresent = "";
-	let strPublishEndPresent = "";
-	if (!postData.OPTION_NOT_TIME_LIMITED) {
+	return postData;
+}
+
+function _preCheckForUpdate(postData) {
+	let nTweetNow = postData.OPTION_TWEET ? 1 : 0;
+	const nOpenId = $('#ContentOpenId').val();
+	if (!postData.OPTION_NOT_TIME_LIMITED){
+		let strPublishStartPresent = "";
+		let strPublishEndPresent = "";
 		strPublishStartPresent = $('#EditTimeLimitedStartPresent').val();
 		strPublishEndPresent = $('#EditTimeLimitedEndPresent').val();
 		if(!checkPublishDatetime(postData.TIME_LIMITED_START, postData.TIME_LIMITED_END, true, strPublishStartPresent, strPublishEndPresent)){
-			return;
+			return null;
 		}
-	}
-
-	const nOpenId = $('#ContentOpenId').val();
-	let nTweetNow = postData.OPTION_TWEET ? 1 : 0;
-	if (!postData.OPTION_NOT_TIME_LIMITED){
 		if(nOpenId !== 2 && (strPublishStartPresent==null||strPublishEndPresent==null)){
 			nTweetNow = 0;
 		} else if(postData.OPTION_TWEET && nOpenId !== 2 && comparePublishDate(strPublishStartPresent,postData.TIME_LIMITED_START) && comparePublishDate(strPublishEndPresent, postData.TIME_LIMITED_END)){
@@ -208,6 +203,19 @@ function UpdateFile(userId, contentId) {
 			nTweetNow = 0;
 		}
 	}
+	return nTweetNow;
+}
+
+//画像ファイルの更新アップロード
+function UpdateFile(userId, contentId) {
+	if(!multiFileUploader) return;
+	if($(uploadListId).children('li').length<=0) return;
+
+	const editorId = 0;
+	let postData = _getUpdatePostData(userId, contentId, editorId);
+
+	let nTweetNow = _preCheckForUpdate(postData);
+	if (nTweetNow == null) return;
 
 	setLastCategorySetting(postData.CAT);
 	startMsg();
@@ -249,14 +257,12 @@ function UpdateFile(userId, contentId) {
 
 //画像ペーストエリアの初期化
 function initUpdatePaste(user_id, content_id) {
-	updateTweetButton();
-
-	var cCategory = getLastCategorySetting();
-	$('#EditCategory option').each(function(){
-		if($(this).val()==cCategory) {
-			$('#EditCategory').val(cCategory);
-		}
-	});
+	// var cCategory = getLastCategorySetting();
+	// $('#EditCategory option').each(function(){
+	// 	if($(this).val()==cCategory) {
+	// 		$('#EditCategory').val(cCategory);
+	// 	}
+	// });
 
 	g_strPasteMsg = $('#TimeLineAddImage').html();
 	$('#TimeLineAddImage').pastableContenteditable();
@@ -308,7 +314,7 @@ function UpdatePasteAppendFAjax(img_element, user_id, content_id){
 			"IID":content_id,
 			"DATA":strEncodeImg,
 		},
-		"url": "/f/UpdatePasteAppendF.jsp",
+		"url": "/f/UpdatePasteAppendV2F.jsp",
 		"dataType": "json",
 		"async": false,
 	});
@@ -318,17 +324,17 @@ function UpdateFileRefTwitterFAjax(data){
 	return $.ajax({
 		"type": "post",
 		"data": data,
-		"url": "/f/UpdateFileRefTwitterF.jsp",
+		"url": "/f/UpdateFileRefTwitterV2F.jsp",
 		"dataType": "json",
 	});
 }
 
 
-function UploadTextRefTwitterFAjax(data){
+function UpdateTextRefTwitterFAjax(data){
 	return $.ajax({
 		"type": "post",
 		"data": data,
-		"url": "/f/UpdateTextRefTwitterF.jsp",
+		"url": "/f/UpdateTextRefTwitterV2F.jsp",
 		"dataType": "json",
 	});
 }
@@ -348,126 +354,36 @@ function UploadFileTweetFAjax(user_id, content_id, nTweetImage, nDeleteTweet){
 }
 
 //ペースト画像の更新
-function createUpdatePaste(){
-	var bEntered = false;
-	return function UpdatePaste(user_id, content_id) {
-		if(bEntered) return;
-		bEntered = true;
+function createUpdatePasteFunction(){
+	var nowProcessing = false;
+	return function UpdatePaste(userId, contentId) {
+		if(nowProcessing) return;
+		nowProcessing = true;
 
 		// check image
-		var nImageNum = 0;
+		let nImageNum = 0;
 		$('.imgView').each(function(){
-			var strSrc = $.trim($(this).attr('src'));
+			const strSrc = $.trim($(this).attr('src'));
 			if(strSrc.length>0) nImageNum++;
 		});
 		if(nImageNum<=0){
-			bEntered = false;
-			return;
-		}
-		let genre = $('#TagInputItemData').val();
-		const nCategory = parseInt($('#EditCategory').val(), 10);
-		const strDescription = $.trim($("#EditDescription").val());
-		let strTagList = $.trim($("#EditTagList").val());
-		strTagList = strTagList.substr(0 , 100);
-		const nOpenId = $('#ContentOpenId').val();
-		const nPublishId = parseInt($('#EditPublish').val(), 10);
-		const strPassword = $('#EditPassword').val();
-		const nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
-		const nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-		let nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-		const nTweetImage = ($('#OptionImage').prop('checked'))?1:0;
-		const nDeleteTweet = ($('#OptionDeleteTweet').prop('checked'))?1:0;
-		let nTwListId = null;
-		const nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
-		let strPublishStart = null;
-		let strPublishEnd = null;
-		if(nPublishId === 10){
-			if($("#TwitterListNotFound").is(':visible')){
-				bEntered = false;
-				twitterListNotFoundMsg();
-				return;
-			}
-			nTwListId = $('#EditTwitterList').val();
-		}
-		if(nLimitedTime === 1){
-			strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
-			strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
-			strPublishStartPresent = $('#EditTimeLimitedStartPresent').val();
-			strPublishEndPresent = $('#EditTimeLimitedEndPresent').val();
-			if(!checkPublishDatetime(strPublishStart, strPublishEnd, true, strPublishStartPresent, strPublishEndPresent)){
-				bEntered = false;
-				return;
-			}
-		}
-		const nPublishAllNum = $('#OptionShowAllFirst').prop('checked') ? 1 : 0;
-		if (nPublishAllNum > 0 && getPasteAreaImageNum() < 2) {
-			showAllFirstErrMsg();
+			nowProcessing = false;
 			return;
 		}
 
-		if(!($('#TagInputItemData').length)) genre=1;
+		const editorId = 1;
+		let postData = _getUpdatePostData(userId, contentId, editorId);
 
-		setTweetSetting($('#OptionTweet').prop('checked'));
-		setTweetImageSetting($('#OptionImage').prop('checked'));
-		setTwitterCardThumbnailSetting($('#OptionTwitterCardThumbnail').prop('checked'));
-		setLastCategorySetting(nCategory);
-		if(nPublishId === 99) {
-			nTweet = 0;
+		let nTweetNow = _preCheckForUpdate(postData);
+		if (nTweetNow == null) {
+			nowProcessing = false;
+			return;
 		}
 
-		let nTweetNow = nTweet;
-		if(nLimitedTime === 1){
-			if(nOpenId !== 2 && (strPublishStartPresent==null||strPublishEndPresent==null)){
-				nTweetNow = 0;
-			} else if(nTweet === 1 && nOpenId !== 2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
-				nTweetNow = 1;
-			} else {
-				nTweetNow = 0;
-			}
-		}
-
+		setLastCategorySetting(postData.CAT);
 		startMsg();
 
-		const postData = {
-			"UID":user_id,
-			"IID":content_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"REC":nRecent,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":getTweetSetting(),
-			"TWI":getTweetImageSetting(),
-			"TWCT":getTwitterCardThumbnailSetting(),
-			"DELTW":nDeleteTweet,
-			"ED":1,
-			"CNG":nCheerNg,
-			"PUBALL":nPublishAllNum,
-			"NOTE":privateNote.getText(),
-		};
-
-		if (!transList) {
-			// 下位互換
-			postData["DES"] = $.trim($("#EditDescription").val());
-		} else {
-			const descList = transList.Description;
-			descList[selected['Description']] = $("#EditDescription").val();
-			for (let key in descList) {
-				if (key === 'default') {
-					postData["DES"] = descList[key];
-				} else {
-					postData["DES" + key] = descList[key];
-				}
-			}
-		}
-
 		let fUpdateFile = UpdateFileRefTwitterFAjax(postData);
-
 		let aryFunc = [];
 		let fTweet = null;
 
@@ -475,14 +391,14 @@ function createUpdatePaste(){
 			function(data){
 				let f = null;
 				$('.imgView').each(function(){
-					f = UpdatePasteAppendFAjax($(this),user_id,data.content_id);
+					f = UpdatePasteAppendFAjax($(this),userId,data.content_id);
 					if (f != null){
 						aryFunc.push(f);
 					}
 				});
 
 				if(nTweetNow === 1) {
-					fTweet = UploadFileTweetFAjax(user_id, data.content_id, nTweetImage, nDeleteTweet);
+					fTweet = UploadFileTweetFAjax(userId, data.content_id, postData.OPTION_TWEET_IMAGE, postData.DELTW);
 				} else {
 					fTweet = function() {
 						let dfd = $.Deferred();
@@ -513,7 +429,7 @@ function createUpdatePaste(){
 							break;
 						}
 					}
-					return UpdatePasteOrderAjax(user_id, data.content_id, json_array, firstNewID);
+					return UpdatePasteOrderAjax(userId, data.content_id, json_array, firstNewID);
 				},function(err){errorMsg(-10);})
 				.then(fTweet, function(err){errorMsg(-11)})
 				.then(
@@ -527,108 +443,40 @@ function createUpdatePaste(){
 		return false;
 	}
 }
-var UpdatePaste = createUpdatePaste();
+var UpdatePaste = createUpdatePasteFunction();
 
 
 // テキストの更新
-function createUpdateText(){
-	let bEntered = false;
-	return function UpdateText(user_id, content_id) {
-		if(bEntered) return;
-		bEntered = true;
+function createUpdateTextFunction(){
+	let nowProcessing = false;
+	return function UpdateText(userId, contentId) {
+		if(nowProcessing) return;
+		nowProcessing = true;
 
-		let genre = $('#TagInputItemData').val();
-		const nCategory = parseInt($('#EditCategory').val(), 10);
-		const strDescription = $.trim($("#EditDescription").val());
-		const strTextBody = $("#EditTextBody").val();
-		let strTagList = $.trim($("#EditTagList").val());
-		strTagList = strTagList.substr(0 , 100);
-		const nOpenId = $('#ContentOpenId').val();
-		const nPublishId = parseInt($('#EditPublish').val(), 10);
-		const strPassword = $('#EditPassword').val();
-		const nCheerNg = ($('#OptionCheerNg').prop('checked'))?0:1;
-		const nRecent = ($('#OptionRecent').prop('checked'))?1:0;
-		let nTweet = ($('#OptionTweet').prop('checked'))?1:0;
-		const title = $("#EditTextTitle").val();
-		const direction = $('input:radio[name="EditTextDirection"]:checked').val();
+		const editorId = 3;
 
-		const nTweetImage = 0;
-		const nDeleteTweet = ($('#OptionDeleteTweet').prop('checked'))?1:0;
-		let nTwListId = null;
-		const nLimitedTime = getLimitedTimeFlg('EditPublish', 'OptionLimitedTimePublish');
-		let strPublishStart = null;
-		let strPublishEnd = null;
-		if(nPublishId === 10){
-			if($("#TwitterListNotFound").is(':visible')){
-				twitterListNotFoundMsg();
-				return;
-			}
-			nTwListId = $('#EditTwitterList').val();
-		}
-		if(nLimitedTime === 1){
-			strPublishStart = getPublishDateTime($('#EditTimeLimitedStart').val());
-			strPublishEnd = getPublishDateTime($('#EditTimeLimitedEnd').val());
-			strPublishStartPresent = $('#EditTimeLimitedStartPresent').val();
-			strPublishEndPresent = $('#EditTimeLimitedEndPresent').val();
-			if(!checkPublishDatetime(strPublishStart, strPublishEnd, true, strPublishStartPresent, strPublishEndPresent)){
-				bEntered = false;
-				return;
-			}
-		}
-		if(!($('#TagInputItemData').length)) genre=1;
-
-		setTweetSetting($('#OptionTweet').prop('checked'));
-		setTweetImageSetting($('#OptionImage').prop('checked'));
-		setLastCategorySetting(nCategory);
-		if(nPublishId === 99) {
-			nTweet = 0;
+		let postData = _getUpdatePostData(userId, contentId, editorId);
+		if (postData == null) {
+			nowProcessing = false;
+			return;
 		}
 
-		let nTweetNow = nTweet;
-		if(nLimitedTime === 1){
-			if(nOpenId !== 2 && (strPublishStartPresent==null||strPublishEndPresent==null)){
-				nTweetNow = 0;
-			} else if(nTweet === 1 && nOpenId !== 2 && comparePublishDate(strPublishStartPresent,strPublishStart) && comparePublishDate(strPublishEndPresent, strPublishEnd)){
-				nTweetNow = 1;
-			} else {
-				nTweetNow = 0;
-			}
+		let nTweetNow = _preCheckForUpdate(postData);
+		if (nTweetNow == null) {
+			nowProcessing = false;
+			return;
 		}
 
 		startMsg();
 
-		const data = {
-			"UID":user_id,
-			"IID":content_id,
-			"GD" :genre,
-			"CAT":nCategory,
-			"DES":strDescription,
-			"BDY":strTextBody,
-			"TAG":strTagList,
-			"PID":nPublishId,
-			"PPW":strPassword,
-			"PLD":nTwListId,
-			"LTP":nLimitedTime,
-			"REC":nRecent,
-			"PST":strPublishStart,
-			"PED":strPublishEnd,
-			"TWT":getTweetSetting(),
-			"TWI":getTweetImageSetting(),
-			"DELTW":nDeleteTweet,
-			"ED":3,
-			"CNG":nCheerNg,
-			"TIT":title,
-			"DIR":direction,
-			"NOTE":privateNote.getText(),
-		};
-		let fUpdateFile = UploadTextRefTwitterFAjax(data);
+		let fUpdateFile = UpdateTextRefTwitterFAjax(postData);
 		let aryFunc = [];
 		let fTweet = null;
 
 		fUpdateFile.done(
 			function(data){
 				if(nTweetNow === 1) {
-					fTweet = UploadFileTweetFAjax(user_id, data.content_id, nTweetImage, nDeleteTweet);
+					fTweet = UploadFileTweetFAjax(userId, data.content_id, postData.OPTION_TWEET_IMAGE, postData.DELTW);
 				} else {
 					fTweet = function() {
 						let dfd = $.Deferred();
@@ -650,4 +498,4 @@ function createUpdateText(){
 		return false;
 	}
 }
-var UpdateText = createUpdateText();
+var UpdateText = createUpdateTextFunction();

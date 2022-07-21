@@ -935,6 +935,12 @@ function _getBasePostData(userId, requestId, editorId) {
 		}
 	}
 
+	// for novel
+	if (editorId === 3) {
+		postData["TIT"] = $("#EditTextTitle").val();
+		postData["BDY"] = $("#EditTextBody").val();
+	}
+
 	return postData;
 }
 
@@ -1134,9 +1140,6 @@ function UploadText(userId, requestId) {
 
 	let postData = _getBasePostData(userId, requestId, editorId);
 	if (!postData) return;
-
-	postData["TIT"] = $("#EditTextTitle").val();
-	postData["BDY"] = $("#EditTextBody").val();
 
 	setLastCategorySetting(postData.CAT);
 	startMsg();
