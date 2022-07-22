@@ -13,19 +13,15 @@ public class GetSearchLogC {
 
 	public int getResults(CheckLogin checkLogin) {
 		int  nResult = -1;
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		String sql = "";
 		keywords = new ArrayList<>();
 		if(!checkLogin.m_bLogin){return nResult;}
 
-		try {
-			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "SELECT keywords FROM (SELECT DISTINCT ON (keywords) * FROM keyword_search_logs WHERE user_id=?) kw ORDER BY created_at DESC";
-			statement = connection.prepareStatement(sql);
+		String sql = "SELECT keywords FROM (SELECT DISTINCT ON (keywords) * FROM keyword_search_logs WHERE user_id=?) kw ORDER BY created_at DESC";
+		try (Connection connection = DatabaseUtil.dataSource.getConnection();
+		     PreparedStatement statement = connection.prepareStatement(sql);
+		) {
 			statement.setInt(1, checkLogin.m_nUserId);
-			resultSet = statement.executeQuery();
+			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				keywords.add(resultSet.getString("keywords"));
 			}
@@ -34,10 +30,6 @@ public class GetSearchLogC {
 
 		} catch(Exception e) {
 			e.printStackTrace();
-		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 		return nResult;
 	}
