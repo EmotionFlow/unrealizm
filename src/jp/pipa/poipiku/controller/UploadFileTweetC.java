@@ -78,7 +78,6 @@ public class UploadFileTweetC {
 			// 前のツイート削除
 			Integer nResultDeleteTweet=null;
 			if(cParam.m_nOptDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
-				Log.d("delete previous tweet");
 				nResultDeleteTweet = cTweet.Delete(cContent.m_strTweetId);
 				if(nResultDeleteTweet!=CTweet.OK){
 					if (nResultDeleteTweet == CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){
@@ -94,7 +93,6 @@ public class UploadFileTweetC {
 			// ツイート
 			Integer nResultTweet=null;
 			if(nResultDeleteTweet==null || (nResultDeleteTweet!=null && nResultDeleteTweet!=CTweet.ERR_INVALID_OR_EXPIRED_TOKEN)){
-				Log.d("tweeeeet");
 				if(cParam.m_nOptImage==0 || vFileList.size()<=0) {	// text only
 					nResultTweet = cTweet.Tweet(strTwitterMsg);
 				} else { // with image

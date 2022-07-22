@@ -716,33 +716,33 @@ function updateMyTwitterList() {
 
 var updateMyTwitterListF = updateMyTwitterList();
 
-function tweetSucceeded(errCode){
+function tweetSucceeded(resultCode){
 	const toContext = "/MyIllustListPcV.jsp";
 	const nTimeOut = 5000;
-	if (errCode != null) {
-		if (errCode >= 0) { // 異常無し
+	if (resultCode != null) {
+		if (resultCode >= 0) { // 異常無し
 			completeMsg();
 			setTimeout(function () {
 				location.href = toContext;
 			}, 1000);
 		} else {
-			if (errCode === -103 || errCode === -203) {
+			if (resultCode === -103 || resultCode === -203) {
 				twtterTweetInvalidTokenMsg();
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
-			} else if (errCode === -102) {
+			} else if (resultCode === -102) {
 				twtterTweetRateLimitMsg();
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
-			} else if (errCode === -104) {
+			} else if (resultCode === -104) {
 				twtterTweetTooMuchMsg();
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
 			} else {
-				twtterTweetOtherErrMsg(data);
+				twtterTweetOtherErrMsg(resultCode);
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
@@ -1127,7 +1127,7 @@ function UploadPaste(userId) {
 					"data": {
 						UID: userId,
 						IID: data.content_id,
-						IMG: postData.OPTION_TWEET_IMAGE,
+						IMG: postData.OPTION_TWEET_IMAGE ? 1 : 0,
 					},
 					"url": "/f/UploadFileTweetF.jsp",
 					"dataType": "json",

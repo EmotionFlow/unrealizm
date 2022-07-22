@@ -434,7 +434,7 @@ function createUpdatePasteFunction(){
 				.then(fTweet, function(err){errorMsg(-11)})
 				.then(
 					function(data){
-						tweetSucceeded(data);
+						tweetSucceeded(data.result);
 					},
 					function(err){errorMsg(-12)}
 				);
@@ -489,7 +489,7 @@ function createUpdateTextFunction(){
 				.then(fTweet, function(err){errorMsg(-11)})
 				.then(
 					function(data){
-						tweetSucceeded(data);
+						tweetSucceeded(data.result);
 					},
 					function(err){errorMsg(-12)}
 				);
