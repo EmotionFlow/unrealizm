@@ -3,15 +3,15 @@
 <div class="OptionItem" style="font-weight: bold;">
 	<label class="rocker" onclick="updateOptionPublish()">
 		<input id="OPTION_PUBLISH" type="checkbox">
-		<span class="switch-left">公開する</span>
-		<span class="switch-right">公開しない</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.Publish.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.Publish.UnChecked")%></span>
 	</label>
 </div>
 <div class="OptionItem" id="ItemTimeLimited">
 	<label class="rocker" onclick="updateOptionLimitedTimePublish()">
 		<input id="OPTION_NOT_TIME_LIMITED" type="checkbox">
-		<span class="switch-left">常時</span>
-		<span class="switch-right">期間指定</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.NotTimeLimited.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.NotTimeLimited.UnChecked")%></span>
 	</label>
 </div>
 <div class="OptionItem" id="ItemTimeLimitedVal" style="padding-top: 0; display: none;">
@@ -47,8 +47,8 @@
 <div class="OptionItem" style="margin-top: 13px">
 	<label class="rocker" onclick="updateOptionPublishNsfw()">
 		<input id="OPTION_NOT_PUBLISH_NSFW" type="checkbox">
-		<span class="switch-left">配慮・NSFW不要</span>
-		<span class="switch-right">指定する</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.NoNsfw.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.NoNsfw.UnChecked")%></span>
 	</label>
 </div>
 <div class="OptionItem" id="ItemNsfwVal" style="display: none;">
@@ -56,12 +56,12 @@
 		<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R15%>" id="RadioOneCushion">
 		<label for="RadioOneCushion" class="OptionPublishNsfw">
 			<span class="OneCushionImage OneCushion"></span>
-			<span class="OneCushionName">ワンクッション</span>
+			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.OneCushion")%></span>
 		</label>
 		<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R18%>" id="RadioR18">
 		<label for="RadioR18" class="OptionPublishNsfw">
 			<span class="OneCushionImage R18"></span>
-			<span class="OneCushionName">R18</span>
+			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.R18")%></span>
 		</label>
 	</div>
 </div>
@@ -69,8 +69,8 @@
 <div class="OptionItem">
 	<label class="rocker" onclick="updateOptionShowLimit()">
 		<input id="OPTION_NO_CONDITIONAL_SHOW" type="checkbox">
-		<span class="switch-left">誰でも閲覧OK</span>
-		<span class="switch-right">限定する</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.NoConditionalShow.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.NoConditionalShow.UnChecked")%></span>
 	</label>
 </div>
 <div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
@@ -78,22 +78,22 @@
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_LOGIN%>" id="RadioPoipikuLogin">
 		<label for="RadioPoipikuLogin" class="OptionShowLimit">
 			<span class="ShowLimitImage PoipikuLogin"></span>
-			<span class="ShowLimitName">ログイン限定</span>
+			<span class="ShowLimitName"><%=_TEX.T("UpCmdOptions.Condition.PoipikuLogin")%></span>
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_FOLLOWER%>" id="RadioPoipikuFollower">
 		<label for="RadioPoipikuFollower" class="OptionShowLimit">
 			<span class="ShowLimitImage PoipikuFollower"></span>
-			<span class="ShowLimitName">こそフォロ限定</span>
+			<span class="ShowLimitName"><%=_TEX.T("UpCmdOptions.Condition.PoipikuFollower")%></span>
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_FOLLOWER%>" id="RadioTwitterFollower">
 		<label for="RadioTwitterFollower" class="OptionShowLimit">
 			<span class="ShowLimitImage TwitterFollower"></span>
-			<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</span>
+			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterFollower")%></span>
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_LIST%>" id="RadioTwitterList">
 		<label for="RadioTwitterList" class="OptionShowLimit" onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)">
 			<span class="ShowLimitImage TwitterList"></span>
-			<span class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</span>
+			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterList")%></span>
 			<span class="ShowLimitName" id="TwitterList">
 				<span id="TwitterListLoading" style="display: none"></span>
 				<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
@@ -147,12 +147,12 @@
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_EACH%>" id="RadioTwitterEach">
 		<label for="RadioTwitterEach" class="OptionShowLimit">
 			<span class="ShowLimitImage TwitterEach"></span>
-			<span class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</span>
+			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterEach")%></span>
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_RT%>" id="RadioTwitterRetweet">
 		<label for="RadioTwitterRetweet" class="OptionShowLimit">
 			<span class="ShowLimitImage TwitterRetweet"></span>
-			<span class="ShowLimitName"><i class="fab fa-twitter"></i>リツイート限定</span>
+			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterRetweet")%></span>
 		</label>
 	</div>
 </div>
@@ -160,8 +160,8 @@
 <div class="OptionItem">
 	<label class="rocker" onclick="updateOptionPassword()">
 		<input id="OPTION_NO_PASSWORD" type="checkbox">
-		<span class="switch-left">パスワードなし</span>
-		<span class="switch-right">あり</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.NoPassword.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.NoPassword.UnChecked")%></span>
 	</label>
 </div>
 <div id="ItemPassword" class="OptionItem" style="padding-top: 0; display: none;">
@@ -173,8 +173,8 @@
 <div class="OptionItem" id="OptionItemShowAllFirst" style="display: none">
 	<label class="rocker">
 		<input id="OPTION_SHOW_FIRST" type="checkbox" checked="checked">
-		<span class="switch-left">最初の１枚見せる</span>
-		<span class="switch-right">見せない</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.ShowFirst.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.ShowFirst.UnChecked")%></span>
 	</label>
 </div>
 <%}%>
@@ -182,8 +182,8 @@
 <div class="OptionItem" style="margin-top: 13px">
 	<label class="rocker" onclick="updateOptionTweet()">
 		<input id="OPTION_TWEET" type="checkbox">
-		<span class="switch-left">同時にツイート</span>
-		<span class="switch-right">しない</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.Tweet.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.Tweet.UnChecked")%></span>
 	</label>
 </div>
 
@@ -191,8 +191,8 @@
 <div class="OptionItem Sub" id="OptionItemTweetImage" style="display: none">
 	<label class="rocker sub">
 		<input id="OPTION_TWEET_IMAGE" type="checkbox">
-		<span class="switch-left">画像もツイート</span>
-		<span class="switch-right">しない</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.TweetImage.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.TweetImage.UnChecked")%></span>
 	</label>
 </div>
 <%}%>
@@ -201,8 +201,8 @@
 <div class="OptionItem">
 	<label class="rocker">
 		<input id="OPTION_DELETE_TWEET" type="checkbox">
-		<span class="switch-left">前のツイート削除</span>
-		<span class="switch-right">残す</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.DeleteTweet.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.DeleteTweet.UnChecked")%></span>
 	</label>
 </div>
 <%}%>
@@ -211,8 +211,8 @@
 <div class="OptionItem">
 	<label class="rocker" onclick="updateOptionPassword()">
 		<input id="OPTION_TWITTER_CARD_THUMBNAIL" type="checkbox">
-		<span class="switch-left" style="font-size:0.8em">Twitterカードにサムネ表示</span>
-		<span class="switch-right">表示しない</span>
+		<span class="switch-left" style="font-size:0.8em"><%=_TEX.T("UpCmdOptions.TwitterCardThumbnail.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.TwitterCardThumbnail.UnChecked")%></span>
 	</label>
 </div>
 <%}%>
@@ -220,15 +220,15 @@
 <div class="OptionItem" style="margin-top: 13px">
 	<label class="rocker" onclick="updateOptionPassword()">
 		<input id="OPTION_CHEER_NG" type="checkbox">
-		<span class="switch-left">ポチ袋OFF</span>
-		<span class="switch-right">ON</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.CheerNg.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.CheerNg.UnChecked")%></span>
 	</label>
 </div>
 
 <div class="OptionItem" style="margin-top: 13px">
 	<label class="rocker">
 		<input id="OPTION_RECENT" type="checkbox">
-		<span class="switch-left">新着に載せる</span>
-		<span class="switch-right">避ける</span>
+		<span class="switch-left"><%=_TEX.T("UpCmdOptions.Recent.Checked")%></span>
+		<span class="switch-right"><%=_TEX.T("UpCmdOptions.Recent.UnChecked")%></span>
 	</label>
 </div>
