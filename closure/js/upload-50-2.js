@@ -970,6 +970,7 @@ function UploadFile(userId, requestId) {
 	if (!postData) return;
 
 	setLastCategorySetting(postData.CAT);
+	saveUploadParamsToLocalStorage();
 	startMsg();
 
 	$.ajaxSingle({
@@ -1072,6 +1073,7 @@ function UploadPaste(userId) {
 	if (!postData) return;
 
 	setLastCategorySetting(postData.CAT);
+	saveUploadParamsToLocalStorage();
 	startMsg();
 
 	$.ajaxSingle({
@@ -1152,6 +1154,7 @@ function UploadText(userId, requestId) {
 	if (!postData) return;
 
 	setLastCategorySetting(postData.CAT);
+	saveUploadParamsToLocalStorage();
 	startMsg();
 
 	$.ajaxSingle({
@@ -1353,11 +1356,11 @@ function setUploadParams(params) {
 
 function initUploadParams() {
 	let uploadParams = UPLOAD_PARAMS_DEFAULT;
-	const loadParams = loadUploadParamsFromLocalStorage();
+	const storageParams = loadUploadParamsFromLocalStorage();
 	try {
-		if (loadParams && loadParams !== 'undefined' && loadParams !== 'null') {
-			for (let [key, _] of Object.entries(loadParams)) {
-				uploadParams[key].value = loadParams[key].value;
+		if (storageParams && storageParams !== 'undefined' && storageParams !== 'null') {
+			for (let [key, _] of Object.entries(storageParams)) {
+				uploadParams[key].value = storageParams[key].value;
 			}
 		}
 	} catch (e) {
