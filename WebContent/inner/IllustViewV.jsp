@@ -216,6 +216,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<div id="IllustViewGoLatestBtn" style="display: none;">

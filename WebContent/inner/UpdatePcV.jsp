@@ -209,6 +209,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<nav class="TabMenuWrapper">

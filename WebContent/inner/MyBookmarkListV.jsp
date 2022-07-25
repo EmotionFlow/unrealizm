@@ -144,6 +144,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 	<body>
 		<%if(!isApp){%>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">

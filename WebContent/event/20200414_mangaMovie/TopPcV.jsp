@@ -53,6 +53,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	</head>
 	<body>
 		<div id="DispMsg"></div>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 <!-- #私の漫画を動画にしたい -->

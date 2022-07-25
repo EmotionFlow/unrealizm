@@ -28,6 +28,7 @@
 </head>
 
 <body>
+<%String searchType = "Contents";%>
 <%@ include file="/inner/TMenuPc.jsp"%>
 <article class="Wrapper" style="min-height: 400px; text-align: center;">
     <%if(checkLogin.m_bLogin){%>

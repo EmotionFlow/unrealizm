@@ -36,7 +36,8 @@
 </head>
 
 <body>
-<%@ include file="/inner/TMenuPc.jsp" %>
+<%String searchType = "Contents";%>
+<%@ include file="/inner/TMenuPc.jsp"%>
 
 <article class="Wrapper">
 	<%@include file="inner/GuideLineRequestV.jsp"%>

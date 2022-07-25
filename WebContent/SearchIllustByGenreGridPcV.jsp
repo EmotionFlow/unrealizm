@@ -59,6 +59,7 @@ String strFileUrl = results.repFileName;
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>

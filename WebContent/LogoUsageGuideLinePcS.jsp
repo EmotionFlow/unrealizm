@@ -39,7 +39,8 @@
 </head>
 <body>
 <div id="DispMsg"></div>
-<%@ include file="/inner/TMenuPc.jsp" %>
+<%String searchType = "Contents";%>
+<%@ include file="/inner/TMenuPc.jsp"%>
 <article class="Wrapper">
 	<div class="SettingList">
 		<div class="SettingListItem">

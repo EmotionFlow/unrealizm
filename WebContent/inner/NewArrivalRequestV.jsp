@@ -54,6 +54,7 @@ if(cResults.m_nCategoryId >= 0) {
 
 	<body>
 		<%if(!isApp){%>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%}%>
 		<%@ include file="/inner/TTabMenuRequestPotalPc.jsp"%>

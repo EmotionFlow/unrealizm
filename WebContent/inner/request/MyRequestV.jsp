@@ -258,6 +258,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 		<div id="DispMsg"></div>
 
 		<%if(!isApp){%>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%}else{%>
 		<%@ include file="/inner/TMenuApp.jsp" %>

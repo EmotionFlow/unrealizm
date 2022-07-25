@@ -166,6 +166,7 @@ if (requestId > 0) {
 		</style>
 	</head>
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<%if(requestId<0){%>

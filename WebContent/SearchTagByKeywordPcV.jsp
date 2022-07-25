@@ -39,6 +39,7 @@ g_strSearchWord = results.m_strKeyword;
 	</head>
 
 	<body>
+		<%String searchType = "Tags";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<nav class="TabMenuWrapper">

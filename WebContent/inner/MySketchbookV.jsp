@@ -108,6 +108,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 	<body>
 		<%if (!isApp) {%>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%} else {%>
 		<%@ include file="/inner/TMenuApp.jsp"%>

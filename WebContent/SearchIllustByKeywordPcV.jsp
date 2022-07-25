@@ -61,6 +61,7 @@ String strFileUrl = cResults.m_strRepFileName;
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<nav class="TabMenuWrapper">

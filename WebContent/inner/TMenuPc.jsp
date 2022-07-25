@@ -170,6 +170,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			$.ajax({
 				"type": "get",
 				"url": "/f/GetSearchLogF.jsp",
+				"data": { "type": "<%=searchType == null ? "Contents" : searchType%>" },
 				"dataType": "json",
 			}).then(function(history) {
 				const $ul = $('ul#RecentSearchList');
@@ -195,12 +196,17 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$ul.append($li);
 				}
 			});
-		};
+		}
 		$(document).on('click', '.RecentSearchItem', ev => {
 			$('#HeaderTitleWrapper').show();
 			$('#OverlaySearchWrapper').hide();
 			$('ul#RecentSearchList').empty();
-			SearchIllustByKeyword($(ev.currentTarget).find('.RecentSearchKW').text());
+			const searchFunc = {
+				Contents: SearchIllustByKeyword,
+				Tags: SearchTagByKeyword,
+				Users: SearchUserByKeyword,
+			};
+			searchFunc["<%=searchType%>"]($(ev.currentTarget).find('.RecentSearchKW').text());
 		});
 	</script>
 <%}%>

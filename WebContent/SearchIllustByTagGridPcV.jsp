@@ -42,6 +42,7 @@ final String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?GD="+results
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>

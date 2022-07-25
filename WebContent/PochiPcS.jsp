@@ -96,6 +96,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	</head>
 	<body>
 		<div id="DispMsg"></div>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%@ include file="/inner/PochiS.jsp"%>
 		<%@ include file="/inner/TFooterBase.jsp"%>

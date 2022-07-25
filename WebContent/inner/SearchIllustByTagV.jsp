@@ -120,6 +120,7 @@ ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 	<body>
 		<%if (!isApp) {%>
+		<%String searchType = "Tags";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%} else {%>
 		<%@ include file="/inner/TMenuApp.jsp"%>

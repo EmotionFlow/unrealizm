@@ -45,6 +45,7 @@
 
 <body>
 <%if(!isApp){%>
+<%String searchType = "Contents";%>
 <%@ include file="/inner/TMenuPc.jsp"%>
 <%}%>
 <%@ include file="/inner/TTabMenuRequestPotalPc.jsp"%>

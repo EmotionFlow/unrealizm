@@ -41,6 +41,7 @@ if(!authUrl.isEmpty()) {
 		<title><%=_TEX.T("THeader.Title")%> - Twitter Link</title>
 	</head>
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper" style="text-align: center;">

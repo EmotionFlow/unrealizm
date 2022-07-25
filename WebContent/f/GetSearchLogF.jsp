@@ -4,6 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 GetSearchLogC cResults = new GetSearchLogC();
+cResults.getParam(request);
 int nResult = cResults.getResults(checkLogin);
 %>
 {

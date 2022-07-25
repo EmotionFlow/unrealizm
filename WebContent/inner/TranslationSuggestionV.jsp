@@ -90,7 +90,8 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 	<body>
 		<div id="DispMsg"></div>
 		<%if(!isApp){%>
-		<%@ include file="/inner/TMenuPc.jsp" %>
+		<%String searchType = "Contents";%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<script>$(function () {
 			$("#MenuSearch").show();

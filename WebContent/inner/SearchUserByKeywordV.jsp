@@ -100,6 +100,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%if(isApp){%>
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
 		<%}else{%>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<nav class="TabMenuWrapper">

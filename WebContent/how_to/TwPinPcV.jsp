@@ -31,6 +31,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	</head>
 	<body>
 		<div id="DispMsg"></div>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">

@@ -164,6 +164,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<div id="DispMsg"></div>
 		<article class="Wrapper">

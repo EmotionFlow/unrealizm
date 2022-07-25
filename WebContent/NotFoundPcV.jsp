@@ -15,6 +15,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">

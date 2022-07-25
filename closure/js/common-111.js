@@ -137,13 +137,13 @@ function SearchIllustByKeyword(kwd) {
 	location.href="/SearchIllustByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
-function SearchTagByKeyword() {
-	var keyword = $('#HeaderSearchBox').val();
+function SearchTagByKeyword(kwd) {
+	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
 	location.href="/SearchTagByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
-function SearchUserByKeyword() {
-	var keyword = $('#HeaderSearchBox').val();
+function SearchUserByKeyword(kwd) {
+	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
 	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 

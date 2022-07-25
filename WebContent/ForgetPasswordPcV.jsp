@@ -100,6 +100,7 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 	</head>
 
 	<body>
+		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<div id="DispMsg"></div>
 		<article class="Wrapper">
