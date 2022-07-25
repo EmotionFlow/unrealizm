@@ -41,11 +41,6 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<style>
 			body {padding-top: 79px !important;}
-
-			<%if(Util.isSmartPhone(request)) {%>
-			#HeaderTitleWrapper {display: none;}
-			#HeaderSearchWrapper {display: block;}
-			<%}%>
 		</style>
 	</head>
 

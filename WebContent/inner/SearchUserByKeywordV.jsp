@@ -49,12 +49,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		</script>
 
 		<style>
-            body {padding-top: 79px !important;}
-
-			<%if(Util.isSmartPhone(request)) {%>
-            #HeaderTitleWrapper {display: none;}
-            #HeaderSearchWrapper {display: block;}
-			<%}%>
+			body {padding-top: 79px !important;}
 		</style>
 		<%}%>
 

@@ -159,12 +159,14 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</div>
 			</div>
 		</form>
+		<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
 		<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
 	</div>
 	<script>
 		function showSearch() {
 			$('#HeaderTitleWrapper').hide();
 			$('#OverlaySearchWrapper').show();
+			$('#HeaderSearchBox').focus();
 			$.ajax({
 				"type": "get",
 				"url": "/f/GetSearchLogF.jsp",
