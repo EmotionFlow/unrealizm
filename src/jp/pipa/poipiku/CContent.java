@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -298,6 +299,9 @@ public final class CContent {
 				isHideThumbImg = true;
 			}
 		}
+
+		Log.d("thumbImgUrlList" + String.join(", ", thumbImgUrlList));
+		Log.d("thumbImgSmallUrlList" + String.join(", ", thumbImgSmallUrlList));
 	}
 
 	public String getThumbnailFilePath() {

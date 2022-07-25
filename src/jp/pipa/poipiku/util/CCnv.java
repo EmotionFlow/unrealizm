@@ -13,8 +13,6 @@ import java.util.List;
 
 import jp.pipa.poipiku.*;
 
-import javax.xml.crypto.Data;
-
 public final class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
 	public static final int MODE_PC = 0;
@@ -29,6 +27,7 @@ public final class CCnv {
 	}
 
 	private static final String ILLUST_ITEM_THUMB_IMG = "<img class=\"IllustItemThumbImg\" src=\"%s_640.jpg\" onload=\"setImgHeightStyle(this)\"/>";
+	private static final String ILLUST_ITEM_THUMB_IMG_FMT = "<img class=\"IllustItemThumbImg\" src=\"%s\" onload=\"setImgHeightStyle(this)\"/>";
 
 	private static final String DATE_FORMAT_SHORT = "yyyy.MM.dd HH:mm";
 
@@ -355,23 +354,36 @@ public final class CCnv {
 	}
 
 	private static void appendContentItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
-		final String strFileUrl;
-		final int publishId = cContent.m_nPublishId;
-		if (publishId == Common.PUBLISH_ID_ALL || !cContent.nowAvailable() || cContent.publishAllNum == 1) {
-			if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
-				appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
-			} else {
-				appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-			}
-		} else {
-			cContent.m_nFileNum++;
-			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-			appendIllustItemThumb(strRtn, null, nViewMode, ILLUST_VIEW, strFileUrl);
+
+		//zzz
+		if (cContent.thumbImgUrlList == null || cContent.thumbImgUrlList.isEmpty()) {
+			cContent.setThumb();
 		}
+
+		if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
+			appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
+		} else {
+			appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+		}
+
+
+//		final String strFileUrl;
+//		final int publishId = cContent.m_nPublishId;
+//		if (publishId == Common.PUBLISH_ID_ALL || !cContent.nowAvailable() || cContent.publishAllNum == 1) {
+//			if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
+//				appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
+//			} else {
+//				appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+//			}
+//		} else {
+//			cContent.m_nFileNum++;
+//			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
+//			appendIllustItemThumb(strRtn, null, nViewMode, ILLUST_VIEW, strFileUrl);
+//		}
 	}
 
 	private static void appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW){
-		appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
+		appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
 	}
 
 	private static void appendIllustInfoIcon(StringBuilder strRtn,  CContent content) {
@@ -387,24 +399,33 @@ public final class CCnv {
 		}
 	}
 
-	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
-		if(nViewMode==VIEW_DETAIL) {
+	private static void appendSubThumbnail(StringBuilder strRtn, CContent cContent) {
+		strRtn.append("<div class=\"IllustInfo\">");
+		strRtn.append("""
+						<div class="SubThumbnail" style="background-image:url('%s')"></div>
+						""".formatted(Common.GetUrl(cContent.thumbImgSmallUrlList.get(1))));
+		strRtn.append("</div>");
+	}
+
+
+	public static void appendIllustItemThumb2(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW) {
+		if (nViewMode == VIEW_DETAIL) {
 			appendIllustInfoIcon(strRtn, cContent);
 			strRtn.append("<a class=\"IllustItemThumb");
 			strRtn.append("\" href=\"javascript:void(0)\"");
 			if (cContent != null) {
-				strRtn.append(String.format(" onclick=\"showIllustDetail(%d, %d, %d)\"", cContent.m_nUserId, cContent.m_nContentId, contentAppend==null ? -1 : contentAppend.m_nAppendId));
+				strRtn.append(String.format(" onclick=\"showIllustDetail(%d, %d, %d)\"", cContent.m_nUserId, cContent.m_nContentId, contentAppend == null ? -1 : contentAppend.m_nAppendId));
 			}
 			strRtn.append(">");
 		} else {
 			strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
 		}
-		strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG, strFileUrl));
+		strRtn.append(String.format(ILLUST_ITEM_THUMB_IMG_FMT, Common.GetUrl(cContent.thumbImgUrlList.get(0))));
 		strRtn.append("</a>");
 	}
 
-	public static void appendIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String strFileUrl) {
-		appendIllustItemThumb(strRtn, cContent, null, nViewMode, ILLUST_VIEW, strFileUrl);
+	public static void appendIllustItemThumb3(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW) {
+		appendIllustItemThumb2(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
 	}
 
 	private static void appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
@@ -768,30 +789,59 @@ public final class CCnv {
 
 	private static void appendIllustItemExpand( StringBuilder strRtn, CContent cContent, ResourceBundleControl _TEX, int nSpMode) {
 		strRtn.append("<div class=\"IllustItemExpand\">");
-		if(cContent.m_nFileNum>1) {
+		if (cContent.passwordEnabled) {
 			appendIllustItemExpandPassFrame(_TEX, strRtn);
+		}
 
-			final String mark;
-			if (cContent.publishAllNum > 0) {
-				mark = String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId);
-			} else {
-				mark = "<i class=\"far fa-clone\"></i>";
+		// cContent.isHideThumbImg, cContent.publishAllNum,  cContent.m_nFileNum で、追加表示する画像があるか否かを判定
+		if (cContent.passwordEnabled
+				|| cContent.isHideThumbImg
+				|| !cContent.isHideThumbImg && cContent.m_nFileNum - cContent.publishAllNum > 0) {
+
+			StringBuilder sb = new StringBuilder();
+
+			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
+				sb.append(String.format("<span class=\"Publish SafeFilterIcoBlue%02d\"></span>", cContent.m_nSafeFilter));
+			}
+
+			if (cContent.m_nPublishId != Common.PUBLISH_ID_ALL) {
+				sb.append(String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId));
 			}
 
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
-				cContent.m_nUserId,
-				cContent.m_nContentId,
+					cContent.m_nUserId,
+					cContent.m_nContentId,
 					nSpMode,
-				mark,
-				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum-1)));
-		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
-			appendIllustItemExpandPassFrame(_TEX, strRtn);
-			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s</a>",
-				cContent.m_nUserId,
-				cContent.m_nContentId,
-					nSpMode,
-				String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length())));
+					sb,
+					String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum - cContent.publishAllNum)));
 		}
+
+
+
+//		if(cContent.isHideThumbImg) {
+//			appendIllustItemExpandPassFrame(_TEX, strRtn);
+//
+//			final String mark;
+//			if (cContent.publishAllNum > 0) {
+//				mark = String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId);
+//			} else {
+//				mark = "<i class=\"far fa-clone\"></i>";
+//			}
+//
+//			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
+//				cContent.m_nUserId,
+//				cContent.m_nContentId,
+//					nSpMode,
+//				mark,
+//				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum - cContent.publishAllNum)));
+//		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
+//			appendIllustItemExpandPassFrame(_TEX, strRtn);
+//			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s</a>",
+//				cContent.m_nUserId,
+//				cContent.m_nContentId,
+//					nSpMode,
+//				String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length())));
+//		}
 		strRtn.append("</div>");	// IllustItemExpand
 	}
 
@@ -834,15 +884,19 @@ public final class CCnv {
 	}
 
 	private static void appendIllustItemExpandPassFrame(ResourceBundleControl _TEX, StringBuilder strRtn) {
-		strRtn.append(String.format("<div class=\"IllustItemExpandPassFrame\">" +
-						"<input class=\"IllustItemExpandPass\" name=\"PAS\" type=\"text\" maxlength=\"16\" placeholder=\"%s\" />" +
-						"<a class=\"IllustItemExpandPassVisible Display\" style=\"display:none\" href=\"javascript:void(0)\" onclick=\"visibleContentPassword(this)\">%s</a>" +
-						"<a class=\"IllustItemExpandPassVisible Hide\" href=\"javascript:void(0)\" onclick=\"hideContentPassword(this)\">%s</a>" +
-						"</div>",
-				_TEX.T("ShowAppendFileC.EnterPassword"),
+		strRtn.append(
+				"""
+				<div class="IllustItemExpandPassFrame">
+				<img class="PasswordIcon" src="//poipiku.com/img/ico_pass_blue.png"/>
+				<input class="IllustItemExpandPass" name="PAS" type="text" maxlength="16" />
+				<a class="IllustItemExpandPassVisible Display" style="display:none" href="javascript:void(0)" onclick="visibleContentPassword(this)">%s</a>
+				<a class="IllustItemExpandPassVisible Hide" href="javascript:void(0)" onclick="hideContentPassword(this)">%s</a>
+				</div>
+				""".formatted(
 				_TEX.T("ShowAppendFileC.EnterPassword.Show"),
 				_TEX.T("ShowAppendFileC.EnterPassword.Hide")
-				));
+				)
+		);
 	}
 
 	public static String MyContent2Html(final CContent cContent, CheckLogin checkLogin, int nMode, final ResourceBundleControl _TEX, final ArrayList<String> vResult, int nViewMode, int nSpMode) throws UnsupportedEncodingException {

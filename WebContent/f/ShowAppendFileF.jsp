@@ -99,31 +99,31 @@ if(nRtn<ShowAppendFileC.OK) {
 
 } else {
 	final String illustDetailUrl = (cResults.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
-	if (cResults.m_cContent.m_nOpenId==Common.OPEN_ID_HIDDEN || !cResults.m_cContent.isHideThumbImg || cResults.m_cContent.publishAllNum == 1) {
-		if (cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
+	if (cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN || !cResults.content.isHideThumbImg || cResults.content.publishAllNum == 1) {
+		if (cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
 			nRtn=1;
 		}
 	} else {
-		if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
+		if(cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
 			// 2枚目の場所に本文を表示する
 			nRtn=2;
 			strHtml.append(String.format("<a class=\"IllustItemText\" %s href=\"%s?ID=%d&TD=%d\">",
-					cResults.m_cContent.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
-					illustDetailUrl, cResults.m_cContent.m_nUserId, cResults.m_cContent.m_nContentId));
+					cResults.content.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
+					illustDetailUrl, cResults.content.m_nUserId, cResults.content.m_nContentId));
 			strHtml.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
-					cResults.m_cContent.novelDirection==1 ? "Vertical" : "",
-					Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)));
+					cResults.content.novelDirection==1 ? "Vertical" : "",
+					Util.replaceForGenEiFont(cResults.content.novelHtml)));
 			strHtml.append("</a>");
 		} else {
 			// 2枚目の場所に1枚目を表示する
 			nRtn++;
-			CCnv.appendIllustItemThumb(strHtml, cResults.m_cContent, CCnv.VIEW_DETAIL, null, Common.GetUrl(cResults.m_cContent.m_strFileName));
+			CCnv.appendIllustItemThumb3(strHtml, cResults.content, CCnv.VIEW_DETAIL, null);
 		}
 	}
 
 	// 以降の画像を表示
-	for(CContentAppend contentAppend : cResults.m_cContent.m_vContentAppend) {
-		CCnv.appendIllustItemThumb(strHtml, cResults.m_cContent, contentAppend, CCnv.VIEW_DETAIL, null, Common.GetUrl(contentAppend.m_strFileName));
+	for(CContentAppend contentAppend : cResults.content.m_vContentAppend) {
+		CCnv.appendIllustItemThumb2(strHtml, cResults.content, contentAppend, CCnv.VIEW_DETAIL, null);
 	}
 }
 %>{"result_num":<%=nRtn%>,"html":"<%=CEnc.E(strHtml.toString())%>","tw_friendship":"<%=cResults.m_nTwFriendship%>"}
