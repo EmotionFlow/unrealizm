@@ -158,7 +158,6 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 <body>
 
 <%if(!isApp){%>
-	<%String searchType = "Contents";%>
 	<%@ include file="/inner/TMenuPc.jsp"%>
 	<%if(bSmartPhone){%>
 	<script>$(function () {

@@ -212,7 +212,6 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 <body>
 
 <%if(!isApp){%>
-<%String searchType = "Contents";%>
 <%@ include file="/inner/TMenuPc.jsp"%>
 <%}%>
 <article class="Wrapper <%=isApp?"":"ViewPc"%>">

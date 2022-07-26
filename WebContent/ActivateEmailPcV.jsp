@@ -19,7 +19,6 @@ if (nRtn > 0) {
 	</head>
 
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">

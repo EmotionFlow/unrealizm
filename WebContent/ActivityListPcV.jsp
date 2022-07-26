@@ -106,7 +106,6 @@ if (infoType==-1) infoType = 1;
 	</style>
 </head>
 <body>
-<%String searchType = "Contents";%>
 <%@ include file="/inner/TMenuPc.jsp"%>
 
 <nav class="TabMenuWrapper">

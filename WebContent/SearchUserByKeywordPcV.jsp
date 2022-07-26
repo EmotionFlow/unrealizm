@@ -45,7 +45,6 @@ g_strSearchWord = cResults.m_strKeyword;
 	</head>
 
 	<body>
-		<%String searchType = "Users";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<nav class="TabMenuWrapper">

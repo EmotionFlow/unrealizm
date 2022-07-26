@@ -116,7 +116,6 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 
 	<body>
 		<%if(!isApp){%>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<script>$(function () {

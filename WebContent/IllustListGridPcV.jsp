@@ -89,7 +89,6 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 	</head>
 
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper" style="width: 100%;">

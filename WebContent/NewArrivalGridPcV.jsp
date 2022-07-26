@@ -44,7 +44,6 @@ if(cResults.categoryId >= 0) {
 	</head>
 
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<nav class="TabMenuWrapper">

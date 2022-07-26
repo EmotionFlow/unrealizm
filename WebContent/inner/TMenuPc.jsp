@@ -163,6 +163,15 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
 	</div>
 	<script>
+		<%
+			String searchType = "Contents";
+			String requestPath = request.getRequestURL().toString();
+			if (Pattern.compile("/SearchUserByKeyword.*\\.jsp").matcher(requestPath).find()) {
+				searchType = "Users";
+			} else if (Pattern.compile("/SearchTagByKeyword.*\\.jsp").matcher(requestPath).find()) {
+				searchType = "Tags";
+			}
+		%>
 		function showSearch() {
 			$('#HeaderTitleWrapper').hide();
 			$('#OverlaySearchWrapper').show();

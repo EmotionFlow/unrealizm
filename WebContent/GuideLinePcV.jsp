@@ -45,7 +45,6 @@
 </head>
 
 <body>
-<%String searchType = "Contents";%>
 <%@ include file="/inner/TMenuPc.jsp"%>
 
 <article class="Wrapper">

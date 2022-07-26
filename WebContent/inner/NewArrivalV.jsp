@@ -119,7 +119,6 @@ if(cResults.categoryId >= 0) {
 
 	<body>
 		<%if (!isApp) {%>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">

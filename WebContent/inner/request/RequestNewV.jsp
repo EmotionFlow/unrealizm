@@ -386,7 +386,6 @@ if (!results.getResults(checkLogin)) {
 <body>
 
 <%if(!isApp){%>
-<%String searchType = "Contents";%>
 <%@ include file="/inner/TMenuPc.jsp"%>
 <%}%>
 

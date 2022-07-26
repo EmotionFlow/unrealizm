@@ -33,7 +33,6 @@ boolean bRtn = results.getResults(checkLogin);
 	</head>
 
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<nav class="TabMenuWrapper">

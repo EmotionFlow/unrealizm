@@ -164,7 +164,6 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 	</head>
 
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<script>$(function () {
 			$("#MenuSearch").hide();

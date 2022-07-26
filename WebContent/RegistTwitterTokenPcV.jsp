@@ -38,7 +38,6 @@ response.sendRedirect(Common.GetPoipikuUrl(strNextContextPath));
 	</head>
 
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper" style="text-align: center; margin: 150px auto;">

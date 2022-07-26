@@ -118,7 +118,6 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 		</style>
 	</head>
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<nav class="TabMenuWrapper">

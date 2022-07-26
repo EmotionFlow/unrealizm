@@ -93,7 +93,6 @@ String strUrl = "https://poipiku.com/event/20190901/TopPcV.jsp";
 	</head>
 
 	<body>
-		<%String searchType = "Contents";%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
