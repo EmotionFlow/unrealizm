@@ -480,7 +480,7 @@ function createUpdateTextFunction(){
 				} else {
 					fTweet = function() {
 						let dfd = $.Deferred();
-						dfd.resolve(1);
+						dfd.resolve({"result": 1});
 						return dfd.promise();
 					};
 				}

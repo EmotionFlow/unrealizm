@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.crypto.Data;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.CTweet;
@@ -57,7 +56,6 @@ public final class ShowAppendFileC {
 
 	private boolean verifyRequestClient(CheckLogin checkLogin) {
 		boolean result = false;
-		if (content.m_nUserId == checkLogin.m_nUserId) return true;
 
 		final String sql = "SELECT 1 FROM requests WHERE content_id=? AND client_user_id=?";
 		try (Connection connection = DatabaseUtil.dataSource.getConnection();
@@ -179,10 +177,8 @@ public final class ShowAppendFileC {
 		return TwitterRetweet.find(checkLogin.m_nUserId, content.m_nContentId);
 	}
 
-
-
-
 	public int getResults(CheckLogin checkLogin) {
+		content = null;
 		try (Connection connection = DatabaseUtil.dataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement(
 					 "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?"
@@ -198,8 +194,6 @@ public final class ShowAppendFileC {
 			throwables.printStackTrace();
 		}
 		if(content == null) return ERR_NOT_FOUND;
-		content.setThumb();
-
 
 		boolean isRequestClient = verifyRequestClient(checkLogin);
 		boolean isOwner = content.m_nUserId == checkLogin.m_nUserId;

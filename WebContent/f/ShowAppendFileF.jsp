@@ -98,6 +98,8 @@ if(nRtn<ShowAppendFileC.OK) {
 	}
 
 } else {
+	cResults.content.setThumb(); // isHideThumbImgをセットするために必要
+
 	final String illustDetailUrl = (cResults.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 	if (cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN || !cResults.content.isHideThumbImg || cResults.content.publishAllNum == 1) {
 		if (cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
@@ -117,6 +119,7 @@ if(nRtn<ShowAppendFileC.OK) {
 		} else {
 			// 2枚目の場所に1枚目を表示する
 			nRtn++;
+			cResults.content.setOrgImgThumb();
 			CCnv.appendIllustItemThumb3(strHtml, cResults.content, CCnv.VIEW_DETAIL, null);
 		}
 	}

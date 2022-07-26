@@ -94,7 +94,7 @@ public final class UpdateC extends UpC {
 			boolean bToPublish = false;
 			int newOpenId = GetOpenId(
 				openIdPresent,
-				upParam.publishId,
+				!upParam.isPublish ? Common.OPEN_ID_HIDDEN : Common.PUBLISH_ID_ALL,
 				!upParam.isShowRecently,
 				upParam.isTimeLimited,
 				limitedTimePublishPresent,

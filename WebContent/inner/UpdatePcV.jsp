@@ -18,6 +18,13 @@ if(!cResults.getResults(checkLogin)) {
 	return;
 }
 
+// V2 -> V1 convert
+if (cResults.m_cContent.m_nOpenId == Common.OPEN_ID_HIDDEN && !cResults.m_cContent.m_bLimitedTimePublish) {
+	cResults.m_cContent.m_nPublishId = Common.PUBLISH_ID_HIDDEN;
+} else if (cResults.m_cContent.m_nPublishId == Common.PUBLISH_ID_ALL && cResults.m_cContent.isPasswordEnabled()) {
+	cResults.m_cContent.m_nPublishId = Common.PUBLISH_ID_PASS;
+}
+
 Request poipikuRequest = new Request();
 poipikuRequest.selectByContentId(cResults.m_nContentId, null);
 // 納品済かつ納品期限を過ぎている
@@ -45,8 +52,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-50-2.js" type="text/javascript"></script>
-		<script src="/js/update-25-1.js" type="text/javascript"></script>
+		<script src="/js/upload-51.js" type="text/javascript"></script>
+		<script src="/js/update-25.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
@@ -366,7 +373,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					</div>
 
 					<div id="ItemPassword" class="OptionItem"
-						<%if(!cResults.m_cContent.isPasswordEnabled()){%>style="display: none;"<%}%>
+						<%if(!(cResults.m_cContent.m_nPublishId == Common.PUBLISH_ID_PASS  && cResults.m_cContent.isPasswordEnabled())){%>style="display: none;"<%}%>
 						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">

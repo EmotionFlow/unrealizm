@@ -749,7 +749,7 @@ function tweetSucceeded(resultCode){
 			}
 		}
 	} else {
-		twtterTweetOtherErrMsg(data);
+		twtterTweetOtherErrMsg(resultCode);
 		setTimeout(function () {
 			location.href = toContext;
 		}, nTimeOut);

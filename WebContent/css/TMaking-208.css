@@ -1365,6 +1365,7 @@ Decoration
 	padding: 9px 0;
 	align-items: center;
 	border-radius: 2px;
+	justify-content: center;
 }
 
 .UploadFile .UoloadCmdOption .OptionNotify {

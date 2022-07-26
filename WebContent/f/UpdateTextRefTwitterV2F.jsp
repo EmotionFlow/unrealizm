@@ -15,6 +15,4 @@ if( checkLogin.m_bLogin && cParam.userId==checkLogin.m_nUserId && nRtn==0 ) {
 	nRtn = cResults.GetResults(cParam, checkLogin);
 }
 %>
-{
-"content_id":<%=nRtn%>
-}
+{"content_id":<%=nRtn%>}

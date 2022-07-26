@@ -227,10 +227,15 @@ public final class CContent {
 				|| m_nPublishId==Common.PUBLISH_ID_T_RT;
 	}
 
+
+	public void setOrgImgThumb() {
+		thumbImgUrlList = new ArrayList<>();
+		thumbImgSmallUrlList = new ArrayList<>();
+		thumbImgUrlList.add(m_strFileName + "_640.jpg");
+		thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
+	}
+
 	public void setThumb() {
-
-		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
-
 		thumbImgUrlList = new ArrayList<>();
 		thumbImgSmallUrlList = new ArrayList<>();
 
@@ -243,25 +248,18 @@ public final class CContent {
 		}
 
 		// 最初の１枚公開 or ワンクッションや閲覧制限無しの場合はコンテンツのサムネを表示する
-		if (publishAllNum > 0 || (m_nSafeFilter == Common.SAFE_FILTER_ALL && m_nPublishId == Common.PUBLISH_ID_ALL)) {
+		if (publishAllNum > 0 || (!passwordEnabled && m_nSafeFilter == Common.SAFE_FILTER_ALL && m_nPublishId == Common.PUBLISH_ID_ALL)) {
 			thumbImgUrlList.add(m_strFileName + "_640.jpg");
 			thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
 			isHideThumbImg = false;
+			return;
 		}
 
 		// 閲覧制限サムネ
-		switch(m_nPublishId) {
-			case Common.PUBLISH_ID_LOGIN:
-			case Common.PUBLISH_ID_FOLLOWER:
-			case Common.PUBLISH_ID_T_FOLLOWER:
-			case Common.PUBLISH_ID_T_FOLLOWEE:
-			case Common.PUBLISH_ID_T_EACH:
-			case Common.PUBLISH_ID_T_LIST:
-			case Common.PUBLISH_ID_T_RT:
-				thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg");
-				thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg");
-				isHideThumbImg = true;
-				break;
+		if (isValidPublishId()) {
+			thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg");
+			thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg");
+			isHideThumbImg = true;
 		}
 
 		// ワンクッション・R18サムネ
@@ -300,8 +298,8 @@ public final class CContent {
 			}
 		}
 
-		Log.d("thumbImgUrlList" + String.join(", ", thumbImgUrlList));
-		Log.d("thumbImgSmallUrlList" + String.join(", ", thumbImgSmallUrlList));
+//		Log.d("thumbImgUrlList" + String.join(", ", thumbImgUrlList));
+//		Log.d("thumbImgSmallUrlList" + String.join(", ", thumbImgSmallUrlList));
 	}
 
 	public String getThumbnailFilePath() {
