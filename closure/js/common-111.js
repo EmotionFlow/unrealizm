@@ -147,6 +147,38 @@ function SearchUserByKeyword(kwd) {
 	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
+function showSearchHistory(searchType, notFoundMsg) {
+	$.ajax({
+		"type": "get",
+		"url": "/f/GetSearchLogF.jsp",
+		"data": { "type": searchType },
+		"dataType": "json",
+	}).then(function(history) {
+		const $ul = $('ul#RecentSearchList');
+		$ul.empty();
+		if (history.keywords.length) {
+			history.keywords.forEach(kw => {
+				const $li = $('<li></li>', {class: 'RecentSearchItem'});
+				const $row = $('<div></div>', {class: 'RecentSearchRow'});
+				const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
+				const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+				const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
+				$close.append($closeIcon);
+				$row.append($item, $close);
+				$li.append($row);
+				$ul.append($li);
+			});
+		} else {
+			const $li = $('<li></li>');
+			const $row = $('<div></div>', {class: 'RecentSearchRow'});
+			const $item = $('<div></div>', {class: 'RecentSearchKW', text: notFoundMsg});
+			$row.append($item);
+			$li.append($row);
+			$ul.append($li);
+		}
+	});
+}
+
 var sendObjectMessage = function(parameters) {
 	var iframe = document.createElement('iframe');
 	iframe.setAttribute('src', "myurlscheme://"+parameters);

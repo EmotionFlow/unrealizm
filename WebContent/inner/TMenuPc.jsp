@@ -155,39 +155,6 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				searchFunction = "SearchTagByKeyword";
 			}
 		%>
-		<script>
-			function showSearchHistory() {
-				$.ajax({
-					"type": "get",
-					"url": "/f/GetSearchLogF.jsp",
-					"data": { "type": "<%=searchType == null ? "Contents" : searchType%>" },
-					"dataType": "json",
-				}).then(function(history) {
-					const $ul = $('ul#RecentSearchList');
-					$ul.empty();
-					if (history.keywords.length) {
-						history.keywords.forEach(kw => {
-							const $li = $('<li></li>', {class: 'RecentSearchItem'});
-							const $row = $('<div></div>', {class: 'RecentSearchRow'});
-							const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
-							const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
-							const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
-							$close.append($closeIcon);
-							$row.append($item, $close);
-							$li.append($row);
-							$ul.append($li);
-						});
-					} else {
-						const $li = $('<li></li>');
-						const $row = $('<div></div>', {class: 'RecentSearchRow'});
-						const $item = $('<div></div>', {class: 'RecentSearchKW', text: '<%=_TEX.T("SearchLog.NotFound")%>'});
-						$row.append($item);
-						$li.append($row);
-						$ul.append($li);
-					}
-				});
-			}
-		</script>
 		<%if(Util.isSmartPhone(request)) {%>
 			<div id="OverlaySearchWrapper" class="SearchWrapper overlay">
 				<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
@@ -209,7 +176,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderTitleWrapper').hide();
 					$('#OverlaySearchWrapper').show();
 					$('#HeaderSearchBox').focus();
-					showSearchHistory();
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
 				}
 				$(document).on('click', '.RecentSearchItem', ev => {
 					$('#HeaderTitleWrapper').show();
@@ -226,7 +193,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<script>
 				function showSearch() {
 					$('#PulldownSearchWrapper').slideDown();
-					showSearchHistory();
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
 				}
 				$('#HeaderSearchBox').on('focus', showSearch);
 				$(document).on('click', '.RecentSearchItem', ev => {
