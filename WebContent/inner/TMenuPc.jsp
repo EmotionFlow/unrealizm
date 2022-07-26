@@ -143,82 +143,105 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			</form>
 		</nav>
 		<%}%>
-	</div>
-</header>
-
-<%if(Util.isSmartPhone(request)) {%>
-	<div id="OverlaySearchWrapper" class="OverlaySearchWrapper">
-		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
-			<div id="OverlaySearchCloseBtn" class="OverlaySearchCloseBtn" onclick="$('#HeaderTitleWrapper').show();$('#OverlaySearchWrapper').hide();">
-				<i class="fas fa-arrow-left"></i>
-			</div>
-			<div class="HeaderSearch">
-				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
-				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
-					<i class="fas fa-search"></i>
-				</div>
-			</div>
-		</form>
-		<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
-		<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
-	</div>
-	<script>
 		<%
 			String searchType = "Contents";
 			String requestPath = request.getRequestURL().toString();
+			String searchFunction = "SearchIllustByKeyword";
 			if (Pattern.compile("/SearchUserByKeyword.*\\.jsp").matcher(requestPath).find()) {
 				searchType = "Users";
+				searchFunction = "SearchUserByKeyword";
 			} else if (Pattern.compile("/SearchTagByKeyword.*\\.jsp").matcher(requestPath).find()) {
 				searchType = "Tags";
+				searchFunction = "SearchTagByKeyword";
 			}
 		%>
-		function showSearch() {
-			$('#HeaderTitleWrapper').hide();
-			$('#OverlaySearchWrapper').show();
-			$('#HeaderSearchBox').focus();
-			$.ajax({
-				"type": "get",
-				"url": "/f/GetSearchLogF.jsp",
-				"data": { "type": "<%=searchType == null ? "Contents" : searchType%>" },
-				"dataType": "json",
-			}).then(function(history) {
-				const $ul = $('ul#RecentSearchList');
-				$ul.empty();
-				if (history.keywords.length) {
-					history.keywords.forEach(kw => {
-						const $li = $('<li></li>', {class: 'RecentSearchItem'});
+		<script>
+			function showSearchHistory() {
+				$.ajax({
+					"type": "get",
+					"url": "/f/GetSearchLogF.jsp",
+					"data": { "type": "<%=searchType == null ? "Contents" : searchType%>" },
+					"dataType": "json",
+				}).then(function(history) {
+					const $ul = $('ul#RecentSearchList');
+					$ul.empty();
+					if (history.keywords.length) {
+						history.keywords.forEach(kw => {
+							const $li = $('<li></li>', {class: 'RecentSearchItem'});
+							const $row = $('<div></div>', {class: 'RecentSearchRow'});
+							const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
+							const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+							const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
+							$close.append($closeIcon);
+							$row.append($item, $close);
+							$li.append($row);
+							$ul.append($li);
+						});
+					} else {
+						const $li = $('<li></li>');
 						const $row = $('<div></div>', {class: 'RecentSearchRow'});
-						const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
-						const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
-						const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
-						$close.append($closeIcon);
-						$row.append($item, $close);
+						const $item = $('<div></div>', {class: 'RecentSearchKW', text: '<%=_TEX.T("SearchLog.NotFound")%>'});
+						$row.append($item);
 						$li.append($row);
 						$ul.append($li);
-					});
-				} else {
-					const $li = $('<li></li>');
-					const $row = $('<div></div>', {class: 'RecentSearchRow'});
-					const $item = $('<div></div>', {class: 'RecentSearchKW', text: '<%=_TEX.T("SearchLog.NotFound")%>'});
-					$row.append($item);
-					$li.append($row);
-					$ul.append($li);
+					}
+				});
+			}
+		</script>
+		<%if(Util.isSmartPhone(request)) {%>
+			<div id="OverlaySearchWrapper" class="SearchWrapper overlay">
+				<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
+					<div id="OverlaySearchCloseBtn" class="OverlaySearchCloseBtn" onclick="$('#HeaderTitleWrapper').show();$('#OverlaySearchWrapper').hide();">
+						<i class="fas fa-arrow-left"></i>
+					</div>
+					<div class="HeaderSearch">
+						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
+						<div id="HeaderSearchBtn" class="HeaderSearchBtn">
+							<i class="fas fa-search"></i>
+						</div>
+					</div>
+				</form>
+				<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
+				<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
+			</div>
+			<script>
+				function showSearch() {
+					$('#HeaderTitleWrapper').hide();
+					$('#OverlaySearchWrapper').show();
+					$('#HeaderSearchBox').focus();
+					showSearchHistory();
 				}
-			});
-		}
-		$(document).on('click', '.RecentSearchItem', ev => {
-			$('#HeaderTitleWrapper').show();
-			$('#OverlaySearchWrapper').hide();
-			$('ul#RecentSearchList').empty();
-			const searchFunc = {
-				Contents: SearchIllustByKeyword,
-				Tags: SearchTagByKeyword,
-				Users: SearchUserByKeyword,
-			};
-			searchFunc["<%=searchType%>"]($(ev.currentTarget).find('.RecentSearchKW').text());
-		});
-	</script>
-<%}%>
+				$(document).on('click', '.RecentSearchItem', ev => {
+					$('#HeaderTitleWrapper').show();
+					$('#OverlaySearchWrapper').hide();
+					$('ul#RecentSearchList').empty();
+					<%=searchFunction%>($(ev.currentTarget).find('.RecentSearchKW').text());
+				});
+			</script>
+		<%} else {%>
+			<div id="PulldownSearchWrapper" class="SearchWrapper pulldown">
+				<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
+				<ul id="RecentSearchList" class="RecentSearchList"></ul>
+			</div>
+			<script>
+				function showSearch() {
+					$('#PulldownSearchWrapper').slideDown();
+					showSearchHistory();
+				}
+				$('#HeaderSearchBox').on('focus', showSearch);
+				$(document).on('click', '.RecentSearchItem', ev => {
+					$('#PulldownSearchWrapper').hide();
+					$('ul#RecentSearchList').empty();
+					<%=searchFunction%>($(ev.currentTarget).find('.RecentSearchKW').text());
+				});
+				$(document).on('click touchend', function(ev) {
+					if (!$(ev.target).closest('#PulldownSearchWrapper, .HeaderSearch').length) $('#PulldownSearchWrapper').hide();
+				});
+			</script>
+		<%}%>
+	</div>
+</header>
+
 
 <script>
 	<%if(checkLogin.m_bLogin){%>

@@ -1,8 +1,8 @@
 @charset "utf-8";
 body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box;}
-.Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 50px; border-bottom: solid 1px #ddd; text-align: center; padding: 0; background: #fff; z-index: 999; overflow: hidden;}
+.Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 50px; border-bottom: solid 1px #ddd; text-align: center; padding: 0; background: #fff; z-index: 999;}
 #HeaderSlider {display: block; position: absolute; z-index: 1; width: 0; height: 2px; background-color: #3498db; top: 0; left: 0;}
-.HeaderWrapper {display:block; width: 100%;}
+.HeaderWrapper {display:block; width: 100%; position: relative;}
 .Header .HeaderTitle {display: block; margin: 0; padding: 0; width: 52px; height: 34px;}
 .Header .HeaderTitleWrapper {display: block; max-width: 600px; margin: 0 auto; position: relative; padding: 10px 0 8px 0;}
 .Header .HeaderTitleWrapper .TwLoginUnsuccessfulIcon {
@@ -30,19 +30,21 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .HeaderSelectLangList > dd{margin: 10px 0;}
 .HeaderSelectLangList > dd > a {color: #3498db;}
 
-.OverlaySearchWrapper {display: none; width: 100vw; height: calc(100vh - 50px); position: fixed; left: 0; top: 0; background-color: #fff; z-index: 999; text-align: center;}
-.OverlaySearchWrapper .OverlaySearchCloseBtn {color: #3498db; font-size: 16px; padding: 4px 12px;}
-.OverlaySearchWrapper .HeaderSearchWrapper {display: flex; height: 50px;}
-.OverlaySearchWrapper .HeaderSearch {flex-grow: 1;}
+.SearchWrapper.overlay {display: none; width: 100vw; height: calc(100vh - 50px); position: fixed; left: 0; top: 0; background-color: #fff; z-index: 999; text-align: center;}
+.SearchWrapper.pulldown {display: none; width: 320px; position: absolute; right: 0; top: 50px; background-color: #fff; z-index: 999; text-align: right; border: solid 1px #ddd; border-radius: 0 0 4px 4px; transition: height .4s;}
+.SearchWrapper .OverlaySearchCloseBtn {color: #3498db; font-size: 16px; padding: 4px 12px;}
+.SearchWrapper .HeaderSearchWrapper {display: flex; height: 50px;}
+.SearchWrapper .HeaderSearch {flex-grow: 1;}
 
-.OverlaySearchWrapper .RecentSearchHeader {color: #6d6965; font-size: 16px; font-weight: bold; padding: 1em; text-align: left;}
-.OverlaySearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 50px); margin: 0; overflow-y: auto;}
-.OverlaySearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; padding: 0 2em; list-style-type: none;}
-.OverlaySearchWrapper .RecentSearchList .RecentSearchItem {transition: background-color .4s;}
-.OverlaySearchWrapper .RecentSearchList .RecentSearchItem:active {background-color: #ddd;}
-.OverlaySearchWrapper .RecentSearchList .RecentSearchRow {display: flex;}
-.OverlaySearchWrapper .RecentSearchList .RecentSearchKW {flex-grow: 1; padding: 1em 0;}
-.OverlaySearchWrapper .RecentSearchList .RecentSearchDelBtn {width: 1em; padding: 1em 0; color: #3498db; display: none;}
+.SearchWrapper .RecentSearchHeader {color: #6d6965; font-size: 16px; font-weight: bold; padding: 1em; text-align: left;}
+.SearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 50px); margin: 0; overflow-y: auto;}
+.SearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; padding: 0 2em; list-style-type: none;}
+.SearchWrapper .RecentSearchList .RecentSearchItem {transition: background-color .4s;}
+.SearchWrapper .RecentSearchList .RecentSearchItem:active {background-color: #ddd;}
+.SearchWrapper .RecentSearchList .RecentSearchRow {display: flex;}
+.SearchWrapper .RecentSearchList .RecentSearchKW {flex-grow: 1; padding: 1em 0;}
+.SearchWrapper .RecentSearchList .RecentSearchDelBtn {width: 1em; padding: 1em 0; color: #3498db; display: none;}
+
 
 .FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ddd; z-index: 999; }
 .FooterMenu {width: 100%; display: flex; align-items: center; justify-content: center;  height: 50px; overflow: hidden;}
