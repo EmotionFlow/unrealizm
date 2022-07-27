@@ -702,7 +702,9 @@ public final class CCnv {
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
 
 		// 全て表示ボタン
-		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
+		if (cContent.nowAvailable()) {
+			appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
+		}
 
 		// サムネイルへの重畳表示
 		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
@@ -1106,8 +1108,14 @@ public final class CCnv {
 				|| pageCategory == PageCategory.MY_BOX && checkLogin.m_nUserId==cContent.m_nUserId){
 
 			// TODO publish_idの運用方針変更。R18+フォロワー限定のような、複数掛け対応。
-			if(cContent.isValidPublishId() && cContent.m_nPublishId != Common.PUBLISH_ID_ALL) {
+			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
+				strRtn.append(String.format("<span class=\"Publish SafeFilterIco%02d\"></span>", cContent.m_nSafeFilter));
+			}
+			if (cContent.isValidPublishId() && cContent.m_nPublishId != Common.PUBLISH_ID_ALL) {
 				strRtn.append(String.format("<span class=\"Publish PublishIco%02d\"></span>", cContent.m_nPublishId));
+			}
+			if (cContent.isPasswordEnabled()) {
+				strRtn.append("<span class=\"Publish PasswordIco\"></span>");
 			}
 		}
 

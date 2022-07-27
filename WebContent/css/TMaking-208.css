@@ -909,13 +909,12 @@ Decoration
 	display: block;
 	float: left;
 	color: white;
-	font-size: 13px;
+	font-size: 11px;
 	background: #3498db;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 20px;
-	padding: 0 7px;
-	margin: 0 2px;
+	padding: 0 5px;
 	line-height: 20px;
 	text-align: center;
 	z-index: 2;
@@ -950,48 +949,53 @@ Decoration
 	padding: 0 7px;
 	z-index: 2;
 }
-.PublishIco01{ background-position: center; background-size: contain; background-image: url(/img/ico_warning.png);}
-.PublishIco02{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
-.PublishIco03{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
-.PublishIco04{ background-position: center; background-size: contain; background-image: url(/img/ico_pass.png);}
-.PublishIco05{ background-position: center; background-size: contain; background-image: url(/img/ico_signin.png);}
-.PublishIco06{ background-position: center; background-size: contain; background-image: url(/img/ico_favorite.png);}
-.PublishIco07{ background-position: center; background-size: contain; background-image: url(/img/ico_follower.png);}
-.PublishIco08{ background-position: center; background-size: contain; background-image: url(/img/ico_follow.png);}
-.PublishIco09{ background-position: center; background-size: contain; background-image: url(/img/ico_ff.png);}
-.PublishIco10{ background-position: center; background-size: contain; background-image: url(/img/ico_list.png);}
-.PublishIco12{ background-position: center; background-size: contain; background-image: url(/img/ico_rt.png);}
-.PublishIco99{ background-position: center; background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
+.PublishIco01{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_warning.png);}
+.PublishIco02{ background-repeat: no-repeat; ackground-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.PublishIco03{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.PublishIco04{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_pass.png);}
+.PublishIco05{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_signin.png);}
+.PublishIco06{ background-repeat: no-repeat; background-position: center; background-size: 70%; background-image: url(/img/ico_favorite.png);}
+.PublishIco07{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_follower.png);}
+.PublishIco08{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_follow.png);}
+.PublishIco09{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_ff.png);}
+.PublishIco10{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_list.png);}
+.PublishIco12{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_rt.png);}
+.PublishIco99{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_visible.png); background-color: #a0a0a0;}
 
-.PublishIcoBlue01{ background-position: center; background-size: cover; background-image: url(/img/ico_warning_blue.png);}
-.PublishIcoBlue02{ background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
-.PublishIcoBlue03{ background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
-.PublishIcoBlue04{ background-position: center; background-size: cover; background-image: url(/img/ico_pass_blue.png);}
-.PublishIcoBlue05{ background-position: center; background-size: cover; background-image: url(/img/ico_signin_blue.png);}
-.PublishIcoBlue06{ background-position: center; background-size: cover; background-image: url(/img/ico_favorite_blue.png);}
-.PublishIcoBlue07{ background-position: center; background-size: cover; background-image: url(/img/ico_follower_blue.png);}
-.PublishIcoBlue08{ background-position: center; background-size: cover; background-image: url(/img/ico_follow_blue.png);}
-.PublishIcoBlue09{ background-position: center; background-size: cover; background-image: url(/img/ico_ff_blue.png);}
-.PublishIcoBlue10{ background-position: center; background-size: cover; background-image: url(/img/ico_list_blue.png);}
-.PublishIcoBlue12{ background-position: center; background-size: cover; background-image: url(/img/ico_rt_blue.png);}
+.PublishIcoBlue01{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_warning_blue.png);}
+.PublishIcoBlue02{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
+.PublishIcoBlue03{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
+.PublishIcoBlue04{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_pass_blue.png);}
+.PublishIcoBlue05{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_signin_blue.png);}
+.PublishIcoBlue06{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_favorite_blue.png);}
+.PublishIcoBlue07{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_follower_blue.png);}
+.PublishIcoBlue08{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_follow_blue.png);}
+.PublishIcoBlue09{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_ff_blue.png);}
+.PublishIcoBlue10{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_list_blue.png);}
+.PublishIcoBlue12{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_rt_blue.png);}
 
-.SafeFilterIco02{ background-position: center; background-size: contain; background-image: url(/img/ico_warning.png);}
-.SafeFilterIco04{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
-.SafeFilterIco06{ background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
-.SafeFilterIco08{ background-position: center; background-size: contain; background-image: url(/img/ico_r18_plus.png);}
+.SafeFilterIco02{ background-repeat: no-repeat; background-position: center; background-size: 70%; background-image: url(/img/ico_warning.png);}
+.SafeFilterIco04{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.SafeFilterIco06{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.SafeFilterIco08{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_r18_plus.png);}
 
-.SafeFilterIcoBlue02{ background-position: center; background-size: cover; background-image: url(/img/ico_warning_blue.png);}
-.SafeFilterIcoBlue04{ background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
-.SafeFilterIcoBlue06{ background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
-.SafeFilterIcoBlue08{ background-position: center; background-size: cover; background-image: url(/img/ico_r18_plus_blue.png);}
+.SafeFilterIcoBlue02{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_warning_blue.png);}
+.SafeFilterIcoBlue04{ background-repeat: no-repeat; background-position: center; background-size: 128%; background-image: url(/img/ico_r18_blue.png);}
+.SafeFilterIcoBlue06{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_r18_blue.png);}
+.SafeFilterIcoBlue08{ background-repeat: no-repeat; background-position: center; background-size: cover; background-image: url(/img/ico_r18_plus_blue.png);}
+
+.PasswordIco{ background-repeat: no-repeat; background-position: center; background-size: 70%; background-image: url(/img/ico_pass.png);}
+
+.PasswordIcoBlue{ background-repeat: no-repeat; background-position: center; background-size: 80%; background-image: url(/img/ico_pass_blue.png);}
+
 
 
 .IllustItemExpandBtn > .Publish {
-	padding: 3px 16px;
-	margin-right: 4px;
-	border: 1px solid #b9ddf5;
-	border-radius: 6px;
-	opacity: 0.75;
+	padding: 0 13px;
+	margin-right: 3px;
+	/*border: 1px solid #b9ddf5;*/
+	/*border-radius: 6px;*/
+	opacity: 0.90;
 }
 
 .IllustItemExpandBtn:hover > .Publish {

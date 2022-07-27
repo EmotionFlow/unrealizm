@@ -256,7 +256,7 @@ public final class CContent {
 		}
 
 		// 閲覧制限サムネ
-		if (isValidPublishId()) {
+		if (m_nPublishId != Common.PUBLISH_ID_ALL && isValidPublishId()) {
 			thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg");
 			thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg");
 			isHideThumbImg = true;

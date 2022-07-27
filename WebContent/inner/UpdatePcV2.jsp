@@ -21,6 +21,11 @@ if(!cResults.getResults(checkLogin)) {
 
 final CContent content = cResults.m_cContent;
 
+// V1 -> V2 convert
+if (!content.isValidPublishId()) {
+	content.m_nPublishId = Common.PUBLISH_ID_ALL;
+}
+
 Request poipikuRequest = new Request();
 poipikuRequest.selectByContentId(cResults.m_nContentId, null);
 // 納品済かつ納品期限を過ぎている

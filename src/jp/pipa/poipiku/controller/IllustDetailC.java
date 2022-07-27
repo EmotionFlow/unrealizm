@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
+import static jp.pipa.poipiku.util.ContentAccessVerificationUtil.*;
+
 public final class IllustDetailC {
 	public int ownerUserId = -1;
 	public int contentId = -1;
@@ -34,10 +36,10 @@ public final class IllustDetailC {
 		return String.format("ID:%d, TD:%d ,AD:%d", ownerUserId, contentId, appendId);
 	}
 
-	public CContent m_cContent = new CContent();
+	public CContent content = new CContent();
 	public List<CContentAppend> contentAppendList = new ArrayList<>();
 	public boolean isOwner = false;
-	public int m_nDownload = CUser.DOWNLOAD_OFF;
+	public int downloadCode = CUser.DOWNLOAD_OFF;
 	public boolean isDownloadable = false;
 	public boolean isRequestClient = false;
 	public boolean getResults(CheckLogin checkLogin) {
@@ -57,15 +59,13 @@ public final class IllustDetailC {
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				if (resultSet.getInt("passport_id") == 1) {
-					m_nDownload = resultSet.getInt("ng_download");
+					downloadCode = resultSet.getInt("ng_download");
 				}
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			Request poipikuRequest = new Request();
-			poipikuRequest.selectByContentId(contentId, connection);
-			isRequestClient = poipikuRequest.isClient(checkLogin.m_nUserId);
+			isRequestClient = verifyRequestClient(content, checkLogin);
 
 			// content main
 			String strOpenCnd = (ownerUserId !=checkLogin.m_nUserId && !isRequestClient) ? " AND open_id<>2" : "";
@@ -75,7 +75,7 @@ public final class IllustDetailC {
 			statement.setInt(2, contentId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()){
-				m_cContent = new CContent(resultSet);
+				content = new CContent(resultSet);
 				bRtn = true;
 			} else {
 				Log.d("record not found");
@@ -83,47 +83,36 @@ public final class IllustDetailC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
-			isOwner = m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId;
+			isOwner = content.m_cUser.m_nUserId==checkLogin.m_nUserId;
 
-			if(!isOwner) {
-				if (m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWER ||
-						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_FOLLOWEE ||
-						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_EACH ||
-						m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST) {
-					CTweet tweet = new CTweet();
-					tweet.GetResults(checkLogin.m_nUserId);
-					if (m_cContent.m_nPublishId == Common.PUBLISH_ID_T_LIST) {
-						bRtn = (tweet.LookupListMember(m_cContent) == CTweet.OK);
-					} else {
-						final int friendshipResult = tweet.LookupFriendship(m_cContent.m_nUserId, m_cContent.m_nPublishId);
-						switch (m_cContent.m_nPublishId) {
-							case Common.PUBLISH_ID_T_FOLLOWER:
-								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWEE || friendshipResult == CTweet.FRIENDSHIP_EACH);
-								break;
-							case Common.PUBLISH_ID_T_FOLLOWEE:
-								bRtn = (friendshipResult == CTweet.FRIENDSHIP_FOLLOWER || friendshipResult == CTweet.FRIENDSHIP_EACH);
-								break;
-							case Common.PUBLISH_ID_T_EACH:
-								bRtn = (friendshipResult == CTweet.FRIENDSHIP_EACH);
-								break;
-							default:
-								bRtn = false;
-						}
-					}
-					if (!bRtn) {
-						Log.d("Tw限定のチェックができなかった");
+			if(!isOwner && !isRequestClient) {
+				if (showMode == 1 && content.isPasswordEnabled()) {
+					if (!verifyPassword(content, password)) {
+						Log.d(String.format("Pw認証に失敗した(%s, %s)", content.m_strPassword, password));
 						return false;
 					}
 				}
-				if (showMode == 1 && m_cContent.isPasswordEnabled()) {
-					if (!m_cContent.m_strPassword.equals(password)) {
-						Log.d(String.format("Pw認証に失敗した(%s, %s)",m_cContent.m_strPassword, password));
-						return false;
-					}
+
+				if (content.m_nPublishId == Common.PUBLISH_ID_LOGIN && !verifyPoipassLogin(checkLogin)) return false;
+				if (content.m_nPublishId == Common.PUBLISH_ID_FOLLOWER && !verifyPoipassFollower(content, checkLogin)) return false;
+				if (!content.nowAvailable()) return false;
+
+				if (content.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER
+						|| content.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE
+						|| content.m_nPublishId==Common.PUBLISH_ID_T_EACH) {
+					int resultCode = verifyTwitterFollowing(content, checkLogin, CTweet.FRIENDSHIP_UNDEF).code;
+					if (resultCode < 0) return false;
 				}
+				if (content.m_nPublishId==Common.PUBLISH_ID_T_LIST) {
+					int resultCode = verifyTwitterOpenList(content, checkLogin).code;
+					if (resultCode < 0) return false;
+				}
+				if (content.m_nPublishId==Common.PUBLISH_ID_T_RT && !verifyTwitterRetweet(content, checkLogin)) return false;
+
+
 				if (showMode == 1
-						&& m_cContent.m_nPublishId == Common.PUBLISH_ID_T_RT
-						&& m_cContent.publishAllNum > 0
+						&& content.m_nPublishId == Common.PUBLISH_ID_T_RT
+						&& content.publishAllNum > 0
 						&& appendId < 0) {
 					// RT限定かつ最初の一枚だけ公開で１枚目がタップされた時は、続きを表示しない。
 					showMode = 0;
@@ -158,12 +147,12 @@ public final class IllustDetailC {
 			}
 
 			isDownloadable = false;
-			if(isOwner || poipikuRequest.isClient(checkLogin.m_nUserId)){
+			if(isOwner || isRequestClient){
 				// 自分のコンテンツ or エアスケブを依頼したユーザは必ずダウンロードできる
 				isDownloadable = true;
 			} else {
 				// コンテンツ保有者がポイパス特典でダウンロードOKとしているケース
-				isDownloadable = (m_cContent.m_nEditorId != Common.EDITOR_TEXT) && (m_nDownload == CUser.DOWNLOAD_ON);
+				isDownloadable = (content.m_nEditorId != Common.EDITOR_TEXT) && (downloadCode == CUser.DOWNLOAD_ON);
 			}
 
 		} catch(Exception e) {
