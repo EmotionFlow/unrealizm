@@ -11,16 +11,21 @@ import java.util.*;
 
 public class GetSearchLogC {
 	public List<String> keywords = null;
+	public String blankMsg = "";
 	String searchType = "";
 
 	public void getParam(HttpServletRequest request) {
 		searchType = request.getParameter("type");
 	}
 
-	public int getResults(CheckLogin checkLogin) {
+	public int getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
 		int  nResult = -1;
 		keywords = new ArrayList<>();
-		if(!checkLogin.m_bLogin){return nResult;}
+		blankMsg = _TEX.T("SearchLog.NotFound");
+		if(!checkLogin.m_bLogin){
+			blankMsg = _TEX.T("SearchLog.NoLogin");
+			return nResult;
+		}
 
 		List<KeywordSearchLog.SearchTarget> targetCodes = new ArrayList<>();
 		if (searchType.equals("Contents") || searchType.equals("Tags")) {

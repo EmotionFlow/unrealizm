@@ -176,7 +176,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderTitleWrapper').hide();
 					$('#OverlaySearchWrapper').show();
 					$('#HeaderSearchBox').focus();
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>');
 				}
 				$(document).on('click', '.RecentSearchItem', ev => {
 					$('#HeaderTitleWrapper').show();
@@ -193,7 +193,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<script>
 				function showSearch() {
 					$('#PulldownSearchWrapper').slideDown();
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>');
 				}
 				$('#HeaderSearchBox').on('focus', showSearch);
 				$(document).on('click', '.RecentSearchItem', ev => {

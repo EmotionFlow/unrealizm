@@ -147,7 +147,7 @@ function SearchUserByKeyword(kwd) {
 	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
-function showSearchHistory(searchType, notFoundMsg) {
+function showSearchHistory(searchType) {
 	$.ajax({
 		"type": "get",
 		"url": "/f/GetSearchLogF.jsp",
@@ -171,7 +171,7 @@ function showSearchHistory(searchType, notFoundMsg) {
 		} else {
 			const $li = $('<li></li>');
 			const $row = $('<div></div>', {class: 'RecentSearchRow'});
-			const $item = $('<div></div>', {class: 'RecentSearchKW', text: notFoundMsg});
+			const $item = $('<div></div>', {class: 'RecentSearchKW', text: history.blankMsg});
 			$row.append($item);
 			$li.append($row);
 			$ul.append($li);
