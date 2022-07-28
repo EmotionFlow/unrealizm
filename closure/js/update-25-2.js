@@ -402,7 +402,7 @@ function createUpdatePasteFunction(){
 				} else {
 					fTweet = function() {
 						let dfd = $.Deferred();
-						dfd.resolve(1);
+						dfd.resolve({"result": 1});
 						return dfd.promise();
 					};
 				}
@@ -431,7 +431,9 @@ function createUpdatePasteFunction(){
 					}
 					return UpdatePasteOrderAjax(userId, data.content_id, json_array, firstNewID);
 				},function(err){errorMsg(-10);})
-				.then(fTweet, function(err){errorMsg(-11)})
+				.then(
+					fTweet, function(err){errorMsg(-11)}
+				)
 				.then(
 					function(data){
 						tweetSucceeded(data.result);
