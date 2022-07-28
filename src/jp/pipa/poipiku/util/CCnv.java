@@ -824,9 +824,10 @@ public final class CCnv {
 				sb.append(String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId));
 			}
 
-			final int remainNum;
+			int remainNum;
 			if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
 				remainNum = cContent.m_nFileNum - cContent.publishAllNum;
+				if (!cContent.isHideThumbImg) remainNum--;
 			} else {
 				remainNum = 1;
 			}
