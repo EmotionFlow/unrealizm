@@ -12,7 +12,7 @@
 <%@page import="jp.pipa.poipiku.util.CTweet"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-	int nResult = 0;
+int nResult = 0;
 CTweet cTweet = new CTweet();
 
 PROCESS: {
@@ -68,10 +68,10 @@ try {
         //twitter list情報(配列)
 		List<Map<String, Object>> twitterListList = new ArrayList<Map<String, Object>>();
 		for(UserList u : cTweet.m_listOpenList) {
-	Map<String, Object> twitterList = new HashMap<String, Object>();
-	twitterList.put("id", Long.toString(u.getId()));
-	twitterList.put("name", u.getName());
-	twitterListList.add(twitterList);
+			Map<String, Object> twitterList = new HashMap<String, Object>();
+			twitterList.put("id", Long.toString(u.getId()));
+			twitterList.put("name", u.getName());
+			twitterListList.add(twitterList);
 		}
 		root.put("twitter_open_list", twitterListList);
 	}

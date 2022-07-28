@@ -3,14 +3,16 @@ package jp.pipa.poipiku.controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
+
+import static jp.pipa.poipiku.util.ContentAccessVerificationUtil.*;
 
 public final class ShowAppendFileC {
 	public static final int OK = 0;
@@ -50,171 +52,69 @@ public final class ShowAppendFileC {
 		}
 	}
 
-	public CContent m_cContent = null;
+
+	public CContent content = null;
+
 	public int getResults(CheckLogin checkLogin) {
-		int nRtn = OK;
-		Connection cConn = null;
-		PreparedStatement cState = null;
-		ResultSet cResSet = null;
-		String strSql = "";
-
-		try {
-			cConn = DatabaseUtil.dataSource.getConnection();
-
-			strSql = "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, contentUserId);
-			cState.setInt(2, contentId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				m_cContent = new CContent(cResSet);
-				m_cContent.m_strPassword = Util.toString(cResSet.getString("password"));
+		content = null;
+		try (Connection connection = DatabaseUtil.dataSource.getConnection();
+		     PreparedStatement statement = connection.prepareStatement(
+					 "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?"
+		     )
+		) {
+			statement.setInt(1, contentUserId);
+			statement.setInt(2, contentId);
+			ResultSet resultSet = statement.executeQuery();
+			if (resultSet.next()) {
+				content = new CContent(resultSet);
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-			if(m_cContent==null) return ERR_NOT_FOUND;
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+		}
+		if(content == null) return ERR_NOT_FOUND;
 
-			m_cContent.setThumb();
+		boolean isRequestClient = verifyRequestClient(content, checkLogin);
+		boolean isOwner = content.m_nUserId == checkLogin.m_nUserId;
 
-			boolean bRequestClient = false;
-			strSql = "SELECT id FROM requests WHERE content_id=? AND client_user_id=?";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, contentId);
-			cState.setInt(2, checkLogin.m_nUserId);
-			cResSet = cState.executeQuery();
-			if(cResSet.next()) {
-				bRequestClient = true;
+		if (!isRequestClient && content.passwordEnabled) {
+			if (!verifyPassword(content, m_strPassword)) return ERR_PASS;
+		}
+
+		if (!isOwner && !isRequestClient) {
+			if (content.m_nPublishId == Common.PUBLISH_ID_LOGIN && !verifyPoipassLogin(checkLogin)) return ERR_LOGIN;
+			if (content.m_nPublishId == Common.PUBLISH_ID_FOLLOWER && !verifyPoipassFollower(content, checkLogin)) return ERR_FOLLOWER;
+			if (!content.nowAvailable()) return ERR_HIDDEN;
+			if (content.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER
+					|| content.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE
+					|| content.m_nPublishId==Common.PUBLISH_ID_T_EACH) {
+				VerifyTwitterResult verifyTwitterResult = verifyTwitterFollowing(content, checkLogin, m_nTwFriendship);
+				m_strMyTwitterScreenName = verifyTwitterResult.myTwitterScreenName;
+				if (verifyTwitterResult.code < 0) return verifyTwitterResult.code;
 			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-
-			boolean bOwner = m_cContent.m_nUserId==checkLogin.m_nUserId;
-
-			if (!bRequestClient && m_cContent.isPasswordEnabled() && !m_cContent.m_strPassword.equals(m_strPassword)) return ERR_PASS;
-
-			// login user
-			if (m_cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN && !checkLogin.m_bLogin) {
-				return ERR_LOGIN;
+			if (content.m_nPublishId==Common.PUBLISH_ID_T_LIST) {
+				VerifyTwitterResult verifyTwitterResult  = verifyTwitterOpenList(content, checkLogin);
+				m_strMyTwitterScreenName = verifyTwitterResult.myTwitterScreenName;
+				if (verifyTwitterResult.code < 0) return verifyTwitterResult.code;
 			}
+			if (content.m_nPublishId==Common.PUBLISH_ID_T_RT && !verifyTwitterRetweet(content, checkLogin)) return ERR_T_NEED_RETWEET;
+		}
 
-			// POIPIKU favo
-			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) {
-				boolean bFollow = (contentUserId == checkLogin.m_nUserId);
-				if(!bFollow) {
-					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
-					cState = cConn.prepareStatement(strSql);
-					cState.setInt(1, checkLogin.m_nUserId);
-					cState.setInt(2, contentUserId);
-					cResSet = cState.executeQuery();
-					if(cResSet.next()) {
-						bFollow = true;
-					}
-					cResSet.close();cResSet=null;
-					cState.close();cState=null;
-				}
-				if(!bFollow) return ERR_FOLLOWER;
+		int nRtn;
+		try (Connection connection = DatabaseUtil.dataSource.getConnection();
+		     PreparedStatement statement = connection.prepareStatement(
+				     "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000"
+		     )
+		) {
+			statement.setInt(1, contentId);
+			ResultSet resultSet = statement.executeQuery();
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				content.m_vContentAppend.add(new CContentAppend(resultSet));
 			}
-			cConn.close();cConn=null;
-
-			// hidden
-			if (!(bRequestClient || bOwner) && !m_cContent.nowAvailable()){
-				return ERR_HIDDEN;
-			}
-
-			// twitter follower, followee, each
-			if (!(bRequestClient || bOwner) && (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE || m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH)) {
-				if (!checkLogin.m_bLogin) {
-					if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER) {
-						return ERR_T_FOLLOWER;
-					}
-					if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE) {
-						return ERR_T_FOLLOW;
-					}
-					if (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH) {
-						return ERR_T_EACH;
-					}
-					return ERR_UNKNOWN;
-				}
-				CTweet cTweet = new CTweet();
-				if(cTweet.GetResults(checkLogin.m_nUserId)){
-					if (!cTweet.m_bIsTweetEnable) {
-						return ERR_T_UNLINKED;
-					}
-
-					m_strMyTwitterScreenName = cTweet.m_strScreenName;
-					if(m_nTwFriendship==CTweet.FRIENDSHIP_UNDEF
-						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
-						|| (m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH     && (m_nTwFriendship==CTweet.FRIENDSHIP_NONE || m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER))
-						){
-						m_nTwFriendship = cTweet.LookupFriendship(contentUserId, m_cContent.m_nPublishId);
-						if(m_nTwFriendship==CTweet.ERR_RATE_LIMIT_EXCEEDED){
-							return ERR_T_RATE_LIMIT_EXCEEDED;
-						} else if (m_nTwFriendship==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) {
-							return ERR_T_INVALID_OR_EXPIRED_TOKEN;
-						} else if (m_nTwFriendship==CTweet.ERR_TARGET_TW_ACCOUNT_NOT_FOUND) {
-							return ERR_T_TARGET_ACCOUNT_NOT_FOUND;
-						} else if (m_nTwFriendship==CTweet.ERR_OTHER) {
-							Log.d("m_nTwFriendship==CTweet.ERR_OTHER");
-							return ERR_UNKNOWN;
-						}
-					}
-					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER && !(m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWEE || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOWER;}
-					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWEE && !(m_nTwFriendship==CTweet.FRIENDSHIP_FOLLOWER || m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_FOLLOW;}
-					if(m_cContent.m_nPublishId==Common.PUBLISH_ID_T_EACH && !(m_nTwFriendship==CTweet.FRIENDSHIP_EACH)){return ERR_T_EACH;}
-				}
-			}
-
-			// twitter openlist
-			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_LIST){
-				if (!checkLogin.m_bLogin) {
-					return ERR_T_LIST;
-				}
-				CTweet cTweet = new CTweet();
-				if(cTweet.GetResults(checkLogin.m_nUserId)){
-					if(!cTweet.m_bIsTweetEnable){
-						return ERR_T_UNLINKED;
-					}
-					m_strMyTwitterScreenName = cTweet.m_strScreenName;
-					int nRet = cTweet.LookupListMember(m_cContent);
-					if(nRet==CTweet.ERR_NOT_FOUND) return ERR_T_LIST;
-					if(nRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN) return ERR_T_INVALID_OR_EXPIRED_TOKEN;
-					if(nRet==CTweet.ERR_RATE_LIMIT_EXCEEDED) return ERR_T_RATE_LIMIT_EXCEEDED;
-					if(nRet<0) {
-						Log.d("nRet<0)");
-						return ERR_UNKNOWN;
-					}
-				} else {
-					Log.d("cTweet.GetResults(checkLogin.m_nUserId) return false");
-					return ERR_UNKNOWN;
-				}
-			}
-
-			// twitter retweet
-			if (!(bRequestClient || bOwner) && m_cContent.m_nPublishId==Common.PUBLISH_ID_T_RT) {
-				if (!TwitterRetweet.find(checkLogin.m_nUserId, m_cContent.m_nContentId)) {
-					return ERR_T_NEED_RETWEET;
-				}
-			}
-
-			// Each append image
-			cConn = DatabaseUtil.dataSource.getConnection();
-			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
-			cState = cConn.prepareStatement(strSql);
-			cState.setInt(1, contentId);
-			cResSet = cState.executeQuery();
-			while (cResSet.next()) {
-				m_cContent.m_vContentAppend.add(new CContentAppend(cResSet));
-			}
-			cResSet.close();cResSet=null;
-			cState.close();cState=null;
-			nRtn = m_cContent.m_vContentAppend.size();
-		} catch(Exception e) {
-			e.printStackTrace();
+			nRtn = content.m_vContentAppend.size();
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
 			nRtn = ERR_UNKNOWN;
-		} finally {
-			try{if(cResSet!=null){cResSet.close();cResSet=null;}}catch(Exception e){;}
-			try{if(cState!=null){cState.close();cState=null;}}catch(Exception e){;}
-			try{if(cConn!=null){cConn.close();cConn=null;}}catch(Exception e){;}
 		}
 		return nRtn;
 	}

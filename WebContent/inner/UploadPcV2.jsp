@@ -4,6 +4,9 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
+boolean isCreateContent = true;
+final CContent content = null;
+
 if(!checkLogin.m_bLogin) {
 	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	return;
@@ -94,9 +97,9 @@ if (requestId > 0) {
 			});
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 			function UploadPasteCheck(user_id) {
-				var nImageNum = 0;
+				let nImageNum = 0;
 				$('.imgView').each(function(){
-					var strSrc = $.trim($(this).attr('src'));
+					const strSrc = $.trim($(this).attr('src'));
 					if(strSrc.length>0) nImageNum++;
 				});
 				if(nImageNum<=0) {
@@ -111,7 +114,7 @@ if (requestId > 0) {
 			});
 			<%} else if(nEditorId==Common.EDITOR_TEXT){%>
 			function UploadTextCheck(user_id) {
-				var strTextBody = $.trim($("#EditTextBody").val());
+				const strTextBody = $.trim($("#EditTextBody").val());
 				if(!strTextBody) {
 					DispMsg('<%=_TEX.T("UploadFilePc.Text.NeedBody")%>');
 					return;
@@ -137,7 +140,7 @@ if (requestId > 0) {
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
 			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
 			.qq-gallery .qq-file-info {display: none;}
-			.qq-upload-retry-selector qq-upload-retry {display: none;}
+			.qq-upload-retry-selector .qq-upload-retry {display: none;}
 			.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
 			.qq-gallery .qq-upload-retry {display: none;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
@@ -178,15 +181,15 @@ if (requestId > 0) {
 				}
 			%>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_UPLOAD ? "Selected" : ""%>"
-						href="/UploadFilePcV.jsp<%=cgiParams%>">
+						href="/UploadFilePcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.File")%>
 				</a></li>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_TEXT ? "Selected" : ""%>"
-						href="/UploadTextPcV.jsp<%=cgiParams%>">
+						href="/UploadTextPcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.Text")%>
 				</a></li>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_PASTE ? "Selected" : ""%>"
-						href="/UploadPastePcV.jsp<%=cgiParams%>">
+						href="/UploadPastePcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.Paste")%>
 				</a></li>
 			</ul>
@@ -274,6 +277,12 @@ if (requestId > 0) {
 					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
+				<div class="OptionItem" style="display: <%=nEditorId==Common.EDITOR_TEXT ? "block" : "none"%>">
+					<div class="OptionPublish">
+						<label><input type="radio" name="NOVEL_DIRECTION_VAL" value="<%=CContent.NOVEL_DIRECTION_HORIZONTAL%>" id="RadioHorizontal" /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
+						<label><input type="radio" name="NOVEL_DIRECTION_VAL" value="<%=CContent.NOVEL_DIRECTION_VERTICAL%>" id="RadioVertical" /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>
+					</div>
+				</div>
 				<%}%>
 
 				<div class="TagList">
@@ -283,417 +292,7 @@ if (requestId > 0) {
 
 
 				<div class="UoloadCmdOption">
-					<style>
-                        .UploadFile .UoloadCmdOption .OptionItem.Sub {
-							padding: 4px 0;
-                        }
-
-
-                        /* Switch starts here */
-                        .rocker {
-                            display: inline-block;
-                            position: relative;
-                            font-size: 1em;
-                            text-align: center;
-                            color: #888;
-                            width: 100%;
-                            height: 2.5em;
-                            padding: 4px 0;
-                            overflow: hidden;
-                            margin: 0 12px;
-                        }
-
-                        .rocker.sub {
-                            font-size: 0.9em;
-                            height: 2em;
-                            padding: 3px 0;
-                            margin: -5px 12px 0 12px;
-                        }
-
-                        .rocker::before {
-                            content: "";
-                            position: absolute;
-                            background-color: #999;
-                        }
-
-                        .rocker input {
-                            opacity: 0;
-                            width: 0;
-                            height: 0;
-                        }
-
-                        .switch-left,
-                        .switch-right {
-                            cursor: pointer;
-                            position: absolute;
-							top: 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            width: 50%;
-							height: 100%;
-                            transition: 0.3s;
-                        }
-
-                        .switch-left {
-                            background-color: #ddd;
-							border-radius: 4px 0 0 4px;
-                        }
-
-                        .switch-right {
-                            right: 0;
-                            background-color: #3498da;
-                            color: #fff;
-                            border-radius: 0 4px 4px 0;
-                        }
-
-                        input:checked + .switch-left {
-                            background-color: #3498da;
-                            color: #fff;
-                        }
-
-                        input:checked + .switch-left + .switch-right {
-                            background-color: #ddd;
-                            color: #888;
-                            right: 0;
-                        }
-
-                        /* Keyboard Users */
-                        input:focus + .switch-left {
-                            color: #888;
-                        }
-
-                        input:checked:focus + .switch-left {
-                            color: #fff;
-                        }
-
-                        input:focus + .switch-left + .switch-right {
-                            color: #fff;
-                        }
-
-                        input:checked:focus + .switch-left + .switch-right {
-                            color: #888;
-                        }
-
-                        .OptionItem input[type=radio] {
-                            display: none;
-                        }
-                        .OptionItem input[type=radio]:checked + label {
-                            border: 2px solid #00A0BA;
-                        }
-                        .OptionItem input[type=radio] + label {
-                            border: 2px solid rgba(0,0,0,0);
-                        }
-
-                        .OptionToggle {
-                            width: 100%;
-                            height: 35px;
-                            margin: 7px;
-                            display: flex;
-                            border: solid 1px #3498da;
-                            border-radius: 4px;
-                            text-align: center;
-                            line-height: 35px;
-                            color: #a7a7a7;
-                        }
-                        .OptionToggle > div{
-                            width: 50%;
-                            text-align: center;
-                        }
-                        .OptionToggle .Selected {
-                            background-color: #3498da;
-                            color: #ffffff;
-                        }
-						#ItemNsfwVal {
-							padding-top: 0;
-                            justify-content: center;
-						}
-						.OptionPublishNsfwList {
-							display: flex;
-                            justify-content: center;
-                            margin:	0 12px;
-						}
-						.OptionPublishNsfw {
-                            display: flex;
-                            flex-direction: column;
-                            background: #fff;
-                            margin: 4px 2px;
-                            border-radius: 4px;
-						}
-                        .OneCushionImage{
-                            display: block;
-                            width: 148px;
-                            height: 65px;
-							border-radius: 4px;
-                            background-size: 90%;
-                        }
-                        .OneCushionName{
-                            display: block;
-							width: 100%;
-							font-size: 12px;
-                            text-align: center;
-						}
-                        .OneCushionImage.OneCushion {
-                            background-image: url("/img/warning.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .OneCushionImage.R18 {
-                            background-image: url("/img/R-18.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-
-                        .OptionPublishShowLimitList {
-                            display: flex;
-							justify-content: center;
-                            margin:	0 12px;
-                            flex-direction: row;
-                            flex-wrap: wrap;
-                        }
-                        .OptionShowLimit {
-                            display: flex;
-                            flex-direction: column;
-							background: #fff;
-                            margin: 2px 3px;
-                            border-radius: 4px;
-                        }
-                        .ShowLimitImage {
-                            display: block;
-                            width: 148px;
-                            height: 65px;
-                            background-size: 90%;
-                        }
-                        .ShowLimitImage.PoipikuLogin {
-                            background-image: url("/img/publish_login.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.PoipikuFollower {
-                            background-image: url("/img/publish_follower.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterFollower {
-                            background-image: url("/img/publish_t_follower.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterList {
-                            background-image: url("/img/publish_t_list.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterFollowee {
-                            background-image: url("/img/publish_t_follow.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterEach {
-                            background-image: url("/img/publish_t_each.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitImage.TwitterRetweet {
-                            background-image: url("/img/publish_t_rt.png_360.jpg");
-                            background-repeat: no-repeat;
-                            background-position: 50% 50%;
-                        }
-                        .ShowLimitName {
-                            display: block;
-                            width: 100%;
-							font-size: 12px;
-                            text-align: center;
-                        }
-                        .UploadFile .UoloadCmdOption .OptionOther {
-                            border-top: 1px solid rgb(172, 172, 172);
-						}
-                        #TwitterList {
-							text-align: center;
-                        }
-                        #TwitterList select{
-                            width: 145px;
-                            margin: 2px auto;
-                            font-size: 12px;
-                            padding: 1px;
-						}
-						#TwitterListNotFound {
-                            display: block;
-                            width: 140px;
-                            font-size: 11px;
-                            text-align: left;
-						}
-					</style>
-
-					<div class="OptionItem" style="font-weight: bold;">
-						<label class="rocker">
-							<input id="OPTION_PUBLISH" type="checkbox">
-							<span class="switch-left">公開する</span>
-							<span class="switch-right">公開しない</span>
-						</label>
-					</div>
-					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionLimitedTimePublish()">
-							<input id="OPTION_NOT_TIME_LIMITED" type="checkbox">
-							<span class="switch-left">常時</span>
-							<span class="switch-right">期間指定</span>
-						</label>
-					</div>
-					<div class="OptionItem" id="ItemTimeLimitedVal" style="padding-top: 0; display: none;">
-						<div class="OptionPublish">
-							<%if(Util.isSmartPhone(request)) {%>
-							<div style="display: block;">
-								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
-								<input id="TIME_LIMITED_START" class="EditTimeLimited" type="text" />
-							</div>
-							<div style="display: block;">
-								<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
-								<input id="TIME_LIMITED_END" class="EditTimeLimited" type="text" />
-							</div>
-							<%}else{%>
-							<input id="TIME_LIMITED_START" class="EditTimeLimitedPc" type="text" maxlength="15" />
-							<span class="EditTimeLimitedPcTo">〜</span>
-							<input id="TIME_LIMITED_END" class="EditTimeLimitedPc" type="text" maxlength="15" />
-							<%}%>
-						</div>
-					</div>
-					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionPublishNsfw()">
-							<input id="OPTION_NOT_PUBLISH_NSFW" type="checkbox">
-							<span class="switch-left">配慮・NSFW不要</span>
-							<span class="switch-right">指定する</span>
-						</label>
-					</div>
-					<div class="OptionItem" id="ItemNsfwVal" style="display: none;">
-						<div class="OptionPublishNsfwList">
-							<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R15%>" id="RadioOneCushion">
-							<label for="RadioOneCushion" class="OptionPublishNsfw">
-								<span class="OneCushionImage OneCushion"></span>
-								<span class="OneCushionName">ワンクッション</span>
-							</label>
-							<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R18%>" id="RadioR18">
-							<label for="RadioR18" class="OptionPublishNsfw">
-								<span class="OneCushionImage R18"></span>
-								<span class="OneCushionName">R18</span>
-							</label>
-						</div>
-					</div>
-
-					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionShowLimit()">
-							<input id="OPTION_NO_CONDITIONAL_SHOW" type="checkbox">
-							<span class="switch-left">誰でも閲覧OK</span>
-							<span class="switch-right">限定する</span>
-						</label>
-					</div>
-					<div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
-						<div class="OptionPublishShowLimitList">
-							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_LOGIN%>" id="RadioPoipikuLogin">
-							<label for="RadioPoipikuLogin" class="OptionShowLimit">
-								<span class="ShowLimitImage PoipikuLogin"></span>
-								<span class="ShowLimitName">ログイン限定</span>
-							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_FOLLOWER%>" id="RadioPoipikuFollower">
-							<label for="RadioPoipikuFollower" class="OptionShowLimit">
-								<span class="ShowLimitImage PoipikuFollower"></span>
-								<span class="ShowLimitName">こそフォロ限定</span>
-							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_FOLLOWER%>" id="RadioTwitterFollower">
-							<label for="RadioTwitterFollower" class="OptionShowLimit">
-								<span class="ShowLimitImage TwitterFollower"></span>
-								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロワー限定</span>
-							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_LIST%>" id="RadioTwitterList">
-							<label for="RadioTwitterList" class="OptionShowLimit" onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)">
-								<span class="ShowLimitImage TwitterList"></span>
-								<span class="ShowLimitName"><i class="fab fa-twitter"></i>リスト限定</span>
-								<span class="ShowLimitName" id="TwitterList">
-									<span id="TwitterListLoading" style="display: none"></span>
-									<span id="TwitterListNotFound" style="display: none;"><%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%></span>
-									<select id="TWITTER_LIST_ID" class="EditPublish" style="display: none;"></select>
-								</span>
-							</label>
-<%--							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_T_FOLLOWEE%>" id="RadioTwitterFollowee">--%>
-<%--							<label for="RadioTwitterFollowee" class="OptionShowLimit">--%>
-<%--								<span class="ShowLimitImage TwitterFollowee"></span>--%>
-<%--								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</span>--%>
-<%--							</label>--%>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_EACH%>" id="RadioTwitterEach">
-							<label for="RadioTwitterEach" class="OptionShowLimit">
-								<span class="ShowLimitImage TwitterEach"></span>
-								<span class="ShowLimitName"><i class="fab fa-twitter"></i>相互限定</span>
-							</label>
-							<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_RT%>" id="RadioTwitterRetweet">
-							<label for="RadioTwitterRetweet" class="OptionShowLimit">
-								<span class="ShowLimitImage TwitterRetweet"></span>
-								<span class="ShowLimitName"><i class="fab fa-twitter"></i>リツイート限定</span>
-							</label>
-						</div>
-					</div>
-
-					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionPassword()">
-							<input id="OPTION_NO_PASSWORD" type="checkbox">
-							<span class="switch-left">パスワードなし</span>
-							<span class="switch-right">あり</span>
-						</label>
-					</div>
-					<div id="ItemPassword" class="OptionItem" style="padding-top: 0; display: none;">
-						<label for="PASSWORD_VAL"><i class="fas fa-key" style="margin-right: 5px"></i></label>
-						<input id="PASSWORD_VAL" class="EditPassword" type="text" maxlength="16" />
-					</div>
-
-					<%if(nEditorId!=Common.EDITOR_TEXT){%>
-					<div class="OptionItem" id="OptionItemShowAllFirst" style="display: none">
-						<label class="rocker">
-							<input id="OPTION_SHOW_FIRST" type="checkbox">
-							<span class="switch-left">最初の１枚見せる</span>
-							<span class="switch-right">見せない</span>
-						</label>
-					</div>
-					<%}%>
-
-					<div class="OptionItem" style="margin-top: 13px">
-						<label class="rocker" onclick="updateOptionTweet()">
-							<input id="OPTION_TWEET" type="checkbox">
-							<span class="switch-left">同時にツイート</span>
-							<span class="switch-right">しない</span>
-						</label>
-					</div>
-
-					<%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
-					<div class="OptionItem Sub" id="OptionItemTweetImage" style="display: none">
-						<label class="rocker sub">
-							<input id="OPTION_TWEET_IMAGE" type="checkbox">
-							<span class="switch-left">画像もツイート</span>
-							<span class="switch-right">しない</span>
-						</label>
-					</div>
-
-					<div class="OptionItem">
-						<label class="rocker" onclick="updateOptionPassword()">
-							<input id="OPTION_TWITTER_CARD_THUMBNAIL" type="checkbox">
-							<span class="switch-left" style="font-size:0.8em">Twitterカードにサムネ表示</span>
-							<span class="switch-right">表示しない</span>
-						</label>
-					</div>
-					<%}%>
-
-					<div class="OptionItem" style="margin-top: 13px">
-						<label class="rocker" onclick="updateOptionPassword()">
-							<input id="OPTION_CHEER_NG" type="checkbox">
-							<span class="switch-left">ポチ袋OFF</span>
-							<span class="switch-right">ON</span>
-						</label>
-					</div>
-
-					<div class="OptionItem" style="margin-top: 13px">
-						<label class="rocker">
-							<input id="OPTION_RECENT" type="checkbox">
-							<span class="switch-left">新着に載せる</span>
-							<span class="switch-right">避ける</span>
-						</label>
-					</div>
+					<%@include file="UpCmdOptions.jsp"%>
 
 					<div class="UoloadCmd">
 					<a id="UoloadCmdBtn"

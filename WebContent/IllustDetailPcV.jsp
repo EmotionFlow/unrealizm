@@ -20,6 +20,7 @@ if(!checkLogin.m_bLogin) {
 }
 
 IllustDetailC cResults = new IllustDetailC();
+
 cResults.getParam(request);
 if(!cResults.getResults(checkLogin)) {
 	response.sendRedirect("/NotFoundPcV.jsp");
@@ -30,13 +31,13 @@ if(!cResults.getResults(checkLogin)) {
 String file_name = "";
 if(cResults.isDownloadable) {
 	try {
-		file_name = (new File(cResults.m_cContent.m_strFileName)).getName();
+		file_name = (new File(cResults.content.m_strFileName)).getName();
 		file_name = Util.changeExtension(
 				file_name,
-				ImageUtil.getExt(getServletContext().getRealPath(cResults.m_cContent.m_strFileName))
+				ImageUtil.getExt(getServletContext().getRealPath(cResults.content.m_strFileName))
 		);
 	}catch (IllegalArgumentException ioe) {
-		Log.d("Download ERROR(not found)", getServletContext().getRealPath(cResults.m_cContent.m_strFileName));
+		Log.d("Download ERROR(not found)", getServletContext().getRealPath(cResults.content.m_strFileName));
 	}
 }
 %>
@@ -52,7 +53,7 @@ if(cResults.isDownloadable) {
 		});
 		</script>
 
-		<%if(cResults.m_cContent.m_cUser.m_nUserId==checkLogin.m_nUserId || cResults.m_nDownload==CUser.DOWNLOAD_ON) {%>
+		<%if(cResults.content.m_cUser.m_nUserId==checkLogin.m_nUserId || cResults.downloadCode ==CUser.DOWNLOAD_ON) {%>
 		<style>
 			body {
 				user-select:  all;
@@ -72,10 +73,10 @@ if(cResults.isDownloadable) {
 		</script>
 		<%}%>
 
-		<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT){%>
+		<%if(cResults.content.m_nEditorId==Common.EDITOR_TEXT){%>
 		<script>
 		$(function () {
-			<%if(cResults.m_cContent.novelDirection==0){%>
+			<%if(cResults.content.novelDirection==0){%>
 			if (window.innerWidth< $(".NovelSection").width()){
 				$(".IllustItemLink").css("width", String(window.innerWidth - 10) +"px");
 			}
@@ -96,7 +97,7 @@ if(cResults.isDownloadable) {
 		<style>
 		body {
 			height: 100%;
-			<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT ){%>
+			<%if(cResults.content.m_nEditorId==Common.EDITOR_TEXT ){%>
 			background: #ffffff;
 			<%}else{%>
             background: #333333;
@@ -105,7 +106,7 @@ if(cResults.isDownloadable) {
 		.AnalogicoInfo {display: none;}
 
 		.IllustItemLink {
-			<%if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==0){%>
+			<%if(cResults.content.m_nEditorId==Common.EDITOR_TEXT && cResults.content.novelDirection==0){%>
 			margin: 0 auto;
 			width: 38em;
 			<%}else{%>
@@ -144,13 +145,13 @@ if(cResults.isDownloadable) {
 			<table class="IllustDetail">
 			<tr>
 			<td>
-			<%if(!cResults.m_cContent.m_strFileName.isEmpty()) {%>
+			<%if(!cResults.content.m_strFileName.isEmpty()) {%>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.contentId%>&AD=<%=cResults.appendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 				<%if (cResults.isOwner) {%>
 				<br><span>
-				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>
+				<%if (cResults.downloadCode ==CUser.DOWNLOAD_OFF) {%>
 				(<%=_TEX.T("IllustView.DownloadInfo.Disallow")%>)
 				<%}else{%>
 				(<%=_TEX.T("IllustView.DownloadInfo.Allow")%>)
@@ -160,14 +161,14 @@ if(cResults.isDownloadable) {
 			</div>
 			<%}%>
 			<div class="IllustItemLink">
-				<img class="IllustItemImage" src="<%=Common.GetOrgImgUrl(cResults.m_cContent.m_strFileName)%>" />
+				<img class="IllustItemImage" src="<%=Common.GetOrgImgUrl(cResults.content.m_strFileName)%>" />
 			</div>
 			<%if(cResults.isDownloadable) {%>
 			<div class="IllustItemTProhibit">
 				<a href="/DownloadImageFile?TD=<%=cResults.contentId%>&AD=<%=cResults.appendId%>" download="<%=file_name%>"><i class="fas fa-download"></i> <%=_TEX.T("IllustView.Download")%></a>
 				<%if (cResults.isOwner) {%>
 				<br><span>
-				<%if (cResults.m_nDownload==CUser.DOWNLOAD_OFF) {%>
+				<%if (cResults.downloadCode ==CUser.DOWNLOAD_OFF) {%>
 				(<%=_TEX.T("IllustView.DownloadInfo.Disallow")%>)
 				<%}else{%>
 				(<%=_TEX.T("IllustView.DownloadInfo.Allow")%>)
@@ -182,10 +183,10 @@ if(cResults.isDownloadable) {
 			<div class="IllustItemTProhibit">
 				<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
 			</div>
-			<%} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
+			<%} else if(cResults.content.m_nEditorId==Common.EDITOR_TEXT) {%>
 			<div class="IllustItemLink">
-				<div class="IllustItemTextDetail <%=cResults.m_cContent.novelDirection==1 ? "Vertical" : ""%>">
-					<%=Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)%>
+				<div class="IllustItemTextDetail <%=cResults.content.novelDirection==1 ? "Vertical" : ""%>">
+					<%=Util.replaceForGenEiFont(cResults.content.novelHtml)%>
 				</div>
 			</div>
 			<%} else {%>
@@ -196,7 +197,7 @@ if(cResults.isDownloadable) {
 			</table>
 		</article>
 
-		<%if(!(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==1)){%>
+		<%if(!(cResults.content.m_nEditorId==Common.EDITOR_TEXT && cResults.content.novelDirection==1)){%>
 		<%@ include file="/inner/TFooter.jsp"%>
 		<%}%>
 	</body>

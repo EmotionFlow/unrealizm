@@ -18,6 +18,13 @@ if(!cResults.getResults(checkLogin)) {
 	return;
 }
 
+// V2 -> V1 convert
+if (cResults.m_cContent.m_nOpenId == Common.OPEN_ID_HIDDEN && !cResults.m_cContent.m_bLimitedTimePublish) {
+	cResults.m_cContent.m_nPublishId = Common.PUBLISH_ID_HIDDEN;
+} else if (cResults.m_cContent.m_nPublishId == Common.PUBLISH_ID_ALL && cResults.m_cContent.isPasswordEnabled()) {
+	cResults.m_cContent.m_nPublishId = Common.PUBLISH_ID_PASS;
+}
+
 Request poipikuRequest = new Request();
 poipikuRequest.selectByContentId(cResults.m_nContentId, null);
 // 納品済かつ納品期限を過ぎている
@@ -215,8 +222,8 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			<ul class="TabMenu">
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<li><a class="TabMenuItem Selected" href="/UpdateFilePcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span>></li>
-				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span>></li>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>
+				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span></li>
 			<%}else if(nEditorId==Common.EDITOR_TEXT){%>
 				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.File")%></span></li>
 				<li><a class="TabMenuItem Selected" href="/UploadTextPcV.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Text")%></a></li>
@@ -366,7 +373,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 					</div>
 
 					<div id="ItemPassword" class="OptionItem"
-						<%if(!cResults.m_cContent.isPasswordEnabled()){%>style="display: none;"<%}%>
+						<%if(!(cResults.m_cContent.m_nPublishId == Common.PUBLISH_ID_PASS  && cResults.m_cContent.isPasswordEnabled())){%>style="display: none;"<%}%>
 						>
 						<div class="OptionLabel"></div>
 						<div class="OptionPublish">

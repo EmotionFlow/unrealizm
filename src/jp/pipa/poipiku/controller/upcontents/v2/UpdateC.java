@@ -52,13 +52,13 @@ public final class UpdateC extends UpC {
 		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 0;
-		int nPublishIdPresent = -1;
-		String strTweetId = "";
-		int nOpenIdPresent = 2;
-		Timestamp tsUploadDatePresent = new Timestamp(0);
-		Timestamp tsEndDatePresent = new Timestamp(0);
-		boolean bLimitedTimePublishPresent = false;
-		Integer nNewContentId = null;
+		int publishIdPresent = -1;
+		String tweetId = "";
+		int openIdPresent = 2;
+		Timestamp uploadDatePresent = new Timestamp(0);
+		Timestamp endDatePresent = new Timestamp(0);
+		boolean limitedTimePublishPresent = false;
+		Integer newContentId = null;
 		int nEditorId = Common.EDITOR_UPLOAD;
 
 		try {
@@ -71,12 +71,12 @@ public final class UpdateC extends UpC {
 			statement.setInt(2, upParam.contentId);
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
-				nOpenIdPresent = resultSet.getInt("open_id");
-				nPublishIdPresent = resultSet.getInt("publish_id");
-				strTweetId = resultSet.getString("tweet_id");
-				bLimitedTimePublishPresent = resultSet.getBoolean("limited_time_publish");
-				tsUploadDatePresent = resultSet.getTimestamp("upload_date");
-				tsEndDatePresent = resultSet.getTimestamp("end_date");
+				openIdPresent = resultSet.getInt("open_id");
+				publishIdPresent = resultSet.getInt("publish_id");
+				tweetId = resultSet.getString("tweet_id");
+				limitedTimePublishPresent = resultSet.getBoolean("limited_time_publish");
+				uploadDatePresent = resultSet.getTimestamp("upload_date");
+				endDatePresent = resultSet.getTimestamp("end_date");
 				nEditorId = Math.max(resultSet.getInt("editor_id"), Common.EDITOR_UPLOAD);
 			}
 			resultSet.close();resultSet=null;
@@ -92,16 +92,16 @@ public final class UpdateC extends UpC {
 		try {
 			// create statement
 			boolean bToPublish = false;
-			int nOpenId = GetOpenId(
-				nOpenIdPresent,
-				upParam.publishId,
-				upParam.isNotRecently,
+			int newOpenId = GetOpenId(
+				openIdPresent,
+				!upParam.isPublish ? Common.OPEN_ID_HIDDEN : Common.PUBLISH_ID_ALL,
+				!upParam.isShowRecently,
 				upParam.isTimeLimited,
-				bLimitedTimePublishPresent,
+				limitedTimePublishPresent,
 				upParam.publishStart,
 				upParam.publishEnd,
-				tsUploadDatePresent,
-				tsEndDatePresent);
+				uploadDatePresent,
+				endDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
 			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(
 					"genre_id=?", "category_id=?", "open_id=?",
@@ -120,7 +120,7 @@ public final class UpdateC extends UpC {
 
 			if(!upParam.isTimeLimited){
 				// これまで非公開で、今後公開したい。
-				if(nOpenIdPresent==Common.OPEN_ID_HIDDEN && upParam.isPublish){
+				if(openIdPresent==Common.OPEN_ID_HIDDEN && upParam.isPublish){
 					bToPublish = true;
 					lColumns.add("upload_date=now()");
 				}
@@ -148,7 +148,7 @@ public final class UpdateC extends UpC {
 				// set values
 				statement.setInt(idx++, upParam.genre);
 				statement.setInt(idx++, upParam.categoryId);
-				statement.setInt(idx++, nOpenId);
+				statement.setInt(idx++, newOpenId);
 				statement.setString(idx++, Common.SubStrNum(upParam.description, Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]));
 				statement.setString(idx++, upParam.privateNote);
 				statement.setString(idx++, upParam.tagList);
@@ -178,7 +178,7 @@ public final class UpdateC extends UpC {
 
 				statement.setBoolean(idx++, upParam.isCheerNg);
 				statement.setInt(idx++, CContent.getTweetWhenPublishedId(upParam.isTweet, upParam.isTweetWithImage, upParam.isTwitterCardThumbnail));
-				statement.setBoolean(idx++, !upParam.isNotRecently);
+				statement.setBoolean(idx++, !upParam.isShowRecently);
 
 				statement.setBoolean(idx++, upParam.isTimeLimited);
 				if (upParam.isTimeLimited) {
@@ -193,6 +193,9 @@ public final class UpdateC extends UpC {
 				// set where params
 				statement.setInt(idx++, upParam.userId);
 				statement.setInt(idx++, upParam.contentId);
+
+				Log.d(statement.toString());
+
 				statement.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -209,7 +212,7 @@ public final class UpdateC extends UpC {
 					statement.setInt(1, upParam.contentId);
 					resultSet = statement.executeQuery();
 					if(resultSet.next()) {
-						nNewContentId = resultSet.getInt("new_id");
+						newContentId = resultSet.getInt("new_id");
 					} else {
 						throw new Exception("new content id is null.");
 					}
@@ -222,7 +225,7 @@ public final class UpdateC extends UpC {
 					if(statement!=null){statement.close();};statement=null;
 				}
 
-				boolean bUpdateResult = doUpdateContentIdTransaction(connection,  upParam.contentId, nNewContentId);
+				boolean bUpdateResult = doUpdateContentIdTransaction(connection,  upParam.contentId, newContentId);
 				if(!bUpdateResult){
 					try{
 						strSql = "DELETE FROM content_id_histories WHERE old_id=?";
@@ -239,7 +242,7 @@ public final class UpdateC extends UpC {
 				}
 			}
 
-			final int contentId = nNewContentId==null ? upParam.contentId : nNewContentId;
+			final int contentId = newContentId==null ? upParam.contentId : newContentId;
 
 			// Delete old tags
 			if (!upParam.description.isEmpty() || !upParam.tagList.isEmpty()) {
@@ -271,16 +274,16 @@ public final class UpdateC extends UpC {
 			//		 & 同時ツイートON ＆ 前のツイートを削除 & 削除対象ツイートあり
 			// だったら、ツイート削除→UPDATE tweet_id=NULL
 			if ((
-					(!bLimitedTimePublishPresent && upParam.isTimeLimited)
-					|| (upParam.isTimeLimited && (nOpenIdPresent==Common.OPEN_ID_HIDDEN || nOpenIdPresent!=Common.OPEN_ID_HIDDEN && (!tsUploadDatePresent.equals(upParam.publishStart) || !tsEndDatePresent.equals(upParam.publishEnd))))
+					(!limitedTimePublishPresent && upParam.isTimeLimited)
+					|| (upParam.isTimeLimited && (openIdPresent==Common.OPEN_ID_HIDDEN || openIdPresent!=Common.OPEN_ID_HIDDEN && (!uploadDatePresent.equals(upParam.publishStart) || !endDatePresent.equals(upParam.publishEnd))))
 				)
 				&& (upParam.isTweet || upParam.isTweetWithImage)
 				&& upParam.isDeleteTweet
-				&& !strTweetId.isEmpty()
+				&& !tweetId.isEmpty()
 				){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(upParam.userId)){
-					if(cTweet.Delete(strTweetId)!=CTweet.OK){
+					if(cTweet.Delete(tweetId)!=CTweet.OK){
 						Log.d("Delete tweet failed.");
 						// 処理自体は続行する
 					}
@@ -305,6 +308,6 @@ public final class UpdateC extends UpC {
 			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
-		return nNewContentId==null?upParam.contentId :nNewContentId;
+		return newContentId==null?upParam.contentId :newContentId;
 	}
 }

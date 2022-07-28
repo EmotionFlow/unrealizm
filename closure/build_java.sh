@@ -15,7 +15,7 @@ SOURCE_PATH="../src"
 DEPLOY_PATH="${WEB_CONTENT}WEB-INF/classes"
 CLASSES_WEB_INF="${WEB_CONTENT}WEB-INF/lib/*"
 JAVA_FILE_ROOT="../src/jp/pipa/poipiku"
-JAVA_FILE_DIRS=("/controller" "/controller/upcontents/v1" "/servlet" "/util" "/settlement/epsilon" "/settlement" "/notify")
+JAVA_FILE_DIRS=("/controller" "/controller/upcontents/v1" "/controller/upcontents/v2" "/servlet" "/util" "/settlement/epsilon" "/settlement" "/notify")
 
 java -version
 

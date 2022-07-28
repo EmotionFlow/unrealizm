@@ -25,6 +25,7 @@ fi
 /bin/cp ./js/upload-51.js ${WEB_CONTENT}js/
 /bin/cp ./js/upload-50-2.js ${WEB_CONTENT}js/
 /bin/cp ./js/update-25.js ${WEB_CONTENT}js/
+/bin/cp ./js/update-25-1.js ${WEB_CONTENT}js/
 
 CLOSURE_COMPILER_JAR="./closure-compiler-v20201006.jar"
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-111.js --js_output_file ${WEB_CONTENT}js/common-111.js
@@ -32,6 +33,7 @@ java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-111.js --js_output_file ${WEB
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-51.js --js_output_file ${WEB_CONTENT}js/upload-51.js
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-50-2.js --js_output_file ${WEB_CONTENT}js/upload-50-2.js
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-25.js --js_output_file ${WEB_CONTENT}js/update-25.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-25-1.js --js_output_file ${WEB_CONTENT}js/update-25-1.js
 
 ##for file in $( ls ./js | grep .js$ ); do
 #echo "${file}"

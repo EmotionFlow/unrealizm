@@ -1,7 +1,7 @@
-<%@ page import="jp.pipa.poipiku.controller.upcontents.v2.UploadC" %>
-<%@ page import="jp.pipa.poipiku.controller.upcontents.v2.UploadCParam" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v2.UploadC" %>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v2.UploadCParam" %>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
@@ -23,7 +23,4 @@ if( checkLogin.m_bLogin && cParam.userId==checkLogin.m_nUserId && nRtn==0 ) {
 	return;
 }
 %>
-{
-"content_id":<%=nRtn%>,
-"deliver_request_result":<%=cResults.deliverRequestResult%>
-}
+{"content_id":<%=nRtn%>,"open_id":<%=cResults.openId%>,"deliver_request_result":<%=cResults.deliverRequestResult%>}

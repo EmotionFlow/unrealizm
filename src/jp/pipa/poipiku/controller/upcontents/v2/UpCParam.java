@@ -3,6 +3,7 @@ package jp.pipa.poipiku.controller.upcontents.v2;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.SupportedLocales;
 import jp.pipa.poipiku.UserLocale;
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +65,7 @@ public class UpCParam {
 
 		isPublish = Util.toBoolean(request.getParameter("OPTION_PUBLISH"));
 
-		isTimeLimited = Util.toBoolean(request.getParameter("OPTION_NOT_TIME_LIMITED"));
+		isTimeLimited = !Util.toBoolean(request.getParameter("OPTION_NOT_TIME_LIMITED"));
 		publishStart = Util.toSqlTimestamp(request.getParameter("TIME_LIMITED_START"));
 		publishEnd = Util.toSqlTimestamp(request.getParameter("TIME_LIMITED_END"));
 
@@ -113,6 +114,8 @@ public class UpCParam {
 				}
 			}
 		}
+
+		 Log.d(toString());
 	};
 
 	protected int ErrorOccurred(Exception e) {

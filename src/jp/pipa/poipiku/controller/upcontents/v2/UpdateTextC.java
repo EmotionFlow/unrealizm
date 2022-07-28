@@ -63,8 +63,8 @@ public final class UpdateTextC extends UpC {
 			boolean bToPublish = false;
 			int nOpenId = GetOpenId(
 				nOpenIdPresent,
-				upParam.publishId,
-				upParam.isNotRecently,
+				!upParam.isPublish ? Common.OPEN_ID_HIDDEN : Common.PUBLISH_ID_ALL,
+				!upParam.isShowRecently,
 				upParam.isTimeLimited,
 				bLimitedTimePublishPresent,
 				upParam.publishStart,
@@ -72,7 +72,8 @@ public final class UpdateTextC extends UpC {
 				tsUploadDatePresent,
 				tsEndDatePresent);
 			String sqlUpdate =  "UPDATE contents_0000";
-			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(						"genre_id=?", "category_id=?", "open_id=?",
+			ArrayList<String> lColumns = new ArrayList<>(Arrays.asList(
+					"genre_id=?", "category_id=?", "open_id=?",
 					"description=?", "private_note=?",
 					"tag_list=?", "publish_id=?",
 					"password_enabled=?", "password=?",
@@ -109,7 +110,6 @@ public final class UpdateTextC extends UpC {
 				}
 			}
 
-
 			String sqlSet = "SET " + String.join(",", lColumns);
 			String sqlWhere = "WHERE user_id=? AND content_id=?";
 
@@ -145,9 +145,16 @@ public final class UpdateTextC extends UpC {
 
 				statement.setBoolean(idx++, upParam.isCheerNg);
 				statement.setInt(idx++, CContent.getTweetWhenPublishedId(upParam.isTweet, upParam.isTweetWithImage, upParam.isTwitterCardThumbnail));
-				statement.setBoolean(idx++, !upParam.isNotRecently);
+				statement.setBoolean(idx++, upParam.isShowRecently);
 
 				statement.setBoolean(idx++, upParam.isTimeLimited);
+
+				statement.setString(idx++, upParam.title);
+				statement.setString(idx++, textBody);
+				statement.setString(idx++, NovelUtil.genarateHtml(upParam.title, textBody, ""));
+				statement.setString(idx++, NovelUtil.genarateHtmlShort(upParam.title, textBody, ""));
+				statement.setInt(idx++, upParam.novelDirection);
+
 				if (upParam.isTimeLimited) {
 					if (upParam.publishStart != null) {
 						statement.setTimestamp(idx++, upParam.publishStart);
@@ -156,12 +163,6 @@ public final class UpdateTextC extends UpC {
 						statement.setTimestamp(idx++, upParam.publishEnd);
 					}
 				}
-
-				statement.setString(idx++, upParam.title);
-				statement.setString(idx++, textBody);
-				statement.setString(idx++, NovelUtil.genarateHtml(upParam.title, textBody, ""));
-				statement.setString(idx++, NovelUtil.genarateHtmlShort(upParam.title, textBody, ""));
-				statement.setInt(idx++, upParam.novelDirection);
 
 				// set where params
 				statement.setInt(idx++, upParam.userId);

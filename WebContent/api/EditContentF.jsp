@@ -27,6 +27,13 @@ if (checkLogin.m_nUserId!=cResults.m_nUserId || !cResults.getResults(checkLogin)
 	nResult = -2;
 }
 
+// V2 -> V1 convert
+if (cResults.m_cContent.m_nOpenId == Common.OPEN_ID_HIDDEN && !cResults.m_cContent.m_bLimitedTimePublish) {
+	cResults.m_cContent.m_nPublishId = Common.PUBLISH_ID_HIDDEN;
+} else if (cResults.m_cContent.m_nPublishId == Common.PUBLISH_ID_ALL && cResults.m_cContent.isPasswordEnabled()) {
+	cResults.m_cContent.m_nPublishId = Common.PUBLISH_ID_PASS;
+}
+
 //JSON元データを格納する連想配列
 Map<String, Object> content = null;
 ObjectMapper mapper = null;

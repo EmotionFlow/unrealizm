@@ -7,9 +7,9 @@
 	String createDetailVHtml(final IllustDetailC cResults, final ResourceBundleControl _TEX){
 		StringBuilder html = new StringBuilder();
 
-		if (cResults.m_cContent.m_nEditorId == Common.EDITOR_TEXT) {
+		if (cResults.content.m_nEditorId == Common.EDITOR_TEXT) {
 			html.append("    <script>\n" + "      $(function () {\n");
-			if (cResults.m_cContent.novelDirection == 0) {
+			if (cResults.content.novelDirection == 0) {
 				html.append("if (window.innerWidth< $(\".NovelSection\").width()){\n" + "          $(\".IllustItemLink\").css(\"width\", String(window.innerWidth - 10) +\"px\");\n" + "        }");
 			} else {
 				html.append("        $(\".IllustItemTextDetail\").css(\"width\", (window.innerWidth - 10) + \"px\");\n" + "        $(\".IllustItemTextDetail\").scrollLeft(100000);\n" + "        const h = $(\"body\").height();\n" + "        if (h < $(\".IllustItemTextDetail.Vertical\").height()){\n" + "          $(\".IllustItemLink\").css(\"height\", String(h - 10) +\"px\");\n" + "          $(\".IllustItemLink\").css(\"padding\", 0);\n" + "          $(\".IllustItemTextDetail.Vertical\").css(\"height\", String(h - 10) +\"px\");\n" + "        }\n");
@@ -18,12 +18,12 @@
 		}
 
 		html.append("<style>.IllustItemLink {\n");
-		if (cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT && cResults.m_cContent.novelDirection==0) {
+		if (cResults.content.m_nEditorId==Common.EDITOR_TEXT && cResults.content.novelDirection==0) {
 			html.append("margin: 0 auto;width: 25em;\n");
 		}
 		html.append("} </style>");
 
-		if(!cResults.m_cContent.m_strFileName.isEmpty()) {
+		if(!cResults.content.m_strFileName.isEmpty()) {
 			String downloadAreaDiv = "";
 
 			html.append("      <div class=\"DetailIllustItemLink\">\n");
@@ -33,7 +33,7 @@
 				downloadAreaDiv += "        <a href=\"/DownloadImageFile?TD=" + cResults.contentId + "&AD=" + cResults.appendId + "\"><i class=\"fas fa-download\"></i> " + _TEX.T("IllustView.Download") + "</a>\n";
 				if (cResults.isOwner) {
 					downloadAreaDiv += "<br><span>";
-					if (cResults.m_nDownload == CUser.DOWNLOAD_OFF) {
+					if (cResults.downloadCode == CUser.DOWNLOAD_OFF) {
 						downloadAreaDiv += _TEX.T("IllustView.DownloadInfo.Disallow");
 					} else {
 						downloadAreaDiv += _TEX.T("IllustView.DownloadInfo.Allow");
@@ -47,7 +47,7 @@
 			}
 
 			if (cResults.appendId < 0) {
-				html.append(getImgTag(cResults.m_cContent.m_strFileName));
+				html.append(getImgTag(cResults.content.m_strFileName));
 			}
 
 			for (CContentAppend contentAppend : cResults.contentAppendList) {
@@ -57,9 +57,9 @@
 			html.append("\t<div class=\"DetailIllustItemProhibit\">").append(_TEX.T("IllustView.ProhibitMsg.Long")).append("</div>\n");
 
 			html.append("      </div>\n");
-		} else if(cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {
+		} else if(cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
 			html.append("<div class=\"IllustItemLink\">");
-			html.append("        <div class=\"IllustItemTextDetail ").append(cResults.m_cContent.novelDirection == 1 ? "Vertical" : "").append("\">\n").append("          ").append(Util.replaceForGenEiFont(cResults.m_cContent.novelHtml)).append("        </div>\n");
+			html.append("        <div class=\"IllustItemTextDetail ").append(cResults.content.novelDirection == 1 ? "Vertical" : "").append("\">\n").append("          ").append(Util.replaceForGenEiFont(cResults.content.novelHtml)).append("        </div>\n");
 			html.append("</div>");
 		} else {
 			html.append("Not found");

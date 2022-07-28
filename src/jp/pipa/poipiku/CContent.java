@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -18,6 +19,9 @@ public final class CContent {
 	public static final int TWEET_CONCURRENT = 1;       // 0001
 	public static final int TWEET_WITH_THUMBNAIL = 2;   // 0010
 	public static final int TWITTER_CARD_THUMBNAIL = 4; // 0100
+
+	public static final int NOVEL_DIRECTION_HORIZONTAL = 0;
+	public static final int NOVEL_DIRECTION_VERTICAL = 1;
 
 	public int m_nContentId = 0;
 	public int m_nCategoryId = 0;
@@ -191,21 +195,6 @@ public final class CContent {
 		if (novelHtmlShort.isEmpty()) {
 			novelHtmlShort = Util.toStringHtml(Util.subStrNum(m_strTextBody, 500));
 		}
-
-		if(m_nPublishId==0 && m_nSafeFilter>0) {
-			switch(m_nSafeFilter) {
-				case Common.SAFE_FILTER_R15:
-					m_nPublishId = Common.PUBLISH_ID_R15;
-					break;
-				case Common.SAFE_FILTER_R18:
-					m_nPublishId = Common.PUBLISH_ID_R18;
-					break;
-				case Common.SAFE_FILTER_R18G:
-				default:
-					m_nPublishId = Common.PUBLISH_ID_R18G;
-					break;
-			}
-		}
 	}
 
 	public CContent() {}
@@ -219,11 +208,11 @@ public final class CContent {
 	}
 
 	public boolean nowAvailable() {
-		return (m_nOpenId == OpenId.Open.getCode() ||m_nOpenId == OpenId.OpenAvoidNewArrivals.getCode());
+		return (m_nOpenId == OpenId.Open.getCode() || m_nOpenId == OpenId.OpenAvoidNewArrivals.getCode());
 	}
 
 	public boolean isPasswordEnabled() {
-		return m_nPublishId == Common.PUBLISH_ID_PASS;
+		return passwordEnabled;
 //		return (m_strPassword != null && !m_strPassword.isEmpty());
 	}
 
@@ -238,10 +227,15 @@ public final class CContent {
 				|| m_nPublishId==Common.PUBLISH_ID_T_RT;
 	}
 
+
+	public void setOrgImgThumb() {
+		thumbImgUrlList = new ArrayList<>();
+		thumbImgSmallUrlList = new ArrayList<>();
+		thumbImgUrlList.add(m_strFileName + "_640.jpg");
+		thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
+	}
+
 	public void setThumb() {
-
-		//TODO 廃止予定のpublish_idについて、代わりの判定ロジックを実装する。
-
 		thumbImgUrlList = new ArrayList<>();
 		thumbImgSmallUrlList = new ArrayList<>();
 
@@ -254,25 +248,18 @@ public final class CContent {
 		}
 
 		// 最初の１枚公開 or ワンクッションや閲覧制限無しの場合はコンテンツのサムネを表示する
-		if (publishAllNum > 0 || (m_nSafeFilter == Common.SAFE_FILTER_ALL && m_nPublishId == Common.PUBLISH_ID_ALL)) {
+		if (publishAllNum > 0 || (!passwordEnabled && m_nSafeFilter == Common.SAFE_FILTER_ALL && m_nPublishId == Common.PUBLISH_ID_ALL)) {
 			thumbImgUrlList.add(m_strFileName + "_640.jpg");
 			thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
 			isHideThumbImg = false;
+			return;
 		}
 
 		// 閲覧制限サムネ
-		switch(m_nPublishId) {
-			case Common.PUBLISH_ID_LOGIN:
-			case Common.PUBLISH_ID_FOLLOWER:
-			case Common.PUBLISH_ID_T_FOLLOWER:
-			case Common.PUBLISH_ID_T_FOLLOWEE:
-			case Common.PUBLISH_ID_T_EACH:
-			case Common.PUBLISH_ID_T_LIST:
-			case Common.PUBLISH_ID_T_RT:
-				thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg");
-				thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg");
-				isHideThumbImg = true;
-				break;
+		if (m_nPublishId != Common.PUBLISH_ID_ALL && isValidPublishId()) {
+			thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg");
+			thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg");
+			isHideThumbImg = true;
 		}
 
 		// ワンクッション・R18サムネ
@@ -310,6 +297,9 @@ public final class CContent {
 				isHideThumbImg = true;
 			}
 		}
+
+//		Log.d("thumbImgUrlList" + String.join(", ", thumbImgUrlList));
+//		Log.d("thumbImgSmallUrlList" + String.join(", ", thumbImgSmallUrlList));
 	}
 
 	public String getThumbnailFilePath() {
