@@ -47,10 +47,10 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
-		<link href="/css/upload-206-1.css" type="text/css" rel="stylesheet" />
+		<link href="/css/upload-206-2.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-50-2.js" type="text/javascript"></script>
-		<script src="/js/update-25-1.js" type="text/javascript"></script>
+		<script src="/js/upload-51-3.js" type="text/javascript"></script>
+		<script src="/js/update-25-2.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 

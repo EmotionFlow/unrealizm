@@ -23,17 +23,17 @@ fi
 /bin/cp ./js/common-111.js ${WEB_CONTENT}js/
 #/bin/cp ./js/commonPc-04.js ${WEB_CONTENT}js/
 /bin/cp ./js/upload-51.js ${WEB_CONTENT}js/
-/bin/cp ./js/upload-50-2.js ${WEB_CONTENT}js/
+/bin/cp ./js/upload-51-3.js ${WEB_CONTENT}js/
 /bin/cp ./js/update-25.js ${WEB_CONTENT}js/
-/bin/cp ./js/update-25-1.js ${WEB_CONTENT}js/
+/bin/cp ./js/update-25-2.js ${WEB_CONTENT}js/
 
 CLOSURE_COMPILER_JAR="./closure-compiler-v20201006.jar"
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/common-111.js --js_output_file ${WEB_CONTENT}js/common-111.js
 #java -jar ${CLOSURE_COMPILER_JAR} --js ./js/commonPc-04.js --js_output_file ${WEB_CONTENT}js/commonPc-04.js
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-51.js --js_output_file ${WEB_CONTENT}js/upload-51.js
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-50-2.js --js_output_file ${WEB_CONTENT}js/upload-50-2.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/upload-51-3.js --js_output_file ${WEB_CONTENT}js/upload-51-3.js
 java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-25.js --js_output_file ${WEB_CONTENT}js/update-25.js
-java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-25-1.js --js_output_file ${WEB_CONTENT}js/update-25-1.js
+java -jar ${CLOSURE_COMPILER_JAR} --js ./js/update-25-2.js --js_output_file ${WEB_CONTENT}js/update-25-2.js
 
 ##for file in $( ls ./js | grep .js$ ); do
 #echo "${file}"
