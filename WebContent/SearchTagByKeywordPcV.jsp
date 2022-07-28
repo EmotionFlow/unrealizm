@@ -52,6 +52,9 @@ g_strSearchWord = results.m_strKeyword;
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ItemList">
+			<header class="SearchResultTitle">
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(results.m_strKeyword)%></h2>
+			</header>
 			<section id="IllustThumbList" class="IllustItemList">
 				<%
 				String backgroundImageUrl;

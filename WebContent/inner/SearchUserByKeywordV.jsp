@@ -112,6 +112,9 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%}%>
 
 		<article class="Wrapper GridList">
+			<header class="SearchResultTitle">
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
