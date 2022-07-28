@@ -384,10 +384,14 @@ public final class CCnv {
 //		}
 	}
 
-	private static void appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW){
+	private static void appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
 		cContent.setThumb();
 		cContent.setOrgImgThumb();
-		appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
+		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
+			appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
+		} else {
+			appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+		}
 	}
 
 	private static void appendIllustInfoIcon(StringBuilder strRtn,  CContent content) {
@@ -691,9 +695,9 @@ public final class CCnv {
 			appendIllustItemDescEdit(strRtn, cContent, nMode);
 		}
 
-		// 画像
+		// 画像orテキスト
 		if (!cContent.nowAvailable() && cContent.m_nUserId == nLoginUserId) {
-			appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW);
+			appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 		} else {
 			appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 		}
@@ -702,9 +706,7 @@ public final class CCnv {
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
 
 		// 全て表示ボタン
-		if (cContent.nowAvailable()) {
-			appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
-		}
+		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
 
 		// サムネイルへの重畳表示
 		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
@@ -801,7 +803,7 @@ public final class CCnv {
 	}
 
 	private static void appendIllustItemExpand( StringBuilder strRtn, CContent cContent, ResourceBundleControl _TEX, int nSpMode) {
-		if (!cContent.passwordEnabled && cContent.m_nSafeFilter == Common.SAFE_FILTER_ALL && cContent.m_nPublishId == Common.PUBLISH_ID_ALL) {
+		if (!cContent.nowAvailable()) {
 			return;
 		}
 
@@ -811,10 +813,7 @@ public final class CCnv {
 		}
 
 		// cContent.isHideThumbImg, cContent.publishAllNum,  cContent.m_nFileNum で、追加表示する画像があるか否かを判定
-		if (cContent.passwordEnabled
-				|| cContent.isHideThumbImg
-				|| !cContent.isHideThumbImg && cContent.m_nFileNum - cContent.publishAllNum > 0) {
-
+		if (cContent.isHideThumbImg || (cContent.m_nEditorId != Common.EDITOR_TEXT && cContent.m_nFileNum - cContent.publishAllNum > 0)) {
 			StringBuilder sb = new StringBuilder();
 
 			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
@@ -838,6 +837,7 @@ public final class CCnv {
 					sb,
 					String.format(_TEX.T("IllustView.ExpandBtn"), remainNum)));
 		}
+		strRtn.append("</div>");	// IllustItemExpand
 
 
 
@@ -865,7 +865,6 @@ public final class CCnv {
 //					nSpMode,
 //				String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length())));
 //		}
-		strRtn.append("</div>");	// IllustItemExpand
 	}
 
 	private static void appendIllustItemDescEdit(StringBuilder strRtn, CContent cContent, int nMode) {
@@ -929,6 +928,7 @@ public final class CCnv {
 		final String REPORT_FORM = getReportFormContext(nMode);
 		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
+		final String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 
 		String strThumbClass = getThumbClass(cContent);
 
@@ -957,7 +957,7 @@ public final class CCnv {
 		}
 
 		// 画像
-		appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW);
+		appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 2枚目以降用の場所
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
