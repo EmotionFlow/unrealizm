@@ -813,7 +813,7 @@ public final class CCnv {
 		}
 
 		// cContent.isHideThumbImg, cContent.publishAllNum,  cContent.m_nFileNum で、追加表示する画像があるか否かを判定
-		if (cContent.isHideThumbImg || (cContent.m_nEditorId != Common.EDITOR_TEXT && cContent.m_nFileNum - cContent.publishAllNum > 0)) {
+		if (cContent.isHideThumbImg || (cContent.m_nEditorId != Common.EDITOR_TEXT && cContent.m_nFileNum - cContent.publishAllNum > 1)) {
 			StringBuilder sb = new StringBuilder();
 
 			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
