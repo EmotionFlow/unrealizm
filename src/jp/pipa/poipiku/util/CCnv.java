@@ -813,7 +813,7 @@ public final class CCnv {
 		}
 
 		// cContent.isHideThumbImg, cContent.publishAllNum,  cContent.m_nFileNum で、追加表示する画像があるか否かを判定
-		if (cContent.isHideThumbImg || (cContent.m_nEditorId != Common.EDITOR_TEXT && cContent.m_nFileNum - cContent.publishAllNum > 1)) {
+		if (cContent.isHideThumbImg || (cContent.m_nEditorId != Common.EDITOR_TEXT && cContent.m_nFileNum - cContent.publishAllNum > 0)) {
 			StringBuilder sb = new StringBuilder();
 
 			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
@@ -826,8 +826,11 @@ public final class CCnv {
 
 			int remainNum;
 			if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
-				remainNum = cContent.m_nFileNum - cContent.publishAllNum;
-				if (!cContent.isHideThumbImg) remainNum--;
+				if (cContent.isHideThumbImg) {
+					remainNum = cContent.m_nFileNum;
+				} else {
+					remainNum = cContent.m_nFileNum - 1;
+				}
 			} else {
 				remainNum = 1;
 			}
