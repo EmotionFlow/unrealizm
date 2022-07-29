@@ -33,19 +33,29 @@ public class GetSearchLogC {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Tags);
 		} else if (searchType.equals("Users")) {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Users);
+		} else if (searchType.equals("All")) {
+			targetCodes.add(KeywordSearchLog.SearchTarget.Undefined);
 		} else {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Undefined);
 		}
 
-		String sql = "SELECT keywords FROM keyword_search_logs WHERE user_id=? AND search_target_code IN (?";
-		for (int i=1; i<targetCodes.size(); i++) { sql += ",?"; }
-		sql += ") GROUP BY keywords ORDER BY MAX(created_at) DESC LIMIT ?";
+		String sql = "SELECT keywords FROM keyword_search_logs WHERE user_id=?";
+
+		if (targetCodes.get(0) != KeywordSearchLog.SearchTarget.Undefined) {
+			sql += " AND search_target_code IN (?";
+			for (int i=1; i<targetCodes.size(); i++) { sql += ",?"; }
+			sql += ")";
+		}
+
+		sql += " GROUP BY keywords ORDER BY MAX(created_at) DESC LIMIT ?";
+
 		try (Connection connection = DatabaseUtil.dataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, checkLogin.m_nUserId);
 			for (int i=0; i<targetCodes.size(); i++) { statement.setInt(2+i, targetCodes.get(i).getCode()); }
 			statement.setInt(2 + targetCodes.size(), Common.SEARCH_LOG_SUGGEST_MAX);
+
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				keywords.add(resultSet.getString("keywords"));
