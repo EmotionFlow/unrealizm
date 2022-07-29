@@ -27,7 +27,7 @@ public class GetSearchLogC {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Users);
 		}
 
-		String sql = "SELECT keywords FROM keyword_search_logs WHERE user_id=?";
+		String sql = "SELECT keywords FROM keyword_search_logs WHERE user_id=? AND created_at > now() - ?::INTERVAL";
 
 		if (targetCodes.size() > 0) {
 			sql += " AND search_target_code IN (?";
@@ -41,8 +41,9 @@ public class GetSearchLogC {
 		     PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, checkLogin.m_nUserId);
-			for (int i=0; i<targetCodes.size(); i++) { statement.setInt(2+i, targetCodes.get(i).getCode()); }
-			statement.setInt(2 + targetCodes.size(), Common.SEARCH_LOG_SUGGEST_MAX);
+			statement.setString(2, String.valueOf(Common.SEARCH_LOG_SUGGEST_DAYS) + " day");
+			for (int i=0; i<targetCodes.size(); i++) { statement.setInt(3+i, targetCodes.get(i).getCode()); }
+			statement.setInt(3 + targetCodes.size(), Common.SEARCH_LOG_SUGGEST_MAX);
 
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
@@ -51,6 +52,7 @@ public class GetSearchLogC {
 
 			nResult = keywords.size();
 		} catch(Exception e) {
+			Log.d(sql);
 			e.printStackTrace();
 		}
 		return nResult;
