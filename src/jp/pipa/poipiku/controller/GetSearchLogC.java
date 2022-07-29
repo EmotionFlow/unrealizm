@@ -3,9 +3,7 @@ package jp.pipa.poipiku.controller;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.*;
 
