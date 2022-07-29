@@ -176,14 +176,30 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderTitleWrapper').hide();
 					$('#OverlaySearchWrapper').show();
 					$('#HeaderSearchBox').focus();
+
+					<%if(checkLogin.m_bLogin){%>
 					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>');
+					<%}else{%>
+					const $ul = $('ul#RecentSearchList');
+					$ul.empty();
+					const $li = $('<li></li>');
+					const $row = $('<div></div>', {class: 'RecentSearchRow'});
+					const $item = $('<div></div>', {class: 'RecentSearchKW', text: "<%=_TEX.T("SearchLog.NoLogin")%>"});
+					$row.append($item);
+					$li.append($row);
+					$ul.append($li);
+					<%}%>
 				}
+
+				<%if(checkLogin.m_bLogin){%>
 				$(document).on('click', '.RecentSearchItem', ev => {
 					$('#HeaderTitleWrapper').show();
 					$('#OverlaySearchWrapper').hide();
 					$('ul#RecentSearchList').empty();
 					<%=searchFunction%>($(ev.currentTarget).find('.RecentSearchKW').text());
 				});
+				<%}%>
+
 			</script>
 		<%} else {%>
 			<div id="PulldownSearchWrapper" class="SearchWrapper pulldown">
@@ -193,7 +209,18 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<script>
 				function showSearch() {
 					$('#PulldownSearchWrapper').slideDown();
+					<%if(checkLogin.m_bLogin){%>
 					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>');
+					<%}else{%>
+					const $ul = $('ul#RecentSearchList');
+					$ul.empty();
+					const $li = $('<li></li>');
+					const $row = $('<div></div>', {class: 'RecentSearchRow'});
+					const $item = $('<div></div>', {class: 'RecentSearchKW', text: "<%=_TEX.T("SearchLog.NoLogin")%>"});
+					$row.append($item);
+					$li.append($row);
+					$ul.append($li);
+					<%}%>
 				}
 				$('#HeaderSearchBox').on('focus', showSearch);
 				$(document).on('click', '.RecentSearchItem', ev => {
