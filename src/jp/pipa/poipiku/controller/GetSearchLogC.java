@@ -9,7 +9,6 @@ import java.util.*;
 
 public class GetSearchLogC {
 	public List<String> keywords = null;
-	public String blankMsg = "";
 	String searchType = "";
 
 	public void getParam(HttpServletRequest request) {
@@ -19,11 +18,6 @@ public class GetSearchLogC {
 	public int getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
 		int  nResult = -1;
 		keywords = new ArrayList<>();
-		blankMsg = _TEX.T("SearchLog.NotFound");
-		if(!checkLogin.m_bLogin){
-			blankMsg = _TEX.T("SearchLog.NoLogin");
-			return nResult;
-		}
 
 		List<KeywordSearchLog.SearchTarget> targetCodes = new ArrayList<>();
 		if (searchType.equals("Contents") || searchType.equals("Tags")) {
@@ -31,15 +25,11 @@ public class GetSearchLogC {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Tags);
 		} else if (searchType.equals("Users")) {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Users);
-		} else if (searchType.equals("All")) {
-			targetCodes.add(KeywordSearchLog.SearchTarget.Undefined);
-		} else {
-			targetCodes.add(KeywordSearchLog.SearchTarget.Undefined);
 		}
 
 		String sql = "SELECT keywords FROM keyword_search_logs WHERE user_id=?";
 
-		if (targetCodes.get(0) != KeywordSearchLog.SearchTarget.Undefined) {
+		if (targetCodes.size() > 0) {
 			sql += " AND search_target_code IN (?";
 			for (int i=1; i<targetCodes.size(); i++) { sql += ",?"; }
 			sql += ")";

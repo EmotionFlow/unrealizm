@@ -147,15 +147,17 @@ function SearchUserByKeyword(kwd) {
 	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
-function showSearchHistory(searchType) {
+function showSearchHistory(searchType, blankMsg) {
 	// 今はUI側がイマイチなので、searchTypeをAllに固定する
-	const SEARCH_TYPE = "All";
-	$.ajax({
+	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
+	(searchType ? $.ajax({
 		"type": "get",
 		"url": "/f/GetSearchLogF.jsp",
-		"data": { "type": SEARCH_TYPE },
+		"data": { "type": searchType },
 		"dataType": "json",
-	}).then(function(history) {
+	}) : Promise.resolve({
+		keywords: [],
+	})).then(function(history) {
 		const $ul = $('ul#RecentSearchList');
 		$ul.empty();
 		if (history.keywords.length) {
@@ -173,7 +175,7 @@ function showSearchHistory(searchType) {
 		} else {
 			const $li = $('<li></li>');
 			const $row = $('<div></div>', {class: 'RecentSearchRow'});
-			const $item = $('<div></div>', {class: 'RecentSearchKW', text: history.blankMsg});
+			const $item = $('<div></div>', {class: 'RecentSearchKW', text: blankMsg});
 			$row.append($item);
 			$li.append($row);
 			$ul.append($li);

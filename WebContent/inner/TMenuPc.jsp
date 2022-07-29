@@ -178,16 +178,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderSearchBox').focus();
 
 					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>');
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
 					<%}else{%>
-					const $ul = $('ul#RecentSearchList');
-					$ul.empty();
-					const $li = $('<li></li>');
-					const $row = $('<div></div>', {class: 'RecentSearchRow'});
-					const $item = $('<div></div>', {class: 'RecentSearchKW', text: "<%=_TEX.T("SearchLog.NoLogin")%>"});
-					$row.append($item);
-					$li.append($row);
-					$ul.append($li);
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>');
 					<%}%>
 				}
 
@@ -210,16 +203,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				function showSearch() {
 					$('#PulldownSearchWrapper').slideDown();
 					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>');
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
 					<%}else{%>
-					const $ul = $('ul#RecentSearchList');
-					$ul.empty();
-					const $li = $('<li></li>');
-					const $row = $('<div></div>', {class: 'RecentSearchRow'});
-					const $item = $('<div></div>', {class: 'RecentSearchKW', text: "<%=_TEX.T("SearchLog.NoLogin")%>"});
-					$row.append($item);
-					$li.append($row);
-					$ul.append($li);
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>');
 					<%}%>
 				}
 				$('#HeaderSearchBox').on('focus', showSearch);

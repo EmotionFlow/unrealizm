@@ -12,6 +12,5 @@ int nResult = cResults.getResults(checkLogin, _TEX);
 "result": <%=nResult%>,
 "keywords": [
     <%=cResults.keywords.stream().map(k -> "\"" + k + "\"").collect(Collectors.joining(","))%>
-],
-"blankMsg": "<%=cResults.blankMsg%>"
+]
 }
