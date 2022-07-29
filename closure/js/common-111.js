@@ -148,10 +148,12 @@ function SearchUserByKeyword(kwd) {
 }
 
 function showSearchHistory(searchType) {
+	// 今はUI側がイマイチなので、searchTypeをAllに固定する
+	const SEARCH_TYPE = "All";
 	$.ajax({
 		"type": "get",
 		"url": "/f/GetSearchLogF.jsp",
-		"data": { "type": searchType },
+		"data": { "type": SEARCH_TYPE },
 		"dataType": "json",
 	}).then(function(history) {
 		const $ul = $('ul#RecentSearchList');
