@@ -15,7 +15,7 @@ public class GetSearchLogC {
 		searchType = request.getParameter("type");
 	}
 
-	public int getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
+	public int getResults(CheckLogin checkLogin) {
 		int  nResult = -1;
 		keywords = new ArrayList<>();
 
