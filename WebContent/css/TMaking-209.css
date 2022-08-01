@@ -1177,7 +1177,7 @@ Decoration
 
 
 /********** UPLOAD **********/
-.PasteZone {display: block;float: left;width: 100%; font-size: 0;min-height: 113px;background: #fff;border-radius: 4px;}
+.PasteZone {display: block;float: left;width: 100%; font-size: 0;min-height: 113px;background: #fff;border-radius: 4px; border: solid}
 
 .CategoryDesc > .PrivateNote {
 	font-size: 14px;

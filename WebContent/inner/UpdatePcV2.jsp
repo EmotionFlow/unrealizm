@@ -185,7 +185,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 		<style>
             body {padding-top: 79px !important; background-color: #f5f5f5; color: #6d6965}
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
-			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; border: none; padding: 0; min-height: 113px; background: #fff; max-height: none;}
+			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; padding: 0; min-height: 113px; background: #fff; max-height: none; border: solid;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
 			.qq-gallery .qq-upload-list li {margin: 6px; height: 100px; padding: 0; box-shadow: none; max-width: 100px; background-color: #f3f3f3; border-radius: 4px;}
