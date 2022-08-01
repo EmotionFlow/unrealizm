@@ -227,6 +227,14 @@ public final class CContent {
 				|| m_nPublishId==Common.PUBLISH_ID_T_RT;
 	}
 
+	public boolean isValidSafeFilterId() {
+		return m_nSafeFilter==Common.SAFE_FILTER_ALL
+				|| m_nSafeFilter==Common.SAFE_FILTER_R15
+				|| m_nSafeFilter==Common.SAFE_FILTER_R18
+				|| m_nSafeFilter==Common.SAFE_FILTER_R18G
+				|| m_nSafeFilter==Common.SAFE_FILTER_R18_PLUS;
+	}
+
 
 	public void setOrgImgThumb() {
 		thumbImgUrlList = new ArrayList<>();

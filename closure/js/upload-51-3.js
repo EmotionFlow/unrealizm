@@ -1251,23 +1251,23 @@ function selectRadioButton(name, value) {
 }
 
 const UPLOAD_PARAMS_DEFAULT = {
-	"OPTION_PUBLISH": {"type": "checkbox", "value": true},
-	"OPTION_NOT_TIME_LIMITED": {"type": "checkbox", "value": true},
-	"TIME_LIMITED_START": {"type": "datetime", "value": ""},
-	"TIME_LIMITED_END": {"type": "datetime", "value": ""},
-	"OPTION_NOT_PUBLISH_NSFW": {"type": "checkbox", "value": true},
-	"NSFW_VAL": {"type": "radio", "value": "2"},
-	"OPTION_NO_CONDITIONAL_SHOW": {"type": "checkbox", "value": true},
-	"SHOW_LIMIT_VAL": {"type": "radio", "value": "6"},
-	"OPTION_NO_PASSWORD": {"type": "checkbox", "value": true},
-	"PASSWORD_VAL": {"type": "textbox", "value": ""},
-	"OPTION_SHOW_FIRST": {"type": "checkbox", "value": false},
-	"OPTION_TWEET": {"type": "checkbox", "value": false},
-	"OPTION_TWEET_IMAGE": {"type": "checkbox", "value": true},
-	"OPTION_TWITTER_CARD_THUMBNAIL": {"type": "checkbox", "value": true},
-	"OPTION_CHEER_NG": {"type": "checkbox", "value": true},
-	"OPTION_RECENT": {"type": "checkbox", "value": true},
-	"NOVEL_DIRECTION_VAL": {"type": "radio", "value": "0"},
+	"OPTION_PUBLISH":				{"type": "checkbox", "value": true},
+	"OPTION_NOT_TIME_LIMITED": 		{"type": "checkbox", "value": true},
+	"TIME_LIMITED_START": 			{"type": "datetime", "value": ""},
+	"TIME_LIMITED_END": 			{"type": "datetime", "value": ""},
+	"OPTION_NOT_PUBLISH_NSFW": 		{"type": "checkbox", "value": true},
+	"NSFW_VAL": 					{"type": "radio",    "value": 2},
+	"OPTION_NO_CONDITIONAL_SHOW": 	{"type": "checkbox", "value": true},
+	"SHOW_LIMIT_VAL": 				{"type": "radio",    "value": 6},
+	"OPTION_NO_PASSWORD": 			{"type": "checkbox", "value": true},
+	"PASSWORD_VAL": 				{"type": "textbox",  "value": ""},
+	"OPTION_SHOW_FIRST": 			{"type": "checkbox", "value": false},
+	"OPTION_TWEET": 				{"type": "checkbox", "value": false},
+	"OPTION_TWEET_IMAGE": 			{"type": "checkbox", "value": true},
+	"OPTION_TWITTER_CARD_THUMBNAIL":{"type": "checkbox", "value": true},
+	"OPTION_CHEER_NG": 				{"type": "checkbox", "value": true},
+	"OPTION_RECENT": 				{"type": "checkbox", "value": true},
+	"NOVEL_DIRECTION_VAL": 			{"type": "radio",    "value": 0},
 }
 
 // for local storage
@@ -1345,7 +1345,7 @@ function setUploadParams(params) {
 	updateOptionTweet();
 }
 
-function initUploadParams() {
+function initUploadParams(tweetEnabled) {
 	let uploadParams = UPLOAD_PARAMS_DEFAULT;
 	const storageParams = loadUploadParamsFromLocalStorage();
 	try {
@@ -1357,7 +1357,18 @@ function initUploadParams() {
 	} catch (e) {
 		console.log(e);
 	}
-	console.log(uploadParams);
+
+	if (!tweetEnabled) {
+		uploadParams.OPTION_TWEET.value = false;
+		uploadParams.OPTION_TWEET_IMAGE.value = false;
+		if (uploadParams.SHOW_LIMIT_VAL.value === 7
+			|| uploadParams.SHOW_LIMIT_VAL.value === 10
+			|| uploadParams.SHOW_LIMIT_VAL.value === 9
+			|| uploadParams.SHOW_LIMIT_VAL.value === 12
+		) {
+			uploadParams.SHOW_LIMIT_VAL.value = 5;
+		}
+	}
 
 	setUploadParams(uploadParams);
 }

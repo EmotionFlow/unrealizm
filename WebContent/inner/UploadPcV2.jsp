@@ -127,7 +127,7 @@ if (requestId > 0) {
 			<%}%>
 
 			$(function() {
-				initUploadParams();
+				initUploadParams(<%=cTweet.m_bIsTweetEnable%>);
 				DispDescCharNum();
 			});
 		</script>

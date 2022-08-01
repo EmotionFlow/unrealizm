@@ -160,10 +160,21 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			contentParams.OPTION_NOT_TIME_LIMITED.value = <%=!content.m_bLimitedTimePublish%>;
 			contentParams.TIME_LIMITED_START.value = "<%=Util.toYMDHMString(content.m_timeUploadDate)%>";
 			contentParams.TIME_LIMITED_END.value = "<%=Util.toYMDHMString(content.m_timeEndDate)%>";
+
 			contentParams.OPTION_NOT_PUBLISH_NSFW.value = <%=content.m_nSafeFilter==Common.SAFE_FILTER_ALL%>;
-			contentParams.NSFW_VAL.value = "<%=content.m_nSafeFilter%>";
+			<%if (content.isValidSafeFilterId() && content.m_nSafeFilter!=Common.SAFE_FILTER_ALL) {%>
+				contentParams.NSFW_VAL.value = <%=content.m_nSafeFilter%>;
+			<%}else{%>
+				contentParams.NSFW_VAL.value = <%=Common.SAFE_FILTER_R15%>;
+			<%}%>
+
 			contentParams.OPTION_NO_CONDITIONAL_SHOW.value = <%=content.m_nPublishId==Common.PUBLISH_ID_ALL%>;
-			contentParams.SHOW_LIMIT_VAL.value = "<%=content.m_nPublishId%>";
+			<%if (content.isValidPublishId() && content.m_nPublishId!=Common.PUBLISH_ID_ALL) {%>
+				contentParams.SHOW_LIMIT_VAL.value = <%=content.m_nPublishId%>;
+			<%}else{%>
+				contentParams.SHOW_LIMIT_VAL.value = <%=Common.PUBLISH_ID_LOGIN%>;
+			<%}%>
+
 			contentParams.OPTION_NO_PASSWORD.value = <%=!content.passwordEnabled%>;
 			contentParams.PASSWORD_VAL.value = "<%=content.m_strPassword%>";
 			contentParams.OPTION_SHOW_FIRST.value = <%=content.publishAllNum>0%>;
@@ -173,7 +184,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.poipiku.com");
 			contentParams.OPTION_CHEER_NG.value = <%=content.m_bCheerNg%>;
 			contentParams.OPTION_RECENT.value = <%=!content.m_bNotRecently%>;
 			<%if (nEditorId == Common.EDITOR_TEXT){ %>
-			contentParams.NOVEL_DIRECTION_VAL.value = "<%=content.novelDirection%>";
+				contentParams.NOVEL_DIRECTION_VAL.value = <%=content.novelDirection%>;
 			<%}%>
 
 			$(function() {

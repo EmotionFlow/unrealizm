@@ -86,12 +86,22 @@
 			<span class="ShowLimitName"><%=_TEX.T("UpCmdOptions.Condition.PoipikuFollower")%></span>
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_FOLLOWER%>" id="RadioTwitterFollower">
-		<label for="RadioTwitterFollower" class="OptionShowLimit">
+		<label for="RadioTwitterFollower" class="OptionShowLimit"
+			<%if(!cTweet.m_bIsTweetEnable){%>
+			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+			<%}%>
+		>
 			<span class="ShowLimitImage TwitterFollower"></span>
 			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterFollower")%></span>
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_LIST%>" id="RadioTwitterList">
-		<label for="RadioTwitterList" class="OptionShowLimit" onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)">
+		<label for="RadioTwitterList" class="OptionShowLimit"
+			<%if(!cTweet.m_bIsTweetEnable){%>
+			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+			<%}else{%>
+			   onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)"
+		    <%}%>
+		>
 			<span class="ShowLimitImage TwitterList"></span>
 			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterList")%></span>
 			<span class="ShowLimitName" id="TwitterList">
@@ -145,11 +155,19 @@
 		<%--								<span class="ShowLimitName"><i class="fab fa-twitter"></i>フォロー限定</span>--%>
 		<%--							</label>--%>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_EACH%>" id="RadioTwitterEach">
-		<label for="RadioTwitterEach" class="OptionShowLimit">
+		<label for="RadioTwitterEach" class="OptionShowLimit"
+			<%if(!cTweet.m_bIsTweetEnable){%>
+			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+			<%}%>
+		>
 			<span class="ShowLimitImage TwitterEach"></span>
 			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterEach")%></span>
 		</label>
-		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_RT%>" id="RadioTwitterRetweet">
+		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_RT%>" id="RadioTwitterRetweet"
+			<%if(!cTweet.m_bIsTweetEnable){%>
+			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+			<%}%>
+		>
 		<label for="RadioTwitterRetweet" class="OptionShowLimit">
 			<span class="ShowLimitImage TwitterRetweet"></span>
 			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterRetweet")%></span>
@@ -180,7 +198,13 @@
 <%}%>
 
 <div class="OptionItem" style="margin-top: 13px">
-	<label class="rocker" onclick="updateOptionTweet()">
+	<label class="rocker"
+		<%if(!cTweet.m_bIsTweetEnable){%>
+		   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+		<%}else{%>
+		   onclick="updateOptionTweet()"
+		<%}%>
+	>
 		<input id="OPTION_TWEET" type="checkbox">
 		<span class="switch-left"><%=_TEX.T("UpCmdOptions.Tweet.Checked")%></span>
 		<span class="switch-right"><%=_TEX.T("UpCmdOptions.Tweet.UnChecked")%></span>
@@ -197,7 +221,7 @@
 </div>
 <%}%>
 
-<%if(!isCreateContent){%>
+<%if(!isCreateContent && cTweet.m_bIsTweetEnable){%>
 <div class="OptionItem">
 	<label class="rocker">
 		<input id="OPTION_DELETE_TWEET" type="checkbox">
