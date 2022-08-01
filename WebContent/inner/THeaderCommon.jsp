@@ -26,7 +26,7 @@
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/jquery.creditCardValidator.js"></script>
 <script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
-<script type="text/javascript" src="/js/common-111.js"></script>
+<script type="text/javascript" src="/js/common-112.js"></script>
 <%@ include file="/inner/TSweetAlert.jsp"%>
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
