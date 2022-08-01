@@ -803,17 +803,34 @@ public final class CCnv {
 	}
 
 	private static void appendIllustItemExpand( StringBuilder strRtn, CContent cContent, ResourceBundleControl _TEX, int nSpMode) {
-		if (!cContent.nowAvailable()) {
-			return;
+		int remainNum;
+		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
+			remainNum = cContent.m_nFileNum - 1;
+			if (cContent.passwordEnabled
+					|| cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL
+					|| cContent.isValidPublishId() && cContent.m_nPublishId != Common.PUBLISH_ID_ALL ) {
+				remainNum++;
+				if (cContent.publishAllNum > 0) {
+					remainNum--;
+				}
+			}
+		} else { // for TEXT
+			remainNum = 0;
+			if (cContent.passwordEnabled
+					|| cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL
+					|| cContent.isValidPublishId() && cContent.m_nPublishId != Common.PUBLISH_ID_ALL ) {
+				remainNum++;
+			}
 		}
 
 		strRtn.append("<div class=\"IllustItemExpand\">");
-		if (cContent.passwordEnabled) {
-			appendIllustItemExpandPassFrame(_TEX, strRtn);
-		}
 
 		// cContent.isHideThumbImg, cContent.publishAllNum,  cContent.m_nFileNum で、追加表示する画像があるか否かを判定
-		if (cContent.isHideThumbImg || (cContent.m_nEditorId != Common.EDITOR_TEXT && cContent.m_nFileNum - cContent.publishAllNum > 0)) {
+		if (remainNum > 0) {
+			if (cContent.passwordEnabled) {
+				appendIllustItemExpandPassFrame(_TEX, strRtn);
+			}
+
 			StringBuilder sb = new StringBuilder();
 
 			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
@@ -824,16 +841,6 @@ public final class CCnv {
 				sb.append(String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId));
 			}
 
-			int remainNum;
-			if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
-				if (cContent.isHideThumbImg) {
-					remainNum = cContent.m_nFileNum;
-				} else {
-					remainNum = cContent.m_nFileNum - 1;
-				}
-			} else {
-				remainNum = 1;
-			}
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
 					cContent.m_nUserId,
 					cContent.m_nContentId,
