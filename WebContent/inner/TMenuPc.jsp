@@ -58,7 +58,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					<span class="MenuSwitchUserIcon"></span>
 					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>
 				</a>
-				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
 					<span class="MenuUploadIcon"></span>
 					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 				</a>
@@ -120,7 +120,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("SwitchAccount")%></span>
 			</a>
-			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 			</a>

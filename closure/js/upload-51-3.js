@@ -482,15 +482,6 @@ function DispTagListCharNum() {
 	$("#EditTagListCharNum").html(nCharNum);
 }
 
-function OnChangeTab(nIndex) {
-	setCookie("MOD", nIndex);
-	if(nIndex==0) {
-		window.location.href="/UploadFilePcV.jsp";
-	}else{
-		window.location.href="/UploadPastePcV.jsp";
-	}
-}
-
 function setLastCategorySetting(val) {
 	setLocalStrage('last_category', val);
 }

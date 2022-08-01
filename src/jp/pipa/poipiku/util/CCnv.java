@@ -151,11 +151,11 @@ public final class CCnv {
 			} else {
 				final String updateJsp;
 				if(cContent.m_nEditorId == Common.EDITOR_PASTE) {
-					updateJsp = "UpdatePastePcV";
+					updateJsp = "UpdatePastePcV2";
 				} else if(cContent.m_nEditorId == Common.EDITOR_TEXT) {
-					updateJsp = "UpdateTextPcV";
+					updateJsp = "UpdateTextPcV2";
 				} else {
-					updateJsp = "UpdateFilePcV";
+					updateJsp = "UpdateFilePcV2";
 				}
 				strRtn.append(String.format("<a class=\"IllustItemCommandEdit far fa-edit\" href=\"/%s.jsp?ID=%d&TD=%d\"></a>",
 						updateJsp, cContent.m_nUserId, cContent.m_nContentId));

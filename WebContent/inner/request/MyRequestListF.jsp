@@ -27,13 +27,13 @@ final String requestUserUrlFmt = isApp ? "/IllustListAppV.jsp?ID=%d" : "/%d/";
 for(MyRequestListC.Result r : results.requests) {
 	switch (r.request.mediaId) {
 		case 1:
-			uploadJsp = "UploadFilePcV.jsp";
+			uploadJsp = "UploadFilePcV2.jsp";
 			break;
 		case 10:
-			uploadJsp = "UploadTextPcV.jsp";
+			uploadJsp = "UploadTextPcV2.jsp";
 			break;
 		default:
-			uploadJsp = "UploadFilePcV.jsp";
+			uploadJsp = "UploadFilePcV2.jsp";
 	}
 %>
 <div id="RequestPane-<%=r.request.id%>" class="RequestPane">
