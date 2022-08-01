@@ -72,6 +72,9 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
 
 		<article class="Wrapper">
+			<header class="SearchResultTitle">
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(results.m_strKeyword)%></h2>
+			</header>
 			<section id="IllustThumbList" class="IllustItemList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
 				<%for(int nCnt = 0; nCnt<cResults.tagList.size(); nCnt++) {

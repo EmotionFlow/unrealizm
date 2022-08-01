@@ -49,7 +49,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
 				</div>
 			<%} else {%>
-				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="$('#HeaderTitleWrapper').hide();$('#HeaderSearchWrapper').show();"></a>
+				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="showSearch()"></a>
 				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
 					<span class="MenuMyRequestsIcon"></span>
 					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>
@@ -132,7 +132,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
 				<div class="HeaderSearch">
 					<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text"
-						   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>"
+						   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off"
 					/>
 					<div id="HeaderSearchBtn" class="HeaderSearchBtn"
 						 <%if(!checkLogin.m_bLogin){%> onclick="DispMsg('<%=_TEX.T("Common.NeedLogin")%>')"<%}%>
@@ -142,26 +142,93 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</div>
 			</form>
 		</nav>
-		<%} else {%>
-		<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
-			<div class="HeaderSearch">
-				<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" />
-				<div id="HeaderSearchBtn" class="HeaderSearchBtn">
-					<i class="fas fa-search"></i>
-				</div>
-			</div>
-		</form>
 		<%}%>
+		<%
+			String searchType = "Contents";
+			String requestPath = request.getRequestURL().toString();
+			String searchFunction = "SearchIllustByKeyword";
+			if (Pattern.compile("/SearchUserByKeyword.*\\.jsp").matcher(requestPath).find()) {
+				searchType = "Users";
+				searchFunction = "SearchUserByKeyword";
+			} else if (Pattern.compile("/SearchTagByKeyword.*\\.jsp").matcher(requestPath).find()) {
+				searchType = "Tags";
+				searchFunction = "SearchTagByKeyword";
+			}
+		%>
+		<%if(Util.isSmartPhone(request)) {%>
+			<div id="OverlaySearchWrapper" class="SearchWrapper overlay">
+				<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
+					<div id="OverlaySearchCloseBtn" class="OverlaySearchCloseBtn" onclick="$('#HeaderTitleWrapper').show();$('#OverlaySearchWrapper').hide();">
+						<i class="fas fa-arrow-left"></i>
+					</div>
+					<div class="HeaderSearch">
+						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off"/>
+						<div id="HeaderSearchBtn" class="HeaderSearchBtn">
+							<i class="fas fa-search"></i>
+						</div>
+					</div>
+				</form>
+				<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
+				<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
+			</div>
+			<script>
+				function showSearch() {
+					$('#HeaderTitleWrapper').hide();
+					$('#OverlaySearchWrapper').show();
+					$('#HeaderSearchBox').focus();
 
-		<script>
-			<%if(checkLogin.m_bLogin){%>
-			$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
-			$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
-			<%}%>
-		</script>
+					<%if(checkLogin.m_bLogin){%>
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
+					<%}else{%>
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>');
+					<%}%>
+				}
 
+				<%if(checkLogin.m_bLogin){%>
+				$(document).on('click', '.RecentSearchItem', ev => {
+					$('#HeaderTitleWrapper').show();
+					$('#OverlaySearchWrapper').hide();
+					$('ul#RecentSearchList').empty();
+					<%=searchFunction%>($(ev.currentTarget).find('.RecentSearchKW').text());
+				});
+				<%}%>
+
+			</script>
+		<%} else {%>
+			<div id="PulldownSearchWrapper" class="SearchWrapper pulldown">
+				<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
+				<ul id="RecentSearchList" class="RecentSearchList"></ul>
+			</div>
+			<script>
+				function showSearch() {
+					$('#PulldownSearchWrapper').slideDown();
+					<%if(checkLogin.m_bLogin){%>
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
+					<%}else{%>
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>');
+					<%}%>
+				}
+				$('#HeaderSearchBox').on('focus', showSearch);
+				$(document).on('click', '.RecentSearchItem', ev => {
+					$('#PulldownSearchWrapper').hide();
+					$('ul#RecentSearchList').empty();
+					<%=searchFunction%>($(ev.currentTarget).find('.RecentSearchKW').text());
+				});
+				$(document).on('click touchend', function(ev) {
+					if (!$(ev.target).closest('#PulldownSearchWrapper, .HeaderSearch').length) $('#PulldownSearchWrapper').hide();
+				});
+			</script>
+		<%}%>
 	</div>
 </header>
+
+
+<script>
+	<%if(checkLogin.m_bLogin){%>
+	$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
+	$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+	<%}%>
+</script>
 
 <%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">

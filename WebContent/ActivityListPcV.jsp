@@ -106,7 +106,7 @@ if (infoType==-1) infoType = 1;
 	</style>
 </head>
 <body>
-<%@ include file="/inner/TMenuPc.jsp" %>
+<%@ include file="/inner/TMenuPc.jsp"%>
 
 <nav class="TabMenuWrapper">
 	<ul class="TabMenu">

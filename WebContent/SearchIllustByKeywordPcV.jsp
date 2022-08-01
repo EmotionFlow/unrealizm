@@ -57,11 +57,6 @@ String strFileUrl = cResults.m_strRepFileName;
 
 		<style>
 			body {padding-top: 79px !important;}
-
-			<%if(Util.isSmartPhone(request)) {%>
-			#HeaderTitleWrapper {display: none;}
-			#HeaderSearchWrapper {display: block;}
-			<%}%>
 		</style>
 	</head>
 

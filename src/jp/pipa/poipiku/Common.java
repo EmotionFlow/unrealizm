@@ -266,6 +266,10 @@ public final class Common {
 	// lang_id
 	// SupportedLocalesに移行した
 
+	// 検索履歴取得範囲
+	public static final int SEARCH_LOG_SUGGEST_MAX = 5;
+	public static final int SEARCH_LOG_SUGGEST_DAYS = 7;
+
 	public static String CrLfInjection(String strSrc) {
 		if(strSrc == null) {
 			return "";

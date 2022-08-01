@@ -74,7 +74,7 @@ public final class SearchIllustByKeywordC {
 
 		if (m_nPage < 4) {
 			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, muteKeywords,
-					m_nPage, KeywordSearchLog.SearchTarget.Tags, keywordMatchedIds.size(), ipAddress);
+					m_nPage, KeywordSearchLog.SearchTarget.Contents, keywordMatchedIds.size(), ipAddress);
 		}
 
 		if (keywordMatchedIds.isEmpty()) return true;

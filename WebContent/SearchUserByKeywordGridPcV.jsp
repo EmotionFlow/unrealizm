@@ -39,11 +39,6 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<style>
 			body {padding-top: 79px !important;}
-
-			<%if(Util.isSmartPhone(request)) {%>
-			#HeaderTitleWrapper {display: none;}
-			#HeaderSearchWrapper {display: block;}
-			<%}%>
 		</style>
 	</head>
 
@@ -61,6 +56,9 @@ g_strSearchWord = cResults.m_strKeyword;
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper GridList">
+			<header class="SearchResultTitle">
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CUser cUser = cResults.m_vContentList.get(nCnt);%>

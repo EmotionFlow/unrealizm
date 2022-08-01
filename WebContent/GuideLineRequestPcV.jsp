@@ -36,7 +36,7 @@
 </head>
 
 <body>
-<%@ include file="/inner/TMenuPc.jsp" %>
+<%@ include file="/inner/TMenuPc.jsp"%>
 
 <article class="Wrapper">
 	<%@include file="inner/GuideLineRequestV.jsp"%>

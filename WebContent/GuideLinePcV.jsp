@@ -45,7 +45,7 @@
 </head>
 
 <body>
-<%@ include file="/inner/TMenuPc.jsp" %>
+<%@ include file="/inner/TMenuPc.jsp"%>
 
 <article class="Wrapper">
 	<div class="SettingList">

@@ -116,7 +116,7 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 
 	<body>
 		<%if(!isApp){%>
-		<%@ include file="/inner/TMenuPc.jsp" %>
+		<%@ include file="/inner/TMenuPc.jsp"%>
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<script>$(function () {
 			$("#MenuSearch").hide();

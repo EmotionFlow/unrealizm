@@ -132,19 +132,55 @@ function getLocalStrage(key) {
 	return obj.val;
 }
 
-function SearchIllustByKeyword() {
-	var keyword = $('#HeaderSearchBox').val();
+function SearchIllustByKeyword(kwd) {
+	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
 	location.href="/SearchIllustByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
-function SearchTagByKeyword() {
-	var keyword = $('#HeaderSearchBox').val();
+function SearchTagByKeyword(kwd) {
+	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
 	location.href="/SearchTagByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
-function SearchUserByKeyword() {
-	var keyword = $('#HeaderSearchBox').val();
+function SearchUserByKeyword(kwd) {
+	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
 	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
+}
+
+function showSearchHistory(searchType, blankMsg) {
+	// 今はUI側がイマイチなので、searchTypeをAllに固定する
+	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
+	(searchType ? $.ajax({
+		"type": "get",
+		"url": "/f/GetSearchLogF.jsp",
+		"data": { "type": searchType },
+		"dataType": "json",
+	}) : Promise.resolve({
+		keywords: [],
+	})).then(function(history) {
+		const $ul = $('ul#RecentSearchList');
+		$ul.empty();
+		if (history.keywords.length) {
+			history.keywords.forEach(kw => {
+				const $li = $('<li></li>', {class: 'RecentSearchItem'});
+				const $row = $('<div></div>', {class: 'RecentSearchRow'});
+				const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
+				const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+				const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
+				$close.append($closeIcon);
+				$row.append($item, $close);
+				$li.append($row);
+				$ul.append($li);
+			});
+		} else {
+			const $li = $('<li></li>');
+			const $row = $('<div></div>', {class: 'RecentSearchRow'});
+			const $item = $('<div></div>', {class: 'RecentSearchKW', text: blankMsg});
+			$row.append($item);
+			$li.append($row);
+			$ul.append($li);
+		}
+	});
 }
 
 var sendObjectMessage = function(parameters) {

@@ -386,7 +386,7 @@ if (!results.getResults(checkLogin)) {
 <body>
 
 <%if(!isApp){%>
-<%@ include file="/inner/TMenuPc.jsp" %>
+<%@ include file="/inner/TMenuPc.jsp"%>
 <%}%>
 
 <article class="Wrapper" <%if(!bSmartPhone){%>style="width: 100%;"<%}%>>

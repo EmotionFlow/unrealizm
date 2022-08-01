@@ -138,7 +138,6 @@ if(cResults.isDownloadable) {
 
 	<body>
 		<div id="DispMsg" style="top: 51px;"></div>
-
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper" style="overflow: scroll; width: 100%; height: 100%;">
