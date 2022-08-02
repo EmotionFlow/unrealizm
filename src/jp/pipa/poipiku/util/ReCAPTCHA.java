@@ -11,8 +11,8 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 public final class ReCAPTCHA {
-	public static final String SITE_KEY = "6Lfdhg8bAAAAALzgmqBkX41NyEQXhWYrOXCImNIp";
-	private static final String SECRET_KEY = "6Lfdhg8bAAAAAD00lzcpNUbpGOCLeuLGv6AJg8kX";
+	public static final String SITE_KEY = "6LdyQQQhAAAAAPxrfSXpRfnjKqJwT9rKHRtApK44";
+	private static final String SECRET_KEY = "6LdyQQQhAAAAAJA0y8l2G9Sl01Bni2HGZezekYFS";
 
 	public static class VerifyResult {
 		public boolean success = false;
