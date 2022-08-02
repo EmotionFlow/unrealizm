@@ -194,8 +194,6 @@ public final class UpdateC extends UpC {
 				statement.setInt(idx++, upParam.userId);
 				statement.setInt(idx++, upParam.contentId);
 
-				Log.d(statement.toString());
-
 				statement.executeUpdate();
 			} catch(Exception e) {
 				e.printStackTrace();

@@ -114,8 +114,6 @@ public class UpCParam {
 				}
 			}
 		}
-
-		 Log.d(toString());
 	};
 
 	protected int ErrorOccurred(Exception e) {
