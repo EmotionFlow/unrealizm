@@ -21,8 +21,6 @@ public class UpdateTextCParam extends UpCParam {
 			isDeleteTweet = Util.toBoolean(request.getParameter("DELTW"));
 			title = Util.deleteInvalidChar(Util.subStrNum(request.getParameter("TIT"), 100));
 			novelDirection = Util.toIntN(request.getParameter("NOVEL_DIRECTION_VAL"), 0, 1);
-
-			Log.d(toString());
 		} catch(Exception e) {
 			return super.ErrorOccurred(e);
 		}
