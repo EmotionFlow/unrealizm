@@ -82,9 +82,12 @@ public final class CCnv {
 		String strThumbClass = "";
 		// Open class
 		if(cContent.m_nOpenId==2) strThumbClass += " Hidden";
+
 		if(cContent.m_nSafeFilter==Common.SAFE_FILTER_R15) strThumbClass += " R15";
 		if(cContent.m_nSafeFilter==Common.SAFE_FILTER_R18) strThumbClass += " R18";
 		if(cContent.m_nSafeFilter==Common.SAFE_FILTER_R18G) strThumbClass += " R18G";
+		if(cContent.m_nSafeFilter==Common.SAFE_FILTER_R18_PLUS) strThumbClass += " R18Plus";
+
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_PASS) strThumbClass += " Password";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_LOGIN) strThumbClass += " Login";
 		if(cContent.m_nPublishId==Common.PUBLISH_ID_FOLLOWER) strThumbClass += " Follower";

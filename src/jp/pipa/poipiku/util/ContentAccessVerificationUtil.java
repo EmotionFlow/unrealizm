@@ -4,6 +4,7 @@ import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.TwitterRetweet;
+import jp.pipa.poipiku.controller.CheckCreditCardC;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -47,6 +48,12 @@ public final class ContentAccessVerificationUtil {
 
 	static public boolean verifyPoipassLogin(CheckLogin checkLogin) {
 		return checkLogin.m_bLogin;
+	}
+
+	static public boolean verifyR18Plus(CheckLogin checkLogin) {
+		if (!checkLogin.m_bLogin) return false;
+		CheckCreditCardC checkCreditCardC = new CheckCreditCardC();
+		return checkCreditCardC.getResults(checkLogin) == 1;
 	}
 
 	static public boolean verifyPoipassFollower(CContent content, CheckLogin checkLogin) {

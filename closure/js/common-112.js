@@ -1432,3 +1432,19 @@ function sendUserWave(fromUserId, toUserId, emoji, elThis) {
 	)
 }
 /******** ユーザー宛絵文字(wave) *********/
+
+/******** R18+ *********/
+function DispR18PlusDlg(){
+	$.ajax({
+		"type": "get",
+		"url": "/f/GetR18PlusDlgHtmlF.jsp",
+	}).then( html => {
+		Swal.fire({
+			html: html,
+			focusConfirm: false,
+			showConfirmButton: false,
+			showCloseButton: true,
+		});
+	})
+}
+/******** R18+ *********/

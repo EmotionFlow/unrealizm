@@ -94,6 +94,8 @@ public final class IllustDetailC {
 				}
 
 				if (content.m_nPublishId == Common.PUBLISH_ID_LOGIN && !verifyPoipassLogin(checkLogin)) return false;
+
+				if (content.m_nSafeFilter == Common.SAFE_FILTER_R18_PLUS && !verifyR18Plus(checkLogin)) return false;
 				if (content.m_nPublishId == Common.PUBLISH_ID_FOLLOWER && !verifyPoipassFollower(content, checkLogin)) return false;
 				if (!content.nowAvailable()) return false;
 

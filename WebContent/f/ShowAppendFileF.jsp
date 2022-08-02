@@ -74,6 +74,11 @@ if(nRtn<ShowAppendFileC.OK) {
 	case ShowAppendFileC.ERR_T_NEED_RETWEET:
 		strHtml.append("need retweet");
 		break;
+	case ShowAppendFileC.ERR_R18_PLUS:
+		strHtml.append("""
+  			%s<br><br><a href="javascript:void(0)" onclick="DispR18PlusDlg()" style="text-decoration: underline;">%s</a>
+  			""".formatted("クレジットカード情報登録済の方のみ閲覧できます", "詳細を見る"));
+		break;
 	case ShowAppendFileC.ERR_NOT_FOUND:
 	case ShowAppendFileC.ERR_HIDDEN :
 	case ShowAppendFileC.ERR_UNKNOWN:

@@ -30,6 +30,7 @@ public final class ShowAppendFileC {
 	public static final int ERR_T_TARGET_ACCOUNT_NOT_FOUND = -98;
 	public static final int ERR_T_UNLINKED = -10;
 	public static final int ERR_HIDDEN = -9;
+	public static final int ERR_R18_PLUS = -11;
 	public static final int ERR_UNKNOWN = -99;
 
 	public int contentUserId = -1;
@@ -82,6 +83,8 @@ public final class ShowAppendFileC {
 
 		if (!isOwner && !isRequestClient) {
 			if (content.m_nPublishId == Common.PUBLISH_ID_LOGIN && !verifyPoipassLogin(checkLogin)) return ERR_LOGIN;
+
+			if (content.m_nSafeFilter == Common.SAFE_FILTER_R18_PLUS && !verifyR18Plus(checkLogin)) return ERR_R18_PLUS;
 			if (content.m_nPublishId == Common.PUBLISH_ID_FOLLOWER && !verifyPoipassFollower(content, checkLogin)) return ERR_FOLLOWER;
 			if (!content.nowAvailable()) return ERR_HIDDEN;
 			if (content.m_nPublishId==Common.PUBLISH_ID_T_FOLLOWER

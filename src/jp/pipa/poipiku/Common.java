@@ -131,7 +131,7 @@ public final class Common {
 			"/img/warning.png",				// 1
 			"/img/R-18.png",				// 2
 			"/img/R-18.png",				// 3
-			"/img/R-18+.png",				// 4
+			"/img/R-18_plus.png",			// 4
 	};
 
 	public static final String PASSWORD_FILE = "/img/publish_pass.png";
@@ -158,6 +158,7 @@ public final class Common {
 	public static final int SAFE_FILTER_R18 = 4;
 	public static final int SAFE_FILTER_R18G = 6;
 	public static final int SAFE_FILTER_R18_PLUS = 8;
+	public static final int SAFE_FILTER_MAX = 8;
 
 	// 表示するカテゴリ一覧
 	public static final int CATEGORY_ID_MAX = 32;

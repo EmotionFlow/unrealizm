@@ -271,7 +271,11 @@ public final class CContent {
 		}
 
 		// ワンクッション・R18サムネ
-		if (m_nSafeFilter == Common.SAFE_FILTER_R15 || m_nSafeFilter == Common.SAFE_FILTER_R18 || m_nSafeFilter == Common.SAFE_FILTER_R18G) {
+		if (m_nSafeFilter == Common.SAFE_FILTER_R15
+				|| m_nSafeFilter == Common.SAFE_FILTER_R18
+				|| m_nSafeFilter == Common.SAFE_FILTER_R18G
+				|| m_nSafeFilter == Common.SAFE_FILTER_R18_PLUS
+		) {
 			String thumbFile = "";
 			switch (m_nSafeFilter) {
 				case Common.SAFE_FILTER_R15 -> thumbFile = Common.SAFE_FILTER_FILE[1];
@@ -321,7 +325,10 @@ public final class CContent {
 	}
 
 	public int getAdSwitchId() {
-		if (m_nSafeFilter == Common.SAFE_FILTER_R18 || m_nSafeFilter == Common.SAFE_FILTER_R18G) {
+		if (m_nSafeFilter == Common.SAFE_FILTER_R18
+				|| m_nSafeFilter == Common.SAFE_FILTER_R18G
+				|| m_nSafeFilter == Common.SAFE_FILTER_R18_PLUS
+		) {
 			return Common.AD_ID_R18;
 		} else {
 			return Common.AD_ID_ALL;

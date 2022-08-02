@@ -115,12 +115,12 @@ public class GetContentsByUserC {
 				boolean bFollow = resultSet.next();
 				followCode = (bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				if(bFollow) {
-					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			} else {	// owner
-				checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+				checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
 			}
 
 			// author profile
