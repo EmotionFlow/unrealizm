@@ -195,7 +195,7 @@ public class UpdateFileOrderCTest {
 		c.newIdList = new int[]{0, aidBase + 0, aidBase + 1, aidBase + 2};
 
 		Arrays.stream(c.newIdList).forEach(System.out::println);
-		assertEquals(0, c.GetResults(null));
+		assertEquals(0, c.GetResults(null, false));
 	}
 
 	@Test
@@ -223,7 +223,7 @@ public class UpdateFileOrderCTest {
 		c.contentId = cid;
 		c.newIdList = new int[]{0, aidBase + 2, aidBase + 0, aidBase + 1, };
 
-		assertEquals(0, c.GetResults(null));
+		assertEquals(0, c.GetResults(null, false));
 
 		assertEquals("file-0", selectContentFile(cid));
 
@@ -258,7 +258,7 @@ public class UpdateFileOrderCTest {
 		c.contentId = cid;
 		c.newIdList = new int[]{aidBase + 2, aidBase + 0, aidBase + 1, 0};
 
-		assertEquals(0, c.GetResults(null));
+		assertEquals(0, c.GetResults(null, false));
 
 		assertEquals("append-file-2", selectContentFile(cid));
 
@@ -285,7 +285,7 @@ public class UpdateFileOrderCTest {
 		c.contentId = cid;
 		c.newIdList = new int[]{aidBase + 1, 0};
 
-		assertEquals(0, c.GetResults(null));
+		assertEquals(0, c.GetResults(null, false));
 
 		assertEquals("append-file-1", selectContentFile(cid));
 
@@ -327,7 +327,7 @@ public class UpdateFileOrderCTest {
 		c.newIdList = new int[]{aidBase + 3, aidBase + 4, aidBase + 5};
 		c.firstNewId = aidBase + 3;
 
-		assertEquals(0, c.GetResults(null));
+		assertEquals(0, c.GetResults(null, false));
 
 		assertEquals("append-file-3", selectContentFile(cid));
 
@@ -367,7 +367,7 @@ public class UpdateFileOrderCTest {
 		c.contentId = cid;
 		c.newIdList = new int[]{0, aidBase + 2, aidBase + 0, aidBase + 1, };
 
-		assertEquals(-1, c.GetResults(null));
+		assertEquals(-1, c.GetResults(null, false));
 		assertEquals(Controller.ErrorKind.DoRetry, c.errorKind);
 	}
 
@@ -396,7 +396,7 @@ public class UpdateFileOrderCTest {
 		c.newIdList = new int[]{aidBase + 3, aidBase + 4, aidBase + 5, 0, aidBase + 0, aidBase + 2, aidBase + 1};
 		c.firstNewId = aidBase + 3;
 
-		assertEquals(Common.UPLOAD_FILE_TOTAL_ERROR, c.GetResults(null));
+		assertEquals(Common.UPLOAD_FILE_TOTAL_ERROR, c.GetResults(null, false));
 
 		assertEquals("file-0", selectContentFile(cid));
 
@@ -441,7 +441,7 @@ public class UpdateFileOrderCTest {
 		c.newIdList = new int[]{aidBase + 3, aidBase + 4, 0, aidBase + 5, aidBase + 0, aidBase + 2, aidBase + 1};
 		c.firstNewId = aidBase + 3;
 
-		assertEquals(0, c.GetResults(null));
+		assertEquals(0, c.GetResults(null, false));
 
 		assertEquals("append-file-3", selectContentFile(cid));
 
@@ -492,7 +492,7 @@ public class UpdateFileOrderCTest {
 		c.newIdList = new int[]{aidBase + 3, aidBase + 4, 0, aidBase + 5, aidBase + 0, aidBase + 2, aidBase + 1};
 		c.firstNewId = aidBase + 3;
 
-		assertEquals(Common.UPLOAD_FILE_TOTAL_ERROR, c.GetResults(null));
+		assertEquals(Common.UPLOAD_FILE_TOTAL_ERROR, c.GetResults(null, false));
 
 		assertEquals("file-0", selectContentFile(cid));
 
@@ -538,7 +538,7 @@ public class UpdateFileOrderCTest {
 		c.newIdList = new int[]{aidBase + 3, aidBase + 1, aidBase + 4, aidBase + 5, aidBase + 2};
 		c.firstNewId = aidBase + 3;
 
-		assertEquals(0, c.GetResults(null));
+		assertEquals(0, c.GetResults(null, false));
 
 		assertEquals("append-file-3", selectContentFile(cid));
 
