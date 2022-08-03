@@ -380,6 +380,11 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 							<th class="BenefitCell" style="width: 30%"><%=_TEX.T("MyEditSettingPassportV.Features.Header.Benefit")%></th>
 						</tr>
 						<tr>
+							<td class="ListCell"><span style="color: red">NEW!</span><br><%=_TEX.T("MyEditSettingPassportV.Features.List17")%></td>
+							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List17.Normal")%></td>
+							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List17.Benefit")%></td>
+						</tr>
+						<tr>
 							<td class="ListCell"><span style="color: red">NEW!</span><br><%=_TEX.T("MyEditSettingPassportV.Features.List16")%></td>
 							<td class="NormalCell"><%=_TEX.T("MyEditSettingPassportV.Features.List16.Normal")%></td>
 							<td class="BenefitCell"><%=_TEX.T("MyEditSettingPassportV.Features.List16.Benefit")%></td>
