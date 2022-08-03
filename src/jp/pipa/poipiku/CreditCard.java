@@ -14,7 +14,6 @@ public class CreditCard {
 	public int agentId = -1;
 	private String strCardExpire = "";
 	private LocalDateTime dtCardExpire = null;
-	public String securityCode = "";
 	public String agentUserId = "";
 	public String lastAgentOrderId = "";
 	public boolean isInvalid = false;
@@ -54,7 +53,7 @@ public class CreditCard {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		final String sql =
-				"SELECT id, user_id, agent_id, card_expire, security_code, agent_user_id, last_agent_order_id, invalid_flg" +
+				"SELECT id, user_id, agent_id, card_expire, agent_user_id, last_agent_order_id, invalid_flg" +
 				" FROM creditcards" +
 				" WHERE user_id=? AND agent_id=? AND del_flg=false";
 		try {
@@ -72,7 +71,6 @@ public class CreditCard {
 				userId = resultSet.getInt(idx++);
 				agentId = resultSet.getInt(idx++);
 				setExpire(resultSet.getString(idx++));
-				securityCode = resultSet.getString(idx++);
 				agentUserId = resultSet.getString(idx++);
 				lastAgentOrderId = resultSet.getString(idx++);
 				isInvalid = resultSet.getBoolean(idx++);
@@ -104,8 +102,8 @@ public class CreditCard {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		final String sql = "INSERT INTO creditcards" +
-				" (user_id, agent_id, card_expire, security_code, agent_user_id, last_agent_order_id)" +
-				" VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
+				" (user_id, agent_id, card_expire, agent_user_id, last_agent_order_id)" +
+				" VALUES (?, ?, ?, ?, ?) RETURNING id";
 
 //		String HASH_SALT = "yoi29MeetMeat";
 //		final String hashValue = Util.getHashPass(cardNumPart + HASH_SALT);
@@ -117,7 +115,6 @@ public class CreditCard {
 			statement.setInt(idx++, userId);
 			statement.setInt(idx++, agentId);
 			statement.setString(idx++, strCardExpire);
-			statement.setString(idx++, securityCode);
 			statement.setString(idx++, agentUserId);
 			statement.setString(idx++, lastAgentOrderId);
 			//statement.setString(idx++, hashValue);

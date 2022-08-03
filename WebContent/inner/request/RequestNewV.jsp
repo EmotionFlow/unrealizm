@@ -90,7 +90,6 @@ if (!results.getResults(checkLogin)) {
 
 			if (cardInfo) {
 				postInfo["EXP"] = cardInfo.expire;
-				postInfo["SEC"] = cardInfo.securityCode;
 			}
 
 			$.ajax({

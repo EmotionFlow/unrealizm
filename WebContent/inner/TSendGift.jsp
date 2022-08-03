@@ -111,7 +111,6 @@ function _sendGiftAjax(giftInfo, agentInfo, cardInfo) {
 			"AID": agentInfo == null ? '' :  agentInfo.agentId,
 			"TKN": agentInfo == null ? '' : agentInfo.token,
 			"EXP": cardInfo == null ? '' : cardInfo.expire,
-			"SEC": cardInfo == null ? '' : cardInfo.securityCode,
 		},
 		"url": "/f/SendGiftF.jsp",
 		"dataType": "json",

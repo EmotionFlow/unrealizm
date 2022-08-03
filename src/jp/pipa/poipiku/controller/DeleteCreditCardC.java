@@ -64,7 +64,7 @@ public class DeleteCreditCardC {
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
 
-			strSql = "UPDATE creditcards SET del_flg=true, last_agent_order_id='', card_expire='', security_code='', updated_at=now() WHERE id=?";
+			strSql = "UPDATE creditcards SET del_flg=true, last_agent_order_id='', card_expire='', updated_at=now() WHERE id=?";
 			cState = cConn.prepareStatement(strSql);
 			for (Integer id : cardIds) {
 				cState.setInt(1, id);

@@ -23,7 +23,6 @@ public final class BuyPassportC {
 			cParam.m_nPassportId,
 			cParam.m_strAgentToken,
 			cParam.m_strCardExpire,
-			cParam.m_strCardSecurityCode,
 			cParam.m_strUserAgent
 		);
 

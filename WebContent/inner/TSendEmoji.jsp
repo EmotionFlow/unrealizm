@@ -14,7 +14,6 @@
 				"AID": agentInfo == null ? '' :  agentInfo.agentId,
 				"TKN": agentInfo == null ? '' : agentInfo.token,
 				"EXP": cardInfo == null ? '' : cardInfo.expire,
-				"SEC": cardInfo == null ? '' : cardInfo.securityCode,
 			},
 			"url": "/f/SendEmojiF.jsp",
 			"dataType": "json",

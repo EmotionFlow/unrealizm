@@ -25,7 +25,6 @@ public class SendRequestC extends Controller {
 	public String ipAddress = "";
 	public String agentToken = "";
 	public String cardExpire = "";
-	public String cardSecurityCode = "";
 	public String userAgent = "";
 
 
@@ -46,7 +45,6 @@ public class SendRequestC extends Controller {
 			agentId = Util.toInt(request.getParameter("AID"));
 			agentToken = Util.toString(request.getParameter("TKN"));
 			cardExpire	= Util.toString(request.getParameter("EXP"));
-			cardSecurityCode	= Util.toString(request.getParameter("SEC"));
 			userAgent  = request.getHeader("user-agent");
 			ipAddress = request.getRemoteAddr();
 		} catch(Exception e) {
@@ -164,7 +162,6 @@ public class SendRequestC extends Controller {
 			cardSettlement.amount = order.paymentTotal;
 			cardSettlement.agentToken = agentToken;
 			cardSettlement.cardExpire = cardExpire;
-			cardSettlement.cardSecurityCode = cardSecurityCode;
 			cardSettlement.userAgent = userAgent;
 			cardSettlement.billingCategory = CardSettlement.BillingCategory.AuthorizeOnly;
 			cardSettlement.itemName = CardSettlement.ItemName.Request;

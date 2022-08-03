@@ -52,10 +52,10 @@ public class PoiTicketTest {
 		assertEquals(testUserId, ticket.userId);
 		assertEquals(-1, ticket.amount);
 
-		boolean buyResult = ticket.buy(1, 1, "", "", "", "");
+		boolean buyResult = ticket.buy(1, 1, "", "", "");
 		assertTrue(buyResult);
 
-		buyResult = ticket.buy(1, 2, "", "", "", "");
+		buyResult = ticket.buy(1, 2, "", "", "");
 		assertTrue(buyResult);
 		assertEquals(testUserId, ticket.userId);
 		assertEquals(3, ticket.amount);
@@ -66,17 +66,17 @@ public class PoiTicketTest {
 		assertEquals(testUserId, ticket.userId);
 		assertEquals(3, ticket.amount);
 
-		buyResult = ticket.buy(1, 0, "", "", "", "");
+		buyResult = ticket.buy(1, 0, "", "", "");
 		assertFalse(buyResult);
 		assertEquals(testUserId, ticket.userId);
 		assertEquals(3, ticket.amount);
 
-		buyResult = ticket.buy(1, -1, "", "", "", "");
+		buyResult = ticket.buy(1, -1, "", "", "");
 		assertFalse(buyResult);
 		assertEquals(testUserId, ticket.userId);
 		assertEquals(3, ticket.amount);
 
-		buyResult = ticket.buy(1, 4, "", "", "", "");
+		buyResult = ticket.buy(1, 4, "", "", "");
 		assertTrue(buyResult);
 		assertEquals(testUserId, ticket.userId);
 		assertEquals(7, ticket.amount);
@@ -92,7 +92,7 @@ public class PoiTicketTest {
 		ticket.isSkipSettlement = true;
 
 		assertFalse(ticket.use());
-		ticket.buy(1, 2, "", "", "", "");
+		ticket.buy(1, 2, "", "", "");
 		assertTrue(ticket.use());
 		assertEquals(1, ticket.amount);
 
