@@ -3,11 +3,9 @@
 
 <script>
 function DispR18PlusMsg() {
-	const msg = "クレジットカード登録済みのユーザーのみ閲覧できます"
-		+ `<br><br><a href="javascript:void(0)" style="text-decoration: underline" onclick="DispR18PlusDlg()">`
-		+ "詳細を見る"
-		+ `</a>`;
-	DispMsg(msg, 4000);
+	DispMsg(`[R18+] クレジットカード登録済みのユーザーのみ、この作品を閲覧できるようにします<br><br>
+<a href="javascript:void(0)" style="text-decoration: underline" onclick="DispR18PlusDlg()">
+<i class="fas fa-info-circle"></i>詳細を見る</a>`, 4000);
 }
 </script>
 
@@ -75,7 +73,7 @@ function DispR18PlusMsg() {
 			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.R18")%></span>
 		</label>
 		<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R18_PLUS%>" id="RadioR18Plus">
-		<label for="RadioR18Plus" class="OptionPublishNsfw" onclick="DispR18PlusMsg('[R-18+]クレジットカードによる決済履歴があるユーザーのみが閲覧できるようにします。', 5000)">
+		<label for="RadioR18Plus" class="OptionPublishNsfw" onclick="DispR18PlusMsg()">
 			<span class="OneCushionImage R18Plus"></span>
 			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.R18Plus")%></span>
 		</label>
