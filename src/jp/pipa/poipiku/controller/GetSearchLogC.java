@@ -41,9 +41,9 @@ public class GetSearchLogC {
 		     PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, checkLogin.m_nUserId);
-			statement.setString(2, String.valueOf(Common.SEARCH_LOG_SUGGEST_DAYS) + " day");
+			statement.setString(2, String.valueOf(Common.SEARCH_LOG_SUGGEST_DAYS[checkLogin.m_nPassportId]) + " day");
 			for (int i=0; i<targetCodes.size(); i++) { statement.setInt(3+i, targetCodes.get(i).getCode()); }
-			statement.setInt(3 + targetCodes.size(), Common.SEARCH_LOG_SUGGEST_MAX);
+			statement.setInt(3 + targetCodes.size(), Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]);
 
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
