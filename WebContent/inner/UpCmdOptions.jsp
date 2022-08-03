@@ -3,9 +3,9 @@
 
 <script>
 function DispR18PlusMsg() {
-	DispMsg(`[R18+] クレジットカード登録済みのユーザーのみ、この作品を閲覧できるようにします<br><br>
+	DispMsg(`<%=_TEX.T("R18Plus.Msg")%><br><br>
 <a href="javascript:void(0)" style="text-decoration: underline" onclick="DispR18PlusDlg()">
-<i class="fas fa-info-circle"></i>詳細を見る</a>`, 4000);
+<i class="fas fa-info-circle"></i><%=_TEX.T("R18Plus.Msg.ShowDetail")%></a>`, 4000);
 }
 </script>
 

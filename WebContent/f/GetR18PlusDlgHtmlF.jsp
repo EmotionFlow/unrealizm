@@ -9,16 +9,16 @@
     .swal2-popup .swal2-actions {margin-top: 0}
 </style>
 <div class="R18PlusIntroDlg">
-	<h2 class="R18PlusIntroDlgTitle">R18+(β)</h2>
+	<h2 class="R18PlusIntroDlgTitle"><%=_TEX.T("R18Plus.Dlg.Title")%></h2>
 	<div class="R18PlusIntroDlgInfo" style="margin-top: 11px;">
-		<p style="text-align:center; font-weight: normal; font-size:17px; color: #3498db;">クレジットカード情報があるユーザのみ見ることができます</p>
+		<p style="text-align:center; font-weight: normal; font-size:17px; color: #3498db;"><%=_TEX.T("R18Plus.Dlg.Description")%></p>
 	</div>
 	<div class="R18PlusIntroDlgInfo">
 		<ul>
-			<li>投稿側はどなたでもR18+を設定できます</li>
-			<li>R18+設定されたコンテンツは、クレジットカード登録がある方のみが閲覧できます</li>
-			<li>おふせ(β)やポイパス購入をすることで、クレジットカード情報を登録できます</li>
-			<li>設定画面からカード情報を削除したり、登録カードの有効期限が切れると、R18+の閲覧ができなくなります</li>
+			<li><%=_TEX.T("R18Plus.Dlg.List01")%></li>
+			<li><%=_TEX.T("R18Plus.Dlg.List02")%></li>
+			<li><%=_TEX.T("R18Plus.Dlg.List03")%></li>
+			<li><%=_TEX.T("R18Plus.Dlg.List04")%></li>
 		</ul>
 	</div>
 </div>
