@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-42.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-210.css" type="text/css" rel="stylesheet" />
-<link href="/css/TBasePc-77.css" type="text/css" rel="stylesheet" />
+<link href="/css/TBasePc-78.css" type="text/css" rel="stylesheet" />
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114_2.png" />
@@ -35,7 +35,7 @@
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
 <%} else {%>
-<link href="/css/TPcAppend-85.css" type="text/css" rel="stylesheet" />
+<link href="/css/TPcAppend-86.css" type="text/css" rel="stylesheet" />
 <%}%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
