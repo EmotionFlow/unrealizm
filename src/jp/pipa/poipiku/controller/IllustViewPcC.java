@@ -182,16 +182,7 @@ public final class IllustViewPcC {
 			statement.close();statement=null;
 
 			if(m_cUser.m_strHeaderFileName.isEmpty()) {
-				sql = "SELECT file_name FROM contents_0000 WHERE publish_id=0 AND open_id<>2 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
-				statement = connection.prepareStatement(sql);
-				idx = 1;
-				statement.setInt(idx++, ownerUserId);
-				resultSet = statement.executeQuery();
-				if(resultSet.next()) {
-					m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("file_name")) + "_640.jpg";
-				}
-				resultSet.close();resultSet=null;
-				statement.close();statement=null;
+				m_cUser.m_strHeaderFileName = SqlUtil.getRecentlyPublicImageFileName(connection, m_cUser.m_nUserId);
 			} else {
 				m_cUser.m_strHeaderFileName += "_640.jpg";
 			}

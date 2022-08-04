@@ -53,4 +53,21 @@ public class SqlUtil {
 			statement.setInt(index, i);
 		}
 	}
+
+	public static String getRecentlyPublicImageFileName(Connection connection, int userId) throws SQLException {
+		if (userId < 0) return null;
+		final String result;
+		final String sql = "SELECT file_name FROM contents_0000 WHERE user_id=? AND editor_id<>3 AND publish_id=0 AND open_id<>2 AND safe_filter=0 AND password_enabled=FALSE ORDER BY content_id DESC LIMIT 1";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, userId);
+		ResultSet resultSet = statement.executeQuery();
+		if (resultSet.next()) {
+			result = resultSet.getString(1);
+		} else {
+			result = "";
+		}
+		resultSet.close();
+		statement.close();
+		return result;
+	}
 }
