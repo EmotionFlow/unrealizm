@@ -841,12 +841,19 @@ public final class CCnv {
 				sb.append(String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId));
 			}
 
+			final String remainLabel;
+			if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
+				remainLabel = String.format(_TEX.T("IllustView.ExpandBtn"), remainNum);
+			} else {
+				remainLabel = String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length());
+			}
 			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
 					cContent.m_nUserId,
 					cContent.m_nContentId,
 					nSpMode,
 					sb,
-					String.format(_TEX.T("IllustView.ExpandBtn"), remainNum)));
+					remainLabel
+					));
 		}
 		strRtn.append("</div>");	// IllustItemExpand
 
