@@ -1,10 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jp.pipa.poipiku.*"%>
-<%@page import="jp.pipa.poipiku.cache.*"%>
-<%@page import="jp.pipa.poipiku.controller.*"%>
-<%@page import="jp.pipa.poipiku.settlement.*"%>
-<%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
-<%@page import="jp.pipa.poipiku.util.*"%>
 <%if((checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) && checkLogin.m_nUserId!=315) {%>
 <div class="HeaderPoiPassAd" style="width: 100%;">
 	<a href="/MyEditSettingPassportAppV.jsp" style="display: flex; flex-flow: row; padding: 3px 0 ; justify-content: center;background-image: linear-gradient( 135deg, #5EFCE8 10%, #736EFE 100%);">
