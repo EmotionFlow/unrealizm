@@ -267,8 +267,14 @@ public final class Common {
 	// SupportedLocalesに移行した
 
 	// 検索履歴取得範囲
-	public static final int SEARCH_LOG_SUGGEST_MAX = 5;
-	public static final int SEARCH_LOG_SUGGEST_DAYS = 7;
+	public static final int[] SEARCH_LOG_SUGGEST_MAX = {
+			// normal, PASSPORT
+			5, 30
+	};
+	public static final int[] SEARCH_LOG_SUGGEST_DAYS = {
+			// normal, PASSPORT
+			7, 30
+	};
 
 	public static String CrLfInjection(String strSrc) {
 		if(strSrc == null) {
