@@ -85,14 +85,14 @@ public final class IllustDetailC {
 
 			isOwner = content.m_cUser.m_nUserId==checkLogin.m_nUserId;
 
-			if(!isOwner && !isRequestClient) {
-				if (showMode == 1 && content.isPasswordEnabled()) {
-					if (!verifyPassword(content, password)) {
-						Log.d(String.format("Pw認証に失敗した(%s, %s)", content.m_strPassword, password));
-						return false;
-					}
+			if (showMode == 1 && content.isPasswordEnabled()) {
+				if (!verifyPassword(content, password)) {
+					Log.d(String.format("Pw認証に失敗した(%s, %s)", content.m_strPassword, password));
+					return false;
 				}
+			}
 
+			if(!isOwner && !isRequestClient) {
 				if (content.m_nPublishId == Common.PUBLISH_ID_LOGIN && !verifyPoipassLogin(checkLogin)) return false;
 				if (content.m_nPublishId == Common.PUBLISH_ID_FOLLOWER && !verifyPoipassFollower(content, checkLogin)) return false;
 				if (!content.nowAvailable()) return false;
