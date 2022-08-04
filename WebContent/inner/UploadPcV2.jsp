@@ -39,7 +39,7 @@ if (requestId > 0) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
-		<link href="/css/upload-206-2.css" type="text/css" rel="stylesheet" />
+		<link href="/css/upload-206-3.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-51-4.js" type="text/javascript"></script>
 

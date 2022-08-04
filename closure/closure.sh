@@ -20,7 +20,7 @@ fi
 /bin/rm -f ${WEB_CONTENT}js/upload-*.js
 /bin/rm -f ${WEB_CONTENT}js/update-*.js
 
-JS_FILES=("common-112.js" "upload-51.js" "upload-51-4.js" "update-25.js" "update-25-3.js")
+JS_FILES=("common-113.js" "upload-51.js" "upload-51-4.js" "update-25.js" "update-25-3.js")
 
 
 if [ $APP_ENVIRONMENT == "development" ]; then
