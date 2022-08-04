@@ -36,7 +36,6 @@ public class SendEmojiC {
 	public String m_strAgentToken = "";
 	public String m_strIpAddress = "";
 	public String m_strCardExpire = "";
-	public String m_strCardSecurityCode = "";
 	public int m_nErrCode = ERR_UNKNOWN;
 	public String m_strUserAgent = "";
 
@@ -52,7 +51,6 @@ public class SendEmojiC {
 			m_nAmount		= Util.toIntN(request.getParameter("AMT"), -1, 10000);
 			m_strAgentToken = Util.toString(request.getParameter("TKN"));
 			m_strCardExpire	= Util.toString(request.getParameter("EXP"));
-			m_strCardSecurityCode	= Util.toString(request.getParameter("SEC"));
 			m_strUserAgent  = request.getHeader("user-agent");
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -163,7 +161,6 @@ public class SendEmojiC {
 				cardSettlement.amount = m_nAmount;
 				cardSettlement.agentToken = m_strAgentToken;
 				cardSettlement.cardExpire = m_strCardExpire;
-				cardSettlement.cardSecurityCode = m_strCardSecurityCode;
 				cardSettlement.userAgent = m_strUserAgent;
 				cardSettlement.billingCategory = CardSettlement.BillingCategory.OneTime;
 				cardSettlement.itemName = CardSettlement.ItemName.Emoji;

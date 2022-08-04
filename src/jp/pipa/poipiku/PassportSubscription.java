@@ -132,8 +132,7 @@ public final class PassportSubscription {
 		return cnt > 0;
 	}
 
-	public boolean buy(int nPassportCourseId, String strAgentToken, String strCardExpire,
-					   String strCardSecurityCode, String strUserAgent) {
+	public boolean buy(int nPassportCourseId, String strAgentToken, String strCardExpire, String strUserAgent) {
 		if(userId < 1){
 			Log.d("userId < 1");
 			errorKind = ErrorKind.DoRetry;
@@ -219,7 +218,6 @@ public final class PassportSubscription {
 				cardSettlement.amount = listPrice;
 				cardSettlement.agentToken = strAgentToken;
 				cardSettlement.cardExpire = strCardExpire;
-				cardSettlement.cardSecurityCode = strCardSecurityCode;
 				cardSettlement.userAgent = strUserAgent;
 
 				// 過去に登録歴がなかったら、登録月無料とする。
@@ -340,7 +338,7 @@ public final class PassportSubscription {
 		return true;
 	}
 
-	public boolean changeCreditCard(String strAgentToken, String strCardExpire, String strCardSecurityCode, String strUserAgent) {
+	public boolean changeCreditCard(String strAgentToken, String strCardExpire, String strUserAgent) {
 		// 定期課金キャンセル
 		CardSettlement cardSettlement = new CardSettlementEpsilon(userId);
 		boolean authorizeResult = cardSettlement.cancelSubscription(orderId);
@@ -400,7 +398,6 @@ public final class PassportSubscription {
 		cardSettlement.amount = listPrice;
 		cardSettlement.agentToken = strAgentToken;
 		cardSettlement.cardExpire = strCardExpire;
-		cardSettlement.cardSecurityCode = strCardSecurityCode;
 		cardSettlement.userAgent = strUserAgent;
 		cardSettlement.billingCategory = CardSettlement.BillingCategory.MonthlyFirstFree;
 		cardSettlement.itemName = CardSettlement.ItemName.Poipass;

@@ -11,7 +11,6 @@ public abstract class CardSettlement {
 	public int requestId = -1;
 	public String agentToken = null;
 	public String cardExpire = null;
-	public String cardSecurityCode = null;
 	public String userAgent = null;
 	public int creditCardIdToPay = -1;
 

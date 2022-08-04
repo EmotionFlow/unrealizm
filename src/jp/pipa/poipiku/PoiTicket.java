@@ -117,8 +117,7 @@ public final class PoiTicket {
 		return true;
 	}
 
-	public boolean buy(int nPassportCourseId, int _amount, String strAgentToken, String strCardExpire,
-					   String strCardSecurityCode, String strUserAgent) {
+	public boolean buy(int nPassportCourseId, int _amount, String strAgentToken, String strCardExpire, String strUserAgent) {
 		if (_amount <= 0) {
 			Log.d("_amount<=0");
 			errorKind = ErrorKind.DoRetry;
@@ -181,7 +180,6 @@ public final class PoiTicket {
 				cardSettlement.amount = order.paymentTotal;
 				cardSettlement.agentToken = strAgentToken;
 				cardSettlement.cardExpire = strCardExpire;
-				cardSettlement.cardSecurityCode = strCardSecurityCode;
 				cardSettlement.userAgent = strUserAgent;
 				cardSettlement.billingCategory = CardSettlement.BillingCategory.OneTime;
 				cardSettlement.itemName = CardSettlement.ItemName.Poipass;

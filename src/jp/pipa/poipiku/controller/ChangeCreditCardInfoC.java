@@ -19,7 +19,6 @@ public class ChangeCreditCardInfoC extends Controller {
 	public String agentToken = "";
 	public String ipAddress = "";
 	public String cardExpire = "";
-	public String cardSecurityCode = "";
 	public String userAgent = "";
 
 	public void getParam(HttpServletRequest request) {
@@ -29,7 +28,6 @@ public class ChangeCreditCardInfoC extends Controller {
 			ipAddress = request.getRemoteAddr();
 			agentToken = Util.toString(request.getParameter("TKN"));
 			cardExpire = Util.toString(request.getParameter("EXP"));
-			cardSecurityCode = Util.toString(request.getParameter("SEC"));
 			userAgent = request.getHeader("user-agent");
 		} catch(Exception e) {
 			agentUserId = "";
@@ -39,6 +37,6 @@ public class ChangeCreditCardInfoC extends Controller {
 	public boolean getResults(final CheckLogin checkLogin) {
 		if(!checkLogin.m_bLogin  || agentUserId.isEmpty()) return false;
 		PassportSubscription subscription = new PassportSubscription(checkLogin);
-		return subscription.changeCreditCard(agentToken, cardExpire, cardSecurityCode, userAgent);
+		return subscription.changeCreditCard(agentToken, cardExpire, userAgent);
 	}
 }

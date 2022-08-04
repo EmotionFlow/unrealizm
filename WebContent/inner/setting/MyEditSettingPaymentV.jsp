@@ -44,7 +44,6 @@
                 "AID": agentInfo == null ? '' :  agentInfo.agentId,
                 "TKN": agentInfo == null ? '' : agentInfo.token,
                 "EXP": cardInfo == null ? '' : cardInfo.expire,
-                "SEC": cardInfo == null ? '' : cardInfo.securityCode,
             },
             "url": "/f/ChangeCreditCardInfoF.jsp",
             "dataType": "json",
@@ -110,6 +109,7 @@
         EpsilonToken.getToken(cardObj , _changeCardEpsilonTrade);
     }
 
+    <%if(cResults.m_cPassport.status == Passport.Status.Active){%>
     function changeCreditCardInfo() {
         let cardInfo = {
             "number": null,
@@ -146,6 +146,7 @@
         });
     }
     <%}%>
+    <%}%>
 </script>
 
 <div class="SettingList">
@@ -165,7 +166,7 @@
             <%}%>
         </div>
 
-        <%if(checkLogin.m_nPassportId > 0){%>
+        <%if(cResults.m_cPassport.status == Passport.Status.Active){%>
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Title")%></div>
         <div class="SettingBody">
             <%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Text")%>

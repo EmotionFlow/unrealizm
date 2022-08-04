@@ -23,7 +23,6 @@ public class BuyPassportCParam {
 			m_strIpAddress	= cRequest.getRemoteAddr();
 			m_strAgentToken = Util.toString(cRequest.getParameter("TKN"));
 			m_strCardExpire	= Util.toString(cRequest.getParameter("EXP"));
-			m_strCardSecurityCode	= Util.toString(cRequest.getParameter("SEC"));
 			m_strUserAgent  = cRequest.getHeader("user-agent");
 		} catch(Exception e) {
 			m_nUserId = -1;

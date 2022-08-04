@@ -214,7 +214,6 @@ public class CardSettlementEpsilon extends CardSettlement {
 					CreditCard creditCard = new CreditCard(poipikuUserId, Agent.EPSILON);
 					if (isFirstSettlement) {
 						creditCard.setExpire(cardExpire);
-						creditCard.securityCode = cardSecurityCode;
 						creditCard.agentUserId = ssi.userId;
 						creditCard.lastAgentOrderId = ssi.orderNumber;
 

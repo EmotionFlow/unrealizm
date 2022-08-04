@@ -50,10 +50,10 @@ public class PassportSubscriptionTest {
 		PassportSubscription passport = new PassportSubscription(checkLogin);
 		passport.isSkipSettlement = true;
 
-		boolean buyResult = passport.buy(1, "", "", "", "");
+		boolean buyResult = passport.buy(1, "", "", "");
 		assertTrue(buyResult);
 
-		buyResult = passport.buy(1, "", "", "", "");
+		buyResult = passport.buy(1, "", "", "");
 		assertFalse(buyResult);
 	}
 
@@ -65,7 +65,7 @@ public class PassportSubscriptionTest {
 		PassportSubscription passport = new PassportSubscription(checkLogin);
 		passport.isSkipSettlement = true;
 
-		boolean buyResult = passport.buy(1, "", "", "", "");
+		boolean buyResult = passport.buy(1, "", "", "");
 		assertTrue(buyResult);
 
 		DataSource dataSource = (DataSource) DBConnection.getDataSource();
@@ -75,7 +75,7 @@ public class PassportSubscriptionTest {
 		statement.setInt(1, testUserId);
 		statement.executeUpdate();
 
-		buyResult = passport.buy(1, "", "", "", "");
+		buyResult = passport.buy(1, "", "", "");
 		assertTrue(buyResult);
 	}
 
@@ -87,7 +87,7 @@ public class PassportSubscriptionTest {
 		PassportSubscription passport = new PassportSubscription(checkLogin);
 		passport.isSkipSettlement = true;
 
-		boolean buyResult = passport.buy(1, "", "", "", "");
+		boolean buyResult = passport.buy(1, "", "", "");
 		assertTrue(buyResult);
 
 		DataSource dataSource = (DataSource) DBConnection.getDataSource();
@@ -97,7 +97,7 @@ public class PassportSubscriptionTest {
 		statement.setInt(1, testUserId);
 		statement.executeUpdate();
 
-		buyResult = passport.buy(1, "", "", "", "");
+		buyResult = passport.buy(1, "", "", "");
 		assertFalse(buyResult);
 	}
 }
