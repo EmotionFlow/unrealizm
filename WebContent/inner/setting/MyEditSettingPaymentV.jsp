@@ -109,6 +109,7 @@
         EpsilonToken.getToken(cardObj , _changeCardEpsilonTrade);
     }
 
+    <%if(cResults.m_cPassport.status == Passport.Status.Active){%>
     function changeCreditCardInfo() {
         let cardInfo = {
             "number": null,
@@ -145,6 +146,7 @@
         });
     }
     <%}%>
+    <%}%>
 </script>
 
 <div class="SettingList">
@@ -164,7 +166,7 @@
             <%}%>
         </div>
 
-        <%if(checkLogin.m_nPassportId > 0){%>
+        <%if(cResults.m_cPassport.status == Passport.Status.Active){%>
         <div class="SettingListTitle"><%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Title")%></div>
         <div class="SettingBody">
             <%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Text")%>
