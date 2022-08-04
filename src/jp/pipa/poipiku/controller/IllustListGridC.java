@@ -123,7 +123,7 @@ public class IllustListGridC {
 					}
 					resultSet.close();resultSet=null;
 					statement.close();statement=null;
-					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
 				} else {
 					// follow
 					strSql = "SELECT * FROM follows_0000 WHERE user_id=? AND follow_user_id=? LIMIT 1";
@@ -133,7 +133,7 @@ public class IllustListGridC {
 					resultSet = statement.executeQuery();
 					if(resultSet.next()) {
 						m_bFollow = true;
-						checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_R18);
+						checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
 					}
 					resultSet.close();resultSet=null;
 					statement.close();statement=null;

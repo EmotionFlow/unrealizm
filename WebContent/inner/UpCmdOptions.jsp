@@ -1,5 +1,14 @@
 <%@ page import="twitter4j.UserList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<script>
+function DispR18PlusMsg() {
+	DispMsg(`<%=_TEX.T("R18Plus.Msg")%><br><br>
+<a href="javascript:void(0)" style="text-decoration: underline" onclick="DispR18PlusDlg()">
+<i class="fas fa-info-circle"></i><%=_TEX.T("R18Plus.Msg.ShowDetail")%></a>`, 4000);
+}
+</script>
+
 <div class="OptionItem" style="font-weight: bold;">
 	<label class="rocker" onclick="updateOptionPublish()">
 		<input id="OPTION_PUBLISH" type="checkbox">
@@ -62,6 +71,11 @@
 		<label for="RadioR18" class="OptionPublishNsfw">
 			<span class="OneCushionImage R18"></span>
 			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.R18")%></span>
+		</label>
+		<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R18_PLUS%>" id="RadioR18Plus">
+		<label for="RadioR18Plus" class="OptionPublishNsfw" onclick="DispR18PlusMsg()">
+			<span class="OneCushionImage R18Plus"></span>
+			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.R18Plus")%></span>
 		</label>
 	</div>
 </div>

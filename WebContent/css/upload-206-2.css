@@ -152,14 +152,15 @@
 }
 .UoloadCmdOption .OptionPublishNsfwList {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	margin:	0 12px;
+	flex-wrap: wrap;
 }
 .UoloadCmdOption .OptionPublishNsfw {
 	display: flex;
 	flex-direction: column;
 	background: #fff;
-	margin: 4px 2px;
+	margin: 2px 3px;
 	border-radius: 4px;
 }
 .UoloadCmdOption .OneCushionImage{
@@ -167,7 +168,7 @@
 	width: 148px;
 	height: 65px;
 	border-radius: 4px;
-	background-size: 90%;
+	background-size: 105%;
 }
 .UoloadCmdOption .OneCushionName{
 	display: block;
@@ -182,6 +183,11 @@
 }
 .UoloadCmdOption .OneCushionImage.R18 {
 	background-image: url("/img/R-18.png_360.jpg");
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+.UoloadCmdOption .OneCushionImage.R18Plus {
+	background-image: url("/img/R-18_plus.png_360.jpg");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 }

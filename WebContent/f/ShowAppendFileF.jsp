@@ -74,12 +74,16 @@ if(nRtn<ShowAppendFileC.OK) {
 	case ShowAppendFileC.ERR_T_NEED_RETWEET:
 		strHtml.append("need retweet");
 		break;
+	case ShowAppendFileC.ERR_R18_PLUS:
+		strHtml.append("""
+  			%s<br><br><a href="javascript:void(0)" onclick="DispR18PlusDlg()" style="text-decoration: underline;"><i class="fas fa-info-circle"></i> %s</a>
+  			""".formatted(_TEX.T("ShowAppendFileC.ERR_R18_PLUS"), _TEX.T("ShowAppendFileC.ERR_R18_PLUS.ShowDetail")));
+		break;
 	case ShowAppendFileC.ERR_NOT_FOUND:
 	case ShowAppendFileC.ERR_HIDDEN :
 	case ShowAppendFileC.ERR_UNKNOWN:
 	default:
 		strHtml.append(_TEX.T("ShowAppendFileC.ERR_UNKNOWN"));
-		;
 	}
 
 	switch(nRtn) {
