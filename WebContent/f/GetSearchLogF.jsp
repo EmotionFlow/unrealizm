@@ -4,6 +4,7 @@
 <%
 String referer = Util.toString(request.getHeader("Referer"));
 if (!referer.contains("poipiku")) {
+    Log.d("おそらく不正アクセス Referer不一致 " + referer);
     return;
 }
 
