@@ -55,12 +55,13 @@ public final class ShowAppendFileC {
 
 
 	public CContent content = null;
+	public String errorMessage = "";
 
-	public int getResults(CheckLogin checkLogin) {
+	public int verify(CheckLogin checkLogin) {
 		content = null;
 		try (Connection connection = DatabaseUtil.dataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement(
-					 "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?"
+				     "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?"
 		     )
 		) {
 			statement.setInt(1, contentUserId);
@@ -119,6 +120,100 @@ public final class ShowAppendFileC {
 			throwables.printStackTrace();
 			nRtn = ERR_UNKNOWN;
 		}
+		return nRtn;
+	}
+
+
+	public int getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
+		int nRtn = verify(checkLogin);
+		
+		StringBuilder sb = new StringBuilder();
+
+		switch(nRtn) {
+			case ShowAppendFileC.ERR_PASS:
+				sb.append(_TEX.T("ShowAppendFileC.ERR_PASS"));
+				break;
+			case ShowAppendFileC.ERR_LOGIN:
+				sb.append(_TEX.T("ShowAppendFileC.ERR_LOGIN"));
+				break;
+			case ShowAppendFileC.ERR_T_UNLINKED:
+				sb.append(_TEX.T("ShowAppendFileC.ERR_T_UNLINKED"));
+				break;
+			case ShowAppendFileC.ERR_FOLLOWER:
+				if(checkLogin.m_bLogin) {
+					sb.append(_TEX.T("ShowAppendFileC.ERR_FOLLOWER"));
+				} else {
+					sb.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+				}
+				break;
+			case ShowAppendFileC.ERR_T_FOLLOWER:
+				if(checkLogin.m_bLogin) {
+					sb.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOWER"));
+				} else {
+					sb.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+				}
+				break;
+			case ShowAppendFileC.ERR_T_FOLLOW:
+				if(checkLogin.m_bLogin) {
+					sb.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOW"));
+				} else {
+					sb.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+				}
+				break;
+			case ShowAppendFileC.ERR_T_EACH:
+				if(checkLogin.m_bLogin) {
+					sb.append(_TEX.T("ShowAppendFileC.ERR_T_EACH"));
+				} else {
+					sb.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+				}
+				break;
+			case ShowAppendFileC.ERR_T_LIST:
+				if(checkLogin.m_bLogin) {
+					sb.append(_TEX.T("ShowAppendFileC.ERR_T_LIST"));
+				} else {
+					sb.append(_TEX.T("ShowAppendFileC.SigninPlease"));
+				}
+				break;
+			case ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED:
+				sb.append(_TEX.T("ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED"));
+				break;
+			case ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN:
+				sb.append(_TEX.T("ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN"));
+				break;
+			case ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND:
+				sb.append(_TEX.T("ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND"));
+				break;
+			case ShowAppendFileC.ERR_T_NEED_RETWEET:
+				sb.append("need retweet");
+				break;
+			case ShowAppendFileC.ERR_R18_PLUS:
+				sb.append("""
+					%s<br><br><a href="javascript:void(0)" onclick="DispR18PlusDlg()" style="text-decoration: underline;"><i class="fas fa-info-circle"></i> %s</a>
+					""".formatted(_TEX.T("ShowAppendFileC.ERR_R18_PLUS"), _TEX.T("ShowAppendFileC.ERR_R18_PLUS.ShowDetail")));
+				break;
+			case ShowAppendFileC.ERR_NOT_FOUND:
+			case ShowAppendFileC.ERR_HIDDEN :
+			case ShowAppendFileC.ERR_UNKNOWN:
+			default:
+				sb.append(_TEX.T("ShowAppendFileC.ERR_UNKNOWN"));
+		}
+
+		switch(nRtn) {
+			case ShowAppendFileC.ERR_T_FOLLOWER:
+			case ShowAppendFileC.ERR_T_FOLLOW:
+			case ShowAppendFileC.ERR_T_EACH:
+			case ShowAppendFileC.ERR_T_LIST:
+				sb.append(
+						String.format(
+								_TEX.T("ShowAppendFileC.ERR_T_LINKED_ACCOUNT"), m_strMyTwitterScreenName
+						)
+				);
+				break;
+			default:
+				;
+		}
+
+		errorMessage = sb.toString();
 		return nRtn;
 	}
 }

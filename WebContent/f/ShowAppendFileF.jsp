@@ -10,97 +10,14 @@ if (!referer.contains("poipiku.com")) {
 }
 
 CheckLogin checkLogin = new CheckLogin(request, response);
-int nRtn = 0;
+
 StringBuilder strHtml = new StringBuilder();
 ShowAppendFileC cResults = new ShowAppendFileC();
 cResults.getParam(request);
-nRtn = cResults.getResults(checkLogin);
+int nRtn = cResults.getResults(checkLogin, _TEX);
 
 if(nRtn<ShowAppendFileC.OK) {
-	switch(nRtn) {
-	case ShowAppendFileC.ERR_PASS:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_PASS"));
-		break;
-	case ShowAppendFileC.ERR_LOGIN:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_LOGIN"));
-		break;
-	case ShowAppendFileC.ERR_T_UNLINKED:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_UNLINKED"));
-		break;
-	case ShowAppendFileC.ERR_FOLLOWER:
-		if(checkLogin.m_bLogin) {
-			strHtml.append(_TEX.T("ShowAppendFileC.ERR_FOLLOWER"));
-		} else {
-			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
-		}
-		break;
-	case ShowAppendFileC.ERR_T_FOLLOWER:
-		if(checkLogin.m_bLogin) {
-			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOWER"));
-		} else {
-			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
-		}
-		break;
-	case ShowAppendFileC.ERR_T_FOLLOW:
-		if(checkLogin.m_bLogin) {
-			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_FOLLOW"));
-		} else {
-			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
-		}
-		break;
-	case ShowAppendFileC.ERR_T_EACH:
-		if(checkLogin.m_bLogin) {
-			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_EACH"));
-		} else {
-			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
-		}
-		break;
-	case ShowAppendFileC.ERR_T_LIST:
-		if(checkLogin.m_bLogin) {
-			strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_LIST"));
-		} else {
-			strHtml.append(_TEX.T("ShowAppendFileC.SigninPlease"));
-		}
-		break;
-	case ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_RATE_LIMIT_EXCEEDED"));
-		break;
-	case ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_INVALID_OR_EXPIRED_TOKEN"));
-		break;
-	case ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_T_TARGET_ACCOUNT_NOT_FOUND"));
-		break;
-	case ShowAppendFileC.ERR_T_NEED_RETWEET:
-		strHtml.append("need retweet");
-		break;
-	case ShowAppendFileC.ERR_R18_PLUS:
-		strHtml.append("""
-  			%s<br><br><a href="javascript:void(0)" onclick="DispR18PlusDlg()" style="text-decoration: underline;"><i class="fas fa-info-circle"></i> %s</a>
-  			""".formatted(_TEX.T("ShowAppendFileC.ERR_R18_PLUS"), _TEX.T("ShowAppendFileC.ERR_R18_PLUS.ShowDetail")));
-		break;
-	case ShowAppendFileC.ERR_NOT_FOUND:
-	case ShowAppendFileC.ERR_HIDDEN :
-	case ShowAppendFileC.ERR_UNKNOWN:
-	default:
-		strHtml.append(_TEX.T("ShowAppendFileC.ERR_UNKNOWN"));
-	}
-
-	switch(nRtn) {
-		case ShowAppendFileC.ERR_T_FOLLOWER:
-		case ShowAppendFileC.ERR_T_FOLLOW:
-		case ShowAppendFileC.ERR_T_EACH:
-		case ShowAppendFileC.ERR_T_LIST:
-			strHtml.append(
-					String.format(
-							_TEX.T("ShowAppendFileC.ERR_T_LINKED_ACCOUNT"), cResults.m_strMyTwitterScreenName
-					)
-			);
-			break;
-		default:
-			;
-	}
-
+	strHtml.append(cResults.errorMessage);
 } else {
 	cResults.content.setThumb(); // isHideThumbImgをセットするために必要
 
