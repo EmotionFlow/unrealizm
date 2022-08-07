@@ -99,13 +99,14 @@ public final class SearchTagByKeywordC {
 					"         INNER JOIN a ON a.content_id = c.content_id" +
 					" WHERE open_id <> 2" +
 					"  AND publish_id = 0" +
-					"  AND safe_filter<=?" +
+					"  AND safe_filter <= 0" +
+					"  AND password_enabled = FALSE" +
+					"  AND editor_id <> 3" +
 					" ORDER BY c.content_id DESC" +
 					" LIMIT 1;";
 			statement = connection.prepareStatement(sql);
 			for (CTag tag: tagList) {
 				statement.setInt(1, tag.m_nGenreId);
-				statement.setInt(2, checkLogin.m_nSafeFilter);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
 					sampleContentFile.add(resultSet.getString(1));

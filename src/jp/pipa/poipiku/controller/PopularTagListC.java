@@ -139,9 +139,8 @@ public final class PopularTagListC {
 			}
 
 
-			strSql += " WHERE open_id<>2 AND publish_id=0 "
+			strSql += " WHERE open_id<>2 AND publish_id=0 AND password_enabled=FALSE AND safe_filter=0 AND editor_id<>3"
 					+ " AND c.content_id IN (SELECT content_id FROM tags_0000 WHERE tag_txt LIKE ? AND tag_type=1) "
-					+ " AND safe_filter<=? "
 					+ strCondBlockUser
 					+ strCondBlocedkUser;
 
@@ -161,7 +160,6 @@ public final class PopularTagListC {
 					statement.setString(idx++, strMuteKeyword);
 				}
 				statement.setString(idx++, cTag.m_strTagTxt);
-				statement.setInt(idx++, checkLogin.m_nSafeFilter);
 				if(!strCondBlockUser.isEmpty()) {
 					statement.setInt(idx++, checkLogin.m_nUserId);
 				}
