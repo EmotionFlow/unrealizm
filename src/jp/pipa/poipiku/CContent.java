@@ -4,8 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
@@ -72,9 +70,8 @@ public final class CContent {
 	
 	public boolean isHideThumbImg = false;
 
-	//TODO R18+フォロワー限定のようなケースが出てくるので、リスト化しないといけない気がする。main - subみたいな
-	public List<String> thumbImgUrlList = null;
-	public List<String> thumbImgSmallUrlList = null;
+	public String thumbImgUrl = null;
+	public String thumbImgSmallUrl = null;
 
 	public enum OpenId implements CodeEnum<CContent.OpenId> {
 		Undefined(-1),
@@ -237,22 +234,17 @@ public final class CContent {
 
 
 	public void setOrgImgThumb() {
-		thumbImgUrlList = new ArrayList<>();
-		thumbImgSmallUrlList = new ArrayList<>();
-		thumbImgUrlList.add(m_strFileName + "_640.jpg");
-		thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
+		thumbImgUrl = m_strFileName + "_640.jpg";
+		thumbImgSmallUrl = m_strFileName + "_360.jpg";
 	}
 
 
 	private void _setThumb(boolean isRequestImg, boolean isOwner) {
-		thumbImgUrlList = new ArrayList<>();
-		thumbImgSmallUrlList = new ArrayList<>();
-
 		// 非公開
 		if (m_nOpenId == Common.OPEN_ID_HIDDEN) {
 			if (!isRequestImg && !isOwner) {
-				thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
-				thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
+				thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
+				thumbImgSmallUrl = "/img/poipiku_icon_512x512_2.png";
 				isHideThumbImg = true;
 				return;
 			}
@@ -269,16 +261,16 @@ public final class CContent {
 
 		// 最初の１枚公開 or ワンクッションや閲覧制限無しの場合はコンテンツのサムネを表示する
 		if (publishAllNum > 0 || (!passwordEnabled && m_nSafeFilter == Common.SAFE_FILTER_ALL && m_nPublishId == Common.PUBLISH_ID_ALL)) {
-			thumbImgUrlList.add(m_strFileName + "_640.jpg");
-			thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
+			thumbImgUrl = m_strFileName + "_640.jpg";
+			thumbImgSmallUrl = m_strFileName + "_360.jpg";
 			isHideThumbImg = false;
 			return;
 		}
 
 		// 閲覧制限サムネ
 		if (m_nPublishId != Common.PUBLISH_ID_ALL && isValidPublishId()) {
-			thumbImgUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg");
-			thumbImgSmallUrlList.add(Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg");
+			thumbImgUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_640.jpg";
+			thumbImgSmallUrl = Common.PUBLISH_ID_FILE[m_nPublishId] + "_360.jpg";
 			isHideThumbImg = true;
 		}
 
@@ -296,27 +288,27 @@ public final class CContent {
 				case Common.SAFE_FILTER_R18_PLUS -> thumbFile = Common.SAFE_FILTER_FILE[4];
 				default -> thumbFile = Common.SAFE_FILTER_FILE[0];
 			}
-			thumbImgUrlList.add(thumbFile + "_640.jpg");
-			thumbImgSmallUrlList.add(thumbFile + "_360.jpg");
+			thumbImgUrl = thumbFile + "_640.jpg";
+			thumbImgSmallUrl = thumbFile + "_360.jpg";
 			isHideThumbImg = true;
 		}
 
 		// 表示すべきサムネがない
-		if (thumbImgUrlList.isEmpty()) {
+		if (thumbImgUrl == null || thumbImgUrl.isEmpty()) {
 			if (isPasswordEnabled()) {
 				// パスワード指定あり
-				thumbImgUrlList.add(Common.PASSWORD_FILE + "_640.jpg");
-				thumbImgSmallUrlList.add(Common.PASSWORD_FILE + "_360.jpg");
+				thumbImgUrl = Common.PASSWORD_FILE + "_640.jpg";
+				thumbImgSmallUrl = Common.PASSWORD_FILE + "_360.jpg";
 				isHideThumbImg = true;
 			} else if (m_nOpenId == Common.OPEN_ID_PUBLISH || m_nOpenId == Common.OPEN_ID_NG_RECENT) {
 				// 普通の公開
-				thumbImgUrlList.add(m_strFileName + "_640.jpg");
-				thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
+				thumbImgUrl = m_strFileName + "_640.jpg";
+				thumbImgSmallUrl = m_strFileName + "_360.jpg";
 				isHideThumbImg = false;
 			} else {
 				// 通常このパスには入らないはず
-				thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
-				thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
+				thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
+				thumbImgSmallUrl = "/img/poipiku_icon_512x512_2.png";
 				isHideThumbImg = true;
 			}
 		}
@@ -340,9 +332,8 @@ public final class CContent {
 
 	public String getThumbnailFilePath() {
 		setThumb();
-		if (!thumbImgUrlList.isEmpty()) {
-			Log.d(thumbImgUrlList.get(0));
-			return thumbImgUrlList.get(0);
+		if (thumbImgUrl != null &&  !thumbImgUrl.isEmpty()) {
+			return thumbImgUrl;
 		} else {
 			return "";
 		}

@@ -357,7 +357,7 @@ public final class CCnv {
 	}
 
 	private static void appendContentItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
-		if (cContent.thumbImgUrlList == null || cContent.thumbImgUrlList.isEmpty()) {
+		if (cContent.thumbImgUrl == null || cContent.thumbImgUrl.isEmpty()) {
 			cContent.setThumb();
 		}
 
@@ -409,15 +409,6 @@ public final class CCnv {
 		}
 	}
 
-	private static void appendSubThumbnail(StringBuilder strRtn, CContent cContent) {
-		strRtn.append("<div class=\"IllustInfo\">");
-		strRtn.append("""
-						<div class="SubThumbnail" style="background-image:url('%s')"></div>
-						""".formatted(Common.GetUrl(cContent.thumbImgSmallUrlList.get(1))));
-		strRtn.append("</div>");
-	}
-
-
 	public static void appendIllustItemThumb2(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW) {
 		if (nViewMode == VIEW_DETAIL) {
 			appendIllustInfoIcon(strRtn, cContent);
@@ -432,7 +423,7 @@ public final class CCnv {
 		}
 		strRtn.append(String.format(
 				ILLUST_ITEM_THUMB_IMG_FMT,
-				contentAppend == null ? Common.GetUrl(cContent.thumbImgUrlList.get(0)) : Common.GetUrl(contentAppend.m_strFileName + "_640.jpg")
+				contentAppend == null ? Common.GetUrl(cContent.thumbImgUrl) : Common.GetUrl(contentAppend.m_strFileName + "_640.jpg")
 		));
 		strRtn.append("</a>");
 	}
@@ -1060,7 +1051,7 @@ public final class CCnv {
 			bHidden = false;
 		} else {
 			cContent.setThumb();
-			strFileUrl = cContent.thumbImgUrlList.get(0);
+			strFileUrl = cContent.thumbImgUrl;
 			bHidden = cContent.isHideThumbImg;
 		}
 
@@ -1102,7 +1093,6 @@ public final class CCnv {
 		if(cContent.publishAllNum == 1
 				|| pageCategory == PageCategory.MY_BOX && checkLogin.m_nUserId==cContent.m_nUserId){
 
-			// TODO publish_idの運用方針変更。R18+フォロワー限定のような、複数掛け対応。
 			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
 				strRtn.append(String.format("<span class=\"Publish SafeFilterIco%02d\"></span>", cContent.m_nSafeFilter));
 			}

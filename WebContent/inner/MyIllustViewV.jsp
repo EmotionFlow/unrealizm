@@ -26,7 +26,7 @@ if(!bRet || (bRet&&cResults.m_cUser.m_nUserId!=checkLogin.m_nUserId)) {
 g_nSafeFilter = cResults.m_cContent.getAdSwitchId();
 
 cResults.m_cContent.setThumb();
-final String strFileUrl = cResults.m_cContent.thumbImgUrlList.get(0);
+final String strFileUrl = cResults.m_cContent.thumbImgUrl;
 final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
 
 String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);
