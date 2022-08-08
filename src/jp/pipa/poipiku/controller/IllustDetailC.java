@@ -86,7 +86,7 @@ public final class IllustDetailC {
 			isOwner = content.m_cUser.m_nUserId==checkLogin.m_nUserId;
 
 			if (showMode == 1 && content.isPasswordEnabled()) {
-				if (!verifyPassword(content, password)) {
+				if (password.isEmpty() || !verifyPassword(content, password)) {
 					Log.d(String.format("Pw認証に失敗した(%s, %s)", content.m_strPassword, password));
 					return false;
 				}

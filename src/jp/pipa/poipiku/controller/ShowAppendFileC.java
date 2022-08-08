@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
+import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import static jp.pipa.poipiku.util.ContentAccessVerificationUtil.*;
@@ -82,7 +83,10 @@ public final class ShowAppendFileC {
 		isOwner = content.m_nUserId == checkLogin.m_nUserId;
 
 		if (!isRequestClient && content.passwordEnabled) {
-			if (!verifyPassword(content, m_strPassword)) return ERR_PASS;
+			if (m_strPassword.isEmpty() || !verifyPassword(content, m_strPassword)) {
+				Log.d(String.format("Pw認証に失敗した(%s, %s)", content.m_strPassword, m_strPassword));
+				return ERR_PASS;
+			}
 		}
 
 		if (!isOwner && !isRequestClient) {

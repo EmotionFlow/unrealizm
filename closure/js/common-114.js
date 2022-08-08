@@ -636,7 +636,11 @@ function _retweetContentF(userId, contentId, mode, elm) {
 function generateShowAppendFile(){
 	var tw_friendships = {}; // target user id -> friendship id (see CTweet)
 	return function(user_id, content_id, mode, elm) {
-		const password = $('#IllustItem_' + content_id + ' input[name="PAS"]').val();
+		const $EditPassword = $('#IllustItem_' + content_id + ' input[name="PAS"]');
+		const password = $EditPassword.val();
+		if ($EditPassword.css('display') && $EditPassword.css('display') !== 'none') {
+			if (!password) return false;
+		}
 		let tw_f = tw_friendships[user_id];
 		if(!tw_f){
 			tw_f = -1;
