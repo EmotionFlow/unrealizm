@@ -244,16 +244,27 @@ public final class CContent {
 	}
 
 
-	private void _setThumb(boolean isRequestImg) {
+	private void _setThumb(boolean isRequestImg, boolean isOwner) {
 		thumbImgUrlList = new ArrayList<>();
 		thumbImgSmallUrlList = new ArrayList<>();
 
 		// 非公開
-		if (!isRequestImg && m_nOpenId == Common.OPEN_ID_HIDDEN) {
-			thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
-			thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
-			isHideThumbImg = true;
-			return;
+		if (m_nOpenId == Common.OPEN_ID_HIDDEN) {
+			if (!isRequestImg && !isOwner) {
+				thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
+				thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
+				isHideThumbImg = true;
+				return;
+			}
+			if (isOwner
+					&& m_nSafeFilter == Common.SAFE_FILTER_ALL
+					&& m_nPublishId == Common.PUBLISH_ID_ALL
+					&& !isPasswordEnabled()
+			) {
+				isHideThumbImg = false;
+				setOrgImgThumb();
+				return;
+			}
 		}
 
 		// 最初の１枚公開 or ワンクッションや閲覧制限無しの場合はコンテンツのサムネを表示する
@@ -304,7 +315,6 @@ public final class CContent {
 				isHideThumbImg = false;
 			} else {
 				// 通常このパスには入らないはず
-				Log.d("通常このパスには入らないはず");
 				thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
 				thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
 				isHideThumbImg = true;
@@ -317,11 +327,15 @@ public final class CContent {
 
 	// 描いてもらったリクエスト作品のサムネ
 	public void setRequestImgThumb() {
-		_setThumb(true);
+		_setThumb(true, false);
+	}
+
+	public void setMyImgThumb() {
+		_setThumb(false, true);
 	}
 
 	public void setThumb() {
-		_setThumb(false);
+		_setThumb(false, false);
 	}
 
 	public String getThumbnailFilePath() {

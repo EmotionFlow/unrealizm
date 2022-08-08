@@ -388,8 +388,7 @@ public final class CCnv {
 	}
 
 	private static void appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
-		cContent.setThumb();
-		cContent.setOrgImgThumb();
+		cContent.setMyImgThumb();
 		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
 			appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
 		} else {
@@ -806,7 +805,8 @@ public final class CCnv {
 				_TEX.T("IllustView.ProhibitMsg")));
 	}
 
-	private static void appendIllustItemExpand( StringBuilder strRtn, CContent cContent, ResourceBundleControl _TEX, int nSpMode) {
+	private static void appendIllustItemExpand(StringBuilder strRtn, CContent cContent,
+	                                           ResourceBundleControl _TEX, int nSpMode) {
 		int remainNum;
 		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
 			remainNum = cContent.m_nFileNum - 1;
@@ -860,33 +860,6 @@ public final class CCnv {
 					));
 		}
 		strRtn.append("</div>");	// IllustItemExpand
-
-
-
-//		if(cContent.isHideThumbImg) {
-//			appendIllustItemExpandPassFrame(_TEX, strRtn);
-//
-//			final String mark;
-//			if (cContent.publishAllNum > 0) {
-//				mark = String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId);
-//			} else {
-//				mark = "<i class=\"far fa-clone\"></i>";
-//			}
-//
-//			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
-//				cContent.m_nUserId,
-//				cContent.m_nContentId,
-//					nSpMode,
-//				mark,
-//				String.format(_TEX.T("IllustView.ExpandBtn"), cContent.m_nFileNum - cContent.publishAllNum)));
-//		} else if (cContent.m_nEditorId==Common.EDITOR_TEXT && (cContent.novelDirection==0 || cContent.m_nPublishId != Common.PUBLISH_ID_ALL)) {
-//			appendIllustItemExpandPassFrame(_TEX, strRtn);
-//			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s</a>",
-//				cContent.m_nUserId,
-//				cContent.m_nContentId,
-//					nSpMode,
-//				String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length())));
-//		}
 	}
 
 	private static void appendIllustItemDescEdit(StringBuilder strRtn, CContent cContent, int nMode) {

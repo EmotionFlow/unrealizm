@@ -1,5 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
+<%!
+	static int appendIllustItem(StringBuilder sb, String detailVUrl, CContent content, int nRtn) {
+		if(content.m_nEditorId==Common.EDITOR_TEXT) {
+			// 2枚目の場所に本文を表示する
+			nRtn=2;
+			sb.append(String.format("<a class=\"IllustItemText\" %s href=\"%s?ID=%d&TD=%d\">",
+					content.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
+					detailVUrl, content.m_nUserId, content.m_nContentId));
+			sb.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
+					content.novelDirection==1 ? "Vertical" : "",
+					Util.replaceForGenEiFont(content.novelHtml)));
+			sb.append("</a>");
+		} else {
+			// 2枚目の場所に1枚目を表示する
+			nRtn++;
+			content.setOrgImgThumb();
+			CCnv.appendIllustItemThumb3(sb, content, CCnv.VIEW_DETAIL, null);
+		}
+		return nRtn;
+	}
+%>
 <%
 if (Util.isBot(request)) return;
 
@@ -25,26 +46,21 @@ if (nRtn < ShowAppendFileC.OK) {
 	if (!cResults.isRequestClient && cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN
 			|| !cResults.content.isHideThumbImg
 			|| cResults.content.publishAllNum == 1) {
+
+		if (cResults.isOwner
+				&& cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN
+				&& (cResults.content.m_nPublishId != Common.PUBLISH_ID_ALL
+					||  cResults.content.m_nSafeFilter != Common.SAFE_FILTER_ALL
+					||  cResults.content.isPasswordEnabled())
+		) {
+			nRtn = appendIllustItem(strHtml, illustDetailUrl, cResults.content, nRtn);
+		}
+
 		if (cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
 			nRtn=1;
 		}
 	} else {
-		if(cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
-			// 2枚目の場所に本文を表示する
-			nRtn=2;
-			strHtml.append(String.format("<a class=\"IllustItemText\" %s href=\"%s?ID=%d&TD=%d\">",
-					cResults.content.novelDirection==1 ? "" : "style=\"max-height:470px; overflow: scroll;\"",
-					illustDetailUrl, cResults.content.m_nUserId, cResults.content.m_nContentId));
-			strHtml.append(String.format("<span class=\"IllustItemThumbText %s\">%s</span>",
-					cResults.content.novelDirection==1 ? "Vertical" : "",
-					Util.replaceForGenEiFont(cResults.content.novelHtml)));
-			strHtml.append("</a>");
-		} else {
-			// 2枚目の場所に1枚目を表示する
-			nRtn++;
-			cResults.content.setOrgImgThumb();
-			CCnv.appendIllustItemThumb3(strHtml, cResults.content, CCnv.VIEW_DETAIL, null);
-		}
+		nRtn = appendIllustItem(strHtml, illustDetailUrl, cResults.content, nRtn);
 	}
 
 	// 以降の画像を表示
