@@ -243,12 +243,13 @@ public final class CContent {
 		thumbImgSmallUrlList.add(m_strFileName + "_360.jpg");
 	}
 
-	public void setThumb() {
+
+	private void _setThumb(boolean isRequestImg) {
 		thumbImgUrlList = new ArrayList<>();
 		thumbImgSmallUrlList = new ArrayList<>();
 
 		// 非公開
-		if (m_nOpenId == Common.OPEN_ID_HIDDEN) {
+		if (!isRequestImg && m_nOpenId == Common.OPEN_ID_HIDDEN) {
 			thumbImgUrlList.add("/img/poipiku_icon_512x512_2.png");
 			thumbImgSmallUrlList.add("/img/poipiku_icon_512x512_2.png");
 			isHideThumbImg = true;
@@ -314,8 +315,17 @@ public final class CContent {
 //		Log.d("thumbImgSmallUrlList" + String.join(", ", thumbImgSmallUrlList));
 	}
 
+	// 描いてもらったリクエスト作品のサムネ
+	public void setRequestImgThumb() {
+		_setThumb(true);
+	}
+
+	public void setThumb() {
+		_setThumb(false);
+	}
+
 	public String getThumbnailFilePath() {
-		this.setThumb();
+		setThumb();
 		if (!thumbImgUrlList.isEmpty()) {
 			Log.d(thumbImgUrlList.get(0));
 			return thumbImgUrlList.get(0);

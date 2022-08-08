@@ -773,6 +773,7 @@ public final class CCnv {
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
 
 		// 画像
+		cContent.setRequestImgThumb();
 		appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 2枚目以降用の場所

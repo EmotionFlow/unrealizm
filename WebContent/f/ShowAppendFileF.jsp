@@ -16,13 +16,15 @@ ShowAppendFileC cResults = new ShowAppendFileC();
 cResults.getParam(request);
 int nRtn = cResults.getResults(checkLogin, _TEX);
 
-if(nRtn<ShowAppendFileC.OK) {
+if (nRtn < ShowAppendFileC.OK) {
 	strHtml.append(cResults.errorMessage);
 } else {
 	cResults.content.setThumb(); // isHideThumbImgをセットするために必要
 
 	final String illustDetailUrl = (cResults.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
-	if (cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN || !cResults.content.isHideThumbImg || cResults.content.publishAllNum == 1) {
+	if (!cResults.isRequestClient && cResults.content.m_nOpenId==Common.OPEN_ID_HIDDEN
+			|| !cResults.content.isHideThumbImg
+			|| cResults.content.publishAllNum == 1) {
 		if (cResults.content.m_nEditorId==Common.EDITOR_TEXT) {
 			nRtn=1;
 		}

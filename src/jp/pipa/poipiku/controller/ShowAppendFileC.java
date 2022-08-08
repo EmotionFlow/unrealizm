@@ -56,6 +56,9 @@ public final class ShowAppendFileC {
 
 	public CContent content = null;
 	public String errorMessage = "";
+	public boolean isRequestClient = false;
+	public boolean isOwner = false;
+
 
 	public int verify(CheckLogin checkLogin) {
 		content = null;
@@ -75,8 +78,8 @@ public final class ShowAppendFileC {
 		}
 		if(content == null) return ERR_NOT_FOUND;
 
-		boolean isRequestClient = verifyRequestClient(content, checkLogin);
-		boolean isOwner = content.m_nUserId == checkLogin.m_nUserId;
+		isRequestClient = verifyRequestClient(content, checkLogin);
+		isOwner = content.m_nUserId == checkLogin.m_nUserId;
 
 		if (!isRequestClient && content.passwordEnabled) {
 			if (!verifyPassword(content, m_strPassword)) return ERR_PASS;
@@ -103,7 +106,7 @@ public final class ShowAppendFileC {
 			if (content.m_nPublishId==Common.PUBLISH_ID_T_RT && !verifyTwitterRetweet(content, checkLogin)) return ERR_T_NEED_RETWEET;
 		}
 
-		int nRtn;
+		int nRtn = 0;
 		try (Connection connection = DatabaseUtil.dataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement(
 				     "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000"
@@ -125,10 +128,10 @@ public final class ShowAppendFileC {
 
 
 	public int getResults(CheckLogin checkLogin, ResourceBundleControl _TEX) {
-		int nRtn = verify(checkLogin);
-		
-		StringBuilder sb = new StringBuilder();
+		final int nRtn = verify(checkLogin);
 
+		// set error message
+		StringBuilder sb = new StringBuilder();
 		switch(nRtn) {
 			case ShowAppendFileC.ERR_PASS:
 				sb.append(_TEX.T("ShowAppendFileC.ERR_PASS"));
