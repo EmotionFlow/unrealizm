@@ -84,7 +84,6 @@ public final class ShowAppendFileC {
 
 		if (!isRequestClient && content.passwordEnabled) {
 			if (m_strPassword.isEmpty() || !verifyPassword(content, m_strPassword)) {
-				Log.d(String.format("Pw認証に失敗した(%s, %s)", content.m_strPassword, m_strPassword));
 				return ERR_PASS;
 			}
 		}
