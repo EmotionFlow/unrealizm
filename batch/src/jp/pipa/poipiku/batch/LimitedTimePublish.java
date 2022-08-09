@@ -22,7 +22,7 @@ import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
-	static final boolean _DEBUG = true;
+	static final boolean _DEBUG = false;
 	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
 
 	private static Integer updateContentId(int nOldContentId) {
@@ -144,10 +144,13 @@ public class LimitedTimePublish extends Batch {
 
 				// 期間限定公開しましたTweet
 				sb.setLength(0);
-				sb.append("SELECT u.nickname, a.fldaccesstoken, a.fldsecrettoken, c.*")
-						.append(" FROM (tbloauth a JOIN contents_0000 c ON c.user_id=a.flduserid) JOIN users_0000 u ON c.user_id=u.user_id")
-						.append(" WHERE c.content_id IN(").append(strPublishContentIds).append(")")
-						.append(" AND mod(c.tweet_when_published, 2)=1 AND a.fldproviderid=1 AND a.fldaccesstoken IS NOT NULL AND a.fldsecrettoken IS NOT NULL AND a.del_flg=false");
+				sb.append(
+                """
+				SELECT u.nickname, a.fldaccesstoken, a.fldsecrettoken, c.*
+				FROM (tbloauth a JOIN contents_0000 c ON c.user_id=a.flduserid) JOIN users_0000 u ON c.user_id=u.user_id
+				WHERE c.content_id IN(%s)
+				AND mod(c.tweet_when_published, 2)=1 AND a.fldproviderid=1 AND a.fldaccesstoken IS NOT NULL AND a.fldsecrettoken IS NOT NULL AND a.del_flg=false
+				""".formatted(strPublishContentIds));
 				strSql = new String(sb);
 				cState = cConn.prepareStatement(strSql);
 				cResSet = cState.executeQuery();
