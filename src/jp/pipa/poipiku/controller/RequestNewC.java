@@ -4,6 +4,7 @@ import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
+import jp.pipa.poipiku.util.SqlUtil;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,15 +67,9 @@ public class RequestNewC {
 			statement.close();statement=null;
 
 			if(user.m_strHeaderFileName.isEmpty()) {
-				strSql = "SELECT file_name FROM contents_0000 WHERE publish_id=0 AND safe_filter=0 AND user_id=? ORDER BY content_id DESC LIMIT 1";
-				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, creatorUserId);
-				resultSet = statement.executeQuery();
-				if(resultSet.next()) {
-					user.m_strHeaderFileName	= Util.toString(resultSet.getString("file_name"));
-				}
-				resultSet.close();resultSet=null;
-				statement.close();statement=null;
+				user.m_strHeaderFileName = SqlUtil.getRecentlyPublicImageFileName(connection, creatorUserId);
+			} else {
+				user.m_strHeaderFileName += "_640.jpg";
 			}
 			requestCreator = new RequestCreator(creatorUserId);
 
