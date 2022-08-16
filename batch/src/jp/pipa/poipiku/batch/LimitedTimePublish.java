@@ -158,12 +158,12 @@ public class LimitedTimePublish extends Batch {
 				CTweet cTweet = new CTweet();
 				cTweet.m_bIsTweetEnable = true;
 				String strTwMsg;
-				ArrayList<String> vFileList = new ArrayList<String>();
 
 				while (cResSet.next()) {
 					CContent cContent = new CContent(cResSet);
 					cContent.m_cUser.m_nUserId = cResSet.getInt("user_id");
 					cContent.m_cUser.m_strNickName = cResSet.getString("nickname");
+					ArrayList<String> vFileList = new ArrayList<>();
 					String strFileName = cContent.m_strFileName;
 					if (!strFileName.isEmpty()) {
 						strFileName = cContent.getThumbnailFilePath();
@@ -199,7 +199,7 @@ public class LimitedTimePublish extends Batch {
 
 					// ツイート
 					int nTweetResult = CTweet.ERR_OTHER;
-					if (cContent.m_nTweetWhenPublished == 1 || vFileList.size() <= 0) {    // text only
+					if (cContent.m_nTweetWhenPublished == 1 || vFileList.isEmpty()) {    // text only
 						if (!_DEBUG) {
 							nTweetResult = cTweet.Tweet(strTwMsg);
 						}
