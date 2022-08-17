@@ -276,6 +276,7 @@ public final class Common {
 			// normal, PASSPORT
 			7, 30
 	};
+	public static final int SEARCH_LOG_CACHE_MINUTES = 60;
 
 	public static String CrLfInjection(String strSrc) {
 		if(strSrc == null) {

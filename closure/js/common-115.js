@@ -147,7 +147,7 @@ function SearchUserByKeyword(kwd) {
 	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
 }
 
-function showSearchHistory(searchType, blankMsg) {
+function showSearchHistory(searchType, blankMsg, cacheMinutes) {
 	const $ul = $('ul#RecentSearchList');
 	$ul.empty();
 	// loading spinner表示
@@ -158,9 +158,16 @@ function showSearchHistory(searchType, blankMsg) {
 		const $loadingLi = $('<li></li>', {class: 'Loading'});
 		$ul.append($loadingLi);
 	}
+
 	// 今はUI側がイマイチなので、searchTypeをAllに固定する
 	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
-	(searchType ? $.ajax({
+	// 最後に検索履歴を取得した日時と比較
+	const lastHistory = getLocalStrage('search-history-' + (searchType || '')) || {};
+	const historyCache = lastHistory.at && (new Date() - new Date(lastHistory.at)) < cacheMinutes * 60000;
+
+	(historyCache ? Promise.resolve({
+		keywords: lastHistory.keywords || [],
+	}) : searchType ? $.ajax({
 		"type": "get",
 		"url": "/f/GetSearchLogF.jsp",
 		"data": { "type": searchType },
@@ -189,6 +196,7 @@ function showSearchHistory(searchType, blankMsg) {
 			$li.append($row);
 			$ul.append($li);
 		}
+		if (history.result >= 0) setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date() });
 	});
 }
 

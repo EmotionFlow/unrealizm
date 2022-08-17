@@ -186,9 +186,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderSearchBox').focus();
 
 					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>);
 					<%}else{%>
-					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>');
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>);
 					<%}%>
 				}
 
@@ -219,9 +219,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				function showSearch() {
 					$('#PulldownSearchWrapper').slideDown();
 					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>');
+					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>);
 					<%}else{%>
-					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>');
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>);
 					<%}%>
 				}
 				$('#HeaderSearchBox').on('focus', showSearch);
