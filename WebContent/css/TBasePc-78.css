@@ -16,7 +16,6 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Header .HeaderLink {display: block; padding: 0 10px;}
 .Header .HeaderLink .HeaderImg {display: block; height: 32px; padding: 0 0 2px 0;}
 .Header .HeaderTitleSearch {display: block; color: #3498db; width: 30px; height: 30px; line-height: 28px; text-align: center; position: absolute; top: 2px; right: 10px; padding: 10px 0;}
-/* #HeaderSearchWrapper {display: none;} */
 .HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 10px 0; box-sizing: border-box; overflow: hidden;}
 .Header .HeaderLoginBtn {display: block; width: 118px; height: 7px; line-height: 2px; text-align: center; position: absolute; top: 10px; right: 4px; padding: 11px 6px; font-size: 11px;}
 .Header .HeaderLoginBtnPc {display: block; width: 117px; height: 7px; line-height: 3px; text-align: center; margin: 0; padding: 11px 6px; font-size: 12px;}
@@ -38,6 +37,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 
 .SearchWrapper .RecentSearchHeader {color: #6d6965; font-size: 16px; font-weight: bold; padding: 18px; text-align: left; height: 24px;}
 .SearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 110px); margin: 0; overflow-y: auto;}
+.SearchWrapper.overlay .RecentSearchList.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%;}
 
 .SearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; padding: 0 2em; list-style-type: none;}
 .SearchWrapper .RecentSearchList li:last-child {border-bottom: solid 1px #ddd;}
@@ -46,6 +46,8 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .SearchWrapper .RecentSearchList .RecentSearchRow {display: flex;}
 .SearchWrapper .RecentSearchList .RecentSearchKW {flex-grow: 1; padding: 1em 0;}
 .SearchWrapper .RecentSearchList .RecentSearchDelBtn {width: 1em; padding: 1em 0; color: #3498db; display: none;}
+.SearchWrapper.pulldown .RecentSearchList li.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%; background-size: 2em; height: 4em;}
+
 .SearchWrapper .SearchListPoipassLink {padding: 0.6em 0; border-top: solid 1px #ddd;}
 .SearchWrapper .SearchListPoipassLink a {color: #3498db; font-size: 14px; display: flex; align-items: center;}
 .SearchWrapper.overlay .SearchListPoipassLink {position: absolute; bottom: 0; width: 100%; display: flex; justify-content: center;}
