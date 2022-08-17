@@ -148,6 +148,16 @@ function SearchUserByKeyword(kwd) {
 }
 
 function showSearchHistory(searchType, blankMsg) {
+	const $ul = $('ul#RecentSearchList');
+	$ul.empty();
+	// loading spinner表示
+	const mobile = $ul.closest('.SearchWrapper').attr('class').split(/\s/).includes('overlay');
+	if (mobile) {
+		$ul.addClass('Loading');
+	} else {
+		const $loadingLi = $('<li></li>', {class: 'Loading'});
+		$ul.append($loadingLi);
+	}
 	// 今はUI側がイマイチなので、searchTypeをAllに固定する
 	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
 	(searchType ? $.ajax({
@@ -158,8 +168,7 @@ function showSearchHistory(searchType, blankMsg) {
 	}) : Promise.resolve({
 		keywords: [],
 	})).then(function(history) {
-		const $ul = $('ul#RecentSearchList');
-		$ul.empty();
+		if (mobile) { $ul.removeClass('Loading'); } else { $ul.empty(); }
 		if (history.keywords.length) {
 			history.keywords.forEach(kw => {
 				const $li = $('<li></li>', {class: 'RecentSearchItem'});
