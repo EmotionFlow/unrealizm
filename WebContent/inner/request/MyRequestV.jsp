@@ -37,9 +37,9 @@ boolean bSmartPhone = isApp ? true : Util.isSmartPhone(request);
 
 //パラメータの取得
 //検索結果の取得
-MyEditSettingC cResults = new MyEditSettingC();
+MyRequestC cResults = new MyRequestC();
 cResults.getParam(request);
-cResults.getResults(checkLogin);
+cResults.getResults();
 
 HashMap<String, String> MENU = new HashMap<>();
 MENU.put("RECEIVED", "いただいた依頼");
@@ -99,8 +99,8 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 				$('#MenuMyRequests').addClass('Selected');
 				$('#MenuSearch').hide();
 
-				<%if(cResults.m_strMessage.length()>0) {%>
-					DispMsg("<%=Util.toStringHtml(cResults.m_strMessage)%>");
+				<%if(!cResults.message.isEmpty()) {%>
+					DispMsg("<%=Util.toStringHtml(cResults.message)%>");
 				<%}%>
 
 				$(".SettingChangePageLink").click((ev)=>{
@@ -114,14 +114,14 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 				});
 
 				<%if(bSmartPhone){%>
-					<%if(cResults.m_strSelectedMenuId.isEmpty()){%>
+					<%if(cResults.menuId.isEmpty()){%>
 						$("#MENUROOT").show();
 					<%}else{%>
-						$("#<%=cResults.m_strSelectedMenuId%>").show();
+						$("#<%=cResults.menuId%>").show();
 					<%}%>
 				<%}else{%>
 					$("#MENUROOT").show();
-					let menuId = "<%=cResults.m_strSelectedMenuId%>";
+					let menuId = "<%=cResults.menuId%>";
 					if(menuId===""){
 						menuId = "RECEIVED";
 					}
@@ -292,7 +292,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			<%String category = "";%>
 
 			<%category = "RECEIVED";%>
-			<%if(category.equals(cResults.m_strSelectedMenuId)){%>
+			<%if(category.equals(cResults.menuId)){%>
 			<div id="<%=category%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(category), bSmartPhone)%>
 				<div class="SettingBody">
@@ -302,7 +302,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			<%}%>
 
 			<%category = "SENT";%>
-			<%if(category.equals(cResults.m_strSelectedMenuId)){%>
+			<%if(category.equals(cResults.menuId)){%>
 			<div id="<%=category%>" class="SettingPage" style="display: none;">
 				<%=getSettingMenuHeader(MENU.get(category), bSmartPhone)%>
 				<div class="SettingBody">

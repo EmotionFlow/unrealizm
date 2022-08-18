@@ -63,23 +63,42 @@ public class MyRequestListC {
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql = "SELECT r.*, u.nickname, u.file_name profile_file_name, c.file_name content_file_name, LEFT(c.text_body, 150) text_summary FROM requests r" +
-					" INNER JOIN users_0000 u ON(" + (category.equals("SENT") ? "r.creator_user_id" : "r.client_user_id") + "=u.user_id)" +
-					" LEFT JOIN contents_0000 c ON(r.content_id=c.content_id)" +
-					" WHERE " + (category.equals("SENT") ? "r.client_user_id" : "r.creator_user_id") + "=?" +
-					" AND r.status = ?";
+			sql = """
+				WITH a AS (
+				    SELECT r.*,
+				           c.file_name            content_file_name,
+				           LEFT(c.text_body, 150) text_summary
+				    FROM requests r
+				             LEFT JOIN contents_0000 c ON (r.content_id = c.content_id)
+				    WHERE r.%s = ?
+				      AND r.status = ?
+				      %s
+				    ORDER BY updated_at DESC OFFSET ? LIMIT ?
+				), u AS (
+				    SELECT user_id, nickname, file_name
+				    FROM users_0000 WHERE user_id IN (SELECT %s FROM a)
+				)
+				SELECT a.*,
+				       u.nickname,
+				       u.file_name            profile_file_name
+				FROM a INNER JOIN u ON a.%s = u.user_id
+			
+				""".formatted(
+					category.equals("SENT") ? "client_user_id" : "creator_user_id",
+					(statusCode == Request.Status.Canceled.getCode() || statusCode == Request.Status.SettlementError.getCode()) ?
+							"AND r.updated_at > now() - interval '30 days'": "",
+					category.equals("SENT") ? "creator_user_id" : "client_user_id",
+					category.equals("SENT") ? "creator_user_id" : "client_user_id"
+				);
 
-			if (statusCode == Request.Status.Canceled.getCode() || statusCode == Request.Status.SettlementError.getCode()) {
-				sql += " AND r.updated_at > now() - interval '30 days'";
-			}
 
-			sql += " ORDER BY updated_at DESC OFFSET ? LIMIT ?";
 			statement = connection.prepareStatement(sql);
 			idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, statusCode);
 			statement.setInt(idx++, pageNum * SELECT_MAX_GALLERY);
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
+
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				requests.add(new MyRequestListC.Result(resultSet));
