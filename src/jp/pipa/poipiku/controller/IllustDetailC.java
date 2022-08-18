@@ -65,14 +65,18 @@ public final class IllustDetailC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			content.m_nContentId = contentId;
 			isRequestClient = verifyRequestClient(content, checkLogin);
 
 			// content main
-			String strOpenCnd = (ownerUserId !=checkLogin.m_nUserId && !isRequestClient) ? " AND open_id<>2" : "";
+			String strOpenCnd = (ownerUserId ==checkLogin.m_nUserId || isRequestClient) ? "" : " AND open_id<>2";
 			strSql = String.format("SELECT * FROM contents_0000 WHERE user_id=? AND content_id=? %s", strOpenCnd);
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, ownerUserId);
 			statement.setInt(2, contentId);
+
+			Log.d(statement.toString());
+
 			resultSet = statement.executeQuery();
 			if(resultSet.next()){
 				content = new CContent(resultSet);

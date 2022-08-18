@@ -39,6 +39,9 @@ String strUrl = "https://poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResult
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
+if (cResults.m_bRequestClient) {
+	cResults.m_cContent.setRequestImgThumb();
+}
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
