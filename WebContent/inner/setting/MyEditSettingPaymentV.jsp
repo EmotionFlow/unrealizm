@@ -121,6 +121,7 @@
         const description = "<%=_TEX.T("MyEditSettingPaymentV.ChangeCard.Dlg.Description")%>";
         Swal.fire({
             html: getRegistCreditCardDlgHtml(title, description),
+            footer: '<%=_TEX.T("CardInfoDlg.Footer")%>',
             focusConfirm: false,
             showCloseButton: true,
             showCancelButton: true,

@@ -248,6 +248,7 @@ if (!results.getResults(checkLogin)) {
 					<%// 入力内容を代理店に送信し、Tokenを取得する。%>
 					Swal.fire({
 						html: getRegistCreditCardDlgHtml(title, description),
+						footer: '<%=_TEX.T("CardInfoDlg.Footer")%>',
 						focusConfirm: false,
 						showCloseButton: true,
 						showCancelButton: true,

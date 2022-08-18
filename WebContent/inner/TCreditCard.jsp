@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!-- for EPSILON -->
 <%if(checkLogin.isStaff() || Common.isDevEnv()){%>
 <script async src='https://beta.epsilon.jp/js/token.js'></script>
 <%}else{%>
@@ -7,7 +6,6 @@
 <%}%>
 <script>
 	const AGENT = {
-		//"VERITRANS": 1,
 		"EPSILON": 2,
 	};
 
@@ -19,12 +17,13 @@
 		return `
 <style>
 	.CardInfoDlgTitle{padding: 10px 0 0 0;}
-	.CardInfoDlgInfo{font-size: 12px; text-align: left;}
+	.CardInfoDlgInfo{font-size: 14px; text-align: left;}
 	.CardInfoDlgInputItem{margin: 4px;}
 	.CardInfoDlgInputLabel{font-size: 16px;}
 	.CardInfoDlgInfoCheckList{text-align: left; font-size: 16px;}
 	.swal2-popup .CardInfoDlgInputItem .swal2-input{margin-top: 4px; font-size: 1.1em; height: 1.825em;}
 	.swal2-popup .CardInfoDlgInputItem .swal2-input::placeholder{font-style: italic;}
+	.swal2-popup .swal2-footer {font-size: 0.75em;}
 </style>
 <h2 class="CardInfoDlgTitle">
 ` + strTitle + `

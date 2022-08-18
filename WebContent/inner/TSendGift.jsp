@@ -190,6 +190,7 @@ function SendGift(userId, nickName){
 				const description = "<%=_TEX.T("TSendGift.SubmitDescription")%>";
 				Swal.fire({
 					html: getRegistCreditCardDlgHtml(title, description),
+					footer: '<%=_TEX.T("CardInfoDlg.Footer")%>',
 					focusConfirm: false,
 					showCloseButton: true,
 					showCancelButton: true,
