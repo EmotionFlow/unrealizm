@@ -290,11 +290,9 @@ public final class IllustViewPcC {
 				}
 
 				final int h = LocalDateTime.now().getHour();
-				if (h != 20 &&h != 21 && h != 22 && h != 23 && h != 0 && h != 1) {
-					// Related Contents
-					if (selectMaxRelatedGallery > 0) {
-						m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, selectMaxRelatedGallery, checkLogin, connection);
-					}
+				// Related Contents
+				if (selectMaxRelatedGallery > 0) {
+					m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, selectMaxRelatedGallery, checkLogin, connection);
 				}
 
 				if (h != 20 && h != 21 && h != 22 && h != 23 && h != 0 && h != 1){
