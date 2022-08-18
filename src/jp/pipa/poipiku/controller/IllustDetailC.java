@@ -75,8 +75,6 @@ public final class IllustDetailC {
 			statement.setInt(1, ownerUserId);
 			statement.setInt(2, contentId);
 
-			Log.d(statement.toString());
-
 			resultSet = statement.executeQuery();
 			if(resultSet.next()){
 				content = new CContent(resultSet);
