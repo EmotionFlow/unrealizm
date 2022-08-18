@@ -73,12 +73,29 @@ for(MyRequestListC.Result r : results.requests) {
 			String textMore = r.textSummary.length() > 100 ? " ....." : "";
 		%>
 		<a class="IllustThumbImg"
-		   href="/IllustView<%=isApp?"App":"Pc"%>V.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>">
+	    <%if(isApp){%>
+		   href="/IllustViewAppV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>"
+		<%}else{%>
+			<%if(results.category.equals("SENT")){%>
+			   href="/MySketchbookPcV.jsp"
+			<%}else{%>
+			   href="/<%=r.request.creatorUserId%>/<%=r.request.contentId%>.html"
+			<%}%>
+		<%}%>
+		>
 			<span style="color: #6d6965"><%=r.textSummary + textMore%></span>
 		</a>
 		<%}else{%>
 		<a class="IllustThumbImg"
-		   href="/IllustView<%=isApp?"App":"Pc"%>V.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>"
+		<%if(isApp){%>
+		   href="/IllustViewAppV.jsp?ID=<%=r.request.creatorUserId%>&TD=<%=r.request.contentId%>"
+		<%}else{%>
+			<%if(results.category.equals("SENT")){%>
+			   href="/MySketchbookPcV.jsp"
+			<%}else{%>
+			   href="/<%=r.request.creatorUserId%>/<%=r.request.contentId%>.html"
+			<%}%>
+		<%}%>
 		   style="background-image:url('<%=Common.GetUrl(r.contentFileName)%>_640.jpg')">
 			<span class="IllustInfoBottom"></span>
 		</a>
