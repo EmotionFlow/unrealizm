@@ -28,8 +28,8 @@ g_strSearchWord = results.m_strKeyword;
 
 		<script>
 			$(function(){
-				$('#HeaderSearchWrapper').attr("action","/SearchTagByKeywordPcV.jsp");
-				$('#HeaderSearchBtn').on('click', SearchTagByKeyword);
+				$('#HeaderSearchWrapper').on('submit', SearchByKeyword('Tags', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+				$('#HeaderSearchBtn').on('click', SearchByKeyword('Tags', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 			});
 		</script>
 

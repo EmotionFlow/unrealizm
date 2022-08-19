@@ -132,22 +132,34 @@ function getLocalStrage(key) {
 	return obj.val;
 }
 
-function SearchIllustByKeyword(kwd) {
-	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
-	location.href="/SearchIllustByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
+function SearchByKeyword(searchType, userId, limit, kwd) {
+	if (searchType != 'Tags' && searchType != 'Users') searchType = 'Contents';
+	const paths = {
+		Contents: 'SearchIllustByKeywordPcV',
+		Tags: 'SearchTagByKeywordPcV',
+		Users: 'SearchUserByKeywordPcV',
+	};
+	return function() {
+		var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
+		updateSearchCache(keyword, userId, searchType, limit);
+		location.href = `/${paths[searchType]}.jsp?KWD=${encodeURIComponent(keyword)}`;
+	};
 }
 
-function SearchTagByKeyword(kwd) {
-	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
-	location.href="/SearchTagByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
+function updateSearchCache(kwd, userId, searchType, limit = 5) {
+	searchType = 'All'; // 今はUI側がイマイチなので、searchTypeをAllに固定する
+	const storageKey = `search-history-${searchType || ''}`;
+	const lastHistory = getLocalStrage(storageKey) || {};
+	const oldKWList = lastHistory.user == userId ? lastHistory.keywords : [];
+	const newKWList = [...(kwd ? [kwd] : []), ...(oldKWList || [])].filter((kw, idx, arr) => arr.indexOf(kw) == idx).slice(0, limit);
+	setLocalStrage(storageKey, {
+		keywords: newKWList,
+		at: new Date(),
+		user: userId,
+	});
 }
 
-function SearchUserByKeyword(kwd) {
-	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
-	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
-}
-
-function showSearchHistory(searchType, blankMsg, cacheMinutes) {
+function showSearchHistory(searchType, blankMsg, cacheMinutes, userId) {
 	const $ul = $('ul#RecentSearchList');
 	$ul.empty();
 	// loading spinner表示
@@ -196,7 +208,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes) {
 			$li.append($row);
 			$ul.append($li);
 		}
-		if (history.result >= 0) setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date() });
+		if (history.result >= 0) setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date(), user: userId });
 	});
 }
 

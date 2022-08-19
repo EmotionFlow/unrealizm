@@ -43,8 +43,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<script>
 			$(function(){
-				$('#HeaderSearchWrapper').attr("action","/SearchUserByKeywordPcV.jsp");
-				$('#HeaderSearchBtn').on('click', SearchUserByKeyword);
+				$('#HeaderSearchWrapper').on('submit', SearchByKeyword('Users', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+				$('#HeaderSearchBtn').on('click', SearchByKeyword('Users', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 			});
 		</script>
 

@@ -44,8 +44,8 @@ String strFileUrl = cResults.m_strRepFileName;
 
 		<script>
 			$(function(){
-				$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
-				$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+				$('#HeaderSearchWrapper').on('submit', SearchByKeyword('Contents', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+				$('#HeaderSearchBtn').on('click', SearchByKeyword('Contents', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 			});
 		</script>
 

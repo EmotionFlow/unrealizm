@@ -146,13 +146,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<%
 			String searchType = "Contents";
 			String requestPath = request.getRequestURL().toString();
-			String searchFunction = "SearchIllustByKeyword";
 			if (Pattern.compile("/SearchUserByKeyword.*\\.jsp").matcher(requestPath).find()) {
 				searchType = "Users";
-				searchFunction = "SearchUserByKeyword";
 			} else if (Pattern.compile("/SearchTagByKeyword.*\\.jsp").matcher(requestPath).find()) {
 				searchType = "Tags";
-				searchFunction = "SearchTagByKeyword";
 			}
 		%>
 		<%if(Util.isSmartPhone(request)) {%>
@@ -197,7 +194,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderTitleWrapper').show();
 					$('#OverlaySearchWrapper').hide();
 					$('ul#RecentSearchList').empty();
-					<%=searchFunction%>($(ev.currentTarget).find('.RecentSearchKW').text());
+					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
 				});
 				<%}%>
 
@@ -228,7 +225,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				$(document).on('click', '.RecentSearchItem', ev => {
 					$('#PulldownSearchWrapper').hide();
 					$('ul#RecentSearchList').empty();
-					<%=searchFunction%>($(ev.currentTarget).find('.RecentSearchKW').text());
+					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
 				});
 				$(document).on('click touchend', function(ev) {
 					if (!$(ev.target).closest('#PulldownSearchWrapper, .HeaderSearch').length) $('#PulldownSearchWrapper').hide();
@@ -241,8 +238,8 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 
 <script>
 	<%if(checkLogin.m_bLogin){%>
-	$('#HeaderSearchWrapper').attr("action","/SearchIllustByKeywordPcV.jsp");
-	$('#HeaderSearchBtn').on('click', SearchIllustByKeyword);
+	$('#HeaderSearchWrapper').on('submit', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+	$('#HeaderSearchBtn').on('click', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 	<%}%>
 </script>
 
