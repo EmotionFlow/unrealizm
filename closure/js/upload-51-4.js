@@ -671,11 +671,11 @@ function updateMyTwitterList() {
 			$("#TwitterListNotFound").show();
 			$selectElement.hide();
 			if(apiResp.result===-102){
-				twtterListRateLimiteExceededMsg();
+				twitterListRateLimiteExceededMsg();
 			}else if(apiResp.result===-103){
-				twtterListInvalidTokenMsg();
+				twitterListInvalidTokenMsg();
 			}else if(apiResp.result<0){
-				twtterListOtherErrMsg();
+				twitterListOtherErrMsg();
 			}
 		} else {
 			$("#TwitterListNotFound").hide();
@@ -718,29 +718,29 @@ function tweetSucceeded(resultCode){
 			}, 1000);
 		} else {
 			if (resultCode === -103 || resultCode === -203) {
-				twtterTweetInvalidTokenMsg();
+				twitterTweetInvalidTokenMsg();
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
 			} else if (resultCode === -102) {
-				twtterTweetRateLimitMsg();
+				twitterTweetRateLimitMsg();
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
 			} else if (resultCode === -104) {
-				twtterTweetTooMuchMsg();
+				twitterTweetTooMuchMsg();
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
 			} else {
-				twtterTweetOtherErrMsg(resultCode);
+				twitterTweetOtherErrMsg(resultCode);
 				setTimeout(function () {
 					location.href = toContext;
 				}, nTimeOut);
 			}
 		}
 	} else {
-		twtterTweetOtherErrMsg(resultCode);
+		twitterTweetOtherErrMsg(resultCode);
 		setTimeout(function () {
 			location.href = toContext;
 		}, nTimeOut);

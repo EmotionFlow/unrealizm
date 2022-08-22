@@ -21,29 +21,29 @@
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.ShowAllFirst.Error")%>");
 	}
 
-	function twtterListRateLimiteExceededMsg() {
+	function twitterListRateLimiteExceededMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
 	}
-	function twtterListInvalidTokenMsg() {
+	function twitterListInvalidTokenMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.InvalidToken")%>");
 	}
 	function twitterListNotFoundMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.NotFound")%>");
 	}
-	function twtterListOtherErrMsg(nErrCode) {
+	function twitterListOtherErrMsg(nErrCode) {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.OtherErr")%>: " + nErrCode);
 	}
 
-	function twtterTweetInvalidTokenMsg() {
+	function twitterTweetInvalidTokenMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.InvalidToken")%>");
 	}
-	function twtterTweetRateLimitMsg() {
+	function twitterTweetRateLimitMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.RateLimiteExceeded")%>");
 	}
-	function twtterTweetTooMuchMsg() {
+	function twitterTweetTooMuchMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.TooMuch")%>");
 	}
-	function twtterTweetOtherErrMsg(nErrCode) {
+	function twitterTweetOtherErrMsg(nErrCode) {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.Tweet.OtherErr")%>: " + nErrCode);
 	}
 

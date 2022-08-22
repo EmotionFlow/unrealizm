@@ -679,11 +679,11 @@ function udpateMyTwitterList() {
 			$("#TwitterListNotFound").show();
 			$("#EditTwitterList").hide();
 			if(apiResp.result==-102){
-				twtterListRateLimiteExceededMsg();
+				twitterListRateLimiteExceededMsg();
 			}else if(apiResp.result==-103){
-				twtterListInvalidTokenMsg();
+				twitterListInvalidTokenMsg();
 			}else if(apiResp.result<0){
-				twtterListOtherErrMsg();
+				twitterListOtherErrMsg();
 			}
 		} else {
 			$("#TwitterListNotFound").hide();
@@ -819,29 +819,29 @@ function tweetSucceeded(data){
 		}else{
 			var nTimeOut = 5000;
 			if(data == -103 || data == -203){
-				twtterTweetInvalidTokenMsg();
+				twitterTweetInvalidTokenMsg();
 				setTimeout(function(){
 					location.href=toContext;
 				}, nTimeOut);
 			}else if(data == -102){
-				twtterTweetRateLimitMsg();
+				twitterTweetRateLimitMsg();
 				setTimeout(function(){
 					location.href=toContext;
 				}, nTimeOut);
 			}else if(data == -104){
-				twtterTweetTooMuchMsg();
+				twitterTweetTooMuchMsg();
 				setTimeout(function(){
 					location.href=toContext;
 				}, nTimeOut);
 			}else{
-				twtterTweetOtherErrMsg(data);
+				twitterTweetOtherErrMsg(data);
 				setTimeout(function(){
 					location.href=toContext;
 				}, nTimeOut);
 			}
 		}
 	}else{
-		twtterTweetOtherErrMsg(data);
+		twitterTweetOtherErrMsg(data);
 		setTimeout(function(){
 			location.href=toContext;
 		}, nTimeOut);

@@ -148,13 +148,13 @@ function DispR18PlusMsg() {
 				</select>
 				<%if (!isCreateContent) {%>
 					<%if(nTwLstRet==CTweet.ERR_RATE_LIMIT_EXCEEDED){%>
-					<script>twtterListRateLimiteExceededMsg()</script>
+					<script>twitterListRateLimiteExceededMsg()</script>
 					<%}else if(nTwLstRet==CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){%>
-					<script>twtterListInvalidTokenMsg()</script>
+					<script>twitterListInvalidTokenMsg()</script>
 					<%}else if(nTwLstRet==CTweet.ERR_OTHER){%>
-					<script>twtterListOtherErrMsg()</script>
+					<script>twitterListOtherErrMsg()</script>
 					<%}else if(nTwLstRet==CTweet.OK && !bTwListFound){%>
-					<script>twtterListNotFoundMsg()</script>
+					<script>twitterListNotFoundMsg()</script>
 					<%}else if(nTwLstRet==CTweet.OK && bTwListFound){%>
 					<script>$("#TWITTER_LIST_ID").show()</script>
 					<%}%>
