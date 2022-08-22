@@ -749,7 +749,10 @@ public final class CTweet {
 
 	public int LookupListMember(CContent cContent){
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
-		if (cContent.m_strListId.isEmpty()) return ERR_OTHER;
+		if (cContent.m_strListId.isEmpty()) {
+			Log.d("cContent.m_strListId.isEmpty()");
+			return ERR_OTHER;
+		}
 
 		List<TwitterApiErrorLog> errorLogs = TwitterApiErrorLog.selectListErrors(m_nUserId, Long.parseLong(cContent.m_strListId), 60);
 		if (errorLogs.size() > 0) {

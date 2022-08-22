@@ -172,7 +172,7 @@ public final class ContentAccessVerificationUtil {
 				return result;
 			}
 			if(nRet<0) {
-				Log.d("nRet<0)");
+				Log.d("cTweet.LookupListMember nRet<0)");
 				result.code = ERR_UNKNOWN;
 				return result;
 			}
