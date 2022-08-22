@@ -117,7 +117,6 @@ public final class ShowAppendFileC {
 		) {
 			statement.setInt(1, contentId);
 			ResultSet resultSet = statement.executeQuery();
-			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				content.m_vContentAppend.add(new CContentAppend(resultSet));
 			}
