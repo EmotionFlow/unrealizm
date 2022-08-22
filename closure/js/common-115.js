@@ -175,7 +175,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId) {
 	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
 	// 最後に検索履歴を取得した日時と比較
 	const lastHistory = getLocalStrage('search-history-' + (searchType || '')) || {};
-	const historyCache = lastHistory.at && (new Date() - new Date(lastHistory.at)) < cacheMinutes * 60000;
+	const historyCache = lastHistory.user == userId && lastHistory.at && (new Date() - new Date(lastHistory.at)) < cacheMinutes * 60000;
 
 	(historyCache ? Promise.resolve({
 		keywords: lastHistory.keywords || [],
@@ -208,8 +208,16 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId) {
 			$li.append($row);
 			$ul.append($li);
 		}
-		if (history.result >= 0) setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date(), user: userId });
+		if (history.result >= 0) {
+			setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date(), user: userId });
+		} else if (!history.keywords.length) {
+			clearSearchCache();
+		}
 	});
+}
+
+function clearSearchCache() {
+	Object.keys(localStorage).filter(key => /^search-history/.test(key)).forEach(key => localStorage.removeItem(key));
 }
 
 var sendObjectMessage = function(parameters) {
