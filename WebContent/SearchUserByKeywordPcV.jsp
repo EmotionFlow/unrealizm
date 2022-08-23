@@ -9,12 +9,6 @@ cResults.SELECT_MAX_GALLERY = 48;
 if (Util.isSmartPhone(request)){
 	cResults.SELECT_MAX_GALLERY = 42;
 }
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = "/";
-	response.sendRedirect("/" + strKeywordHan + "/");
-	return;
-}
 boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
 %>

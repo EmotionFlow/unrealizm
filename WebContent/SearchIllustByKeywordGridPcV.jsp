@@ -7,12 +7,6 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = "/";
-	response.sendRedirect("/" + strKeywordHan + "/");
-	return;
-}
 cResults.selectMaxGallery = 48;
 boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;

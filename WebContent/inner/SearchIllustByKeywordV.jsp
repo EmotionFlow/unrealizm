@@ -18,12 +18,6 @@ checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
 cResults.selectMaxGallery = 45;
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = isApp ? "/IllustListAppV.jsp?ID=" : "/IllustListPcV.jsp?ID=";
-	response.sendRedirect(Common.GetPoipikuUrl(strUrl + strKeywordHan));
-	return;
-}
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>

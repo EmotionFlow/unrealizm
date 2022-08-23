@@ -143,6 +143,7 @@ function SearchByKeyword(searchType, userId, limit, kwd) {
 		var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
 		updateSearchCache(keyword, userId, searchType, limit);
 		location.href = `/${paths[searchType]}.jsp?KWD=${encodeURIComponent(keyword)}`;
+		return false;
 	};
 }
 

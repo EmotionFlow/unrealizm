@@ -19,12 +19,6 @@ if(!Util.isSmartPhone(request)) {
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = isApp ? "/IllustListAppV.jsp?ID=" : "/IllustListPcV.jsp?ID=";
-	response.sendRedirect(Common.GetPoipikuUrl(strUrl + strKeywordHan));
-	return;
-}
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>

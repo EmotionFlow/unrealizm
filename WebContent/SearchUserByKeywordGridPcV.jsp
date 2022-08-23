@@ -7,12 +7,6 @@ SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
 cResults.SELECT_MAX_GALLERY = 45;
 
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = "/";
-	response.sendRedirect("/" + strKeywordHan + "/");
-	return;
-}
 boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
 %>
