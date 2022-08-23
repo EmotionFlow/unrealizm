@@ -156,10 +156,11 @@ function updateSearchCache(kwd, userId, searchType, limit = 5) {
 		keywords: newKWList,
 		at: new Date(),
 		user: userId,
+		limit: limit,
 	});
 }
 
-function showSearchHistory(searchType, blankMsg, cacheMinutes, userId) {
+function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 	const $ul = $('ul#RecentSearchList');
 	$ul.empty();
 	// loading spinner表示
@@ -175,7 +176,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId) {
 	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
 	// 最後に検索履歴を取得した日時と比較
 	const lastHistory = getLocalStrage('search-history-' + (searchType || '')) || {};
-	const historyCache = lastHistory.user == userId && lastHistory.at && (new Date() - new Date(lastHistory.at)) < cacheMinutes * 60000;
+	const historyCache = lastHistory.user == userId && lastHistory.limit == limit && lastHistory.at && (new Date() - new Date(lastHistory.at)) < cacheMinutes * 60000;
 
 	(historyCache ? Promise.resolve({
 		keywords: lastHistory.keywords || [],
@@ -209,7 +210,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId) {
 			$ul.append($li);
 		}
 		if (history.result >= 0) {
-			setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date(), user: userId });
+			setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date(), user: userId, limit: limit });
 		} else if (!history.keywords.length) {
 			clearSearchCache();
 		}

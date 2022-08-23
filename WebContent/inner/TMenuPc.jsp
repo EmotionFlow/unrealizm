@@ -151,6 +151,8 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			} else if (Pattern.compile("/SearchTagByKeyword.*\\.jsp").matcher(requestPath).find()) {
 				searchType = "Tags";
 			}
+			int cacheMin = Common.SEARCH_LOG_CACHE_MINUTES;
+			int suggestMax = Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId];
 		%>
 		<%if(Util.isSmartPhone(request)) {%>
 			<div id="OverlaySearchWrapper" class="SearchWrapper overlay">
@@ -183,9 +185,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderSearchBox').focus();
 
 					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>, <%=checkLogin.m_nUserId%>);
+					showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>);
 					<%}else{%>
-					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>);
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=cacheMin%>);
 					<%}%>
 				}
 
@@ -194,7 +196,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#HeaderTitleWrapper').show();
 					$('#OverlaySearchWrapper').hide();
 					$('ul#RecentSearchList').empty();
-					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
+					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
 				});
 				<%}%>
 
@@ -216,16 +218,16 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				function showSearch() {
 					$('#PulldownSearchWrapper').slideDown();
 					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType == null ? "Contents" : searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>, <%=checkLogin.m_nUserId%>);
+					showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>);
 					<%}else{%>
-					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=Common.SEARCH_LOG_CACHE_MINUTES%>);
+					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=cacheMin%>);
 					<%}%>
 				}
 				$('#HeaderSearchBox').on('focus', showSearch);
 				$(document).on('click', '.RecentSearchItem', ev => {
 					$('#PulldownSearchWrapper').hide();
 					$('ul#RecentSearchList').empty();
-					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
+					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
 				});
 				$(document).on('click touchend', function(ev) {
 					if (!$(ev.target).closest('#PulldownSearchWrapper, .HeaderSearch').length) $('#PulldownSearchWrapper').hide();
@@ -238,8 +240,8 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 
 <script>
 	<%if(checkLogin.m_bLogin){%>
-	$('#HeaderSearchWrapper').on('submit', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
-	$('#HeaderSearchBtn').on('click', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+	$('#HeaderSearchWrapper').on('submit', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));
+	$('#HeaderSearchBtn').on('click', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));
 	<%}%>
 </script>
 
