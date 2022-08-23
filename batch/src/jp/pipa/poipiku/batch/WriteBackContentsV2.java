@@ -71,7 +71,7 @@ public class WriteBackContentsV2 extends Batch {
 	}
 
 	public static void main(String[] args) {
-		Log.d("WriteBackContents batch start");
+		Log.d("WriteBackContentsV2 batch start");
 
 		final int h = LocalDateTime.now().getHour();
 		if (h == 22 ||h == 23 || h == 0 || h == 1){
@@ -195,6 +195,6 @@ public class WriteBackContentsV2 extends Batch {
 			// write_back_filesを更新
 			writeBackFile.updateStatus(WriteBackFile.Status.Moved);
 		}
-		Log.d("WriteBackContents batch end");
+		Log.d("WriteBackContentsV2 batch end");
 	}
 }
