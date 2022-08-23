@@ -9,12 +9,6 @@ cResults.SELECT_MAX_GALLERY = 48;
 if (Util.isSmartPhone(request)){
 	cResults.SELECT_MAX_GALLERY = 42;
 }
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = "/";
-	response.sendRedirect("/" + strKeywordHan + "/");
-	return;
-}
 boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
 %>
@@ -34,8 +28,8 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<script>
 			$(function(){
-				$('#HeaderSearchWrapper').attr("action","/SearchUserByKeywordPcV.jsp");
-				$('#HeaderSearchBtn').on('click', SearchUserByKeyword);
+				$('#HeaderSearchWrapper').on('submit', SearchByKeyword('Users', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+				$('#HeaderSearchBtn').on('click', SearchByKeyword('Users', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 			});
 		</script>
 

@@ -19,12 +19,6 @@ if(!Util.isSmartPhone(request)) {
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = isApp ? "/IllustListAppV.jsp?ID=" : "/IllustListPcV.jsp?ID=";
-	response.sendRedirect(Common.GetPoipikuUrl(strUrl + strKeywordHan));
-	return;
-}
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -43,8 +37,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<script>
 			$(function(){
-				$('#HeaderSearchWrapper').attr("action","/SearchUserByKeywordPcV.jsp");
-				$('#HeaderSearchBtn').on('click', SearchUserByKeyword);
+				$('#HeaderSearchWrapper').on('submit', SearchByKeyword('Users', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+				$('#HeaderSearchBtn').on('click', SearchByKeyword('Users', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 			});
 		</script>
 

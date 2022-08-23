@@ -132,22 +132,36 @@ function getLocalStrage(key) {
 	return obj.val;
 }
 
-function SearchIllustByKeyword(kwd) {
-	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
-	location.href="/SearchIllustByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
+function SearchByKeyword(searchType, userId, limit, kwd) {
+	if (searchType != 'Tags' && searchType != 'Users') searchType = 'Contents';
+	const paths = {
+		Contents: 'SearchIllustByKeywordPcV',
+		Tags: 'SearchTagByKeywordPcV',
+		Users: 'SearchUserByKeywordPcV',
+	};
+	return function() {
+		var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
+		updateSearchCache(keyword, userId, searchType, limit);
+		location.href = `/${paths[searchType]}.jsp?KWD=${encodeURIComponent(keyword)}`;
+		return false;
+	};
 }
 
-function SearchTagByKeyword(kwd) {
-	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
-	location.href="/SearchTagByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
+function updateSearchCache(kwd, userId, searchType, limit = 5) {
+	searchType = 'All'; // 今はUI側がイマイチなので、searchTypeをAllに固定する
+	const storageKey = `search-history-${searchType || ''}`;
+	const lastHistory = getLocalStrage(storageKey) || {};
+	const oldKWList = lastHistory.user == userId ? lastHistory.keywords : [];
+	const newKWList = [...(kwd ? [kwd] : []), ...(oldKWList || [])].filter((kw, idx, arr) => arr.indexOf(kw) == idx).slice(0, limit);
+	setLocalStrage(storageKey, {
+		keywords: newKWList,
+		at: new Date(),
+		user: userId,
+		limit: limit,
+	});
 }
 
-function SearchUserByKeyword(kwd) {
-	var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
-	location.href="/SearchUserByKeywordPcV.jsp?KWD="+encodeURIComponent(keyword);
-}
-
-function showSearchHistory(searchType, blankMsg) {
+function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 	const $ul = $('ul#RecentSearchList');
 	$ul.empty();
 	// loading spinner表示
@@ -158,9 +172,16 @@ function showSearchHistory(searchType, blankMsg) {
 		const $loadingLi = $('<li></li>', {class: 'Loading'});
 		$ul.append($loadingLi);
 	}
+
 	// 今はUI側がイマイチなので、searchTypeをAllに固定する
 	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
-	(searchType ? $.ajax({
+	// 最後に検索履歴を取得した日時と比較
+	const lastHistory = getLocalStrage('search-history-' + (searchType || '')) || {};
+	const historyCache = lastHistory.user == userId && lastHistory.limit == limit && lastHistory.at && (new Date() - new Date(lastHistory.at)) < cacheMinutes * 60000;
+
+	(historyCache ? Promise.resolve({
+		keywords: lastHistory.keywords || [],
+	}) : searchType ? $.ajax({
 		"type": "get",
 		"url": "/f/GetSearchLogF.jsp",
 		"data": { "type": searchType },
@@ -189,7 +210,16 @@ function showSearchHistory(searchType, blankMsg) {
 			$li.append($row);
 			$ul.append($li);
 		}
+		if (history.result >= 0) {
+			setLocalStrage('search-history-' + (searchType || ''), { keywords: history.keywords, at: new Date(), user: userId, limit: limit });
+		} else if (!history.keywords.length) {
+			clearSearchCache();
+		}
 	});
+}
+
+function clearSearchCache() {
+	Object.keys(localStorage).filter(key => /^search-history/.test(key)).forEach(key => localStorage.removeItem(key));
 }
 
 var sendObjectMessage = function(parameters) {

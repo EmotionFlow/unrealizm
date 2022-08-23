@@ -17,6 +17,7 @@
 		.then(
 			data => {
 				if (data.result === <%=Common.API_OK%>) {
+					clearSearchCache();
 					location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=" + userId;
 					return true;
 				} else {
@@ -131,6 +132,7 @@
 				data => {
 					if (data.result === <%=Common.API_OK%>) {
 						HideMsgStatic();
+						clearSearchCache();
 						location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=" + data.user_id;
 						return true;
 					} else {
