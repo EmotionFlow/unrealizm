@@ -354,6 +354,7 @@ if(cResults.m_bUpdate) {
 							if(data.result>0) {
 								//setCookie('POIPIKU_LK','-1');
 								deleteCookie('POIPIKU_LK');
+								clearSearchCache();
 								sendObjectMessage("restart");
 							}
 						},

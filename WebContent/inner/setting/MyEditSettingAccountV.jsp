@@ -30,6 +30,7 @@
 				"success": function (data) {
 					if (data.result > 0) {
 						deleteCookie('POIPIKU_LK');
+						clearSearchCache();
 						location.href = "/";
 					}
 				},
