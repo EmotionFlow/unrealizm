@@ -138,7 +138,7 @@ if (requestId > 0) {
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; padding: 0; min-height: 113px; background: #fff; color: #6d6965; max-height: none; border: solid;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
 			.qq-gallery .qq-total-progress-bar-container {display: none;}
-			.qq-gallery .qq-upload-list li {margin: 6px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
+			.qq-gallery .qq-upload-list li {margin: 5px; height: 101px; padding: 0; box-shadow: none; max-width: 101px; background-color: #f3f3f3; border-radius: 4px;}
 			.qq-gallery .qq-file-info {display: none;}
 			.qq-upload-retry-selector .qq-upload-retry {display: none;}
 			.qq-gallery .qq-upload-fail .qq-upload-status-text {display: none;}
@@ -147,7 +147,7 @@ if (requestId > 0) {
 			.qq-gallery .qq-upload-cancel {right: -8px; top: -8px; width: 26px; height: 26px; line-height: 20px; font-size: 12px; padding: 0; border: solid 3px #fafafa; border-radius: 30px;}
 				<%if(!Util.isSmartPhone(request)) {%>
 				.qq-gallery.qq-uploader {min-height: 193px;}
-				.qq-gallery .qq-upload-list li {margin: 8px; height: 177px; max-width: 177px;}
+				.qq-gallery .qq-upload-list li {margin: 7px; height: 177px; max-width: 177px;}
 				.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
 				<%}%>
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
