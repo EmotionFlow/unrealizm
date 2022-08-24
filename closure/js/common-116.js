@@ -175,7 +175,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 
 	// 今はUI側がイマイチなので、searchTypeをAllに固定する
 	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
-	// 最後に検索履歴を取得した日時と比較
+	// 最後にキーワード検索をした日時と比較
 	const lastHistory = getLocalStrage('search-history-' + (searchType || '')) || {};
 	const historyCache = lastHistory.user == userId && lastHistory.limit == limit && lastHistory.at && (new Date() - new Date(lastHistory.at)) < cacheMinutes * 60000;
 
