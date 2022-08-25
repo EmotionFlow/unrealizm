@@ -6,10 +6,7 @@ import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.SlackNotifier;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -171,14 +168,10 @@ public class WriteBackContentsV2 extends Batch {
 			// HDDへコピー（オリジナル、サムネ）
 			isSuccess = copyToHDD(writeBackFile, destDir);
 
-			if (!isSuccess) {
-				// ダメだったらレコード削除
-				writeBackFile.delete();
-				continue;
+			if (isSuccess) {
+				// contents_0000 or contents_appendsを更新
+				isSuccess = updateContentsDB(pathIdx, writeBackFile);
 			}
-
-			// contents_0000 or contents_appendsを更新
-			isSuccess = updateContentsDB(pathIdx, writeBackFile);
 
 			if (!isSuccess) {
 				writeBackFile.delete();
@@ -216,7 +209,7 @@ public class WriteBackContentsV2 extends Batch {
 		for (String f : TGT_FILE_NAMES) {
 			Path src = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path + f);
 			try {
-				Files.copy(src, destDir.resolve(src.getFileName()));
+				Files.copy(src, destDir.resolve(src.getFileName()), StandardCopyOption.REPLACE_EXISTING);
 			} catch (NoSuchFileException noSuchFileException) {
 				// notifyError("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
 				Log.d("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
