@@ -111,7 +111,7 @@ public class WriteBackContentsV2 extends Batch {
 			boolean isSuccess;
 
 			// HDDへコピー（オリジナル、サムネ）
-			isSuccess = copyToHDD(writeBackFile, destDir);
+			isSuccess = copyToHDD(writeBackFile, destDir, true);
 
 			if (!isSuccess) {
 				writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
@@ -166,7 +166,7 @@ public class WriteBackContentsV2 extends Batch {
 			boolean isSuccess;
 
 			// HDDへコピー（オリジナル、サムネ）
-			isSuccess = copyToHDD(writeBackFile, destDir);
+			isSuccess = copyToHDD(writeBackFile, destDir, false);
 
 			if (isSuccess) {
 				// contents_0000 or contents_appendsを更新
@@ -204,18 +204,17 @@ public class WriteBackContentsV2 extends Batch {
 		return true;
 	}
 
-	private static boolean copyToHDD(WriteBackFile writeBackFile, Path destDir) {
+	private static boolean copyToHDD(WriteBackFile writeBackFile, Path destDir, boolean isLogging) {
 		boolean isSuccess = true;
 		for (String f : TGT_FILE_NAMES) {
 			Path src = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path + f);
 			try {
 				Files.copy(src, destDir.resolve(src.getFileName()), StandardCopyOption.REPLACE_EXISTING);
 			} catch (NoSuchFileException noSuchFileException) {
-				// notifyError("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
-				Log.d("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
+				if (isLogging) Log.d("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
 				isSuccess = false;
 			} catch (IOException e) {
-				notifyError("(WriteBackContentsError)Files.copy, IOException:" + src);
+				if (isLogging) notifyError("(WriteBackContentsError)Files.copy, IOException:" + src);
 				e.printStackTrace();
 				isSuccess = false;
 			}
