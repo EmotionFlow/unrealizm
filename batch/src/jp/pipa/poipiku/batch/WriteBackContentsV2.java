@@ -84,9 +84,6 @@ public class WriteBackContentsV2 extends Batch {
 			notifyError("(WriteBackContentsError)DB上の「ステータス：移動済み」レコードの削除に失敗");
 		}
 
-		Connection connection = null;
-		PreparedStatement statement = null;
-		String sql = "";
 
 		// HDDへの移動対象を抽出
 		List<WriteBackFile> moveTargets = WriteBackFile.select(WriteBackFile.Status.Created, HOLD_IN_CACHE_HOURS, getSelectLimit());
@@ -99,7 +96,6 @@ public class WriteBackContentsV2 extends Batch {
 
 		int pathIdx = 0;
 		for (WriteBackFile writeBackFile: moveTargets) {
-
 			pathIdx++;
 			if (WRITE_STORAGE_PATH_ARY.length <= pathIdx) {
 				pathIdx = 0;
@@ -113,30 +109,12 @@ public class WriteBackContentsV2 extends Batch {
 							Common.CONTENTS_CACHE_DIR, WRITE_STORAGE_PATH_ARY[pathIdx])).getParent();
 
 			// 移動先にディレクトリがなかったら作る
-			if (!Files.exists(destDir)) {
-				if (!destDir.toFile().mkdir()) {
-					notifyError("(WriteBackContentsError)failed to mkdir: " + destDir);
-					writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
-					continue;
-				}
-			}
+			if (!mkDir(writeBackFile, destDir)) continue;
 
-			boolean isSuccess = true;
+			boolean isSuccess;
+
 			// HDDへコピー（オリジナル、サムネ）
-			for (String f : TGT_FILE_NAMES) {
-				Path src = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path + f);
-				try {
-					Files.copy(src, destDir.resolve(src.getFileName()));
-				} catch (NoSuchFileException noSuchFileException) {
-					// notifyError("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
-					Log.d("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
-					isSuccess = false;
-				} catch (IOException e) {
-					notifyError("(WriteBackContentsError)Files.copy, IOException:" + src);
-					e.printStackTrace();
-					isSuccess = false;
-				}
-			}
+			isSuccess = copyToHDD(writeBackFile, destDir);
 
 			if (!isSuccess) {
 				writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
@@ -144,30 +122,7 @@ public class WriteBackContentsV2 extends Batch {
 			}
 
 			// contents_0000 or contents_appendsを更新
-			try {
-				connection = dataSource.getConnection();
-				if (writeBackFile.tableCode == WriteBackFile.TableCode.Contents) {
-					sql = SQL_UPDATE_CONTENT_FILENAME_FMT.formatted(WRITE_STORAGE_PATH_ARY[pathIdx]);
-					statement = connection.prepareStatement(sql);
-				} else if (writeBackFile.tableCode == WriteBackFile.TableCode.ContentsAppends) {
-					sql = SQL_UPDATE_CONTENT_APPEND_FILENAME_FMT.formatted(WRITE_STORAGE_PATH_ARY[pathIdx]);
-					statement = connection.prepareStatement(sql);
-				} else {
-					notifyError("(WriteBackContentsError)想定外のtable_code: " + writeBackFile.tableCode.getCode());
-					isSuccess = false;
-				}
-				if (isSuccess){
-					statement.setInt(1, writeBackFile.rowId);
-					statement.executeUpdate();
-				}
-			} catch (SQLException e) {
-				Log.d(sql);
-				e.printStackTrace();
-				isSuccess = false;
-			} finally {
-				if(statement!=null){try{statement.close();}catch(SQLException ignored){}}
-				if(connection!=null){try{connection.close();}catch(SQLException ignored){}}
-			}
+			isSuccess = updateContentsDB(pathIdx, writeBackFile);
 
 			if (!isSuccess) {
 				notifyError("(WriteBackContentsError)DB更新に失敗");
@@ -176,16 +131,7 @@ public class WriteBackContentsV2 extends Batch {
 			}
 
 			// SSD上のファイルを削除
-			for (String f : TGT_FILE_NAMES) {
-				Path src = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path + f);
-				try {
-					Files.delete(src);
-				} catch (IOException e) {
-					notifyError("(WriteBackContentsError)SSD上のファイル削除に失敗:" + src);
-					e.printStackTrace();
-					isSuccess = false;
-				}
-			}
+			isSuccess = removeSSDFiles(writeBackFile);
 
 			if (!isSuccess) {
 				writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
@@ -195,6 +141,137 @@ public class WriteBackContentsV2 extends Batch {
 			// write_back_filesを更新
 			writeBackFile.updateStatus(WriteBackFile.Status.Moved);
 		}
+
+		// エラーだったのを抽出
+		List<WriteBackFile> errorTargets = WriteBackFile.select(WriteBackFile.Status.ErrorOccurred, HOLD_IN_CACHE_HOURS + 24, getSelectLimit());
+		if (errorTargets == null) errorTargets = new ArrayList<>();
+
+		// もう一度移動を試みる
+		pathIdx = 0;
+		for (WriteBackFile writeBackFile: errorTargets) {
+			pathIdx++;
+			if (WRITE_STORAGE_PATH_ARY.length <= pathIdx) {
+				pathIdx = 0;
+			}
+
+			writeBackFile.updateStatus(WriteBackFile.Status.Moving);
+
+			Path destDir = Paths.get(
+					Common.CONTENTS_ROOT,
+					writeBackFile.path.replace(
+							Common.CONTENTS_CACHE_DIR, WRITE_STORAGE_PATH_ARY[pathIdx])).getParent();
+
+			// 移動先にディレクトリがなかったら作る
+			if (!mkDir(writeBackFile, destDir)) continue;
+
+			boolean isSuccess;
+
+			// HDDへコピー（オリジナル、サムネ）
+			isSuccess = copyToHDD(writeBackFile, destDir);
+
+			if (!isSuccess) {
+				// ダメだったらレコード削除
+				writeBackFile.delete();
+				continue;
+			}
+
+			// contents_0000 or contents_appendsを更新
+			isSuccess = updateContentsDB(pathIdx, writeBackFile);
+
+			if (!isSuccess) {
+				writeBackFile.delete();
+				continue;
+			}
+
+			// SSD上のファイルを削除
+			isSuccess = removeSSDFiles(writeBackFile);
+
+			if (!isSuccess) {
+				writeBackFile.delete();
+				continue;
+			}
+
+			// write_back_filesを更新
+			writeBackFile.updateStatus(WriteBackFile.Status.Moved);
+		}
+
 		Log.d("WriteBackContentsV2 batch end");
+	}
+
+	private static boolean mkDir(WriteBackFile writeBackFile, Path destDir) {
+		if (!Files.exists(destDir)) {
+			if (!destDir.toFile().mkdir()) {
+				notifyError("(WriteBackContentsError)failed to mkdir: " + destDir);
+				writeBackFile.updateStatus(WriteBackFile.Status.ErrorOccurred);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static boolean copyToHDD(WriteBackFile writeBackFile, Path destDir) {
+		boolean isSuccess = true;
+		for (String f : TGT_FILE_NAMES) {
+			Path src = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path + f);
+			try {
+				Files.copy(src, destDir.resolve(src.getFileName()));
+			} catch (NoSuchFileException noSuchFileException) {
+				// notifyError("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
+				Log.d("(WriteBackContentsError)Files.copy, NoSuchFileException :" + src);
+				isSuccess = false;
+			} catch (IOException e) {
+				notifyError("(WriteBackContentsError)Files.copy, IOException:" + src);
+				e.printStackTrace();
+				isSuccess = false;
+			}
+		}
+		return isSuccess;
+	}
+
+	private static boolean removeSSDFiles(WriteBackFile writeBackFile) {
+		boolean isSuccess = true;
+		for (String f : TGT_FILE_NAMES) {
+			Path src = Paths.get(Common.CONTENTS_ROOT, writeBackFile.path + f);
+			try {
+				Files.delete(src);
+			} catch (IOException e) {
+				notifyError("(WriteBackContentsError)SSD上のファイル削除に失敗:" + src);
+				e.printStackTrace();
+				isSuccess = false;
+			}
+		}
+		return isSuccess;
+	}
+
+	private static boolean updateContentsDB(int pathIdx, WriteBackFile writeBackFile) {
+		boolean isSuccess = true;
+		Connection connection = null;
+		PreparedStatement statement = null;
+		String sql = "";
+		try {
+			connection = dataSource.getConnection();
+			if (writeBackFile.tableCode == WriteBackFile.TableCode.Contents) {
+				sql = SQL_UPDATE_CONTENT_FILENAME_FMT.formatted(WRITE_STORAGE_PATH_ARY[pathIdx]);
+				statement = connection.prepareStatement(sql);
+			} else if (writeBackFile.tableCode == WriteBackFile.TableCode.ContentsAppends) {
+				sql = SQL_UPDATE_CONTENT_APPEND_FILENAME_FMT.formatted(WRITE_STORAGE_PATH_ARY[pathIdx]);
+				statement = connection.prepareStatement(sql);
+			} else {
+				notifyError("(WriteBackContentsError)想定外のtable_code: " + writeBackFile.tableCode.getCode());
+				isSuccess = false;
+			}
+			if (isSuccess){
+				statement.setInt(1, writeBackFile.rowId);
+				statement.executeUpdate();
+			}
+		} catch (SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+			isSuccess = false;
+		} finally {
+			if(statement!=null){try{statement.close();}catch(SQLException ignored){}}
+			if(connection!=null){try{connection.close();}catch(SQLException ignored){}}
+		}
+		return isSuccess;
 	}
 }
