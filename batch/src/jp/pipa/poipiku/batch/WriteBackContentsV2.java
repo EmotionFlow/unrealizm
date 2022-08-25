@@ -146,6 +146,8 @@ public class WriteBackContentsV2 extends Batch {
 		List<WriteBackFile> errorTargets = WriteBackFile.select(WriteBackFile.Status.ErrorOccurred, HOLD_IN_CACHE_HOURS + 24, getSelectLimit());
 		if (errorTargets == null) errorTargets = new ArrayList<>();
 
+		Log.d("errorTargets.size(): " + errorTargets.size());
+
 		// もう一度移動を試みる
 		pathIdx = 0;
 		for (WriteBackFile writeBackFile: errorTargets) {
