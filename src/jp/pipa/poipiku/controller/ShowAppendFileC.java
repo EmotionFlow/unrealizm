@@ -83,7 +83,7 @@ public final class ShowAppendFileC {
 		isOwner = content.m_nUserId == checkLogin.m_nUserId;
 
 		if (!isRequestClient && content.passwordEnabled) {
-			if (m_strPassword.isEmpty() || !verifyPassword(content, m_strPassword)) {
+			if (m_strPassword == null || m_strPassword.isEmpty() || !verifyPassword(content, m_strPassword)) {
 				return ERR_PASS;
 			}
 		}
