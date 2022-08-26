@@ -97,12 +97,13 @@ class UpdateFileFirstC {
 			cState.close();cState=null;
 
 			// save file
-			File cDir = new File(getServletContext().getRealPath(Common.getUploadContentsPath(cParam.m_nUserId)));
+			String uploadContentsPath = Common.getUploadContentsPath(cParam.m_nUserId);
+			File cDir = new File(getServletContext().getRealPath(uploadContentsPath));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
 			String strRandom = RandomStringUtils.randomAlphanumeric(9);
-			String strFileName = String.format("%s/%09d_%s.%s", Common.getUploadContentsPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
+			String strFileName = String.format("%s/%09d_%s.%s", uploadContentsPath, cParam.m_nContentId, strRandom, ext);
 			String strRealFileName = getServletContext().getRealPath(strFileName);
 			cParam.item_file.write(new File(strRealFileName));
 			ImageUtil.createThumbIllust(strRealFileName);

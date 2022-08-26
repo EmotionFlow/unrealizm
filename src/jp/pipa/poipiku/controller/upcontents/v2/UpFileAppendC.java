@@ -153,13 +153,15 @@ public class UpFileAppendC extends UpC {
 			//Log.d("UploadFileAppendC:"+nAppendId);
 
 			// save file
-			File cDir = new File(servletContext.getRealPath(Common.getUploadContentsPath(cParam.userId)));
+			final String uploadContentsPath = Common.getUploadContentsPath(cParam.userId);
+
+			File cDir = new File(servletContext.getRealPath(uploadContentsPath));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strRandom = RandomStringUtils.randomAlphanumeric(9);
-			String strFileName = String.format("%s/%09d_%09d_%s.%s", Common.getUploadContentsPath(cParam.userId), cParam.contentId, nAppendId, strRandom, ext);
-			String strRealFileName = servletContext.getRealPath(strFileName);
+			final String strRandom = RandomStringUtils.randomAlphanumeric(9);
+			final String strFileName = String.format("%s/%09d_%09d_%s.%s", uploadContentsPath, cParam.contentId, nAppendId, strRandom, ext);
+			final String strRealFileName = servletContext.getRealPath(strFileName);
 
 			if(!cParam.isPasteUpload){
 				cParam.fileItem.write(new File(strRealFileName));
@@ -169,40 +171,18 @@ public class UpFileAppendC extends UpC {
 			ImageUtil.createThumbIllust(strRealFileName);
 
 			// ファイルサイズ系情報
-			int nWidth = 0;
-			int nHeight = 0;
-			long nFileSize = 0;
-			long nComplexSize = 0;
-			try {
-				int[] size = ImageUtil.getImageSize(strRealFileName);
-				nWidth = size[0];
-				nHeight = size[1];
-			} catch(Exception e) {
-				Log.d("error getImageSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
-			try {
-				nFileSize = (new File(strRealFileName)).length();
-			} catch(Exception e) {
-				Log.d("error fileSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
-			try {
-				nComplexSize = ImageUtil.getConplex(strRealFileName);
-			} catch(Exception e) {
-				Log.d("error complexSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
+			FileSizeInfo fileSizeInfo = new FileSizeInfo();
+			fileSizeInfo.set(strRealFileName);
 
 			// update file name
 			connection = DatabaseUtil.dataSource.getConnection();
 			sql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setString(1, strFileName);
-			statement.setInt(2, nWidth);
-			statement.setInt(3, nHeight);
-			statement.setLong(4, nFileSize);
-			statement.setLong(5, nComplexSize);
+			statement.setInt(2, fileSizeInfo.nWidth);
+			statement.setInt(3, fileSizeInfo.nHeight);
+			statement.setLong(4, fileSizeInfo.nFileSize);
+			statement.setLong(5, fileSizeInfo.nComplexSize);
 			statement.setInt(6, nAppendId);
 			statement.executeUpdate();
 			statement.close();statement=null;

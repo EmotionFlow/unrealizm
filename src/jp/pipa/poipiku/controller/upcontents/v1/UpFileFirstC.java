@@ -95,13 +95,14 @@ public class UpFileFirstC extends UpC {
 			}
 
 			// save file
-			File cDir = new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(cParam.m_nUserId)));
+			String uploadContentsPath = Common.getUploadContentsPath(cParam.m_nUserId);
+			File cDir = new File(m_cServletContext.getRealPath(uploadContentsPath));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
 			String strRandom = RandomStringUtils.randomAlphanumeric(9);
 			String strFileName = "";
-			strFileName = String.format("%s/%09d_%s.%s", Common.getUploadContentsPath(cParam.m_nUserId), cParam.m_nContentId, strRandom, ext);
+			strFileName = String.format("%s/%09d_%s.%s", uploadContentsPath, cParam.m_nContentId, strRandom, ext);
 			String strRealFileName = m_cServletContext.getRealPath(strFileName);
 
 			if(!cParam.m_bPasteUpload){

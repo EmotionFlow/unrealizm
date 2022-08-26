@@ -91,14 +91,14 @@ public class UpFileFirstC extends UpC {
 			}
 
 			// save file
-			File cDir = new File(m_cServletContext.getRealPath(Common.getUploadContentsPath(cParam.userId)));
+			final String uploadContentsPath = Common.getUploadContentsPath(cParam.userId);
+			File cDir = new File(m_cServletContext.getRealPath(uploadContentsPath));
 			if(!cDir.exists()) {
 				cDir.mkdirs();
 			}
-			String strRandom = RandomStringUtils.randomAlphanumeric(9);
-			String strFileName = "";
-			strFileName = String.format("%s/%09d_%s.%s", Common.getUploadContentsPath(cParam.userId), cParam.contentId, strRandom, ext);
-			String strRealFileName = m_cServletContext.getRealPath(strFileName);
+			final String strRandom = RandomStringUtils.randomAlphanumeric(9);
+			final String strFileName = String.format("%s/%09d_%s.%s", uploadContentsPath, cParam.contentId, strRandom, ext);
+			final String strRealFileName = m_cServletContext.getRealPath(strFileName);
 
 			if(!cParam.isPasteUpload){
 				cParam.fileItem.write(new File(strRealFileName));
@@ -108,38 +108,16 @@ public class UpFileFirstC extends UpC {
 			ImageUtil.createThumbIllust(strRealFileName);
 
 			// ファイルサイズ系情報
-			int nWidth = 0;
-			int nHeight = 0;
-			long nFileSize = 0;
-			long nComplexSize = 0;
-			try {
-				int[] size = ImageUtil.getImageSize(strRealFileName);
-				nWidth = size[0];
-				nHeight = size[1];
-			} catch(Exception e) {
-				Log.d("error getImageSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
-			try {
-				nFileSize = (new File(strRealFileName)).length();
-			} catch(Exception e) {
-				Log.d("error fileSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
-			try {
-				nComplexSize = ImageUtil.getConplex(strRealFileName);
-			} catch(Exception e) {
-				Log.d("error complexSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
+			FileSizeInfo fileSizeInfo = new FileSizeInfo();
+			fileSizeInfo.set(strRealFileName);
 
 			// ファイルサイズチェック
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			CacheUsers0000.User user = users.getUser(cParam.userId);
 
 			connection = DatabaseUtil.dataSource.getConnection();
-			if(nFileSize> (long) Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId] *1024*1024) {
-				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+nFileSize);
+			if(fileSizeInfo.nFileSize> (long) Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId] *1024*1024) {
+				Log.d("UPLOAD_FILE_TOTAL_ERROR:"+fileSizeInfo.nFileSize);
 				sql ="DELETE FROM contents_0000 WHERE user_id=? AND content_id=?";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, cParam.userId);
@@ -169,10 +147,10 @@ public class UpFileFirstC extends UpC {
 			statement.setString(idx++, strFileName);
 			statement.setInt(idx++, nOpenId);
 			statement.setBoolean(idx++, cParam.isNotRecently);
-			statement.setInt(idx++, nWidth);
-			statement.setInt(idx++, nHeight);
-			statement.setLong(idx++, nFileSize);
-			statement.setLong(idx++, nComplexSize);
+			statement.setInt(idx++, fileSizeInfo.nWidth);
+			statement.setInt(idx++, fileSizeInfo.nHeight);
+			statement.setLong(idx++, fileSizeInfo.nFileSize);
+			statement.setLong(idx++, fileSizeInfo.nComplexSize);
 			statement.setInt(idx++, cParam.contentId);
 			statement.executeUpdate();
 			statement.close();statement=null;

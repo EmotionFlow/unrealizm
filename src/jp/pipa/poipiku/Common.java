@@ -31,6 +31,7 @@ public final class Common {
 	public static final String CONTENTS_CACHE_DIR = "user_img00";
 	public static final String CONTENTS_STORAGE_DIR = "user_img01";
 	public static final String[] CONTENTS_STORAGE_DIR_ARY = {"user_img01","user_img02","user_img03"};
+	public static final String[] CURRENT_CONTENTS_STORAGE_DIR_ARY = {"user_img02","user_img03"};
 
 	// APIリターンコード
 	public static final int API_OK = 1;
@@ -373,14 +374,14 @@ public final class Common {
 		*/
 	}
 
-	public static String getUploadContentsPath(int nUserId) {
-		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
-		//return String.format("/user_img01/%09d", nUserId);
-		return String.format("/user_img00/%09d", nUserId);
+	private static int userImageCounter = 0;
+	synchronized public static String getUploadContentsPath(int nUserId) {
+		userImageCounter++;
+		if (userImageCounter >= CURRENT_CONTENTS_STORAGE_DIR_ARY.length) userImageCounter = 0;
+		return String.format("/%s/%09d", CURRENT_CONTENTS_STORAGE_DIR_ARY[userImageCounter], nUserId);
 	}
 
 	public static String getUploadUsersPath(int nUserId) {
-		//return String.format("/user_img%02d/%09d", (int)(nUserId/10000)+1, nUserId);
 		return String.format("/user_img%02d/%09d", (nUserId % 2) + 2, nUserId);
 	}
 

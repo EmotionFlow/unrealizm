@@ -1,8 +1,10 @@
 package jp.pipa.poipiku.controller.upcontents.v2;
 
 import jp.pipa.poipiku.Common;
+import jp.pipa.poipiku.util.ImageUtil;
 import jp.pipa.poipiku.util.Log;
 
+import java.io.File;
 import java.sql.*;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -11,6 +13,35 @@ import java.util.regex.Pattern;
 public class UpC {
 	private static int _getOpenId(boolean bNotRecently){
 		return bNotRecently ? Common.OPEN_ID_NG_RECENT : Common.OPEN_ID_PUBLISH;
+	}
+
+	protected class FileSizeInfo {
+		int nWidth = 0;
+		int nHeight = 0;
+		long nFileSize = 0;
+		long nComplexSize = 0;
+		void set(String imgFilePath) {
+			try {
+				int[] size = ImageUtil.getImageSize(imgFilePath);
+				nWidth = size[0];
+				nHeight = size[1];
+			} catch(Exception e) {
+				Log.d("error getImageSize %s".formatted(imgFilePath));
+				e.printStackTrace();
+			}
+			try {
+				nFileSize = (new File(imgFilePath)).length();
+			} catch(Exception e) {
+				Log.d("error fileSize %s".formatted(imgFilePath));
+				e.printStackTrace();
+			}
+			try {
+				nComplexSize = ImageUtil.getConplex(imgFilePath);
+			} catch(Exception e) {
+				Log.d("error complexSize %s".formatted(imgFilePath));
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected static int GetOpenId(
