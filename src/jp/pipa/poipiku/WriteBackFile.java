@@ -71,6 +71,13 @@ public final class WriteBackFile extends Model{
 	}
 
 	public boolean insert() {
+		if (path.contains("user_img02") || path.contains("user_img03")) {
+			return true;
+		} else {
+			SlackNotifier notifier = new SlackNotifier("https://hooks.slack.com/services/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");
+			notifier.notify("止めたはずのuser_img00への書き込みが発生");
+		}
+
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String sql = "";
