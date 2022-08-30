@@ -70,7 +70,7 @@ public class SpotMoveImages extends Batch {
 
 		// HDDへの移動対象を抽出
 //		List<TmpUser> tmpUsers = TmpUser.selectByUserId(TmpUser.Status.Created, 21808);
-		List<TmpUser> tmpUsers = TmpUser.select(TmpUser.Status.Created, 80);
+		List<TmpUser> tmpUsers = TmpUser.select(TmpUser.Status.Created, 160);
 
 		if (tmpUsers == null) {
 			tmpUsers = new ArrayList<>();
