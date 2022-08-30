@@ -176,14 +176,13 @@ public class UpFileAppendC extends UpC {
 
 			// update file name
 			connection = DatabaseUtil.dataSource.getConnection();
-			sql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
+			sql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=? WHERE append_id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setString(1, strFileName);
 			statement.setInt(2, fileSizeInfo.nWidth);
 			statement.setInt(3, fileSizeInfo.nHeight);
 			statement.setLong(4, fileSizeInfo.nFileSize);
-			statement.setLong(5, fileSizeInfo.nComplexSize);
-			statement.setInt(6, nAppendId);
+			statement.setInt(5, nAppendId);
 			statement.executeUpdate();
 			statement.close();statement=null;
 

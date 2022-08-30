@@ -19,7 +19,6 @@ public class UpC {
 		int nWidth = 0;
 		int nHeight = 0;
 		long nFileSize = 0;
-		long nComplexSize = 0;
 		void set(String imgFilePath) {
 			try {
 				int[] size = ImageUtil.getImageSize(imgFilePath);
@@ -33,12 +32,6 @@ public class UpC {
 				nFileSize = (new File(imgFilePath)).length();
 			} catch(Exception e) {
 				Log.d("error fileSize %s".formatted(imgFilePath));
-				e.printStackTrace();
-			}
-			try {
-				nComplexSize = ImageUtil.getConplex(imgFilePath);
-			} catch(Exception e) {
-				Log.d("error complexSize %s".formatted(imgFilePath));
 				e.printStackTrace();
 			}
 		}

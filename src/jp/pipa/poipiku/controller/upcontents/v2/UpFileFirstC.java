@@ -141,7 +141,7 @@ public class UpFileFirstC extends UpC {
 				null,null);
 
 			// update making file_name
-			sql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
+			sql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_num=1 WHERE content_id=?";
 			int idx=1;
 			statement = connection.prepareStatement(sql);
 			statement.setString(idx++, strFileName);
@@ -150,7 +150,6 @@ public class UpFileFirstC extends UpC {
 			statement.setInt(idx++, fileSizeInfo.nWidth);
 			statement.setInt(idx++, fileSizeInfo.nHeight);
 			statement.setLong(idx++, fileSizeInfo.nFileSize);
-			statement.setLong(idx++, fileSizeInfo.nComplexSize);
 			statement.setInt(idx++, cParam.contentId);
 			statement.executeUpdate();
 			statement.close();statement=null;

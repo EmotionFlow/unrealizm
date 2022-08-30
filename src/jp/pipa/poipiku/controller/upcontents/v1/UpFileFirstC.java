@@ -116,7 +116,6 @@ public class UpFileFirstC extends UpC {
 			int nWidth = 0;
 			int nHeight = 0;
 			long nFileSize = 0;
-			long nComplexSize = 0;
 			try {
 				int[] size = ImageUtil.getImageSize(strRealFileName);
 				nWidth = size[0];
@@ -129,12 +128,6 @@ public class UpFileFirstC extends UpC {
 				nFileSize = (new File(strRealFileName)).length();
 			} catch(Exception e) {
 				Log.d("error fileSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
-			try {
-				nComplexSize = ImageUtil.getConplex(strRealFileName);
-			} catch(Exception e) {
-				Log.d("error complexSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
 
@@ -168,7 +161,7 @@ public class UpFileFirstC extends UpC {
 				null,null);
 
 			// update making file_name
-			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_complex=?, file_num=1 WHERE content_id=?";
+			strSql ="UPDATE contents_0000 SET file_name=?, open_id=?, not_recently=?, file_width=?, file_height=?, file_size=?, file_num=1 WHERE content_id=?";
 			int idx=1;
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(idx++, strFileName);
@@ -177,7 +170,6 @@ public class UpFileFirstC extends UpC {
 			cState.setInt(idx++, nWidth);
 			cState.setInt(idx++, nHeight);
 			cState.setLong(idx++, nFileSize);
-			cState.setLong(idx++, nComplexSize);
 			cState.setInt(idx++, cParam.m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;

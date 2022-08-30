@@ -171,7 +171,6 @@ public class UpFileAppendC extends UpC {
 			int nWidth = 0;
 			int nHeight = 0;
 			long nFileSize = 0;
-			long nComplexSize = 0;
 			try {
 				int[] size = ImageUtil.getImageSize(strRealFileName);
 				nWidth = size[0];
@@ -186,23 +185,16 @@ public class UpFileAppendC extends UpC {
 				Log.d("error fileSize %s".formatted(strRealFileName));
 				e.printStackTrace();
 			}
-			try {
-				nComplexSize = ImageUtil.getConplex(strRealFileName);
-			} catch(Exception e) {
-				Log.d("error complexSize %s".formatted(strRealFileName));
-				e.printStackTrace();
-			}
 
 			// update file name
 			cConn = DatabaseUtil.dataSource.getConnection();
-			strSql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=?, file_complex=? WHERE append_id=?";
+			strSql ="UPDATE contents_appends_0000 SET file_name=?, file_width=?, file_height=?, file_size=? WHERE append_id=?";
 			cState = cConn.prepareStatement(strSql);
 			cState.setString(1, strFileName);
 			cState.setInt(2, nWidth);
 			cState.setInt(3, nHeight);
 			cState.setLong(4, nFileSize);
-			cState.setLong(5, nComplexSize);
-			cState.setInt(6, nAppendId);
+			cState.setInt(5, nAppendId);
 			cState.executeUpdate();
 			cState.close();cState=null;
 

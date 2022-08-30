@@ -19,7 +19,6 @@ class EditedContent {
 	public int fileWidth = 0;
 	public int fileHeight = 0;
 	public long filesSize = 0;
-	public long fileComplex = 0;
 	public String fileName = "";
 	public Integer writeBackStatus = null;
 
@@ -31,7 +30,6 @@ class EditedContent {
 		fileWidth = resultSet.getInt("file_width");
 		fileHeight = resultSet.getInt("file_height");
 		filesSize = resultSet.getLong("file_size");
-		fileComplex = resultSet.getLong("file_complex");
 		writeBackStatus = resultSet.getInt("write_back_status");
 		if (resultSet.wasNull()) {
 			writeBackStatus = null;
@@ -43,8 +41,8 @@ class EditedContent {
 	}
 
 	public String toString(){
-		return String.format("%d, %d, %d, %d, %d, %s, %d",
-				appendId, fileWidth, fileHeight, filesSize, fileComplex, fileName, writeBackStatus);
+		return String.format("%d, %d, %d, %d, %s, %d",
+				appendId, fileWidth, fileHeight, filesSize, fileName, writeBackStatus);
 	}
 }
 
@@ -148,7 +146,7 @@ public class UpdateFileOrderC extends Controller {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			//元のファイルリストを取得
-			sql = "SELECT 0 as append_id, file_name, file_width, file_height, file_size, file_complex, wbf.status write_back_status" +
+			sql = "SELECT 0 as append_id, file_name, file_width, file_height, file_size, wbf.status write_back_status" +
 					" FROM contents_0000 c" +
 					" LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=0) wbf ON c.content_id = wbf.row_id" +
 					" WHERE c.user_id=? AND content_id=?";
@@ -165,7 +163,7 @@ public class UpdateFileOrderC extends Controller {
 				oldContentList.add(c);
 			}
 
-			sql = "SELECT append_id, file_name, file_width, file_height, file_size, file_complex, wbf.status write_back_status" +
+			sql = "SELECT append_id, file_name, file_width, file_height, file_size, wbf.status write_back_status" +
 					" FROM contents_appends_0000 c" +
 					"   LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=1) wbf ON c.append_id = wbf.row_id" +
 					" WHERE c.content_id=? ORDER BY append_id";
@@ -231,7 +229,6 @@ public class UpdateFileOrderC extends Controller {
 					c.fileWidth = foundContent.fileWidth;
 					c.fileHeight = foundContent.fileHeight;
 					c.filesSize = foundContent.filesSize;
-					c.fileComplex = foundContent.fileComplex;
 					c.writeBackStatus = foundContent.writeBackStatus;
 					newContentList.add(c);
 				}
@@ -430,28 +427,26 @@ public class UpdateFileOrderC extends Controller {
 
 			//並び替え
 			//先頭画像はcontents_0000にセット
-			sql = "UPDATE contents_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=?;";
+			sql = "UPDATE contents_0000 SET file_name=?,file_width=?,file_height=?,file_size=? WHERE content_id=?;";
 			statement = connection.prepareStatement(sql);
 			statement.setString(1, newContentList.get(0).fileName);
 			statement.setInt(2, newContentList.get(0).fileWidth);
 			statement.setInt(3, newContentList.get(0).fileHeight);
 			statement.setLong(4, newContentList.get(0).filesSize);
-			statement.setLong(5, newContentList.get(0).fileComplex);
-			statement.setInt(6, contentId);
+			statement.setInt(5, contentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
 
 			//2枚目以降はcontents_appends_0000にセット
-			sql = "UPDATE contents_appends_0000 SET file_name=?,file_width=?,file_height=?,file_size=?,file_complex=? WHERE content_id=? AND append_id=?";
+			sql = "UPDATE contents_appends_0000 SET file_name=?,file_width=?,file_height=?,file_size=? WHERE content_id=? AND append_id=?";
 			statement = connection.prepareStatement(sql);
 			for (int i=1; i<newContentList.size(); i++) {
 				statement.setString(1, newContentList.get(i).fileName);
 				statement.setInt(2, newContentList.get(i).fileWidth);
 				statement.setInt(3, newContentList.get(i).fileHeight);
 				statement.setLong(4, newContentList.get(i).filesSize);
-				statement.setLong(5, newContentList.get(i).fileComplex);
-				statement.setInt(6, contentId);
-				statement.setInt(7, newContentList.get(i).appendId);
+				statement.setInt(5, contentId);
+				statement.setInt(6, newContentList.get(i).appendId);
 				statement.executeUpdate();
 			}
 			statement.close();statement=null;
