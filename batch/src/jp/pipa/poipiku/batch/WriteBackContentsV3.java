@@ -96,7 +96,7 @@ public class WriteBackContentsV3 extends Batch {
 
 		int pathIdx = 0;
 		for (CContent content: targetContents) {
-			Log.d("content_id %d".formatted(content.m_nContentId));
+//			Log.d("content_id %d".formatted(content.m_nContentId));
 
 			pathIdx++;
 			if (WRITE_STORAGE_PATH_ARY.length <= pathIdx) {
@@ -122,7 +122,7 @@ public class WriteBackContentsV3 extends Batch {
 			// SSD上のファイルを削除
 			removeSSDFiles(content.m_strFileName);
 
-			Log.d("content_id %d moved".formatted(content.m_nContentId));
+//			Log.d("content_id %d moved".formatted(content.m_nContentId));
 		}
 
 		// HDDへの移動対象を抽出(contents_appends)
@@ -147,7 +147,7 @@ public class WriteBackContentsV3 extends Batch {
 
 		pathIdx = 0;
 		for (CContentAppend contentAppend: targetContentsAppends) {
-			Log.d("append_id %d".formatted(contentAppend.m_nAppendId));
+//			Log.d("append_id %d".formatted(contentAppend.m_nAppendId));
 
 			pathIdx++;
 			if (WRITE_STORAGE_PATH_ARY.length <= pathIdx) {
@@ -173,7 +173,7 @@ public class WriteBackContentsV3 extends Batch {
 			// SSD上のファイルを削除
 			removeSSDFiles(contentAppend.m_strFileName);
 
-			Log.d("append_id %d moved".formatted(contentAppend.m_nAppendId));
+//			Log.d("append_id %d moved".formatted(contentAppend.m_nAppendId));
 		}
 
 		Log.d("WriteBackContentsV3 batch end");
