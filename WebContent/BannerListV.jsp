@@ -22,7 +22,8 @@ class BannerListC {
 
 			// NEW ARRIVAL
 			if(SELECT_MAX_GALLERY>0) {
-				strSql = "SELECT * FROM contents_0000 WHERE open_id==0 AND bookmark_num>10 ORDER BY RANDOM() LIMIT ?";
+				strSql = "SELECT * FROM contents_0000 WHERE open_id==0 ORDER BY RANDOM() LIMIT ?";
+//				strSql = "SELECT * FROM contents_0000 WHERE open_id==0 AND bookmark_num>10 ORDER BY RANDOM() LIMIT ?";
 				cState = cConn.prepareStatement(strSql);
 				cState.setInt(1, SELECT_MAX_GALLERY);
 				cResSet = cState.executeQuery();

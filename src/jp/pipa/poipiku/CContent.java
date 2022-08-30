@@ -160,7 +160,6 @@ public final class CContent {
 		m_bNotRecently		= resultSet.getBoolean("not_recently");
 		m_strFileName		= Util.toString(resultSet.getString("file_name"));
 		m_nFileNum			= resultSet.getInt("file_num");
-		m_nBookmarkNum		= resultSet.getInt("bookmark_num");
 		m_nSafeFilter		= resultSet.getInt("safe_filter");
 		m_nFileWidth		= resultSet.getInt("file_width");
 		m_nFileHeight		= resultSet.getInt("file_height");

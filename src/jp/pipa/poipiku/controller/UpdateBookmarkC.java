@@ -76,11 +76,6 @@ public class UpdateBookmarkC {
 					statement.setInt(2, m_nContentId);
 					statement.executeUpdate();
 					statement.close();statement=null;
-					strSql ="UPDATE contents_0000 SET bookmark_num=bookmark_num+1 WHERE content_id=?";
-					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, m_nContentId);
-					statement.executeUpdate();
-					statement.close();statement=null;
 					nRtn = CContent.BOOKMARK_BOOKMARKING;
 				} else {
 					nRtn = CContent.BOOKMARK_LIMIT;
@@ -90,11 +85,6 @@ public class UpdateBookmarkC {
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, m_nUserId);
 				statement.setInt(2, m_nContentId);
-				statement.executeUpdate();
-				statement.close();statement=null;
-				strSql ="UPDATE contents_0000 SET bookmark_num=bookmark_num-1 WHERE content_id=?";
-				statement = connection.prepareStatement(strSql);
-				statement.setInt(1, m_nContentId);
 				statement.executeUpdate();
 				statement.close();statement=null;
 				nRtn = CContent.BOOKMARK_NONE;
