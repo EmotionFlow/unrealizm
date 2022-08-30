@@ -33,7 +33,7 @@ public class WriteBackContentsV3 extends Batch {
 			selectLimit = 130;
 		}
 
-		return 1;
+		return selectLimit;
 	}
 
 	static List<String> TGT_FILE_NAMES;
