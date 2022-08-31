@@ -222,6 +222,17 @@ function clearSearchCache() {
 	Object.keys(localStorage).filter(key => /^search-history/.test(key)).forEach(key => localStorage.removeItem(key));
 }
 
+function clearHeaderSearchInput() {
+	const $search = $('#HeaderSearchBox');
+	$search.val('');
+	$search.focus();
+	toggleClearSearchBtn();
+}
+
+function toggleClearSearchBtn() {
+	$('#HeaderSearchClear').css('visibility', $('#HeaderSearchBox').val() ? 'visible' : 'hidden');
+}
+
 var sendObjectMessage = function(parameters) {
 	var iframe = document.createElement('iframe');
 	iframe.setAttribute('src', "myurlscheme://"+parameters);

@@ -131,9 +131,14 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<%}%>
 			<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
 				<div class="HeaderSearch">
-					<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text"
-						   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search"
-					/>
+					<div class="HeaderSearchInputWrapper">
+						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text"
+								placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" onkeyup="toggleClearSearchBtn()"
+						/>
+						<div id="HeaderSearchClear" class="HeaderSearchClear">
+							<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
+						</div>
+					</div>
 					<div id="HeaderSearchBtn" class="HeaderSearchBtn"
 						 <%if(!checkLogin.m_bLogin){%> onclick="DispMsg('<%=_TEX.T("Common.NeedLogin")%>')"<%}%>
 					>
@@ -161,7 +166,12 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 						<i class="fas fa-arrow-left"></i>
 					</div>
 					<div class="HeaderSearch">
-						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search"/>
+						<div class="HeaderSearchInputWrapper">
+							<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" onkeyup="toggleClearSearchBtn()"/>
+							<div id="HeaderSearchClear" class="HeaderSearchClear">
+								<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
+							</div>
+						</div>
 						<div id="HeaderSearchBtn" class="HeaderSearchBtn">
 							<i class="fas fa-search"></i>
 						</div>
@@ -243,6 +253,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 	$('#HeaderSearchWrapper').on('submit', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));
 	$('#HeaderSearchBtn').on('click', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));
 	<%}%>
+	toggleClearSearchBtn();
 </script>
 
 <%if(Util.isSmartPhone(request)) {%>
