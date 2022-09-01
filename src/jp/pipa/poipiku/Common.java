@@ -28,8 +28,6 @@ public final class Common {
 
 	public static final String CONTENTS_ROOT = "/var/www/html/poipiku_img";
 	public static final String CONTENTS_DIR_REGEX = "user_img[0-9][0-9]";
-	public static final String CONTENTS_CACHE_DIR = "user_img00";
-	public static final String CONTENTS_STORAGE_DIR = "user_img01";
 	public static final String[] CONTENTS_STORAGE_DIR_ARY = {"user_img01","user_img02","user_img03"};
 	public static final String[] CURRENT_CONTENTS_STORAGE_DIR_ARY = {"user_img02","user_img03"};
 
@@ -399,10 +397,6 @@ public final class Common {
 			}
 		}
 		return profPath;
-	}
-
-	public static String getUploadCachePath(int nUserId) {
-		return String.format("/user_img00/%09d", nUserId);
 	}
 
 	public static List<String> getUploadContentsPathList(int userId) {

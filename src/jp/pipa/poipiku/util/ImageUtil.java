@@ -704,23 +704,8 @@ public class ImageUtil {
 
 	public static void deleteFiles(String strFileName) {
 		if (strFileName==null || strFileName.isEmpty()) return;
-
-		List<String> fileNameList = new LinkedList<>();
-
-		if (strFileName.contains(Common.CONTENTS_CACHE_DIR)) {
-			fileNameList.add(strFileName);
-			for (String s : Common.CONTENTS_STORAGE_DIR_ARY) {
-				fileNameList.add(strFileName.replace(Common.CONTENTS_DIR_REGEX, s));
-			}
-		} else {
-			fileNameList.add(strFileName);
-			fileNameList.add(strFileName.replaceAll(Common.CONTENTS_DIR_REGEX, Common.CONTENTS_CACHE_DIR));
-		}
-
-		for (String f: fileNameList) {
-			Util.deleteFile(f);
-			deleteFilesClean(f);
-		}
+		Util.deleteFile(strFileName);
+		deleteFilesClean(strFileName);
 	}
 
 	static void deleteFilesClean(String strFileName) {

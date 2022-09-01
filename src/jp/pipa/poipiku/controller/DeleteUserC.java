@@ -233,9 +233,6 @@ public class DeleteUserC {
 
 			// delete files
 			File fileDel;
-			// cache (ssd)
-			fileDel= new File(m_cServletContext.getRealPath(Common.getUploadCachePath(m_nUserId)));
-			Common.rmDir(fileDel);
 
 			// hdd
 			List<String> delList = Common.getUploadContentsPathList(m_nUserId);
