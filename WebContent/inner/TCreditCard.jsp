@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%if(checkLogin.isStaff() || Common.isDevEnv()){%>
-<script async src='https://beta.epsilon.jp/js/token.js'></script>
+<script async src='https://static.beta.epsilon.jp/js/token.js'></script>
 <%}else{%>
-<script async src='https://secure.epsilon.jp/js/token.js'></script>
+<script async src='https://static.secure.epsilon.jp/js/token.js'></script>
 <%}%>
 <script>
 	const AGENT = {
