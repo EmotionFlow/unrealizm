@@ -172,9 +172,6 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 								<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
 							</div>
 						</div>
-						<div id="HeaderSearchBtn" class="HeaderSearchBtn">
-							<i class="fas fa-search"></i>
-						</div>
 					</div>
 				</form>
 				<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
