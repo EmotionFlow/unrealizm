@@ -94,9 +94,13 @@ body {padding: 51px 0 0 0 !important;}
 .Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 10px;}
 .HeaderSearchWrapper {padding: 10px 0;}
 .HeaderSearch {padding: 3px 10px 1px 16px;}
-.Header .HeaderSearch .HeaderSearchBox {width: 152px; height: 26px; padding: 0 5px; box-sizing: border-box; border: solid 1px #3498db; border-radius: 15px 0 0 15px;}
+.Header .HeaderSearch .HeaderSearchBox {width: 160px; height: 32px; padding: 0 1px 0 5px; box-sizing: border-box; border: solid 1px #3498db; border-radius: 15px 0 0 15px;}
 .Header .HeaderSearch .HeaderSearchInputWrapper {border: none;}
-.Header .HeaderSearch .HeaderSearchClear {padding: 0; font-size: 16px;}
+.Header .HeaderSearch .HeaderSearchClear {padding: 0; font-size: 16px; right: 10px}
+.Header .HeaderSearch .HeaderSearchClear > i {vertical-align: middle;}
+.HeaderSearch .HeaderSearchBtn {height: 32px}
+.HeaderSearchBtn > i {vertical-align: middle;}
+
 .Header .HeaderTitleSearch {display: none;}
 .FooterMenu .FooterMenuItem {width: 60px;}
 .FooterMenu {float: left; width: auto; justify-content: flex-end; margin: 0 10px;}

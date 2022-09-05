@@ -11,7 +11,7 @@ $(function(){
 							var complete = typeof(options.complete)=="function" ? options.complete : function(a,b){} ;
 							return function(a,b){
 								ajaxSending = false;
-							};
+							}
 						})();
 						$.ajax(options);
 					} else {
@@ -230,7 +230,15 @@ function clearHeaderSearchInput() {
 }
 
 function toggleClearSearchBtn() {
-	$('#HeaderSearchClear').css('visibility', $('#HeaderSearchBox').val() ? 'visible' : 'hidden');
+	const $HeaderSearchClear = $('#HeaderSearchClear');
+	const $HeaderSearchBox = $('#HeaderSearchBox');
+	if ($HeaderSearchBox.val()) {
+		$HeaderSearchClear.css('visibility','visible');
+		$HeaderSearchBox.css('padding-right', '28px');
+	} else {
+		$HeaderSearchClear.css('visibility','hidden');
+		$HeaderSearchBox.css('padding-right', '1px');
+	}
 }
 
 var sendObjectMessage = function(parameters) {
