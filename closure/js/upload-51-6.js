@@ -903,9 +903,10 @@ function _getBasePostData(userId, requestId, editorId) {
 			return null;
 		}
 	}
-	if ((uploadParams.OPTION_NO_CONDITIONAL_SHOW.value ||
-			!uploadParams.OPTION_NOT_PUBLISH_NSFW ||
-			!uploadParams.OPTION_NO_PASSWORD) &&
+
+	if ((!uploadParams.OPTION_NO_CONDITIONAL_SHOW.value ||
+			!uploadParams.OPTION_NOT_PUBLISH_NSFW.value ||
+			!uploadParams.OPTION_NO_PASSWORD.value) &&
 		uploadParams.OPTION_SHOW_FIRST.value && getPreviewAreaImageNum() < 2) {
 		showAllFirstErrMsg();
 		return null;
