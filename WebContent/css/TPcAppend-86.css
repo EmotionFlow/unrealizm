@@ -70,7 +70,6 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
 .Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
 .Wrapper.ViewPc .IllustItem .Category {margin: 0px 0 3px 0px;}
-.Wrapper.ViewPc .IllustItem .IllustItemCommand {}
 
 .IllustItem .IllustItemCommand .GenreInfo {margin: 4px 4px 0 4px;}
 .IllustItem .IllustItemCommand .GenreInfo .GenreImage {flex: 0 40px;width: 40px;height: 40px;}
@@ -93,14 +92,16 @@ body {padding: 51px 0 0 0 !important;}
 .HeaderWrapper {min-width: 700px; max-width: 990px; margin: 0 auto;}
 .Header .HeaderTitleWrapper {float: left;  margin: 0;}
 .Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 10px;}
-.Header .HeaderSearch {}
-.Header .HeaderSearch .HeaderSearchBox {width: 152px;}
+.HeaderSearchWrapper {padding: 10px 0;}
+.HeaderSearch {padding: 3px 10px 1px 16px;}
+.Header .HeaderSearch .HeaderSearchBox {width: 152px; height: 26px; padding: 0 5px; box-sizing: border-box; border: solid 1px #3498db; border-radius: 15px 0 0 15px;}
+.Header .HeaderSearch .HeaderSearchInputWrapper {border: none;}
+.Header .HeaderSearch .HeaderSearchClear {padding: 0; font-size: 16px;}
 .Header .HeaderTitleSearch {display: none;}
 .FooterMenu .FooterMenuItem {width: 60px;}
 .FooterMenu {float: left; width: auto; justify-content: flex-end; margin: 0 10px;}
 .FooterMenu #MenuSearch {margin: 0 10px 0 0;}
 .FooterMenu .MenuSep {display: block; float: left; width: 1px; height: 20px; margin: 10px 9px 20px 0; background-color: #ccc;}
-.FooterMenu .FooterMenuBtn {}
 .Footer .FooterLink dl {flex : 0 0 16.66%;}
 .FooterAd .PcSideBarAd {display: block; width: 300px; height: 250px; flex: 0 0 300px;}
 
@@ -147,13 +148,8 @@ body {padding: 51px 0 0 0 !important;}
 /********** genre **********/
 .SearchGenre {padding: 5px 15px 0px 15px; flex-flow: row wrap;}
 .SearchGenre .SearchEdit {margin: 0 0 10px 0; 	font-size: 12px;}
-.SearchGenre .SearchGenreMeta {}
 .SearchGenre .SearchGenreCmd .CmdBtn {margin: 0 0 10px 0;padding: 5px 12px;}
-.SearchGenre .SearchGenreMeta .SearchGenreTitle {}
-.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreImage {}
-.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreNameOrg {}
 .SearchGenre .SearchGenreMeta .SearchGenreDesc {font-size: 21px;margin: 5px 0;}
-.SearchGenreDetail a {}
 .SearchGenreFrame{max-width: 1140px; margin: 0 auto;}
 .SearchGenre .SearchGenreCmd {flex-direction: column; justify-content: flex-end;}
 /********** genre list **********/
