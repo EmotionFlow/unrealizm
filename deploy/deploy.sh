@@ -10,13 +10,13 @@ fi
 source ${ENV_FILE}
 
 echo "本番サーバでpull,buildを実行します"
-ssh ${HOST_ALIAS} 'bash -c "cd stg && ./pull.sh && ./build_java_and_js.sh && cd poipiku && git branch && git log -1"'
+ssh ${HOST_ALIAS} 'bash -c "cd stg && ./poipiku_pull.sh && ./poipiku_build.sh && cd poipiku && git branch && git log -1"'
 
 echo "."
 read -p "このcommitを本番サーバにデプロイします。よろしいですか？(y/N): " yn
 case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
 
-ssh ${HOST_ALIAS} 'bash -c "cd stg && sudo ./deploy_prod.sh -f"'
+ssh ${HOST_ALIAS} 'bash -c "cd stg && sudo ./poipiku_deploy_prod.sh -f"'
 
 git tag -a release-$(date +%Y-%m-%d-%H-%M) -m "Release at $(date)"
 git push --tags
