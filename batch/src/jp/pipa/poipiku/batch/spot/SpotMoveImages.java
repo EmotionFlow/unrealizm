@@ -24,8 +24,7 @@ import java.util.Objects;
 
 public class SpotMoveImages extends Batch {
 	static final boolean isDebug = false;
-	static final String URL_SCHEME = (isDebug)?"http":"https";
-	static final String urlClearUserCacheF = URL_SCHEME + "://poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
+	static final String urlClearUserCacheF = "http://poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
 
 	private static String getBandWidthLimit() {
 		String bandWidthLimit = "60.0m"; // Byte per second
