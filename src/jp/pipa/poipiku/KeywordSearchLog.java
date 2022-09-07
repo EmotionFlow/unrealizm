@@ -65,7 +65,7 @@ public final class KeywordSearchLog extends Model {
 			""";
 		List<KeywordSearchLog> list = new LinkedList<>();
 		try (
-				Connection connection = DatabaseUtil.dataSource.getConnection();
+				Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, userId);

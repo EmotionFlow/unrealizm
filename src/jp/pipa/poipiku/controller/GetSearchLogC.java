@@ -37,7 +37,7 @@ public class GetSearchLogC {
 
 		sql += " GROUP BY keywords ORDER BY MAX(created_at) DESC LIMIT ?";
 
-		try (Connection connection = DatabaseUtil.dataSource.getConnection();
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, checkLogin.m_nUserId);
