@@ -8,13 +8,16 @@ import javax.sql.DataSource;
 
 public final class DatabaseUtil {
 	public static DataSource dataSource;
+	public static DataSource replicaDataSource;
 	static {
 		try {
 			Class.forName("org.postgresql.Driver");
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
+			replicaDataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL_REPLICA);
 		} catch (ClassNotFoundException | NamingException e) {
 			e.printStackTrace();
 			dataSource = null;
+			replicaDataSource = null;
 		}
 	}
 }
