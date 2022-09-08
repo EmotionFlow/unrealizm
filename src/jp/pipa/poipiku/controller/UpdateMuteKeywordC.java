@@ -43,7 +43,7 @@ public class UpdateMuteKeywordC {
 			cConn = dsPostgres.getConnection();
 
 			// update mute keyword
-			String strKeywords[] = m_strDescription.split("[\\s.]");
+			String strKeywords[] = m_strDescription.split("[\\s.]+");
 			String strMuteKeyword = String.join(" OR ", strKeywords);
 
 			strSql = "UPDATE users_0000 SET mute_keyword_list=? WHERE user_id=?";
