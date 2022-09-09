@@ -72,7 +72,7 @@ public class SpotMoveImages extends Batch {
 		if (tmpUsers == null) {
 			tmpUsers = new ArrayList<>();
 		}
-		tmpUsers.addAll(TmpUser.select(TmpUser.Status.ErrorOccurred, 160));
+		tmpUsers.addAll(TmpUser.select(TmpUser.Status.Created, 160));
 
 		Log.d("moveTargets.size(): " + tmpUsers.size());
 
