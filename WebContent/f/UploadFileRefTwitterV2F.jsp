@@ -9,10 +9,11 @@ int nRtn = 0;
 UploadCParam cParam = new UploadCParam();
 cParam.userId = checkLogin.m_nUserId;
 nRtn = cParam.GetParam(request);
+//Log.d("checlLogin.userId:"+checkLogin.m_nUserId);
 //Log.d("UploadCParam:"+nRtn);
-//Log.d("UploadCParam.m_nUserId:"+cParam.m_nUserId);
-//Log.d("UploadCParam.m_nCategoryId:"+cParam.m_nCategoryId);
-//Log.d("UploadCParam.m_strDescription:"+cParam.m_strDescription);
+//Log.d("UploadCParam.m_nUserId:"+cParam.userId);
+//Log.d("UploadCParam.m_nCategoryId:"+cParam.categoryId);
+//Log.d("UploadCParam.m_strDescription:"+cParam.description);
 //cParam.m_bCheerNg=true;	// スマホからcheerできないように -> アプリからこのパラメータを送ってないのでtrueがデフォルト
 
 UploadC cResults = null;
