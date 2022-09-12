@@ -1,7 +1,7 @@
 package jp.pipa.poipiku.batch.spot;
 
-import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.batch.Batch;
+import jp.pipa.poipiku.batch.DBConnection;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.SlackNotifier;
@@ -9,7 +9,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -20,11 +19,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 
 public class SpotMoveImages2 extends Batch {
@@ -38,6 +34,20 @@ public class SpotMoveImages2 extends Batch {
 	private static final String FROM_IMG_PATH_FMT ="/var/www/html/poipiku/user_img01/%09d";
 	private static final String TO_IMG_PATH_FMT = "/var/www/html/poipiku/user_img%02d/%09d";
 	private static final Path DEV_NULL = Paths.get("/dev/null");
+
+	static class Target {
+		int userId;
+		int contentId;
+		int appendId;
+		String fileName;
+
+		public Target(int _userId, int _contentId, int _appendId, String _fileName) {
+			userId = _userId;
+			contentId = _contentId;
+			appendId = _appendId;
+			fileName = _fileName;
+		}
+	}
 
 	private static void notifyError(String msg) {
 		Log.d(msg);
@@ -56,35 +66,42 @@ public class SpotMoveImages2 extends Batch {
 
 
 		// HDDへの移動対象を抽出
-		List<CContent> targetContents = new ArrayList<>();
-		try (Connection con = DatabaseUtil.dataSource.getConnection();
-		     PreparedStatement st = con.prepareStatement("select * from contents_0000 where file_name like '%user_img01%' limit 100")
-		) {
+		List<Target> targets = new ArrayList<>();
+		try (Connection con = DBConnection.getDataSource().getConnection();
+		     PreparedStatement st = con.prepareStatement("""
+				select c.user_id, c.content_id, a.append_id, a.file_name
+				from contents_appends_0000 a inner join contents_0000 c ON a.content_id = c.content_id
+				where a.file_name like '%user_img01%' order by a.append_id limit 100;
+				""")) {
 			ResultSet r = st.executeQuery();
 			while (r.next()) {
-				targetContents.add(new CContent(r));
+				targets.add(new Target(
+						r.getInt(1), r.getInt(2), r.getInt(3), r.getString(4)
+						));
 			}
 		} catch (SQLException throwables) {
 			throwables.printStackTrace();
 		}
 
-		Log.d("moveTargets.size(): " + targetContents.size());
-		if (targetContents.isEmpty()) return;
+		Log.d("moveTargets.size(): " + targets.size());
+		if (targets.isEmpty()) return;
 
 
-		Connection connection = null;
-		PreparedStatement statement = null;
 		String sql = "";
 		OkHttpClient client = new OkHttpClient();
 
-		for (CContent content : targetContents) {
-			Path contentFilePath = Paths.get(FROM_IMG_PATH_FMT.formatted(content.m_nUserId), content.m_strFileName);
+		for (Target target : targets) {
+			Path contentFilePath = Paths.get("/var/www/html/poipiku", target.fileName);
 			Log.d("tgt: " + contentFilePath);
 			// img01側にファイルが本当にあったら、それをコピーする。
 			if (Files.exists(contentFilePath)){
 				// userIdごとにuser_img02,03を振り分け
-				final int userImageNumber = (content.m_nUserId % 2) + 2;
+				final int userImageNumber = (target.userId % 2) + 2;
 				Path copyTo = Paths.get(contentFilePath.toString().replace("img01", "img%02d".formatted(userImageNumber)));
+
+				if (!Files.exists(copyTo.getParent())) {
+					copyTo.getParent().toFile().mkdir();
+				}
 
 				try {
 					Files.copy(contentFilePath, copyTo);
@@ -93,15 +110,15 @@ public class SpotMoveImages2 extends Batch {
 				}
 
 				sql = """
-					UPDATE contents_0000
+					UPDATE contents_appends_0000
 					SET file_name = replace(file_name, 'user_img01','user_img%02d')
-					WHERE content_id=?;
+					WHERE append_id=?;
 					""".formatted(userImageNumber);
 
-				try (Connection con = DatabaseUtil.dataSource.getConnection();
+				try (Connection con = DBConnection.getDataSource().getConnection();
 				     PreparedStatement st = con.prepareStatement(sql)
 				) {
-					st.setInt(1, content.m_nContentId);
+					st.setInt(1, target.appendId);
 					st.executeUpdate();
 				} catch (SQLException throwables) {
 					throwables.printStackTrace();
@@ -119,15 +136,15 @@ public class SpotMoveImages2 extends Batch {
 				if (i > 1) {
 					Log.d("img%02d にすでにあった".formatted(i));
 					sql = """
-						UPDATE contents_0000
+						UPDATE contents_appends_0000
 						SET file_name = replace(file_name, 'user_img01','user_img%02d')
-						WHERE content_id=?;
+						WHERE append_id=?;
 						""".formatted(i);
 
-					try (Connection con = DatabaseUtil.dataSource.getConnection();
+					try (Connection con = DBConnection.getDataSource().getConnection();
 					     PreparedStatement st = con.prepareStatement(sql)
 					) {
-						st.setInt(1, content.m_nContentId);
+						st.setInt(1, target.appendId);
 						st.executeUpdate();
 					} catch (SQLException throwables) {
 						throwables.printStackTrace();
