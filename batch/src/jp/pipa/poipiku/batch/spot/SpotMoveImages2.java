@@ -71,7 +71,7 @@ public class SpotMoveImages2 extends Batch {
 		     PreparedStatement st = con.prepareStatement("""
 				select c.user_id, c.content_id, a.append_id, a.file_name
 				from contents_appends_0000 a inner join contents_0000 c ON a.content_id = c.content_id
-				where a.file_name like '%user_img01%' order by a.append_id limit 100;
+				where a.file_name like '%user_img01%' order by a.append_id limit 50;
 				""")) {
 			ResultSet r = st.executeQuery();
 			while (r.next()) {
