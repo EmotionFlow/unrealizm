@@ -1,5 +1,5 @@
 import json
-
+import os
 import requests
 
 POIPIKU_URL = 'https://poipiku.com/'
@@ -39,7 +39,6 @@ post_data = {
 }
 
 r = requests.post(POIPIKU_URL + "f/UploadFileRefTwitterV2F.jsp", cookies=cookies, data=post_data, verify=False)
-print(r.text)
 ref_tw_resp = json.loads(r.text)
 content_id = ref_tw_resp['content_id']
 print(f'content_id: {content_id}')
@@ -48,14 +47,12 @@ print(f'content_id: {content_id}')
 post_data = {
     'UID': user_id,
     'IID': content_id,
-    'OID': 0,
-    'REC': 0
+    'OID': 1,  # 0:公開, 1:新着避け公開, 2:非公開
+    'REC': 1  # 0:新着避けない, 1:新着避けする
 }
-file = {
+files = {
     'file1': open(upload_file_path, 'rb')
 }
-r = requests.post(POIPIKU_URL + "f/UploadFileFirstV2F.jsp", cookies=cookies, data=post_data, files=[file], verify=False)
+r = requests.post(POIPIKU_URL + "f/UploadFileFirstV2F.jsp", cookies=cookies, data=post_data, files=files, verify=False)
 
-print(r.text)
-
-
+print(r.json())
