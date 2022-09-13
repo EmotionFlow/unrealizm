@@ -13,7 +13,12 @@ public final class DatabaseUtil {
 		try {
 			Class.forName("org.postgresql.Driver");
 			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-			replicaDataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL_REPLICA);
+			if (Common.isDevEnv()) {
+				Log.d("dev mode, replicaDataSource = dataSource");
+				replicaDataSource = dataSource;
+			} else {
+				replicaDataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL_REPLICA);
+			}
 		} catch (ClassNotFoundException | NamingException e) {
 			e.printStackTrace();
 			dataSource = null;
