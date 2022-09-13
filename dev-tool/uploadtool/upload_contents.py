@@ -1,5 +1,4 @@
 import json
-import os
 import requests
 
 POIPIKU_URL = 'https://poipiku.com/'

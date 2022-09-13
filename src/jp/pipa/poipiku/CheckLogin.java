@@ -10,11 +10,12 @@ import jp.pipa.poipiku.util.*;
 
 public final class CheckLogin {
 	static private final List<Integer> m_staffIds = Arrays.asList(
-			1,      // pipa
-			2,      // official
-			21808,  // nino
-			1708444, // michi
-			1851512  // picさん
+			1,          // pipa
+			2,          // official
+			21808,      // nino
+			1708444,    // michi
+			1851512,    // picさん
+			6230955     // nino作業用
 	);
 	static private final List<Integer> m_testStaffIds = Arrays.asList(
 			2,      // official
