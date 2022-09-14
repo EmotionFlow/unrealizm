@@ -10,6 +10,7 @@ import java.util.List;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
@@ -224,14 +225,12 @@ public class Emoji {
 				vResult.add(emoji);
 			}
 		} else {	// 通常時
-			DataSource dataSource = null;
 			Connection connection = null;
 			PreparedStatement statement = null;
 			ResultSet resultSet = null;
 			String strSql = "";
 			try {
-				dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-				connection = dataSource.getConnection();
+				connection = DatabaseUtil.dataSource.getConnection();
 
 				if(nUserId>0) {
 					strSql = "SELECT description FROM vw_comments_0000_last_7days WHERE user_id=? GROUP BY description ORDER BY count(description) DESC LIMIT ?";
