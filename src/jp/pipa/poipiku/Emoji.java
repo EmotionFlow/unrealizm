@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.naming.InitialContext;
@@ -221,9 +222,7 @@ public class Emoji {
 		ArrayList<String> vResult = new ArrayList<String>();
 
 		if(EMOJI_EVENT) {	// イベント用
-			for(String emoji : EMOJI_EVENT_LIST) {
-				vResult.add(emoji);
-			}
+			Collections.addAll(vResult, EMOJI_EVENT_LIST);
 		} else {	// 通常時
 			Connection connection = null;
 			PreparedStatement statement = null;
