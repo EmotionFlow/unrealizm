@@ -33,7 +33,6 @@ public class SearchUserByKeywordC {
 	public int SELECT_MAX_GALLERY = 36;
 	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
 	public int m_nContentsNum = 0;
-	private static final String PG_HINT = "/*+ BitmapIndexScan(users_0000_nickname_pgidx) */";
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -42,64 +41,57 @@ public class SearchUserByKeywordC {
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
 		boolean result = false;
 		CacheUsers0000 users  = CacheUsers0000.getInstance();
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		String sql = "";
+
+		final String sql = " SELECT user_id FROM users_0000 WHERE nickname &@~ ? OR profile &@~ ? LIMIT 10000";
 
 		if(m_strKeyword.isEmpty()) return result;
-		try {
-			connection = DatabaseUtil.dataSource.getConnection();
-
-			sql = PG_HINT + " SELECT user_id FROM users_0000 WHERE nickname &@~ ? LIMIT 10000";
-			statement = connection.prepareStatement(sql);
+		List<Integer> userIds = new ArrayList<>();
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
+		     PreparedStatement statement = connection.prepareStatement(sql)
+		)
+		{
 			statement.setString(1, m_strKeyword);
-			resultSet = statement.executeQuery();
+			statement.setString(2, m_strKeyword);
+			ResultSet resultSet = statement.executeQuery();
 
-			List<Integer> userIds = new ArrayList<>();
 			while (resultSet.next()) {
 				userIds.add(resultSet.getInt(1));
 			}
-			if(!bContentOnly) {
-				m_nContentsNum = userIds.size();
-			}
-			Collections.sort(userIds);
-			Collections.reverse(userIds);
-
-			if (m_nPage < 4) {
-				KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "",
-						m_nPage, KeywordSearchLog.SearchTarget.Users, userIds.size(), ipAddress);
-			}
-
-			int offset = m_nPage * SELECT_MAX_GALLERY;
-			int toIndex = offset + Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY);
-			toIndex = Math.min(toIndex, m_nContentsNum-1);
-			List<Integer> subList = null;
-			if (offset < toIndex) {
-				subList = userIds.subList(offset, toIndex);
-			}
-
-			if (subList != null) {
-				for (int userId : subList) {
-					CacheUsers0000.User cashUser = users.getUser(userId);
-					if(cashUser==null) continue;
-					CUser user = new CUser(cashUser);
-					m_vContentList.add(user);
-				}
-			}
-
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
 
 			result = true;
 		} catch(Exception e) {
 			Log.d(sql);
 			e.printStackTrace();
-		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
+
+		if(!bContentOnly) {
+			m_nContentsNum = userIds.size();
+		}
+		Collections.sort(userIds);
+		Collections.reverse(userIds);
+
+		if (m_nPage < 4) {
+			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "",
+					m_nPage, KeywordSearchLog.SearchTarget.Users, userIds.size(), ipAddress);
+		}
+
+		int offset = m_nPage * SELECT_MAX_GALLERY;
+		int toIndex = offset + Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY);
+		toIndex = Math.min(toIndex, m_nContentsNum-1);
+		List<Integer> subList = null;
+		if (offset < toIndex) {
+			subList = userIds.subList(offset, toIndex);
+		}
+
+		if (subList != null) {
+			for (int userId : subList) {
+				CacheUsers0000.User cashUser = users.getUser(userId);
+				if(cashUser==null) continue;
+				CUser user = new CUser(cashUser);
+				m_vContentList.add(user);
+			}
+		}
+
 		return result;
 	}
 }
