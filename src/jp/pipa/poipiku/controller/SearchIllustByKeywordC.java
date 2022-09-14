@@ -51,7 +51,7 @@ public final class SearchIllustByKeywordC {
 		String muteKeywords = "";
 
 		try (
-			Connection connection = DatabaseUtil.dataSource.getConnection();
+			Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(strSql);
 		) {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
@@ -87,7 +87,7 @@ public final class SearchIllustByKeywordC {
 		ResultSet resultSet = null;
 
 		try {
-			connection = DatabaseUtil.dataSource.getConnection();
+			connection = DatabaseUtil.replicaDataSource.getConnection();
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 
 			String strCondContentId = " AND content_id IN (" +
