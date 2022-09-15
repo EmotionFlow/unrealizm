@@ -50,6 +50,7 @@ public class SearchUserByKeywordC {
 			while (resultSet.next()) {
 				CUser u = new CUser(resultSet);
 				u.m_strProfile = resultSet.getString("profile");
+				u.m_strHeaderFileName = resultSet.getString("header_file_name");
 				selectByNicknameUsers.add(u);
 			}
 			result = true;
@@ -70,6 +71,7 @@ public class SearchUserByKeywordC {
 			while (resultSet.next()) {
 				CUser u = new CUser(resultSet);
 				u.m_strProfile = resultSet.getString("profile");
+				u.m_strHeaderFileName = resultSet.getString("header_file_name");
 				selectByNicknameUsers.add(u);
 			}
 			result = true;
