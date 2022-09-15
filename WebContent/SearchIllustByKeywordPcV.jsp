@@ -11,6 +11,11 @@ if(!bSmartPhone) {
 	return;
 }
 
+boolean isApp = false;
+
+ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
+
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
 cResults.selectMaxGallery = 45;
@@ -19,7 +24,7 @@ g_strSearchWord = cResults.m_strKeyword;
 String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, "UTF-8");
 String strTitle = cResults.m_strKeyword + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
-String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?KWD="+strEncodedKeyword;
+String strUrl = "https://poipiku.com/SearchIllustByKeywordPcV.jsp?KWD="+strEncodedKeyword;
 String strFileUrl = cResults.m_strRepFileName;
 %>
 <!DOCTYPE html>
@@ -80,17 +85,13 @@ String strFileUrl = cResults.m_strRepFileName;
 			</header>
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+				<% for (int cnt=0; cnt<cResults.m_vContentList.size(); cnt++) { %>
+				<%=CCnv.Content2Html(cResults.m_vContentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
+				<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
+				<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
+				<%}%>
 				<%}%>
 			</section>
-
-			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchIllustByKeywordPcV.jsp", "&KWD="+strEncodedKeyword, cResults.m_nPage, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
-			</nav>
 		</article>
 
 		<%@ include file="/inner/TFooterSingleAd.jsp"%>

@@ -31,7 +31,6 @@ public final class SearchIllustByKeywordC {
 	public int selectMaxGallery = 15;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
 	public int m_nContentsNum = 0;
-	public boolean m_bFollowing = false;
 	public String m_strRepFileName = "";
 
 	public boolean getResults(CheckLogin checkLogin) {
@@ -42,18 +41,21 @@ public final class SearchIllustByKeywordC {
 		if (!checkLogin.m_bLogin) return false;
 		if (m_strKeyword.isEmpty()) return false;
 
-		String strSql = PG_HINT + "SELECT content_id FROM contents_0000 WHERE description &@~ ? LIMIT 1000";
 		StringBuilder keywords = new StringBuilder(m_strKeyword);
-		List<Integer> keywordMatchedIds = new LinkedList<>();
 
 		KeywordSearchLog searchLog = new KeywordSearchLog();
 
 		String muteKeywords = "";
 
-		try (
-			Connection connection = DatabaseUtil.replicaDataSource.getConnection();
-			PreparedStatement statement = connection.prepareStatement(strSql);
-		) {
+		String strCondBlockUser = "";
+		String strCondBlockedUser = "";
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection()) {
+			if (SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
+				strCondBlockUser = " AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
+			}
+			if (SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
+				strCondBlockedUser = " AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
+			}
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
 				muteKeywords = SqlUtil.getMuteKeyWord(connection, checkLogin.m_nUserId);
 				if (!muteKeywords.isEmpty()) {
@@ -61,94 +63,39 @@ public final class SearchIllustByKeywordC {
 					searchLog.muteWords = muteKeywords;
 				}
 			}
-			statement.setString(1, keywords.toString());
-			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				keywordMatchedIds.add(resultSet.getInt(1));
-			}
-			resultSet.close();
-		} catch(Exception e) {
-			Log.d(strSql);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		if (m_nPage < 4) {
-			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, muteKeywords,
-					m_nPage, KeywordSearchLog.SearchTarget.Contents, keywordMatchedIds.size(), ipAddress);
-		}
-
-		if (keywordMatchedIds.isEmpty()) return true;
-
-
 		boolean bResult = false;
-		int idx = 1;
-		Connection connection = null;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 
-		try {
-			connection = DatabaseUtil.replicaDataSource.getConnection();
+		final String strSqlFromWhere = "SELECT * FROM contents_0000 WHERE"
+				+ " description &@~ ? AND open_id<>2 AND safe_filter<=? AND publish_id IN (0, 5, 6)"
+				+ strCondBlockUser
+				+ strCondBlockedUser
+				+ " ORDER BY content_id DESC OFFSET ? LIMIT ?";
+
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
+			PreparedStatement statement = connection.prepareStatement(strSqlFromWhere);
+			){
+
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 
-			String strCondContentId = " AND content_id IN (" +
-					keywordMatchedIds.stream().map(String::valueOf).collect(Collectors.joining(",")) +
-					")";
-
-			// BLOCK USER
-			String strCondBlockUser = "";
-			if(SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
-				strCondBlockUser = " AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
-			}
-
-			// BLOCKED USER
-			String strCondBlocedkUser = "";
-			if(SqlUtil.hasBlockedUser(connection, checkLogin.m_nUserId)) {
-				strCondBlocedkUser = " AND user_id NOT IN(SELECT user_id FROM blocks_0000 WHERE block_user_id=?) ";
-			}
-
-			final String strSqlFromWhere = "FROM contents_0000 "
-					+ " WHERE open_id<>2 AND safe_filter<=? "
-					+ strCondContentId
-					+ strCondBlockUser
-					+ strCondBlocedkUser;
-
-			// NEW ARRIVAL
-			if(!bContentOnly) {
-				strSql = "SELECT count(*) " + strSqlFromWhere;
-				statement = connection.prepareStatement(strSql);
-				idx = 1;
-				statement.setInt(idx++, checkLogin.m_nSafeFilter);
-				if(!strCondBlockUser.isEmpty()) {
-					statement.setInt(idx++, checkLogin.m_nUserId);
-				}
-				if(!strCondBlocedkUser.isEmpty()) {
-					statement.setInt(idx++, checkLogin.m_nUserId);
-				}
-				resultSet = statement.executeQuery();
-				if (resultSet.next()) {
-					m_nContentsNum = resultSet.getInt(1);
-				}
-				resultSet.close();resultSet=null;
-				statement.close();statement=null;
-			}
-
-			strSql = "SELECT * " + strSqlFromWhere
-					+ " ORDER BY content_id DESC OFFSET ? LIMIT ?";
-			statement = connection.prepareStatement(strSql);
-			idx = 1;
+			int idx = 1;
+			statement.setString(idx++, keywords.toString());
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!strCondBlockUser.isEmpty()) {
 				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
-			if(!strCondBlocedkUser.isEmpty()) {
+			if(!strCondBlockedUser.isEmpty()) {
 				statement.setInt(idx++, checkLogin.m_nUserId);
 			}
 			statement.setInt(idx++, m_nPage * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
-			resultSet = statement.executeQuery();
 
-			int cnt = 0;
-			while (resultSet.next() && cnt < selectMaxGallery) {
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
 				CContent cContent = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
@@ -157,21 +104,19 @@ public final class SearchIllustByKeywordC {
 					m_strRepFileName = cContent.m_strFileName;
 				}
 				m_vContentList.add(cContent);
-				cnt++;
 			}
-			resultSet.close();resultSet=null;
-			statement.close();statement=null;
+
+			if (m_nPage < 4) {
+				KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, muteKeywords,
+						m_nPage, KeywordSearchLog.SearchTarget.Contents, m_vContentList.size(), ipAddress);
+			}
 
 			bResult = true;
 
 		} catch(Exception e) {
-			Log.d(strSql);
+			Log.d(strSqlFromWhere);
 			e.printStackTrace();
 			bResult = false;
-		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){}
 		}
 
 		return bResult;
