@@ -48,12 +48,15 @@ public class SearchUserByKeywordC {
 			statement.setInt(3, SELECT_MAX_GALLERY);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				selectByNicknameUsers.add(new CUser(resultSet));
+				CUser u = new CUser(resultSet);
+				u.m_strProfile = resultSet.getString("profile");
+				selectByNicknameUsers.add(u);
 			}
 			result = true;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement("""
              SELECT * FROM users_0000 WHERE profile &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?
@@ -65,7 +68,9 @@ public class SearchUserByKeywordC {
 			statement.setInt(3, SELECT_MAX_GALLERY);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				selectByProfileUsers.add(new CUser(resultSet));
+				CUser u = new CUser(resultSet);
+				u.m_strProfile = resultSet.getString("profile");
+				selectByNicknameUsers.add(u);
 			}
 			result = true;
 		} catch(Exception e) {
