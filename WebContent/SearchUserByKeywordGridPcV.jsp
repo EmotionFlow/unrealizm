@@ -54,8 +54,8 @@ g_strSearchWord = cResults.m_strKeyword;
 				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.selectByNicknameUsers.size(); nCnt++) {
+					CUser cUser = cResults.selectByNicknameUsers.get(nCnt);%>
 					<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW)%>
 					<%if(Util.isSmartPhone(request)) {%>
 						<%if(nCnt==13) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>

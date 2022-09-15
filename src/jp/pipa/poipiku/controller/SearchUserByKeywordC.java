@@ -3,12 +3,9 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.cache.CacheUsers0000;
@@ -30,8 +27,9 @@ public class SearchUserByKeywordC {
 		}
 	}
 
-	public int SELECT_MAX_GALLERY = 36;
-	public ArrayList<CUser> m_vContentList = new ArrayList<CUser>();
+	public int SELECT_MAX_GALLERY = 9;
+	public ArrayList<CUser> selectByNicknameUsers = new ArrayList<>();
+	public ArrayList<CUser> selectByProfileUsers = new ArrayList<>();
 	public int m_nContentsNum = 0;
 
 	public boolean getResults(CheckLogin checkLogin) {
@@ -39,57 +37,47 @@ public class SearchUserByKeywordC {
 	}
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
+		if(m_strKeyword.isEmpty()) return false;
+
 		boolean result = false;
-		CacheUsers0000 users  = CacheUsers0000.getInstance();
-
-		final String sql = " SELECT user_id FROM users_0000 WHERE nickname &@~ ? OR profile &@~ ? LIMIT 10000";
-
-		if(m_strKeyword.isEmpty()) return result;
-		List<Integer> userIds = new ArrayList<>();
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
-		     PreparedStatement statement = connection.prepareStatement(sql)
+		     PreparedStatement statement = connection.prepareStatement("""
+             SELECT * FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?
+             """)
 		)
 		{
 			statement.setString(1, m_strKeyword);
-			statement.setString(2, m_strKeyword);
+			statement.setInt(2, m_nPage * SELECT_MAX_GALLERY);
+			statement.setInt(3, SELECT_MAX_GALLERY);
 			ResultSet resultSet = statement.executeQuery();
-
 			while (resultSet.next()) {
-				userIds.add(resultSet.getInt(1));
+				selectByNicknameUsers.add(new CUser(resultSet));
 			}
-
 			result = true;
 		} catch(Exception e) {
-			Log.d(sql);
+			e.printStackTrace();
+		}
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
+		     PreparedStatement statement = connection.prepareStatement("""
+             SELECT * FROM users_0000 WHERE profile &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?
+             """)
+		)
+		{
+			statement.setString(1, m_strKeyword);
+			statement.setInt(2, m_nPage * SELECT_MAX_GALLERY);
+			statement.setInt(3, SELECT_MAX_GALLERY);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				selectByProfileUsers.add(new CUser(resultSet));
+			}
+			result = true;
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
-		if(!bContentOnly) {
-			m_nContentsNum = userIds.size();
-		}
-		Collections.sort(userIds);
-		Collections.reverse(userIds);
-
 		if (m_nPage < 4) {
 			KeywordSearchLog.insert(checkLogin.m_nUserId, m_strKeyword, "",
-					m_nPage, KeywordSearchLog.SearchTarget.Users, userIds.size(), ipAddress);
-		}
-
-		int offset = m_nPage * SELECT_MAX_GALLERY;
-		int toIndex = offset + Math.min(m_nContentsNum<=0 ? 0 : m_nContentsNum-1, SELECT_MAX_GALLERY);
-		toIndex = Math.min(toIndex, m_nContentsNum-1);
-		List<Integer> subList = null;
-		if (offset < toIndex) {
-			subList = userIds.subList(offset, toIndex);
-		}
-
-		if (subList != null) {
-			for (int userId : subList) {
-				CacheUsers0000.User cashUser = users.getUser(userId);
-				if(cashUser==null) continue;
-				CUser user = new CUser(cashUser);
-				m_vContentList.add(user);
-			}
+					m_nPage, KeywordSearchLog.SearchTarget.Users, selectByNicknameUsers.size() + selectByProfileUsers.size(), ipAddress);
 		}
 
 		return result;

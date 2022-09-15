@@ -5,9 +5,9 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 48;
+cResults.SELECT_MAX_GALLERY = 20;
 if (Util.isSmartPhone(request)){
-	cResults.SELECT_MAX_GALLERY = 42;
+	cResults.SELECT_MAX_GALLERY = 18;
 }
 boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
@@ -56,12 +56,44 @@ g_strSearchWord = cResults.m_strKeyword;
 				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CUser cUser = cResults.m_vContentList.get(nCnt);%>
-					<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW)%>
+				<%
+					Iterator<CUser> itrNn = cResults.selectByNicknameUsers.iterator();
+					Iterator<CUser> itrProf = cResults.selectByProfileUsers.iterator();
+					List<CUser> row = new ArrayList<>(3);
+					int nCnt = 0;
+					boolean isNn = true;
+					CUser cUser;
+				%>
+				<%while (itrNn.hasNext() || itrProf.hasNext()) {
+					row.clear();
+					for (int i=0; i<3; i++) {
+						if (isNn) {
+							if (itrNn.hasNext()){
+								row.add(itrNn.next());
+							} else {
+								if (itrProf.hasNext()) row.add(itrProf.next());
+							}
+						} else {
+							if (itrProf.hasNext()){
+								row.add(itrProf.next());
+							} else {
+								if (itrNn.hasNext()) row.add(itrNn.next());
+							}
+						}
+					}
+					isNn = !isNn;
+				%>
+				<%for (int i=0; i<row.size(); i++, nCnt++) {%>
+					<%if (Util.isSmartPhone(request)) {%>
+					<%=CCnv.toHtmlUserMini(row.get(i), CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW)%>
+					<%}else{%>
+					<%=CCnv.toHtmlUser(row.get(i), CCnv.MODE_PC, _TEX, CCnv.SP_MODE_WVIEW)%>
+					<%}%>
+				<%}%>
 					<%if(Util.isSmartPhone(request)) {%>
-						<%if(nCnt==13) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+						<%if(nCnt==9) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
+						<%if(nCnt==18) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+						<%if(nCnt==27) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
 					<%} else {%>
 						<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
 						<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
@@ -71,7 +103,7 @@ g_strSearchWord = cResults.m_strKeyword;
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchUserByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, cResults.m_nContentsNum, cResults.SELECT_MAX_GALLERY)%>
+				<%=CPageBar.CreatePageBarSp("/SearchUserByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(cResults.m_strKeyword, "UTF-8"), cResults.m_nPage, 90, cResults.SELECT_MAX_GALLERY)%>
 			</nav>
 		</article>
 

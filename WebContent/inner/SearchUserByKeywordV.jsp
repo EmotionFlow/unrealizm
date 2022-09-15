@@ -111,8 +111,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.selectByNicknameUsers.size(); nCnt++) {
+					CUser cUser = cResults.selectByNicknameUsers.get(nCnt);%>
 					<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, nSpMode)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
