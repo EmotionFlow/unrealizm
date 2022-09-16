@@ -69,11 +69,16 @@ public final class SearchIllustByKeywordC {
 
 		boolean bResult = false;
 
-		final String strSqlFromWhere = "SELECT * FROM contents_0000 WHERE"
+		final String strSqlFromWhere = """
+				SELECT c.*, b.content_id bookmarking, f.follow_user_id following FROM contents_0000 c
+				LEFT JOIN (SELECT content_id FROM bookmarks_0000 WHERE user_id=?) b ON c.content_id=b.content_id
+    			LEFT JOIN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) f ON c.user_id=f.follow_user_id
+                WHERE
+			    """
 				+ " description &@~ ? AND open_id<>2 AND safe_filter<=? AND publish_id IN (0, 5, 6)"
 				+ strCondBlockUser
 				+ strCondBlockedUser
-				+ " ORDER BY content_id DESC OFFSET ? LIMIT ?";
+				+ " ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
 
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(strSqlFromWhere);
@@ -82,6 +87,8 @@ public final class SearchIllustByKeywordC {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 
 			int idx = 1;
+			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setString(idx++, keywords.toString());
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if(!strCondBlockUser.isEmpty()) {
@@ -98,6 +105,8 @@ public final class SearchIllustByKeywordC {
 			while (resultSet.next()) {
 				CContent cContent = new CContent(resultSet);
 				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				cContent.m_nBookmarkState = resultSet.getInt("bookmarking")>0?CContent.BOOKMARK_BOOKMARKING:CContent.BOOKMARK_NONE;
+				cContent.m_cUser.m_nFollowing   = resultSet.getInt("following")>0?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
 				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
 				if(!bContentOnly && m_strRepFileName.isEmpty() && cContent.m_nPublishId==Common.PUBLISH_ID_ALL) {
