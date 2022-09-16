@@ -2341,7 +2341,7 @@ Decoration
 	box-sizing: border-box;
 	overflow: hidden;
 	min-height: 140px;
-	max-height: 450px;
+	max-height: 300px;
 	text-align: left;
 	padding: 0 8px;
 	margin: 15px 0 0 0;
