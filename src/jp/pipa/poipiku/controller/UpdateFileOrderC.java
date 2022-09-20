@@ -36,7 +36,7 @@ class EditedContent {
 	}
 
 	public String toString(){
-		return String.format("%d, %d, %d, %d, %s, %d",
+		return String.format("%d, %d, %d, %d, %s",
 				appendId, fileWidth, fileHeight, filesSize, fileName);
 	}
 }
@@ -157,9 +157,8 @@ public class UpdateFileOrderC extends Controller {
 				oldContentList.add(c);
 			}
 
-			sql = "SELECT append_id, file_name, file_width, file_height, file_size, wbf.status write_back_status" +
+			sql = "SELECT append_id, file_name, file_width, file_height, file_size" +
 					" FROM contents_appends_0000 c" +
-					"   LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=1) wbf ON c.append_id = wbf.row_id" +
 					" WHERE c.content_id=? ORDER BY append_id";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, contentId);
