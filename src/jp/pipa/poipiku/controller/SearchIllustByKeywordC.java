@@ -30,6 +30,7 @@ public final class SearchIllustByKeywordC {
 
 	public int selectMaxGallery = 15;
 	public ArrayList<CContent> m_vContentList = new ArrayList<>();
+	public ArrayList<CTag> tagList = new ArrayList<>();
 	public int m_nContentsNum = 0;
 	public String m_strRepFileName = "";
 
@@ -69,7 +70,7 @@ public final class SearchIllustByKeywordC {
 
 		boolean bResult = false;
 
-		final String strSqlFromWhere = """
+		final String sqlSelectContents = """
 				SELECT c.*, b.content_id bookmarking, f.follow_user_id following FROM contents_0000 c
 				LEFT JOIN (SELECT content_id FROM bookmarks_0000 WHERE user_id=?) b ON c.content_id=b.content_id
     			LEFT JOIN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) f ON c.user_id=f.follow_user_id
@@ -81,7 +82,7 @@ public final class SearchIllustByKeywordC {
 				+ " ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
 
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
-			PreparedStatement statement = connection.prepareStatement(strSqlFromWhere);
+			PreparedStatement statement = connection.prepareStatement(sqlSelectContents);
 			){
 
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
@@ -123,7 +124,55 @@ public final class SearchIllustByKeywordC {
 			bResult = true;
 
 		} catch(Exception e) {
-			Log.d(strSqlFromWhere);
+			Log.d(sqlSelectContents);
+			e.printStackTrace();
+			bResult = false;
+		}
+
+		final String sqlSelectTags = """
+				WITH g_matched AS (
+				    SELECT genre_id
+				    FROM genres
+				    WHERE genre_id>0 AND genre_name &@~ ?
+				    UNION
+				    DISTINCT
+				    SELECT genre_id
+				    FROM genre_translations
+				    WHERE genre_id>0 AND trans_text &@~ ?
+				), t_matched AS (
+				    SELECT t.genre_id, COUNT(*) tag_count
+				    FROM tags_0000 t
+				             INNER JOIN g_matched ON t.genre_id=g_matched.genre_id
+				    GROUP BY t.genre_id
+				    having COUNT(t.tag_txt) > 2
+				    ORDER BY COUNT(t.tag_txt) DESC LIMIT 10
+				)
+				SELECT t.genre_id, genre_name, trans_text, tag_count
+				FROM t_matched t
+				INNER JOIN genres g ON t.genre_id=g.genre_id
+				LEFT JOIN (SELECT genre_id, trans_text FROM genre_translations WHERE type_id=1 AND lang_id=?) gt ON t.genre_id=gt.genre_id
+				""";
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
+		     PreparedStatement statement = connection.prepareStatement(sqlSelectTags);
+		){
+			int idx = 1;
+			statement.setString(idx++, m_strKeyword);
+			statement.setString(idx++, m_strKeyword);
+			statement.setInt(idx++, checkLogin.m_nLangId);
+
+			Log.d(statement.toString());
+
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				CTag tag = new CTag();
+				tag.m_nGenreId = resultSet.getInt("genre_id");
+				tag.m_strTagTxt = resultSet.getString("tag_txt");
+				tag.m_strTagTransTxt = resultSet.getString("trans_text");
+				tagList.add(tag);
+			}
+
+		} catch(Exception e) {
+			Log.d(sqlSelectTags);
 			e.printStackTrace();
 			bResult = false;
 		}

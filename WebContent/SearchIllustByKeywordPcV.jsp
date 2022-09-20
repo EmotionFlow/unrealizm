@@ -1,4 +1,5 @@
 <%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.util.stream.Collectors" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
@@ -84,6 +85,10 @@ String strFileUrl = cResults.m_strRepFileName;
 			<header class="SearchResultTitle">
 				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
 			</header>
+
+			<%if (cResults.tagList.size()>0){ %>
+			<%=cResults.tagList.stream().map(e -> e.m_strTagTxt).collect(Collectors.joining(", "))%>
+			<%}%>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<% for (int cnt=0; cnt<cResults.m_vContentList.size(); cnt++) { %>
