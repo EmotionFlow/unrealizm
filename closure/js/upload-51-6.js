@@ -1352,7 +1352,9 @@ function initUploadParams(tweetEnabled) {
 	try {
 		if (storageParams && storageParams !== 'undefined' && storageParams !== 'null') {
 			for (let [key, _] of Object.entries(storageParams)) {
-				uploadParams[key].value = storageParams[key].value;
+				if (uploadParams[key] && storageParams[key]) {
+					uploadParams[key].value = storageParams[key].value;
+				}
 			}
 		}
 	} catch (e) {
