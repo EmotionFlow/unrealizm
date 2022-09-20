@@ -2,7 +2,6 @@ package jp.pipa.poipiku.controller.upcontents.v2;
 
 import jp.pipa.poipiku.CContent;
 import jp.pipa.poipiku.Common;
-import jp.pipa.poipiku.WriteBackFile;
 import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.ImageUtil;
@@ -153,15 +152,6 @@ public class UpFileFirstC extends UpC {
 			statement.setInt(idx++, cParam.contentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
-
-			WriteBackFile writeBackFile = new WriteBackFile();
-			writeBackFile.userId = cParam.userId;
-			writeBackFile.tableCode = WriteBackFile.TableCode.Contents;
-			writeBackFile.rowId = content.m_nContentId;
-			writeBackFile.path = strFileName;
-			if (!writeBackFile.insert()) {
-				Log.d("writeBackFile.insert() error: " + cParam.contentId);
-			}
 
 			returnCode = cParam.contentId;
 		} catch(Exception e) {

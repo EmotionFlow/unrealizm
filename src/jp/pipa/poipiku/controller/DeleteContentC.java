@@ -157,7 +157,6 @@ public class DeleteContentC {
 				} catch (Exception e) {
 					Log.d("cannot delete content_append file : " + c.m_strFileName);
 				}
-				WriteBackFile.deleteByPrimaryKeys(WriteBackFile.TableCode.ContentsAppends, c.m_nAppendId);
 			}
 
 			///////
@@ -192,7 +191,6 @@ public class DeleteContentC {
 			} catch (Exception e) {
 				Log.d("cannot delete content file : " + cContent.m_strFileName);
 			}
-			WriteBackFile.deleteByPrimaryKeys(WriteBackFile.TableCode.Contents, m_nContentId);
 
 
 			// delete tweet
