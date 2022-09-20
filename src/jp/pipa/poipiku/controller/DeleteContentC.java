@@ -223,17 +223,19 @@ public class DeleteContentC {
 				}
 			}
 
-			strSql = "DELETE FROM content_id_histories WHERE old_id in (%s)"
-					.formatted(oldIds.stream().map(Object::toString).collect(Collectors.joining(",")));
-			statement = connection.prepareStatement(strSql);
-			statement.executeUpdate();
-			statement.close();
+			if (!oldIds.isEmpty()) {
+				strSql = "DELETE FROM content_id_histories WHERE old_id in (%s)"
+						.formatted(oldIds.stream().map(Object::toString).collect(Collectors.joining(",")));
+				statement = connection.prepareStatement(strSql);
+				statement.executeUpdate();
+				statement.close();
 
-			strSql = "DELETE FROM content_id_histories WHERE new_id=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_nContentId);
-			statement.executeUpdate();
-			statement.close();
+				strSql = "DELETE FROM content_id_histories WHERE new_id=?";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_nContentId);
+				statement.executeUpdate();
+				statement.close();
+			}
 
 			// delete tweet
 			if(m_nUserId==cContent.m_nUserId && m_nDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
