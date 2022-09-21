@@ -31,17 +31,20 @@ public class GetSearchSuggestionC {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Users);
 		}
 
-		String subSql = "SELECT id, keywords, result_num, RANK() OVER(PARTITION BY keywords ORDER BY id DESC) FROM keyword_search_logs WHERE keywords &^ ? AND keywords &@~ ? AND result_num > 0";
-		if (excludeNgWords) { subSql += " AND ng = 0"; }
+		String subSql = """
+			SELECT id, keywords, result_num,
+			RANK() OVER(PARTITION BY keywords ORDER BY id DESC) AS rank_
+			FROM keyword_search_logs WHERE keywords &@~ ? AND keywords &@~ ? AND result_num > 0 AND ng = 0
+			""";
 
 		if (targetCodes.size() > 0) {
 			subSql += " AND search_target_code IN (?";
 			for (int i=1; i<targetCodes.size(); i++) { subSql += ",?"; }
 			subSql += ")";
 		}
-		String sql = "SELECT keywords FROM (" + subSql + ") AS kw WHERE rank = 1 ORDER BY result_num DESC, id DESC LIMIT ?";
+		String sql = "SELECT keywords FROM (" + subSql + ") AS kw WHERE rank_ = 1 ORDER BY result_num DESC, id DESC LIMIT ?";
 
-		try (Connection connection = DatabaseUtil.dataSource.getConnection();
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			if(checkLogin.m_bLogin && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {
