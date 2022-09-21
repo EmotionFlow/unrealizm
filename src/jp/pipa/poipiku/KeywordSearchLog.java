@@ -21,7 +21,6 @@ public final class KeywordSearchLog extends Model {
 	public int resultNum = -1;
 	public String ipAddress = "";
 
-
 	public enum SearchTarget implements CodeEnum<SearchTarget> {
 		Undefined(-1),
 		Contents(0),
@@ -65,7 +64,7 @@ public final class KeywordSearchLog extends Model {
 			""";
 		List<KeywordSearchLog> list = new LinkedList<>();
 		try (
-				Connection connection = DatabaseUtil.replicaDataSource.getConnection();
+				Connection connection = DatabaseUtil.dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, userId);
