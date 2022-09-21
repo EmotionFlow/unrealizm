@@ -21,7 +21,6 @@ public class GetSearchSuggestionC {
 		int  nResult = -1;
 		keywords = new ArrayList<>();
 		String muteKeywords = "";
-		boolean excludeNgWords = true;
 
 		List<KeywordSearchLog.SearchTarget> targetCodes = new ArrayList<>();
 		if (searchType.equals("Contents") || searchType.equals("Tags")) {
