@@ -6,7 +6,7 @@ if(Util.isBot(request)) {
 }
 
 final String referer = Util.toString(request.getHeader("Referer"));
-if (!referer.contains("poipiku.com")) {
+if (!isApp && !referer.contains("poipiku.com")) {
 	Log.d("不正アクセス(referer不一致):" + referer);
 	return;
 }
