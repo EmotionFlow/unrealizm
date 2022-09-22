@@ -6,17 +6,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-
-import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CheckNgSearchLog extends Batch {
+	private static final int limit = 1000;
+
 	public static void main(String[] args) {
 		Log.d("CheckNgSearchLog batch start");
-		LocalDateTime startAt = LocalDateTime.now();
 		int result = -1;
 
 		// NGワードを取得
@@ -40,13 +38,26 @@ public class CheckNgSearchLog extends Batch {
 		}
 		String ngPattern = String.join(" OR ", ngWords);
 
-		// NG未判定の検索ログに対してNG判定
-		sql = "UPDATE keyword_search_logs SET ng=1 WHERE created_at < ? AND ng = -1 AND keywords &@~ '" + ngPattern + "'";
+		// NG判定対象の検索ログにフラグ立て
+		sql = "UPDATE keyword_search_logs SET ng=-1 WHERE id IN (SELECT id FROM keyword_search_logs WHERE ng = -2 LIMIT ?)";
 		try (
 			Connection connection = dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 		) {
-			statement.setTimestamp(1, Timestamp.valueOf(startAt));
+			statement.setInt(1, limit);
+			result = statement.executeUpdate();
+			Log.d("NG check target: " + String.valueOf(result) + " rows.");
+		} catch(SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+
+		// NG未判定の検索ログに対してNG判定
+		sql = "UPDATE keyword_search_logs SET ng=1 WHERE ng = -1 AND keywords &@~ '" + ngPattern + "'";
+		try (
+			Connection connection = dataSource.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+		) {
 			result = statement.executeUpdate();
 			Log.d("Labeled " + String.valueOf(result) + " rows as NG.");
 		} catch(SQLException e) {
@@ -54,13 +65,12 @@ public class CheckNgSearchLog extends Batch {
 			e.printStackTrace();
 		}
 
-		// バッチ起動前に作成されていて、NG判定されなかったものはクリーン
-		sql = "UPDATE keyword_search_logs SET ng=0 WHERE created_at < ? AND ng = -1";
+		// NG判定されなかったものはクリーン
+		sql = "UPDATE keyword_search_logs SET ng=0 WHERE ng = -1";
 		try (
 			Connection connection = dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 		) {
-			statement.setTimestamp(1, Timestamp.valueOf(startAt));
 			result = statement.executeUpdate();
 			Log.d("Labeled " + String.valueOf(result) + " rows as NG.");
 		} catch(SQLException e) {
