@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckNgSearchLog extends Batch {
-	private static final int SELECT_LIMIT = 10000;
+	private static final int SELECT_LIMIT = 1000;
 
 	public static void main(String[] args) {
 		Log.d("CheckNgSearchLog batch start");
