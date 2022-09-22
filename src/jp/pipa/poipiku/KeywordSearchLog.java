@@ -39,6 +39,24 @@ public final class KeywordSearchLog extends Model {
 	}
 	public SearchTarget searchTarget = SearchTarget.Undefined;
 
+	public enum Ng implements CodeEnum<Ng> {
+		Undefined(-99),
+		Created(-2),
+		UnderJudgement(-1),
+		Clean(0),
+		Ng(1);
+
+		private final int code;
+		private Ng(int code) {
+			this.code = code;
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+	}
+	public Ng ng = Ng.Undefined;
 
 	public KeywordSearchLog(){};
 
