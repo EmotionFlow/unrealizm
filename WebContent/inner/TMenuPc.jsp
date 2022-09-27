@@ -248,9 +248,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <script>
 	function onSearchInput() {
 		toggleClearSearchBtn();
+		<%if(checkLogin.m_bLogin){%>
 		const prevTimeout = getLocalStrage('search-suggestion-timeout');
 		if (prevTimeout) clearTimeout(prevTimeout);
-		setLocalStrage('search-suggestion-timeout', setTimeout(() => {
+		setLocalStrage('search-suggesstion-timeout', setTimeout(() => {
 			const inputStr = $('#HeaderSearchBox').val();
 			if (inputStr) {
 				showSearchSuggestion('<%=searchType%>', inputStr);
@@ -258,6 +259,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				showSearch();
 			}
 		}, 400));
+		<%}%>
 	}
 	localStorage.removeItem('search-suggestion-timeout');
 	<%if(checkLogin.m_bLogin){%>
