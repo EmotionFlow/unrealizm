@@ -1,5 +1,7 @@
 package jp.pipa.poipiku.controller;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,12 +17,14 @@ import jp.pipa.poipiku.util.*;
 public final class SearchIllustByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
+	public String encodedKeyword = "";
 	public String ipAddress = "";
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
 			m_strKeyword = Common.TrimAll(request.getParameter("KWD"));
+			encodedKeyword = URLEncoder.encode(m_strKeyword, StandardCharsets.UTF_8);
 			ipAddress = request.getRemoteAddr();
 		}
 		catch(Exception ignored) {}

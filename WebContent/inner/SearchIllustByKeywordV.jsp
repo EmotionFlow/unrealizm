@@ -6,17 +6,22 @@ if (Util.isBot(request)) return;
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 if(SP_REVIEW && !checkLogin.m_bLogin) {
-	if(isApp){
-		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
-	} else {
-		getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
-	}
+	getServletContext().getRequestDispatcher("/StartPoipiku" + (isApp?"App":"") +"V.jsp").forward(request,response);
 	return;
 }
 
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
+
+if (cResults.m_strKeyword.indexOf("#") == 0) {
+	response.sendRedirect("/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" +  cResults.encodedKeyword);
+	return;
+} else if (cResults.m_strKeyword.indexOf("@") == 0) {
+	response.sendRedirect("/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" +  cResults.encodedKeyword);
+	return;
+}
+
 cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
@@ -35,7 +40,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" : "<%=cResults.m_strKeyword%>"},
 					"url": "/f/SearchIllustByKeyword<%=isApp?"App":""%>F.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {

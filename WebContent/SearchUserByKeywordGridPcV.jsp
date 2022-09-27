@@ -1,3 +1,4 @@
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -15,6 +16,12 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
+
+if (cResults.m_strKeyword.indexOf("#") == 0) {
+	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+	return;
+}
+
 cResults.SELECT_MAX_GALLERY = 45;
 
 boolean bRtn = cResults.getResults(checkLogin);
@@ -51,9 +58,9 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
-				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordGridPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordGridPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
 
@@ -61,7 +68,7 @@ g_strSearchWord = cResults.m_strKeyword;
 
 		<article class="Wrapper GridList">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">@<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt = 0; nCnt<cResults.selectByNicknameUsers.size(); nCnt++) {

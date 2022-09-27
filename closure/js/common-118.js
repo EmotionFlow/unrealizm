@@ -133,14 +133,17 @@ function getLocalStrage(key) {
 }
 
 function SearchByKeyword(searchType, userId, limit, kwd) {
-	if (searchType != 'Tags' && searchType != 'Users') searchType = 'Contents';
+	if (searchType !== 'Tags' && searchType !== 'Users') searchType = 'Contents';
 	const paths = {
 		Contents: 'SearchIllustByKeywordPcV',
 		Tags: 'SearchTagByKeywordPcV',
 		Users: 'SearchUserByKeywordPcV',
 	};
 	return function() {
-		var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
+		const keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
+		if (!keyword || keyword.trim() === "#" || keyword.trim() === "@") {
+			return false;
+		}
 		updateSearchCache(keyword, userId, searchType, limit);
 		location.href = `/${paths[searchType]}.jsp?KWD=${encodeURIComponent(keyword)}`;
 		return false;

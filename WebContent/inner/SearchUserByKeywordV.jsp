@@ -1,3 +1,4 @@
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
@@ -29,6 +30,19 @@ if(!Util.isSmartPhone(request)) {
 
 SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
+
+if (cResults.m_strKeyword.indexOf("#") == 0) {
+	response.sendRedirect("/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+	return;
+}
+
+String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
+if(strKeywordHan.matches("^[0-9]+$")) {
+	String strUrl = (isApp ? "/IllustListAppV.jsp?ID=%s" : "/%s/").formatted(strKeywordHan);
+	response.sendRedirect(Common.GetPoipikuUrl(strUrl));
+	return;
+}
+
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -108,16 +122,16 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
-				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchUserByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
 		<%}%>
 
 		<article class="Wrapper GridList">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">@<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
