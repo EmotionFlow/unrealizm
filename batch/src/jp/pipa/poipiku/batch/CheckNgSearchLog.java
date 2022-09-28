@@ -56,16 +56,31 @@ public class CheckNgSearchLog extends Batch {
 			e.printStackTrace();
 		}
 
-		// NG未判定の検索ログに対してNG判定
+		// NG未判定の検索ログに対してNG判定 (NGワードフィルタ)
 		sql = "UPDATE keyword_search_logs SET ng=? WHERE ng=? AND keywords &@~ '" + ngPattern + "'";
 		try (
 			Connection connection = dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 		) {
-			statement.setInt(1, KeywordSearchLog.Ng.Ng.getCode());
+			statement.setInt(1, KeywordSearchLog.Ng.FilteredByWord.getCode());
 			statement.setInt(2, KeywordSearchLog.Ng.UnderJudgement.getCode());
 			result = statement.executeUpdate();
-			Log.d("Labeled " + String.valueOf(result) + " rows as NG.");
+			Log.d("Labeled " + String.valueOf(result) + " rows as NG (Filtered by R18 word).");
+		} catch(SQLException e) {
+			Log.d(sql);
+			e.printStackTrace();
+		}
+
+		// NG判定(検索形式)
+		sql = "UPDATE keyword_search_logs SET ng=? WHERE ng=? AND keywords &~| ARRAY['\sOR\s', '\s-', '([^\s]+\s+){3}[^\s]+']";
+		try (
+			Connection connection = dataSource.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+		) {
+			statement.setInt(1, KeywordSearchLog.Ng.ComplexFormat.getCode());
+			statement.setInt(2, KeywordSearchLog.Ng.UnderJudgement.getCode());
+			result = statement.executeUpdate();
+			Log.d("Labeled " + String.valueOf(result) + " rows as NG (Long or complex keywords).");
 		} catch(SQLException e) {
 			Log.d(sql);
 			e.printStackTrace();
