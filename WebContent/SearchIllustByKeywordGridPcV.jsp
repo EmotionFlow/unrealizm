@@ -9,19 +9,19 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
 
-if (cResults.m_strKeyword.indexOf("#") == 0) {
-	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+if (cResults.keyword.indexOf("#") == 0) {
+	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
-} else if (cResults.m_strKeyword.indexOf("@") == 0) {
-	response.sendRedirect("/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+} else if (cResults.keyword.indexOf("@") == 0) {
+	response.sendRedirect("/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
 
 cResults.selectMaxGallery = 48;
 boolean bRtn = cResults.getResults(checkLogin);
-g_strSearchWord = cResults.m_strKeyword;
-String strTitle = cResults.m_strKeyword + " | " + _TEX.T("THeader.Title");
-String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
+g_strSearchWord = cResults.keyword;
+String strTitle = cResults.keyword + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.keyword, cResults.m_nContentsNum);
 String strUrl = "https://poipiku.com/SearchIllustByKeywordPcV.jsp?KWD="+cResults.encodedKeyword;
 String strFileUrl = cResults.m_strRepFileName;
 %>
@@ -72,13 +72,13 @@ String strFileUrl = cResults.m_strRepFileName;
 
 		<article class="Wrapper GridList">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
 			</header>
 
 
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
+					CContent cContent = cResults.contentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%if(nCnt==3){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%><%}%>
 					<%if(nCnt==19){%><%@ include file="/inner/ad/TAdGridPc336x280_mid_2.jsp"%><%}%>
@@ -87,7 +87,7 @@ String strFileUrl = cResults.m_strRepFileName;
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchIllustByKeywordPcV.jsp", "&KWD="+cResults.encodedKeyword, cResults.m_nPage, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
+				<%=CPageBar.CreatePageBarSp("/SearchIllustByKeywordPcV.jsp", "&KWD="+cResults.encodedKeyword, cResults.page, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 

@@ -14,10 +14,10 @@ checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
 
-if (cResults.m_strKeyword.indexOf("#") == 0) {
+if (cResults.keyword.indexOf("#") == 0) {
 	response.sendRedirect("/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" +  cResults.encodedKeyword);
 	return;
-} else if (cResults.m_strKeyword.indexOf("@") == 0) {
+} else if (cResults.keyword.indexOf("@") == 0) {
 	response.sendRedirect("/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" +  cResults.encodedKeyword);
 	return;
 }
@@ -29,7 +29,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=Util.toStringHtml(cResults.m_strKeyword)%></title>
+		<title><%=Util.toStringHtml(cResults.keyword)%></title>
 		<script>
 			var g_nPage = 1;
 			var g_bAdding = false;
@@ -40,7 +40,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" : "<%=cResults.m_strKeyword%>"},
+					"data": {"PG" : g_nPage, "KWD" : "<%=cResults.keyword%>"},
 					"url": "/f/SearchIllustByKeyword<%=isApp?"App":""%>F.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -76,13 +76,13 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<article class="Wrapper">
 			<header class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
-				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
 			</header>
 
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CContent cContent = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
+					CContent cContent = cResults.contentList.get(nCnt);%>
 					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
 					<%if(nCnt==14) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
 					<%if(nCnt==29) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>

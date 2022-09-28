@@ -2,20 +2,29 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
+cResults.selectMaxGallery = 30;
 cResults.getParam(request);
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
-boolean bRtn = cResults.getResults(checkLogin, true);
-%>
-<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CContent cContent = cResults.m_vContentList.get(nCnt);%>
-	<%if(isApp){%>
-		<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
-	<%
-		}else{
-	%>
-		<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
-	<%}%>
-	<%if(nCnt==14) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
-<%}%>
+cResults.getResults(checkLogin, true);
+
+ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+
+StringBuilder sbHtml = new StringBuilder();
+final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
+
+int nCnt;
+for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
+	CContent cContent = cResults.contentList.get(nCnt);
+	sbHtml.append(CCnv.Content2Html(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, cResults.viewMode, nSpMode));
+
+	if ((nCnt == 2 || nCnt == 7 || nCnt == 12 || nCnt == 17 || nCnt == 22 || nCnt == 27) && bSmartPhone){
+		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
+	}
+}
+
+Log.d("lcd " + cResults.lastContentId);
+
+%>{"end_id":<%=cResults.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
