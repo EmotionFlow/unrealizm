@@ -44,7 +44,8 @@ public final class KeywordSearchLog extends Model {
 		Created(-2),
 		UnderJudgement(-1),
 		Clean(0),
-		Ng(1);
+		FilteredByWord(1),
+		ComplexFormat(2);
 
 		private final int code;
 		private Ng(int code) {
