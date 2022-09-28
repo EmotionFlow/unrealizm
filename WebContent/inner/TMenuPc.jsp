@@ -133,7 +133,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				<div class="HeaderSearch">
 					<div class="HeaderSearchInputWrapper">
 						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text"
-								placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" onkeyup="toggleClearSearchBtn()"
+								placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"
 						/>
 						<div id="HeaderSearchClear" class="HeaderSearchClear">
 							<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
@@ -167,7 +167,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					</div>
 					<div class="HeaderSearch">
 						<div class="HeaderSearchInputWrapper">
-							<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" onkeyup="toggleClearSearchBtn()"/>
+							<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"/>
 							<div id="HeaderSearchClear" class="HeaderSearchClear">
 								<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
 							</div>
@@ -246,6 +246,22 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 
 
 <script>
+	function onSearchInput() {
+		toggleClearSearchBtn();
+		<%if(checkLogin.m_bLogin){%>
+		const prevTimeout = getLocalStrage('search-suggestion-timeout');
+		if (prevTimeout) clearTimeout(prevTimeout);
+		setLocalStrage('search-suggesstion-timeout', setTimeout(() => {
+			const inputStr = $('#HeaderSearchBox').val();
+			if (inputStr) {
+				showSearchSuggestion('<%=searchType%>', inputStr);
+			} else {
+				showSearch();
+			}
+		}, 800));
+		<%}%>
+	}
+	localStorage.removeItem('search-suggestion-timeout');
 	<%if(checkLogin.m_bLogin){%>
 	$('#HeaderSearchWrapper').on('submit', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));
 	$('#HeaderSearchBtn').on('click', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));

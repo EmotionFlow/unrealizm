@@ -22,13 +22,6 @@ public final class UpdateC extends UpC {
 				statement.setInt(2, oldContentId);
 				statement.executeUpdate();
 			}
-			strSql = "UPDATE write_back_files SET row_id=? WHERE table_code=? AND row_id=?";
-			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, newContentId);
-			statement.setInt(2, WriteBackFile.TableCode.Contents.getCode());
-			statement.setInt(3, oldContentId);
-			statement.executeUpdate();
-
 			connection.commit();
 		}catch(Exception e){
 			Log.d(strSql);

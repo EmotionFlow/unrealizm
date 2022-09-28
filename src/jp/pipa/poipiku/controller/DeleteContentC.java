@@ -1,10 +1,13 @@
 package jp.pipa.poipiku.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.*;
@@ -35,17 +38,13 @@ public class DeleteContentC {
 
 		CContent cContent = null;
 		boolean bRtn = false;
-		DataSource dataSource = null;
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String strSql = "";
 
 		try {
-			dataSource = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
-
-			///////
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			// イラスト存在確認(不正アクセス対策)
 			if(m_nUserId==1) {
 				strSql = "SELECT * FROM contents_0000 WHERE content_id=?";
@@ -87,7 +86,7 @@ public class DeleteContentC {
 			//////
 
 			//////
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			// delete comment
 			strSql ="DELETE FROM comments_0000 WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -105,7 +104,7 @@ public class DeleteContentC {
 			/////
 
 			/////
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			// delete info_lists
 			strSql ="DELETE FROM info_lists WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -138,7 +137,7 @@ public class DeleteContentC {
 			//////
 
 			// delete append files
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			strSql ="SELECT * FROM contents_appends_0000 WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
@@ -157,11 +156,10 @@ public class DeleteContentC {
 				} catch (Exception e) {
 					Log.d("cannot delete content_append file : " + c.m_strFileName);
 				}
-				WriteBackFile.deleteByPrimaryKeys(WriteBackFile.TableCode.ContentsAppends, c.m_nAppendId);
 			}
 
 			///////
-			connection = dataSource.getConnection();
+			connection = DatabaseUtil.dataSource.getConnection();
 			// delete append data
 			strSql ="DELETE FROM contents_appends_0000 WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
@@ -182,7 +180,6 @@ public class DeleteContentC {
 			statement.setInt(1, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
-			connection.close();connection=null;
 
 			///////
 
@@ -192,8 +189,53 @@ public class DeleteContentC {
 			} catch (Exception e) {
 				Log.d("cannot delete content file : " + cContent.m_strFileName);
 			}
-			WriteBackFile.deleteByPrimaryKeys(WriteBackFile.TableCode.Contents, m_nContentId);
 
+			// old_id
+			List<Integer> oldIds = new ArrayList<>();
+			strSql = "SELECT old_id FROM content_id_histories WHERE new_id=?";
+			statement = connection.prepareStatement(strSql);
+			int cid = m_nContentId;
+			for (int i=0; i<100; i++) {
+				statement.setInt(1, cid);
+				resultSet = statement.executeQuery();
+				if (resultSet.next()) {
+					cid = resultSet.getInt(1);
+					oldIds.add(cid);
+					resultSet.close();resultSet=null;
+				} else {
+					resultSet.close();resultSet=null;
+					break;
+				}
+			}
+			statement.close();
+
+			// delete files
+			for (int i=0; i<Common.CURRENT_CONTENTS_STORAGE_DIR_ARY.length; i++) {
+				Path path = Paths.get(
+						m_cServletContext.getRealPath(Common.CURRENT_CONTENTS_STORAGE_DIR_ARY[i]),
+						"%09d".formatted(m_nUserId)
+				);
+				for (Integer oldId: oldIds) {
+					String pat = "^%09d.*".formatted(oldId);
+					Files.list(path)
+							.filter(path1 -> path1.getFileName().toString().matches(pat))
+							.forEach(e -> Util.deleteFile(e.toString()));
+				}
+			}
+
+			if (!oldIds.isEmpty()) {
+				strSql = "DELETE FROM content_id_histories WHERE old_id in (%s)"
+						.formatted(oldIds.stream().map(Object::toString).collect(Collectors.joining(",")));
+				statement = connection.prepareStatement(strSql);
+				statement.executeUpdate();
+				statement.close();
+
+				strSql = "DELETE FROM content_id_histories WHERE new_id=?";
+				statement = connection.prepareStatement(strSql);
+				statement.setInt(1, m_nContentId);
+				statement.executeUpdate();
+				statement.close();
+			}
 
 			// delete tweet
 			if(m_nUserId==cContent.m_nUserId && m_nDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){

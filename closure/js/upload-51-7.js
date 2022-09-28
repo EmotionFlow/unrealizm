@@ -907,9 +907,18 @@ function _getBasePostData(userId, requestId, editorId) {
 	if ((!uploadParams.OPTION_NO_CONDITIONAL_SHOW.value ||
 			!uploadParams.OPTION_NOT_PUBLISH_NSFW.value ||
 			!uploadParams.OPTION_NO_PASSWORD.value) &&
-		uploadParams.OPTION_SHOW_FIRST.value && getPreviewAreaImageNum() < 2) {
-		showAllFirstErrMsg();
-		return null;
+		uploadParams.OPTION_SHOW_FIRST.value) {
+
+		let isErr = false;
+		if (editorId === 0) {  // EDITOR_UPLOAD
+			isErr = getPreviewAreaImageNum() < 2;
+		} else if(editorId === 1) {  // EDITOR_PASTE
+			isErr = getPasteAreaImageNum() < 2;
+		}
+		if (isErr) {
+			showAllFirstErrMsg();
+			return null;
+		}
 	}
 
 	if(!uploadParams.OPTION_PUBLISH.value) {
@@ -1352,7 +1361,9 @@ function initUploadParams(tweetEnabled) {
 	try {
 		if (storageParams && storageParams !== 'undefined' && storageParams !== 'null') {
 			for (let [key, _] of Object.entries(storageParams)) {
-				uploadParams[key].value = storageParams[key].value;
+				if (uploadParams[key] && storageParams[key]) {
+					uploadParams[key].value = storageParams[key].value;
+				}
 			}
 		}
 	} catch (e) {

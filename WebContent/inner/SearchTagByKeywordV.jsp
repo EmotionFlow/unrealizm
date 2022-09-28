@@ -1,3 +1,4 @@
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
@@ -14,12 +15,12 @@ if(SP_REVIEW && !checkLogin.m_bLogin) {
 
 SearchTagByKeywordC cResults = new SearchTagByKeywordC();
 cResults.getParam(request);
-String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
-if(strKeywordHan.matches("^[0-9]+$")) {
-	String strUrl = isApp ? "/IllustListAppV.jsp?ID=" : "/IllustListPcV.jsp?ID=";
-	response.sendRedirect(Common.GetPoipikuUrl(strUrl + strKeywordHan));
+
+if (cResults.m_strKeyword.indexOf("@") == 0) {
+	response.sendRedirect("/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
+
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -37,7 +38,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" :  decodeURIComponent("<%=URLEncoder.encode(cResults.m_strKeyword, "UTF-8")%>")},
+					"data": {"PG" : g_nPage, "KWD" :  "<%=cResults.m_strKeyword%>"},
 					"url": "/f/SearchTagByKeyword<%=isApp?"App":""%>F.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -73,7 +74,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<article class="Wrapper">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
+				<h2 class="Keyword">#<%=Util.toStringHtml(cResults.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustItemList">
 				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>

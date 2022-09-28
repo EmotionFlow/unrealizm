@@ -1,4 +1,5 @@
 <%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page import="java.util.stream.Collectors" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
@@ -20,13 +21,21 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
+
+if (cResults.m_strKeyword.indexOf("#") == 0) {
+	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+	return;
+} else if (cResults.m_strKeyword.indexOf("@") == 0) {
+	response.sendRedirect("/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+	return;
+}
+
 cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.m_strKeyword;
-String strEncodedKeyword = URLEncoder.encode(cResults.m_strKeyword, StandardCharsets.UTF_8);
 String strTitle = cResults.m_strKeyword + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.m_strKeyword, cResults.m_nContentsNum);
-String strUrl = "https://poipiku.com/SearchIllustByKeywordPcV.jsp?KWD="+strEncodedKeyword;
+String strUrl = "https://poipiku.com/SearchIllustByKeywordPcV.jsp?KWD="+cResults.encodedKeyword;
 String strFileUrl = cResults.m_strRepFileName;
 %>
 <!DOCTYPE html>

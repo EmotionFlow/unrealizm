@@ -1,5 +1,8 @@
 package jp.pipa.poipiku.controller;
 
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -11,12 +14,17 @@ import jp.pipa.poipiku.util.*;
 public final class SearchTagByKeywordC {
 	public int m_nPage = 0;
 	public String m_strKeyword = "";
+	public String encodedKeyword = "";
 	public String ipAddress = "";
 	public void getParam(HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
 			m_strKeyword = Common.TrimAll(request.getParameter("KWD"));
+			if (!m_strKeyword.isEmpty() && m_strKeyword.indexOf("#") == 0) {
+				m_strKeyword = m_strKeyword.replaceFirst("#", "");
+			}
+			encodedKeyword = URLEncoder.encode(m_strKeyword, StandardCharsets.UTF_8);
 			ipAddress = request.getRemoteAddr();
 		}
 		catch(Exception e) {

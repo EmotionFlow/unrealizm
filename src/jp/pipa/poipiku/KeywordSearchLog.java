@@ -21,7 +21,6 @@ public final class KeywordSearchLog extends Model {
 	public int resultNum = -1;
 	public String ipAddress = "";
 
-
 	public enum SearchTarget implements CodeEnum<SearchTarget> {
 		Undefined(-1),
 		Contents(0),
@@ -40,6 +39,25 @@ public final class KeywordSearchLog extends Model {
 	}
 	public SearchTarget searchTarget = SearchTarget.Undefined;
 
+	public enum Ng implements CodeEnum<Ng> {
+		Undefined(-99),
+		Created(-2),
+		UnderJudgement(-1),
+		Clean(0),
+		FilteredByWord(1),
+		ComplexFormat(2);
+
+		private final int code;
+		private Ng(int code) {
+			this.code = code;
+		}
+
+		@Override
+		public int getCode() {
+			return code;
+		}
+	}
+	public Ng ng = Ng.Undefined;
 
 	public KeywordSearchLog(){};
 
@@ -65,7 +83,7 @@ public final class KeywordSearchLog extends Model {
 			""";
 		List<KeywordSearchLog> list = new LinkedList<>();
 		try (
-				Connection connection = DatabaseUtil.replicaDataSource.getConnection();
+				Connection connection = DatabaseUtil.dataSource.getConnection();
 				PreparedStatement statement = connection.prepareStatement(sql);
 		) {
 			statement.setInt(1, userId);

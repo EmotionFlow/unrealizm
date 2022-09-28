@@ -20,7 +20,6 @@ class EditedContent {
 	public int fileHeight = 0;
 	public long filesSize = 0;
 	public String fileName = "";
-	public Integer writeBackStatus = null;
 
 	EditedContent(){}
 
@@ -30,10 +29,6 @@ class EditedContent {
 		fileWidth = resultSet.getInt("file_width");
 		fileHeight = resultSet.getInt("file_height");
 		filesSize = resultSet.getLong("file_size");
-		writeBackStatus = resultSet.getInt("write_back_status");
-		if (resultSet.wasNull()) {
-			writeBackStatus = null;
-		}
 	}
 
 	public int getAppendId() {
@@ -41,8 +36,8 @@ class EditedContent {
 	}
 
 	public String toString(){
-		return String.format("%d, %d, %d, %d, %s, %d",
-				appendId, fileWidth, fileHeight, filesSize, fileName, writeBackStatus);
+		return String.format("%d, %d, %d, %d, %s",
+				appendId, fileWidth, fileHeight, filesSize, fileName);
 	}
 }
 
@@ -146,9 +141,8 @@ public class UpdateFileOrderC extends Controller {
 			connection = DatabaseUtil.dataSource.getConnection();
 
 			//元のファイルリストを取得
-			sql = "SELECT 0 as append_id, file_name, file_width, file_height, file_size, wbf.status write_back_status" +
+			sql = "SELECT 0 as append_id, file_name, file_width, file_height, file_size" +
 					" FROM contents_0000 c" +
-					" LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=0) wbf ON c.content_id = wbf.row_id" +
 					" WHERE c.user_id=? AND content_id=?";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, userId);
@@ -163,9 +157,8 @@ public class UpdateFileOrderC extends Controller {
 				oldContentList.add(c);
 			}
 
-			sql = "SELECT append_id, file_name, file_width, file_height, file_size, wbf.status write_back_status" +
+			sql = "SELECT append_id, file_name, file_width, file_height, file_size" +
 					" FROM contents_appends_0000 c" +
-					"   LEFT OUTER JOIN (select row_id, status from write_back_files where table_code=1) wbf ON c.append_id = wbf.row_id" +
 					" WHERE c.content_id=? ORDER BY append_id";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, contentId);
@@ -204,17 +197,6 @@ public class UpdateFileOrderC extends Controller {
 				printContentList(userId,"---oldList---", oldContentList);
 			}
 
-			//write_back_status = 1 (作業中)が見つかったら、少々待って、最初からやり直し。
-			if (oldContentList
-					.stream()
-					.filter(e -> e.writeBackStatus != null)
-					.anyMatch(e -> e.writeBackStatus == WriteBackFile.Status.Moving.getCode())
-			){
-				Log.d("write_back_status = 1 (作業中)が見つかった");
-				errorKind = ErrorKind.DoRetry;
-				return -1;
-			}
-
 			//画像情報を新ファイルリストにコピー
 			boolean bExists = false;
 			List<EditedContent> newContentList = new ArrayList<>(newIdList.length);
@@ -229,7 +211,6 @@ public class UpdateFileOrderC extends Controller {
 					c.fileWidth = foundContent.fileWidth;
 					c.fileHeight = foundContent.fileHeight;
 					c.filesSize = foundContent.filesSize;
-					c.writeBackStatus = foundContent.writeBackStatus;
 					newContentList.add(c);
 				}
 			}
@@ -317,43 +298,32 @@ public class UpdateFileOrderC extends Controller {
 				CacheUsers0000.User user = users.getUser(userId);
 				if(fileTotalSize > Common.UPLOAD_FILE_TOTAL_SIZE[user.passportId]*1024*1024) {
 					// サイズオーバーしていれば新規アップロードされた画像を削除
-					Log.d("UPLOAD_FILE_TOTAL_ERROR:" + fileTotalSize);
-					String inPhrase = "(";
-					for (int i=0; i<diffNew.size(); i++) {
-						if (i > 0) inPhrase += ",";
-						inPhrase += "?";
-					}
-					inPhrase += ")";
-
-					for (int i=0; i<diffNew.size(); i++) {
-						EditedContent content = diffNew.get(i);
-						if(servletContext != null && content.fileName !=null && !content.fileName.isEmpty()) {
-							String strPath = servletContext.getRealPath(content.fileName);
-							ImageUtil.deleteFiles(strPath);
-						Log.d("Deleted " + diffNew.get(i).fileName + " (#" + diffNew.get(i).appendId + ")");
-						}
-					}
-					sql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id IN " + inPhrase;
-					statement = connection.prepareStatement(sql);
-					statement.setInt(1, contentId);
-					for (int i=0; i<diffNew.size(); i++) {
-						statement.setInt(i+2, diffNew.get(i).appendId);
-					}
-					statement.executeUpdate();
-					statement.close();statement=null;
+					//-- 挙動が不安定なので、原因がわかるまでは削除対象にマークされている画像ファイルを削除しないでおく --//
+//					Log.d("UPLOAD_FILE_TOTAL_ERROR:" + fileTotalSize);
+//					String inPhrase = "(";
+//					for (int i=0; i<diffNew.size(); i++) {
+//						if (i > 0) inPhrase += ",";
+//						inPhrase += "?";
+//					}
+//					inPhrase += ")";
+//
+//					for (int i=0; i<diffNew.size(); i++) {
+//						EditedContent content = diffNew.get(i);
+//						if(servletContext != null && content.fileName !=null && !content.fileName.isEmpty()) {
+//							String strPath = servletContext.getRealPath(content.fileName);
+//							ImageUtil.deleteFiles(strPath);
+//						Log.d("Deleted " + diffNew.get(i).fileName + " (#" + diffNew.get(i).appendId + ")");
+//						}
+//					}
+//					sql = "DELETE FROM contents_appends_0000 WHERE content_id=? AND append_id IN " + inPhrase;
+//					statement = connection.prepareStatement(sql);
+//					statement.setInt(1, contentId);
+//					for (int i=0; i<diffNew.size(); i++) {
+//						statement.setInt(i+2, diffNew.get(i).appendId);
+//					}
+//					statement.executeUpdate();
+//					statement.close();statement=null;
 					return Common.UPLOAD_FILE_TOTAL_ERROR;
-				} else {
-					// 上限サイズ内であればWriteBackFile書き込み
-					for (int i=0; i<diffNew.size(); i++) {
-						WriteBackFile writeBackFile = new WriteBackFile();
-						writeBackFile.userId = userId;
-						writeBackFile.tableCode = WriteBackFile.TableCode.ContentsAppends;
-						writeBackFile.rowId = diffNew.get(i).appendId;
-						writeBackFile.path = diffNew.get(i).fileName;
-						if (!writeBackFile.insert()) {
-							Log.d("writeBackFile.insert() error: " + diffNew.get(i).appendId);
-						}
-					}
 				}
 			}
 
@@ -365,24 +335,15 @@ public class UpdateFileOrderC extends Controller {
 					int append_id = content.appendId;
 					strDelList[i] = Integer.toString(append_id);
 
-					if(servletContext != null && content.fileName !=null && !content.fileName.isEmpty()) {
-						String strPath = servletContext.getRealPath(content.fileName);
-						ImageUtil.deleteFiles(strPath);
-					}
+					//-- 挙動が不安定なので、原因がわかるまでは削除対象にマークされている画像ファイルを削除しないでおく --//
+//					if(servletContext != null && content.fileName !=null && !content.fileName.isEmpty()) {
+//						String strPath = servletContext.getRealPath(content.fileName);
+//						ImageUtil.deleteFiles(strPath);
+//					}
 
-					// 元リストからも削除
+					// 元リストから削除
 					oldContentList.removeIf(c -> c.appendId == append_id && append_id != 0);
 
-					// write_back_filesにレコードがあったら削除
-					if (content.writeBackStatus != null) {
-						sql = "DELETE FROM write_back_files WHERE table_code=? AND path=?";
-						statement = connection.prepareStatement(sql);
-						statement.setInt(1,
-								append_id == 0 ? WriteBackFile.TableCode.Contents.getCode() : WriteBackFile.TableCode.ContentsAppends.getCode());
-						statement.setString(2, content.fileName);
-						statement.executeUpdate();
-						statement.close();statement=null;
-					}
 				}
 
 				//不要レコード削除
@@ -447,23 +408,6 @@ public class UpdateFileOrderC extends Controller {
 				statement.setLong(4, newContentList.get(i).filesSize);
 				statement.setInt(5, contentId);
 				statement.setInt(6, newContentList.get(i).appendId);
-				statement.executeUpdate();
-			}
-			statement.close();statement=null;
-
-			sql = "UPDATE write_back_files SET table_code=?, row_id=?, updated_at=now() WHERE path=?";
-			statement = connection.prepareStatement(sql);
-			statement.setInt(1, WriteBackFile.TableCode.Contents.getCode());
-			statement.setInt(2, contentId);
-			statement.setString(3, newContentList.get(0).fileName);
-			statement.executeUpdate();
-
-			sql = "UPDATE write_back_files SET table_code=?, row_id=?, updated_at=now() WHERE path=?";
-			statement = connection.prepareStatement(sql);
-			for (int i=1; i<newContentList.size(); i++) {
-				statement.setInt(1, WriteBackFile.TableCode.ContentsAppends.getCode());
-				statement.setInt(2, newContentList.get(i).appendId);
-				statement.setString(3, newContentList.get(i).fileName);
 				statement.executeUpdate();
 			}
 			statement.close();statement=null;

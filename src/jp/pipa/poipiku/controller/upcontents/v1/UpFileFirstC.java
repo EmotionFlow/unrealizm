@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.ByteArrayInputStream;
 
-import jp.pipa.poipiku.WriteBackFile;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.codec.binary.Base64;
@@ -173,15 +172,6 @@ public class UpFileFirstC extends UpC {
 			cState.setInt(idx++, cParam.m_nContentId);
 			cState.executeUpdate();
 			cState.close();cState=null;
-
-			WriteBackFile writeBackFile = new WriteBackFile();
-			writeBackFile.userId = cParam.m_nUserId;
-			writeBackFile.tableCode = WriteBackFile.TableCode.Contents;
-			writeBackFile.rowId = cContent.m_nContentId;
-			writeBackFile.path = strFileName;
-			if (!writeBackFile.insert()) {
-				Log.d("writeBackFile.insert() error: " + cParam.m_nContentId);
-			}
 
 			nRtn = cParam.m_nContentId;
 		} catch(Exception e) {

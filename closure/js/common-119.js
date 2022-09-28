@@ -133,14 +133,17 @@ function getLocalStrage(key) {
 }
 
 function SearchByKeyword(searchType, userId, limit, kwd) {
-	if (searchType != 'Tags' && searchType != 'Users') searchType = 'Contents';
+	if (searchType !== 'Tags' && searchType !== 'Users') searchType = 'Contents';
 	const paths = {
 		Contents: 'SearchIllustByKeywordPcV',
 		Tags: 'SearchTagByKeywordPcV',
 		Users: 'SearchUserByKeywordPcV',
 	};
 	return function() {
-		var keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
+		const keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
+		if (!keyword || keyword.trim() === "#" || keyword.trim() === "@") {
+			return false;
+		}
 		updateSearchCache(keyword, userId, searchType, limit);
 		location.href = `/${paths[searchType]}.jsp?KWD=${encodeURIComponent(keyword)}`;
 		return false;
@@ -162,17 +165,9 @@ function updateSearchCache(kwd, userId, searchType, limit = 5) {
 }
 
 function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
-	const $ul = $('ul#RecentSearchList');
-	$ul.empty();
-	// loading spinner表示
-	const mobile = $ul.closest('.SearchWrapper').attr('class').split(/\s/).includes('overlay');
-	if (mobile) {
-		$ul.addClass('Loading');
-	} else {
-		const $loadingLi = $('<li></li>', {class: 'Loading'});
-		$ul.append($loadingLi);
-	}
-
+	$('.RecentSearchHeader').show();
+	$('.SearchListPoipassLink').show();
+	showSearchSpinner();
 	// 今はUI側がイマイチなので、searchTypeをAllに固定する
 	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
 	// 最後にキーワード検索をした日時と比較
@@ -189,7 +184,10 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 	}) : Promise.resolve({
 		keywords: [],
 	})).then(function(history) {
-		if (mobile) { $ul.removeClass('Loading'); } else { $ul.empty(); }
+		const mobile = searchMobileCheck();
+		const $ul = $('ul#RecentSearchList');
+		if (mobile) $ul.removeClass('Loading');
+		$ul.empty();
 		if (history.keywords.length) {
 			history.keywords.forEach(kw => {
 				const $li = $('<li></li>', {class: 'RecentSearchItem'});
@@ -220,6 +218,59 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 
 function clearSearchCache() {
 	Object.keys(localStorage).filter(key => /^search-history/.test(key)).forEach(key => localStorage.removeItem(key));
+}
+
+function showSearchSuggestion(searchType, inputStr) {
+	$('.RecentSearchHeader').hide();
+	$('.SearchListPoipassLink').hide();
+	showSearchSpinner();
+	// 今はUI側がイマイチなので、searchTypeをAllに固定する
+	const SEARCH_TYPE = "All"; searchType = searchType ? SEARCH_TYPE : null;
+	$.ajax({
+		"type": "get",
+		"url": "/f/GetSearchSuggestionF.jsp",
+		"data": { "type": searchType, "input": inputStr },
+		"dataType": "json",
+	}).then(function(suggestion) {
+		console.log(suggestion);
+		// リクエスト〜レスポンスまでの間に入力値が変わっていたらレスポンスを無視
+		if ($('#HeaderSearchBox').val() != suggestion.input) return;
+
+		const mobile = searchMobileCheck();
+		const $ul = $('ul#RecentSearchList');
+		if (mobile) $ul.removeClass('Loading');
+		$ul.empty();
+		if (suggestion.keywords.length) {
+			suggestion.keywords.forEach(kw => {
+				const $li = $('<li></li>', {class: 'RecentSearchItem'});
+				const $row = $('<div></div>', {class: 'RecentSearchRow'});
+				const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
+				const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+				const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
+				$close.append($closeIcon);
+				$row.append($item, $close);
+				$li.append($row);
+				$ul.append($li);
+			});
+		}
+	});
+}
+
+function searchMobileCheck() {
+	const $ul = $('ul#RecentSearchList');
+	return $ul.closest('.SearchWrapper').attr('class').split(/\s/).includes('overlay');
+}
+function showSearchSpinner() {
+	const $ul = $('ul#RecentSearchList');
+	$ul.empty();
+	// loading spinner表示
+	const mobile = searchMobileCheck();
+	if (mobile) {
+		$ul.addClass('Loading');
+	} else {
+		const $loadingLi = $('<li></li>', {class: 'Loading'});
+		$ul.append($loadingLi);
+	}
 }
 
 function clearHeaderSearchInput() {

@@ -1,3 +1,4 @@
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
@@ -8,6 +9,12 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 SearchTagByKeywordC results = new SearchTagByKeywordC();
 results.getParam(request);
+
+if (results.m_strKeyword.indexOf("@") == 0) {
+	response.sendRedirect("/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(results.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+	return;
+}
+
 results.selectMaxGallery = 45;
 results.getResults(checkLogin);
 g_strSearchWord = results.m_strKeyword;
@@ -43,9 +50,9 @@ g_strSearchWord = results.m_strKeyword;
 
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
-				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(results.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
-				<li><a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(results.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
-				<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=URLEncoder.encode(results.m_strKeyword, "UTF-8")%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+				<li><a class="TabMenuItem Selected" href="/SearchTagByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+				<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=results.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
 			</ul>
 		</nav>
 
@@ -53,7 +60,7 @@ g_strSearchWord = results.m_strKeyword;
 
 		<article class="Wrapper ItemList">
 			<header class="SearchResultTitle">
-				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(results.m_strKeyword)%></h2>
+				<h2 class="Keyword">#<%=Util.toStringHtml(results.m_strKeyword)%></h2>
 			</header>
 			<section id="IllustThumbList" class="IllustItemList">
 				<%
@@ -78,7 +85,7 @@ g_strSearchWord = results.m_strKeyword;
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchTagByKeywordPcV.jsp", "&KWD="+URLEncoder.encode(results.m_strKeyword, "UTF-8"), results.m_nPage, results.contentsNum, results.selectMaxGallery)%>
+				<%=CPageBar.CreatePageBarSp("/SearchTagByKeywordPcV.jsp", "&KWD="+results.encodedKeyword, results.m_nPage, results.contentsNum, results.selectMaxGallery)%>
 			</nav>
 		</article>
 
