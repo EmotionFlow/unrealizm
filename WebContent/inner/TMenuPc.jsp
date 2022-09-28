@@ -258,7 +258,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			} else {
 				showSearch();
 			}
-		}, 400));
+		}, 800));
 		<%}%>
 	}
 	localStorage.removeItem('search-suggestion-timeout');
