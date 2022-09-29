@@ -37,7 +37,10 @@ public class NotifyRequestStartedToFollowee extends Batch {
 					continue;
 				}
 				Log.d(String.format("creatorUserId: %d", creatorUserId));
-				notifier.notifyRequestStarted(creatorUserId);
+				boolean notifyResult = notifier.notifyRequestStarted(creatorUserId);
+				if (!notifyResult) {
+					break;
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
