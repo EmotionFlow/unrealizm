@@ -40,9 +40,9 @@ public class DBConnection {
 
 
 	static public void setUp() {
-		System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
-		System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming.java");
 		try {
+			System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
+			System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming.java");
 			dataSource = new PGSimpleDataSource();
 			dataSource.setUser("postgres");
 			dataSource.setPassword(System.getProperty("dbPass"));
@@ -64,6 +64,8 @@ public class DBConnection {
 
 	static public void setUpReplica() {
 		try {
+			System.setProperty(Context.INITIAL_CONTEXT_FACTORY, "org.apache.naming.java.javaURLContextFactory");
+			System.setProperty(Context.URL_PKG_PREFIXES, "org.apache.naming.java");
 			replicaDataSource = new PGSimpleDataSource();
 			replicaDataSource.setUser("postgres");
 			replicaDataSource.setPassword(System.getProperty("replicaDbPass"));
