@@ -7,7 +7,7 @@ import javax.sql.DataSource;
 public class Batch {
 	static protected DataSource dataSource;
 	static protected DataSource replicaDataSource;
-	Batch() {
+	public Batch() {
 		try {
 			Class.forName("jp.pipa.poipiku.Common");
 			Class.forName("jp.pipa.poipiku.batch.DBConnection");
