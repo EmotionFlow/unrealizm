@@ -1,93 +1,167 @@
+<%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/inner/Common.jsp"%>
 <%
 if (Util.isBot(request)) return;
 
 CheckLogin checkLogin = new CheckLogin(request, response);
+boolean bSmartPhone = Util.isSmartPhone(request);
 
-if(SP_REVIEW && !checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/StartPoipiku" + (isApp?"App":"") +"V.jsp").forward(request,response);
+if(!bSmartPhone) {
+	getServletContext().getRequestDispatcher("/SearchIllustByKeywordGridPcV.jsp").forward(request,response);
 	return;
 }
 
-checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
+final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
+
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
 
 if (cResults.keyword.indexOf("#") == 0) {
-	response.sendRedirect("/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" +  cResults.encodedKeyword);
+	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
 } else if (cResults.keyword.indexOf("@") == 0) {
-	response.sendRedirect("/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" +  cResults.encodedKeyword);
+	response.sendRedirect("/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
 
-cResults.selectMaxGallery = 45;
+cResults.selectMaxGallery = 10;
 boolean bRtn = cResults.getResults(checkLogin);
+g_strSearchWord = cResults.keyword;
+String strTitle = cResults.keyword + " | " + _TEX.T("THeader.Title");
+String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.keyword, cResults.m_nContentsNum);
+String strUrl = "https://poipiku.com/SearchIllustByKeywordPcV.jsp?KWD="+cResults.encodedKeyword;
+String strFileUrl = cResults.m_strRepFileName;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
-	<head>
-		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<title><%=Util.toStringHtml(cResults.keyword)%></title>
-		<script>
-			var g_nPage = 1;
-			var g_bAdding = false;
-			function addContents() {
-				if(g_bAdding) return;
-				g_bAdding = true;
-				var $objMessage = $("<div/>").addClass("Waiting");
-				$("#IllustThumbList").append($objMessage);
-				$.ajax({
-					"type": "post",
-					"data": {"PG" : g_nPage, "KWD" : "<%=cResults.keyword%>"},
-					"url": "/f/SearchIllustByKeyword<%=isApp?"App":""%>F.jsp",
-					"success": function(data) {
-						if($.trim(data).length>0) {
-							g_nPage++;
-							$('#InfoMsg').hide();
-							$("#IllustThumbList").append(data);
-							g_bAdding = false;
-							gtag('config', 'UA-125150180-1', {'page_location': location.pathname+'/'+g_nPage+'.html'});
-						} else {
-							$(window).unbind("scroll.addContents");
-						}
-						$(".Waiting").remove();
-					},
-					"error": function(req, stat, ex){
-						DispMsg('Connection error');
-					}
-				});
-			}
+<head>
+	<%if(!isApp){%>
+	<%@ include file="/inner/THeaderCommonPc.jsp"%>
+	<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
+	<%}else{%>
+	<%@ include file="/inner/THeaderCommon.jsp"%>
+	<%}%>
 
-			$(function(){
-				$(window).bind("scroll.addContents", function() {
-					$(window).height();
-					if($("#IllustThumbList").height() - $(window).height() - $(window).scrollTop() < 400) {
-						addContents();
-					}
-				});
+	<%@ include file="/inner/TSendEmoji.jsp"%>
+	<%@ include file="/inner/TReplyEmoji.jsp"%>
+	<%@ include file="/inner/TRetweetContent.jsp"%>
+	<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
+
+	<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
+	<meta name="twitter:site" content="@pipajp" />
+	<meta property="og:url" content="<%=strUrl%>" />
+	<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
+	<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
+	<link rel="canonical" href="<%=strUrl%>" />
+	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
+	<title><%=Util.toDescString(strTitle)%></title>
+
+	<script type="text/javascript">
+		<%if(!isApp){%>
+		$(function(){
+			$('#MenuNew').addClass('Selected');
+		});
+		<%}%>
+
+		let lastContentId = <%=cResults.contentList.size()>0 ? cResults.contentList.get(cResults.contentList.size()-1).m_nContentId : -1%>;
+		let page = 0;
+
+		const loadingSpinner = {
+			appendTo: "#IllustItemList",
+			className: "loadingSpinner",
+		}
+		const observer = createIntersectionObserver(addContents);
+
+		function addContents() {
+			console.log("addContents");
+			appendLoadingSpinner(loadingSpinner.appendTo, loadingSpinner.className);
+			return $.ajax({
+				"type": "post",
+				"data": {
+					"PG": page,
+					"KWD": "<%=cResults.keyword%>",
+					"MD": <%=CCnv.MODE_SP%>,
+					"VD": <%=CCnv.VIEW_DETAIL%>,
+					"SD": lastContentId,
+				},
+				"dataType": "json",
+				"url": "/f/SearchIllustByKeywordF.jsp",
+			}).then((data) => {
+				page++;
+				if (data.end_id > 0) {
+					lastContentId = data.end_id;
+					const contents = document.getElementById('IllustItemList');
+					$(contents).append(data.html);
+					observer.observe(contents.lastElementChild);
+				}
+				removeLoadingSpinners(loadingSpinner.className);
+			}, (error) => {
+				DispMsg('Connection error');
 			});
-		</script>
-	</head>
+		}
 
-	<body>
-		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
+		function initContents() {
+			const contents = document.getElementById('IllustItemList');
+			observer.observe(contents.lastElementChild);
+		}
 
-		<article class="Wrapper">
-			<header class="SearchResultTitle" style="box-sizing: border-box; margin: 10px 0; padding: 0 5px;">
-				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
-			</header>
+		$(function(){
+			$('#HeaderSearchWrapper').on('submit', SearchByKeyword('Contents', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+			$('#HeaderSearchBtn').on('click', SearchByKeyword('Contents', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
+			$('body, .Wrapper').each(function(index, element){
+				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+			});
+			initContents();
+		});
+	</script>
 
-			<section id="IllustThumbList" class="IllustThumbList">
-				<%int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;%>
-				<%for(int nCnt = 0; nCnt<cResults.contentList.size(); nCnt++) {
-					CContent cContent = cResults.contentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
-					<%if(nCnt==14) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
-					<%if(nCnt==29) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}%>
-				<%}%>
-			</section>
-		</article>
-	</body>
+	<%if (!isApp) {%>
+	<style>body {padding-top: 79px !important;}</style>
+	<%} else {%>
+	<style>body {padding-top: 0 !important;}</style>
+	<%}%>
+</head>
+
+<body>
+<%if (!isApp) {%>
+<%@ include file="/inner/TMenuPc.jsp"%>
+<nav class="TabMenuWrapper">
+	<ul class="TabMenu">
+		<li><a class="TabMenuItem Selected" href="/SearchIllustByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Illust")%></a></li>
+		<li><a class="TabMenuItem" href="/SearchTagByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.Tag")%></a></li>
+		<li><a class="TabMenuItem" href="/SearchUserByKeywordPcV.jsp?KWD=<%=cResults.encodedKeyword%>"><%=_TEX.T("Search.Cat.User")%></a></li>
+	</ul>
+</nav>
+<%} else {%>
+<%@ include file="/inner/TMenuApp.jsp"%>
+<%}%>
+
+<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
+
+<article class="Wrapper ThumbList">
+
+	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+	<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+	<%}%>
+
+	<header class="SearchResultTitle">
+		<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
+	</header>
+
+	<section id="IllustItemList" class="IllustItemList">
+		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
+		<%=CCnv.Content2Html(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
+		<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
+		<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
+		<%}%>
+		<%}%>
+	</section>
+</article>
+<%@ include file="/inner/TShowDetail.jsp"%>
+</body>
+<%@include file="/inner/PolyfillIntersectionObserver.jsp"%>
 </html>

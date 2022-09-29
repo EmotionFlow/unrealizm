@@ -25,6 +25,4 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	}
 }
 
-Log.d("lcd " + cResults.lastContentId);
-
 %>{"end_id":<%=cResults.lastContentId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
