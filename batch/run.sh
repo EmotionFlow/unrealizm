@@ -12,7 +12,7 @@ source ${ENV_FILE}
 
 java -DAPP_ENVIRONMENT=${APP_ENVIRONMENT} \
 -DdbHost=${DB_HOST} -DdbPass=${DB_PASS} -DdbPort=${DB_PORT} \
--DreplicaDbHost=${REPLICA_DB_HOST} -DteplicaDbPass=${REPLICA_DB_PASS} -DreplicaDbPort=${REPLICA_DB_PORT} \
+-DreplicaDbHost=${REPLICA_DB_HOST} -DreplicaDbPass=${REPLICA_DB_PASS} -DreplicaDbPort=${REPLICA_DB_PORT} \
 -cp ${APP_JAR}:${CLASSES_TOMCAT}:${WEB_CONTENT_CLASSES}:${BATCH_CLASSES} \
 jp.pipa.poipiku.batch.$1 $2
 
