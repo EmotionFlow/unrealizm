@@ -6,8 +6,8 @@ import javax.sql.DataSource;
 
 public class Batch {
 	static protected DataSource dataSource;
-	static protected DataSource repilcaDataSource;
-	static {
+	static protected DataSource replicaDataSource;
+	Batch() {
 		try {
 			Class.forName("jp.pipa.poipiku.Common");
 			Class.forName("jp.pipa.poipiku.batch.DBConnection");
@@ -16,6 +16,6 @@ public class Batch {
 		}
 		Velocity.init("velocity.properties");
 		dataSource = DBConnection.getDataSource();
-		repilcaDataSource = DBConnection.getReplicaDataSource();
+		replicaDataSource = DBConnection.getReplicaDataSource();
 	}
 }
