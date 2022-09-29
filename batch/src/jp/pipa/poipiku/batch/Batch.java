@@ -11,7 +11,9 @@ public class Batch {
 		try {
 			Class.forName("jp.pipa.poipiku.Common");
 			Class.forName("jp.pipa.poipiku.batch.DBConnection");
-		} catch (Exception ignore){}
+		} catch (Exception ex){
+			ex.printStackTrace();
+		}
 		Velocity.init("velocity.properties");
 		dataSource = DBConnection.getDataSource();
 		repilcaDataSource = DBConnection.getReplicaDataSource();
