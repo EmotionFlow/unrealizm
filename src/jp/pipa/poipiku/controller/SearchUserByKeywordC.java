@@ -46,7 +46,7 @@ public class SearchUserByKeywordC {
 		boolean result = false;
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement("""
-             SELECT * FROM users_0000 WHERE nickname &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?
+             SELECT * FROM users_0000 WHERE nickname &@~ ? ORDER BY always_null, user_id DESC OFFSET ? LIMIT ?
              """)
 		)
 		{
@@ -67,7 +67,7 @@ public class SearchUserByKeywordC {
 
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement("""
-             SELECT * FROM users_0000 WHERE profile &@~ ? ORDER BY user_id DESC OFFSET ? LIMIT ?
+             SELECT * FROM users_0000 WHERE profile &@~ ? ORDER BY always_null, user_id DESC OFFSET ? LIMIT ?
              """)
 		)
 		{
