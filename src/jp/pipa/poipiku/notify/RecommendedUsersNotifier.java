@@ -41,7 +41,7 @@ public final class RecommendedUsersNotifier extends Notifier {
 					"  AND email LIKE '%@%'" +
 					"  AND send_email_mode = 1" +
 					"  AND user_id NOT IN (SELECT user_id FROM temp_emails_0000)" +
-					" ORDER BY last_dm_delivery_date DESC NULLS FIRST, last_login_date DESC LIMIT 500";
+					" ORDER BY last_dm_delivery_date DESC NULLS FIRST, last_login_date DESC LIMIT 300";
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			List<User> deliveryTargets = new ArrayList<>();
