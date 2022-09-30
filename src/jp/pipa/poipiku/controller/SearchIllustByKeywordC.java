@@ -88,7 +88,7 @@ public final class SearchIllustByKeywordC {
 				+ strCondStart
 				+ strCondBlockUser
 				+ strCondBlockedUser
-				+ " ORDER BY c.content_id DESC OFFSET ? LIMIT ?";
+				+ " ORDER BY c.always_null, c.content_id DESC OFFSET ? LIMIT ?";
 
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sqlSelectContents);
