@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class NotifyTwitterFollowerRegistered extends Batch {
 	// 配信時間帯
 	private static final int[] DELIVERY_TIME = {1, 23};
+	private static final int MAX_USER = 100;
 
 	public static void main(String[] args) {
 		// 配信時間帯外だったら何もしない
@@ -42,6 +43,8 @@ public class NotifyTwitterFollowerRegistered extends Batch {
 			resultSet.next();
 			userIdTo = resultSet.getInt(1);
 			resultSet.close();
+
+			userIdTo = Math.min(userIdFrom + MAX_USER, userIdTo);
 
 			Log.d(String.format("%d - %d", userIdFrom, userIdTo));
 
