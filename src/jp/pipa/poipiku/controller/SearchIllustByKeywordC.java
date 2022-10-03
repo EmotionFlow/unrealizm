@@ -58,7 +58,7 @@ public final class SearchIllustByKeywordC {
 
 		String strCondBlockUser = "";
 		String strCondBlockedUser = "";
-		try (Connection connection = DatabaseUtil.dataSource.getConnection()) {
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection()) {
 			if (SqlUtil.hasBlockUser(connection, checkLogin.m_nUserId)) {
 				strCondBlockUser = " AND user_id NOT IN(SELECT block_user_id FROM blocks_0000 WHERE user_id=?) ";
 			}
@@ -90,7 +90,7 @@ public final class SearchIllustByKeywordC {
 				+ strCondBlockedUser
 				+ " ORDER BY c.always_null, c.content_id DESC OFFSET ? LIMIT ?";
 
-		try (Connection connection = DatabaseUtil.dataSource.getConnection();
+		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sqlSelectContents);
 			){
 
@@ -166,7 +166,7 @@ public final class SearchIllustByKeywordC {
 //				INNER JOIN genres g ON t.genre_id=g.genre_id
 //				LEFT JOIN (SELECT genre_id, trans_text FROM genre_translations WHERE type_id=1 AND lang_id=?) gt ON t.genre_id=gt.genre_id
 //				""";
-//		try (Connection connection = DatabaseUtil.dataSource.getConnection();
+//		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 //		     PreparedStatement statement = connection.prepareStatement(sqlSelectTags);
 //		){
 //			int idx = 1;
