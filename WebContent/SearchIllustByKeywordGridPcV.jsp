@@ -87,7 +87,7 @@ String strFileUrl = cResults.m_strRepFileName;
 			</section>
 
 			<nav class="PageBar">
-				<%=CPageBar.CreatePageBarSp("/SearchIllustByKeywordPcV.jsp", "&KWD="+cResults.encodedKeyword, cResults.page, cResults.m_nContentsNum, cResults.selectMaxGallery)%>
+				<%=CPageBar.CreatePageBarSp("/SearchIllustByKeywordPcV.jsp", "&KWD="+cResults.encodedKeyword, cResults.page, 1000, cResults.selectMaxGallery)%>
 			</nav>
 		</article>
 
