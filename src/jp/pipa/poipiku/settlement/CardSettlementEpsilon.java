@@ -326,20 +326,26 @@ public class CardSettlementEpsilon extends CardSettlement {
 				9：実売上NG
 				 */
 				String resultCode = resultInfo.getResult();
-				Log.d("resultInfo: " + resultCode);
+				Log.d("resultCode: " + resultCode);
 				if ("1".equals(resultCode)) {
 					return true;
 				} else {
-					Log.d(String.format("実売上処理でエラーが発生 requestId=%d", requestId));
-					Log.d("Code: " + resultInfo.getErrCode());
-					Log.d("Detail: " + resultInfo.getErrDetail());
+					String errLog = """
+                            実売上処理でエラーが発生 requestId=%d
+                            Code: %s
+                            Detail: %s
+							""".formatted(requestId, resultInfo.getErrCode(), resultInfo.getErrDetail());
+					Log.d(errLog);
+					notifyErrorToSlack(errLog);
 					errorKind = ErrorKind.CardAuth;
 					return false;
 				}
 			} else {
-				Log.d(String.format("resultInfoが想定外の値 requestId=%d", requestId));
-				Log.d("Code: " + resultInfo.getErrCode());
-				Log.d("Detail: " + resultInfo.getErrDetail());
+				String errLog = """
+                            resultInfoがnull  requestId=%d
+							""".formatted(requestId);
+				Log.d(errLog);
+				notifyErrorToSlack(errLog);
 				errorKind = ErrorKind.Unknown;
 				return false;
 			}
