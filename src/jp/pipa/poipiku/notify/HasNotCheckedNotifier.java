@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 class HasNotCheckedNotifier extends Notifier {
-	private static final int MAX_SEND_USERS = 250;
+	private static final int MAX_SEND_USERS = 300;
 	protected InfoList.InfoType infoType = InfoList.InfoType.Undefined;
 	protected String vmTemplateStatus = "";
 	protected int remindDay = 5;

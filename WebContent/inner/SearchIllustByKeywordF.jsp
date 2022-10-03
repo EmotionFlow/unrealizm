@@ -7,7 +7,9 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.selectMaxGallery = 30;
 cResults.getParam(request);
-checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+if (isApp) {
+	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+}
 cResults.getResults(checkLogin, true);
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);

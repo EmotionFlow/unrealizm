@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class NotifyTwitterFollowerRegistered extends Batch {
 	// 配信時間帯
 	private static final int[] DELIVERY_TIME = {1, 23};
-	private static final int MAX_USER = 50;
+	private static final int MAX_USER = 75;
 
 	public static void main(String[] args) {
 		// 配信時間帯外だったら何もしない

@@ -14,9 +14,12 @@ if(!bSmartPhone) {
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
-
 SearchIllustByKeywordC cResults = new SearchIllustByKeywordC();
 cResults.getParam(request);
+if (isApp) {
+	checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+}
+
 
 if (cResults.keyword.indexOf("#") == 0) {
 	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
