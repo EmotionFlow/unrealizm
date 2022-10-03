@@ -13,7 +13,7 @@ import okhttp3.*;
 
 public class UpdatePassportMember extends Batch{
 	static final boolean _DEBUG = false;
-	static final String URL_SCHEME = (_DEBUG)?"http":"https";
+	static final String URL_SCHEME = (_DEBUG)?"http":"http";
 
 	public static void main(String[] args) {
 		java.sql.Connection connection = null;
