@@ -1,5 +1,7 @@
 package jp.pipa.poipiku.settlement;
 
+import jp.pipa.poipiku.CUser;
+import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.CreditCard;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
@@ -374,7 +376,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 					"   AND c.del_flg = FALSE" +
 					" ORDER BY orders.created_at DESC" +
 					" LIMIT 1";
-			Log.d(sql);
+			Log.d(sql + ", poipikuUserId: " + poipikuUserId);
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, poipikuUserId);
 			statement.setInt(2, Agent.EPSILON);
@@ -391,6 +393,17 @@ public class CardSettlementEpsilon extends CardSettlement {
 			if(resultSet!=null){try{resultSet.close();resultSet=null;}catch(Exception ignored){;}}
 			if(statement!=null){try{statement.close();statement=null;}catch(Exception ignored){;}}
 			if(connection!=null){try{connection.close();connection=null;}catch(Exception ignored){;}}
+		}
+
+		if (itemCode == null || epsilonUserId == null) {
+			Log.d("epsilon側のuser_id, item_codeが見つからなかった。 poipikuUserId:" + poipikuUserId);
+			if (CheckLogin.isStaff(poipikuUserId)) {
+				Log.d("staffのため以降の処理をスキップする");
+				return true;
+			} else {
+				Log.d("staffではないので、エラーを返す");
+				return false;
+			}
 		}
 
 		// 金額変更CGIを叩く
