@@ -115,11 +115,12 @@ public class IllustListC {
 		Pin pin = null;
 		List<Pin> pins = Pin.selectByUserId(m_nUserId);
 
-		try {
-			CacheUsers0000 users  = CacheUsers0000.getInstance();
-			connection = DatabaseUtil.dataSource.getConnection();
+		CacheUsers0000 users  = CacheUsers0000.getInstance();
 
-			if(!bContentOnly) {
+		if (!bContentOnly) {
+			try {
+				connection = DatabaseUtil.dataSource.getConnection();
+
 				// author profile
 				strSql = "SELECT u.*, oa.twitter_screen_name" +
 						" FROM users_0000 u" +
@@ -266,7 +267,19 @@ public class IllustListC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
+
+			} catch(Exception e) {
+				Log.d(strSql);
+				e.printStackTrace();
+			} finally {
+				try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+				try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+				try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 			}
+		}
+
+		try {
+			connection = DatabaseUtil.replicaDataSource.getConnection();
 
 			if(m_bBlocking || m_bBlocked) return true;
 
@@ -466,9 +479,9 @@ public class IllustListC {
 			Log.d(strSql);
 			e.printStackTrace();
 		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception e){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception e){;}
-			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.close();connection=null;}}catch(Exception ignored){;}
 		}
 		return bRtn;
 	}
