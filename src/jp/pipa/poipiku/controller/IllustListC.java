@@ -357,7 +357,9 @@ public class IllustListC {
 					}
 					// Emoji
 					if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-						GridUtil.getComment(connection, cContent);
+						try (Connection con = DatabaseUtil.dataSource.getConnection()) {
+							GridUtil.getComment(con, cContent);
+						}
 					}
 					pinContents.add(cContent);
 				}
