@@ -286,7 +286,7 @@ public final class CCnv {
 				if (isMyTag) {
 					href = "/IllustList%sV.jsp?ID=%d&KWD=%s".formatted(
 							appOrPc,
-							checkLogin.m_nUserId,
+							cContent.m_nUserId,
 							tagName.substring(2)
 					);
 				} else {
