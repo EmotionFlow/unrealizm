@@ -53,7 +53,6 @@ public final class CheckNotifyC {
 			cState.setInt(1, cParam.m_nUserId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
-				int nMailComment	= cResSet.getInt("mail_comment");
 				bDispFollower		= ((nMailComment>>>0 & 0x01) == 0x01);
 			}
 			cResSet.close();cResSet=null;

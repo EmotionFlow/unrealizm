@@ -49,19 +49,6 @@ try{
 		DataSource dsPostgres = (DataSource)new InitialContext().lookup(Common.DB_POSTGRESQL);
 		cConn = dsPostgres.getConnection();
 
-		// フォロー通知を表示するか
-		boolean bDispFollower = false;
-		strSql = "SELECT * FROM users_0000 WHERE user_id=?";
-		cState = cConn.prepareStatement(strSql);
-		cState.setInt(1, m_nUserId);
-		cResSet = cState.executeQuery();
-		if(cResSet.next()) {
-		int nMailComment	= cResSet.getInt("mail_comment");
-		bDispFollower		= ((nMailComment>>>0 & 0x01) == 0x01);
-		}
-		cResSet.close();cResSet=null;
-		cState.close();cState=null;
-
 		//リアクション（内部的にはcomment）
 		strSql = "SELECT comments_0000.*, T1.file_name, T1.nickname FROM comments_0000"
 		+ " LEFT JOIN users_0000 as T1 ON comments_0000.user_id=T1.user_id WHERE content_id IN ("

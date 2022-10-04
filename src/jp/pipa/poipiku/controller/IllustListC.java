@@ -136,14 +136,13 @@ public class IllustListC {
 					m_cUser.m_strFileName		= Util.toString(resultSet.getString("file_name"));
 					m_cUser.m_strHeaderFileName	= Util.toString(resultSet.getString("header_file_name"));
 					m_cUser.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
-					m_cUser.m_nMailComment		= resultSet.getInt("mail_comment");
 					m_cUser.m_nTwitterAccountPublicMode = resultSet.getInt("twitter_account_public_mode");
 					if (m_cUser.m_nTwitterAccountPublicMode == CUser.TW_PUBLIC_ON) {
 						twitterScreenName = resultSet.getString("twitter_screen_name");
 					}
 					//if(m_cUser.m_strProfile.isEmpty())  m_cUser.m_strProfile = "";
 					if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
-					m_cUser.m_bDispFollower		= ((m_cUser.m_nMailComment>>>0 & 0x01) == 0x01);
+//					m_cUser.m_bDispFollower		= ((m_cUser.m_nMailComment>>>0 & 0x01) == 0x01);
 					//m_cUser.m_bMailHeart		= ((m_cUser.m_nMailComment>>>1 & 0x01) == 0x01);
 					//m_cUser.m_bMailBookmark	= ((m_cUser.m_nMailComment>>>2 & 0x01) == 0x01);
 					//m_cUser.m_bMailFollow		= ((m_cUser.m_nMailComment>>>3 & 0x01) == 0x01);

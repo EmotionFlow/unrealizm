@@ -31,7 +31,6 @@ public class CUser {
 	public String m_strNickName = "";
 	public String m_strProfile = "";
 	public String m_strEmail = "";
-	public int m_nMailComment = 65535;
 	public int m_nLangId = 1;
 	public String m_strFileName = "";
 	public ArrayList<CContent> m_vContent = new ArrayList<CContent>();

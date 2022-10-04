@@ -58,7 +58,6 @@ public class RequestNewC {
 				user.m_strFileName		= Util.toString(resultSet.getString("file_name"));
 				user.m_strHeaderFileName	= Util.toString(resultSet.getString("header_file_name"));
 				user.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
-				user.m_nMailComment		= resultSet.getInt("mail_comment");
 				if(user.m_strFileName.isEmpty()) user.m_strFileName="/img/default_user.jpg";
 				user.setRequestEnabled(resultSet);
 				user.m_nPassportId      = resultSet.getInt("passport_id");
