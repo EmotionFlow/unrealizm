@@ -269,7 +269,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<%if(checkLogin.m_bLogin){%>
 		const prevTimeout = getLocalStrage('search-suggestion-timeout');
 		if (prevTimeout) clearTimeout(prevTimeout);
-		setLocalStrage('search-suggesstion-timeout', setTimeout(() => {
+		setLocalStrage('search-suggestion-timeout', setTimeout(() => {
 			const inputStr = $('#HeaderSearchBox').val();
 			if (inputStr) {
 				showSearchSuggestion('<%=searchType%>', inputStr);
