@@ -68,13 +68,13 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .SearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 110px); margin: 0; overflow-y: auto;}
 .SearchWrapper.overlay .RecentSearchList.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%; height: 28px; background-size: contain}
 
-.SearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; padding: 0 2em; list-style-type: none;}
+.SearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; list-style-type: none;}
 .SearchWrapper .RecentSearchList li:last-child {border-bottom: solid 1px #ddd;}
 .SearchWrapper .RecentSearchList .RecentSearchItem {transition: background-color .4s;}
 .SearchWrapper .RecentSearchList .RecentSearchItem:active {background-color: #ddd;}
 .SearchWrapper .RecentSearchList .RecentSearchRow {display: flex;}
-.SearchWrapper .RecentSearchList .RecentSearchKW {flex-grow: 1; padding: 1em 0;}
-.SearchWrapper .RecentSearchList .RecentSearchDelBtn {width: 1em; padding: 1em 0; color: #3498db; display: none;}
+.SearchWrapper .RecentSearchList .RecentSearchKW {flex-grow: 1; padding: 1em 0 1em 2em;}
+.SearchWrapper .RecentSearchList .RecentSearchDelBtn {width: 1em; padding: 1em 2em 1em 0; color: #3498db;}
 .SearchWrapper.pulldown .RecentSearchList li.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%; background-size: 1.6em; height: 4em;}
 
 .SearchWrapper .SearchListPoipassLink {padding: 0.6em 0; border-top: solid 1px #ddd;}

@@ -247,10 +247,7 @@ function showSearchSuggestion(searchType, inputStr) {
 				const $li = $('<li></li>', {class: 'RecentSearchItem'});
 				const $row = $('<div></div>', {class: 'RecentSearchRow'});
 				const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
-				const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
-				const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
-				$close.append($closeIcon);
-				$row.append($item, $close);
+				$row.append($item);
 				$li.append($row);
 				$ul.append($li);
 			});
@@ -293,6 +290,21 @@ function toggleClearSearchBtn() {
 		$HeaderSearchBox.css('padding-right', '1px');
 	}
 }
+
+function deleteSearchHistory(searchType, kwd) {
+	searchType = 'All'; // 今はUI側がイマイチなので、searchTypeをAllに固定する
+	return $.ajax({
+		"type": "post",
+		"url": "/f/DeleteSearchLogF.jsp",
+		"data": {
+			"type": searchType,
+			"keyword": kwd,
+		},
+		"dataType": "json",
+	}).then(() => {
+		localStorage.removeItem(`search-history-${searchType}`);
+	});
+};
 
 var sendObjectMessage = function(parameters) {
 	var iframe = document.createElement('iframe');

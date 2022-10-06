@@ -205,11 +205,17 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				}
 
 				<%if(checkLogin.m_bLogin){%>
-				$(document).on('click', '.RecentSearchItem', ev => {
+				$(document).on('click', '.RecentSearchKW', ev => {
 					$('#HeaderTitleWrapper').show();
 					$('#OverlaySearchWrapper').hide();
 					$('ul#RecentSearchList').empty();
-					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
+					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).text())();
+				});
+				$(document).on('click', '.RecentSearchDelBtn', ev => {
+					deleteSearchHistory('<%=searchType%>', $(ev.target).closest('.RecentSearchRow').find('.RecentSearchKW').text())
+					.then(() => {
+						showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>);
+					});
 				});
 				<%}%>
 
@@ -237,10 +243,16 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					<%}%>
 				}
 				$('#HeaderSearchBox').on('focus', showSearch);
-				$(document).on('click', '.RecentSearchItem', ev => {
+				$(document).on('click', '.RecentSearchKW', ev => {
 					$('#PulldownSearchWrapper').hide();
 					$('ul#RecentSearchList').empty();
-					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).find('.RecentSearchKW').text())();
+					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).text())();
+				});
+				$(document).on('click', '.RecentSearchDelBtn', ev => {
+					deleteSearchHistory('<%=searchType%>', $(ev.target).closest('.RecentSearchRow').find('.RecentSearchKW').text())
+					.then(() => {
+						showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>);
+					});
 				});
 				$(document).on('click touchend', function(ev) {
 					if (!$(ev.target).closest('#PulldownSearchWrapper, .HeaderSearch').length) $('#PulldownSearchWrapper').hide();
