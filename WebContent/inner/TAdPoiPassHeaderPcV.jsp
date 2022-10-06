@@ -19,6 +19,7 @@ final int poipassHeaderBenefitMessageRnd = (int)(Math.random()*5.0);
 			<%=poipassHeaderBenefitMessage%>
 		</div>
 		<div class="CreateAccountButtons">
+			<div class="CreateAccountButtonsLabel"><%=_TEX.T("TAdPoiPassHeader.CreateAccountButtonsLabel")%></div>
 			<a class="BtnBase LoginButton" href="javascript:login_from_twitter_tmenupc_00.submit()">
 				<span class="typcn typcn-social-twitter"></span>
 			</a>

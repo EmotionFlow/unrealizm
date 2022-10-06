@@ -144,7 +144,9 @@ function SearchByKeyword(searchType, userId, limit, kwd) {
 		if (!keyword || keyword.trim() === "#" || keyword.trim() === "@") {
 			return false;
 		}
-		updateSearchCache(keyword, userId, searchType, limit);
+		if (userId > 0) {
+			updateSearchCache(keyword, userId, searchType, limit);
+		}
 		location.href = `/${paths[searchType]}.jsp?KWD=${encodeURIComponent(keyword)}`;
 		return false;
 	};

@@ -45,7 +45,6 @@ public final class SearchIllustByKeywordC {
 	}
 
 	public boolean getResults(CheckLogin checkLogin, boolean bContentOnly) {
-		if (!checkLogin.m_bLogin) return false;
 		if (keyword.isEmpty()) return false;
 
 		StringBuilder keywords = new StringBuilder(keyword);

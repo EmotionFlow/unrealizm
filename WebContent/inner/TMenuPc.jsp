@@ -38,13 +38,19 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 						for(let i=0; i<3; i++){s.shift();}
 						$('#login_from_twitter_tmenupc_callback_00').val("/" + s.join("/"));
 					}</script>
-					<a class="BtnBase Rev HeaderLoginBtn LoginButton" style="right: 126px; width: 96px;" href="javascript:login_from_twitter_tmenupc_00.submit()">
-						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
-					</a>
+					<div class="CreateAccountButtons">
+						<i class="fas fa-sign-in-alt"></i>
+						<a class="BtnBase LoginButton" href="javascript:login_from_twitter_tmenupc_00.submit()">
+							<span class="typcn typcn-social-twitter"></span>
+						</a>
+						or
+						<a class="BtnBase LoginButton" href="/LoginFormEmailPcV.jsp">
+							<span class="typcn typcn-mail"></span>
+						</a>
+					</div>
+
 				</form>
-				<div class="TwLoginUnsuccessfulIcon" onclick="dispTwLoginUnsuccessfulInfo($('#login_from_twitter_tmenupc_callback_00').val())">
-					<i class="fas fa-info-circle" style="font-size: 19px; padding: 5px;"></i>
-				</div>
+				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" style="right: 38px;" href="javascript:void(0);" onclick="showSearch()"></a>
 				<div class="HeaderSelectLang" onclick="showSelectLangDlg(false);">
 					<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
 				</div>
@@ -262,10 +268,8 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<%}%>
 	}
 	localStorage.removeItem('search-suggestion-timeout');
-	<%if(checkLogin.m_bLogin){%>
 	$('#HeaderSearchWrapper').on('submit', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));
 	$('#HeaderSearchBtn').on('click', SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>));
-	<%}%>
 	toggleClearSearchBtn();
 </script>
 
