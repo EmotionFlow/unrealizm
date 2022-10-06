@@ -138,8 +138,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
 				<div class="HeaderSearch">
 					<div class="HeaderSearchInputWrapper">
-						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text"
-								placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"
+						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" maxlength="20"
+							   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>"
+							   autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"
 						/>
 						<div id="HeaderSearchClear" class="HeaderSearchClear">
 							<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
@@ -173,7 +174,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					</div>
 					<div class="HeaderSearch">
 						<div class="HeaderSearchInputWrapper">
-							<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>" autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"/>
+							<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" maxlength="20"
+								   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>"
+								   autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"/>
 							<div id="HeaderSearchClear" class="HeaderSearchClear">
 								<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
 							</div>
