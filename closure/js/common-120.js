@@ -157,7 +157,8 @@ function updateSearchCache(kwd, userId, searchType, limit = 5) {
 	const storageKey = `search-history-${searchType || ''}`;
 	const lastHistory = getLocalStrage(storageKey) || {};
 	const oldKWList = lastHistory.user == userId ? lastHistory.keywords : [];
-	const newKWList = [...(kwd ? [kwd] : []), ...(oldKWList || [])].filter((kw, idx, arr) => arr.indexOf(kw) == idx).slice(0, limit);
+	const newKW = kwd.replace(/^(#|@)/, '');
+	const newKWList = [...(newKW ? [newKW] : []), ...(oldKWList || [])].filter((kw, idx, arr) => arr.indexOf(kw) == idx).slice(0, limit);
 	setLocalStrage(storageKey, {
 		keywords: newKWList,
 		at: new Date(),
