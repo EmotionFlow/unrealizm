@@ -27,7 +27,7 @@ public class DeleteSearchLogC {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Users);
 		}
 
-		String sql = "UPDATE keyword_search_logs SET deleted = TRUE WHERE user_id = ? AND keywords = ?";
+		String sql = "UPDATE keyword_search_logs SET is_hide = TRUE WHERE user_id = ? AND keywords = ?";
 		if (targetCodes.size() > 0) {
 			sql += " AND search_target_code IN (?";
 			for (int i=1; i<targetCodes.size(); i++) { sql += ",?"; }

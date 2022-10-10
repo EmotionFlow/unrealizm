@@ -27,7 +27,7 @@ public class GetSearchLogC {
 			targetCodes.add(KeywordSearchLog.SearchTarget.Users);
 		}
 
-		String sql = "SELECT keywords FROM keyword_search_logs WHERE user_id=? AND created_at > now() - ?::INTERVAL AND deleted = FALSE";
+		String sql = "SELECT keywords FROM keyword_search_logs WHERE user_id=? AND created_at > now() - ?::INTERVAL AND is_hide = FALSE";
 
 		if (targetCodes.size() > 0) {
 			sql += " AND search_target_code IN (?";
