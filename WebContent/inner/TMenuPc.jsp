@@ -156,15 +156,15 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<%}%>
 		<%
 			String searchType = "Contents";
-			String requestPath = request.getRequestURL().toString();
+			final String requestPath = request.getRequestURL().toString();
 			if (Pattern.compile("/SearchUserByKeyword.*\\.jsp").matcher(requestPath).find()) {
 				searchType = "Users";
 			} else if (Pattern.compile("/SearchTagByKeyword.*\\.jsp").matcher(requestPath).find()) {
 				searchType = "Tags";
 			}
-			int cacheMin = Common.SEARCH_LOG_CACHE_MINUTES;
-			int suggestMax = Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId];
-			boolean passportOn = checkLogin.m_nPassportId == Common.PASSPORT_ON;
+			final int cacheMin = Common.SEARCH_LOG_CACHE_MINUTES;
+			final int suggestMax = Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId];
+			final boolean passportOn = checkLogin.m_nPassportId == Common.PASSPORT_ON;
 		%>
 		<%if(Util.isSmartPhone(request)) {%>
 			<div id="OverlaySearchWrapper" class="SearchWrapper overlay">
@@ -214,7 +214,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				});
 				$(document).on('click', '.RecentSearchDelBtn', ev => {
 					<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>
-						DispMsg("<%=_TEX.T("SearchLog.Delete.IntroPoipass")%>");
+						DispMsg("<%=_TEX.T("SearchLog.Delete.IntroPoipass")%>", 1500);
 					<%}else{%>
 						deleteSearchHistory('<%=searchType%>', $(ev.target).closest('.RecentSearchRow').find('.RecentSearchKW').text())
 						.then(() => {
@@ -255,7 +255,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				});
 				$(document).on('click', '.RecentSearchDelBtn', ev => {
 					<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>
-						DispMsg("<%=_TEX.T("SearchLog.Delete.IntroPoipass")%>");
+						DispMsg("<%=_TEX.T("SearchLog.Delete.IntroPoipass")%>", 1500);
 					<%}else{%>
 						deleteSearchHistory('<%=searchType%>', $(ev.target).closest('.RecentSearchRow').find('.RecentSearchKW').text())
 						.then(() => {
