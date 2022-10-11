@@ -1463,10 +1463,10 @@ Decoration
 }
 
 .IllustItemList2Column {
-	display: flex;
+	/*display: flex;*/
 	width: 100%;
-	flex-direction: row;
-	flex-wrap: wrap;
+	/*flex-direction: row;*/
+	/*flex-wrap: wrap;*/
 }
 
 .IllustItem {
@@ -1486,9 +1486,9 @@ Decoration
 
 .IllustItemList2Column .IllustItem {
 	min-height: 100px;
-	float: none;
-	display: flex;
-	flex-direction: column;
+	/*float: none;*/
+	/*display: flex;*/
+	/*flex-direction: column;*/
 	width: 176px;
 	margin: 3px 2px;
 }

@@ -585,21 +585,27 @@ public final class CCnv {
 				.append("</span>")
 				.append("</div>");	// ResEmojiCheerNowPayment
 
-		if(!miniList && nLoginUserId>0) {
+		if (nLoginUserId > 0) {
+			String emoji;
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
-			for(String emoji : vEmoji) {
+			for (int i=0; i<vEmoji.size(); i++) {
+				if (miniList && i >= 12) break;
+				emoji = vEmoji.get(i);
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
 			// 人気の絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Popular\" style=\"display: none;\"></div>");
 		} else {
+			String emoji;
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\" style=\"display: none;\"></div>");
 			// 人気の絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
-			for(String emoji : vEmoji) {
+			for (int i=0; i<vEmoji.size(); i++) {
+				if (miniList && i >= 12) break;
+				emoji = vEmoji.get(i);
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
 			strRtn.append("</div>");	// ResEmojiBtnList
