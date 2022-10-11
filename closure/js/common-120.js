@@ -206,7 +206,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 		} else {
 			const $li = $('<li></li>');
 			const $row = $('<div></div>', {class: 'RecentSearchRow'});
-			const $item = $('<div></div>', {class: 'RecentSearchKW', text: blankMsg});
+			const $item = $('<div></div>', {class: 'RecentSearchKWBlank', text: blankMsg});
 			$row.append($item);
 			$li.append($row);
 			$ul.append($li);
