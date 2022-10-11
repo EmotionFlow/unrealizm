@@ -167,7 +167,7 @@ function updateSearchCache(kwd, userId, searchType, limit = 5) {
 	});
 }
 
-function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
+function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit, deletable) {
 	$('.RecentSearchHeader').show();
 	$('.SearchListPoipassLink').show();
 	showSearchSpinner();
@@ -196,7 +196,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 				const $li = $('<li></li>', {class: 'RecentSearchItem'});
 				const $row = $('<div></div>', {class: 'RecentSearchRow'});
 				const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
-				const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+				const $close = $('<div></div>', {class: 'RecentSearchDelBtn' + (deletable ? '' : ' Disabled')});
 				const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
 				$close.append($closeIcon);
 				$row.append($item, $close);
