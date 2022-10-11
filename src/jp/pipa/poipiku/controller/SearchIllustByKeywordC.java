@@ -78,12 +78,13 @@ public final class SearchIllustByKeywordC {
 		boolean bResult = false;
 
 		final String sqlSelectContents = """
-				SELECT c.*, b.content_id bookmarking, f.follow_user_id following FROM contents_0000 c
+				SELECT c.*, b.content_id bookmarking, f.follow_user_id following, cdc.description comment_cache FROM contents_0000 c
 				LEFT JOIN (SELECT content_id FROM bookmarks_0000 WHERE user_id=?) b ON c.content_id=b.content_id
     			LEFT JOIN (SELECT follow_user_id FROM follows_0000 WHERE user_id=?) f ON c.user_id=f.follow_user_id
+    			LEFT JOIN comments_desc_cache cdc ON c.content_id = cdc.content_id
                 WHERE
 			    """
-				+ " (description &@~ ? OR tag_list &@~ ?) AND open_id<>2 AND safe_filter<=? AND publish_id IN (0, 5, 6)"
+				+ " (c.description &@~ ? OR tag_list &@~ ?) AND open_id<>2 AND safe_filter<=? AND publish_id IN (0, 5, 6)"
 				+ strCondStart
 				+ strCondBlockUser
 				+ strCondBlockedUser
@@ -123,6 +124,7 @@ public final class SearchIllustByKeywordC {
 				content.m_cUser.m_nReaction	= user.reaction;
 				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
 				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				content.m_strCommentsListsCache = Util.toString(resultSet.getString("comment_cache"));
 				if(!bContentOnly && m_strRepFileName.isEmpty() && content.m_nPublishId==Common.PUBLISH_ID_ALL) {
 					m_strRepFileName = content.m_strFileName;
 				}

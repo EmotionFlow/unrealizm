@@ -11,6 +11,7 @@ import jp.pipa.poipiku.*;
 
 public class GridUtil {
 	public static int SELECT_MAX_EMOJI = 59;
+	public static int SELECT_MINI_LIST_EMOJI = 9;
 
 	public static void getEachComment(Connection connection, List<CContent> contents) throws SQLException {
 		String sql = "SELECT description FROM comments_desc_cache WHERE content_id=?";
