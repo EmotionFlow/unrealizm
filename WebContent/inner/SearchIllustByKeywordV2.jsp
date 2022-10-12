@@ -188,10 +188,14 @@ String strFileUrl = cResults.m_strRepFileName;
 		<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
 	</header>
 
-	<section id="IllustItemList" class="IllustItemList2Column" style="position: relative; top: 110px;">
+	<section
+			id="IllustItemList"
+			class="IllustItemList2Column"
+			style="position: relative; top: <%=checkLogin.m_nPassportId==Common.PASSPORT_OFF?110:48%>px;"
+	>
 		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
 		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
-		<% if ((cnt == 3 || cnt == 9) && bSmartPhone){ %>
+		<% if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (cnt == 3 || cnt == 9) && bSmartPhone){ %>
 		<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
 		<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 		</div>
