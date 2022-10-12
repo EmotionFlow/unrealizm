@@ -1462,6 +1462,13 @@ Decoration
 	box-sizing: border-box;
 }
 
+.IllustItemList2Column {
+	/*display: flex;*/
+	width: 100%;
+	/*flex-direction: row;*/
+	/*flex-wrap: wrap;*/
+}
+
 .IllustItem {
 	display: block;
 	float: left;
@@ -1475,6 +1482,15 @@ Decoration
 	margin: 15px 8px;
 	border-radius: 6px;
 	border: solid 1px #eee;
+}
+
+.IllustItemList2Column .IllustItem {
+	min-height: 100px;
+	/*float: none;*/
+	/*display: flex;*/
+	/*flex-direction: column;*/
+	width: 176px;
+	margin: 3px 2px;
 }
 
 .IllustItem .BtnBase {
@@ -1502,9 +1518,13 @@ Decoration
 	box-sizing: border-box;
 	position: relative;
 	text-align: center;
-	padding: 8px 8px 8px 8px;
+	padding: 8px;
 	border-bottom: solid 1px #eee;
 	align-items: center;
+}
+
+.IllustItemList2Column .IllustItem .IllustItemUser {
+	padding: 4px;
 }
 
 .IllustItem .IllustItemUser .IllustItemUserThumb {
@@ -1532,6 +1552,13 @@ Decoration
 	overflow: hidden;
 }
 
+.IllustItemList2Column .IllustItemUser .IllustItemUserName {
+	display: flex;
+	flex: none;
+	font-weight: normal;
+	font-size: 12px;
+}
+
 .IllustItem .IllustItemUser .IllustItemUserName a {
 	color: #6d6965;
 }
@@ -1557,7 +1584,6 @@ Decoration
 	flex: 0 0 25px;
 	font-size: 18px;
 }
-
 
 .IllustItem .IllustItemCommand {
 	display: block;
@@ -1749,6 +1775,14 @@ Decoration
 	padding: 3px 6px;
 	border-radius: 12px;
 	opacity: 0.87;
+}
+
+.IllustItemList2Column .IllustItem .IllustItemExpand .IllustItemExpandBtn {
+	font-size: 11px;
+	line-height: 18px;
+	height: 18px;
+	padding: 1px 3px;
+	border-radius: 6px;
 }
 
 .IllustItem .IllustItemCmd {
@@ -2142,6 +2176,13 @@ Decoration
 	color: #6d6965;
 }
 
+.IllustItemList2Column .IllustItem .IllustItemDesc {
+	padding: 0 4px;
+	font-size: 12px;
+	height: 1.5em;
+	overflow: hidden;
+}
+
 .IllustItem .IllustItemDescTranslation{
 	margin: 5px 0 0 10px;
 	font-size: 17px;
@@ -2467,6 +2508,10 @@ Decoration
 	box-sizing: border-box;
 	text-align: left;
 	padding: 0;
+}
+
+.IllustItemList2Column .IllustItemResBtnList .ResBtnSetList {
+	margin-top: 6px;
 }
 
 .IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem {

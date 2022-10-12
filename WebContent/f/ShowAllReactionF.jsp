@@ -11,7 +11,7 @@ if(checkLogin.m_bLogin) {
 	StringBuilder strRtn = new StringBuilder();
 
 	CCnv.appendResEmoji(strRtn, cResults.contentUserId,
-			cResults.comments, cResults.lastCommentId, checkLogin.m_nUserId);
+			cResults.comments, cResults.lastCommentId, checkLogin.m_nUserId, false);
 
 	strHtml = strRtn.toString();
 	nRtn = 1;
