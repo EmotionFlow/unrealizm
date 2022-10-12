@@ -157,7 +157,8 @@ function updateSearchCache(kwd, userId, searchType, limit = 5) {
 	const storageKey = `search-history-${searchType || ''}`;
 	const lastHistory = getLocalStrage(storageKey) || {};
 	const oldKWList = lastHistory.user == userId ? lastHistory.keywords : [];
-	const newKWList = [...(kwd ? [kwd] : []), ...(oldKWList || [])].filter((kw, idx, arr) => arr.indexOf(kw) == idx).slice(0, limit);
+	const newKW = kwd.replace(/^(#|@)/, '');
+	const newKWList = [...(newKW ? [newKW] : []), ...(oldKWList || [])].filter((kw, idx, arr) => arr.indexOf(kw) == idx).slice(0, limit);
 	setLocalStrage(storageKey, {
 		keywords: newKWList,
 		at: new Date(),
@@ -166,7 +167,7 @@ function updateSearchCache(kwd, userId, searchType, limit = 5) {
 	});
 }
 
-function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
+function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit, deletable) {
 	$('.RecentSearchHeader').show();
 	$('.SearchListPoipassLink').show();
 	showSearchSpinner();
@@ -195,7 +196,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 				const $li = $('<li></li>', {class: 'RecentSearchItem'});
 				const $row = $('<div></div>', {class: 'RecentSearchRow'});
 				const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
-				const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
+				const $close = $('<div></div>', {class: 'RecentSearchDelBtn' + (deletable ? '' : ' Disabled')});
 				const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
 				$close.append($closeIcon);
 				$row.append($item, $close);
@@ -205,7 +206,7 @@ function showSearchHistory(searchType, blankMsg, cacheMinutes, userId, limit) {
 		} else {
 			const $li = $('<li></li>');
 			const $row = $('<div></div>', {class: 'RecentSearchRow'});
-			const $item = $('<div></div>', {class: 'RecentSearchKW', text: blankMsg});
+			const $item = $('<div></div>', {class: 'RecentSearchKWBlank', text: blankMsg});
 			$row.append($item);
 			$li.append($row);
 			$ul.append($li);
@@ -247,10 +248,7 @@ function showSearchSuggestion(searchType, inputStr) {
 				const $li = $('<li></li>', {class: 'RecentSearchItem'});
 				const $row = $('<div></div>', {class: 'RecentSearchRow'});
 				const $item = $('<div></div>', {class: 'RecentSearchKW', text: kw});
-				const $close = $('<div></div>', {class: 'RecentSearchDelBtn'});
-				const $closeIcon = $('<i></i>', {class: 'fas fa-times'});
-				$close.append($closeIcon);
-				$row.append($item, $close);
+				$row.append($item);
 				$li.append($row);
 				$ul.append($li);
 			});
@@ -293,6 +291,21 @@ function toggleClearSearchBtn() {
 		$HeaderSearchBox.css('padding-right', '1px');
 	}
 }
+
+function deleteSearchHistory(searchType, kwd) {
+	searchType = 'All'; // 今はUI側がイマイチなので、searchTypeをAllに固定する
+	return $.ajax({
+		"type": "post",
+		"url": "/f/DeleteSearchLogF.jsp",
+		"data": {
+			"type": searchType,
+			"keyword": kwd,
+		},
+		"dataType": "json",
+	}).then(() => {
+		localStorage.removeItem(`search-history-${searchType}`);
+	});
+};
 
 var sendObjectMessage = function(parameters) {
 	var iframe = document.createElement('iframe');
