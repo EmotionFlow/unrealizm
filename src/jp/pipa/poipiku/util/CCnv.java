@@ -590,7 +590,7 @@ public final class CCnv {
 			// よく使う絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Recent\">");
 			for (int i=0; i<vEmoji.size(); i++) {
-				if (miniList && i >= 12) break;
+				if (miniList && i >= 8) break;
 				emoji = vEmoji.get(i);
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
@@ -604,7 +604,7 @@ public final class CCnv {
 			// 人気の絵文字
 			strRtn.append("<div class=\"ResEmojiBtnList Popular\">");
 			for (int i=0; i<vEmoji.size(); i++) {
-				if (miniList && i >= 12) break;
+				if (miniList && i >= 8) break;
 				emoji = vEmoji.get(i);
 				strRtn.append(String.format("<a class=\"ResEmojiBtn\" href=\"javascript:void(0)\" onclick=\"SendEmoji(%d, '%s', %d, this)\">%s</a>", cContent.m_nContentId, emoji, nLoginUserId, CEmoji.parse(emoji)));
 			}
@@ -773,7 +773,7 @@ public final class CCnv {
 
 		StringBuilder strRtn = new StringBuilder();
 
-		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\">", strThumbCssClass, cContent.m_nContentId));
+		strRtn.append(String.format("<div class=\"IllustItem %s\" id=\"IllustItem_%d\" style=\"opacity: 0\">", strThumbCssClass, cContent.m_nContentId));
 
 		// ユーザ名とフォローボタン
 		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, false, false);

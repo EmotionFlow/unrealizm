@@ -99,6 +99,16 @@ String strFileUrl = cResults.m_strRepFileName;
 					const contents = document.getElementById('IllustItemList');
 					$(contents).append(data.html);
 					observer.observe(contents.lastElementChild);
+
+					let $newElems  = $('.IllustItem[style*="opacity: 0"]');
+					<%if (!Common.isDevEnv()){ %>
+					$('#IllustItemList').imagesLoaded(function(){
+					<%}%>
+					$newElems.animate({ opacity: 1 });
+					$('#IllustItemList').masonry('appended', $newElems, true);
+						<%if (!Common.isDevEnv()){ %>
+					});
+					<%}%>
 				}
 				removeLoadingSpinners(loadingSpinner.className);
 			}, (error) => {
@@ -131,14 +141,20 @@ String strFileUrl = cResults.m_strRepFileName;
 	<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 	<script>
 		$(function () {
+			<%if (!Common.isDevEnv()){ %>
 			$('#IllustItemList').imagesLoaded(function(){
+			<%}%>
+				let $newElems = $('.IllustItem');
+				$newElems.animate({ opacity: 1 });
 				$('#IllustItemList').masonry({
 					itemSelector: '.IllustItem',
 					columnWidth: 180,
 					isFitWidth: true,
 					gutterWidth: 0,
 				});
+			<%if (!Common.isDevEnv()){ %>
 			});
+			<%}%>
 		});
 	</script>
 
@@ -164,19 +180,21 @@ String strFileUrl = cResults.m_strRepFileName;
 
 	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 	<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
-				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
-			</span>
+		<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+	</span>
 	<%}%>
 
 	<header class="SearchResultTitle">
 		<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
 	</header>
 
-	<section id="IllustItemList" class="IllustItemList2Column">
+	<section id="IllustItemList" class="IllustItemList2Column" style="position: relative; top: 110px;">
 		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
 		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 		<% if ((cnt == 3 || cnt == 9) && bSmartPhone){ %>
+		<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
 		<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
+		</div>
 		<%}%>
 		<%}%>
 	</section>
