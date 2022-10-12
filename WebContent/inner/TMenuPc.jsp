@@ -157,9 +157,9 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<%
 			String searchType = "Contents";
 			final String requestPath = request.getRequestURL().toString();
-			if (Pattern.compile("/SearchUserByKeyword.*\\.jsp").matcher(requestPath).find()) {
+			if (requestPath.contains("/SearchUserByKeyword")) {
 				searchType = "Users";
-			} else if (Pattern.compile("/SearchTagByKeyword.*\\.jsp").matcher(requestPath).find()) {
+			} else if (requestPath.contains("/SearchTagByKeyword")) {
 				searchType = "Tags";
 			}
 			final int cacheMin = Common.SEARCH_LOG_CACHE_MINUTES;
