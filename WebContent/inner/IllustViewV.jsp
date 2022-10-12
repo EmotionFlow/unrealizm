@@ -56,6 +56,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 if (cResults.m_bRequestClient) {
 	cResults.m_cContent.setRequestImgThumb();
 }
+
+//ツイッターカード用:作者の言語でツイッターカードを作るためのResourceBundleControl
+ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.findLocale(CacheUsers0000.getInstance().getUser(cResults.m_cContent.m_nUserId).langId));
+
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
@@ -74,17 +78,14 @@ if (cResults.m_bRequestClient) {
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 		<meta name="twitter:card" content="summary_large_image" />
-		<%}else{%>
-		<meta name="twitter:card" content="summary" />
-		<%}%>
-		<meta name="twitter:site" content="@pipajp" />
-		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX)%>" />
-		<meta name="twitter:description" content="<%=Util.toDescString(strDesc)%>" />
-		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 		<meta name="twitter:image" content="<%="https://img.poipiku.com" + strFileUrl%>" />
 		<%}else{%>
+		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:image" content="https://img.poipiku.com/img/poipiku_icon_512x512_2.png" />
 		<%}%>
+		<meta name="twitter:site" content="@pipajp" />
+		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX_TWEET)%>" />
+		<meta name="twitter:description" content="<%=CTweet.generateMetaTwitterDesc(cResults.m_cContent, _TEX_TWEET)%>" />
 		<link rel="canonical" href="<%=strUrl%>" />
 		<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 		<title><%=Util.toDescString(strTitle)%></title>

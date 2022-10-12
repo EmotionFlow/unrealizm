@@ -58,6 +58,10 @@ public final class ResourceBundleControl {
 			}
 		}
 	}
+	
+	public ResourceBundleControl(Locale locale) {
+		objRb = CResourceBundleUtil.get(locale);
+	}
 
 	public Locale getLocale() {
 		return objRb.getLocale();
