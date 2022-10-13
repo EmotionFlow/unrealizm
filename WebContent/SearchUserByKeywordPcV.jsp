@@ -17,7 +17,7 @@ SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
 
 if (cResults.m_strKeyword.indexOf("#") == 0) {
-	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + cResults.encodedKeyword);
+	response.sendRedirect("https://poipiku.com/SearchTagByKeywordPcV.jsp?KWD=" + cResults.encodedKeyword);
 	return;
 }
 

@@ -22,10 +22,10 @@ if (isApp) {
 
 
 if (cResults.keyword.indexOf("#") == 0) {
-	response.sendRedirect("/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+	response.sendRedirect("https://poipiku.com/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
 } else if (cResults.keyword.indexOf("@") == 0) {
-	response.sendRedirect("/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+	response.sendRedirect("https://poipiku.com/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
 

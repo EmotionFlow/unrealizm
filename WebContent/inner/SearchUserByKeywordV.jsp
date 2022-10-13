@@ -32,7 +32,7 @@ SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
 
 if (cResults.m_strKeyword.indexOf("#") == 0) {
-	response.sendRedirect("/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+	response.sendRedirect("https://poipiku.com/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
 }
 
