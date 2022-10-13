@@ -21,6 +21,7 @@ public class Emoji {
 	static final int EMOJI_KEYBORD_PC = 14;
 	//static final int EMOJI_KEYBORD_SP = 8;
 	static final int EMOJI_KEYBORD_MAX = EMOJI_KEYBORD_PC*EMOJI_KEYBORD_LINE_DEFAULT;
+	static final int EMOJI_KEYBOARD_MINI = 8;
 
 	public static final int EMOJI_CAT_RECENT = 0;
 	public static final int EMOJI_CAT_POPULAR = 1;
@@ -218,8 +219,9 @@ public class Emoji {
 
 	//private static String[] FORBITTED_EMOJI = {"👎"};
 
-	public static ArrayList<String> getDefaultEmoji(int nUserId) {
-		ArrayList<String> vResult = new ArrayList<String>();
+	public static ArrayList<String> getDefaultEmoji(int userId) {
+		final int emojiNum = EMOJI_KEYBORD_MAX;
+		ArrayList<String> vResult = new ArrayList<>(emojiNum);
 
 		if(EMOJI_EVENT) {	// イベント用
 			Collections.addAll(vResult, EMOJI_EVENT_LIST);
@@ -231,22 +233,22 @@ public class Emoji {
 			try {
 				connection = DatabaseUtil.dataSource.getConnection();
 
-				if(nUserId>0) {
+				if(userId>0) {
 					strSql = "SELECT description FROM vw_comments_0000_last_7days WHERE user_id=? GROUP BY description ORDER BY count(description) DESC LIMIT ?";
 					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, nUserId);
-					statement.setInt(2, EMOJI_KEYBORD_MAX);
+					statement.setInt(1, userId);
+					statement.setInt(2, emojiNum);
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						vResult.add(Util.toString(resultSet.getString(1)).trim());
 					}
 					resultSet.close();resultSet=null;
 					statement.close();statement=null;
-					if(vResult.size()>0 && vResult.size()<EMOJI_KEYBORD_MAX){
+					if(vResult.size()>0 && vResult.size()<emojiNum){
 						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN(SELECT description FROM vw_comments_0000_last_7days WHERE user_id=?) ORDER BY rank DESC LIMIT ?";
 						statement = connection.prepareStatement(strSql);
-						statement.setInt(1, nUserId);
-						statement.setInt(2, EMOJI_KEYBORD_MAX-vResult.size());
+						statement.setInt(1, userId);
+						statement.setInt(2, emojiNum-vResult.size());
 						resultSet = statement.executeQuery();
 						while (resultSet.next()) {
 							vResult.add(Util.toString(resultSet.getString(1)).trim());
@@ -255,10 +257,10 @@ public class Emoji {
 						statement.close();statement=null;
 					}
 				}
-				if(vResult.size()<EMOJI_KEYBORD_MAX){
+				if(vResult.size()<emojiNum){
 					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
 					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, EMOJI_KEYBORD_MAX-vResult.size());
+					statement.setInt(1, emojiNum-vResult.size());
 					resultSet = statement.executeQuery();
 					while (resultSet.next()) {
 						vResult.add(Util.toString(resultSet.getString(1)).trim());
@@ -267,45 +269,6 @@ public class Emoji {
 					statement.close();statement=null;
 				}
 
-				/*
-				// vw_user_emoji_minuteバージョン
-				if(nUserId>0) {
-					strSql = "SELECT description FROM vw_user_emoji_minute WHERE user_id=? ORDER BY description_count DESC LIMIT ?";
-					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, nUserId);
-					statement.setInt(2, EMOJI_KEYBORD_MAX);
-					resultSet = statement.executeQuery();
-					while (resultSet.next()) {
-						vResult.add(Util.toString(resultSet.getString(1)).trim());
-					}
-					resultSet.close();resultSet=null;
-					statement.close();statement=null;
-					if(vResult.size()>0 && vResult.size()<EMOJI_KEYBORD_MAX){
-						strSql = "SELECT description FROM vw_rank_emoji_daily WHERE description NOT IN("+strSql+") ORDER BY rank DESC LIMIT ?";
-						statement = connection.prepareStatement(strSql);
-						statement.setInt(1, nUserId);
-						statement.setInt(2, EMOJI_KEYBORD_MAX);
-						statement.setInt(3, EMOJI_KEYBORD_MAX-vResult.size());
-						resultSet = statement.executeQuery();
-						while (resultSet.next()) {
-							vResult.add(Util.toString(resultSet.getString(1)).trim());
-						}
-						resultSet.close();resultSet=null;
-						statement.close();statement=null;
-					}
-				}
-				if(vResult.size()<EMOJI_KEYBORD_MAX){
-					strSql = "SELECT description FROM vw_rank_emoji_daily ORDER BY rank DESC LIMIT ?";
-					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, EMOJI_KEYBORD_MAX-vResult.size());
-					resultSet = statement.executeQuery();
-					while (resultSet.next()) {
-						vResult.add(Util.toString(resultSet.getString(1)).trim());
-					}
-					resultSet.close();resultSet=null;
-					statement.close();statement=null;
-				}
-				*/
 			} catch(Exception e) {
 				Log.d(strSql);
 				e.printStackTrace();

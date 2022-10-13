@@ -435,18 +435,18 @@ function DeleteContentBase(nUserId, nContentId, bDeleteTweet) {
 	});
 }
 
-function switchEmojiKeyboard(obj, nContentId, nSelected) {
-	var $ResEmojiBtnList = $(obj).parent().parent().children('.ResEmojiBtnList');
+function _switchEmojiKeyboard(obj, nContentId, nSelected, miniList) {
+	const $ResEmojiBtnList = $(obj).parent().parent().children('.ResEmojiBtnList');
 	$ResEmojiBtnList.hide();
-	var $ResEmojiBtnListTarg = $ResEmojiBtnList.eq(nSelected);
+	const $ResEmojiBtnListTarg = $ResEmojiBtnList.eq(nSelected);
 	if(!$ResEmojiBtnListTarg.loading) {
 		$ResEmojiBtnListTarg.loading = true;
-		var $objMessage = $("<div/>").addClass("Waiting");
+		const $objMessage = $("<div/>").addClass("Waiting");
 		$ResEmojiBtnListTarg.empty();
 		$ResEmojiBtnListTarg.append($objMessage);
 		$.ajax({
 			"type": "post",
-			"data": { "IID": nContentId, "CAT": nSelected},
+			"data": { "IID": nContentId, "CAT": nSelected, "MINI": miniList?1:0 },
 			"url": "/f/GetEmojiListF.jsp",
 			"dataType": "html",
 			"success": function(data) {
@@ -465,6 +465,15 @@ function switchEmojiKeyboard(obj, nContentId, nSelected) {
 	$(obj).parent().children('.ResBtnSetItem').removeClass('Selected');
 	$(obj).addClass('Selected');
 }
+
+function switchEmojiKeyboard(obj, nContentId, nSelected) {
+	_switchEmojiKeyboard(obj, nContentId, nSelected, false);
+}
+
+function switchEmojiKeyboardMini(obj, nContentId, nSelected) {
+	_switchEmojiKeyboard(obj, nContentId, nSelected, true);
+}
+
 
 function EditDesc(content_id) {
 	$("#IllustItemDesc_"+content_id).hide();

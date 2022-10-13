@@ -496,9 +496,11 @@ public final class CCnv {
 			if (GridUtil.SELECT_MINI_LIST_EMOJI < emojiList.size()) {
 				sb.append(
 						String.join("",
-						emojiList.subList(emojiList.size() - GridUtil.SELECT_MINI_LIST_EMOJI , emojiList.size() - 1)
+						emojiList.subList(emojiList.size() - GridUtil.SELECT_MINI_LIST_EMOJI , emojiList.size())
 						)
 				);
+			} else {
+				sb.append(String.join("", emojiList));
 			}
 		}
 
@@ -571,8 +573,10 @@ public final class CCnv {
 
 
 		strRtn.append("<div class=\"ResBtnSetList\">");
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>", (nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>", (nLoginUserId<1)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard%s(this, %d, 0)\">%s</a>",
+				(nLoginUserId>0)?"Selected":"", miniList?"Mini":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
+		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard%s(this, %d, 1)\">%s</a>",
+				(nLoginUserId<1)?"Selected":"", miniList?"Mini":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
 		// 使いまわしバレンタイン
 		//strRtn.append(String.format("<a class=\"BtnBase Xmas ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Valentine")));
 		// 使いまわし年賀状
