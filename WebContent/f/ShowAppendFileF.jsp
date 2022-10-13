@@ -16,7 +16,7 @@
 			// 2枚目の場所に1枚目を表示する
 			nRtn++;
 			content.setOrgImgThumb();
-			CCnv.appendIllustItemThumb3(sb, content, CCnv.VIEW_DETAIL, null);
+			CCnv.appendIllustItemThumb2(sb, content, null, CCnv.VIEW_DETAIL, null);
 		}
 		return nRtn;
 	}

@@ -144,7 +144,7 @@ String strFileUrl = cResults.m_strRepFileName;
 			<%if (!Common.isDevEnv()){ %>
 			$('#IllustItemList').imagesLoaded(function(){
 			<%}%>
-				let $newElems = $('.IllustItem');
+				let $newElems = $('.IllustItem, .loadingSpinner');
 				$newElems.animate({ opacity: 1 });
 				$('#IllustItemList').masonry({
 					itemSelector: '.IllustItem',

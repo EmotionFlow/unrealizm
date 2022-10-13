@@ -363,35 +363,36 @@ public final class CCnv {
 		}
 
 		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
-			appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
+			appendIllustItemThumb2(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
 		} else {
 			if (cContent.isHideThumbImg) {
-				appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
+				appendIllustItemThumb2(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
 			} else {
 				appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 			}
 		}
+	}
 
+	private static void appendContentItemThumbMiniList(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
+		if (cContent.thumbImgUrl == null || cContent.thumbImgUrl.isEmpty()) {
+			cContent.setThumb();
+		}
 
-//		final String strFileUrl;
-//		final int publishId = cContent.m_nPublishId;
-//		if (publishId == Common.PUBLISH_ID_ALL || !cContent.nowAvailable() || cContent.publishAllNum == 1) {
-//			if(cContent.m_nEditorId!=Common.EDITOR_TEXT) {
-//				appendIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, Common.GetUrl(cContent.m_strFileName));
-//			} else {
-//				appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-//			}
-//		} else {
-//			cContent.m_nFileNum++;
-//			strFileUrl = Common.PUBLISH_ID_FILE[cContent.m_nPublishId];
-//			appendIllustItemThumb(strRtn, null, nViewMode, ILLUST_VIEW, strFileUrl);
-//		}
+		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
+			appendIllustItemThumb2MiniList(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
+		} else {
+			if (cContent.isHideThumbImg) {
+				appendIllustItemThumb2MiniList(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
+			} else {
+				appendTextItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+			}
+		}
 	}
 
 	private static void appendMyIllustItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL){
 		cContent.setMyImgThumb();
 		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
-			appendIllustItemThumb3(strRtn, cContent, nViewMode, ILLUST_VIEW);
+			appendIllustItemThumb2(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
 		} else {
 			appendTextItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 		}
@@ -429,8 +430,13 @@ public final class CCnv {
 		strRtn.append("</a>");
 	}
 
-	public static void appendIllustItemThumb3(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW) {
-		appendIllustItemThumb2(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
+	public static void appendIllustItemThumb2MiniList(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW) {
+		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
+		strRtn.append(String.format(
+				ILLUST_ITEM_THUMB_IMG_FMT,
+				contentAppend == null ? Common.GetUrl(cContent.thumbImgUrl) : Common.GetUrl(contentAppend.m_strFileName + "_640.jpg")
+		));
+		strRtn.append("</a>");
 	}
 
 	private static void appendTextItemThumb(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
@@ -449,6 +455,16 @@ public final class CCnv {
 			strRtn.append(String.format("<span class=\"%s\">%s</span>", className, Util.replaceForGenEiFont(cContent.novelHtmlShort)));
 			strRtn.append("</a>");
 		}
+	}
+
+	private static void appendTextItemThumbMiniList(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
+		String className = "IllustItemThumbText";
+		if(cContent.novelDirection==1) {
+			className += " Vertical";
+		}
+		strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s\">", cContent.m_nContentId, ILLUST_VIEW));
+		strRtn.append(String.format("<span class=\"%s\">%s</span>", className, Util.replaceForGenEiFont(cContent.novelHtmlShort)));
+		strRtn.append("</a>");
 	}
 
 	public static void appendResEmoji(
@@ -764,9 +780,7 @@ public final class CCnv {
 		if (cContent.m_nContentId <= 0) return "";
 
 		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
-		final String REPORT_FORM = getReportFormContext(nMode);
 		final String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
-		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
 
 		final String strThumbCssClass = getThumbClass(cContent);
@@ -778,33 +792,14 @@ public final class CCnv {
 		// ユーザ名とフォローボタン
 		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, false, false);
 
-		// カテゴリーとコマンド
-//		strRtn.append("<div class=\"IllustItemCommand\">");
-//		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
-//		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, pageCategory);
-//		strRtn.append("</div>");	// IllustItemCommand
-
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
-		// タグ
-//		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
-
 		// 画像orテキスト
-		if (!cContent.nowAvailable() && cContent.m_nUserId == nLoginUserId) {
-			appendMyIllustItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-		} else {
-			appendContentItemThumb(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
-		}
-
-		// 2枚目以降用の場所
-		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
+		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 全て表示ボタン
-		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
-
-		// サムネイルへの重畳表示
-//		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
+//		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
