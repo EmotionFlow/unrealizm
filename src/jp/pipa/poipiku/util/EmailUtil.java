@@ -6,6 +6,10 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 public class EmailUtil {
+	static final String FROM_NAME = "POIPIKU";
+	static final String FROM_ADDR = "info@poipiku.com";
+	static final String SMTP_HOST = "localhost";
+
 	public static boolean send(final String toAddress, final String subject, final String body) {
 		if (Common.isDevEnv()) {
 			Log.d("開発環境のためメール送信をスキップします");
@@ -14,9 +18,8 @@ public class EmailUtil {
 			Log.d("body: " + body);
 			return true;
 		}
-		final String FROM_NAME = "POIPIKU";
-		final String FROM_ADDR = "info@poipiku.com";
-		final String SMTP_HOST = "localhost";
+
+		boolean result = true;
 		try {
 			Email email = new SimpleEmail();
 			email.setHostName(SMTP_HOST);
@@ -25,9 +28,12 @@ public class EmailUtil {
 			email.setMsg(body);
 			email.addTo(toAddress);
 			email.send();
-		} catch (EmailException e) {
+		} catch (Exception e) {
+			Log.d("to: " + toAddress);
+			Log.d("subject: " + subject);
 			e.printStackTrace();
+			result = false;
 		}
-		return true;
+		return result;
 	}
 }
