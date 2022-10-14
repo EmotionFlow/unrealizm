@@ -1226,6 +1226,35 @@ function illustDetailOnPopstate() {
 	return false;
 }
 
+function _showTextDetail(ownerUserId, contentId, password) {
+	$.ajax({
+		"type": "post",
+		"data": {"ID":ownerUserId, "TD":contentId, "AD":-1, "PAS":password},
+		"url": "/f/ShowIllustDetailF.jsp",
+		"dataType": "json",
+	}).then(
+		data => {
+			if (data.result === 1) {
+				location.href = "https://poipiku.com/IllustDetailPcV.jsp?ID=" + ownerUserId + "&TD=" + contentId;
+			} else {
+				switch (data.error_code) {
+					case -1:
+						location.href = 'StartPoipikuPcV.jsp';
+						break;
+					case -2:
+						DispNeedLoginMsg();
+						break;
+					default:
+						DispUnknownErrorMsg();
+				}
+			}
+		},err => {
+			DispUnknownErrorMsg();
+		}
+	);
+	return false;
+}
+
 function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 	$.ajax({
 		"type": "post",
@@ -1274,7 +1303,11 @@ function showIllustDetail(ownerUserId, contentId, appendId) {
 	const $IllustItem = $("#IllustItem_" + contentId);
 	let password = $IllustItem.find(".IllustItemExpandPass").val();
 	if (!password) password = "";
-	_showIllustDetail(ownerUserId, contentId, appendId, password.trim());
+	if ($IllustItem.hasClass('Text')) {
+		_showTextDetail(ownerUserId, contentId, password.trim());
+	} else {
+		_showIllustDetail(ownerUserId, contentId, appendId, password.trim());
+	}
 }
 
 function closeDetailOverlay() {

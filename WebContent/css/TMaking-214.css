@@ -1007,6 +1007,10 @@ Decoration
 	opacity: 0.90;
 }
 
+.IllustItemExpandBtn > .Publish.Mini {
+	margin-right: -1px;
+}
+
 .IllustItemExpandBtn:hover > .Publish {
 	filter: brightness(400);
 }
@@ -1761,12 +1765,22 @@ Decoration
 	opacity: 0.8;
 }
 
+.IllustItemList2Column .IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPass {
+	width: 75px;
+	height: 27px;
+}
+
 .IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPassVisible {
 	color: #77c8e3;
 	font-size: 12px;
 	position: relative;
 	margin-left: 4px;
 	vertical-align: bottom;
+}
+
+.IllustItemList2Column .IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPassVisible {
+	font-size: 11px;
+	margin-left: 1px;
 }
 
 .IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPass::placeholder {
@@ -1788,8 +1802,8 @@ Decoration
 
 .IllustItemList2Column .IllustItem .IllustItemExpand .IllustItemExpandBtn {
 	font-size: 11px;
-	line-height: 18px;
-	height: 18px;
+	line-height: 20px;
+	height: 20px;
 	padding: 1px 3px;
 	border-radius: 6px;
 }

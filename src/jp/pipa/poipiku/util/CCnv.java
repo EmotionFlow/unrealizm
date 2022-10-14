@@ -379,12 +379,12 @@ public final class CCnv {
 		}
 
 		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
-			appendIllustItemThumb2MiniList(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
+			appendIllustItemThumb2MiniList(strRtn, cContent);
 		} else {
 			if (cContent.isHideThumbImg) {
-				appendIllustItemThumb2MiniList(strRtn, cContent, null, nViewMode, ILLUST_VIEW);
+				appendIllustItemThumb2MiniList(strRtn, cContent);
 			} else {
-				appendTextItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
+				appendTextItemThumbMiniList(strRtn, cContent);
 			}
 		}
 	}
@@ -430,11 +430,15 @@ public final class CCnv {
 		strRtn.append("</a>");
 	}
 
-	public static void appendIllustItemThumb2MiniList(StringBuilder strRtn, CContent cContent, CContentAppend contentAppend, int nViewMode, String ILLUST_VIEW) {
-		strRtn.append(String.format("<a class=\"IllustItemThumb\" href=\"%s\">", ILLUST_VIEW));
+	public static void appendIllustItemThumb2MiniList(StringBuilder strRtn, CContent cContent) {
+		strRtn.append(
+				"""
+                <a class="IllustItemThumb" href="javascript:void(0)" onclick="showIllustDetail(%d,%d,-1)">
+				""".formatted(cContent.m_nUserId, cContent.m_nContentId)
+		);
 		strRtn.append(String.format(
 				ILLUST_ITEM_THUMB_IMG_FMT,
-				contentAppend == null ? Common.GetUrl(cContent.thumbImgUrl) : Common.GetUrl(contentAppend.m_strFileName + "_640.jpg")
+				Common.GetUrl(cContent.thumbImgUrl)
 		));
 		strRtn.append("</a>");
 	}
@@ -457,12 +461,16 @@ public final class CCnv {
 		}
 	}
 
-	private static void appendTextItemThumbMiniList(StringBuilder strRtn, CContent cContent, int nViewMode, String ILLUST_VIEW, String ILLUST_DETAIL) {
+	private static void appendTextItemThumbMiniList(StringBuilder strRtn, CContent cContent) {
 		String className = "IllustItemThumbText";
 		if(cContent.novelDirection==1) {
 			className += " Vertical";
 		}
-		strRtn.append(String.format("<a class=\"IllustItemText\" id=\"IllustItemText_%d\" href=\"%s\">", cContent.m_nContentId, ILLUST_VIEW));
+		strRtn.append(
+				"""
+                <a class="IllustItemText" id="IllustItemText_%d" href="javascript:void(0)" onclick="showIllustDetail(%d,%d,-1)">
+				""".formatted(cContent.m_nContentId, cContent.m_nUserId, cContent.m_nContentId)
+		);
 		strRtn.append(String.format("<span class=\"%s\">%s</span>", className, Util.replaceForGenEiFont(cContent.novelHtmlShort)));
 		strRtn.append("</a>");
 	}
@@ -761,7 +769,7 @@ public final class CCnv {
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
 
 		// 全て表示ボタン
-		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
+		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, false);
 
 		// サムネイルへの重畳表示
 		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
@@ -803,7 +811,7 @@ public final class CCnv {
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 全て表示ボタン
-//		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
+		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
@@ -871,7 +879,7 @@ public final class CCnv {
 		strRtn.append("<div class=\"IllustItemThubExpand\"></div>");
 
 		// 全て表示ボタン
-		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode);
+		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, false);
 
 		// サムネイルへの重畳表示
 		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
@@ -897,8 +905,7 @@ public final class CCnv {
 				_TEX.T("IllustView.ProhibitMsg")));
 	}
 
-	private static void appendIllustItemExpand(StringBuilder strRtn, CContent cContent,
-	                                           ResourceBundleControl _TEX, int nSpMode) {
+	private static int getImageRemainNum(CContent cContent) {
 		int remainNum;
 		if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
 			remainNum = cContent.m_nFileNum - 1;
@@ -918,6 +925,14 @@ public final class CCnv {
 				remainNum++;
 			}
 		}
+		return remainNum;
+	}
+
+
+	private static void appendIllustItemExpand(StringBuilder strRtn, CContent cContent,
+	                                           ResourceBundleControl _TEX, int nSpMode, boolean miniList) {
+
+		int remainNum = getImageRemainNum(cContent);
 
 		strRtn.append("<div class=\"IllustItemExpand\">");
 
@@ -930,26 +945,47 @@ public final class CCnv {
 			StringBuilder sb = new StringBuilder();
 
 			if (cContent.m_nSafeFilter != Common.SAFE_FILTER_ALL) {
-				sb.append(String.format("<span class=\"Publish SafeFilterIcoBlue%02d\"></span>", cContent.m_nSafeFilter));
+				sb.append(
+					"""
+                    <span class="Publish %s SafeFilterIcoBlue%02d"></span>
+					""".formatted(miniList ? "Mini" : "", cContent.m_nSafeFilter));
 			}
 
 			if (cContent.isValidPublishId() && cContent.m_nPublishId != Common.PUBLISH_ID_ALL) {
-				sb.append(String.format("<span class=\"Publish PublishIcoBlue%02d\"></span>", cContent.m_nPublishId));
+				sb.append(
+                    """
+                    <span class="Publish %s PublishIcoBlue%02d"></span>
+					""".formatted(miniList?"Mini":"", cContent.m_nPublishId));
 			}
 
 			final String remainLabel;
 			if (cContent.m_nEditorId != Common.EDITOR_TEXT) {
-				remainLabel = String.format(_TEX.T("IllustView.ExpandBtn"), remainNum);
+				remainLabel = String.format(_TEX.T(
+						"IllustView.ExpandBtn" + (miniList?"Mini":"")
+				), remainNum);
 			} else {
-				remainLabel = String.format(_TEX.T("IllustView.ExpandBtnText"), cContent.m_strTextBody.length());
+				remainLabel = String.format(_TEX.T(
+						"IllustView.ExpandBtnText" + (miniList?"Mini":"")
+				), cContent.m_strTextBody.length());
 			}
-			strRtn.append(String.format("<a class=\"BtnBase IllustItemExpandBtn\" href=\"javascript:void(0)\" onclick=\"ShowAppendFile(%d, %d, %d, this);\">%s %s</a>",
-					cContent.m_nUserId,
-					cContent.m_nContentId,
-					nSpMode,
-					sb,
-					remainLabel
-					));
+
+			final String onClickFunction;
+			if (!miniList) {
+				onClickFunction = "ShowAppendFile(%d, %d, %d, this)".formatted(
+						cContent.m_nUserId,
+						cContent.m_nContentId,
+						nSpMode);
+			} else {
+				onClickFunction = "showIllustDetail(%d, %d, -1)".formatted(
+						cContent.m_nUserId,
+						cContent.m_nContentId);
+			}
+			strRtn.append(
+                    """
+					<a class="BtnBase IllustItemExpandBtn" href="javascript:void(0)" onclick="%s">%s %s</a>
+					""".formatted(onClickFunction, sb, remainLabel)
+			);
+
 		}
 		strRtn.append("</div>");	// IllustItemExpand
 	}
