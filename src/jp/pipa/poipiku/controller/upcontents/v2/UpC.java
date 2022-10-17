@@ -93,15 +93,24 @@ public class UpC {
 	private void InsertIntoTags(String tag_list, String match_pattern, int tag_type, int content_id, Connection connection) throws SQLException{
 		Pattern ptn = Pattern.compile(match_pattern, Pattern.MULTILINE);
 		Matcher matcher = ptn.matcher(" "+tag_list.replaceAll("　", " ")+"\n");
-		String strSql ="INSERT INTO genres(genre_name) VALUES(?) ON CONFLICT(genre_name) DO UPDATE SET content_num_total=genres.content_num_total+1 RETURNING genre_id;";
+		String strSql ="""
+                INSERT INTO genres(genre_name) VALUES(?)
+                ON CONFLICT(genre_name)
+                DO UPDATE SET content_num_total = genres.content_num_total + 1
+                RETURNING genre_id;
+                """;
 		PreparedStatement statement_genre = connection.prepareStatement(strSql);
-		strSql ="INSERT INTO tags_0000(tag_txt, content_id, tag_type, genre_id) VALUES(?, ?, ?, ?) ON CONFLICT DO NOTHING;";
+		strSql ="""
+            INSERT INTO tags_0000(tag_txt, content_id, tag_type, genre_id)
+            VALUES(?, ?, ?, ?)
+            ON CONFLICT DO NOTHING;
+            """;
 		PreparedStatement statement_tag = connection.prepareStatement(strSql);
 		ResultSet resultSet;
-		for (int nNum=0; matcher.find() && nNum<20; nNum++) {
+		for (int nNum=0; matcher.find() && nNum<Common.TAG_MAX_NUM; nNum++) {
 			try {
 				// タグ文字列取得
-				String tag = Common.SubStrNum(matcher.group(1), 64);
+				String tag = Common.SubStrNum(matcher.group(1), Common.TAG_MAX_LENGTH);
 				int genre_id=-1;
 				if(tag_type==1) {
 					// ジャンルマスターテーブル更新

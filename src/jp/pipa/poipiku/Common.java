@@ -56,6 +56,9 @@ public final class Common {
 	public static final String HUSH_TAG_PATTERN = "[^#]#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 	public static final String MY_TAG_PATTERN = "##([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 
+	public static final int TAG_MAX_NUM = 20;
+	public static final int TAG_MAX_LENGTH = 64;
+
 	public static final String SLACK_WEBHOOK_ERROR = "https://hooks.slack.com/services/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";
 
 	// お知らせ一覧種別
