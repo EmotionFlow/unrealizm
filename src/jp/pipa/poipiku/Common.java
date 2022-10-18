@@ -47,8 +47,8 @@ public final class Common {
 	public static final String TWITTER_API_AUTHORIZE = "https://api.twitter.com/oauth/authorize";
 	public static final String TWITTER_API_AUTHENTICATE = "https://api.twitter.com/oauth/authenticate";
 	public static final String PROF_DEFAULT = "/img/DefaultProfile.jpg";
-	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/poipiku";	// for Database
-	public static final String DB_POSTGRESQL_REPLICA = "java:comp/env/jdbc/poipiku_replica";	// for Database
+	public static final String DB_POSTGRESQL = "java:comp/env/jdbc/ai_poipiku";	// for Database
+	public static final String DB_POSTGRESQL_REPLICA = "java:comp/env/jdbc/ai_poipiku_replica";	// for Database
 
 	public static final String TAG_PATTERN = "#([\\w\\p{InHiragana}\\p{InKatakana}\\p{InHalfwidthAndFullwidthForms}\\p{InCJKUnifiedIdeographs}一-龠々ー!$%()\\*\\+\\-\\.,\\/\\[\\]:;=?@^_`{|}~]+)";
 

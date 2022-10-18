@@ -36,7 +36,7 @@ public class DBConnection {
 			int ports[] = {5432};
 			dataSource.setPortNumbers(ports);
 
-			initialContext.bind("java:comp/env/jdbc/poipiku", dataSource);
+			initialContext.bind("java:comp/env/jdbc/ai_poipiku", dataSource);
 		} catch (javax.naming.NameAlreadyBoundException ex) {
 			;
 		} catch (NamingException ex) {
