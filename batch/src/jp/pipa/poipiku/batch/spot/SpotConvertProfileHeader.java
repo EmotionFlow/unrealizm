@@ -60,7 +60,7 @@ public class SpotConvertProfileHeader extends Batch {
 
 			Log.d("headerFilePathList.size: " + headerFilePathList.size());
 
-			final String PREFIX = "/var/www/html/poipiku";
+			final String PREFIX = "/var/www/html/ai_poipiku";
 			final String THUMB_ADDED = "_640.jpg";
 			int cnt = 1;
 			for (HeaderFileRecord record : headerFilePathList) {

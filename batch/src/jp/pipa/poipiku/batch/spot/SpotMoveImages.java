@@ -43,8 +43,8 @@ public class SpotMoveImages extends Batch {
 	private static final SlackNotifier slackNotifier = new SlackNotifier(WEBHOOK_URL);
 
 	private static final Path RSYNC_CMD_PATH = Paths.get(isDebug ? "/opt/local/bin/rsync" : "/usr/bin/rsync");
-	private static final String FROM_IMG_PATH_FMT ="/var/www/html/poipiku/user_img01/%09d";
-	private static final String TO_IMG_PATH_FMT = "/var/www/html/poipiku/user_img%02d/";
+	private static final String FROM_IMG_PATH_FMT ="/var/www/html/ai_poipiku/user_img01/%09d";
+	private static final String TO_IMG_PATH_FMT = "/var/www/html/ai_poipiku/user_img%02d/";
 	private static final Path DEV_NULL = Paths.get("/dev/null");
 
 	private static void notifyError(String msg) {

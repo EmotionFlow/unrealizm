@@ -9,7 +9,7 @@ import java.util.List;
 public class ImageMagickUtil {
     private static final Path CONVERT_CMD_PATH = Paths.get("/usr/local/bin/convert");
     private static final Path MONTAGE_CMD_PATH = Paths.get("/usr/local/bin/montage");
-    private static final Path AUTO_TWEET_HEADER = Paths.get("/var/www/html/poipiku/img/AutoTweetHeader.png");
+    private static final Path AUTO_TWEET_HEADER = Paths.get("/var/www/html/ai_poipiku/img/AutoTweetHeader.png");
     private static final Path DEV_NULL = Paths.get("/dev/null");
 
     public static int createThumbnail(String srcPath, String dstPath, String format, Integer width, Integer height) {

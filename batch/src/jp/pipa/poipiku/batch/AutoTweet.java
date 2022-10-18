@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class AutoTweet extends Batch {
 	static final boolean _DEBUG = false;
-	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
+	static final String SRC_IMG_PATH = "/var/www/html/ai_poipiku";	// 最後の/はDBに入っている
 
 	static final int TWITTER_PROVIDER_ID = 1;
 

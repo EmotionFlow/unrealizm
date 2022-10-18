@@ -31,8 +31,8 @@ public class SpotMoveImages2 extends Batch {
 	private static final SlackNotifier slackNotifier = new SlackNotifier(WEBHOOK_URL);
 
 	private static final Path RSYNC_CMD_PATH = Paths.get(isDebug ? "/opt/local/bin/rsync" : "/usr/bin/rsync");
-	private static final String FROM_IMG_PATH_FMT ="/var/www/html/poipiku/user_img01/%09d";
-	private static final String TO_IMG_PATH_FMT = "/var/www/html/poipiku/user_img%02d/%09d";
+	private static final String FROM_IMG_PATH_FMT ="/var/www/html/ai_poipiku/user_img01/%09d";
+	private static final String TO_IMG_PATH_FMT = "/var/www/html/ai_poipiku/user_img%02d/%09d";
 	private static final Path DEV_NULL = Paths.get("/dev/null");
 
 	static class Target {
@@ -91,7 +91,7 @@ public class SpotMoveImages2 extends Batch {
 		OkHttpClient client = new OkHttpClient();
 
 		for (Target target : targets) {
-			Path contentFilePath = Paths.get("/var/www/html/poipiku", target.fileName);
+			Path contentFilePath = Paths.get("/var/www/html/ai_poipiku", target.fileName);
 			Log.d("tgt: " + contentFilePath);
 			// img01側にファイルが本当にあったら、それをコピーする。
 			if (Files.exists(contentFilePath)){

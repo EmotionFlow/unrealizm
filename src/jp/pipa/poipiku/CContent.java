@@ -66,7 +66,7 @@ public final class CContent {
 
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
-	static final String SRC_IMG_PATH = "/var/www/html/poipiku";    // 最後の/はDBに入っている
+	static final String SRC_IMG_PATH = "/var/www/html/ai_poipiku";    // 最後の/はDBに入っている
 	
 	public boolean isHideThumbImg = false;
 

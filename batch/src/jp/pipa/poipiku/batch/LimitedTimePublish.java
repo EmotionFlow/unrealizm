@@ -23,7 +23,7 @@ import jp.pipa.poipiku.util.CTweet;
 
 public class LimitedTimePublish extends Batch {
 	static final boolean _DEBUG = false;
-	static final String SRC_IMG_PATH = "/var/www/html/poipiku";	// 最後の/はDBに入っている
+	static final String SRC_IMG_PATH = "/var/www/html/ai_poipiku";	// 最後の/はDBに入っている
 
 	private static Integer updateContentId(int nOldContentId) {
 		String strSql = "";
