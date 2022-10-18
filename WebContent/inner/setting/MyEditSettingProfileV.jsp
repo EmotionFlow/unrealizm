@@ -60,9 +60,9 @@
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("Twitter.Share.MyUrl")%></div>
 		<div class="SettingBody">
-			<a href="https://poipiku.com/<%=checkLogin.m_nUserId%>/"
+			<a href="https://ai.poipiku.com/<%=checkLogin.m_nUserId%>/"
 			style="font-size: 14px; text-decoration: underline;">
-				https://poipiku.com/<%=checkLogin.m_nUserId%>/
+				https://ai.poipiku.com/<%=checkLogin.m_nUserId%>/
 			</a>
 			<div class="SettingBodyCmd">
 				<%
@@ -71,7 +71,7 @@
 									checkLogin.m_strNickName,
 									_TEX.T("Twitter.UserAddition"),
 									_TEX.T("Common.HashTag")), "UTF-8"),
-							URLEncoder.encode("https://poipiku.com/"+checkLogin.m_nUserId+"/", "UTF-8"));
+							URLEncoder.encode("https://ai.poipiku.com/"+checkLogin.m_nUserId+"/", "UTF-8"));
 
 				%>
 				<a class="BtnBase" href="<%=strTwitterUrl%>" target="_blank"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>

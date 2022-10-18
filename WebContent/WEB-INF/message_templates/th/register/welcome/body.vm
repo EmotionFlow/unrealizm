@@ -28,7 +28,7 @@ $u.nickname
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://poipiku.com/$u.userId
+https://ai.poipiku.com/$u.userId
 
 #end
 
@@ -57,7 +57,7 @@ https://poipiku.com/$u.userId
 นี่คือบัญชีอย่างเป็นทางการของ POIPIKU และ Twitter เราจะโพสต์ข้อมูลอัปเดตและข้อมูลแคมเปญตามความจำเป็น ดังนั้นโปรดติดตามเราหากคุณต้องการ
 
 POIPIKU
-https://poipiku.com/2
+https://ai.poipiku.com/2
 
 Twitter
 https://twitter.com/pipajp

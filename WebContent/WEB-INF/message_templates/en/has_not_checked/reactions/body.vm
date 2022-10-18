@@ -4,13 +4,13 @@
 
 あなたの${contents_total}作品に、${reactions_total}リアクションが送られています。
 お知らせ画面で絵文字リアクションの通知をチェックしてみましょう。
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 --------
 
 $reactions_total emoji reactions have been sent to your $contents_total works.
 Check the Notification screen for the reactions.
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 
 #parse("en/footer.vm")

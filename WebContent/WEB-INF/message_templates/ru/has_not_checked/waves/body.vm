@@ -2,6 +2,6 @@
 
 Вы получили ${waves_total} приветствующих эмодзи.
 Проверьте экран уведомлений на наличие уведомлений.
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 #parse("ru/footer.vm")

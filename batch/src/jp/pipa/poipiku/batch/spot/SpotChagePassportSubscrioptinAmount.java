@@ -22,8 +22,8 @@ public class SpotChagePassportSubscrioptinAmount extends Batch{
 		ResultSet resultSet = null;
 		String sql = "";
 
-		final String urlClearUserCacheF = URL_SCHEME + "://poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
-		final String urlChangeRegularlyAmountF = URL_SCHEME + "://poipiku.com/api/ChangeRegularlyAmountF.jsp?TOKEN=08yg3qghpwj48q6742o97qwqvh&ID=%d&AMT=%d";
+		final String urlClearUserCacheF = URL_SCHEME + "://ai.poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
+		final String urlChangeRegularlyAmountF = URL_SCHEME + "://ai.poipiku.com/api/ChangeRegularlyAmountF.jsp?TOKEN=08yg3qghpwj48q6742o97qwqvh&ID=%d&AMT=%d";
 		OkHttpClient client = new OkHttpClient();
 
 		LocalDate now = LocalDate.now();

@@ -38,8 +38,8 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 
 if (strNextUrl.isEmpty()) {
 	String referer = Util.toString(request.getHeader("Referer"));
-	if (referer.contains("poipiku.com")) {
-		strNextUrl = referer.replace("https://poipiku.com", "");
+	if (referer.contains("ai.poipiku.com")) {
+		strNextUrl = referer.replace("https://ai.poipiku.com", "");
 	} else {
 		strNextUrl = "/";
 	}

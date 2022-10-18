@@ -7,7 +7,7 @@ A user you follow on Twitter has started a POIPIKU.
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://poipiku.com/$u.userId
+https://ai.poipiku.com/$u.userId
 
 #end
 

@@ -75,7 +75,7 @@ int result = Common.API_NG;
 int errorCode = 0;
 
 final String referer = Util.toString(request.getHeader("Referer"));
-if (!referer.contains("poipiku.com")) {
+if (!referer.contains("ai.poipiku.com")) {
 	Log.d("ShowIllustDetailFへの不正アクセス(referer不一致):" + referer);
 	errorCode = -1;
 }

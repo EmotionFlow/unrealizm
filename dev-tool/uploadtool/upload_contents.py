@@ -1,7 +1,7 @@
 import json
 import requests
 
-POIPIKU_URL = 'https://poipiku.com/'
+POIPIKU_URL = 'https://ai.poipiku.com/'
 
 
 def upload_content(_user_id, _user_lk, _description, _upload_file_path):

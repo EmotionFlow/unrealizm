@@ -2,6 +2,6 @@
 
 คุณมี ${waves_total} ตอบกลับ
 ตรวจสอบการแจ้งเตือนของคุณในหน้าการแจ้งเตือน
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 #parse("th/footer.vm")

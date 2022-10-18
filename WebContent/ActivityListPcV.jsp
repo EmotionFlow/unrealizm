@@ -50,7 +50,7 @@ if (infoType==-1) infoType = 1;
 								html: `
 								<p style="text-align: left">他のユーザーからあなた宛に「エアスケブの受付を開始してほしい」という通知が来ました。
 									<a style="color: #545454;text-decoration: underline;"
-										href="https://poipiku.com/MyEditSettingPcV.jsp?MENUID=REQUEST">
+										href="https://ai.poipiku.com/MyEditSettingPcV.jsp?MENUID=REQUEST">
 										設定画面で「エアスケブの依頼を受け付ける」をONにする</a>と、受付を開始できます。</p>
 								`,
 								showCloseButton: true,

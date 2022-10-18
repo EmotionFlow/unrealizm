@@ -3,7 +3,7 @@
 <%
 boolean result;
 CheckLogin checkLogin = new CheckLogin(request, response);
-if (!request.getHeader("REFERER").contains("poipiku.com") || !checkLogin.m_bLogin) {
+if (!request.getHeader("REFERER").contains("ai.poipiku.com") || !checkLogin.m_bLogin) {
 	Log.d("不正アクセス");
 	result = false;
 } else {

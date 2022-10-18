@@ -156,10 +156,10 @@ cResults.getResults(checkLogin);
 				<div id="InfoMsg" style="display: none; margin-top:30px; text-align: center;">
 					<h3><%=_TEX.T("FollowingTag.Info01")%></h3>
 					<div style="text-decoration: underline; margin-top: 15px;">
-						<a class="FooterLink" href="https://poipiku.com/SearchTagByKeywordPcV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
+						<a class="FooterLink" href="https://ai.poipiku.com/SearchTagByKeywordPcV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
 					</div>
 					<div style="text-decoration: underline; margin-top: 15px;">
-						<a class="FooterLink" href="https://poipiku.com/PopularTagListPcV.jsp"><%=_TEX.T("FollowingTag.Link02")%></a>
+						<a class="FooterLink" href="https://ai.poipiku.com/PopularTagListPcV.jsp"><%=_TEX.T("FollowingTag.Link02")%></a>
 					</div>
 				</div>
 				<%}%>

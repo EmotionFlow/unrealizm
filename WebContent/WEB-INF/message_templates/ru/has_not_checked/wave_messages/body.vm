@@ -2,6 +2,6 @@
 
 Вы получили эмодзи с ${waves_total} сообщениями поддержки, адресованными вам.
 Проверьте свои уведомления на странице уведомлений.
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 #parse("ru/footer.vm")

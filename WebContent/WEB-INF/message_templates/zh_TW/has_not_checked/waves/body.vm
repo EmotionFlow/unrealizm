@@ -2,6 +2,6 @@
 
 您已收到 ${waves_total} 歡呼表情符號。
 檢查通知屏幕上的通知。
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 #parse("zh_TW/footer.vm")

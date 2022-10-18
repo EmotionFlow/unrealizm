@@ -2,6 +2,6 @@
 
 Has recibido un emoji con ${waves_total} mensajes de apoyo dirigidos a ti.
 Consulta tus notificaciones en la página Notificaciones.
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 #parse("es/footer.vm")

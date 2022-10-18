@@ -4,7 +4,7 @@
 request.setCharacterEncoding("UTF-8");
 
 String referer = Util.toString(request.getHeader("Referer"));
-if (!referer.contains("poipiku.com")) {
+if (!referer.contains("ai.poipiku.com")) {
 	Log.d("Illegal referer.");
 	return;
 }

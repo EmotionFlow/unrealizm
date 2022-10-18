@@ -9,7 +9,7 @@ public class CommonsEmailSample extends Batch {
 	public static void main(String[] args) {
 
 		final String FROM_NAME = "ポイピク";
-		final String FROM_ADDR = "info@poipiku.com";
+		final String FROM_ADDR = "info@ai.poipiku.com";
 		final String SMTP_HOST = "localhost";
 
 		try {

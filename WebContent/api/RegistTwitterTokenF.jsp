@@ -125,7 +125,7 @@ try {
 		cState.setString(4, tokenSecret);
 		cState.setString(5, twitterUserId);
 		cState.setString(6, screen_name);
-		cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://poipiku.com/%d/", checkLogin.m_nUserId));
+		cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://ai.poipiku.com/%d/", checkLogin.m_nUserId));
 		cState.executeUpdate();
 	}
 	cState.close();cState=null;

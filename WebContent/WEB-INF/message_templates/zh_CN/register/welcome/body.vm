@@ -29,7 +29,7 @@ $u.nickname
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://poipiku.com/$u.userId
+https://ai.poipiku.com/$u.userId
 
 #end
 
@@ -58,7 +58,7 @@ https://poipiku.com/$u.userId
 这是POIPIKU和Twitter的官方账户。我们将根据需要发布最新信息和运动信息，如果你喜欢，请关注我们。
 
 POIPIKU
-https://poipiku.com/2
+https://ai.poipiku.com/2
 
 Twitter
 https://twitter.com/pipajp

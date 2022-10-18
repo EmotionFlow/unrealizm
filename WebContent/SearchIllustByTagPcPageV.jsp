@@ -16,7 +16,7 @@ boolean bRtn = results.getResults(checkLogin);
 String strEncodedKeyword = URLEncoder.encode(results.keyword, "UTF-8");
 String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), results.keyword) + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), results.keyword, results.contentsNum);
-String strUrl = "https://poipiku.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
+String strUrl = "https://ai.poipiku.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
 String strFileUrl = results.m_strRepFileName;
 %>
 <!DOCTYPE html>

@@ -2,6 +2,6 @@
 
 ส่งอิโมจิ $reactions_total ตอบกลับไปยังผลงาน $contents_total ของคุณแล้ว
 ตรวจสอบหน้าจอการแจ้งเตือนสำหรับปฏิกิริยา
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 #parse("th/footer.vm")

@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 boolean isPrecheckOK = true;
-if (request.getHeader("REFERER")==null || !request.getHeader("REFERER").contains("poipiku.com")) {
+if (request.getHeader("REFERER")==null || !request.getHeader("REFERER").contains("ai.poipiku.com")) {
 	Log.d(String.format("不正なREFERER: %s, %s, %s, %s",
 			request.getRemoteAddr(),
 			request.getHeader("REFERER"),

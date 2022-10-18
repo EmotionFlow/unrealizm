@@ -2,6 +2,6 @@
 
 您有 ${waves_total} 條回复。
 在通知頁面上查看您的通知。
-https://poipiku.com/ActivityListPcV.jsp
+https://ai.poipiku.com/ActivityListPcV.jsp
 
 #parse("zh_TW/footer.vm")

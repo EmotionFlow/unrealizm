@@ -7,7 +7,7 @@ Một người dùng mà bạn theo dõi trên Twitter đã bắt đầu một P
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://poipiku.com/$u.userId
+https://ai.poipiku.com/$u.userId
 
 #end
 

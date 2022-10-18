@@ -25,7 +25,7 @@ import java.util.List;
 
 public class SpotMoveImages2 extends Batch {
 	static final boolean isDebug = false;
-	static final String urlClearUserCacheF = "http://poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
+	static final String urlClearUserCacheF = "http://ai.poipiku.com/api/ClearUserCacheF.jsp?TOKEN=kkvjaw8per32qt3j28ycb4&ID=";
 
 	private static final String WEBHOOK_URL = "https://hooks.slack.com/services/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";
 	private static final SlackNotifier slackNotifier = new SlackNotifier(WEBHOOK_URL);

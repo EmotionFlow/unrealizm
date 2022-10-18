@@ -1032,7 +1032,7 @@ public final class CCnv {
 		strRtn.append(
 				"""
 				<div class="IllustItemExpandPassFrame">
-				<img class="PasswordIcon" src="//poipiku.com/img/ico_pass_blue.png"/>
+				<img class="PasswordIcon" src="//ai.poipiku.com/img/ico_pass_blue.png"/>
 				<input class="IllustItemExpandPass" name="PAS" type="text" maxlength="16" />
 				<a class="IllustItemExpandPassVisible Display" style="display:none" href="javascript:void(0)" onclick="visibleContentPassword(this)">%s</a>
 				<a class="IllustItemExpandPassVisible Hide" href="javascript:void(0)" onclick="hideContentPassword(this)">%s</a>
