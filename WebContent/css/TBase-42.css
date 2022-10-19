@@ -101,16 +101,17 @@
 }
 
 body {
-	font-family: Verdana, 'Rounded Mplus 1c', 'ヒラギノ角ゴ Pro W3',
-		'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック',
-		'MS PGothic', sans-serif;
+	font-family: "Helvetica Neue",
+		Arial,
+		"Hiragino Kaku Gothic ProN",
+		"Hiragino Sans",
+		Meiryo,
+		sans-serif;
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
-	color: #fff;
-	/*background: #b8d6e0;*/
-	/*background: #f3f3f3;*/
-	background: #3498db;
+	color: #262626;
+	background: #fafafa;
 	/* background: #ff9900; Halloween color */
 	-webkit-text-size-adjust: none;
 	user-select: none;
@@ -141,7 +142,7 @@ h2, h3 {
 }
 
 input, button, textarea, select {
-	font-family: Verdana, 'Rounded Mplus 1c', 'ヒラギノ角ゴ Pro W3',
+	font-family: Verdana, 'ヒラギノ角ゴ Pro W3',
 		'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Osaka, 'ＭＳ Ｐゴシック',
 		'MS PGothic', sans-serif;
 	font-size: 14px;
@@ -179,7 +180,7 @@ a {
 }
 
 .Misaki {
-	font-family: Misaki, 'Rounded Mplus 1c', 'ヒラギノ角ゴ Pro W3',
+	font-family: Misaki, 'ヒラギノ角ゴ Pro W3',
 		'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, Verdana, Osaka, 'ＭＳ Ｐゴシック',
 		'MS PGothic', sans-serif;
 }
@@ -212,7 +213,7 @@ a {
 }
 
 a.Selected {
-	color: #3498db;
+	color: #262626;
 }
 
 hr {
@@ -229,12 +230,17 @@ form, button {
 
 .BtnBase, input[type="submit"], input[type="button"], button {
 	border: 1px solid #fff;
-	background: #3498db;
+	background: #262626;
 	color: #fff;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	font-family: Verdana, 'Rounded Mplus 1c', arial, helvetica, sans-serif;
+	font-family: "Helvetica Neue",
+		Arial,
+		"Hiragino Kaku Gothic ProN",
+		"Hiragino Sans",
+		Meiryo,
+		sans-serif;
 	padding: 3px 12px;
 	text-decoration: none;
 	display: inline-block;
@@ -246,9 +252,9 @@ form, button {
 
 .BtnBase.Selected, input[type="submit"].Selected, input[type="button"].Selected,
 	button.Selected {
-	border: 1px solid #3498db;
+	border: 1px solid #262626;
 	background: #fff;
-	color: #3498db;
+	color: #262626;
 }
 
 .BtnBase.Disabled, input[type="submit"].Disabled,
@@ -260,14 +266,14 @@ form, button {
 }
 
 .BtnBase.Rev {
-	border-color: #3498db;
+	border-color: #262626;
 	background-color: #fff;
-	color: #3498db;
+	color: #262626;
 }
 
 .BtnBase.Rev.Selected {
 	border-color: #fff;
-	background-color: #3498db;
+	background-color: #262626;
 	color: #fff;
 }
 
@@ -459,5 +465,5 @@ form, button {
 .TabMenuWrapper {display: block; width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 900; top: 51px;}
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; height:27px; margin: 0 auto; background: #fff; overflow-x: scroll; padding: 0; list-style: none;}
 .TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
-.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #3498db; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
-.TabMenu .TabMenuItem.Selected {border-color: #3498db;}
+.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #262626; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
+.TabMenu .TabMenuItem.Selected {border-color: #262626;}
