@@ -44,7 +44,7 @@ if(bTwRet && cTweet.m_bIsTweetEnable && cResults.m_cContent.m_nPublishId == Comm
 	nTwLstRet = cTweet.GetMyOpenLists();
 }
 
-response.setHeader("Access-Control-Allow-Origin", "https://img.ai.poipiku.com");
+response.setHeader("Access-Control-Allow-Origin", "https://ai-img.poipiku.com");
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">

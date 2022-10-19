@@ -86,18 +86,18 @@ CheckLogin checkLogin = new CheckLogin();
 		<article class="Wrapper">
 			<section class="AnalogicoInfo Flyer Omote">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Omote")%>"/>
+					<img class="PoipikuFlyerImg" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Omote")%>"/>
 				</div>
 			</section>
 			<section class="AnalogicoInfo Flyer Ura">
 				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Ura")%>" />
+					<img class="PoipikuFlyerImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Ura")%>" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Title">
 				<div class="AnalogicoDesc Title">
 					<div>
-						<img class="TopTitleLogo" loading="lazy" src="//img.ai.poipiku.com/img/poipiku_icon_512x512_2.png" alt="<%=_TEX.T("THeader.Title")%>">
+						<img class="TopTitleLogo" loading="lazy" src="//ai-img.poipiku.com/img/poipiku_icon_512x512_2.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</div>
 					<h1 class="TopTitleInfo"><%=_TEX.T("THeader.Title.Desc")%></h1>
 					<!--
@@ -144,25 +144,25 @@ CheckLogin checkLogin = new CheckLogin();
 		<article class="Wrapper ThumbList">
 			<section class="PoipikuInfo">
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" alt="<%=_TEX.T("StartPoipiku.Capture01")%>"/>
+					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" alt="<%=_TEX.T("StartPoipiku.Capture01")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" alt="<%=_TEX.T("StartPoipiku.Capture02")%>"/>
+					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" alt="<%=_TEX.T("StartPoipiku.Capture02")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" alt="<%=_TEX.T("StartPoipiku.Capture03")%>"/>
+					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" alt="<%=_TEX.T("StartPoipiku.Capture03")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" alt="<%=_TEX.T("StartPoipiku.Capture04")%>"/>
+					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" alt="<%=_TEX.T("StartPoipiku.Capture04")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" alt="<%=_TEX.T("StartPoipiku.Capture05")%>"/>
+					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" alt="<%=_TEX.T("StartPoipiku.Capture05")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" alt="<%=_TEX.T("StartPoipiku.Capture06")%>"/>
+					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" alt="<%=_TEX.T("StartPoipiku.Capture06")%>"/>
 				</div>
 				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//img.ai.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" alt="<%=_TEX.T("StartPoipiku.Capture07")%>"/>
+					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" alt="<%=_TEX.T("StartPoipiku.Capture07")%>"/>
 				</div>
 
 				<div class="PoipikuDesc Full">

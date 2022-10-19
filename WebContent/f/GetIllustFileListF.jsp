@@ -15,7 +15,7 @@ results.getParam(request);
 int nRtn = results.getResults(checkLogin);
 
 if (nRtn > 0) {
-	response.setHeader("Access-Control-Allow-Origin", "https://img.ai.poipiku.com");
+	response.setHeader("Access-Control-Allow-Origin", "https://ai-img.poipiku.com");
 
 	//オブジェクト配列をJSONに変換
 	ObjectMapper mapper = null;

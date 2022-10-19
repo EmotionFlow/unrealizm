@@ -59,10 +59,10 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:image" content="<%="https://img.ai.poipiku.com" + strFileUrl%>" />
+		<meta name="twitter:image" content="<%="https://ai-img.poipiku.com" + strFileUrl%>" />
 		<%}else{%>
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:image" content="https://img.ai.poipiku.com/img/poipiku_icon_512x512_2.png" />
+		<meta name="twitter:image" content="https://ai-img.poipiku.com/img/poipiku_icon_512x512_2.png" />
 		<%}%>
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX_TWEET)%>" />
@@ -78,7 +78,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>",
 				 "name": "<%=Util.toDescString(strTitle)%>",
 				 <%if(cResults.m_cContent.isTweetWithThumbnail()){%>
-				 "image": "<%="https://img.ai.poipiku.com" + strFileUrl%>"
+				 "image": "<%="https://ai-img.poipiku.com" + strFileUrl%>"
 				 <%}else{%>
 				 "image": "https://ai.poipiku.com/img/poipiku_icon_512x512_2.png"
 				 <%}%>

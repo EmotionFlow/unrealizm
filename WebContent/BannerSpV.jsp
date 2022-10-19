@@ -29,7 +29,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="AnalogicoStart">
 				<a class="BtnBase" href="https://ai.poipiku.com/">
-					<img class="Logo" src="//img.ai.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>">
+					<img class="Logo" src="//ai-img.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>">
 				</a>
 			</div>
 			<div class="AnalogicoDesc Title">

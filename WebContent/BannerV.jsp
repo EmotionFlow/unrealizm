@@ -36,7 +36,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 					進捗ポイポイ<br />
 					<br />
 					<a class="BtnBase" href="https://ai.poipiku.com/">
-						<img class="Logo" src="//img.ai.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>">
+						<img class="Logo" src="//ai-img.poipiku.com/img/pc_top_title-03.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</a>
 				</div>
 			</div>

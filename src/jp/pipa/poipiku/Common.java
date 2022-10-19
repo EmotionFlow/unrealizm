@@ -348,12 +348,12 @@ public final class Common {
 
 	public static String GetUrl(final String strFileName) {
 		if(strFileName==null) return "";
-		return "//img.ai.poipiku.com" + strFileName;
+		return "//ai-img.poipiku.com" + strFileName;
 	}
 
 	public static String GetOrgImgUrl(final String strFileName) {
 		if(strFileName==null) return "";
-		return "//img-org.ai.poipiku.com" + strFileName;
+		return "//ai-img-org.poipiku.com" + strFileName;
 	}
 
 	public static String GetPoipikuUrl(final String strFileName) {
