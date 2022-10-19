@@ -453,6 +453,9 @@ public class IllustListC {
 
 			statement.setInt(idx++, offset);
 			statement.setInt(idx++, limit);
+
+			Log.d(statement.toString());
+
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent cContent;
