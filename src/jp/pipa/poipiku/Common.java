@@ -39,8 +39,10 @@ public final class Common {
 	public static final int PAGE_BAR_NUM = 2;
 
 	public static final int TWITTER_PROVIDER_ID = 1;
-	public static final String TWITTER_CONSUMER_KEY = "Wh6tHeINW6IQbSd1nJP9i1yUN";
-	public static final String TWITTER_CONSUMER_SECRET = "kXYW0KkWlfDszfGn0m8lj3aEz6vB3iWzY5M1SO9T8DNM9rXJY0";
+//	public static final String TWITTER_CONSUMER_KEY = "Wh6tHeINW6IQbSd1nJP9i1yUN";
+//	public static final String TWITTER_CONSUMER_SECRET = "kXYW0KkWlfDszfGn0m8lj3aEz6vB3iWzY5M1SO9T8DNM9rXJY0";
+	public static final String TWITTER_CONSUMER_KEY = "";
+	public static final String TWITTER_CONSUMER_SECRET = "";
 	public static final String TWITTER_CALLBAK_DOMAIN = "https://ai.poipiku.com";
 	public static final String TWITTER_API_REQUEST_TOKEN = "https://api.twitter.com/oauth/request_token";
 	public static final String TWITTER_API_ACCESS_TOKEN = "https://api.twitter.com/oauth/access_token";
