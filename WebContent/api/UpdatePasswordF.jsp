@@ -18,7 +18,7 @@ try {
 	//ユーザの情報
 	jsonMap = new HashMap<String, Object>();
 	jsonMap.put("result", userId);
-	jsonMap.put(Common.POIPIKU_LK, poipikuLk);
+	jsonMap.put(Common.AI_POIPIKU_LK, poipikuLk);
 
 	//JSONに変換して出力
 	mapper = new ObjectMapper();

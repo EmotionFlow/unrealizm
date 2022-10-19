@@ -89,7 +89,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<a class="SystemInfoTitle" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><i class="fas fa-bullhorn"></i></a>
 				<a class="SystemInfoDate" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><%=(new SimpleDateFormat("YYYY MM/dd")).format(cResults.systemInfo.m_timeUploadDate)%></a>
 				<a class="SystemInfoDesc" href="/IllustViewAppV.jsp?ID=2&TD=<%=cResults.systemInfo.m_nContentId%>"><%=Util.toStringHtml(cResults.systemInfo.m_strDescription)%></a>
-				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.systemInfo.m_nContentId%>').hide();setCookie('<%=Common.POIPIKU_INFO%>', '<%=cResults.systemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
+				<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=cResults.systemInfo.m_nContentId%>').hide();setCookie('<%=Common.AI_POIPIKU_INFO%>', '<%=cResults.systemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 			</div>
 			<%}%>
 

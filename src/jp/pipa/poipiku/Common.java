@@ -260,11 +260,11 @@ public final class Common {
 	public static final int UPLOAD_FILE_TYPE_ERROR = -998;
 
 	// Cookie Key
-	public static final String POIPIKU_LK = "POIPIKU_LK";
-	public static final String POIPIKU_LK_POST = "POIPIKU_LK";
-	public static final String LANG_ID = "LANG";
-	public static final String LANG_ID_POST = "hl";
-	public static final String POIPIKU_INFO = "POIPIKU_INFO";
+	public static final String AI_POIPIKU_LK = "AI_POIPIKU_LK";
+	public static final String AI_POIPIKU_LK_POST = "AI_POIPIKU_LK";
+	public static final String AI_LANG_ID = "AI_LANG";
+	public static final String AI_LANG_ID_POST = "hl";
+	public static final String AI_POIPIKU_INFO = "AI_POIPIKU_INFO";
 	public static final String CLIENT_TIMEZONE_OFFSET = "TZ_OFFSET";
 
 	// lang_id

@@ -186,9 +186,9 @@ public final class RegistTwitterUserC {
 
 			// Lang Id
 			int nLangId = 1;
-			String strLang = Util.toString(request.getParameter(Common.LANG_ID));
+			String strLang = Util.toString(request.getParameter(Common.AI_LANG_ID));
 			if (strLang.isEmpty()) {
-				strLang = Util.toString(Util.getCookie(request, Common.LANG_ID));
+				strLang = Util.toString(Util.getCookie(request, Common.AI_LANG_ID));
 			}
 			if (!strLang.isEmpty()) {
 				nLangId = SupportedLocales.findId(strLang);
@@ -304,7 +304,7 @@ public final class RegistTwitterUserC {
 	}
 
 	private static void setCookie(HttpServletResponse response, String strHashPass) {
-		Cookie cLK = new Cookie(Common.POIPIKU_LK, strHashPass);
+		Cookie cLK = new Cookie(Common.AI_POIPIKU_LK, strHashPass);
 		cLK.setMaxAge(Integer.MAX_VALUE);
 		cLK.setPath("/");
 		response.addCookie(cLK);

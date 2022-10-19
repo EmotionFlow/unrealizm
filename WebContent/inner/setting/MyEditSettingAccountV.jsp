@@ -8,7 +8,7 @@
 			"dataType": "json",
 			"success": function (data) {
 				if (data.result > 0) {
-					deleteCookie('POIPIKU_LK');
+					deleteCookie('AI_POIPIKU_LK');
 					clearSearchCache();
 					location.href = "/";
 				}
@@ -29,7 +29,7 @@
 				"dataType": "json",
 				"success": function (data) {
 					if (data.result > 0) {
-						deleteCookie('POIPIKU_LK');
+						deleteCookie('AI_POIPIKU_LK');
 						clearSearchCache();
 						location.href = "/";
 					}

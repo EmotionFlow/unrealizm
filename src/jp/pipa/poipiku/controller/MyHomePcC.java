@@ -24,7 +24,7 @@ public final class MyHomePcC {
 			n_nVersion = Util.toInt(request.getParameter("VER"));
 			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
 			if(m_nPage<=0) {
-				String strPoipikuInfoId = Util.getCookie(request, Common.POIPIKU_INFO);
+				String strPoipikuInfoId = Util.getCookie(request, Common.AI_POIPIKU_INFO);
 				if(strPoipikuInfoId!=null && !strPoipikuInfoId.isEmpty()) {
 					m_nLastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
 				}

@@ -9,7 +9,6 @@ import java.util.ResourceBundle.Control;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 
@@ -34,19 +33,19 @@ public final class ResourceBundleControl {
 
 		try {
 			request.setCharacterEncoding("UTF-8");
-			strLangParam = request.getParameter(Common.LANG_ID_POST);
+			strLangParam = request.getParameter(Common.AI_LANG_ID_POST);
 
 			if (strLangParam != null) {
 				locale = SupportedLocales.getLocale(strLangParam);
 				// Log.d("locale: ", locale.toString());
 				objRb = CResourceBundleUtil.get(locale);
-				Util.setCookie(response, Common.LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
+				Util.setCookie(response, Common.AI_LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
 				return;
 			}
 		} catch (Exception ignored) {}
 
 		if (strLangParam == null) {
-			strLangCookie = Util.getCookie(request, Common.LANG_ID);
+			strLangCookie = Util.getCookie(request, Common.AI_LANG_ID);
 			if (strLangCookie != null && !strLangCookie.isEmpty()) {
 				objRb = CResourceBundleUtil.get(SupportedLocales.getLocale(strLangCookie));
 			} else {
@@ -54,7 +53,7 @@ public final class ResourceBundleControl {
 						SupportedLocales.getLocaleByRequestHeader(
 								request.getHeader("Accept-Language")).locale
 				);
-				Util.setCookie(response, Common.LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
+				Util.setCookie(response, Common.AI_LANG_ID, objRb.getLocale().toString(), Integer.MAX_VALUE);
 			}
 		}
 	}

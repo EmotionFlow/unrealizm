@@ -133,7 +133,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 				<%
 				CacheUsers0000.User user = CacheUsers0000.getInstance().getUser(selectedUserId);
 				%>
-				sendObjectMessage("auth_data?<%=Common.POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.LANG_ID_POST%>=<%=SupportedLocales.findLocale(user.langId).toString()%>");
+				sendObjectMessage("auth_data?<%=Common.AI_POIPIKU_LK_POST%>=<%=user.hashPass%>&<%=Common.AI_LANG_ID_POST%>=<%=SupportedLocales.findLocale(user.langId).toString()%>");
 			});
 		</script>
 

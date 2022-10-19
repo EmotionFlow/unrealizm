@@ -11,7 +11,7 @@ try {
 	//ユーザの情報
 	user = new HashMap<String, Object>();
 	user.put("user_id", checkLogin.m_nUserId);
-	user.put(Common.POIPIKU_LK, checkLogin.m_strHashPass);
+	user.put(Common.AI_POIPIKU_LK, checkLogin.m_strHashPass);
 	user.put("premium_id", checkLogin.m_nPassportId);
 	user.put("passport_id", checkLogin.m_nPassportId);
 	user.put("lang_id", checkLogin.m_nPassportId);

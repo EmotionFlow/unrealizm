@@ -5,7 +5,7 @@ POIPIKU_URL = 'https://ai.poipiku.com/'
 
 
 def upload_content(_user_id, _user_lk, _description, _upload_file_path):
-    cookies = dict(POIPIKU_LK=_user_lk)
+    cookies = dict(AI_POIPIKU_LK=_user_lk)
     post_data = {
         "DES": _description,
         "UID": _user_id,

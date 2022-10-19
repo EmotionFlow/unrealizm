@@ -117,7 +117,7 @@ public class AddSwitchUserC extends Controller {
 
 		// LK更新
 		if(!hashPass.isEmpty()) {
-			Cookie cLK = new Cookie(Common.POIPIKU_LK, hashPass);
+			Cookie cLK = new Cookie(Common.AI_POIPIKU_LK, hashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);

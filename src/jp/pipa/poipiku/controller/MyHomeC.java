@@ -30,7 +30,7 @@ public class MyHomeC {
 			viewMode = Util.toInt(request.getParameter("VD"));
 			page = Util.toInt(request.getParameter("PG"));
 			if(startId <=0) {
-				String strPoipikuInfoId = Util.getCookie(request, Common.POIPIKU_INFO);
+				String strPoipikuInfoId = Util.getCookie(request, Common.AI_POIPIKU_INFO);
 				if(strPoipikuInfoId!=null && !strPoipikuInfoId.isEmpty()) {
 					lastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
 				}
