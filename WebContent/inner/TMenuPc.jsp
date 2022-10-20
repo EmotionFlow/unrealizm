@@ -56,14 +56,14 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				</div>
 			<%} else {%>
 				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="showSearch()"></a>
-				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
-					<span class="MenuMyRequestsIcon"></span>
-					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>
-				</a>
-				<a id="MenuSwitchUser" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="javascript: void(0);" onclick="toggleSwitchUserList();">
-					<span class="MenuSwitchUserIcon"></span>
-					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>
-				</a>
+<%--				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">--%>
+<%--					<span class="MenuMyRequestsIcon"></span>--%>
+<%--					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>--%>
+<%--				</a>--%>
+<%--				<a id="MenuSwitchUser" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="javascript: void(0);" onclick="toggleSwitchUserList();">--%>
+<%--					<span class="MenuSwitchUserIcon"></span>--%>
+<%--					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>--%>
+<%--				</a>--%>
 				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
 					<span class="MenuUploadIcon"></span>
 					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
@@ -99,10 +99,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <%--				<span class="FooterMenuItemIcon"></span>--%>
 <%--				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>--%>
 <%--			</a>--%>
-			<a id="MenuMyRequests" class="FooterMenuItem" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
-				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("Request.MyRequests")%></span>
-			</a>
+<%--			<a id="MenuMyRequests" class="FooterMenuItem" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">--%>
+<%--				<span class="FooterMenuItemIcon"></span>--%>
+<%--				<span class="FooterMenuItemName"><%=_TEX.T("Request.MyRequests")%></span>--%>
+<%--			</a>--%>
 		</nav>
 		<nav class="FooterMenu" style="float: right;">
 			<%if(!checkLogin.m_bLogin) {%>
@@ -122,10 +122,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			</div>
 
 			<%} else {%>
-			<a id="MenuSwitchUser" class="FooterMenuItem" style="display: none;" href="javascript: void(0);" onclick="toggleSwitchUserList();">
-				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("SwitchAccount")%></span>
-			</a>
+<%--			<a id="MenuSwitchUser" class="FooterMenuItem" style="display: none;" href="javascript: void(0);" onclick="toggleSwitchUserList();">--%>
+<%--				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>--%>
+<%--				<span class="FooterMenuItemName"><%=_TEX.T("SwitchAccount")%></span>--%>
+<%--			</a>--%>
 			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>

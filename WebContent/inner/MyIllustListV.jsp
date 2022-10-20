@@ -122,7 +122,7 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 			$("#MenuSearch").hide();
 			$("#MenuUpload").show();
 			$("#MenuSettings").show();
-			$("#MenuSwitchUser").show();
+			// $("#MenuSwitchUser").show();
 		})</script>
 		<%}else{%>
 		<%@ include file="/inner/TMenuApp.jsp" %>
@@ -149,11 +149,11 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 <%--							<a href="/MyRequestList<%=isApp?"App":"Pc"%>V.jsp?MENUID=RECEIVED" class="BtnBase">--%>
 <%--								<%=_TEX.T("Request.MyRequests.Long")%>--%>
 <%--							</a>--%>
-							<%if(isApp){%>
-							<a id="MenuSwitchUser" class="BtnBase" href="javascript: void(0);" onclick="toggleSwitchUserList();">
-								<%=_TEX.T("SwitchAccount")%>
-							</a>
-							<%}%>
+<%--							<%if(isApp){%>--%>
+<%--							<a id="MenuSwitchUser" class="BtnBase" href="javascript: void(0);" onclick="toggleSwitchUserList();">--%>
+<%--								<%=_TEX.T("SwitchAccount")%>--%>
+<%--							</a>--%>
+<%--							<%}%>--%>
 						</span>
 						<%@ include file="/inner/TUserShareCmd.jsp"%>
 					</span>

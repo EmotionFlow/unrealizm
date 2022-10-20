@@ -96,7 +96,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 			$("#MenuSearch").show();
 			$("#MenuUpload").hide();
 			$("#MenuSettings").hide();
-			$("#MenuSwitchUser").hide();
+			// $("#MenuSwitchUser").hide();
 		})</script>
 		<%}else{%>
 		<%@ include file="/inner/TMenuApp.jsp" %>
