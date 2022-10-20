@@ -48,13 +48,13 @@ MENU.put("EMOJI", _TEX.T("EditSettingV.Emoji"));
 MENU.put("FOLLOW", "<i class=\"fas fa-star\"></i> " + _TEX.T("EditSettingV.FavoList"));
 MENU.put("FOLLOWTAG", "<i class=\"fas fa-tag\"></i> " + _TEX.T("EditSettingV.FollowTagList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
-MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
+//MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("TWITTER", "<i class=\"fab fa-twitter\"></i> " + _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", "<i class=\"fas fa-envelope\"></i> " + _TEX.T("EditSettingV.Email"));
 MENU.put("REQUEST", "<span class=\"RequestIcon\"></span>" + _TEX.T("Request"));
-MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo3_60.png\" />" + _TEX.T("EditSettingV.Passport"));
-MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
-MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
+//MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo3_60.png\" />" + _TEX.T("EditSettingV.Passport"));
+//MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
+//MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
 MENU.put("ACCOUNT", "<i class=\"fas fa-user\"></i> " + _TEX.T("EditSettingV.Account"));
 MENU.put("INFO", "<i class=\"fas fa-info-circle\"></i> " + _TEX.T("EditSettingV.Usage"));
 MENU.put("LANGUAGE", "<i class=\"fas fa-globe\"></i> " + _TEX.T("EditSettingV.Language"));
@@ -67,13 +67,13 @@ String[][] menuOrder = {
 		"FOLLOW",
 		"FOLLOWTAG",
 		"BLOCK",
-		"MUTEKEYWORD",
+//		"MUTEKEYWORD",
 		"TWITTER",
 		"MAIL",
-		"PAYMENT",
+//		"PAYMENT",
 		"REQUEST",
-		"POIPASS",
-		"CHEER",
+//		"POIPASS",
+//		"CHEER",
 		"ACCOUNT",
 		"INFO",
 		"LANGUAGE",

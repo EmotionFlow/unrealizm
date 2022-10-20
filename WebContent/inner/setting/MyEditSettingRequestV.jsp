@@ -296,41 +296,41 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 					</div>
 				</div>
 			</div>
-			<div class="SettingListItem">
-				<div class="SettingListTitle">メディア</div>
-				依頼を受け付けるメディアを設定します。
-				<div class="SettingBody">
-					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
-						<div class="RegistMessage">
-						<label>
-							<input id="RequestMediaIllust" type="checkbox" <%if(requestCreator.allowIllust()){%>checked="checked"<%}%> >イラスト
-						</label>
-						<label>
-							<input id="RequestMediaNovel" type="checkbox" <%if(requestCreator.allowNovel()){%>checked="checked"<%}%> >小説
-						</label>
-						</div>
-						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateRequestMedia()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-					</div>
-				</div>
-			</div>
-			<div class="SettingListItem">
-				<div class="SettingListTitle">NSFW許可</div>
-				<div class="SettingBody">
-					ワンクッション・R18に相当するセンシティブな内容の依頼を許可します。
-					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
-						<div class="RegistMessage">
-							<div class="onoffswitch OnOff">
-								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AllowSensitive" value="0" <%if(requestCreator.allowSensitive()){%>checked="checked"<%}%> />
-								<label class="onoffswitch-label" for="AllowSensitive">
-									<span class="onoffswitch-inner"></span>
-									<span class="onoffswitch-switch"></span>
-								</label>
-							</div>
-						</div>
-						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowSensitive()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-					</div>
-				</div>
-			</div>
+<%--			<div class="SettingListItem">--%>
+<%--				<div class="SettingListTitle">メディア</div>--%>
+<%--				依頼を受け付けるメディアを設定します。--%>
+<%--				<div class="SettingBody">--%>
+<%--					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
+<%--						<div class="RegistMessage">--%>
+<%--						<label>--%>
+<%--							<input id="RequestMediaIllust" type="checkbox" <%if(requestCreator.allowIllust()){%>checked="checked"<%}%> >イラスト--%>
+<%--						</label>--%>
+<%--						<label>--%>
+<%--							<input id="RequestMediaNovel" type="checkbox" <%if(requestCreator.allowNovel()){%>checked="checked"<%}%> >小説--%>
+<%--						</label>--%>
+<%--						</div>--%>
+<%--						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateRequestMedia()"><%=_TEX.T("EditSettingV.Button.Update")%></a>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--			<div class="SettingListItem">--%>
+<%--				<div class="SettingListTitle">NSFW許可</div>--%>
+<%--				<div class="SettingBody">--%>
+<%--					ワンクッション・R18に相当するセンシティブな内容の依頼を許可します。--%>
+<%--					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
+<%--						<div class="RegistMessage">--%>
+<%--							<div class="onoffswitch OnOff">--%>
+<%--								<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="AllowSensitive" value="0" <%if(requestCreator.allowSensitive()){%>checked="checked"<%}%> />--%>
+<%--								<label class="onoffswitch-label" for="AllowSensitive">--%>
+<%--									<span class="onoffswitch-inner"></span>--%>
+<%--									<span class="onoffswitch-switch"></span>--%>
+<%--								</label>--%>
+<%--							</div>--%>
+<%--						</div>--%>
+<%--						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAllowSensitive()"><%=_TEX.T("EditSettingV.Button.Update")%></a>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--			</div>--%>
 			<div class="SettingListItem">
 				<div class="SettingListTitle">匿名許可</div>
 				<div class="SettingBody">
@@ -380,56 +380,56 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				</div>
 			</div>
 
-			<div id="PaidSetting" class="SettingListItem">
-				<div class="SettingListTitle">無償 / 有償</div>
-				<div class="SettingBody">
-					依頼を無償とするか、有償にするかを選択します。有償依頼では、クリエイターが指定した範囲内で、依頼主が金額を提示します。
-					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
-						<div class="RegistMessage" style="margin: 0">
-							<select id="SelectPaidRequest">
-								<option value="FREE" <%=requestCreator.allowFreeRequest ? "selected": ""%>>無償にする</option>
-								<option value="PAID" <%=requestCreator.allowPaidRequest ? "selected": ""%>>有償の依頼を受け付ける</option>
-							</select>
-						</div>
-						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateSelectPaidRequest()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-					</div>
-				</div>
-			</div>
+<%--			<div id="PaidSetting" class="SettingListItem">--%>
+<%--				<div class="SettingListTitle">無償 / 有償</div>--%>
+<%--				<div class="SettingBody">--%>
+<%--					依頼を無償とするか、有償にするかを選択します。有償依頼では、クリエイターが指定した範囲内で、依頼主が金額を提示します。--%>
+<%--					<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
+<%--						<div class="RegistMessage" style="margin: 0">--%>
+<%--							<select id="SelectPaidRequest">--%>
+<%--								<option value="FREE" <%=requestCreator.allowFreeRequest ? "selected": ""%>>無償にする</option>--%>
+<%--								<option value="PAID" <%=requestCreator.allowPaidRequest ? "selected": ""%>>有償の依頼を受け付ける</option>--%>
+<%--							</select>--%>
+<%--						</div>--%>
+<%--						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateSelectPaidRequest()"><%=_TEX.T("EditSettingV.Button.Update")%></a>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--			</div>--%>
 
-			<div id="SettingAmountItems" style="display: <%=requestCreator.allowPaidRequest?"block":"none"%>">
-			<div class="SettingListItem">
-				<div class="SettingListTitle">おまかせ金額</div>
-				<div class="SettingBody">
-					<div>
-						<span class="RequestVarUnit">¥</span>
-						<input id="AmountLeftToMe" type="number" placeholder="<%=RequestCreator.AMOUNT_LEFT_TO_ME_DEFAULT%>" value="<%=requestCreator.amountLeftToMe%>" maxlength="5" />
-					</div>
-					<div class="RegistMessage">
-						依頼画面で初期表示する金額を設定します。
-						¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MAX)%>の間で設定できます。
-					</div>
-					<div class="SettingBodyCmd">
-						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAmountLeftToMe()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-					</div>
-				</div>
-			</div>
-			<div class="SettingListItem">
-				<div class="SettingListTitle">最低金額</div>
-				<div class="SettingBody">
-					<div>
-						<span class="RequestVarUnit">¥</span>
-						<input id="AmountMinimum" type="number" placeholder="<%=RequestCreator.AMOUNT_MINIMUM_DEFAULT%>" value="<%=requestCreator.amountMinimum%>" maxlength="16" />
-					</div>
-					<div class="RegistMessage">
-						最低金額を設定します。
-						¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>の間で設定できます。
-					</div>
-					<div class="SettingBodyCmd">
-						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAmountMinimum()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-					</div>
-				</div>
-			</div>
-			</div>
+<%--			<div id="SettingAmountItems" style="display: <%=requestCreator.allowPaidRequest?"block":"none"%>">--%>
+<%--			<div class="SettingListItem">--%>
+<%--				<div class="SettingListTitle">おまかせ金額</div>--%>
+<%--				<div class="SettingBody">--%>
+<%--					<div>--%>
+<%--						<span class="RequestVarUnit">¥</span>--%>
+<%--						<input id="AmountLeftToMe" type="number" placeholder="<%=RequestCreator.AMOUNT_LEFT_TO_ME_DEFAULT%>" value="<%=requestCreator.amountLeftToMe%>" maxlength="5" />--%>
+<%--					</div>--%>
+<%--					<div class="RegistMessage">--%>
+<%--						依頼画面で初期表示する金額を設定します。--%>
+<%--						¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_LEFT_TO_ME_MAX)%>の間で設定できます。--%>
+<%--					</div>--%>
+<%--					<div class="SettingBodyCmd">--%>
+<%--						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAmountLeftToMe()"><%=_TEX.T("EditSettingV.Button.Update")%></a>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--			<div class="SettingListItem">--%>
+<%--				<div class="SettingListTitle">最低金額</div>--%>
+<%--				<div class="SettingBody">--%>
+<%--					<div>--%>
+<%--						<span class="RequestVarUnit">¥</span>--%>
+<%--						<input id="AmountMinimum" type="number" placeholder="<%=RequestCreator.AMOUNT_MINIMUM_DEFAULT%>" value="<%=requestCreator.amountMinimum%>" maxlength="16" />--%>
+<%--					</div>--%>
+<%--					<div class="RegistMessage">--%>
+<%--						最低金額を設定します。--%>
+<%--						¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MIN)%>〜¥<%=String.format("%,d", RequestCreator.AMOUNT_MINIMUM_MAX)%>の間で設定できます。--%>
+<%--					</div>--%>
+<%--					<div class="SettingBodyCmd">--%>
+<%--						<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="updateAmountMinimum()"><%=_TEX.T("EditSettingV.Button.Update")%></a>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--			</div>--%>
 
 			<%if(false){ // まだなくても良い気がするので、非表示にしておく。%>
 			<div class="SettingListItem">
