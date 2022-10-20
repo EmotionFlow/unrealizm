@@ -51,7 +51,7 @@ MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 //MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
 MENU.put("TWITTER", "<i class=\"fab fa-twitter\"></i> " + _TEX.T("EditSettingV.Twitter"));
 MENU.put("MAIL", "<i class=\"fas fa-envelope\"></i> " + _TEX.T("EditSettingV.Email"));
-MENU.put("REQUEST", "<span class=\"RequestIcon\"></span>" + _TEX.T("Request"));
+//MENU.put("REQUEST", "<span class=\"RequestIcon\"></span>" + _TEX.T("Request"));
 //MENU.put("POIPASS", "<img style=\"height: 30px;vertical-align: middle; margin: 0 5px 0 0;}\" src=\"/img/poipiku_passport_logo3_60.png\" />" + _TEX.T("EditSettingV.Passport"));
 //MENU.put("PAYMENT", _TEX.T("EditSettingV.Payment"));
 //MENU.put("CHEER", _TEX.T("EditSettingV.Cheer"));
@@ -71,7 +71,7 @@ String[][] menuOrder = {
 		"TWITTER",
 		"MAIL",
 //		"PAYMENT",
-		"REQUEST",
+//		"REQUEST",
 //		"POIPASS",
 //		"CHEER",
 		"ACCOUNT",

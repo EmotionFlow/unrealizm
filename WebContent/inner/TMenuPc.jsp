@@ -95,10 +95,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
-			<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">
-				<span class="FooterMenuItemIcon"></span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
-			</a>
+<%--			<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">--%>
+<%--				<span class="FooterMenuItemIcon"></span>--%>
+<%--				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>--%>
+<%--			</a>--%>
 			<a id="MenuMyRequests" class="FooterMenuItem" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">
 				<span class="FooterMenuItemIcon"></span>
 				<span class="FooterMenuItemName"><%=_TEX.T("Request.MyRequests")%></span>
@@ -308,10 +308,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<span class="FooterMenuItemIcon"></span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
-		<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">
-			<span class="FooterMenuItemIcon"></span>
-			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>
-		</a>
+<%--		<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">--%>
+<%--			<span class="FooterMenuItemIcon"></span>--%>
+<%--			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>--%>
+<%--		</a>--%>
 		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon">
 				<div id="InfoNumAct" class="InfoNum">0</div>

@@ -146,9 +146,9 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i><%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
-							<a href="/MyRequestList<%=isApp?"App":"Pc"%>V.jsp?MENUID=RECEIVED" class="BtnBase">
-								<%=_TEX.T("Request.MyRequests.Long")%>
-							</a>
+<%--							<a href="/MyRequestList<%=isApp?"App":"Pc"%>V.jsp?MENUID=RECEIVED" class="BtnBase">--%>
+<%--								<%=_TEX.T("Request.MyRequests.Long")%>--%>
+<%--							</a>--%>
 							<%if(isApp){%>
 							<a id="MenuSwitchUser" class="BtnBase" href="javascript: void(0);" onclick="toggleSwitchUserList();">
 								<%=_TEX.T("SwitchAccount")%>
