@@ -255,13 +255,13 @@ function DispR18PlusMsg() {
 </div>
 <%}%>
 
-<div class="OptionItem" style="margin-top: 13px">
-	<label class="rocker" onclick="updateOptionPassword()">
-		<input id="OPTION_CHEER_NG" type="checkbox">
-		<span class="switch-left"><%=_TEX.T("UpCmdOptions.CheerNg.Checked")%></span>
-		<span class="switch-right"><%=_TEX.T("UpCmdOptions.CheerNg.UnChecked")%></span>
-	</label>
-</div>
+<%--<div class="OptionItem" style="margin-top: 13px">--%>
+<%--	<label class="rocker" onclick="updateOptionPassword()">--%>
+<%--		<input id="OPTION_CHEER_NG" type="checkbox">--%>
+<%--		<span class="switch-left"><%=_TEX.T("UpCmdOptions.CheerNg.Checked")%></span>--%>
+<%--		<span class="switch-right"><%=_TEX.T("UpCmdOptions.CheerNg.UnChecked")%></span>--%>
+<%--	</label>--%>
+<%--</div>--%>
 
 <div class="OptionItem" style="margin-top: 13px">
 	<label class="rocker">
