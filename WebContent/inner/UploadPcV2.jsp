@@ -184,10 +184,10 @@ if (requestId > 0) {
 						href="/UploadFilePcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.File")%>
 				</a></li>
-				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_TEXT ? "Selected" : ""%>"
-						href="/UploadTextPcV2.jsp<%=cgiParams%>">
-					<%=_TEX.T("UploadFilePc.Tab.Text")%>
-				</a></li>
+<%--				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_TEXT ? "Selected" : ""%>"--%>
+<%--						href="/UploadTextPcV2.jsp<%=cgiParams%>">--%>
+<%--					<%=_TEX.T("UploadFilePc.Tab.Text")%>--%>
+<%--				</a></li>--%>
 				<li><a class="TabMenuItem <%=nEditorId == Common.EDITOR_PASTE ? "Selected" : ""%>"
 						href="/UploadPastePcV2.jsp<%=cgiParams%>">
 					<%=_TEX.T("UploadFilePc.Tab.Paste")%>
