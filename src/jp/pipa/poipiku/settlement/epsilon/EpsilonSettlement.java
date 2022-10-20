@@ -5,7 +5,7 @@ import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.util.SlackNotifier;
 
 public abstract class EpsilonSettlement {
-	protected static final String CONTRACT_CODE = "68968190";
+	protected static final String CONTRACT_CODE = "XXXXXXX";
 	enum ConnectTo {
 		Dev, Prod
 	}

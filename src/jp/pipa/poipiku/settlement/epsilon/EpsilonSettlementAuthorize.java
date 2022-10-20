@@ -96,17 +96,17 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			String url ="";
-			switch (settlementSendInfo.processCode) {
-				case 1: case 2: // 初回/登録済み課金
-					url = tokenSettlementUrl;
-					break;
-				case 4: case 7: case 9: // 登録内容(カード情報)変更又はユーザ退会又は退会取消
-					url = linkSettlementUrl;
-					break;
-			}
-			post.setURI(new URI(url));
-			res = client.execute(post);
+//			String url ="";
+//			switch (settlementSendInfo.processCode) {
+//				case 1: case 2: // 初回/登録済み課金
+//					url = tokenSettlementUrl;
+//					break;
+//				case 4: case 7: case 9: // 登録内容(カード情報)変更又はユーザ退会又は退会取消
+//					url = linkSettlementUrl;
+//					break;
+//			}
+//			post.setURI(new URI(url));
+//			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
 			notifyErrorToSlack("EpsilonSettlementAuthorize:client.execute()で例外発生");

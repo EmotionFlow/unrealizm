@@ -94,8 +94,8 @@ public final class EpsilonRegularlyAmountChange extends EpsilonSettlement{
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			post.setURI(new URI(amountChangeUrl));
-			res = client.execute(post);
+//			post.setURI(new URI(amountChangeUrl));
+//			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
 			notifyErrorToSlack("EpsilonRegularlyAmountChange:client.execute()例外発生");

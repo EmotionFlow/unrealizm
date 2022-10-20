@@ -84,8 +84,8 @@ public class EpsilonSettlementCancel extends EpsilonSettlement{
 
 		try {
 			post.setEntity(new UrlEncodedFormEntity(param,"UTF-8"));
-			post.setURI(new URI(cancelUrl));
-			res = client.execute(post);
+//			post.setURI(new URI(cancelUrl));
+//			res = client.execute(post);
 		}catch(Exception e){
 			e.printStackTrace();
 			notifyErrorToSlack("EpsilonSettlementCancel:client.execute()で例外発生");
