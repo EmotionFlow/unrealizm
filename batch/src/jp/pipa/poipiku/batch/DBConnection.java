@@ -46,7 +46,7 @@ public class DBConnection {
 			dataSource = new PGSimpleDataSource();
 			dataSource.setUser("postgres");
 			dataSource.setPassword(System.getProperty("dbPass"));
-			dataSource.setDatabaseName("poipiku");
+			dataSource.setDatabaseName("ai-poipiku");
 			String[] servers = {System.getProperty("dbHost")};
 			dataSource.setServerNames(servers);
 			int[] ports = {Integer.parseInt(System.getProperty("dbPort"))};
@@ -64,7 +64,7 @@ public class DBConnection {
 			replicaDataSource = new PGSimpleDataSource();
 			replicaDataSource.setUser("postgres");
 			replicaDataSource.setPassword(System.getProperty("replicaDbPass"));
-			replicaDataSource.setDatabaseName("poipiku-replica");
+			replicaDataSource.setDatabaseName("ai-poipiku-replica");
 			String[] servers = {System.getProperty("replicaDbHost")};
 			replicaDataSource.setServerNames(servers);
 			int[] ports = {Integer.parseInt(System.getProperty("replicaDbPort"))};
