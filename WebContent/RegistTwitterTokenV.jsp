@@ -14,7 +14,7 @@ boolean bResult = false;
 
 //login check
 if(!checkLogin.m_bLogin || checkLogin.m_nUserId < 1){
-	getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
 	return;
 }
 

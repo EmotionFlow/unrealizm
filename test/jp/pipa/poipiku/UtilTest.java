@@ -18,7 +18,7 @@ public class UtilTest {
 		assertEquals(123, Util.findUserIdFromUrl("https://ai.poipiku.com/123/456.html"));
 		assertEquals(123, Util.findUserIdFromUrl("https://ai.poipiku.com/IllustViewPcV.jsp?ID=123&TD=678"));
 		assertEquals(-1, Util.findUserIdFromUrl("https://ai.poipiku.com/"));
-		assertEquals(-1, Util.findUserIdFromUrl("https://ai.poipiku.com/StartPoipikuV.jsp/"));
+		assertEquals(-1, Util.findUserIdFromUrl("https://ai.poipiku.com/StartUnrealizmV.jsp/"));
 		assertEquals(-1, Util.findUserIdFromUrl("https://ai.poipiku.com/IllustViewPcV.jsp?ID=-234"));
 	}
 }

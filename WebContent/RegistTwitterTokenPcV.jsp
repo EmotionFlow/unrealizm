@@ -23,7 +23,7 @@ if(c.result==RegistTwitterTokenC.Result.OK){
 	strNextContextPath = "/MyEditSettingPcV.jsp?MENUID=TWITTER&ERR=OTHER";
 }
 
-response.sendRedirect(Common.GetPoipikuUrl(strNextContextPath));
+response.sendRedirect(Common.GetUnrealizmUrl(strNextContextPath));
 
 %>
 <!DOCTYPE html>

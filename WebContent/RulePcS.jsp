@@ -37,7 +37,7 @@
 <article class="Wrapper">
 	<div class="SettingList">
 		<div class="SettingListItem">
-			<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」利用規約</div>
+			<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「unrealizm」利用規約</div>
 			<div class="SettingBody Language">
 				<%
 					for (UserLocale userLocale : SupportedLocales.list) {
@@ -60,7 +60,7 @@
 		<div class="SettingListItem">
 			<div class="SettingListTitle">第1条(規約の適用)</div>
 			<div class="SettingBody">
-				pipa.jpは、「ポイピク」(以下、本サービスという)において利用規約(以下、本規約)を定め、これにより本サービスを提供します。<br/>
+				pipa.jpは、「unrealizm」(以下、本サービスという)において利用規約(以下、本規約)を定め、これにより本サービスを提供します。<br/>
 				2.本規約は、pipa.jpと利用者との間の一切の関係に適用します。<br/>
 				3.本サービスと競合する可能性のあるサービス運営者並びにその関係者は本サービスを利用できません。<br/>
 				4.利用者は、本サービスを利用することにより、本規約内容について承諾したものとみなします。<br/>

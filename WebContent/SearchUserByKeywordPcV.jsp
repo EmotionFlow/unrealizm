@@ -28,7 +28,7 @@ if (cResults.m_strKeyword.indexOf("@") == 0) {
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = "/%s/".formatted(strKeywordHan);
-	response.sendRedirect(Common.GetPoipikuUrl(strUrl));
+	response.sendRedirect(Common.GetUnrealizmUrl(strUrl));
 	return;
 }
 

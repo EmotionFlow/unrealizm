@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 		StringBuilder sb = new StringBuilder();
-		sb.append(Common.GetPoipikuUrl("/")).append(cResults.m_cUser.m_nUserId).append("/");
+		sb.append(Common.GetUnrealizmUrl("/")).append(cResults.m_cUser.m_nUserId).append("/");
 		String strMyBoxUrl = sb.toString();
 		String strTwitterIntentURL = Util.getTwitterIntentURL(
 						String.format(_TEX.T("MyIllustListV.TweetMyBox.Tweet.Msg"), cResults.m_cUser.m_strNickName),

@@ -358,7 +358,7 @@ public final class Common {
 		return "//ai-img-org.poipiku.com" + strFileName;
 	}
 
-	public static String GetPoipikuUrl(final String strFileName) {
+	public static String GetUnrealizmUrl(final String strFileName) {
 		if(strFileName==null) return "";
 		return "https://ai.poipiku.com" + strFileName;
 	}

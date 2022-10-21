@@ -50,7 +50,7 @@
 <article class="Wrapper">
 	<div class="SettingList">
 		<div class="SettingListItem">
-			<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」ガイドライン</div>
+			<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「unrealizm」ガイドライン</div>
 			<div class="SettingBody Language">
 				<%for(UserLocale userLocale: SupportedLocales.list){
 					if (userLocale.id != 1) {
@@ -63,7 +63,7 @@
 		<div class="SettingListItem">
 			<div class="SettingListTitle">1.序文</div>
 			<div class="SettingBody">
-				これは「ポイピク」を利用する利用者および運営するpipa.jpが遵守すべきガイドラインです。<br/>
+				これは「unrealizm」を利用する利用者および運営するpipa.jpが遵守すべきガイドラインです。<br/>
 				法規法令、社会通念、利用実態に即し、pipa.jpは利用者と共に、時代の変化に応じた形でこのガイドラインをより適切な形に維持します。<br/>
 				法律の解釈は習慣や判例で変化するものであり、ガイドラインの遵守が違法性の否定にならないことに留意し、利用者自らが自身の正当性を証明をすることを怠らないようにして下さい。<br/>
 			</div>

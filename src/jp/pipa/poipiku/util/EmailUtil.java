@@ -6,7 +6,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 public class EmailUtil {
-	static final String FROM_NAME = "POIPIKU";
+	static final String FROM_NAME = "Unrealizm";
 	static final String FROM_ADDR = "info@ai.poipiku.com";
 	static final String SMTP_HOST = "localhost";
 

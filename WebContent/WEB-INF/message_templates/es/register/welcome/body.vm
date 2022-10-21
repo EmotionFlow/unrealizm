@@ -1,11 +1,11 @@
 Estimado $to_name
 
-¡Bienvenido a POIPIKU!
-Nuestro personal le mostrará cómo usar POIPIKU y cómo configurar su correo electrónico.
+¡Bienvenido a Unrealizm!
+Nuestro personal le mostrará cómo usar Unrealizm y cómo configurar su correo electrónico.
 
 [Publicar y disfrutar]
 Puede publicar imágenes (se aceptan fotos) y novelas (texto).
-POIPIKU es un sitio en el que puedes publicar de forma casual garabatos o contenido en el que estás trabajando. Siéntete libre de publicar tu propio trabajo.
+Unrealizm es un sitio en el que puedes publicar de forma casual garabatos o contenido en el que estás trabajando. Siéntete libre de publicar tu propio trabajo.
 
 + Archivos +
 Puede cargar archivos PNG, JPEG y GIF (incluidos los GIF animados). Se pueden cargar varias imágenes al mismo tiempo y el orden se puede cambiar o reemplazar después del envío.
@@ -18,8 +18,8 @@ Puede copiar y pegar capturas de pantalla y otras imágenes y publicarlas. Puede
 
 
 [Disfruta viendo y leyendo]
-Cuando sigue a un usuario en POIPIKU, puede consultar las nuevas publicaciones del usuario que está siguiendo en la página [seguimiento silencioso].
-Los seguidores en POIPIKU no serán notificados. Sigámoslos de inmediato.
+Cuando sigue a un usuario en Unrealizm, puede consultar las nuevas publicaciones del usuario que está siguiendo en la página [seguimiento silencioso].
+Los seguidores en Unrealizm no serán notificados. Sigámoslos de inmediato.
 
 + Usuarios Recomendados +
 
@@ -39,7 +39,7 @@ Reacciones, no se lo digas a la otra persona que te las envió. Si lo desea, pue
 
 
 [Ajustes del correo electrónico]
-También puede iniciar sesión en POIPIKU con su dirección de correo electrónico y contraseña, en caso de que la integración de Twitter no funcione o haya eliminado su cuenta de Twitter.
+También puede iniciar sesión en Unrealizm con su dirección de correo electrónico y contraseña, en caso de que la integración de Twitter no funcione o haya eliminado su cuenta de Twitter.
 
 Correo electrónico: $login_email
 Contraseña: $login_password
@@ -49,20 +49,20 @@ Contraseña: $login_password
 
 
 [Entrega de correo electrónico]
-Recibirá notificaciones por correo electrónico ocasionales, como las que le presentan a los usuarios recomendados o le notifican cuando un usuario al que sigue en Twitter comienza a usar POIPIKU.
+Recibirá notificaciones por correo electrónico ocasionales, como las que le presentan a los usuarios recomendados o le notifican cuando un usuario al que sigue en Twitter comienza a usar Unrealizm.
 - Puede cambiar la entrega ON/OFF en la pantalla de configuración.
 
 
 [Cuentas oficiales]
-Esta es la cuenta oficial de POIPIKU y Twitter. Publicaremos actualizaciones e información de la campaña según sea necesario, así que síganos si lo desea.
+Esta es la cuenta oficial de Unrealizm y Twitter. Publicaremos actualizaciones e información de la campaña según sea necesario, así que síganos si lo desea.
 
-POIPIKU
+Unrealizm
 https://ai.poipiku.com/2
 
 Gorjeo
 https://twitter.com/pipajp
 
 
-Entonces, ¡disfruta de POIPIKU!
+Entonces, ¡disfruta de Unrealizm!
 
 #parse("es/footer.vm")

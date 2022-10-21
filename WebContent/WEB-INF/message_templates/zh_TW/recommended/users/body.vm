@@ -1,6 +1,6 @@
 #parse("zh_TW/header.vm")
 
-以下是您在 POIPIKU 上未關注的一些推薦用戶。
+以下是您在 Unrealizm 上未關注的一些推薦用戶。
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-跟隨 POIPIKU 不會通知其他人。隨時關注他們。
+跟隨 Unrealizm 不會通知其他人。隨時關注他們。
 
 #parse("zh_TW/footer.vm")

@@ -114,7 +114,7 @@ try {
 	reaction.put("emoji_url", CEmoji.parseToUrl(cComment.m_strDescription));
 	reaction.put("description", _TEX.T("ActivityList.Message.Comment"));
 	reaction.put("thumbnail_url", "");
-	reaction.put("link_url", Common.GetPoipikuUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", m_nUserId, cComment.m_nContentId)));
+	reaction.put("link_url", Common.GetUnrealizmUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", m_nUserId, cComment.m_nContentId)));
 	reaction.put("datetime", cComment.m_timeUploadDate.getTime());
 	reactionList.add(reaction);
 		}

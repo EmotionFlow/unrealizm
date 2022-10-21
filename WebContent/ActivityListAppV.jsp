@@ -6,9 +6,9 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) {
 	if(isApp){
-		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
 	} else {
-		getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
 	}
 	return;
 }
@@ -38,7 +38,7 @@ if (infoType==-1) infoType = 1;
 								swal.fire({
 									html: `
 								<p style="text-align: left">他のユーザーからあなた宛に「リクエストの受付を開始してほしい」という通知が来ました。
-										ブラウザ版ポイピクの設定画面で「リクエストを募集する」をONにすると、受付を開始できます。</p>
+										ブラウザ版Unrealizmの設定画面で「リクエストを募集する」をONにすると、受付を開始できます。</p>
 								`,
 									showCloseButton: true,
 									showConfirmButton: false,
@@ -53,7 +53,7 @@ if (infoType==-1) infoType = 1;
 											padding-inline-start: 20px;">
 								<li>ポイパス未加入の方は、今月末までポイパスがONになります</li>
 								<li>ポイパス定期購入中の方は、来月以降１ヶ月分、課金が0円になります</li>
-								<li>ポイパスの設定はブラウザ版ポイピクの設定画面から確認できます</li>
+								<li>ポイパスの設定はブラウザ版Unrealizmの設定画面から確認できます</li>
 								</ul>
 								`,
 									showCloseButton: true,

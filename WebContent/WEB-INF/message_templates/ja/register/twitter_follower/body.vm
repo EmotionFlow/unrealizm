@@ -1,6 +1,6 @@
 #parse("ja/header.vm")
 
-あなたがTwitterでフォローしているユーザーがポイピクをはじめています。
+あなたがTwitterでフォローしているユーザーがUnrealizmをはじめています。
 
 #foreach($u in $recommend_users)
 【$u.nickname】
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-ポイピクのフォローは相手に伝わりません。気軽にフォローしてみましょう。
+Unrealizmのフォローは相手に伝わりません。気軽にフォローしてみましょう。
 
 #parse("ja/footer.vm")

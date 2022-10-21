@@ -1,6 +1,6 @@
 #parse("zh_TW/header.vm")
 
-您在 Twitter 上關注的用戶已啟動 POIPIKU。
+您在 Twitter 上關注的用戶已啟動 Unrealizm。
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-跟隨 POIPIKU 不會通知其他人。隨時關注他們。
+跟隨 Unrealizm 不會通知其他人。隨時關注他們。
 
 #parse("zh_TW/footer.vm")

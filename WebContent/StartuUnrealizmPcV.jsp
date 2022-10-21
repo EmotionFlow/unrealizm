@@ -13,7 +13,7 @@ CheckLogin checkLogin = new CheckLogin();
 		<meta property="og:url" content="https://ai.poipiku.com/" />
 		<meta property="og:title" content="<%=_TEX.T("THeader.Title")%>" />
 		<meta property="og:description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
-		<meta property="og:image" content="<%=Common.GetPoipikuUrl("/img/poipiku_icon_512x512_2.png")%>" />
+		<meta property="og:image" content="<%=Common.GetUnrealizmUrl("/img/poipiku_icon_512x512_2.png")%>" />
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
@@ -32,12 +32,12 @@ CheckLogin checkLogin = new CheckLogin();
 			.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 			.AnalogicoInfo {display: none;}
 
-			.PoipikuInfo {display: flex; flex-flow: row wrap; flex: 0 0 100%; margin: 0 auto; justify-content: space-around; background-color: #fff; color: #3498db; padding: 15px 0;box-sizing: border-box;}
-			.PoipikuInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
-			.PoipikuInfo .PoipikuDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #3498db; color: #fff; margin: 15px 0;}
-			.PoipikuInfo .PoipikuDesc .PoipikuDescImg {display: block; width: 100%;}
-			.PoipikuInfo .PoipikuDesc .DescTitle {font-size: 17px; margin: 0 0 15px 0; font-weight: bold;}
-			.PoipikuInfo .PoipikuDesc .DescTitle .DescSubTitle {font-size: 15px; font-weight: normal;}
+			.UnrealizmInfo {display: flex; flex-flow: row wrap; flex: 0 0 100%; margin: 0 auto; justify-content: space-around; background-color: #fff; color: #3498db; padding: 15px 0;box-sizing: border-box;}
+			.UnrealizmInfoTitle {display: block; padding: 30px 0; text-align: center; font-size: 30px; font-weight: bold; flex: 1 1 100%;}
+			.UnrealizmInfo .UnrealizmDesc {display: block; flex: 0 0 300px; padding: 20px; box-sizing: border-box; background-color: #3498db; color: #fff; margin: 15px 0;}
+			.UnrealizmInfo .UnrealizmDesc .UnrealizmDescImg {display: block; width: 100%;}
+			.UnrealizmInfo .UnrealizmDesc .DescTitle {font-size: 17px; margin: 0 0 15px 0; font-weight: bold;}
+			.UnrealizmInfo .UnrealizmDesc .DescTitle .DescSubTitle {font-size: 15px; font-weight: normal;}
 
 
 			.poipikuDesc.TextOnly {height: auto;}
@@ -48,8 +48,8 @@ CheckLogin checkLogin = new CheckLogin();
 			.AnalogicoInfo.Flyer {display: flex; align-content: center; justify-content: center;}
 			.AnalogicoInfo.Flyer.Omote {padding: 0; background-color: #232323;}
 			.AnalogicoInfo.Flyer.Ura {padding: 10px 0; background-color: #fff;}
-			.PoipikuFlyerImgFrame {display: flex; flex: 0 0 100%;}
-			.PoipikuFlyerImgFrame .PoipikuFlyerImg {width: 100%; height: 100%;}
+			.UnrealizmFlyerImgFrame {display: flex; flex: 0 0 100%;}
+			.UnrealizmFlyerImgFrame .UnrealizmFlyerImg {width: 100%; height: 100%;}
 
 			<%if(Util.isSmartPhone(request)) {%>
 			<%} else {%>
@@ -58,12 +58,12 @@ CheckLogin checkLogin = new CheckLogin();
 			.TopTitleInfoSub {font-size: 14px; margin: 10px 0 0 0;}
 			.AnalogicoDesc {display: block; width: 800px;}
 			.TopBanner {display: block; width: 600px; margin: 0 auto 30px auto;}
-			.PoipikuInfo {flex: 0 0 990px; padding: 10px 15px;}
-			.PoipikuInfo .PoipikuDesc {margin: 10px 0;}
-			.PoipikuInfo .PoipikuDesc.Full {flex: 0 0 620px; padding: 45px;}
+			.UnrealizmInfo {flex: 0 0 990px; padding: 10px 15px;}
+			.UnrealizmInfo .UnrealizmDesc {margin: 10px 0;}
+			.UnrealizmInfo .UnrealizmDesc.Full {flex: 0 0 620px; padding: 45px;}
 			.AnalogicoInfo.Title {padding: 100px 0;}
 			.AnalogicoInfo.Flyer.Ura {padding: 50px 0;}
-			.PoipikuFlyerImgFrame {flex: 0 0 990px;}
+			.UnrealizmFlyerImgFrame {flex: 0 0 990px;}
 			<%}%>
 		</style>
 
@@ -85,13 +85,13 @@ CheckLogin checkLogin = new CheckLogin();
 
 		<article class="Wrapper">
 			<section class="AnalogicoInfo Flyer Omote">
-				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_b8.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Omote")%>"/>
+				<div class="UnrealizmFlyerImgFrame">
+					<img class="UnrealizmFlyerImg" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/poipiku_flyer_b8.png" alt="<%=_TEX.T("StartUnrealizm.Flyer.Omote")%>"/>
 				</div>
 			</section>
 			<section class="AnalogicoInfo Flyer Ura">
-				<div class="PoipikuFlyerImgFrame">
-					<img class="PoipikuFlyerImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/poipiku_flyer_ura12.png" alt="<%=_TEX.T("StartPoipiku.Flyer.Ura")%>" />
+				<div class="UnrealizmFlyerImgFrame">
+					<img class="UnrealizmFlyerImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/poipiku_flyer_ura12.png" alt="<%=_TEX.T("StartUnrealizm.Flyer.Ura")%>" />
 				</div>
 			</section>
 			<section class="AnalogicoInfo Title">
@@ -108,7 +108,7 @@ CheckLogin checkLogin = new CheckLogin();
 					<form method="post" name="login_from_twitter_startpoipikupcv_00" action="/LoginFormTwitter.jsp">
 						<input id="login_from_twitter_startpoipikupcv_callback_00" type="hidden" name="CBPATH" value="/" />
 						<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="javascript:login_from_twitter_startpoipikupcv_00.submit()">
-							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+							<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login")%>
 						</a>
 						<div style="font-size: 9px;margin: 10px 0 15px 0;">
 							<a  style="text-decoration: underline; color: #d6e5f7;"
@@ -131,7 +131,7 @@ CheckLogin checkLogin = new CheckLogin();
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<a class="RegistByMainLink" href="/MyHomePcV.jsp">
-						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+						<span class="typcn typcn-mail"></span> <%=_TEX.T("Unrealizm.Info.Login.Mail")%>
 					</a>
 				</div>
 				<div class="AnalogicoStart" style="margin-top: 0;">
@@ -142,52 +142,52 @@ CheckLogin checkLogin = new CheckLogin();
 		</article>
 
 		<article class="Wrapper ThumbList">
-			<section class="PoipikuInfo">
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_02.png" alt="<%=_TEX.T("StartPoipiku.Capture01")%>"/>
+			<section class="UnrealizmInfo">
+				<div class="UnrealizmDesc">
+					<img class="UnrealizmDescImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/iPhone01_sc_02.png" alt="<%=_TEX.T("StartUnrealizm.Capture01")%>"/>
 				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_03.png" alt="<%=_TEX.T("StartPoipiku.Capture02")%>"/>
+				<div class="UnrealizmDesc">
+					<img class="UnrealizmDescImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/iPhone01_sc_03.png" alt="<%=_TEX.T("StartUnrealizm.Capture02")%>"/>
 				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_04.png" alt="<%=_TEX.T("StartPoipiku.Capture03")%>"/>
+				<div class="UnrealizmDesc">
+					<img class="UnrealizmDescImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/iPhone01_sc_04.png" alt="<%=_TEX.T("StartUnrealizm.Capture03")%>"/>
 				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_05.png" alt="<%=_TEX.T("StartPoipiku.Capture04")%>"/>
+				<div class="UnrealizmDesc">
+					<img class="UnrealizmDescImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/iPhone01_sc_05.png" alt="<%=_TEX.T("StartUnrealizm.Capture04")%>"/>
 				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_06.png" alt="<%=_TEX.T("StartPoipiku.Capture05")%>"/>
+				<div class="UnrealizmDesc">
+					<img class="UnrealizmDescImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/iPhone01_sc_06.png" alt="<%=_TEX.T("StartUnrealizm.Capture05")%>"/>
 				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_07.png" alt="<%=_TEX.T("StartPoipiku.Capture06")%>"/>
+				<div class="UnrealizmDesc">
+					<img class="UnrealizmDescImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/iPhone01_sc_07.png" alt="<%=_TEX.T("StartUnrealizm.Capture06")%>"/>
 				</div>
-				<div class="PoipikuDesc">
-					<img class="PoipikuDescImg" loading="lazy" src="//ai-img.poipiku.com/img/PoipikuInfo_2020_03_07/iPhone01_sc_08.png" alt="<%=_TEX.T("StartPoipiku.Capture07")%>"/>
+				<div class="UnrealizmDesc">
+					<img class="UnrealizmDescImg" loading="lazy" src="//ai-img.poipiku.com/img/UnrealizmInfo_2020_03_07/iPhone01_sc_08.png" alt="<%=_TEX.T("StartUnrealizm.Capture07")%>"/>
 				</div>
 
-				<div class="PoipikuDesc Full">
+				<div class="UnrealizmDesc Full">
 					<div class="DescTitle">
-						<%=_TEX.T("StartPoipiku.Desc01.Title")%>
+						<%=_TEX.T("StartUnrealizm.Desc01.Title")%>
 						<div class="DescSubTitle">
-							<%=_TEX.T("StartPoipiku.Desc01.TitleSub")%>
+							<%=_TEX.T("StartUnrealizm.Desc01.TitleSub")%>
 						</div>
 					</div>
 					<div class="DescTitle">
-						<%=_TEX.T("StartPoipiku.Desc02.Title")%>
+						<%=_TEX.T("StartUnrealizm.Desc02.Title")%>
 						<div class="DescSubTitle">
-							<%=_TEX.T("StartPoipiku.Desc02.TitleSub")%>
+							<%=_TEX.T("StartUnrealizm.Desc02.TitleSub")%>
 						</div>
 					</div>
 					<div class="DescTitle">
-						<%=_TEX.T("StartPoipiku.Desc03.Title")%>
+						<%=_TEX.T("StartUnrealizm.Desc03.Title")%>
 						<div class="DescSubTitle">
-							<%=_TEX.T("StartPoipiku.Desc03.TitleSub")%>
+							<%=_TEX.T("StartUnrealizm.Desc03.TitleSub")%>
 						</div>
 					</div>
 					<div class="DescTitle">
-						<%=_TEX.T("StartPoipiku.Desc04.Title")%>
+						<%=_TEX.T("StartUnrealizm.Desc04.Title")%>
 						<div class="DescSubTitle">
-							<%=_TEX.T("StartPoipiku.Desc04.TitleSub")%>
+							<%=_TEX.T("StartUnrealizm.Desc04.TitleSub")%>
 						</div>
 					</div>
 				</div>
@@ -197,16 +197,16 @@ CheckLogin checkLogin = new CheckLogin();
 		<article class="Wrapper">
 			<section class="AnalogicoInfo" style="display: block; padding: 100px 0;">
 				<div class="AnalogicoDesc Title">
-						<%=_TEX.T("StartPoipiku.LetsStart")%>
+						<%=_TEX.T("StartUnrealizm.LetsStart")%>
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<a class="BtnBase Rev AnalogicoInfoRegistBtn LoginButton" href="/LoginFormTwitter.jsp?CBPATH=">
-						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+						<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login")%>
 					</a>
 				</div>
 				<div class="AnalogicoInfoRegist">
 					<a class="RegistByMainLink" href="/MyHomePcV.jsp">
-						<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+						<span class="typcn typcn-mail"></span> <%=_TEX.T("Unrealizm.Info.Login.Mail")%>
 					</a>
 				</div>
 				<div class="AnalogicoStart" style="margin-top: 0;">

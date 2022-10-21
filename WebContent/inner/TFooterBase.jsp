@@ -6,10 +6,10 @@
 	<%if(!checkLogin.m_bLogin) {%>
 	<article class="AnalogicoInfo">
 		<h1 class="AnalogicoInfoTitle">
-			<%=_TEX.T("Poipiku.Info.Message")%>
+			<%=_TEX.T("Unrealizm.Info.Message")%>
 		</h1>
 		<a class="AnalogicoMoreInfo" href="/">
-			<%=_TEX.T("Poipiku.Info.MoreInfo")%>
+			<%=_TEX.T("Unrealizm.Info.MoreInfo")%>
 		</a>
 		<div class="AnalogicoInfoRegist">
 			<form method="post" name="login_from_twitter_tfooterbase_00" action="/LoginFormTwitter.jsp">
@@ -20,13 +20,13 @@
 					$('#login_from_twitter_tfooterbase_callback_00').val("/" + s.join("/"));
 				}</script>
 				<a class="BtnBase Rev AnalogicoInfoRegistBtn" style="width:200px;" href="javascript:login_from_twitter_tfooterbase_00.submit()">
-					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login")%>
 				</a>
 			</form>
 		</div>
 		<div class="AnalogicoInfoRegist">
 			<a class="BtnBase Rev AnalogicoInfoRegistBtn" style="width:200px;" href="/MyHomePcV.jsp">
-				<span class="typcn typcn-mail"></span> <%=_TEX.T("Poipiku.Info.Login.Mail")%>
+				<span class="typcn typcn-mail"></span> <%=_TEX.T("Unrealizm.Info.Login.Mail")%>
 			</a>
 		</div>
 	</article>
@@ -54,7 +54,7 @@
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Usage")%></dt>
-			<dd><a class="FooterHref" href="/StartPoipikuPcV.jsp"><%=_TEX.T("Footer.Whats")%></a></dd>
+			<dd><a class="FooterHref" href="/StartUnrealizmPcV.jsp"><%=_TEX.T("Footer.Whats")%></a></dd>
 			<dd><a class="FooterHref" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a></dd>
 		</dl>
 		<dl>
@@ -71,7 +71,7 @@
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.Information")%></a></dd>
 			<%
 			StringBuilder sbFooterHref = new StringBuilder();
-			sbFooterHref.append(request.getRequestURL().toString().replaceFirst(Common.GetPoipikuUrl(""), ""));
+			sbFooterHref.append(request.getRequestURL().toString().replaceFirst(Common.GetUnrealizmUrl(""), ""));
 			if(request.getQueryString()!=null) {
 				sbFooterHref.append("?").append(Util.toString(request.getQueryString()));
 			}
@@ -94,7 +94,7 @@
 			<dt><%=_TEX.T("Footer.Link.Service")%></dt>
 			<dd><a class="FooterHref" href="https://tegaki.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Link.Service.Tegaki")%></a></dd>
 			<dd><a class="FooterHref" href="https://galleria.emotionflow.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Galleria")%></a></dd>
-			<dd><a class="FooterHref" href="https://ai.poipiku.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Poipiku")%></a></dd>
+			<dd><a class="FooterHref" href="https://ai.poipiku.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Unrealizm")%></a></dd>
 		</dl>
 	</nav>
 

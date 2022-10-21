@@ -252,7 +252,7 @@ public class UpdatePassportMember extends Batch{
 
 			///////////////////////////////////////////////////////////////////////
 			// 25日以降に解約された場合、イプシロン上では翌月解約扱いとなり、解約月の翌月に課金が発生してしまうため、課金額を0円に変更する。
-			// 25日ピッタリにすると嫌な予感(ポイピクサーバとイプシロンサーバの時刻のずれによって不具合が生じるかも)がするので１分間余裕を持たせている
+			// 25日ピッタリにすると嫌な予感(Unrealizmサーバとイプシロンサーバの時刻のずれによって不具合が生じるかも)がするので１分間余裕を持たせている
 			LocalDate lastMonth = now.minusMonths(1);
 			sql = String.format(
 					"SELECT user_id FROM passport_subscriptions WHERE (cancel_datetime BETWEEN '%d-%02d-24 23:59:00' AND '%d-%02d-01')",

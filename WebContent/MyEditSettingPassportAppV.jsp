@@ -25,8 +25,8 @@ cResults.getResults(checkLogin);
 				top: 4px;
 				margin: 0 2px 0 4px;
 			}
-			.PoipikuPassportLogoFrame {display: block; float: left; width: 100%;}
-			.PoipikuPassportLogoFrame .PoipikuPassportLogo {display: block; height: 45px;}
+			.UnrealizmPassportLogoFrame {display: block; float: left; width: 100%;}
+			.UnrealizmPassportLogoFrame .UnrealizmPassportLogo {display: block; height: 45px;}
 			.BenefitTable {
 						width: 100%;
 						text-align: center;
@@ -61,13 +61,13 @@ cResults.getResults(checkLogin);
 						<%if(passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive) {%>
 						<%//_TEX.T("MyEditSettingPassportV.Text")%>
 						<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
-						平素よりポイピクをご愛顧頂き誠にありがとうございます。
+						平素よりUnrealizmをご愛顧頂き誠にありがとうございます。
 						サーバの過負荷状態が続きサービス継続に支障が出ていたため、一部機能の提供を中止し皆様にはご迷惑をおかけいたしました。申し訳ございません。
-						検討した結果、この度「ポイピクパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。
-						また「可能であればイラストと一緒に広告を表示したくない」というポイピクチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
+						検討した結果、この度「Unrealizmパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。
+						また「可能であればイラストと一緒に広告を表示したくない」というUnrealizmチームの強い思いで、ポイパスにご加入頂くと広告を表示しないようにいたしました。
 						iPhone版、Android版の各アプリでも加入後広告が表示されなくなり、ポイパスの機能が有効となります。
 						高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
-						収益はポイピクサービスの維持・発展に使用させていただきます。
+						収益はUnrealizmサービスの維持・発展に使用させていただきます。
 						ぜひポイパスへのご加入をご検討いただけますと幸いです。
 						(2020年12月 株式会社pipa.jp代表 川合和寛)
 						</div>

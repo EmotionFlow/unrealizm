@@ -1,6 +1,6 @@
 #parse("vi/header.vm")
 
-Dưới đây là một số người dùng được đề xuất mà bạn không nên theo dõi trên POIPIKU.
+Dưới đây là một số người dùng được đề xuất mà bạn không nên theo dõi trên Unrealizm.
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-Việc theo dõi POIPIKU không được thông báo cho người khác. Hãy thoải mái theo dõi chúng.
+Việc theo dõi Unrealizm không được thông báo cho người khác. Hãy thoải mái theo dõi chúng.
 
 #parse("vi/footer.vm")

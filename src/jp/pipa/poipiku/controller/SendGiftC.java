@@ -86,7 +86,7 @@ public class SendGiftC {
 			// 注文生成
 			Order order = new Order();
 			order.customerId = fromUserId;
-			order.sellerId = 2; // ポイピク公式
+			order.sellerId = 2; // Unrealizm公式
 			order.paymentTotal = AMOUNT;
 			order.cheerPointStatus = Order.CheerPointStatus.NotApplicable;
 			if (order.insert() != 0 || order.id < 0) {

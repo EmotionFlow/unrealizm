@@ -43,7 +43,7 @@ if (controllerResults == null) { // 初回アクセス
 				.filter(s -> s.user.m_nUserId == finalSelectedUserId1)
 				.collect(Collectors.toList());
 		if (list.size() > 0 && selectedUserId > 0) {
-			result = Oauth.connectPoipikuUser(
+			result = Oauth.connectUnrealizmUser(
 					list.get(0).oauth.twitterUserId, selectedUserId);
 		} else {
 			result = true;

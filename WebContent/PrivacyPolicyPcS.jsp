@@ -20,7 +20,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
-					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「ポイピク」プライバシーポリシー</div>
+					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「unrealizm」プライバシーポリシー</div>
 					<div class="SettingBody">
 						pipa.jpは、個人情報の保護のため法令を遵守するとともに、このプライバシーポリシーを公開し、これに従うことを宣言いたします。<br />
 					</div>

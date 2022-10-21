@@ -1,6 +1,6 @@
 #parse("es/header.vm")
 
-Aquí tienes algunos usuarios recomendados que no sigues en POIPIKU.
+Aquí tienes algunos usuarios recomendados que no sigues en Unrealizm.
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-Seguir por POIPIKU no es notificar a la otra persona. Siéntase libre de seguirlos.
+Seguir por Unrealizm no es notificar a la otra persona. Siéntase libre de seguirlos.
 
 #parse("es/footer.vm")

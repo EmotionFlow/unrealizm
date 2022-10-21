@@ -89,15 +89,15 @@ function DispR18PlusMsg() {
 </div>
 <div class="OptionItem" id="ItemShowLimitVal" style="padding-top: 0; display: none;">
 	<div class="OptionPublishShowLimitList">
-		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_LOGIN%>" id="RadioPoipikuLogin">
-		<label for="RadioPoipikuLogin" class="OptionShowLimit">
-			<span class="ShowLimitImage PoipikuLogin"></span>
-			<span class="ShowLimitName"><%=_TEX.T("UpCmdOptions.Condition.PoipikuLogin")%></span>
+		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_LOGIN%>" id="RadioUnrealizmLogin">
+		<label for="RadioUnrealizmLogin" class="OptionShowLimit">
+			<span class="ShowLimitImage UnrealizmLogin"></span>
+			<span class="ShowLimitName"><%=_TEX.T("UpCmdOptions.Condition.UnrealizmLogin")%></span>
 		</label>
-		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_FOLLOWER%>" id="RadioPoipikuFollower">
-		<label for="RadioPoipikuFollower" class="OptionShowLimit">
-			<span class="ShowLimitImage PoipikuFollower"></span>
-			<span class="ShowLimitName"><%=_TEX.T("UpCmdOptions.Condition.PoipikuFollower")%></span>
+		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_FOLLOWER%>" id="RadioUnrealizmFollower">
+		<label for="RadioUnrealizmFollower" class="OptionShowLimit">
+			<span class="ShowLimitImage UnrealizmFollower"></span>
+			<span class="ShowLimitName"><%=_TEX.T("UpCmdOptions.Condition.UnrealizmFollower")%></span>
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_FOLLOWER%>" id="RadioTwitterFollower">
 		<label for="RadioTwitterFollower" class="OptionShowLimit"

@@ -11,7 +11,7 @@ if (isApp) {
 
 if(!checkLogin.m_bLogin) {
 	if(isApp){
-		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
 	} else {
 		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
 	}

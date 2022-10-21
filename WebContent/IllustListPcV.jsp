@@ -48,7 +48,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<meta property="og:url" content="<%=strUrl%>" />
 		<meta property="og:title" content="<%=Util.toDescString(strTitle)%>" />
 		<meta property="og:description" content="<%=Util.toDescString(strDesc)%>" />
-		<meta property="og:image" content="<%=Common.GetPoipikuUrl(strFileUrl)%>" />
+		<meta property="og:image" content="<%=Common.GetUnrealizmUrl(strFileUrl)%>" />
 		<title><%=Util.toDescString(strTitle)%></title>
 
 		<script type="text/javascript">
@@ -65,7 +65,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
 			<%if(!bSmartPhone) {%>
-			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
+			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Unrealizm.Info.RegistNow")%>');
 			<%}%>
 			/*
 			$(window).bind("scroll.slideHeader", function() {

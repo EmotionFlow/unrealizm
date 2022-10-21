@@ -1,11 +1,11 @@
 Gửi $to_name
 
-Chào mừng đến với POIPIKU!
-Nhân viên của chúng tôi sẽ hướng dẫn bạn cách sử dụng POIPIKU và cách thiết lập email của bạn.
+Chào mừng đến với Unrealizm!
+Nhân viên của chúng tôi sẽ hướng dẫn bạn cách sử dụng Unrealizm và cách thiết lập email của bạn.
 
 [Đăng và thưởng thức]
 Bạn có thể đăng hình ảnh (ảnh có thể chấp nhận được) và tiểu thuyết (văn bản).
-POIPIKU là một trang web nơi bạn có thể tình cờ đăng những nét vẽ nguệch ngoạc hoặc nội dung mà bạn đang làm việc. Hãy đăng tác phẩm của riêng bạn.
+Unrealizm là một trang web nơi bạn có thể tình cờ đăng những nét vẽ nguệch ngoạc hoặc nội dung mà bạn đang làm việc. Hãy đăng tác phẩm của riêng bạn.
 
 + Tệp +
 Bạn có thể tải lên PNG, JPEG và GIF (bao gồm cả GIF động). Nhiều hình ảnh có thể được tải lên cùng một lúc và thứ tự có thể được thay đổi hoặc thay thế sau khi gửi.
@@ -18,8 +18,8 @@ Bạn có thể sao chép và dán ảnh chụp màn hình và các hình ảnh 
 
 
 [Thích xem và đọc]
-Khi theo dõi một người dùng trên POIPIKU, bạn có thể kiểm tra các bài đăng mới của người dùng mà bạn đang theo dõi trên trang [lặng lẽ theo dõi].
-Những người theo dõi trên POIPIKU sẽ không được thông báo. Hãy cùng theo dõi chúng ngay sau đây.
+Khi theo dõi một người dùng trên Unrealizm, bạn có thể kiểm tra các bài đăng mới của người dùng mà bạn đang theo dõi trên trang [lặng lẽ theo dõi].
+Những người theo dõi trên Unrealizm sẽ không được thông báo. Hãy cùng theo dõi chúng ngay sau đây.
 
 + Người dùng được đề xuất +
 
@@ -39,7 +39,7 @@ Các phản ứng, đừng nói cho người khác biết người đã gửi ch
 
 
 [Cài đặt email]
-Bạn cũng có thể đăng nhập vào POIPIKU bằng địa chỉ email và mật khẩu của mình, trong trường hợp tích hợp Twitter không hoạt động hoặc bạn đã xóa tài khoản Twitter của mình.
+Bạn cũng có thể đăng nhập vào Unrealizm bằng địa chỉ email và mật khẩu của mình, trong trường hợp tích hợp Twitter không hoạt động hoặc bạn đã xóa tài khoản Twitter của mình.
 
 Email: $login_email
 Mật khẩu: $login_password
@@ -49,20 +49,20 @@ Mật khẩu: $login_password
 
 
 [Gửi email]
-Bạn sẽ nhận được thông báo qua email không thường xuyên, chẳng hạn như thông báo giới thiệu người dùng được đề xuất hoặc thông báo cho bạn khi người dùng mà bạn theo dõi trên Twitter bắt đầu sử dụng POIPIKU.
+Bạn sẽ nhận được thông báo qua email không thường xuyên, chẳng hạn như thông báo giới thiệu người dùng được đề xuất hoặc thông báo cho bạn khi người dùng mà bạn theo dõi trên Twitter bắt đầu sử dụng Unrealizm.
 - Bạn có thể thay đổi giao hàng BẬT / TẮT trong màn hình cài đặt.
 
 
 [Tài khoản chính thức]
-Đây là tài khoản chính thức cho POIPIKU và Twitter. Chúng tôi sẽ đăng thông tin cập nhật và chiến dịch khi cần thiết, vì vậy hãy theo dõi chúng tôi nếu bạn thích.
+Đây là tài khoản chính thức cho Unrealizm và Twitter. Chúng tôi sẽ đăng thông tin cập nhật và chiến dịch khi cần thiết, vì vậy hãy theo dõi chúng tôi nếu bạn thích.
 
-POIPIKU
+Unrealizm
 https://ai.poipiku.com/2
 
 Twitter
 https://twitter.com/pipajp
 
 
-Vì vậy, hãy tận hưởng POIPIKU!
+Vì vậy, hãy tận hưởng Unrealizm!
 
 #parse("vi/footer.vm")

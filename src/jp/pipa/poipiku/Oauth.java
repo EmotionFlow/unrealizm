@@ -37,7 +37,7 @@ public class Oauth extends Model{
 	 * @param poipikuUserId poipiku user id
 	 * @return result
 	 */
-	public static boolean connectPoipikuUser(String twitterUserId, int poipikuUserId) {
+	public static boolean connectUnrealizmUser(String twitterUserId, int poipikuUserId) {
 		Connection connection = null;
 		PreparedStatement statement = null;
 		String strSql = "";

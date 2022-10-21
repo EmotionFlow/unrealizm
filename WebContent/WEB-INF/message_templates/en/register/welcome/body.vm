@@ -1,11 +1,11 @@
 Dear $to_name
 
-Welcome to POIPIKU!
-Our staff will show you how to use POIPIKU and how to set up your email.
+Welcome to Unrealizm!
+Our staff will show you how to use Unrealizm and how to set up your email.
 
 [Post and enjoy]
 You can post images (photos are acceptable) and novels (text).
-POIPIKU is a site where you can casually post scribbles or content you are working on. Feel free to post your own work.
+Unrealizm is a site where you can casually post scribbles or content you are working on. Feel free to post your own work.
 
 + Files +
 You can upload PNGs, JPEGs, and GIFs (including animated GIFs). Multiple images can be uploaded at the same time, and the order can be changed or replaced after submission.
@@ -18,8 +18,8 @@ You can copy and paste screen shots and other images and post them. You can do t
 
 
 [Enjoy watching and reading]
-When you follow a user on POIPIKU, you can check the new posts of the user you are following on the [quiet follow] page.
-Followers on POIPIKU will not be notified. Let's follow them right away.
+When you follow a user on Unrealizm, you can check the new posts of the user you are following on the [quiet follow] page.
+Followers on Unrealizm will not be notified. Let's follow them right away.
 
 + Recommended Users +
 
@@ -39,7 +39,7 @@ Reactions, do not tell the other person who sent them. If you feel like it, you 
 
 
 [Email settings]
-You can also log in to POIPIKU with your email address and password, in case Twitter integration doesn't work or you've deleted your Twitter account.
+You can also log in to Unrealizm with your email address and password, in case Twitter integration doesn't work or you've deleted your Twitter account.
 
 Email : $login_email
 Password : $login_password
@@ -49,20 +49,20 @@ Password : $login_password
 
 
 [Email Delivery]
-You will receive occasional email notifications, such as those introducing recommended users or notifying you when a user you follow on Twitter starts using POIPIKU.
+You will receive occasional email notifications, such as those introducing recommended users or notifying you when a user you follow on Twitter starts using Unrealizm.
 - You can change the delivery ON/OFF in the settings screen.
 
 
 [Official Accounts]
-This is the official account for POIPIKU and Twitter. We will post updates and campaign information as needed, so please follow us if you like.
+This is the official account for Unrealizm and Twitter. We will post updates and campaign information as needed, so please follow us if you like.
 
-POIPIKU
+Unrealizm
 https://ai.poipiku.com/2
 
 Twitter
 https://twitter.com/pipajp
 
 
-So, enjoy POIPIKU!
+So, enjoy Unrealizm!
 
 #parse("en/footer.vm")

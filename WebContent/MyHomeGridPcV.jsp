@@ -79,9 +79,9 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 		<style>
 			body {padding-top: 79px !important;}
-			.PoipikuDesc.Event {margin: 10px 0;}
+			.UnrealizmDesc.Event {margin: 10px 0;}
 			.RequestEmail {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
-			.PoipikuDesc.Event {margin: 30px 0 0 0;}
+			.UnrealizmDesc.Event {margin: 30px 0 0 0;}
 			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}

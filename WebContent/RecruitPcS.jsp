@@ -81,7 +81,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 					<div class="SettingListTitle">必須条件</div>
 					<div class="SettingBody">
 						<ul>
-							<li>ポイピク愛❤︎</li>
+							<li>Unrealizm愛❤︎</li>
 						</ul>
 					</div>
 				</div>
@@ -103,7 +103,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 							<li>ユーザから寄せられる各種問い合わせへの対応</li>
 							<li>文書やWebサイト用イラスト素材の作成</li>
 							<li>サイト内イベントの企画、運営</li>
-							<li>ポイピクの広報活動</li>
+							<li>Unrealizmの広報活動</li>
 						</ul>
 					</div>
 				</div>
@@ -184,7 +184,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 ・履歴書<br />
 ・職務経歴書（社会人のみ）<br />
 ・ポートフォリオ<br />
-・ポイピクユーザID<br />
+・UnrealizmユーザID<br />
 <br />
 
 3. 面談<br/>

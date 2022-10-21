@@ -55,7 +55,7 @@ public final class RegisteredNotifier extends Notifier {
 
 			final int MAX_RECOMMENDED_USERS = 15;
 			List<RecommendedUser> recommendedUsers = new ArrayList<>();
-			// 登録ユーザーがフォローしているユーザーのうち、ポイピクにいる人を抽出
+			// 登録ユーザーがフォローしているユーザーのうち、Unrealizmにいる人を抽出
 			sql = "SELECT user_id, nickname, profile" +
 					" FROM users_0000" +
 					" WHERE user_id IN (" +
@@ -191,7 +191,7 @@ public final class RegisteredNotifier extends Notifier {
 		return result;
 	}
 
-		// Twitterで自分をフォローしているユーザーに、自分がポイピクを始めたことをメールする。
+		// Twitterで自分をフォローしているユーザーに、自分がUnrealizmを始めたことをメールする。
 	public boolean notifyToMyTwitterFollower(DataSource dataSource, int newUserIdFrom, int newUserIdTo) {
 		Connection connection = null;
 		PreparedStatement statement = null;

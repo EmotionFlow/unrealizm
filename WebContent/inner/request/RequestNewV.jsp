@@ -136,7 +136,7 @@ if (!results.getResults(checkLogin)) {
 				},
 				error => {
 					cardInfo = null;
-					DispMsg("<%=_TEX.T("PassportDlg.Err.PoipikuSrv")%>");
+					DispMsg("<%=_TEX.T("PassportDlg.Err.UnrealizmSrv")%>");
 				}
 			);
 		}

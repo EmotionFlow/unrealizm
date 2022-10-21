@@ -58,7 +58,7 @@ public final class RegistTwitterTokenC extends Controller {
 
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			// 他のポイピクアカウントがこのTwitterアカウントと紐づいてるかを検索
+			// 他のUnrealizmアカウントがこのTwitterアカウントと紐づいてるかを検索
 			sql = "SELECT flduserid FROM tbloauth WHERE flduserid<>? AND twitter_user_id=? AND del_flg=false";
 			statement = connection.prepareStatement(sql);
 			statement.setInt(1, checkLogin.m_nUserId);

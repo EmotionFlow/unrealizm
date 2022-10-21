@@ -20,7 +20,7 @@
                 <%if(checkLogin.m_bLogin){%>
                 go_inquiry.submit();
                 <%}else{%>
-                location.href = "<%=Common.GetPoipikuUrl("/")%>";
+                location.href = "<%=Common.GetUnrealizmUrl("/")%>";
                 <%}%>
             }, 2000);
         })
@@ -35,7 +35,7 @@
         <%=_TEX.T("GoToInquiry.Info")%>
     </div>
     <form method="post" name="go_inquiry" action="https://cs.pipa.jp/InquiryPcV.jsp">
-        <input type="hidden" name="SRV" value="Poipiku"/>
+        <input type="hidden" name="SRV" value="Unrealizm"/>
         <input type="hidden" name="EMAIL" value="<%=cResults.m_cUser.m_strEmail%>"/>
         <input type="hidden" name="NNAME" value="<%=cResults.m_cUser.m_strNickName%>"/>
         <input type="hidden" name="TWNAME" value="<%=cResults.m_cUser.m_strTwitterScreenName%>"/>

@@ -1,6 +1,6 @@
 #parse("en/header.vm")
 
-A user you follow on Twitter has started a POIPIKU.
+A user you follow on Twitter has started a Unrealizm.
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-Following by POIPIKU is not notify to the other person. Feel free to follow them.
+Following by Unrealizm is not notify to the other person. Feel free to follow them.
 
 #parse("en/footer.vm")

@@ -114,7 +114,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					$('#login_from_twitter_tmenupc_callback_01').val("/" + s.join("/"));
 				}</script>
 				<a class="BtnBase Rev HeaderLoginBtnPc LoginButton" href="javascript:login_from_twitter_tmenupc_01.submit()">
-					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login.Short")%>
+					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login.Short")%>
 				</a>
 			</form>
 			<div class="TwLoginUnsuccessfulIcon" onclick="dispTwLoginUnsuccessfulInfo($('#login_from_twitter_tmenupc_callback_01').val())">
@@ -380,7 +380,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<%=_TEX.T("THeader.Title.Desc")%>
 	</h2>
 	<a class="AnalogicoMoreInfo" href="/">
-		<%=_TEX.T("Poipiku.Info.MoreInfo")%>
+		<%=_TEX.T("Unrealizm.Info.MoreInfo")%>
 	</a>
 	<div class="LinkApp" style="display: none;">
 		<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>

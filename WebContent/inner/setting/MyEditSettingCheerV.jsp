@@ -30,7 +30,7 @@ return `
 	<div class="AccountInfoInputLabel">金融機関コード</div>
 	<input id="FCD" class="swal2-input" style="margin-top: 4px;" maxlength="4" placeholder="0000"/>
 	<div class="AccountInfoInputLabel">銀行名(日本国内のみ)</div>
-	<input id="FNM" class="swal2-input" style="margin-top: 4px;" maxlength="32" placeholder="ポイピク銀行"/>
+	<input id="FNM" class="swal2-input" style="margin-top: 4px;" maxlength="32" placeholder="Unrealizm銀行"/>
 	<div class="AccountInfoInputLabel">支店コード</div>
 	<input id="FSUBCD" class="swal2-input" style="margin-top: 4px;" maxlength="3" placeholder="000"/>
 	<div class="AccountInfoInputLabel">支店名(本店の場合は「本店」)</div>
@@ -43,7 +43,7 @@ return `
 	<div class="AccountInfoInputLabel">口座番号(7桁)</div>
 	<input id="ACCD" class="swal2-input" style="margin-top: 4px;" maxlength="7" placeholder="1234567"/>
 	<div class="AccountInfoInputLabel">口座名義(全角カナ)</div>
-	<input id="ACNM" class="swal2-input" style="margin-top: 4px;" maxlength="64" placeholder="ポイピクタロウ"/>
+	<input id="ACNM" class="swal2-input" style="margin-top: 4px;" maxlength="64" placeholder="Unrealizmタロウ"/>
 </div>
 `;
 }

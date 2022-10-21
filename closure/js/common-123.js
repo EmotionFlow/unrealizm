@@ -1239,7 +1239,7 @@ function _showTextDetail(ownerUserId, contentId, password) {
 			} else {
 				switch (data.error_code) {
 					case -1:
-						location.href = 'StartPoipikuPcV.jsp';
+						location.href = 'StartUnrealizmPcV.jsp';
 						break;
 					case -2:
 						DispNeedLoginMsg();
@@ -1284,7 +1284,7 @@ function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 			} else {
 				switch (data.error_code) {
 					case -1:
-						location.href = 'StartPoipikuPcV.jsp';
+						location.href = 'StartUnrealizmPcV.jsp';
 						break;
 					case -2:
 						DispNeedLoginMsg();
@@ -1357,7 +1357,7 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 
 	if (isSmartPhone && typeof navigator.share !== 'undefined') {
 		const shareData = {
-			title: 'POIPIKU',
+			title: 'Unrealizm',
 			text: tweetTxt,
 			url: 'https://ai.poipiku.com/' + contentUserId + '/' + contentId + '.html',
 		}
@@ -1403,7 +1403,7 @@ function contentPageToClipboard(ownerUserId, contentId) {
 function shareUser(userId, message, uri, isSmartPhone) {
 	if (isSmartPhone && typeof navigator.share !== 'undefined') {
 		const shareData = {
-			title: 'POIPIKU',
+			title: 'Unrealizm',
 			text: message,
 			url: uri,
 		}

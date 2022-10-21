@@ -141,7 +141,7 @@ public final class RegistTwitterUserC {
 						statement.close();statement = null;
 						connection.close();connection = null;
 
-						// twitterから取得したメアドが、他に登録されていなかったら、このポイピクアカウントの
+						// twitterから取得したメアドが、他に登録されていなかったら、このUnrealizmアカウントの
 						// メアドとして登録する。
 						if (!isEmailRegistered) {
 							connection = dataSource.getConnection();

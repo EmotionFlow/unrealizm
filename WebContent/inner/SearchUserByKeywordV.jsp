@@ -16,9 +16,9 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 if(SP_REVIEW && !checkLogin.m_bLogin) {
 	if(isApp){
-		getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
 	} else {
-		getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
 	}
 	return;
 }
@@ -39,7 +39,7 @@ if (cResults.m_strKeyword.indexOf("#") == 0) {
 String strKeywordHan = Util.toSingle(cResults.m_strKeyword);
 if(strKeywordHan.matches("^[0-9]+$")) {
 	String strUrl = (isApp ? "/IllustListAppV.jsp?ID=%s" : "/%s/").formatted(strKeywordHan);
-	response.sendRedirect(Common.GetPoipikuUrl(strUrl));
+	response.sendRedirect(Common.GetUnrealizmUrl(strUrl));
 	return;
 }
 

@@ -1,6 +1,6 @@
 #parse("th/header.vm")
 
-ผู้ใช้ที่คุณติดตามบน Twitter ได้เริ่มต้น POIPIKU
+ผู้ใช้ที่คุณติดตามบน Twitter ได้เริ่มต้น Unrealizm
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-ตามด้วย POIPIKU จะไม่แจ้งให้บุคคลอื่นทราบ รู้สึกอิสระที่จะปฏิบัติตามพวกเขา
+ตามด้วย Unrealizm จะไม่แจ้งให้บุคคลอื่นทราบ รู้สึกอิสระที่จะปฏิบัติตามพวกเขา
 
 #parse("th/footer.vm")

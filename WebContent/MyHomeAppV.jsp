@@ -6,7 +6,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 boolean isApp = true;
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
 	return;
 }
 

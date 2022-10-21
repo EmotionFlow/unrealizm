@@ -24,9 +24,9 @@ public final class MyHomePcC {
 			n_nVersion = Util.toInt(request.getParameter("VER"));
 			m_nPage = Math.max(Util.toInt(request.getParameter("PG")), 0);
 			if(m_nPage<=0) {
-				String strPoipikuInfoId = Util.getCookie(request, Common.AI_POIPIKU_INFO);
-				if(strPoipikuInfoId!=null && !strPoipikuInfoId.isEmpty()) {
-					m_nLastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
+				String strUnrealizmInfoId = Util.getCookie(request, Common.AI_POIPIKU_INFO);
+				if(strUnrealizmInfoId!=null && !strUnrealizmInfoId.isEmpty()) {
+					m_nLastSystemInfoId = Integer.parseInt(strUnrealizmInfoId);
 				}
 			}
 		} catch(Exception ignored) {
@@ -80,7 +80,7 @@ public final class MyHomePcC {
 				checkLogin.m_nLangId = cookieLangId;
 			}
 
-			// POIPIKU INFO
+			// Unrealizm INFO
 			if(m_nPage<=0) {
 				statement = connection.prepareStatement(POIPIKU_INFO_SQL);
 				statement.setInt(1, checkLogin.m_nLangId);

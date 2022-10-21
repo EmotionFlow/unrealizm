@@ -73,7 +73,7 @@
 				}},
 			error => {
 				// cardInfo = null;
-				DispMsg("<%=_TEX.T("CheerDlg.Err.PoipikuSrv")%>");
+				DispMsg("<%=_TEX.T("CheerDlg.Err.UnrealizmSrv")%>");
 				if (elCheerNowPayment != null) {
 					elCheerNowPayment.hide();
 				}

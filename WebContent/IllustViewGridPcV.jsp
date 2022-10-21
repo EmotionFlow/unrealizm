@@ -13,7 +13,7 @@ if(!cResults.getResults(checkLogin)) {
 	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.contentId) {
 		response.sendRedirect("/NotFoundPcV.jsp");
 	} else {
-		response.sendRedirect(Common.GetPoipikuUrl(String.format("/%d/%d.html", cResults.ownerUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(Common.GetUnrealizmUrl(String.format("/%d/%d.html", cResults.ownerUserId, cResults.m_nNewContentId)));
 	}
 	return;
 }
@@ -112,7 +112,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 				<%}%>
 				$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(cResults.m_cUser.m_strNickName), cResults.m_nContentsNumTotal)%>');
 				<%if(!Util.isSmartPhone(request)) {%>
-				$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Poipiku.Info.RegistNow")%>');
+				$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Unrealizm.Info.RegistNow")%>');
 				<%}%>
 
 				<%if(!bHidden && cResults.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>

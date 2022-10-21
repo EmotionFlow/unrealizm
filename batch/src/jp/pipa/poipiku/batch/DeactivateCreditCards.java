@@ -106,7 +106,7 @@ public class DeactivateCreditCards extends Batch {
 					}
 				}
 
-				// ポイピクDB上でカードを無効化する
+				// UnrealizmDB上でカードを無効化する
 				Log.d(String.format("card: %d, %b, %b", cardId, cardDelFlg, cardInvalidFlg));
 				if (!cardDelFlg && !cardInvalidFlg) {
 					CreditCard creditCard = new CreditCard(poipikuUserId, Agent.EPSILON);

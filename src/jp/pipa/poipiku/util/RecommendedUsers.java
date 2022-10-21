@@ -24,7 +24,7 @@ public final class RecommendedUsers {
 			CacheUsers0000 cacheUsers = CacheUsers0000.getInstance();
 			List<Integer> userIds = new ArrayList<>();
 
-			// ツイッターでフォローしているが、ポイピクでフォローしていないユーザー
+			// ツイッターでフォローしているが、Unrealizmでフォローしていないユーザー
 			strSql = "WITH poi AS (" +
 					"    SELECT follow_user_id" +
 					"    FROM follows_0000" +

@@ -1,6 +1,6 @@
 #parse("vi/header.vm")
 
-Một người dùng mà bạn theo dõi trên Twitter đã bắt đầu một POIPIKU.
+Một người dùng mà bạn theo dõi trên Twitter đã bắt đầu một Unrealizm.
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -11,6 +11,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-Việc theo dõi POIPIKU không được thông báo cho người khác. Hãy thoải mái theo dõi chúng.
+Việc theo dõi Unrealizm không được thông báo cho người khác. Hãy thoải mái theo dõi chúng.
 
 #parse("vi/footer.vm")

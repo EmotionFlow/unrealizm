@@ -180,7 +180,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 							<a class="BtnBase Rev AnalogicoInfoRegistBtn"
 							   style="margin: 10px 0 10px 0"
 							   href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
-								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Poipiku.Info.Login")%>
+								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login")%>
 							</a>
 
 							<div style="font-size: 9px;">

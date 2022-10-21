@@ -22,7 +22,7 @@ if(!cResults.getResults(checkLogin)) {
 	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.contentId) {
 		response.sendRedirect("/NotFoundPcV.jsp");
 	} else {
-		response.sendRedirect(Common.GetPoipikuUrl(String.format("/%d/%d.html", cResults.ownerUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(Common.GetUnrealizmUrl(String.format("/%d/%d.html", cResults.ownerUserId, cResults.m_nNewContentId)));
 	}
 	return;
 }

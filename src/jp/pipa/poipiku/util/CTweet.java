@@ -688,7 +688,7 @@ public final class CTweet {
 			statement.close();statement=null;
 
 
-			// ポイピク上のuser_id紐付け
+			// Unrealizm上のuser_id紐付け
 			sql = "WITH a AS (" +
 					"    SELECT twitter_follow_user_id" +
 					"    FROM twitter_friends" +

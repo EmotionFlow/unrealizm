@@ -30,9 +30,9 @@ public class MyHomeC {
 			viewMode = Util.toInt(request.getParameter("VD"));
 			page = Util.toInt(request.getParameter("PG"));
 			if(startId <=0) {
-				String strPoipikuInfoId = Util.getCookie(request, Common.AI_POIPIKU_INFO);
-				if(strPoipikuInfoId!=null && !strPoipikuInfoId.isEmpty()) {
-					lastSystemInfoId = Integer.parseInt(strPoipikuInfoId);
+				String strUnrealizmInfoId = Util.getCookie(request, Common.AI_POIPIKU_INFO);
+				if(strUnrealizmInfoId!=null && !strUnrealizmInfoId.isEmpty()) {
+					lastSystemInfoId = Integer.parseInt(strUnrealizmInfoId);
 				}
 			}
 		} catch(Exception ignored) {}
@@ -75,7 +75,7 @@ public class MyHomeC {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
 
-			// POIPIKU INFO
+			// Unrealizm INFO
 			if(startId <=0) {
 				statement = connection.prepareStatement(POIPIKU_INFO_SQL);
 				statement.setInt(1, lastSystemInfoId);

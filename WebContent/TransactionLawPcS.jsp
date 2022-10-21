@@ -97,7 +97,7 @@
 				<div class="SettingListItem">
 					<div class="SettingListTitle">屋号またはサービス名</div>
 					<div class="SettingBody">
-						ポイピク<br />
+						unrealizm<br />
 					</div>
 				</div>
 

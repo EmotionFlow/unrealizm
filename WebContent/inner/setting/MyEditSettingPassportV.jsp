@@ -56,7 +56,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			},
 			error => {
 				cardInfo = null;
-				DispMsg("<%=_TEX.T("PassportDlg.Err.PoipikuSrv")%>");
+				DispMsg("<%=_TEX.T("PassportDlg.Err.UnrealizmSrv")%>");
 				if (elPassportNowPayment != null) {
 					elPassportNowPayment.hide();
 				}
@@ -188,7 +188,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 				});
 
 			} else {
-				DispMsg("<%=_TEX.T("CardInfoDlg.Err.PoipikuSrv")%>");
+				DispMsg("<%=_TEX.T("CardInfoDlg.Err.UnrealizmSrv")%>");
 			}
 		});
 	}
@@ -239,7 +239,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 					setTimeout(()=>location.reload(), 5000);
 				},
 				error => {
-					DispMsg("<%=_TEX.T("PassportDlg.Err.PoipikuSrv")%>");
+					DispMsg("<%=_TEX.T("PassportDlg.Err.UnrealizmSrv")%>");
 					setTimeout(()=>location.reload(), 5000);
 				}
 			);
@@ -258,8 +258,8 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 		top: 4px;
 		margin: 0 2px 0 4px;
 	}
-	.PoipikuPassportLogoFrame {display: block; float: left; width: 100%;}
-	.PoipikuPassportLogoFrame .PoipikuPassportLogo {display: block; height: 45px;}
+	.UnrealizmPassportLogoFrame {display: block; float: left; width: 100%;}
+	.UnrealizmPassportLogoFrame .UnrealizmPassportLogo {display: block; height: 45px;}
 	.BenefitTable {
 			width: 100%;
 			text-align: center;

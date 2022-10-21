@@ -46,7 +46,7 @@ try {
 
 		String strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
 				URLEncoder.encode(String.format(_TEX.T("MyIllustListV.TweetMyBox.Tweet.Msg"), cResults.m_cUser.m_strNickName), "UTF-8"),
-				URLEncoder.encode(Common.GetPoipikuUrl("/"+cResults.m_cUser.m_nUserId+"/"), "UTF-8"));
+				URLEncoder.encode(Common.GetUnrealizmUrl("/"+cResults.m_cUser.m_nUserId+"/"), "UTF-8"));
 		result.put("twitter_link", strTwitterUrl);
 
 		List<String> myTagList = new ArrayList<>();

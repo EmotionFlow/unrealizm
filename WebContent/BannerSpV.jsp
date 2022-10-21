@@ -34,7 +34,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 			</div>
 			<div class="AnalogicoDesc Title">
 				<div>放置絵ポイポイ 練習ポイポイ 進捗ポイポイ</div>
-				<div>「ポイピク」正式オープン！</div>
+				<div>「unrealizm」正式オープン！</div>
 			</div>
 		</article>
 	</body>

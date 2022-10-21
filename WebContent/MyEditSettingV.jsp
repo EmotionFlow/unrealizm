@@ -11,7 +11,7 @@ String strDebug = "";
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/StartPoipikuV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
 	return;
 }
 

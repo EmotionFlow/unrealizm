@@ -137,7 +137,7 @@ public final class CCnv {
 			));
 			strRtn.append("</div>");    // IllustItemCmd
 
-			// ポイピク内でのピン留め
+			// Unrealizm内でのピン留め
 			strRtn.append("<div class=\"IllustItemCmd\" style=\"float:none;display:inline-block;margin-right:14px\">");
 			strRtn.append(String.format("<a id=\"IllustItemPinBtn_%d\" class=\"NonFrameBtnBase IllustItemPinButton fas fa-thumbtack %s\" style=\"float:none;margin-bottom:-2px\" href=\"javascript:void(0)\" onclick=\"UpdatePin(%d, %d);\"></a>",
 					cContent.m_nContentId,

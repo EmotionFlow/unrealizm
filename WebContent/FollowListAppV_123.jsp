@@ -5,7 +5,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/StartPoipikuAppV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
 	return;
 }
 

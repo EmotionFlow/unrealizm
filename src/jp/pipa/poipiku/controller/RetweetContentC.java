@@ -21,7 +21,7 @@ public class RetweetContentC extends Controller {
 		RecordNotFound(-10),	    // 自分を外そうとした
 		TweetIdNotFound(-20),	    // 削除対象が見つからなかった
 		RetweetError(-30),          // リツイート時にエラー
-		NotSignedIn(-40),           // ポイピクにログインしていない
+		NotSignedIn(-40),           // Unrealizmにログインしていない
 		Unknown(-99);         // 不明。通常ありえない。
 
 		@Override

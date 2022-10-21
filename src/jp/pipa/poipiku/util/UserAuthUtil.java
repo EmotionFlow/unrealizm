@@ -527,7 +527,7 @@ public class UserAuthUtil {
 			cState.close();cState=null;
 
 			final String SMTP_HOST = "localhost";
-			final String FROM_NAME = "POIPIKU";
+			final String FROM_NAME = "Unrealizm";
 			final String FROM_ADDR = "info@ai.poipiku.com";
 			final String EMAIL_TITLE = _TEX.T("UpdateEmailAddressV.Mail.Title");
 			String strEmailText = null;
@@ -696,7 +696,7 @@ public class UserAuthUtil {
 								cResSet.close();cResSet=null;
 								cState.close();cState=null;
 
-								// twitterから取得したメアドが、他に登録されていなかったら、このポイピクアカウントの
+								// twitterから取得したメアドが、他に登録されていなかったら、このUnrealizmアカウントの
 								// メアドとして登録する。
 								if(!bEmailRegistered){
 									strSql = "UPDATE users_0000 SET email=? WHERE user_id=?";

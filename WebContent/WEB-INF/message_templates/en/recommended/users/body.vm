@@ -1,7 +1,7 @@
 #parse("en/header.vm")
 
-あなたがポイピクでフォローしていないおすすめユーザーを紹介します。
-Here are some recommended users that you are not following on POIPIKU.
+あなたがUnrealizmでフォローしていないおすすめユーザーを紹介します。
+Here are some recommended users that you are not following on Unrealizm.
 
 #foreach($u in $recommend_users)
 [$u.nickname]
@@ -12,7 +12,7 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-ポイピクのフォローは相手に伝わりません。気軽にフォローしてみましょう。
-Following by POIPIKU is not notify to the other person. Feel free to follow them.
+Unrealizmのフォローは相手に伝わりません。気軽にフォローしてみましょう。
+Following by Unrealizm is not notify to the other person. Feel free to follow them.
 
 #parse("en/footer.vm")

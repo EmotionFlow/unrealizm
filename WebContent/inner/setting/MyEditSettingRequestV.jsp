@@ -6,7 +6,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 	function _getJudgeOkHtml() {
 		return `
 		<h1>エアスケブ受付を開始しました</h1>
-		<p style="text-align: left">エアスケブ受付開始のメールを、ポイピクに登録されているメールアドレス宛に送信しました。</p>
+		<p style="text-align: left">エアスケブ受付開始のメールを、Unrealizmに登録されているメールアドレス宛に送信しました。</p>
 		`;
 	}
 
@@ -17,7 +17,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 		<ul style="text-align: left">
 		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
 		</ul>
-		<p style="text-align: left">加えて、ポイピクの利用歴から総合的に判定させていただいております。</p>
+		<p style="text-align: left">加えて、Unrealizmの利用歴から総合的に判定させていただいております。</p>
 		`;
 	}
 
@@ -29,7 +29,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 		<li>Twitterアカウントと連携していること(Twitter設定)</li>
 		<li>メールアドレスとパスワードが登録・確認されていること(メールログイン設定)</li>
 		</ul>
-		<p style="text-align: left">加えて、ポイピク・Twitterの利用歴から総合的に判定させていただいております。</p>
+		<p style="text-align: left">加えて、unrealizm・Twitterの利用歴から総合的に判定させていただいております。</p>
 		<p style="text-align: left">複数の連絡先確保と、不正利用防止の観点から、ご協力よろしくお願いいたします。</p>
 		`;
 	}
@@ -249,7 +249,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin);
 				<span style="color: coral; font-weight: bold">NEW!</span><br>Twitter連携なし(メアド登録のみ)でも<br>はじめられるようになりました</div>
 			<%}%>
 			<%if(requestCreator.status!=RequestCreator.Status.Enabled){%>
-			クリエイターとしてポイピクユーザーからエアスケブの依頼を受け付けます。
+			クリエイターとしてUnrealizmユーザーからエアスケブの依頼を受け付けます。
 			<%}else{%>
 			受け付けを停止していても、現在受信している依頼は承認したり、制作物をお渡ししたりできます。
 			<%}%>

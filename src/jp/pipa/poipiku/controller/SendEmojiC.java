@@ -135,7 +135,7 @@ public class SendEmojiC {
 				// 注文生成
 				Order order = new Order();
 				order.customerId = m_nUserId;
-				order.sellerId = 2; // ポイピク公式
+				order.sellerId = 2; // Unrealizm公式
 				order.paymentTotal = m_nAmount;
 				order.cheerPointStatus = Order.CheerPointStatus.BeforeDistribute;
 				if (order.insert() != 0 || order.id < 0) {

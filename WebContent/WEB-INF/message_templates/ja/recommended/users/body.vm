@@ -21,6 +21,6 @@ https://ai.poipiku.com/$u.userId
 
 #end
 
-ポイピクのフォローは相手に伝わりません。気軽にフォローしてみましょう。
+Unrealizmのフォローは相手に伝わりません。気軽にフォローしてみましょう。
 
 #parse("ja/footer.vm")

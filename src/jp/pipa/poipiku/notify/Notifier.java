@@ -68,7 +68,7 @@ public class Notifier {
 	}
 
 	static protected String getServiceName(User user) {
-		return user.langLabel.equals("ja") ? "ポイピク" : "POIPIKU";
+		return user.langLabel.equals("ja") ? "unrealizm" : "Unrealizm";
 	}
 
 	protected String merge(Template template, VelocityContext context) {

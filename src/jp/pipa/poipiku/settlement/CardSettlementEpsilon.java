@@ -67,7 +67,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 
 			cancelSendInfo.userId = strAgentUserId;
 
-			// epsilonの商品コード=ポイピクのorder_id
+			// epsilonの商品コード=Unrealizmのorder_id
 			cancelSendInfo.itemCode = Integer.toString(poipikuOrderId);
 
 			EpsilonSettlementCancel epsilonSettlementCancel = new EpsilonSettlementCancel(poipikuUserId, cancelSendInfo);

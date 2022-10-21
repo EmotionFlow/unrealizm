@@ -17,7 +17,7 @@ if(!cResults.getResults(checkLogin)) {
 	} else if (cResults.m_nNewContentId==null || cResults.m_nNewContentId==cResults.contentId) {
 		response.sendRedirect("/NotFoundV.jsp");
 	} else {
-		response.sendRedirect(Common.GetPoipikuUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.ownerUserId, cResults.m_nNewContentId)));
+		response.sendRedirect(Common.GetUnrealizmUrl(String.format("/IllustViewAppV.jsp?ID=%d&TD=%d", cResults.ownerUserId, cResults.m_nNewContentId)));
 	}
 	return;
 }

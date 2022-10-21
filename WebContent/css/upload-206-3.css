@@ -212,12 +212,12 @@
 	height: 65px;
 	background-size: 90%;
 }
-.UoloadCmdOption .ShowLimitImage.PoipikuLogin {
+.UoloadCmdOption .ShowLimitImage.UnrealizmLogin {
 	background-image: url("/img/publish_login.png_360.jpg");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 }
-.UoloadCmdOption .ShowLimitImage.PoipikuFollower {
+.UoloadCmdOption .ShowLimitImage.UnrealizmFollower {
 	background-image: url("/img/publish_follower.png_360.jpg");
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
