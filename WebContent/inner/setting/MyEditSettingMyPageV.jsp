@@ -84,79 +84,79 @@
 		</div>
 	</div>
 
-	<div class="SettingListItem">
-		<div class="SettingListTitle">
-			<%@include file="PoipassLogoLink.jsp"%>
-			<%=_TEX.T("EditSettingV.BgImage")%>
-		</div>
-		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
-			<div class="PreviewImgFrame">
-				<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>
-				<span class="PreviewMessage"><%=_TEX.T("EditSettingV.Image.NoImage")%></span>
-				<%} else {%>
-				<img class="PreviewImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>" />
-				<%}%>
-			</div>
-			<div class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>
-			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
-			<div class="SettingBodyCmd">
-				<span class="BtnBase SettingBodyCmdRegist">
-					<%=_TEX.T("EditSettingV.Image.Select")%>
-					<input class="CmdRegistSelectFile" type="file" name="file_bg" id="file_bg" onchange="UpdateProfileBgFile(this)" />
-				</span>
-				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(3)"><%=_TEX.T("EditSettingV.Image.Default")%></a>
-			</div>
-			<%}%>
-		</div>
-	</div>
+<%--	<div class="SettingListItem">--%>
+<%--		<div class="SettingListTitle">--%>
+<%--			<%@include file="PoipassLogoLink.jsp"%>--%>
+<%--			<%=_TEX.T("EditSettingV.BgImage")%>--%>
+<%--		</div>--%>
+<%--		<div class="SettingBody" <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>--%>
+<%--			<div class="PreviewImgFrame">--%>
+<%--				<%if(cResults.m_cUser.m_strBgFileName.equals("/img/default_transparency.gif")) {%>--%>
+<%--				<span class="PreviewMessage"><%=_TEX.T("EditSettingV.Image.NoImage")%></span>--%>
+<%--				<%} else {%>--%>
+<%--				<img class="PreviewImg" src="<%=Common.GetUrl(cResults.m_cUser.m_strBgFileName)%>" />--%>
+<%--				<%}%>--%>
+<%--			</div>--%>
+<%--			<div class="RegistMessage" ><%=_TEX.T("EditSettingV.HeaderImage.Format")%></div>--%>
+<%--			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>--%>
+<%--			<div class="SettingBodyCmd">--%>
+<%--				<span class="BtnBase SettingBodyCmdRegist">--%>
+<%--					<%=_TEX.T("EditSettingV.Image.Select")%>--%>
+<%--					<input class="CmdRegistSelectFile" type="file" name="file_bg" id="file_bg" onchange="UpdateProfileBgFile(this)" />--%>
+<%--				</span>--%>
+<%--				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="ResetProfileFile(3)"><%=_TEX.T("EditSettingV.Image.Default")%></a>--%>
+<%--			</div>--%>
+<%--			<%}%>--%>
+<%--		</div>--%>
+<%--	</div>--%>
 
-	<div class="SettingListItem">
-		<div class="SettingListTitle">
-			<%@include file="PoipassLogoLink.jsp"%>
-			<%=_TEX.T("EditSettingV.MyPage.AdMode")%>
-		</div>
-		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
-			<%=_TEX.T("EditSettingV.MyPage.AdMode.Message")%>
-			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
-			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
-				<div class="RegistMessage" >
-					<div class="onoffswitch OnOff">
-						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgAdMode" value="0" <%if(cResults.m_cUser.m_nAdMode!=CUser.AD_MODE_HIDE){%>checked="checked"<%}%> />
-						<label class="onoffswitch-label" for="NgAdMode">
-							<span class="onoffswitch-inner"></span>
-							<span class="onoffswitch-switch"></span>
-						</label>
-					</div>
-				</div>
-				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNgAdMode()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-			</div>
-			<%}%>
-		</div>
-	</div>
+<%--	<div class="SettingListItem">--%>
+<%--		<div class="SettingListTitle">--%>
+<%--			<%@include file="PoipassLogoLink.jsp"%>--%>
+<%--			<%=_TEX.T("EditSettingV.MyPage.AdMode")%>--%>
+<%--		</div>--%>
+<%--		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>--%>
+<%--			<%=_TEX.T("EditSettingV.MyPage.AdMode.Message")%>--%>
+<%--			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>--%>
+<%--			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
+<%--				<div class="RegistMessage" >--%>
+<%--					<div class="onoffswitch OnOff">--%>
+<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgAdMode" value="0" <%if(cResults.m_cUser.m_nAdMode!=CUser.AD_MODE_HIDE){%>checked="checked"<%}%> />--%>
+<%--						<label class="onoffswitch-label" for="NgAdMode">--%>
+<%--							<span class="onoffswitch-inner"></span>--%>
+<%--							<span class="onoffswitch-switch"></span>--%>
+<%--						</label>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNgAdMode()"><%=_TEX.T("EditSettingV.Button.Update")%></a>--%>
+<%--			</div>--%>
+<%--			<%}%>--%>
+<%--		</div>--%>
+<%--	</div>--%>
 
-	<div class="SettingListItem">
-		<div class="SettingListTitle">
-			<%@include file="PoipassLogoLink.jsp"%>
-			<%=_TEX.T("EditSettingV.MyPage.Download")%>
-		</div>
-		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>
-			<%=_TEX.T("EditSettingV.MyPage.Download.Message")%>
-			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>
-			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">
-				<div class="RegistMessage" >
-					<div class="onoffswitch OnOff">
-						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgDownload" value="0" <%if(cResults.m_cUser.m_nDownload!=CUser.DOWNLOAD_OFF){%>checked="checked"<%}%> />
-						<label class="onoffswitch-label" for="NgDownload">
-							<span class="onoffswitch-inner"></span>
-							<span class="onoffswitch-switch"></span>
-						</label>
-					</div>
-				</div>
-				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNgDownload()"><%=_TEX.T("EditSettingV.Button.Update")%></a>
-			</div>
-			<%}%>
-		</div>
-	</div>
+<%--	<div class="SettingListItem">--%>
+<%--		<div class="SettingListTitle">--%>
+<%--			<%@include file="PoipassLogoLink.jsp"%>--%>
+<%--			<%=_TEX.T("EditSettingV.MyPage.Download")%>--%>
+<%--		</div>--%>
+<%--		<div class="SettingBody"  <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF) {%>style="opacity: 0.3"<%}%>>--%>
+<%--			<%=_TEX.T("EditSettingV.MyPage.Download.Message")%>--%>
+<%--			<%if(checkLogin.m_nPassportId >= Common.PASSPORT_ON) {%>--%>
+<%--			<div class="SettingBodyCmd" style="margin: 5px 0 5px 0;">--%>
+<%--				<div class="RegistMessage" >--%>
+<%--					<div class="onoffswitch OnOff">--%>
+<%--						<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="NgDownload" value="0" <%if(cResults.m_cUser.m_nDownload!=CUser.DOWNLOAD_OFF){%>checked="checked"<%}%> />--%>
+<%--						<label class="onoffswitch-label" for="NgDownload">--%>
+<%--							<span class="onoffswitch-inner"></span>--%>
+<%--							<span class="onoffswitch-switch"></span>--%>
+<%--						</label>--%>
+<%--					</div>--%>
+<%--				</div>--%>
+<%--				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="UpdateNgDownload()"><%=_TEX.T("EditSettingV.Button.Update")%></a>--%>
+<%--			</div>--%>
+<%--			<%}%>--%>
+<%--		</div>--%>
+<%--	</div>--%>
 
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.ReactionMode")%></div>
