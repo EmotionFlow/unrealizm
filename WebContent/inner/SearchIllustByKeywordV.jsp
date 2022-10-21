@@ -42,10 +42,10 @@ String strFileUrl = cResults.m_strRepFileName;
 <html lang="<%=_TEX.getLangStr()%>">
 <head>
 	<%if(!isApp){%>
-	<%@ include file="/inner/THeaderCommonPc.jsp"%>
+	<%@ include file="/inner/THeaderCommonNoGenieePc.jsp"%>
 	<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
 	<%}else{%>
-	<%@ include file="/inner/THeaderCommon.jsp"%>
+	<%@ include file="/inner/THeaderCommonNoGenieePc.jsp"%>
 	<%}%>
 
 	<%@ include file="/inner/TSendEmoji.jsp"%>
@@ -192,7 +192,7 @@ String strFileUrl = cResults.m_strRepFileName;
 	<section
 			id="IllustItemList"
 			class="IllustItemList2Column"
-			style="position: relative; top: <%=checkLogin.m_nPassportId==Common.PASSPORT_OFF?110:48%>px;"
+			style="position: relative; top: <%=checkLogin.m_nPassportId==Common.PASSPORT_OFF?72:48%>px;"
 	>
 		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
 		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
