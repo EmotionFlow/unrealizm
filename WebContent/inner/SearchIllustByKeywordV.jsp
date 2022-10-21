@@ -62,6 +62,9 @@ String strFileUrl = cResults.m_strRepFileName;
 	<link rel="alternate" media="only screen and (max-width: 640px)" href="<%=strUrl%>" />
 	<title><%=Util.toDescString(strTitle)%></title>
 
+	<script src="/js/masonry.pkgd.min.js"></script>
+	<script src="/js/imagesloaded.pkgd.min.js"></script>
+
 	<script type="text/javascript">
 		<%if(!isApp){%>
 		$(function(){
@@ -137,8 +140,6 @@ String strFileUrl = cResults.m_strRepFileName;
 	<style>body {padding-top: 0 !important;}</style>
 	<%}%>
 
-	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
-	<script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
 	<script>
 		$(function () {
 			<%if (!Common.isDevEnv()){ %>
