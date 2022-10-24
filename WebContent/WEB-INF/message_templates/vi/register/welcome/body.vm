@@ -28,7 +28,7 @@ $u.nickname
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://ai.poipiku.com/$u.userId
+https://unrealizm.com/$u.userId
 
 #end
 
@@ -57,7 +57,7 @@ Bạn sẽ nhận được thông báo qua email không thường xuyên, chẳn
 Đây là tài khoản chính thức cho Unrealizm và Twitter. Chúng tôi sẽ đăng thông tin cập nhật và chiến dịch khi cần thiết, vì vậy hãy theo dõi chúng tôi nếu bạn thích.
 
 Unrealizm
-https://ai.poipiku.com/2
+https://unrealizm.com/2
 
 Twitter
 https://twitter.com/pipajp

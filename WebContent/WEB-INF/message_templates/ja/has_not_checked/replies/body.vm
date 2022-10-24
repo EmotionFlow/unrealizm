@@ -2,6 +2,6 @@
 
 あなたがリアクションした${contents_total}作品に、作者からのリプライが届きました。
 お知らせ画面で絵文字リプライの通知をチェックしてみましょう。
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("ja/footer.vm")

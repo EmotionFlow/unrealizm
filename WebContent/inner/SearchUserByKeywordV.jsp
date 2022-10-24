@@ -7,7 +7,7 @@ if(Util.isBot(request)) {
 }
 
 final String referer = Util.toString(request.getHeader("Referer"));
-if (!isApp && !referer.contains("ai.poipiku.com")) {
+if (!isApp && !referer.contains("unrealizm.com")) {
 	Log.d("不正アクセス(referer不一致):" + referer);
 	return;
 }
@@ -32,7 +32,7 @@ SearchUserByKeywordC cResults = new SearchUserByKeywordC();
 cResults.getParam(request);
 
 if (cResults.m_strKeyword.indexOf("#") == 0) {
-	response.sendRedirect("https://ai.poipiku.com/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+	response.sendRedirect("https://unrealizm.com/SearchTagByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
 }
 

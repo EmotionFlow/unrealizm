@@ -310,7 +310,7 @@ public final class Util {
 		final String useragent = toString(request.getHeader("user-agent"));
 		//String strReferer = toString(request.getHeader("Referer"));
 
-		//if(strReferer.indexOf("ai.poipiku.com")<0) {
+		//if(strReferer.indexOf("unrealizm.com")<0) {
 			if(	(useragent.indexOf("iPhone")>=0 && useragent.indexOf("iPad")<0) ||
 					useragent.indexOf("iPod")>=0 ||
 					(useragent.indexOf("Android")>=0 && useragent.indexOf("Mobile")>=0)) {

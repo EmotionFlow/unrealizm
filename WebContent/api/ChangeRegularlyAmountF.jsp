@@ -3,7 +3,7 @@
 <%@ page import="jp.pipa.poipiku.util.Log" %>
 <%@ page import="jp.pipa.poipiku.Common" %>
 <%
-	// 例：https://ai.poipiku.com/api/ChangeRegularlyAmountF.jsp?TOKEN=08yg3qghpwj48q6742o97qwqvh&ID=21808&AMT=300
+	// 例：https://unrealizm.com/api/ChangeRegularlyAmountF.jsp?TOKEN=08yg3qghpwj48q6742o97qwqvh&ID=21808&AMT=300
 	boolean result = false;
 	String accessIpAddress = request.getRemoteAddr();
 	if (!(accessIpAddress.equals("127.0.0.1") || accessIpAddress.equals(Common.GLOBAL_IP_ADDRESS))) return;

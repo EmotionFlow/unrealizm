@@ -223,7 +223,7 @@
 			</div>
 			<div class="SettingBodyCmd">
 				<%if(cResults.m_cUser.m_strAutoTweetDesc.isEmpty()) {
-					cResults.m_cUser.m_strAutoTweetDesc = String.format("%s%s%s https://ai.poipiku.com/%d/ #%s",
+					cResults.m_cUser.m_strAutoTweetDesc = String.format("%s%s%s https://unrealizm.com/%d/ #%s",
 							_TEX.T("EditSettingV.Twitter.Auto.AutoTxt"),
 							cResults.m_cUser.m_strNickName,
 							_TEX.T("Twitter.UserAddition"),

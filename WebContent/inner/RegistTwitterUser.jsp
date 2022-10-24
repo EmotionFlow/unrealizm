@@ -180,7 +180,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 			%>
 			<a class="UserThumb" href="/RegistTwitterUser<%=isApp?"App":"Pc"%>.jsp?ID=<%=user.m_nUserId%>">
 				<span class="UserThumbImg"
-					  style="background-image:url('//ai-img.poipiku.com<%=user.m_strFileName%>')">
+					  style="background-image:url('//img.unrealizm.com<%=user.m_strFileName%>')">
 				</span>
 				<span class="UserThumbName"><%=user.m_strNickName%> (ID:<%=user.m_nUserId%>)</span>
 			</a>
@@ -188,7 +188,7 @@ if(!isApp && (status == Status.LoginSucceed || status == Status.RegisterSucceed)
 			<%if (controller.results.size()<=2) {%>
 			<a class="UserThumb" href="/RegistTwitterUser<%=isApp?"App":"Pc"%>.jsp?ID=<%=NEW_USER%>">
 				<span class="UserThumbImg"
-					  style="background-image:url('//ai-img.poipiku.com/img/default_user.jpg')">
+					  style="background-image:url('//img.unrealizm.com/img/default_user.jpg')">
 				</span>
 				<span class="UserThumbName"><%=_TEX.T("RegistTwitterUser.CreateNew")%></span>
 			</a>

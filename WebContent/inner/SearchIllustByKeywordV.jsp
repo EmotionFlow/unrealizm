@@ -22,10 +22,10 @@ if (isApp) {
 
 
 if (cResults.keyword.indexOf("#") == 0) {
-	response.sendRedirect("https://ai.poipiku.com/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
+	response.sendRedirect("https://unrealizm.com/SearchTagByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("#", ""), StandardCharsets.UTF_8));
 	return;
 } else if (cResults.keyword.indexOf("@") == 0) {
-	response.sendRedirect("https://ai.poipiku.com/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+	response.sendRedirect("https://unrealizm.com/SearchUserByKeywordPcV.jsp?KWD=" + URLEncoder.encode(cResults.keyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
 
@@ -34,7 +34,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 g_strSearchWord = cResults.keyword;
 String strTitle = cResults.keyword + " | " + _TEX.T("THeader.Title");
 String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), cResults.keyword, cResults.m_nContentsNum);
-String strUrl = "https://ai.poipiku.com/SearchIllustByKeywordPcV.jsp?KWD="+cResults.encodedKeyword;
+String strUrl = "https://unrealizm.com/SearchIllustByKeywordPcV.jsp?KWD="+cResults.encodedKeyword;
 String strFileUrl = cResults.m_strRepFileName;
 
 %>

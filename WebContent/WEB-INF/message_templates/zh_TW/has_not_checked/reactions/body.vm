@@ -2,6 +2,6 @@
 
 $reactions_total 表情符號反應已發送至您的 $contents_total 作品。
 檢查通知屏幕以了解反應。
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("zh_TW/footer.vm")

@@ -3,6 +3,6 @@
 您已收到作者对您已做出反应的 ${contents_total} 作品的回复。
 在通知页面上查看表情符号回复的通知。
 
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("zh_CN/footer.vm")

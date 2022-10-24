@@ -3,6 +3,6 @@
 Вы получили ответы от авторов на ${contents_total} работ, на которые вы отреагировали.
 Проверьте уведомление об ответах смайликов на странице уведомлений.
 
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("ru/footer.vm")

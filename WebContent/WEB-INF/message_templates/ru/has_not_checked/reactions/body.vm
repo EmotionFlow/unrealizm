@@ -2,6 +2,6 @@
 
 Смайлы-реакции $response_total были отправлены в ваши работы $contents_total.
 Проверьте реакцию на экране уведомлений.
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("ru/footer.vm")

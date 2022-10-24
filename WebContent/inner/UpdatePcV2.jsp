@@ -40,7 +40,7 @@ if (poipikuRequest.id > 0 &&
 CTweet cTweet = new CTweet();
 boolean bTwRet = cTweet.GetResults(checkLogin.m_nUserId);
 
-response.setHeader("Access-Control-Allow-Origin", "https://ai-img.poipiku.com");
+response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">

@@ -22,7 +22,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 final String tagName = (results.transTagName != null && !results.transTagName.isEmpty()) ? results.transTagName : results.keyword;
 final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), tagName);
 final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc.Short"), tagName);
-final String strUrl = "https://ai.poipiku.com/SearchIllustByTag" + (isApp?"App":"Pc") + "V.jsp?GD="+results.genreId;
+final String strUrl = "https://unrealizm.com/SearchIllustByTag" + (isApp?"App":"Pc") + "V.jsp?GD="+results.genreId;
 
 ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 

@@ -28,7 +28,7 @@ $u.nickname
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://ai.poipiku.com/$u.userId
+https://unrealizm.com/$u.userId
 
 #end
 
@@ -57,7 +57,7 @@ You will receive occasional email notifications, such as those introducing recom
 This is the official account for Unrealizm and Twitter. We will post updates and campaign information as needed, so please follow us if you like.
 
 Unrealizm
-https://ai.poipiku.com/2
+https://unrealizm.com/2
 
 Twitter
 https://twitter.com/pipajp

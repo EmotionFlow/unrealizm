@@ -12,7 +12,7 @@ IllustViewC cResults = new IllustViewC();
 cResults.getParam(request);
 
 if(!checkLogin.m_bLogin || checkLogin.m_nUserId!=cResults.m_nUserId){
-	response.sendRedirect(String.format("https://ai.poipiku.com/%d/%d.html", cResults.m_nUserId, cResults.m_nContentId));
+	response.sendRedirect(String.format("https://unrealizm.com/%d/%d.html", cResults.m_nUserId, cResults.m_nContentId));
 	return;
 }
 
@@ -32,7 +32,7 @@ final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用�
 String strDesc = Util.deleteCrLf(cResults.m_cContent.m_strDescription);
 String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 10) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
 strDesc = Util.deleteCrLf(strDesc) + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName);
-String strUrl = "https://ai.poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
+String strUrl = "https://unrealizm.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <!DOCTYPE html>

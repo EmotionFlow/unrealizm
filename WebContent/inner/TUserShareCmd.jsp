@@ -7,7 +7,7 @@
 					String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
 					_TEX.T("Common.HashTag")).replace("\"", "\\\"");
 	final String shareUri = (
-			"https://ai.poipiku.com/" + cResults.m_cUser.m_nUserId + "/").replace("\"", "\\\"");;
+			"https://unrealizm.com/" + cResults.m_cUser.m_nUserId + "/").replace("\"", "\\\"");;
 %>
 <script>
 	function DispSharedMsg() {

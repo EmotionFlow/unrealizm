@@ -3,6 +3,6 @@
 คุณได้รับคำตอบจากผู้เขียนงาน ${contents_total} ที่คุณตอบกลับ
 ตรวจสอบการแจ้งเตือนการตอบกลับอีโมจิในหน้าการแจ้งเตือน
 
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("th/footer.vm")

@@ -12,7 +12,7 @@ boolean bRtn = results.getResults(checkLogin);
 final String tagName = (results.transTagName != null && !results.transTagName.isEmpty()) ? results.transTagName : results.keyword;
 final String strTitle = String.format(_TEX.T("SearchIllustByTag.Title"), tagName);
 final String strDesc = String.format(_TEX.T("SearchIllustByTag.Title.Desc"), tagName, results.contentsNum);
-final String strUrl = "https://ai.poipiku.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
+final String strUrl = "https://unrealizm.com/SearchIllustByTagPcV.jsp?GD="+results.genreId;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">

@@ -94,7 +94,7 @@
 			<dt><%=_TEX.T("Footer.Link.Service")%></dt>
 			<dd><a class="FooterHref" href="https://tegaki.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Link.Service.Tegaki")%></a></dd>
 			<dd><a class="FooterHref" href="https://galleria.emotionflow.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Galleria")%></a></dd>
-			<dd><a class="FooterHref" href="https://ai.poipiku.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Unrealizm")%></a></dd>
+			<dd><a class="FooterHref" href="https://unrealizm.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Unrealizm")%></a></dd>
 		</dl>
 	</nav>
 

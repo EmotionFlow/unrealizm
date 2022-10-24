@@ -7,7 +7,7 @@ import org.apache.commons.mail.SimpleEmail;
 
 public class EmailUtil {
 	static final String FROM_NAME = "Unrealizm";
-	static final String FROM_ADDR = "info@ai.poipiku.com";
+	static final String FROM_ADDR = "info@unrealizm.com";
 	static final String SMTP_HOST = "localhost";
 
 	public static boolean send(final String toAddress, final String subject, final String body) {

@@ -3,6 +3,6 @@
 You have received replies from the authors to the ${contents_total} works you have reacted to.
 Check the notification of emoji replies on the notification page.
 
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("en/footer.vm")

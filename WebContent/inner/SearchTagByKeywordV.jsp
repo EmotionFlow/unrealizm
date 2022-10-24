@@ -17,7 +17,7 @@ SearchTagByKeywordC cResults = new SearchTagByKeywordC();
 cResults.getParam(request);
 
 if (cResults.m_strKeyword.indexOf("@") == 0) {
-	response.sendRedirect("https://ai.poipiku.com/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
+	response.sendRedirect("https://unrealizm.com/SearchUserByKeyword" + (isApp?"App":"Pc") + "V.jsp?KWD=" + URLEncoder.encode(cResults.m_strKeyword.replaceFirst("@", ""), StandardCharsets.UTF_8));
 	return;
 }
 

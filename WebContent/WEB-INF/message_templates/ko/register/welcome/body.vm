@@ -28,7 +28,7 @@ $u.nickname
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://ai.poipiku.com/$u.userId
+https://unrealizm.com/$u.userId
 
 #end
 
@@ -57,7 +57,7 @@ https://ai.poipiku.com/$u.userId
 포이피쿠와 트위터의 공식 계정입니다. 업데이트 및 캠페인 정보는 필요에 따라 게시할 예정이니 마음에 드시면 팔로우 부탁드립니다.
 
 Unrealizm
-https://ai.poipiku.com/2
+https://unrealizm.com/2
 
 Twitter
 https://twitter.com/pipajp

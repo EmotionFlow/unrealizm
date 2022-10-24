@@ -45,7 +45,7 @@ public final class Common {
 //	public static final String TWITTER_CONSUMER_SECRET = "kXYW0KkWlfDszfGn0m8lj3aEz6vB3iWzY5M1SO9T8DNM9rXJY0";
 	public static final String TWITTER_CONSUMER_KEY = "";
 	public static final String TWITTER_CONSUMER_SECRET = "";
-	public static final String TWITTER_CALLBAK_DOMAIN = "https://ai.poipiku.com";
+	public static final String TWITTER_CALLBAK_DOMAIN = "https://unrealizm.com";
 	public static final String TWITTER_API_REQUEST_TOKEN = "https://api.twitter.com/oauth/request_token";
 	public static final String TWITTER_API_ACCESS_TOKEN = "https://api.twitter.com/oauth/access_token";
 	public static final String TWITTER_API_AUTHORIZE = "https://api.twitter.com/oauth/authorize";
@@ -352,17 +352,17 @@ public final class Common {
 
 	public static String GetUrl(final String strFileName) {
 		if(strFileName==null) return "";
-		return "//ai-img.poipiku.com" + strFileName;
+		return "//img.unrealizm.com" + strFileName;
 	}
 
 	public static String GetOrgImgUrl(final String strFileName) {
 		if(strFileName==null) return "";
-		return "//ai-img-org.poipiku.com" + strFileName;
+		return "//img-org.unrealizm.com" + strFileName;
 	}
 
 	public static String GetUnrealizmUrl(final String strFileName) {
 		if(strFileName==null) return "";
-		return "https://ai.poipiku.com" + strFileName;
+		return "https://unrealizm.com" + strFileName;
 	}
 
 	public static String GetUploadTemporaryPath() {

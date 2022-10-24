@@ -2,7 +2,7 @@
 
 Se han enviado reacciones emoji de $reactions_total a sus trabajos de $contents_total.
 Consulta la pantalla de notificaciones para ver las reacciones.
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 
 #parse("es/footer.vm")

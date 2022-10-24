@@ -30,7 +30,7 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 	final List<GenreTranslation> translationList = results.translationList;
 
 	String strTitle = String.format(_TEX.T("EditGenreInfo.Title"), genre.genreName) + " | " + _TEX.T("THeader.Title");
-	String strUrl = "https://ai.poipiku.com/EditGenreInfo" + (isApp?"App":"Pc") + "V.jsp?GD="+genre.genreId;
+	String strUrl = "https://unrealizm.com/EditGenreInfo" + (isApp?"App":"Pc") + "V.jsp?GD="+genre.genreId;
 	boolean editable = (genre.genreId>=1);
 	String disable = (editable)?"":"Disabled";
 %>

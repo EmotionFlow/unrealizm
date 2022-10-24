@@ -908,7 +908,7 @@ public final class CTweet {
 	}
 
 	static public String generateWithTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
-		String strFooter = String.format("\nhttps://ai.poipiku.com/%d/%d.html",
+		String strFooter = String.format("\nhttps://unrealizm.com/%d/%d.html",
 				cContent.m_nUserId,
 				cContent.m_nContentId);
 
@@ -924,7 +924,7 @@ public final class CTweet {
 	static public String generateAfterTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
-			final String strUrl = String.format("https://ai.poipiku.com/%d/%d.html",
+			final String strUrl = String.format("https://unrealizm.com/%d/%d.html",
 					cContent.m_nUserId,
 					cContent.m_nContentId);
 

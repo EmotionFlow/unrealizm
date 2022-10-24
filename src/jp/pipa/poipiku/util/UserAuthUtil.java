@@ -528,7 +528,7 @@ public class UserAuthUtil {
 
 			final String SMTP_HOST = "localhost";
 			final String FROM_NAME = "Unrealizm";
-			final String FROM_ADDR = "info@ai.poipiku.com";
+			final String FROM_ADDR = "info@unrealizm.com";
 			final String EMAIL_TITLE = _TEX.T("UpdateEmailAddressV.Mail.Title");
 			String strEmailText = null;
 
@@ -787,7 +787,7 @@ public class UserAuthUtil {
 					cState.setString(4, tokenSecret);
 					cState.setString(5, twitterUserId);
 					cState.setString(6, screen_name);
-					cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://ai.poipiku.com/%d/", nUserId));
+					cState.setString(7, _TEX.T("EditSettingV.Twitter.Auto.AutoTxt")+_TEX.T("Common.Title")+String.format(" https://unrealizm.com/%d/", nUserId));
 					cState.executeUpdate();
 					cState.close();cState=null;
 

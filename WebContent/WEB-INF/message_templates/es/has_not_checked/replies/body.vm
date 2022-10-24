@@ -3,6 +3,6 @@
 Ha recibido respuestas de los autores a los ${contents_total} trabajos a los que ha reaccionado.
 Verifique la notificación de respuestas de emoji en la página de notificación.
 
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("es/footer.vm")

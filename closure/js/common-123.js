@@ -908,7 +908,7 @@ function initGraph(ctx) {
 	return new Chart(ctx, {
 		type: 'doughnut',
 		data: {
-			labels : ["https://ai-img.poipiku.com/img/unrealizm_logo_64x64.png"],
+			labels : ["https://img.unrealizm.com/img/unrealizm_logo_64x64.png"],
 			datasets: [{
 				data: [100],
 				backgroundColor: ["#3498db"]
@@ -1235,7 +1235,7 @@ function _showTextDetail(ownerUserId, contentId, password) {
 	}).then(
 		data => {
 			if (data.result === 1) {
-				location.href = "https://ai.poipiku.com/IllustDetailPcV.jsp?ID=" + ownerUserId + "&TD=" + contentId;
+				location.href = "https://unrealizm.com/IllustDetailPcV.jsp?ID=" + ownerUserId + "&TD=" + contentId;
 			} else {
 				switch (data.error_code) {
 					case -1:
@@ -1359,7 +1359,7 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 		const shareData = {
 			title: 'Unrealizm',
 			text: tweetTxt,
-			url: 'https://ai.poipiku.com/' + contentUserId + '/' + contentId + '.html',
+			url: 'https://unrealizm.com/' + contentUserId + '/' + contentId + '.html',
 		}
 		navigator.share(shareData)
 			.then( () => {DispSharedMsg()})
@@ -1368,7 +1368,7 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 		const $IllustItemCmd = $("#IllustItem_" + contentId + " .IllustItemShareButton").parent();
 		if ($IllustItemCmd.children(".IllustItemShareSub").length === 0) {
 			const uri = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetTxt)
-				+ "&url=" + encodeURIComponent("https://ai.poipiku.com/" + contentUserId + "/" + contentId + ".html");
+				+ "&url=" + encodeURIComponent("https://unrealizm.com/" + contentUserId + "/" + contentId + ".html");
 			$IllustItemCmd.append(
 				'<span class="IllustItemShareSub">' +
 				'<a class="IllustItemCommandShareTweet fab fa-twitter" href="' + uri + '"></a>' +
@@ -1380,7 +1380,7 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 }
 
 function contentPageToClipboard(ownerUserId, contentId) {
-	let url = 'https://ai.poipiku.com/' + ownerUserId + '/';
+	let url = 'https://unrealizm.com/' + ownerUserId + '/';
 	if (contentId != null) {
 		url = url + contentId + '.html';
 	}

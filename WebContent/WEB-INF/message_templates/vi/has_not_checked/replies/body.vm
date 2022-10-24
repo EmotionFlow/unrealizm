@@ -3,6 +3,6 @@
 Bạn đã nhận được câu trả lời từ các tác giả cho các tác phẩm ${content_total} mà bạn đã phản hồi.
 Kiểm tra thông báo trả lời biểu tượng cảm xúc trên trang thông báo.
 
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("vi/footer.vm")

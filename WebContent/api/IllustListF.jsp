@@ -55,7 +55,7 @@ try {
 						_TEX.T("Twitter.UserAddition"),
 						String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
 						_TEX.T("Common.HashTag")), "UTF-8"),
-				URLEncoder.encode("https://ai.poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+				URLEncoder.encode("https://unrealizm.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 		user.put("twitter_link", strTwitterUrl);
 
 		//画像の情報(配列)

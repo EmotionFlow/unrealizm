@@ -35,8 +35,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 					らくがきポイポイ<br />
 					進捗ポイポイ<br />
 					<br />
-					<a class="BtnBase" href="https://ai.poipiku.com/">
-						<img class="Logo" src="//ai-img.poipiku.com/img/unrealizm_logo_64x64.png" alt="<%=_TEX.T("THeader.Title")%>">
+					<a class="BtnBase" href="https://unrealizm.com/">
+						<img class="Logo" src="//img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</a>
 				</div>
 			</div>

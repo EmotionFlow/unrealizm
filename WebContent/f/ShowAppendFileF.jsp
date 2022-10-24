@@ -25,7 +25,7 @@
 if (Util.isBot(request)) return;
 
 final String referer = Util.toString(request.getHeader("Referer"));
-if (!referer.contains("ai.poipiku.com")) {
+if (!referer.contains("unrealizm.com")) {
 	Log.d("ShowIllustDetailFへの不正アクセス(referer不一致):" + referer);
 	return;
 }

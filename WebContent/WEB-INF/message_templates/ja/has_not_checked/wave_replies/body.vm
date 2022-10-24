@@ -2,6 +2,6 @@
 
 あなた宛に、${waves_total}通の返信メッセージが届いています。
 お知らせ画面で通知をチェックしてみましょう。
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("ja/footer.vm")

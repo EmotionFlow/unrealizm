@@ -13,7 +13,7 @@ String strReportDesc = Common.TrimAll(Common.EscapeInjection(Util.toString(reque
 try {
 	String TO_ADDR		= "info@emotionflow.com";
 	String EMAIL_TITLE	= "POIPIKU_REPORT";
-	String EMAIL_TXT	= "Post UserId : https://ai.poipiku.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://ai.poipiku.com/IllustViewV.jsp?ID=%d&TD=%d \nReportDesc:%s \n\n";
+	String EMAIL_TXT	= "Post UserId : https://unrealizm.com/IllustListPcV.jsp?ID=%d \nTarg Content : https://unrealizm.com/IllustViewV.jsp?ID=%d&TD=%d \nReportDesc:%s \n\n";
 	EmailUtil.send(TO_ADDR, EMAIL_TITLE, String.format(EMAIL_TXT, checkLogin.m_nUserId, nUserId, nContentId, strReportDesc));
 }catch(Exception e) {
 	e.printStackTrace();

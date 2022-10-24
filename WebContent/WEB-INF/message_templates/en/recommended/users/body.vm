@@ -8,7 +8,7 @@ Here are some recommended users that you are not following on Unrealizm.
 #if($u.profile.length()>0)
 $u.profile
 #end
-https://ai.poipiku.com/$u.userId
+https://unrealizm.com/$u.userId
 
 #end
 

@@ -2,6 +2,6 @@
 
 Tienes ${waves_total} respuestas.
 Consulta tus notificaciones en la página Notificaciones.
-https://ai.poipiku.com/ActivityListPcV.jsp
+https://unrealizm.com/ActivityListPcV.jsp
 
 #parse("es/footer.vm")

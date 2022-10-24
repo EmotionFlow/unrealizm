@@ -175,7 +175,7 @@ if(cResults.isDownloadable) {
 				</span>
 				<%}%>
 				<%if (checkLogin.m_nPassportId == 0) {%>
-				<br><span><a style="text-decoration: underline;" href="https://ai.poipiku.com/MyEditSettingPcV.jsp?MENUID=POIPASS"><%=_TEX.T("IllustDetailPc.PoipassBenefit")%></a></span>
+				<br><span><a style="text-decoration: underline;" href="https://unrealizm.com/MyEditSettingPcV.jsp?MENUID=POIPASS"><%=_TEX.T("IllustDetailPc.PoipassBenefit")%></a></span>
 				<%}%>
 			</div>
 			<%}%>

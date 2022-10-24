@@ -35,7 +35,7 @@ final boolean bHidden = cResults.m_cContent.isHideThumbImg;	// テキスト用�
 String strDesc = Util.deleteCrLf(cResults.m_cContent.title);
 strDesc = (strDesc.isEmpty())?Util.deleteCrLf(cResults.m_cContent.m_strDescription):strDesc;
 String strTitle = CTweet.generateState(cResults.m_cContent, _TEX) +  CTweet.generateFileNum(cResults.m_cContent, _TEX) + " " + Util.subStrNum(strDesc, 15) + " " + String.format(_TEX.T("Tweet.Title"), cResults.m_cContent.m_cUser.m_strNickName) + " | " + _TEX.T("THeader.Title");;
-String strUrl = "https://ai.poipiku.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
+String strUrl = "https://unrealizm.com/"+cResults.m_cContent.m_nUserId+"/"+cResults.m_cContent.m_nContentId+".html";
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
@@ -59,10 +59,10 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<meta name="description" content="<%=Util.toDescString(strDesc)%>" />
 		<%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:image" content="<%="https://ai-img.poipiku.com" + strFileUrl%>" />
+		<meta name="twitter:image" content="<%="https://img.unrealizm.com" + strFileUrl%>" />
 		<%}else{%>
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:image" content="https://ai-img.poipiku.com/img/poipiku_icon_512x512_2.png" />
+		<meta name="twitter:image" content="https://img.unrealizm.com/img/poipiku_icon_512x512_2.png" />
 		<%}%>
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX_TWEET)%>" />
@@ -78,9 +78,9 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 				{"@type":"ListItem", "position":1, "url":"<%=strUrl%>",
 				 "name": "<%=Util.toDescString(strTitle)%>",
 				 <%if(cResults.m_cContent.isTweetWithThumbnail()){%>
-				 "image": "<%="https://ai-img.poipiku.com" + strFileUrl%>"
+				 "image": "<%="https://img.unrealizm.com" + strFileUrl%>"
 				 <%}else{%>
-				 "image": "https://ai.poipiku.com/img/poipiku_icon_512x512_2.png"
+				 "image": "https://unrealizm.com/img/poipiku_icon_512x512_2.png"
 				 <%}%>
 				}
 			]
@@ -175,7 +175,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 										_TEX.T("Twitter.UserAddition"),
 										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
 										_TEX.T("Common.HashTag")), "UTF-8"),
-								URLEncoder.encode("https://ai.poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+								URLEncoder.encode("https://unrealizm.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(!checkLogin.m_bLogin) {%>
 						<a class="BtnBase UserInfoCmdFollow" href="/"><%=_TEX.T("IllustV.Follow")%></a>

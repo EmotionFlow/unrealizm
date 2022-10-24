@@ -26,7 +26,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<div id="HeaderTitleWrapper" class="HeaderTitleWrapper">
 			<h1 class="HeaderTitle">
 				<a id="HeaderLink" class="HeaderLink" href="/">
-					<img  class="HeaderImg" src="//ai-img.poipiku.com/img/unrealizm_logo_64x64.png" alt="<%=_TEX.T("THeader.Title")%>" />
+					<img  class="HeaderImg" src="//img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="<%=_TEX.T("THeader.Title")%>" />
 				</a>
 			</h1>
 			<%if(Util.isSmartPhone(request)) {

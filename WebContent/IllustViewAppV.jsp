@@ -119,7 +119,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 										_TEX.T("Twitter.UserAddition"),
 										String.format(_TEX.T("Twitter.UserPostNum"), cResults.m_nContentsNumTotal),
 										_TEX.T("Common.HashTag")), "UTF-8"),
-								URLEncoder.encode("https://ai.poipiku.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
+								URLEncoder.encode("https://unrealizm.com/"+cResults.m_cUser.m_nUserId+"/", "UTF-8"));
 						%>
 						<%if(cResults.m_bOwner) {%>
 						&nbsp;

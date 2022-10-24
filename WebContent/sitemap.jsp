@@ -22,27 +22,27 @@ cResults.getResults(checkLogin);
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<%for (String lang : langTags) {%>
 	<url>
-		<loc>https://ai.poipiku.com/?hl=<%=lang%></loc>
+		<loc>https://unrealizm.com/?hl=<%=lang%></loc>
 		<lastmod><%=NOW%></lastmod>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
 	</url>
 	<url>
-		<loc>https://ai.poipiku.com/PopularTagListPcV.jsp?hl=<%=lang%></loc>
+		<loc>https://unrealizm.com/PopularTagListPcV.jsp?hl=<%=lang%></loc>
 		<lastmod><%=NOW%></lastmod>
 		<changefreq>daily</changefreq>
 		<priority>0.5</priority>
 	</url>
 	<%for(CTag tag : cResults.m_vTagListWeekly) {%>
 	<url>
-		<loc>https://ai.poipiku.com/SearchIllustByTagPcV.jsp?hl=<%=lang%>&amp;KWD=<%=URLEncoder.encode(tag.m_strTagTxt, StandardCharsets.UTF_8)%></loc>
+		<loc>https://unrealizm.com/SearchIllustByTagPcV.jsp?hl=<%=lang%>&amp;KWD=<%=URLEncoder.encode(tag.m_strTagTxt, StandardCharsets.UTF_8)%></loc>
 		<lastmod><%=NOW%></lastmod>
 		<changefreq>always</changefreq>
 		<priority>0.5</priority>
 	</url>
 	<%}%>
 	<url>
-		<loc>https://ai.poipiku.com/NewArrivalPcV.jsp?hl=<%=lang%></loc>
+		<loc>https://unrealizm.com/NewArrivalPcV.jsp?hl=<%=lang%></loc>
 		<lastmod><%=NOW%></lastmod>
 		<changefreq>always</changefreq>
 		<priority>0.5</priority>

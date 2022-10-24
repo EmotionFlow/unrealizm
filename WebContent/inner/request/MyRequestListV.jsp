@@ -77,7 +77,7 @@
 		<%if(!isApp){%>
 		location.href = toUrl;
 		<%}else{%>
-		alert("お手数ですが、お渡しはブラウザ版(https://ai.poipiku.com/)からお願いいたします。アプリからのお渡しは現在開発中です。");
+		alert("お手数ですが、お渡しはブラウザ版(https://unrealizm.com/)からお願いいたします。アプリからのお渡しは現在開発中です。");
 		<%}%>
 	}
 

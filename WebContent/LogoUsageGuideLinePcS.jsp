@@ -54,13 +54,13 @@
 			<div class="SettingListTitle"><%=_TEX.T("LogoUsageGuideLine.Logo.Title")%></div>
 			<div class="SettingBody">
 				<div class="LogoArea">
-					<a class="LogoAreaLogo Small" href="https://ai-img.poipiku.com/img/unrealizm_logo_64x64.png">
+					<a class="LogoAreaLogo Small" href="https://img.unrealizm.com/img/unrealizm_logo_64x64.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Small")%><br>
-						<img src="https://ai-img.poipiku.com/img/unrealizm_logo_64x64.png" alt="poipiku logo small"/>
+						<img src="https://img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="poipiku logo small"/>
 					</a>
-					<a class="LogoAreaLogo Large" href="https://ai-img.poipiku.com/img/poipiku_icon_512x512_2.png">
+					<a class="LogoAreaLogo Large" href="https://img.unrealizm.com/img/poipiku_icon_512x512_2.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Large")%><br>
-						<img width="256px" height="256px" src="https://ai-img.poipiku.com/img/poipiku_icon_512x512_2.png" alt="poipiku logo large"/>
+						<img width="256px" height="256px" src="https://img.unrealizm.com/img/poipiku_icon_512x512_2.png" alt="poipiku logo large"/>
 					</a>
 				</div>
 			</div>
