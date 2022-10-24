@@ -247,7 +247,7 @@ public final class Common {
 
 	public static final int[] UPLOAD_FILE_TOTAL_SIZE = {
 			// normal, PASSPORT
-			10, 100
+			10, 10
 //			50, 50
 	};
 
