@@ -398,164 +398,21 @@ public final class Util {
 
 	// 無限スクロール可能広告枠
 	public static String poipiku_336x280_sp_mid(CheckLogin checkLogin, int adId) {
-		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
-		StringBuilder sbRtn = new StringBuilder();
-
-		sbRtn.append("<div class=\"SideBarMid\">");
-//		int nRand = (int)(Math.random()*10000);
-		// SB Ad
-		if(adId==Common.AD_ID_ALL) {	// 一般
-			if(checkLogin.m_nLangId==1) {	// 国内
-				if(Math.random()>0.8) {	// 男性
-					sbRtn.append("<iframe scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" src=\"/ad/g_d_m.html\"></iframe>");
-				} else {	// 女性
-					sbRtn.append("<iframe scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" src=\"/ad/g_d_f.html\"></iframe>");
-				}
-			} else {	// 海外
-				sbRtn.append("<iframe scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" src=\"/ad/g_f.html\"></iframe>");
-			}
-		} else {	// R18
-			if(Math.random()>0.8) {	// 男性
-				sbRtn.append("<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/587/a1508587.js\"></script>");
-			} else {	// 女性
-				sbRtn.append("<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/588/a1508588.js\"></script>");
-			}
-		}
-		// AdManager
-//		sbRtn.append("<!-- /4789880/poipiku/poipikumobile_336x280_mid -->");
-//		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
-//		sbRtn.append("<script>");
-//		sbRtn.append("googletag.cmd.push(function() {");
-//		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipikumobile_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
-//		sbRtn.append("googletag.enableServices();");
-//		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
-//		sbRtn.append("});");
-//		sbRtn.append("</script>");
-//		sbRtn.append("</div>");
-
-		sbRtn.append("</div>");
-		return sbRtn.toString();
+		return "";
 	}
 
 	public static String poipiku_336x280_pc_mid(CheckLogin checkLogin, int adId) {
-		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
-		StringBuilder sbRtn = new StringBuilder();
-		sbRtn.append("<div class=\"PcSideBarAd\">");
-		sbRtn.append("<!-- /4789880/poipiku/poipiku_336x280_mid -->");
-		int nRand = (int)(Math.random()*10000);
-		sbRtn.append("<div id='div-gpt-ad-1592940074228-").append(nRand).append("'>");
-		sbRtn.append("<script>");
-		sbRtn.append("googletag.cmd.push(function() {");
-		sbRtn.append("googletag.defineSlot('/4789880/poipiku/poipiku_336x280_mid', [[336, 280], [300, 250]], 'div-gpt-ad-1592940074228-").append(nRand).append("').addService(googletag.pubads());");
-		sbRtn.append("googletag.enableServices();");
-		sbRtn.append("googletag.display('div-gpt-ad-1592940074228-").append(nRand).append("');");
-		sbRtn.append("});");
-		sbRtn.append("</script>");
-		sbRtn.append("</div>");
-		sbRtn.append("</div>");
-		return sbRtn.toString();
+		return "";
 	}
 
 	// スマホオーバレイ広告枠
 	public static String poipiku_sp_overlay(CheckLogin checkLogin, int adId) {
-		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
-		StringBuilder sbRtn = new StringBuilder();
-		// SB Ad
-		if(adId==Common.AD_ID_ALL) {	// 一般
-			if(checkLogin.m_nLangId==1) {	// 国内
-				if(Math.random()>0.8) {	// 男性
-					sbRtn.append("<!-- Geniee Wrapper Body Tag 1508662 -->\n"
-							+ "<div data-cptid=\"1508662\">\n"
-							+ "<script>\n"
-							+ "  gnshbrequest.cmd.push(function() {\n"
-							+ "    gnshbrequest.applyPassback(\"1508662\", \"[data-cptid='1508662']\");\n"
-							+ "  });\n"
-							+ "</script>\n"
-							+ "</div>\n"
-							+ "<!-- /Geniee Wrapper Body Tag 1508662 -->");
-				} else {	// 女性
-					sbRtn.append("<!-- Geniee Wrapper Body Tag 1508857 -->\n"
-							+ "<div data-cptid=\"1508857\">\n"
-							+ "<script>\n"
-							+ "  gnshbrequest.cmd.push(function() {\n"
-							+ "    gnshbrequest.applyPassback(\"1508857\", \"[data-cptid='1508857']\");\n"
-							+ "  });\n"
-							+ "</script>\n"
-							+ "</div>\n"
-							+ "<!-- /Geniee Wrapper Body Tag 1508857 -->");
-				}
-			} else {	// 海外
-				sbRtn.append("<!-- Geniee Wrapper Body Tag 1508663 -->\n"
-						+ "<div data-cptid=\"1508663\">\n"
-						+ "<script>\n"
-						+ "  gnshbrequest.cmd.push(function() {\n"
-						+ "    gnshbrequest.applyPassback(\"1508663\", \"[data-cptid='1508663']\");\n"
-						+ "  });\n"
-						+ "</script>\n"
-						+ "</div>\n"
-						+ "<!-- /Geniee Wrapper Body Tag 1508663 -->");
-			}
-		} else {	// R18
-			if(Math.random()>0.8) {	// 男性
-				sbRtn.append("<!--  ad tags Size: 320x100 ZoneId:1508664-->\n"
-						+ "<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/664/a1508664.js\"></script>");
-			} else {	// 女性
-				sbRtn.append("<!--  ad tags Size: 320x100 ZoneId:1508859-->\n"
-						+ "<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/859/a1508859.js\"></script>");
-			}
-		}
-		return sbRtn.toString();
+		return "";
 	}
 
 	// PCオーバレイ広告枠
 	public static String poipiku_pc_overlay(CheckLogin checkLogin, int adId) {
-		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
-		StringBuilder sbRtn = new StringBuilder();
-		// SB Ad
-		if(adId==Common.AD_ID_ALL) {	// 一般
-			if(checkLogin.m_nLangId==1) {	// 国内
-				if(Math.random()>0.8) {	// 男性
-					sbRtn.append("<!-- Geniee Wrapper Body Tag 1508690 -->\n"
-							+ "<div data-cptid=\"1508690\">\n"
-							+ "<script>\n"
-							+ "  gnshbrequest.cmd.push(function() {\n"
-							+ "    gnshbrequest.applyPassback(\"1508690\", \"[data-cptid='1508690']\");\n"
-							+ "  });\n"
-							+ "</script>\n"
-							+ "</div>\n"
-							+ "<!-- /Geniee Wrapper Body Tag 1508690 -->");
-				} else {	// 女性
-					sbRtn.append("<!-- Geniee Wrapper Body Tag 1508858 -->\n"
-							+ "<div data-cptid=\"1508858\">\n"
-							+ "<script>\n"
-							+ "  gnshbrequest.cmd.push(function() {\n"
-							+ "    gnshbrequest.applyPassback(\"1508858\", \"[data-cptid='1508858']\");\n"
-							+ "  });\n"
-							+ "</script>\n"
-							+ "</div>\n"
-							+ "<!-- /Geniee Wrapper Body Tag 1508858 -->");
-				}
-			} else {	// 海外
-				sbRtn.append("<!-- Geniee Wrapper Body Tag 1508691 -->\n"
-						+ "<div data-cptid=\"1508691\">\n"
-						+ "<script>\n"
-						+ "  gnshbrequest.cmd.push(function() {\n"
-						+ "    gnshbrequest.applyPassback(\"1508691\", \"[data-cptid='1508691']\");\n"
-						+ "  });\n"
-						+ "</script>\n"
-						+ "</div>\n"
-						+ "<!-- /Geniee Wrapper Body Tag 1508691 -->");
-			}
-		} else {	// R18
-			if(Math.random()>0.8) {	// 男性
-				sbRtn.append("<!--  ad tags Size: 728x90 ZoneId:1508692-->\n"
-						+ "<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/692/a1508692.js\"></script>");
-			} else {	// 女性
-				sbRtn.append("<!--  ad tags Size: 728x90 ZoneId:1508860-->\n"
-						+ "<script type=\"text/javascript\" src=\"https://js.gsspcln.jp/t/508/860/a1508860.js\"></script>");
-			}
-		}
-		return sbRtn.toString();
+		return "";
 	}
 
 	private static final List<String> vBot = Arrays.asList(

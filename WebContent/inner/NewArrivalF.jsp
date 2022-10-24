@@ -21,7 +21,8 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 	CContent cContent = cResults.contentList.get(nCnt);
 	sbHtml.append(CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, cResults.viewMode, nSpMode));
 
-	if ((nCnt == 2 || nCnt == 7 || nCnt == 12 || nCnt == 17 || nCnt == 22 || nCnt == 27) && bSmartPhone){
+	if (false){
+//		if ((nCnt == 2 || nCnt == 7 || nCnt == 12 || nCnt == 17 || nCnt == 22 || nCnt == 27) && bSmartPhone){
 		sbHtml.append("<div class=\"IllustItem\" style=\"width: 360px; height: 250px; background: none; border: none; opacity: 0\">");
 		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 		sbHtml.append("</div>");
