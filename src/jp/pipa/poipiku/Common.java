@@ -242,13 +242,12 @@ public final class Common {
 
 	public static final int[] UPLOAD_FILE_MAX = {
 			// normal, PASSPORT
-			200, 400
-//			200, 200
+			4, 400
 	};
 
 	public static final int[] UPLOAD_FILE_TOTAL_SIZE = {
 			// normal, PASSPORT
-			50, 100
+			10, 100
 //			50, 50
 	};
 
@@ -263,7 +262,7 @@ public final class Common {
 
 	// Cookie Key
 	public static final String UNREALIZM_LK = "UNREALIZM_LK";
-	public static final String UNREALIZM_LK_POST = "UNREALIZM_LK";
+	public static final String UNREALIZM_LK_POST = "UR_LK";
 	public static final String UR_LANG_ID = "UR_LANG";
 	public static final String UR_LANG_ID_POST = "hl";
 	public static final String UNREALIZM_INFO = "UNREALIZM_INFO";
