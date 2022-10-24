@@ -110,7 +110,7 @@ body {
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
-	color: #262626;
+	color: #3498dc;
 	background: #fafafa;
 	/* background: #ff9900; Halloween color */
 	-webkit-text-size-adjust: none;
@@ -213,7 +213,7 @@ a {
 }
 
 a.Selected {
-	color: #262626;
+	color: #3498dc;
 }
 
 hr {
@@ -230,7 +230,7 @@ form, button {
 
 .BtnBase, input[type="submit"], input[type="button"], button {
 	border: 1px solid #fff;
-	background: #262626;
+	background: #3498dc;
 	color: #fff;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -252,9 +252,9 @@ form, button {
 
 .BtnBase.Selected, input[type="submit"].Selected, input[type="button"].Selected,
 	button.Selected {
-	border: 1px solid #262626;
+	border: 1px solid #3498dc;
 	background: #fff;
-	color: #262626;
+	color: #3498dc;
 }
 
 .BtnBase.Disabled, input[type="submit"].Disabled,
@@ -266,14 +266,14 @@ form, button {
 }
 
 .BtnBase.Rev {
-	border-color: #262626;
+	border-color: #3498dc;
 	background-color: #fff;
-	color: #262626;
+	color: #3498dc;
 }
 
 .BtnBase.Rev.Selected {
 	border-color: #fff;
-	background-color: #262626;
+	background-color: #3498dc;
 	color: #fff;
 }
 
@@ -465,5 +465,5 @@ form, button {
 .TabMenuWrapper {display: block; width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 900; top: 51px;}
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; height:27px; margin: 0 auto; background: #fff; overflow-x: scroll; padding: 0; list-style: none;}
 .TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
-.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #262626; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
-.TabMenu .TabMenuItem.Selected {border-color: #262626;}
+.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #3498dc; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
+.TabMenu .TabMenuItem.Selected {border-color: #3498dc;}

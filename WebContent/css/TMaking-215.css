@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.AutoLink {color: #262626 !important; text-decoration: underline;}
+.AutoLink {color: #3498dc !important; text-decoration: underline;}
 .AutoLinkMyTag {color: #f09090 !important; text-decoration: underline;}
 
 .IllustItem .IllustItemTag .AutoLink,
@@ -10,7 +10,7 @@
 	height: 35px;
 	line-height: 24px;
 	padding: 0 5px 0 10px;
-	background-color: #262626;
+	background-color: #3498dc;
 	border-radius: 3px;
 	color: #fff !important;
 	font-size: 13px;
@@ -26,7 +26,7 @@
 	content: '';
 	width: 0;
 	height: 0;
-	border-color: transparent #262626 transparent transparent;
+	border-color: transparent #3498dc transparent transparent;
 	border-style: solid;
 	border-width: 17px 10px 17px 0;
 }
@@ -144,7 +144,7 @@
 	-webkit-touch-callout: none;
 }
 
-.UpdateInfo {float: left; width: 100%; text-align: center; background-color: #262626; padding: 5px 0; font-size: 0;}
+.UpdateInfo {float: left; width: 100%; text-align: center; background-color: #3498dc; padding: 5px 0; font-size: 0;}
 
 .UpdateInfo .UpdateInfoMsg {color: #fff;font-size: 12px; font-weight: bold;}
 
@@ -193,7 +193,7 @@
 
 .SearchResultTitle {
 	text-decoration: none;
-	color: #262626;
+	color: #3498dc;
 	margin: 10px 0 7px 0;
 	font-size: 18px;
 	line-height: 30px;
@@ -212,7 +212,7 @@
 	display: block;
 	float: left;
 	background-color: #fff;
-	color: #262626;
+	color: #3498dc;
 	font-size: 15px;
 	padding: 0 18px;
 	margin: 0;
@@ -461,13 +461,13 @@
 	margin: 0;
 	border: solid 1px #fff;
 	border-left: none;
-	background-color: #262626;
+	background-color: #3498dc;
 	color: #fff;
 	min-width: 60px;
 }
 .CategoryMenu .CategoryBtn:first-child {border-left: solid 1px #fff; border-radius: 20px 0 0 20px;}
 .CategoryMenu .CategoryBtn:last-child {border-radius: 0 20px 20px 0;}
-.CategoryMenu .CategoryBtn.Selected {background-color: #fff; color: #262626;}
+.CategoryMenu .CategoryBtn.Selected {background-color: #fff; color: #3498dc;}
 .CategoryMenu .CategoryBtn.Disabled {color: #61ade2;}
 
 
@@ -496,7 +496,7 @@
 	content: '';
 	width: 0;
 	height: 0;
-	border-color: transparent #262626 transparent transparent;
+	border-color: transparent #3498dc transparent transparent;
 	border-style: solid;
 	border-width: 12px 8px 12px 0;
 }
@@ -515,7 +515,7 @@
 	margin: 0;
 	border: solid 1px #fff;
 	border-left: none;
-	background-color: #262626;
+	background-color: #3498dc;
 	color: #fff;
 	min-width: 60px;
 }
@@ -526,7 +526,7 @@
 
 .TagMenu .TagBtn:first-child {border-left: solid 1px #fff; border-radius: 20px 0 0 20px;}
 .TagMenu .TagBtn:last-child {border-radius: 0 20px 20px 0;}
-.TagMenu .TagBtn.Selected {background-color: #fff; color: #262626;}
+.TagMenu .TagBtn.Selected {background-color: #fff; color: #3498dc;}
 .TagMenu .TagBtn.Disabled {color: #61ade2;}
 
 
@@ -647,7 +647,7 @@
 .IllustThumb .IllustUser .IllustUserPin {
 	display: block;
 	flex: 0 0 15px;
-	color: #262626;
+	color: #3498dc;
 }
 
 .IllustThumb .IllustUser.DateTime {
@@ -670,7 +670,7 @@
 }
 
 .IllustThumb .IllustInfo .IllustInfoPin {
-	color: #262626;
+	color: #3498dc;
 }
 
 .IllustThumb .CategoryInfo {
@@ -696,7 +696,7 @@
 .IllustThumb .Category {
 	display: block;
 	float: left;
-	background: #262626;
+	background: #3498dc;
 	font-size: 10px;
 	color: #fff;
 	text-align: center;
@@ -903,7 +903,7 @@ Decoration
 	float: left;
 	color: white;
 	font-size: 15px;
-	background: #262626;
+	background: #3498dc;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 25px;
@@ -919,7 +919,7 @@ Decoration
 	float: left;
 	color: white;
 	font-size: 11px;
-	background: #262626;
+	background: #3498dc;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 20px;
@@ -938,7 +938,7 @@ Decoration
 	min-width: 35px;
 	display: block;
 	float: left;
-	background-color: #262626;
+	background-color: #3498dc;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 20px;
@@ -951,7 +951,7 @@ Decoration
 	min-width: 40px;
 	display: block;
 	float: left;
-	background-color: #262626;
+	background-color: #3498dc;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 25px;
@@ -1018,7 +1018,7 @@ Decoration
 .IllustThumb .PublishLimitedPublished{
 	background-size: contain;
 	background-image: url(/img/ico_clock.png);
-	background-color: #262626;
+	background-color: #3498dc;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
 	opacity: 0.75;
@@ -1103,7 +1103,7 @@ Decoration
 	line-height: 30px;
 	padding: 10px;
 	box-sizing: border-box;
-	color: #262626;
+	color: #3498dc;
 }
 
 .TagThumb {
@@ -1180,7 +1180,7 @@ Decoration
 }
 
 .TagThumbBookmarkButton {
-	color: #262626;
+	color: #3498dc;
 	position: absolute;
 	top: 0;
 	right: 2px;
@@ -1260,7 +1260,7 @@ Decoration
 
 .UploadFile .InputFile.Done {
 	background-color: #EDEDF5;
-	box-shadow: 0 0 1px 0 #262626;
+	box-shadow: 0 0 1px 0 #3498dc;
 	border: 0;
 }
 
@@ -1507,20 +1507,20 @@ Decoration
 }
 
 .IllustItem .BtnBase {
-	border: 1px solid #262626;
+	border: 1px solid #3498dc;
 	background: #fff;
-	color: #262626;
+	color: #3498dc;
 }
 
 .IllustItem .NonFrameBtnBase {
 	background: #fff;
-	color: #262626;
+	color: #3498dc;
 }
 
 .IllustItem .BtnBase.Selected,
 .IllustItem .BtnBase:hover {
 	border: 1px solid #fff;
-	background: #262626;
+	background: #3498dc;
 	color: #fff;
 }
 
@@ -1838,7 +1838,7 @@ Decoration
 }
 
 .IllustItem .IllustItemCmd .IllustItemPinButton.Selected {
-	color: #262626;
+	color: #3498dc;
 }
 
 .IllustItem .Request {
@@ -1862,7 +1862,7 @@ Decoration
 .IllustItem .Category {
 	display: block;
 	float: left;
-	background: #262626;
+	background: #3498dc;
 	font-size: 13px;
 	color: #fff;
 	text-align: center;
@@ -2356,7 +2356,7 @@ Decoration
 	border-radius: 11px;
 		background-size: contain;
 		background-image: url(/img/ico_clock.png);
-		background-color: #262626;
+		background-color: #3498dc;
 		background-repeat: no-repeat;
 	background-position: 50% 50%;
 	opacity: 0.75;
@@ -2672,7 +2672,7 @@ Decoration
 
 .IllustItemReplyInfo .ReplyBtn,
 .IllustItemReplyList .ReplyBtn {
-	color: #262626;
+	color: #3498dc;
 	position: relative;
 	float: right;
 	right: 6px;
@@ -2716,7 +2716,7 @@ Decoration
 }
 
 .ReplyEmojiInfoDlgTitle > i {
-	color: #262626;
+	color: #3498dc;
 	margin-right: 10px;
 }
 
@@ -3011,7 +3011,7 @@ hr.IllustItemListSeparator {
 	margin: 0;
 	box-sizing: border-box;
 	overflow: hidden;
-	background: #262626;
+	background: #3498dc;
 	background-size: cover;
 	background-repeat: no-repeat;
 	border-bottom: solid 1px #eee;
@@ -3024,15 +3024,15 @@ hr.IllustItemListSeparator {
 }
 
 .UserInfo .BtnBase {
-	border: 1px solid #262626;
+	border: 1px solid #3498dc;
 	background: #fff;
-	color: #262626;
+	color: #3498dc;
 }
 
 .UserInfo .BtnBase.Selected,
 .UserInfo .BtnBase:hover {
 	border: 1px solid #fff;
-	background: #262626;
+	background: #3498dc;
 	color: #fff;
 }
 
@@ -3431,15 +3431,15 @@ hr.IllustItemListSeparator {
 }
 
 .SettingList .BtnBase {
-	border: 1px solid #262626;
+	border: 1px solid #3498dc;
 	background: #fff;
-	color: #262626;
+	color: #3498dc;
 }
 
 .SettingList .BtnBase.Selected,
 .SettingList .BtnBase:hover {
 	border: 1px solid #fff;
-	background: #262626;
+	background: #3498dc;
 	color: #fff;
 }
 
@@ -3461,14 +3461,14 @@ hr.IllustItemListSeparator {
 
 .SettingList .BtnBase.Rev {
 	border-color: #fff;
-	background-color: #262626;
+	background-color: #3498dc;
 	color: #fff;
 }
 
 .SettingList .BtnBase.Rev.Selected {
-	border-color: #262626;
+	border-color: #3498dc;
 	background-color: #fff;
-	color: #262626;
+	color: #3498dc;
 }
 
 .SettingList .SettingListItem .SettingListTitle {
@@ -3656,7 +3656,7 @@ hr.IllustItemListSeparator {
 .EventItemList .EventItem.Updated {position: relative;}
 .EventItemList .EventItem.Updated:after {display: block; content: ''; position: absolute; width: 50px; height: 46px; background-image: url('/img/upodate_jp.png'); background-size: contain; top: 5px; left: 0;}
 .EventItemList .EventItem.Pre {position: relative;}
-.EventItemList .EventItem.Pre:after {display: block; content: '予告'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #262626; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
+.EventItemList .EventItem.Pre:after {display: block; content: '予告'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #3498dc; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
 .EventItemList .EventItem.Start {position: relative;}
 .EventItemList .EventItem.Start:after {display: block; content: '開催中'; position: absolute; width: 80px; height: 20px; line-height: 20px; text-align: center; background: #ff0000; color: #fff; top: 5px; left: 5px; border-radius: 20px;}
 .EventItemList .EventItem.End {position: relative;}
@@ -4152,7 +4152,7 @@ hr.IllustItemListSeparator {
 /********** wave *********/
 .AddWaveMessage > .fa-comment-dots {
 	font-size: 22px;
-	color: #262626;
+	color: #3498dc;
 }
 .UserInfoCmd .WaveMessageText {
 	width: 21em;
