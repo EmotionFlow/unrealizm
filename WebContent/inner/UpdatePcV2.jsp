@@ -370,7 +370,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> />
+					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> readonly onclick="showSetTagDlg(this.value)" />
 					<div id="EditTagListCharNum" class="TagListCharNum">100</div>
 				</div>
 				<div class="UoloadCmdOption">

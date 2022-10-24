@@ -1395,4 +1395,77 @@ function initUploadParams(tweetEnabled) {
 	setUploadParams(uploadParams);
 }
 
+function showSetTagDlg(currentTags) {
+	function getSetTagDlgHtml(tags) {
+		const dlgHtml = `
+<div>
+	<div id="TagDlgWrapper" class="TagDlgWrapper">
+		<form id="TagSearchWrapper" class="TagSearchWrapper" method="get">
+			<div class="TagSearch">
+				<div class="TagSearchInputWrapper">
+					<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="20" placeholder="タグを入力" value="" autocomplete="off" enterkeyhint="search" oninput="onTagInput()">
+					<div id="TagSearchClear" class="TagSearchClear">
+						<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="CurrentTagHeader">設定中のタグ</div>
+		<ul id="CurrentTagList" class="CurrentTagList">
+		</ul>
+	</div>
+</div>
+		`;
+		const $dlg = $(dlgHtml);
+		const $tagList = $dlg.find('ul#CurrentTagList');
+		tags.forEach(tag => {
+			const $li = $('<li></li>', { class: 'CurrentTagItem' });
+			const $tagRow = $('<div></div>',  { class: 'CurrentTagRow' });
+			const $tagName = $('<div></div>', { class: 'CurrentTagName', text: tag });
+			const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn' });
+			const $delIcon = $('<i></i>', { class: 'fas fa-times' });
+			$tagList.append($li.append($tagRow.append($tagName, $delBtn.append($delIcon))));
+		})
+		return $dlg.html();
+	}
 
+	const tagList = currentTags.trim().split(/\s+/).filter(str => str);
+	Swal.fire({
+		html: getSetTagDlgHtml(tagList),
+		showCancelButton: true,
+	}).then(resp => {});
+}
+
+function toggleClearTagBtn() {
+	const $TagSearchClear = $('#TagSearchClear');
+	const $TagSearchBox = $('#TagSearchBox');
+	if ($TagSearchBox.val()) {
+		$TagSearchClear.css('visibility','visible');
+		$TagSearchBox.css('padding-right', '28px');
+	} else {
+		$TagSearchClear.css('visibility','hidden');
+		$TagSearchBox.css('padding-right', '1px');
+	}
+}
+
+function clearTagSearchInput() {
+	const $search = $('#TagSearchBox');
+	$search.val('');
+	$search.focus();
+	toggleClearSearchBtn();
+}
+
+function onTagInput() {
+	toggleClearTagBtn();
+	const prevTimeout = getLocalStrage('tag-suggestion-timeout');
+	if (prevTimeout) clearTimeout(prevTimeout);
+	setLocalStrage('tag-suggestion-timeout', setTimeout(() => {
+		const inputStr = $('#TagSearchBox').val();
+		// TODO
+		if (inputStr) {
+			// showTagSuggestion(inputStr);
+		} else {
+			// showCurrentTags();
+		}
+	}, 800))
+}
