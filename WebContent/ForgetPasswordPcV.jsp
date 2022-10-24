@@ -95,7 +95,7 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 				font-style: italic;
 				font-weight: normal;
 			}
-			.SettingList .SettingListItem {color: #fff;}
+			.SettingList .SettingListItem {color: #6d6965;}
 		</style>
 	</head>
 

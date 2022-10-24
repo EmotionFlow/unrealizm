@@ -7,7 +7,7 @@
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>プライバシーポリシー</title>
 		<style>
-			.SettingList .SettingListItem {color: #fff;}
+			.SettingList .SettingListItem {color: #6d6965;}
 		</style>
 	</head>
 	<body>

@@ -150,14 +150,15 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 <%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 <article class="Wrapper ThumbList">
-	<header class="SearchResultTitle">
-		<h2 style="text-align: center;">Unrealizm</h2>
+	<header class="StartPageTitle">
+		<h2>Unrealizm</h2>
+		<h3 style="text-align: center" >AI Works SNS </h3>
 	</header>
 
 	<section
 			id="IllustItemList"
 			class="IllustItemList2Column"
-			style="position: relative; top: <%=checkLogin.m_nPassportId==Common.PASSPORT_OFF?70:48%>px;"
+			style="position: relative; top: 15px;"
 	>
 		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
 		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>

@@ -24,7 +24,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(cResults.tagList.size()<=0) {%>
-				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center; background-color: #fff;">
+				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 160px 0; text-align: center; background-color: #ffffff;">
 					<%=_TEX.T("MyHomeTag.FirstMsg")%>
 				</div>
 				<%}%>

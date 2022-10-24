@@ -110,7 +110,7 @@ body {
 	font-size: 14px;
 	margin: 0;
 	padding: 0;
-	color: #3498dc;
+	color: #6d6965;
 	background: #fafafa;
 	/* background: #ff9900; Halloween color */
 	-webkit-text-size-adjust: none;
@@ -161,7 +161,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="dat
 	box-shadow: none;
 	border-radius: 0;
 	vertical-align: top;
-	background-color: #ffffff;
+	background-color: #fffffff;
 	border: 1px solid #cccccc;
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 	color: #6d6965;
@@ -176,7 +176,7 @@ img {
 
 a {
 	text-decoration: none;
-	color: #fff;
+	color: #6d6965;
 }
 
 .Misaki {
@@ -231,7 +231,7 @@ form, button {
 .BtnBase, input[type="submit"], input[type="button"], button {
 	border: 1px solid #fff;
 	background: #3498dc;
-	color: #fff;
+	color: #ffffff;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
@@ -267,14 +267,14 @@ form, button {
 
 .BtnBase.Rev {
 	border-color: #3498dc;
-	background-color: #fff;
+	background-color: #ffffff;
 	color: #3498dc;
 }
 
 .BtnBase.Rev.Selected {
-	border-color: #fff;
+	border-color: #6d6965;
 	background-color: #3498dc;
-	color: #fff;
+	color: #6d6965;
 }
 
 .onoffswitch {
@@ -383,7 +383,7 @@ form, button {
 	padding: 20px 5px;
 	background: rgba(0, 0, 0, 0.8);
 	display: none;
-	color: #fff;
+	color: #6d6965;
 	box-sizing: border-box;
 	z-index: 9999;
 	text-align: center;
@@ -462,7 +462,7 @@ form, button {
 	border-radius: 7px;
 }
 
-.TabMenuWrapper {display: block; width: 100%; background-color: #fff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 900; top: 51px;}
+.TabMenuWrapper {display: block; width: 100%; background-color: #ffffff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 900; top: 51px;}
 .TabMenu {display: flex; flex-flow: row nowrap; max-width: 600px; height:27px; margin: 0 auto; background: #fff; overflow-x: scroll; padding: 0; list-style: none;}
 .TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
 .TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #3498dc; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}

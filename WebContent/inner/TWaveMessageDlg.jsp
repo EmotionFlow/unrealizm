@@ -148,7 +148,7 @@
 				border-radius:20px;
 				background-size: cover;
 				background-position: 50% 50%;
-				background-color: #fff;
+				background-color: #ffffff;
 			}
 			.WaveReplyUserNickname{
 				margin-left: 5px;

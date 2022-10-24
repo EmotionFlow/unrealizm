@@ -62,7 +62,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				position: absolute;
 				margin: auto;
 				text-align: center;
-				background-color: #fff;
+				background-color: #ffffff;
 			}
 			.SettingList .SettingListItem {
 				display: block;

@@ -87,7 +87,7 @@
 			<%=_TEX.T("MySketchbookV.Info06")%>
 		</div>
 
-		<div style="text-align: center; color: #ffffff">
+		<div style="text-align: center; color: #6d6965f">
 			<div>
 				<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="font-size: 17px; font-weight: 600;">
 					<%=_TEX.T("MySketchbookV.Info08")%>

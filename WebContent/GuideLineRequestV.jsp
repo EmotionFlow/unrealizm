@@ -27,7 +27,7 @@
         }
 
         .SettingList .SettingListItem {
-            color: #fff;
+            color: #6d6965;
         }
 	</style>
 </head>

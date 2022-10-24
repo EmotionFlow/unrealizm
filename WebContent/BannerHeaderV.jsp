@@ -14,8 +14,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
 		body {padding: 0;}
-		.Wrapper {width: 1024px; color: #fff; background: #3498db; height: auto; margin: 0; padding: 77px 0;}
-		.AnalogicoDesc {width: 100%; padding: 0 0 0 0; box-sizing: border-box; text-align: center; font-size: 14px; line-height: 37px; color: #fff; font-weight: normal;}
+		.Wrapper {width: 1024px; color: #6d6965; background: #3498db; height: auto; margin: 0; padding: 77px 0;}
+		.AnalogicoDesc {width: 100%; padding: 0 0 0 0; box-sizing: border-box; text-align: center; font-size: 14px; line-height: 37px; color: #6d6965; font-weight: normal;}
 		.AnalogicoStart {text-align: center; margin: 20px 0 0 0; padding: 0 0 0 0;}
 		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 		.AnalogicoInfo {display: none;}
@@ -35,7 +35,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 			</h1>
 			<div class="AnalogicoStart">
 				<div style="margin: 0 0 5px 0; font-size: 16px;">イラストポイポイSNS</div>
-				<a class="BtnBase Rev" style="background-color: #fff;" href="https://unrealizm.com/">
+				<a class="BtnBase Rev" style="background-color: #ffffff;" href="https://unrealizm.com/">
 					<img class="Logo" src="//img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="<%=_TEX.T("THeader.Title")%>">
 				</a>
 			</div>

@@ -44,7 +44,7 @@
 		max-width: 100%;
 		white-space: nowrap;
         overflow: hidden;
-        text-shadow: 0 0 5px #787878;
+        /*text-shadow: 0 0 5px #787878;*/
 	}
 	span.currentKeyword {
 		font-size: 11px;
@@ -76,7 +76,7 @@
 	<div>
 		<span onclick="showMyBoxSortFilterSubMenu('CategoryFilterMenu');"
 				class="CategoryFilter <%="Category C"+cResults.categoryFilterId%>"
-				style="border-color: #ffffff">
+				style="border-color: #6d6965f">
 					<%=cResults.categoryFilterId<0?_TEX.T("Category.All"):_TEX.T(String.format("Category.C%d", cResults.categoryFilterId))%>
 		</span>
 	</div>

@@ -104,13 +104,13 @@
 .UoloadCmdOption .switch-right {
 	right: 0;
 	background-color: #3498da;
-	color: #fff;
+	color: #ffffff;
 	border-radius: 0 4px 4px 0;
 }
 
 .UoloadCmdOption input:checked + .switch-left {
 	background-color: #3498da;
-	color: #fff;
+	color: #ffffff;
 }
 
 .UoloadCmdOption input:checked + .switch-left + .switch-right {
@@ -125,11 +125,11 @@
 }
 
 .UoloadCmdOption input:checked:focus + .switch-left {
-	color: #fff;
+	color: #6d6965;
 }
 
 .UoloadCmdOption input:focus + .switch-left + .switch-right {
-	color: #fff;
+	color: #6d6965;
 }
 
 .UoloadCmdOption input:checked:focus + .switch-left + .switch-right {

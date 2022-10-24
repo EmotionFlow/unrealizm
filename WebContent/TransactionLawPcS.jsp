@@ -7,7 +7,7 @@
 		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>特定商取引法に基づく表記</title>
 		<style>
-			.SettingList .SettingListItem {color: #fff;}
+			.SettingList .SettingListItem {color: #6d6965;}
 		</style>
 	</head>
 	<body>

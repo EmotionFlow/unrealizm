@@ -220,7 +220,7 @@ String[][] menuOrder = {
 			font-size: 18px;
 			font-weight: 400;
 			padding: 7px;
-			background-color: #fff;
+			background-color: #ffffff;
 			color: #6d6965;
 			border-bottom: 1px solid #555;
 		}
@@ -235,7 +235,7 @@ String[][] menuOrder = {
 		}
 
 		.SettingMenuItemLink {
-			background-color: #fff;
+			background-color: #ffffff;
 			min-height: calc(41.625px);
 			width: 100%;
 			display: block;

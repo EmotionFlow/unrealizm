@@ -10,7 +10,7 @@
 	<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("LogoUsageGuideLine.Title")%></title>
 	<style>
         .SettingList .SettingListItem {
-            color: #fff;
+            color: #6d6965;
         }
 		.LogoArea {
             text-align: center;
@@ -56,11 +56,11 @@
 				<div class="LogoArea">
 					<a class="LogoAreaLogo Small" href="https://img.unrealizm.com/img/unrealizm_logo_64x64.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Small")%><br>
-						<img src="https://img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="poipiku logo small"/>
+						<img src="https://img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="unrealizm logo small"/>
 					</a>
-					<a class="LogoAreaLogo Large" href="https://img.unrealizm.com/img/poipiku_icon_512x512_2.png">
+					<a class="LogoAreaLogo Large" href="https://img.unrealizm.com/img/unrealizm_logo_510x510.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Large")%><br>
-						<img width="256px" height="256px" src="https://img.unrealizm.com/img/poipiku_icon_512x512_2.png" alt="poipiku logo large"/>
+						<img width="256px" height="256px" src="https://img.unrealizm.com/img/unrealizm_logo_510x510.png" alt="unrealizm logo large"/>
 					</a>
 				</div>
 			</div>

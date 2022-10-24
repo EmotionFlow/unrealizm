@@ -5,7 +5,7 @@
         margin: 0;
 	}
 	.SettingListItem dd > a {
-        background-color: #fff;
+        background-color: #ffffff;
         min-height: calc(41.625px);
         width: 100%;
         display: block;
