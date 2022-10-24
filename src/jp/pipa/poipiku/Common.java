@@ -24,6 +24,8 @@ import static java.util.stream.Collectors.joining;
 public final class Common {
 	private Common(){}
 
+	public static final String URL_ROOT = "https://unrealizm.com/";
+
 	public static final String GLOBAL_IP_ADDRESS = "118.238.233.16";
 
 	public static final String CONTENTS_ROOT = "/var/www/html/ai_poipiku_img";

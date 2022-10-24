@@ -54,9 +54,9 @@
 			<div class="SettingListTitle"><%=_TEX.T("LogoUsageGuideLine.Logo.Title")%></div>
 			<div class="SettingBody">
 				<div class="LogoArea">
-					<a class="LogoAreaLogo Small" href="https://ai-img.poipiku.com/img/pc_top_title-03.png">
+					<a class="LogoAreaLogo Small" href="https://ai-img.poipiku.com/img/unrealizm_logo_64x64.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Small")%><br>
-						<img src="https://ai-img.poipiku.com/img/pc_top_title-03.png" alt="poipiku logo small"/>
+						<img src="https://ai-img.poipiku.com/img/unrealizm_logo_64x64.png" alt="poipiku logo small"/>
 					</a>
 					<a class="LogoAreaLogo Large" href="https://ai-img.poipiku.com/img/poipiku_icon_512x512_2.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Large")%><br>

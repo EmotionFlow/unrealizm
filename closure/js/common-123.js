@@ -908,7 +908,7 @@ function initGraph(ctx) {
 	return new Chart(ctx, {
 		type: 'doughnut',
 		data: {
-			labels : ["https://ai-img.poipiku.com/img/pc_top_title-03.png"],
+			labels : ["https://ai-img.poipiku.com/img/unrealizm_logo_64x64.png"],
 			datasets: [{
 				data: [100],
 				backgroundColor: ["#3498db"]
