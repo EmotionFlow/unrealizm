@@ -18,7 +18,7 @@ case "$yn" in [yY]*) ;; *) echo "abort." ; exit ;; esac
 
 ssh ${HOST_ALIAS} 'bash -c "cd stg && sudo ./ai-poipiku_deploy_prod.sh -f"'
 
-git tag -a release-ai-$(date +%Y-%m-%d-%H-%M) -m "Release at $(date)"
+git tag -a release-unrealizm-$(date +%Y-%m-%d-%H-%M) -m "Release at $(date)"
 git push --tags
 
 echo "ai-poipikuをデプロイしました"
