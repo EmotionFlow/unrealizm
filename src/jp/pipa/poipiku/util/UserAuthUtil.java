@@ -114,7 +114,7 @@ public class UserAuthUtil {
 		}
 
 		if(!strHashPass.isEmpty()) {
-			Cookie cLK = new Cookie(Common.AI_POIPIKU_LK, strHashPass);
+			Cookie cLK = new Cookie(Common.UNREALIZM_LK, strHashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);
@@ -131,9 +131,9 @@ public class UserAuthUtil {
 
 		// Lang Id
 		int nLangId = 1;
-		String strLang = Util.toString(request.getParameter(Common.AI_LANG_ID));
+		String strLang = Util.toString(request.getParameter(Common.UR_LANG_ID));
 		if (strLang.isEmpty()) {
-			strLang = Util.toString(Util.getCookie(request, Common.AI_LANG_ID));
+			strLang = Util.toString(Util.getCookie(request, Common.UR_LANG_ID));
 		}
 		if (!strLang.isEmpty()) {
 			nLangId = SupportedLocales.findId(strLang);
@@ -272,7 +272,7 @@ public class UserAuthUtil {
 		}
 
 		if(!strHashPass.isEmpty() && nUserId>0) {
-			Cookie cLK = new Cookie(Common.AI_POIPIKU_LK, strHashPass);
+			Cookie cLK = new Cookie(Common.UNREALIZM_LK, strHashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);
@@ -432,7 +432,7 @@ public class UserAuthUtil {
 		}
 
 		if(!strHashPass.isEmpty()) {
-			Cookie cLK = new Cookie(Common.AI_POIPIKU_LK, strHashPass);
+			Cookie cLK = new Cookie(Common.UNREALIZM_LK, strHashPass);
 			cLK.setMaxAge(Integer.MAX_VALUE);
 			cLK.setPath("/");
 			response.addCookie(cLK);
@@ -713,7 +713,7 @@ public class UserAuthUtil {
 					Log.d("USERAUTH Login error : no user : " + nUserId);
 				}
 
-				Cookie cLK = new Cookie(Common.AI_POIPIKU_LK, strHashPass);
+				Cookie cLK = new Cookie(Common.UNREALIZM_LK, strHashPass);
 				cLK.setMaxAge(Integer.MAX_VALUE);
 				cLK.setPath("/");
 				response.addCookie(cLK);
@@ -727,9 +727,9 @@ public class UserAuthUtil {
 
 				// Lang Id
 				int nLangId = 1;
-				String strLang = Util.toString(request.getParameter(Common.AI_LANG_ID));
+				String strLang = Util.toString(request.getParameter(Common.UR_LANG_ID));
 				if(strLang.isEmpty()) {
-					strLang = Util.toString(Util.getCookie(request, Common.AI_LANG_ID));
+					strLang = Util.toString(Util.getCookie(request, Common.UR_LANG_ID));
 				}
 				if (!strLang.isEmpty()) {
 					nLangId = SupportedLocales.findId(strLang);
@@ -815,7 +815,7 @@ public class UserAuthUtil {
 						tweet.updateDBFollowInfoFromTwitter(nUserId);
 					}
 
-					Cookie cLK = new Cookie(Common.AI_POIPIKU_LK, strHashPass);
+					Cookie cLK = new Cookie(Common.UNREALIZM_LK, strHashPass);
 					cLK.setMaxAge(Integer.MAX_VALUE);
 					cLK.setPath("/");
 					response.addCookie(cLK);

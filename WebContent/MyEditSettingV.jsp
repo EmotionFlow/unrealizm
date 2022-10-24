@@ -330,8 +330,8 @@ if(cResults.m_bUpdate) {
 					"dataType": "json",
 					"success": function(data) {
 						if(data.result>0) {
-							//setCookie('AI_POIPIKU_LK','-1');
-							deleteCookie('AI_POIPIKU_LK');
+							//setCookie('UNREALIZM_LK','-1');
+							deleteCookie('UNREALIZM_LK');
 							clearSearchCache();
 							sendObjectMessage("restart");
 						}
@@ -352,8 +352,8 @@ if(cResults.m_bUpdate) {
 						"dataType": "json",
 						"success": function(data) {
 							if(data.result>0) {
-								//setCookie('AI_POIPIKU_LK','-1');
-								deleteCookie('AI_POIPIKU_LK');
+								//setCookie('UNREALIZM_LK','-1');
+								deleteCookie('UNREALIZM_LK');
 								clearSearchCache();
 								sendObjectMessage("restart");
 							}

@@ -101,10 +101,10 @@ public final class Common {
 
 	// Publish ID
 	public static final int PUBLISH_ID_ALL			= 0;	// XX限定なし
-	public static final int PUBLISH_ID_R15			= 1;	// [廃止予定] R15。safe_filterに統合
-	public static final int PUBLISH_ID_R18			= 2;	// [廃止予定] R18。safe_filterに統合
-	public static final int PUBLISH_ID_R18G			= 3;	// [廃止予定] R18G。safe_filterに統合
-	public static final int PUBLISH_ID_PASS			= 4;	// [廃止予定] パスワード。passwordに統合
+	public static final int PUBLISH_ID_R15			= 1;	// [廃止] R15。safe_filterに統合
+	public static final int PUBLISH_ID_R18			= 2;	// [廃止] R18。safe_filterに統合
+	public static final int PUBLISH_ID_R18G			= 3;	// [廃止] R18G。safe_filterに統合
+	public static final int PUBLISH_ID_PASS			= 4;	// [廃止] パスワード。passwordに統合
 	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン限定
 	public static final int PUBLISH_ID_FOLLOWER		= 6;	// こそフォロ限定
 	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー限定
@@ -117,10 +117,10 @@ public final class Common {
 	public static final int PUBLISH_ID_MAX = PUBLISH_ID_HIDDEN;
 	public static final String[] PUBLISH_ID_FILE = {
 			"",								// 0
-			"/img/warning.png",				// [廃止予定]1 SAFE_FILTER_FILEへ移行
-			"/img/R-18.png",				// [廃止予定]2 SAFE_FILTER_FILEへ移行
-			"/img/R-18.png",				// [廃止予定]3 SAFE_FILTER_FILEへ移行
-			"/img/publish_pass.png",		// [廃止予定]4 PASSWORD_FILEへ移行
+			"/img/warning.png",				// [廃止]1 SAFE_FILTER_FILEへ移行
+			"/img/R-18.png",				// [廃止]2 SAFE_FILTER_FILEへ移行
+			"/img/R-18.png",				// [廃止]3 SAFE_FILTER_FILEへ移行
+			"/img/publish_pass.png",		// [廃止]4 PASSWORD_FILEへ移行
 			"/img/publish_login.png",		// 5
 			"/img/publish_follower.png",	// 6
 			"/img/publish_t_follower.png",	// 7
@@ -262,11 +262,11 @@ public final class Common {
 	public static final int UPLOAD_FILE_TYPE_ERROR = -998;
 
 	// Cookie Key
-	public static final String AI_POIPIKU_LK = "AI_POIPIKU_LK";
-	public static final String AI_POIPIKU_LK_POST = "AI_POIPIKU_LK";
-	public static final String AI_LANG_ID = "AI_LANG";
-	public static final String AI_LANG_ID_POST = "hl";
-	public static final String AI_POIPIKU_INFO = "AI_POIPIKU_INFO";
+	public static final String UNREALIZM_LK = "UNREALIZM_LK";
+	public static final String UNREALIZM_LK_POST = "UNREALIZM_LK";
+	public static final String UR_LANG_ID = "UR_LANG";
+	public static final String UR_LANG_ID_POST = "hl";
+	public static final String UNREALIZM_INFO = "UNREALIZM_INFO";
 	public static final String CLIENT_TIMEZONE_OFFSET = "TZ_OFFSET";
 
 	// lang_id

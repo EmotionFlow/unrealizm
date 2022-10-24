@@ -51,12 +51,12 @@ public final class CheckLogin {
 	private void getCookie(final HttpServletRequest request) {
 		try {
 			request.setCharacterEncoding("UTF-8");
-			m_strHashPass = Util.toString(request.getParameter(Common.AI_POIPIKU_LK_POST));
+			m_strHashPass = Util.toString(request.getParameter(Common.UNREALIZM_LK_POST));
 		} catch (Exception e) {
 			;
 		}
 		if(m_strHashPass.isEmpty()) {
-			m_strHashPass = Util.toString(Util.getCookie(request, Common.AI_POIPIKU_LK));
+			m_strHashPass = Util.toString(Util.getCookie(request, Common.UNREALIZM_LK));
 		}
 	}
 
@@ -67,7 +67,7 @@ public final class CheckLogin {
 			m_strNickName	= "guest";
 			m_strHashPass	= "";
 			m_bLogin        = false;
-			Util.setCookie(response, Common.AI_POIPIKU_LK, m_strHashPass, Integer.MAX_VALUE);
+			Util.setCookie(response, Common.UNREALIZM_LK, m_strHashPass, Integer.MAX_VALUE);
 		} else {
 			m_nUserId		= cacheUser.userId;
 			m_strNickName	= cacheUser.nickName;
@@ -89,11 +89,11 @@ public final class CheckLogin {
 			if (!validateUser(response)) {
 				// 以下の優先順位で、非ログインユーザーの言語設定を取得する。
 				// hlパラメータ -> cookie -> http headerのAccept-Language
-				final String hlParam = request.getParameter(Common.AI_LANG_ID_POST);
+				final String hlParam = request.getParameter(Common.UR_LANG_ID_POST);
 				if (hlParam != null && !hlParam.isEmpty()) {
 					m_nLangId = SupportedLocales.findId(hlParam);
 				} else {
-					final String cookieParam = Util.getCookie(request, Common.AI_LANG_ID);
+					final String cookieParam = Util.getCookie(request, Common.UR_LANG_ID);
 					if (cookieParam != null && !cookieParam.isEmpty()) {
 						m_nLangId = SupportedLocales.findId(cookieParam);
 					} else {
