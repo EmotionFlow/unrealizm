@@ -54,13 +54,13 @@
 			<div class="SettingListTitle"><%=_TEX.T("LogoUsageGuideLine.Logo.Title")%></div>
 			<div class="SettingBody">
 				<div class="LogoArea">
-					<a class="LogoAreaLogo Small" href="https://img.unrealizm.com/img/unrealizm_logo_64x64.png">
+					<a class="LogoAreaLogo Small" href="https://img.unrealizm.com/img/logo_tr_48.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Small")%><br>
-						<img src="https://img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="unrealizm logo small"/>
+						<img src="https://img.unrealizm.com/img/logo_tr_48.png" alt="unrealizm logo small"/>
 					</a>
-					<a class="LogoAreaLogo Large" href="https://img.unrealizm.com/img/unrealizm_logo_510x510.png">
+					<a class="LogoAreaLogo Large" href="https://img.unrealizm.com/img/logo_tr_512.png">
 						<%=_TEX.T("LogoUsageGuideLine.Logo.Large")%><br>
-						<img width="256px" height="256px" src="https://img.unrealizm.com/img/unrealizm_logo_510x510.png" alt="unrealizm logo large"/>
+						<img width="256px" height="256px" src="https://img.unrealizm.com/img/logo_tr_512.png" alt="unrealizm logo large"/>
 					</a>
 				</div>
 			</div>

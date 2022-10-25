@@ -36,7 +36,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 					進捗ポイポイ<br />
 					<br />
 					<a class="BtnBase" href="https://unrealizm.com/">
-						<img class="Logo" src="//img.unrealizm.com/img/unrealizm_logo_64x64.png" alt="<%=_TEX.T("THeader.Title")%>">
+						<img class="Logo" src="//img.unrealizm.com/img/logo_tr_48.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</a>
 				</div>
 			</div>
