@@ -27,7 +27,7 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
+		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">
 		$(function(){
@@ -124,8 +124,6 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 			<ul class="TabMenu">
 				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=1"><%=existUnreadReactionInfo?"<span class=\"ActivityListBadge\"></span>":""%><%=_TEX.T("THeader.Menu.Act.Reaction")%>
 				</a></li>
-				<li><a class="TabMenuItem" href="/ActivityListPcV.jsp?TY=3"><%=existUnreadRequestInfo?"<span class=\"ActivityListBadge\"></span>":""%><%=_TEX.T("THeader.Menu.Act.Request")%>
-				</a></li>
 				<li><a class="TabMenuItem Selected" href="/ActivityAnalyzePcV.jsp"><%=_TEX.T("THeader.Menu.Act.Analyze")%>
 				</a></li>
 			</ul>
@@ -134,7 +132,7 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper">
-			<nav id="CategoryMenu" class="CategoryMenu">
+			<nav id="CategoryMenu" class="CategoryMenu" style="display: none;">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 1)"><%=_TEX.T("ActivityList.Category.30days")%></a>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 2)"><%=_TEX.T("ActivityList.Category.Total")%></a>
