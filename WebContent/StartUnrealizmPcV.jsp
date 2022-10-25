@@ -152,7 +152,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 <article class="Wrapper ThumbList">
 	<header class="StartPageTitle">
 		<h2>Unrealizm</h2>
-		<h3 style="text-align: center" >AI Works SNS </h3>
+		<h3 style="text-align: center" >AI Work(s) SNS </h3>
 	</header>
 
 	<section
