@@ -22,14 +22,14 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 				<div class="SettingListItem">
 					<div class="SettingListTitle" style="text-align: center; font-size: 18px;">「unrealizm」プライバシーポリシー</div>
 					<div class="SettingBody">
-						pipa.jpは、個人情報の保護のため法令を遵守するとともに、このプライバシーポリシーを公開し、これに従うことを宣言いたします。<br />
+						EmotionFlowは、個人情報の保護のため法令を遵守するとともに、このプライバシーポリシーを公開し、これに従うことを宣言いたします。<br />
 					</div>
 				</div>
 
 				<div class="SettingListItem">
 					<div class="SettingListTitle">1.個人情報の取得</div>
 					<div class="SettingBody">
-pipa.jpがサービスを提供するために必要な範囲でのみユーザーの個人情報 (氏名、住所、電話番号等の情報を単一または複数組み合わせることにより特定の個人を識別できる情報)を取得いたします。<br />
+EmotionFlowがサービスを提供するために必要な範囲でのみユーザーの個人情報 (氏名、住所、電話番号等の情報を単一または複数組み合わせることにより特定の個人を識別できる情報)を取得いたします。<br />
 個人情報を不正な手段により取得いたしません。<br />
 					</div>
 				</div>
@@ -72,7 +72,7 @@ pipa.jpがサービスを提供するために必要な範囲でのみユーザ�
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
-						(最終更新日 2016/1/14)
+						(最終更新日 2022/10/26)
 					</div>
 				</div>
 			</div>

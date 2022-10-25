@@ -52,11 +52,11 @@
 			<dd><a class="FooterHref" hreflang="ru" onclick="ChLang('ru', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">русский</a></dd>
 			<dd><a class="FooterHref" hreflang="ja" onclick="ChLang('ja', <%=checkLogin.m_bLogin%>)" href="javascript:void(0);">日本語</a></dd>
 		</dl>
-		<dl>
-			<dt><%=_TEX.T("Footer.Link.Usage")%></dt>
-			<dd><a class="FooterHref" href="/StartUnrealizmPcV.jsp"><%=_TEX.T("Footer.Whats")%></a></dd>
-			<dd><a class="FooterHref" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a></dd>
-		</dl>
+<%--		<dl>--%>
+<%--			<dt><%=_TEX.T("Footer.Link.Usage")%></dt>--%>
+<%--			<dd><a class="FooterHref" href="/StartUnrealizmPcV.jsp"><%=_TEX.T("Footer.Whats")%></a></dd>--%>
+<%--			<dd><a class="FooterHref" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a></dd>--%>
+<%--		</dl>--%>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Term")%></dt>
 			<dd><a class="FooterHref" href="/RulePcS.jsp"><%=_TEX.T("Footer.Term")%></a></dd>
@@ -90,12 +90,12 @@
 			<dt><%=_TEX.T("Footer.Link.Company")%></dt>
 			<dd><a class="FooterHref" href="https://www.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Company")%></a></dd>
 		</dl>
-		<dl>
-			<dt><%=_TEX.T("Footer.Link.Service")%></dt>
-			<dd><a class="FooterHref" href="https://tegaki.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Link.Service.Tegaki")%></a></dd>
-			<dd><a class="FooterHref" href="https://galleria.emotionflow.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Galleria")%></a></dd>
-			<dd><a class="FooterHref" href="https://unrealizm.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Unrealizm")%></a></dd>
-		</dl>
+<%--		<dl>--%>
+<%--			<dt><%=_TEX.T("Footer.Link.Service")%></dt>--%>
+<%--			<dd><a class="FooterHref" href="https://tegaki.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Link.Service.Tegaki")%></a></dd>--%>
+<%--			<dd><a class="FooterHref" href="https://galleria.emotionflow.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Galleria")%></a></dd>--%>
+<%--			<dd><a class="FooterHref" href="https://unrealizm.com/" target="_blank"><%=_TEX.T("Footer.Link.Service.Unrealizm")%></a></dd>--%>
+<%--		</dl>--%>
 	</nav>
 
 	<article class="FooterInfo" style="font-size: 10px; margin: 10px 0;">
@@ -105,8 +105,7 @@
 	</article>
 
 	<div class="FooterCopy">
-		Copyright(C) 2017 -
-		based on <a class="FooterHref" href="https://analogico.pipa.jp/" target="_blank">analogico</a> by
-		<a class="FooterHref" href="https://www.pipa.jp/" target="_blank">Pipa.jp Ltd.</a>
+		Copyright(C) 2022 - by
+		<a class="FooterHref" href="https://emotionflow.com/" target="_blank">EmotionFlow LLC.</a>
 	</div>
 </footer>

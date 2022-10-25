@@ -20,7 +20,7 @@
 				<div class="SettingListItem">
 					<div class="SettingListTitle">販売業者</div>
 					<div class="SettingBody">
-						株式会社pipa.jp<br />
+						emotionflow合同会社<br />
 					</div>
 				</div>
 

@@ -22,7 +22,7 @@ if (nRtn > 0) {
 		<%@ include file="/inner/TMenuPc.jsp"%>
 		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
-				<div class="SettingListItem" style="color: #6d6965f">
+				<div class="SettingListItem" style="color: #6d6965">
 					<div class="SettingListTitle"><%=_TEX.T("ActivateEmailV.Title")%></div>
 					<div class="SettingBody">
 						<% if(nRtn>0){ %>

@@ -7,7 +7,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 <html lang="ja">
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<title>株式会社pipa.jp スタッフ募集のお知らせ</title>
+		<title>emotionflow合同会社 スタッフ募集のお知らせ</title>
 		<style>
 			body {
 				background: #fff;
@@ -63,9 +63,9 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
-					<div class="SettingListTitle Head">株式会社pipa.jp スタッフ募集のお知らせ</div>
+					<div class="SettingListTitle Head">emotionflow合同会社 スタッフ募集のお知らせ</div>
 					<div class="SettingBody">
-						株式会社pipa.jpが提供する各種サービスの運営業務を担って頂ける人材を募集します。<br/>
+						emotionflow合同会社が提供する各種サービスの運営業務を担って頂ける人材を募集します。<br/>
 						イラストを始めとする創作活動の支援や、インターネットサービスの仕事を通して共に成長したい方はぜひご応募ください。<br/><br/>
 					</div>
 				</div>

@@ -3455,7 +3455,7 @@ hr.IllustItemListSeparator {
 .SettingList .BtnBase:hover {
 	border: 1px solid #fff;
 	background: #3498dc;
-	color: #6d6965;
+	color: #ffffff;
 }
 
 .SettingList .BtnBase.Disabled,
