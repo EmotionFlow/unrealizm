@@ -18,16 +18,18 @@ public class UpCParam {
 	public int userId = -1;
 	public int categoryId = 0;
 	public String description = "";
+	public String aiPrompt = "";
+	public String aiOtherPrams = "";
 	public String tagList = "";
 	public int editorId = Common.EDITOR_UPLOAD;
 
 	public boolean isPublish = true;
-	public boolean isTimeLimited = true;
+	public boolean isTimeLimited = false;
 	public Timestamp publishStart = null;
 	public Timestamp publishEnd = null;
-	public boolean isNsfw = true;
+	public boolean isNsfw = false;
 	public int safeFilterId = Common.SAFE_FILTER_ALL;
-	public boolean isConditionalShow = true;
+	public boolean isConditionalShow = false;
 	public int publishId = Common.PUBLISH_ID_ALL;
 	public boolean isNoPassword = true;
 	public String password = "";
@@ -56,6 +58,9 @@ public class UpCParam {
 		description = description.replace("＃", "#").replace("♯", "#").replace("\r\n", "\n").replace("\r", "\n");
 		if(description.startsWith("#")) description =" "+ description;
 		description = Util.deleteInvalidChar(description);
+
+		aiPrompt = Util.toString(Common.TrimAll(request.getParameter("AI_PRMPT")).replace("\r\n", "\n").replace("\r", "\n"));
+		aiOtherPrams = Util.toString(Common.TrimAll(request.getParameter("AI_PARAMS")).replace("\r\n", "\n").replace("\r", "\n"));
 
 		tagList = Util.deleteInvalidChar(Common.SubStrNum(Common.TrimAll(request.getParameter("TAG")), 100));
 		tagList = tagList.replace("＃", "#").replace("♯", "#").replace("\r\n", " ").replace("\r", " ").replace("　", " ");

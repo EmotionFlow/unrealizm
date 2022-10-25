@@ -21,6 +21,10 @@
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.ShowAllFirst.Error")%>");
 	}
 
+	function showPromptErrMsg() {
+		DispMsg("<%=_TEX.T("UploadFilePc.Prompt.NotSetError")%>");
+	}
+
 	function twitterListRateLimiteExceededMsg() {
 		DispMsg("<%=_TEX.T("UploadFilePc.Option.Publish.T_List.RateLimiteExceeded")%>");
 	}
@@ -92,14 +96,25 @@
 	}
 
 	function DispDescCharNum() {
-		var nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditDescription").val().length;
+		const nCharNum = <%=Common.EDITOR_DESC_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditDescription").val().length;
 		$("#DescriptionCharNum").html(nCharNum);
 	}
 
 	<%if(nEditorId==Common.EDITOR_TEXT){%>
 	function DispTextCharNum() {
-		var nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditTextBody").val().length;
+		const nCharNum = <%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditTextBody").val().length;
 		$("#TextBodyCharNum").html(nCharNum);
 	}
 	<%}%>
+
+	function DispPromptCharNum() {
+		const nCharNum = <%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditPrompt").val().length;
+		$("#PromptCharNum").html(nCharNum);
+	}
+
+	function DispOtherParamsCharNum() {
+		const nCharNum = <%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditOtherParams").val().length;
+		$("#OtherParamsCharNum").html(nCharNum);
+	}
+
 </script>

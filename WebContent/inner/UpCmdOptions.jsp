@@ -67,16 +67,6 @@ function DispR18PlusMsg() {
 			<span class="OneCushionImage OneCushion"></span>
 			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.OneCushion")%></span>
 		</label>
-		<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R18%>" id="RadioR18">
-		<label for="RadioR18" class="OptionPublishNsfw">
-			<span class="OneCushionImage R18"></span>
-			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.R18")%></span>
-		</label>
-		<input type="radio" name="NSFW_VAL" value="<%=Common.SAFE_FILTER_R18_PLUS%>" id="RadioR18Plus">
-		<label for="RadioR18Plus" class="OptionPublishNsfw" onclick="DispR18PlusMsg()">
-			<span class="OneCushionImage R18Plus"></span>
-			<span class="OneCushionName"><%=_TEX.T("UpCmdOptions.Nsfw.R18Plus")%></span>
-		</label>
 	</div>
 </div>
 
@@ -246,7 +236,7 @@ function DispR18PlusMsg() {
 <%}%>
 
 <%if(nEditorId==Common.EDITOR_UPLOAD || nEditorId==Common.EDITOR_PASTE || nEditorId==Common.EDITOR_BASIC_PAINT){%>
-<div class="OptionItem">
+<div class="OptionItem" style="display: none;">
 	<label class="rocker" onclick="updateOptionPassword()">
 		<input id="OPTION_TWITTER_CARD_THUMBNAIL" type="checkbox">
 		<span class="switch-left" style="font-size:0.8em"><%=_TEX.T("UpCmdOptions.TwitterCardThumbnail.Checked")%></span>

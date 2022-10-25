@@ -231,7 +231,18 @@ if (requestId > 0) {
 				</div>
 				<%}%>
 
-				<div class="CategoryDesc">
+					<div class="Prompt">
+						<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"></textarea>
+						<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
+					</div>
+
+					<div class="OtherParams">
+						<input id="EditOtherParams" class="EditOtherParams" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> />
+						<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
+					</div>
+
+
+					<div class="CategoryDesc" style="display: none;">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
@@ -254,9 +265,10 @@ if (requestId > 0) {
 					</script>
 				</div>
 
+
+
 				<div class="Description">
-					<div class="SettingListTitle WithLangSelector" style="text-align: right; display: <%=nEditorId==Common.EDITOR_TEXT?"none":""%>">
-<%--					<div class="SettingListTitle WithLangSelector" style="text-align: right; <%=checkLogin.isStaff()?"":"display: none"%>">--%>
+					<div class="SettingListTitle WithLangSelector" style="text-align: right; display: none">
 						<span class="SelectTransLang">
 							<i class="fas fa-language" style="font-size: 20px;" onclick="showTransDescMsg();"></i>
 							<select id="EditTransDescLang" style="font-size: 12px;" onchange="switchTransTxt('Description', $(this).val())">
@@ -287,9 +299,8 @@ if (requestId > 0) {
 
 				<div class="TagList">
 					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> />
-					<div class="TagListCharNum"><span><%=_TEX.T("IllustV.Description.Tag.Info")%></span><span id="EditTagListCharNum">100</span></div>
+					<div class="TagListCharNum"><span><%=_TEX.T("IllustV.Description.Tag.Info")%></span><span id="TagListCharNum">100</span></div>
 				</div>
-
 
 				<div class="UoloadCmdOption">
 					<%@include file="UpCmdOptions.jsp"%>

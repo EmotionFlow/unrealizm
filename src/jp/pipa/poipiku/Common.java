@@ -256,6 +256,23 @@ public final class Common {
 			10, 100
 	};
 
+	public static final int[][] EDITOR_PROMPT_MAX = {
+			// normal, PASSPORT
+			{3000, 3000},
+			{3000, 3000},
+			{3000, 3000},
+			{3000, 3000}
+	};
+
+	public static final int[][] EDITOR_OTHER_PARAMS_MAX = {
+			// normal, PASSPORT
+			{300, 300},
+			{300, 300},
+			{300, 300},
+			{300, 300}
+	};
+
+
 	// アップロードエラーコード
 	public static final int UPLOAD_FILE_TOTAL_ERROR = -999;
 	public static final int UPLOAD_FILE_TYPE_ERROR = -998;

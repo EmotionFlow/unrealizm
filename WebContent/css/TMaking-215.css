@@ -971,7 +971,7 @@ Decoration
 	z-index: 2;
 }
 .PublishIco01{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_warning.png);}
-.PublishIco02{ background-repeat: no-repeat; ackground-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
+.PublishIco02{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
 .PublishIco03{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_r18.png);}
 .PublishIco04{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_pass.png);}
 .PublishIco05{ background-repeat: no-repeat; background-position: center; background-size: contain; background-image: url(/img/ico_signin.png);}
@@ -1299,7 +1299,8 @@ Decoration
 	position: relative;
 }
 
-.UploadFile .Description .EditDescription {
+.UploadFile .Description .EditDescription,
+.UploadFile .Prompt .EditPrompt {
 	display: block;
 	float: left;
 	width: 100%;
@@ -1307,7 +1308,15 @@ Decoration
 	box-sizing: border-box;
 }
 
-.UploadFile .Description .DescriptionCharNum {
+.UploadFile .Prompt .EditPrompt {
+	font-size: 11px;
+	height: 70px;
+	margin-top: 10px;
+}
+
+.UploadFile .Description .DescriptionCharNum,
+.UploadFile .Prompt .PromptCharNum,
+.UploadFile .OtherParams .OtherParamsCharNum{
 	display: block;
 	float: left;
 	width: 100%;
@@ -1352,11 +1361,15 @@ Decoration
 	line-height: 10px;
 }
 
-.UploadFile .TagList .EditTagList {
+.UploadFile .TagList .EditTagList,
+.UploadFile .OtherParams .EditOtherParams {
 	display: block;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
+}
+.UploadFile .OtherParams .EditOtherParams {
+	font-size: 11px;
 }
 
 .UploadFile .TagList {

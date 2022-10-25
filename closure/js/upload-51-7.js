@@ -478,8 +478,8 @@ let privateNote = (()=>{
 
 
 function DispTagListCharNum() {
-	var nCharNum = 100 - $("#EditTagList").val().length;
-	$("#EditTagListCharNum").html(nCharNum);
+	const nCharNum = 100 - $("#EditTagList").val().length;
+	$("#TagListCharNum").html(nCharNum);
 }
 
 function setLastCategorySetting(val) {
@@ -945,6 +945,13 @@ function _getBasePostData(userId, requestId, editorId) {
 			postData["DES" + key] = descList[key];
 		}
 	}
+
+	postData["AI_PRMPT"] = $("#EditPrompt").val().trim().replace("\n", "");
+	if (!postData["AI_PRMPT"] || postData["AI_PRMPT"].length === 0) {
+		showPromptErrMsg();
+		return null;
+	}
+	postData["AI_PARAMS"] = $("#EditOtherParams").val().trim();
 
 	// for novel
 	if (editorId === 3) {

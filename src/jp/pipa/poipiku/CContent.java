@@ -61,6 +61,8 @@ public final class CContent {
 	public int novelDirection = 0;
 	public int pinOrder = -1;
 	public String privateNote = "";
+	public String aiPrompt = "";
+	public String aiOtherParams = "";
 	public Timestamp createdAt = null;
 	public Timestamp updatedAt = null;
 
@@ -181,16 +183,10 @@ public final class CContent {
 		novelHtmlShort		= Util.toString(resultSet.getString("novel_html_short"));
 		novelDirection		= Util.toIntN(resultSet.getInt("novel_direction"), 0, 1);
 		privateNote         = Util.toString(resultSet.getString("private_note"));
+		aiPrompt            = Util.toString(resultSet.getString("ai_prompt"));
+		aiOtherParams       = Util.toString(resultSet.getString("ai_other_params"));
 		createdAt           = resultSet.getTimestamp("created_at");
 		updatedAt           = resultSet.getTimestamp("updated_at");
-
-		// 後方互換
-		if (novelHtml.isEmpty()) {
-			novelHtml = Util.toStringHtml(m_strTextBody);
-		}
-		if (novelHtmlShort.isEmpty()) {
-			novelHtmlShort = Util.toStringHtml(Util.subStrNum(m_strTextBody, 500));
-		}
 	}
 
 	public CContent() {}

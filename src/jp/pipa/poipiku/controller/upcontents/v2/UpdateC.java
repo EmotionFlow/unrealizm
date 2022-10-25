@@ -104,7 +104,8 @@ public final class UpdateC extends UpC {
 					"password_enabled=?", "password=?",
 					"list_id=?", "safe_filter=?", "cheer_ng=?",
 					"tweet_when_published=?",
-					"not_recently=?", "limited_time_publish=?"
+					"not_recently=?", "limited_time_publish=?",
+					"ai_prompt=?", "ai_other_params=?"
 			));
 
 			if (checkLogin.m_nPassportId==Common.PASSPORT_OFF) {
@@ -182,6 +183,9 @@ public final class UpdateC extends UpC {
 						statement.setTimestamp(idx++, upParam.publishEnd);
 					}
 				}
+
+				statement.setString(idx++, upParam.aiPrompt);
+				statement.setString(idx++, upParam.aiOtherPrams);
 
 				// set where params
 				statement.setInt(idx++, upParam.userId);
