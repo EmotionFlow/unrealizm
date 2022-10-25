@@ -21,5 +21,5 @@ ResourceBundleControl _TEX = new ResourceBundleControl(request, response);
 int g_nSafeFilter = Common.AD_ID_ALL;
 String g_strSearchWord = "";
 boolean SP_REVIEW = true;
-boolean g_bShowAd = true;
+boolean g_bShowAd = false;
 %>

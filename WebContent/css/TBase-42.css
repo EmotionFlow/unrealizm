@@ -366,7 +366,7 @@ form, button {
 
 .onoffswitch .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch
 	{
-	right: 0px;
+	right: 0;
 }
 
 .onoffswitch.disabled .onoffswitch-inner:before,
@@ -375,7 +375,6 @@ form, button {
 }
 
 #DispMsg {
-	display: block;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -383,7 +382,7 @@ form, button {
 	padding: 20px 5px;
 	background: rgba(0, 0, 0, 0.8);
 	display: none;
-	color: #6d6965;
+	color: #ffffff;
 	box-sizing: border-box;
 	z-index: 9999;
 	text-align: center;

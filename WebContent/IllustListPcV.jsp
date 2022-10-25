@@ -137,9 +137,9 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 					<%}else{%>
 						<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 					<%}%>
-					<%if(nCnt==8 && bSmartPhone && !checkLogin.m_bLogin) {%><div class="SideBarMid" style="padding: 15px 0 10px 0"><%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%></div><%}%>
-					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+<%--					<%if(nCnt==8 && bSmartPhone && !checkLogin.m_bLogin) {%><div class="SideBarMid" style="padding: 15px 0 10px 0"><%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%></div><%}%>--%>
+<%--					<%if(nCnt==14 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>--%>
+<%--					<%if(nCnt==29 && bSmartPhone) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>--%>
 				<%}%>
 			</section>
 

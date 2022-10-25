@@ -24,7 +24,7 @@
 	padding: 0 5px 0 10px;
 	background-color: #3498dc;
 	border-radius: 3px;
-	color: #6d6965 !important;
+	color: #ffffff !important;
 	font-size: 13px;
 	text-decoration: none;
 	margin: 5px 0 0 14px;
@@ -1876,7 +1876,7 @@ Decoration
 	float: left;
 	background: #3498dc;
 	font-size: 13px;
-	color: #6d6965;
+	color: #ffffff;
 	text-align: center;
 	box-sizing: border-box;
 	overflow: hidden;
@@ -1891,11 +1891,11 @@ Decoration
 
 .Category.C-1 {
 	background-color: #3498da;
-	color: #6d6965f;
+	color: #6d6965;
 }
 .CategoryBtn.C-1 {
 	border-color: #3498da;
-	color: #6d6965f;
+	color: #6d6965;
 }
 
 .Category.C0 {
@@ -3001,6 +3001,10 @@ Decoration
 	border: solid 1px #fff;
 	border-radius: 20px;
 	z-index: 100;
+}
+
+#IllustViewGoLatestBtn > a {
+	color: #ffffff;
 }
 
 hr.IllustItemListSeparator {
