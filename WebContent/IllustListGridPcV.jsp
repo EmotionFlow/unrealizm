@@ -154,7 +154,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 
 		<article class="Wrapper GridList">
 			<%if(cResults.m_vCategoryList.size()>0) {%>
-			<nav id="CategoryMenu" class="CategoryMenu">
+			<nav id="CategoryMenu" class="CategoryMenu" style="display: none;">
 				<a class="BtnBase CategoryBtn <%if(cResults.m_strTagKeyword.isEmpty()){%> Selected<%}%>" href="/<%=cResults.m_nUserId%>/"><%=_TEX.T("Category.All")%></a>
 				<%for(CTag cTag : cResults.m_vCategoryList) {%>
 				<a class="BtnBase CategoryBtn <%if(cTag.m_strTagTxt.equals(cResults.m_strTagKeyword)){%> Selected<%}%>" href="/IllustListPcV.jsp?ID=<%=cResults.m_nUserId%>&KWD=<%=URLEncoder.encode(cTag.m_strTagTxt, "UTF-8")%>"><%=Util.toDescString(cTag.m_strTagTxt)%></a>

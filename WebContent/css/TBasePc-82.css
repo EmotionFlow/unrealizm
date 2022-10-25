@@ -52,7 +52,7 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .HeaderSearch .HeaderSearchBox {width: 100%; padding: 10px 0 0 8px; border: none; background: none;}
 .HeaderSearch .HeaderSearchBox:focus {outline: none;}
 .HeaderSearch .HeaderSearchBox:placeholder-shown, .HeaderSearch .HeaderSearchBox::placeholder {color: #bbb; font-style: italic;font-size: 12px;}
-.HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 34px; height: 26px; box-sizing: border-box; margin: 0; background-color: #3498db; color: #6d6965; border: solid 1px #3498db; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0;}
+.HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 34px; height: 26px; box-sizing: border-box; margin: 0; background-color: #3498db; color: #ffffff; border: solid 1px #3498db; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0;}
 .HeaderSearch .HeaderSearchBtn:hover {background-color: #ffffff; color: #3498db;}
 .HeaderSelectLangList > dd{margin: 10px 0;}
 .HeaderSelectLangList > dd > a {color: #3498db;}

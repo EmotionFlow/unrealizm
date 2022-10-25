@@ -109,11 +109,11 @@ public final class CCnv {
 		return (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-images\"></i> %d", cContent.m_nFileNum):"";
 	}
 	private static void appendIllustItemCategory(StringBuilder strRtn, final CContent cContent, final String SEARCH_CATEGORY, final ResourceBundleControl _TEX, final int loginUserId){
-		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
-		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
-				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
-				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
-		strRtn.append("</h2>");
+//		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
+//		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
+//				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
+//				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+//		strRtn.append("</h2>");
 //		if (cContent.m_nRequestId>0) {
 //			strRtn.append("<h2 class=\"IllustItemCategory\">");
 //			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
@@ -900,9 +900,9 @@ public final class CCnv {
 		if (cContent.m_nFileWidth > 0 && cContent.m_nFileHeight > 0) {
 			strSizeAppendix = "(" + String.format(_TEX.T("UploadFileTweet.OriginalSize"), cContent.m_nFileWidth, cContent.m_nFileHeight) + ")";
 		}
-		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
-				(nViewMode == VIEW_DETAIL) ? String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendix) : strSizeAppendix,
-				_TEX.T("IllustView.ProhibitMsg")));
+//		strRtn.append(String.format("<div class=\"IllustItemTProhibit\"><span class=\"TapToFull\">%s</span>%s</div>",
+//				(nViewMode == VIEW_DETAIL) ? String.format(_TEX.T("IllustView.ProhibitMsg.TapToFull"), strSizeAppendix) : strSizeAppendix,
+//				_TEX.T("IllustView.ProhibitMsg")));
 	}
 
 	private static int getImageRemainNum(CContent cContent) {
@@ -1148,14 +1148,14 @@ public final class CCnv {
 		// カテゴリ系情報
 		strRtn.append("<span class=\"IllustInfo IllustMeta\">");
 		// カテゴリ
-		strRtn.append(
-				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
-						SEARCH_CATEGORY,
-						cContent.m_nCategoryId,
-						cContent.m_nCategoryId,
-						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
-				)
-		);
+//		strRtn.append(
+//				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
+//						SEARCH_CATEGORY,
+//						cContent.m_nCategoryId,
+//						cContent.m_nCategoryId,
+//						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+//				)
+//		);
 
 		// Pin, Note
 		if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {

@@ -238,7 +238,8 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<%}%>
 
 		<article class="Wrapper ViewPc">
-			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<%if(false) {%>
+<%--			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>--%>
 			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
 				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
 			</span>
@@ -249,7 +250,8 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 						cResults.m_cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC,
 						_TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW,
 						cResults.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
-				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+				<%if(false) {%>
+<%--				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>--%>
 				<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin-bottom: 17px;">
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>
 				</span>
