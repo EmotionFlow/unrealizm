@@ -272,6 +272,7 @@
 	text-align: left;
 }
 
+.TagDlgWrapper {height: 60vh;}
 .TagDlgWrapper .TagSearchWrapper {display: flex; height: 42px; padding: 4px 0;}
 .TagDlgWrapper .TagSearch {flex-grow: 1; display: flex; justify-content: center; padding: 3px 10px;}
 .TagDlgWrapper .TagSearch .TagSearchBox {width: 100%; padding: 10px 0 0 8px; border: none; background: none;}
@@ -281,7 +282,7 @@
 .TagDlgWrapper .TagSearch .TagSearchClear {display: inline-block; color: #3498dbaa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size: 20px;}
 
 .TagDlgWrapper .CurrentTagHeader {color: #6d6965; font-size: 16px; font-weight: bold; padding: 18px; text-align: left; height: 24px;}
-.TagDlgWrapper .CurrentTagList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; max-height: calc(100% - 110px); margin: 0; overflow-y: auto;}
+.TagDlgWrapper .CurrentTagList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 110px); margin: 0; overflow-y: auto;}
 
 .TagDlgWrapper .CurrentTagList li {border-top: solid 1px #ddd; list-style: none;}
 .TagDlgWrapper .CurrentTagList li:last-child {border-bottom: solid 1px #ddd;}

@@ -1433,6 +1433,7 @@ function showSetTagDlg(currentTags) {
 	Swal.fire({
 		html: getSetTagDlgHtml(tagList),
 		showCancelButton: true,
+		position: 'top',
 	}).then(resp => {});
 }
 
