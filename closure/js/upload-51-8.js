@@ -1395,46 +1395,41 @@ function initUploadParams(tweetEnabled) {
 	setUploadParams(uploadParams);
 }
 
-function showSetTagDlg(currentTags) {
+function showSetTagDlg() {
 	function getSetTagDlgHtml(tags) {
 		const dlgHtml = `
-<div>
-	<div id="TagDlgWrapper" class="TagDlgWrapper">
-		<form id="TagSearchWrapper" class="TagSearchWrapper" method="get">
-			<div class="TagSearch">
-				<div class="TagSearchInputWrapper">
-					<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="20" placeholder="タグを入力" value="" autocomplete="off" enterkeyhint="search" oninput="onTagInput()">
-					<div id="TagSearchClear" class="TagSearchClear">
-						<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
-					</div>
+<div id="TagDlgWrapper" class="TagDlgWrapper">
+	<form id="TagSearchWrapper" class="TagSearchWrapper" method="get">
+		<div class="TagSearch">
+			<div class="TagSearchInputWrapper">
+				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="20" placeholder="タグを入力" value="" autocomplete="off" enterkeyhint="search" oninput="onTagInput()">
+				<div id="TagSearchClear" class="TagSearchClear">
+					<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
 				</div>
 			</div>
-		</form>
+		</div>
+	</form>
+	<div id="CurrentTagWrapper" class="CurrentTagWrapper">
 		<div class="CurrentTagHeader">設定中のタグ</div>
-		<ul id="CurrentTagList" class="CurrentTagList">
-		</ul>
+		<ul id="CurrentTagList" class="DlgTagList"></ul>
+	</div>
+	<div id="TagSuggestionWrapper" class="TagSuggestionWrapper">
+		<div class="TagSuggestionHeader"></div>
+		<ul id="TagSuggestionList" class="DlgTagList"></ul>
 	</div>
 </div>
 		`;
-		const $dlg = $(dlgHtml);
-		const $tagList = $dlg.find('ul#CurrentTagList');
-		tags.forEach(tag => {
-			const $li = $('<li></li>', { class: 'CurrentTagItem' });
-			const $tagRow = $('<div></div>',  { class: 'CurrentTagRow' });
-			const $tagName = $('<div></div>', { class: 'CurrentTagName', text: tag });
-			const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn' });
-			const $delIcon = $('<i></i>', { class: 'fas fa-times' });
-			$tagList.append($li.append($tagRow.append($tagName, $delBtn.append($delIcon))));
-		})
-		return $dlg.html();
+		return dlgHtml;
 	}
 
-	const tagList = currentTags.trim().split(/\s+/).filter(str => str);
 	Swal.fire({
 		html: getSetTagDlgHtml(tagList),
 		showCancelButton: true,
 		position: 'top',
-	}).then(resp => {});
+	}).then(resp => {
+		// TODO: タグ反映
+	});
+	showCurrentTags();
 }
 
 function toggleClearTagBtn() {
@@ -1462,11 +1457,43 @@ function onTagInput() {
 	if (prevTimeout) clearTimeout(prevTimeout);
 	setLocalStrage('tag-suggestion-timeout', setTimeout(() => {
 		const inputStr = $('#TagSearchBox').val();
-		// TODO
 		if (inputStr) {
-			// showTagSuggestion(inputStr);
+			showTagSuggestion(inputStr);
 		} else {
-			// showCurrentTags();
+			showCurrentTags();
 		}
 	}, 800))
+}
+
+function showCurrentTags() {
+	$('#CurrentTagWrapper').show();
+	$('#TagSuggestionWrapper').hide();
+	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
+	$tagList.empty();
+	const tags = $('#EditTagList').val().trim().split(/\s+/).filter(str => str);
+	if (tags.length) {
+		tags.forEach(tag => {
+			const $li = $('<li></li>', { class: 'DlgTagItem CurrentTagItem' });
+			const $tagRow = $('<div></div>',  { class: 'DlgTagRow CurrentTagRow' });
+			const $tagName = $('<div></div>', { class: 'DlgTagName CurrentTagName', text: tag });
+			const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn' });
+			const $delIcon = $('<i></i>', { class: 'fas fa-times' });
+			$tagList.append($li.append($tagRow.append($tagName, $delBtn.append($delIcon))));
+			// TODO: $delBtn押下時処理
+		});
+	} else {
+		const $li = $('<li></li>');
+		const $row = $('<div></div>', { class: 'DlgTagRow' });
+		const $item = $('<div></div>', { class: 'DlgTagNameBlank', text: 'タグはありません' });
+		$tagList.append($li.append($row.append($item)));
+	}
+}
+
+function showTagSuggestion(inputStr) {
+	$('#CurrentTagWrapper').hide();
+	$('#TagSuggestionWrapper').show();
+	const $tagList = $('#TagSuggestionWrapper').find('ul#TagSuggestionList');
+	$tagList.empty();
+	// TODO: spinner
+	// TODO: get & show
 }

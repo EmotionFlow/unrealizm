@@ -282,11 +282,11 @@
 .TagDlgWrapper .TagSearch .TagSearchClear {display: inline-block; color: #3498dbaa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size: 20px;}
 
 .TagDlgWrapper .CurrentTagHeader {color: #6d6965; font-size: 16px; font-weight: bold; padding: 18px; text-align: left; height: 24px;}
-.TagDlgWrapper .CurrentTagList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 110px); margin: 0; overflow-y: auto;}
+.TagDlgWrapper .DlgTagList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 110px); margin: 0; overflow-y: auto;}
 
-.TagDlgWrapper .CurrentTagList li {border-top: solid 1px #ddd; list-style: none;}
-.TagDlgWrapper .CurrentTagList li:last-child {border-bottom: solid 1px #ddd;}
-.TagDlgWrapper .CurrentTagList .CurrentTagRow {display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;}
-.TagDlgWrapper .CurrentTagList .CurrentTagName {flex-grow: 1; padding: 1em 0 1em 2em; width: 340px;}
-.TagDlgWrapper .CurrentTagList .CurrentTagNameBlank {padding: 1em;}
-.TagDlgWrapper .CurrentTagList .CurrentTagDelBtn {width: 1em; padding: 0.5em; color: #3498dbaa; margin-right: 12px;}
+.TagDlgWrapper .DlgTagList li {border-top: solid 1px #ddd; list-style: none;}
+.TagDlgWrapper .DlgTagList li:last-child {border-bottom: solid 1px #ddd;}
+.TagDlgWrapper .DlgTagList .DlgTagRow {display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;}
+.TagDlgWrapper .DlgTagList .DlgTagName {flex-grow: 1; padding: 1em 0 1em 2em; width: 340px;}
+.TagDlgWrapper .DlgTagList .DlgTagNameBlank {padding: 1em;}
+.TagDlgWrapper .DlgTagList .CurrentTagDelBtn {width: 1em; padding: 0.5em; color: #3498dbaa; margin-right: 12px;}
