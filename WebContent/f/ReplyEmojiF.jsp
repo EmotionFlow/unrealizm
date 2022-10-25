@@ -2,7 +2,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 //String referer = Util.toString(request.getHeader("Referer"));
-//if (!referer.contains("poipiku")) return;
+//if (!referer.contains("unrealizm")) return;
 if (Util.isBot(request)) return;
 
 CheckLogin checkLogin = new CheckLogin(request, response);

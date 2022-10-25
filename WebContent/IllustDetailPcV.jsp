@@ -4,7 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 String referer = Util.toString(request.getHeader("Referer"));
-if (!referer.contains("poipiku")) {
+if (!referer.contains("unrealizm")) {
 	response.sendRedirect("/NotFoundPcV.jsp");
 	return;
 }

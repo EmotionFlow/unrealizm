@@ -3,7 +3,7 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 String referer = Util.toString(request.getHeader("Referer"));
-if (!referer.contains("poipiku")) {
+if (!referer.contains("unrealizm")) {
     Log.d("おそらく不正アクセス Referer不一致 " + referer);
     return;
 }
