@@ -36,7 +36,7 @@ if(!cResults.getResults(checkLogin)) {
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="robots" content="noindex" />
 		<meta name="pinterest" content="nopin" />
-		<link rel="icon" href="/favicon_2.ico" />
+		<link rel="icon" href="/favicon.ico" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP" rel="stylesheet">

@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Language" content="ja">
 <meta name="robots" content="index,follow" />
 <meta name="pinterest" content="nopin" />
-<link rel="icon" href="/favicon_2.ico" />
+<link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/css/TBase-42.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-215.css" type="text/css" rel="stylesheet" />
