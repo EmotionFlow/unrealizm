@@ -46,9 +46,9 @@ if(!cResults.getResults(checkLogin)) {
 		<link href="/css/TBasePc-82.css" type="text/css" rel="stylesheet" />
 		<link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 		<link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
-		<link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114_2.png" />
-		<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72_2.png" />
-		<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon_2.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon.png" />
 		<script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 		<script type="text/javascript" src="/js/common-123.js"></script>
 		<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
