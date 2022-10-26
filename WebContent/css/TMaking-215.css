@@ -2224,6 +2224,19 @@ Decoration
 	color: #6d6965;
 }
 
+.IllustItem .IllustItemPrompt {
+	display: block;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 8px;
+	text-align: left;
+	margin: 2px 0 5px 0;
+	font-size: 12px;
+	color: #6d6965;
+	font-family: serif;
+}
+
 .IllustItemList2Column .IllustItem .IllustItemDesc {
 	padding: 0 4px;
 	font-size: 12px;

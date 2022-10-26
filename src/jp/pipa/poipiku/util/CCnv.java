@@ -203,7 +203,7 @@ public final class CCnv {
 
 		String desc;
 
-		final int firstDispLen = Common.EDITOR_DESC_MAX[0][0] + 300;
+		final int firstDispLen = Common.EDITOR_DESC_MAX[0][0] + 100;
 		int moreIndex = -1;
 		if (descShowFirst.length() > firstDispLen) {
 			moreIndex = descShowFirst.indexOf("\n", firstDispLen);
@@ -217,7 +217,7 @@ public final class CCnv {
 			desc += String.format(
 					"<span class=\"IllustItemDescMore\" style=\"display:none;\">%s</span>",
 					Common.AutoLink(Util.toStringHtml(descShowFirst.substring(moreIndex)), cContent.m_nUserId, nMode)
-					);
+			);
 		}
 		if (trsExist) {
 			strRtn.append("<div class=\"fas fa-language IllustItemDescTranslation\" onclick=\"toggleIllustItemDesc(this)\"></div>");
@@ -234,6 +234,23 @@ public final class CCnv {
 			strRtn.append(Common.AutoLink(Util.toStringHtml(def), cContent.m_nUserId, nMode));
 			strRtn.append("</h1>");
 		}
+	}
+
+	private static void appendIllustItemPrompt(StringBuilder strRtn, CContent cContent, int nMode){
+		String prompt = cContent.aiPrompt;
+
+		if (prompt.length() >= 70) {
+			prompt = prompt.substring(0, 70);
+			prompt += " ...";
+		}
+
+		strRtn.append("<h1 id=\"IllustItemPrompt_%d\" class=\"IllustItemPrompt\" %s onclick=\"DispPromptDlg(%d)\">".formatted(
+				cContent.m_nContentId,
+				(prompt.isEmpty())?"style=\"display: none;\"":"",
+				cContent.m_nContentId
+		));
+		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt);
+		strRtn.append("</h1>");
 	}
 
 	private static HashMap<String, String> getTagNameTranslations(CheckLogin checkLogin, CContent content, List<String> tagNameList) {
@@ -750,6 +767,9 @@ public final class CCnv {
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
+		// プロンプト
+		appendIllustItemPrompt(strRtn, cContent, nMode);
+
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
 
@@ -806,6 +826,9 @@ public final class CCnv {
 
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
+
+		// プロンプト
+		appendIllustItemPrompt(strRtn, cContent, nMode);
 
 		// 画像orテキスト
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
@@ -867,6 +890,9 @@ public final class CCnv {
 
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
+
+		// プロンプト
+		appendIllustItemPrompt(strRtn, cContent, nMode);
 
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
@@ -1069,6 +1095,9 @@ public final class CCnv {
 
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
+
+		// プロンプト
+		appendIllustItemPrompt(strRtn, cContent, nMode);
 
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);

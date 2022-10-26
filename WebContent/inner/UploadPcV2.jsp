@@ -237,7 +237,7 @@ if (requestId > 0) {
 					</div>
 
 					<div class="OtherParams">
-						<input id="EditOtherParams" class="EditOtherParams" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> />
+						<input id="EditOtherParams" class="EditOtherParams" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()" />
 						<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
 					</div>
 

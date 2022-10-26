@@ -21,11 +21,6 @@ if(!cResults.getResults(checkLogin)) {
 
 final CContent content = cResults.m_cContent;
 
-// V1 -> V2 convert
-if (!content.isValidPublishId()) {
-	content.m_nPublishId = Common.PUBLISH_ID_ALL;
-}
-
 Request poipikuRequest = new Request();
 poipikuRequest.selectByContentId(cResults.m_nContentId, null);
 // 納品済かつ納品期限を過ぎている
@@ -298,7 +293,17 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				</div>
 				<%}%>
 
-				<div class="CategoryDesc">
+				<div class="Prompt">
+					<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"><%=Util.toDescString(cResults.m_cContent.aiPrompt)%></textarea>
+					<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
+				</div>
+
+				<div class="OtherParams">
+					<input id="EditOtherParams" class="EditOtherParams" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()" <%if(!cResults.m_cContent.aiOtherParams.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.aiOtherParams)%>"<%}%>/>
+					<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
+				</div>
+
+				<div class="CategoryDesc" style="display: none;">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>

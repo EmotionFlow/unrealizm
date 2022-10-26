@@ -1,6 +1,7 @@
 <%@ page import="twitter4j.UserList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%if(false){%>
 <script>
 function DispR18PlusMsg() {
 	DispMsg(`<%=_TEX.T("R18Plus.Msg")%><br><br>
@@ -8,6 +9,7 @@ function DispR18PlusMsg() {
 <i class="fas fa-info-circle"></i><%=_TEX.T("R18Plus.Msg.ShowDetail")%></a>`, 4000);
 }
 </script>
+<%}%>
 
 <div class="OptionItem" style="font-weight: bold;">
 	<label class="rocker" onclick="updateOptionPublish()">
@@ -53,7 +55,7 @@ function DispR18PlusMsg() {
 	<%}%>
 
 </div>
-<div class="OptionItem" style="margin-top: 13px">
+<div class="OptionItem" style="margin-top: 13px; display: none;" >
 	<label class="rocker" onclick="updateOptionPublishNsfw()">
 		<input id="OPTION_NOT_PUBLISH_NSFW" type="checkbox">
 		<span class="switch-left"><%=_TEX.T("UpCmdOptions.NoNsfw.Checked")%></span>

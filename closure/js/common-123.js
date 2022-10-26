@@ -1618,3 +1618,20 @@ function DispR18PlusDlg(){
 	})
 }
 /******** R18+ *********/
+
+/******** AI prompt *********/
+function DispPromptDlg(contentId) {
+	$.ajax({
+		"type": "post",
+		"data": {"ID": contentId},
+		"url": "/f/GetPromptDlgHtmlF.jsp",
+	}).then( html => {
+		Swal.fire({
+			html: html,
+			focusConfirm: false,
+			showConfirmButton: false,
+			showCloseButton: true,
+		});
+	})
+}
+/******** AI prompt *********/
