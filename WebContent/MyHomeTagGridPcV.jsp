@@ -38,7 +38,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 		<script>
 		$(function(){
 			$('body, .Wrapper').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
+				$(element).on("drag dragstart",function(e){if(!$(e.target).is(".MyUrl")){return false;}});
 			});
 		});
 		</script>

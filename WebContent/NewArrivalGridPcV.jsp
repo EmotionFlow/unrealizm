@@ -31,7 +31,7 @@ if(cResults.categoryId >= 0) {
 		<script type="text/javascript">
 		$(function(){
 			$('body, .Wrapper').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+				$(element).on("drag dragstart",function(e){return false;});
 			});
 			$('#MenuNew').addClass('Selected');
 			$('#MenuRecent').addClass('Selected');

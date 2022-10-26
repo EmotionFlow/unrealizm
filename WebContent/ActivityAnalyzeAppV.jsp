@@ -56,7 +56,7 @@ if(!checkLogin.m_bLogin) return;
 
 			$(function(){
 				$('body, .Wrapper').each(function(index, element){
-					$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+					$(element).on("drag dragstart",function(e){return false;});
 				});
 			});
 		</script>

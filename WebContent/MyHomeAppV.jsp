@@ -69,7 +69,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 		$(function(){
 			$('body, .Wrapper').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+				$(element).on("drag dragstart",function(e){return false;});
 			});
 			$(window).bind("scroll.addContents", function() {
 				$(window).height();

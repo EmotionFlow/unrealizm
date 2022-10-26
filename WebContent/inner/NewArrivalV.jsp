@@ -100,7 +100,7 @@ if(cResults.categoryId >= 0) {
 
 		$(function(){
 			$('body, .Wrapper').each(function(index, element){
-				$(element).on("contextmenu drag dragstart copy",function(e){return false;});
+				$(element).on("drag dragstart",function(e){return false;});
 			});
 			updateCategoryMenuPos(0);
 			initContents();
