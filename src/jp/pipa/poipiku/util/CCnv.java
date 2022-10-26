@@ -596,7 +596,6 @@ public final class CCnv {
 			strRtn.append("</div>");	// IllustItemResListTitle
 		}
 
-
 		strRtn.append("<div class=\"ResBtnSetList\">");
 		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard%s(this, %d, 0)\">%s</a>",
 				(nLoginUserId>0)?"Selected":"", miniList?"Mini":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
@@ -617,18 +616,18 @@ public final class CCnv {
 			// Normal
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
-			if(!cContent.m_bCheerNg && (nSpMode != SP_MODE_APP)) {
-				strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
-			}
+//			if(!cContent.m_bCheerNg && (nSpMode != SP_MODE_APP)) {
+//				strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
+//			}
 		}
 		strRtn.append("</div>");	// ResBtnSetList
 
 		// 投げ銭支払い処理中
-		strRtn.append("<div class=\"ResEmojiCheerNowPayment\" style=\"display:none\">")
-				.append("<span class=\"CheerLoading\"></span><span>")
-				.append(_TEX.T("Cheer.PaymentProcessing"))
-				.append("</span>")
-				.append("</div>");	// ResEmojiCheerNowPayment
+//		strRtn.append("<div class=\"ResEmojiCheerNowPayment\" style=\"display:none\">")
+//				.append("<span class=\"CheerLoading\"></span><span>")
+//				.append(_TEX.T("Cheer.PaymentProcessing"))
+//				.append("</span>")
+//				.append("</div>");	// ResEmojiCheerNowPayment
 
 		if (nLoginUserId > 0) {
 			String emoji;
@@ -666,12 +665,12 @@ public final class CCnv {
 			strRtn.append("<div class=\"ResEmojiBtnList All\" style=\"display: none;\"></div>");
 			if (!cContent.m_bCheerNg) {
 				// ポチ袋
-				if (nSpMode == SP_MODE_APP) {
-					// アプリであることを示すclassを付与して、JS側で区別できるようにする。
-					//strRtn.append("<div class=\"ResEmojiBtnList Cheer App\" style=\"display: none;\"></div>");
-				} else {
-					strRtn.append("<div class=\"ResEmojiBtnList Cheer Browser\" style=\"display: none;\"></div>");
-				}
+//				if (nSpMode == SP_MODE_APP) {
+//					// アプリであることを示すclassを付与して、JS側で区別できるようにする。
+//					//strRtn.append("<div class=\"ResEmojiBtnList Cheer App\" style=\"display: none;\"></div>");
+//				} else {
+//					strRtn.append("<div class=\"ResEmojiBtnList Cheer Browser\" style=\"display: none;\"></div>");
+//				}
 			}
 		}
 		strRtn.append("</div>");	// IllustItemResBtnList
