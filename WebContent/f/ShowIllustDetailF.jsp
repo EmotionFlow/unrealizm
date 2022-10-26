@@ -54,7 +54,7 @@
 				html.append(getImgTag(contentAppend.m_strFileName));
 			}
 
-			html.append("\t<div class=\"DetailIllustItemProhibit\">").append(_TEX.T("IllustView.ProhibitMsg.Long")).append("</div>\n");
+//			html.append("\t<div class=\"DetailIllustItemProhibit\">").append(_TEX.T("IllustView.ProhibitMsg.Long")).append("</div>\n");
 
 			html.append("      </div>\n");
 		} else if(cResults.content.m_nEditorId==Common.EDITOR_TEXT) {

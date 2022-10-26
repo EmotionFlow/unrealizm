@@ -179,9 +179,9 @@ if(cResults.isDownloadable) {
 				<%}%>
 			</div>
 			<%}%>
-			<div class="IllustItemTProhibit">
-				<%=_TEX.T("IllustView.ProhibitMsg.Long")%>
-			</div>
+<%--			<div class="IllustItemTProhibit">--%>
+<%--				<%=_TEX.T("IllustView.ProhibitMsg.Long")%>--%>
+<%--			</div>--%>
 			<%} else if(cResults.content.m_nEditorId==Common.EDITOR_TEXT) {%>
 			<div class="IllustItemLink">
 				<div class="IllustItemTextDetail <%=cResults.content.novelDirection==1 ? "Vertical" : ""%>">
