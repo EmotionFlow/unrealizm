@@ -1399,7 +1399,7 @@ function showSetTagDlg() {
 	function getSetTagDlgHtml(tags) {
 		const dlgHtml = `
 <div id="TagDlgWrapper" class="TagDlgWrapper">
-	<form id="TagSearchWrapper" class="TagSearchWrapper" method="get">
+	<form id="TagSearchWrapper" class="TagSearchWrapper">
 		<div class="TagSearch">
 			<div class="TagSearchInputWrapper">
 				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="20" placeholder="タグを入力" value="" autocomplete="off" enterkeyhint="search" oninput="onTagInput()">
@@ -1409,11 +1409,11 @@ function showSetTagDlg() {
 			</div>
 		</div>
 	</form>
-	<div id="CurrentTagWrapper" class="CurrentTagWrapper">
+	<div id="CurrentTagWrapper" class="DlgTagListWrapper">
 		<div class="CurrentTagHeader">設定中のタグ</div>
 		<ul id="CurrentTagList" class="DlgTagList"></ul>
 	</div>
-	<div id="TagSuggestionWrapper" class="TagSuggestionWrapper">
+	<div id="TagSuggestionWrapper" class="DlgTagListWrapper">
 		<div class="TagSuggestionHeader"></div>
 		<ul id="TagSuggestionList" class="DlgTagList"></ul>
 	</div>
@@ -1426,10 +1426,13 @@ function showSetTagDlg() {
 		html: getSetTagDlgHtml(tagList),
 		showCancelButton: true,
 		position: 'top',
+		onOpen: () => {
+			$('#TagSearchBox').focus();
+			showCurrentTags();
+		},
 	}).then(resp => {
 		// TODO: タグ反映
 	});
-	showCurrentTags();
 }
 
 function toggleClearTagBtn() {
@@ -1449,6 +1452,7 @@ function clearTagSearchInput() {
 	$search.val('');
 	$search.focus();
 	toggleClearSearchBtn();
+	showCurrentTags();
 }
 
 function onTagInput() {
@@ -1494,6 +1498,6 @@ function showTagSuggestion(inputStr) {
 	$('#TagSuggestionWrapper').show();
 	const $tagList = $('#TagSuggestionWrapper').find('ul#TagSuggestionList');
 	$tagList.empty();
-	// TODO: spinner
+	$tagList.addClass('Loading');
 	// TODO: get & show
 }
