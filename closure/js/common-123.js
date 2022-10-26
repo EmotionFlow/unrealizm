@@ -97,9 +97,9 @@ function setTimeZoneOffsetCookie() {
 
 function ChLang(l,isLogin){
 	if(l.length>0) {
-		setCookie('LANG',l);
+		setCookie('UR_LANG',l);
 	} else {
-		deleteCookie('LANG');
+		deleteCookie('UR_LANG');
 		location.reload();
 		return;
 	}

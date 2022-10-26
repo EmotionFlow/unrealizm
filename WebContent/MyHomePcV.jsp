@@ -13,10 +13,10 @@ if(!bSmartPhone) {
 MyHomePcC cResults = new MyHomePcC();
 cResults.getParam(request);
 
-String cookieLang = Util.getCookie(request, "LANG");
+String cookieLang = Util.getCookie(request, "UR_LANG");
 if (cookieLang == null) {
 	cookieLang = "ja";
-	Util.setCookie(response, "LANG", "ja", Integer.MAX_VALUE);
+	Util.setCookie(response, "UR_LANG", "ja", Integer.MAX_VALUE);
 }
 cResults.cookieLangId = SupportedLocales.findId(cookieLang);
 
