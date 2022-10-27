@@ -54,7 +54,7 @@ final String categoryInfo = "";
 		<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 		<meta name="description" content="<%=Util.toStringHtml(Util.deleteCrLf(description))%>" />
 		<meta name="twitter:site" content="@pipajp" />
-		<meta property="og:url" content="https://poipiku.com/NewArrivalPcV.jsp" />
+		<meta property="og:url" content="https://unrealizm.com/NewArrivalPcV.jsp" />
 		<meta property="og:title" content="<%=_TEX.T("THeader.Title")%> - <%=_TEX.T("NewArrivalPc.Title")%>" />
 		<meta property="og:description" content="<%=Util.toDescString(description)%>" />
 
@@ -198,12 +198,11 @@ final String categoryInfo = "";
 				<% for (int cnt=0; cnt<cResults.contentList.size(); cnt++) { %>
 					<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 
-				<% if (false){ %>
 <%--				<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>--%>
-				<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
-				<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
-				</div>
-				<%}%>
+<%--				<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">--%>
+<%--				<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>--%>
+<%--				</div>--%>
+<%--				<%}%>--%>
 
 				<%}%>
 			</section>
