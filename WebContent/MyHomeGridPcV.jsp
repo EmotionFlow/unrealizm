@@ -154,7 +154,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 50px 10px 50px 10px; text-align: center; box-sizing: border-box;">
 					<%=_TEX.T("MyHome.FirstMsg")%>
 					<br />
-					<a class="BtnBase" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a>
+<%--					<a class="BtnBase" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a>--%>
 				</div>
 				<%}%>
 
@@ -172,14 +172,14 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					</div>
 					<%}%>
 
-					<%if(nCnt==7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>
-					<div class="IllustItemListRecommended">
-						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>
-						<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>
-						<%=CCnv.toHtmlUserMini(recommendedUser, 0, _TEX, CCnv.SP_MODE_WVIEW)%>
-						<%}%>
-					</div>
-					<%}%>
+<%--					<%if(nCnt==7 && cResults.m_vRecommendedRequestCreatorList!=null && !cResults.m_vRecommendedRequestCreatorList.isEmpty()) {%>--%>
+<%--					<div class="IllustItemListRecommended">--%>
+<%--						<h2 class="IllustItemListRecommendedTitle"><%=_TEX.T("MyHome.Recommended.RequestCreators")%></h2>--%>
+<%--						<%for (CUser recommendedUser: cResults.m_vRecommendedRequestCreatorList){%>--%>
+<%--						<%=CCnv.toHtmlUserMini(recommendedUser, 0, _TEX, CCnv.SP_MODE_WVIEW)%>--%>
+<%--						<%}%>--%>
+<%--					</div>--%>
+<%--					<%}%>--%>
 				<%}%>
 
 				<%if(nCnt<=6 && cResults.m_vRecommendedUserList!=null && !cResults.m_vRecommendedUserList.isEmpty()) {%>

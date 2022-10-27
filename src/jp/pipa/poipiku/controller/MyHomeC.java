@@ -161,9 +161,9 @@ public class MyHomeC {
 			}
 
 			// Recommended Request Creators
-			if (needRecommendedRequestCreator) {
-				recommendedRequestCreatorList = RecommendedUsers.getRequestCreators(recommendedMax, checkLogin, connection);
-			}
+//			if (needRecommendedRequestCreator) {
+//				recommendedRequestCreatorList = RecommendedUsers.getRequestCreators(recommendedMax, checkLogin, connection);
+//			}
 
 		} catch(Exception e) {
 			Log.d(strSql);

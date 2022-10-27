@@ -209,11 +209,10 @@ public final class MyHomePcC {
 					GridUtil.getEachBookmark(connection, m_vContentList, checkLogin);
 				}
 				// Recommended Request Creators
-				m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
+//				m_vRecommendedRequestCreatorList = RecommendedUsers.getRequestCreators(m_nSelectRecommendedListNum, checkLogin, connection);
 
 				// Recommended Users
-//				if (m_nContentsNum <= SELECT_MAX_GALLERY || m_nPage == 1) {
-				if (false) {
+				if (m_nContentsNum <= SELECT_MAX_GALLERY || m_nPage == 1) {
 					m_vRecommendedUserList = RecommendedUsers.getUnFollowedUsers(m_nSelectRecommendedListNum, checkLogin, connection);
 				}
 			}

@@ -3,7 +3,7 @@
 		<div class="SettingListItem" style="margin-bottom: 15px; border-bottom: none;">
 				<div class="SettingListTitle"><%=_TEX.T("HowTo.Title")%>/<%=_TEX.T("Footer.Term")%>/<%=_TEX.T("Footer.Information")%></div>
 				<div class="SettingBody" style="line-height: 30px;">
-						<a href="/how_to/TopPcV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("HowTo.Title")%></a><br />
+<%--						<a href="/how_to/TopPcV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("HowTo.Title")%></a><br />--%>
 						<a href="/RulePcS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.Term")%></a><br />
 						<a href="/GuideLinePcV.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.GuideLine")%></a><br />
 						<a href="/PrivacyPolicyPcS.jsp" style="font-size: 14px; text-decoration: underline;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
