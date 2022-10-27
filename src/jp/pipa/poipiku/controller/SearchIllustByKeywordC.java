@@ -84,7 +84,7 @@ public final class SearchIllustByKeywordC {
     			LEFT JOIN comments_desc_cache cdc ON c.content_id = cdc.content_id
                 WHERE
 			    """
-				+ " (c.description &@~ ? OR tag_list &@~ ?) AND open_id<>2 AND safe_filter<=? AND publish_id IN (0, 5, 6)"
+				+ " (c.description &@~ ? OR tag_list &@~ ? OR ai_prompt &@~ ?) AND open_id<>2 AND safe_filter<=? AND publish_id IN (0, 5, 6)"
 				+ strCondStart
 				+ strCondBlockUser
 				+ strCondBlockedUser
@@ -99,6 +99,7 @@ public final class SearchIllustByKeywordC {
 			int idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, checkLogin.m_nUserId);
+			statement.setString(idx++, keywords.toString());
 			statement.setString(idx++, keywords.toString());
 			statement.setString(idx++, keywords.toString());
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
