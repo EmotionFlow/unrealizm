@@ -1,6 +1,6 @@
 #parse("ko/header.vm")
 
-트위터에서 팔로우하는 사용자가 POIPIKU를 시작했습니다.
+트위터에서 팔로우하는 사용자가 Unrealizm를 시작했습니다.
 
 #foreach($u in $recommend_users)
 [$u.nickname]
