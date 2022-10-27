@@ -111,11 +111,16 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 		});
 	</script>
 
+	<style>
 	<%if (!isApp) {%>
-	<style>body {padding-top: 79px !important;}</style>
-	<%} else {%>
-	<style>body {padding-top: 0 !important;}</style>
+	body {padding-top: 79px !important;}
+	<%if (!bSmartPhone){%>
+	.Wrapper.ThumbList {padding-top: 10px; width: 720px;}
 	<%}%>
+	<%} else {%>
+	body {padding-top: 0 !important;}
+	<%}%>
+	</style>
 
 	<script>
 		$(function () {
