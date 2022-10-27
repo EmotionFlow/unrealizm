@@ -1399,10 +1399,10 @@ function showSetTagDlg() {
 	function getSetTagDlgHtml(tags) {
 		const dlgHtml = `
 <div id="TagDlgWrapper" class="TagDlgWrapper">
-	<form id="TagSearchWrapper" class="TagSearchWrapper">
+	<form id="TagSearchWrapper" class="TagSearchWrapper" onsubmit="return addTag()">
 		<div class="TagSearch">
 			<div class="TagSearchInputWrapper">
-				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="20" placeholder="タグを入力" value="" autocomplete="off" enterkeyhint="search" oninput="onTagInput()">
+				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="20" placeholder="タグを入力 | ##でマイタグ" value="" autocomplete="off" enterkeyhint="search" oninput="onTagInput()">
 				<div id="TagSearchClear" class="TagSearchClear">
 					<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
 				</div>
@@ -1410,7 +1410,10 @@ function showSetTagDlg() {
 		</div>
 	</form>
 	<div id="CurrentTagWrapper" class="DlgTagListWrapper">
-		<div class="CurrentTagHeader">設定中のタグ</div>
+		<div class="CurrentTagHeader">
+			<span>設定中のタグ</span>
+			<span id="CurrentTagNum"></span>
+		</div>
 		<ul id="CurrentTagList" class="DlgTagList"></ul>
 	</div>
 	<div id="TagSuggestionWrapper" class="DlgTagListWrapper">
@@ -1426,12 +1429,21 @@ function showSetTagDlg() {
 		html: getSetTagDlgHtml(tagList),
 		showCancelButton: true,
 		position: 'top',
+		allowEnterKey: false,
 		onOpen: () => {
 			$('#TagSearchBox').focus();
-			showCurrentTags();
+			showCurrentTags(true);
 		},
-	}).then(resp => {
-		// TODO: タグ反映
+		preConfirm: () => getTagsInDlg(),
+	}).then(result => {
+		if(result.value) $('#EditTagList').val(result.value.join(' '));
+	});
+}
+
+function getTagsInDlg() {
+	return $('#CurrentTagList .CurrentTagName').get().map(el => {
+		const tagName = $(el).text();
+		return `${/^#/.test(tagName) ? '' : '#'}${tagName}`
 	});
 }
 
@@ -1469,24 +1481,38 @@ function onTagInput() {
 	}, 800))
 }
 
-function showCurrentTags() {
+function generateCurrentTagRow(tagName) {
+	const $li = $('<li></li>', { class: 'DlgTagItem CurrentTagItem' });
+	const $tagRow = $('<div></div>',  { class: 'DlgTagRow CurrentTagRow' });
+	const $tagName = $('<div></div>', {
+		class: 'DlgTagName CurrentTagName',
+		text: `${/^#/.test(tagName) ? '' : '#'}${tagName}`,
+	});
+	const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn' });
+	const $delIcon = $('<i></i>', { class: 'fas fa-times', onclick: 'deleteTag()' });
+	return $li.append($tagRow.append($tagName, $delBtn.append($delIcon)));
+}
+
+function showCurrentTags(refresh=false) {
+	const tagMaxNum = $('#EditTagList').data('tag-max-num');
 	$('#CurrentTagWrapper').show();
 	$('#TagSuggestionWrapper').hide();
 	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
-	$tagList.empty();
-	const tags = $('#EditTagList').val().trim().split(/\s+/).filter(str => str);
-	if (tags.length) {
-		tags.forEach(tag => {
-			const $li = $('<li></li>', { class: 'DlgTagItem CurrentTagItem' });
-			const $tagRow = $('<div></div>',  { class: 'DlgTagRow CurrentTagRow' });
-			const $tagName = $('<div></div>', { class: 'DlgTagName CurrentTagName', text: tag });
-			const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn' });
-			const $delIcon = $('<i></i>', { class: 'fas fa-times' });
-			$tagList.append($li.append($tagRow.append($tagName, $delBtn.append($delIcon))));
-			// TODO: $delBtn押下時処理
-		});
-	} else {
-		const $li = $('<li></li>');
+	if (refresh) {
+		$tagList.empty();
+		const tags = $('#EditTagList').val().trim().split(/\s+/).filter(str => str);
+		if (tags.length) {
+			tags.filter((_, i) => i < tagMaxNum).forEach(tag => {
+				$tagList.append(generateCurrentTagRow(tag));
+			});
+		}
+	}
+	const tagRowsCnt = $tagList.find('li.DlgTagItem.CurrentTagItem').length;
+	$('#CurrentTagNum').text(`(${tagRowsCnt}/${tagMaxNum})`)
+	if (tagRowsCnt) {
+		$('li.CurrentTagBlankRow').remove();
+	} else if (!$('li.CurrentTagBlankRow').length) {
+		const $li = $('<li></li>', { class: 'CurrentTagBlankRow' });
 		const $row = $('<div></div>', { class: 'DlgTagRow' });
 		const $item = $('<div></div>', { class: 'DlgTagNameBlank', text: 'タグはありません' });
 		$tagList.append($li.append($row.append($item)));
@@ -1500,4 +1526,25 @@ function showTagSuggestion(inputStr) {
 	$tagList.empty();
 	$tagList.addClass('Loading');
 	// TODO: get & show
+}
+
+function addTag() {
+	const tagMaxNum = $('#EditTagList').data('tag-max-num');
+	const $input = $(event.currentTarget).find('#TagSearchBox');
+	const newTag = $input.val();
+	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
+	$input.val('');
+	if (newTag && $tagList.find('li.DlgTagItem.CurrentTagItem').length < tagMaxNum) {
+		const $newTagRow = generateCurrentTagRow(newTag);
+		const newTagText = $newTagRow.find('.DlgTagName').text()
+		if(!getTagsInDlg().includes(newTagText)) $tagList.append(generateCurrentTagRow(newTag));
+	}
+	showCurrentTags();
+	return false;
+}
+
+function deleteTag() {
+	const $tag = $(event.currentTarget).closest('li');
+	$tag.remove();
+	showCurrentTags();
 }

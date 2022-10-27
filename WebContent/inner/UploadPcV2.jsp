@@ -299,7 +299,7 @@ if (requestId > 0) {
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> readonly onclick="showSetTagDlg()" />
+					<input id="EditTagList" class="EditTagList" type="text" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" onkeyup="DispTagListCharNum()" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> readonly onclick="showSetTagDlg()" data-tag-max-num="<%=Common.TAG_MAX_NUM%>" data-tag-max-length="<%=Common.TAG_MAX_LENGTH%>"/>
 					<div class="TagListCharNum"><span><%=_TEX.T("IllustV.Description.Tag.Info")%></span><span id="TagListCharNum">100</span></div>
 				</div>
 
