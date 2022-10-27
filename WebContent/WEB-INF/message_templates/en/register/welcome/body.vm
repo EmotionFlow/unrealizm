@@ -1,41 +1,26 @@
 Dear $to_name
 
 Welcome to Unrealizm!
+Unrealizm is an image submission social network for AI works.
+You can post not only AI-generated images, but also works created in cooperation with AI.
 Our staff will show you how to use Unrealizm and how to set up your email.
 
 [Post and enjoy]
-You can post images (photos are acceptable) and novels (text).
-Unrealizm is a site where you can casually post scribbles or content you are working on. Feel free to post your own work.
-
 + Files +
 You can upload PNGs, JPEGs, and GIFs (including animated GIFs). Multiple images can be uploaded at the same time, and the order can be changed or replaced after submission.
-
-+ Novels +
-You can submit up to 100,000 characters. You can switch between vertical and horizontal writing styles, as well as use Aozora Bunko notation to write ruby.
 
 + Paste +
 You can copy and paste screen shots and other images and post them. You can do things like capture the screen of a painting software and post the progress of your work.
 
 
 [Enjoy watching and reading]
-When you follow a user on Unrealizm, you can check the new posts of the user you are following on the [quiet follow] page.
-Followers on Unrealizm will not be notified. Let's follow them right away.
-
-+ Recommended Users +
-
-#foreach($u in $recommend_users)
-$u.nickname
-#if($u.profile.length()>0)
-$u.profile
-#end
-https://unrealizm.com/$u.userId
-
-#end
-
-
 + Reactions +
 For each content, you can send your feelings as Emoji (reactions). You can also have multiple reactions to a single content.
 Reactions, do not tell the other person who sent them. If you feel like it, you can send emoji as often as you like.
+
++ Follow +
+When you follow a user on Unrealizm, you can check the new posts of the user you are following on the [Home] page.
+Followers on Unrealizm will not be notified. Let's follow them right away.
 
 
 [Email settings]
@@ -44,12 +29,12 @@ You can also log in to Unrealizm with your email address and password, in case T
 Email : $login_email
 Password : $login_password
 
-- The email address registered on Twitter.
+- If you have registered with Twitter integration, your email address registered in your Twitter account is temporarily set to Unrealizm.
 - You can change your email address and password in the settings page.
 
 
 [Email Delivery]
-You will receive occasional email notifications, such as those introducing recommended users or notifying you when a user you follow on Twitter starts using Unrealizm.
+YouYou will receive occasional notification e-mails when there are unread announcements, or when a user you follow on Twitter starts Unrealizm.
 - You can change the delivery ON/OFF in the settings screen.
 
 

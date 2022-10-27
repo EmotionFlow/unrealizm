@@ -11,11 +11,11 @@ import translate
 SOURCE_LOCALE = 'en'
 
 # ターゲットとする言語
-#TARGET_LOCALES = ["ko", "zh_CN", "zh_TW", "th", "ru", "vi", "es"]
-TARGET_LOCALES = ["es"]
+TARGET_LOCALES = ["ko", "zh_CN", "zh_TW", "th", "ru", "vi", "es"]
+#TARGET_LOCALES = ["es"]
 
 # clear
-## rm -rf ../../WebContent/WEB-INF/message_templates/{ko,zh_CN,zh_TW,th,ru,vi}/register/twitter_follower
+## rm -rf ../../WebContent/WEB-INF/message_templates/{ko,zh_CN,zh_TW,th,ru,vi,es}/register/twitter_follower
 
 
 TEMPLATE_ROOT = '../../WebContent/WEB-INF/message_templates/'

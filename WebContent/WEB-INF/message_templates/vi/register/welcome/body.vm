@@ -1,41 +1,26 @@
 Gửi $to_name
 
-Chào mừng đến với Unrealizm!
+Chào mừng bạn đến với Unrealizm!
+Unrealizm là một mạng xã hội gửi hình ảnh cho các công trình AI.
+Bạn không chỉ có thể đăng hình ảnh do AI tạo mà còn có thể đăng các tác phẩm được tạo ra với sự hợp tác của AI.
 Nhân viên của chúng tôi sẽ hướng dẫn bạn cách sử dụng Unrealizm và cách thiết lập email của bạn.
 
 [Đăng và thưởng thức]
-Bạn có thể đăng hình ảnh (ảnh có thể chấp nhận được) và tiểu thuyết (văn bản).
-Unrealizm là một trang web nơi bạn có thể tình cờ đăng những nét vẽ nguệch ngoạc hoặc nội dung mà bạn đang làm việc. Hãy đăng tác phẩm của riêng bạn.
-
 + Tệp +
 Bạn có thể tải lên PNG, JPEG và GIF (bao gồm cả GIF động). Nhiều hình ảnh có thể được tải lên cùng một lúc và thứ tự có thể được thay đổi hoặc thay thế sau khi gửi.
-
-+ Tiểu thuyết +
-Bạn có thể gửi tối đa 100.000 ký tự. Bạn có thể chuyển đổi giữa các kiểu viết dọc và ngang, cũng như sử dụng ký hiệu Aozora Bunko để viết ruby.
 
 + Dán +
 Bạn có thể sao chép và dán ảnh chụp màn hình và các hình ảnh khác và đăng chúng. Bạn có thể làm những việc như chụp màn hình phần mềm vẽ tranh và đăng tiến trình công việc của mình.
 
 
 [Thích xem và đọc]
-Khi theo dõi một người dùng trên Unrealizm, bạn có thể kiểm tra các bài đăng mới của người dùng mà bạn đang theo dõi trên trang [lặng lẽ theo dõi].
-Những người theo dõi trên Unrealizm sẽ không được thông báo. Hãy cùng theo dõi chúng ngay sau đây.
-
-+ Người dùng được đề xuất +
-
-#foreach($u in $recommend_users)
-$u.nickname
-#if($u.profile.length()>0)
-$u.profile
-#end
-https://unrealizm.com/$u.userId
-
-#end
-
-
 + Phản ứng +
 Đối với mỗi nội dung, bạn có thể gửi cảm xúc của mình dưới dạng Emoji (phản ứng). Bạn cũng có thể có nhiều phản ứng với một nội dung.
 Các phản ứng, đừng nói cho người khác biết người đã gửi chúng. Nếu cảm thấy thích, bạn có thể gửi biểu tượng cảm xúc bao nhiêu lần tùy thích.
+
++ Theo dõi +
+Khi theo dõi một người dùng trên Unrealizm, bạn có thể kiểm tra các bài đăng mới của người dùng mà bạn đang theo dõi trên trang [Trang chủ].
+Những người theo dõi trên Unrealizm sẽ không được thông báo. Hãy cùng theo dõi chúng ngay sau đây.
 
 
 [Cài đặt email]
@@ -44,17 +29,17 @@ Bạn cũng có thể đăng nhập vào Unrealizm bằng địa chỉ email và
 Email: $login_email
 Mật khẩu: $login_password
 
-- Địa chỉ email đã đăng ký trên Twitter.
+- Nếu bạn đã đăng ký tích hợp Twitter, địa chỉ email đăng ký trong tài khoản Twitter của bạn tạm thời được đặt thành Unrealizm.
 - Bạn có thể thay đổi địa chỉ email và mật khẩu của mình trong trang cài đặt.
 
 
 [Gửi email]
-Bạn sẽ nhận được thông báo qua email không thường xuyên, chẳng hạn như thông báo giới thiệu người dùng được đề xuất hoặc thông báo cho bạn khi người dùng mà bạn theo dõi trên Twitter bắt đầu sử dụng Unrealizm.
+Bạn sẽ thỉnh thoảng nhận được e-mail thông báo khi có thông báo chưa đọc hoặc khi người dùng mà bạn theo dõi trên Twitter khởi động Unrealizm.
 - Bạn có thể thay đổi giao hàng BẬT / TẮT trong màn hình cài đặt.
 
 
 [Tài khoản chính thức]
-Đây là tài khoản chính thức cho Unrealizm và Twitter. Chúng tôi sẽ đăng thông tin cập nhật và chiến dịch khi cần thiết, vì vậy hãy theo dõi chúng tôi nếu bạn thích.
+Đây là tài khoản chính thức của Unrealizm và Twitter. Chúng tôi sẽ đăng thông tin cập nhật và thông tin chiến dịch khi cần thiết, vì vậy hãy theo dõi chúng tôi nếu bạn thích.
 
 Unrealizm
 https://unrealizm.com/2
