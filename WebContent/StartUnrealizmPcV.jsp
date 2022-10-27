@@ -156,8 +156,8 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 
 <article class="Wrapper ThumbList">
 	<header class="StartPageTitle">
-		<h2>Unrealizm</h2>
-		<h3 style="text-align: center" >AI Work(s) SNS </h3>
+		<h2>Unrealizm - <span style="font-size: 14px"><%=_TEX.T("Catchphrase")%></span> -</h2>
+<%--		<span style="font-size: 12px; color: #808080"><%=_TEX.T("Unrealizm.Info.Message.Short")%></span>--%>
 	</header>
 
 	<section

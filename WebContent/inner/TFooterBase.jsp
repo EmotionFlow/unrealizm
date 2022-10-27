@@ -6,7 +6,7 @@
 	<%if(!checkLogin.m_bLogin) {%>
 	<article class="AnalogicoInfo">
 		<h1 class="AnalogicoInfoTitle">
-			<%=_TEX.T("Unrealizm.Info.Message")%>
+			<%=_TEX.T("Catchphrase")%>
 		</h1>
 		<a class="AnalogicoMoreInfo" href="/">
 			<%=_TEX.T("Unrealizm.Info.MoreInfo")%>

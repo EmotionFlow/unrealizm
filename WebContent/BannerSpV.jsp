@@ -33,7 +33,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 				</a>
 			</div>
 			<div class="AnalogicoDesc Title">
-				<div>放置絵ポイポイ 練習ポイポイ 進捗ポイポイ</div>
+				<div><%=_TEX.T("Catchphrase")%></div>
 				<div>「unrealizm」正式オープン！</div>
 			</div>
 		</article>

@@ -30,11 +30,6 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		<article class="Wrapper">
 			<div class="AnalogicoStart">
 				<div style="margin: 0 0 5px 0;">
-					放置絵ポイポイ<br />
-					練習ポイポイ<br />
-					らくがきポイポイ<br />
-					進捗ポイポイ<br />
-					<br />
 					<a class="BtnBase" href="https://unrealizm.com/">
 						<img class="Logo" src="//img.unrealizm.com/img/logo_tr_48.png" alt="<%=_TEX.T("THeader.Title")%>">
 					</a>

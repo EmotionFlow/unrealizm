@@ -30,11 +30,11 @@ return `
 	<div class="AccountInfoInputLabel">金融機関コード</div>
 	<input id="FCD" class="swal2-input" style="margin-top: 4px;" maxlength="4" placeholder="0000"/>
 	<div class="AccountInfoInputLabel">銀行名(日本国内のみ)</div>
-	<input id="FNM" class="swal2-input" style="margin-top: 4px;" maxlength="32" placeholder="Unrealizm銀行"/>
+	<input id="FNM" class="swal2-input" style="margin-top: 4px;" maxlength="32" placeholder="UR銀行"/>
 	<div class="AccountInfoInputLabel">支店コード</div>
 	<input id="FSUBCD" class="swal2-input" style="margin-top: 4px;" maxlength="3" placeholder="000"/>
 	<div class="AccountInfoInputLabel">支店名(本店の場合は「本店」)</div>
-	<input id="FSUBNM" class="swal2-input" style="margin-top: 4px;" maxlength="3" placeholder="ポイポイ支店"/>
+	<input id="FSUBNM" class="swal2-input" style="margin-top: 4px;" maxlength="3" placeholder="UR支店"/>
 	<div class="AccountInfoInputLabel">預金種別</div>
 		<select id="ACTYPE" class="swal2-input">
 		<option value="1">普通</option>
