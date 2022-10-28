@@ -40,7 +40,7 @@
         <input type="hidden" name="NNAME" value="<%=cResults.m_cUser.m_strNickName%>"/>
         <input type="hidden" name="TWNAME" value="<%=cResults.m_cUser.m_strTwitterScreenName%>"/>
         <input type="hidden" name="UID" value="<%=checkLogin.m_nUserId%>"/>
-        <input type="hidden" name="RET" value="https://unrealizm.com<%=cResults.m_strReturnUrl%>" />
+        <input type="hidden" name="RET" value="<%=cResults.m_strReturnUrl%>" />
         <a class="BtnBase" href="javascript:go_inquiry.submit()" style="font-size: 14px; padding: 10px 20px;" ><%=_TEX.T("Inquiry.Title")%></a>
     </form>
     <%}else{%>

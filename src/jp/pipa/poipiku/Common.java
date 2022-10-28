@@ -575,7 +575,7 @@ public final class Common {
 	}
 
 	public static String getGoogleTransformLinkHtml(String jspPage, String target, String langCode, String langName){
-		final String translateUrlFormat = "https://poipiku-com.translate.goog/%s?hl=ja&_x_tr_sl=ja&_x_tr_tl=%s&_x_tr_hl=ja";
+		final String translateUrlFormat = "https://unrealizm-com.translate.goog/%s?hl=ja&_x_tr_sl=ja&_x_tr_tl=%s&_x_tr_hl=ja";
 		final String aTag="<a target=\"%s\" href=\"%s\">%s</a>";
 		return String.format(
 				aTag,

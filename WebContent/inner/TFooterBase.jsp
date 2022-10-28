@@ -83,12 +83,11 @@
 			<%}else{%>
 			<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry.NeedSignIn")%></a></dd>
 			<%}%>
-			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.CannotLogin")%></a></dd>
 			<dd><a class="FooterHref" href="/LogoUsageGuideLinePcS.jsp"><%=_TEX.T("LogoUsageGuideLine.Title")%></a></dd>
 		</dl>
 		<dl>
 			<dt><%=_TEX.T("Footer.Link.Company")%></dt>
-			<dd><a class="FooterHref" href="https://www.pipa.jp/" target="_blank"><%=_TEX.T("Footer.Company")%></a></dd>
+			<dd><a class="FooterHref" href="https://emotionflow.com/" target="_blank"><%=_TEX.T("Footer.Company")%></a></dd>
 		</dl>
 <%--		<dl>--%>
 <%--			<dt><%=_TEX.T("Footer.Link.Service")%></dt>--%>
