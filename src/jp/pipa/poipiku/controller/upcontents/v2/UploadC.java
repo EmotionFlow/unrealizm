@@ -43,8 +43,8 @@ public final class UploadC extends UpC {
 					Arrays.asList(
 							"user_id", "genre_id", "category_id", "description", "private_note",
 							"tag_list", "publish_id", "publish_all_num", "password_enabled", "password", "list_id", "safe_filter",
-							"editor_id", "cheer_ng", "tweet_when_published", "limited_time_publish",
-							"ai_prompt", "ai_other_params"));
+							"editor_id", "cheer_ng", "tweet_when_published", "ai_prompt", "ai_other_params", "limited_time_publish"
+							));
 
 			if(upParam.isTimeLimited){
 				if(upParam.publishStart == null && upParam.publishEnd == null){
@@ -106,6 +106,9 @@ public final class UploadC extends UpC {
 			statement.setBoolean(idx++, upParam.isCheerNg);
 			statement.setInt(idx++, CContent.getTweetWhenPublishedId(upParam.isTweet, upParam.isTweetWithImage, upParam.isTwitterCardThumbnail));
 
+			statement.setString(idx++, upParam.aiPrompt);
+			statement.setString(idx++, upParam.aiOtherPrams);
+
 			statement.setBoolean(idx++, upParam.isTimeLimited);
 			if (upParam.isTimeLimited) {
 				if (upParam.publishStart != null) {
@@ -115,9 +118,6 @@ public final class UploadC extends UpC {
 					statement.setTimestamp(idx++, upParam.publishEnd);
 				}
 			}
-
-			statement.setString(idx++, upParam.aiPrompt);
-			statement.setString(idx++, upParam.aiOtherPrams);
 
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
