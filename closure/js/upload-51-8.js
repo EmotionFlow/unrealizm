@@ -1425,6 +1425,7 @@ function showSetTagDlg() {
 		showCancelButton: true,
 		position: 'top',
 		allowEnterKey: false,
+		allowOutsideClick: false,
 		onOpen: () => {
 			$('#TagSearchBox').focus();
 			showCurrentTags(true);
