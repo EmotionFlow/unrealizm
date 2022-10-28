@@ -1470,11 +1470,13 @@ function clearTagSearchInput() {
 }
 
 function onTagInput() {
+	const $input = $('#TagSearchBox');
+	const inputStr = $input.val();
+	if (/\s$/.test(inputStr)) $input.val(inputStr.replace(/\s/g, ''));
 	toggleClearTagBtn();
 	const prevTimeout = getLocalStrage('tag-suggestion-timeout');
 	if (prevTimeout) clearTimeout(prevTimeout);
 	setLocalStrage('tag-suggestion-timeout', setTimeout(() => {
-		const inputStr = $('#TagSearchBox').val();
 		if (inputStr) {
 			showTagSuggestion(inputStr);
 		} else {
