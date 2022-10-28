@@ -1396,13 +1396,14 @@ function initUploadParams(tweetEnabled) {
 }
 
 function showSetTagDlg() {
-	function getSetTagDlgHtml(tags) {
+	function getSetTagDlgHtml() {
+		const tagMaxLength = $('#EditTagList').data('tag-max-length');
 		const dlgHtml = `
 <div id="TagDlgWrapper" class="TagDlgWrapper">
 	<form id="TagSearchWrapper" class="TagSearchWrapper" onsubmit="return addTag()">
 		<div class="TagSearch">
 			<div class="TagSearchInputWrapper">
-				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="20" placeholder="タグを入力 | ##でマイタグ" value="" autocomplete="off" enterkeyhint="search" oninput="onTagInput()">
+				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="${tagMaxLength}" placeholder="タグを入力 | ##でマイタグ" value="" autocomplete="off" enterkeyhint="done" oninput="onTagInput()">
 				<div id="TagSearchClear" class="TagSearchClear">
 					<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
 				</div>
@@ -1426,7 +1427,7 @@ function showSetTagDlg() {
 	}
 
 	Swal.fire({
-		html: getSetTagDlgHtml(tagList),
+		html: getSetTagDlgHtml(),
 		showCancelButton: true,
 		position: 'top',
 		allowEnterKey: false,
@@ -1462,6 +1463,7 @@ function toggleClearTagBtn() {
 function clearTagSearchInput() {
 	const $search = $('#TagSearchBox');
 	$search.val('');
+	toggleClearTagBtn();
 	$search.focus();
 	toggleClearSearchBtn();
 	showCurrentTags();
@@ -1534,6 +1536,7 @@ function addTag() {
 	const newTag = $input.val();
 	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
 	$input.val('');
+	toggleClearTagBtn();
 	if (newTag && $tagList.find('li.DlgTagItem.CurrentTagItem').length < tagMaxNum) {
 		const $newTagRow = generateCurrentTagRow(newTag);
 		const newTagText = $newTagRow.find('.DlgTagName').text()
