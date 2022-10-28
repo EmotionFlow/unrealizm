@@ -1,13 +1,15 @@
 import json
 import requests
+from requests.auth import HTTPBasicAuth
 
-POIPIKU_URL = 'https://unrealizm.com/'
+UNREALIZM_URL = 'https://unrealizm.com/'
 
 
-def upload_content(_user_id, _user_lk, _description, _upload_file_path):
+def upload_content(_user_id, _user_lk, _description, _prompt, _upload_file_path):
     cookies = dict(UNREALIZM_LK=_user_lk)
     post_data = {
         "DES": _description,
+        "AI_PRMPT": _prompt,
         "UID": _user_id,
         "OPTION_PUBLISH":				"true",
         "OPTION_NOT_TIME_LIMITED": 		"true",
@@ -34,7 +36,11 @@ def upload_content(_user_id, _user_lk, _description, _upload_file_path):
         "NOTE":	"",
     }
 
-    r = requests.post(POIPIKU_URL + "f/UploadFileRefTwitterV2F.jsp", cookies=cookies, data=post_data, verify=False)
+    r = requests.post(UNREALIZM_URL + "f/UploadFileRefTwitterV2F.jsp",
+                      cookies=cookies,
+                      data=post_data,
+                      verify=False,
+                      auth=HTTPBasicAuth("ur", "west2929"))
     ref_tw_resp = json.loads(r.text)
     content_id = ref_tw_resp['content_id']
     print(f'content_id: {content_id}')
@@ -43,19 +49,30 @@ def upload_content(_user_id, _user_lk, _description, _upload_file_path):
     post_data = {
         'UID': _user_id,
         'IID': content_id,
-        'OID': 1,  # 0:公開, 1:新着避け公開, 2:非公開
-        'REC': 1  # 0:新着避けない, 1:新着避けする
+        'OID': 0,  # 0:公開, 1:新着避け公開, 2:非公開
+        'REC': 0  # 0:新着避けない, 1:新着避けする
     }
     files = {
         'file1': open(_upload_file_path, 'rb')
     }
-    r = requests.post(POIPIKU_URL + "f/UploadFileFirstV2F.jsp", cookies=cookies, data=post_data, files=files, verify=False)
+    r = requests.post(UNREALIZM_URL + "f/UploadFileFirstV2F.jsp",
+                      cookies=cookies,
+                      data=post_data,
+                      files=files,
+                      verify=False,
+                      auth=HTTPBasicAuth("ur", "west2929"))
     print(r.json())
 
 
 if __name__ == "__main__":
-    user_id = 6230955
-    user_lk = 'a946273b3597d1eff47391ba1c71f30edfcd2d475d80d3e17e3dcc2e3d9ebd9b'
-    description = 'ですく'
-    upload_file_path = '/Users/nino/Desktop/Visual_SQL_JOINS_orig.jpeg'
-    upload_content(user_id, user_lk, description, upload_file_path)
+    user_id = 5
+    user_lk = 'e5116cb31f5cab74eea3c56195aadf4728a87e4ba9532db2e813e0612d0c66d5'
+    description_fmt = 'タイトル %d'
+    prompt = 'ismail inceoglu painting of world war two, painting, line art, art concept for a book cover, trending on artstation, by greg manchess and by craig mullins and by kilian eng and by jake parker'
+    upload_file_path_fmt = '/Users/nino/stable-diffusion/stable-diffusion/outputs/txt2img-samples/samples/%05d.png'
+
+    for i in range(0, 50):
+        upload_file_path = upload_file_path_fmt % i
+        description = description_fmt % i
+        print(upload_file_path)
+        upload_content(user_id, user_lk, description, prompt, upload_file_path)
