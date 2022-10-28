@@ -1490,8 +1490,8 @@ function generateCurrentTagRow(tagName) {
 		class: 'DlgTagName CurrentTagName',
 		text: `${/^#/.test(tagName) ? '' : '#'}${tagName}`,
 	});
-	const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn' });
-	const $delIcon = $('<i></i>', { class: 'fas fa-times', onclick: 'deleteTag()' });
+	const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn', onclick: 'deleteTag()' });
+	const $delIcon = $('<i></i>', { class: 'fas fa-times' });
 	return $li.append($tagRow.append($tagName, $delBtn.append($delIcon)));
 }
 
