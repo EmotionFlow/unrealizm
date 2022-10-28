@@ -1,5 +1,5 @@
-<%@ page import="jp.pipa.poipiku.controller.upcontents.v1.UpdateC" %>
-<%@ page import="jp.pipa.poipiku.controller.upcontents.v1.UpdateCParam" %>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v2.UpdateC" %>
+<%@ page import="jp.pipa.poipiku.controller.upcontents.v2.UpdateCParam" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
