@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public final class Log {
+	private static final String SERVICE_ID = "POI";
+	private static final String PREFIX = SERVICE_ID + " : ";
 	private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss, ");
 	static String calledFrom() {
 		try {
@@ -23,7 +25,7 @@ public final class Log {
 	}
 
 	public static void d(String... args) {
-		System.out.print("Log : ");
+		System.out.print(PREFIX);
 		System.out.print(LocalDateTime.now().format(formatter));
 		System.out.print(calledFrom());
 		for (String s : args) {
@@ -33,7 +35,7 @@ public final class Log {
 	}
 
 	public static void d(String arg1, int arg2) {
-		System.out.print("Log : ");
+		System.out.print(PREFIX);
 		System.out.print(LocalDateTime.now().format(formatter));
 		System.out.print(calledFrom());
 		System.out.printf("%s:%d", arg1, arg2);
