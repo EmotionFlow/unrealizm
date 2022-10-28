@@ -1173,28 +1173,29 @@ public final class CCnv {
 			strRtn.append("</a>");    // IllustItemUser
 		}
 
-		// カテゴリ系情報
-		strRtn.append("<span class=\"IllustInfo IllustMeta\">");
-		// カテゴリ
-//		strRtn.append(
-//				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
-//						SEARCH_CATEGORY,
-//						cContent.m_nCategoryId,
-//						cContent.m_nCategoryId,
-//						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
-//				)
-//		);
+		if (pageCategory == PageCategory.MY_BOX) {
+			// カテゴリ系情報
+			strRtn.append("<span class=\"IllustInfo IllustMeta\">");
+			// カテゴリ
+			//		strRtn.append(
+			//				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
+			//						SEARCH_CATEGORY,
+			//						cContent.m_nCategoryId,
+			//						cContent.m_nCategoryId,
+			//						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+			//				)
+			//		);
 
-		// Pin, Note
-		if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
-			strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
-		} else if (cContent.m_nUserId==checkLogin.m_nUserId && !cContent.privateNote.isEmpty()) {
-			strRtn.append("<span class=\"IllustInfoPin far fa-sticky-note\" onclick=\"TogglePrivateNote($(this).parent().parent(),'" +
-					Util.toQuotedString(cContent.privateNote, "'") +
-					"')\"></span>");
+			// Pin, Note
+			if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
+				strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
+			} else if (cContent.m_nUserId == checkLogin.m_nUserId && !cContent.privateNote.isEmpty()) {
+				strRtn.append("<span class=\"IllustInfoPin far fa-sticky-note\" onclick=\"TogglePrivateNote($(this).parent().parent(),'" +
+						Util.toQuotedString(cContent.privateNote, "'") +
+						"')\"></span>");
+			}
+			strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
 		}
-
-		strRtn.append("</span>");	// カテゴリ系情報(IllustInfo)
 
 		// イラスト情報
 		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
