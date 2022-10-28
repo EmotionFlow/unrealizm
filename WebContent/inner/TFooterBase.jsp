@@ -71,7 +71,8 @@
 			<dd><a class="FooterHref" href="https://twitter.com/pipajp" target="_blank"><%=_TEX.T("Footer.Information")%></a></dd>
 			<%
 			StringBuilder sbFooterHref = new StringBuilder();
-			sbFooterHref.append(request.getRequestURL().toString().replaceFirst(Common.GetUnrealizmUrl(""), ""));
+			String requestUrl = request.getRequestURL().toString();
+			sbFooterHref.append("https").append(requestUrl.substring(requestUrl.indexOf("://")));
 			if(request.getQueryString()!=null) {
 				sbFooterHref.append("?").append(Util.toString(request.getQueryString()));
 			}
