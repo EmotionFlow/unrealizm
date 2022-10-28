@@ -45,7 +45,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 		<link href="/css/upload-206-4.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
 		<script src="/js/upload-51-8.js" type="text/javascript"></script>
-		<script src="/js/update-25-3.js" type="text/javascript"></script>
+		<script src="/js/update-25-4.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
