@@ -213,6 +213,7 @@ function UpdateFile(userId, contentId) {
 
 	const editorId = 0;
 	let postData = _getUpdatePostData(userId, contentId, editorId);
+	if (!postData) return;
 
 	let nTweetNow = _preCheckForUpdate(postData);
 	if (nTweetNow == null) return;
