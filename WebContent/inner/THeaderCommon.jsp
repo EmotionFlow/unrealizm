@@ -37,7 +37,8 @@
 <style>
 body {user-select:none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-touch-callout: none;}
 </style>
-<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+<%if(false) {%>
+<%--<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>--%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
 	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
 		<%if(checkLogin.m_nLangId==1) {	// 国内%>
