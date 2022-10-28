@@ -374,6 +374,10 @@ function createUpdatePasteFunction(){
 
 		const editorId = 1;
 		let postData = _getUpdatePostData(userId, contentId, editorId);
+		if (!postData) {
+			nowProcessing = false;
+			return;
+		}
 
 		let nTweetNow = _preCheckForUpdate(postData);
 		if (nTweetNow == null) {
@@ -459,7 +463,7 @@ function createUpdateTextFunction(){
 		const editorId = 3;
 
 		let postData = _getUpdatePostData(userId, contentId, editorId);
-		if (postData == null) {
+		if (!postData) {
 			nowProcessing = false;
 			return;
 		}
