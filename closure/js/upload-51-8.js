@@ -1522,11 +1522,11 @@ function showCurrentTags(refresh=false) {
 }
 
 function showTagSuggestion(inputStr) {
-	$('#CurrentTagWrapper').hide();
-	$('#TagSuggestionWrapper').show();
-	const $tagList = $('#TagSuggestionWrapper').find('ul#TagSuggestionList');
-	$tagList.empty();
-	$tagList.addClass('Loading');
+	// $('#CurrentTagWrapper').hide();
+	// $('#TagSuggestionWrapper').show();
+	// const $tagList = $('#TagSuggestionWrapper').find('ul#TagSuggestionList');
+	// $tagList.empty();
+	// $tagList.addClass('Loading');
 	// TODO: get & show
 }
 
