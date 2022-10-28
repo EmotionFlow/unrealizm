@@ -476,12 +476,6 @@ let privateNote = (()=>{
 	}
 })();
 
-
-function DispTagListCharNum() {
-	const nCharNum = 100 - $("#EditTagList").val().length;
-	$("#TagListCharNum").html(nCharNum);
-}
-
 function setLastCategorySetting(val) {
 	setLocalStrage('last_category', val);
 }
