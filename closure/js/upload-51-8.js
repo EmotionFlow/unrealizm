@@ -1389,7 +1389,7 @@ function initUploadParams(tweetEnabled) {
 	setUploadParams(uploadParams);
 }
 
-function showSetTagDlg(txt={placeholder:'', header: '', blankMsg:''}) {
+function showSetTagDlg(txt={placeholder:'', header: '', blankMsg:'', doneMsg: 'OK'}) {
 	function getSetTagDlgHtml() {
 		const tagMaxLength = $('#EditTagList').data('tag-max-length');
 		const dlgHtml = `
@@ -1426,6 +1426,7 @@ function showSetTagDlg(txt={placeholder:'', header: '', blankMsg:''}) {
 		position: 'top',
 		allowEnterKey: false,
 		allowOutsideClick: false,
+		confirmButtonText: txt.doneMsg,
 		onOpen: () => {
 			$('#TagSearchBox').focus();
 			showCurrentTags(true);
@@ -1459,8 +1460,8 @@ function clearTagSearchInput() {
 	const $search = $('#TagSearchBox');
 	$search.val('');
 	toggleClearTagBtn();
+	$(Swal.getConfirmButton()).prop('disabled', false);
 	$search.focus();
-	toggleClearSearchBtn();
 	showCurrentTags();
 }
 
@@ -1471,6 +1472,7 @@ function onTagInput() {
 	if (/^#{3,}/.test(inputStr)) $input.val(inputStr.replace(/^#{3,}/, '##'));
 	if (/[^#]#/.test(inputStr)) $input.val(inputStr.replace(/([^#])#/g, '$1'));
 	toggleClearTagBtn();
+	$(Swal.getConfirmButton()).prop('disabled', !!inputStr);
 	const prevTimeout = getLocalStrage('tag-suggestion-timeout');
 	if (prevTimeout) clearTimeout(prevTimeout);
 	setLocalStrage('tag-suggestion-timeout', setTimeout(() => {
@@ -1536,6 +1538,7 @@ function addTag() {
 	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
 	$input.val('');
 	toggleClearTagBtn();
+	$(Swal.getConfirmButton()).prop('disabled', false);
 	if (newTag && /[^#]/.test(newTag) && $tagList.find('li.DlgTagItem.CurrentTagItem').length < tagMaxNum) {
 		const $newTagRow = generateCurrentTagRow(newTag);
 		const newTagText = $newTagRow.find('.DlgTagName').text()

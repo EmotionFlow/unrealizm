@@ -299,7 +299,7 @@ if (requestId > 0) {
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> readonly onclick="showSetTagDlg({placeholder: '<%=_TEX.T("IllustV.Description.Tag.Info")%>', header: '<%=_TEX.T("IllustV.Description.Tag.ListHeader")%>', blankMsg: '<%=_TEX.T("IllustV.Description.Tag.Blank")%>'})" data-tag-max-num="<%=Common.TAG_MAX_NUM%>" data-tag-max-length="<%=Common.TAG_MAX_LENGTH%>"/>
+					<input id="EditTagList" class="EditTagList" type="text" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" <%if(!strTag.isEmpty()){%>value="#<%=Util.toStringHtml(strTag)%>"<%}%> readonly onclick="showSetTagDlg({placeholder: '<%=_TEX.T("IllustV.Description.Tag.Info")%>', header: '<%=_TEX.T("IllustV.Description.Tag.ListHeader")%>', blankMsg: '<%=_TEX.T("IllustV.Description.Tag.Blank")%>', doneMsg: '<%=_TEX.T("IllustV.Description.Tag.Done")%>'})" data-tag-max-num="<%=Common.TAG_MAX_NUM%>" data-tag-max-length="<%=Common.TAG_MAX_LENGTH%>"/>
 				</div>
 
 				<div class="UoloadCmdOption">
