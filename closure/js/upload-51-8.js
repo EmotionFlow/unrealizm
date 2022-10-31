@@ -1467,7 +1467,9 @@ function clearTagSearchInput() {
 function onTagInput() {
 	const $input = $('#TagSearchBox');
 	const inputStr = $input.val();
-	if (/\s$/.test(inputStr)) $input.val(inputStr.replace(/\s/g, ''));
+	if (/\s/.test(inputStr)) $input.val(inputStr.replace(/\s/g, ''));
+	if (/^#{3,}/.test(inputStr)) $input.val(inputStr.replace(/^#{3,}/, '##'));
+	if (/[^#]#/.test(inputStr)) $input.val(inputStr.replace(/([^#])#/g, '$1'));
 	toggleClearTagBtn();
 	const prevTimeout = getLocalStrage('tag-suggestion-timeout');
 	if (prevTimeout) clearTimeout(prevTimeout);
@@ -1534,7 +1536,7 @@ function addTag() {
 	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
 	$input.val('');
 	toggleClearTagBtn();
-	if (newTag && $tagList.find('li.DlgTagItem.CurrentTagItem').length < tagMaxNum) {
+	if (newTag && /[^#]/.test(newTag) && $tagList.find('li.DlgTagItem.CurrentTagItem').length < tagMaxNum) {
 		const $newTagRow = generateCurrentTagRow(newTag);
 		const newTagText = $newTagRow.find('.DlgTagName').text()
 		if(!getTagsInDlg().includes(newTagText)) $tagList.append(generateCurrentTagRow(newTag));
