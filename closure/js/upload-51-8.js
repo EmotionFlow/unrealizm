@@ -1389,7 +1389,7 @@ function initUploadParams(tweetEnabled) {
 	setUploadParams(uploadParams);
 }
 
-function showSetTagDlg() {
+function showSetTagDlg(txt={placeholder:'', header: '', blankMsg:''}) {
 	function getSetTagDlgHtml() {
 		const tagMaxLength = $('#EditTagList').data('tag-max-length');
 		const dlgHtml = `
@@ -1397,7 +1397,7 @@ function showSetTagDlg() {
 	<form id="TagSearchWrapper" class="TagSearchWrapper" onsubmit="return addTag()">
 		<div class="TagSearch">
 			<div class="TagSearchInputWrapper">
-				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="${tagMaxLength}" placeholder="タグを入力 | ##でマイタグ" value="" autocomplete="off" enterkeyhint="done" oninput="onTagInput()">
+				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="${tagMaxLength}" placeholder="${txt.placeholder}" value="" autocomplete="off" enterkeyhint="done" oninput="onTagInput()">
 				<div id="TagSearchClear" class="TagSearchClear">
 					<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
 				</div>
@@ -1406,10 +1406,10 @@ function showSetTagDlg() {
 	</form>
 	<div id="CurrentTagWrapper" class="DlgTagListWrapper">
 		<div class="CurrentTagHeader">
-			<span>設定中のタグ</span>
+			<span>${txt.header}</span>
 			<span id="CurrentTagNum"></span>
 		</div>
-		<ul id="CurrentTagList" class="DlgTagList"></ul>
+		<ul id="CurrentTagList" class="DlgTagList" data-blank-msg="${txt.blankMsg}"></ul>
 	</div>
 	<div id="TagSuggestionWrapper" class="DlgTagListWrapper">
 		<div class="TagSuggestionHeader"></div>
@@ -1513,7 +1513,7 @@ function showCurrentTags(refresh=false) {
 	} else if (!$('li.CurrentTagBlankRow').length) {
 		const $li = $('<li></li>', { class: 'CurrentTagBlankRow' });
 		const $row = $('<div></div>', { class: 'DlgTagRow' });
-		const $item = $('<div></div>', { class: 'DlgTagNameBlank', text: 'タグはありません' });
+		const $item = $('<div></div>', { class: 'DlgTagNameBlank', text: $tagList.data('blank-msg') });
 		$tagList.append($li.append($row.append($item)));
 	}
 }
