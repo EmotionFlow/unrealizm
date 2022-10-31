@@ -450,7 +450,7 @@ public final class CCnv {
 	public static void appendIllustItemThumb2MiniList(StringBuilder strRtn, CContent cContent) {
 		strRtn.append(
 				"""
-                <a class="IllustItemThumb" href="javascript:void(0)" onclick="showIllustDetail(%d,%d,-1)">
+                <a class="IllustItemThumb" href="javascript:void(0)" href="/%d/%d.html">
 				""".formatted(cContent.m_nUserId, cContent.m_nContentId)
 		);
 		strRtn.append(String.format(

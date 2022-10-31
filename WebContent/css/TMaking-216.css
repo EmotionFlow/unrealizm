@@ -1209,6 +1209,13 @@ Decoration
 	margin-right: 3px;
 }
 
+#EditCategoryLabel {
+	line-height: 30px;
+}
+#EditCategory {
+	font-size: 12px;
+}
+
 .UploadFile {
 	display: block;
 	float: left;
@@ -1301,16 +1308,16 @@ Decoration
 
 .UploadFile .Description .EditDescription,
 .UploadFile .Prompt .EditPrompt {
+	font-size: 11px;
 	display: block;
 	float: left;
 	width: 100%;
-	height: 100px;
+	height: 50px;
 	box-sizing: border-box;
 }
 
 .UploadFile .Prompt .EditPrompt {
-	font-size: 11px;
-	height: 70px;
+	height: 90px;
 	margin-top: 10px;
 }
 
@@ -1322,7 +1329,7 @@ Decoration
 	width: 100%;
 	text-align: right;
 	font-size: 10px;
-	height: 10px;
+	height: 20px;
 	line-height: 10px;
 }
 
@@ -1363,13 +1370,14 @@ Decoration
 
 .UploadFile .TagList .EditTagList,
 .UploadFile .OtherParams .EditOtherParams {
+	font-size: 11px;
 	display: block;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
 }
 .UploadFile .OtherParams .EditOtherParams {
-	font-size: 11px;
+	height: 60px;
 }
 
 .UploadFile .TagList {
@@ -1377,7 +1385,7 @@ Decoration
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	margin: 13px 0 10px 0;
+	margin: 0 0 10px 0;
 	position: relative;
 }
 

@@ -231,32 +231,19 @@ if (requestId > 0) {
 				</div>
 				<%}%>
 
-					<div class="Prompt">
-						<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"></textarea>
-						<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
-					</div>
-
-					<div class="OtherParams">
-						<input id="EditOtherParams" class="EditOtherParams" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()" />
-						<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
-					</div>
-
-
-					<div class="CategoryDesc" style="display: none;">
-					<select id="EditCategory">
-						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-						<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
-						<%}%>
-					</select>
-					<%if(requestId>0){%>
-					<script>
-						$(()=>{$('.CategoryDesc option[value="6"]').prop('selected', true);})
-					</script>
-					<%}%>
+				<div class="CategoryDesc">
+					<span>
+						<label id="EditCategoryLabel" for="EditCategory"><i class="fas fa-terminal"></i> Model: </label>
+						<select id="EditCategory">
+							<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+							<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
+							<%}%>
+						</select>
+					</span>
 
 					<span class="PrivateNote" onclick="privateNote.showEditDlg()">
-						<i class="far fa-sticky-note"></i>
-						<span id="PrivateNoteSummary"><%=_TEX.T("PrivateNote")%></span>
+					<i class="far fa-sticky-note"></i>
+					<span id="PrivateNoteSummary"><%=_TEX.T("PrivateNote")%></span>
 					</span>
 					<script>
 						privateNote.setSummaryElement($("#PrivateNoteSummary"));
@@ -265,6 +252,16 @@ if (requestId > 0) {
 					</script>
 				</div>
 
+
+				<div class="Prompt">
+					<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"></textarea>
+					<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
+				</div>
+
+				<div class="OtherParams">
+					<textarea id="EditOtherParams" class="EditOtherParams" maxlength="<%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()"></textarea>
+					<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
+				</div>
 
 
 				<div class="Description">
