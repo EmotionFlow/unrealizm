@@ -1539,7 +1539,10 @@ function addTag() {
 	if (newTag && /[^#]/.test(newTag) && $tagList.find('li.DlgTagItem.CurrentTagItem').length < tagMaxNum) {
 		const $newTagRow = generateCurrentTagRow(newTag);
 		const newTagText = $newTagRow.find('.DlgTagName').text()
-		if(!getTagsInDlg().includes(newTagText)) $tagList.append(generateCurrentTagRow(newTag));
+		if(!getTagsInDlg().includes(newTagText)) {
+			$tagList.append(generateCurrentTagRow(newTag));
+			$tagList.scrollTop($tagList.children().last().offset().top);
+		}
 	}
 	showCurrentTags();
 	return false;
