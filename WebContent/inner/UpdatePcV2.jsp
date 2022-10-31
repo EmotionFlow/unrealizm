@@ -293,17 +293,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				</div>
 				<%}%>
 
-				<div class="Prompt">
-					<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"><%=Util.toDescString(cResults.m_cContent.aiPrompt)%></textarea>
-					<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
-				</div>
-
-				<div class="OtherParams">
-					<input id="EditOtherParams" class="EditOtherParams" type="text" maxlength="100" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()" <%if(!cResults.m_cContent.aiOtherParams.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.aiOtherParams)%>"<%}%>/>
-					<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
-				</div>
-
-				<div class="CategoryDesc" style="display: none;">
+				<div class="CategoryDesc">
 					<select id="EditCategory">
 						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
@@ -324,6 +314,16 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 						privateNote.setText('<%=Util.toQuotedString(cResults.m_cContent.privateNote, "'")%>');
 						<%}%>
 					</script>
+				</div>
+
+				<div class="Prompt">
+					<textarea id="EditPrompt" class="EditPrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Prompt.Add")%>" onkeyup="DispPromptCharNum()"><%=Util.toDescString(cResults.m_cContent.aiPrompt)%></textarea>
+					<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
+				</div>
+
+				<div class="OtherParams">
+					<textarea id="EditOtherParams" class="EditOtherParams" type="text" maxlength="<%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()"><%=Util.toStringHtml(cResults.m_cContent.aiOtherParams)%></textarea>
+					<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
 				</div>
 
 				<div class="Description">

@@ -22,17 +22,19 @@ public class GetPromptC {
 
 	public String prompt = "";
 	public String otherParams = "";
+	public int categoryId = -1;
 	public boolean getResults(CheckLogin checkLogin) {
 		if (contentId < 0) return false;
 
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement("""
-                SELECT ai_prompt, ai_other_params FROM contents_0000 WHERE content_id = ?
+                SELECT category_id, ai_prompt, ai_other_params FROM contents_0000 WHERE content_id = ?
 				""");
 		) {
 			statement.setInt(1, contentId);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
+				categoryId = resultSet.getInt("category_id");
 				prompt = resultSet.getString("ai_prompt");
 				otherParams = resultSet.getString("ai_other_params");
 			}

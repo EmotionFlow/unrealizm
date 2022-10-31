@@ -225,8 +225,8 @@ final String myPagePath = isApp ? "/IllustListAppV.jsp?ID=" + checkLogin.m_nUser
 					<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 						CContent cContent = cResults.m_vContentList.get(nCnt);%>
 						<%=CCnv.toMyBoxThumbHtml(cContent, checkLogin, CCnv.MODE_SP, !isApp ? CCnv.SP_MODE_WVIEW : CCnv.SP_MODE_APP, _TEX)%>
-						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>
-						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>
+<%--						<%if(nCnt==14) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%><%}%>--%>
+<%--						<%if(nCnt==29) {%><%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%><%}%>--%>
 					<%}%>
 				<%}else{%>
 					<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>

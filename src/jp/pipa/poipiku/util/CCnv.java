@@ -109,18 +109,18 @@ public final class CCnv {
 		return (cContent.m_nFileNum>1)?String.format("<i class=\"far fa-images\"></i> %d", cContent.m_nFileNum):"";
 	}
 	private static void appendIllustItemCategory(StringBuilder strRtn, final CContent cContent, final String SEARCH_CATEGORY, final ResourceBundleControl _TEX, final int loginUserId){
-//		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
-//		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
-//				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
-//				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
-//		strRtn.append("</h2>");
-//		if (cContent.m_nRequestId>0) {
-//			strRtn.append("<h2 class=\"IllustItemCategory\">");
-//			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
-//					cContent.m_nRequestId, _TEX.T("Request")
-//			));
-//			strRtn.append("</h2>");
-//		}
+		strRtn.append(String.format("<h2 id=\"IllustItemCategory_%d\" class=\"IllustItemCategory\">", cContent.m_nContentId));
+		strRtn.append(String.format("<a class=\"Category C%d\" href=\"%s?CD=%s\">%s</a>",
+				cContent.m_nCategoryId, SEARCH_CATEGORY, cContent.m_nCategoryId,
+				_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))));
+		strRtn.append("</h2>");
+		if (cContent.m_nRequestId>0) {
+			strRtn.append("<h2 class=\"IllustItemCategory\">");
+			strRtn.append(String.format("<a class=\"Request\" href=\"javascript:void(0)\" onclick=\"dispRequestDlg(%d)\">%s</a>",
+					cContent.m_nRequestId, _TEX.T("Request")
+			));
+			strRtn.append("</h2>");
+		}
 	}
 
 	private static void appendIllustItemCommandSub(StringBuilder strRtn, CContent cContent, int nLoginUserId, int nMode, int nSpMode, String REPORT_FORM, ResourceBundleControl _TEX, PageCategory pageCategory){
@@ -249,7 +249,7 @@ public final class CCnv {
 				(prompt.isEmpty())?"style=\"display: none;\"":"",
 				cContent.m_nContentId
 		));
-		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt);
+		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt + " <i class=\"fas fa-angle-double-right\"></i>");
 		strRtn.append("</h1>");
 	}
 
@@ -450,7 +450,7 @@ public final class CCnv {
 	public static void appendIllustItemThumb2MiniList(StringBuilder strRtn, CContent cContent) {
 		strRtn.append(
 				"""
-                <a class="IllustItemThumb" href="javascript:void(0)" onclick="showIllustDetail(%d,%d,-1)">
+                <a class="IllustItemThumb" href="/%d/%d.html">
 				""".formatted(cContent.m_nUserId, cContent.m_nContentId)
 		);
 		strRtn.append(String.format(
@@ -763,11 +763,11 @@ public final class CCnv {
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, pageCategory);
 		strRtn.append("</div>");	// IllustItemCommand
 
-		// キャプション
-		appendIllustItemDesc(strRtn, cContent, nMode);
-
 		// プロンプト
 		appendIllustItemPrompt(strRtn, cContent, nMode);
+
+		// キャプション
+		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
@@ -813,6 +813,7 @@ public final class CCnv {
 		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		final String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
+		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 
 		final String strThumbCssClass = getThumbClass(cContent);
 
@@ -823,17 +824,20 @@ public final class CCnv {
 		// ユーザ名とフォローボタン
 		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, false, false);
 
-		// キャプション
-		appendIllustItemDesc(strRtn, cContent, nMode);
+		// カテゴリー
+		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
 
 		// プロンプト
 		appendIllustItemPrompt(strRtn, cContent, nMode);
+
+		// キャプション
+		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// 画像orテキスト
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 全て表示ボタン
-		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
+//		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
@@ -1177,14 +1181,14 @@ public final class CCnv {
 			// カテゴリ系情報
 			strRtn.append("<span class=\"IllustInfo IllustMeta\">");
 			// カテゴリ
-			//		strRtn.append(
-			//				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
-			//						SEARCH_CATEGORY,
-			//						cContent.m_nCategoryId,
-			//						cContent.m_nCategoryId,
-			//						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
-			//				)
-			//		);
+			strRtn.append(
+					String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
+							SEARCH_CATEGORY,
+							cContent.m_nCategoryId,
+							cContent.m_nCategoryId,
+							_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+					)
+			);
 
 			// Pin, Note
 			if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
@@ -1196,6 +1200,9 @@ public final class CCnv {
 			}
 			strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
 		}
+
+		// プロンプト
+		appendIllustItemPrompt(strRtn, cContent, nMode);
 
 		// イラスト情報
 		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));

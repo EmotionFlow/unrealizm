@@ -471,15 +471,15 @@
 	line-height: 20px;
 	padding: 0 10px;
 	margin: 0;
-	border: solid 1px #fff;
+	border: solid 1px #e6e6e6;
 	border-left: none;
-	background-color: #3498dc;
+	background-color: #246b9a;
 	color: #ffffff;
 	min-width: 60px;
 }
-.CategoryMenu .CategoryBtn:first-child {border-left: solid 1px #fff; border-radius: 20px 0 0 20px;}
-.CategoryMenu .CategoryBtn:last-child {border-radius: 0 20px 20px 0;}
-.CategoryMenu .CategoryBtn.Selected {background-color: #ffffff; color: #3498dc;}
+.CategoryMenu .CategoryBtn:first-child {border-left: solid 1px #e6e6e6; border-radius: 2px 0 0 2px;}
+.CategoryMenu .CategoryBtn:last-child {border-radius: 0 2px 2px 0;}
+.CategoryMenu .CategoryBtn.Selected {background-color: #ffffff; color: #21628a;}
 .CategoryMenu .CategoryBtn.Disabled {color: #61ade2;}
 
 
@@ -715,7 +715,6 @@
 	overflow: hidden;
 	white-space: nowrap;
 	box-sizing: border-box;
-	border-radius: 22px;
 	min-width: 50px;
 	max-width: 100%;
 	height: 20px;
@@ -1209,6 +1208,13 @@ Decoration
 	margin-right: 3px;
 }
 
+#EditCategoryLabel {
+	line-height: 30px;
+}
+#EditCategory {
+	font-size: 12px;
+}
+
 .UploadFile {
 	display: block;
 	float: left;
@@ -1301,16 +1307,16 @@ Decoration
 
 .UploadFile .Description .EditDescription,
 .UploadFile .Prompt .EditPrompt {
+	font-size: 11px;
 	display: block;
 	float: left;
 	width: 100%;
-	height: 100px;
+	height: 50px;
 	box-sizing: border-box;
 }
 
 .UploadFile .Prompt .EditPrompt {
-	font-size: 11px;
-	height: 70px;
+	height: 90px;
 	margin-top: 10px;
 }
 
@@ -1322,7 +1328,7 @@ Decoration
 	width: 100%;
 	text-align: right;
 	font-size: 10px;
-	height: 10px;
+	height: 20px;
 	line-height: 10px;
 }
 
@@ -1363,13 +1369,14 @@ Decoration
 
 .UploadFile .TagList .EditTagList,
 .UploadFile .OtherParams .EditOtherParams {
+	font-size: 11px;
 	display: block;
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
 }
 .UploadFile .OtherParams .EditOtherParams {
-	font-size: 11px;
+	height: 60px;
 }
 
 .UploadFile .TagList {
@@ -1377,7 +1384,7 @@ Decoration
 	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	margin: 13px 0 10px 0;
+	margin: 0 0 10px 0;
 	position: relative;
 }
 
@@ -1894,12 +1901,15 @@ Decoration
 	box-sizing: border-box;
 	overflow: hidden;
 	white-space: nowrap;
-	border-radius: 22px;
 	height: 24px;
 	line-height: 24px;
 	margin: 0 0 5px 0;
 	padding: 0 10px;
 	min-width: 70px;
+}
+
+.IllustItemList2Column .IllustItem .Category {
+	font-size: 12px;
 }
 
 .Category.C-1 {
@@ -1912,57 +1922,77 @@ Decoration
 }
 
 .Category.C0 {
-	background-color: #ecec01;
-	color: #555;
+	background-color: #e7e7e7;
+	color: #555555;
 }
+
 .CategoryBtn.C0 {
-	border-color: #ecec01;
-	color: #ecec01;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 
 .Category.C1 {
-	background-color: #eb7f10;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 .CategoryBtn.C1 {
-	border-color: #eb7f10;
-	color: #eb7f10;
+	background-color: #e7e7e7;
+	color: #555555;
 }
 
 .Category.C2 {
-	background-color: #ea541a;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 .CategoryBtn.C2 {
-	border-color: #ea541a;
-	color: #ea541a;
+	background-color: #e7e7e7;
+	color: #555555;
 }
 
 .Category.C3 {
-	background-color: #d20000;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 .CategoryBtn.C3 {
-	border-color: #d20000;
-	color: #d20000;
+	background-color: #e7e7e7;
+	color: #555555;
 }
 
 .Category.C4 {
-	background-color: #bfda80;
-	color: #555;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 .CategoryBtn.C4 {
-	border-color: #bfda80;
-	color: #bfda80;
+	background-color: #e7e7e7;
+	color: #555555;
 }
 
 .Category.C5 {
-	background-color: #34cca4;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 .CategoryBtn.C5 {
-	border-color: #34cca4;
-	color: #34cca4;
+	background-color: #e7e7e7;
+	color: #555555;
 }
 
 .Category.C6 {
-	background-color: #55bbdd;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 .CategoryBtn.C6 {
 	border-color: #55bbdd;
@@ -2235,6 +2265,12 @@ Decoration
 	font-size: 12px;
 	color: #6d6965;
 	font-family: serif;
+}
+
+.IllustItem .IllustItemPrompt .fa-terminal,
+.IllustItem .IllustItemPrompt .fa-angle-double-right{
+	padding: 2px 0;
+	color: #3498dc;
 }
 
 .IllustItemList2Column .IllustItem .IllustItemDesc {

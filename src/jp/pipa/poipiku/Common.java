@@ -166,42 +166,16 @@ public final class Common {
 	public static final int SAFE_FILTER_MAX = 8;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 32;
+	public static final int CATEGORY_ID_MAX = 6;
+	public static final int CATEGORY_ID_OTHER = 0;
 	public static final int[] CATEGORY_ID = {
-			4,	// らくがき
-			6,	// できた
-			10,	// 作業進捗
-			7,	// 過去絵を晒す
-			9,	// 供養
-			5,	// 自主練
-			23,	// ネタバレ
-			17,	// メモ
-			30,	// 尻を叩く
-			15,	// 描きかけ
-			16,	// 描けねえ
-			22,	// リハビリ
-			32,	// お品書き
-			14,	// お知らせ
-
-//			0,	// いちほ
-//			1,	// 飽きた
-//			2,	// 力尽きた
-//			3,	// ボツ
-//			8,	// 黒歴史
-//			11,	// 放置絵を晒す
-//			11,	// 放置中
-//			12,	// 挫折
-//			13,	// 使い回しハロウィン
-//			18,	// ほぼ白紙
-//			19, // 使い回しクリスマス
-//			21, // 公式
-//			24,	// 使いまわしバレンタイン
-//			25,	// 胸キュン
-//			26,	// 今年の振り返り
-//			27, // 煩悩を晒せ
-//			28,	// 200万祝ってください
-//			29,	// 腐女子は見た
-//			31,	// 1111
+			1, // Stable-Diffusion
+			2, // Midjourney
+			3, // NovelAI
+			4, // DALL-E
+			5, // AIピカソ
+			6, // mimic
+			CATEGORY_ID_OTHER, // その他
 	};
 
 	public static final int EDITOR_UPLOAD = 0;
@@ -216,10 +190,10 @@ public final class Common {
 
 	public static final int[][] EDITOR_DESC_MAX = {
 			// normal, PASSPORT
-			{200, 3000},
-			{200, 3000},
-			{200, 3000},
-			{200, 3000}
+			{100, 100},
+			{100, 100},
+			{100, 100},
+			{100, 100}
 	};
 
 	public static final int[][] EDITOR_TEXT_MAX = {
@@ -266,10 +240,10 @@ public final class Common {
 
 	public static final int[][] EDITOR_OTHER_PARAMS_MAX = {
 			// normal, PASSPORT
-			{300, 300},
-			{300, 300},
-			{300, 300},
-			{300, 300}
+			{1000, 1000},
+			{1000, 1000},
+			{1000, 1000},
+			{1000, 1000},
 	};
 
 

@@ -1634,4 +1634,13 @@ function DispPromptDlg(contentId) {
 		});
 	})
 }
+
+function copyTxtToClipBoard(textAreaId, buttonElement){
+	document.getElementById(textAreaId).select();
+	document.execCommand("copy");
+	let checkIcon = document.createElement("i");
+	checkIcon.className = "fas fa-check";
+	buttonElement.appendChild(checkIcon);
+}
+
 /******** AI prompt *********/
