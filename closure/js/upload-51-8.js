@@ -1406,7 +1406,6 @@ function showSetTagDlg(txt={placeholder:'', header: '', blankMsg:'', doneMsg: 'O
 	</form>
 	<div id="CurrentTagWrapper" class="DlgTagListWrapper">
 		<div class="CurrentTagHeader">
-			<span>${txt.header}</span>
 			<span id="CurrentTagNum"></span>
 		</div>
 		<ul id="CurrentTagList" class="DlgTagList" data-blank-msg="${txt.blankMsg}"></ul>

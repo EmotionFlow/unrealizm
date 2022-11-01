@@ -280,7 +280,15 @@
 .TagDlgWrapper .TagSearch .TagSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 5px;}
 .TagDlgWrapper .TagSearch .TagSearchClear {display: inline-block; color: #3498dbaa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size: 20px;}
 
-.TagDlgWrapper .CurrentTagHeader {color: #6d6965; font-size: 16px; font-weight: bold; padding: 18px; text-align: left; height: 24px;}
+.TagDlgWrapper .CurrentTagHeader {
+	color: #6d6965;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 18px;
+	text-align: right;
+	height: 24px;
+}
+
 .TagDlgWrapper .DlgTagList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; max-height: calc(60vh - 110px); margin: 0; overflow-y: auto;}
 .TagDlgWrapper .DlgTagList.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%; height: 28px; background-size: contain}
 
