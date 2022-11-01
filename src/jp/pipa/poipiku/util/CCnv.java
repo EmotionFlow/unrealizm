@@ -763,11 +763,11 @@ public final class CCnv {
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, pageCategory);
 		strRtn.append("</div>");	// IllustItemCommand
 
-		// プロンプト
-		appendIllustItemPrompt(strRtn, cContent, nMode);
-
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
+
+		// プロンプト
+		appendIllustItemPrompt(strRtn, cContent, nMode);
 
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
@@ -813,7 +813,6 @@ public final class CCnv {
 		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		final String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
-		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 
 		final String strThumbCssClass = getThumbClass(cContent);
 
@@ -824,20 +823,17 @@ public final class CCnv {
 		// ユーザ名とフォローボタン
 		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, false, false);
 
-		// カテゴリー
-		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, nLoginUserId);
+		// キャプション
+		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// プロンプト
 		appendIllustItemPrompt(strRtn, cContent, nMode);
-
-		// キャプション
-		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// 画像orテキスト
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 全て表示ボタン
-//		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
+		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
@@ -1181,14 +1177,14 @@ public final class CCnv {
 			// カテゴリ系情報
 			strRtn.append("<span class=\"IllustInfo IllustMeta\">");
 			// カテゴリ
-			strRtn.append(
-					String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
-							SEARCH_CATEGORY,
-							cContent.m_nCategoryId,
-							cContent.m_nCategoryId,
-							_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
-					)
-			);
+			//		strRtn.append(
+			//				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
+			//						SEARCH_CATEGORY,
+			//						cContent.m_nCategoryId,
+			//						cContent.m_nCategoryId,
+			//						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+			//				)
+			//		);
 
 			// Pin, Note
 			if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
@@ -1200,9 +1196,6 @@ public final class CCnv {
 			}
 			strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
 		}
-
-		// プロンプト
-		appendIllustItemPrompt(strRtn, cContent, nMode);
 
 		// イラスト情報
 		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
