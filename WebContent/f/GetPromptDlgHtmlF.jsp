@@ -68,6 +68,7 @@ if (!result) return;
     <div class="PromptDlgGo">
         <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion" target="_blank">Stable Diffusion Demo </a>
         <a href="https://www.mage.space/" target="_blank">mage.space</a>
+        <a href="https://novelai.net/" target="_blank">NovelAI</a>
         <a href="https://www.midjourney.com/home/" target="_blank">Midjourney</a>
         <a href="https://openai.com/dall-e-2/" target="_blank">DALL-E 2</a>
         <a href="https://apps.apple.com/jp/app/ai%E3%83%94%E3%82%AB%E3%82%BD-ai%E3%81%8A%E7%B5%B5%E6%8F%8F%E3%81%8D%E3%82%A2%E3%83%97%E3%83%AA/id1642181654" target="_blank">AIピカソ</a>
