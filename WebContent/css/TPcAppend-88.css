@@ -62,7 +62,7 @@ body {padding: 51px 0 0 0 !important;}
 .IllustThumb .Category {font-size: 12px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
 .IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
 .IllustThumb.Hidden .Category:before {font-size: 14px;}
-.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 14px; height: 40px; line-height: 20px; -webkit-line-clamp: 2;}
+.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 14px; line-height: 20px; -webkit-line-clamp: 2;}
 
 .IllustThumb .IllustThumbImg {box-sizing: border-box; height: 164px;}
 .IllustThumb .IllustThumbText {box-sizing: border-box; height: 164px; padding: 1px 3px;}

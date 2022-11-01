@@ -1173,19 +1173,19 @@ public final class CCnv {
 			strRtn.append("</a>");    // IllustItemUser
 		}
 
-		if (pageCategory == PageCategory.MY_BOX) {
-			// カテゴリ系情報
-			strRtn.append("<span class=\"IllustInfo IllustMeta\">");
-			// カテゴリ
-			strRtn.append(
-					String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
-							SEARCH_CATEGORY,
-							cContent.m_nCategoryId,
-							cContent.m_nCategoryId,
-							_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
-					)
-			);
+		// カテゴリ系情報
+		strRtn.append("<span class=\"IllustInfo IllustMeta\">");
+		// カテゴリ
+		strRtn.append(
+				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
+						SEARCH_CATEGORY,
+						cContent.m_nCategoryId,
+						cContent.m_nCategoryId,
+						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+				)
+		);
 
+		if (pageCategory == PageCategory.MY_BOX) {
 			// Pin, Note
 			if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
 				strRtn.append("<span class=\"IllustInfoPin fas fa-thumbtack\"></span>");
@@ -1194,8 +1194,8 @@ public final class CCnv {
 						Util.toQuotedString(cContent.privateNote, "'") +
 						"')\"></span>");
 			}
-			strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
 		}
+		strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
 
 		// プロンプト
 		String prompt = cContent.aiPrompt;
@@ -1203,9 +1203,11 @@ public final class CCnv {
 			prompt = prompt.substring(0, 15) + "...";
 		}
 		strRtn.append("""
-                <span class="IllustInfoPrompt" onclick="DispPromptDlg(%d)"><i class="fas fa-terminal"></i> %s</span>
+                <span class="IllustInfoPrompt" onclick="DispPromptDlg(%d)">
+                    <i class="fas fa-terminal"></i> %s
+                    <span class="ShowMorePrompt">more</span>
+                </span>
 				""".formatted(cContent.m_nContentId, prompt));
-
 		// イラスト情報
 //		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
 		strRtn.append("<a class=\"IllustInfo\" href=\"javascript: void(0);\">");
