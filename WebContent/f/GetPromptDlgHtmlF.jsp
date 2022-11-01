@@ -48,6 +48,7 @@ if (!result) return;
         padding: 2px 4px;
         margin: 8px 4px;
         line-height: 30px;
+        word-break: keep-all;
     }
 </style>
 <div class="PromptDlg">
