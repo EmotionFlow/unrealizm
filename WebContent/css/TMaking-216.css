@@ -876,7 +876,7 @@ Decoration
 	display: block;
 	width: 100%;
 	font-size: 11px;
-	height: 30px;
+	height: 15px;
 	line-height: 15px;
 	overflow: hidden;
 	color: #6d6965;
@@ -884,6 +884,26 @@ Decoration
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 }
+
+.IllustThumb .IllustInfoPrompt {
+	display: block;
+	width: 100%;
+	font-size: 11px;
+	font-family: serif;
+	height: 15px;
+	line-height: 15px;
+	overflow: hidden;
+	color: #6d6965;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+}
+
+.IllustThumb .IllustInfoPrompt .fa-terminal{
+	font-size: 10px;
+}
+
+
 .IllustThumb .IllustInfoCenter {
 	display: block;
 	box-sizing: border-box;
@@ -2270,6 +2290,11 @@ Decoration
 .IllustItem .IllustItemPrompt .fa-terminal,
 .IllustItem .IllustItemPrompt .fa-angle-double-right{
 	padding: 2px 0;
+}
+
+.ShowMorePrompt {
+	text-decoration: underline;
+	font-family: sans-serif;
 	color: #3498dc;
 }
 

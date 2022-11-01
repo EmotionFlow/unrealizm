@@ -249,7 +249,7 @@ public final class CCnv {
 				(prompt.isEmpty())?"style=\"display: none;\"":"",
 				cContent.m_nContentId
 		));
-		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt + " <i class=\"fas fa-angle-double-right\"></i>");
+		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt + " <span class=\"ShowMorePrompt\">more<span>");
 		strRtn.append("</h1>");
 	}
 
@@ -763,11 +763,11 @@ public final class CCnv {
 		appendIllustItemCommandSub(strRtn, cContent, nLoginUserId, nMode, nSpMode, REPORT_FORM, _TEX, pageCategory);
 		strRtn.append("</div>");	// IllustItemCommand
 
-		// キャプション
-		appendIllustItemDesc(strRtn, cContent, nMode);
-
 		// プロンプト
 		appendIllustItemPrompt(strRtn, cContent, nMode);
+
+		// キャプション
+		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
@@ -1177,14 +1177,14 @@ public final class CCnv {
 			// カテゴリ系情報
 			strRtn.append("<span class=\"IllustInfo IllustMeta\">");
 			// カテゴリ
-			//		strRtn.append(
-			//				String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
-			//						SEARCH_CATEGORY,
-			//						cContent.m_nCategoryId,
-			//						cContent.m_nCategoryId,
-			//						_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
-			//				)
-			//		);
+			strRtn.append(
+					String.format("<a class=\"CategoryInfo\" href=\"%s?CD=%d\"><span class=\"Category C%d\">%s</span></a>",
+							SEARCH_CATEGORY,
+							cContent.m_nCategoryId,
+							cContent.m_nCategoryId,
+							_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))
+					)
+			);
 
 			// Pin, Note
 			if (pageCategory == PageCategory.MY_BOX && cContent.pinOrder > 0) {
@@ -1197,8 +1197,19 @@ public final class CCnv {
 			strRtn.append("</span>");    // カテゴリ系情報(IllustInfo)
 		}
 
+		// プロンプト
+		String prompt = cContent.aiPrompt;
+		if (prompt.length() > 15) {
+			prompt = prompt.substring(0, 15) + "...";
+		}
+		strRtn.append("""
+                <span class="IllustInfoPrompt" onclick="DispPromptDlg(%d)"><i class="fas fa-terminal"></i> %s</span>
+				""".formatted(cContent.m_nContentId, prompt));
+
 		// イラスト情報
-		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
+//		strRtn.append(String.format("<a class=\"IllustInfo\" href=\"%s\">", ILLUST_VIEW));
+		strRtn.append("<a class=\"IllustInfo\" href=\"javascript: void(0);\">");
+
 		// キャプション
 		final String description =
 				(cContent.m_strDescriptionTranslated!=null&&!cContent.m_strDescriptionTranslated.isEmpty())
