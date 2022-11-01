@@ -239,9 +239,9 @@ public final class CCnv {
 	private static void appendIllustItemPrompt(StringBuilder strRtn, CContent cContent, int nMode){
 		String prompt = cContent.aiPrompt;
 
-		if (prompt.length() >= 70) {
-			prompt = prompt.substring(0, 70);
-			prompt += " ...";
+		if (prompt.length() >= 50) {
+			prompt = prompt.substring(0, 50);
+			prompt += "...";
 		}
 
 		strRtn.append("<h1 id=\"IllustItemPrompt_%d\" class=\"IllustItemPrompt\" %s onclick=\"DispPromptDlg(%d)\">".formatted(
@@ -813,6 +813,7 @@ public final class CCnv {
 		final String ILLUST_LIST = getIllustListContext(nSpMode, cContent.m_nUserId);
 		final String ILLUST_DETAIL = getIllustFromContext(nMode, nSpMode);
 		final String ILLUST_VIEW = getIllustViewContext(nMode, nSpMode, cContent);
+		final String SEARCH_CATEGORY = getSearchCategoryContext(nMode, nSpMode);
 
 		final String strThumbCssClass = getThumbClass(cContent);
 
@@ -823,17 +824,20 @@ public final class CCnv {
 		// ユーザ名とフォローボタン
 		appendIllustItemUser(strRtn, cContent, nLoginUserId, _TEX, ILLUST_LIST, false, false, false);
 
-		// キャプション
-		appendIllustItemDesc(strRtn, cContent, nMode);
+		// カテゴリー
+		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, checkLogin.m_nUserId);
 
 		// プロンプト
 		appendIllustItemPrompt(strRtn, cContent, nMode);
+
+		// キャプション
+		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// 画像orテキスト
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// 全て表示ボタン
-		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
+//		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
