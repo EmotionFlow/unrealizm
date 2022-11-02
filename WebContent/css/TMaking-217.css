@@ -2022,9 +2022,12 @@ Decoration
 }
 
 .ShowMorePrompt {
-	text-decoration: underline;
 	font-family: sans-serif;
+	border: solid 1px;
 	color: #3498dc;
+	padding: 1px 3px;
+	border-radius: 5px;
+	font-size: 10px;
 }
 
 .IllustItemList2Column .IllustItem .IllustItemDesc {

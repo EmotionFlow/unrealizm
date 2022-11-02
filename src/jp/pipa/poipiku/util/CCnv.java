@@ -236,7 +236,7 @@ public final class CCnv {
 		}
 	}
 
-	private static void appendIllustItemPrompt(StringBuilder strRtn, CContent cContent, int nMode){
+	private static void appendIllustItemPrompt(StringBuilder strRtn, CContent cContent, ResourceBundleControl _TEX){
 		String prompt = cContent.aiPrompt;
 
 		if (prompt.length() >= 50) {
@@ -249,7 +249,7 @@ public final class CCnv {
 				(prompt.isEmpty())?"style=\"display: none;\"":"",
 				cContent.m_nContentId
 		));
-		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt + " <span class=\"ShowMorePrompt\">more<span>");
+		strRtn.append("<i class=\"fas fa-terminal\"></i> " + prompt + " <span class=\"ShowMorePrompt\">" + _TEX.T("Common.IllustItemPrompt.MorePrompt") + "</span>");
 		strRtn.append("</h1>");
 	}
 
@@ -764,7 +764,7 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustItemCommand
 
 		// プロンプト
-		appendIllustItemPrompt(strRtn, cContent, nMode);
+		appendIllustItemPrompt(strRtn, cContent, _TEX);
 
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
@@ -828,7 +828,7 @@ public final class CCnv {
 		appendIllustItemCategory(strRtn, cContent, SEARCH_CATEGORY, _TEX, checkLogin.m_nUserId);
 
 		// プロンプト
-		appendIllustItemPrompt(strRtn, cContent, nMode);
+		appendIllustItemPrompt(strRtn, cContent, _TEX);
 
 		// キャプション
 		appendIllustItemDesc(strRtn, cContent, nMode);
@@ -895,7 +895,7 @@ public final class CCnv {
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// プロンプト
-		appendIllustItemPrompt(strRtn, cContent, nMode);
+		appendIllustItemPrompt(strRtn, cContent, _TEX);
 
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
@@ -1100,7 +1100,7 @@ public final class CCnv {
 		appendIllustItemDesc(strRtn, cContent, nMode);
 
 		// プロンプト
-		appendIllustItemPrompt(strRtn, cContent, nMode);
+		appendIllustItemPrompt(strRtn, cContent, _TEX);
 
 		// タグ
 		appendTag(strRtn, checkLogin, cContent, nMode, nSpMode);
