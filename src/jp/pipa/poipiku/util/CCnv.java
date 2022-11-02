@@ -455,7 +455,7 @@ public final class CCnv {
 		);
 		strRtn.append(String.format(
 				ILLUST_ITEM_THUMB_IMG_FMT,
-				Common.GetUrl(cContent.thumbImgUrl)
+				Common.GetUrl(cContent.thumbImgSmallUrl)
 		));
 		strRtn.append("</a>");
 	}
