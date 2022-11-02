@@ -1941,317 +1941,43 @@ Decoration
 	color: #6d6965;
 }
 
-.Category.C0 {
-	background-color: #e7e7e7;
-	color: #555555;
-}
-
-.CategoryBtn.C0 {
+.Category.C0,
+.Category.C1,
+.Category.C2,
+.Category.C3,
+.Category.C4,
+.Category.C5,
+.Category.C6,
+.Category.C7,
+.Category.C8,
+.Category.C9,
+.Category.C10,
+.Category.C11
+{
 	background: none;
 	border-bottom: 1px solid #e7e7e7;
 	border-right: 1px solid #e7e7e7;
 	color: #21628a;
 }
 
-.Category.C1 {
+.CategoryBtn.C0,
+.CategoryBtn.C1,
+.CategoryBtn.C2,
+.CategoryBtn.C3,
+.CategoryBtn.C4,
+.CategoryBtn.C5,
+.CategoryBtn.C6,
+.CategoryBtn.C7,
+.CategoryBtn.C8,
+.CategoryBtn.C9,
+.CategoryBtn.C10,
+.CategoryBtn.C11
+{
 	background: none;
 	border-bottom: 1px solid #e7e7e7;
 	border-right: 1px solid #e7e7e7;
 	color: #21628a;
 }
-.CategoryBtn.C1 {
-	background-color: #e7e7e7;
-	color: #555555;
-}
-
-.Category.C2 {
-	background: none;
-	border-bottom: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
-	color: #21628a;
-}
-.CategoryBtn.C2 {
-	background-color: #e7e7e7;
-	color: #555555;
-}
-
-.Category.C3 {
-	background: none;
-	border-bottom: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
-	color: #21628a;
-}
-.CategoryBtn.C3 {
-	background-color: #e7e7e7;
-	color: #555555;
-}
-
-.Category.C4 {
-	background: none;
-	border-bottom: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
-	color: #21628a;
-}
-.CategoryBtn.C4 {
-	background-color: #e7e7e7;
-	color: #555555;
-}
-
-.Category.C5 {
-	background: none;
-	border-bottom: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
-	color: #21628a;
-}
-.CategoryBtn.C5 {
-	background-color: #e7e7e7;
-	color: #555555;
-}
-
-.Category.C6 {
-	background: none;
-	border-bottom: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
-	color: #21628a;
-}
-.CategoryBtn.C6 {
-	border-color: #55bbdd;
-	color: #55bbdd;
-}
-
-.Category.C7 {
-	background: none;
-	border-bottom: 1px solid #e7e7e7;
-	border-right: 1px solid #e7e7e7;
-	color: #21628a;
-}
-.CategoryBtn.C7 {
-	border-color: #017ff0;
-	color: #017ff0;
-}
-
-.Category.C8 {
-	background-color: #333333;
-}
-.CategoryBtn.C8 {
-	border-color: #333333;
-	color: #333333;
-}
-
-.Category.C9 {
-	background-color: #003399;
-}
-.CategoryBtn.C9 {
-	border-color: #003399;
-	color: #003399;
-}
-
-.Category.C10, .CategoryBtn.Selected.C10 {
-	background-color: #eebb00;
-	color: #555;
-}
-.CategoryBtn.C10 {
-	border-color: #eebb00;
-	color: #eebb00;
-}
-
-.Category.C11{
-	background-color: #336699;
-}
-.CategoryBtn.C11 {
-	border-color: #336699;
-	color: #336699;
-}
-
-.Category.C12 {
-	background-color: #ea541a;
-}
-.CategoryBtn.C12 {
-	border-color: #ea541a;
-	color: #ea541a;
-}
-
-.Category.C13 {
-	background-color: #ff9900;
-	color: #000;
-}
-.CategoryBtn.C13 {
-	border-color: #ff9900;
-	color: #ff9900;
-}
-
-.Category.C13 {
-	background-color: #ff9900;
-	color: #000;
-}
-.CategoryBtn.C13 {
-	border-color: #ff9900;
-	color: #ff9900;
-}
-
-.IllustThumb .Category.C13 {
-	font-size: 10px;
-	height: auto;
-	line-height: 10px;
-	white-space: normal;
-	padding: 5px 5px;
-}
-
-.Category.C14 {
-	background-color: #55bbdd;
-}
-.CategoryBtn.C14 {
-	border-color: #55bbdd;
-	color: #55bbdd;
-}
-
-.Category.C15 {
-	background-color: #8eb8ea;
-}
-.CategoryBtn.C15 {
-	border-color: #8eb8ea;
-	color: #8eb8ea;
-}
-
-.Category.C16 {
-	background-color: #dd4400;
-}
-.CategoryBtn.C16 {
-	border-color: #dd4400;
-	color: #dd4400;
-}
-
-.Category.C17 {
-	background-color: #eee;
-	color: #000;
-
-}
-.CategoryBtn.C17 {
-	border-color: #eee;
-	color: #000;
-}
-
-.Category.C18 {
-	background-color: #999999;
-}
-.CategoryBtn.C18 {
-	background-color: #999999;
-	color: #999999;
-}
-
-.Category.C19 {
-	background-color: #dd0000;
-	color: #6d6965;
-}
-.CategoryBtn.C19 {
-	background-color: #dd0000;
-	color: #6d6965;
-}
-
-.Category.C20 {
-	background-color: #3498da;
-	color: #6d6965f;
-}
-.CategoryBtn.C20 {
-	border-color: #3498da;
-	color: #6d6965f;
-}
-
-.Category.C22 {
-	background-color: #3377ff;
-	color: #6d6965;
-}
-.CategoryBtn.C22 {
-	background-color: #3377ff;
-	color: #6d6965;
-}
-
-.Category.C23 {
-	background-color: #000;
-	color: #6d6965f00;
-}
-.CategoryBtn.C23 {
-	background-color: #000;
-	color: #6d6965f00;
-}
-
-.Category.C24 {
-	background-color: #dd0000;
-	color: #6d6965;
-}
-.CategoryBtn.C24 {
-	background-color: #dd0000;
-	color: #6d6965;
-}
-
-.Category.C25 {
-	background-color: #FF99CC;
-	color: #6d6965;
-}
-.CategoryBtn.C25 {
-	background-color: #FF99CC;
-	color: #6d6965;
-}
-
-.Category.C26 {
-	background-color: #fdca7f;
-	color: #ff3333;
-}
-.CategoryBtn.C26 {
-	background-color: #fdca7f;
-	color: #ff3333;
-}
-
-.Category.C27 {
-	background-color: #000;
-	color: #aaa;
-}
-.CategoryBtn.C27 {
-	background-color: #000;
-	color: #aaa;
-}
-
-.Category.C28 {
-	background-color: #ff0000;
-	color: #6d6965;
-}
-.CategoryBtn.C28 {
-	background-color: #ff0000;
-	color: #6d6965;
-}
-
-.Category.C29 {
-	background-color: #e4027f;
-	color: #6d6965;
-}
-.CategoryBtn.C29 {
-	background-color: #e4027f;
-	color: #6d6965;
-}
-.Category.C30 {
-	background-color: #eb7f10;
-}
-.CategoryBtn.C30 {
-	border-color: #eb7f10;
-	color: #eb7f10;
-}
-.Category.C31 {
-	background-color: #7F460A;
-	color: #6d6965;
-}
-.CategoryBtn.C31 {
-	border-color: #7F460A;
-	color: #6d6965;
-}
-.Category.C32 {
-	background-color: #ff66aa;
-	color: #6d6965;
-}
-.CategoryBtn.C32 {
-	border-color: #ff66aa;
-	color: #6d6965;
-}
-
 
 .IllustItemList .CategoryMore {
 	display: block;

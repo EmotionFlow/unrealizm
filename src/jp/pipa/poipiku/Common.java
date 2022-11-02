@@ -166,16 +166,20 @@ public final class Common {
 	public static final int SAFE_FILTER_MAX = 8;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 7;
+	public static final int CATEGORY_ID_MAX = 11;
 	public static final int CATEGORY_ID_OTHER = 0;
 	public static final int[] CATEGORY_ID = {
-			1, // Stable-Diffusion
-			7, // Mage
-			2, // Midjourney
-			3, // NovelAI
-			4, // DALL-E
-			5, // AIピカソ
-			6, // mimic
+			1,  // Stable-Diffusion
+			7,  // Mage
+			9,  // ERNIE-ViLG
+			10, // りんな＠AI画家(twitter)
+			11, // お絵描きばりぐっどくん(LINE)
+			8,  // Cyber punk Anime Diffusion
+			2,  // Midjourney
+			3,  // NovelAI
+			4,  // DALL-E
+//			5,  // AIピカソ
+//			6,  // mimic
 			CATEGORY_ID_OTHER, // その他
 	};
 
@@ -188,6 +192,10 @@ public final class Common {
 			/* 5:AIピカソ */             "https://apps.apple.com/jp/app/ai%E3%83%94%E3%82%AB%E3%82%BD-ai%E3%81%8A%E7%B5%B5%E6%8F%8F%E3%81%8D%E3%82%A2%E3%83%97%E3%83%AA/id1642181654",
 			/* 6:mimic */               "https://illustmimic.com/",
 			/* 7:Mage */                "https://www.mage.space/",
+			/* 8:Cyber punk Anime Diffusion */ "https://huggingface.co/spaces/DGSpitzer/DGS-Diffusion-Space",
+			/* 9:ERNIE-ViLG */                 "https://huggingface.co/spaces/PaddlePaddle/ERNIE-ViLG",
+			/* 10:りんな＠AI画家(twitter) */     "https://twitter.com/ms_rinna/status/1567844022240313344",
+			/* 11:ばりぐっどくん(LINE) */  "https://page.line.me/877ieiqs",
 	};
 
 	public static final int EDITOR_UPLOAD = 0;
