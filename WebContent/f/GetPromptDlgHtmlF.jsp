@@ -15,7 +15,11 @@ if (!result) return;
 %>
 <style>
     .PromptDlgTitle{
-        padding: 35px 0 1px 0; color: #6d6965;
+        padding: 35px 0 1px 0;
+        color: #47423e;
+    }
+    .PromptDlgTitle:first-child{
+        padding-top: 10px;
     }
     .PromptDlgInfo {
         width: 100%;
@@ -38,6 +42,10 @@ if (!result) return;
     .PromptDlgGo {
         margin-top: 4px;
         font-size: 14px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     .PromptDlgTitle > i {
         font-size: 12px;
@@ -45,10 +53,9 @@ if (!result) return;
     .PromptDlgGo > a {
         border: solid 1px #aeaeae;
         border-radius: 7px;
-        padding: 2px 4px;
+        padding: 1px 10px;
         margin: 8px 4px;
         line-height: 30px;
-        word-break: keep-all;
     }
 </style>
 <div class="PromptDlg">
