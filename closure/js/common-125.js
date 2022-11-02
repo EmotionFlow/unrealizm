@@ -1643,4 +1643,9 @@ function copyTxtToClipBoard(textAreaId, buttonElement){
 	buttonElement.appendChild(checkIcon);
 }
 
+function copyPromptAndGoPage(toUrl) {
+	copyTxtToClipBoard("PromptDlgPrompt", document.getElementById("PromptDlgCopyPromptBtn"));
+	window.open(toUrl, '_blank', 'noopener');
+}
+
 /******** AI prompt *********/

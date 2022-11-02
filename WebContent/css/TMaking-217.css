@@ -2020,7 +2020,10 @@ Decoration
 }
 
 .Category.C7 {
-	background-color: #017ff0;
+	background: none;
+	border-bottom: 1px solid #e7e7e7;
+	border-right: 1px solid #e7e7e7;
+	color: #21628a;
 }
 .CategoryBtn.C7 {
 	border-color: #017ff0;
