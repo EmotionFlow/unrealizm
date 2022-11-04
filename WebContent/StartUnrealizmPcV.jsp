@@ -123,6 +123,10 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 	</style>
 
 	<script>
+		var _columnWidth = 180;
+		<%if (!isApp && !bSmartPhone) {%>
+		_columnWidth = 236;
+		<%}%>
 		$(function () {
 			<%if (!Common.isDevEnv()){ %>
 			$('#IllustItemList').imagesLoaded(function(){
@@ -131,7 +135,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 				$newElems.animate({ opacity: 1 });
 				$('#IllustItemList').masonry({
 					itemSelector: '.IllustItem',
-					columnWidth: 236,
+					columnWidth: _columnWidth,
 					isFitWidth: true,
 					gutterWidth: 0,
 				});

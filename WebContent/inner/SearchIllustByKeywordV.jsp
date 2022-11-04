@@ -141,6 +141,11 @@ String strFileUrl = cResults.m_strRepFileName;
 	<%}%>
 
 	<script>
+		var _columnWidth = 180;
+		<%if (!isApp && !bSmartPhone) {%>
+		_columnWidth = 236;
+		<%}%>
+
 		$(function () {
 			<%if (!Common.isDevEnv()){ %>
 			$('#IllustItemList').imagesLoaded(function(){
@@ -149,7 +154,7 @@ String strFileUrl = cResults.m_strRepFileName;
 				$newElems.animate({ opacity: 1 });
 				$('#IllustItemList').masonry({
 					itemSelector: '.IllustItem',
-					columnWidth: 180,
+					columnWidth: _columnWidth,
 					isFitWidth: true,
 					gutterWidth: 0,
 				});
