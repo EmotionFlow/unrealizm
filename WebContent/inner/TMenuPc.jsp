@@ -279,13 +279,18 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 
 <script>
 	function onSearchInput() {
+		const inputStr = $('#HeaderSearchBox').val().trim();
+		if (!inputStr) {
+			$('#HeaderSearchBox').val('');
+			toggleClearSearchBtn();
+			return false;
+		}
 		toggleClearSearchBtn();
 		<%if(checkLogin.m_bLogin){%>
 		const prevTimeout = getLocalStrage('search-suggestion-timeout');
 		if (prevTimeout) clearTimeout(prevTimeout);
 		setLocalStrage('search-suggestion-timeout', setTimeout(() => {
-			const inputStr = $('#HeaderSearchBox').val();
-			if (inputStr) {
+			if (inputStr && !/^(\d|\w|[\u3040-\u30FFＡ-Ｚａ-ｚ０-９])$/.test(inputStr)) {
 				showSearchSuggestion('<%=searchType%>', inputStr);
 			} else {
 				showSearch();
