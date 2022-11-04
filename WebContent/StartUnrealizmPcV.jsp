@@ -131,7 +131,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 				$newElems.animate({ opacity: 1 });
 				$('#IllustItemList').masonry({
 					itemSelector: '.IllustItem',
-					columnWidth: 180,
+					columnWidth: 236,
 					isFitWidth: true,
 					gutterWidth: 0,
 				});
