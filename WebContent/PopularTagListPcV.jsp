@@ -35,7 +35,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		});
 		</script>
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 			.CategoryListItem {display: block; float: left; width: 100%; padding: 0;}
 			.CategoryListItem .CategoryMore {display: block; float: left; width: 100%; text-align: right; font-size: 13px; font-weight: normal; padding: 0 7px; box-sizing: border-box;}
 			.SearchResultTitle {margin: 10px 0 0 0;}

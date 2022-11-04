@@ -38,7 +38,7 @@
 	<title><%=_TEX.T("THeader.Title")%> - 最近エアスケブを始めたクリエイター</title>
 	<style>
 	<%if(!isApp){%>
-				body {padding-top: 79px !important;}
+				body {padding-top: 51px !important;}
 	<%}%>
 	</style>
 	<script type="text/javascript">

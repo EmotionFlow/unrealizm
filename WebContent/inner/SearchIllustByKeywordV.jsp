@@ -135,7 +135,7 @@ String strFileUrl = cResults.m_strRepFileName;
 	</script>
 
 	<%if (!isApp) {%>
-	<style>body {padding-top: 79px !important;}</style>
+	<style>body {padding-top: 51px !important;}</style>
 	<%} else {%>
 	<style>body {padding-top: 0 !important;}</style>
 	<%}%>

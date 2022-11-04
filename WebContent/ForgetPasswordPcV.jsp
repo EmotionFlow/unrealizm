@@ -88,14 +88,14 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 				padding-right: 50px;
 			}
 			input{
-				color: #6d6965;
+				color: #000;
 			}
 			input::placeholder {
 				color: lightgray;
 				font-style: italic;
 				font-weight: normal;
 			}
-			.SettingList .SettingListItem {color: #6d6965;}
+			.SettingList .SettingListItem {color: #000;}
 		</style>
 	</head>
 

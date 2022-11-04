@@ -189,7 +189,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 		</script>
 
 		<style>
-            body {padding-top: 79px !important; background-color: #f5f5f5; color: #6d6965}
+            body {padding-top: 51px !important; background-color: #f5f5f5; color: #000}
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; padding: 0; min-height: 113px; background: #fff; max-height: none; border: solid;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}

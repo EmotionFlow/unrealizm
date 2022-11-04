@@ -141,7 +141,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 		.Wrapper.ItemList .IllustItemList {margin-top: 16px;}
 		<%}%>
 
-		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #6d6965;}
+		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #000;}
 
 		.SettingMenuHeader{
 			height: 27px;
@@ -149,14 +149,14 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			font-weight: 400;
 			padding: 7px;
 			background-color: #ffffff;
-			color: #6d6965;
+			color: #000;
 			border-bottom: 1px solid #555;
 		}
 
-		.SettingBody {display: block; float: left; background: #fff; color: #6d6965;width: 100%;}
+		.SettingBody {display: block; float: left; background: #fff; color: #000;width: 100%;}
 
-		.SettingListItem {color: #6d6965;}
-		.SettingListItem a {color: #6d6965;}
+		.SettingListItem {color: #000;}
+		.SettingListItem a {color: #000;}
 
 		.SettingBody .SettingBodyCmdRegist {
 			font-size: 14px;
@@ -169,7 +169,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			display: block;
 			line-height: 40px;
 			border-bottom: 1px solid #ccc;
-			color: #6d6965;
+			color: #000;
 		}
 
 		.SettingMenuItem{
@@ -214,10 +214,10 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			border-top: 0;
 		}
 		.SettingListItem {
-			color: #6d6965;
+			color: #000;
 		}
 		.SettingListItem a {
-			color: #6d6965;
+			color: #000;
 		}
 		.SettingMenuItemLink:hover,
 		.SettingMenuItemLink.Selected{
@@ -233,7 +233,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
             display: block;
             line-height: 40px;
             border-bottom: 1px solid #ccc;
-            color: #6d6965;
+            color: #000;
             text-align: center;
         }
         .SettingMenu > .RequestCreatorStatus {
@@ -242,7 +242,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
             display: block;
             line-height: 30px;
             border-bottom: 1px solid #ccc;
-            color: #6d6965;
+            color: #000;
             text-align: center;
         }
 
@@ -267,7 +267,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			<div id="MENUROOT" class="SettingPage" style="display: none;">
 				<div class="SettingMenu">
 					<div class="RequestCreatorStatus">
-						<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="color:#6d6965;">
+						<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="color:#000;">
 						<%=requestCreator.status== RequestCreator.Status.Enabled ? "エアスケブ依頼受付中" : "依頼の受け付け：停止中"%>
 						</a>
 					</div>
@@ -278,7 +278,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 					<%}%>
 					<div class="WhatIsRequest">
 						<i class="fas fa-info-circle" style="font-size: 14px"></i>
-						<a href="javascript: void(0);" style="color:#6d6965; text-decoration: underline" onclick="dispRequestIntroduction()">
+						<a href="javascript: void(0);" style="color:#000; text-decoration: underline" onclick="dispRequestIntroduction()">
 							エアスケブとは？
 						</a>
 					</div>

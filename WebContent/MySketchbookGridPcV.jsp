@@ -31,7 +31,7 @@
 	<%@ include file="/inner/TTwitterFollowerLimitInfo.jsp"%>
 
 	<style>
-        body {padding-top: 79px !important;}
+        body {padding-top: 51px !important;}
         .UnrealizmDesc.Event {margin: 10px 0;}
         .RequestEmail {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
         .UnrealizmDesc.Event {margin: 30px 0 0 0;}
@@ -87,7 +87,7 @@
 			<%=_TEX.T("MySketchbookV.Info06")%>
 		</div>
 
-		<div style="text-align: center; color: #6d6965f">
+		<div style="text-align: center; color: #000f">
 			<div>
 				<a href="/MyEditSettingPcV.jsp?MENUID=REQUEST" style="font-size: 17px; font-weight: 600;">
 					<%=_TEX.T("MySketchbookV.Info08")%>

@@ -213,7 +213,7 @@ String[][] menuOrder = {
 		.Wrapper.ItemList .IllustItemList {margin-top: 16px;}
 		<%}%>
 
-		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #6d6965;}
+		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #000;}
 
 		.SettingMenuHeader{
 			height: 27px;
@@ -221,14 +221,14 @@ String[][] menuOrder = {
 			font-weight: 400;
 			padding: 7px;
 			background-color: #ffffff;
-			color: #6d6965;
+			color: #000;
 			border-bottom: 1px solid #555;
 		}
 
-		.SettingBody {display: block; float: left; background: #fff; color: #6d6965;width: 100%;}
+		.SettingBody {display: block; float: left; background: #fff; color: #000;width: 100%;}
 
-		.SettingListItem {color: #6d6965;}
-		.SettingListItem a {color: #6d6965;}
+		.SettingListItem {color: #000;}
+		.SettingListItem a {color: #000;}
 
 		.SettingBody .SettingBodyCmdRegist {
 			font-size: 14px;
@@ -241,7 +241,7 @@ String[][] menuOrder = {
 			display: block;
 			line-height: 40px;
 			border-bottom: 1px solid #ccc;
-			color: #6d6965;
+			color: #000;
 		}
 
 		.SettingMenuItem{
@@ -286,10 +286,10 @@ String[][] menuOrder = {
 			border-top: 0;
 		}
 		.SettingListItem {
-			color: #6d6965;
+			color: #000;
 		}
 		.SettingListItem a {
-			color: #6d6965;
+			color: #000;
 		}
 		.SettingMenuItemLink:hover,
 		.SettingMenuItemLink.Selected{

@@ -51,9 +51,9 @@ return `
 function getAccountInfoDlgHtml() {
 return `
 <style>
-.AccountInfoDlg {border-collapse: collapse; border: 1px #6d6965 solid; width: 100%; text-align: left}
-.AccountInfoDlg tr {border: 1px #6d6965 solid;}
-.AccountInfoDlg tr td {border: 1px #6d6965 solid;}
+.AccountInfoDlg {border-collapse: collapse; border: 1px #000 solid; width: 100%; text-align: left}
+.AccountInfoDlg tr {border: 1px #000 solid;}
+.AccountInfoDlg tr td {border: 1px #000 solid;}
 </style>
 <table class="AccountInfoDlg">
 	<tbody>

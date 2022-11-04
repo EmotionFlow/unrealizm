@@ -118,7 +118,7 @@ cResults.getResults(checkLogin);
 		</script>
 
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 			<%if(!Util.isSmartPhone(request)) {%>
 			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}

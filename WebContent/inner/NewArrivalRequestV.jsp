@@ -41,7 +41,7 @@ if(cResults.m_nCategoryId >= 0) {
 		<meta name="description" content="<%=Util.toStringHtml(Util.deleteCrLf(description))%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("Request")%>(<%=categoryName%>)</title>
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 		</style>
 		<script type="text/javascript">
 			$(function(){

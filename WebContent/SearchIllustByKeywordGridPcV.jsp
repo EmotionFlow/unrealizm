@@ -53,7 +53,7 @@ String strFileUrl = cResults.m_strRepFileName;
 		</script>
 
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 		</style>
 	</head>
 

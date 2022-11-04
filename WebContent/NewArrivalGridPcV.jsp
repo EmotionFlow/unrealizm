@@ -39,7 +39,7 @@ if(cResults.categoryId >= 0) {
 		});
 		</script>
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 		</style>
 	</head>
 

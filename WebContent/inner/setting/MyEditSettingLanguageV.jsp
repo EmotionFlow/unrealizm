@@ -11,7 +11,7 @@
         display: block;
         line-height: 40px;
         border-bottom: 1px solid #ccc;
-        color: #6d6965;
+        color: #000;
 	}
 	.SettingListItem dt {
 		text-align: center;

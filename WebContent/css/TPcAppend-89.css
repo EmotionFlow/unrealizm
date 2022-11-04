@@ -1,10 +1,10 @@
 @charset "utf-8";
 
 /* Base */
-.BtnBase:hover {background: #fff;color: #3498db;}
-a:hover {color: #6d6965;}
+.BtnBase:hover {background: #fff;color: #000;}
+a:hover {color: #000;}
 .BtnBase.Disabled:hover, input[type="submit"].Disabled:hover, input[type="button"].Disabled:hover, button.Disabled:hover {border-color: #ebe;color: #ebe;cursor: default;}
-.BtnBase.Rev:hover {border-color: #3498db; background-color: #ffffff;color: #3498db;}
+.BtnBase.Rev:hover {border-color: #000; background-color: #ffffff;color: #000;}
 
 body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; min-height: 60px; position: relative;}
@@ -24,7 +24,7 @@ body {padding: 51px 0 0 0 !important;}
 .UserInfo .UserInfoCmd .IllustItemCommandSub {bottom: 15px; right: 15px;}
 /* for user list */
 .UserInfo.Thumb {
-	color: #6d6965;
+	color: #000;
 	border-radius: 4px;
 	border: solid 1px #eee;
 	margin: 31px 12px 17px 12px;
@@ -94,7 +94,7 @@ body {padding: 51px 0 0 0 !important;}
 .Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 10px;}
 .HeaderSearchWrapper {padding: 10px 0;}
 .HeaderSearch {padding: 3px 10px 1px 16px;}
-.Header .HeaderSearch .HeaderSearchBox {width: 160px; height: 32px; padding: 0 1px 0 5px; box-sizing: border-box; border: solid 1px #3498db; border-radius: 15px 0 0 15px;}
+.Header .HeaderSearch .HeaderSearchBox {width: 160px; height: 32px; padding: 0 1px 0 5px; box-sizing: border-box; border: solid 1px #000; border-radius: 15px 0 0 15px;}
 .Header .HeaderSearch .HeaderSearchInputWrapper {border: none;}
 .Header .HeaderSearch .HeaderSearchClear {padding: 0; font-size: 16px; right: 10px}
 .Header .HeaderSearch .HeaderSearchClear > i {vertical-align: middle;}
@@ -135,7 +135,7 @@ body {padding: 51px 0 0 0 !important;}
 /********** GRID ***********/
 .Wrapper.GridList {width: 1140px;}
 .Wrapper.GridList .PcSideBarAd {display: flex; flex-flow: column; position: relative; width: 336px; height: 280px; float: right; margin: 31px 12px 12px 12px; background-color: #ffffff; align-items: center; justify-content: center;}
-.Wrapper.GridList .PcSideBarAd .PassAd {display: block; position: absolute; top: -19px; left: 0; width: 100%; height: 19px; max-height: 19px; line-height: 19px; font-size: 13px; color: #6d6965; text-align: right;}
+.Wrapper.GridList .PcSideBarAd .PassAd {display: block; position: absolute; top: -19px; left: 0; width: 100%; height: 19px; max-height: 19px; line-height: 19px; font-size: 13px; color: #000; text-align: right;}
 
 /********** EVENT LIST **********/
 .EventItemList {float: none; margin: 0; width: 100%; height: auto; opacity: 1;}

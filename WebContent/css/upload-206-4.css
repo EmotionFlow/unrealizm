@@ -125,11 +125,11 @@
 }
 
 .UoloadCmdOption input:checked:focus + .switch-left {
-	color: #6d6965;
+	color: #000;
 }
 
 .UoloadCmdOption input:focus + .switch-left + .switch-right {
-	color: #6d6965;
+	color: #000;
 }
 
 .UoloadCmdOption input:checked:focus + .switch-left + .switch-right {

@@ -60,7 +60,7 @@ cResults.getResults(checkLogin);
 					<div class="SettingBody">
 						<%if(passportStatus == Passport.Status.NotYet || passportStatus == Passport.Status.InActive) {%>
 						<%//_TEX.T("MyEditSettingPassportV.Text")%>
-						<div style="float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
+						<div style="float: left; width: 100%; border-bottom: 1px solid #000; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;">
 						平素よりUnrealizmをご愛顧頂き誠にありがとうございます。
 						サーバの過負荷状態が続きサービス継続に支障が出ていたため、一部機能の提供を中止し皆様にはご迷惑をおかけいたしました。申し訳ございません。
 						検討した結果、この度「Unrealizmパスポート(通称ポイパス)」というサブスクリプション形式で負荷が高くサーバ費用負担が大きい機能を提供させていただくことといたしました。

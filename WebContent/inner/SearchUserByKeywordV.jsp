@@ -67,7 +67,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		</script>
 
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 		</style>
 		<%}%>
 

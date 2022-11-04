@@ -418,7 +418,7 @@ if(cResults.m_bUpdate) {
 							<%if(cResults.m_cUser.m_strFileName.equals("/img/default_user.jpg")) {%>
 							<span class="typcn typcn-plus-outline"></span>
 							<%} else {%>
-							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
+							<span style="text-shadow: none; color: #000;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
 							<%}%>
 						</div>
 						<div class="SettingBodyCmd">
@@ -439,7 +439,7 @@ if(cResults.m_bUpdate) {
 							<%if(cResults.m_cUser.m_strHeaderFileName.equals("/img/default_transparency.gif")) {%>
 							<span class="typcn typcn-plus-outline"></span>
 							<%} else {%>
-							<span style="text-shadow: none; color: #6d6965;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
+							<span style="text-shadow: none; color: #000;"><%=_TEX.T("EditSettingV.Image.Saving")%></span>
 							<%}%>
 						</div>
 						<div class="SettingBodyCmd">
@@ -683,11 +683,11 @@ if(cResults.m_bUpdate) {
 				<div class="SettingListItem" style="margin-bottom: 15px; border-bottom: none;">
 					<div class="SettingListTitle"><%=_TEX.T("HowTo.Title")%>/<%=_TEX.T("Footer.Term")%>/<%=_TEX.T("Footer.Information")%></div>
 					<div class="SettingBody">
-						<a href="/how_to/TopV.jsp" style="font-size: 14px; text-decoration: underline; color: #6d6965;"><%=_TEX.T("HowTo.Title")%></a><br />
-						<a href="/RuleS.jsp" style="font-size: 14px; text-decoration: underline; color: #6d6965;"><%=_TEX.T("Footer.Term")%></a><br />
-						<a href="/GuideLineV.jsp" style="font-size: 14px; text-decoration: underline; color: #6d6965;"><%=_TEX.T("Footer.GuideLine")%></a><br />
-						<a href="/PrivacyPolicyS.jsp" style="font-size: 14px; text-decoration: underline; color: #6d6965;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
-						<a href="https://twitter.com/pipajp" style="font-size: 14px; text-decoration: underline; color: #6d6965;" target="_blank"><%=_TEX.T("Footer.Link.Info")%> (<%=_TEX.T("Footer.Information")%>)</a><br />
+						<a href="/how_to/TopV.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("HowTo.Title")%></a><br />
+						<a href="/RuleS.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("Footer.Term")%></a><br />
+						<a href="/GuideLineV.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("Footer.GuideLine")%></a><br />
+						<a href="/PrivacyPolicyS.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
+						<a href="https://twitter.com/pipajp" style="font-size: 14px; text-decoration: underline; color: #000;" target="_blank"><%=_TEX.T("Footer.Link.Info")%> (<%=_TEX.T("Footer.Information")%>)</a><br />
 					</div>
 				</div>
 			</div>

@@ -78,7 +78,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 		.MyBoxSearch {display: flex; flex-flow: row nowrap; text-align: center; width: 300px;}
 		.MyBoxSearch .MyBoxSearchBox {display: block; flex: 1 1; height: 26px; width: 152px; padding: 0 5px; box-sizing: border-box; border: solid 1px #3498db; border-radius: 15px 0 0 15px;}
 		.MyBoxSearch .MyBoxSearchBtn {display: block; height: 26px; box-sizing: border-box; margin: 0; background-color: #ffffff; color: #3498db; border: solid 1px #3498db; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0; font-size: 14px; padding: 0px 6px 0px 4px;}
-		.MyBoxSearch .MyBoxSearchBtn:hover {border: solid 1px #fff; background-color: #3498db; color: #6d6965;}
+		.MyBoxSearch .MyBoxSearchBtn:hover {border: solid 1px #fff; background-color: #3498db; color: #000;}
 		</style>
 
 		<%if(cResults.m_cUser.m_nPassportId>=Common.PASSPORT_ON && !cResults.m_cUser.m_strBgFileName.isEmpty()) {%>
@@ -104,7 +104,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
                 align-items: center;
                 justify-content: center;
                 background: #fff;
-                color: #6d6965;
+                color: #000;
                 flex-flow: column;
 			}
             .SwitchUserItem {
@@ -118,7 +118,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
                 padding: 2px 2px 2px 2px;
                 border-bottom: solid 1px #eee;
                 align-items: center;
-                color: #6d6965;
+                color: #000;
             }
             .SwitchUserThumb {
                 display: block;
@@ -130,7 +130,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
                 background-position: 50% 50%;
             }
             .SwitchUserNickname {
-				color: #6d6965;
+				color: #000;
                 display: block;
                 flex: 1 1 80px;
                 padding: 0;

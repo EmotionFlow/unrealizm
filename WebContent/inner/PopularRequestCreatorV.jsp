@@ -31,7 +31,7 @@
 	<title><%=_TEX.T("THeader.Title")%> - 人気クリエイター</title>
 	<style>
 				body {
-						padding-top: 79px !important;
+						padding-top: 51px !important;
 				}
 	</style>
 	<script type="text/javascript">

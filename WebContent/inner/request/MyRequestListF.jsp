@@ -83,7 +83,7 @@ for(MyRequestListC.Result r : results.requests) {
 			<%}%>
 		<%}%>
 		>
-			<span style="color: #6d6965"><%=r.textSummary + textMore%></span>
+			<span style="color: #000"><%=r.textSummary + textMore%></span>
 		</a>
 		<%}else{%>
 		<a class="IllustThumbImg"

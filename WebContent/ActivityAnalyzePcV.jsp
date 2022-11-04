@@ -108,7 +108,7 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 			});
 		</script>
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 			.IllustItemList {background: #fff;}
 			#AnalyzeList {display: flex; flex-flow: column; align-items: center;}
 			.AnalyzeItem {flex: 0 0 80%; width: 80%; display: flex; flex-flow: row nowrap; background: #3498db; margin: 5px 0; box-sizing: border-box; padding: 5px 10px;}

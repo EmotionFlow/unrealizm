@@ -113,7 +113,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 
 	<style>
 	<%if (!isApp) {%>
-	body {padding-top: 79px !important;}
+	body {padding-top: 51px !important;}
 	<%if (!bSmartPhone){%>
 	.Wrapper.ThumbList {padding-top: 10px; width: 720px;}
 	<%}%>
@@ -154,11 +154,12 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 
 <%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
+<header class="StartPageTitle">
+	<h2><%=_TEX.T("THeader.Title")%> - <span style="font-size: 14px"><%=_TEX.T("Catchphrase")%></span> -</h2>
+<%--<span style="font-size: 12px; color: #808080"><%=_TEX.T("Unrealizm.Info.Message.Short")%></span>--%>
+</header>
+
 <article class="Wrapper ThumbList">
-	<header class="StartPageTitle">
-		<h2>Unrealizm - <span style="font-size: 14px"><%=_TEX.T("Catchphrase")%></span> -</h2>
-<%--		<span style="font-size: 12px; color: #808080"><%=_TEX.T("Unrealizm.Info.Message.Short")%></span>--%>
-	</header>
 
 	<section
 			id="IllustItemList"

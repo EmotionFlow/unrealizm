@@ -361,7 +361,7 @@ if (!results.getResults(checkLogin)) {
 		}
 		.RequestRule {
             background-color: #f6fafd;
-            color: #6d6965;
+            color: #000;
             border-radius: 10px;
             margin: 4px;
             padding: 1px;
@@ -418,7 +418,7 @@ if (!results.getResults(checkLogin)) {
 				<%if(results.user.m_bRequestEnabled){%>
 
 				<%if(results.isReachedLimit){%>
-				<div style="color: #6d69658db; font-size: 12px; margin: 20px auto;">
+				<div style="color: #0008db; font-size: 12px; margin: 20px auto;">
 					送信できる依頼数の制限に達しているため、<br>
 					ただいまエアスケブの依頼を送ることができません。<br>
 					しばらく間をあけてからご依頼ください。
@@ -635,7 +635,7 @@ if (!results.getResults(checkLogin)) {
 
 		<%if(checkLogin.m_bLogin){%>
 			<%if(results.isReachedLimit){%>
-			<div style="color: #6d69658db; font-size: 12px; margin: 20px auto; text-align: center">
+			<div style="color: #0008db; font-size: 12px; margin: 20px auto; text-align: center">
 				送信できる依頼数の制限に達しているため、<br>
 				ただいまエアスケブの依頼を送ることができません。<br>
 				しばらく間をあけてからご依頼ください。

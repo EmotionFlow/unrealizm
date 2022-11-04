@@ -10,7 +10,7 @@
 	<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("LogoUsageGuideLine.Title")%></title>
 	<style>
         .SettingList .SettingListItem {
-            color: #6d6965;
+            color: #000;
         }
 		.LogoArea {
             text-align: center;

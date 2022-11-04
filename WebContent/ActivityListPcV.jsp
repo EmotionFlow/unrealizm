@@ -101,7 +101,7 @@ if (infoType==-1) infoType = 1;
 
 	<style>
         body {
-            padding-top: 79px !important;
+            padding-top: 51px !important;
         }
 	</style>
 </head>

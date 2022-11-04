@@ -135,7 +135,7 @@
 	}
 	.RequestTimeStampLabel{
 		background: #3498db;
-		color: #6d6965f;
+		color: #000f;
         border-radius: 4px 0 0 4px;
 		padding: 3px;
 	}
@@ -161,7 +161,7 @@
         border: none;
     }
     .RequestCmd > .RequestCancelBtn:hover{
-        color: #6d6965f;
+        color: #000f;
 		background: #f09090;
         border: none;
     }
@@ -171,12 +171,12 @@
         align-items: center;
 	}
 	.RequestUser > .RequestUserLink {
-        color: #6d6965;
+        color: #000;
 		font-size: 12px;
     }
 	.RequestUserLink > .RequestUserLabel {
         background: #3498db;
-        color: #6d6965f;
+        color: #000f;
         border-radius: 4px 0 0 4px;
         padding: 3px 2px 3px 4px;
     }
@@ -195,13 +195,13 @@
     }
 
 	.RequestLicense {
-        color: #6d6965;
+        color: #000;
         font-size: 12px;
 		margin-top: 4px;
 	}
     .RequestLicense > .RequestLicenseLabel {
         background: #3498db;
-        color: #6d6965f;
+        color: #000f;
         border-radius: 4px 0 0 4px;
         padding: 3px 2px 3px 4px;
     }

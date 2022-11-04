@@ -137,7 +137,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		</script>
 		<%if(!isApp){%>
 		<style>
-						body {padding-top: 79px !important;}
+						body {padding-top: 51px !important;}
 		</style>
 		<%}%>
 	</head>

@@ -95,7 +95,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 		<style>
 			<%if (!isApp) {%>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 			<%} else {%>
 			body {padding-top: 0 !important;}
 			<%}%>
@@ -149,7 +149,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 					<%=_TEX.T("MySketchbookV.Info06")%>
 				</div>
 
-				<div style="text-align: center; color: #6d6965f; text-decoration: underline;">
+				<div style="text-align: center; color: #000f; text-decoration: underline;">
 					<div>
 						<%if(isApp){%>
 						<%=_TEX.T("MySketchbookV.Info07")%>

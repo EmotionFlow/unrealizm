@@ -280,7 +280,7 @@ final PoiTicket ticket = new PoiTicket(checkLogin);
 			color: #62605c;
 	}
 	.CEOMessage {
-        float: left; width: 100%; border-bottom: 1px solid #6d6965; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;
+        float: left; width: 100%; border-bottom: 1px solid #000; padding: 0 0 5px 0; margin: 0 0 5px 0; font-size: 12px;
 	}
 
 </style>

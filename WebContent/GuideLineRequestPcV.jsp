@@ -30,7 +30,7 @@
         }
 
         .SettingList .SettingListItem {
-            color: #6d6965;
+            color: #000;
         }
 	</style>
 </head>

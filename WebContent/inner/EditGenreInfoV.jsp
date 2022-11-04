@@ -184,13 +184,13 @@ if(checkLogin.m_nPassportId <= Common.PASSPORT_OFF) {
 
 	<style>
         .SettingList {background: #fff; max-width: none;}
-        .SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #6d6965;}
-        .SettingBody {display: block; float: left; background: #fff; color: #6d6965;width: 100%;}
-        .SettingListItem {color: #6d6965;}
-        .SettingListItem a {color: #6d6965;}
+        .SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #000;}
+        .SettingBody {display: block; float: left; background: #fff; color: #000;width: 100%;}
+        .SettingListItem {color: #000;}
+        .SettingListItem a {color: #000;}
         .SettingBody .SettingBodyCmdRegist {font-size: 14px;}
-        .SettingListItem {color: #6d6965;}
-        .SettingListItem a {color: #6d6965;}
+        .SettingListItem {color: #000;}
+        .SettingListItem a {color: #000;}
         .SettingListItem.Disabled , .SettingList .SettingListItem.Disabled .SettingBody .SettingBodyTxt, .SettingList .SettingListItem.Disabled .SettingBody {background: #eee;}
         .SelectTransLang > select {
             height: 30px;

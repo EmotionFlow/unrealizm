@@ -61,7 +61,7 @@ g_strSearchWord = cResults.m_strKeyword;
 		</script>
 
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 		</style>
 	</head>
 

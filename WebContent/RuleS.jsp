@@ -8,7 +8,7 @@
 	<title>利用規約</title>
 	<style>
         .SettingList .SettingListItem {
-            color: #6d6965;
+            color: #000;
         }
 
         .Language {

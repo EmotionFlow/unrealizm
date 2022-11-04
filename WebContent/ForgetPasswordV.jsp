@@ -82,7 +82,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 				width: 200px;
 			}
 			input{
-				color: #6d6965;
+				color: #000;
 			}
 			input::placeholder {
 				color: lightgray;

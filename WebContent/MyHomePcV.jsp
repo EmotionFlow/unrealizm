@@ -154,7 +154,7 @@ cResults.getResults(checkLogin);
 		</script>
 
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 			.UnrealizmDesc.Event {margin: 10px 0;}
 			.RequestEmail {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
 		</style>

@@ -14,8 +14,8 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		<script type="text/javascript" src="/js/jquery.simplyscroll.min.js"></script>
 		<style>
 		body {padding: 0;}
-		.Wrapper {width: 350px; color: #6d6965; background: #3498db; height: auto; margin: 0; padding: 4px 3px; display: flex;align-items: center; box-sizing: border-box;}
-		.AnalogicoDesc {flex: 1 1; padding: 0 0 0 0; margin: 0 0 0 5px; box-sizing: border-box; text-align: left; font-size: 14px; line-height: 16px; color: #6d6965; font-weight: normal;}
+		.Wrapper {width: 350px; color: #000; background: #3498db; height: auto; margin: 0; padding: 4px 3px; display: flex;align-items: center; box-sizing: border-box;}
+		.AnalogicoDesc {flex: 1 1; padding: 0 0 0 0; margin: 0 0 0 5px; box-sizing: border-box; text-align: left; font-size: 14px; line-height: 16px; color: #000; font-weight: normal;}
 		.AnalogicoStart {text-align: center; margin: 0 0 0 0; padding: 0 0 0 0;}
 		.IllustThumb .IllustThumbImg {width: 100%; height: 100%;}
 		.AnalogicoInfo {display: none;}

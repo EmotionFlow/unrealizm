@@ -159,7 +159,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 		.AnalogicoInfo {display: none;}
 		#RegistForm {display: block; float: left; width: 100%;}
 		#LoginForm {display: none; float: left; width: 100%;}
-		.SettingList .SettingListItem {color: #6d6965;}
+		.SettingList .SettingListItem {color: #000;}
 		</style>
 	</head>
 

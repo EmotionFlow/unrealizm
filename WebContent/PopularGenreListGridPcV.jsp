@@ -22,7 +22,7 @@ boolean bRtn = results.getResults(checkLogin);
 		});
 		</script>
 		<style>
-			body {padding-top: 79px !important;}
+			body {padding-top: 51px !important;}
 			.SearchGenre .SearchEdit {margin: 0 0 5px 0;}
 		</style>
 	</head>

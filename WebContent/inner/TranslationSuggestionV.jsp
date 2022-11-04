@@ -63,10 +63,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 		</script>
 
 		<style>
-			.SettingBody {display: block; float: left; width: 100%; background: #fff; color: #6d6965;}
+			.SettingBody {display: block; float: left; width: 100%; background: #fff; color: #000;}
 			.SettingBody > .SettingList {max-width: unset;}
-			.SettingListItem {color: #6d6965;}
-			.SettingListItem a {color: #6d6965;}
+			.SettingListItem {color: #000;}
+			.SettingListItem a {color: #000;}
 			.SettingBody .SettingBodyCmdRegist {font-size: 14px;}
 			.TranslationSuggestionIntro {margin: 0 <%=bSmartPhone?"5":"20"%>px;}
             .SettingList .SettingListItem .SettingBody .RegistMessage {margin: 0}
@@ -78,10 +78,10 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 				width: 850px;
 			}
 			.SettingListItem {
-				color: #6d6965;
+				color: #000;
 			}
 			.SettingListItem a {
-				color: #6d6965;
+				color: #000;
 			}
 			<%}%>
 		</style>

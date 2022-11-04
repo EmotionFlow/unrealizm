@@ -1,12 +1,12 @@
 @charset "utf-8";
 body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box;}
 .Header {display:block; position: fixed; top: 0; left: 0; width: 100%; height: 50px; border-bottom: solid 1px #ddd; text-align: center; padding: 0; background: #fff; z-index: 999;}
-#HeaderSlider {display: block; position: absolute; z-index: 1; width: 0; height: 2px; background-color: #3498db; top: 0; left: 0;}
+#HeaderSlider {display: block; position: absolute; z-index: 1; width: 0; height: 2px; background-color: #000; top: 0; left: 0;}
 .HeaderWrapper {display:block; width: 100%; position: relative;}
 .Header .HeaderTitle {display: block; margin: 0; padding: 0; width: 52px; height: 34px;}
 .Header .HeaderTitleWrapper {display: block; max-width: 600px; margin: 0 auto; position: relative; padding: 10px 0 8px 0;}
 .Header .HeaderTitleWrapper .TwLoginUnsuccessfulIcon {
-    color: #3498dbaa;
+    color: #000aa;
     display: block;
     position: absolute;
     top: 5px;
@@ -16,18 +16,18 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Header .HeaderLink {display: block; padding: 0 10px;}
 .Header .HeaderLink .HeaderImg {display: block; height: 32px; padding: 0 0 2px 0;font-size: 10px;}
 .Header .HeaderLoginLabel {font-size: 10px; color: #4B4B4B;}
-.Header .HeaderTitleSearch {display: block; color: #3498db; width: 30px; height: 30px; line-height: 28px; font-size: 18px; text-align: center; position: absolute; top: 1px; right: 10px; padding: 10px 0;}
+.Header .HeaderTitleSearch {display: block; color: #000; width: 30px; height: 30px; line-height: 28px; font-size: 18px; text-align: center; position: absolute; top: 1px; right: 10px; padding: 10px 0;}
 .HeaderSearchWrapper {max-width: 600px; margin: 0 auto; padding: 4px 0; box-sizing: border-box; overflow: hidden;}
 .Header .HeaderLoginBtn {display: block; width: 118px; height: 7px; line-height: 2px; text-align: center; position: absolute; top: 10px; right: 4px; padding: 11px 6px; font-size: 11px;}
 .Header .HeaderLoginBtnPc {display: block; width: 117px; height: 7px; line-height: 3px; text-align: center; margin: 0; padding: 11px 6px; font-size: 12px;}
-.Header .HeaderSelectLang {color: #3498db;position: absolute;top: 10px;right: 3px;}
+.Header .HeaderSelectLang {color: #000;position: absolute;top: 10px;right: 3px;}
 
 
 .Header .CreateAccountButtons {
     position: absolute;
     top: 13px;
     left: 107px;
-    color: #6d6965;
+    color: #000;
 }
 .Header .CreateAccountButtons .CreateAccountButtonsLabel{
     font-size: 11px;
@@ -52,21 +52,21 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .HeaderSearch .HeaderSearchBox {width: 100%; padding: 10px 0 0 8px; border: none; background: none;}
 .HeaderSearch .HeaderSearchBox:focus {outline: none;}
 .HeaderSearch .HeaderSearchBox:placeholder-shown, .HeaderSearch .HeaderSearchBox::placeholder {color: #bbb; font-style: italic;font-size: 12px;}
-.HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 34px; height: 26px; box-sizing: border-box; margin: 0; background-color: #3498db; color: #ffffff; border: solid 1px #3498db; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0;}
-.HeaderSearch .HeaderSearchBtn:hover {background-color: #ffffff; color: #3498db;}
+.HeaderSearch .HeaderSearchBtn {display: block; flex: 0 0 34px; height: 26px; box-sizing: border-box; margin: 0; background-color: #000; color: #ffffff; border: solid 1px #000; cursor: pointer; border-left: none;line-height: 25px;border-radius: 0 15px 15px 0;}
+.HeaderSearch .HeaderSearchBtn:hover {background-color: #ffffff; color: #000;}
 .HeaderSelectLangList > dd{margin: 10px 0;}
-.HeaderSelectLangList > dd > a {color: #3498db;}
+.HeaderSelectLangList > dd > a {color: #000;}
 .HeaderSearch .HeaderSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 5px;}
-.HeaderSearch .HeaderSearchClear {display: inline-block; color: #3498dbaa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size:20px;}
+.HeaderSearch .HeaderSearchClear {display: inline-block; color: #000aa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size:20px;}
 
 .SearchWrapper.overlay {display: none; width: 100vw; height: calc(100vh - 50px); position: fixed; left: 0; top: 0; background-color: #ffffff; z-index: 999; text-align: center;}
 .SearchWrapper.pulldown {display: none; width: 320px; max-height: 75vh; position: absolute; right: 0; top: 50px; background-color: #ffffff; z-index: 999; text-align: right; border: solid 1px #ddd; border-radius: 0 0 4px 4px; overflow-y: auto; transition: height .4s;}
-.SearchWrapper .OverlaySearchCloseBtn {color: #3498db; font-size: 16px; padding: 10px 12px;}
+.SearchWrapper .OverlaySearchCloseBtn {color: #000; font-size: 16px; padding: 10px 12px;}
 .SearchWrapper .HeaderSearchWrapper {display: flex; height: 50px;}
 .SearchWrapper .HeaderSearch {flex-grow: 1;}
 
-.SearchWrapper .RecentSearchHeader {color: #6d6965; font-size: 16px; font-weight: bold; padding: 18px; text-align: left; height: 24px;}
-.SearchWrapper .RecentSearchList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 110px); margin: 0; overflow-y: auto;}
+.SearchWrapper .RecentSearchHeader {color: #000; font-size: 16px; font-weight: bold; padding: 18px; text-align: left; height: 24px;}
+.SearchWrapper .RecentSearchList {color: #000; font-size: 16px; text-align: left; padding-inline-start: 0; height: calc(100% - 110px); margin: 0; overflow-y: auto;}
 .SearchWrapper.overlay .RecentSearchList.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%; height: 28px; background-size: contain}
 
 .SearchWrapper .RecentSearchList li {border-top: solid 1px #ddd; list-style-type: none;}
@@ -82,14 +82,14 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .SearchWrapper .RecentSearchList .RecentSearchKWBlank {padding: 1em;}
 .SearchWrapper .RecentSearchList .RecentSearchDelBtn {    width: 1em;
     padding: 0.5em;
-    color: #3498dbaa;
+    color: #000aa;
     margin-right: 12px;
 }
-.SearchWrapper .RecentSearchList .RecentSearchDelBtn.Disabled {color: #3498dbaa;}
+.SearchWrapper .RecentSearchList .RecentSearchDelBtn.Disabled {color: #000aa;}
 .SearchWrapper.pulldown .RecentSearchList li.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%; background-size: 1.6em; height: 4em;}
 
 .SearchWrapper .SearchListPoipassLink {padding: 0.6em 0; border-top: solid 1px #ddd;}
-.SearchWrapper .SearchListPoipassLink a {color: #3498db; font-size: 14px; display: flex; align-items: center;}
+.SearchWrapper .SearchListPoipassLink a {color: #000; font-size: 14px; display: flex; align-items: center;}
 .SearchWrapper.overlay .SearchListPoipassLink {position: absolute; bottom: 0; width: 100%; display: flex; justify-content: center; background-color: #ffffff;}
 
 
@@ -99,10 +99,10 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-12.png') no-repeat; background-size: 930%; position: relative;}
 .FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #ff4e4e; color: #ffffff; font-size: 9px; height: 15px; min-width: 9px; padding: 0 3px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
 .FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
-.FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #3498db;}
-.FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #3498db;}
+.FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #000;}
+.FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #000;}
 .FooterMenu .TwLoginUnsuccessfulIcon {
-    color: #3498dbaa;
+    color: #000aa;
     display: block;
     font-size: 14px;
     padding-bottom: 12px;
@@ -142,19 +142,19 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
     background-size: cover;
     background-position: 50% 50%;
 }
-#MenuSwitchUser .MenuSwitchUserName{display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #3498db;}
+#MenuSwitchUser .MenuSwitchUserName{display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #000;}
 
 #MenuUpload {min-width: 60px; top: 5px; right: 40px; display: block;}
 #MenuUpload .MenuUploadIcon{background-size: 700%;background: url(/img/menu_pc-12.png) no-repeat -56px -28px;top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
-#MenuUpload .MenuUploadName{display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #3498db;}
+#MenuUpload .MenuUploadName{display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #000;}
 #MenuSettings {top: 5px; right: 9px; display: block;}
 #MenuSettings .MenuSettingsIcon{background-size: 700%;background: url(/img/menu_pc-12.png) no-repeat -140px -28px;top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
-#MenuSettings .MenuSettingsName{ display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #3498db;}
+#MenuSettings .MenuSettingsName{ display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #000;}
 #MenuMyRequests {top: 5px; right: 8px; display: block;}
 #MenuMyRequests .MenuMyRequestsIcon{background-size: 700%;background: url(/img/menu_pc-12.png) no-repeat -225px 0px;top: 5px; left: 1px; position: relative; width: 28px; display: inline-block; height: 28px;}
 #MenuMyRequests.Selected .MenuMyRequestsIcon{background: url(/img/menu_pc-12.png) no-repeat -225px -28px;}
 #MenuMyRequests .MenuMyRequestsName{ display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
-#MenuMyRequests.Selected .MenuMyRequestsName{ color: #3498db;}
+#MenuMyRequests.Selected .MenuMyRequestsName{ color: #000;}
 
 .FooterMenu .FooterMenuBtn {font-size: 10px; margin: 0 4px; padding: 2px 5px; display: block;}
 .FooterMenu .MyEditSettingBtn {font-size: 14px; padding: 3px 7px; margin-left: 8px;}
@@ -165,29 +165,29 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .Footer .FooterLang {display: block; float: left; width: 100%; margin: 10px 0; text-align: center; list-style: none; padding: 0;}
 .Footer .FooterHref {text-decoration: underline;}
 .Footer .FooterCopy {text-align: center;}
-.Footer .FooterLink {display: flex; flex-flow: row wrap; margin: 0 0 30px 0; justify-content: space-between; border-top: solid 1px #6d6965; padding: 15px 0 0 0; width: 100%;}
+.Footer .FooterLink {display: flex; flex-flow: row wrap; margin: 0 0 30px 0; justify-content: space-between; border-top: solid 1px #000; padding: 15px 0 0 0; width: 100%;}
 .Footer .FooterLink dl {flex: 0 0 50%; text-align: left; white-space: nowrap; margin: 0; padding: 15px 10px; box-sizing: border-box;}
 .Footer .FooterLink dl dt {font-size: 13px; margin: 0; padding: 0; font-weight: bold;}
 .Footer .FooterLink dl dd {font-size: 12px; margin: 0; padding: 0;}
 .Footer .LinkApp {margin: 0 0 15px 0;}
 
 /********** AnalogicoInfo *********/
-.AnalogicoInfo {display: block; color: #6d6965; background: #3498db; height: auto; padding: 15px 0;float: none;width: 100%;}
+.AnalogicoInfo {display: block; color: #000; background: #000; height: auto; padding: 15px 0;float: none;width: 100%;}
 .AnalogicoInfo .AnalogicoInfoTitle {display: block; margin: 0 0 0 0; padding: 0; font-size: 16px; text-align: center; float: left; width: 100%;font-weight: normal;}
-.AnalogicoInfo .AnalogicoMoreInfo {display: block; margin: 0 0 0 0; padding: 0; font-size: 16px; text-align: center; color: #6d6965; text-decoration: underline; font-weight: normal;}
+.AnalogicoInfo .AnalogicoMoreInfo {display: block; margin: 0 0 0 0; padding: 0; font-size: 16px; text-align: center; color: #000; text-decoration: underline; font-weight: normal;}
 .AnalogicoInfo .AnalogicoInfoRegist {display: block; text-align: center; font-size: 14px; float: none; width: 100%; margin: 6px 0;}
 .AnalogicoInfo .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 10px 0 0 0; width: 210px;}
-.AnalogicoInfo .AnalogicoInfoRegist .RegistByMainLink {text-decoration: underline; display: block; margin: 6px 0 10px 0; font-size: 12px; color: #6d6965;}
+.AnalogicoInfo .AnalogicoInfoRegist .RegistByMainLink {text-decoration: underline; display: block; margin: 6px 0 10px 0; font-size: 12px; color: #000;}
 .Footer .AnalogicoInfo {background: #fff; padding: 0 0 15px 0;}
 
 
 /********** AnalogicoInfo Float *********/
-.AnalogicoInfo.Float {color: #6d6965; background: #d8f0f7; height: auto; padding: 3px 0;float: none;width: 100%; text-align: center; position: fixed; bottom: 0; z-index: 999;border-top: solid 1px #eee;}
-.AnalogicoInfo.Float .AnalogicoInfoTitle {display: inline; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #3498db;}
-.AnalogicoInfo.Float .AnalogicoInfoSubTitle {display: none; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #3498db;}
-.AnalogicoInfo.Float .AnalogicoMoreInfo {display: inline; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #3498db; text-decoration: underline;}
+.AnalogicoInfo.Float {color: #000; background: #d8f0f7; height: auto; padding: 3px 0;float: none;width: 100%; text-align: center; position: fixed; bottom: 0; z-index: 999;border-top: solid 1px #eee;}
+.AnalogicoInfo.Float .AnalogicoInfoTitle {display: inline; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #000;}
+.AnalogicoInfo.Float .AnalogicoInfoSubTitle {display: none; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #000;}
+.AnalogicoInfo.Float .AnalogicoMoreInfo {display: inline; float: none; width: auto; margin: 0; padding: 0; font-size: 11px; font-weight: normal; color: #000; text-decoration: underline;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist {display: flex; justify-content: space-around; font-size: 10px; margin: 0;}
 .AnalogicoInfo.Float .AnalogicoInfoRegist .AnalogicoInfoRegistBtn {margin: 8px 0 0 0; min-width: 150px; padding: 1px 3px; max-width: 160px; overflow: hidden; white-space: nowrap;}
 
 /********** Ad **********/
-.FooterAd {display:flex; width: 100%; flex-flow: row nowrap; justify-content: space-around; background: #3498db; padding: 15px 0;}
+.FooterAd {display:flex; width: 100%; flex-flow: row nowrap; justify-content: space-around; background: #000; padding: 15px 0;}
