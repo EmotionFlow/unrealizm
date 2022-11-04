@@ -8,7 +8,7 @@ a:hover {color: #000;}
 
 body {padding: 51px 0 0 0 !important;}
 .Wrapper {width: 600px; min-height: 60px; position: relative;}
-.Wrapper.ThumbList {width: 990px;}
+.Wrapper.ThumbList {width: 1180px;}
 .Wrapper.ItemList {width: 730px;}
 .Wrapper.ViewPc {width: 930px; position: relative; display: flex; flex-flow: row wrap;}
 .Wrapper.ViewPc .IllustItemList {width: 600px; float: none; flex: 0 0 600px; margin: 0;}
@@ -54,7 +54,7 @@ body {padding: 51px 0 0 0 !important;}
 /* for user list */
 
 .IllustThumbList {margin: 0 0;}
-.IllustThumb {margin: 31px 12px 17px 12px; width: 166px; height: 274px;}
+.IllustThumb {margin: 31px 12px 17px 12px; width: 212px; height: 296px;}
 .IllustThumb .IllustUser {padding: 4px 2px;}
 .IllustThumb .IllustUser .IllustUserThumb {flex: 0 0 29px; height: 29px; border-radius: 29px;}
 .IllustThumb .IllustUser .IllustUserName {flex: 1 1 119px; margin: 0 0 0 4px; font-size: 14px;}
@@ -62,9 +62,9 @@ body {padding: 51px 0 0 0 !important;}
 .IllustThumb .Category {font-size: 12px; min-width: 60px; height: 22px; line-height: 22px; max-width: 100%; padding: 0 10px;}
 .IllustThumb .Category.C13 {font-size: 13px; height: 24px; line-height: 24px; white-space: nowrap; padding: 0 5px;}
 .IllustThumb.Hidden .Category:before {font-size: 14px;}
-.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 14px; line-height: 20px; -webkit-line-clamp: 2;}
+.IllustThumb .IllustInfo .IllustInfoDesc {font-size: 14px; height: 40px; line-height: 20px; -webkit-line-clamp: 2;}
 
-.IllustThumb .IllustThumbImg {box-sizing: border-box; height: 164px;}
+.IllustThumb .IllustThumbImg {box-sizing: border-box; height: 212px;}
 .IllustThumb .IllustThumbText {box-sizing: border-box; height: 164px; padding: 1px 3px;}
 .IllustItem {margin: 15px;}
 .Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
@@ -75,6 +75,9 @@ body {padding: 51px 0 0 0 !important;}
 .IllustItem .IllustItemCommand .GenreInfo .GenreImage {flex: 0 40px;width: 40px;height: 40px;}
 .IllustItem .IllustItemTag {-ms-overflow-style: none;}
 .IllustItem .IllustItemTag::-webkit-scrollbar {display:none;}
+
+.IllustItemList2Column .IllustItem {margin: 31px 12px 17px 12px; width: 212px;}
+
 
 .Wrapper.ViewPc .IllustItem .IllustItemCommand .IllustItemCategoryEdit {margin: 0px 0 8px 0px;}
 .Wrapper.ViewPc .IllustItem .IllustItemDesc {padding: 0 10px;}
@@ -133,7 +136,7 @@ body {padding: 51px 0 0 0 !important;}
 
 
 /********** GRID ***********/
-.Wrapper.GridList {width: 1140px;}
+.Wrapper.GridList {width: 1180px;}
 .Wrapper.GridList .PcSideBarAd {display: flex; flex-flow: column; position: relative; width: 336px; height: 280px; float: right; margin: 31px 12px 12px 12px; background-color: #ffffff; align-items: center; justify-content: center;}
 .Wrapper.GridList .PcSideBarAd .PassAd {display: block; position: absolute; top: -19px; left: 0; width: 100%; height: 19px; max-height: 19px; line-height: 19px; font-size: 13px; color: #000; text-align: right;}
 
@@ -154,7 +157,7 @@ body {padding: 51px 0 0 0 !important;}
 .SearchGenre .SearchEdit {margin: 0 0 10px 0; 	font-size: 12px;}
 .SearchGenre .SearchGenreCmd .CmdBtn {margin: 0 0 10px 0;padding: 5px 12px;}
 .SearchGenre .SearchGenreMeta .SearchGenreDesc {font-size: 21px;margin: 5px 0;}
-.SearchGenreFrame{max-width: 1140px; margin: 0 auto;}
+.SearchGenreFrame{max-width: 1180px; margin: 0 auto;}
 .SearchGenre .SearchGenreCmd {flex-direction: column; justify-content: flex-end;}
 /********** genre list **********/
 .GenreItem {width: 380px;padding: 22px 31px;float: left;}

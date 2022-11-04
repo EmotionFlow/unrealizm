@@ -115,7 +115,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 	<%if (!isApp) {%>
 	body {padding-top: 51px !important;}
 	<%if (!bSmartPhone){%>
-	.Wrapper.ThumbList {padding-top: 10px; width: 720px;}
+	.Wrapper.ThumbList {padding-top: 10px; width: 1180px;}
 	<%}%>
 	<%} else {%>
 	body {padding-top: 0 !important;}
