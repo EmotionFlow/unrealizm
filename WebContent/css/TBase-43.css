@@ -466,3 +466,11 @@ form, button {
 .TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
 .TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #000; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
 .TabMenu .TabMenuItem.Selected {border-color: #000;}
+
+.material-symbols-sharp {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}

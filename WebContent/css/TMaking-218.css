@@ -1600,7 +1600,6 @@ Decoration
 	flex: 0 0 30px;
 	height: 30px;
 	overflow: hidden;
-	border: solid 1px #ccc;
 	border-radius: 60px;
 	background-size: cover;
 	background-position: 50% 50%;

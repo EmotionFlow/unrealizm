@@ -92,7 +92,7 @@ body {padding: 51px 0 0 0 !important;}
 
 .Wrapper.ItemList .IllustThumbList, .Wrapper.ItemList .IllustItemList {margin: 30px 0; border: solid 1px #eee; border-radius: 6px; overflow: hidden; background-color: #ffffff;}
 .Header {width: 100%; min-width: 850px; padding: 0;}
-.HeaderWrapper {min-width: 700px; max-width: 990px; margin: 0 auto;}
+.HeaderWrapper {min-width: 700px; max-width: 1180px; margin: 0 auto;}
 .Header .HeaderTitleWrapper {float: left;  margin: 0;}
 .Header #HeaderSearchWrapper {display: block; float: left; margin: 0 0 0 10px;}
 .HeaderSearchWrapper {padding: 10px 0;}

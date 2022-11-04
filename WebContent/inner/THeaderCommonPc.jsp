@@ -11,6 +11,7 @@
 <meta name="pinterest" content="nopin" />
 <link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link href="/css/TBase-43.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-218.css" type="text/css" rel="stylesheet" />
 <link href="/css/TBasePc-83.css" type="text/css" rel="stylesheet" />

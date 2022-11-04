@@ -96,9 +96,9 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .FooterMenuWrapper {display: block; width: 100%; height: 50px; position: fixed; bottom: 0; left: 0; background: #fff; border-top: solid 1px #ddd; z-index: 999; }
 .FooterMenu {width: 100%; display: flex; align-items: center; justify-content: center;  height: 50px; overflow: hidden;}
 .FooterMenu .FooterMenuItem {display: block; float: left; width: 72px; height: 50px; text-align: center; font-size: 0;}
-.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; margin: 6px 0 3px 0; background: url('/img/menu_pc-12.png') no-repeat; background-size: 930%; position: relative;}
-.FooterMenu .FooterMenuItem .FooterMenuItemIcon .InfoNum {display: none; position: absolute; background: #ff4e4e; color: #ffffff; font-size: 9px; height: 15px; min-width: 9px; padding: 0 3px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
-.FooterMenu .FooterMenuItem .FooterMenuItemName {display: block; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
+.FooterMenu .FooterMenuItem .FooterMenuItemIcon {display: inline-block; width: 28px; height: 28px; font-size: 28px; margin: 11px 0; position: relative; color: #c0c0b5;}
+.FooterMenu .FooterMenuItem .InfoNum {display: none; position: absolute; background: #ff4e4e; color: #ffffff; font-size: 9px; height: 15px; min-width: 9px; padding: 0 3px; text-align: center; ;line-height: 15px; border-radius: 15px; top:-4px; right: -7px;}
+.FooterMenu .FooterMenuItem .FooterMenuItemName {display: none; width: 100%; height: 10px; line-height: 10px; text-align: center; font-size: 9px; color: #c0c0b5;}
 .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #000;}
 .FooterMenu .FooterMenuItem:hover .FooterMenuItemName, .FooterMenuWrapper .FooterMenu .FooterMenuItem.Selected .FooterMenuItemName {color: #000;}
 .FooterMenu .TwLoginUnsuccessfulIcon {
@@ -110,25 +110,16 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 }
 
 #DispMsg {top: 51px;padding: 40px 10px;}
-#MenuHome .FooterMenuItemIcon {background-position: 0 0;}
-#MenuSearch .FooterMenuItemIcon {background-position: -28px 0;}
-#MenuNew .FooterMenuItemIcon {background-position: -28px 0;}
-#MenuRequest .FooterMenuItemIcon {background-position: -197px 0;}
-#MenuUpload .FooterMenuItemIcon {background-position: -56px 0;}
-#MenuAct .FooterMenuItemIcon {background-position: -84px 0;}
-#MenuMe .FooterMenuItemIcon {background-position: -112px 0;}
-#MenuMyRequests .FooterMenuItemIcon {background-position: -224px 0;}
-#MenuSettings .FooterMenuItemIcon {background-position: -140px 0;}
-#MenuGenre .FooterMenuItemIcon {background-position: -168px 0;}
-#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {background-position: 0 -28px;}
-#MenuNew.Selected .FooterMenuItemIcon, #MenuNew:hover .FooterMenuItemIcon {background-position: -28px -28px;}
-#MenuRequest.Selected .FooterMenuItemIcon, #MenuRequest:hover .FooterMenuItemIcon {background-position: -197px -28px;}
-#MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {background-position: -56px -28px;}
-#MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {background-position: -84px -28px;}
-#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {background-position: -112px -28px;}
-#MenuMyRequests.Selected .FooterMenuItemIcon, #MenuMyRequests:hover .FooterMenuItemIcon {background-position: -224px -28px;}
-#MenuSettings.Selected .FooterMenuItemIcon, #MenuSettings:hover .FooterMenuItemIcon {background-position: -140px -28px;}
-#MenuGenre.Selected .FooterMenuItemIcon, #MenuGenre:hover .FooterMenuItemIcon {background-position: -168px -28px;}
+#MenuHome .FooterMenuItemIcon {}
+#MenuNew .FooterMenuItemIcon {}
+#MenuUpload .FooterMenuItemIcon {}
+#MenuAct .FooterMenuItemIcon {}
+#MenuMe .FooterMenuItemIcon {}
+#MenuHome.Selected .FooterMenuItemIcon, #MenuHome:hover .FooterMenuItemIcon {color: #000;}
+#MenuNew.Selected .FooterMenuItemIcon, #MenuNew:hover .FooterMenuItemIcon {color: #000;}
+#MenuUpload.Selected .FooterMenuItemIcon, #MenuUpload:hover .FooterMenuItemIcon {color: #000;}
+#MenuAct.Selected .FooterMenuItemIcon, #MenuAct:hover .FooterMenuItemIcon {color: #000;}
+#MenuMe.Selected .FooterMenuItemIcon, #MenuMe:hover .FooterMenuItemIcon {color: #000;}
 
 #MenuSwitchUser {top: 5px; right: 111px; display: block;}
 #MenuSwitchUser .MenuSwitchUserIcon{

@@ -58,7 +58,7 @@ if(cResults.categoryId >= 0) {
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper GridList">
-			<nav id="CategoryMenu" class="CategoryMenu" style="display: none;">
+			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.categoryId<0){%> Selected<%}%>" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 				<a class="BtnBase CategoryBtn CC<%=nCategoryId%> <%if(nCategoryId==cResults.categoryId){%> Selected<%}%>" href="/NewArrivalPcV.jsp?CD=<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></a>

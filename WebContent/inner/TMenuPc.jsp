@@ -65,11 +65,11 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <%--					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>--%>
 <%--				</a>--%>
 				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
-					<span class="MenuUploadIcon"></span>
+					<span class="MenuUploadIcon material-symbols-sharp">file_upload</span>
 					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 				</a>
 				<a id="MenuSettings" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
-					<span class="MenuSettingsIcon"></span>
+					<span class="MenuSettingsIcon material-symbols-sharp">settings</span>
 					<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 				</a>
 				<%}%>
@@ -78,21 +78,20 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		<%if(!Util.isSmartPhone(request)) {%>
 		<nav class="FooterMenu">
 			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemIcon material-symbols-sharp">home</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 			</a>
 			<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemIcon material-symbols-sharp">schedule</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 			</a>
-			<a id="MenuAct" style="<%=Util.isSmartPhone(request)?"":"margin-right: 18px;"%>" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon">
-					<div id="InfoNumAct" class="InfoNum">0</div>
-				</span>
+			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+				<span class="FooterMenuItemIcon material-symbols-sharp">mode_comment</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
+				<div id="InfoNumAct" class="InfoNum">0</div>
 			</a>
 			<a id="MenuMe" style="<%=Util.isSmartPhone(request)?"":"margin-right: 20px;"%>" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemIcon material-symbols-sharp">account_circle</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 			</a>
 <%--			<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">--%>
@@ -127,7 +126,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <%--				<span class="FooterMenuItemName"><%=_TEX.T("SwitchAccount")%></span>--%>
 <%--			</a>--%>
 			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemIcon material-symbols-sharp">file_upload</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 			</a>
 			<a id="MenuSettings" class="FooterMenuItem" href="<%=(checkLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId : "/" %>">
@@ -302,25 +301,24 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
 		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemIcon material-symbols-sharp">home</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>
 		<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemIcon material-symbols-sharp">schedule</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
 		<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
-			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemIcon material-symbols-sharp">file_upload</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 		</a>
 		<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-			<span class="FooterMenuItemIcon">
-				<div id="InfoNumAct" class="InfoNum">0</div>
-			</span>
+			<span class="FooterMenuItemIcon material-symbols-sharp">mode_comment</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
+			<div id="InfoNumAct" class="InfoNum">0</div>
 		</a>
 		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-			<span class="FooterMenuItemIcon"></span>
+			<span class="FooterMenuItemIcon material-symbols-sharp">account_circle</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>
 	</nav>
