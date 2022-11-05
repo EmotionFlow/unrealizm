@@ -193,12 +193,18 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 						<span class="UserInfoStateItemNum"><%=cResults.m_nContentsNumTotal%></span>
 						<%}%>
 					</a>
-					<%if(cResults.m_bOwner) {%>
 					<a class="UserInfoStateItem" href="/FollowListAppV.jsp">
+						<%if(!cResults.m_bBlocked) {%>
 						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follow")%></span>
 						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowNum%></span>
+						<%}%>
 					</a>
-					<%}%>
+					<a class="UserInfoStateItem" href="/FollowerListAppV.jsp">
+						<%if(!cResults.m_bBlocked) {%>
+						<span class="UserInfoStateItemTitle"><%=_TEX.T("IllustListV.Follower")%></span>
+						<span class="UserInfoStateItemNum"><%=cResults.m_cUser.m_nFollowerNum%></span>
+						<%}%>
+					</a>
 				</section>
 			</div>
 		</article>

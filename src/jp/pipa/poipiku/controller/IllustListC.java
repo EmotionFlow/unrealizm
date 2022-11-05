@@ -183,23 +183,6 @@ public class IllustListC {
 				// flags
 				if(m_bOwner) {
 					m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
-					strSql = "SELECT COUNT(user_id) as content_num FROM follows_0000 WHERE user_id=?";
-					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, m_nUserId);
-					resultSet = statement.executeQuery();
-					if(resultSet.next()) {
-						m_cUser.m_nFollowNum = resultSet.getInt("content_num");
-					}
-					resultSet.close();resultSet=null;
-					statement.close();statement=null;
-
-					strSql = "SELECT COUNT(follow_user_id) as content_num FROM follows_0000 WHERE follow_user_id=?";
-					statement = connection.prepareStatement(strSql);
-					statement.setInt(1, m_nUserId);
-					resultSet = statement.executeQuery();
-					if(resultSet.next()) {
-						m_cUser.m_nFollowerNum = resultSet.getInt("content_num");
-					}
 					resultSet.close();resultSet=null;
 					statement.close();statement=null;
 					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
@@ -255,6 +238,28 @@ public class IllustListC {
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
+
+				// フォロー数
+				strSql = "SELECT COUNT(user_id) as content_num FROM follows_0000 WHERE user_id=?";
+				statement = connection.prepareStatement(strSql);
+				idx = 1;
+				statement.setInt(idx++, m_nUserId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					m_cUser.m_nFollowNum = resultSet.getInt("content_num");
+				}
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
+
+				// フォロワー数
+				strSql = "SELECT COUNT(follow_user_id) as content_num FROM follows_0000 WHERE follow_user_id=?";
+				statement = connection.prepareStatement(strSql);
+				idx = 1;
+				statement.setInt(idx++, m_nUserId);
+				resultSet = statement.executeQuery();
+				if(resultSet.next()) {
+					m_cUser.m_nFollowerNum = resultSet.getInt("content_num");
+				}
 
 				// tag
 				strSql = String.format("SELECT tag_txt FROM tags_0000 WHERE tag_type=3 AND content_id IN(SELECT content_id FROM contents_0000 WHERE user_id=? %s) GROUP BY tag_txt ORDER BY max(upload_date) DESC", strOpenCnd);

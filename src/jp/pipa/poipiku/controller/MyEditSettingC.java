@@ -143,6 +143,16 @@ public class MyEditSettingC {
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
+			strSql = "SELECT COUNT(follow_user_id) as cnt FROM follows_0000 WHERE follow_user_id=?";
+			statement = connection.prepareStatement(strSql);
+			statement.setInt(1, checkLogin.m_nUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_cUser.m_nFollowerNum = resultSet.getInt("cnt");
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
 			strSql = "SELECT 1 FROM creditcards WHERE user_id=? AND del_flg=false";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, checkLogin.m_nUserId);
