@@ -203,7 +203,7 @@ public final class CCnv {
 
 		String desc;
 
-		final int firstDispLen = Common.EDITOR_DESC_MAX[0][0] + 100;
+		final int firstDispLen = Common.EDITOR_DESC_MAX[0][0] + 300;
 		int moreIndex = -1;
 		if (descShowFirst.length() > firstDispLen) {
 			moreIndex = descShowFirst.indexOf("\n", firstDispLen);
@@ -596,29 +596,25 @@ public final class CCnv {
 			strRtn.append("</div>");	// IllustItemResListTitle
 		}
 
-		strRtn.append("<div class=\"ResBtnSetList\">");
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard%s(this, %d, 0)\">%s</a>",
-				(nLoginUserId>0)?"Selected":"", miniList?"Mini":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
-		strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard%s(this, %d, 1)\">%s</a>",
-				(nLoginUserId<1)?"Selected":"", miniList?"Mini":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
-		// 使いまわしバレンタイン
-		//strRtn.append(String.format("<a class=\"BtnBase Xmas ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Valentine")));
-		// 使いまわし年賀状
-		//strRtn.append(String.format("<a class=\"BtnBase Xmas ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Nenga")));
-		// X'max
-		//strRtn.append(String.format("<a class=\"BtnBase Xmas ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Xmas")));
-		// Halloween
-		//strRtn.append(String.format("<a class=\"BtnBase Food ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Halloween")));
-		// Pocky
-		//strRtn.append(String.format("<a class=\"BtnBase Pocky ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Pocky")));
 
+		strRtn.append("<div class=\"ResBtnSetList\">");
 		if (!miniList) {
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 0)\">%s</a>",
+					(nLoginUserId>0)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Recent")));
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboard(this, %d, 1)\">%s</a>",
+					(nLoginUserId<1)?"Selected":"", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Popular")));
+
 			// Normal
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 2)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.Food")));
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 3)\">%s</a>", cContent.m_nContentId, _TEX.T("IllustV.Emoji.All")));
 //			if(!cContent.m_bCheerNg && (nSpMode != SP_MODE_APP)) {
 //				strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem\" onclick=\"switchEmojiKeyboard(this, %d, 4)\">%s</a>", cContent.m_nContentId, _TEX.T("Cheer")));
 //			}
+		} else {
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboardMini(this, %d, 0)\"><i class=\"fas fa-history\"></i></a>",
+					(nLoginUserId>0)?"Selected":"",  cContent.m_nContentId));
+			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboardMini(this, %d, 1)\"><i class=\"far fa-star\"></i></a>",
+					(nLoginUserId<1)?"Selected":"", cContent.m_nContentId));
 		}
 		strRtn.append("</div>");	// ResBtnSetList
 
