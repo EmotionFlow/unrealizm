@@ -9,8 +9,8 @@ cResults.getParam(request);
 
 boolean bRtn = cResults.getResults(checkLogin);
 %>
-<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-	CUser cUser = cResults.m_vContentList.get(nCnt);%>
+<%for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
+	CUser cUser = cResults.userList.get(nCnt);%>
 	<%if(isApp){%>
 		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 	<%}else{%>

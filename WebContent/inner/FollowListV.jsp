@@ -15,16 +15,27 @@ if(!checkLogin.m_bLogin) {
 
 FollowListC cResults = new FollowListC();
 cResults.getParam(request);
+cResults.m_nMode = followMode;
 boolean bRtn = cResults.getResults(checkLogin);
+
+final String title;
+if (cResults.m_nMode == FollowListC.MODE_FOLLOWING) {
+	title = _TEX.T("FollowListV.Title");
+} else {
+	title = _TEX.T("FollowerListV.Title");
+}
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
+		<%if(!isApp){%>
+		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+		<%}else{%>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
+		<%}%>
 		<title>follow</title>
 		<script>
 			var g_nPage = 1;
-			var g_nMode = <%=cResults.m_nMode%>;
 			var g_bAdding = false;
 			function addContents() {
 				if(g_bAdding) return;
@@ -33,7 +44,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 				$("#IllustThumbList").append($objMessage);
 				$.ajax({
 					"type": "post",
-					"data": {"MD" : g_nMode, "PG" : g_nPage},
+					"data": {"ID": <%=cResults.userId%> ,"MD" : <%=cResults.m_nMode%>, "PG" : g_nPage},
 					"url": "/f/FollowList<%=isApp?"App":""%>F.jsp",
 					"success": function(data) {
 						if($.trim(data).length>0) {
@@ -53,17 +64,6 @@ boolean bRtn = cResults.getResults(checkLogin);
 				});
 			}
 
-			function changeCategory(elm, param) {
-				g_nPage = 0;
-				g_nMode = param;
-				$("#IllustThumbList").empty();
-				$('#CategoryMenu .CategoryBtn').removeClass('Selected');
-				$(elm).addClass('Selected');
-				updateCategoryMenuPos(300);
-				g_bAdding = false;
-				addContents();
-			}
-
 			$(function(){
 				$(window).bind("scroll.addContents", function() {
 					if(g_bAdding) return;
@@ -77,25 +77,28 @@ boolean bRtn = cResults.getResults(checkLogin);
 	</head>
 
 	<body>
+		<%if(!isApp){%>
+		<%@ include file="/inner/TMenuPc.jsp"%>
+		<%}%>
 		<article class="Wrapper GridList">
-			<div id="CategoryMenu" class="CategoryMenu">
-				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_FOLLOW){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_FOLLOW%>)"><%=_TEX.T("IllustListV.Follow")%></a>
-				<a class="BtnBase CategoryBtn <%if(cResults.m_nMode==FollowListC.MODE_BLOCK){%>Selected<%}%>" onclick="changeCategory(this, <%=FollowListC.MODE_BLOCK%>)"><%=_TEX.T("IllustListV.Block")%></a>
+			<div class="FollowListHeader">
+				<h2 class="FollowListTitle">
+					<i class="FollowListBackLink fas fa-arrow-left"></i><%=title%></h2>
 			</div>
-
 			<div id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
+					CUser cUser = cResults.userList.get(nCnt);%>
 					<%if(isApp){%>
-						<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
+						<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 					<%}else{%>
-						<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX)%>
+						<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW)%>
 					<%}%>
-					<%if((nCnt+1)%9==0) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
-					<%}%>
+<%--					<%if((nCnt+1)%9==0) {%>--%>
+<%--					<%@ include file="/inner/TAd336x280_mid.jsp"%>--%>
+<%--					<%}%>--%>
 				<%}%>
 			</div>
 		</article>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

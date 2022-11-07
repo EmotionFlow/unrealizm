@@ -1370,6 +1370,7 @@ public final class CCnv {
 		return  _toHtmlUser(cUser, nMode, _TEX, nSpMode);
 	}
 	public static String toHtmlUserMini(CUser cUser, int nMode,  ResourceBundleControl _TEX, int nSpMode) {
+		Log.d("Mini");
 		String ILLUST_LIST = getIllustListContext(nSpMode, cUser.m_nUserId);
 		String headerFileName = "";
 		if(!cUser.m_strHeaderFileName.isEmpty()) {

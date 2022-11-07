@@ -21,7 +21,7 @@ cBlockListResults.getResults(checkLogin);
 					$.ajax({
 						"type": "POST",
 						"url": "/f/PageBarF.jsp",
-						"data": "TOTAL=<%=cBlockListResults.m_nContentsNum%>&PARPAGE=<%=cBlockListResults.selectMaxGallery%>&PG=" + pageNum,
+						"data": "TOTAL=<%=cBlockListResults.userNum%>&PARPAGE=<%=cBlockListResults.selectMaxGallery%>&PG=" + pageNum,
 					}).then(
 						function(htmlPageBar){
 							$("#BlockListPageBar").empty();
@@ -41,8 +41,8 @@ cBlockListResults.getResults(checkLogin);
 
 <div class="SettingList">
 	<div id="BlockList" class="IllustThumbList">
-		<%for(int nCnt = 0; nCnt< cBlockListResults.m_vContentList.size(); nCnt++) {
-			CUser cUser = cBlockListResults.m_vContentList.get(nCnt);%>
+		<%for(int nCnt = 0; nCnt< cBlockListResults.userList.size(); nCnt++) {
+			CUser cUser = cBlockListResults.userList.get(nCnt);%>
 		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
 		<%if(bSmartPhone && (nCnt+1)%15==0) {%>
 		<%@ include file="/inner/TAd336x280_mid.jsp"%>
@@ -51,6 +51,6 @@ cBlockListResults.getResults(checkLogin);
 	</div>
 
 	<nav id="BlockListPageBar" class="PageBar">
-		<%=CPageBar.CreatePageBarSp(null, null, cBlockListResults.m_nPage, cBlockListResults.m_nContentsNum, cBlockListResults.selectMaxGallery)%>
+		<%=CPageBar.CreatePageBarSp(null, null, cBlockListResults.m_nPage, cBlockListResults.userNum, cBlockListResults.selectMaxGallery)%>
 	</nav>
 </div>

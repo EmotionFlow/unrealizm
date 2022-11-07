@@ -24,7 +24,7 @@ cFollowListResults.getResults(checkLogin);
 					$.ajax({
 						"type": "POST",
 						"url": "/f/PageBarF.jsp",
-						"data": "TOTAL=<%=cFollowListResults.m_nContentsNum%>&PARPAGE=<%=cFollowListResults.selectMaxGallery%>&PG=" + pageNum,
+						"data": "TOTAL=<%=cFollowListResults.userNum%>&PARPAGE=<%=cFollowListResults.selectMaxGallery%>&PG=" + pageNum,
 					}).then(
 						function(htmlPageBar){
 							$("#FollowListPageBar").empty();
@@ -44,8 +44,8 @@ cFollowListResults.getResults(checkLogin);
 
 <div class="SettingList">
 	<div id="FollowList" class="IllustThumbList">
-		<%for(int nCnt = 0; nCnt< cFollowListResults.m_vContentList.size(); nCnt++) {
-			CUser cUser = cFollowListResults.m_vContentList.get(nCnt);%>
+		<%for(int nCnt = 0; nCnt< cFollowListResults.userList.size(); nCnt++) {
+			CUser cUser = cFollowListResults.userList.get(nCnt);%>
 		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
 		<%if(bSmartPhone && (nCnt+1)%8==0) {%>
 		<%@ include file="/inner/TAd336x280_mid.jsp"%>
@@ -54,6 +54,6 @@ cFollowListResults.getResults(checkLogin);
 	</div>
 
 	<nav id="FollowListPageBar" class="PageBar">
-		<%=CPageBar.CreatePageBarSp(null, null, cFollowListResults.m_nPage, cFollowListResults.m_nContentsNum, cFollowListResults.selectMaxGallery)%>
+		<%=CPageBar.CreatePageBarSp(null, null, cFollowListResults.m_nPage, cFollowListResults.userNum, cFollowListResults.selectMaxGallery)%>
 	</nav>
 </div>

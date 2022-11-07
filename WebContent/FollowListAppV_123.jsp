@@ -64,8 +64,8 @@ boolean bRtn = cResults.getResults(checkLogin);
 	<body style="background: #fff;">
 		<article class="Wrapper GridList">
 			<div id="IllustThumbList" class="IllustThumbList">
-				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
-					CUser cUser = cResults.m_vContentList.get(nCnt);%>
+				<%for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
+					CUser cUser = cResults.userList.get(nCnt);%>
 					<%=CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
 					<%if((nCnt+1)%9==0) {%>
 					<%@ include file="/inner/TAd336x280_mid.jsp"%>
