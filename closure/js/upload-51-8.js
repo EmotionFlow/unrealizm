@@ -1475,7 +1475,7 @@ function onTagInput() {
 	if (/^#{3,}/.test(inputStr)) $input.val(inputStr.replace(/^#{3,}/, '##'));
 	if (/[^#]#/.test(inputStr)) $input.val(inputStr.replace(/([^#])#/g, '$1'));
 	toggleClearTagBtn();
-	$(Swal.getConfirmButton()).prop('disabled', !!inputStr);
+	$(Swal.getConfirmButton()).prop('disabled', !!$input.val());
 	const prevTimeout = getLocalStrage('tag-suggestion-timeout');
 	if (prevTimeout) clearTimeout(prevTimeout);
 	setLocalStrage('tag-suggestion-timeout', setTimeout(() => {
