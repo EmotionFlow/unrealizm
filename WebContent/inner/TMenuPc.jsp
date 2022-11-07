@@ -64,14 +64,16 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <%--					<span class="MenuSwitchUserIcon"></span>--%>
 <%--					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>--%>
 <%--				</a>--%>
-				<a id="MenuUpload" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
-					<span class="MenuUploadIcon material-symbols-sharp">file_upload</span>
-					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
-				</a>
-				<a id="MenuSettings" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
-					<span class="MenuSettingsIcon material-symbols-sharp">settings</span>
-					<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
-				</a>
+				<div style="display: flex; margin-right: 8px">
+					<a id="MenuUpload" style="display: none;margin-right: 7px" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
+						<span class="MenuUploadIcon material-symbols-sharp">file_upload</span>
+						<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+					</a>
+					<a id="MenuSettings" style="display: none;" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
+						<span class="MenuSettingsIcon material-symbols-sharp">settings</span>
+						<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
+					</a>
+				</div>
 				<%}%>
 			<%}%>
 		</div>
