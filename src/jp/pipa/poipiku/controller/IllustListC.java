@@ -183,8 +183,6 @@ public class IllustListC {
 				// flags
 				if(m_bOwner) {
 					m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
-					resultSet.close();resultSet=null;
-					statement.close();statement=null;
 					checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
 				} else {
 					// follow
