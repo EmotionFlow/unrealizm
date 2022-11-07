@@ -130,7 +130,7 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 			</a>
 			<a id="MenuSettings" class="FooterMenuItem" href="<%=(checkLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId : "/" %>">
-				<span class="FooterMenuItemIcon"></span>
+				<span class="FooterMenuItemIcon material-symbols-sharp">settings</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
 			<%}%>
