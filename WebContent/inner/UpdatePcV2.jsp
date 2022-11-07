@@ -370,7 +370,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				<%}%>
 
 				<div class="TagList">
-					<input id="EditTagList" class="EditTagList" type="text" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> readonly onclick="showSetTagDlg({placeholder: '<%=_TEX.T("IllustV.Description.Tag.Info")%>', header: '<%=_TEX.T("IllustV.Description.Tag.ListHeader")%>', blankMsg: '<%=_TEX.T("IllustV.Description.Tag.Blank")%>', doneMsg: '<%=_TEX.T("IllustV.Description.Tag.Done")%>'})" data-tag-max-num="<%=Common.TAG_MAX_NUM%>" data-tag-max-length="<%=Common.TAG_MAX_LENGTH%>"/>
+					<input id="EditTagList" class="EditTagList" type="text" placeholder="<%=_TEX.T("IllustV.Description.Tag")%>" <%if(!cResults.m_cContent.m_strTagList.isEmpty()){%>value="<%=Util.toStringHtml(cResults.m_cContent.m_strTagList)%>"<%}%> readonly onclick="showSetTagDlg({placeholder: '<%=_TEX.T("IllustV.Description.Tag.Info")%>', header: '<%=_TEX.T("IllustV.Description.Tag.ListHeader")%>', addTag: '<%=_TEX.T("IllustV.Description.Tag.Add")%>', blankMsg: '<%=_TEX.T("IllustV.Description.Tag.Blank")%>', doneMsg: '<%=_TEX.T("IllustV.Description.Tag.Done")%>'})" data-tag-max-num="<%=Common.TAG_MAX_NUM%>" data-tag-max-length="<%=Common.TAG_MAX_LENGTH%>"/>
 				</div>
 				<div class="UoloadCmdOption">
 					<input id="ContentOpenId" value="<%=cResults.m_cContent.m_nOpenId%>" type="hidden"/>

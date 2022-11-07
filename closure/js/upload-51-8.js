@@ -1402,6 +1402,10 @@ function showSetTagDlg(txt={placeholder:'', header: '', blankMsg:'', doneMsg: 'O
 					<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
 				</div>
 			</div>
+			<button id="AddTagBtn" class="AddTagBtn" onclick="addTag()">
+				<i class="fas fa-arrow-down AddTagIcon"></i>
+				${txt.addTag}
+			</button>
 		</div>
 	</form>
 	<div id="CurrentTagWrapper" class="DlgTagListWrapper">
@@ -1547,6 +1551,7 @@ function addTag() {
 		}
 	}
 	showCurrentTags();
+	$input.focus();
 	return false;
 }
 

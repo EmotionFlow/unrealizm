@@ -279,6 +279,8 @@
 .TagDlgWrapper .TagSearch .TagSearchBox:placeholder-shown, .TagDlgWrapper .TagSearch .TagSearchBox::placeholder {color: #bbb; font-style: italic; font-size: 12px;}
 .TagDlgWrapper .TagSearch .TagSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 5px;}
 .TagDlgWrapper .TagSearch .TagSearchClear {display: inline-block; color: #3498dbaa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size: 20px;}
+.TagDlgWrapper .TagSearch .AddTagBtn {margin-left: 4px;}
+.TagDlgWrapper .TagSearch .AddTagIcon {margin-right: 4px;}
 
 .TagDlgWrapper .CurrentTagHeader {
 	color: #6d6965;
