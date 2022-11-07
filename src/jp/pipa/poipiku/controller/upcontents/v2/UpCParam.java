@@ -19,6 +19,7 @@ public class UpCParam {
 	public int categoryId = 0;
 	public String description = "";
 	public String aiPrompt = "";
+	public String aiNegativePrompt = "";
 	public String aiOtherPrams = "";
 	public String tagList = "";
 	public int editorId = Common.EDITOR_UPLOAD;
@@ -60,6 +61,7 @@ public class UpCParam {
 		description = Util.deleteInvalidChar(description);
 
 		aiPrompt = Util.toString(Common.TrimAll(request.getParameter("AI_PRMPT")).replace("\r\n", "\n").replace("\r", "\n"));
+		aiNegativePrompt = Util.toString(Common.TrimAll(request.getParameter("AI_NG_PRMPT")).replace("\r\n", "\n").replace("\r", "\n"));
 		aiOtherPrams = Util.toString(Common.TrimAll(request.getParameter("AI_PARAMS")).replace("\r\n", "\n").replace("\r", "\n"));
 
 		tagList = Util.deleteInvalidChar(Common.SubStrNum(Common.TrimAll(request.getParameter("TAG")), 100));

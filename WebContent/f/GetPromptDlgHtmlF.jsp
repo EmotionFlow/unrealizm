@@ -16,7 +16,8 @@ if (!result) return;
 <style>
     .PromptDlgTitle{
         padding: 35px 0 1px 0;
-        color: #47423e;
+        color: #000000;
+        font-size: 0.9em;
     }
     .PromptDlgTitle:first-child{
         padding-top: 10px;
@@ -28,10 +29,13 @@ if (!result) return;
         font-family: serif
     }
     .PromptDlgInfo.Prompt {
-        height: 100px;
+        height: 90px;
+    }
+    .PromptDlgInfo.NegativePrompt {
+        height: 45px;
     }
     .PromptDlgInfo.OtherParams {
-        height: 50px;
+        height: 45px;
     }
     .PromptDlgModelName {
         font-size: 14px;
@@ -66,6 +70,10 @@ if (!result) return;
     <h2 class="PromptDlgTitle"><%=_TEX.T("PromptDlg.Prompt")%></h2>
     <textarea readonly id="PromptDlgPrompt" class="PromptDlgInfo Prompt" style="margin-top: 5px;"><%=cResults.prompt%></textarea>
     <span id="PromptDlgCopyPromptBtn" class="PromptDlgCopyBtn" onclick="copyTxtToClipBoard('PromptDlgPrompt', this)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyPrompt")%> </span>
+
+    <h2 class="PromptDlgTitle"><%=_TEX.T("PromptDlg.NegativePrompt")%></h2>
+    <textarea readonly id="PromptDlgNegativePrompt" class="PromptDlgInfo NegativePrompt" style="margin-top: 5px;"><%=cResults.negativePrompt%></textarea>
+    <span id="PromptDlgCopyNegativePromptBtn" class="PromptDlgCopyBtn" onclick="copyTxtToClipBoard('PromptDlgNegativePrompt', this)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyNegativePrompt")%> </span>
 
     <h2 class="PromptDlgTitle" style="margin-top: 4px;"><%=_TEX.T("PromptDlg.Params")%></h2>
     <textarea readonly id="PromptDlgParams" class="PromptDlgInfo OtherParams" style="margin-top: 5px;"><%=cResults.otherParams%></textarea>

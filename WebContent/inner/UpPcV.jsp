@@ -112,6 +112,11 @@
 		$("#PromptCharNum").html(nCharNum);
 	}
 
+	function DispNegativePromptCharNum() {
+		const nCharNum = <%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditNegativePrompt").val().length;
+		$("#NegativePromptCharNum").html(nCharNum);
+	}
+
 	function DispOtherParamsCharNum() {
 		const nCharNum = <%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%> - $("#EditOtherParams").val().length;
 		$("#OtherParamsCharNum").html(nCharNum);

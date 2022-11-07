@@ -258,11 +258,15 @@ if (requestId > 0) {
 					<div id="PromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 
-				<div class="OtherParams">
-					<textarea id="EditOtherParams" class="EditOtherParams" maxlength="<%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()"></textarea>
-					<div class="OtherParamsCharNum"><span id="OtherParamsCharNum">100</span></div>
+				<div class="Prompt">
+					<textarea id="EditNegativePrompt" class="EditNegativePrompt" maxlength="<%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.NegativePrompt.Add")%>" onkeyup="DispNegativePromptCharNum()"></textarea>
+					<div id="NegativePromptCharNum" class="PromptCharNum"><%=Common.EDITOR_PROMPT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
 
+				<div class="OtherParams">
+					<textarea id="EditOtherParams" class="EditOtherParams" maxlength="<%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.OtherParams.Add")%>" onkeyup="DispOtherParamsCharNum()"></textarea>
+					<div class="OtherParamsCharNum"><span id="OtherParamsCharNum"><%=Common.EDITOR_OTHER_PARAMS_MAX[nEditorId][checkLogin.m_nPassportId]%></span></div>
+				</div>
 
 				<div class="Description">
 					<div class="SettingListTitle WithLangSelector" style="text-align: right; display: none">

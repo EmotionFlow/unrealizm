@@ -73,12 +73,6 @@
 		left: 12px;
 	}
 
-	element.style {
-		display: flex;
-	}
-	.swal2-popup .swal2-close {
-		color: #88b9ca;
-	}
 </style>
 <script type="text/javascript">
 		$(function(){

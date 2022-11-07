@@ -104,7 +104,7 @@ public final class UpdateC extends UpC {
 					"password_enabled=?", "password=?",
 					"list_id=?", "safe_filter=?", "cheer_ng=?",
 					"tweet_when_published=?",
-					"not_recently=?", "ai_prompt=?", "ai_other_params=?",
+					"not_recently=?", "ai_prompt=?", "ai_negative_prompt=?", "ai_other_params=?",
 					"limited_time_publish=?"
 			));
 
@@ -175,6 +175,7 @@ public final class UpdateC extends UpC {
 				statement.setBoolean(idx++, !upParam.isShowRecently);
 
 				statement.setString(idx++, upParam.aiPrompt);
+				statement.setString(idx++, upParam.aiNegativePrompt);
 				statement.setString(idx++, upParam.aiOtherPrams);
 
 				statement.setBoolean(idx++, upParam.isTimeLimited);

@@ -62,6 +62,7 @@ public final class CContent {
 	public int pinOrder = -1;
 	public String privateNote = "";
 	public String aiPrompt = "";
+	public String aiNegativePrompt = "";
 	public String aiOtherParams = "";
 	public Timestamp createdAt = null;
 	public Timestamp updatedAt = null;
@@ -184,6 +185,7 @@ public final class CContent {
 		novelDirection		= Util.toIntN(resultSet.getInt("novel_direction"), 0, 1);
 		privateNote         = Util.toString(resultSet.getString("private_note"));
 		aiPrompt            = Util.toString(resultSet.getString("ai_prompt"));
+		aiNegativePrompt    = Util.toString(resultSet.getString("ai_negative_prompt"));
 		aiOtherParams       = Util.toString(resultSet.getString("ai_other_params"));
 		createdAt           = resultSet.getTimestamp("created_at");
 		updatedAt           = resultSet.getTimestamp("updated_at");

@@ -951,7 +951,10 @@ function _getBasePostData(userId, requestId, editorId) {
 		showPromptErrMsg();
 		return null;
 	}
+
+	postData["AI_NG_PRMPT"] = $("#EditNegativePrompt").val().trim().replace("\n", "");
 	postData["AI_PARAMS"] = $("#EditOtherParams").val().trim();
+
 
 	// for novel
 	if (editorId === 3) {

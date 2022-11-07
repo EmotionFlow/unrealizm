@@ -1329,7 +1329,8 @@ Decoration
 }
 
 .UploadFile .Description .EditDescription,
-.UploadFile .Prompt .EditPrompt {
+.UploadFile .Prompt .EditPrompt,
+.UploadFile .Prompt .EditNegativePrompt {
 	font-size: 11px;
 	display: block;
 	float: left;
@@ -1340,6 +1341,11 @@ Decoration
 
 .UploadFile .Prompt .EditPrompt {
 	height: 90px;
+	margin-top: 10px;
+}
+
+.UploadFile .Prompt .EditNegativePrompt {
+	height: 50px;
 	margin-top: 10px;
 }
 
@@ -2016,6 +2022,7 @@ Decoration
 	font-size: 12px;
 	color: #000;
 	font-family: serif;
+	word-break: keep-all;
 }
 
 .IllustItem .IllustItemPrompt .fa-terminal,
