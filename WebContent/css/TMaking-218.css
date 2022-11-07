@@ -4044,3 +4044,13 @@ hr.IllustItemListSeparator {
 	background: #fffefb;
 }
 /********** メッセージ付きwave表示ダイアログ ************/
+
+/********** Follow, Follower List ************/
+.FollowListHeader {
+	font-size: 1.2rem;
+	margin: 9px 8px 0 7px;
+}
+.FollowListHeader > .FollowListTitle > i {
+	padding-right: 4px;
+}
+/********** Follow, Follower List ************/

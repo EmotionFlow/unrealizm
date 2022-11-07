@@ -82,8 +82,9 @@ if (cResults.m_nMode == FollowListC.MODE_FOLLOWING) {
 		<%}%>
 		<article class="Wrapper GridList">
 			<div class="FollowListHeader">
-				<h2 class="FollowListTitle">
-					<i class="FollowListBackLink fas fa-arrow-left"></i><%=title%></h2>
+				<a class="FollowListTitle" href="/<%=cResults.userId%>">
+					<i class="FollowListBackLink fas fa-arrow-left"></i><%=title%>
+				</a>
 			</div>
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {

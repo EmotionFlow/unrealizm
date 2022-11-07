@@ -45,7 +45,7 @@ HashMap<String, String> MENU = new HashMap<>();
 MENU.put("PROFILE", "<i class=\"fas fa-address-card\"></i> " + _TEX.T("EditSettingV.Profile"));
 MENU.put("MYPAGE", _TEX.T("EditSettingV.MyPage"));
 MENU.put("EMOJI", _TEX.T("EditSettingV.Emoji"));
-MENU.put("FOLLOW", "<i class=\"fas fa-star\"></i> " + _TEX.T("EditSettingV.FavoList"));
+//MENU.put("FOLLOW", "<i class=\"fas fa-star\"></i> " + _TEX.T("EditSettingV.FavoList"));
 MENU.put("FOLLOWTAG", "<i class=\"fas fa-tag\"></i> " + _TEX.T("EditSettingV.FollowTagList"));
 MENU.put("BLOCK", _TEX.T("EditSettingV.BlockList"));
 //MENU.put("MUTEKEYWORD", _TEX.T("EditSettingV.MuteKeyowrd"));
@@ -64,7 +64,7 @@ String[][] menuOrder = {
 		"PROFILE",
 		"MYPAGE",
 		"EMOJI",
-		"FOLLOW",
+//		"FOLLOW",
 		"FOLLOWTAG",
 		"BLOCK",
 //		"MUTEKEYWORD",
