@@ -2423,6 +2423,10 @@ Decoration
 	font-size: 11px;
 }
 
+.IllustItemList2Column .IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem {
+	min-width: 50px;
+}
+
 .IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Selected {
 }
 
