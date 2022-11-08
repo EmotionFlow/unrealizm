@@ -2,6 +2,7 @@ package jp.pipa.poipiku.controller;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,14 +17,16 @@ public final class FollowListC {
 	public int userId = -1;
 	public int m_nMode = -1;
 	public int m_nPage = 0;
+	public int lastUserId = -1;
 	public void getParam(HttpServletRequest cRequest) {
 		try {
 			cRequest.setCharacterEncoding("UTF-8");
 			userId = Util.toInt(cRequest.getParameter("ID"));
 			m_nMode = Math.max(Util.toInt(cRequest.getParameter("MD")), MODE_FOLLOWING);
 			m_nPage = Math.max(Util.toInt(cRequest.getParameter("PG")), 0);
+			lastUserId = Util.toInt(cRequest.getParameter("SD"));
 		}
-		catch(Exception e) {
+		catch(Exception ignored) {
 			;
 		}
 	}
@@ -31,6 +34,8 @@ public final class FollowListC {
 	public int selectMaxGallery = 36;
 	public ArrayList<CUser> userList = new ArrayList<>();
 	public int userNum = 0;
+	public String nickName = "";
+	public int endId = -1;
 
 	public boolean getResults(CheckLogin checkLogin) {
 		return getResults(checkLogin, false);
@@ -48,6 +53,8 @@ public final class FollowListC {
 		try {
 			CacheUsers0000 users  = CacheUsers0000.getInstance();
 			connection = DatabaseUtil.dataSource.getConnection();
+
+			nickName = Objects.requireNonNull(users.getUser(userId)).nickName;
 
 			if(!bContentOnly) {
 				if(m_nMode== MODE_FOLLOWING) {
@@ -69,19 +76,27 @@ public final class FollowListC {
 
 			if(m_nMode== MODE_FOLLOWING) {
 				strSql = "SELECT follow_user_id FROM follows_0000 f "
-						+ "INNER JOIN users_0000 u ON f.follow_user_id=u.user_id "
-						+ "WHERE f.user_id=? "
-						+ "ORDER BY upload_date DESC OFFSET ? LIMIT ?";
+						+ " INNER JOIN users_0000 u ON f.follow_user_id=u.user_id "
+						+ " WHERE f.user_id=? "
+						+ (lastUserId > 0 ? " AND follow_user_id < ?" : "")
+						+ " ORDER BY follow_user_id DESC OFFSET ? LIMIT ?";
 			} else {
 				strSql = "SELECT f.user_id as follower_user_id FROM follows_0000 f "
-						+ "INNER JOIN users_0000 u ON f.user_id=u.user_id "
-						+ "WHERE f.follow_user_id=? "
-						+ "ORDER BY upload_date DESC OFFSET ? LIMIT ?";
+						+ " INNER JOIN users_0000 u ON f.user_id=u.user_id "
+						+ " WHERE f.follow_user_id=? "
+						+ (lastUserId > 0 ? " AND f.user_id < ?" : "")
+						+ " ORDER BY f.user_id DESC OFFSET ? LIMIT ?";
 			}
+
+			int idx = 1;
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, userId);
-			statement.setInt(2, m_nPage * selectMaxGallery);
-			statement.setInt(3, selectMaxGallery);
+			statement.setInt(idx++, userId);
+			if (lastUserId > 0) statement.setInt(idx++, lastUserId);
+			statement.setInt(idx++, m_nPage * selectMaxGallery);
+			statement.setInt(idx++, selectMaxGallery);
+
+			Log.d(statement.toString());
+
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CUser cContent = new CUser();
@@ -96,7 +111,9 @@ public final class FollowListC {
 				if (user != null) {
 					cContent.m_strNickName	= Util.toString(user.nickName);
 					cContent.m_strFileName	= Util.toString(user.fileName);
+					cContent.m_strProfile   = Util.toString(user.profile);
 					userList.add(cContent);
+					endId = user.userId;
 				}
 			}
 			resultSet.close();resultSet=null;

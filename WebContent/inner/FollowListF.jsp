@@ -8,16 +8,21 @@ FollowListC cResults = new FollowListC();
 cResults.getParam(request);
 cResults.m_nMode = followMode;
 
-boolean bRtn = cResults.getResults(checkLogin);
+cResults.getResults(checkLogin, true);
+
+StringBuilder sbHtml = new StringBuilder();
+for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
+	CUser cUser = cResults.userList.get(nCnt);
+	if (Util.isSmartPhone(request)) {
+		if (isApp) {
+	sbHtml.append(CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP));
+		} else {
+			sbHtml.append(CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW));
+		}
+	} else {
+		sbHtml.append(CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW));
+	}
+}
+
 %>
-<%for(int nCnt = 0; nCnt<cResults.userList.size(); nCnt++) {
-	CUser cUser = cResults.userList.get(nCnt);%>
-	<%if(isApp){%>
-		<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP)%>
-	<%}else{%>
-		<%=CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW)%>
-	<%}%>
-<%--	<%if( Util.isSmartPhone(request) && (nCnt+1) % 8 == 0) {%>--%>
-<%--	<%@ include file="/inner/TAd336x280_mid.jsp"%>--%>
-<%--	<%}%>--%>
-<%}%>
+{"end_id":<%=cResults.endId%>,"html":"<%=CEnc.E(sbHtml.toString())%>"}
