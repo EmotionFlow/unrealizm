@@ -21,7 +21,7 @@ public class GetEmojiListC {
 		try {
 			request.setCharacterEncoding("UTF-8");
 			contentId = Util.toInt(request.getParameter("IID"));
-			categoryId = Util.toIntN(request.getParameter("CAT"), 0, Emoji.EMOJI_CAT_CHEER);
+			categoryId = Util.toIntN(request.getParameter("CAT"), 0, Emoji.EMOJI_CAT_RANDOM);
 			miniList = Util.toBoolean(request.getParameter("MINI"));
 		} catch(Exception ignored) {}
 	}
@@ -34,12 +34,15 @@ public class GetEmojiListC {
 		Login       vEmoji  static   static  static  static
 	 */
 	public String[] getResults(CheckLogin checkLogin) {
-		String[] EMOJI_LIST = Emoji.getInstance().EMOJI_LIST[categoryId];
+		int _categoryId = categoryId;
+		if (categoryId == Emoji.EMOJI_CAT_RANDOM) _categoryId = Emoji.EMOJI_CAT_OTHER;
+		String[] EMOJI_LIST = Emoji.getInstance().EMOJI_LIST[_categoryId];
 
 		if(categoryId ==Emoji.EMOJI_CAT_RECENT && !checkLogin.m_bLogin) return EMOJI_LIST;
 		if(categoryId ==Emoji.EMOJI_CAT_POPULAR) return EMOJI_LIST;
 		if(categoryId ==Emoji.EMOJI_CAT_FOOD) return EMOJI_LIST;
 		if(categoryId ==Emoji.EMOJI_CAT_OTHER) return EMOJI_LIST;
+		if(categoryId ==Emoji.EMOJI_CAT_RANDOM) return EMOJI_LIST;
 
 		if(categoryId ==Emoji.EMOJI_CAT_CHEER) {
 			if(checkLogin.m_bLogin){

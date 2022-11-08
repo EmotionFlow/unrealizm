@@ -21,13 +21,14 @@ public class Emoji {
 	static final int EMOJI_KEYBORD_PC = 14;
 	//static final int EMOJI_KEYBORD_SP = 8;
 	static final int EMOJI_KEYBORD_MAX = EMOJI_KEYBORD_PC*EMOJI_KEYBORD_LINE_DEFAULT;
-	static final int EMOJI_KEYBOARD_MINI = 8;
+	public static final int EMOJI_KEYBOARD_MINI = 8;
 
 	public static final int EMOJI_CAT_RECENT = 0;
 	public static final int EMOJI_CAT_POPULAR = 1;
 	public static final int EMOJI_CAT_FOOD = 2;
 	public static final int EMOJI_CAT_OTHER = 3;
 	public static final int EMOJI_CAT_CHEER = 4;
+	public static final int EMOJI_CAT_RANDOM = 5;
 
 	public static final int EMOJI_CHEER_NUM = 16;
 
