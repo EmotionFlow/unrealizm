@@ -3,6 +3,7 @@ package jp.pipa.poipiku;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -283,6 +284,14 @@ public class Emoji {
 	}
 
 	public static int getLength(String s) {
-		return s.codePointCount(0, s.length());
+		BreakIterator iterator = BreakIterator.getCharacterInstance();
+		iterator.setText(s);
+
+		int count = 0;
+		while (iterator.next() != BreakIterator.DONE) {
+			count++;
+		}
+
+		return count;
 	}
 }

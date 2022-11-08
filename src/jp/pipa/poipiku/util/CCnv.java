@@ -839,7 +839,7 @@ public final class CCnv {
 
 		// リアクション数
 		if (cContent.m_strCommentsListsCache.length() > 0) {
-			final int nReactionNum = cContent.m_strCommentsListsCache.length();
+			final int nReactionNum = Emoji.getLength(cContent.m_strCommentsListsCache);
 			String strReactionNum = "";
 			if (nReactionNum > 10e3) {
 				strReactionNum = "1000+";
