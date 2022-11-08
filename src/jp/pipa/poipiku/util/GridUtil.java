@@ -14,7 +14,7 @@ public class GridUtil {
 	public static int SELECT_MINI_LIST_EMOJI = 9;
 
 	public static void getEachComment(Connection connection, List<CContent> contents) throws SQLException {
-		String sql = "SELECT description FROM comments_desc_cache WHERE content_id=?";
+		String sql = "SELECT description, total_num FROM comments_desc_cache WHERE content_id=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		for(CContent content : contents) {
 			if(content.m_cUser.m_nReaction!=CUser.REACTION_SHOW) continue;
@@ -22,6 +22,7 @@ public class GridUtil {
 			ResultSet resultSet = statement.executeQuery();
 			if (resultSet.next()) {
 				content.m_strCommentsListsCache = Util.toString(resultSet.getString("description"));
+				content.commentTotalNum = resultSet.getInt("total_num");
 			}
 			resultSet.close();resultSet=null;
 		}
@@ -79,13 +80,14 @@ public class GridUtil {
 	}
 
 	public static void getComment(Connection connection, CContent content) throws SQLException {
-		String strSql = "SELECT description, last_comment_id FROM comments_desc_cache WHERE content_id=?";
+		String strSql = "SELECT description, last_comment_id, total_num FROM comments_desc_cache WHERE content_id=?";
 		PreparedStatement statement = connection.prepareStatement(strSql);
 		statement.setInt(1, content.m_nContentId);
 		ResultSet resultSet = statement.executeQuery();
 		if (resultSet.next()) {
 			content.m_strCommentsListsCache = Util.toString(resultSet.getString("description"));
 			content.m_nCommentsListsCacheLastId = resultSet.getInt("last_comment_id");
+			content.commentTotalNum = resultSet.getInt("total_num");
 		}
 		resultSet.close();resultSet=null;
 		statement.close();statement=null;

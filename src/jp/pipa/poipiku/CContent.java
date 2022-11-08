@@ -50,6 +50,7 @@ public final class CContent {
 	public ArrayList<CComment> m_vComment = new ArrayList<>();
 	public String m_strCommentsListsCache = "";
 	public int m_nCommentsListsCacheLastId = 0;
+	public int commentTotalNum = 0;
 	public ArrayList<CContentAppend> m_vContentAppend = new ArrayList<>();
 	public boolean m_bCheerNg = true;
 	public String m_strTextBody = "";

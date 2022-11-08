@@ -792,7 +792,10 @@ public final class CCnv {
 		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, false);
 
 		// サムネイルへの重畳表示
-		appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
+		//appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
+
+		// リアクション数
+		appendReactionNum(strRtn, cContent);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
@@ -838,22 +841,7 @@ public final class CCnv {
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// リアクション数
-		if (cContent.m_strCommentsListsCache.length() > 0) {
-			final int nReactionNum = Emoji.getLength(cContent.m_strCommentsListsCache);
-			String strReactionNum = "";
-			if (nReactionNum > 10e3) {
-				strReactionNum = "1000+";
-			} else {
-				strReactionNum = "%d".formatted(nReactionNum);
-			}
-
-			strRtn.append("""
-	            <div class="IllustItemReactionNum"><span class="ReactionNumLabel">
-	            <span class="material-symbols-sharp">favorite</span>
-	            <span id="ReactionNum_%d" class="ReactionNum">%s</span>
-	            </span></div>
-				""".formatted(cContent.m_nContentId, strReactionNum));
-		}
+		appendReactionNum(strRtn, cContent);
 
 		// 全て表示ボタン
 //		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
@@ -866,6 +854,24 @@ public final class CCnv {
 		strRtn.append("</div>");	// IllustItem
 
 		return strRtn.toString();
+	}
+
+	private static void appendReactionNum(StringBuilder strRtn, CContent cContent) {
+		if (cContent.m_strCommentsListsCache.length() > 0) {
+			String strReactionNum = "";
+			if (cContent.commentTotalNum > 10e3) {
+				strReactionNum = "1000+";
+			} else {
+				strReactionNum = "%d".formatted(cContent.commentTotalNum);
+			}
+
+			strRtn.append("""
+	            <div class="IllustItemReactionNum"><span class="ReactionNumLabel">
+	            <span class="material-symbols-sharp">favorite</span>
+	            <span id="ReactionNum_%d" class="ReactionNum">%s</span>
+	            </span></div>
+				""".formatted(cContent.m_nContentId, strReactionNum));
+		}
 	}
 
 

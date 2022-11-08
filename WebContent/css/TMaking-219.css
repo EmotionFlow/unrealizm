@@ -2126,16 +2126,21 @@ Decoration
 	min-height: 100px;
 }
 
-.IllustItemList2Column .IllustItem .IllustItemReactionNum {
+.IllustItem .IllustItemReactionNum {
 	width: 100%;
-	height: 22px;
-	margin-top: -23px;
+	height: 32px;
+	margin-top: -33px;
 	float: left;
 	display: flex;
 	justify-content: flex-end;
 }
 
-.IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel{
+.IllustItemList2Column .IllustItem .IllustItemReactionNum {
+	height: 22px;
+	margin-top: -23px;
+}
+
+.IllustItem .IllustItemReactionNum .ReactionNumLabel{
 	display: flex;
 	align-items: center;
 	font-size: 13px;
@@ -2145,6 +2150,12 @@ Decoration
 	color: #212020;
 	border: solid 1px #eaeaea;
 	border-radius: 3px;
+}
+
+.IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel{
+	font-size: 13px;
+	margin-right: 7px;
+	padding: 1px 4px;
 }
 
 .IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel .material-symbols-sharp{

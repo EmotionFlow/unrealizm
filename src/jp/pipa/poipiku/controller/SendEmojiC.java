@@ -75,14 +75,12 @@ public class SendEmojiC {
 		ResultSet resultSet = null;
 		String strSql = "";
 
+		// 投稿存在確認(不正アクセス対策) & 対象コンテンツ情報取得
+		CUser cTargUser = null;
+		CContent cTargContent = null;
+		Integer nContentUserId = null;
+		CacheUsers0000 users  = CacheUsers0000.getInstance();
 		try {
-			CacheUsers0000 users  = CacheUsers0000.getInstance();
-
-			// 投稿存在確認(不正アクセス対策) & 対象コンテンツ情報取得
-			CUser cTargUser = null;
-			CContent cTargContent = null;
-			Integer nContentUserId = null;
-
 			connection = DatabaseUtil.dataSource.getConnection();
 			strSql = "SELECT * FROM contents_0000 WHERE content_id=? AND open_id<>2";
 			statement = connection.prepareStatement(strSql);
@@ -177,6 +175,19 @@ public class SendEmojiC {
 					return false;
 				}
 			}
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+
+
+		try {
+			connection = DatabaseUtil.dataSource.getConnection();
+			connection.setAutoCommit(false);
 
 			// add new comment
 			strSql = "INSERT INTO comments_0000(content_id, description, user_id, to_user_id, ip_address) VALUES(?, ?, ?, ?, ?)";
@@ -189,24 +200,35 @@ public class SendEmojiC {
 			statement.executeUpdate();
 			statement.close();statement=null;
 
-			// update comment_list
-			GridUtil.updateCommentsLists(connection, m_nContentId, cTargUser.m_nUserId);
-
-			// update making comment num
-			strSql ="UPDATE contents_0000 SET people_num=(SELECT COUNT(DISTINCT user_id) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
+			strSql = "UPDATE comments_desc_cache SET total_num=(SELECT count(*) FROM comments_0000 WHERE content_id=?) WHERE content_id=?";
 			statement = connection.prepareStatement(strSql);
 			statement.setInt(1, m_nContentId);
 			statement.setInt(2, m_nContentId);
 			statement.executeUpdate();
 			statement.close();statement=null;
 
+			connection.commit();
+			connection.setAutoCommit(true);
+
+			// update comment_list
+			GridUtil.updateCommentsLists(connection, m_nContentId, cTargUser.m_nUserId);
+
 			bRtn = true; // 以下実行されなくてもOKを返す
 
-			// お知らせ一覧更新
-			// サムネイルタイプの判定
-			final int contentType;
-			final String infoThumb;
-			switch(cTargContent.m_nEditorId) {
+		} catch(Exception e) {
+			Log.d(strSql);
+			e.printStackTrace();
+		} finally {
+			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
+			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
+			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception ignored){;}
+		}
+
+		// お知らせ一覧更新
+		// サムネイルタイプの判定
+		final int contentType;
+		final String infoThumb;
+		switch(cTargContent.m_nEditorId) {
 			case Common.EDITOR_TEXT:
 				contentType = Common.CONTENT_TYPE_TEXT;
 				infoThumb = cTargContent.m_strDescription;
@@ -218,25 +240,17 @@ public class SendEmojiC {
 				contentType = Common.CONTENT_TYPE_IMAGE;
 				infoThumb = cTargContent.m_strFileName;
 				break;
-			}
-
-			EmojiNotifier notifier = new EmojiNotifier();
-			notifier.notifyReactionReceived(
-					cTargContent.m_nUserId,
-					cTargContent.m_nContentId,
-					contentType,
-					m_strEmoji,
-					infoThumb
-					);
-			
-		} catch(Exception e) {
-			Log.d(strSql);
-			e.printStackTrace();
-		} finally {
-			try{if(resultSet!=null){resultSet.close();resultSet=null;}}catch(Exception ignored){;}
-			try{if(statement!=null){statement.close();statement=null;}}catch(Exception ignored){;}
-			try{if(connection!=null){connection.setAutoCommit(true);connection.close();connection=null;}}catch(Exception ignored){;}
 		}
+
+		EmojiNotifier notifier = new EmojiNotifier();
+		notifier.notifyReactionReceived(
+				cTargContent.m_nUserId,
+				cTargContent.m_nContentId,
+				contentType,
+				m_strEmoji,
+				infoThumb
+		);
+
 		return bRtn;
 	}
 
