@@ -190,9 +190,9 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
 							<a id="OpenTweetMyBoxDlgBtn" href="javascript:void(0);" class="BtnBase">
 								<i class="fab fa-twitter"></i><%=_TEX.T("MyIllustListV.TweetMyBox")%>
 							</a>
-							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">
-								<%=_TEX.T("Request.MyRequests")%>
-							</a>
+<%--							<a href="/MyRequestListPcV.jsp?MENUID=RECEIVED" class="BtnBase">--%>
+<%--								<%=_TEX.T("Request.MyRequests")%>--%>
+<%--							</a>--%>
 						</span>
 					</span>
 				</section>
