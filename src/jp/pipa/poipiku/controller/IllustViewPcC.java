@@ -243,6 +243,28 @@ public final class IllustViewPcC {
 				return false;
 			}
 
+			// フォロー数
+			sql = "SELECT COUNT(user_id) as content_num FROM follows_0000 WHERE user_id=?";
+			statement = connection.prepareStatement(sql);
+			idx = 1;
+			statement.setInt(idx++, ownerUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_cUser.m_nFollowNum = resultSet.getInt("content_num");
+			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
+
+			// フォロワー数
+			sql = "SELECT COUNT(follow_user_id) as content_num FROM follows_0000 WHERE follow_user_id=?";
+			statement = connection.prepareStatement(sql);
+			idx = 1;
+			statement.setInt(idx++, ownerUserId);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				m_cUser.m_nFollowerNum = resultSet.getInt("content_num");
+			}
+
 			// follow
 			int m_nFollow = CUser.FOLLOW_HIDE;
 			if(ownerUserId != checkLogin.m_nUserId) {
