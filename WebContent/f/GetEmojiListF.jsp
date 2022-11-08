@@ -5,9 +5,6 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 StringBuilder sbResult = new StringBuilder();
 GetEmojiListC cResults = new GetEmojiListC();
 cResults.getParam(request);
-
-Log.d("cat: " + cResults.categoryId);
-
 if(!checkLogin.m_bLogin && cResults.categoryId ==Emoji.EMOJI_CAT_RECENT) {
 	sbResult.append(String.format("<span class=\"NeedLogin\">%s</span>", _TEX.T("IllustV.Emoji.Recent.NeedLogin")));
 } else if(!checkLogin.m_bLogin && cResults.categoryId ==Emoji.EMOJI_CAT_OTHER) {
