@@ -837,7 +837,7 @@ public final class CCnv {
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// リアクション数
-		if (cContent.m_strCommentsListsCache.length() > 10) {
+		if (cContent.m_strCommentsListsCache.length() > 0) {
 			final int nReactionNum = cContent.m_strCommentsListsCache.length();
 			String strReactionNum = "";
 			if (nReactionNum > 10e3) {
