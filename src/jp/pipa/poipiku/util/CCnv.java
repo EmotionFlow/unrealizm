@@ -836,6 +836,26 @@ public final class CCnv {
 		// 画像orテキスト
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
+		// リアクション数
+		if (cContent.m_strCommentsListsCache.length() > 20) {
+			final int nReactionNum = cContent.m_strCommentsListsCache.length();
+			String strReactionNum = "";
+			if (nReactionNum > 10e3) {
+				strReactionNum = "1000";
+			} else if (nReactionNum > 10e2) {
+				strReactionNum = "%d".formatted(nReactionNum / 10 * 10);
+			} else {
+				strReactionNum = "%d".formatted(nReactionNum);
+			}
+
+			strRtn.append("""
+	            <div class="IllustItemReactionNum"><span class="ReactionNumLabel">
+	            <span class="material-symbols-sharp">favorite</span>
+	            <span id="ReactionNum_%d" class="ReactionNum">%s+</span>
+	            </span></div>
+				""".formatted(cContent.m_nContentId, strReactionNum));
+		}
+
 		// 全て表示ボタン
 //		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
 
