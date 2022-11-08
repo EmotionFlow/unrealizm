@@ -79,13 +79,13 @@ public final class FollowListC {
 						+ " INNER JOIN users_0000 u ON f.follow_user_id=u.user_id "
 						+ " WHERE f.user_id=? "
 						+ (lastUserId > 0 ? " AND follow_user_id < ?" : "")
-						+ " ORDER BY follow_user_id DESC OFFSET ? LIMIT ?";
+						+ " ORDER BY upload_date DESC OFFSET ? LIMIT ?";
 			} else {
 				strSql = "SELECT f.user_id as follower_user_id FROM follows_0000 f "
 						+ " INNER JOIN users_0000 u ON f.user_id=u.user_id "
 						+ " WHERE f.follow_user_id=? "
 						+ (lastUserId > 0 ? " AND f.user_id < ?" : "")
-						+ " ORDER BY f.user_id DESC OFFSET ? LIMIT ?";
+						+ " ORDER BY upload_date DESC OFFSET ? LIMIT ?";
 			}
 
 			int idx = 1;
