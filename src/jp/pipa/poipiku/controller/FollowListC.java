@@ -95,8 +95,6 @@ public final class FollowListC {
 			statement.setInt(idx++, m_nPage * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
 
-			Log.d(statement.toString());
-
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CUser cContent = new CUser();
