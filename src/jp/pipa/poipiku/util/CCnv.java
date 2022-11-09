@@ -796,7 +796,7 @@ public final class CCnv {
 		//appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
 
 		// リアクション数
-		appendReactionNum(strRtn, cContent);
+		appendReactionNum(strRtn, cContent, false);
 
 		// 絵文字
 		if(cContent.m_cUser.m_nReaction==CUser.REACTION_SHOW) {
@@ -842,7 +842,7 @@ public final class CCnv {
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
 		// リアクション数
-		appendReactionNum(strRtn, cContent);
+		appendReactionNum(strRtn, cContent, true);
 
 		// 全て表示ボタン
 //		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
@@ -857,7 +857,7 @@ public final class CCnv {
 		return strRtn.toString();
 	}
 
-	private static void appendReactionNum(StringBuilder strRtn, CContent cContent) {
+	private static void appendReactionNum(StringBuilder strRtn, CContent cContent, boolean miniList) {
 		if (cContent.m_strCommentsListsCache.length() > 0) {
 			String strReactionNum = "";
 			if (cContent.commentTotalNum > 10e3) {
@@ -866,12 +866,19 @@ public final class CCnv {
 				strReactionNum = "%d".formatted(cContent.commentTotalNum);
 			}
 
+			final String href;
+			if (miniList) {
+				href = "/%d/%d.html".formatted(cContent.m_nUserId, cContent.m_nContentId);
+			} else {
+				href = "/ReactionListPcV.jsp?UID=%d&CID=%d".formatted(cContent.m_nUserId, cContent.m_nContentId);
+			}
 			strRtn.append("""
-	            <div class="IllustItemReactionNum"><span class="ReactionNumLabel">
+	            <div class="IllustItemReactionNum">
+	            <a class="ReactionNumLabel" href="%s">
 	            <span class="material-symbols-sharp">favorite</span>
 	            <span id="ReactionNum_%d" class="ReactionNum">%s</span>
-	            </span></div>
-				""".formatted(cContent.m_nContentId, strReactionNum));
+	            </a></div>
+				""".formatted(href, cContent.m_nContentId, strReactionNum));
 		}
 	}
 
