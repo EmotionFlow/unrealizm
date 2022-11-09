@@ -50,6 +50,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 		});
 		<%}%>
 
+		let initDone = false;
 		let lastContentId = <%=cResults.contentList.size()>0 ? cResults.contentList.get(cResults.contentList.size()-1).m_nContentId : -1%>;
 		let page = 0;
 
@@ -78,15 +79,19 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 					lastContentId = data.end_id;
 					const contents = document.getElementById('IllustItemList');
 					$(contents).append(data.html);
-					observer.observe(contents.lastElementChild);
 
 					let $newElems  = $('.IllustItem[style*="opacity: 0"]');
 					<%if (!Common.isDevEnv()){ %>
 					$('#IllustItemList').imagesLoaded(function(){
-						<%}%>
-						$newElems.animate({ opacity: 1 });
-						$('#IllustItemList').masonry('appended', $newElems, true);
-						<%if (!Common.isDevEnv()){ %>
+					<%}%>
+					$newElems.animate({ opacity: 1 });
+					$('#IllustItemList').masonry('appended', $newElems, true);
+
+					setTimeout(()=>{
+						observer.observe(contents.lastElementChild);
+					}, 1000);
+
+					<%if (!Common.isDevEnv()){ %>
 					});
 					<%}%>
 				}
@@ -96,18 +101,12 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 			});
 		}
 
-		function initContents() {
-			const contents = document.getElementById('IllustItemList');
-			observer.observe(contents.lastElementChild);
-		}
-
 		$(function(){
 			$('#HeaderSearchWrapper').on('submit', SearchByKeyword('Contents', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 			$('#HeaderSearchBtn').on('click', SearchByKeyword('Contents', <%=checkLogin.m_nUserId%>, <%=Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId]%>));
 			$('body, .Wrapper').each(function(index, element){
 				$(element).on("drag dragstart",function(e){return false;});
 			});
-			initContents();
 		});
 	</script>
 
@@ -139,6 +138,12 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 					isFitWidth: true,
 					gutterWidth: 0,
 				});
+
+				setTimeout(()=>{
+					const contents = document.getElementById('IllustItemList');
+					observer.observe(contents.lastElementChild);
+				}, 1000)
+
 				<%if (!Common.isDevEnv()){ %>
 			});
 			<%}%>
@@ -174,10 +179,11 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 
 		<% if (false){ %>
-<%--		<% if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (cnt == 3 || cnt == 9) && bSmartPhone){ %>--%>
+		<% if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (cnt == 3 || cnt == 9) && bSmartPhone){ %>
 		<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
 			<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 		</div>
+		<%}%>
 		<%}%>
 
 		<%}%>
