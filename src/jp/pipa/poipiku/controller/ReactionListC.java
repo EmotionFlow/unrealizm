@@ -58,21 +58,22 @@ public final class ReactionListC {
 				    FROM follows_0000
 				    WHERE user_id=?
 				)
-				SELECT c.content_id, c.description, c.user_id from_user_id, u.nickname, u.file_name, u.profile, f.follow_user_id IS NOT NULL following
+				SELECT c.comment_id, c.content_id, c.description, c.user_id from_user_id, u.nickname, u.file_name, u.profile, f.follow_user_id IS NOT NULL following
 				FROM comments_0000 c
 				         LEFT JOIN users_0000 u ON c.user_id = u.user_id
 				         LEFT JOIN followers f ON c.user_id = f.follow_user_id
-				WHERE c.content_id=? AND c.comment_id>?
+				WHERE c.content_id=? %s
 				ORDER BY c.comment_id DESC LIMIT ?;
-				""")
+				""".formatted(lastCommentId < 0 ? "" : "AND c.comment_id<?"))
 			) {
 
 			int idx = 1;
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setInt(idx++, contentId);
-			statement.setInt(idx++, lastCommentId);
+			if (lastCommentId > 0) {
+				statement.setInt(idx++, lastCommentId);
+			}
 			statement.setInt(idx++, selectMaxGallery);
-			Log.d(statement.toString());
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				ReactionDetail reactionDetail = new ReactionDetail();
@@ -83,6 +84,7 @@ public final class ReactionListC {
 				reactionDetail.fromUserProfileFile = resultSet.getString("file_name");
 				reactionDetail.isFollowing = resultSet.getBoolean("following");
 				reactionDetails.add(reactionDetail);
+				endId = resultSet.getInt("comment_id");
 			}
 
 			bResult = true;

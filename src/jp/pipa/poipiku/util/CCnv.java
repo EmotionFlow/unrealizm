@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import jp.pipa.poipiku.*;
+import jp.pipa.poipiku.controller.ReactionListC;
 
 public final class CCnv {
 	public static final int TYPE_USER_ILLUST = 0;
@@ -1469,4 +1470,88 @@ public final class CCnv {
 	public static String toHtmlKeyword(CTag cTag, int nMode,  ResourceBundleControl _TEX, int nSpMode) throws UnsupportedEncodingException {
 		return _toHtml(cTag, nMode, _TEX, nSpMode);
 	}
+
+	public static String toReactionDetailListHtml(List<ReactionListC.ReactionDetail> reactionDetails, CheckLogin checkLogin, ResourceBundleControl _TEX) {
+		StringBuilder sb = new StringBuilder();
+
+		for(int count = 0; count<reactionDetails.size(); count++) {
+			 ReactionListC.ReactionDetail r = reactionDetails.get(count);
+			 sb.append("""
+				<div class="ReactionDetail">
+				""");
+			 sb.append("""
+                <div class="ReactionDetailEmoji">%s</div>
+				""".formatted(CEmoji.parse(r.comment)));
+
+			sb.append("""
+                <div class="ReactionDetailUserThumb">
+				""");
+			if(r.fromUserNickname != null){
+				sb.append("""
+                <a class="UserInfoUserThumb" style="background-image: url('%s')" href="/%d/"></a>
+				""".formatted(Common.GetUrl(r.fromUserProfileFile), r.fromUserId));
+			}else {
+				sb.append("""
+                <div class="UserInfoUserThumb" style="background-image: url('%s')"></div>
+				""".formatted(Common.GetUrl("/img/default_user.jpg_120.jpg")));
+			}
+			sb.append("</div>"); // ReactionDetailUserThumb
+
+			if(r.fromUserNickname != null){
+				sb.append("""
+                <a class="ReactionDetailUserNickName" href="%d">%s</a>
+				""".formatted(r.fromUserId, r.fromUserNickname));
+			} else {
+				sb.append("""
+				<div class="ReactionDetailUserNickName">%s</div>
+				""".formatted(_TEX.T("ReactionListV.AnonymousUser")));
+			}
+
+			sb.append("""
+                <div class="ReactionDetailUserFollow">
+				""");
+			if(r.fromUserId < 0 || r.fromUserId == checkLogin.m_nUserId) {
+				sb.append("<div></div>");
+			} else if (r.isFollowing) {
+				sb.append("""
+				<div class="ReactionDetailFollowing">%s</div>
+				""".formatted(_TEX.T("ReactionListV.Following")));
+			} else {
+				sb.append("""
+				<a class="BtnBase ReactionDetailFollow UserInfoCmdFollow_%d"
+				   onclick="UpdateFollowUser(%d,%d)">%s</a>
+				""".formatted(r.fromUserId,checkLogin.m_nUserId, r.fromUserId, _TEX.T("IllustV.Follow") ));
+
+			}
+			sb.append("</div>"); // ReactionDetailUserFollow
+
+			sb.append("</div>"); // ReactionDetail
+		}
+		return sb.toString();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

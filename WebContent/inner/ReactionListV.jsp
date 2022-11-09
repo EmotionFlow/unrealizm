@@ -85,71 +85,7 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 				<%=_TEX.T("ReactionListV.Title")%>
 			</div>
 			<section id="IllustThumbList" class="IllustThumbList">
-
-			<style>
-                .ReactionDetail {
-                    margin: 9px 8px;
-                    display: flex;
-                    align-items: center;
-                    border-bottom: 1px solid #ededed;
-				}
-                .ReactionDetail > .ReactionDetailEmoji > img{
-					width: 32px;
-				}
-                .ReactionDetail > .ReactionDetailUserThumb {
-					padding: 0 4px 0 6px;
-				}
-                .ReactionDetail > .ReactionDetailUserThumb .UserInfoUserThumb {
-					display: block;
-                    width: 30px;
-                    height: 30px;
-                    overflow: hidden;
-                    border: solid 1px #ccc;
-                    border-radius: 80px;
-                    background-size: cover;
-                    background-position: 50% 50%;
-                    background-color: #fff;
-                }
-
-                .ReactionDetail > .ReactionDetailUserNickName {
-					overflow: hidden;
-                }
-                .ReactionDetail > .ReactionDetailUserFollow {
-                    margin-left: auto;
-                }
-                .ReactionDetail > .ReactionDetailUserFollow > a {
-                    font-size: 14px;
-                }
-			</style>
-
-			<%for(int count = 0; count<cResults.reactionDetails.size(); count++) {%>
-				<% ReactionListC.ReactionDetail r = cResults.reactionDetails.get(count); %>
-				<div class="ReactionDetail">
-					<div class="ReactionDetailEmoji"><%=CEmoji.parse(r.comment)%></div>
-					<div class="ReactionDetailUserThumb">
-						<%if(r.fromUserNickname != null){%>
-						<a class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl(r.fromUserProfileFile)%>')" href="/<%=r.fromUserId%>/"></a>
-						<%}else{%>
-						<div class="UserInfoUserThumb" style="background-image: url('<%=Common.GetUrl("/img/default_user.jpg_120.jpg")%>')"></div>
-						<%}%>
-					</div>
-					<%if(r.fromUserNickname != null){%>
-					<a class="ReactionDetailUserNickName" href="/<%=r.fromUserId%>/"><%=r.fromUserNickname%></a>
-					<%}else{%>
-					<div class="ReactionDetailUserNickName"><%=_TEX.T("ReactionListV.AnonymousUser")%></div>
-					<%}%>
-					<div class="ReactionDetailUserFollow">
-						<%if(r.fromUserId < 0 || r.fromUserId == checkLogin.m_nUserId){%>
-						<div></div>
-						<%}else if(r.isFollowing){%>
-						<div class="ReactionDetailFollowing"><%=_TEX.T("ReactionListV.Following")%></div>
-						<%}else{%>
-						<a class="BtnBase ReactionDetailFollow UserInfoCmdFollow_<%=r.fromUserId%>"
-						   onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>,<%=r.fromUserId%>)"><%=_TEX.T("IllustV.Follow")%></a>
-						<%}%>
-					</div>
-				</div>
-			<%}%>
+				<%=CCnv.toReactionDetailListHtml(cResults.reactionDetails, checkLogin, _TEX)%>
 			</section>
 		</article>
 		<%@ include file="/inner/TFooter.jsp"%>

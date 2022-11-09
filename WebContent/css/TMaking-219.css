@@ -4101,3 +4101,41 @@ hr.IllustItemListSeparator {
 	padding-right: 4px;
 }
 /********** Follow, Follower List ************/
+
+
+/********** ReactionListV ************/
+.ReactionDetail {
+	margin: 9px 8px;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #ededed;
+}
+.ReactionDetail > .ReactionDetailEmoji > img{
+	width: 32px;
+}
+.ReactionDetail > .ReactionDetailUserThumb {
+	padding: 0 4px 0 6px;
+}
+.ReactionDetail > .ReactionDetailUserThumb .UserInfoUserThumb {
+	display: block;
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	border: solid 1px #ccc;
+	border-radius: 80px;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-color: #fff;
+}
+
+.ReactionDetail > .ReactionDetailUserNickName {
+	overflow: hidden;
+}
+.ReactionDetail > .ReactionDetailUserFollow {
+	margin-left: auto;
+}
+.ReactionDetail > .ReactionDetailUserFollow > a {
+	font-size: 14px;
+}
+/********** ReactionListV ************/
+
