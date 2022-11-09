@@ -8,7 +8,7 @@ if(!checkLogin.m_bLogin) {
 	if(isApp){
 		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
 	} else {
-		getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/StartUnrealizmPcV.jsp").forward(request,response);
 	}
 	return;
 }
