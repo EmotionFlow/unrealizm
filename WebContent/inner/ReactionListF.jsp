@@ -8,6 +8,6 @@ ReactionListC cResults = new ReactionListC();
 cResults.getParam(request);
 
 cResults.getResults(checkLogin);
-String html = CCnv.toReactionDetailListHtml(cResults.reactionDetails, checkLogin, _TEX);
+String html = CCnv.toReactionDetailListHtml(cResults.reactionDetails, checkLogin, _TEX, Util.isSmartPhone(request));
 %>
 {"end_id":<%=cResults.endId%>,"html":"<%=CEnc.E(html)%>"}

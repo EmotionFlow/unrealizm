@@ -1478,29 +1478,33 @@ public final class CCnv {
 		return _toHtml(cTag, nMode, _TEX, nSpMode);
 	}
 
-	public static String toReactionDetailListHtml(List<ReactionListC.ReactionDetail> reactionDetails, CheckLogin checkLogin, ResourceBundleControl _TEX) {
+	public static String toReactionDetailListHtml(List<ReactionListC.ReactionDetail> reactionDetails, CheckLogin checkLogin, ResourceBundleControl _TEX, boolean isSmartPhone) {
 		StringBuilder sb = new StringBuilder();
 
 		for(int count = 0; count<reactionDetails.size(); count++) {
 			 ReactionListC.ReactionDetail r = reactionDetails.get(count);
 			 sb.append("""
-				<div class="ReactionDetail">
-				""");
+				<div class="ReactionDetail%s">
+				""".formatted(isSmartPhone?"":" Pc"));
 			 sb.append("""
                 <div class="ReactionDetailEmoji">%s</div>
 				""".formatted(CEmoji.parse(r.comment)));
 
 			sb.append("""
-                <div class="ReactionDetailUserThumb">
-				""");
+                <div class="ReactionDetailUserThumb%s">
+				""".formatted(isSmartPhone ? "" : " Pc"));
 			if(r.fromUserNickname != null){
 				sb.append("""
                 <a class="UserInfoUserThumb" style="background-image: url('%s')" href="/%d/"></a>
-				""".formatted(Common.GetUrl(r.fromUserProfileFile), r.fromUserId));
+				""".formatted(
+						Common.GetUrl(r.fromUserProfileFile), r.fromUserId
+				));
 			}else {
 				sb.append("""
                 <div class="UserInfoUserThumb" style="background-image: url('%s')"></div>
-				""".formatted(Common.GetUrl("/img/default_user.jpg_120.jpg")));
+				""".formatted(
+						Common.GetUrl("/img/default_user.jpg_120.jpg")
+				));
 			}
 			sb.append("</div>"); // ReactionDetailUserThumb
 

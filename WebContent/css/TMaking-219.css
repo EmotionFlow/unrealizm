@@ -2143,14 +2143,20 @@ Decoration
 .IllustItem .IllustItemReactionNum .ReactionNumLabel{
 	display: flex;
 	align-items: center;
-	font-size: 13px;
+	font-size: 16px;
 	margin-right: 7px;
 	background: #ffffffcc;
-	padding: 1px 4px;
+	padding: 3px 6px;
 	color: #212020;
 	border: solid 1px #eaeaea;
 	border-radius: 3px;
 }
+
+.IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel{
+	padding: 1px 4px;
+	font-size: 13px;
+}
+
 
 .IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel{
 	font-size: 13px;
@@ -4110,11 +4116,20 @@ hr.IllustItemListSeparator {
 	align-items: center;
 	border-bottom: 1px solid #ededed;
 }
+.ReactionDetail.Pc {
+	width: 500px;
+	margin: 0 auto;
+	padding: 9px 10px;
+	background-color: #ffffff;
+}
 .ReactionDetail > .ReactionDetailEmoji > img{
 	width: 32px;
 }
 .ReactionDetail > .ReactionDetailUserThumb {
 	padding: 0 4px 0 6px;
+}
+.ReactionDetail > .ReactionDetailUserThumb.Pc {
+	padding: 0 4px 0 18px;
 }
 .ReactionDetail > .ReactionDetailUserThumb .UserInfoUserThumb {
 	display: block;

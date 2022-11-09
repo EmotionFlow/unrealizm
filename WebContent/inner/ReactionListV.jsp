@@ -85,7 +85,7 @@ final boolean isSmartPhone = Util.isSmartPhone(request);
 				<%=_TEX.T("ReactionListV.Title")%>
 			</div>
 			<section id="IllustThumbList" class="IllustThumbList">
-				<%=CCnv.toReactionDetailListHtml(cResults.reactionDetails, checkLogin, _TEX)%>
+				<%=CCnv.toReactionDetailListHtml(cResults.reactionDetails, checkLogin, _TEX, isSmartPhone)%>
 			</section>
 		</article>
 		<%@ include file="/inner/TFooter.jsp"%>
