@@ -101,7 +101,6 @@ public final class SearchIllustByKeywordC {
 			statement.setInt(idx++, checkLogin.m_nUserId);
 			statement.setString(idx++, keywords.toString());
 			statement.setString(idx++, keywords.toString());
-			statement.setString(idx++, keywords.toString());
 			statement.setInt(idx++, checkLogin.m_nSafeFilter);
 			if (startId > 0) {
 				statement.setInt(idx++, startId);
