@@ -66,8 +66,8 @@ body {margin:0; padding: 51px 0 !important; height: 100%; box-sizing: border-box
 .HeaderSearch .HeaderSearchBtn:hover {background-color: #ffffff; color: #000;}
 .HeaderSelectLangList > dd{margin: 10px 0;}
 .HeaderSelectLangList > dd > a {color: #000;}
-.HeaderSearch .HeaderSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 5px;}
-.HeaderSearch .HeaderSearchClear {display: inline-block; color: #000aa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size:20px;}
+.HeaderSearch .HeaderSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 2px;}
+.HeaderSearch .HeaderSearchClear {display: inline-block; color: #00aa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size:20px;}
 
 .SearchWrapper.overlay {display: none; width: 100vw; height: calc(100vh - 50px); position: fixed; left: 0; top: 0; background-color: #ffffff; z-index: 999; text-align: center;}
 .SearchWrapper.pulldown {display: none; width: 320px; max-height: 75vh; position: absolute; right: 0; top: 50px; background-color: #ffffff; z-index: 999; text-align: right; border: solid 1px #ddd; border-radius: 0 0 4px 4px; overflow-y: auto; transition: height .4s;}

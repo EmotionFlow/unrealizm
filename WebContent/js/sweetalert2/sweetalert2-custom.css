@@ -1,0 +1,3 @@
+.swal2-popup .swal2-styled.swal2-confirm{background-color: #000;}
+.swal2-popup{border-radius: 2px;}
+.swal2-popup .swal2-styled.swal2-confirm, .swal2-popup .swal2-styled.swal2-cancel {border-radius: 2px;}

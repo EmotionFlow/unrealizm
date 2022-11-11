@@ -56,7 +56,7 @@
 	position: relative;
 	font-size: 1em;
 	text-align: center;
-	color: #888;
+	color: #b6b6b6;
 	width: 100%;
 	height: 2.5em;
 	padding: 4px 0;
@@ -98,18 +98,18 @@
 
 .UoloadCmdOption .switch-left {
 	background-color: #ddd;
-	border-radius: 4px 0 0 4px;
+	border-radius: 2px 0 0 2px;
 }
 
 .UoloadCmdOption .switch-right {
 	right: 0;
-	background-color: #3498da;
+	background-color: #7f7f7f;
 	color: #ffffff;
-	border-radius: 0 4px 4px 0;
+	border-radius: 0 2px 2px 0;
 }
 
 .UoloadCmdOption input:checked + .switch-left {
-	background-color: #3498da;
+	background-color: #7f7f7f;
 	color: #ffffff;
 }
 
@@ -277,8 +277,8 @@
 .TagDlgWrapper .TagSearch .TagSearchBox {width: 100%; padding: 10px 0 0 8px; border: none; background: none;}
 .TagDlgWrapper .TagSearch .TagSearchBox:focus {outline: none;}
 .TagDlgWrapper .TagSearch .TagSearchBox:placeholder-shown, .TagDlgWrapper .TagSearch .TagSearchBox::placeholder {color: #bbb; font-style: italic; font-size: 12px;}
-.TagDlgWrapper .TagSearch .TagSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 5px;}
-.TagDlgWrapper .TagSearch .TagSearchClear {display: inline-block; color: #3498dbaa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size: 20px;}
+.TagDlgWrapper .TagSearch .TagSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 2px;}
+.TagDlgWrapper .TagSearch .TagSearchClear {display: inline-block; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size: 20px;}
 .TagDlgWrapper .TagSearch .AddTagBtn {margin-left: 4px;}
 .TagDlgWrapper .TagSearch .AddTagIcon {margin-right: 4px;}
 
@@ -299,4 +299,4 @@
 .TagDlgWrapper .DlgTagList .DlgTagRow {display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;}
 .TagDlgWrapper .DlgTagList .DlgTagName {flex-grow: 1; padding: 1em 0 1em 2em; width: 340px;}
 .TagDlgWrapper .DlgTagList .DlgTagNameBlank {padding: 1em;}
-.TagDlgWrapper .DlgTagList .CurrentTagDelBtn {width: 1em; padding: 0.5em; color: #3498dbaa; margin-right: 12px;}
+.TagDlgWrapper .DlgTagList .CurrentTagDelBtn {width: 1em; padding: 0.5em; margin-right: 12px;}
