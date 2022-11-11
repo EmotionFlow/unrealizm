@@ -706,7 +706,7 @@ public final class CCnv {
 						""".formatted(cContent.m_nContentId, _TEX.T("IllustView.Reply.FromCreator"), cContent.m_nContentId));
 			}
 
-			// こそフォロ促し
+			// フォロー促し
 			strRtn.append(String.format("<div id=\"EncourageFollowUp_%d\" class=\"EncourageFollowUp\" style=\"display:none\">", cContent.m_nContentId));
 			strRtn.append("<span>").append(_TEX.T("EncourageFollowUp")).append("</span>");
 			strRtn.append(String.format("<span class=\"BtnBase UserInfoCmdFollow UserInfoCmdFollow_%d %s\" onclick=\"UpdateFollowUser(%d,%d)\">%s</span>",

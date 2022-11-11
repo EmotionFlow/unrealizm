@@ -106,7 +106,7 @@ public final class Common {
 	public static final int PUBLISH_ID_R18G			= 3;	// [廃止] R18G。safe_filterに統合
 	public static final int PUBLISH_ID_PASS			= 4;	// [廃止] パスワード。passwordに統合
 	public static final int PUBLISH_ID_LOGIN		= 5;	// ログイン限定
-	public static final int PUBLISH_ID_FOLLOWER		= 6;	// こそフォロ限定
+	public static final int PUBLISH_ID_FOLLOWER		= 6;	// フォロー限定
 	public static final int PUBLISH_ID_T_FOLLOWER	= 7;	// ツイッターフォロワー限定
 	public static final int PUBLISH_ID_T_FOLLOWEE	= 8;	// ツイッターフォロー限定
 	public static final int PUBLISH_ID_T_EACH		= 9;	// ツイッター相互フォロー限定
