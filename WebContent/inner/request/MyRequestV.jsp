@@ -180,7 +180,7 @@ RequestCreator requestCreator = new RequestCreator(checkLogin.m_nUserId);
 			margin-left: 8px;
 		}
 		.SettinMenuTitle .SettingChangePageLink {
-			color: #3498db;
+			color: #000000;
 		}
 
 		.SettingMenuItemArrow{

@@ -17,7 +17,7 @@
 	function _getRetweetContentHtml(){
 		return `
 <style>
-	.RetweetContentDlgTitle{padding: 10px 0 0 0; color: #3498db;font-weight: 500;}
+	.RetweetContentDlgTitle{padding: 10px 0 0 0; color: #000000;font-weight: 500;}
 	.RetweetContentDlgInfo{font-size: 14px; text-align: left;}
 </style>
 <div class="RetweetContentDlg">

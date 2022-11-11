@@ -252,7 +252,7 @@ String[][] menuOrder = {
 			margin-left: 8px;
 		}
 		.SettinMenuTitle .SettingChangePageLink {
-			color: #3498db;
+			color: #000000;
 		}
 
 		.SettingMenuItemArrow{
