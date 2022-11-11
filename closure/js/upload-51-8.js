@@ -476,12 +476,6 @@ let privateNote = (()=>{
 	}
 })();
 
-
-function DispTagListCharNum() {
-	const nCharNum = 100 - $("#EditTagList").val().length;
-	$("#TagListCharNum").html(nCharNum);
-}
-
 function setLastCategorySetting(val) {
 	setLocalStrage('last_category', val);
 }
@@ -1395,4 +1389,174 @@ function initUploadParams(tweetEnabled) {
 	setUploadParams(uploadParams);
 }
 
+function showSetTagDlg(txt={placeholder:'', header: '', blankMsg:'', doneMsg: 'OK'}) {
+	function getSetTagDlgHtml() {
+		const tagMaxLength = $('#EditTagList').data('tag-max-length');
+		const dlgHtml = `
+<div id="TagDlgWrapper" class="TagDlgWrapper">
+	<form id="TagSearchWrapper" class="TagSearchWrapper" onsubmit="return addTag()">
+		<div class="TagSearch">
+			<div class="TagSearchInputWrapper">
+				<input name="TagKWD" id="TagSearchBox" class="TagSearchBox" type="text" maxlength="${tagMaxLength}" placeholder="${txt.placeholder}" value="" autocomplete="off" enterkeyhint="done" oninput="onTagInput()">
+				<div id="TagSearchClear" class="TagSearchClear">
+					<i class="fas fa-times-circle" onclick="clearTagSearchInput()"></i>
+				</div>
+			</div>
+			<button id="AddTagBtn" class="AddTagBtn" onclick="addTag()">
+				<i class="fas fa-arrow-down AddTagIcon"></i>
+				${txt.addTag}
+			</button>
+		</div>
+	</form>
+	<div id="CurrentTagWrapper" class="DlgTagListWrapper">
+		<div class="CurrentTagHeader">
+			<span id="CurrentTagNum"></span>
+		</div>
+		<ul id="CurrentTagList" class="DlgTagList" data-blank-msg="${txt.blankMsg}"></ul>
+	</div>
+	<div id="TagSuggestionWrapper" class="DlgTagListWrapper">
+		<div class="TagSuggestionHeader"></div>
+		<ul id="TagSuggestionList" class="DlgTagList"></ul>
+	</div>
+</div>
+		`;
+		return dlgHtml;
+	}
 
+	Swal.fire({
+		html: getSetTagDlgHtml(),
+		showCancelButton: true,
+		position: 'top',
+		allowEnterKey: false,
+		allowOutsideClick: false,
+		confirmButtonText: txt.doneMsg,
+		onOpen: () => {
+			$('#TagSearchBox').focus();
+			showCurrentTags(true);
+		},
+		preConfirm: () => getTagsInDlg(),
+	}).then(result => {
+		if(result.value) $('#EditTagList').val(result.value.join(' '));
+	});
+}
+
+function getTagsInDlg() {
+	return $('#CurrentTagList .CurrentTagName').get().map(el => {
+		const tagName = $(el).text();
+		return `${/^#/.test(tagName) ? '' : '#'}${tagName}`
+	});
+}
+
+function toggleClearTagBtn() {
+	const $TagSearchClear = $('#TagSearchClear');
+	const $TagSearchBox = $('#TagSearchBox');
+	if ($TagSearchBox.val()) {
+		$TagSearchClear.css('visibility','visible');
+		$TagSearchBox.css('padding-right', '28px');
+	} else {
+		$TagSearchClear.css('visibility','hidden');
+		$TagSearchBox.css('padding-right', '1px');
+	}
+}
+
+function clearTagSearchInput() {
+	const $search = $('#TagSearchBox');
+	$search.val('');
+	toggleClearTagBtn();
+	$(Swal.getConfirmButton()).prop('disabled', false);
+	$search.focus();
+	showCurrentTags();
+}
+
+function onTagInput() {
+	const $input = $('#TagSearchBox');
+	const inputStr = $input.val();
+	if (/\s/.test(inputStr)) $input.val(inputStr.replace(/\s/g, ''));
+	if (/^#{3,}/.test(inputStr)) $input.val(inputStr.replace(/^#{3,}/, '##'));
+	if (/[^#]#/.test(inputStr)) $input.val(inputStr.replace(/([^#])#/g, '$1'));
+	toggleClearTagBtn();
+	$(Swal.getConfirmButton()).prop('disabled', !!$input.val());
+	const prevTimeout = getLocalStrage('tag-suggestion-timeout');
+	if (prevTimeout) clearTimeout(prevTimeout);
+	setLocalStrage('tag-suggestion-timeout', setTimeout(() => {
+		if (inputStr) {
+			showTagSuggestion(inputStr);
+		} else {
+			showCurrentTags();
+		}
+	}, 800))
+}
+
+function generateCurrentTagRow(tagName) {
+	const $li = $('<li></li>', { class: 'DlgTagItem CurrentTagItem' });
+	const $tagRow = $('<div></div>',  { class: 'DlgTagRow CurrentTagRow' });
+	const $tagName = $('<div></div>', {
+		class: 'DlgTagName CurrentTagName',
+		text: `${/^#/.test(tagName) ? '' : '#'}${tagName}`,
+	});
+	const $delBtn = $('<div></div>', { class: 'CurrentTagDelBtn', onclick: 'deleteTag()' });
+	const $delIcon = $('<i></i>', { class: 'fas fa-times' });
+	return $li.append($tagRow.append($tagName, $delBtn.append($delIcon)));
+}
+
+function showCurrentTags(refresh=false) {
+	const tagMaxNum = $('#EditTagList').data('tag-max-num');
+	$('#CurrentTagWrapper').show();
+	$('#TagSuggestionWrapper').hide();
+	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
+	if (refresh) {
+		$tagList.empty();
+		const tags = $('#EditTagList').val().trim().split(/\s+/).filter(str => str);
+		if (tags.length) {
+			tags.filter((_, i) => i < tagMaxNum).forEach(tag => {
+				$tagList.append(generateCurrentTagRow(tag));
+			});
+		}
+	}
+	const tagRowsCnt = $tagList.find('li.DlgTagItem.CurrentTagItem').length;
+	$('#CurrentTagNum').text(`(${tagRowsCnt}/${tagMaxNum})`)
+	if (tagRowsCnt) {
+		$('li.CurrentTagBlankRow').remove();
+	} else if (!$('li.CurrentTagBlankRow').length) {
+		const $li = $('<li></li>', { class: 'CurrentTagBlankRow' });
+		const $row = $('<div></div>', { class: 'DlgTagRow' });
+		const $item = $('<div></div>', { class: 'DlgTagNameBlank', text: $tagList.data('blank-msg') });
+		$tagList.append($li.append($row.append($item)));
+	}
+}
+
+function showTagSuggestion(inputStr) {
+	// $('#CurrentTagWrapper').hide();
+	// $('#TagSuggestionWrapper').show();
+	// const $tagList = $('#TagSuggestionWrapper').find('ul#TagSuggestionList');
+	// $tagList.empty();
+	// $tagList.addClass('Loading');
+	// TODO: get & show
+}
+
+function addTag() {
+	const tagMaxNum = $('#EditTagList').data('tag-max-num');
+	const $input = $(event.currentTarget).find('#TagSearchBox');
+	const newTag = $input.val();
+	const $tagList = $('#CurrentTagWrapper').find('ul#CurrentTagList');
+	$input.val('');
+	toggleClearTagBtn();
+	$(Swal.getConfirmButton()).prop('disabled', false);
+	if (newTag && /[^#]/.test(newTag) && $tagList.find('li.DlgTagItem.CurrentTagItem').length < tagMaxNum) {
+		const $newTagRow = generateCurrentTagRow(newTag);
+		const newTagText = $newTagRow.find('.DlgTagName').text()
+		if(!getTagsInDlg().includes(newTagText)) {
+			$tagList.append(generateCurrentTagRow(newTag));
+			$tagList.scrollTop($tagList.children().last().offset().top);
+		}
+	}
+	showCurrentTags();
+	$input.focus();
+	return false;
+}
+
+function deleteTag() {
+	const $tag = $(event.currentTarget).closest('li');
+	$tag.remove();
+	showCurrentTags();
+}

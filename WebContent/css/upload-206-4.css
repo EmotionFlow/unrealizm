@@ -272,5 +272,31 @@
 	text-align: left;
 }
 
+.TagDlgWrapper .TagSearchWrapper {display: flex; height: 42px; padding: 4px 0;}
+.TagDlgWrapper .TagSearch {flex-grow: 1; display: flex; justify-content: center; padding: 3px 10px;}
+.TagDlgWrapper .TagSearch .TagSearchBox {width: 100%; padding: 10px 0 0 8px; border: none; background: none;}
+.TagDlgWrapper .TagSearch .TagSearchBox:focus {outline: none;}
+.TagDlgWrapper .TagSearch .TagSearchBox:placeholder-shown, .TagDlgWrapper .TagSearch .TagSearchBox::placeholder {color: #bbb; font-style: italic; font-size: 12px;}
+.TagDlgWrapper .TagSearch .TagSearchInputWrapper {flex: 1 1; position: relative; border: 1px solid #bbb; border-radius: 5px;}
+.TagDlgWrapper .TagSearch .TagSearchClear {display: inline-block; color: #3498dbaa; height: 26px; line-height: 26px; position: absolute; right: 1px; cursor: pointer; visibility: hidden; padding: 4px; font-size: 20px;}
+.TagDlgWrapper .TagSearch .AddTagBtn {margin-left: 4px;}
+.TagDlgWrapper .TagSearch .AddTagIcon {margin-right: 4px;}
 
+.TagDlgWrapper .CurrentTagHeader {
+	color: #6d6965;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 18px;
+	text-align: right;
+	height: 24px;
+}
 
+.TagDlgWrapper .DlgTagList {color: #6d6965; font-size: 16px; text-align: left; padding-inline-start: 0; max-height: calc(60vh - 110px); margin: 0; overflow-y: auto;}
+.TagDlgWrapper .DlgTagList.Loading {background-image: url('/img/loading.gif'); background-repeat: no-repeat; background-position: 50% 50%; height: 28px; background-size: contain}
+
+.TagDlgWrapper .DlgTagList li {border-top: solid 1px #ddd; list-style: none;}
+.TagDlgWrapper .DlgTagList li:last-child {border-bottom: solid 1px #ddd;}
+.TagDlgWrapper .DlgTagList .DlgTagRow {display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;}
+.TagDlgWrapper .DlgTagList .DlgTagName {flex-grow: 1; padding: 1em 0 1em 2em; width: 340px;}
+.TagDlgWrapper .DlgTagList .DlgTagNameBlank {padding: 1em;}
+.TagDlgWrapper .DlgTagList .CurrentTagDelBtn {width: 1em; padding: 0.5em; color: #3498dbaa; margin-right: 12px;}
