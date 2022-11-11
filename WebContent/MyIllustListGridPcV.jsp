@@ -155,7 +155,7 @@ final String thisPagePath = "/MyIllustListGridPcV.jsp";
                 font-size: 16px;
             }
             .SwitchUserStatus > .Selected {
-                color: #3498da;
+                color: #000000;
             }
             .SwitchUserStatus > .Other {
                 cursor: pointer;

@@ -25,7 +25,7 @@
 		margin-top: 12px;
 		text-align: right;
 		text-decoration: underline;
-		color: #3498da;
+		color: #000000;
 	}
     .TranslationSuggestionLink > i {
 		margin-right: 2px;

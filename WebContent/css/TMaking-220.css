@@ -1639,7 +1639,7 @@ Decoration
 .IllustItem .IllustItemUser .UserInfoCmdGift {
 	font-size: 19px;
 	margin-right: 16px;
-	color: #3498da;
+	color: #000000;
 }
 
 .IllustItem .IllustItemUser .UserInfoCmdFollow {
@@ -1941,11 +1941,11 @@ Decoration
 }
 
 .Category.C-1 {
-	background-color: #3498da;
+	background-color: #000000;
 	color: #000;
 }
 .CategoryBtn.C-1 {
-	border-color: #3498da;
+	border-color: #000000;
 	color: #000;
 }
 
@@ -2858,7 +2858,7 @@ Decoration
 	float: left;
 	width: 100%;
 	background: rgba(255,255,255,0.95);
-	color: #3498da;
+	color: #000000;
 	box-sizing: border-box;
 	padding: 8px;
 	font-size: 15px;
@@ -3937,7 +3937,7 @@ hr.IllustItemListSeparator {
 	font-size: 16px;
 }
 .SwitchUserStatus > .Selected {
-	color: #3498da;
+	color: #000000;
 }
 /*********** Switch user ************/
 

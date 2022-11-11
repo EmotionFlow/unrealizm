@@ -98,7 +98,7 @@
 
 <style>
 	#RequestList{
-        background: #3498da;
+        background: #000000;
 	}
 	.RequestPane{
         background: #ffffff;

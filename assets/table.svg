@@ -45,7 +45,7 @@
 	<path
    class="st0"
    d="M 413.369,102.427 H 100.631 L 0,171.016 v 3.764 52.337 1.163 205.293 H 66.066 V 228.28 h 23.402 v 133.79 h 57.807 V 228.28 h 217.442 v 133.79 h 57.814 V 228.28 h 23.395 V 433.573 H 512 v -205.293 -1.163 -56.11 z m -308.577,20.519 304.408,-2 62.808,43.634 H 41.984 Z M 45.548,413.055 H 20.519 V 232.28 h 25.029 z m 85.209,-67.505 h -24.77 V 228.28 h 24.77 z m 275.257,0 H 381.236 V 228.28 h 24.778 z m 85.468,71.505 H 466.445 V 232.28 h 25.037 z m 0,-209.293 H 20.519 v -22.79 h 470.963 z"
-   style="fill:#3498da;fill-opacity:1"
+   style="fill:#000000;fill-opacity:1"
    id="path826"
    sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccccccccccccccc" />
 </g>
