@@ -15,7 +15,9 @@
 	<%}%>
 
 	<span class="UserInfoCmd">
+		<%if(checkLogin.m_bLogin){%>
 		<%@ include file="TFollowButton.jsp"%>
+		<%}%>
 		<%@ include file="IllustBrowserVRequestButton.jsp"%>
 		<%@ include file="TUserShareCmd.jsp"%>
 	</span>
