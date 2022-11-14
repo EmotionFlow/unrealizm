@@ -952,7 +952,7 @@ Decoration
 	float: left;
 	color: white;
 	font-size: 11px;
-	background: #000;
+	background: #000000b0;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 20px;
@@ -971,7 +971,7 @@ Decoration
 	min-width: 35px;
 	display: block;
 	float: left;
-	background-color: #000;
+	background-color: #000000b0;
 	box-sizing: border-box;
 	border-radius: 11px;
 	height: 20px;
@@ -1829,7 +1829,7 @@ Decoration
 }
 
 .IllustItem .IllustItemExpand .IllustItemExpandPassFrame .IllustItemExpandPassVisible {
-	color: #77c8e3;
+	color: #545454;
 	font-size: 12px;
 	position: relative;
 	margin-left: 4px;
@@ -2369,7 +2369,7 @@ Decoration
 	margin: 0;
 	position: relative;
 	font-size: 22px;
-	color: #000;
+	color: #818181;
 }
 
 .IllustItem .IllustItemResList .ResEmojiAdd:after, .ResEmojiAdd:before {
@@ -2391,7 +2391,7 @@ Decoration
 
 .IllustItem .IllustItemResList .ResEmojiAdd:before {
 	border-color: rgba(221, 221, 221, 0);
-	border-bottom-color: #000;
+	border-bottom-color: #676767;
 	border-width: 11px;
 	margin-left: -11px;
 }
@@ -2876,7 +2876,7 @@ Decoration
 	position: fixed;
 	top: 0;
 	left: calc(50% - 240px/2);
-	background: rgba(52,152,218,0.9);
+	background: rgb(65 110 140 / 90%);
 	padding: 4px;
 	text-align: center;
 	border: solid 1px #fff;
@@ -3621,7 +3621,7 @@ hr.IllustItemListSeparator {
 }
 
 .loadingSpinner2 > div {
-	background-color: #cafaff96;
+	background-color: #ffffffc4;
 	height: 100%;
 	width: 7px;
 	display: inline-block;
