@@ -852,11 +852,6 @@ function TweetMyBox(strMyBoxURL, strTweetURL, hMessages, bIsSmartPhone,) {
 		'<div class="TweetMyBoxInfoStep2">' +
 		hMessages.TweetInfo2 +
 		'</div>' +
-		'<div class="TweetMyBoxPinLink">' +
-		'<a href="/how_to/TwPinPcV.jsp" target="_blank">' +
-		hMessages.TweetHowToPin +
-		'</a>' +
-		'</div>' +
 		'<hr class="TweetMyBoxHr"/>' +
 		'<h2 class="TweetMyBoxTitle">' +
 		hMessages.ShareURLTitle +
@@ -1353,7 +1348,7 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 		if (catTxt.length > 130) break;
 		tweetTxt = catTxt;
 	}
-	tweetTxt += " #poipiku";
+	tweetTxt += " #unrealizm";
 
 	if (isSmartPhone && typeof navigator.share !== 'undefined') {
 		const shareData = {
