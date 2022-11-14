@@ -10,7 +10,7 @@ if(!checkLogin.m_bLogin) {
 
 MyBookmarkC cResults = new MyBookmarkC();
 cResults.getParam(request);
-cResults.selectMaxGallery = 48;
+cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -44,7 +44,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper GridList" style="padding-top: 35px">
 			<%if(cResults.m_vContentList.size()<=0) {%>
 			<div style="padding: 10px; box-sizing: border-box; text-align: center; font-size: 10px;">
 				<%=_TEX.T("MyBookmarkList.LetsMessage")%>

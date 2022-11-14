@@ -125,7 +125,14 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 			});
 		</script>
 		<style>
-			.RelatedItemList {display: block; margin: 0 15px 15px 15px; box-sizing: border-box; float: left;}
+            .RelatedItemList {
+                display: flex;
+                margin: 0 0 7px 0;
+                box-sizing: border-box;
+                width: 600px;
+                flex-direction: row;
+                flex-wrap: wrap;
+			}
 			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 81px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
@@ -207,7 +214,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 			</div>
 		</article>
 
-		<article class="Wrapper ViewPc GridList">
+		<article class="Wrapper ViewPc GridList" style="padding-top: 5px">
 
 			<aside class="PcSideBar" style="margin-top: 30px;">
 				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>

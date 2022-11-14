@@ -6,7 +6,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 NewArrivalC cResults = new NewArrivalC();
 cResults.getParam(request);
-cResults.selectMaxGallery = 48;
+cResults.selectMaxGallery = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 
 String description = _TEX.T("THeader.Title.Desc");
@@ -57,7 +57,7 @@ if(cResults.categoryId >= 0) {
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper GridList" style="padding-top: 17px">
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.categoryId<0){%> Selected<%}%>" href="/NewArrivalPcV.jsp"><%=_TEX.T("Category.All")%></a>
 				<%for(int nCategoryId : Common.CATEGORY_ID) {%>

@@ -15,7 +15,9 @@
 	<%}%>
 </a>
 <a class="UserInfoStateItem"
-    <%if(checkLogin.m_bLogin){%>href="/FollowerListPcV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"><%}else{%>
+    <%if(checkLogin.m_bLogin){%>
+    href="/FollowerListPcV.jsp?ID=<%=cResults.m_cUser.m_nUserId%>"
+	<%}else{%>
 	href="javascript:void(0)" onclick="DispMsg('<%=_TEX.T("Common.NeedLogin")%>')"<%}%>
 	>
 	<%if(!cResults.m_bBlocked) {%>

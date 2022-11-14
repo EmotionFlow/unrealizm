@@ -43,7 +43,7 @@ results.getResults(checkLogin);
 			</ul>
 		</nav>
 
-		<article class="Wrapper ItemList">
+		<article class="Wrapper ItemList" style="padding-top: 31px;">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(results.tagList.size()<=0) {%>
 				<div style="margin-top:15px; text-align: center;">

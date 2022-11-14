@@ -6,7 +6,7 @@ boolean bSmartPhone = Util.isSmartPhone(request);
 
 RandomPickupC cResults = new RandomPickupC();
 cResults.getParam(request);
-cResults.SELECT_MAX_GALLERY = 48;
+cResults.SELECT_MAX_GALLERY = 45;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -45,7 +45,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper GridList" style="padding-top: 50px">
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%for(int nCnt=0; nCnt<cResults.m_vContentList.size(); nCnt++) {
 					CContent cContent = cResults.m_vContentList.get(nCnt);%>

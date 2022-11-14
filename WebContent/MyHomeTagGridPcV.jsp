@@ -66,12 +66,12 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper ViewPc">
-			<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
+		<article class="Wrapper ViewPc" style="padding-top: 34px">
+			<div style="width: 100%; box-sizing: border-box; padding: 0 15px 0 15px; font-size: 16px; text-align: right;">
 				<a href="/MyHomeTagSettingPcV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
 			</div>
 
-			<aside class="PcSideBar" style="margin-top: 30px;">
+			<aside class="PcSideBar">
 				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>

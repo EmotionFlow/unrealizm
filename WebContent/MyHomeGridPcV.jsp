@@ -110,7 +110,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper ViewPc">
+		<article class="Wrapper ViewPc" style="padding-top: 40px">
 			<aside class="PcSideBar" style="margin-top: 30px;">
 				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 				<div class="PcSideBarItem">

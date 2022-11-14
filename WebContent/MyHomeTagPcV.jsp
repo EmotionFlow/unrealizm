@@ -142,7 +142,7 @@ cResults.getResults(checkLogin);
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		</div>
 
-		<article class="Wrapper ViewPc">
+		<article class="Wrapper ViewPc" style="padding-top: 29px;">
 			<div class="ThumbListHeader" style="display: none">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 			</div>

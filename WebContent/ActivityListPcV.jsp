@@ -119,7 +119,7 @@ if (infoType==-1) infoType = 1;
 
 <%@ include file="/inner/TAdPoiPassHeaderPcV.jsp" %>
 
-<article class="Wrapper ItemList">
+<article class="Wrapper ItemList" style="padding-top: 30px">
 	<div class="IllustItemList" style="min-height: 600px;">
 		<div id="ActivityList" class="ActivityList">
 		</div>

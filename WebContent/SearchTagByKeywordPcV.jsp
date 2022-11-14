@@ -58,7 +58,7 @@ g_strSearchWord = results.m_strKeyword;
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper ItemList">
+		<article class="Wrapper ItemList" style="padding-top: 30px">
 			<header class="SearchResultTitle">
 				<h2 class="Keyword">#<%=Util.toStringHtml(results.m_strKeyword)%></h2>
 			</header>

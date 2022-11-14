@@ -70,7 +70,7 @@ String strFileUrl = cResults.m_strRepFileName;
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper GridList" style="padding-top: 42px">
 			<header class="SearchResultTitle">
 				<h2 class="Keyword"><i class="fas fa-search"></i> <%=Util.toStringHtml(cResults.keyword)%></h2>
 			</header>

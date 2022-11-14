@@ -17,7 +17,7 @@ body {padding: 51px 0 0 0 !important;}
 .SideBarMid.Wide {height: 90px; margin: 5px 0;}
 .Wrapper.ItemList .SideBarMid.Wide {margin: 0;}
 .SideBarBottom {height: 60px;}
-.CategoryMenu {padding: 20px 0px 4px 0px;}
+.CategoryMenu {padding: 24px 0 4px 0;}
 .CategoryMenu .CategoryBtn {padding: 0 12px;height: 24px;line-height: 22px;}
 .UserInfo .UserInfoBg {height: 103px;}
 .UserInfo .UserInfoUser .UserInfoUserThumb {width: 90px; height: 90px; margin: -47px auto 0 auto;}
@@ -52,8 +52,19 @@ body {padding: 51px 0 0 0 !important;}
 }
 /* for user list */
 
-.IllustThumbList {margin: 0 0;}
-.IllustThumb {margin: 31px 12px 17px 12px; width: 212px; height: 296px;}
+.IllustThumbList {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.IllustThumb {
+	margin: 7px 1px 7px 1px;
+	width: 198px;
+	height: 290px;
+}
+
 .IllustThumb .IllustUser {padding: 4px 2px;}
 .IllustThumb .IllustUser .IllustUserThumb {flex: 0 0 29px; height: 29px; border-radius: 29px;}
 .IllustThumb .IllustUser .IllustUserName {flex: 1 1 119px; margin: 0 0 0 4px; font-size: 14px;}
@@ -66,7 +77,7 @@ body {padding: 51px 0 0 0 !important;}
 .IllustThumb .IllustThumbImg {box-sizing: border-box; height: 212px;}
 .IllustThumb .IllustThumbText {box-sizing: border-box; height: 164px; padding: 1px 3px;}
 .IllustItem {margin: 15px;}
-.Wrapper.ViewPc .IllustItem {margin: 30px auto; width: 600px; float: none;}
+.Wrapper.ViewPc .IllustItem {margin: 0 auto 30px auto; width: 600px; float: none;}
 .Wrapper.ViewPc .IllustItem .IllustItemUser {padding: 10px;}
 .Wrapper.ViewPc .IllustItem .Category {margin: 0px 0 3px 0px;}
 
@@ -86,10 +97,19 @@ body {padding: 51px 0 0 0 !important;}
 .Wrapper.ViewPc .IllustItem .IllustItemResList .ResEmoji {width: 29px; height: 29px;}
 .Wrapper.ViewPc .IllustItem .IllustItemResBtnList {padding: 3px 5px;}
 .Wrapper.ViewPc .IllustItem .IllustItemResBtnList .ResEmojiBtnList .ResEmojiBtn {width: 36px; height: 36px; line-height: 36px; margin: 3px 3px 0 3px;}
-.SearchResultTitle {margin: 25px 0 10px 0; font-size: 20px; height: 32px; line-height: 30px;}
+.SearchResultTitle {
+	margin-left: 12px;
+	font-size: 20px;
+	height: 32px;
+	line-height: 30px;
+}
 .SearchResultTitle .TitleCmdFollow {float: left; position: static;}
 
-.Wrapper.ItemList .IllustThumbList, .Wrapper.ItemList .IllustItemList {margin: 30px 0; border: solid 1px #eee; border-radius: 6px; overflow: hidden; background-color: #ffffff;}
+.Wrapper.ItemList .IllustThumbList, .Wrapper.ItemList .IllustItemList {
+	margin: 30px 0;
+	overflow: hidden;
+}
+
 .Header {width: 100%; min-width: 850px; padding: 0;}
 .HeaderWrapper {min-width: 700px; max-width: 1180px; margin: 0 auto;}
 .Header .HeaderTitleWrapper {float: left;  margin: 0;}

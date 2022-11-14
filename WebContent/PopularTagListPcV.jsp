@@ -59,7 +59,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 		<style>
 		</style>
 
-		<article class="Wrapper ThumbList">
+		<article class="Wrapper ThumbList" style="padding-top: 31px;">
 			<section class="CategoryListItem">
 				<div class="IllustThumbList">
 					<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {

@@ -182,7 +182,7 @@ String strFileUrl = cResults.m_strRepFileName;
 
 <%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-<article class="Wrapper ThumbList">
+<article class="Wrapper ThumbList" style="padding-top: 30px">
 
 	<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 	<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">

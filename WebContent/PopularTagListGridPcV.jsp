@@ -4,9 +4,9 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 PopularTagListC cResults = new PopularTagListC();
 cResults.getParam(request);
-cResults.selectMaxGallery = 15;
-cResults.selectMaxSampleGallery = 15;
-cResults.selectSampleGallery = 6;
+cResults.selectMaxGallery = 10;
+cResults.selectMaxSampleGallery = 10;
+cResults.selectSampleGallery = 5;
 boolean bRtn = cResults.getResults(checkLogin);
 %>
 <!DOCTYPE html>
@@ -47,7 +47,7 @@ boolean bRtn = cResults.getResults(checkLogin);
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper GridList" style="padding-top: 30px">
 			<%for(int nCnt=0; nCnt<cResults.m_vContentSamplpeListWeekly.size(); nCnt++) {
 				ArrayList<CContent> m_vContentList = cResults.m_vContentSamplpeListWeekly.get(nCnt);
 				CTag tag = cResults.m_vTagListWeekly.get(nCnt);

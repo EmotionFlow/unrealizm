@@ -240,7 +240,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 			<ul class="TabMenu">
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 				<li><a class="TabMenuItem Selected" href="/UpdateFilePcV2.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_cContent.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.File")%></a></li>
-				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>
+<%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>--%>
 				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span></li>
 <%--			<%}else if(nEditorId==Common.EDITOR_TEXT){%>--%>
 <%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.File")%></span></li>--%>
@@ -248,7 +248,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 <%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Paste")%></span></li>--%>
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
 				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.File")%></span></li>
-				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>
+<%--				<li><span class="TabMenuItem"><%=_TEX.T("UploadFilePc.Tab.Text")%></span></li>--%>
 				<li><a class="TabMenuItem Selected" href="/UpdatePastePcV2.jsp?ID=<%=cResults.m_nUserId%>&TD=<%=cResults.m_nContentId%>"><%=_TEX.T("UploadFilePc.Tab.Paste")%></a></li>
 			<%}%>
 			</ul>

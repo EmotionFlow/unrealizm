@@ -131,7 +131,7 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper">
+		<article class="Wrapper" style="padding-top: 56px">
 			<nav id="CategoryMenu" class="CategoryMenu" style="display: none;">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 1)"><%=_TEX.T("ActivityList.Category.30days")%></a>
