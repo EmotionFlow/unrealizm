@@ -583,9 +583,9 @@
 /********** ILLUST LIST **********/
 .IllustThumb {
 	float: left;
-	width: 112px;
+	width: 116px;
 	height: 182px;
-	margin: 6px 0 0 6px;
+	margin: 6px 0 0 3px;
 	box-sizing: border-box;
 	overflow: hidden;
 	position: relative;
@@ -595,7 +595,7 @@
 	color: #000;
 	display: flex;
 	flex-flow: column;
-	border-radius: 0px;
+	border-radius: 0;
 	border: solid 1px #000;
 }
 
