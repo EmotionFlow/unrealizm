@@ -177,6 +177,7 @@ public final class Common {
 			2,  // Midjourney
 			12, // Waifu Diffusion
 			3,  // NovelAI
+			13, // AnythingV3
 			8,  // Cyber punk Anime Diffusion
 			4,  // DALL-E2
 //			5,  // AIピカソ
@@ -198,6 +199,8 @@ public final class Common {
 			/* 10:りんな＠AI画家(twitter) */     "https://twitter.com/ms_rinna/status/1567844022240313344",
 			/* 11:ばりぐっどくん(LINE) */  "https://page.line.me/877ieiqs",
 			/* 12:Waifu Diffusion */  "https://huggingface.co/spaces/hakurei/waifu-diffusion-demo",
+			/* 13:AnythingV3 */  "https://huggingface.co/Linaqruf/anything-v3.0/tree/main",
+
 	};
 
 	public static final int EDITOR_UPLOAD = 0;
