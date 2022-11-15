@@ -29,7 +29,7 @@
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>window.googletag = window.googletag || {cmd: []};</script>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
-<script data-ad-client="ca-pub-0260822034407772" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9388519601000159" crossorigin="anonymous"></script>
 <%}%>
 <%if(Util.isSmartPhone(request)) {%>
 <meta name="viewport" content="width=360" />
