@@ -256,7 +256,7 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
-		<article class="Wrapper">
+		<article class="Wrapper" style="padding-top: 10px">
 			<div class="UploadFile">
 				<%if(poipikuRequest.id>0){%>
 				<div class="RequestText">
