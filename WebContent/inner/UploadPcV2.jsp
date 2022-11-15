@@ -45,12 +45,6 @@ if (requestId > 0) {
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
-		<script type="text/javascript">
-		$(function(){
-			$('#MenuUpload').addClass('Selected');
-		});
-		</script>
-
 		<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			<link href="/js/fine-uploader/fine-uploader-gallery-0.3.css" type="text/css" rel="stylesheet" />
 			<%@ include file="/js/fine-uploader/templates/gallery-0.2.html"%>
@@ -127,6 +121,7 @@ if (requestId > 0) {
 			<%}%>
 
 			$(function() {
+				$('#MenuUpload').addClass('Selected');
 				initUploadParams(<%=cTweet.m_bIsTweetEnable%>);
 				DispDescCharNum();
 			});
@@ -204,7 +199,7 @@ if (requestId > 0) {
 		<%}%>
 		<%}%>
 
-		<article class="Wrapper" style="padding-top:">
+		<article class="Wrapper" style="padding-top: 10px">
 			<div class="UploadFile" <%if(requestId>0){%>style="padding-bottom: 80px"<%}%>>
 				<%if(requestId>0){%>
 				<div class="RequestText">
