@@ -1497,7 +1497,8 @@ public final class CCnv {
 				sb.append("""
                 <a class="UserInfoUserThumb" style="background-image: url('%s')" href="/%d/"></a>
 				""".formatted(
-						Common.GetUrl(r.fromUserProfileFile), r.fromUserId
+						Common.GetUrl(r.fromUserProfileFile.isEmpty()?"/img/default_user.jpg_120.jpg":r.fromUserProfileFile),
+						r.fromUserId
 				));
 			}else {
 				sb.append("""
