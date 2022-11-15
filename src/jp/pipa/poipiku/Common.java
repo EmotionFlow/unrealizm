@@ -166,7 +166,7 @@ public final class Common {
 	public static final int SAFE_FILTER_MAX = 8;
 
 	// 表示するカテゴリ一覧
-	public static final int CATEGORY_ID_MAX = 11;
+	public static final int CATEGORY_ID_MAX = 13;
 	public static final int CATEGORY_ID_OTHER = 0;
 	public static final int[] CATEGORY_ID = {
 			1,  // Stable Diffusion
