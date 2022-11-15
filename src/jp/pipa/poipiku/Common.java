@@ -169,15 +169,16 @@ public final class Common {
 	public static final int CATEGORY_ID_MAX = 11;
 	public static final int CATEGORY_ID_OTHER = 0;
 	public static final int[] CATEGORY_ID = {
-			1,  // Stable-Diffusion
+			1,  // Stable Diffusion
 			7,  // Mage
 			9,  // ERNIE-ViLG
 			10, // りんな＠AI画家(twitter)
 			11, // お絵描きばりぐっどくん(LINE)
-			8,  // Cyber punk Anime Diffusion
 			2,  // Midjourney
+			12, // Waifu Diffusion
 			3,  // NovelAI
-			4,  // DALL-E
+			8,  // Cyber punk Anime Diffusion
+			4,  // DALL-E2
 //			5,  // AIピカソ
 //			6,  // mimic
 			CATEGORY_ID_OTHER, // その他
@@ -196,6 +197,7 @@ public final class Common {
 			/* 9:ERNIE-ViLG */                 "https://huggingface.co/spaces/PaddlePaddle/ERNIE-ViLG",
 			/* 10:りんな＠AI画家(twitter) */     "https://twitter.com/ms_rinna/status/1567844022240313344",
 			/* 11:ばりぐっどくん(LINE) */  "https://page.line.me/877ieiqs",
+			/* 12:Waifu Diffusion */  "https://huggingface.co/spaces/hakurei/waifu-diffusion-demo",
 	};
 
 	public static final int EDITOR_UPLOAD = 0;
