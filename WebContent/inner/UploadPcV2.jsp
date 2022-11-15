@@ -232,7 +232,7 @@ if (requestId > 0) {
 
 				<div class="CategoryDesc">
 					<span>
-						<label id="EditCategoryLabel" for="EditCategory"><i class="fas fa-terminal"></i> Model: </label>
+						<label id="EditCategoryLabel" for="EditCategory"><i class="fas fa-terminal"></i></label>
 						<select id="EditCategory">
 							<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 							<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
@@ -289,7 +289,7 @@ if (requestId > 0) {
 					<textarea id="EditTextBody" class="EditTextBody" maxlength="<%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%>" placeholder="<%=_TEX.T("IllustV.Description.AddText")%>" onkeyup="DispTextCharNum()"></textarea>
 					<div id="TextBodyCharNum" class="TextBodyCharNum"><%=Common.EDITOR_TEXT_MAX[nEditorId][checkLogin.m_nPassportId]%></div>
 				</div>
-				<div class="OptionItem" style="display: <%=nEditorId==Common.EDITOR_TEXT ? "block" : "none"%>">
+				<div class="OptionItem" style="display: block">
 					<div class="OptionPublish">
 						<label><input type="radio" name="NOVEL_DIRECTION_VAL" value="<%=CContent.NOVEL_DIRECTION_HORIZONTAL%>" id="RadioHorizontal" /><%=_TEX.T("UploadFilePc.Text.Direction.Horizontal")%></label>
 						<label><input type="radio" name="NOVEL_DIRECTION_VAL" value="<%=CContent.NOVEL_DIRECTION_VERTICAL%>" id="RadioVertical" /><%=_TEX.T("UploadFilePc.Text.Direction.Vertical")%></label>

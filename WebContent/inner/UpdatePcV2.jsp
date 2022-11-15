@@ -294,11 +294,14 @@ response.setHeader("Access-Control-Allow-Origin", "https://img.unrealizm.com");
 				<%}%>
 
 				<div class="CategoryDesc">
-					<select id="EditCategory">
-						<%for(int nCategoryId : Common.CATEGORY_ID) {%>
-						<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
-						<%}%>
-					</select>
+					<span>
+						<label id="EditCategoryLabel" for="EditCategory"><i class="fas fa-terminal"></i></label>
+						<select id="EditCategory">
+							<%for(int nCategoryId : Common.CATEGORY_ID) {%>
+							<option value="<%=nCategoryId%>" <%if(nCategoryId==cResults.m_cContent.m_nCategoryId){%>selected<%}%>><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>
+							<%}%>
+						</select>
+					</span>
 
 					<span class="PrivateNote" onclick="privateNote.showEditDlg()">
 						<i class="far fa-sticky-note"></i>
