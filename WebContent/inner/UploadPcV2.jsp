@@ -204,7 +204,7 @@ if (requestId > 0) {
 		<%}%>
 		<%}%>
 
-		<article class="Wrapper">
+		<article class="Wrapper" style="padding-top: 10px">
 			<div class="UploadFile" <%if(requestId>0){%>style="padding-bottom: 80px"<%}%>>
 				<%if(requestId>0){%>
 				<div class="RequestText">

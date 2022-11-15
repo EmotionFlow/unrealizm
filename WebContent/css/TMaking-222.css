@@ -893,7 +893,7 @@ Decoration
 	font-size: 11px;
 	font-family: serif;
 	height: 35px;
-	line-height: 15px;
+	line-height: 17px;
 	overflow: hidden;
 	color: #000;
 	display: -webkit-box;
@@ -2033,6 +2033,7 @@ Decoration
 	border: solid 1px;
 	color: #000;
 	padding: 1px 3px;
+	padding-left: 1px;
 	border-radius: 2px;
 	font-size: 10px;
 }

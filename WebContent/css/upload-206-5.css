@@ -140,7 +140,7 @@
 	display: none;
 }
 .UoloadCmdOption .OptionItem input[type=radio]:checked + label {
-	border: 2px solid #00A0BA;
+	border: 2px solid #101010;
 }
 .UoloadCmdOption .OptionItem input[type=radio] + label {
 	border: 2px solid rgba(0,0,0,0);
