@@ -11,6 +11,4 @@ https://unrealizm.com/$u.userId
 
 #end
 
-Unrealizmのフォローは相手に伝わりません。気軽にフォローしてみましょう。
-
 #parse("ja/footer.vm")

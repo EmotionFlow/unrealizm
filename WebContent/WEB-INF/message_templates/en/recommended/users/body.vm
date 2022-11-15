@@ -1,6 +1,5 @@
 #parse("en/header.vm")
 
-あなたがUnrealizmでフォローしていないおすすめユーザーを紹介します。
 Here are some recommended users that you are not following on Unrealizm.
 
 #foreach($u in $recommend_users)
@@ -11,8 +10,5 @@ $u.profile
 https://unrealizm.com/$u.userId
 
 #end
-
-Unrealizmのフォローは相手に伝わりません。気軽にフォローしてみましょう。
-Following by Unrealizm is not notify to the other person. Feel free to follow them.
 
 #parse("en/footer.vm")

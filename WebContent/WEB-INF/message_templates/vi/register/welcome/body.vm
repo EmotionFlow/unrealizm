@@ -1,26 +1,24 @@
-Gửi $to_name
+Kính gửi $to_name
 
-Chào mừng bạn đến với Unrealizm!
+Chào mừng đến với Unrealizm!
 Unrealizm là một mạng xã hội gửi hình ảnh cho các công trình AI.
 Bạn không chỉ có thể đăng hình ảnh do AI tạo mà còn có thể đăng các tác phẩm được tạo ra với sự hợp tác của AI.
 Nhân viên của chúng tôi sẽ hướng dẫn bạn cách sử dụng Unrealizm và cách thiết lập email của bạn.
 
 [Đăng và thưởng thức]
-+ Tệp +
++ Tập tin +
 Bạn có thể tải lên PNG, JPEG và GIF (bao gồm cả GIF động). Nhiều hình ảnh có thể được tải lên cùng một lúc và thứ tự có thể được thay đổi hoặc thay thế sau khi gửi.
 
 + Dán +
-Bạn có thể sao chép và dán ảnh chụp màn hình và các hình ảnh khác và đăng chúng. Bạn có thể làm những việc như chụp màn hình phần mềm vẽ tranh và đăng tiến trình công việc của mình.
-
+Bạn có thể sao chép và dán ảnh chụp màn hình và các hình ảnh khác và đăng chúng.
 
 [Thích xem và đọc]
 + Phản ứng +
 Đối với mỗi nội dung, bạn có thể gửi cảm xúc của mình dưới dạng Emoji (phản ứng). Bạn cũng có thể có nhiều phản ứng với một nội dung.
-Các phản ứng, đừng nói cho người khác biết người đã gửi chúng. Nếu cảm thấy thích, bạn có thể gửi biểu tượng cảm xúc bao nhiêu lần tùy thích.
+Nếu cảm thấy thích, bạn có thể gửi biểu tượng cảm xúc bao nhiêu lần tùy thích.
 
 + Theo dõi +
 Khi theo dõi một người dùng trên Unrealizm, bạn có thể kiểm tra các bài đăng mới của người dùng mà bạn đang theo dõi trên trang [Trang chủ].
-Những người theo dõi trên Unrealizm sẽ không được thông báo. Hãy cùng theo dõi chúng ngay sau đây.
 
 
 [Cài đặt email]
@@ -29,13 +27,13 @@ Bạn cũng có thể đăng nhập vào Unrealizm bằng địa chỉ email và
 Email: $login_email
 Mật khẩu: $login_password
 
-- Nếu bạn đã đăng ký tích hợp Twitter, địa chỉ email đăng ký trong tài khoản Twitter của bạn tạm thời được đặt thành Unrealizm.
+- Nếu bạn đã đăng ký tích hợp Twitter, địa chỉ email đã đăng ký trong tài khoản Twitter của bạn tạm thời được đặt thành Unrealizm.
 - Bạn có thể thay đổi địa chỉ email và mật khẩu của mình trong trang cài đặt.
 
 
 [Gửi email]
 Bạn sẽ thỉnh thoảng nhận được e-mail thông báo khi có thông báo chưa đọc hoặc khi người dùng mà bạn theo dõi trên Twitter khởi động Unrealizm.
-- Bạn có thể thay đổi giao hàng BẬT / TẮT trong màn hình cài đặt.
+- Bạn có thể thay đổi BẬT/TẮT phân phối trong màn hình cài đặt.
 
 
 [Tài khoản chính thức]

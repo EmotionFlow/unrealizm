@@ -11,6 +11,4 @@ https://unrealizm.com/$u.userId
 
 #end
 
-포이피쿠에 의한 팔로우는 타인에게 통지되지 않습니다. 자유롭게 팔로우하세요.
-
 #parse("ko/footer.vm")

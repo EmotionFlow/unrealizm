@@ -11,6 +11,4 @@ https://unrealizm.com/$u.userId
 
 #end
 
-跟隨 Unrealizm 不會通知其他人。隨時關注他們。
-
 #parse("zh_TW/footer.vm")

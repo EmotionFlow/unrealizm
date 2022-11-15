@@ -11,6 +11,4 @@ https://unrealizm.com/$u.userId
 
 #end
 
-Следование Unrealizm не является уведомлением другого лица. Не стесняйтесь следовать им.
-
 #parse("ru/footer.vm")

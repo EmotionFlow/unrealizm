@@ -15,7 +15,7 @@ TARGET_LOCALES = ["ko", "zh_CN", "zh_TW", "th", "ru", "vi", "es"]
 #TARGET_LOCALES = ["es"]
 
 # clear
-## rm -rf ../../WebContent/WEB-INF/message_templates/{ko,zh_CN,zh_TW,th,ru,vi,es}/register/twitter_follower
+## rm -rf ../../WebContent/WEB-INF/message_templates/{ko,zh_CN,zh_TW,th,ru,vi,es}/register/welcome
 
 
 TEMPLATE_ROOT = '../../WebContent/WEB-INF/message_templates/'

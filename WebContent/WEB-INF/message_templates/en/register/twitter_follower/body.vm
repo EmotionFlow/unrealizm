@@ -11,6 +11,4 @@ https://unrealizm.com/$u.userId
 
 #end
 
-Following by Unrealizm is not notify to the other person. Feel free to follow them.
-
 #parse("en/footer.vm")

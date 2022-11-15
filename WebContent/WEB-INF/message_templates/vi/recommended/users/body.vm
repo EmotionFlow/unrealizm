@@ -11,6 +11,4 @@ https://unrealizm.com/$u.userId
 
 #end
 
-Việc theo dõi Unrealizm không được thông báo cho người khác. Hãy thoải mái theo dõi chúng.
-
 #parse("vi/footer.vm")

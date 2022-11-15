@@ -11,6 +11,4 @@ https://unrealizm.com/$u.userId
 
 #end
 
-ตามด้วย Unrealizm จะไม่แจ้งให้บุคคลอื่นทราบ รู้สึกอิสระที่จะปฏิบัติตามพวกเขา
-
 #parse("th/footer.vm")
