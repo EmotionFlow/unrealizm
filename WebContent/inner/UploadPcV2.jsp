@@ -121,7 +121,11 @@ if (requestId > 0) {
 			<%}%>
 
 			$(function() {
+				<%if(Util.isSmartPhone(request)){%>
 				$('#MenuUpload').addClass('Selected');
+				<%}else{%>
+				$('#HeaderMenuUpload').addClass('Selected');
+				<%}%>
 				initUploadParams(<%=cTweet.m_bIsTweetEnable%>);
 				DispDescCharNum();
 			});

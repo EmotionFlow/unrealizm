@@ -65,11 +65,11 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <%--					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>--%>
 <%--				</a>--%>
 				<div style="display: flex; margin-right: 8px">
-					<a id="MenuUpload" style="display: none;margin-right: 7px" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
+					<a id="HeaderMenuUpload" style="display: none;margin-right: 7px" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
 						<span class="MenuUploadIcon material-symbols-sharp">file_upload</span>
 						<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 					</a>
-					<a id="MenuSettings" style="display: none;" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
+					<a id="HeaderMenuSettings" style="display: none;" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
 						<span class="MenuSettingsIcon material-symbols-sharp">settings</span>
 						<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 					</a>
@@ -127,11 +127,11 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 <%--				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>--%>
 <%--				<span class="FooterMenuItemName"><%=_TEX.T("SwitchAccount")%></span>--%>
 <%--			</a>--%>
-			<a id="MenuUpload" class="FooterMenuItem" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
+			<a id="HeaderMenuUpload" class="FooterMenuItem" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
 				<span class="FooterMenuItemIcon material-symbols-sharp">file_upload</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
 			</a>
-			<a id="MenuSettings" class="FooterMenuItem" href="<%=(checkLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId : "/" %>">
+			<a id="HeaderMenuSettings" class="FooterMenuItem" href="<%=(checkLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId : "/" %>">
 				<span class="FooterMenuItemIcon material-symbols-sharp">settings</span>
 				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
 			</a>
