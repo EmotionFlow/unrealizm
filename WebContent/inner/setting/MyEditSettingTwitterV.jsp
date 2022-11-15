@@ -182,8 +182,7 @@
 	</div>
 	<%}%>
 
-<%--	<%if(cResults.m_cUser.m_bTweet && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {%>--%>
-	<%if(false) {%>
+	<%if(cResults.m_cUser.m_bTweet && checkLogin.m_nPassportId >=Common.PASSPORT_ON) {%>
 	<div id="SectionAutoTweet" class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("EditSettingV.Twitter.Auto")%></div>
 		<div class="SettingBody">

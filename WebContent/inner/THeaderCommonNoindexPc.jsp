@@ -33,7 +33,7 @@
 <%@ include file="/inner/TGoogleAnalytics.jsp"%>
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>window.googletag = window.googletag || {cmd: []};</script>
-<%if(false /*checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd*/) {%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9388519601000159" crossorigin="anonymous"></script>
 <%}%>
 <%if(Util.isSmartPhone(request)) {%>
@@ -42,8 +42,7 @@
 <link href="/css/TPcAppend-90.css" type="text/css" rel="stylesheet" />
 <%}%>
 
-<%if(false) {%>
-<%--<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>--%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
 	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
 		<%if(checkLogin.m_nLangId==1) {	// 国内%>

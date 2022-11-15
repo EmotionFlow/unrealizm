@@ -176,11 +176,11 @@ final String categoryInfo = "";
 		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 
 		<article class="Wrapper ThumbList" style="padding-top: 20px">
-<%--			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>--%>
-<%--			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">--%>
-<%--				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>--%>
-<%--			</span>--%>
-<%--			<%}%>--%>
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
+				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
+			</span>
+			<%}%>
 
 			<nav id="CategoryMenu" class="CategoryMenu">
 				<a class="BtnBase CategoryBtn <%if(cResults.categoryId<0){%> Selected<%}%>" href="/NewArrival<%=isApp?"App":"Pc"%>V.jsp"><%=_TEX.T("Category.All")%></a>
@@ -203,11 +203,11 @@ final String categoryInfo = "";
 				<% for (int cnt=0; cnt<cResults.contentList.size(); cnt++) { %>
 					<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 
-<%--				<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>--%>
-<%--				<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">--%>
-<%--				<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>--%>
-<%--				</div>--%>
-<%--				<%}%>--%>
+				<% if ((cnt == 2 || cnt == 7) && bSmartPhone){ %>
+				<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
+				<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
+				</div>
+				<%}%>
 
 				<%}%>
 			</section>

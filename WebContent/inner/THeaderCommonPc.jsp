@@ -36,8 +36,7 @@
 <%} else {%>
 <link href="/css/TPcAppend-90.css" type="text/css" rel="stylesheet" />
 <%}%>
-<%if(false) {%>
-<%--<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>--%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
 	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
 		<%if(checkLogin.m_nLangId==1) {	// 国内%>
