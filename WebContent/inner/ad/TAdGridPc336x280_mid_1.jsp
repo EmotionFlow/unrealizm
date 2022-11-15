@@ -3,7 +3,7 @@
 <%@page import="jp.pipa.poipiku.util.*"%>
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
 <div class="PcSideBarAd">
-	<a class="PassAd" href="/MyEditSettingPcV.jsp?MENUID=POIPASS"><%=_TEX.T("Common.Ad.Hide")%> &nbsp; <i class="fas fa-times"></i></a>
+<%--	<a class="PassAd" href="/MyEditSettingPcV.jsp?MENUID=POIPASS"><%=_TEX.T("Common.Ad.Hide")%> &nbsp; <i class="fas fa-times"></i></a>--%>
 
 	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
 	<!-- /4789880/poipiku/poipiku_336x280_mid -->
