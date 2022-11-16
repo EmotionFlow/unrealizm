@@ -188,6 +188,7 @@ myEditSettingEmojiC.getResults(checkLogin);
 
 </style>
 <div class="SettingList">
+	<%if(false){%>
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingEmojiV.Wave.Title")%></div>
 		<div class="SettingBody">
@@ -246,6 +247,8 @@ myEditSettingEmojiC.getResults(checkLogin);
 			</div>
 		</div>
 	</div>
+	<%}%>
+
 	<div class="SettingListItem">
 		<div class="SettingListTitle"><%=_TEX.T("MyEditSettingEmojiV.Reply.Title")%></div>
 		<div class="SettingBody">
