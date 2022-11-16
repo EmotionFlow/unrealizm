@@ -908,7 +908,8 @@ public final class CTweet {
 	}
 
 	static public String generateWithTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
-		String strFooter = String.format("\nhttps://unrealizm.com/%d/%d.html",
+		String strFooter = String.format(" %s\nhttps://unrealizm.com/%d/%d.html",
+				Common.CATEGORY_TW_HASHTAG[cContent.m_nCategoryId],
 				cContent.m_nUserId,
 				cContent.m_nContentId);
 
@@ -924,7 +925,9 @@ public final class CTweet {
 	static public String generateAfterTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
-			final String strUrl = String.format("https://unrealizm.com/%d/%d.html",
+			final String strUrl = String.format(" %s %s\nhttps://unrealizm.com/%d/%d.html",
+					Common.CATEGORY_TW_HASHTAG[cContent.m_nCategoryId],
+					"#" + _TEX.T("Common.HashTag"),
 					cContent.m_nUserId,
 					cContent.m_nContentId);
 
@@ -938,7 +941,7 @@ public final class CTweet {
 			}
 
 			strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-					URLEncoder.encode(strDesc + " " + "#" + _TEX.T("Common.HashTag"), "UTF-8"),
+					URLEncoder.encode(strDesc, "UTF-8"),
 					URLEncoder.encode(strUrl, "UTF-8"));
 		} catch (Exception ignored) {
 			;

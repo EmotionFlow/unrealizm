@@ -200,7 +200,22 @@ public final class Common {
 			/* 11:ばりぐっどくん(LINE) */  "https://page.line.me/877ieiqs",
 			/* 12:Waifu Diffusion */  "https://huggingface.co/spaces/hakurei/waifu-diffusion-demo",
 			/* 13:AnythingV3 */  "https://huggingface.co/Linaqruf/anything-v3.0/tree/main",
-
+	};
+	public static final String[] CATEGORY_TW_HASHTAG = {
+			/* 0:その他 */               "#ai",
+			/* 1:Stable-Diffusion */    "#stablediffusion",
+			/* 2:Midjourney */          "#midjourney",
+			/* 3:NovelAI */             "#NovelAI",
+			/* 4:DALL-E */              "#dalle2",
+			/* 5:AIピカソ */             "#aipicaso",
+			/* 6:mimic */               "#mimic",
+			/* 7:Mage */                "#magespace",
+			/* 8:Cyber punk Anime Diffusion */ "#CyberpunkAnimeDiffusion",
+			/* 9:ERNIE-ViLG */                 "#ERNIEViLG",
+			/* 10:りんな＠AI画家(twitter) */     "#ai #rinna",
+			/* 11:ばりぐっどくん(LINE) */        "#ai",
+			/* 12:Waifu Diffusion */           "#waifudiffusion",
+			/* 13:AnythingV3 */                "#anythingv3",
 	};
 
 	public static final int EDITOR_UPLOAD = 0;
