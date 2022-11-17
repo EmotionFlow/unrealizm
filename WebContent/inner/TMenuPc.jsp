@@ -190,10 +190,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				<%if(false){%>
 <%--				<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>--%>
 					<div class="SearchListPoipassLink">
-						<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS">
-							<img style="margin: 0 10px 0 0; height: 25px;" src="/img/poipiku_passport_logo3_60.png"/>
-							<span><%=_TEX.T("SearchLog.IntroPoipass")%></span>
-						</a>
+<%--						<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS">--%>
+<%--							<img style="margin: 0 10px 0 0; height: 25px;" src="/img/poipiku_passport_logo3_60.png"/>--%>
+<%--							<span><%=_TEX.T("SearchLog.IntroPoipass")%></span>--%>
+<%--						</a>--%>
 					</div>
 				<%}%>
 			</div>
@@ -236,10 +236,10 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 				<ul id="RecentSearchList" class="RecentSearchList"></ul>
 				<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>
 					<div class="SearchListPoipassLink">
-						<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS">
-							<img style="margin: 0 4px 0 0; height: 25px;" src="/img/poipiku_passport_logo3_60.png"/>
-							<span><%=_TEX.T("SearchLog.IntroPoipass")%></span>
-						</a>
+<%--						<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS">--%>
+<%--							<img style="margin: 0 4px 0 0; height: 25px;" src="/img/poipiku_passport_logo3_60.png"/>--%>
+<%--							<span><%=_TEX.T("SearchLog.IntroPoipass")%></span>--%>
+<%--						</a>--%>
 					</div>
 				<%}%>
 			</div>
