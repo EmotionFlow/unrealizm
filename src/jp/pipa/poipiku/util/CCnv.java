@@ -617,7 +617,7 @@ public final class CCnv {
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboardMini(this, %d, 1, 'Popular')\"><i class=\"far fa-star\"></i></a>",
 					(nLoginUserId<1)?"Selected":"", cContent.m_nContentId));
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboardMini(this, %d, 5, 'Random')\"><i class=\"fas fa-random\"></i></a>",
-					(nLoginUserId<1)?"Selected":"", cContent.m_nContentId));
+					"", cContent.m_nContentId));
 		}
 		strRtn.append("</div>");	// ResBtnSetList
 
