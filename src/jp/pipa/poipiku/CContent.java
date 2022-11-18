@@ -241,8 +241,8 @@ public final class CContent {
 		// 非公開
 		if (m_nOpenId == Common.OPEN_ID_HIDDEN) {
 			if (!isRequestImg && !isOwner) {
-				thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
-				thumbImgSmallUrl = "/img/poipiku_icon_512x512_2.png";
+				thumbImgUrl = "/img/icon-512x512.png";
+				thumbImgSmallUrl = "/img/icon-512x512.png";
 				isHideThumbImg = true;
 				return;
 			}
@@ -305,8 +305,8 @@ public final class CContent {
 				isHideThumbImg = false;
 			} else {
 				// 通常このパスには入らないはず
-				thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
-				thumbImgSmallUrl = "/img/poipiku_icon_512x512_2.png";
+				thumbImgUrl = "/img/icon-512x512.png";
+				thumbImgSmallUrl = "/img/icon-512x512.png";
 				isHideThumbImg = true;
 			}
 		}
