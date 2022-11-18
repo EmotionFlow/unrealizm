@@ -856,7 +856,13 @@ public final class CTweet {
 
 
 	static public String generateState(CContent cContent, ResourceBundleControl _TEX) {
-		String strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
+		String strState;
+		if (cContent.m_nCategoryId == 10 || cContent.m_nCategoryId == 11) {
+			String s = _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId));
+			strState = s.substring(s.indexOf("</i>"));
+		} else {
+			strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
+		}
 
 		String optionLabel = "";
 
