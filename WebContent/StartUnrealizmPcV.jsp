@@ -66,7 +66,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 				"type": "post",
 				"data": {
 					"PG": page,
-					"CD": 0,
+					"CD": -1,
 					"MD": <%=CCnv.MODE_SP%>,
 					"VD": <%=CCnv.VIEW_DETAIL%>,
 					"SD": lastContentId,

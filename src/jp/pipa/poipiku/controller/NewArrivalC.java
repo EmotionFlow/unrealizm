@@ -14,7 +14,7 @@ public final class NewArrivalC {
 	public int mode = CCnv.MODE_PC;
 	public int startId = -1;
 	public int viewMode = CCnv.VIEW_LIST;
-	public int categoryId = 0;
+	public int categoryId = -1;
 	public int page = 0;
 	public void getParam(HttpServletRequest request) {
 		try {
@@ -109,6 +109,8 @@ public final class NewArrivalC {
 			if (!strCondMute.isEmpty()) statement.setString(idx++, strMuteKeyword);
 			statement.setInt(idx++, startId > 0 ? 0 :page * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
+
+			Log.d(statement.toString());
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
