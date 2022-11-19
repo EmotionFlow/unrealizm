@@ -48,7 +48,6 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 							<span class="typcn typcn-mail"></span>
 						</a>
 					</div>
-
 				</form>
 				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" style="right: 38px;" href="javascript:void(0);" onclick="showSearch()"></a>
 				<div class="HeaderSelectLang" onclick="showSelectLangDlg(false);">
@@ -107,20 +106,26 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		</nav>
 		<nav class="FooterMenu" style="float: right;">
 			<%if(!checkLogin.m_bLogin) {%>
-			<form method="post" name="login_from_twitter_tmenupc_01" action="/LoginFormTwitter.jsp">
+
+			<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitter.jsp">
 				<input id="login_from_twitter_tmenupc_callback_01" type="hidden" name="CBPATH" value=""/>
 				<script>{
 					let s = document.URL.split("/");
 					for(let i=0; i<3; i++){s.shift();}
 					$('#login_from_twitter_tmenupc_callback_01').val("/" + s.join("/"));
 				}</script>
-				<a class="BtnBase Rev HeaderLoginBtnPc LoginButton" href="javascript:login_from_twitter_tmenupc_01.submit()">
-					<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login.Short")%>
-				</a>
+				<div class="CreateAccountButtons">
+					<i class="fas fa-sign-in-alt"></i>
+					<a class="BtnBase LoginButton" href="javascript:login_from_twitter_tmenupc_00.submit()">
+						<span class="typcn typcn-social-twitter"></span>
+					</a>
+					or
+					<a class="BtnBase LoginButton" href="/LoginFormEmailPcV.jsp">
+						<span class="typcn typcn-mail"></span>
+					</a>
+				</div>
 			</form>
-			<div class="TwLoginUnsuccessfulIcon" onclick="dispTwLoginUnsuccessfulInfo($('#login_from_twitter_tmenupc_callback_01').val())">
-				<i class="fas fa-info-circle" style="padding: 2px"></i>
-			</div>
+
 
 			<%} else {%>
 <%--			<a id="MenuSwitchUser" class="FooterMenuItem" style="display: none;" href="javascript: void(0);" onclick="toggleSwitchUserList();">--%>
