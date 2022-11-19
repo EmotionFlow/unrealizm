@@ -110,8 +110,6 @@ public final class NewArrivalC {
 			statement.setInt(idx++, startId > 0 ? 0 :page * selectMaxGallery);
 			statement.setInt(idx++, selectMaxGallery);
 
-			Log.d(statement.toString());
-
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				CContent content = new CContent(resultSet);
