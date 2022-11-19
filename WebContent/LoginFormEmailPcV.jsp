@@ -62,7 +62,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%> | <%=_TEX.T("THeader.Title")%></title>
-		<%=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
+		<%//=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
 		<script>
 			function RegistUser() {
 				const strEmail = $.trim($("#RegistEmail").val());
@@ -81,8 +81,9 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 					return false;
 				}
 
-				grecaptcha.ready( () => {
-					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_browser'}).then((reCAPTCHAtoken) => {
+				<%--grecaptcha.ready( () => {--%>
+				<%--	grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_browser'}).then((reCAPTCHAtoken) => {--%>
+						const reCAPTCHAtoken = "";
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
@@ -108,16 +109,17 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
-					});
-				});
+				// 	});
+				// });
 				return false;
 			}
 
 			function LoginUser() {
 				const strEmail = $.trim($("#LoginEmail").val());
 				const strPassword = $.trim($("#LoginPassword").val());
-				grecaptcha.ready( () => {
-					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_browser'}).then((reCAPTCHAtoken) => {
+				<%--grecaptcha.ready( () => {--%>
+				<%--	grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_browser'}).then((reCAPTCHAtoken) => {--%>
+						const reCAPTCHAtoken = "";
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
@@ -139,8 +141,8 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
-					});
-				});
+				// 	});
+				// });
 				return false;
 			}
 
