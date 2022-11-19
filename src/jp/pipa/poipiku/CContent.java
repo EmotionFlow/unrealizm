@@ -136,7 +136,8 @@ public final class CContent {
 		int ret = 0;
 		if(isTweetTxt) ret += TWEET_CONCURRENT;
 		if(isTweetImg) ret += TWEET_WITH_THUMBNAIL;
-		if(isTwitterCardThumbnail) ret += TWITTER_CARD_THUMBNAIL;
+//		if(isTwitterCardThumbnail) ret += TWITTER_CARD_THUMBNAIL;
+		ret += TWITTER_CARD_THUMBNAIL;
 		return ret;
 	}
 

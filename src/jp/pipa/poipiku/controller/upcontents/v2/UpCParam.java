@@ -37,7 +37,7 @@ public class UpCParam {
 	public boolean isShowFirst = false;
 	public boolean isTweet = false;
 	public boolean isTweetWithImage = false;
-	public boolean isTwitterCardThumbnail = false;
+	public boolean isTwitterCardThumbnail = true;
 	public boolean isCheerNg = true;
 	public String twitterListId = "";
 	public boolean isShowRecently = true;
