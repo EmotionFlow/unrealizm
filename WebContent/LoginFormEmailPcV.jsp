@@ -22,14 +22,8 @@ if(!strRequestUri.isEmpty()) {
 }
 
 String strNextUrl = "";
-String strReturnUrl = "";
 if(Util.toBoolean(request.getParameter("INQUIRY"))) {
-	strReturnUrl = Util.toString(request.getParameter("RET"));
-	if(strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
-		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyHomePcV.jsp?ID="+checkLogin.m_nUserId,"UTF-8");;
-	} else {
-		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode(strReturnUrl,"UTF-8");
-	}
+	strNextUrl = "/";
 } else if(strRequestUri.isEmpty()) {
 	strNextUrl = strRequestUri;
 } else {
