@@ -43,7 +43,7 @@ if (requestId > 0) {
 
 		<script type="text/javascript" src="/js/exifr/exifr.7.1.3.full.umd.min.js"></script>
 		<script type="text/javascript" src="/js/flatpickr/flatpickr.min.js"></script>
-		<script src="/js/upload-51-9.js" type="text/javascript"></script>
+		<script src="/js/upload-51-10.js" type="text/javascript"></script>
 
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("UploadFilePc.Title")%></title>
 
