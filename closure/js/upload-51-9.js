@@ -748,6 +748,51 @@ const FINE_UPLOADER_ERROR = {
 	sizeError: 'SizeError',
 	totalSizeError: 'TotalSizeError',
 }
+
+function promiseImg(img) {
+	if (img.naturalWidth !== 0) {
+		return Promise.resolve()
+	} else {
+		return new Promise((resolve, reject) => {
+			img.onload = resolve
+			img.onerror = reject
+		})
+	}
+}
+
+function getPrompt(exif){
+	let result = {
+		'prompt' : '',
+		'negativePrompt': '',
+		'otherParams': '',
+	};
+
+	if (exif.parameters) {
+		// automatic1111
+		const p = exif.parameters;
+		const lines = p.split('\n');
+		result.prompt = lines[0];
+		if (lines[1]) {
+			if (lines[1].match(/^Negative prompt:/)) {
+				result.negativePrompt = lines[1];
+				result.otherParams = lines[2];
+			} else {
+				result.otherParams = lines[1];
+			}
+		}
+	} else if (exif['Software'] === 'NovelAI') {
+		// nai
+		const comment = JSON.parse(exif['Comment']);
+		result.prompt = exif['Description'];
+		result.negativePrompt = comment['uc'];
+		result.otherParams = 'Steps: ' + comment['steps']
+			+ ', Scale: ' + comment['scale']
+			+ ', Seed: ' + comment['seed'];
+	}
+
+	return result;
+}
+
 function initUploadFile(fileNumMax, fileSizeMax) {
 	multiFileUploader = new qq.FineUploader({
 		element: document.getElementById("file-drop-area"),
@@ -807,7 +852,7 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 					setTimeout(onCompleteUpload, 1000);
 				}
 			},
-			onValidate: function(data) {
+			onValidate: function (data) {
 				let total = this.getSubmittedSize();
 				const submit_num = this.getSubmittedNum();
 				this.showTotalSize(total, submit_num);
@@ -816,7 +861,31 @@ function initUploadFile(fileNumMax, fileSizeMax) {
 					showFineUploaderErrorDialog(FINE_UPLOADER_ERROR.totalSizeError);
 					return false;
 				}
-				this.showTotalSize(total, submit_num+1);
+				this.showTotalSize(total, submit_num + 1);
+
+				let url;
+				for (let idx=0; idx<100; idx++) {
+					const file = this._handler.getFile(idx);
+					if (!file) {
+						url = URL.createObjectURL(this._handler.getFile(--idx));
+						break;
+					}
+				}
+
+				exifr.parse(url).then((d) => {
+					const params = getPrompt(d);
+					const $EditPrompt = $("#EditPrompt");
+					const $EditNegativePrompt = $("#EditNegativePrompt");
+					const $EditOtherParams = $("#EditOtherParams");
+					if ($EditPrompt.val() === '') {
+						$EditPrompt.val(params.prompt);
+						$EditNegativePrompt.val(params.negativePrompt);
+						$EditOtherParams.val(params.otherParams);
+						DispPromptCharNum();
+						DispNegativePromptCharNum();
+						DispOtherParamsCharNum();
+					}
+				})
 			},
 			onStatusChange: function(id, oldStatus, newStatus) {
 				this.showTotalSize(this.getSubmittedSize(), this.getSubmittedNum());
