@@ -33,7 +33,7 @@ public class IncrementAiPromptCopyNumC extends Controller{
 		try (
 			Connection connection = DatabaseUtil.dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement("""
-                UPDATE poipiku.public.contents_0000 SET ai_prompt_copy_num = ai_prompt_copy_num + 1
+                UPDATE contents_0000 SET ai_prompt_copy_num = ai_prompt_copy_num + 1
                 WHERE user_id=? AND content_id=?
 				""")){
 			statement.setInt(1, ownerUserId);

@@ -1644,7 +1644,7 @@ function copyAiParam(ownerUserId, contentId, textAreaId, buttonElement, toUrl) {
 		"type": "post",
 		"data": {"UID": ownerUserId, "IID": contentId},
 		"url": "/f/IncrementAiPromptCopyNumF.jsp",
-	}).then( () => {
+	}).then( (result) => {
 		if (toUrl) {
 			window.open(toUrl, '_blank', 'noopener');
 		}
