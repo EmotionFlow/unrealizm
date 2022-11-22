@@ -69,22 +69,22 @@ if (!result) return;
 
     <h2 class="PromptDlgTitle"><%=_TEX.T("PromptDlg.Prompt")%></h2>
     <textarea readonly id="PromptDlgPrompt" class="PromptDlgInfo Prompt" style="margin-top: 5px;"><%=cResults.prompt%></textarea>
-    <span id="PromptDlgCopyPromptBtn" class="PromptDlgCopyBtn" onclick="copyTxtToClipBoard('PromptDlgPrompt', this)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyPrompt")%> </span>
+    <span id="PromptDlgCopyPromptBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgPrompt', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyPrompt")%> </span>
 
     <h2 class="PromptDlgTitle"><%=_TEX.T("PromptDlg.NegativePrompt")%></h2>
     <textarea readonly id="PromptDlgNegativePrompt" class="PromptDlgInfo NegativePrompt" style="margin-top: 5px;"><%=cResults.negativePrompt%></textarea>
-    <span id="PromptDlgCopyNegativePromptBtn" class="PromptDlgCopyBtn" onclick="copyTxtToClipBoard('PromptDlgNegativePrompt', this)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyNegativePrompt")%> </span>
+    <span id="PromptDlgCopyNegativePromptBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgNegativePrompt', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyNegativePrompt")%> </span>
 
     <h2 class="PromptDlgTitle" style="margin-top: 4px;"><%=_TEX.T("PromptDlg.Params")%></h2>
     <textarea readonly id="PromptDlgParams" class="PromptDlgInfo OtherParams" style="margin-top: 5px;"><%=cResults.otherParams%></textarea>
-    <span id="PromptDlgCopyParamBtn" class="PromptDlgCopyBtn" onclick="copyTxtToClipBoard('PromptDlgParams', this)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyParams")%> </span>
+    <span id="PromptDlgCopyParamBtn" class="PromptDlgCopyBtn" onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgParams', this, null)"><i class="far fa-clone"></i> <%=_TEX.T("PromptDlg.CopyParams")%> </span>
 
     <h2 class="PromptDlgTitle" style="margin-top: 4px;"><%=_TEX.T("PromptDlg.Generate")%> <i class="fas fa-external-link-alt"></i></h2>
     <div class="PromptDlgGo">
         <%for (int i=0; i<Common.CATEGORY_ID.length; i++) {
             if (Common.CATEGORY_ID[i] == Common.CATEGORY_ID_OTHER) continue;
         %>
-        <a onclick="copyPromptAndGoPage('<%=Common.CATEGORY_SITE[Common.CATEGORY_ID[i]]%>')" href="javascript: void(0)"><%=_TEX.T("Category.C" + Common.CATEGORY_ID[i])%></a>
+        <a onclick="copyAiParam(<%=cResults.ownerUserId%>, <%=cResults.contentId%>, 'PromptDlgPrompt', this, '<%=Common.CATEGORY_SITE[Common.CATEGORY_ID[i]]%>')" href="javascript: void(0)"><%=_TEX.T("Category.C" + Common.CATEGORY_ID[i])%></a>
         <%}%>
     </div>
 </div>

@@ -65,6 +65,7 @@ public final class CContent {
 	public String aiPrompt = "";
 	public String aiNegativePrompt = "";
 	public String aiOtherParams = "";
+	public int aiPromptCopyNum = 0;
 	public Timestamp createdAt = null;
 	public Timestamp updatedAt = null;
 
@@ -189,6 +190,7 @@ public final class CContent {
 		aiPrompt            = Util.toString(resultSet.getString("ai_prompt"));
 		aiNegativePrompt    = Util.toString(resultSet.getString("ai_negative_prompt"));
 		aiOtherParams       = Util.toString(resultSet.getString("ai_other_params"));
+		aiPromptCopyNum     = resultSet.getInt("ai_prompt_copy_num");
 		createdAt           = resultSet.getTimestamp("created_at");
 		updatedAt           = resultSet.getTimestamp("updated_at");
 	}
