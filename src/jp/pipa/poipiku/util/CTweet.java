@@ -859,7 +859,7 @@ public final class CTweet {
 		String strState;
 		if (cContent.m_nCategoryId == 10 || cContent.m_nCategoryId == 11) {
 			String s = _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId));
-			strState = s.substring(s.indexOf("</i>"));
+			strState = s.substring(s.indexOf("</i>") + 4);
 		} else {
 			strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
 		}
