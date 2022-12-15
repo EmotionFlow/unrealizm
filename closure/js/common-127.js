@@ -1638,9 +1638,18 @@ function copyTxtToClipBoard(textAreaId, buttonElement){
 	buttonElement.appendChild(checkIcon);
 }
 
-function copyPromptAndGoPage(toUrl) {
-	copyTxtToClipBoard("PromptDlgPrompt", document.getElementById("PromptDlgCopyPromptBtn"));
-	window.open(toUrl, '_blank', 'noopener');
+function copyAiParam(ownerUserId, contentId, textAreaId, buttonElement, toUrl) {
+	copyTxtToClipBoard(textAreaId, buttonElement);
+	$.ajax({
+		"type": "post",
+		"data": {"UID": ownerUserId, "IID": contentId},
+		"url": "/f/IncrementAiPromptCopyNumF.jsp",
+	}).then( (result) => {
+		if (toUrl) {
+			window.open(toUrl, '_blank', 'noopener');
+		}
+	})
+
 }
 
 /******** AI prompt *********/

@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.controller;
 
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
@@ -36,7 +35,6 @@ public final class SearchTagByKeywordC {
 	public ArrayList<CTag> tagList = new ArrayList<>();
 	public ArrayList<String> sampleContentFile = new ArrayList<>();
 	public int contentsNum = 0;
-	private static final String PG_HINT = "/*+ BitmapScan(tags_0000 tags_0000_tag_txt_pgidx) */";
 
 
 	public boolean getResults(CheckLogin checkLogin) {
@@ -52,18 +50,18 @@ public final class SearchTagByKeywordC {
 
 		if(m_strKeyword.isEmpty()) return bResult;
 		try {
-			connection = DatabaseUtil.dataSource.getConnection();
+			connection = DatabaseUtil.replicaDataSource.getConnection();
 
-			sql = PG_HINT + """
+			sql = """
 				WITH g_matched AS (
 				    SELECT genre_id
 				    FROM genres
-				    WHERE genre_id>0 AND genre_name &@~ ?
+					WHERE genre_id>0 AND (genre_name &^ pgroonga.query_escape(?) OR genre_name_kana &^~ pgroonga.query_escape(?))
 				    UNION
 				    DISTINCT
 				    SELECT genre_id
 				    FROM genre_translations
-				    WHERE genre_id>0 AND trans_text &@~ ?
+				    WHERE genre_id>0 AND trans_text &^ pgroonga.query_escape(?)
 				)
 				SELECT t.genre_id, t.tag_txt, COUNT(t.tag_txt) count_contents, gt.trans_text, f.genre_id AS following
 				FROM tags_0000 t
@@ -75,6 +73,7 @@ public final class SearchTagByKeywordC {
 				""";
 			statement = connection.prepareStatement(sql);
 			int idx = 1;
+			statement.setString(idx++, m_strKeyword);
 			statement.setString(idx++, m_strKeyword);
 			statement.setString(idx++, m_strKeyword);
 			statement.setInt(idx++, checkLogin.m_nUserId);

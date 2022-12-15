@@ -22,14 +22,8 @@ if(!strRequestUri.isEmpty()) {
 }
 
 String strNextUrl = "";
-String strReturnUrl = "";
 if(Util.toBoolean(request.getParameter("INQUIRY"))) {
-	strReturnUrl = Util.toString(request.getParameter("RET"));
-	if(strReturnUrl.isEmpty() || strReturnUrl.equals("/")){
-		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode("/MyHomePcV.jsp?ID="+checkLogin.m_nUserId,"UTF-8");;
-	} else {
-		strNextUrl = "/GoToInquiryPcV.jsp?RET=" + URLEncoder.encode(strReturnUrl,"UTF-8");
-	}
+	strNextUrl = "/";
 } else if(strRequestUri.isEmpty()) {
 	strNextUrl = strRequestUri;
 } else {
@@ -62,7 +56,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 	<head>
 		<%@ include file="/inner/THeaderCommonPc.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%> | <%=_TEX.T("THeader.Title")%></title>
-		<%=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
+		<%//=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
 		<script>
 			function RegistUser() {
 				const strEmail = $.trim($("#RegistEmail").val());
@@ -81,8 +75,9 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 					return false;
 				}
 
-				grecaptcha.ready( () => {
-					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_browser'}).then((reCAPTCHAtoken) => {
+				<%--grecaptcha.ready( () => {--%>
+				<%--	grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'register_browser'}).then((reCAPTCHAtoken) => {--%>
+						const reCAPTCHAtoken = "";
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
@@ -108,16 +103,17 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
-					});
-				});
+				// 	});
+				// });
 				return false;
 			}
 
 			function LoginUser() {
 				const strEmail = $.trim($("#LoginEmail").val());
 				const strPassword = $.trim($("#LoginPassword").val());
-				grecaptcha.ready( () => {
-					grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_browser'}).then((reCAPTCHAtoken) => {
+				<%--grecaptcha.ready( () => {--%>
+				<%--	grecaptcha.execute('<%=ReCAPTCHA.SITE_KEY%>', {action: 'login_browser'}).then((reCAPTCHAtoken) => {--%>
+						const reCAPTCHAtoken = "";
 						$.ajaxSingle({
 							"type": "post",
 							"data": {
@@ -139,8 +135,8 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 								DispMsg('<%=_TEX.T("EditIllustVCommon.Upload.Error")%>');
 							}
 						});
-					});
-				});
+				// 	});
+				// });
 				return false;
 			}
 

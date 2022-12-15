@@ -66,7 +66,7 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 				"type": "post",
 				"data": {
 					"PG": page,
-					"CD": 0,
+					"CD": -1,
 					"MD": <%=CCnv.MODE_SP%>,
 					"VD": <%=CCnv.VIEW_DETAIL%>,
 					"SD": lastContentId,
@@ -178,7 +178,8 @@ String strDesc =  _TEX.T("THeader.Title.Desc");
 		<% for (int cnt = 0; cnt<cResults.contentList.size(); cnt++) { %>
 		<%=CCnv.Content2Html2Column(cResults.contentList.get(cnt), checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
 
-		<% if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (cnt == 3 || cnt == 9) && bSmartPhone){ %>
+		<% if (false){ %>
+<%--		<% if (checkLogin.m_nPassportId==Common.PASSPORT_OFF && (cnt == 3 || cnt == 9) && bSmartPhone){ %>--%>
 		<div class="IllustItem" style="width: 360px; height: 250px; background: none; border: none;">
 			<%=Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter)%>
 		</div>

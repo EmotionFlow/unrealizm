@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%if(cResults.m_cUser.isWaveEnable){%>
+<%if(false){%>
+<%--<%if(cResults.m_cUser.isWaveEnable){%>--%>
 <span class="UserInfoCmd" style="padding-bottom: 0">
 	<%=_TEX.T("IllustV.Wave")%>
 	<%if(cResults.m_cUser.isWaveCommentEnable){%>

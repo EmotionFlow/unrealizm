@@ -72,7 +72,7 @@ EmotionFlowがサービスを提供するために必要な範囲でのみユー
 
 				<div class="SettingListItem Additional">
 					<div class="SettingBody">
-						(最終更新日 2022/10/26)
+						(最終更新日 2022/11/17)
 					</div>
 				</div>
 			</div>

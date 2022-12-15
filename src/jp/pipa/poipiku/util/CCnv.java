@@ -617,7 +617,7 @@ public final class CCnv {
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboardMini(this, %d, 1, 'Popular')\"><i class=\"far fa-star\"></i></a>",
 					(nLoginUserId<1)?"Selected":"", cContent.m_nContentId));
 			strRtn.append(String.format("<a class=\"BtnBase ResBtnSetItem %s\" onclick=\"switchEmojiKeyboardMini(this, %d, 5, 'Random')\"><i class=\"fas fa-random\"></i></a>",
-					(nLoginUserId<1)?"Selected":"", cContent.m_nContentId));
+					"", cContent.m_nContentId));
 		}
 		strRtn.append("</div>");	// ResBtnSetList
 
@@ -795,7 +795,7 @@ public final class CCnv {
 		// サムネイルへの重畳表示
 		//appendOverlayToThumbnail(strRtn, cContent, _TEX, nViewMode);
 
-		// リアクション数
+		// リアクション数・プロンプトなどコピー数
 		appendReactionNum(strRtn, cContent, false);
 
 		// 絵文字
@@ -841,8 +841,9 @@ public final class CCnv {
 		// 画像orテキスト
 		appendContentItemThumbMiniList(strRtn, cContent, nViewMode, ILLUST_VIEW, ILLUST_DETAIL);
 
-		// リアクション数
+		// リアクション数・プロンプトなどコピー数
 		appendReactionNum(strRtn, cContent, true);
+
 
 		// 全て表示ボタン
 //		appendIllustItemExpand(strRtn, cContent, _TEX, nSpMode, true);
@@ -858,14 +859,17 @@ public final class CCnv {
 	}
 
 	private static void appendReactionNum(StringBuilder strRtn, CContent cContent, boolean miniList) {
-		if (cContent.m_strCommentsListsCache.length() > 0) {
+		strRtn.append("""
+		<div class="IllustItemReactionNum">
+		""");
+
+		if (cContent.commentTotalNum > 0) {
 			String strReactionNum = "";
 			if (cContent.commentTotalNum > 10e3) {
 				strReactionNum = "1000+";
 			} else {
 				strReactionNum = "%d".formatted(cContent.commentTotalNum);
 			}
-
 			final String href;
 			if (miniList) {
 				href = "/%d/%d.html".formatted(cContent.m_nUserId, cContent.m_nContentId);
@@ -873,13 +877,31 @@ public final class CCnv {
 				href = "/ReactionListPcV.jsp?UID=%d&CID=%d".formatted(cContent.m_nUserId, cContent.m_nContentId);
 			}
 			strRtn.append("""
-	            <div class="IllustItemReactionNum">
-	            <a class="ReactionNumLabel" href="%s">
-	            <span class="material-symbols-sharp">favorite</span>
-	            <span id="ReactionNum_%d" class="ReactionNum">%s</span>
-	            </a></div>
-				""".formatted(href, cContent.m_nContentId, strReactionNum));
+            <a class="ReactionNumLabel" href="%s">
+            <span class="material-symbols-sharp">favorite</span>
+            <span id="ReactionNum_%d" class="ReactionNum">%s</span>
+            </a>
+			""".formatted(href, cContent.m_nContentId, strReactionNum));
 		}
+
+		if (cContent.aiPromptCopyNum > 0) {
+			String strPromptCopyNum = "";
+			if (cContent.aiPromptCopyNum> 10e3) {
+				strPromptCopyNum = "1000+";
+			} else {
+				strPromptCopyNum = "%d".formatted(cContent.aiPromptCopyNum);
+			}
+
+			strRtn.append("""
+            <a class="ReactionNumLabel" href="javascript:void(0)" onclick="DispPromptDlg(%d)">
+            <span class="material-symbols-sharp">content_copy</span>
+            <span id="PromptCopyNum_%d" class="ReactionNum">%s</span>
+            </a>
+			""".formatted(cContent.m_nContentId,cContent.m_nContentId, strPromptCopyNum));
+		}
+
+		strRtn.append("</div>");
+
 	}
 
 
@@ -1263,11 +1285,11 @@ public final class CCnv {
 		final String strFileUrl;
 		final boolean bHidden;	// テキストモード用カバー画像表示フラグ
 		if (pageCategory == PageCategory.MY_BOX && cContent.m_nUserId == checkLogin.m_nUserId) {
-			strFileUrl = cContent.m_strFileName + "_640.jpg";
+			strFileUrl = cContent.m_strFileName + "_360.jpg";
 			bHidden = false;
 		} else {
 			cContent.setThumb();
-			strFileUrl = cContent.thumbImgUrl;
+			strFileUrl = cContent.thumbImgSmallUrl;
 			bHidden = cContent.isHideThumbImg;
 		}
 

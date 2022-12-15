@@ -177,8 +177,8 @@ public final class Common {
 			2,  // Midjourney
 			12, // Waifu Diffusion
 			3,  // NovelAI
+			8,  // nijijourney
 			13, // AnythingV3
-			8,  // Cyber punk Anime Diffusion
 			4,  // DALL-E2
 //			5,  // AIピカソ
 //			6,  // mimic
@@ -194,13 +194,28 @@ public final class Common {
 			/* 5:AIピカソ */             "https://apps.apple.com/jp/app/ai%E3%83%94%E3%82%AB%E3%82%BD-ai%E3%81%8A%E7%B5%B5%E6%8F%8F%E3%81%8D%E3%82%A2%E3%83%97%E3%83%AA/id1642181654",
 			/* 6:mimic */               "https://illustmimic.com/",
 			/* 7:Mage */                "https://www.mage.space/",
-			/* 8:Cyber punk Anime Diffusion */ "https://huggingface.co/spaces/DGSpitzer/DGS-Diffusion-Space",
+			/* 8:nijijourney */         "https://nijijourney.com/",
 			/* 9:ERNIE-ViLG */                 "https://huggingface.co/spaces/PaddlePaddle/ERNIE-ViLG",
 			/* 10:りんな＠AI画家(twitter) */     "https://twitter.com/ms_rinna/status/1567844022240313344",
 			/* 11:ばりぐっどくん(LINE) */  "https://page.line.me/877ieiqs",
 			/* 12:Waifu Diffusion */  "https://huggingface.co/spaces/hakurei/waifu-diffusion-demo",
 			/* 13:AnythingV3 */  "https://huggingface.co/Linaqruf/anything-v3.0/tree/main",
-
+	};
+	public static final String[] CATEGORY_TW_HASHTAG = {
+			/* 0:その他 */               "#ai",
+			/* 1:Stable-Diffusion */    "#stablediffusion",
+			/* 2:Midjourney */          "#midjourney",
+			/* 3:NovelAI */             "#NovelAI",
+			/* 4:DALL-E */              "#dalle2",
+			/* 5:AIピカソ */             "#aipicaso",
+			/* 6:mimic */               "#mimic",
+			/* 7:Mage */                "#magespace",
+			/* 8:nijijourney */ "#nijijourney",
+			/* 9:ERNIE-ViLG */                 "#ERNIEViLG",
+			/* 10:りんな＠AI画家(twitter) */     "#ai #rinna",
+			/* 11:ばりぐっどくん(LINE) */        "#ai",
+			/* 12:Waifu Diffusion */           "#waifudiffusion",
+			/* 13:AnythingV3 */                "#anythingv3",
 	};
 
 	public static final int EDITOR_UPLOAD = 0;

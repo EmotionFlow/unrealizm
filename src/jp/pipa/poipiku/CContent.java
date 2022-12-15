@@ -65,6 +65,7 @@ public final class CContent {
 	public String aiPrompt = "";
 	public String aiNegativePrompt = "";
 	public String aiOtherParams = "";
+	public int aiPromptCopyNum = 0;
 	public Timestamp createdAt = null;
 	public Timestamp updatedAt = null;
 
@@ -136,7 +137,8 @@ public final class CContent {
 		int ret = 0;
 		if(isTweetTxt) ret += TWEET_CONCURRENT;
 		if(isTweetImg) ret += TWEET_WITH_THUMBNAIL;
-		if(isTwitterCardThumbnail) ret += TWITTER_CARD_THUMBNAIL;
+//		if(isTwitterCardThumbnail) ret += TWITTER_CARD_THUMBNAIL;
+		ret += TWITTER_CARD_THUMBNAIL;
 		return ret;
 	}
 
@@ -188,6 +190,7 @@ public final class CContent {
 		aiPrompt            = Util.toString(resultSet.getString("ai_prompt"));
 		aiNegativePrompt    = Util.toString(resultSet.getString("ai_negative_prompt"));
 		aiOtherParams       = Util.toString(resultSet.getString("ai_other_params"));
+		aiPromptCopyNum     = resultSet.getInt("ai_prompt_copy_num");
 		createdAt           = resultSet.getTimestamp("created_at");
 		updatedAt           = resultSet.getTimestamp("updated_at");
 	}
@@ -241,8 +244,8 @@ public final class CContent {
 		// 非公開
 		if (m_nOpenId == Common.OPEN_ID_HIDDEN) {
 			if (!isRequestImg && !isOwner) {
-				thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
-				thumbImgSmallUrl = "/img/poipiku_icon_512x512_2.png";
+				thumbImgUrl = "/img/icon-512x512.png";
+				thumbImgSmallUrl = "/img/icon-512x512.png";
 				isHideThumbImg = true;
 				return;
 			}
@@ -305,8 +308,8 @@ public final class CContent {
 				isHideThumbImg = false;
 			} else {
 				// 通常このパスには入らないはず
-				thumbImgUrl = "/img/poipiku_icon_512x512_2.png";
-				thumbImgSmallUrl = "/img/poipiku_icon_512x512_2.png";
+				thumbImgUrl = "/img/icon-512x512.png";
+				thumbImgSmallUrl = "/img/icon-512x512.png";
 				isHideThumbImg = true;
 			}
 		}

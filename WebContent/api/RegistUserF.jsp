@@ -9,13 +9,13 @@ if (request.getHeader("REFERER")==null || !request.getHeader("REFERER").contains
 			session.getAttribute("RegistUserFToken"),
 			request.getParameter("TK")));
 	isPrecheckOK = false;
-} else if (session.getAttribute("RegistUserFToken")==null || !session.getAttribute("RegistUserFToken").equals(request.getParameter("TK"))) {
-	Log.d(String.format("不正なToken: %s, %s, %s, %s",
-			request.getRemoteAddr(),
-			request.getHeader("REFERER"),
-			session.getAttribute("RegistUserFToken"),
-			request.getParameter("TK")));
-	isPrecheckOK = false;
+//} else if (session.getAttribute("RegistUserFToken")==null || !session.getAttribute("RegistUserFToken").equals(request.getParameter("TK"))) {
+//	Log.d(String.format("不正なToken: %s, %s, %s, %s",
+//			request.getRemoteAddr(),
+//			request.getHeader("REFERER"),
+//			session.getAttribute("RegistUserFToken"),
+//			request.getParameter("TK")));
+//	isPrecheckOK = false;
 }
 
 // https://github.com/google/recaptcha/issues/248

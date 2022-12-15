@@ -168,7 +168,7 @@
 
 		<div class="SettingListItem Additional">
 			<div class="SettingBody">
-				(2022/10/26 制定)
+				(2022/11/17 制定)
 			</div>
 		</div>
 	</div>

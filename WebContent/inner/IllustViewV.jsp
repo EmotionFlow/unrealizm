@@ -81,7 +81,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<meta name="twitter:image" content="<%="https://img.unrealizm.com" + strFileUrl%>" />
 		<%}else{%>
 		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:image" content="https://img.unrealizm.com/img/poipiku_icon_512x512_2.png" />
+		<meta name="twitter:image" content="https://img.unrealizm.com/img/icon-512x512.png" />
 		<%}%>
 		<meta name="twitter:site" content="@pipajp" />
 		<meta name="twitter:title" content="<%=CTweet.generateMetaTwitterTitle(cResults.m_cContent, _TEX_TWEET)%>" />
@@ -99,7 +99,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 				 <%if(cResults.m_cContent.isTwitterCardThumbnail()){%>
 				 "image": "<%="https://img.unrealizm.com" + strFileUrl%>"
 				 <%}else{%>
-				 "image": "https://unrealizm.com/img/poipiku_icon_512x512_2.png"
+				 "image": "https://unrealizm.com/img/icon-512x512.png"
 				 <%}%>
 				}
 			]

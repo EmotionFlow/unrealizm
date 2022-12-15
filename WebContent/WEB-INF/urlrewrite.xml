@@ -9,6 +9,20 @@
 		<from>^/([0-9]+)$</from>
 		<to type="redirect">%{context-path}/$1/</to>
 	</rule>
+	<rule>
+		<note>
+			for IllustListPcV.jsp
+		</note>
+		<from>^/([0-9]+)/\?.*$</from>
+		<to type="redirect">%{context-path}/$1/</to>
+	</rule>
+	<rule>
+		<note>
+			for IllusViewPcV.jsp
+		</note>
+		<from>^/([0-9]+)/([0-9]+)\.html\?.*$</from>
+		<to type="redirect">%{context-path}/$1/$2.html</to>
+	</rule>
 
 	<rule>
 		<note>
@@ -17,6 +31,7 @@
 		<from>^/([0-9]+)/$</from>
 		<to>/IllustListPcV.jsp?ID=$1</to>
 	</rule>
+
 
 	<rule>
 		<note>
@@ -74,7 +89,6 @@
 		<to>/IllustViewPcV.jsp?ID=$1&amp;TD=$2</to>
 	</rule>
 
-
 	<rule>
 		<note>
 			for sitemap.xml
@@ -82,7 +96,6 @@
 		<from>^/sitemap.xml$</from>
 		<to>/sitemap.jsp</to>
 	</rule>
-
 
 </urlrewrite>
 

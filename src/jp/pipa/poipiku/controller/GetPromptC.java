@@ -15,11 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetPromptC {
-	int contentId = -1;
+	public int contentId = -1;
 	public void getParam(HttpServletRequest request) {
 		contentId = Util.toInt(request.getParameter("ID"));
 	}
 
+
+	public int ownerUserId = -1;
 	public String prompt = "";
 	public String negativePrompt = "";
 	public String otherParams = "";
@@ -29,12 +31,13 @@ public class GetPromptC {
 
 		try (Connection connection = DatabaseUtil.replicaDataSource.getConnection();
 		     PreparedStatement statement = connection.prepareStatement("""
-                SELECT category_id, ai_prompt, ai_negative_prompt, ai_other_params FROM contents_0000 WHERE content_id = ?
+                SELECT user_id, category_id, ai_prompt, ai_negative_prompt, ai_other_params FROM contents_0000 WHERE content_id = ?
 				""");
 		) {
 			statement.setInt(1, contentId);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
+				ownerUserId = resultSet.getInt("user_id");
 				categoryId = resultSet.getInt("category_id");
 				prompt = Util.toString(resultSet.getString("ai_prompt"));
 				negativePrompt = Util.toString(resultSet.getString("ai_negative_prompt"));

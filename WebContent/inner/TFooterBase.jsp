@@ -82,7 +82,7 @@
 			<%if(checkLogin.m_bLogin){%>
 			<dd><a class="FooterHref" href="/GoToInquiryPcV.jsp?RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry")%></a></dd>
 			<%}else{%>
-			<dd><a class="FooterHref" href="/LoginFormEmailPcV.jsp?INQUIRY=1&RET=<%=retUrl%>"><%=_TEX.T("Footer.Inquiry.NeedSignIn")%></a></dd>
+			<dd><%=_TEX.T("Footer.Inquiry.NeedSignIn")%></dd>
 			<%}%>
 			<dd><a class="FooterHref" href="/LogoUsageGuideLinePcS.jsp"><%=_TEX.T("LogoUsageGuideLine.Title")%></a></dd>
 		</dl>

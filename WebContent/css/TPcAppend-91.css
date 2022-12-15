@@ -169,8 +169,6 @@ body {padding: 51px 0 0 0 !important;}
 .SystemInfo .SystemInfoDesc {flex: 0 0 770px; height: 18px; line-height: 18px;}
 .SystemInfo .SystemInfoClose {flex: 0 0 30px; height: 18px; line-height: 18px;}
 
-
-
 /********** genre **********/
 .SearchGenre {padding: 5px 15px 0px 15px; flex-flow: row wrap;}
 .SearchGenre .SearchEdit {margin: 0 0 10px 0; 	font-size: 12px;}
@@ -182,3 +180,21 @@ body {padding: 51px 0 0 0 !important;}
 .GenreItem {width: 380px;padding: 22px 31px;float: left;}
 
 .SearchWrapper .SearchListPoipassLink {display: flex; justify-content: center;}
+
+.Header .CreateAccountButtons {
+	position: unset;
+	top: 0;
+	left: 0;
+	margin-right: 22px;
+	font-size: 18px;
+}
+.Header .CreateAccountButtons .LoginButton {
+	height: 16px;
+	line-height: 14px;
+}
+.Header .CreateAccountButtons .LoginButton:hover{
+	background: #000000;
+}
+.Header .CreateAccountButtons .LoginButton .typcn {
+	font-size: 22px;
+}

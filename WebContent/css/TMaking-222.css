@@ -2148,6 +2148,15 @@ Decoration
 	justify-content: flex-end;
 }
 
+.IllustItem .IllustItemPromptCopyNum {
+	width: 100%;
+	height: 32px;
+	margin-top: -33px;
+	float: left;
+	display: flex;
+	justify-content: flex-end;
+}
+
 .IllustItemList2Column .IllustItem .IllustItemReactionNum {
 	height: 22px;
 	margin-top: -23px;

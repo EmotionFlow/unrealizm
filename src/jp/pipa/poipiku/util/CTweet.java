@@ -856,37 +856,57 @@ public final class CTweet {
 
 
 	static public String generateState(CContent cContent, ResourceBundleControl _TEX) {
-		String strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
+		String strState;
+		if (cContent.m_nCategoryId == 10 || cContent.m_nCategoryId == 11) {
+			String s = _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId));
+			strState = s.substring(s.indexOf("</i>") + 4);
+		} else {
+			strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
+		}
+
+		String optionLabel = "";
 
 		switch(cContent.m_nPublishId) {
 		case Common.PUBLISH_ID_LOGIN:
-			strState += _TEX.T("UploadFilePc.Option.Publish.Login");
+			optionLabel += _TEX.T("UploadFilePc.Option.Publish.Login");
 			break;
 		case Common.PUBLISH_ID_FOLLOWER:
-			strState += _TEX.T("UploadFilePc.Option.Publish.Follower");
+			optionLabel += _TEX.T("UploadFilePc.Option.Publish.Follower");
 			break;
 		case Common.PUBLISH_ID_T_FOLLOWER:
-			strState += _TEX.T("UploadFilePc.Option.Publish.T_Follower");
+			optionLabel += _TEX.T("UploadFilePc.Option.Publish.T_Follower");
 			break;
 		case Common.PUBLISH_ID_T_FOLLOWEE:
-			strState += _TEX.T("UploadFilePc.Option.Publish.T_Followee");
+			optionLabel += _TEX.T("UploadFilePc.Option.Publish.T_Followee");
 			break;
 		case Common.PUBLISH_ID_T_EACH:
-			strState += _TEX.T("UploadFilePc.Option.Publish.T_Each");
+			optionLabel += _TEX.T("UploadFilePc.Option.Publish.T_Each");
 			break;
 		case Common.PUBLISH_ID_T_LIST:
-			strState += _TEX.T("UploadFilePc.Option.Publish.T_List");
+			optionLabel += _TEX.T("UploadFilePc.Option.Publish.T_List");
 			break;
 		case Common.PUBLISH_ID_T_RT:
-			strState += _TEX.T("UploadFilePc.Option.Publish.T_RT");
+			optionLabel += _TEX.T("UploadFilePc.Option.Publish.T_RT");
 			break;
 		case Common.PUBLISH_ID_ALL:
 		default:
-			if (cContent.m_strPassword != null && !cContent.m_strPassword.isEmpty()) {
-				strState += _TEX.T("UploadFilePc.Option.Publish.Pass.Title");
+		}
+
+		if (optionLabel.isEmpty()) {
+			switch (cContent.m_nSafeFilter){
+				case Common.SAFE_FILTER_R15:
+					optionLabel = _TEX.T("UploadFilePc.Option.Publish.R15");
+					break;
+				case Common.SAFE_FILTER_R18:
+				case Common.SAFE_FILTER_R18G:
+				case Common.SAFE_FILTER_R18_PLUS:
+					optionLabel = _TEX.T("UploadFilePc.Option.Publish.R18");
+					break;
+				default:
+					optionLabel = cContent.passwordEnabled ? _TEX.T("UploadFilePc.Option.Publish.Pass.Title") : "";
 			}
 		}
-		return strState;
+		return strState + optionLabel;
 	}
 
 	static public String generateFileNum(CContent cContent, ResourceBundleControl _TEX) {
@@ -900,7 +920,9 @@ public final class CTweet {
 	}
 
 	static public String generateMetaTwitterTitle(CContent cContent, ResourceBundleControl _TEX) {
-		return generateState(cContent, _TEX) +  generateFileNum(cContent, _TEX) + String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+		return generateState(cContent, _TEX) +
+				generateFileNum(cContent, _TEX) +
+				String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
 	}
 
 	static public String generateMetaTwitterDesc(CContent cContent, ResourceBundleControl _TEX) {
@@ -908,7 +930,8 @@ public final class CTweet {
 	}
 
 	static public String generateWithTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
-		String strFooter = String.format("\nhttps://unrealizm.com/%d/%d.html",
+		String strFooter = String.format(" %s\nhttps://unrealizm.com/%d/%d.html",
+				Common.CATEGORY_TW_HASHTAG[cContent.m_nCategoryId],
 				cContent.m_nUserId,
 				cContent.m_nContentId);
 
@@ -924,7 +947,9 @@ public final class CTweet {
 	static public String generateAfterTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
-			final String strUrl = String.format("https://unrealizm.com/%d/%d.html",
+			final String strUrl = String.format(" %s %s\nhttps://unrealizm.com/%d/%d.html",
+					Common.CATEGORY_TW_HASHTAG[cContent.m_nCategoryId],
+					"#" + _TEX.T("Common.HashTag"),
 					cContent.m_nUserId,
 					cContent.m_nContentId);
 
@@ -938,7 +963,7 @@ public final class CTweet {
 			}
 
 			strTwitterUrl=String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
-					URLEncoder.encode(strDesc + " " + "#" + _TEX.T("Common.HashTag"), "UTF-8"),
+					URLEncoder.encode(strDesc, "UTF-8"),
 					URLEncoder.encode(strUrl, "UTF-8"));
 		} catch (Exception ignored) {
 			;

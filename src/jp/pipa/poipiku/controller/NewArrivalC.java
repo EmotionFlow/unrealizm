@@ -14,7 +14,7 @@ public final class NewArrivalC {
 	public int mode = CCnv.MODE_PC;
 	public int startId = -1;
 	public int viewMode = CCnv.VIEW_LIST;
-	public int categoryId = 0;
+	public int categoryId = -1;
 	public int page = 0;
 	public void getParam(HttpServletRequest request) {
 		try {

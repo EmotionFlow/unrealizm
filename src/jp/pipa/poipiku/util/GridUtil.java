@@ -66,15 +66,16 @@ public class GridUtil {
 		statement.close();statement=null;
 
 		// 参照用に結合してcomments_desc_cache格納
-		sql = "INSERT INTO comments_desc_cache(content_id, description, last_comment_id) VALUES (?, ?, ?) "
+		sql = "INSERT INTO comments_desc_cache(content_id, description, last_comment_id, total_num) VALUES (?, ?, ?, ?) "
 				+ "ON CONFLICT (content_id) DO "
 				+ "UPDATE SET description=?, last_comment_id=?";
 		statement = connection.prepareStatement(sql);
 		statement.setInt(1, contentId);
 		statement.setString(2, sbDescription.toString());
 		statement.setInt(3, lastCommentId);
-		statement.setString(4, sbDescription.toString());
-		statement.setInt(5, lastCommentId);
+		statement.setInt(4, 1);
+		statement.setString(5, sbDescription.toString());
+		statement.setInt(6, lastCommentId);
 		statement.executeUpdate();
 		statement.close();statement=null;
 	}
