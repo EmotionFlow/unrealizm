@@ -53,7 +53,7 @@
 
 <article class="Wrapper ViewPc">
 	<aside class="PcSideBar" style="margin-top: 30px;">
-		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 		<div class="PcSideBarItem">
 			<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 		</div>
@@ -65,7 +65,7 @@
 		<div class="PcSideBarItem">
 		</div>
 
-		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+		<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 		<div class="FixFrame">
 		</div>
 		<%}%>

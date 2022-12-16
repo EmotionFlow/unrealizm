@@ -72,7 +72,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 			</div>
 
 			<aside class="PcSideBar">
-				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
@@ -100,7 +100,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 					</div>
 				</div>
 
-				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 				<div class="FixFrame">
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>

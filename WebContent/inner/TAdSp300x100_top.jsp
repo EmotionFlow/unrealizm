@@ -5,7 +5,7 @@
 <%@page import="jp.pipa.poipiku.settlement.*"%>
 <%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
-<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 <div class="PcSideBarAd">
 	<!-- /4789880/poipiku/poipikumobile_300x100_top -->
 	<%int nRand = (int)(Math.random()*10000);%>

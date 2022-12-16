@@ -165,7 +165,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 		<%}%>
 
 		<article class="Wrapper ViewPc">
-			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
 				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
 			</span>
@@ -178,7 +178,7 @@ g_bShowAd = (cResults.m_cUser.m_nPassportId==Common.PASSPORT_OFF || cResults.m_c
 			</section>
 
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
-			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%;">
 				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>
 			</span>

@@ -42,7 +42,7 @@ for (nCnt = 0; nCnt < cResults.contentList.size(); nCnt++) {
 			_TEX, vResult, CCnv.VIEW_DETAIL, nSpMode,
 			cResults.isOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT));
 
-	if ((nCnt % 3 == 0) && bSmartPhone && g_bShowAd){
+	if ((nCnt % 3 == 0) && bSmartPhone && g_bShowAd && false){
 		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
 	}
 

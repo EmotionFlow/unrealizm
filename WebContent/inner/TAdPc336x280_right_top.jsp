@@ -5,7 +5,7 @@
 <%@page import="jp.pipa.poipiku.settlement.*"%>
 <%@page import="jp.pipa.poipiku.settlement.epsilon.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
-<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 <div class="PcSideBarAd">
 	<%if(g_nSafeFilter==Common.AD_ID_ALL){%>
 	<!-- /4789880/poipiku/poipiku_336x280_top_right -->

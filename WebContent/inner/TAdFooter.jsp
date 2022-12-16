@@ -2,7 +2,7 @@
 <%@page import="jp.pipa.poipiku.*"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
 
-<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 <div class="FooterAd">
 <%if(Util.isSmartPhone(request)) {%>
 	<div class="SideBarMid">

@@ -217,7 +217,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 		<article class="Wrapper ViewPc GridList" style="padding-top: 5px">
 
 			<aside class="PcSideBar" style="margin-top: 30px;">
-				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 				<div class="PcSideBarItem">
 					<%@ include file="/inner/ad/TAdHomePc300x250_top_right.jsp"%>
 				</div>
@@ -253,7 +253,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 						</div>
 					</div>
 
-					<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+					<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 					<div class="PcSideBarItem">
 						<%@ include file="/inner/ad/TAdHomePc300x600_bottom_right.jsp"%>
 					</div>
@@ -267,7 +267,7 @@ ResourceBundleControl _TEX_TWEET = new ResourceBundleControl(SupportedLocales.fi
 						vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW,
 						cResults.m_bOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT)%>
 
-				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd) {%>
+				<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 				<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%;">
 					<%@ include file="/inner/ad/TAdGridPc336x280_mid_1.jsp"%>
 				</span>
