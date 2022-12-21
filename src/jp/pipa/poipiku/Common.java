@@ -172,6 +172,7 @@ public final class Common {
 			1,  // Stable Diffusion
 			7,  // Mage
 			9,  // ERNIE-ViLG
+			5,  // AIピカソ
 			10, // りんな＠AI画家(twitter)
 			11, // お絵描きばりぐっどくん(LINE)
 			2,  // Midjourney
@@ -180,7 +181,6 @@ public final class Common {
 			8,  // nijijourney
 			13, // AnythingV3
 			4,  // DALL-E2
-//			5,  // AIピカソ
 //			6,  // mimic
 			CATEGORY_ID_OTHER, // その他
 	};
@@ -207,7 +207,7 @@ public final class Common {
 			/* 2:Midjourney */          "#midjourney",
 			/* 3:NovelAI */             "#NovelAI",
 			/* 4:DALL-E */              "#dalle2",
-			/* 5:AIピカソ */             "#aipicaso",
+			/* 5:AIピカソ */             "#aipicasso",
 			/* 6:mimic */               "#mimic",
 			/* 7:Mage */                "#magespace",
 			/* 8:nijijourney */ "#nijijourney",
