@@ -42,7 +42,7 @@ for(MyRequestListC.Result r : results.requests) {
 		<span class="RequestAmount">¥<%=String.format("%,d",r.request.amount)%></span>
 		<%}else{%>
 		<span>
-			<img class="Twemoji" draggable="false" width="18" height="18" alt="🆓" src="https://twemoji.maxcdn.com/2/72x72/1f193.png">
+			<img class="Twemoji" draggable="false" width="18" height="18" alt="🆓" src="https://emoji.poipiku.com/72x72/1f193.png">
 		</span>
 		<%}%>
 

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class CEmoji {
 	private static final String PROTOCOL = "https:";
-	private static final String BASE = "//twemoji.maxcdn.com/2/";
+	private static final String BASE = "//emoji.poipiku.com/";
 	private static final String SIZE = "72x72";
 	private static final String EXTENSION = ".png";
 	private static final String CDN_URL = PROTOCOL + BASE + SIZE + "/%s" + EXTENSION;
