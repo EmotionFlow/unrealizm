@@ -7,13 +7,11 @@ int nContentId	= Util.toInt(request.getParameter("TD"));
 
 // login check
 CheckLogin checkLogin = new CheckLogin(request, response);
-
-boolean bMobile = Util.isSmartPhone(request);
 %>
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title>問題の報告</title>
 	</head>
 	<script>
@@ -44,7 +42,6 @@ boolean bMobile = Util.isSmartPhone(request);
 	</script>
 
 	<body>
-		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">

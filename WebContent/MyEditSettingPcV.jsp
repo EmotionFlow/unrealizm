@@ -28,12 +28,9 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
-
-boolean bSmartPhone = Util.isSmartPhone(request);
-boolean isApp = false;
 
 //パラメータの取得
 //検索結果の取得
@@ -83,7 +80,7 @@ String[][] menuOrder = {
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyEditSetting.Title.Setting")%></title>
 
 		<script type="text/javascript">
@@ -174,6 +171,8 @@ String[][] menuOrder = {
 			}
 
 			$(function(){
+				$("#MenuSettings").addClass("Selected");
+
 				<%if(results.m_strMessage.length()>0) {%>
 					DispMsg("<%=Util.toStringHtml(results.m_strMessage)%>");
 				<%}%>
@@ -184,37 +183,20 @@ String[][] menuOrder = {
 					return true;
 				});
 
-				<%if(bSmartPhone){%>
-					$("#MenuMe").addClass("Selected");
-					$("#MenuSearch").hide();
-					$("#MenuSettings").show();
-					<%if(results.m_strSelectedMenuId.isEmpty()){%>
-						$("#MENUROOT").show();
-					<%}else{%>
-						$("#<%=results.m_strSelectedMenuId%>").show();
-					<%}%>
-				<%}else{%>
-					$("#MenuSettings").addClass("Selected");
+				$("#MenuMe").addClass("Selected");
+				$("#MenuSearch").hide();
+				$("#MenuSettings").show();
+				<%if(results.m_strSelectedMenuId.isEmpty()){%>
 					$("#MENUROOT").show();
-					let menuId = "<%=results.m_strSelectedMenuId%>";
-					if(menuId===""){
-						menuId = "PROFILE";
-					}
-					$(".SettingMenu>a[data-to="+menuId+"]").addClass("Selected");
-					$("#"+menuId).show();
+				<%}else{%>
+					$("#<%=results.m_strSelectedMenuId%>").show();
 				<%}%>
 			});
 		</script>
 
 		<style>
-		<%if(bSmartPhone){%>
 		.Wrapper.ItemList .IllustItemList {margin-top: 6px;}
-		<%} else {%>
-		.Wrapper.ItemList .IllustItemList {margin-top: 16px;}
-		<%}%>
-
 		.SettingList .SettingListItem .SettingListTitle {border-bottom: 1px solid #000;}
-
 		.SettingMenuHeader{
 			height: 27px;
 			font-size: 18px;
@@ -224,16 +206,10 @@ String[][] menuOrder = {
 			color: #000;
 			border-bottom: 1px solid #555;
 		}
-
 		.SettingBody {display: block; float: left; background: #fff; color: #000;width: 100%;}
-
 		.SettingListItem {color: #000;}
 		.SettingListItem a {color: #000;}
-
-		.SettingBody .SettingBodyCmdRegist {
-			font-size: 14px;
-		}
-
+		.SettingBody .SettingBodyCmdRegist {font-size: 14px;}
 		.SettingMenuItemLink {
 			background-color: #ffffff;
 			min-height: calc(41.625px);
@@ -243,83 +219,31 @@ String[][] menuOrder = {
 			border-bottom: 1px solid #ccc;
 			color: #000;
 		}
-
-		.SettingMenuItem{
-			width: 100%;
-		}
-
-		.SettingMenuItemTitle {
-			margin-left: 8px;
-		}
-		.SettinMenuTitle .SettingChangePageLink {
-			color: #000000;
-		}
-
-		.SettingMenuItemArrow{
-			display: inline-block;
-			float: right;
-			position: relative;
-			top: 10px;
-			padding: 0 9px;
-		}
-
-		.SettingMenuReturnArrow{
-			color: #3498db;
-		}
-
-		<%if(!bSmartPhone){%>
-		.Wrapper{
-			width: 850px;
-		}
-		#MENUROOT{
-			width: 249px;
-			display: inline-block;
-			float: left;
-			border-left: 1px solid #fff;
-		}
-		#SettingContent{
-			display: inline-block;
-			background: #fff;
-			width: 598px;
-			min-height: 425px;
-			border: 1px solid #ccc;
-			border-top: 0;
-		}
-		.SettingListItem {
-			color: #000;
-		}
-		.SettingListItem a {
-			color: #000;
-		}
-		.SettingMenuItemLink:hover,
-		.SettingMenuItemLink.Selected{
-			color: #000;
-			background-color: #f3f3f3;
-		}
-
-		<%}%>
-
-        .RequestIcon {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin-right: 4px;
-            background: url(/img/menu_pc-12.png) no-repeat;
-            background-size: 1054%;
-            position: relative;
-            background-position: -160px -21px;
-            top: 2px;
+		.SettingMenuItem {width: 100%;}
+		.SettingMenuItemTitle {	margin-left: 8px;}
+		.SettinMenuTitle .SettingChangePageLink {color: #000000;}
+		.SettingMenuItemArrow {display: inline-block; float: right; position: relative; top: 10px; padding: 0 9px;}
+		.SettingMenuReturnArrow {color: #3498db;}
+		.RequestIcon {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				margin-right: 4px;
+				background: url(/img/menu_pc-12.png) no-repeat;
+				background-size: 1054%;
+				position: relative;
+				background-position: -160px -21px;
+				top: 2px;
 		}
 		</style>
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
 			<div id="MENUROOT" class="SettingPage" style="display: none;">
-				<div class="SettingMenu">
+				<div class="SettingList">
 					<%for(String m : menuOrder[0]){%>
 						<%if(MENU.get(m)!=null){%>
 							<%=getSettingMenuItem(m, MENU.get(m))%>
@@ -327,20 +251,14 @@ String[][] menuOrder = {
 					<%}%>
 				</div>
 			</div>
-
-			<%if(!bSmartPhone){%>
-			<div id="SettingContent">
-			<%}%>
-
 			<%
 				String strPageId = "";
 				final String selectedMenuId = results.m_strSelectedMenuId;
 			%>
-
 			<%strPageId = "PROFILE";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingProfileV.jsp"%>
 				</div>
@@ -350,7 +268,7 @@ String[][] menuOrder = {
 			<%strPageId = "MYPAGE";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMyPageV.jsp"%>
 				</div>
@@ -360,7 +278,7 @@ String[][] menuOrder = {
 			<%strPageId = "EMOJI";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingEmojiV.jsp"%>
 				</div>
@@ -370,7 +288,7 @@ String[][] menuOrder = {
 			<%strPageId = "FOLLOW";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingFollowV.jsp"%>
 				</div>
@@ -380,7 +298,7 @@ String[][] menuOrder = {
 			<%strPageId = "FOLLOWTAG";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingFollowTagV.jsp"%>
 				</div>
@@ -390,7 +308,7 @@ String[][] menuOrder = {
 			<%strPageId = "BLOCK";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingBlockV.jsp"%>
 				</div>
@@ -400,7 +318,7 @@ String[][] menuOrder = {
 			<%strPageId = "MUTEKEYWORD";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMuteKeywordV.jsp"%>
 				</div>
@@ -410,7 +328,7 @@ String[][] menuOrder = {
 			<%strPageId = "TWITTER";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingTwitterV.jsp"%>
 				</div>
@@ -420,7 +338,7 @@ String[][] menuOrder = {
 			<%strPageId = "MAIL";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingMailV.jsp"%>
 				</div>
@@ -430,7 +348,7 @@ String[][] menuOrder = {
 			<%strPageId = "POIPASS";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingPassportV.jsp"%>
 				</div>
@@ -440,7 +358,7 @@ String[][] menuOrder = {
 				<%strPageId = "REQUEST";%>
 				<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 				<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-					<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+					<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 					<div class="SettingBody">
 						<%@include file="/inner/setting/MyEditSettingRequestV.jsp"%>
 					</div>
@@ -450,7 +368,7 @@ String[][] menuOrder = {
 			<%strPageId = "PAYMENT";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingPaymentV.jsp"%>
 				</div>
@@ -460,7 +378,7 @@ String[][] menuOrder = {
 			<%strPageId = "CHEER";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingCheerV.jsp"%>
 				</div>
@@ -470,7 +388,7 @@ String[][] menuOrder = {
 			<%strPageId = "ACCOUNT";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingAccountV.jsp"%>
 				</div>
@@ -480,7 +398,7 @@ String[][] menuOrder = {
 			<%strPageId = "INFO";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingInfoV.jsp"%>
 				</div>
@@ -490,15 +408,10 @@ String[][] menuOrder = {
 			<%strPageId = "LANGUAGE";%>
 			<%if(selectedMenuId.isEmpty() || selectedMenuId.equals(strPageId)){%>
 			<div id="<%=strPageId%>" class="SettingPage" style="display: none;">
-				<%=getSettingMenuHeader(MENU.get(strPageId), bSmartPhone)%>
+				<%=getSettingMenuHeader(MENU.get(strPageId), true)%>
 				<div class="SettingBody">
 					<%@include file="/inner/setting/MyEditSettingLanguageV.jsp"%>
 				</div>
-			</div>
-			<%}%>
-
-
-				<%if(!bSmartPhone){%>
 			</div>
 			<%}%>
 		</article><!--Wrapper-->

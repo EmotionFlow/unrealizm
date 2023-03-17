@@ -37,7 +37,7 @@ if(!authUrl.isEmpty()) {
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - Twitter Link</title>
 	</head>
 	<body>

@@ -1,5 +1,6 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jp.pipa.poipiku.util.*"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%if(!g_isApp){%>
 
 <%if(!checkLogin.m_bLogin){%>
 <script>
@@ -29,90 +30,13 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 					<img  class="HeaderImg" src="//img.unrealizm.com/img/logo_tr_48.png" alt="<%=_TEX.T("THeader.Title")%>" />
 				</a>
 			</h1>
-			<%if(Util.isSmartPhone(request)) {
-				if(!checkLogin.m_bLogin) {%>
-				<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitter.jsp">
-					<input id="login_from_twitter_tmenupc_callback_00" type="hidden" name="CBPATH" value=""/>
-					<script>{
-						let s = document.URL.split("/");
-						for(let i=0; i<3; i++){s.shift();}
-						$('#login_from_twitter_tmenupc_callback_00').val("/" + s.join("/"));
-					}</script>
-					<div class="CreateAccountButtons">
-						<i class="fas fa-sign-in-alt"></i>
-						<a class="BtnBase LoginButton" href="javascript:login_from_twitter_tmenupc_00.submit()">
-							<span class="typcn typcn-social-twitter"></span>
-						</a>
-						or
-						<a class="BtnBase LoginButton" href="/LoginFormEmailPcV.jsp">
-							<span class="typcn typcn-mail"></span>
-						</a>
-					</div>
-				</form>
-				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" style="right: 38px;" href="javascript:void(0);" onclick="showSearch()"></a>
-				<div class="HeaderSelectLang" onclick="showSelectLangDlg(false);">
-					<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
-				</div>
-			<%} else {%>
-				<a id="MenuSearch" class="HeaderTitleSearch fas fa-search" href="javascript:void(0);" onclick="showSearch()"></a>
-<%--				<a id="MenuMyRequests" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">--%>
-<%--					<span class="MenuMyRequestsIcon"></span>--%>
-<%--					<span class="MenuMyRequestsName"><%=_TEX.T("Request.MyRequests")%></span>--%>
-<%--				</a>--%>
-<%--				<a id="MenuSwitchUser" style="display: none; <%=Util.isSmartPhone(request)?"position: absolute;":""%>" href="javascript: void(0);" onclick="toggleSwitchUserList();">--%>
-<%--					<span class="MenuSwitchUserIcon"></span>--%>
-<%--					<span class="MenuSwitchUserName"><%=_TEX.T("SwitchAccount")%></span>--%>
-<%--				</a>--%>
-				<div style="display: flex; margin-right: 8px">
-					<a id="HeaderMenuUpload" style="display: none;margin-right: 7px" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
-						<span class="MenuUploadIcon material-symbols-sharp">file_upload</span>
-						<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
-					</a>
-					<a id="MenuSettings" style="display: none;" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
-						<span class="MenuSettingsIcon material-symbols-sharp">settings</span>
-						<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
-					</a>
-				</div>
-				<%}%>
-			<%}%>
-		</div>
-		<%if(!Util.isSmartPhone(request)) {%>
-		<nav class="FooterMenu">
-			<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon material-symbols-sharp">home</span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
-			</a>
-			<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon material-symbols-sharp">schedule</span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
-			</a>
-			<a id="MenuAct" class="FooterMenuItem" href="/ActivityListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon material-symbols-sharp">mode_comment</span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
-				<div id="InfoNumAct" class="InfoNum">0</div>
-			</a>
-			<a id="MenuMe" style="<%=Util.isSmartPhone(request)?"":"margin-right: 20px;"%>" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon material-symbols-sharp">account_circle</span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
-			</a>
-<%--			<a id="MenuRequest" class="FooterMenuItem" href="/MySketchbookPcV.jsp">--%>
-<%--				<span class="FooterMenuItemIcon"></span>--%>
-<%--				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Request")%></span>--%>
-<%--			</a>--%>
-<%--			<a id="MenuMyRequests" class="FooterMenuItem" href="/MyRequestListPcV.jsp?MENUID=MENUROOT">--%>
-<%--				<span class="FooterMenuItemIcon"></span>--%>
-<%--				<span class="FooterMenuItemName"><%=_TEX.T("Request.MyRequests")%></span>--%>
-<%--			</a>--%>
-		</nav>
-		<nav class="FooterMenu" style="float: right;">
 			<%if(!checkLogin.m_bLogin) {%>
-
 			<form method="post" name="login_from_twitter_tmenupc_00" action="/LoginFormTwitter.jsp">
-				<input id="login_from_twitter_tmenupc_callback_01" type="hidden" name="CBPATH" value=""/>
+				<input id="login_from_twitter_tmenupc_callback_00" type="hidden" name="CBPATH" value=""/>
 				<script>{
 					let s = document.URL.split("/");
 					for(let i=0; i<3; i++){s.shift();}
-					$('#login_from_twitter_tmenupc_callback_01').val("/" + s.join("/"));
+					$('#login_from_twitter_tmenupc_callback_00').val("/" + s.join("/"));
 				}</script>
 				<div class="CreateAccountButtons">
 					<i class="fas fa-sign-in-alt"></i>
@@ -120,163 +44,92 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 						<span class="typcn typcn-social-twitter"></span>
 					</a>
 					or
-					<a class="BtnBase LoginButton" href="/LoginFormEmailPcV.jsp">
+					<a class="BtnBase LoginButton" href="/LoginFormEmailV.jsp">
 						<span class="typcn typcn-mail"></span>
 					</a>
 				</div>
 			</form>
-
-
+			<a id="MenuSearch" class="HeaderTitleSearch material-symbols-sharp" style="right: 38px;" href="javascript:void(0);" onclick="showSearch()">search</a>
+			<div class="HeaderSelectLang" onclick="showSelectLangDlg(false);">
+				<i class="fas fa-globe" style="font-size: 19px; padding: 5px;"></i>
+			</div>
 			<%} else {%>
-<%--			<a id="MenuSwitchUser" class="FooterMenuItem" style="display: none;" href="javascript: void(0);" onclick="toggleSwitchUserList();">--%>
-<%--				<span class="FooterMenuItemIcon MenuSwitchUserIcon" style="width: 27px;height: 27px;"></span>--%>
-<%--				<span class="FooterMenuItemName"><%=_TEX.T("SwitchAccount")%></span>--%>
-<%--			</a>--%>
-			<a id="HeaderMenuUpload" class="FooterMenuItem" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
-				<span class="FooterMenuItemIcon material-symbols-sharp">file_upload</span>
-				<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Upload")%></span>
-			</a>
-			<a id="MenuSettings" class="FooterMenuItem" href="<%=(checkLogin.m_bLogin) ? "/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId : "/" %>">
-				<span class="FooterMenuItemIcon material-symbols-sharp">settings</span>
-				<span class="FooterMenuItemName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
-			</a>
+			<div style="display: flex; margin-right: 8px">
+				<a id="MenuSearch" class="HeaderTitleSearch material-symbols-sharp" href="javascript:void(0);" onclick="showSearch()">search</a>
+				<a id="HeaderMenuUpload" style="display: none;margin-right: 7px" href="/UploadFilePcV2.jsp?ID=<%=checkLogin.m_nUserId%>">
+					<span class="MenuUploadIcon material-symbols-sharp">file_upload</span>
+					<span class="MenuUploadName"><%=_TEX.T("THeader.Menu.Upload")%></span>
+				</a>
+				<a id="MenuSettings" style="display: none;" href="<%="/MyEditSettingPcV.jsp?ID="+checkLogin.m_nUserId%>" >
+					<span class="MenuSettingsIcon material-symbols-sharp">settings</span>
+					<span class="MenuSettingsName"><%=_TEX.T("MyEditSetting.Title.Setting")%></span>
+				</a>
+			</div>
 			<%}%>
-			<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get" style="float: right;">
+		</div>
+		<%
+		String searchType = "Contents";
+		final String requestPath = request.getRequestURL().toString();
+		if (requestPath.contains("/SearchUserByKeyword")) {
+			searchType = "Users";
+		} else if (requestPath.contains("/SearchTagByKeyword")) {
+			searchType = "Tags";
+		}
+		final int cacheMin = Common.SEARCH_LOG_CACHE_MINUTES;
+		final int suggestMax = Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId];
+		final boolean passportOn = checkLogin.m_nPassportId == Common.PASSPORT_ON;
+		%>
+		<div id="OverlaySearchWrapper" class="SearchWrapper overlay">
+			<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
+				<div id="OverlaySearchCloseBtn" class="OverlaySearchCloseBtn" onclick="$('#HeaderTitleWrapper').show();$('#OverlaySearchWrapper').hide();">
+					<i class="fas fa-arrow-left"></i>
+				</div>
 				<div class="HeaderSearch">
 					<div class="HeaderSearchInputWrapper">
 						<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" maxlength="20"
-							   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>"
-							   autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"
-						/>
+								placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>"
+								autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"/>
 						<div id="HeaderSearchClear" class="HeaderSearchClear">
 							<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
 						</div>
 					</div>
-					<div id="HeaderSearchBtn" class="HeaderSearchBtn"
-						 <%if(!checkLogin.m_bLogin){%> onclick="DispMsg('<%=_TEX.T("Common.NeedLogin")%>')"<%}%>
-					>
-						<i class="fas fa-search"></i>
-					</div>
 				</div>
 			</form>
-		</nav>
-		<%}%>
-		<%
-			String searchType = "Contents";
-			final String requestPath = request.getRequestURL().toString();
-			if (requestPath.contains("/SearchUserByKeyword")) {
-				searchType = "Users";
-			} else if (requestPath.contains("/SearchTagByKeyword")) {
-				searchType = "Tags";
-			}
-			final int cacheMin = Common.SEARCH_LOG_CACHE_MINUTES;
-			final int suggestMax = Common.SEARCH_LOG_SUGGEST_MAX[checkLogin.m_nPassportId];
-			final boolean passportOn = checkLogin.m_nPassportId == Common.PASSPORT_ON;
-		%>
-		<%if(Util.isSmartPhone(request)) {%>
-			<div id="OverlaySearchWrapper" class="SearchWrapper overlay">
-				<form id="HeaderSearchWrapper" class="HeaderSearchWrapper" method="get">
-					<div id="OverlaySearchCloseBtn" class="OverlaySearchCloseBtn" onclick="$('#HeaderTitleWrapper').show();$('#OverlaySearchWrapper').hide();">
-						<i class="fas fa-arrow-left"></i>
-					</div>
-					<div class="HeaderSearch">
-						<div class="HeaderSearchInputWrapper">
-							<input name="KWD" id="HeaderSearchBox" class="HeaderSearchBox" type="text" maxlength="20"
-								   placeholder="<%=_TEX.T("THeader.Search.PlaceHolder")%>" value="<%=Util.toStringHtml(g_strSearchWord)%>"
-								   autocomplete="off" enterkeyhint="search" oninput="onSearchInput()"/>
-							<div id="HeaderSearchClear" class="HeaderSearchClear">
-								<i class="fas fa-times-circle" onclick="clearHeaderSearchInput()"></i>
-							</div>
-						</div>
-					</div>
-				</form>
-				<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
-				<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
-				<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>
-					<div class="SearchListPoipassLink">
-<%--						<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS">--%>
-<%--							<img style="margin: 0 10px 0 0; height: 25px;" src="/img/poipiku_passport_logo3_60.png"/>--%>
-<%--							<span><%=_TEX.T("SearchLog.IntroPoipass")%></span>--%>
-<%--						</a>--%>
-					</div>
-				<%}%>
-			</div>
-			<script>
-				function showSearch() {
-					$('#HeaderTitleWrapper').hide();
-					$('#OverlaySearchWrapper').show();
-					$('#HeaderSearchBox').focus();
-
-					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>, <%=passportOn%>);
-					<%}else{%>
-					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=cacheMin%>);
-					<%}%>
-				}
+			<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
+			<ul id="RecentSearchList" class="RecentSearchList" ontouchstart></ul>
+		</div>
+		<script>
+			function showSearch() {
+				$('#HeaderTitleWrapper').hide();
+				$('#OverlaySearchWrapper').show();
+				$('#HeaderSearchBox').focus();
 
 				<%if(checkLogin.m_bLogin){%>
-				$(document).on('click', '.RecentSearchKW', ev => {
-					$('#HeaderTitleWrapper').show();
-					$('#OverlaySearchWrapper').hide();
-					$('ul#RecentSearchList').empty();
-					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).text())();
-				});
-				$(document).on('click', '.RecentSearchDelBtn', ev => {
-					<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>
-						DispMsg("<%=_TEX.T("SearchLog.Delete.IntroPoipass")%>", 1500);
-					<%}else{%>
-						deleteSearchHistory('<%=searchType%>', $(ev.target).closest('.RecentSearchRow').find('.RecentSearchKW').text())
-						.then(() => {
-							showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>, <%=passportOn%>);
-						});
-					<%}%>
-				});
+				showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>, <%=passportOn%>);
+				<%}else{%>
+				showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=cacheMin%>);
 				<%}%>
+			}
 
-			</script>
-		<%} else {%>
-			<div id="PulldownSearchWrapper" class="SearchWrapper pulldown">
-				<div class="RecentSearchHeader"><%=_TEX.T("SearchLog.Header")%></div>
-				<ul id="RecentSearchList" class="RecentSearchList"></ul>
+			<%if(checkLogin.m_bLogin) {%>
+			$(document).on('click', '.RecentSearchKW', ev => {
+				$('#HeaderTitleWrapper').show();
+				$('#OverlaySearchWrapper').hide();
+				$('ul#RecentSearchList').empty();
+				SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).text())();
+			});
+			$(document).on('click', '.RecentSearchDelBtn', ev => {
 				<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>
-					<div class="SearchListPoipassLink">
-<%--						<a href="/MyEditSettingPcV.jsp?MENUID=POIPASS">--%>
-<%--							<img style="margin: 0 4px 0 0; height: 25px;" src="/img/poipiku_passport_logo3_60.png"/>--%>
-<%--							<span><%=_TEX.T("SearchLog.IntroPoipass")%></span>--%>
-<%--						</a>--%>
-					</div>
+					DispMsg("<%=_TEX.T("SearchLog.Delete.IntroPoipass")%>", 1500);
+				<%}else{%>
+					deleteSearchHistory('<%=searchType%>', $(ev.target).closest('.RecentSearchRow').find('.RecentSearchKW').text())
+					.then(() => {
+						showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>, <%=passportOn%>);
+					});
 				<%}%>
-			</div>
-			<script>
-				function showSearch() {
-					$('#PulldownSearchWrapper').slideDown();
-					<%if(checkLogin.m_bLogin){%>
-					showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>, <%=passportOn%>);
-					<%}else{%>
-					showSearchHistory(null, '<%=_TEX.T("SearchLog.NoLogin")%>', <%=cacheMin%>);
-					<%}%>
-				}
-				$('#HeaderSearchBox').on('focus', showSearch);
-				$(document).on('click', '.RecentSearchKW', ev => {
-					$('#PulldownSearchWrapper').hide();
-					$('ul#RecentSearchList').empty();
-					SearchByKeyword('<%=searchType%>', <%=checkLogin.m_nUserId%>, <%=suggestMax%>, $(ev.currentTarget).text())();
-				});
-				$(document).on('click', '.RecentSearchDelBtn', ev => {
-					<%if(checkLogin.m_bLogin && checkLogin.m_nPassportId == Common.PASSPORT_OFF){%>
-						DispMsg("<%=_TEX.T("SearchLog.Delete.IntroPoipass")%>", 1500);
-					<%}else{%>
-						deleteSearchHistory('<%=searchType%>', $(ev.target).closest('.RecentSearchRow').find('.RecentSearchKW').text())
-						.then(() => {
-							showSearchHistory('<%=searchType%>', '<%=_TEX.T("SearchLog.NotFound")%>', <%=cacheMin%>, <%=checkLogin.m_nUserId%>, <%=suggestMax%>, <%=passportOn%>);
-						});
-					<%}%>
-				});
-				$(document).on('click touchend', function(ev) {
-					if (!$(ev.target).closest('#PulldownSearchWrapper, .HeaderSearch').length) $('#PulldownSearchWrapper').hide();
-				});
-			</script>
-		<%}%>
+			});
+			<%}%>
+		</script>
 	</div>
 </header>
 
@@ -308,14 +161,13 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 	toggleClearSearchBtn();
 </script>
 
-<%if(Util.isSmartPhone(request)) {%>
 <div class="FooterMenuWrapper">
 	<nav class="FooterMenu">
 		<a id="MenuHome" class="FooterMenuItem" href="/MyHomePcV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon material-symbols-sharp">home</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Home")%></span>
 		</a>
-		<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+		<a id="MenuNew" class="FooterMenuItem" href="/NewArrivalV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon material-symbols-sharp">schedule</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Search")%></span>
 		</a>
@@ -328,13 +180,12 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Act")%></span>
 			<div id="InfoNumAct" class="InfoNum">0</div>
 		</a>
-		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListPcV.jsp?ID=<%=checkLogin.m_nUserId%>">
+		<a id="MenuMe" class="FooterMenuItem" href="/MyIllustListV.jsp?ID=<%=checkLogin.m_nUserId%>">
 			<span class="FooterMenuItemIcon material-symbols-sharp">account_circle</span>
 			<span class="FooterMenuItemName"><%=_TEX.T("THeader.Menu.Me")%></span>
 		</a>
 	</nav>
 </div>
-<%}%>
 <%if(checkLogin.m_bLogin) {%>
 <script>
 	function UpdateNotify() {
@@ -380,21 +231,6 @@ function dispTwLoginUnsuccessfulInfo(callbackPath){
 		})
 	})
 </script>
-<%if(false){%>
-<div id="AnalogicoInfo" class="AnalogicoInfo Float">
-	<h2 class="AnalogicoInfoTitle">
-		<%=_TEX.T("THeader.Title")%>
-	</h2>
-	<h2 class="AnalogicoInfoSubTitle">
-		<%=_TEX.T("THeader.Title.Desc")%>
-	</h2>
-	<a class="AnalogicoMoreInfo" href="/">
-		<%=_TEX.T("Unrealizm.Info.MoreInfo")%>
-	</a>
-	<div class="LinkApp" style="display: none;">
-		<a href="https://itunes.apple.com/jp/app/%E3%83%9D%E3%82%A4%E3%83%94%E3%82%AF/id1436433822?mt=8" target="_blank" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; "></a>
-		<a href="https://play.google.com/store/apps/details?id=jp.pipa.poipiku" target="_blank" style="display:inline-block;overflow:hidden; background:url('https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png') no-repeat 50% 50%;width:135px;height:40px; margin: 0 10px; background-size: 158px;"></a>
-	</div>
-</div>
 <%}%>
-<%} // if(!checkLogin.m_bLogin)%>
+
+<%}	//if(!g_isApp)%>

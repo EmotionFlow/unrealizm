@@ -9,11 +9,9 @@
 	String toUrl = "";
 	if (rtn) {
 		if (results.infoType == InfoList.InfoType.Emoji.getCode()
-		 || results.infoType == InfoList.InfoType.EmojiReply.getCode()
+		|| results.infoType == InfoList.InfoType.EmojiReply.getCode()
 		) {
 			toUrl = String.format("/%d/%d.html", results.contentUserId, results.contentId);
-		} else if (results.infoType == InfoList.InfoType.Request.getCode()) {
-			toUrl = String.format("/MyRequestListPcV.jsp?MENUID=%s&ST=%d", results.requestListMenuId, results.requestListSt);
 		} else if (results.infoType == InfoList.InfoType.Gift.getCode()) {
 			toUrl = "";
 		} else if (results.infoType == InfoList.InfoType.RequestStarted.getCode()) {
@@ -23,7 +21,7 @@
 				|| results.infoType == InfoList.InfoType.WaveEmojiMessage.getCode()
 				|| results.infoType == InfoList.InfoType.WaveEmojiMessageReply.getCode()
 		) {
-			toUrl = String.format("MyIllustListPcV.jsp?ID=%d", checkLogin.m_nUserId);
+			toUrl = String.format("MyIllustListV.jsp?ID=%d", checkLogin.m_nUserId);
 		}
 	}
 %>

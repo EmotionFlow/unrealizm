@@ -3,7 +3,6 @@ package jp.pipa.poipiku.controller;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.CommentTemplate;
 import jp.pipa.poipiku.Emoji;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;

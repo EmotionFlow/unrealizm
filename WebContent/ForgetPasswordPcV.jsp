@@ -14,7 +14,7 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("LoginFormV.Button.ForgotPassword")%> | <%=_TEX.T("THeader.Title")%></title>
 		<script>
 			function toHalfWidth(value) {
@@ -101,7 +101,7 @@ session.setAttribute("SendPasswordFToken", strSendPasswordFToken);
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
-		<div id="DispMsg"></div>
+
 		<article class="Wrapper">
 			<div id="InquiryPage" class="SettingList">
 				<div class="SettingListItem">

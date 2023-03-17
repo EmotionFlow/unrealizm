@@ -84,8 +84,8 @@ public class SpotUpdateTbloauth extends Batch {
 					);
 					records.add(r);
 				}
-				resultSet.close();
-				statement.close();
+				resultSet.close();resultSet=null;
+				statement.close();statement=null;
 
 				for (TblOauthRecord r : records) {
 					String twIdFrmAccessToken = r.twitterAccessToken.split("-")[0];
@@ -96,6 +96,7 @@ public class SpotUpdateTbloauth extends Batch {
 
 						Log.d(String.format("update twitter_user_id %d, now: %s, now: %s, new: %s", r.id, r.twitterUserId, r.twitterAccessToken, twIdFrmAccessToken));
 						statement.executeUpdate();
+						statement.close();statement=null;
 						r.twitterUserId = twIdFrmAccessToken;
 						CTweet.updateTwitterCash(uid);
 					}
@@ -115,12 +116,14 @@ public class SpotUpdateTbloauth extends Batch {
 							statement.setInt(2, head.id);
 							Log.d(String.format("update tweet_id %d, %d, %s", r.userId, r.id, r.tweetId));
 							statement.executeUpdate();
+							statement.close();statement=null;
 						}
 
 						statement = connection.prepareStatement("DELETE FROM tbloauth WHERE id=?");
 						statement.setInt(1, r.id);
 						Log.d(String.format("del %d", r.id));
 						statement.executeUpdate();
+						statement.close();statement=null;
 					}
 				}
 				Thread.sleep(100);

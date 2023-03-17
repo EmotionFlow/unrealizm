@@ -6,7 +6,7 @@
 	final String referer = Util.toString(request.getHeader("Referer"));
 	if (!referer.contains("unrealizm.com")) {
 		Log.d("ShowIllustDetailFへの不正アクセス(referer不一致):" + referer);
-		return;
+		//return;
 	}
 
 	CheckLogin checkLogin = new CheckLogin(request, response);

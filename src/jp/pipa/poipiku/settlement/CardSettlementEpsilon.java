@@ -1,6 +1,5 @@
 package jp.pipa.poipiku.settlement;
 
-import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.CreditCard;
 import jp.pipa.poipiku.util.DatabaseUtil;
@@ -291,7 +290,6 @@ public class CardSettlementEpsilon extends CardSettlement {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		String sql = "";
-		boolean result = false;
 
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
@@ -331,9 +329,9 @@ public class CardSettlementEpsilon extends CardSettlement {
 					return true;
 				} else {
 					String errLog = """
-                            実売上処理でエラーが発生 requestId=%d
-                            Code: %s
-                            Detail: %s
+							実売上処理でエラーが発生 requestId=%d
+							Code: %s
+							Detail: %s
 							""".formatted(requestId, resultInfo.getErrCode(), resultInfo.getErrDetail());
 					Log.d(errLog);
 					notifyErrorToSlack(errLog);
@@ -342,7 +340,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 				}
 			} else {
 				String errLog = """
-                            resultInfoがnull  requestId=%d
+							resultInfoがnull  requestId=%d
 							""".formatted(requestId);
 				Log.d(errLog);
 				notifyErrorToSlack(errLog);
@@ -371,7 +369,7 @@ public class CardSettlementEpsilon extends CardSettlement {
 		String epsilonUserId = null;
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
-		
+
 			sql = "SELECT orders.id, agent_user_id" +
 					" FROM orders" +
 					"   INNER JOIN passport_subscriptions ps ON orders.id = ps.order_id" +
@@ -438,8 +436,8 @@ public class CardSettlementEpsilon extends CardSettlement {
 			}
 		} else {
 			Log.d(String.format("金額変更処理でresultInfoが想定外の値 requestId=%d", requestId));
-			Log.d("Code: " + resultInfo.getErrCode());
-			Log.d("Detail: " + resultInfo.getErrDetail());
+			//Log.d("Code: " + resultInfo.getErrCode());
+			//Log.d("Detail: " + resultInfo.getErrDetail());
 			errorKind = ErrorKind.Unknown;
 			return false;
 		}
@@ -452,7 +450,6 @@ public class CardSettlementEpsilon extends CardSettlement {
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
 		String strSql = "";
-		boolean result = false;
 
 		try {
 			cConn = DatabaseUtil.dataSource.getConnection();

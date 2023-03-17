@@ -2,16 +2,9 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
-boolean isApp = false;
-
-if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/MyHomeTagGridPcV.jsp").forward(request,response);
-	return;
-}
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -23,7 +16,7 @@ results.getResults(checkLogin);
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
@@ -118,12 +111,9 @@ results.getResults(checkLogin);
 		</script>
 
 		<style>
-			body {padding-top: 51px !important;}
-			<%if(!Util.isSmartPhone(request)) {%>
 			.Wrapper.ViewPc {flex-flow: row-reverse wrap;}
 			.Wrapper.ViewPc .PcSideBar .FixFrame {position: sticky; top: 113px;}
 			.Wrapper.ViewPc .PcSideBar .PcSideBarItem:last-child {position: static;}
-			<%}%>
 		</style>
 	</head>
 
@@ -138,11 +128,7 @@ results.getResults(checkLogin);
 			</ul>
 		</nav>
 
-		<div class="ThumbListHeader" style="display: none">
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
-		</div>
-
-		<article class="Wrapper ViewPc" style="padding-top: 29px;">
+		<article class="Wrapper ViewPc" style="padding-top: 28px;">
 			<div class="ThumbListHeader" style="display: none">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 			</div>
@@ -152,14 +138,11 @@ results.getResults(checkLogin);
 			</div>
 
 			<section id="IllustItemList" class="IllustItemList">
-				<%if(results.contentList.size()<=0) {%>
-				<div id="InfoMsg" style="display: none; margin-top:30px; text-align: center;">
+				<%if(results.m_nContentsNum <= 0) {%>
+				<div id="InfoMsg" style="display: none; margin-top:30px; text-align: center; width: 100%;">
 					<h3><%=_TEX.T("FollowingTag.Info01")%></h3>
 					<div style="text-decoration: underline; margin-top: 15px;">
-						<a class="FooterLink" href="https://unrealizm.com/SearchTagByKeywordPcV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
-					</div>
-					<div style="text-decoration: underline; margin-top: 15px;">
-						<a class="FooterLink" href="https://unrealizm.com/PopularTagListPcV.jsp"><%=_TEX.T("FollowingTag.Link02")%></a>
+						<a class="FooterLink" href="https://unrealizm.com/SearchTagByKeywordV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
 					</div>
 				</div>
 				<%}%>

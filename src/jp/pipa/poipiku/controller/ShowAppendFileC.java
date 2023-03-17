@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.CTweet;
 import jp.pipa.poipiku.util.DatabaseUtil;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import static jp.pipa.poipiku.util.ContentAccessVerificationUtil.*;
@@ -64,9 +63,9 @@ public final class ShowAppendFileC {
 	public int verify(CheckLogin checkLogin) {
 		content = null;
 		try (Connection connection = DatabaseUtil.dataSource.getConnection();
-		     PreparedStatement statement = connection.prepareStatement(
-				     "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?"
-		     )
+			 PreparedStatement statement = connection.prepareStatement(
+					 "SELECT * FROM contents_0000 WHERE user_id=? AND content_id=?"
+			 )
 		) {
 			statement.setInt(1, contentUserId);
 			statement.setInt(2, contentId);
@@ -111,9 +110,9 @@ public final class ShowAppendFileC {
 
 		int nRtn = 0;
 		try (Connection connection = DatabaseUtil.dataSource.getConnection();
-		     PreparedStatement statement = connection.prepareStatement(
-				     "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000"
-		     )
+			 PreparedStatement statement = connection.prepareStatement(
+					 "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000"
+			 )
 		) {
 			statement.setInt(1, contentId);
 			ResultSet resultSet = statement.executeQuery();

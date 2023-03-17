@@ -21,10 +21,10 @@
 		}
 	}
 %>
-<div class="TagThumb<%=bSmartPhone?"":"Pc"%>">
+<div class="TagThumb">
 	<div class="TagThumbImg" style="background-image:url('<%=backgroundImageUrl%>')"></div>
-	<a class="TagThumbImgMask" href="/SearchIllustByTag<%=isApp?"App":"Pc"%>V.jsp?KWD=<%=strKeyWord%>"></a>
-	<a class="TagInfoTagName" href="/SearchIllustByTag<%=isApp?"App":"Pc"%>V.jsp?KWD=<%=strKeyWord%>">
+	<a class="TagThumbImgMask" href="/SearchIllustByTagV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, StandardCharsets.UTF_8)%>"></a>
+	<a class="TagInfoTagName" href="/SearchIllustByTagV.jsp?KWD=<%=URLEncoder.encode(strKeyWord, StandardCharsets.UTF_8)%>">
 		#<%=Util.toStringHtml(strKeyWord)%>
 		<%if(transTxt != null &&  !transTxt.isEmpty()){%>
 		<br/><span class="TagInfoTagTransName"><%=Util.toStringHtml(transTxt)%></span>
@@ -32,9 +32,3 @@
 	</a>
 	<div class="TagThumbBookmarkButton" onclick="UpdateFollowTagFromTagList(<%=checkLogin.m_nUserId%>, '<%=strKeyWord%>', this)"><i class="<%=isFollowTag?"fas":"far"%> fa-star"></i></div>
 </div>
-
-<%if(bSmartPhone){%>
-<%if(nCnt==8 || nCnt==17 || nCnt==26 || nCnt==35) {%>
-<%@ include file="/inner/TAd336x280_mid.jsp"%>
-<%}%>
-<%}%>

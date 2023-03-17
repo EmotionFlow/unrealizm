@@ -224,14 +224,14 @@ public class IllustListGridC {
 			statement.setInt(idx++, SELECT_MAX_GALLERY);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				CContent cContent = new CContent(resultSet);
-				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
-				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
-				cContent.m_cUser.m_nReaction	= user.reaction;
-				if(cContent.m_cUser.m_strFileName.isEmpty()) cContent.m_cUser.m_strFileName="/img/default_user.jpg";
-				cContent.m_cUser.m_nFollowing = (m_bOwner)?CUser.FOLLOW_HIDE:(m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
-				contentList.add(cContent);
+				CContent content = new CContent(resultSet);
+				CacheUsers0000.User user = users.getUser(content.m_nUserId);
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				content.m_cUser.m_nReaction	= user.reaction;
+				if(content.m_cUser.m_strFileName.isEmpty()) content.m_cUser.m_strFileName="/img/default_user.jpg";
+				content.m_cUser.m_nFollowing = (m_bOwner)?CUser.FOLLOW_HIDE:(m_bFollow)?CUser.FOLLOW_FOLLOWING:CUser.FOLLOW_NONE;
+				contentList.add(content);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

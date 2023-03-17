@@ -7,9 +7,7 @@ import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,24 +63,24 @@ public class MyRequestListC {
 			connection = DatabaseUtil.dataSource.getConnection();
 			sql = """
 				WITH a AS (
-				    SELECT r.*,
-				           c.file_name            content_file_name,
-				           LEFT(c.text_body, 150) text_summary
-				    FROM requests r
-				             LEFT JOIN contents_0000 c ON (r.content_id = c.content_id)
-				    WHERE r.%s = ?
-				      AND r.status = ?
-				      %s
-				    ORDER BY updated_at DESC OFFSET ? LIMIT ?
+					SELECT r.*,
+						   c.file_name            content_file_name,
+						   LEFT(c.text_body, 150) text_summary
+					FROM requests r
+							 LEFT JOIN contents_0000 c ON (r.content_id = c.content_id)
+					WHERE r.%s = ?
+					  AND r.status = ?
+					  %s
+					ORDER BY updated_at DESC OFFSET ? LIMIT ?
 				), u AS (
-				    SELECT user_id, nickname, file_name
-				    FROM users_0000 WHERE user_id IN (SELECT %s FROM a)
+					SELECT user_id, nickname, file_name
+					FROM users_0000 WHERE user_id IN (SELECT %s FROM a)
 				)
 				SELECT a.*,
-				       u.nickname,
-				       u.file_name            profile_file_name
+					   u.nickname,
+					   u.file_name            profile_file_name
 				FROM a INNER JOIN u ON a.%s = u.user_id
-			
+
 				""".formatted(
 					category.equals("SENT") ? "client_user_id" : "creator_user_id",
 					(statusCode == Request.Status.Canceled.getCode() || statusCode == Request.Status.SettlementError.getCode()) ?

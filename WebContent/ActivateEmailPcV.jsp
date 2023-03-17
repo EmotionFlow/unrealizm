@@ -13,13 +13,14 @@ if (nRtn > 0) {
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivateEmailV.Title")%></title>
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
+
 		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 50px;">
 				<div class="SettingListItem" style="color: #000">

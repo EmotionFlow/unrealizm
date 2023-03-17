@@ -28,9 +28,9 @@ class BannerListC {
 				cState.setInt(1, SELECT_MAX_GALLERY);
 				cResSet = cState.executeQuery();
 				while (cResSet.next()) {
-					CContent cContent = new CContent(cResSet);
-					m_nEndId = cContent.m_nContentId;
-					contentList.addElement(cContent);
+					CContent content = new CContent(cResSet);
+					m_nEndId = content.m_nContentId;
+					contentList.addElement(content);
 				}
 				cResSet.close();cResSet=null;
 				cState.close();cState=null;
@@ -67,9 +67,9 @@ boolean bRtn = results.GetResults();
 <!DOCTYPE html>
 <html style="height: <%=nImgWidth%>px;">
 	<body style="margin:0; padding:0; width: <%=nBodyWidth%>px;">
-		<%for(CContent cContent : results.contentList) {%>
-		<a style="display: block; float: left;" href="https://unrealizm.com/<%=cContent.m_nUserId%>/<%=cContent.m_nContentId%>.html" target="_blank">
-			<img style="display: block; float: left; width: <%=nImgWidth%>px; height: <%=nImgWidth%>px;" src="<%=Common.GetUrl(cContent.m_strFileName)%>_360.jpg">
+		<%for(CContent content : results.contentList) {%>
+		<a style="display: block; float: left;" href="https://unrealizm.com/<%=content.m_nUserId%>/<%=content.m_nContentId%>.html" target="_blank">
+			<img style="display: block; float: left; width: <%=nImgWidth%>px; height: <%=nImgWidth%>px;" src="<%=Common.GetUrl(content.m_strFileName)%>_360.jpg">
 		</a>
 		<%}%>
 	</body>

@@ -1,13 +1,9 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.CreditCard;
 import jp.pipa.poipiku.settlement.Agent;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-import java.sql.*;
 
 public final class CheckCreditCardC {
 	private int verify(int nUserId) {

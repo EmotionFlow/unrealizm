@@ -1,7 +1,6 @@
 package jp.pipa.poipiku.settlement.epsilon;
 
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +12,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -28,14 +24,14 @@ import org.w3c.dom.NodeList;
 
 // EPSILON決済API呼び出しクラス
 public class EpsilonSettlementAuthorize extends EpsilonSettlement{
-	private String tokenSettlementUrl;
-	private String linkSettlementUrl;
+//	private String tokenSettlementUrl;
+//	private String linkSettlementUrl;
 	// dev
-	private static final String DEV_TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
-	private static final String DEV_LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+//	private static final String DEV_TOKEN_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+//	private static final String DEV_LINK_SETTLEMENT_URL = "https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi";
 	// production
-	private static final String PROD_TOKEN_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
-	private static final String PROD_LINK_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi";
+//	private static final String PROD_TOKEN_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi";
+//	private static final String PROD_LINK_SETTLEMENT_URL = "https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi";
 
 	private SettlementSendInfo settlementSendInfo;
 	public SettlementSendInfo getSettlementSendInfo() {
@@ -49,11 +45,11 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 	private void initUrl() {
 		if (connectTo == ConnectTo.Dev) {
 			Log.d("開発用CGIへ接続");
-			tokenSettlementUrl = DEV_TOKEN_SETTLEMENT_URL;
-			linkSettlementUrl = DEV_LINK_SETTLEMENT_URL;
+//			tokenSettlementUrl = DEV_TOKEN_SETTLEMENT_URL;
+//			linkSettlementUrl = DEV_LINK_SETTLEMENT_URL;
 		} else {
-			tokenSettlementUrl = PROD_TOKEN_SETTLEMENT_URL;
-			linkSettlementUrl = PROD_LINK_SETTLEMENT_URL;
+//			tokenSettlementUrl = PROD_TOKEN_SETTLEMENT_URL;
+//			linkSettlementUrl = PROD_LINK_SETTLEMENT_URL;
 		}
 	}
 
@@ -72,19 +68,19 @@ public class EpsilonSettlementAuthorize extends EpsilonSettlement{
 	public SettlementResultInfo execSettlement(){
 		// 決済情報送信
 		// 送信用の設定を作成
-		RequestConfig rc = RequestConfig.custom().setConnectTimeout(60000)
-				.setSocketTimeout(60000)
-				.setMaxRedirects(0)
-				.build();
+//		RequestConfig rc = RequestConfig.custom().setConnectTimeout(60000)
+//				.setSocketTimeout(60000)
+//				.setMaxRedirects(0)
+//				.build();
 		// Header定義
 		List<Header> header = new ArrayList<Header>();
 		header.add( new BasicHeader("Accept-Charset","UTF-8" ))	;
 		header.add( new BasicHeader("User-Agent","EPSILON SAMPLE PROGRAM JAVA" ));
 
-		HttpClient client = HttpClientBuilder.create()
-				.setDefaultRequestConfig(rc)
-				.setDefaultHeaders(header)
-				.build();
+//		HttpClient client = HttpClientBuilder.create()
+//				.setDefaultRequestConfig(rc)
+//				.setDefaultHeaders(header)
+//				.build();
 
 		List<NameValuePair> param = this.makeSendParam();
 		Log.d("key => value");

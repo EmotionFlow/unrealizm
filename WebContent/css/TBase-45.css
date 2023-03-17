@@ -4,15 +4,15 @@
 	font-family: "WebSymbolsLigaRegular";
 	src: url('/font/websymbolsligaregular.eot');
 	src: url('/font/websymbolsligaregular.eot?#iefix') format('embedded-opentype'),
-		 url('/font/websymbolsligaregular.woff') format('woff'),
-	     url('/font/websymbolsligaregular.ttf') format('truetype'),
-		 url('/font/websymbolsligaregular.svg#WebSymbolsRegular') format('svg');
+		url('/font/websymbolsligaregular.woff') format('woff'),
+			url('/font/websymbolsligaregular.ttf') format('truetype'),
+		url('/font/websymbolsligaregular.svg#WebSymbolsRegular') format('svg');
 }
 
 @font-face {
 	font-family: 'GenEiKoburiMin6-R';
 	src: url(/font/GenEiKoburiMin6-R.woff2) format('woff2'),
-	     url(/font/GenEiKoburiMin6-R.woff) format('woff');
+			url(/font/GenEiKoburiMin6-R.woff) format('woff');
 }
 
 @font-face {
@@ -95,11 +95,6 @@
 		U+E0077, U+E007F;
 }
 
-[contenteditable] {
-	-webkit-user-select: text;
-	user-select: text;
-}
-
 body {
 	font-family: "Helvetica Neue",
 		Arial,
@@ -112,17 +107,6 @@ body {
 	padding: 0;
 	color: #000;
 	background: #fff;
-	/* background: #ff9900; Halloween color */
-	-webkit-text-size-adjust: none;
-	user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	-webkit-touch-callout: none;
-}
-
-html {
-
 }
 
 h1 {
@@ -161,7 +145,7 @@ input[type="text"], input[type="email"], input[type="password"], input[type="dat
 	box-shadow: none;
 	border-radius: 0;
 	vertical-align: top;
-	background-color: #fffffff;
+	background-color: #fff;
 	border: 1px solid #cccccc;
 	transition: border linear 0.2s, box-shadow linear 0.2s;
 	color: #000;
@@ -418,59 +402,4 @@ button.Selected {
 	border-radius: 34px;
 	font-size: 16px;
 	line-height: 32px;
-}
-
-.PoiPass {
-	position: relative;
-}
-
-.PoiPass:after {
-	content: '';
-	display: block;
-	position: absolute;
-	width: 44px;
-	height: 20px;
-	background: transparent 50% 50% no-repeat url('/img/poipiku_passport_logo_short3_60.png');
-	background-size: contain;
-	top: -8px;
-	left: -8px;
-	z-index: 999;
-}
-
-.PoiPassInline {
-	position: relative;
-	height: 20px;
-	line-height: 20px;
-	padding: 0 0 0 49px;
-	/*background: transparent 0 0 no-repeat url('/img/poipiku_passport_logo_short3_60.png');*/
-	background-size: 47px 20px;
-}
-
-.PoiPassInline {
-	height: 20px;
-	line-height: 20px;
-	padding: 0 0 0 50px;
-	background-size: 49px 15px;
-}
-
-.SearchEditCmd.PoiPassInline > .AnyoneOK {
-	background: #ff8000;
-	color: white;
-	padding: 2px 4px;
-	margin-right: 3px;
-	border-radius: 7px;
-}
-
-.TabMenuWrapper {display: block; width: 100%; background-color: #ffffff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 900; top: 51px;}
-.TabMenu {display: flex; flex-flow: row nowrap; height:27px; margin: 0 auto; background: #fff; overflow-x: scroll; padding: 0; list-style: none;}
-.TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
-.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #000; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
-.TabMenu .TabMenuItem.Selected {border-color: #000;}
-
-.material-symbols-outlined, .material-symbols-sharp {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
 }

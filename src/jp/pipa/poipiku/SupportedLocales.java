@@ -1,7 +1,5 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.util.Log;
-
 import java.util.*;
 
 public final class SupportedLocales {

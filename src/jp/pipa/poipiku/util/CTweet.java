@@ -747,14 +747,14 @@ public final class CTweet {
 		}
 	}
 
-	public int LookupListMember(CContent cContent){
+	public int LookupListMember(CContent content){
 		if (!m_bIsTweetEnable) return ERR_TWEET_DISABLE;
-		if (cContent.m_strListId.isEmpty()) {
-			Log.d("cContent.m_strListId.isEmpty()");
+		if (content.m_strListId.isEmpty()) {
+			Log.d("content.m_strListId.isEmpty()");
 			return ERR_OTHER;
 		}
 
-		List<TwitterApiErrorLog> errorLogs = TwitterApiErrorLog.selectListErrors(m_nUserId, Long.parseLong(cContent.m_strListId), 60);
+		List<TwitterApiErrorLog> errorLogs = TwitterApiErrorLog.selectListErrors(m_nUserId, Long.parseLong(content.m_strListId), 60);
 		if (errorLogs.size() > 0) {
 			TwitterApiErrorLog log = errorLogs.get(0);
 			return GetErrorCode(log.errorCode, log.statusCode);
@@ -775,7 +775,7 @@ public final class CTweet {
 			//strSql = "SELECT * FROM twitter_lists WHERE list_id=? AND user_id=? AND last_update_date<CURRENT_TIMESTAMP-interval'15 minutes' LIMIT 1";
 			strSql = "SELECT user_id FROM twitter_lists WHERE list_id=? AND user_id=? LIMIT 1";
 			cState = cConn.prepareStatement(strSql);
-			cState.setLong(1, Long.parseLong(cContent.m_strListId));
+			cState.setLong(1, Long.parseLong(content.m_strListId));
 			cState.setInt(2, m_nUserId);
 			cResSet = cState.executeQuery();
 			bFind = cResSet.next();
@@ -786,7 +786,7 @@ public final class CTweet {
 				return OK;
 			}
 
-			lnListId = Long.parseLong(cContent.m_strListId);
+			lnListId = Long.parseLong(content.m_strListId);
 			// DBに存在しなければTwitterに問い合わせ
 			ConfigurationBuilder cb = new ConfigurationBuilder();
 			cb.setDebugEnabled(true)
@@ -855,18 +855,18 @@ public final class CTweet {
 	}
 
 
-	static public String generateState(CContent cContent, ResourceBundleControl _TEX) {
+	static public String generateState(CContent content, ResourceBundleControl _TEX) {
 		String strState;
-		if (cContent.m_nCategoryId == 10 || cContent.m_nCategoryId == 11) {
-			String s = _TEX.T(String.format("Category.C%d", cContent.m_nCategoryId));
+		if (content.m_nCategoryId == 10 || content.m_nCategoryId == 11) {
+			String s = _TEX.T(String.format("Category.C%d", content.m_nCategoryId));
 			strState = s.substring(s.indexOf("</i>") + 4);
 		} else {
-			strState = "["+_TEX.T(String.format("Category.C%d", cContent.m_nCategoryId))+"] ";
+			strState = "["+_TEX.T(String.format("Category.C%d", content.m_nCategoryId))+"] ";
 		}
 
 		String optionLabel = "";
 
-		switch(cContent.m_nPublishId) {
+		switch(content.m_nPublishId) {
 		case Common.PUBLISH_ID_LOGIN:
 			optionLabel += _TEX.T("UploadFilePc.Option.Publish.Login");
 			break;
@@ -893,7 +893,7 @@ public final class CTweet {
 		}
 
 		if (optionLabel.isEmpty()) {
-			switch (cContent.m_nSafeFilter){
+			switch (content.m_nSafeFilter){
 				case Common.SAFE_FILTER_R15:
 					optionLabel = _TEX.T("UploadFilePc.Option.Publish.R15");
 					break;
@@ -903,40 +903,40 @@ public final class CTweet {
 					optionLabel = _TEX.T("UploadFilePc.Option.Publish.R18");
 					break;
 				default:
-					optionLabel = cContent.passwordEnabled ? _TEX.T("UploadFilePc.Option.Publish.Pass.Title") : "";
+					optionLabel = content.passwordEnabled ? _TEX.T("UploadFilePc.Option.Publish.Pass.Title") : "";
 			}
 		}
 		return strState + optionLabel;
 	}
 
-	static public String generateFileNum(CContent cContent, ResourceBundleControl _TEX) {
+	static public String generateFileNum(CContent content, ResourceBundleControl _TEX) {
 		String strFileNum = "";
-		if(cContent.m_nEditorId==Common.EDITOR_TEXT ) {
-			strFileNum = String.format("(%d"+_TEX.T("Common.Unit.Text")+")", cContent.m_strTextBody.length());
+		if(content.m_nEditorId==Common.EDITOR_TEXT ) {
+			strFileNum = String.format("(%d"+_TEX.T("Common.Unit.Text")+")", content.m_strTextBody.length());
 		} else {
-			strFileNum = String.format("("+_TEX.T("UploadFileTweet.FileNum")+")", cContent.m_nFileNum);
+			strFileNum = String.format("("+_TEX.T("UploadFileTweet.FileNum")+")", content.m_nFileNum);
 		}
 		return strFileNum;
 	}
 
-	static public String generateMetaTwitterTitle(CContent cContent, ResourceBundleControl _TEX) {
-		return generateState(cContent, _TEX) +
-				generateFileNum(cContent, _TEX) +
-				String.format(_TEX.T("Tweet.Title"), cContent.m_cUser.m_strNickName);
+	static public String generateMetaTwitterTitle(CContent content, ResourceBundleControl _TEX) {
+		return generateState(content, _TEX) +
+				generateFileNum(content, _TEX) +
+				String.format(_TEX.T("Tweet.Title"), content.m_cUser.m_strNickName);
 	}
 
-	static public String generateMetaTwitterDesc(CContent cContent, ResourceBundleControl _TEX) {
+	static public String generateMetaTwitterDesc(CContent content, ResourceBundleControl _TEX) {
 		return "";
 	}
 
-	static public String generateWithTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
+	static public String generateWithTweetMsg(CContent content, ResourceBundleControl _TEX) {
 		String strFooter = String.format(" %s\nhttps://unrealizm.com/%d/%d.html",
-				Common.CATEGORY_TW_HASHTAG[cContent.m_nCategoryId],
-				cContent.m_nUserId,
-				cContent.m_nContentId);
+				Common.CATEGORY_TW_HASHTAG[content.m_nCategoryId],
+				content.m_nUserId,
+				content.m_nContentId);
 
 		int nMessageLength = CTweet.MAX_LENGTH - strFooter.length();
-		String strDesc = cContent.m_strDescription;
+		String strDesc = content.m_strDescription;
 		if (nMessageLength < strDesc.length()) {
 			strDesc = strDesc.substring(0, nMessageLength-CTweet.ELLIPSE.length()) + CTweet.ELLIPSE;
 		}
@@ -944,20 +944,20 @@ public final class CTweet {
 		return strDesc + strFooter;
 	}
 
-	static public String generateAfterTweetMsg(CContent cContent, ResourceBundleControl _TEX) {
+	static public String generateAfterTweetMsg(CContent content, ResourceBundleControl _TEX) {
 		String strTwitterUrl="";
 		try {
 			final String strUrl = String.format(" %s %s\nhttps://unrealizm.com/%d/%d.html",
-					Common.CATEGORY_TW_HASHTAG[cContent.m_nCategoryId],
+					Common.CATEGORY_TW_HASHTAG[content.m_nCategoryId],
 					"#" + _TEX.T("Common.HashTag"),
-					cContent.m_nUserId,
-					cContent.m_nContentId);
+					content.m_nUserId,
+					content.m_nContentId);
 
 			final String strFooter = "\n" + strUrl;
 
 			int nMessageLength = CTweet.MAX_LENGTH - strFooter.length();
 
-			String strDesc = cContent.m_strDescription;
+			String strDesc = content.m_strDescription;
 			if (nMessageLength < strDesc.length()) {
 				strDesc = strDesc.substring(0, nMessageLength-CTweet.ELLIPSE.length()) + CTweet.ELLIPSE;
 			}

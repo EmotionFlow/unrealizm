@@ -2,7 +2,6 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
 
 GetContentsByUserC results = new GetContentsByUserC();
 results.selectMaxGallery = 10;
@@ -30,37 +29,37 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 
 StringBuilder sbHtml = new StringBuilder();
 g_bShowAd = (results.owner.passportId==Common.PASSPORT_OFF || results.owner.adMode==CUser.AD_MODE_SHOW);
-int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
+int nSpMode = g_isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 int nCnt;
 boolean relatedAppended = false;
 boolean recommendedAppended = false;
 for (nCnt = 0; nCnt < results.contentList.size(); nCnt++) {
-	CContent cContent = results.contentList.get(nCnt);
+	CContent content = results.contentList.get(nCnt);
 	sbHtml.append(CCnv.Content2Html(
-			cContent, checkLogin, results.mode,
+			content, checkLogin, results.mode,
 			_TEX, vResult, CCnv.VIEW_DETAIL, nSpMode,
 			results.isOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT));
-
-	if ((nCnt % 3 == 0) && bSmartPhone && g_bShowAd && false){
-		sbHtml.append(Util.poipiku_336x280_sp_mid(checkLogin, g_nSafeFilter));
-	}
 
 	if (nCnt == 0) {
 		if (!results.relatedContentList.isEmpty()) {
 			sbHtml.append("<h2 class=\"IllustItemListRelatedTitle\">").append(_TEX.T("IllustV.Related")).append("</h2>");
+			sbHtml.append("<section class=\"IllustItemList2Column\">");
 			for (CContent c: results.relatedContentList) {
-				sbHtml.append(CCnv.toThumbHtml(c, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX));
+				sbHtml.append(CCnv.Content2Html2Column(c, checkLogin, _TEX));
 			}
+			sbHtml.append("</section>");
 		}
 		relatedAppended = true;
 
 	} else if (nCnt == 8) {
 		if (!results.recommendedContentList.isEmpty()) {
 			sbHtml.append("<h2 class=\"IllustItemListRelatedTitle\">").append(_TEX.T("IllustV.Recommended")).append("</h2>");
+			sbHtml.append("<section class=\"IllustItemList2Column\">");
 			for (CContent c : results.recommendedContentList) {
-				sbHtml.append(CCnv.toThumbHtml(c, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX));
+				sbHtml.append(CCnv.Content2Html2Column(c, checkLogin, _TEX));
 			}
+			sbHtml.append("</section>");
 		}
 		recommendedAppended = true;
 	}
@@ -70,17 +69,21 @@ for (nCnt = 0; nCnt < results.contentList.size(); nCnt++) {
 if (needRelated && !relatedAppended) {
 	if (!results.relatedContentList.isEmpty()) {
 		sbHtml.append("<h2 class=\"IllustItemListRelatedTitle\">").append(_TEX.T("IllustV.Related")).append("</h2>");
+		sbHtml.append("<section class=\"IllustItemList2Column\">");
 		for (CContent c : results.relatedContentList) {
-			sbHtml.append(CCnv.toThumbHtml(c, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX));
+			sbHtml.append(CCnv.Content2Html2Column(c, checkLogin, _TEX));
 		}
+		sbHtml.append("</section>");
 	}
 }
 if (needRecommended && !recommendedAppended) {
 	if (!results.recommendedContentList.isEmpty()) {
 		sbHtml.append("<h2 class=\"IllustItemListRelatedTitle\">").append(_TEX.T("IllustV.Recommended")).append("</h2>");
+		sbHtml.append("<section class=\"IllustItemList2Column\">");
 		for (CContent c: results.recommendedContentList) {
-			sbHtml.append(CCnv.toThumbHtml(c, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX));
+			sbHtml.append(CCnv.Content2Html2Column(c, checkLogin, _TEX));
 		}
+		sbHtml.append("</section>");
 	}
 }
 

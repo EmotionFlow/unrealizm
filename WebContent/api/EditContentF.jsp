@@ -28,10 +28,10 @@ if (checkLogin.m_nUserId!=results.m_nUserId || !results.getResults(checkLogin)) 
 }
 
 // V2 -> V1 convert
-if (results.m_cContent.m_nOpenId == Common.OPEN_ID_HIDDEN && !results.m_cContent.m_bLimitedTimePublish) {
-	results.m_cContent.m_nPublishId = Common.PUBLISH_ID_HIDDEN;
-} else if (results.m_cContent.m_nPublishId == Common.PUBLISH_ID_ALL && results.m_cContent.isPasswordEnabled()) {
-	results.m_cContent.m_nPublishId = Common.PUBLISH_ID_PASS;
+if (results.content.m_nOpenId == Common.OPEN_ID_HIDDEN && !results.content.m_bLimitedTimePublish) {
+	results.content.m_nPublishId = Common.PUBLISH_ID_HIDDEN;
+} else if (results.content.m_nPublishId == Common.PUBLISH_ID_ALL && results.content.isPasswordEnabled()) {
+	results.content.m_nPublishId = Common.PUBLISH_ID_PASS;
 }
 
 //JSON元データを格納する連想配列
@@ -46,22 +46,22 @@ try {
 	if (nResult == 0) {
 		content.put("user_id", results.m_cUser.m_nUserId);
 		content.put("content_id", results.m_nContentId);
-		content.put("category_id", results.m_cContent.m_nCategoryId);
-		content.put("publish_id", results.m_cContent.m_nPublishId);
-		content.put("description", results.m_cContent.m_strDescription);
-		content.put("tag_list", results.m_cContent.m_strTagList);
-		content.put("password", results.m_cContent.m_strPassword);
-		content.put("upload_date", results.m_cContent.m_timeUploadDate);
-		content.put("file_name", results.m_cContent.m_strFileName);
-		content.put("file_num", results.m_cContent.m_nFileNum);
+		content.put("category_id", results.content.m_nCategoryId);
+		content.put("publish_id", results.content.m_nPublishId);
+		content.put("description", results.content.m_strDescription);
+		content.put("tag_list", results.content.m_strTagList);
+		content.put("password", results.content.m_strPassword);
+		content.put("upload_date", results.content.m_timeUploadDate);
+		content.put("file_name", results.content.m_strFileName);
+		content.put("file_num", results.content.m_nFileNum);
 
 		//画像の情報(配列)
 		List<Map<String, Object>> filelist = new ArrayList<Map<String, Object>>();
-		for(CContentAppend cContent : results.m_cContent.m_vContentAppend) {
+		for(CContentAppend content : results.content.m_vContentAppend) {
 			Map<String, Object> file = new HashMap<String, Object>();
-			file.put("append_id", cContent.m_nAppendId);
-			file.put("file_name", cContent.m_strFileName);
-			file.put("upload_date", cContent.m_timeUploadDate);
+			file.put("append_id", content.m_nAppendId);
+			file.put("file_name", content.m_strFileName);
+			file.put("upload_date", content.m_timeUploadDate);
 			filelist.add(file);
 		}
 		content.put("file_list", filelist);

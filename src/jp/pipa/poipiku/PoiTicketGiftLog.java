@@ -5,7 +5,6 @@ import jp.pipa.poipiku.util.Log;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -25,7 +24,6 @@ public final class PoiTicketGiftLog extends Model {
 
 		Connection connection = null;
 		PreparedStatement statement = null;
-		ResultSet resultSet = null;
 		String sql = "";
 
 		try {

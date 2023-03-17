@@ -38,7 +38,7 @@ function _getRequestIntroductionHtml(){
 </ol>
 </div>
 
-<%if(isApp){%>
+<%if(g_isApp){%>
 <div class="RequestIntroDlgInfo" style="text-align: center;margin-top: 20px; padding: 2px;border: solid 2px;border-radius: 4px;">
 <%=_TEX.T("TRequestIntroduction.Setup01")%>
 </div>
@@ -49,7 +49,7 @@ function _getRequestIntroductionHtml(){
 <%}%>
 
 <div class="RequestIntroDlgInfo" style="margin-top: 22px; text-align: center;">
-<a style="text-decoration: none;" href="/GuideLineRequest<%=isApp?"App":"Pc"%>V.jsp"><%=_TEX.T("TRequestIntroduction.Setup03")%></a>
+<a style="text-decoration: none;" href="/GuideLineRequestV.jsp"><%=_TEX.T("TRequestIntroduction.Setup03")%></a>
 </div>
 
 </div>

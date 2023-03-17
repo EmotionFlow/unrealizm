@@ -78,10 +78,10 @@ public class AutoTweet extends Batch {
 				cState.setInt(1, cTweetUser.m_nUserId);
 				cResSet = cState.executeQuery();
 				while(cResSet.next()) {
-					CContent cContent = new CContent(cResSet);
-					String strFileUrl = cContent.getThumbnailFilePath();
+					CContent content = new CContent(cResSet);
+					String strFileUrl = content.getThumbnailFilePath();
 					if(!strFileUrl.isEmpty()) {
-						if(_DEBUG) Log.d("m_nPublishId:"+cContent.m_nPublishId, "m strFileName:"+strFileUrl);
+						if(_DEBUG) Log.d("m_nPublishId:"+content.m_nPublishId, "m strFileName:"+strFileUrl);
 						cTweetUser.m_vFileName.add(SRC_IMG_PATH + strFileUrl);
 					}
 				}

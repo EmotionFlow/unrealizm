@@ -10,14 +10,16 @@
 <meta http-equiv="Cache-Control" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="robots" content="noindex" />
+<meta http-equiv="Content-Language" content="ja">
+<meta name="robots" content="index,follow" />
 <meta name="pinterest" content="nopin" />
-<meta name="viewport" content="width=360, user-scalable=no" />
-<%/*
+<link rel="icon" href="/favicon.ico" />
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
-*/%>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link href="/css/TBase-45.css" type="text/css" rel="stylesheet" />
 <link href="/css/TMaking-222.css" type="text/css" rel="stylesheet" />
+<%if(!g_isApp){%><link href="/css/TBasePc-84.css" type="text/css" rel="stylesheet" /><%}%>
 <link href="/font/typicons.min.css" type="text/css" rel="stylesheet" />
 <link href="/webfonts/all.min.css" type="text/css" rel="stylesheet" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +27,9 @@
 <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP" rel="stylesheet" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="57x57" href="/img/apple-touch-icon.png" />
 <script type="text/javascript" src="/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="/js/jquery.creditCardValidator.js"></script>
 <script type="text/javascript" src="/js/dayjs-1.8.27.min.js"></script>
@@ -36,64 +41,4 @@
 <%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9388519601000159" crossorigin="anonymous"></script>
 <%}%>
-<style>
-body {user-select:none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select:none; -webkit-touch-callout: none;}
-</style>
-<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
-<script>window.gnshbrequest = window.gnshbrequest || {cmd:[]};</script>
-	<%if(g_nSafeFilter==Common.AD_ID_ALL) {	// 一般%>
-		<%if(checkLogin.m_nLangId==1) {	// 国内%>
-<script>
-	gnshbrequest.cmd.push(function(){
-		gnshbrequest.registerPassback("1508593");
-		gnshbrequest.registerPassback("1508597");
-		gnshbrequest.registerPassback("1508598");
-		gnshbrequest.registerPassback("1508599");
-		gnshbrequest.registerPassback("1508600");
-		gnshbrequest.registerPassback("1508596");
-		gnshbrequest.registerPassback("1508595");
-		gnshbrequest.registerPassback("1508496");
-		gnshbrequest.registerPassback("1508565");
-		gnshbrequest.registerPassback("1508569");
-		gnshbrequest.registerPassback("1508573");
-		gnshbrequest.registerPassback("1508577");
-		gnshbrequest.registerPassback("1508581");
-		gnshbrequest.registerPassback("1508582");
-		gnshbrequest.registerPassback("1508583");
-		gnshbrequest.registerPassback("1508584");
-		gnshbrequest.registerPassback("1508585");
-		gnshbrequest.registerPassback("1508591");
-		gnshbrequest.registerPassback("1508592");
-		gnshbrequest.registerPassback("1508594");
-		gnshbrequest.registerPassback("1508662");
-		gnshbrequest.registerPassback("1508690");
-		gnshbrequest.registerPassback("1508857");
-		gnshbrequest.registerPassback("1508858");
-	});
-</script>
-<script async src="https://cpt.geniee.jp/hb/v1/213456/426/wrapper.min.js"></script>
-		<%} else {	// 海外%>
-<script>
-	gnshbrequest.cmd.push(function(){
-		gnshbrequest.registerPassback("1508562");
-		gnshbrequest.registerPassback("1508566");
-		gnshbrequest.registerPassback("1508570");
-		gnshbrequest.registerPassback("1508574");
-		gnshbrequest.registerPassback("1508578");
-		gnshbrequest.registerPassback("1508601");
-		gnshbrequest.registerPassback("1508603");
-		gnshbrequest.registerPassback("1508604");
-		gnshbrequest.registerPassback("1508605");
-		gnshbrequest.registerPassback("1508606");
-		gnshbrequest.registerPassback("1508663");
-		gnshbrequest.registerPassback("1508691");
-	});
-</script>
-<script async src="https://cpt.geniee.jp/hb/v1/213495/433/wrapper.min.js"></script>
-		<%}%>
-	<%} else {	// R18%>
-		<%if(checkLogin.m_nLangId==1) {	// 国内%>
-		<%} else {	// 海外%>
-		<%}%>
-	<%}%>
-<%}%>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">

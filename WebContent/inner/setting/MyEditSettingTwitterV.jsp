@@ -127,7 +127,7 @@
 			<%}%>
 			<div class="SettingBodyCmd">
 				<div class="RegistMessage" ></div>
-				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="location.href='/TokenFormTwitterPc.jsp'"><%=_TEX.T("EditSettingV.Twitter.Button")%></a>
+				<a class="BtnBase SettingBodyCmdRegist" href="javascript:void(0)" onclick="location.href='/TokenFormTwitter.jsp'"><%=_TEX.T("EditSettingV.Twitter.Button")%></a>
 			</div>
 		</div>
 	</div>

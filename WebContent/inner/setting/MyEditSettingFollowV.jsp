@@ -46,10 +46,7 @@ cFollowListResults.getResults(checkLogin);
 	<div id="FollowList" class="IllustThumbList">
 		<%for(int nCnt = 0; nCnt< cFollowListResults.userList.size(); nCnt++) {
 			CUser cUser = cFollowListResults.userList.get(nCnt);%>
-		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
-		<%if(bSmartPhone && (nCnt+1)%8==0) {%>
-		<%@ include file="/inner/TAd336x280_mid.jsp"%>
-		<%}%>
+		<%=CCnv.toHtmlUser(cUser)%>
 		<%}%>
 	</div>
 

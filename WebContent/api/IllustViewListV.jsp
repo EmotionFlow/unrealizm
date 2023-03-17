@@ -51,35 +51,35 @@ try {
 
 		//画像の情報(配列)
 		List<Map<String, Object>> imglist = new ArrayList<Map<String, Object>>();
-		cListResults.contentList.set(0, cViewResults.m_cContent);
+		cListResults.contentList.set(0, cViewResults.content);
 
-		for(CContent cContent : cListResults.contentList) {
+		for(CContent content : cListResults.contentList) {
 			//カテゴリ名設定
 			String strCategory = "";
 			for(int nCategoryId : Common.CATEGORY_ID) {
-				if (nCategoryId==cContent.m_nCategoryId) {
+				if (nCategoryId==content.m_nCategoryId) {
 					strCategory = _TEX.T(String.format("Category.C%d", nCategoryId));
 					break;
 				}
 			}
 			List<String> strEmojiList = new ArrayList<String>();
-			for (int i = 0; i < cContent.m_strCommentsListsCache.length(); i = cContent.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
-				strEmojiList.add((String.valueOf(Character.toChars(cContent.m_strCommentsListsCache.codePointAt(i)))));
+			for (int i = 0; i < content.m_strCommentsListsCache.length(); i = content.m_strCommentsListsCache.offsetByCodePoints(i, 1)) {
+				strEmojiList.add((String.valueOf(Character.toChars(content.m_strCommentsListsCache.codePointAt(i)))));
 			}
 			/*
-			for (CComment emoji: cContent.m_vComment) {
+			for (CComment emoji: content.m_vComment) {
 				strEmojiList.add(emoji.m_strDescription);
 			}
 			*/
 
 			Map<String, Object> img = new HashMap<String, Object>();
-			img.put("content_id", cContent.m_nContentId);
-			img.put("url", Common.GetUrl(cContent.m_strFileName));
-			img.put("tag_list", cContent.m_strTagList);
-			img.put("description", cContent.m_strDescription);
+			img.put("content_id", content.m_nContentId);
+			img.put("url", Common.GetUrl(content.m_strFileName));
+			img.put("tag_list", content.m_strTagList);
+			img.put("description", content.m_strDescription);
 			img.put("category", strCategory);
-			img.put("content_twitter_link", CTweet.generateAfterTweetMsg(cContent, _TEX));
-			img.put("file_num", cContent.m_nFileNum);
+			img.put("content_twitter_link", CTweet.generateAfterTweetMsg(content, _TEX));
+			img.put("file_num", content.m_nFileNum);
 			img.put("emoji_list", strEmojiList.toArray());
 			imglist.add(img);
 		}

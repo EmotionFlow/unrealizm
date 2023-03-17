@@ -27,7 +27,7 @@ if (Util.isBot(request)) return;
 final String referer = Util.toString(request.getHeader("Referer"));
 if (!referer.contains("unrealizm.com")) {
 	Log.d("ShowIllustDetailFへの不正アクセス(referer不一致):" + referer);
-	return;
+	//return;
 }
 
 CheckLogin checkLogin = new CheckLogin(request, response);
@@ -42,7 +42,6 @@ if (nRtn < ShowAppendFileC.OK) {
 } else {
 	results.content.setThumb(); // isHideThumbImgをセットするために必要
 
-	final String illustDetailUrl = (results.m_nSpMode==CCnv.SP_MODE_APP)?"/IllustDetailV.jsp":"/IllustDetailPcV.jsp";
 	if (!results.isRequestClient && results.content.m_nOpenId==Common.OPEN_ID_HIDDEN
 			|| !results.content.isHideThumbImg
 			|| results.content.publishAllNum == 1) {

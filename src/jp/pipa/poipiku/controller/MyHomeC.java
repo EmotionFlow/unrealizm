@@ -134,15 +134,15 @@ public class MyHomeC {
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				CContent cContent = new CContent(resultSet);
-				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
-				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
-				cContent.m_cUser.m_nReaction	= user.reaction;
-				cContent.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
-				cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
-				lastContentId = cContent.m_nContentId;
-				contentList.add(cContent);
+				CContent content = new CContent(resultSet);
+				CacheUsers0000.User user = users.getUser(content.m_nUserId);
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				content.m_cUser.m_nReaction	= user.reaction;
+				content.m_cUser.m_nFollowing = CUser.FOLLOW_HIDE;
+				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
+				lastContentId = content.m_nContentId;
+				contentList.add(content);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

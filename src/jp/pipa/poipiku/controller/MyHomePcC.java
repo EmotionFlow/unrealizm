@@ -183,16 +183,16 @@ public final class MyHomePcC {
 				statement.setInt(idx++, SELECT_MAX_GALLERY); // LIMIT ?
 				resultSet = statement.executeQuery();
 				while (resultSet.next()) {
-					CContent cContent = new CContent(resultSet);
-					CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-					cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
-					cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
-					cContent.m_cUser.m_nReaction	= user.reaction;
-					cContent.m_cUser.m_nFollowing	= CUser.FOLLOW_HIDE;
-					cContent.m_nRequestId = resultSet.getInt("request_id");
-					cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
-					m_nEndId = cContent.m_nContentId;
-					contentList.add(cContent);
+					CContent content = new CContent(resultSet);
+					CacheUsers0000.User user = users.getUser(content.m_nUserId);
+					content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+					content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+					content.m_cUser.m_nReaction	= user.reaction;
+					content.m_cUser.m_nFollowing	= CUser.FOLLOW_HIDE;
+					content.m_nRequestId = resultSet.getInt("request_id");
+					content.m_strDescriptionTranslated = resultSet.getString("description_translated");
+					m_nEndId = content.m_nContentId;
+					contentList.add(content);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;

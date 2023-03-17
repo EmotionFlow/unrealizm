@@ -77,7 +77,7 @@ int errorCode = 0;
 final String referer = Util.toString(request.getHeader("Referer"));
 if (!referer.contains("unrealizm.com")) {
 	Log.d("ShowIllustDetailFへの不正アクセス(referer不一致):" + referer);
-	errorCode = -1;
+	//errorCode = -1;
 }
 
 if(Util.isBot(request)) {

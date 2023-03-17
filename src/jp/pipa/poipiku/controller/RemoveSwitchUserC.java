@@ -2,18 +2,10 @@ package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.CodeEnum;
-import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.UserGroup;
-import jp.pipa.poipiku.util.DatabaseUtil;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class RemoveSwitchUserC extends Controller {
 	public int removeUserId = -1;

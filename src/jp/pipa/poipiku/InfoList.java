@@ -3,7 +3,6 @@ package jp.pipa.poipiku;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -286,7 +285,6 @@ public final class InfoList extends Model{
 		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		int badgeNum = -1;
 		try {
 			connection = DatabaseUtil.dataSource.getConnection();
 			final String sql = "select info_type, count(info_type) info_num from info_lists where user_id=? and had_read=false group by info_type";

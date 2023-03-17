@@ -43,10 +43,7 @@ cBlockListResults.getResults(checkLogin);
 	<div id="BlockList" class="IllustThumbList">
 		<%for(int nCnt = 0; nCnt< cBlockListResults.userList.size(); nCnt++) {
 			CUser cUser = cBlockListResults.userList.get(nCnt);%>
-		<%=CCnv.toHtmlUser(cUser, CCnv.MODE_PC, _TEX)%>
-		<%if(bSmartPhone && (nCnt+1)%15==0) {%>
-		<%@ include file="/inner/TAd336x280_mid.jsp"%>
-		<%}%>
+			<%=CCnv.toHtmlUser(cUser)%>
 		<%}%>
 	</div>
 

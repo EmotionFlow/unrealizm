@@ -97,20 +97,20 @@ public final class FollowListC {
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				CUser cContent = new CUser();
+				CUser content = new CUser();
 
 				if (m_nMode == MODE_FOLLOWING) {
-					cContent.m_nUserId = resultSet.getInt("follow_user_id");
+					content.m_nUserId = resultSet.getInt("follow_user_id");
 				} else {
-					cContent.m_nUserId = resultSet.getInt("follower_user_id");
+					content.m_nUserId = resultSet.getInt("follower_user_id");
 				}
 
-				CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
+				CacheUsers0000.User user = users.getUser(content.m_nUserId);
 				if (user != null) {
-					cContent.m_strNickName	= Util.toString(user.nickName);
-					cContent.m_strFileName	= Util.toString(user.fileName);
-					cContent.m_strProfile   = Util.toString(user.profile);
-					userList.add(cContent);
+					content.m_strNickName	= Util.toString(user.nickName);
+					content.m_strFileName	= Util.toString(user.fileName);
+					content.m_strProfile   = Util.toString(user.profile);
+					userList.add(content);
 					endId = user.userId;
 				}
 			}

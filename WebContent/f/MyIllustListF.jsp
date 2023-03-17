@@ -16,8 +16,7 @@ boolean bRtn = results.getResults(checkLogin, true);
 %>
 <%if(results.contentList.size()>0) {%>
 	<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-		CContent cContent = results.contentList.get(nCnt);%>
-		<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
+		CContent content = results.contentList.get(nCnt);%>
+		<%=CCnv.toThumbHtml(content, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_WVIEW, _TEX)%>
 	<%}%>
-	<%@ include file="/inner/TAd336x280_mid.jsp"%>
 <%}%>

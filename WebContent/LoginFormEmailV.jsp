@@ -27,7 +27,7 @@ if(Util.toBoolean(request.getParameter("INQUIRY"))) {
 } else if(strRequestUri.isEmpty()) {
 	strNextUrl = strRequestUri;
 } else {
-	strNextUrl = "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
+	strNextUrl = "/MyHomeV.jsp?ID="+checkLogin.m_nUserId;
 }
 
 if (strNextUrl.isEmpty()) {
@@ -54,7 +54,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("TopV.ContentsTitle.Login")%> | <%=_TEX.T("THeader.Title")%></title>
 		<%//=ReCAPTCHA.getScriptTag("reCAPTCHAonLoad")%>
 		<script>
@@ -126,7 +126,11 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 							"success": function(data) {
 								if(data.result>0) {
 									DispMsg('<%=_TEX.T("LoginV.Success.Message")%>');
+									<%if(g_isApp){%>
+									sendObjectMessage("restart");
+									<%}else{%>
 									location.href = "<%=strNextUrl%>";
+									<%}%>
 								} else {
 									DispMsg('<%=_TEX.T("LoginV.Faild.Message")%>');
 								}
@@ -142,26 +146,20 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 
 			function reCAPTCHAonLoad() {
 				let badge = $(".grecaptcha-badge");
-				<%if(Util.isSmartPhone(request)){%>
 				badge.css("bottom", "52px");
-				//badge.css("left", "54px");
 				badge.css("position", "fixed");
 				$(".Footer").css("margin-top", "90px");
-				<%}%>
 			}
 		</script>
 		<style>
-		.Wrapper {width: 360px;}
-		.AnalogicoInfo {display: none;}
 		#RegistForm {display: block; float: left; width: 100%;}
 		#LoginForm {display: none; float: left; width: 100%;}
-		.SettingList .SettingListItem {color: #000;}
 		</style>
 	</head>
 
 	<body>
 		<%@ include file="/inner/TMenuPc.jsp"%>
-		<div id="DispMsg"></div>
+
 		<article class="Wrapper">
 			<div class="SettingList" style="margin-top: 30px;">
 				<div class="SettingListItem">
@@ -174,8 +172,8 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 							<input id="login_from_twitter_loginfromemailpcv_callback_00" type="hidden" name="CBPATH" value="<%=strNextUrl%>"/>
 
 							<a class="BtnBase AnalogicoInfoRegistBtn"
-							   style="margin: 10px 0 10px 0"
-							   href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
+								style="margin: 10px 0 10px 0"
+								href="javascript:login_from_twitter_loginfromemailpcv_00.submit()">
 								<span class="typcn typcn-social-twitter"></span> <%=_TEX.T("Unrealizm.Info.Login")%>
 							</a>
 
@@ -244,7 +242,7 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 								<div style="margin-top: 10px; text-align: center;">
 									<div class="RegistMessage"></div>
 									<a href="javascript:void(0);"
-									   onclick="toggleEmailForm();">
+										onclick="toggleEmailForm();">
 										<i class="fas fa-sign-in-alt"></i> <%=_TEX.T("LoginFormV.Label.Login")%>
 									</a>
 								</div>
@@ -285,6 +283,6 @@ if (strRequestUri.indexOf("/MyHome") == 0) {
 			</div>
 		</article><!--Wrapper-->
 
-		<%@ include file="/inner/TFooterBase.jsp"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

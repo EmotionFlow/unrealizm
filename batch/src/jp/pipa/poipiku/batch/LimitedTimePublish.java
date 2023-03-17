@@ -160,23 +160,23 @@ public class LimitedTimePublish extends Batch {
 				String strTwMsg;
 
 				while (cResSet.next()) {
-					CContent cContent = new CContent(cResSet);
-					cContent.m_cUser.m_nUserId = cResSet.getInt("user_id");
-					cContent.m_cUser.m_strNickName = cResSet.getString("nickname");
+					CContent content = new CContent(cResSet);
+					content.m_cUser.m_nUserId = cResSet.getInt("user_id");
+					content.m_cUser.m_strNickName = cResSet.getString("nickname");
 					ArrayList<String> vFileList = new ArrayList<>();
-					String strFileName = cContent.m_strFileName;
+					String strFileName = content.m_strFileName;
 					if (!strFileName.isEmpty()) {
-						strFileName = cContent.getThumbnailFilePath();
+						strFileName = content.getThumbnailFilePath();
 						if (!strFileName.isEmpty()) {
 							vFileList.add(SRC_IMG_PATH + strFileName);
 						}
 					}
-					if (!cContent.isHideThumbImg) {
+					if (!content.isHideThumbImg) {
 						final String selectAppendFilesSql = "SELECT file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id DESC LIMIT 3";
 						try (Connection connection = DatabaseUtil.dataSource.getConnection();
 						     PreparedStatement statement = connection.prepareStatement(selectAppendFilesSql)
 						) {
-							statement.setInt(1, cContent.m_nContentId);
+							statement.setInt(1, content.m_nContentId);
 							ResultSet resultSet = statement.executeQuery();
 							while (resultSet.next()) {
 								vFileList.add(SRC_IMG_PATH + resultSet.getString(1));
@@ -187,9 +187,9 @@ public class LimitedTimePublish extends Batch {
 					cTweet.m_nUserId = cResSet.getInt("user_id");
 					cTweet.m_strUserAccessToken = cResSet.getString("fldaccesstoken");
 					cTweet.m_strSecretToken = cResSet.getString("fldsecrettoken");
-					strTwMsg = CTweet.generateWithTweetMsg(cContent, _TEX);
+					strTwMsg = CTweet.generateWithTweetMsg(content, _TEX);
 
-					LocalDateTime ldt = cContent.m_timeEndDate.toLocalDateTime();
+					LocalDateTime ldt = content.m_timeEndDate.toLocalDateTime();
 					ZonedDateTime zdtSystemDefault = ldt.atZone(ZoneId.systemDefault());
 					ZonedDateTime zdtTokyo = zdtSystemDefault.withZoneSameInstant(ZoneId.of("Asia/Tokyo"));
 
@@ -199,20 +199,20 @@ public class LimitedTimePublish extends Batch {
 
 					// ツイート
 					int nTweetResult = CTweet.ERR_OTHER;
-					if (cContent.m_nTweetWhenPublished == 1 || vFileList.isEmpty()) {    // text only
+					if (content.m_nTweetWhenPublished == 1 || vFileList.isEmpty()) {    // text only
 						if (!_DEBUG) {
 							nTweetResult = cTweet.Tweet(strTwMsg);
 						}
 					} else { // with image
 						nTweetResult = cTweet.Tweet(strTwMsg, vFileList, _DEBUG);
 					}
-					LimitedTimePublishLog l = lLogsByNewId.get(cContent.m_nContentId);
+					LimitedTimePublishLog l = lLogsByNewId.get(content.m_nContentId);
 					l.m_nTweetResult = nTweetResult;
 					if (nTweetResult == CTweet.OK) {
 						String strTweetId = Long.toString(cTweet.m_statusLastTweet.getId());
 						PreparedStatement cStateUpdateTwId = cConn.prepareStatement("UPDATE contents_0000 SET tweet_id=? WHERE content_id=? ");
 						cStateUpdateTwId.setString(1, strTweetId);
-						cStateUpdateTwId.setInt(2, cContent.m_nContentId);
+						cStateUpdateTwId.setInt(2, content.m_nContentId);
 						cStateUpdateTwId.executeUpdate();
 					}
 				}
@@ -228,15 +228,15 @@ public class LimitedTimePublish extends Batch {
 			cResSet = cState.executeQuery();
 			ArrayList<CContent> unpublishContents = new ArrayList<>();
 			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
-				unpublishContents.add(cContent);
+				CContent content = new CContent(cResSet);
+				unpublishContents.add(content);
 				LimitedTimePublishLog l = new LimitedTimePublishLog();
 				l.m_datetime = dtStart;
-				l.m_nOldContentId = cContent.m_nContentId;
-				l.m_nNewContentId = cContent.m_nContentId;
-				l.m_nUserId = cContent.m_nUserId;
+				l.m_nOldContentId = content.m_nContentId;
+				l.m_nNewContentId = content.m_nContentId;
+				l.m_nUserId = content.m_nUserId;
 				l.m_nOpenId = 2;
-				lLogsByOldId.put(cContent.m_nContentId, l);
+				lLogsByOldId.put(content.m_nContentId, l);
 			}
 			cResSet.close();
 			cResSet = null;

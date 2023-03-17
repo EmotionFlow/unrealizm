@@ -6,38 +6,38 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<%@ include file="/inner/THeaderCommonPc.jsp" %>
+	<%@ include file="/inner/THeaderCommon.jsp" %>
 	<title><%=Common.GetPageTitle2(_TEX, _TEX.T("Footer.GuideLine"))%></title>
 	<style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+				table {
+						width: 100%;
+						border-collapse: collapse;
+				}
 
-        table td, table th {
-            border: solid 1px #262626;
-            vertical-align: middle;
-            text-align: left;
-        }
+				table td, table th {
+						border: solid 1px #262626;
+						vertical-align: middle;
+						text-align: left;
+				}
 
-        table th {
-            text-align: center;
-        }
-        .AnalogicoInfo {
-            display: none;
-        }
+				table th {
+						text-align: center;
+				}
+				.AnalogicoInfo {
+						display: none;
+				}
 
-        .SettingList .SettingListItem {
-            color: #000;
-        }
+				.SettingList .SettingListItem {
+						color: #000;
+				}
 
-        .Language {
+				.Language {
 			padding: 5px 10px;
 			border: solid 2px #eefaff;
 			border-radius: 5px;
 		}
 
-        .Language > a {
+				.Language > a {
 			text-decoration: underline;
 			margin-right: 10px;
 		}
@@ -75,7 +75,7 @@
 				投稿、閲覧、リアクション、タグ等全ての利用においては以下を原則とし、その上で時代の変化に応じた独自の倫理基準を運用するものとします。<br/>
 				<ol>
 					<li>日本国憲法および各種日本国法規法令を遵守する</li>
-					<li><a href="/RulePcS.jsp">利用規約</a>を遵守する</li>
+					<li><a href="/RuleS.jsp">利用規約</a>を遵守する</li>
 					<li>あらゆる国や地域の文化、風習、信仰を尊重する</li>
 					<li>犯罪行為を肯定しない</li>
 					<li>自殺、自傷、暴力、薬物の使用等を肯定しない</li>
@@ -174,6 +174,6 @@
 	</div>
 </article><!--Wrapper-->
 
-<%@ include file="/inner/TFooterBase.jsp" %>
+<%@ include file="/inner/TFooter.jsp" %>
 </body>
 </html>

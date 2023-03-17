@@ -21,7 +21,7 @@ String NOW = (new SimpleDateFormat("yyyy-MM-dd")).format(new java.util.Date());
 		<priority>0.5</priority>
 	</url>
 	<url>
-		<loc>https://unrealizm.com/NewArrivalPcV.jsp?hl=<%=lang%></loc>
+		<loc>https://unrealizm.com/NewArrivalV.jsp?hl=<%=lang%></loc>
 		<lastmod><%=NOW%></lastmod>
 		<changefreq>always</changefreq>
 		<priority>0.5</priority>

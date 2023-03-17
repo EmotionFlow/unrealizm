@@ -13,14 +13,10 @@ results.getResults(checkLogin, true);
 StringBuilder sbHtml = new StringBuilder();
 for(int nCnt = 0; nCnt<results.userList.size(); nCnt++) {
 	CUser cUser = results.userList.get(nCnt);
-	if (Util.isSmartPhone(request)) {
-		if (isApp) {
-	sbHtml.append(CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_APP));
-		} else {
-			sbHtml.append(CCnv.toHtmlUserMini(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW));
-		}
+	if (g_isApp) {
+		sbHtml.append(CCnv.toHtmlUserMini(cUser));
 	} else {
-		sbHtml.append(CCnv.toHtmlUser(cUser, CCnv.MODE_SP, _TEX, CCnv.SP_MODE_WVIEW));
+		sbHtml.append(CCnv.toHtmlUserMini(cUser));
 	}
 }
 

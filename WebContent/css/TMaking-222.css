@@ -1,11 +1,66 @@
 @charset "utf-8";
 
+.PoiPass {
+	position: relative;
+}
+
+.PoiPass:after {
+	content: '';
+	display: block;
+	position: absolute;
+	width: 44px;
+	height: 20px;
+	background: transparent 50% 50% no-repeat url('/img/poipiku_passport_logo_short3_60.png');
+	background-size: contain;
+	top: -8px;
+	left: -8px;
+	z-index: 999;
+}
+
+.PoiPassInline {
+	position: relative;
+	height: 20px;
+	line-height: 20px;
+	padding: 0 0 0 49px;
+	/*background: transparent 0 0 no-repeat url('/img/poipiku_passport_logo_short3_60.png');*/
+	background-size: 47px 20px;
+}
+
+.PoiPassInline {
+	height: 20px;
+	line-height: 20px;
+	padding: 0 0 0 50px;
+	background-size: 49px 15px;
+}
+
+.SearchEditCmd.PoiPassInline > .AnyoneOK {
+	background: #ff8000;
+	color: white;
+	padding: 2px 4px;
+	margin-right: 3px;
+	border-radius: 7px;
+}
+
+.TabMenuWrapper {display: block; width: 100%; background-color: #ffffff; border-bottom: solid 1px #f3f3f3;position: fixed; z-index: 900; top: 51px;}
+.TabMenu {display: flex; flex-flow: row nowrap; height:27px; margin: 0 auto; background: #fff; overflow-x: scroll; padding: 0; list-style: none;}
+.TabMenu li {display: block; flex: 0 1 130px; max-width: 130px}
+.TabMenu .TabMenuItem {display: block; height: 22px; line-height: 26px; border-bottom: solid 2px #fff; text-align: center; color: #000; margin: 0 0 3px 0; font-size: 12px; overflow: hidden; padding: 0 2px;}
+.TabMenu .TabMenuItem.Selected {border-color: #000;}
+
+.material-symbols-outlined, .material-symbols-sharp {
+	font-variation-settings:
+	'FILL' 0,
+	'wght' 400,
+	'GRAD' 0,
+	'opsz' 48
+}
+
 .StartPageTitle {
 	text-align: center;
 	color: #fff;
 	padding: 10px 10px;
-    background: #000;
-    box-sizing: border-box;
+		background: #000;
+		box-sizing: border-box;
 }
 .StartPageTitle > h2 {
 	font-size: 2em;
@@ -15,25 +70,40 @@
 	font-size: 1.2em;
 }
 
-.AutoLink {color: #000 !important; text-decoration: underline;}
+.Header .CreateAccountButtons {
+	position: absolute;
+	top: 13px;
+	left: 107px;
+	color: #000;
+}
+.Header .CreateAccountButtons .CreateAccountButtonsLabel{
+	font-size: 11px;
+	font-weight: 500;
+	margin-bottom: 1px;
+}
+.Header .CreateAccountButtons .LoginButton  {
+	opacity: 0.9;
+	font-size: 12px;
+	height: 15px;
+	border-radius: 13px;
+	line-height: 13px;
+}
+.Header .CreateAccountButtons .LoginButton .typcn-mail {
+	position: relative;
+	top: -2px;
+}
+
+.AutoLink {color: #0088ff !important; text-decoration: underline;}
 .AutoLinkMyTag {color: #f09090 !important; text-decoration: underline;}
 
 .IllustItem .IllustItemTag .AutoLink,
 .IllustItem .IllustItemTag .AutoLinkMyTag {
-	position: relative;
-	display: inline-block;
-	height: 35px;
-	line-height: 24px;
-	padding: 0 5px 0 10px;
-	background-color: #000;
-	border-radius: 3px;
-	color: #ffffff !important;
-	font-size: 13px;
-	text-decoration: none;
-	margin: 5px 0 0 14px;
+	color: #0088ff;
+	margin: 0 5px 0 0;
 }
 
-.IllustItem .IllustItemTag .AutoLink::before,
+/*
+.IllustIrgb(118, 214, 255) 175, 255)lustItemTag .AutoLink::before,
 .IllustItem .IllustItemTag .AutoLinkMyTag::before {
 	position: absolute;
 	top: 0;
@@ -60,24 +130,10 @@
 	background-color: #ffffff;
 	border-radius: 100%;
 }
+*/
 
-.IllustItem .IllustItemTag .AutoLinkMyTag {
-	background-color: #818181;
-}
-.IllustItem .IllustItemTag .AutoLinkMyTag::before {
-	border-color: transparent #818181 transparent transparent;
-}
-
-.IllustItemTag .TagLabel{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-}
-.IllustItemTag .TagName {
-	line-height: 16px;
-}
+.IllustItemTag .TagLabel{display: inline;}
+.IllustItemTag .TagName {display: inline;}
 .IllustItemTag .TagTrans {
 	font-size: 10px;
 	line-height: 11px;
@@ -105,21 +161,8 @@
 	box-sizing: border-box;
 }
 
+.Wrapper.ViewPc {display: flex; flex-flow: row wrap; justify-content: center; margin: 0;}
 .Wrapper.ViewPc .RightPane {display: none;}
-
-.Wrapper.ThumbList {
-	width: 100%;
-	margin: 0 auto;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-.Wrapper.GridList {
-	width: 100%;
-	margin: 0 auto;
-	padding: 0;
-	box-sizing: border-box;
-}
 
 .Wrapper.ItemList {
 	width: 100%;
@@ -236,7 +279,7 @@
 	flex-flow: column;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 5px 5px 3px 5px;
+	padding: 5px;
 	background-color: rgba(255, 255, 255, 0.80);
 	color: #000;
 }
@@ -262,50 +305,29 @@
 
 .SearchGenre .SearchGenreMeta {
 	display: flex;
-	flex-flow: column;
+	flex-flow: row nowrap;
+	justify-content: space-between;
 	flex: 1 1;
 }
 
 .SearchGenre .SearchGenreCmd {
-	display: flex;
-	justify-content: center;
-	flex-flow: row nowrap;
-	flex: 0 0;
-	margin: 5px 0 0 0;
 }
 
 .SearchGenre .SearchGenreCmd .CmdBtn {
 	display: block;
 	flex: 0 0;
-	margin: 0 5px;
 	font-size: 11px;
 	padding: 5px 10px;
 }
 
 .SearchGenre .SearchGenreMeta .SearchGenreTitle {
-	display: flex;
-	flex-flow: row nowrap;
-	overflow: hidden;
-	justify-content: flex-start;
 }
-.SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreImage {
-	display: block;
-	flex: 0 0 60px;
-	width: 60px;
-	height: 60px;
-	border: solid 1px #ccc;
-	background: #fff 50% 50% no-repeat;
-	background-size: cover;
-}
+
 .SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreName {
-	display: flex;
-	flex-direction: column;
-	margin: 0 0 0 5px;
 }
+
 .SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreName .GenreNameOrg {
-	font-size: 20px;
-	font-weight: bold;
-	margin: 3px 0 7px 0;
+	font-size: 18px;
 }
 
 .SearchGenre .SearchGenreMeta .SearchGenreTitle .GenreName .GenreNameTranslate {
@@ -346,79 +368,6 @@
 .SearchGenreDetail a {
 	color: #000;
 }
-
-/********** genre list **********/
-
-.GenreItem {
-	display: flex;
-	flex-flow: row nowrap;
-	width: 100%;
-	padding: 5px;
-	box-sizing: border-box;
-}
-
-.GenreItem .GenreImage {
-	display: block;
-	flex: 0 0 60px;
-	width: 60px;
-	height: 60px;
-	border: solid 1px #ccc;
-	background: #fff 50% 50% no-repeat;
-	background-size: cover;
-}
-
-.GenreItem .GenreInfo {
-	display: flex;
-	flex-flow: column;
-	flex: 1 1;
-	height: 62px;
-	margin: 0 0 0 5px;
-	overflow: hidden;
-}
-
-.GenreItem .GenreInfo .GenreNameOrg {
-	display: block;
-	flex: 1 1;
-	font-size: 18px;
-	height: 23px;
-	min-height: 23px;
-	line-height: 23px;
-	white-space: nowrap;
-	font-weight: bold;
-	overflow: hidden;
-}
-
-.GenreItem .GenreInfo .GenreDesc {
-	display: block;
-	flex: 1 1;
-	font-size: 13px;
-	height: 21px;
-	min-height: 21px;
-	line-height: 21px;
-	white-space: nowrap;
-	overflow: hidden;
-}
-
-.GenreItem .GenreInfo .GenreData {
-	display: flex;
-	flex-flow: row nowrap;
-	flex: 1 1;
-	height: 18px;
-	min-height: 18px;
-	overflow: hidden;
-	justify-content: flex-start;
-}
-
-.GenreItem .GenreInfo .GenreData .DataItem {
-	display: block;
-	height: 18px;
-	line-height: 18px;
-	white-space: nowrap;
-	margin: 0 10px 0 0;
-	overflow: hidden;
-	font-size: 12px;
-}
-
 
 /********** sub menu **********/
 .CategoryInfo {display: block;padding: 5px;box-sizing: border-box;}
@@ -483,9 +432,9 @@
 
 .IllustThumbList {
 	display: flex;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
+		width: 100%;
+		flex-direction: row;
+		flex-wrap: wrap;
 }
 
 .IllustThumbList .IllustThumb .IllustThumbText.Vertical {
@@ -530,10 +479,6 @@
 	flex-flow: column;
 	border-radius: 0;
 	border: solid 1px #000;
-}
-
-.IllustThumb.Pined {
-	/*border-radius: 2px;*/
 }
 
 .IllustThumb > .PrivateNote {
@@ -667,17 +612,6 @@
 	line-height: 18px;
 	padding: 0;
 	margin: 0 0 0 5px;
-}
-
-.IllustThumb .GenreInfo .GenreImage {
-	display: block;
-	flex: 0 0 20px;
-	width: 20px;
-	height: 20px;
-	border: solid 1px #eee;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: cover;
 }
 
 .IllustThumb .GenreInfo .GenreName {
@@ -1089,7 +1023,7 @@ Decoration
 .TagThumb {margin: 20px 1%; width: 23%;}
 }
 @media (min-width: 1000px) {
- .TagThumb {margin: 20px 1%; width: 18%;}
+.TagThumb {margin: 20px 1%; width: 18%;}
 }
 @media (min-width: 1250px) {
 .TagThumb {margin: 20px 1%; width: 14.6%;}
@@ -1125,9 +1059,9 @@ Decoration
 }
 
 .TagThumbImg::before {
-    content: "";
-    padding-top: 100%;
-    display: block;
+		content: "";
+		padding-top: 100%;
+		display: block;
 }
 
 .TagThumbImgMask {
@@ -1175,7 +1109,15 @@ Decoration
 }
 
 #EditCategoryLabel {
-	line-height: 30px;
+	display: inline-block;
+	height: 24px;
+	width: 24px;
+	margin: 2px 0;
+	background-image: url('/img/icon_ai.svg');
+	background-position: 0 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
+
 }
 #EditCategory {
 	font-size: 12px;
@@ -1183,14 +1125,13 @@ Decoration
 
 .UploadFile {
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	padding: 10px 10px 50px 10px;
-	max-width: 600px;
+	max-width: 512px;
 	margin: 0 auto;
 }
-.UploadFile .TimeLineIllustCmd {display: block;float: left;width: 100%;margin: 15px 0 0 0;}
+.UploadFile .TimeLineIllustCmd {display: block; width: 100%;margin: 15px 0 0 0;}
 
 .UploadFile .InputFile {
 	display: inline-block;
@@ -1249,14 +1190,13 @@ Decoration
 }
 
 
-.UploadFile .TotalSize {display: block; float: left; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
-.UploadFile .SelectImageBtn {display: block; float: left; height: 37px; line-height: 37px; margin: 0; text-decoration: none; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; border-radius: 40px;-webkit-user-select: text;user-select: text;}
+.UploadFile .TotalSize {display: block; width: 100%; text-align: right; font-size: 10px; padding: 0; line-height: 20px;}
+.UploadFile .SelectImageBtn {display: block; height: 37px; line-height: 37px; margin: 0; text-decoration: none; overflow: hidden; box-sizing: border-box; padding: 0 15px; width: 100%; -webkit-user-select: text;user-select: text;}
 
 .UploadFile .CategoryDesc {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	margin: 16px 0 0 0;
@@ -1264,7 +1204,6 @@ Decoration
 
 .UploadFile .Description {
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	margin: 16px 0 5px 0;
@@ -1276,7 +1215,6 @@ Decoration
 .UploadFile .Prompt .EditNegativePrompt {
 	font-size: 11px;
 	display: block;
-	float: left;
 	width: 100%;
 	height: 50px;
 	box-sizing: border-box;
@@ -1296,7 +1234,6 @@ Decoration
 .UploadFile .Prompt .PromptCharNum,
 .UploadFile .OtherParams .OtherParamsCharNum{
 	display: block;
-	float: left;
 	width: 100%;
 	text-align: right;
 	font-size: 10px;
@@ -1306,7 +1243,6 @@ Decoration
 
 .UploadFile .TextBody {
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	margin: 5px 0 0 0;
@@ -1315,14 +1251,12 @@ Decoration
 
 .UploadFile .TextBody .EditTextTitle {
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 }
 
 .UploadFile .TextBody .EditTextBody {
 	display: block;
-	float: left;
 	width: 100%;
 	height: 300px;
 	box-sizing: border-box;
@@ -1331,7 +1265,6 @@ Decoration
 
 .UploadFile .TextBody .TextBodyCharNum {
 	display: block;
-	float: left;
 	width: 100%;
 	text-align: right;
 	font-size: 10px;
@@ -1343,7 +1276,6 @@ Decoration
 .UploadFile .OtherParams .EditOtherParams {
 	font-size: 11px;
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 }
@@ -1353,7 +1285,6 @@ Decoration
 
 .UploadFile .TagList {
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	margin: 0 0 10px 0;
@@ -1371,7 +1302,6 @@ Decoration
 
 .UploadFile .UoloadCmdOption {
 	display: flex;
-	float: left;
 	flex-flow: column;
 	width: 100%;
 	margin: 3px 0 10px 0;
@@ -1476,6 +1406,8 @@ Decoration
 	width: 100%;
 	flex-direction: row;
 	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 512px;
 }
 
 .IllustItemList2Column {
@@ -1493,22 +1425,23 @@ Decoration
 	background: #fff;
 	color: #000;
 	border-radius: 0px;
-	margin: 10px 1%;
+	margin: 20px 1%;
 	width: 48%;
 }
-
 @media (min-width: 750px) {
-.IllustItem {margin: 20px 1%; width: 31.3%;}
+.IllustItem {width: 31.3%;}
 }
 @media (min-width: 1000px) {
-.IllustItem {margin: 20px 1%; width: 23%;}
+.IllustItem {width: 23%;}
 }
 @media (min-width: 1250px) {
- .IllustItem {margin: 20px 1%; width: 18%;}
+.IllustItem {width: 18%;}
 }
 @media (min-width: 1500px) {
-.IllustItem {margin: 20px 1%; width: 14.6%;}
+.IllustItem {width: 14.6%;}
 }
+
+.IllustItem.full {width: 100%;margin: 20px 0;}
 
 
 .IllustItem .BtnBase {
@@ -1536,7 +1469,7 @@ Decoration
 	box-sizing: border-box;
 	position: relative;
 	text-align: center;
-	padding: 8px;
+	padding: 2px;
 	align-items: center;
 	overflow: hidden;
 }
@@ -1607,12 +1540,10 @@ Decoration
 
 .IllustItem .IllustItemCommand {
 	display: flex;
-	flex-flow: 
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	position: relative;
-	padding: 4px 0;
+	padding: 2px;
 }
 
 .IllustItem .IllustItemCommand .GenreInfo {
@@ -1626,17 +1557,6 @@ Decoration
 	box-sizing: border-box;
 	padding: 0;
 	margin: 2px 3px 0 2px;
-}
-
-.IllustItem .IllustItemCommand .GenreInfo .GenreImage {
-	display: block;
-	flex: 0 0 36px;
-	width: 36px;
-	height: 36px;
-	border: solid 1px #eee;
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: cover;
 }
 
 .IllustItem .IllustItemCommand .GenreInfo .GenreName {
@@ -1868,7 +1788,7 @@ Decoration
 	display: block;
 	width: 100%;
 	height: 24px;
-    overflow: hidden;
+		overflow: hidden;
 	margin: 2px 0;
 }
 
@@ -1899,50 +1819,6 @@ Decoration
 	color: #000;
 }
 
-.Category.C0,
-.Category.C1,
-.Category.C2,
-.Category.C3,
-.Category.C4,
-.Category.C5,
-.Category.C6,
-.Category.C7,
-.Category.C8,
-.Category.C9,
-.Category.C10,
-.Category.C11,
-.Category.C12,
-.Category.C13,
-.Category.C14,
-.Category.C15,
-.Category.C16,
-.Category.C17,
-.Category.C18
-{
-}
-
-.CategoryBtn.C0,
-.CategoryBtn.C1,
-.CategoryBtn.C2,
-.CategoryBtn.C3,
-.CategoryBtn.C4,
-.CategoryBtn.C5,
-.CategoryBtn.C6,
-.CategoryBtn.C7,
-.CategoryBtn.C8,
-.CategoryBtn.C9,
-.CategoryBtn.C10,
-.CategoryBtn.C11,
-.CategoryBtn.C12,
-.CategoryBtn.C13,
-.CategoryBtn.C14,
-.CategoryBtn.C15,
-.CategoryBtn.C16,
-.CategoryBtn.C17,
-.CategoryBtn.C18
-{
-}
-
 .IllustItemList .CategoryMore {
 	display: block;
 	float: left;
@@ -1957,26 +1833,22 @@ Decoration
 
 .IllustItem .IllustItemDesc {
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 0 8px;
-	text-align: left;
-	margin: 2px 0 5px 0;
-	font-size: 16px;
-	color: #000;
+	padding: 2px;
+	font-size: 13px;
+	margin: 0;
 }
 
 .IllustItem .IllustItemPrompt {
 	display: block;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 0;
 	text-align: left;
-	margin: 2px 0;
+	padding: 2px;
 	font-size: 12px;
 	font-family: serif;
-    font-style: italic;
+		font-style: italic;
 	word-break: keep-all;
 }
 
@@ -2015,13 +1887,10 @@ Decoration
 	display: flex;
 	width: 100%;
 	box-sizing: border-box;
-	padding: 0 8px;
+	padding: 2px;
 	text-align: left;
-	margin: 0 0 5px 0;
-	font-size: 14px;
-	overflow-x: scroll;
-	white-space: nowrap;
-	height: 50px;
+	font-size: 13px;
+	word-break: break-all;
 }
 
 .IllustItem .IllustItemDesc .IllustItemDescCmd {
@@ -2069,6 +1938,7 @@ Decoration
 .IllustItem .IllustItemThumb {
 	display: block;
 	width: 100%;
+	min-height: 150px;
 	box-sizing: border-box;
 	overflow: hidden;
 	text-align: center;
@@ -2079,12 +1949,9 @@ Decoration
 }
 
 .IllustItemList2Column .IllustItem .IllustItemThumb::before{
-    content: "";
-    padding-top: 100%;
-    display: block;
-}
-
-.IllustItemList2Column .IllustItem .IllustItemThumb {
+		content: "";
+		padding-top: 100%;
+		display: block;
 }
 
 .IllustItem .IllustItemReactionNum {
@@ -2093,7 +1960,7 @@ Decoration
 	width: 100%;
 	height: 24px;
 	margin-top: -26px;
-  	overflow: hidden;
+		overflow: hidden;
 }
 
 .IllustItem .IllustItemPromptCopyNum {
@@ -2105,8 +1972,6 @@ Decoration
 	justify-content: flex-end;
 }
 
-.IllustItemList2Column .IllustItem .IllustItemReactionNum {}
-
 .IllustItem .IllustItemReactionNum .ReactionNumLabel {
 	display: block;
 	height: 24px;
@@ -2116,15 +1981,11 @@ Decoration
 	background: #fff;
 }
 
-.IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel {}
-
-.IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel {}
-
 .IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel .material-symbols-sharp,
 .IllustItemList2Column .IllustItem .IllustItemReactionNum .ReactionNumLabel .material-symbols-outlined {
 	font-size: 16px;
 	display: inline-flex;
-    vertical-align: middle;
+		vertical-align: middle;
 }
 
 
@@ -2279,19 +2140,18 @@ Decoration
 }
 
 .IllustItem .IllustItemResList {
-	display: block;
-	float: left;
+	display: flex;
 	width: 100%;
 	margin: 0;
 	box-sizing: border-box;
-	padding: 6px 3px 6px 3px;
+	padding: 6px 2px 6px 2px;
 	text-align: left;
 	font-size: 0;
+	flex-wrap: wrap;
 }
 
 .IllustItem .IllustItemResList .IllustItemResListTitle {
 	display: block;
-	float: left;
 	font-size: 12px;
 	width: 100%;
 	overflow: hidden;
@@ -2300,7 +2160,6 @@ Decoration
 
 .IllustItem .IllustItemResList .ResEmoji {
 	display: block;
-	float: left;
 	width: 28px;
 	height: 28px;
 	line-height: 28px;
@@ -2320,7 +2179,6 @@ Decoration
 
 .IllustItem .IllustItemResList .ResEmojiAdd {
 	display: block;
-	float: left;
 	width: 28px;
 	height: 30px;
 	line-height: 26px;
@@ -2357,19 +2215,17 @@ Decoration
 
 .IllustItem .IllustItemResBtnList {
 	display: block;
-	float: left;
-	width: 100%;
+	width: 98%;
+	margin: 0 1%;
 	box-sizing: border-box;
 	text-align: left;
 	font-size: 0;
 	border: solid 1px #000;
-	border-radius: 6px;
 }
 
 
 .IllustItem .IllustItemResBtnList .IllustItemResListTitle {
 	display: flex;
-	float: left;
 	width: 100%;
 	font-size: 10px;
 	padding: 2px 6px;
@@ -2380,7 +2236,6 @@ Decoration
 
 .IllustItem .IllustItemResBtnList .ResBtnSetList {
 	display: block;
-	float: left;
 	width: 100%;
 	box-sizing: border-box;
 	text-align: left;
@@ -2401,9 +2256,6 @@ Decoration
 
 .IllustItemList2Column .IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem {
 	min-width: 50px;
-}
-
-.IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Selected {
 }
 
 .IllustItem .IllustItemResBtnList .ResBtnSetList .ResBtnSetItem.Food {
@@ -2444,7 +2296,6 @@ Decoration
 
 .IllustItem .IllustItemResBtnList .ResEmojiCheer {
 	display: block;
-	float: left;
 	box-sizing: border-box;
 	text-align: left;
 	padding: 0;
@@ -2453,7 +2304,6 @@ Decoration
 }
 .IllustItem .IllustItemResBtnList .ResEmojiCheerNowPayment {
 	display: block;
-	float: left;
 	box-sizing: border-box;
 	text-align: left;
 	padding: 0;
@@ -2488,7 +2338,6 @@ Decoration
 
 .IllustItem .IllustItemResBtnList .ResEmojiBtnList {
 	display: block;
-	float: left;
 	width: 100%;
 	max-height: 117px;
 	overflow: hidden;
@@ -2814,20 +2663,12 @@ Decoration
 
 .IllustItemListRelatedTitle, .IllustItemListRecommendedTitle {
 	display: block;
-	float: left;
 	width: 100%;
-	background: rgba(255,255,255,0.95);
-	color: #000000;
 	box-sizing: border-box;
-	padding: 8px;
-	font-size: 15px;
-	font-weight: 500;
-}
-.IllustItemListRelatedTitle {
-	margin-top: 24px;
-}
-.IllustItemListRecommendedTitle {
-	margin-top: 6px;
+	padding: 4px;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 4px;
 }
 
 #IllustViewGoLatestBtn {
@@ -2867,7 +2708,7 @@ hr.IllustItemListSeparator {
 	margin: 0;
 	box-sizing: border-box;
 	overflow: hidden;
-	background: #000;
+	background: #bbb;
 	background-size: cover;
 	background-repeat: no-repeat;
 	border-bottom: solid 1px #eee;
@@ -2907,8 +2748,8 @@ hr.IllustItemListSeparator {
 .UserInfo .UserInfoUser .UserInfoUserThumb {
 	display: block;
 	width: 100px;
-    height: 100px;
-    overflow: hidden;
+		height: 100px;
+		overflow: hidden;
 	border: solid 2px #ccc;
 	border-radius: 80px;
 	background-size: cover;
@@ -3254,9 +3095,8 @@ hr.IllustItemListSeparator {
 /********** MyEditSettingPcV.jsp **********/
 .SettingList {
 	display: block;
-	float: left;
 	width: 100%;
-	max-width: 600px;
+	max-width: 512px;
 	margin: 0 auto;
 	box-sizing: border-box;
 }
@@ -3804,10 +3644,6 @@ hr.IllustItemListSeparator {
 	min-width: 58px;
 }
 
-.SortFilterSubMenu > .SortMenu {
-	/*text-shadow: 0 0 5px #787878;*/
-}
-
 .SortFilterSubMenu > div {
 	display: flex;
 	flex-direction: row;
@@ -3896,15 +3732,6 @@ hr.IllustItemListSeparator {
 	overflow: hidden;
 	justify-content: flex-start;
 	margin: 10px 0 0 12px;
-}
-.CategoryListItem .SearchGenreTitle .GenreImage {
-	display: block;
-	flex: 0 0 60px;
-	width: 60px;
-	height: 60px;
-	border: solid 1px #ccc;
-	background: #fff 50% 50% no-repeat;
-	background-size: cover;
 }
 .CategoryListItem .SearchGenreTitle .GenreName {
 	display: flex;

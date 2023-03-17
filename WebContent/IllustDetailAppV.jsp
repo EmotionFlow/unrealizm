@@ -3,18 +3,13 @@
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
 
-if (!Util.isIOS(request) && !Util.isSmartPhone(request)) {
-//	response.sendRedirect("/NotFoundV.jsp");
-//	return;
-}
-
 if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -99,43 +94,43 @@ if(!results.getResults(checkLogin)) {
 
 		<style>
 			body {
-                height: 100%;
+								height: 100%;
 				<%if(results.content.m_nEditorId==Common.EDITOR_TEXT ){%>
-                background: #ffffff;
+								background: #ffffff;
 				<%}else{%>
-                background: #333333;
+								background: #333333;
 				<%}%>
-                padding: 0 !important;
+								padding: 0 !important;
 			}
 
-            .IllustItemLink {
+						.IllustItemLink {
 				<%if(results.content.m_nEditorId==Common.EDITOR_TEXT && results.content.novelDirection==0){%>
-                margin: 0 auto;
-                width: 25em;
+								margin: 0 auto;
+								width: 25em;
 				<%}else{%>
-                padding: 4px;
+								padding: 4px;
 				<%}%>
-            }
+						}
 
-            .IllustItemImage {max-width: 100%; height: auto;}
+						.IllustItemImage {max-width: 100%; height: auto;}
 
-            .IllustItemTextDetail {
+						.IllustItemTextDetail {
 				color: #333333;
-                display: block;
-                float: left;
-                box-sizing: border-box;
-                text-align: left;
-                font-size: 1.3em;
-                line-height: 1.8;
-                margin: 0 4px;
-            }
+								display: block;
+								float: left;
+								box-sizing: border-box;
+								text-align: left;
+								font-size: 1.3em;
+								line-height: 1.8;
+								margin: 0 4px;
+						}
 
-            .IllustItemTextDetail.Vertical{
-                writing-mode: vertical-rl;
-                overflow-x: scroll;
-                height: 500px;
-                width: 100%;
-            }
+						.IllustItemTextDetail.Vertical{
+								writing-mode: vertical-rl;
+								overflow-x: scroll;
+								height: 500px;
+								width: 100%;
+						}
 		</style>
 	</head>
 

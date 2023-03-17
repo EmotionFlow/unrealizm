@@ -10,11 +10,6 @@
 		</svg>
 	</div></div>
 	<div id="DetailOverlayInner"></div>
-	<div id="DetailIllustAd" class="DetailIllustItemAd">
-		<%//if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
-		<%//=(bSmartPhone)?Util.poipiku_336x280_sp_overlay(checkLogin, g_nSafeFilter):Util.poipiku_336x280_pc_overlay(checkLogin, g_nSafeFilter)%>
-		<%//}%>
-	</div>
 </div>
 
 <script type="text/javascript">
@@ -28,22 +23,7 @@
 	const detailToucheMoveHandler = createDetailToucheMoveHandler(detailOverlay);
 	const detailScrollHandler = createDetailScrollHandler(detailOverlay);
 	const AD_INS_TAGS = ['geniee_overlay_outer', 'geniee_overlay_boot'];
-	<%String adHtml;
-		if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {
-			if (g_nSafeFilter == Common.AD_ID_ALL) {
-				if (bSmartPhone) {
-					adHtml = Util.poipiku_sp_overlay(checkLogin, g_nSafeFilter);
-				} else {
-					adHtml = Util.poipiku_pc_overlay(checkLogin, g_nSafeFilter);
-				}
-			} else {
-				adHtml = "";
-			}
-			adHtml = adHtml.replaceAll("\n","").replaceAll("'","\\\\'").replaceAll("</script>","<\\\\/script>");
-		} else {
-			adHtml = "";
-		}%>
-	const adHtml = '<%=adHtml%>';
+	const adHtml = '';
 
 	$(function(){initDetailOverlay();});
 </script>

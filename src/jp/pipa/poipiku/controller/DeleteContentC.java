@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
@@ -36,7 +35,7 @@ public class DeleteContentC {
 	public boolean GetResults(ServletContext context) {
 		m_cServletContext = context;
 
-		CContent cContent = null;
+		CContent content = null;
 		boolean bRtn = false;
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -52,7 +51,7 @@ public class DeleteContentC {
 				statement.setInt(1, m_nContentId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
-					cContent = new CContent(resultSet);
+					content = new CContent(resultSet);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -63,7 +62,7 @@ public class DeleteContentC {
 				statement.setInt(2, m_nUserId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
-					cContent = new CContent(resultSet);
+					content = new CContent(resultSet);
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -74,12 +73,12 @@ public class DeleteContentC {
 				statement.setInt(1, m_nContentId);
 				resultSet = statement.executeQuery();
 				if(resultSet.next()) {
-					cContent = null;
+					content = null;
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}
-			if(cContent==null) {
+			if(content==null) {
 				return false;
 			}
 			connection.close();connection=null;
@@ -144,8 +143,8 @@ public class DeleteContentC {
 			resultSet = statement.executeQuery();
 			List<CContentAppend> contentAppends = new ArrayList<>();
 			while(resultSet.next()) {
-				CContentAppend cContentAppend = new CContentAppend(resultSet);
-				contentAppends.add(cContentAppend);
+				CContentAppend contentAppend = new CContentAppend(resultSet);
+				contentAppends.add(contentAppend);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -185,9 +184,9 @@ public class DeleteContentC {
 
 			// delete files
 			try{
-				ImageUtil.deleteFiles(m_cServletContext.getRealPath(cContent.m_strFileName));
+				ImageUtil.deleteFiles(m_cServletContext.getRealPath(content.m_strFileName));
 			} catch (Exception e) {
-				Log.d("cannot delete content file : " + cContent.m_strFileName);
+				Log.d("cannot delete content file : " + content.m_strFileName);
 			}
 
 			// old_id
@@ -238,10 +237,10 @@ public class DeleteContentC {
 			}
 
 			// delete tweet
-			if(m_nUserId==cContent.m_nUserId && m_nDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
+			if(m_nUserId==content.m_nUserId && m_nDeleteTweet==1 && !content.m_strTweetId.isEmpty()){
 				CTweet cTweet = new CTweet();
 				if(cTweet.GetResults(m_nUserId)) {
-					if(cTweet.Delete(cContent.m_strTweetId)!=CTweet.OK){
+					if(cTweet.Delete(content.m_strTweetId)!=CTweet.OK){
 						Log.d("cTweet.Delete() failed");
 					}
 				} else {

@@ -1,10 +1,7 @@
 package jp.pipa.poipiku.controller;
 
-import jp.pipa.poipiku.CUser;
 import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.DatabaseUtil;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public final class ReactionListC {
 	public int ownerUserId = -1;
@@ -54,14 +50,14 @@ public final class ReactionListC {
 			Connection connection = DatabaseUtil.dataSource.getConnection();
 			PreparedStatement statement = connection.prepareStatement("""
 				WITH followers AS (
-				    SELECT follow_user_id
-				    FROM follows_0000
-				    WHERE user_id=?
+					SELECT follow_user_id
+					FROM follows_0000
+					WHERE user_id=?
 				)
 				SELECT c.comment_id, c.content_id, c.description, c.user_id from_user_id, u.nickname, u.file_name, u.profile, f.follow_user_id IS NOT NULL following
 				FROM comments_0000 c
-				         LEFT JOIN users_0000 u ON c.user_id = u.user_id
-				         LEFT JOIN followers f ON c.user_id = f.follow_user_id
+						 LEFT JOIN users_0000 u ON c.user_id = u.user_id
+						 LEFT JOIN followers f ON c.user_id = f.follow_user_id
 				WHERE c.content_id=? %s
 				ORDER BY c.comment_id DESC LIMIT ?;
 				""".formatted(lastCommentId < 0 ? "" : "AND c.comment_id<?"))

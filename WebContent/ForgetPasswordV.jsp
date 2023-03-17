@@ -93,7 +93,6 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
 		<article class="Wrapper">
 			<div id="InquiryPage" class="SettingList">
 				<div class="SettingListItem">

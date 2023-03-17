@@ -4,9 +4,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
@@ -47,7 +45,7 @@ public class IllustViewC {
 
 	public int SELECT_MAX_EMOJI = GridUtil.SELECT_MAX_EMOJI;
 	public CUser m_cUser = new CUser();
-	public CContent m_cContent = new CContent();
+	public CContent content = new CContent();
 	public boolean m_bOwner = false;
 	public boolean m_bFollow = false;
 	public boolean m_bBlocking = false;
@@ -82,7 +80,7 @@ public class IllustViewC {
 			resultSet = statement.executeQuery();
 			boolean bContentExist = false;
 			if(resultSet.next()) {
-				m_cContent = new CContent(resultSet);
+				content = new CContent(resultSet);
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 				bContentExist = true;
 			}
@@ -110,9 +108,9 @@ public class IllustViewC {
 				m_cUser.m_strBgFileName		= Util.toString(resultSet.getString("bg_file_name"));
 				m_cUser.m_nReaction			= resultSet.getInt("ng_reaction");
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
-				m_cContent.m_cUser.m_strNickName	= m_cUser.m_strNickName;
-				m_cContent.m_cUser.m_strFileName	= m_cUser.m_strFileName;
-				m_cContent.m_cUser.m_nReaction		= m_cUser.m_nReaction;
+				content.m_cUser.m_strNickName	= m_cUser.m_strNickName;
+				content.m_cUser.m_strFileName	= m_cUser.m_strFileName;
+				content.m_cUser.m_nReaction		= m_cUser.m_nReaction;
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
@@ -186,22 +184,22 @@ public class IllustViewC {
 			} else {	// owner
 				checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
 			}
-			m_cContent.m_cUser.m_nFollowing = m_nFollow;
+			content.m_cUser.m_nFollowing = m_nFollow;
 
 			// Each append image
 			strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT 1000";
 			statement = connection.prepareStatement(strSql);
-			statement.setInt(1, m_cContent.m_nContentId);
+			statement.setInt(1, content.m_nContentId);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				m_cContent.m_vContentAppend.add(new CContentAppend(resultSet));
+				content.m_vContentAppend.add(new CContentAppend(resultSet));
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;
 
 			// Emoji
 			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-				GridUtil.getComment(connection, m_cContent);
+				GridUtil.getComment(connection, content);
 			}
 
 			// Bookmark
@@ -209,17 +207,17 @@ public class IllustViewC {
 				strSql = "SELECT 1 FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				statement = connection.prepareStatement(strSql);
 				statement.setInt(1, checkLogin.m_nUserId);
-				statement.setInt(2, m_cContent.m_nContentId);
+				statement.setInt(2, content.m_nContentId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
-					m_cContent.m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
+					content.m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
 			}
 
 			// Translations
-			List<ContentTranslation> contentTranslationList = ContentTranslation.select(m_cContent.m_nContentId);
+			List<ContentTranslation> contentTranslationList = ContentTranslation.select(content.m_nContentId);
 			for (ContentTranslation contentTranslation: contentTranslationList) {
 				descTransList.put(contentTranslation.langId, contentTranslation.transTxt);
 			}

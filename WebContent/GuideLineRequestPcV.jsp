@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 <head>
-	<%@ include file="/inner/THeaderCommonPc.jsp" %>
+	<%@ include file="/inner/THeaderCommon.jsp" %>
 	<title>エアスケブ(β) ガイドライン</title>
 	<style>
         table {
@@ -42,6 +42,6 @@
 	<%@include file="inner/GuideLineRequestV.jsp"%>
 </article><!--Wrapper-->
 
-<%@ include file="/inner/TFooterBase.jsp" %>
+<%@ include file="/inner/TFooter.jsp" %>
 </body>
 </html>

@@ -8,14 +8,13 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) return;
 
 int langId = 1;
-final boolean isApp = !Util.toString(request.getParameter("LD")).isEmpty();
 
 Connection connection = null;
 PreparedStatement statement = null;
 ResultSet resultSet = null;
 String strSql = "";
 
-if (!isApp) {
+if (!g_isApp) {
 	final String strLocale = Util.toString(request.getParameter("LANGID"));
 	if (!strLocale.isEmpty()) {
 		langId = SupportedLocales.findId(strLocale);

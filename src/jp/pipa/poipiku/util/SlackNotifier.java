@@ -31,7 +31,7 @@ public final class SlackNotifier {
 					.url(webhookUrl)
 					.post(requestBody)
 					.build();
-			Response response = client.newCall(request).execute();
+			client.newCall(request).execute();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

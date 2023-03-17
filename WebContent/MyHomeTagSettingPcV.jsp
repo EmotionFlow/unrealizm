@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
 <%
-boolean isApp = false;
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -17,7 +15,7 @@ results.getResults(checkLogin);
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyHomeTagSetting.Title")%></title>
 
@@ -26,10 +24,6 @@ results.getResults(checkLogin);
 			$('#MenuHome').addClass('Selected');
 		});
 		</script>
-
-		<style>
-			body {padding-top: 51px !important;}
-		</style>
 	</head>
 
 	<body>
@@ -43,13 +37,13 @@ results.getResults(checkLogin);
 			</ul>
 		</nav>
 
-		<article class="Wrapper ItemList" style="padding-top: 31px;">
+		<article class="Wrapper ItemList" style="padding-top: 28px;">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(results.tagList.size()<=0) {%>
 				<div style="margin-top:15px; text-align: center;">
 					<h3><%=_TEX.T("FollowingTag.Info02")%></h3>
 					<div style="text-decoration: underline; margin-top: 15px;">
-						<a class="FooterLink" href="https://unrealizm.com/SearchTagByKeywordPcV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
+						<a class="FooterLink" href="https://unrealizm.com/SearchTagByKeywordV.jsp"><%=_TEX.T("FollowingTag.Link01")%></a>
 					</div>
 					<div style="text-decoration: underline; margin-top: 15px;">
 						<a class="FooterLink" href="https://unrealizm.com/PopularTagListPcV.jsp"><%=_TEX.T("FollowingTag.Link02")%></a>

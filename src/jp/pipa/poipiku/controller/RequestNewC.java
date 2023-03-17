@@ -1,7 +1,6 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.*;
-import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.SqlUtil;

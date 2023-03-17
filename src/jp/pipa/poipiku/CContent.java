@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 public final class CContent {
@@ -72,7 +71,7 @@ public final class CContent {
 	public int m_nBookmarkState = BOOKMARK_NONE; // アクセスユーザがこのコンテンツをブックマークしてるかのフラグ
 
 	static final String SRC_IMG_PATH = "/var/www/html/ai_poipiku";    // 最後の/はDBに入っている
-	
+
 	public boolean isHideThumbImg = false;
 
 	public String thumbImgUrl = null;

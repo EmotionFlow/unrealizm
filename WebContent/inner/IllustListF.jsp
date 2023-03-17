@@ -15,7 +15,7 @@ if(results.m_nUserId==-1) {
 	}
 }
 
-if(!isApp){
+if(!g_isApp){
 	results.m_bDispUnPublished = (checkLogin.m_nUserId == results.m_nUserId);
 } else {
 	if(checkLogin.m_nUserId != results.m_nUserId) {
@@ -39,16 +39,13 @@ if(!isApp){
 
 checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 boolean bRtn = results.getResults(checkLogin, true);
-int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
+int nSpMode = g_isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 %>
 <%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-	CContent cContent = results.contentList.get(nCnt);%>
+	CContent content = results.contentList.get(nCnt);%>
 	<%if(checkLogin.m_nUserId != results.m_nUserId){%>
-	<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
+	<%=CCnv.toThumbHtml(content, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
 	<%}else{%>
-	<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
-	<%}%>
-	<%if(nCnt==17) {%>
-	<%@ include file="/inner/TAd336x280_mid.jsp"%>
+	<%=CCnv.toThumbHtml(content, checkLogin, CCnv.MODE_SP, nSpMode, _TEX)%>
 	<%}%>
 <%}%>

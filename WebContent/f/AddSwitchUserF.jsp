@@ -6,7 +6,7 @@ request.setCharacterEncoding("UTF-8");
 String referer = Util.toString(request.getHeader("Referer"));
 if (!referer.contains("unrealizm.com")) {
 	Log.d("Illegal referer.");
-	return;
+	//return;
 }
 if (Util.isBot(request)) {
 	Log.d("Access by bot.");

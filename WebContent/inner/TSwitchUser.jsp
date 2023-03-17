@@ -18,7 +18,7 @@
 			data => {
 				if (data.result === <%=Common.API_OK%>) {
 					clearSearchCache();
-					location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=" + userId;
+					location.href = "/MyIllustListV.jsp?ID=" + userId;
 					return true;
 				} else {
 					DispMsg("Error.");
@@ -133,7 +133,7 @@
 					if (data.result === <%=Common.API_OK%>) {
 						HideMsgStatic();
 						clearSearchCache();
-						location.href = "/MyIllustList<%=isApp?"App":"Pc"%>V.jsp?ID=" + data.user_id;
+						location.href = "/MyIllustListV.jsp?ID=" + data.user_id;
 						return true;
 					} else {
 						switch (data.error_detail_code) {

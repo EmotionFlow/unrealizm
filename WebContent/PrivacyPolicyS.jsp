@@ -6,7 +6,7 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - プライバシーポリシー</title>
 		<style>
 			.AnalogicoInfo {display: none;}
@@ -14,7 +14,6 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 		</style>
 	</head>
 	<body>
-		<div id="DispMsg"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper">
@@ -78,6 +77,6 @@ EmotionFlowがサービスを提供するために必要な範囲でのみユー
 			</div>
 		</article><!--Wrapper-->
 
-		<%@ include file="/inner/TFooterBase.jsp"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

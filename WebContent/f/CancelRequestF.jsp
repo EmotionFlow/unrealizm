@@ -11,7 +11,6 @@ if (r.creatorUserId == checkLogin.m_nUserId || r.clientUserId == checkLogin.m_nU
 	result = r.cancel();
 	if (result) {
 		// スケブに倣ってキャンセル通知はしないでおく。
-		//RequestNotifier.notifyRequestCanceled(checkLogin, r);
 	} else {
 		errorCode = r.errorKind.getCode();
 	}

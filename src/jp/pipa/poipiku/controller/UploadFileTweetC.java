@@ -29,7 +29,7 @@ public class UploadFileTweetC {
 			cConn = DatabaseUtil.dataSource.getConnection();
 
 			// 存在チェック & 本文 & 1枚目取得
-			CContent cContent = null;
+			CContent content = null;
 			ArrayList<String> vFileList = new ArrayList<String>();
 			strSql ="SELECT contents_0000.*, nickname FROM contents_0000 INNER JOIN users_0000 ON contents_0000.user_id=users_0000.user_id WHERE contents_0000.user_id=? AND content_id=?";
 			cState = cConn.prepareStatement(strSql);
@@ -37,10 +37,10 @@ public class UploadFileTweetC {
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if(cResSet.next()) {
-				cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
-				cContent.setThumb();
-				String strFileName = cContent.thumbImgUrl;
+				content = new CContent(cResSet);
+				content.m_cUser.m_strNickName	= Util.toString(cResSet.getString("nickname"));
+				content.setThumb();
+				String strFileName = content.thumbImgUrl;
 				Log.d(strFileName);
 				if(!strFileName.isEmpty()) {
 					vFileList.add(m_cServletContext.getRealPath(strFileName));
@@ -48,10 +48,10 @@ public class UploadFileTweetC {
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
-			if(cContent == null) return nRtn;
+			if(content == null) return nRtn;
 
 			// 2枚目以降取得
-			if(cContent.m_nPublishId==Common.PUBLISH_ID_ALL && cContent.m_nSafeFilter<Common.SAFE_FILTER_R15 && cContent.m_nFileNum>1) {
+			if(content.m_nPublishId==Common.PUBLISH_ID_ALL && content.m_nSafeFilter<Common.SAFE_FILTER_R15 && content.m_nFileNum>1) {
 				int limit = (checkLogin.m_nPassportId>=Common.PASSPORT_ON)?400:3;
 				strSql = "SELECT * FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id ASC LIMIT ?";
 				cState = cConn.prepareStatement(strSql);
@@ -73,12 +73,12 @@ public class UploadFileTweetC {
 			if (!cTweet.GetResults(cParam.m_nUserId)) return nRtn;
 
 			// 本文作成
-			String strTwitterMsg = CTweet.generateWithTweetMsg(cContent, _TEX);
+			String strTwitterMsg = CTweet.generateWithTweetMsg(content, _TEX);
 
 			// 前のツイート削除
 			Integer nResultDeleteTweet=null;
-			if(cParam.m_nOptDeleteTweet==1 && !cContent.m_strTweetId.isEmpty()){
-				nResultDeleteTweet = cTweet.Delete(cContent.m_strTweetId);
+			if(cParam.m_nOptDeleteTweet==1 && !content.m_strTweetId.isEmpty()){
+				nResultDeleteTweet = cTweet.Delete(content.m_strTweetId);
 				if(nResultDeleteTweet!=CTweet.OK){
 					if (nResultDeleteTweet == CTweet.ERR_INVALID_OR_EXPIRED_TOKEN){
 						nRtn = -203;
@@ -123,7 +123,7 @@ public class UploadFileTweetC {
 			}
 
 			if(nResultTweet!=null && nResultTweet==CTweet.OK){
-				nRtn = cContent.m_nContentId;
+				nRtn = content.m_nContentId;
 			}
 
 		} catch(Exception e) {

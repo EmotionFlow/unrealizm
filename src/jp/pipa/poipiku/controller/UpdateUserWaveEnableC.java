@@ -2,7 +2,6 @@ package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
 import jp.pipa.poipiku.UserWaveTemplate;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;

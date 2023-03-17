@@ -2,7 +2,6 @@ package jp.pipa.poipiku.util;
 
 import jp.pipa.poipiku.Common;
 import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
 public class EmailUtil {

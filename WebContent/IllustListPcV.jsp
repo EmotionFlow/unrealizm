@@ -3,8 +3,6 @@
 
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
-boolean isApp = false;
 
 IllustListC results = new IllustListC();
 results.getParam(request);
@@ -13,7 +11,7 @@ if(results.m_nUserId==-1) {
 	results.m_nUserId = checkLogin.m_nUserId;
 }
 if(!results.getResults(checkLogin)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 
@@ -22,15 +20,11 @@ String strTitle = Util.toStringHtml(String.format(_TEX.T("IllustListPc.Title"), 
 String strDesc = String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(results.m_cUser.m_strNickName), results.m_nContentsNumTotal);
 String strFileUrl = "/img/icon-512x512.png";
 g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
-
-ArrayList<String> emojiList = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
-final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 %>
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
-		<%@ include file="/inner/ad/TAdHomePcHeader.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendGift.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
@@ -58,27 +52,14 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 
 		$(function(){
 			updateCategoryMenuPos(0);
-
 			$("#AnalogicoInfo .AnalogicoInfoSubTitle").html('<%=String.format(_TEX.T("IllustListPc.Title.Desc"), Util.toStringHtml(results.m_cUser.m_strNickName), results.m_nContentsNumTotal)%>');
-			<%if(!bSmartPhone) {%>
-			$("#AnalogicoInfo .AnalogicoMoreInfo").html('<%=_TEX.T("Unrealizm.Info.RegistNow")%>');
-			<%}%>
-			/*
-			$(window).bind("scroll.slideHeader", function() {
-				$('.UserInfo.Float').css('background-position-y', $(this).scrollTop()/5 + 'px');
-			});
-			*/
 		});
 		</script>
 
 		<style>
+		.IllustItem .IllustItemUser {display: none;}
 		<%if(!results.m_cUser.m_strHeaderFileName.isEmpty()){%>
 		.UserInfo {background-image: url('<%=Common.GetUrl(results.m_cUser.m_strHeaderFileName)%>');}
-		<%}%>
-		<%if(!bSmartPhone) {%>
-		@media screen and (min-width:1090px){
-		.Wrapper.ThumbList {width: 1090px;}
-		}
 		<%}%>
 		</style>
 
@@ -101,7 +82,7 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			<%@ include file="/inner/TUserInfo.jsp"%>
 		</article>
 
-		<article class="Wrapper ThumbList">
+		<article class="Wrapper">
 			<%if(results.m_vCategoryList.size()>0) {%>
 			<nav id="TagMenu" class="TagMenu">
 				<a class="BtnBase TagBtn <%if(results.m_strTagKeyword.isEmpty()){%> Selected<%}%>" href="/<%=results.m_nUserId%>/">
@@ -113,8 +94,8 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			<%}%>
 
 			<section id="IllustThumbList" class="IllustItemList2Column">
-				<%for(CContent cContent: results.contentList) {%>
-					<%=CCnv.Content2Html2Column(cContent, checkLogin, bSmartPhone?CCnv.MODE_SP:CCnv.MODE_PC, _TEX, emojiList, CCnv.VIEW_DETAIL, nSpMode)%>
+				<%for(CContent content: results.contentList) {%>
+					<%=CCnv.Content2Html2Column(content, checkLogin, _TEX)%>
 				<%}%>
 			</section>
 
@@ -137,6 +118,6 @@ final int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 			</section>
 		</article>
 
-		<%@ include file="/inner/TFooterSingleAd.jsp"%>
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

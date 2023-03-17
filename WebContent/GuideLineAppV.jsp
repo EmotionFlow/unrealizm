@@ -50,7 +50,7 @@
 					for (UserLocale userLocale : SupportedLocales.list) {
 						if (userLocale.id != 1) {
 				%>
-				<%=Common.getGoogleTransformLinkHtml("GuideLineV.jsp", "_self", userLocale.locale.toLanguageTag(), userLocale.label)%>
+				<%=Common.getGoogleTransformLinkHtml("GuideLineAppV.jsp", "_self", userLocale.locale.toLanguageTag(), userLocale.label)%>
 				<%
 						}
 					}

@@ -2,13 +2,6 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
-boolean isApp = false;
-
-if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/MyHomeGridPcV.jsp").forward(request,response);
-	return;
-}
 
 MyHomePcC results = new MyHomePcC();
 results.getParam(request);
@@ -24,7 +17,7 @@ if(!checkLogin.m_bLogin) {
 	if(results.n_nUserId>0) {
 		response.sendRedirect("/"+results.n_nUserId+"/");
 	} else {
-		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp?MSG=MyHome").forward(request,response);
+		getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp?MSG=MyHome").forward(request,response);
 	}
 	return;
 }
@@ -35,7 +28,7 @@ results.getResults(checkLogin);
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<%@ include file="/inner/TReplyEmoji.jsp"%>
 		<title><%=_TEX.T("MyHomePc.Title")%> | <%=_TEX.T("THeader.Title")%></title>
@@ -154,7 +147,6 @@ results.getResults(checkLogin);
 		</script>
 
 		<style>
-			body {padding-top: 51px !important;}
 			.UnrealizmDesc.Event {margin: 10px 0;}
 			.RequestEmail {display: block; float: left; width: 100%; margin: 1px 0 0 0; text-decoration: underline; background: #f4f9fb; text-align: center;}
 		</style>
@@ -180,11 +172,9 @@ results.getResults(checkLogin);
 			<a class="SystemInfoClose" href="javascript:void(0)" onclick="$('#SystemInfo_<%=results.m_cSystemInfo.m_nContentId%>').hide();setCookie('<%=Common.UNREALIZM_INFO%>', '<%=results.m_cSystemInfo.m_nContentId%>')"><i class="fas fa-times"></i></a>
 		</div>
 		<%}%>
-
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		</div>
 
-		<article class="Wrapper ThumbList" style="padding-top: 16px">
+		<article class="Wrapper" style="padding-top: 28px">
 			<div class="ThumbListHeader" style="display: none">
 			<%@ include file="/inner/TAdEvent_top_rightPcV.jsp"%>
 			</div>
@@ -193,13 +183,11 @@ results.getResults(checkLogin);
 				<%if(!(results.followUserNum > 1 || results.m_nContentsNumTotal > 1)) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 20px 10px 20px 10px; text-align: center; box-sizing: border-box;">
 					<%=_TEX.T("MyHome.FirstMsg")%>
-					<br />
-<%--					<a class="BtnBase" href="/how_to/TopPcV.jsp"><%=_TEX.T("HowTo.Title")%></a>--%>
 				</div>
 				<%}%>
 			</section>
 		</article>
-	
+
 		<%@ include file="/inner/TShowDetail.jsp"%>
 	</body>
 	<%@include file="/inner/PolyfillIntersectionObserver.jsp"%>

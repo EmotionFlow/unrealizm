@@ -12,9 +12,6 @@ boolean bRtn = results.getResults(checkLogin);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 %>
 <%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-	CContent cContent = results.contentList.get(nCnt);%>
-	<%= CCnv.Content2Html(cContent, checkLogin, results.m_nMode, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
-	<%if(!results.m_bAdFilter && (nCnt+1)%10==0) {%>
-	<%@ include file="/inner/TAd468x60_mid.jsp"%>
-	<%}%>
+	CContent content = results.contentList.get(nCnt);%>
+	<%= CCnv.Content2Html(content, checkLogin, results.m_nMode, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 <%}%>

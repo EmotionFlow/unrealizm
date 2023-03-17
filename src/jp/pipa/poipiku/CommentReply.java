@@ -2,8 +2,6 @@ package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
-import org.apache.http.ConnectionReuseStrategy;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,4 +183,4 @@ public final class CommentReply extends Model {
 		}
 		return replies;
 	}
- }
+}

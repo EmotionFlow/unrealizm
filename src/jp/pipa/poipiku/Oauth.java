@@ -2,8 +2,6 @@ package jp.pipa.poipiku;
 
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
-import jp.pipa.poipiku.util.Util;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

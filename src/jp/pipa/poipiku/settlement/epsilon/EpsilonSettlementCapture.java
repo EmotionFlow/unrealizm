@@ -5,11 +5,8 @@ import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -20,7 +17,6 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -28,11 +24,11 @@ import java.util.List;
 
 // EPSILON実売上API呼び出しクラス
 public class EpsilonSettlementCapture extends  EpsilonSettlement{
-	private String captureUrl;
+//	private String captureUrl;
 	// dev
-	private static final String DEV_CAPTURE_URL = "https://beta.epsilon.jp/cgi-bin/order/sales_payment.cgi";
+//	private static final String DEV_CAPTURE_URL = "https://beta.epsilon.jp/cgi-bin/order/sales_payment.cgi";
 	// production
-	private static final String PROD_CAPTURE_URL = "https://secure.epsilon.jp/cgi-bin/order/sales_payment.cgi";
+//	private static final String PROD_CAPTURE_URL = "https://secure.epsilon.jp/cgi-bin/order/sales_payment.cgi";
 
 	private SettlementCaptureSendInfo settlementCaptureSendInfo;
 	public SettlementCaptureSendInfo getSettlementCaptureInfo() {
@@ -46,9 +42,9 @@ public class EpsilonSettlementCapture extends  EpsilonSettlement{
 	private void initUrl() {
 		if (connectTo == ConnectTo.Dev) {
 			Log.d("開発用CGIへ接続");
-			captureUrl = DEV_CAPTURE_URL;
+			//captureUrl = DEV_CAPTURE_URL;
 		} else {
-			captureUrl = PROD_CAPTURE_URL;
+			//captureUrl = PROD_CAPTURE_URL;
 		}
 	}
 
@@ -67,19 +63,19 @@ public class EpsilonSettlementCapture extends  EpsilonSettlement{
 	public SettlementCaptureResultInfo execSettlement(){
 		// 決済情報送信
 		// 送信用の設定を作成
-		RequestConfig rc = RequestConfig.custom().setConnectTimeout(60000)
-				.setSocketTimeout(60000)
-				.setMaxRedirects(0)
-				.build();
+//		RequestConfig rc = RequestConfig.custom().setConnectTimeout(60000)
+//				.setSocketTimeout(60000)
+//				.setMaxRedirects(0)
+//				.build();
 		// Header定義
 		List<Header> header = new ArrayList<>();
 		header.add( new BasicHeader("Accept-Charset","UTF-8" ));
 		header.add( new BasicHeader("User-Agent","EPSILON SAMPLE PROGRAM JAVA" ));
 
-		HttpClient client = HttpClientBuilder.create()
-				.setDefaultRequestConfig(rc)
-				.setDefaultHeaders(header)
-				.build();
+//		HttpClient client = HttpClientBuilder.create()
+//				.setDefaultRequestConfig(rc)
+//				.setDefaultHeaders(header)
+//				.build();
 
 		List<NameValuePair> param = this.makeSendParam();
 		Log.d("key => value");

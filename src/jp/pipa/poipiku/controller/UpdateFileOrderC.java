@@ -49,10 +49,8 @@ public class UpdateFileOrderC extends Controller {
 	public String newIdsJson = null;
 	public String userAgent = null;
 
-	private ServletContext servletContext = null;
-
 	public UpdateFileOrderC(ServletContext context){
-		servletContext = context;
+		//ServletContext servletContext = context;
 	}
 
 	public int GetParam(HttpServletRequest request) {
@@ -103,6 +101,8 @@ public class UpdateFileOrderC extends Controller {
 				appendIds.add(0);
 				fileNames.add(resultSet.getString("file_name"));
 			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			sql ="SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
 			statement = connection.prepareStatement(sql);
@@ -112,6 +112,8 @@ public class UpdateFileOrderC extends Controller {
 				appendIds.add(resultSet.getInt("append_id"));
 				fileNames.add(resultSet.getString("file_name"));
 			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			sql = "INSERT INTO contents_update_histories(class, user_id, content_id, params, ua, before_appends, before_files, app) VALUES(?, ?, ?, ?, ?, ?, ?, ?) RETURNING id";
 			statement = connection.prepareStatement(sql);

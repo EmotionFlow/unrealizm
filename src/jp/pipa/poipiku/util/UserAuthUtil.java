@@ -126,8 +126,6 @@ public class UserAuthUtil {
 
 	public static int registUser(HttpServletRequest request, HttpServletResponse response, ResourceBundleControl _TEX) {
 		int nRtn = ERROR_UNKOWN;
-		//login check
-		CheckLogin checkLogin = new CheckLogin(request, response);
 
 		// Lang Id
 		int nLangId = 1;
@@ -526,9 +524,9 @@ public class UserAuthUtil {
 			cState.executeUpdate();
 			cState.close();cState=null;
 
-			final String SMTP_HOST = "localhost";
-			final String FROM_NAME = "Unrealizm";
-			final String FROM_ADDR = "info@unrealizm.com";
+			//final String SMTP_HOST = "localhost";
+			//final String FROM_NAME = "Unrealizm";
+			//final String FROM_ADDR = "info@unrealizm.com";
 			final String EMAIL_TITLE = _TEX.T("UpdateEmailAddressV.Mail.Title");
 			String strEmailText = null;
 

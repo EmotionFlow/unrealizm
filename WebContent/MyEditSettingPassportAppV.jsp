@@ -50,8 +50,6 @@ results.getResults(checkLogin);
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
-
 		<article class="Wrapper">
 			<div class="SettingList" style="background: #fff;">
 				<div class="SettingListItem">
@@ -69,7 +67,7 @@ results.getResults(checkLogin);
 						高負荷機能＋広告表示無し＋ちょっとした遊び心の機能で月額300円と、出来る限りの低価格で提供させていただきます。
 						収益はUnrealizmサービスの維持・発展に使用させていただきます。
 						ぜひポイパスへのご加入をご検討いただけますと幸いです。
-						(2020年12月 emotionflow合同会社代表 川合和寛)
+						(2020年12月 EmotionFlow LLC.代表 川合和寛)
 						</div>
 						<%}else{%>
 						現在、ポイパス加入中です！

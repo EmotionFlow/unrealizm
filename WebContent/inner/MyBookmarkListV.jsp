@@ -2,31 +2,15 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone;
-if (isApp) {
-	bSmartPhone = true;
-} else {
-	bSmartPhone = Util.isSmartPhone(request);
-}
-
 if(!checkLogin.m_bLogin) {
-	if(isApp){
-		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
-	} else {
-		getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
-	}
-	return;
-}
-
-if(!bSmartPhone) {
-	getServletContext().getRequestDispatcher("/MyBookmarkListGridPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
 MyBookmarkC myBookmarkC = new MyBookmarkC();
 myBookmarkC.getParam(request);
 myBookmarkC.noContents = true;
-if (isApp) checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
+if (g_isApp) checkLogin.m_nSafeFilter = Common.SAFE_FILTER_R15;
 myBookmarkC.getResults(checkLogin, false);
 
 MyBookmarkC results = new MyBookmarkC();
@@ -36,15 +20,12 @@ boolean bRtn = results.getResults(checkLogin);
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%if(isApp){%>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%} else {%>
-		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
-		<%}%>
+
 		<meta name="description" content="<%=_TEX.T("THeader.Title.Desc")%>" />
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("MyBookmarkList.Title")%></title>
 
-		<%if(!isApp){%>
+		<%if(!g_isApp){%>
 		<script type="text/javascript">
 			$(function(){
 				$('#MenuHome').addClass('Selected');
@@ -69,7 +50,7 @@ boolean bRtn = results.getResults(checkLogin);
 					"type": "post",
 					"data": {"SD": lastBookmarkId, "PG": page},
 					"dataType": "json",
-					"url": "/f/MyBookmarkList<%=isApp ? "App" : ""%>F.jsp",
+					"url": "/f/MyBookmarkList<%=g_isApp ? "App" : ""%>F.jsp",
 				}).then((data) => {
 					page++;
 					htmlCache.header.page = page;
@@ -95,7 +76,7 @@ boolean bRtn = results.getResults(checkLogin);
 				});
 			}
 
-			<%if(!isApp){%>
+			<%if(!g_isApp){%>
 			function restoreContents(txt){
 				if (Date.now() - htmlCache.header.updatedAt > htmlCache.maxAge) {
 					htmlCache.delete(null);
@@ -121,7 +102,7 @@ boolean bRtn = results.getResults(checkLogin);
 					$(element).on("drag dragstart",function(e){if(!$(e.target).is(".MyUrl")){return false;}}
 					)});
 
-				<%if(!isApp){%>
+				<%if(!g_isApp){%>
 				htmlCache.addClickEventListener(
 					'#HeaderSearchBtn, .SystemInfo a, .slick-list a, ' +
 					'#TabMenuMyHome, #TabMenuMyHomeTag, ' +
@@ -135,16 +116,12 @@ boolean bRtn = results.getResults(checkLogin);
 				<%}%>
 			});
 		</script>
-		<%if(!isApp){%>
-		<style>
-						body {padding-top: 51px !important;}
-		</style>
-		<%}%>
 	</head>
 
 	<body>
-		<%if(!isApp){%>
 		<%@ include file="/inner/TMenuPc.jsp"%>
+
+		<%if(!g_isApp){%>
 		<nav class="TabMenuWrapper">
 			<ul class="TabMenu">
 				<li><a id="TabMenuMyHome" class="TabMenuItem" href="/MyHomePcV.jsp"><%=_TEX.T("THeader.Menu.Home.Follow")%></a></li>
@@ -154,34 +131,17 @@ boolean bRtn = results.getResults(checkLogin);
 		</nav>
 		<%}%>
 
-		<%if(isApp){%>
-		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
-		<%}else{%>
-		<div class="ThumbListHeader" style="display: none">
-			<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
-		</div>
-		<%}%>
-
-		<article class="Wrapper ThumbList" style="padding-top: 44px">
-			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
-			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
-				<%@ include file="/inner/TAdSp300x100_top.jsp"%>
-			</span>
-			<%}%>
-
+		<article class="Wrapper" style="padding-top: 28px">
 			<%if(myBookmarkC.contentsNum <=0) {%>
 			<div style="padding: 10px; box-sizing: border-box; text-align: center;">
 				<%=_TEX.T("MyBookmarkList.LetsMessage")%>
 			</div>
 			<%}%>
 
-			<section id="IllustThumbList" class="IllustThumbList" style="padding-bottom: 5px;">
+			<section id="IllustThumbList" class="IllustItemList2Column" style="padding-bottom: 5px;">
 			</section>
 		</article>
-		<%if(!isApp){%>
-		<div id="Footer" style="display: none">
-			<%@ include file="/inner/TFooterBase.jsp"%>
-		</div>
-		<%}%>
+
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

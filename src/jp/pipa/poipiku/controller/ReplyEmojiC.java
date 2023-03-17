@@ -75,13 +75,12 @@ public final class ReplyEmojiC extends Controller {
 			// リアクション対象を検索
 			int toUserId = -1;
 			int targetCommentId = -1;
-			connection = DatabaseUtil.dataSource.getConnection();
 
 			sql = """
 				SELECT comment_id, user_id
 				FROM comments_0000
 				WHERE content_id = ?
-				  AND comment_id <= ?
+				AND comment_id <= ?
 				ORDER BY comment_id DESC
 				OFFSET ? LIMIT 1;
 				""";
@@ -107,7 +106,7 @@ public final class ReplyEmojiC extends Controller {
 			// マイリプライ絵文字
 			String myReplyEmoji = Emoji.REPLY_EMOJI_DEFAULT;
 			sql = """
-                SELECT chars
+				SELECT chars
 				FROM comment_templates
 				WHERE user_id = ?
 				AND disp_order = 0

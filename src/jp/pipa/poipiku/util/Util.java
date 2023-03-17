@@ -9,9 +9,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -21,12 +18,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
-
 import jp.pipa.poipiku.*;
 
 public final class Util {
@@ -308,21 +302,19 @@ public final class Util {
 
 	public static boolean isSmartPhone(final HttpServletRequest request) {
 		final String useragent = toString(request.getHeader("user-agent"));
-		//String strReferer = toString(request.getHeader("Referer"));
-
-		//if(strReferer.indexOf("unrealizm.com")<0) {
-			if(	(useragent.indexOf("iPhone")>=0 && useragent.indexOf("iPad")<0) ||
-					useragent.indexOf("iPod")>=0 ||
-					(useragent.indexOf("Android")>=0 && useragent.indexOf("Mobile")>=0)) {
-				return true;
-			}
-		//}
-		return false;
+		return (useragent.indexOf("iPhone")>=0 && useragent.indexOf("iPad")<0) ||
+				useragent.indexOf("iPod")>=0 ||
+				(useragent.indexOf("Android")>=0 && useragent.indexOf("Mobile")>=0);
 	}
 
 	public static boolean isIOS(HttpServletRequest request) {
 		String strUa = toString(request.getHeader("user-agent"));
 		return (strUa.indexOf("iPhone")>=0 || strUa.indexOf("iPad")>=0 || strUa.indexOf("iPod")>=0);
+	}
+
+	public static boolean isApp(final HttpServletRequest request) {
+		final String useragent = toString(request.getHeader("user-agent"));
+		return (useragent.indexOf("UNREALIZM_UA")>=0);
 	}
 
 	public static boolean needUpdate(int nVersion) {
@@ -398,6 +390,8 @@ public final class Util {
 
 	// 無限スクロール可能広告枠
 	public static String poipiku_336x280_sp_mid(CheckLogin checkLogin, int adId) {
+		return "";
+/*
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 
@@ -435,9 +429,12 @@ public final class Util {
 
 		sbRtn.append("</div>");
 		return sbRtn.toString();
+*/
 	}
 
 	public static String poipiku_336x280_pc_mid(CheckLogin checkLogin, int adId) {
+		return "";
+/*
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		sbRtn.append("<div class=\"PcSideBarAd\">");
@@ -454,10 +451,13 @@ public final class Util {
 		sbRtn.append("</div>");
 		sbRtn.append("</div>");
 		return sbRtn.toString();
+*/
 	}
 
 	// スマホオーバレイ広告枠
 	public static String poipiku_sp_overlay(CheckLogin checkLogin, int adId) {
+		return "";
+/*
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		// SB Ad
@@ -505,10 +505,13 @@ public final class Util {
 			}
 		}
 		return sbRtn.toString();
+*/
 	}
 
 	// PCオーバレイ広告枠
 	public static String poipiku_pc_overlay(CheckLogin checkLogin, int adId) {
+		return "";
+/*
 		if(checkLogin.m_nPassportId>=Common.PASSPORT_ON) return "";
 		StringBuilder sbRtn = new StringBuilder();
 		// SB Ad
@@ -556,6 +559,7 @@ public final class Util {
 			}
 		}
 		return sbRtn.toString();
+*/
 	}
 
 	private static final List<String> vBot = Arrays.asList(

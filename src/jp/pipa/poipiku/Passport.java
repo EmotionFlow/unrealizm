@@ -4,12 +4,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
 import jp.pipa.poipiku.cache.CacheUsers0000;
-import jp.pipa.poipiku.settlement.CardSettlement;
-import jp.pipa.poipiku.settlement.CardSettlementEpsilon;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 

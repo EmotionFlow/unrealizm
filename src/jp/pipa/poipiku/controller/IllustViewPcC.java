@@ -63,7 +63,7 @@ public final class IllustViewPcC {
 	public int latestContentId = -1;
 	public CUser m_cUser = new CUser();
 	public String twitterScreenName;
-	public CContent m_cContent = new CContent();
+	public CContent content = new CContent();
 	public boolean m_bOwner = false;
 	public boolean m_bRequestClient = false;
 	public boolean m_bFollow = false;
@@ -109,6 +109,8 @@ public final class IllustViewPcC {
 					latestContentId = resultSet.getInt(1);
 				}
 			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			if (contentId <= 0) contentId = latestContentId;
 
@@ -134,11 +136,11 @@ public final class IllustViewPcC {
 			resultSet = statement.executeQuery();
 			boolean bContentExist = false;
 			if(resultSet.next()) {
-				m_cContent = new CContent(resultSet);
+				content = new CContent(resultSet);
 				final int requestId = resultSet.getInt("request_id");
-				if (requestId > 0) m_cContent.m_nRequestId = requestId;
-				if (pin != null && m_cContent.m_nContentId == pin.contentId) m_cContent.pinOrder = pin.dispOrder;
-				m_cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
+				if (requestId > 0) content.m_nRequestId = requestId;
+				if (pin != null && content.m_nContentId == pin.contentId) content.pinOrder = pin.dispOrder;
+				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
 				bRtn = true;	// 以下エラーが有ってもOK.表示は行う
 				bContentExist = true;
 			}
@@ -173,9 +175,9 @@ public final class IllustViewPcC {
 					twitterScreenName = resultSet.getString("twitter_screen_name");
 				}
 				if(m_cUser.m_strFileName.isEmpty()) m_cUser.m_strFileName="/img/default_user.jpg";
-				m_cContent.m_cUser.m_strNickName	= m_cUser.m_strNickName;
-				m_cContent.m_cUser.m_strFileName	= m_cUser.m_strFileName;
-				m_cContent.m_cUser.m_nReaction		= m_cUser.m_nReaction;
+				content.m_cUser.m_strNickName	= m_cUser.m_strNickName;
+				content.m_cUser.m_strFileName	= m_cUser.m_strFileName;
+				content.m_cUser.m_nReaction		= m_cUser.m_nReaction;
 				m_cUser.setRequestEnabled(resultSet);
 			}
 			resultSet.close();resultSet=null;
@@ -284,11 +286,11 @@ public final class IllustViewPcC {
 			} else {	// owner
 				checkLogin.m_nSafeFilter = Math.max(checkLogin.m_nSafeFilter, Common.SAFE_FILTER_MAX);
 			}
-			m_cContent.m_cUser.m_nFollowing = m_nFollow;
+			content.m_cUser.m_nFollowing = m_nFollow;
 
 			// Emoji
 			if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
-				GridUtil.getComment(connection, m_cContent);
+				GridUtil.getComment(connection, content);
 			}
 
 			// Bookmark
@@ -296,10 +298,10 @@ public final class IllustViewPcC {
 				sql = "SELECT 1 FROM bookmarks_0000 WHERE user_id=? AND content_id=?";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, checkLogin.m_nUserId);
-				statement.setInt(2, m_cContent.m_nContentId);
+				statement.setInt(2, content.m_nContentId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
-					m_cContent.m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
+					content.m_nBookmarkState = CContent.BOOKMARK_BOOKMARKING;
 				}
 				resultSet.close();resultSet=null;
 				statement.close();statement=null;
@@ -314,13 +316,13 @@ public final class IllustViewPcC {
 				final int h = LocalDateTime.now().getHour();
 				// Related Contents
 				if (selectMaxRelatedGallery > 0) {
-					m_vRelatedContentList = RelatedContents.getGenreContentList(m_cContent.m_nContentId, selectMaxRelatedGallery, checkLogin, connection);
+					m_vRelatedContentList = RelatedContents.getGenreContentList(content.m_nContentId, selectMaxRelatedGallery, checkLogin, connection);
 				}
 
 				if (h != 20 && h != 21 && h != 22 && h != 23 && h != 0 && h != 1){
 					// Recommended Contents
 					if(selectMaxRecommendedGallery >0) {
-						m_vRecommendedList = RecommendedContents.getContents(m_cContent.m_nUserId, m_cContent.m_nContentId, selectMaxRecommendedGallery, checkLogin, connection);
+						m_vRecommendedList = RecommendedContents.getContents(content.m_nUserId, content.m_nContentId, selectMaxRecommendedGallery, checkLogin, connection);
 					}
 				}
 			}

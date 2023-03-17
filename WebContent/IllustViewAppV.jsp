@@ -6,8 +6,6 @@ if(Util.isBot(request)) {
 	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
-boolean bSmartPhone = Util.isSmartPhone(request);
-boolean isApp = true;
 
 IllustViewPcC results = new IllustViewPcC();
 results.getParam(request);
@@ -23,13 +21,13 @@ if(!results.getResults(checkLogin)) {
 }
 
 //R18によるアドの切り替え
-g_nSafeFilter = results.m_cContent.getAdSwitchId();
+g_nSafeFilter = results.content.getAdSwitchId();
 
-results.m_cContent.setThumb();
-final String strFileUrl = results.m_cContent.thumbImgUrl;
-final boolean bHidden = results.m_cContent.isHideThumbImg;	// テキスト用カバー画像表示フラグ
+results.content.setThumb();
+final String strFileUrl = results.content.thumbImgUrl;
+final boolean bHidden = results.content.isHideThumbImg;	// テキスト用カバー画像表示フラグ
 
-String strTitle = CTweet.generateMetaTwitterTitle(results.m_cContent, _TEX);
+String strTitle = CTweet.generateMetaTwitterTitle(results.content, _TEX);
 ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUser.m_nAdMode==CUser.AD_MODE_SHOW);
 
@@ -38,7 +36,6 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
 		<%@ include file="/inner/THeaderCommon.jsp"%>
-		<%@ include file="/inner/ad/TAdIllustViewPcHeader.jsp"%>
 		<%@ include file="/inner/TCreditCard.jsp"%>
 		<%@ include file="/inner/TSendEmoji.jsp"%>
 		<%@ include file="/inner/TReplyEmoji.jsp"%>
@@ -63,9 +60,9 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 					$(element).on("drag dragstart",function(e){return false;});
 				});
 
-				<%if(!bHidden && results.m_cContent.m_nEditorId==Common.EDITOR_TEXT) {%>
-				var frame_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> ).height();
-				var text_height = $('#IllustItemText_'+ <%=results.m_cContent.m_nContentId%> + ' .IllustItemThumbText').height();
+				<%if(!bHidden && results.content.m_nEditorId==Common.EDITOR_TEXT) {%>
+				var frame_height = $('#IllustItemText_'+ <%=results.content.m_nContentId%> ).height();
+				var text_height = $('#IllustItemText_'+ <%=results.content.m_nContentId%> + ' .IllustItemThumbText').height();
 				if(frame_height>=text_height) {
 					$('.IllustItemExpandBtn').hide();
 				}
@@ -100,8 +97,6 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 
 	<body>
 		<%{%>
-		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
-
 		<article class="Wrapper">
 			<div class="UserInfo">
 				<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
@@ -165,31 +160,20 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 		<%}%>
 
 		<article class="Wrapper ViewPc">
-			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
-			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%; margin: 12px 0 0 0;">
-				<%@ include file="/inner/ad/TAdHomeSp300x100_top.jsp"%>
-			</span>
-			<%}%>
-
 			<section id="IllustItemList" class="IllustItemList">
-				<%=CCnv.Content2Html(results.m_cContent, checkLogin, CCnv.MODE_SP,
+				<%=CCnv.Content2Html(results.content, checkLogin, CCnv.MODE_SP,
 						_TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP,
 						results.m_bOwner?CCnv.PageCategory.MY_ILLUST_LIST:CCnv.PageCategory.DEFAULT)%>
 			</section>
 
 			<%@ include file="/inner/TAdEvent_top_rightV.jsp"%>
-			<%if(checkLogin.m_nPassportId==Common.PASSPORT_OFF && g_bShowAd && false) {%>
-			<span style="display: flex; flex-flow: row nowrap; justify-content: space-around; align-items: center; float: left; width: 100%;">
-				<%@ include file="/inner/ad/TAdHomeSp336x280_mid_1.jsp"%>
-			</span>
-			<%}%>
 		</article>
 
-		<article class="Wrapper GridList">
+		<article class="Wrapper">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-					CContent cContent = results.contentList.get(nCnt);%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+					CContent content = results.contentList.get(nCnt);%>
+					<%=CCnv.toThumbHtml(content, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%
 					}
 				%>
@@ -197,31 +181,26 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 		</article>
 
 		<%if(!results.m_vRelatedContentList.isEmpty()) {%>
-		<%@ include file="/inner/ad/TAdHomeSp336x280_mid_2.jsp"%>
-		<article class="Wrapper GridList">
+		<article class="Wrapper">
 			<section id="IllustItemList" class="IllustItemList Related">
 				<header class="SearchResultTitle" style="box-sizing: border-box; padding: 0 5px; float: none;">
 					<h2 class="Keyword">
 						<%
-							String keyword = RelatedContents.getTitleTag(results.m_cContent.m_nContentId);
+							String keyword = RelatedContents.getTitleTag(results.content.m_nContentId);
 						%>
-						<a class="AutoLink" href="/SearchIllustByTagAppV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
+						<a class="AutoLink" href="/SearchIllustByTagV.jsp?KWD=<%=URLEncoder.encode(keyword, "UTF-8")%>">#<%=keyword%></a>
 					</h2>
 				</header>
 				<%
 					for(int nCnt=0; nCnt<results.m_vRelatedContentList.size(); nCnt++) {
-						CContent cContent = results.m_vRelatedContentList.get(nCnt);
+						CContent content = results.m_vRelatedContentList.get(nCnt);
 				%>
-					<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+					<%=CCnv.toThumbHtml(content, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%}%>
 			</section>
 		</article>
 		<%}%>
 
 		<%@ include file="/inner/TShowDetail.jsp"%>
-
-		<aside class="Wrapper GridList">
-			<%@ include file="/inner/ad/TAdSingleAdSpFooter.jsp"%>
-		</aside>
 	</body>
 </html>

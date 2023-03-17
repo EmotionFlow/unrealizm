@@ -27,7 +27,6 @@ function DispR18PlusMsg() {
 </div>
 <div class="OptionItem" id="ItemTimeLimitedVal" style="padding-top: 0; display: none;">
 	<div class="OptionPublish">
-		<%if(Util.isSmartPhone(request)) {%>
 		<div style="display: block;">
 			<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.Start")%></span>
 			<input id="TIME_LIMITED_START" class="EditTimeLimited" type="text" />
@@ -36,11 +35,6 @@ function DispR18PlusMsg() {
 			<span><%=_TEX.T("UploadFilePc.Option.Publish.LimitedTime.End")%></span>
 			<input id="TIME_LIMITED_END" class="EditTimeLimited" type="text" />
 		</div>
-		<%}else{%>
-		<input id="TIME_LIMITED_START" class="EditTimeLimitedPc" type="text" maxlength="15" />
-		<span class="EditTimeLimitedPcTo">〜</span>
-		<input id="TIME_LIMITED_END" class="EditTimeLimitedPc" type="text" maxlength="15" />
-		<%}%>
 	</div>
 	<%if(!isCreateContent && content.m_bLimitedTimePublish){
 		final String strStartDateTime = Util.toYMDHMString(content.m_timeUploadDate);
@@ -94,7 +88,7 @@ function DispR18PlusMsg() {
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_FOLLOWER%>" id="RadioTwitterFollower">
 		<label for="RadioTwitterFollower" class="OptionShowLimit"
 			<%if(!cTweet.m_bIsTweetEnable){%>
-			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+				 onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
 			<%}%>
 		>
 			<span class="ShowLimitImage TwitterFollower"></span>
@@ -103,10 +97,10 @@ function DispR18PlusMsg() {
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_LIST%>" id="RadioTwitterList">
 		<label for="RadioTwitterList" class="OptionShowLimit"
 			<%if(!cTweet.m_bIsTweetEnable){%>
-			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+				 onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
 			<%}else{%>
-			   onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)"
-		    <%}%>
+				 onclick="updateMyTwitterListF(<%=checkLogin.m_nUserId%>)"
+				<%}%>
 		>
 			<span class="ShowLimitImage TwitterList"></span>
 			<span class="ShowLimitName"><i class="fab fa-twitter"></i><%=_TEX.T("UpCmdOptions.Condition.TwitterList")%></span>
@@ -163,7 +157,7 @@ function DispR18PlusMsg() {
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_EACH%>" id="RadioTwitterEach">
 		<label for="RadioTwitterEach" class="OptionShowLimit"
 			<%if(!cTweet.m_bIsTweetEnable){%>
-			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+				 onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
 			<%}%>
 		>
 			<span class="ShowLimitImage TwitterEach"></span>
@@ -171,7 +165,7 @@ function DispR18PlusMsg() {
 		</label>
 		<input type="radio" name="SHOW_LIMIT_VAL" value="<%=Common.PUBLISH_ID_T_RT%>" id="RadioTwitterRetweet"
 			<%if(!cTweet.m_bIsTweetEnable){%>
-			   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+				 onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
 			<%}%>
 		>
 		<label for="RadioTwitterRetweet" class="OptionShowLimit">
@@ -206,9 +200,9 @@ function DispR18PlusMsg() {
 <div class="OptionItem" style="margin-top: 13px">
 	<label class="rocker"
 		<%if(!cTweet.m_bIsTweetEnable){%>
-		   onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
+			 onclick="DispMsg('<%=_TEX.T("UploadFilePc.Option.Publish.T_Disabled")%>');return false;"
 		<%}else{%>
-		   onclick="updateOptionTweet()"
+			 onclick="updateOptionTweet()"
 		<%}%>
 	>
 		<input id="OPTION_TWEET" type="checkbox">

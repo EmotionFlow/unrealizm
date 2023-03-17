@@ -112,7 +112,6 @@ public class IllustListC {
 			m_bOwner = true;
 		}
 
-		Pin pin = null;
 		List<Pin> pins = Pin.selectByUserId(m_nUserId);
 
 		CacheUsers0000 users  = CacheUsers0000.getInstance();
@@ -340,31 +339,31 @@ public class IllustListC {
 				statement.setInt(idx++, pins.get(0).contentId);
 				resultSet = statement.executeQuery();
 				if (resultSet.next()) {
-					CContent cContent;
+					CContent content;
 					if (m_nPage == 0) {
 						if (clientTimezoneOffset == TIMEZONE_OFFSET_DEFAULT) {
-							cContent = new CContent(resultSet);
+							content = new CContent(resultSet);
 						} else {
-							cContent = new CContent(resultSet, clientTimezoneOffset);
+							content = new CContent(resultSet, clientTimezoneOffset);
 						}
 
-						final CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-						cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
-						cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
-						cContent.m_cUser.m_nFollowing = m_cUser.m_nFollowing;
-						cContent.m_cUser.m_nReaction = m_cUser.m_nReaction;
-						cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
-						cContent.pinOrder = 1;
+						final CacheUsers0000.User user = users.getUser(content.m_nUserId);
+						content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+						content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+						content.m_cUser.m_nFollowing = m_cUser.m_nFollowing;
+						content.m_cUser.m_nReaction = m_cUser.m_nReaction;
+						content.m_strDescriptionTranslated = resultSet.getString("description_translated");
+						content.pinOrder = 1;
 					} else {
-						cContent = new CContent();
+						content = new CContent();
 					}
 					// Emoji
 					if(m_cUser.m_nReaction==CUser.REACTION_SHOW) {
 						try (Connection con = DatabaseUtil.dataSource.getConnection()) {
-							GridUtil.getComment(con, cContent);
+							GridUtil.getComment(con, content);
 						}
 					}
-					pinContents.add(cContent);
+					pinContents.add(content);
 				}
 
 				if (pinContents.size() > 0 && checkLogin.m_bLogin) {
@@ -459,20 +458,20 @@ public class IllustListC {
 
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				CContent cContent;
+				CContent content;
 				if (clientTimezoneOffset == TIMEZONE_OFFSET_DEFAULT) {
-					cContent = new CContent(resultSet);
+					content = new CContent(resultSet);
 				} else {
-					cContent = new CContent(resultSet, clientTimezoneOffset);
+					content = new CContent(resultSet, clientTimezoneOffset);
 				}
-				if (!pins.isEmpty() && cContent.m_nContentId == pins.get(0).contentId) {
+				if (!pins.isEmpty() && content.m_nContentId == pins.get(0).contentId) {
 					continue;
 				}
-				final CacheUsers0000.User user = users.getUser(cContent.m_nUserId);
-				cContent.m_cUser.m_strNickName	= Util.toString(user.nickName);
-				cContent.m_cUser.m_strFileName	= Util.toString(user.fileName);
-				cContent.m_strDescriptionTranslated = resultSet.getString("description_translated");
-				contentList.add(cContent);
+				final CacheUsers0000.User user = users.getUser(content.m_nUserId);
+				content.m_cUser.m_strNickName	= Util.toString(user.nickName);
+				content.m_cUser.m_strFileName	= Util.toString(user.fileName);
+				content.m_strDescriptionTranslated = resultSet.getString("description_translated");
+				contentList.add(content);
 			}
 			resultSet.close();resultSet=null;
 			statement.close();statement=null;

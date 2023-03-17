@@ -51,6 +51,8 @@ public class UpFileAppendC extends UpC {
 				appendIds.add(0);
 				fileNames.add(resultSet.getString("file_name"));
 			}
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			sql = "SELECT append_id, file_name FROM contents_appends_0000 WHERE content_id=? ORDER BY append_id";
 			statement = connection.prepareStatement(sql);

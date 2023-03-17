@@ -4,7 +4,7 @@
 CheckLogin checkLogin = new CheckLogin(request, response);
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -20,7 +20,6 @@ boolean bRtn = results.getResults(checkLogin);
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
 		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<%if(results.tagList.size()<=0) {%>
@@ -30,12 +29,10 @@ boolean bRtn = results.getResults(checkLogin);
 				<%}%>
 
 				<%
-				int nSpMode = isApp ? CCnv.SP_MODE_APP : CCnv.SP_MODE_WVIEW;
 				for(int nCnt = 0; nCnt<results.tagList.size(); nCnt++) {
 					CTag cTag = results.tagList.get(nCnt);%>
-					<%=CCnv.toHtml(cTag, CCnv.MODE_SP, _TEX, nSpMode)%>
-					<%if((nCnt+1)%9==0) {%><%@ include file="/inner/TAd336x280_mid.jsp"%><%}
-				}%>
+					<%=CCnv.toHtmlTag(cTag, results.sampleContentFile.get(nCnt), checkLogin.m_nUserId)%>
+				<%}%>
 			</div>
 		</article>
 	</body>

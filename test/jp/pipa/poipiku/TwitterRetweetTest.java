@@ -1,17 +1,14 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.util.CTweet;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TwitterRetweetTest {
-	private static final int testUserId = 88888888;
+	//private static final int testUserId = 88888888;
 
 	@BeforeEach
 	void clearTable() throws Exception {

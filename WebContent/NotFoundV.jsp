@@ -15,11 +15,15 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 	</head>
 
 	<body>
+		<%@ include file="/inner/TMenuPc.jsp"%>
+
 		<article class="Wrapper">
 			<div style="box-sizing: border-box; width: 100%; float: left; text-align: center; padding: 70px 10px;">
 				<h1><%=_TEX.T("NotFound.TitleBar")%></h1>
 				<%=_TEX.T("NotFound.Detail")%>
 			</div>
 		</article>
+
+		<%@ include file="/inner/TFooter.jsp"%>
 	</body>
 </html>

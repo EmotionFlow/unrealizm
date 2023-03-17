@@ -56,26 +56,26 @@ try {
 		result.put("mytag_list", myTagList);
 
 		List<Map<String, Object>> contentList = new ArrayList<>();
-		for(CContent cContent : results.contentList) {
+		for(CContent content : results.contentList) {
 			String strCategory = "";
 			for(int nCategoryId : Common.CATEGORY_ID) {
-				if (nCategoryId==cContent.m_nCategoryId) {
+				if (nCategoryId==content.m_nCategoryId) {
 					strCategory = _TEX.T(String.format("Category.C%d", nCategoryId));
 					break;
 				}
 			}
 
 			Map<String, Object> content = new HashMap<>();
-			content.put("content_id", cContent.m_nContentId);
-			content.put("url", Common.GetUrl(cContent.m_strFileName));
-			content.put("tag_list", cContent.m_strTagList);
-			content.put("description", cContent.m_strDescription);
+			content.put("content_id", content.m_nContentId);
+			content.put("url", Common.GetUrl(content.m_strFileName));
+			content.put("tag_list", content.m_strTagList);
+			content.put("description", content.m_strDescription);
 			content.put("category", strCategory);
-			content.put("category_id", cContent.m_nCategoryId);
-			content.put("open_id", cContent.m_nOpenId);
-			content.put("publish_id", cContent.m_nPublishId);
-			content.put("content_twitter_link", CTweet.generateAfterTweetMsg(cContent, _TEX));
-			content.put("file_num", cContent.m_nFileNum);
+			content.put("category_id", content.m_nCategoryId);
+			content.put("open_id", content.m_nOpenId);
+			content.put("publish_id", content.m_nPublishId);
+			content.put("content_twitter_link", CTweet.generateAfterTweetMsg(content, _TEX));
+			content.put("file_num", content.m_nFileNum);
 			contentList.add(content);
 		}
 		result.put("content_list", contentList);

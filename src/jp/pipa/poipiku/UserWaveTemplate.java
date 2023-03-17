@@ -1,6 +1,5 @@
 package jp.pipa.poipiku;
 
-import jp.pipa.poipiku.settlement.epsilon.User;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 

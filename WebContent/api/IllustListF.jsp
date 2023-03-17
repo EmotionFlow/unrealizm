@@ -60,26 +60,26 @@ try {
 
 		//画像の情報(配列)
 		List<Map<String, Object>> imglist = new ArrayList<Map<String, Object>>();
-		for(CContent cContent : results.contentList) {
+		for(CContent content : results.contentList) {
 			//カテゴリ名設定
 			String strCategory = "";
 			for(int nCategoryId : Common.CATEGORY_ID) {
-				if (nCategoryId==cContent.m_nCategoryId) {
+				if (nCategoryId==content.m_nCategoryId) {
 					strCategory = _TEX.T(String.format("Category.C%d", nCategoryId));
 					break;
 				}
 			}
 
 			Map<String, Object> img = new HashMap<String, Object>();
-			img.put("content_id", cContent.m_nContentId);
-			img.put("url", Common.GetUrl(cContent.m_strFileName));
-			img.put("tag_list", cContent.m_strTagList);
-			img.put("description", cContent.m_strDescription);
+			img.put("content_id", content.m_nContentId);
+			img.put("url", Common.GetUrl(content.m_strFileName));
+			img.put("tag_list", content.m_strTagList);
+			img.put("description", content.m_strDescription);
 			img.put("category", strCategory);
-			img.put("category_id", cContent.m_nCategoryId);
-			img.put("publish_id", cContent.m_nPublishId);
-			img.put("content_twitter_link", CTweet.generateAfterTweetMsg(cContent, _TEX));
-			img.put("file_num", cContent.m_nFileNum);
+			img.put("category_id", content.m_nCategoryId);
+			img.put("publish_id", content.m_nPublishId);
+			img.put("content_twitter_link", CTweet.generateAfterTweetMsg(content, _TEX));
+			img.put("file_num", content.m_nFileNum);
 			imglist.add(img);
 		}
 		user.put("content_list", imglist);

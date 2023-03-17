@@ -111,8 +111,6 @@ public final class DownloadImageFile extends HttpServlet {
 				boolean isOwner = false;
 				boolean isRequestClient = false;
 				boolean okDownloadOthers = false;
-				int publishId = -1;
-				int openId = -1;
 
 				connection = DatabaseUtil.dataSource.getConnection();
 

@@ -80,12 +80,11 @@ try {
 		user.put("new_email_address", results.m_strNewEmail);
 		user.put("email_address_confirmed", !results.m_bUpdate);
 		user.put("terms_of_service_url", "/RuleS.jsp");
-		user.put("guidelines_url", "/GuideLineV.jsp");
+		user.put("guidelines_url", "/GuideLineAppV.jsp");
 		user.put("privacy_policy_url", "/PrivacyPolicyS.jsp");
 		user.put("info_account_url", "/IllustListAppV.jsp?ID=2");
 		user.put("official_twitter_url", "https://twitter.com/pipajp");
 		user.put("inquiry_url", "https://cs.pipa.jp/InquiryAppV.jsp");
-		user.put("how_to_use", "/how_to/TopV.jsp");
 	}
 
 	//JSONに変換して出力

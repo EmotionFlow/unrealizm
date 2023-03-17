@@ -45,7 +45,6 @@ public final class UpdateC extends UpC {
 		ResultSet resultSet = null;
 		String strSql = "";
 		int idx = 0;
-		int publishIdPresent = -1;
 		String tweetId = "";
 		int openIdPresent = 2;
 		Timestamp uploadDatePresent = new Timestamp(0);
@@ -65,7 +64,7 @@ public final class UpdateC extends UpC {
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				openIdPresent = resultSet.getInt("open_id");
-				publishIdPresent = resultSet.getInt("publish_id");
+				//int publishIdPresent = resultSet.getInt("publish_id");
 				tweetId = resultSet.getString("tweet_id");
 				limitedTimePublishPresent = resultSet.getBoolean("limited_time_publish");
 				uploadDatePresent = resultSet.getTimestamp("upload_date");

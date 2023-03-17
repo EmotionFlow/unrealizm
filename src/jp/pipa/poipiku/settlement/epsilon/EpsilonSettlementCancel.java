@@ -20,7 +20,6 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -60,19 +59,19 @@ public class EpsilonSettlementCancel extends EpsilonSettlement{
 	public SettlementCancelResultInfo execCancel(){
 		// 決済情報送信
 		// 送信用の設定を作成
-		RequestConfig rc = RequestConfig.custom().setConnectTimeout(10000)
-				.setSocketTimeout(10000)
-				.setMaxRedirects(0)
-				.build();
+//		RequestConfig rc = RequestConfig.custom().setConnectTimeout(10000)
+//				.setSocketTimeout(10000)
+//				.setMaxRedirects(0)
+//				.build();
 		// Header定義
 		List<Header> header = new ArrayList<Header>();
 		header.add( new BasicHeader("Accept-Charset","UTF-8" ))	;
 		header.add( new BasicHeader("User-Agent","EPSILON SAMPLE PROGRAM JAVA" ));
 
-		HttpClient client = HttpClientBuilder.create()
-				.setDefaultRequestConfig(rc)
-				.setDefaultHeaders(header)
-				.build();
+//		HttpClient client = HttpClientBuilder.create()
+//				.setDefaultRequestConfig(rc)
+//				.setDefaultHeaders(header)
+//				.build();
 
 		List<NameValuePair> param = this.makeSendParam();
 		Log.d("key => value");

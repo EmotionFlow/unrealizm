@@ -31,8 +31,8 @@ public class GetContentsByUserC {
 
 	public int selectMaxGallery = 10;
 	public boolean isOwner = false;
-	public final int SELECT_MAX_RELATED_GALLERY = 9;
-	public final int SELECT_MAX_RECOMMENDED_GALLERY = 9;
+	public final int SELECT_MAX_RELATED_GALLERY = 4;
+	public final int SELECT_MAX_RECOMMENDED_GALLERY = 4;
 
 	public CacheUsers0000.User owner;
 	public ArrayList<CContent> contentList = new ArrayList<>();

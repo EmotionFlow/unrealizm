@@ -3,23 +3,18 @@
 <%
 final CheckLogin checkLogin = new CheckLogin(request, response);
 
-final boolean bSmartPhone = isApp || Util.isSmartPhone(request);
 final RequestNewC results = new RequestNewC();
 results.getParam(request);
 
 if (!results.getResults(checkLogin)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<%if(isApp){%>
-	<%@ include file="/inner/THeaderCommon.jsp" %>
-	<%}else{%>
-	<%@ include file="/inner/THeaderCommonNoindexPc.jsp" %>
-	<%}%>
+	<%@ include file="/inner/THeaderCommon.jsp"%>
 	<%@ include file="/inner/TCreditCard.jsp"%>
 	<%@ include file="../TRequestIntroduction.jsp"%>
 	<title><%=_TEX.T("THeader.Title")%> - Request </title>
@@ -107,7 +102,7 @@ if (!results.getResults(checkLogin)) {
 							DispMsg("依頼を送りました！", 5000);
 						}
 						window.setTimeout(() => {
-							<%if(isApp){%>
+							<%if(g_isApp){%>
 							location.href = "/IllustListAppV.jsp?ID=" + parseInt(requestInfo.CREATOR, 10);
 							<%}else{%>
 							location.href = "/" + parseInt(requestInfo.CREATOR, 10);
@@ -336,46 +331,46 @@ if (!results.getResults(checkLogin)) {
 
 	<style>
 		<%if(!results.user.m_strHeaderFileName.isEmpty()){%>
-        .UserInfo {background-image: url('<%=Common.GetUrl(results.user.m_strHeaderFileName)%>');}
+				.UserInfo {background-image: url('<%=Common.GetUrl(results.user.m_strHeaderFileName)%>');}
 		<%}%>
 
 		<%if(results.user.m_nPassportId>=Common.PASSPORT_ON && !results.user.m_strBgFileName.isEmpty()) {%>
-         body {
-             background-image: url('<%=Common.GetUrl(results.user.m_strBgFileName)%>');
-             background-repeat: repeat;
-             background-position: 50% top;
-             background-attachment: fixed;
-         }
-		 .UploadFile {
-             background-color: rgba(0,0,0,0.4);
-		 }
+				body {
+						background-image: url('<%=Common.GetUrl(results.user.m_strBgFileName)%>');
+						background-repeat: repeat;
+						background-position: 50% top;
+						background-attachment: fixed;
+				}
+		.UploadFile {
+						background-color: rgba(0,0,0,0.4);
+		}
 		<%}%>
 
 		.RequestTitle {
-            text-align: center;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            font-size: 16px;
+						text-align: center;
+						font-weight: bold;
+						width: 100%;
+						margin-top: 10px;
+						margin-bottom: 10px;
+						font-size: 16px;
 		}
 		.RequestRule {
-            background-color: #f6fafd;
-            color: #000;
-            border-radius: 10px;
-            margin: 4px;
-            padding: 1px;
+						background-color: #f6fafd;
+						color: #000;
+						border-radius: 10px;
+						margin: 4px;
+						padding: 1px;
 			font-size: 13px;
 		}
 		#EditAmount {
-            text-align: right;
-            width: 130px;
-            padding-right: 2px;
+						text-align: right;
+						width: 130px;
+						padding-right: 2px;
 		}
 		.RequestAmountUnit {
-            position: relative;
-            top: 6px;
-            margin-right: 3px;
+						position: relative;
+						top: 6px;
+						margin-right: 3px;
 		}
 		.RequestLicenseDetail {
 			padding: 0 5px;
@@ -385,16 +380,14 @@ if (!results.getResults(checkLogin)) {
 </head>
 <body>
 
-<%if(!isApp){%>
 <%@ include file="/inner/TMenuPc.jsp"%>
-<%}%>
 
-<article class="Wrapper" <%if(!bSmartPhone){%>style="width: 100%;"<%}%>>
+<article class="Wrapper">
 	<div class="UserInfo Float">
 		<span id="UserInfoCmdBlock"
-			  class="BtnBase UserInfoCmdBlock Selected"
-			  style="text-shadow: none;"
-			  onclick="dispRequestIntroduction()">
+				class="BtnBase UserInfoCmdBlock Selected"
+				style="text-shadow: none;"
+				onclick="dispRequestIntroduction()">
 			<i class="fas fa-info-circle" style="font-size: 15px; margin-right: 4px;"></i><span id="UserInfoCmdBlockLabel" style="top:-1px">エアスケブとは</span>
 		</span>
 
@@ -410,7 +403,7 @@ if (!results.getResults(checkLogin)) {
 		</section>
 	</div>
 
-	<div class="UploadFile" style="<%if(!bSmartPhone){%>width: 60%; max-width: 60%; margin: 0 20%;<%}%>padding-bottom: 100px;">
+	<div class="UploadFile" style="padding-bottom: 100px;">
 		<div class="RequestTitle">
 			<%if(results.isBlocking || results.isBlocked){%>
 			<%=results.isBlocking ? "ブロック中です。" : "ブロックされています。"%>
@@ -465,8 +458,8 @@ if (!results.getResults(checkLogin)) {
 			依頼メッセージ
 			<div class="TextBodyCharNum" style="text-align: left;">クリエイターの意向を尊重してお伝えください</div>
 			<textarea id="EditRequestText" class="EditTextBody"
-					  maxlength="1000"
-					  onkeyup="dispRequestTextCharNum()"></textarea>
+						maxlength="1000"
+						onkeyup="dispRequestTextCharNum()"></textarea>
 			<div id="RequestTextCharNum" class="TextBodyCharNum">1</div>
 		</div>
 
@@ -475,9 +468,9 @@ if (!results.getResults(checkLogin)) {
 				<div class="OptionLabel">NSFW（ワンクッション・R18相当）</div>
 				<div class="onoffswitch OnOff <%=results.requestCreator.allowSensitive() ? "" : "disabled"%> ">
 					<input type="checkbox" class="onoffswitch-checkbox"
-						   name="OptionRecent"
-						   id="OptionRequestCategory"
-						   value="0"
+							name="OptionRecent"
+							id="OptionRequestCategory"
+							value="0"
 							<%=results.requestCreator.allowSensitive() ? "" : "onclick=\"return false;\""%>
 					/>
 					<label class="onoffswitch-label" for="OptionRequestCategory">
@@ -498,9 +491,9 @@ if (!results.getResults(checkLogin)) {
 				<div class="OptionLabel">匿名で依頼</div>
 				<div class="onoffswitch OnOff <%=results.requestCreator.allowAnonymous() ? "" : "disabled"%> ">
 					<input type="checkbox" class="onoffswitch-checkbox"
-						   name="OptionRecent"
-						   id="OptionAnonymousRequest"
-						   value="0"
+							name="OptionRecent"
+							id="OptionAnonymousRequest"
+							value="0"
 							<%=results.requestCreator.allowAnonymous() ? "" : "onclick=\"return false;\""%>
 					/>
 					<label class="onoffswitch-label" for="OptionAnonymousRequest">
@@ -542,11 +535,11 @@ if (!results.getResults(checkLogin)) {
 				<div class="OptionLabel">有償で依頼する</div>
 				<div class="onoffswitch OnOff ">
 					<input type="checkbox" class="onoffswitch-checkbox"
-						   name="OptionPaidRequest"
-						   id="OptionPaidRequest"
-						   value="0"
-						   checked="checked"
-						   onclick="$('#PaidOptionArea').toggle()"
+							name="OptionPaidRequest"
+							id="OptionPaidRequest"
+							value="0"
+							checked="checked"
+							onclick="$('#PaidOptionArea').toggle()"
 					/>
 					<label class="onoffswitch-label" for="OptionPaidRequest">
 						<span class="onoffswitch-inner"></span>

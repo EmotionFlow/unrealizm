@@ -2,13 +2,8 @@ package jp.pipa.poipiku.batch.spot;
 
 import jp.pipa.poipiku.batch.Batch;
 import jp.pipa.poipiku.batch.DBConnection;
-import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.SlackNotifier;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -30,10 +25,10 @@ public class SpotMoveImages2 extends Batch {
 	private static final String WEBHOOK_URL = "https://hooks.slack.com/services/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";
 	private static final SlackNotifier slackNotifier = new SlackNotifier(WEBHOOK_URL);
 
-	private static final Path RSYNC_CMD_PATH = Paths.get(isDebug ? "/opt/local/bin/rsync" : "/usr/bin/rsync");
-	private static final String FROM_IMG_PATH_FMT ="/var/www/html/ai_poipiku/user_img01/%09d";
-	private static final String TO_IMG_PATH_FMT = "/var/www/html/ai_poipiku/user_img%02d/%09d";
-	private static final Path DEV_NULL = Paths.get("/dev/null");
+//	private static final Path RSYNC_CMD_PATH = Paths.get(isDebug ? "/opt/local/bin/rsync" : "/usr/bin/rsync");
+//	private static final String FROM_IMG_PATH_FMT ="/var/www/html/ai_poipiku/user_img01/%09d";
+//	private static final String TO_IMG_PATH_FMT = "/var/www/html/ai_poipiku/user_img%02d/%09d";
+//	private static final Path DEV_NULL = Paths.get("/dev/null");
 
 	static class Target {
 		int userId;
@@ -68,7 +63,7 @@ public class SpotMoveImages2 extends Batch {
 		// HDDへの移動対象を抽出
 		List<Target> targets = new ArrayList<>();
 		try (Connection con = DBConnection.getDataSource().getConnection();
-		     PreparedStatement st = con.prepareStatement("""
+			PreparedStatement st = con.prepareStatement("""
 				select c.user_id, c.content_id, a.append_id, a.file_name
 				from contents_appends_0000 a inner join contents_0000 c ON a.content_id = c.content_id
 				where a.file_name like '%user_img01%' order by a.append_id limit 50;
@@ -88,7 +83,7 @@ public class SpotMoveImages2 extends Batch {
 
 
 		String sql = "";
-		OkHttpClient client = new OkHttpClient();
+		//OkHttpClient client = new OkHttpClient();
 
 		for (Target target : targets) {
 			Path contentFilePath = Paths.get("/var/www/html/ai_poipiku", target.fileName);
@@ -116,7 +111,7 @@ public class SpotMoveImages2 extends Batch {
 					""".formatted(userImageNumber);
 
 				try (Connection con = DBConnection.getDataSource().getConnection();
-				     PreparedStatement st = con.prepareStatement(sql)
+					PreparedStatement st = con.prepareStatement(sql)
 				) {
 					st.setInt(1, target.appendId);
 					st.executeUpdate();
@@ -142,7 +137,7 @@ public class SpotMoveImages2 extends Batch {
 						""".formatted(i);
 
 					try (Connection con = DBConnection.getDataSource().getConnection();
-					     PreparedStatement st = con.prepareStatement(sql)
+						PreparedStatement st = con.prepareStatement(sql)
 					) {
 						st.setInt(1, target.appendId);
 						st.executeUpdate();

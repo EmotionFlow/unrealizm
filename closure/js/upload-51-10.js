@@ -702,7 +702,7 @@ function updateMyTwitterList() {
 var updateMyTwitterListF = updateMyTwitterList();
 
 function tweetSucceeded(resultCode){
-	const toContext = "/MyIllustListPcV.jsp";
+	const toContext = "/MyIllustListV.jsp";
 	const nTimeOut = 5000;
 	if (resultCode != null) {
 		if (resultCode >= 0) { // 異常無し
@@ -1213,7 +1213,7 @@ function UploadPaste(userId) {
 				});
 			} else {
 				setTimeout(function(){
-					location.href="/MyIllustListPcV.jsp";
+					location.href="/MyIllustListV.jsp";
 				}, 1000);
 			}
 		}
@@ -1256,7 +1256,7 @@ function UploadText(userId, requestId) {
 						});
 					} else {
 						setTimeout(function(){
-							location.href="/MyIllustListPcV.jsp";
+							location.href="/MyIllustListV.jsp";
 						}, 1000);
 					}
 				}
@@ -1583,7 +1583,7 @@ function showCurrentTags(refresh=false) {
 		}
 	}
 	const tagRowsCnt = $tagList.find('li.DlgTagItem.CurrentTagItem').length;
-	$('#CurrentTagNum').text(`(${tagRowsCnt}/${tagMaxNum})`)
+	$('#CurrentTagNum').text(`(${tagRowsCnt}/${tagMaxNum})`);
 	if (tagRowsCnt) {
 		$('li.CurrentTagBlankRow').remove();
 	} else if (!$('li.CurrentTagBlankRow').length) {

@@ -2,14 +2,8 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean bSmartPhone = Util.isSmartPhone(request);
-
 if(!checkLogin.m_bLogin) {
-	if(isApp){
-		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
-	} else {
-		getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
-	}
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -44,7 +38,7 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				"type": "post",
 				"data": {"SD" : g_nEndId, "MD" : <%=CCnv.MODE_SP%>, "VD" : <%=CCnv.VIEW_DETAIL%>},
 				"dataType": "json",
-				"url": "/f/MyHomeTag<%=isApp?"App":""%>F.jsp",
+				"url": "/f/MyHomeTagF.jsp",
 				"success": function(data) {
 					if(data.end_id>0) {
 						g_nEndId = data.end_id;
@@ -77,12 +71,10 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 	</head>
 
 	<body>
-		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
-
 		<article class="Wrapper ItemList">
 			<div id="IllustThumbList" class="IllustThumbList">
 				<div style="width: 100%; box-sizing: border-box; padding: 10px 15px 0 15px; font-size: 16px; text-align: right;">
-					<a href="/MyHomeTagSetting<%=isApp?"App":""%>V.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
+					<a href="/MyHomeTagSettingV.jsp"><i class="fas fa-cog"></i> <%=_TEX.T("MyHomeTagSetting.Title")%></a>
 				</div>
 				<%if(results.contentList.size()<=0) {%>
 				<div id="InfoMsg" style="display:block; float: left; width: 100%; padding: 150px 10px 50px 10px; text-align: center; box-sizing: border-box;">
@@ -90,14 +82,11 @@ ArrayList<String> vResult = Emoji.getDefaultEmoji(checkLogin.m_nUserId);
 				</div>
 				<%}%>
 				<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-					CContent cContent = results.contentList.get(nCnt);%>
-					<%if(isApp){%>
-						<%= CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
+					CContent content = results.contentList.get(nCnt);%>
+					<%if(g_isApp){%>
+						<%= CCnv.Content2Html(content, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_APP)%>
 					<%}else{%>
-						<%= CCnv.Content2Html(cContent, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
-					<%}%>
-					<%if((nCnt+1)%5==0) {%>
-					<%@ include file="/inner/TAd336x280_mid.jsp"%>
+						<%= CCnv.Content2Html(content, checkLogin, CCnv.MODE_SP, _TEX, vResult, CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW)%>
 					<%}%>
 				<%}%>
 			</div>

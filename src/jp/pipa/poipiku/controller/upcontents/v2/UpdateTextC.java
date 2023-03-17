@@ -19,7 +19,6 @@ public final class UpdateTextC extends UpC {
 		ResultSet resultSet = null;
 		String sql = "";
 		int idx = 0;
-		int nPublishIdPresend = -1;
 		String strTweetId = "";
 		int nOpenIdPresent = 2;
 		Timestamp tsUploadDatePresent = new Timestamp(0);
@@ -40,7 +39,7 @@ public final class UpdateTextC extends UpC {
 			resultSet = statement.executeQuery();
 			if(resultSet.next()) {
 				nOpenIdPresent = resultSet.getInt("open_id");
-				nPublishIdPresend = resultSet.getInt("publish_id");
+				//int nPublishIdPresend = resultSet.getInt("publish_id");
 				strTweetId = resultSet.getString("tweet_id");
 				bLimitedTimePublishPresent = resultSet.getBoolean("limited_time_publish");
 				tsUploadDatePresent = resultSet.getTimestamp("upload_date");

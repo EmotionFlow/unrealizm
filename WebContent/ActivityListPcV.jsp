@@ -4,7 +4,7 @@
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 if (!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request, response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request, response);
 	return;
 }
 
@@ -25,7 +25,7 @@ if (infoType==-1) infoType = 1;
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 <head>
-	<%@ include file="/inner/THeaderCommonPc.jsp" %>
+	<%@ include file="/inner/THeaderCommon.jsp" %>
 	<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%>
 	</title>
 
@@ -98,12 +98,6 @@ if (infoType==-1) infoType = 1;
 			});
 		});
 	</script>
-
-	<style>
-        body {
-            padding-top: 51px !important;
-        }
-	</style>
 </head>
 <body>
 <%@ include file="/inner/TMenuPc.jsp"%>
@@ -117,9 +111,7 @@ if (infoType==-1) infoType = 1;
 	</ul>
 </nav>
 
-<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp" %>
-
-<article class="Wrapper ItemList" style="padding-top: 30px">
+<article class="Wrapper ItemList" style="padding-top: 28px">
 	<div class="IllustItemList" style="min-height: 600px;">
 		<div id="ActivityList" class="ActivityList">
 		</div>

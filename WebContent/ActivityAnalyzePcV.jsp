@@ -4,7 +4,7 @@
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -26,7 +26,7 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("ActivityList.Title")%></title>
 
 		<script type="text/javascript">
@@ -108,7 +108,6 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 			});
 		</script>
 		<style>
-			body {padding-top: 51px !important;}
 			.IllustItemList {background: #fff;}
 			#AnalyzeList {display: flex; flex-flow: column; align-items: center;}
 			.AnalyzeItem {flex: 0 0 80%; width: 80%; display: flex; flex-flow: row nowrap; background: #3498db; margin: 5px 0; box-sizing: border-box; padding: 5px 10px;}
@@ -129,9 +128,7 @@ if (summaryResults.activityCounts.containsKey(InfoList.InfoType.Request)) {
 			</ul>
 		</nav>
 
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
-
-		<article class="Wrapper" style="padding-top: 56px">
+		<article class="Wrapper" style="padding-top: 28px">
 			<nav id="CategoryMenu" class="CategoryMenu" style="display: none;">
 				<a class="BtnBase CategoryBtn Selected" onclick="changeCategory(this, 0)"><%=_TEX.T("ActivityList.Category.7days")%></a>
 				<a class="BtnBase CategoryBtn" onclick="changeCategory(this, 1)"><%=_TEX.T("ActivityList.Category.30days")%></a>

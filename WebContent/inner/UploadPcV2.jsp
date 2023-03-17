@@ -8,7 +8,7 @@ boolean isCreateContent = true;
 final CContent content = null;
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -37,7 +37,7 @@ if (requestId > 0) {
 <!DOCTYPE html>
 <html lang="<%=_TEX.getLangStr()%>">
 	<head>
-		<%@ include file="/inner/THeaderCommonPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<link href="/js/flatpickr/flatpickr.min.css" type="text/css" rel="stylesheet" />
 		<link href="/css/upload-206-5.css" type="text/css" rel="stylesheet" />
 
@@ -69,11 +69,7 @@ if (requestId > 0) {
 			}
 
 			function onCompleteUpload(){
-				<%if(requestId<0){%>
-				location.href = "/MyIllustListPcV.jsp";
-				<%}else{%>
-				location.href = "/MyRequestListPcV.jsp?MENUID=RECEIVED&ST=3";
-				<%}%>
+				location.href = "/MyIllustListV.jsp";
 			}
 
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
@@ -123,18 +119,13 @@ if (requestId > 0) {
 			<%}%>
 
 			$(function() {
-				<%if(Util.isSmartPhone(request)){%>
 				$('#MenuUpload').addClass('Selected');
-				<%}else{%>
-				$('#HeaderMenuUpload').addClass('Selected');
-				<%}%>
 				initUploadParams(<%=cTweet.m_bIsTweetEnable%>);
 				DispDescCharNum();
 			});
 		</script>
 
 		<style>
-			body {padding-top: 51px !important; background-color: #f5f5f5; color: #000}
 			<%if(nEditorId==Common.EDITOR_UPLOAD){%>
 			.qq-gallery.qq-uploader {width: 100%;box-sizing: border-box; margin: 0; padding: 0; min-height: 113px; background: #fff; color: #000; max-height: none; border: solid;}
 			.qq-gallery .qq-upload-list {padding: 0; max-height: none;}
@@ -146,16 +137,7 @@ if (requestId > 0) {
 			.qq-gallery .qq-upload-retry {display: none;}
 			.qq-gallery .qq-thumbnail-wrapper {height: 101px; width: 101px; border-radius: 6px;}
 			.qq-gallery .qq-upload-cancel {right: -8px; top: -8px; width: 26px; height: 26px; line-height: 20px; font-size: 12px; padding: 0; border: solid 3px #fafafa; border-radius: 30px;}
-				<%if(!Util.isSmartPhone(request)) {%>
-				.qq-gallery.qq-uploader {min-height: 193px;}
-				.qq-gallery .qq-upload-list li {margin: 7px; height: 177px; max-width: 177px;}
-				.qq-gallery .qq-thumbnail-wrapper {height: 177px; width: 177px;}
-				<%}%>
 			<%}else if(nEditorId==Common.EDITOR_PASTE){%>
-				<%if(!Util.isSmartPhone(request)) {%>
-				.PasteZone {min-height: 193px;}
-				.UploadFile .InputFile {margin: 8px; height: 177px; width: 177px;}
-				<%}%>
 			<%}%>
 			#TwitterListLoading {
 				display: block;
@@ -201,11 +183,10 @@ if (requestId > 0) {
 		<%if(nEditorId==Common.EDITOR_TEXT){%>
 		<%@ include file="/inner/TAdPoiPassHeaderUploadTextPcV.jsp"%>
 		<%}else{%>
-		<%@ include file="/inner/TAdPoiPassHeaderPcV.jsp"%>
 		<%}%>
 		<%}%>
 
-		<article class="Wrapper" style="padding-top: 10px">
+		<article class="Wrapper" style="padding-top: 28px">
 			<div class="UploadFile" <%if(requestId>0){%>style="padding-bottom: 80px"<%}%>>
 				<%if(requestId>0){%>
 				<div class="RequestText">
@@ -227,14 +208,14 @@ if (requestId > 0) {
 					<span id="TotalSize" class="TotalSize">(multi ver. 0.2beta. 10pastes)</span>
 					<div id="TimeLineAddImage" class="SelectImageBtn BtnBase" contenteditable>
 						<i class="fas fa-paste"></i>
-						<%=(Util.isSmartPhone(request))?_TEX.T("UploadFilePc.PasteImg.SP"):_TEX.T("UploadFilePc.PasteImg")%>
+						<%=_TEX.T("UploadFilePc.PasteImg.SP")%>
 					</div>
 				</div>
 				<%}%>
 
 				<div class="CategoryDesc">
 					<span>
-						<label id="EditCategoryLabel" for="EditCategory"><i class="fas fa-terminal"></i></label>
+						<label id="EditCategoryLabel" for="EditCategory"></label>
 						<select id="EditCategory">
 							<%for(int nCategoryId : Common.CATEGORY_ID) {%>
 							<option value="<%=nCategoryId%>"><%=_TEX.T(String.format("Category.C%d", nCategoryId))%></option>

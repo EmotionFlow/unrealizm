@@ -3,8 +3,6 @@ package jp.pipa.poipiku.notify;
 import jp.pipa.poipiku.InfoList;
 import jp.pipa.poipiku.ResourceBundleControl;
 import jp.pipa.poipiku.SupportedLocales;
-import jp.pipa.poipiku.cache.CacheUsers0000;
-
 import java.util.Locale;
 
 public final class EmojiNotifier extends Notifier {

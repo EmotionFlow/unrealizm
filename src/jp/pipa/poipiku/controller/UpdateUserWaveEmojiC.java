@@ -1,13 +1,10 @@
 package jp.pipa.poipiku.controller;
 
 import jp.pipa.poipiku.CheckLogin;
-import jp.pipa.poipiku.CommentTemplate;
-import jp.pipa.poipiku.Emoji;
 import jp.pipa.poipiku.UserWaveTemplate;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 
 public class UpdateUserWaveEmojiC {
 	static public final int MAX_EMOJI_NUM = 4;

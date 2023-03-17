@@ -35,21 +35,23 @@ public class NotifyTwitterFollowerRegistered extends Batch {
 			resultSet = statement.executeQuery();
 			resultSet.next();
 			userIdFrom = resultSet.getInt(1) + 1;
-			resultSet.close();
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			sql = "SELECT MAX(user_id) FROM users_0000";
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			resultSet.next();
 			userIdTo = resultSet.getInt(1);
-			resultSet.close();
+			resultSet.close();resultSet=null;
+			statement.close();statement=null;
 
 			userIdTo = Math.min(userIdFrom + MAX_USER, userIdTo);
 
 			Log.d(String.format("%d - %d", userIdFrom, userIdTo));
 
 			RegisteredNotifier registeredNotifier = new RegisteredNotifier();
-			boolean result = registeredNotifier.notifyToMyTwitterFollower(dataSource, userIdFrom, userIdTo);
+			registeredNotifier.notifyToMyTwitterFollower(dataSource, userIdFrom, userIdTo);
 
 			sql = "UPDATE counters SET num1=? WHERE id=1";
 			statement = connection.prepareStatement(sql);

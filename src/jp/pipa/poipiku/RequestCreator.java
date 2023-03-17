@@ -4,8 +4,6 @@ import jp.pipa.poipiku.cache.CacheUsers0000;
 import jp.pipa.poipiku.util.DatabaseUtil;
 import jp.pipa.poipiku.util.Log;
 
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.sql.*;
 
 
@@ -158,13 +156,13 @@ public final class RequestCreator extends Model{
 	public boolean allowAnonymous() {
 		return allowClient == ALLOW_CLIENT_ANONYMOUS;
 	}
-	
+
 	public int tryInsert() {
 		if (userId < 0) return -1;
 		Connection cConn = null;
 		PreparedStatement cState = null;
 		ResultSet cResSet = null;
-		
+
 		int result = 0;
 
 		String strSql = "";
@@ -208,7 +206,7 @@ public final class RequestCreator extends Model{
 		}
 		return result;
 	}
-	
+
 	private boolean update(String column, Integer intValue, String strValue, Boolean boolValue){
 		if (userId < 0) return false;
 		if (!exists) tryInsert();
@@ -279,7 +277,7 @@ public final class RequestCreator extends Model{
 			try{if(connection!=null){connection.close();connection=null;}}catch(Exception e){;}
 		}
 	}
-	
+
 	public boolean updateStatus(final Status _status) {
 		if (!update("status", _status.getCode())){
 			return false;

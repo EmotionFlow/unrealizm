@@ -85,7 +85,7 @@ function initUpdateFile(fileNumMax, fileSizeMax, userId, contentId) {
 						} else {
 							completeMsg();
 							setTimeout(function(){
-								location.href="/MyIllustListPcV.jsp";
+								location.href="/MyIllustListV.jsp";
 							}, 2000);
 						}
 					}).fail(()=>{console.log("UpdateFileOrderAjax failed")});
@@ -244,7 +244,7 @@ function UpdateFile(userId, contentId) {
 						}else{
 							completeMsg();
 							setTimeout(function(){
-								location.href="/MyIllustListPcV.jsp";
+								location.href="/MyIllustListV.jsp";
 							}, 2000);
 						}
 					});

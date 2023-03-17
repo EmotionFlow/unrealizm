@@ -9,9 +9,8 @@ String strDebug = "";
 
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
-
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -392,8 +391,6 @@ if(results.m_bUpdate) {
 	</head>
 
 	<body>
-		<div id="DispMsg"></div>
-
 		<article class="Wrapper">
 			<div class="SettingList">
 				<div class="SettingListItem">
@@ -683,9 +680,8 @@ if(results.m_bUpdate) {
 				<div class="SettingListItem" style="margin-bottom: 15px; border-bottom: none;">
 					<div class="SettingListTitle"><%=_TEX.T("HowTo.Title")%>/<%=_TEX.T("Footer.Term")%>/<%=_TEX.T("Footer.Information")%></div>
 					<div class="SettingBody">
-						<a href="/how_to/TopV.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("HowTo.Title")%></a><br />
 						<a href="/RuleS.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("Footer.Term")%></a><br />
-						<a href="/GuideLineV.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("Footer.GuideLine")%></a><br />
+						<a href="/GuideLineAppV.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("Footer.GuideLine")%></a><br />
 						<a href="/PrivacyPolicyS.jsp" style="font-size: 14px; text-decoration: underline; color: #000;"><%=_TEX.T("Footer.PrivacyPolicy")%></a><br />
 						<a href="https://twitter.com/pipajp" style="font-size: 14px; text-decoration: underline; color: #000;" target="_blank"><%=_TEX.T("Footer.Link.Info")%> (<%=_TEX.T("Footer.Information")%>)</a><br />
 					</div>

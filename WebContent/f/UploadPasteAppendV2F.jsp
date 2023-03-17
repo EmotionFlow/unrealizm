@@ -4,7 +4,6 @@
 <%@include file="/inner/Common.jsp"%>
 <%
 CheckLogin checkLogin = new CheckLogin(request, response);
-boolean isApp = false;
 
 int nRtn = 0;
 UploadFileAppendCParam cParam = new UploadFileAppendCParam(getServletContext());
@@ -13,7 +12,7 @@ nRtn = cParam.GetParam(request);
 
 if( checkLogin.m_bLogin && cParam.userId ==checkLogin.m_nUserId && nRtn==0 ) {
 	UploadFileAppendC results = new UploadFileAppendC(getServletContext());
-	nRtn = results.GetResults(cParam, _TEX, true, isApp);
+	nRtn = results.GetResults(cParam, _TEX, true, g_isApp);
 }
 %>
 {"append_id":<%=nRtn%>}

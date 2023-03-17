@@ -1,15 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/inner/Common.jsp"%>
-<% boolean isApp = true; %>
 <%
 //login check
 CheckLogin checkLogin = new CheckLogin(request, response);
 if(!checkLogin.m_bLogin) {
-	if(isApp){
-		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
-	} else {
-		getServletContext().getRequestDispatcher("/StartUnrealizmV.jsp").forward(request,response);
-	}
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -86,7 +81,6 @@ if (infoType==-1) infoType = 1;
 		</script>
 	</head>
 	<body>
-		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
 		<article class="Wrapper ItemList">
 			<div class="IllustItemList" style="min-height: 600px;">
 				<div id="ActivityList" class="ActivityList">

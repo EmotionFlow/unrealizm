@@ -32,7 +32,7 @@
 }
 
 class GetIllustFileListC {
-	public CContent m_cContent = new CContent();
+	public CContent content = new CContent();
 	public ArrayList<Object> m_vContent = new ArrayList<Object>();
 
 	public int GetResults(GetIllustFileListCParam cParam, ResourceBundleControl _TEX) {
@@ -71,19 +71,19 @@ class GetIllustFileListC {
 			cState.setInt(2, cParam.m_nContentId);
 			cResSet = cState.executeQuery();
 			if (cResSet.next()) {
-				m_cContent.m_nCategoryId = cResSet.getInt("category_id");
-				m_cContent.m_nOpenId = cResSet.getInt("open_id");
-				m_cContent.m_nPublishId = cResSet.getInt("publish_id");
-				m_cContent.m_strTagList = cResSet.getString("tag_list");
-				m_cContent.m_strDescription = cResSet.getString("description");
-				m_cContent.m_strPassword = cResSet.getString("password");
-				m_cContent.m_nTweetWhenPublished = cResSet.getInt("tweet_when_published");
-				m_cContent.m_strListId = cResSet.getString("list_id");
-				m_cContent.m_bLimitedTimePublish = cResSet.getBoolean("limited_time_publish");
-				m_cContent.m_timeUploadDate = cResSet.getTimestamp("upload_date");
-				m_cContent.m_timeEndDate = cResSet.getTimestamp("end_date");
-				m_cContent.m_bNotRecently = cResSet.getBoolean("not_recently");
-				m_cContent.m_strTweetId = cResSet.getString("tweet_id");
+				content.m_nCategoryId = cResSet.getInt("category_id");
+				content.m_nOpenId = cResSet.getInt("open_id");
+				content.m_nPublishId = cResSet.getInt("publish_id");
+				content.m_strTagList = cResSet.getString("tag_list");
+				content.m_strDescription = cResSet.getString("description");
+				content.m_strPassword = cResSet.getString("password");
+				content.m_nTweetWhenPublished = cResSet.getInt("tweet_when_published");
+				content.m_strListId = cResSet.getString("list_id");
+				content.m_bLimitedTimePublish = cResSet.getBoolean("limited_time_publish");
+				content.m_timeUploadDate = cResSet.getTimestamp("upload_date");
+				content.m_timeEndDate = cResSet.getTimestamp("end_date");
+				content.m_bNotRecently = cResSet.getBoolean("not_recently");
+				content.m_strTweetId = cResSet.getString("tweet_id");
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;
@@ -125,19 +125,19 @@ try {
 		}
 		content.put("user_id", cParam.m_nUserId);
 		content.put("content_id", cParam.m_nContentId);
-		content.put("category", results.m_cContent.m_nCategoryId);
-		content.put("description", Util.toString(results.m_cContent.m_strDescription));
-		content.put("password", Util.toString(results.m_cContent.m_strPassword));
-		content.put("tag_list", Util.toString(results.m_cContent.m_strTagList));
-		content.put("open_id", results.m_cContent.m_nOpenId);
-		content.put("publish_id", results.m_cContent.m_nPublishId);
-		content.put("not_recently", results.m_cContent.m_bNotRecently);
-		content.put("limited_time_publish", results.m_cContent.m_bLimitedTimePublish);
-		content.put("start_date", Util.toYMDHMString(results.m_cContent.m_timeUploadDate));
-		content.put("end_date", Util.toYMDHMString(results.m_cContent.m_timeEndDate));
-		content.put("tweet_when_published", results.m_cContent.m_nTweetWhenPublished);
-		content.put("twitter_list_id", Util.toString(results.m_cContent.m_strListId));
-		content.put("tweeted", results.m_cContent.m_strTweetId!=null && !results.m_cContent.m_strTweetId.isEmpty());
+		content.put("category", results.content.m_nCategoryId);
+		content.put("description", Util.toString(results.content.m_strDescription));
+		content.put("password", Util.toString(results.content.m_strPassword));
+		content.put("tag_list", Util.toString(results.content.m_strTagList));
+		content.put("open_id", results.content.m_nOpenId);
+		content.put("publish_id", results.content.m_nPublishId);
+		content.put("not_recently", results.content.m_bNotRecently);
+		content.put("limited_time_publish", results.content.m_bLimitedTimePublish);
+		content.put("start_date", Util.toYMDHMString(results.content.m_timeUploadDate));
+		content.put("end_date", Util.toYMDHMString(results.content.m_timeEndDate));
+		content.put("tweet_when_published", results.content.m_nTweetWhenPublished);
+		content.put("twitter_list_id", Util.toString(results.content.m_strListId));
+		content.put("tweeted", results.content.m_strTweetId!=null && !results.content.m_strTweetId.isEmpty());
 		content.put("files", results.m_vContent);
 	}
 	mapper = new ObjectMapper();

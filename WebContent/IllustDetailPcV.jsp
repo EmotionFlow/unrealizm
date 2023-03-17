@@ -5,17 +5,17 @@ CheckLogin checkLogin = new CheckLogin(request, response);
 
 String referer = Util.toString(request.getHeader("Referer"));
 if (!referer.contains("unrealizm")) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 
 if(Util.isBot(request)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 
 if(!checkLogin.m_bLogin) {
-	getServletContext().getRequestDispatcher("/LoginFormEmailPcV.jsp").forward(request,response);
+	getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 	return;
 }
 
@@ -23,7 +23,7 @@ IllustDetailC results = new IllustDetailC();
 
 results.getParam(request);
 if(!results.getResults(checkLogin)) {
-	response.sendRedirect("/NotFoundPcV.jsp");
+	response.sendRedirect("/NotFoundV.jsp");
 	return;
 }
 
@@ -44,7 +44,7 @@ if(results.isDownloadable) {
 <!DOCTYPE html>
 <html lang="ja" style="height: 100%;">
 	<head>
-		<%@ include file="/inner/THeaderCommonNoindexPc.jsp"%>
+		<%@ include file="/inner/THeaderCommon.jsp"%>
 		<title><%=_TEX.T("THeader.Title")%></title>
 
 		<script type="text/javascript">
@@ -100,7 +100,7 @@ if(results.isDownloadable) {
 			<%if(results.content.m_nEditorId==Common.EDITOR_TEXT ){%>
 			background: #ffffff;
 			<%}else{%>
-            background: #333333;
+						background: #333333;
 			<%}%>
 		}
 		.AnalogicoInfo {display: none;}
@@ -110,7 +110,7 @@ if(results.isDownloadable) {
 			margin: 0 auto;
 			width: 38em;
 			<%}else{%>
-            padding: 4px;
+						padding: 4px;
 			<%}%>
 		}
 		.IllustItemImage {max-width: 100%; height: auto;}
@@ -137,7 +137,6 @@ if(results.isDownloadable) {
 	</head>
 
 	<body>
-		<div id="DispMsg" style="top: 51px;"></div>
 		<%@ include file="/inner/TMenuPc.jsp"%>
 
 		<article class="Wrapper" style="overflow: scroll; width: 100%; height: 100%;">

@@ -8,14 +8,11 @@ results.getParam(request);
 
 if(results.m_nUserId==-1) {
 	if(!checkLogin.m_bLogin) {
-		getServletContext().getRequestDispatcher("/StartUnrealizmAppV.jsp").forward(request,response);
+		getServletContext().getRequestDispatcher("/LoginFormEmailV.jsp").forward(request,response);
 		return;
-	} else {
-		results.m_nUserId = checkLogin.m_nUserId;
 	}
 }
 
-boolean isApp = true;
 
 if(checkLogin.m_nUserId != results.m_nUserId) {
 	// 他人のリスト
@@ -139,8 +136,6 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 	</head>
 
 	<body>
-		<%@ include file="/inner/TAdPoiPassHeaderAppV.jsp"%>
-
 		<article class="Wrapper">
 			<div class="UserInfo">
 				<%@include file="inner/IllustBrowserVGiftButton.jsp"%>
@@ -165,7 +160,7 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 							<a class="BtnBase UserInfoCmdFollow" href="<%=strTwitterUrl%>"><i class="fab fa-twitter"></i> <%=_TEX.T("Twitter.Share.MyUrl.Btn")%></a>
 						<%} else if(results.m_bBlocking){ // ブロックしている %>
 							<span class="BtnBase UserInfoCmdFollow UserInfoCmdFollow_<%=results.m_cUser.m_nUserId%>"
-								  style="display: none;" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)">
+									style="display: none;" onclick="UpdateFollowUser(<%=checkLogin.m_nUserId%>, <%=results.m_cUser.m_nUserId%>)">
 								<%=_TEX.T("IllustV.Follow")%>
 							</span>
 						<%} else if(results.m_bBlocked){%>
@@ -222,22 +217,22 @@ g_bShowAd = (results.m_cUser.m_nPassportId==Common.PASSPORT_OFF || results.m_cUs
 			<section id="IllustThumbList" class="IllustThumbList">
 				<%if(checkLogin.m_nUserId != results.m_nUserId){%>
 					<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-						CContent cContent = results.contentList.get(nCnt);%>
-				<%if(cContent.pinOrder == 1){%>
+						CContent content = results.contentList.get(nCnt);%>
+				<%if(content.pinOrder == 1){%>
 				<%= CCnv.Content2Html(
-						cContent, checkLogin, CCnv.MODE_SP,
+						content, checkLogin, CCnv.MODE_SP,
 						_TEX, Emoji.getDefaultEmoji(checkLogin.m_nUserId), CCnv.VIEW_DETAIL, CCnv.SP_MODE_WVIEW,
 						results.m_bOwner ? CCnv.PageCategory.MY_ILLUST_LIST : CCnv.PageCategory.DEFAULT)%>
 				<%}else{%>
 
-				<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+				<%=CCnv.toThumbHtml(content, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 				<%}%>
 					<%}%>
 				<%}else{%>
 					<%if(results.contentList.size()>0){%>
 						<%for(int nCnt=0; nCnt<results.contentList.size(); nCnt++) {
-							CContent cContent = results.contentList.get(nCnt);%>
-							<%=CCnv.toThumbHtml(cContent, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
+							CContent content = results.contentList.get(nCnt);%>
+							<%=CCnv.toThumbHtml(content, checkLogin, CCnv.MODE_SP, CCnv.SP_MODE_APP, _TEX)%>
 						<%}%>
 					<%}else{%>
 						<span class="NoContents"><%=_TEX.T("IllustListV.NoContents.Me")%></span>

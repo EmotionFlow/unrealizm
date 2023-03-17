@@ -3,6 +3,7 @@
 <%@page import="java.lang.*"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.net.URLDecoder"%>
+<%@page import="java.nio.charset.StandardCharsets"%>
 <%@page import="java.security.MessageDigest"%>
 <%@page import="java.sql.*"%>
 <%@page import="java.text.*"%>
@@ -22,4 +23,5 @@ int g_nSafeFilter = Common.AD_ID_ALL;
 String g_strSearchWord = "";
 boolean SP_REVIEW = true;
 boolean g_bShowAd = true;
+boolean g_isApp = Util.isApp(request);
 %>

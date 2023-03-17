@@ -3,7 +3,6 @@ package jp.pipa.poipiku.controller.upcontents.v2;
 import jp.pipa.poipiku.Common;
 import jp.pipa.poipiku.SupportedLocales;
 import jp.pipa.poipiku.UserLocale;
-import jp.pipa.poipiku.util.Log;
 import jp.pipa.poipiku.util.Util;
 
 import javax.servlet.http.HttpServletRequest;

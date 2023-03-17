@@ -19,7 +19,6 @@ results.getResults(checkLogin);
 	<div style="display:block; width: 100%; padding: 250px 0; text-align: center;">
 		<%=_TEX.T("ActivityList.Message.Default.Recive")%>
 	</div>
-	<%@ include file="/inner/TAd728x90_mid.jsp"%>
 <%} else {%>
 	<%for(int nCnt = 0; nCnt<results.activities.size(); nCnt++) {
 		final InfoList activityInfo = results.activities.get(nCnt);
@@ -37,7 +36,7 @@ results.getResults(checkLogin);
 		%>
 
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
-		   onclick="UpdateActivityList(this, <%=infoType.getCode()%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
+			onclick="UpdateActivityList(this, <%=infoType.getCode()%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 
 		<span class="ActivityListThumb">
 			<%if(infoType == InfoList.InfoType.WaveEmoji || infoType == InfoList.InfoType.WaveEmojiMessage){%>
@@ -94,7 +93,7 @@ results.getResults(checkLogin);
 				String[] infoDescLines = activityInfo.infoDesc.split("\n");
 		%>
 		<a class="ActivityListItem <%if(activityInfo.hadRead){%>HadRead<%}%>"
-		   onclick="UpdateActivityList(this, <%=infoType.getCode()%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
+			onclick="UpdateActivityList(this, <%=infoType.getCode()%>, <%=activityInfo.userId%>, <%=activityInfo.contentId%>, <%=activityInfo.requestId%>)">
 				<span class="ActivityListRequestThumb">
 				</span>
 			<span class="ActivityListBody">
@@ -108,9 +107,6 @@ results.getResults(checkLogin);
 			</span>
 		</a>
 		<%} else {%>
-		<%}%>
-		<%if((nCnt+1)%9==0) {%>
-		<%@ include file="/inner/TAd728x90_mid.jsp"%>
 		<%}%>
 	<%}%>
 <%}%>

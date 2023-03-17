@@ -3,9 +3,7 @@ package jp.pipa.poipiku.controller;
 import java.sql.*;
 import java.util.ArrayList;
 
-import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.sql.*;
 
 import jp.pipa.poipiku.*;
 import jp.pipa.poipiku.util.*;
@@ -107,12 +105,12 @@ public class IllustViewListC {
 			cState.setInt(5, SELECT_MAX_GALLERY);
 			cResSet = cState.executeQuery();
 			while (cResSet.next()) {
-				CContent cContent = new CContent(cResSet);
-				cContent.m_cUser.m_strNickName	= cUser.m_strNickName;
-				cContent.m_cUser.m_strFileName	= cUser.m_strFileName;
-				cContent.m_cUser.m_nFollowing	= m_nFollow;
-				cContent.m_cUser.m_nReaction	= cUser.m_nReaction;
-				contentList.add(cContent);
+				CContent content = new CContent(cResSet);
+				content.m_cUser.m_strNickName	= cUser.m_strNickName;
+				content.m_cUser.m_strFileName	= cUser.m_strFileName;
+				content.m_cUser.m_nFollowing	= m_nFollow;
+				content.m_cUser.m_nReaction	= cUser.m_nReaction;
+				contentList.add(content);
 			}
 			cResSet.close();cResSet=null;
 			cState.close();cState=null;

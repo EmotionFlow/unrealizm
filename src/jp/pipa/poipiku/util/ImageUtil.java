@@ -18,7 +18,6 @@ import javax.imageio.stream.FileImageOutputStream;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 
-import jp.pipa.poipiku.Common;
 import org.w3c.dom.*;
 
 import com.drew.imaging.ImageMetadataReader;

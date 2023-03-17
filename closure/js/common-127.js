@@ -135,9 +135,9 @@ function getLocalStrage(key) {
 function SearchByKeyword(searchType, userId, limit, kwd) {
 	if (searchType !== 'Tags' && searchType !== 'Users') searchType = 'Contents';
 	const paths = {
-		Contents: 'SearchIllustByKeywordPcV',
-		Tags: 'SearchTagByKeywordPcV',
-		Users: 'SearchUserByKeywordPcV',
+		Contents: 'SearchIllustByKeywordV',
+		Tags: 'SearchTagByKeywordV',
+		Users: 'SearchUserByKeywordV',
 	};
 	return function() {
 		const keyword = typeof kwd == 'string' ? kwd : $('#HeaderSearchBox').val();
@@ -317,7 +317,7 @@ var sendObjectMessage = function(parameters) {
 
 $.fn.autoLink = function(nMode){
 	// nMode : 0-app, 1-pc & smart phone
-	var SEARCH_TAG = (nMode==0)?"/SearchIllustByTagV.jsp":"/SearchIllustByTagPcV.jsp";
+	var SEARCH_TAG = "/SearchIllustByTagV.jsp";
 
 	return this.each(function(){
 		var srcText = this.innerHTML;
@@ -360,7 +360,7 @@ function DispMsgStatic(strMessage) {
 function HideMsgStatic(timeout=1000) {
 	if (timeout <= 0) {
 		$("#DispMsg").slideUp(200);
- 	} else {
+	} else {
 		setTimeout(function(){
 			$("#DispMsg").slideUp(200);
 		}, timeout);
@@ -1234,7 +1234,7 @@ function _showTextDetail(ownerUserId, contentId, password) {
 			} else {
 				switch (data.error_code) {
 					case -1:
-						location.href = 'StartUnrealizmPcV.jsp';
+						location.href = '/';
 						break;
 					case -2:
 						DispNeedLoginMsg();
@@ -1279,7 +1279,7 @@ function _showIllustDetail(ownerUserId, contentId, appendId, password) {
 			} else {
 				switch (data.error_code) {
 					case -1:
-						location.href = 'StartUnrealizmPcV.jsp';
+						location.href = '/';
 						break;
 					case -2:
 						DispNeedLoginMsg();
@@ -1364,12 +1364,13 @@ function shareContent(contentUserId, contentId, isSmartPhone) {
 		if ($IllustItemCmd.children(".IllustItemShareSub").length === 0) {
 			const uri = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetTxt)
 				+ "&url=" + encodeURIComponent("https://unrealizm.com/" + contentUserId + "/" + contentId + ".html");
-			$IllustItemCmd.append(
-				'<span class="IllustItemShareSub">' +
-				'<a class="IllustItemCommandShareTweet fab fa-twitter" href="' + uri + '"></a>' +
-				'<a class="IllustItemCommandShareTweet fas fa-link" href="javascript: void(0)" onclick="contentPageToClipboard('+contentUserId+','+contentId+')"></a>' +
-				'</span>'
-			);
+			location.href = uri;
+//			$IllustItemCmd.append(
+//				'<span class="IllustItemShareSub">' +
+//				'<a class="IllustItemCommandShareTweet fab fa-twitter" href="' + uri + '"></a>' +
+//				'<a class="IllustItemCommandShareTweet fas fa-link" href="javascript: void(0)" onclick="contentPageToClipboard('+contentUserId+','+contentId+')"></a>' +
+//				'</span>'
+//			);
 		}
 	}
 }

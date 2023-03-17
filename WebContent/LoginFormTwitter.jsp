@@ -36,28 +36,16 @@ try{
 	session.setAttribute("provider", provider);
 
 	String callbackUri = Util.toString(request.getParameter("CBPATH"));
-	boolean isApp = callbackUri.equals("app");
 
 	if(callbackUri.isEmpty() || callbackUri.equals("/")){
-		if(Util.isSmartPhone(request)){
-			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
-		}else{
-			callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
-		}
+		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + "/MyHomePcV.jsp?ID="+checkLogin.m_nUserId;
 	}else{
 		callbackUri = Common.TWITTER_CALLBAK_DOMAIN + callbackUri;
 	}
 	//Log.d("USERAUTH callbackuri:" + callbackUri);
 	session.setAttribute("callback_uri", callbackUri);
 
-	String strTwCallBackUri = "";
-	if(isApp){
-		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserApp.jsp";
-	}else{
-		strTwCallBackUri = Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUserPc.jsp";
-	}
-	//Log.d("USERAUTH twCallBackUri:" + strTwCallBackUri);
-	authUrl = provider.retrieveRequestToken(consumer, strTwCallBackUri);
+	authUrl = provider.retrieveRequestToken(consumer, Common.TWITTER_CALLBAK_DOMAIN + "/RegistTwitterUser.jsp";);
 
 }catch(Exception e){
 	e.printStackTrace();
@@ -79,7 +67,7 @@ if(!authUrl.isEmpty()) {
 		<article class="Wrapper" style="text-align: center;">
 			<p>
 				Twitter側の認証処理にに障害が発生しているようです。<br />
-				しばらくお待ちいただくか、<a style="text-decoration: underline;" href="/LoginFormEmailPcV.jsp">メールアドレスとパスワードによるログイン</a>をお試しください。
+				しばらくお待ちいただくか、<a style="text-decoration: underline;" href="/LoginFormEmailV.jsp">メールアドレスとパスワードによるログイン</a>をお試しください。
 			</p>
 			<p>
 				Twitter is not working.<br />

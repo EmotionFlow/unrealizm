@@ -6,40 +6,38 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-	<%@ include file="/inner/THeaderCommonPc.jsp" %>
+	<%@ include file="/inner/THeaderCommon.jsp" %>
 	<title><%=_TEX.T("THeader.Title")%> - <%=_TEX.T("LogoUsageGuideLine.Title")%></title>
 	<style>
-        .SettingList .SettingListItem {
-            color: #000;
-        }
+				.SettingList .SettingListItem {
+						color: #000;
+				}
 		.LogoArea {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
+						text-align: center;
+						display: flex;
+						flex-direction: column;
 			text-decoration: underline;
 		}
 		.LogoAreaLogo img{
 			padding: 10px;
 			margin: 0 0 20px 0;
-            background: linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%),
-            linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%);
-            background-color: #ffffff;
+						background: linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%),
+						linear-gradient(45deg, #e0e0e0 25%, transparent 25%, transparent 75%, #e0e0e0 75%);
+						background-color: #ffffff;
 		}
-        .LogoAreaLogo.Small img {
-            background-size: 10px 10px;
-            background-position: 0 0, 5px 5px;
-        }
+				.LogoAreaLogo.Small img {
+						background-size: 10px 10px;
+						background-position: 0 0, 5px 5px;
+				}
 
-        .LogoAreaLogo.Large img {
-            background-size: 30px 30px;
-            background-position: 0 0, 15px 15px;
-        }
+				.LogoAreaLogo.Large img {
+						background-size: 30px 30px;
+						background-position: 0 0, 15px 15px;
+				}
 
 	</style>
 </head>
 <body>
-<div id="DispMsg"></div>
-<%@ include file="/inner/TMenuPc.jsp"%>
 <article class="Wrapper">
 	<div class="SettingList">
 		<div class="SettingListItem">
@@ -93,6 +91,6 @@
 	</div>
 </article><!--Wrapper-->
 
-<%@ include file="/inner/TFooterBase.jsp" %>
+<%@ include file="/inner/TFooter.jsp" %>
 </body>
 </html>

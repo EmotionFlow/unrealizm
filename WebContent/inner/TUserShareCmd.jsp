@@ -15,5 +15,5 @@
 	}
 </script>
 <span id="UserShareCmd" class="NonFrameBtnBase" >
-	<img class="UserShareButton" src="/img/share_sp.svg" onclick='shareUser(<%=results.m_cUser.m_nUserId%>, "<%=shareMessage%>", "<%=shareUri%>", <%=bSmartPhone%>);' alt="share">
+	<img class="UserShareButton" src="/img/share_sp.svg" onclick='shareUser(<%=results.m_cUser.m_nUserId%>, "<%=shareMessage%>", "<%=shareUri%>", true);' alt="share">
 </span>

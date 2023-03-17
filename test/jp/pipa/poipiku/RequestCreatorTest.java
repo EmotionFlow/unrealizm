@@ -3,12 +3,9 @@ package jp.pipa.poipiku;
 import javax.sql.DataSource;
 import java.sql.*;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.postgresql.ds.PGSimpleDataSource;
 
 public class RequestCreatorTest {
 	@BeforeEach

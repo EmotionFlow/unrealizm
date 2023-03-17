@@ -124,6 +124,7 @@ public class SpotMoveImages extends Batch {
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, user.userId);
 				statement.executeUpdate();
+				statement.close();statement=null;
 
 				sql = """
 				UPDATE contents_appends_0000
@@ -135,6 +136,7 @@ public class SpotMoveImages extends Batch {
 				statement = connection.prepareStatement(sql);
 				statement.setInt(1, user.userId);
 				statement.executeUpdate();
+				statement.close();statement=null;
 
 				sql = """
 				UPDATE users_0000
